@@ -25,6 +25,8 @@
 #include <qvaluestack.h>
 #include <qvaluevector.h>
 
+#include <cairo.h>
+
 class Anchor;
 class DocumentWidget;
 class dvifile;
@@ -158,6 +160,11 @@ private slots:
   void          showThatSourceInformationIsPresent();
 
 private:
+  /** Draws the source image at the point (x, y) on the image dest. */
+  void drawImage(cairo_t*, double x, double y, cairo_surface_t* source);
+
+  void fillRect(cairo_t*, double x, double y, double width, double height, QColor color);
+
   friend class DVIExportToPS;
   friend class DVISourceEditor;
 
@@ -300,11 +307,11 @@ private:
    */
   bool _isModified;
 
-  /** On this pixmap the page is drawn.
+  /** On this pixmap the page is drawn. */
+  cairo_surface_t* cairoImage;
 
-      @warning Every access to a QPixmap and QPainter has to be guarded
-               by qApp->lock(). Otherwise the program will definitely crash. */
-  QPixmap* foreGroundPixmap;
+  /** The cairo context that is used to draw the page. */
+  cairo_t* painter;
 };
 
 #endif

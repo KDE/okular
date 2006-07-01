@@ -26,7 +26,9 @@ class TeXFont {
   void setDisplayResolution()
     {
       for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
-        glyphtable[i].shrunkenCharacter.resize(0, 0);
+      {
+        glyphtable[i].shrunkenCharacter = 0;
+      }
     };
 
   virtual glyph* getGlyph(Q_UINT16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) = 0;

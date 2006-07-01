@@ -17,12 +17,14 @@
 
 #include <klocale.h>
 #include <kmimetype.h>
+#include <ktempfile.h>
 
 #include <qapplication.h>
 #include <qfile.h>
 #include <qimage.h>
-#include <qpainter.h>
 #include <qstringlist.h>
+
+#include <cairo.h>
 
 //#define DEBUG_SPECIAL
 
@@ -380,14 +382,55 @@ void dviRenderer::epsf_special(const QString& cp)
     bbox_width  *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
     bbox_height *= 0.1 * 65536.0*fontPixelPerDVIunit / shrinkfactor;
 
-    QImage image(EPSfilename);
-    image = image.smoothScale((int)(bbox_width), (int)(bbox_height));
+    cairo_surface_t* pngImage;
 
-    qApp->lock();
-    QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
-    foreGroundPainter->drawImage( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height, image);
-    delete foreGroundPainter;
-    qApp->unlock();
+    QString pngFileName;
+    if (mime_type_name == "image/png")
+      pngImage = cairo_image_surface_create_from_png(EPSfilename.latin1());
+    else
+    {
+      // Since Cairo can only read PNG files natively, we first have to
+      // convert the image to the PNG format.
+      QImage image(EPSfilename);
+
+      // Generate a PNG-file
+      KTempFile tempPNGfile(QString::null, ".png");
+      tempPNGfile.setAutoDelete(1);
+      tempPNGfile.close(); // we are want the filename, not the file
+
+      if (!image.save(tempPNGfile.name(), "PNG"))
+      {
+        tempPNGfile.unlink();
+        kdDebug(kvs::dvi) << "Writing of temporary png file failed." << endl;
+        return;
+      }
+
+      pngImage = cairo_image_surface_create_from_png(tempPNGfile.name().latin1());
+      tempPNGfile.unlink();
+    }
+
+    if (!pngImage)
+    {
+      kdDebug(kvs::dvi) << "loading of the temporary png file failed." << endl;
+      return;
+    }
+
+    double scaleWidth = bbox_width / cairo_image_surface_get_width(pngImage);
+    double scaleHeight = bbox_height / cairo_image_surface_get_height(pngImage);
+
+    double x = currinf.data.dvi_h / (shrinkfactor * 65536.0);
+    double y = currinf.data.pxl_v - bbox_height;
+
+    cairo_save(painter);
+    cairo_translate(painter, x, y);
+    cairo_scale(painter, scaleWidth, scaleHeight);
+
+    cairo_set_source_surface(painter, pngImage, 0, 0);
+    cairo_paint(painter);
+
+    cairo_surface_destroy(pngImage);
+    cairo_restore(painter);
+
     return;
   }
 
@@ -414,27 +457,45 @@ void dviRenderer::epsf_special(const QString& cp)
     QRect bbox(((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))), currinf.data.pxl_v - (int)bbox_height,
                (int)bbox_width, (int)bbox_height);
 
-    qApp->lock();
-    QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
-    foreGroundPainter->save();
+    cairo_save(painter);
+
+    cairo_set_antialias(painter, CAIRO_ANTIALIAS_GRAY);
+    cairo_set_line_width(painter, 1.0);
 
     if (QFile::exists(EPSfilename))
-      foreGroundPainter->setBrush(Qt::lightGray);
+      cairo_set_source_rgb(painter, 0.8, 0.8, 0.8);
     else
-      foreGroundPainter->setBrush(Qt::red);
-    foreGroundPainter->setPen(Qt::black);
-    foreGroundPainter->drawRoundRect(bbox, 2, 2);
-    QFont f = foreGroundPainter->font();
-    f.setPointSize(8);
-    foreGroundPainter->setFont(f);
+      cairo_set_source_rgb(painter, 1.0, 0.0, 0.0);
+
+
+    //cairo_rectangle(painter, (double)bbox.x(), (double)bbox.y(), (double)bbox.width(), (double)bbox.height());
+    double radius = 4.0;
+    // rounded rectangle
+    cairo_move_to(painter, bbox.x() + radius, (double)bbox.y());
+    cairo_arc(painter, bbox.x() + bbox.width() - radius, bbox.y() + radius, radius, -M_PI / 2.0, 0);
+    cairo_arc(painter, bbox.x() + bbox.width() - radius, bbox.y() + bbox.height() - radius, radius, 0, M_PI / 2.0);
+    cairo_arc(painter, bbox.x() + radius, bbox.y() + bbox.height() - radius, radius, M_PI / 2.0, M_PI);
+    cairo_arc(painter, bbox.x() + radius, bbox.y() + radius, radius, M_PI, -M_PI / 2.0);
+    cairo_close_path(painter);
+
+    cairo_fill_preserve(painter);
+    cairo_set_source_rgb(painter, 0.0, 0.0, 0.0);
+    cairo_stroke_preserve(painter);
+
+    cairo_set_font_size(painter, 10.0);
+    cairo_clip(painter);
+    cairo_move_to(painter, bbox.x() + 3.0, bbox.y() + bbox.height() / 2.0);
     if (QFile::exists(EPSfilename))
-      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename, -1);
+    {
+      cairo_show_text(painter, EPSfilename.utf8());
+    }
     else
-      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
-                                i18n("File not found: \n %1").arg(EPSfilename_orig), -1);
-    foreGroundPainter->restore();
-    delete foreGroundPainter;
-    qApp->unlock();
+    {
+      QString text = i18n("File not found: \n %1").arg(EPSfilename_orig);
+      cairo_show_text(painter, text.utf8());
+    }
+
+    cairo_restore(painter);
   }
 
   return;
@@ -452,14 +513,23 @@ void dviRenderer::TPIC_flushPath_special()
     return;
   }
 
-  QPen pen(Qt::black, (int)(penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5));  // Sets the pen size in milli-inches
+  cairo_save(painter);
+  cairo_set_source_rgb(painter, 0.0, 0.0, 0.0); // black
+  cairo_set_line_width(painter, penWidth_in_mInch*resolutionInDPI/1000.0 + 0.5); // Sets the pen size in milli-inches
 
-  qApp->lock();
-  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
-  foreGroundPainter->setPen(pen);
-  foreGroundPainter->drawPolyline(TPIC_path, 0, number_of_elements_in_path);
-  delete foreGroundPainter;
-  qApp->unlock();
+  int x;
+  int y;
+  TPIC_path.point(0, &x, &y);
+
+  cairo_move_to(painter, (double)x, (double)y);
+  for (int i = 1; i < number_of_elements_in_path; i++)
+  {
+    TPIC_path.point(i, &x, &y);
+    cairo_line_to(painter, (double)x, (double)y);
+  }
+
+  cairo_stroke(painter);
+  cairo_restore(painter);
 
   number_of_elements_in_path = 0;
 }
@@ -667,8 +737,6 @@ void dviRenderer::applicationDoSpecial(char *cp)
     }
   }
 
-  qApp->lock();
-  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   // Detect text rotation specials that are included by the graphicx
   // package. If one of these specials is found, the state of the
   // painter is saved, and the coordinate system is rotated
@@ -681,11 +749,11 @@ void dviRenderer::applicationDoSpecial(char *cp)
       int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536)));
       int y = currinf.data.pxl_v;
 
-      foreGroundPainter->save();
+      cairo_save(painter);
       // Rotate about the current point
-      foreGroundPainter->translate(x,y);
-      foreGroundPainter->rotate(-angle);
-      foreGroundPainter->translate(-x,-y);
+      cairo_translate(painter, (double)x, (double)y);
+      cairo_rotate(painter, -angle * (M_PI / 180.0));
+      cairo_translate(painter, (double)(-x), (double)(-y));
     } else
       printErrorMsgForSpecials( i18n("Error in DVIfile '%1', page %2. Could not interpret angle in text rotation special." ).
                                 arg(dviFile->filename).arg(current_page));
@@ -694,10 +762,8 @@ void dviRenderer::applicationDoSpecial(char *cp)
   // The graphicx package marks the end of rotated text with this
   // special. The state of the painter is restored.
   if (special_command == "ps: currentpoint grestore moveto") {
-    foreGroundPainter->restore();
+    cairo_restore(painter);
   }
-  delete foreGroundPainter;
-  qApp->unlock();
 
   // The following special commands are not used here; they are of
   // interest only during the prescan phase. We recognize them here

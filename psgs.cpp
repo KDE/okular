@@ -22,7 +22,6 @@
 
 #include <qapplication.h>
 #include <qdir.h>
-#include <qpainter.h>
 
 extern const char psheader[];
 
@@ -142,14 +141,14 @@ void ghostscript_interface::clear() {
 }
 
 
-void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification) {
+bool ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification) {
 #ifdef DEBUG_PSGS
   kdDebug(kvs::dvi) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )" << endl;
 #endif
 
   if (knownDevices.isEmpty()) {
     kdError(kvs::dvi) << "No known devices found" << endl;
-    return;
+    return false;
   }
 
   emit(setStatusBarText(i18n("Generating PostScript graphics...")));
@@ -236,19 +235,23 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   PSfile.unlink();
 
   // Check if gs has indeed produced a file.
-  if (QFile::exists(filename) == false) {
+  if (QFile::exists(filename) == false)
+  {
     kdError(kvs::dvi) << "GS did not produce output." << endl;
 
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     QString GSoutput;
-    while(proc.readln(GSoutput) != -1) {
-      if (GSoutput.contains("Unknown device")) {
+    while(proc.readln(GSoutput) != -1)
+    {
+      if (GSoutput.contains("Unknown device"))
+      {
         kdDebug(kvs::dvi) << QString("The version of ghostview installed on this computer does not support "
                                    "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
         knownDevices.remove(gsDevice);
         gsDevice = knownDevices.begin();
         if (knownDevices.isEmpty())
+        {
           // TODO: show a requestor of some sort.
           KMessageBox::detailedError(0,
                                      i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
@@ -270,32 +273,32 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
                                           "Ghostview. Among others, KDVI can use the 'png256', 'jpeg' and 'pnm' "
                                           "drivers. Note that KDVI needs to be restarted to re-enable PostScript support."
                                           "</p></qt>"));
-        else {
+          return false;
+        } else {
           kdDebug(kvs::dvi) << QString("KDVI will now try to use the '%1' device driver.").arg(*gsDevice) << endl;
           gs_generate_graphics_file(page, filename, magnification);
         }
-        return;
       }
     }
   }
-  emit(setStatusBarText(QString::null));
+  else
+  {
+    emit(setStatusBarText(QString::null));
+    return true;
+  }
+  return false;
 }
 
 
-void ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QPixmap* pixmap) {
+cairo_surface_t* ghostscript_interface::graphics(const PageNumber& page, double dpi, long magnification, QSize pageSize) {
 #ifdef DEBUG_PSGS
   kdDebug(kvs::dvi) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called." << endl;
 #endif
 
-  if (pixmap == 0) {
-    kdError(kvs::dvi) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with pixmap == 0" << endl;
-    return;
-  }
-
   resolution   = dpi;
 
-  pixel_page_w = pixmap->width();
-  pixel_page_h = pixmap->height();
+  pixel_page_w = pageSize.width();
+  pixel_page_h = pageSize.height();
 
   pageInfo *info = pageList.find(page);
 
@@ -304,22 +307,27 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 #ifdef DEBUG_PSGS
     kdDebug(kvs::dvi) << "No PostScript found. Not drawing anything." << endl;
 #endif
-    return;
+    return 0;
   }
 
   KTempFile gfxFile(QString::null, ".png");
   gfxFile.setAutoDelete(1);
   gfxFile.close(); // we are want the filename, not the file
 
-  gs_generate_graphics_file(page, gfxFile.name(), magnification);
+  bool ok = gs_generate_graphics_file(page, gfxFile.name(), magnification);
 
-  qApp->lock();
-  QPixmap MemoryCopy(gfxFile.name());
-  QPainter paint(pixmap);
-  paint.drawPixmap(0, 0, MemoryCopy);
-  paint.end();
-  qApp->unlock();
-  return;
+  // If there were errors return 0.
+  if (!ok)
+    return 0;
+
+  cairo_surface_t* pngImage = cairo_image_surface_create_from_png(gfxFile.name().latin1());
+
+  if (!pngImage)
+  {
+    kdDebug(kvs::dvi) << "loading of the temporary png file failed." << endl;
+    return 0;
+  }
+  return pngImage;
 }
 
 

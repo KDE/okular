@@ -26,4 +26,9 @@ glyph::glyph()
 }
 
 glyph::~glyph()
-{}
+{
+  if (shrunkenCharacter)
+  {
+    cairo_surface_destroy(shrunkenCharacter);
+  }
+}

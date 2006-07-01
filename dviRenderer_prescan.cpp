@@ -24,11 +24,8 @@
 #include <qapplication.h>
 #include <qdir.h>
 #include <qfileinfo.h>
-#include <qimage.h>
-#include <qpaintdevice.h>
 
 
-extern QPainter foreGroundPaint;
 extern void parse_special_argument(const QString& strg, const char* argument_name, int* variable);
 
 

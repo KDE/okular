@@ -29,13 +29,13 @@
 #include <kmimetype.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
+#include <ktempfile.h>
 
 #include <qapplication.h>
 #include <qcheckbox.h>
 #include <qfileinfo.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpainter.h>
 #include <qptrstack.h>
 #include <qregexp.h>
 #include <qvbox.h>
@@ -163,20 +163,44 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
   int pageHeight = ps.sizeInPixel(resolution).height();
   int pageWidth = ps.sizeInPixel(resolution).width();
   page->resize(pageWidth, pageHeight);
+/*
+  QByteArray buffer(pageWidth * pageHeight * 4);
+  cairoImage = cairo_image_surface_create_for_data((unsigned char*)buffer.data(), CAIRO_FORMAT_RGB24, pageWidth, pageHeight, pageWidth * 4);
+*/
+  cairoImage = cairo_image_surface_create(CAIRO_FORMAT_RGB24, pageWidth, pageHeight);
 
-  qApp->lock();
-  foreGroundPixmap = new QPixmap(pageWidth, pageHeight);
-  qApp->unlock();
+  painter = cairo_create(cairoImage);
+  cairo_set_antialias(painter, CAIRO_ANTIALIAS_NONE);
 
   errorMsg = QString::null;
 
   draw_page();
 
-  qApp->lock();;
-  page->setPixmap(*foreGroundPixmap);
-  delete foreGroundPixmap;
-  foreGroundPixmap = 0;
-  qApp->unlock();
+  cairo_destroy(painter);
+
+  // Generate a PNG-file
+  KTempFile tempPNGfile(QString::null, ".png");
+  tempPNGfile.setAutoDelete(1);
+  tempPNGfile.close(); // we are want the filename, not the file
+
+  cairo_surface_write_to_png(cairoImage, tempPNGfile.name().latin1());
+
+  //QImage image((unsigned char*)buffer.data(), pageWidth, pageHeight, 32, 0, 16777216, QImage::LittleEndian);
+
+  QImage image;
+  bool ok = image.load(tempPNGfile.name(), "PNG");
+  tempPNGfile.unlink();
+
+  if (!ok)
+  {
+    kdError() << "Loading temporary image file failed." << endl;
+    return 0;
+  }
+
+  //image.setAlphaBuffer(false);
+  page->setImage(image);
+
+  cairo_surface_destroy(cairoImage);
 
   page->isEmpty = false;
   //FIXME: We cannot open a KMessageBox outside the main thread.

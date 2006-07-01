@@ -68,8 +68,6 @@
 #include <klocale.h>
 
 #include <qapplication.h>
-#include <qpainter.h>
-#include <qpixmap.h>
 
 /** Routine to print characters.  */
 
@@ -89,16 +87,17 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 
   long dvi_h_sav = currinf.data.dvi_h;
 
-  qApp->lock();
-  QPixmap pix = g->shrunkenCharacter;
+  cairo_surface_t* pix = g->shrunkenCharacter;
   int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))) - g->x2;
   int y = currinf.data.pxl_v - g->y2;
 
+  int width = g->width;
+  int height = g->height;
+
   // Draw the character.
-  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
-  foreGroundPainter->drawPixmap(x, y, pix);
-  delete foreGroundPainter;
-  qApp->unlock();
+  cairo_set_source_surface(painter, pix, (double)x, (double)y);
+  cairo_rectangle(painter, (double)x, (double)y, width, height);
+  cairo_fill(painter);
 
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
@@ -109,11 +108,11 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       // Set up hyperlink
       Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
-      dhl.box.setRect(x, y, pix.width(), pix.height());
+      dhl.box.setRect(x, y, width, height);
       dhl.linkText = *HTML_href;
       currentlyDrawnPage->hyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.unite(QRect(x, y, width, height)) ;
       currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box = dshunion;
     }
   }
@@ -130,14 +129,14 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       // Set up source hyperlinks
       Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
-      dhl.box.setRect(x, y, pix.width(), pix.height());
+      dhl.box.setRect(x, y, width, height);
       if (source_href != NULL)
         dhl.linkText = *source_href;
       else
         dhl.linkText = "";
       currentDVIPage->sourceHyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, width, height)) ;
       currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box = dshunion;
     }
   }
@@ -145,7 +144,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   // Code for DVI -> text functions (e.g. marking of text, full text
   // search, etc.). Set up the currentlyDrawnPage->textBoxList.
   TextBox link;
-  link.box.setRect(x, y, pix.width(), pix.height());
+  link.box.setRect(x, y, width, height);
   link.text = "";
   currentlyDrawnPage->textBoxList.push_back(link);
 
@@ -314,17 +313,12 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             int h = ((int) ROUNDUP(((long) (a *  current_dimconv)), shrinkfactor * 65536));
             int w =  ((int) ROUNDUP(b, shrinkfactor * 65536));
 
-            qApp->lock();
-            QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
             if (colorStack.isEmpty())
-              foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+              fillRect(painter, ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                          currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
             else
-              foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+              fillRect(painter, ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                         currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
-
-            delete foreGroundPainter;
-            qApp->unlock();
           }
           currinf.data.dvi_h += b;
           break;
@@ -342,16 +336,12 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             int h = ((int) ROUNDUP(a, shrinkfactor * 65536));
             int w = ((int) ROUNDUP(b, shrinkfactor * 65536));
 
-            qApp->lock();
-            QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
             if (colorStack.isEmpty())
-              foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+              fillRect(painter, ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                          currinf.data.pxl_v - h + 1, w?w:1, h?h:1, globalColor );
             else
-              foreGroundPainter->fillRect( ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
+              fillRect(painter, ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536))),
                                         currinf.data.pxl_v - h + 1, w?w:1, h?h:1, colorStack.top() );
-            delete foreGroundPainter;
-            qApp->unlock();
           }
           break;
 
@@ -592,6 +582,10 @@ void dviRenderer::draw_page()
   // constantly allocating/freeing memory.
   currentlyDrawnPage->textBoxList.resize(0);
 
+  QSize pageSize;
+  if (currentlyDrawnPage)
+    pageSize = currentlyDrawnPage->size();
+
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
   if (currentDVIPage)
   {
@@ -613,19 +607,24 @@ void dviRenderer::draw_page()
   kdDebug(kvs::dvi) <<"draw_page" << endl;
 #endif
 
-  qApp->lock();
-  QPainter* foreGroundPainter = new QPainter(foreGroundPixmap);
   if (!accessibilityBackground)
   {
-    foreGroundPainter->fillRect( foreGroundPainter->viewport(), PS_interface->getBackgroundColor(current_page) );
+    QColor color = PS_interface->getBackgroundColor(current_page);
+    double red = color.red() / 255.0;
+    double green = color.green() / 255.0;
+    double blue = color.blue() / 255.0;
+    cairo_set_source_rgb(painter, red, green, blue);
   }
   else
   {
     // In accessiblity mode use the custom background color
-    foreGroundPainter->fillRect( foreGroundPainter->viewport(), accessibilityBackgroundColor );
+    QColor color = accessibilityBackgroundColor;
+    double red = color.red() / 255.0;
+    double green = color.green() / 255.0;
+    double blue = color.blue() / 255.0;
+    cairo_set_source_rgb(painter, red, green, blue);
   }
-  delete foreGroundPainter;
-  qApp->unlock();
+  cairo_paint(painter);
 
   // Render the PostScript background, if there is one.
   if (_postscript)
@@ -640,7 +639,12 @@ void dviRenderer::draw_page()
     else
       PS_interface->restoreBackgroundColor(current_page);
 
-    PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPixmap);
+    cairo_surface_t* backgroundImage = PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), pageSize);
+    if (backgroundImage)
+    {
+      drawImage(painter, 0, 0, backgroundImage);
+      cairo_surface_destroy(backgroundImage);
+    }
   }
 
   // Now really write the text
@@ -667,4 +671,36 @@ void dviRenderer::draw_page()
     delete source_href;
     source_href = 0;
   }
+}
+
+
+void dviRenderer::drawImage(cairo_t* dest, double x, double y, cairo_surface_t* source)
+{
+  double width = QMIN(cairo_image_surface_get_width(source), cairo_image_surface_get_width(cairoImage) - x);
+  double height = QMIN(cairo_image_surface_get_height(source), cairo_image_surface_get_height(cairoImage) - y);
+
+  if (width < 0 || height < 0)
+    return;
+
+  cairo_set_source_surface(dest, source, x, y);
+  cairo_rectangle(dest, x, y, width, height);
+  cairo_fill(painter);
+}
+
+
+void dviRenderer::fillRect(cairo_t* dest, double x, double y, double width, double height, QColor color)
+{
+  width = QMIN(width, cairo_image_surface_get_width(cairoImage) - x);
+  height = QMIN(height, cairo_image_surface_get_height(cairoImage) - y);
+
+  if (width < 0 || height < 0)
+    return;
+
+  double red = color.red() / 255.0;
+  double green = color.green() / 255.0;
+  double blue = color.blue() / 255.0;
+  cairo_set_source_rgb(dest, red, green, blue);
+
+  cairo_rectangle(dest, x, y, width, height);
+  cairo_fill(painter);
 }

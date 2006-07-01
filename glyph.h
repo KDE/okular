@@ -4,7 +4,8 @@
 #define _GLYPH_H
 
 #include <qcolor.h>
-#include <qpixmap.h>
+
+#include <cairo.h>
 
 
 struct bitmap {
@@ -32,10 +33,13 @@ class glyph {
   // x and y offset in pixels
   short   x, y;
 
-  QPixmap shrunkenCharacter;
+  cairo_surface_t* shrunkenCharacter;
 
   // x and y offset in pixels (shrunken bitmap)
   short   x2, y2;
+
+  int width;
+  int height;
 };
 
 #endif //ifndef _GLYPH_H

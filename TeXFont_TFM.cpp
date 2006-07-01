@@ -14,6 +14,8 @@
 #include <qapplication.h>
 #include <qfile.h>
 
+#include <cairo.h>
+
 //#define DEBUG_TFM
 
 
@@ -133,7 +135,7 @@ glyph* TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
   // This is the address of the glyph that will be returned.
   struct glyph *g = glyphtable+characterCode;
 
-  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
+  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter == 0) || (color != g->color)) ) {
     g->color = color;
     Q_UINT16 pixelWidth = (Q_UINT16)(parent->displayResolution_in_dpi *
                                      design_size_in_TeX_points.toDouble() *
@@ -149,10 +151,23 @@ glyph* TeXFont_TFM::getGlyph(Q_UINT16 characterCode, bool generateCharacterPixma
     if (pixelHeight > 50)
       pixelHeight = 50;
 
-    qApp->lock();
-    g->shrunkenCharacter.resize( pixelWidth, pixelHeight );
-    g->shrunkenCharacter.fill(color);
-    qApp->unlock();
+    g->width = pixelWidth;
+    g->height = pixelHeight;
+    g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, g->width, g->height);
+
+    cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+    cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+    double red = color.red() / 255.0;
+    double green = color.green() / 255.0;
+    double blue = color.blue() / 255.0;
+
+    cairo_set_source_rgb(glyphSurface, red, green, blue);
+    cairo_rectangle(glyphSurface, 0.0, 0.0, (double)g->width, (double)g->height);
+    cairo_fill(glyphSurface);
+
+    cairo_destroy(glyphSurface);
+
     g->x2 = 0;
     g->y2 = pixelHeight;
   }

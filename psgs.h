@@ -15,10 +15,10 @@
 #include <qobject.h>
 #include <qstring.h>
 
+#include <cairo.h>
+
 class KURL;
 class PageNumber;
-class QPainter;
-
 
 class pageInfo
 {
@@ -58,9 +58,8 @@ public:
   // With option permanent = true.
   void restoreBackgroundColor(const PageNumber& page);
 
-  // Draws the graphics of the page into the pixmap, if possible. If
-  // the page does not contain any graphics, nothing happens
-  void     graphics(const PageNumber& page, double dpi, long magnification, QPixmap* pixmap);
+  // Returns the graphics of the page, if possible. If the page does not contain any graphics, a null Image is returned.
+  cairo_surface_t* graphics(const PageNumber& page, double dpi, long magnificationl, QSize pageSize);
 
   // Returns the background color for a certain page. If no color was
   // set, Qt::white is returned.
@@ -78,7 +77,7 @@ public:
   static  QString locateEPSfile(const QString &filename, const KURL &base);
 
 private:
-  void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
+  bool                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
   QIntDict<pageInfo>    pageList;
 
   double                resolution;   // in dots per inch

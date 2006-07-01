@@ -16,8 +16,6 @@
 #include <kprocio.h>
 
 #include <qapplication.h>
-#include <qimage.h>
-#include <qpainter.h>
 
 #include <cmath>
 
@@ -65,40 +63,6 @@ fontPool::fontPool()
   } else
     FreeType_could_be_loaded = true;
 #endif
-
-  // Check if the QT library supports the alpha channel of
-  // pixmaps. Experiments show that --depending of the configuration
-  // of QT at compile and runtime or the availability of the XFt
-  // extension, alpha channels are either supported, or silently
-  // converted to 1-bit masks.
-  QImage start(1, 1, 32); // Generate a 1x1 image, black with alpha=0x10
-  start.setAlphaBuffer(true);
-  Q_UINT32 *destScanLine = (Q_UINT32 *)start.scanLine(0);
-  *destScanLine = 0x80000000;
-
-  qApp->lock();
-  QPixmap intermediate(start);
-  QPixmap dest(1,1);
-  dest.fill(Qt::white);
-  QPainter paint( &dest );
-  paint.drawPixmap(0, 0, intermediate);
-  paint.end();
-  start = dest.convertToImage().convertDepth(32);
-  qApp->unlock();
-
-  Q_UINT8 result = *(start.scanLine(0)) & 0xff;
-
-  if ((result == 0xff) || (result == 0x00)) {
-#ifdef DEBUG_FONTPOOL
-    kdDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap does not support the alpha channel" << endl;
-#endif
-    QPixmapSupportsAlpha = false;
-  } else {
-#ifdef DEBUG_FONTPOOL
-    kdDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
-#endif
-    QPixmapSupportsAlpha = true;
-  }
 }
 
 

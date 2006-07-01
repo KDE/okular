@@ -19,8 +19,9 @@
 
 #include <klocale.h>
 
-#include <qimage.h>
 #include <qapplication.h>
+
+#include <cairo.h>
 
 //#define DEBUG_PFB 1
 
@@ -156,7 +157,7 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
   if (fatalErrorInFontLoading == true)
     return g;
 
-  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
+  if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter == 0) || (color != g->color)) ) {
     int error;
     unsigned int res =  (unsigned int)(parent->displayResolution_in_dpi/parent->enlargement +0.5);
     g->color = color;
@@ -171,10 +172,21 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
-      qApp->lock();
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
-      qApp->unlock();
+      g->width = 1;
+      g->height = 1;
+      g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 1, 1);
+      cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+      cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+      double red = 1.0;
+      double green = 1.0;
+      double blue = 1.0;
+
+      cairo_set_source_rgb(glyphSurface, red, green, blue);
+      cairo_rectangle(glyphSurface, 0.0, 0.0, (double)g->width, (double)g->height);
+      cairo_fill(glyphSurface);
+      cairo_destroy(glyphSurface);
+
       return g;
     }
 
@@ -189,10 +201,21 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
-      qApp->lock();
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
-      qApp->unlock();
+      g->width = 1;
+      g->height = 1;
+      g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 1, 1);
+      cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+      cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+      double red = 1.0;
+      double green = 1.0;
+      double blue = 1.0;
+
+      cairo_set_source_rgb(glyphSurface, red, green, blue);
+      cairo_rectangle(glyphSurface, 0.0, 0.0, (double)g->width, (double)g->height);
+      cairo_fill(glyphSurface);
+      cairo_destroy(glyphSurface);
+
       return g;
     }
 
@@ -203,10 +226,21 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = msg;
       kdError(kvs::dvi) << msg << endl;
-      //qApp->lock();
-      g->shrunkenCharacter.resize(1,1);
-      g->shrunkenCharacter.fill(QColor(255, 255, 255));
-      //qApp->unlock();
+      g->width = 1;
+      g->height = 1;
+      g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 1, 1);
+      cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+      cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+      double red = 1.0;
+      double green = 1.0;
+      double blue = 1.0;
+
+      cairo_set_source_rgb(glyphSurface, red, green, blue);
+      cairo_rectangle(glyphSurface, 0.0, 0.0, (double)g->width, (double)g->height);
+      cairo_fill(glyphSurface);
+      cairo_destroy(glyphSurface);
+
       return g;
     }
 
@@ -216,71 +250,64 @@ glyph* TeXFont_PFB::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QC
       if (errorMessage.isEmpty())
         errorMessage = i18n("Glyph #%1 is empty.").arg(ch);
       kdError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.").arg(ch).arg(parent->filename) << endl;
-      qApp->lock();
-      g->shrunkenCharacter.resize( 15, 15 );
-      g->shrunkenCharacter.fill(QColor(255, 0, 0));
-      qApp->unlock();
+      g->width = 15;
+      g->height = 15;
+      g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 15, 15);
+
+      cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+      cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+      double red = 1.0;
+      double green = 0.0;
+      double blue = 0.0;
+
+      cairo_set_source_rgb(glyphSurface, red, green, blue);
+      cairo_rectangle(glyphSurface, 0.0, 0.0, (double)g->width, (double)g->height);
+      cairo_fill(glyphSurface);
+      cairo_destroy(glyphSurface);
+
       g->x2 = 0;
       g->y2 = 15;
     } else {
-      QImage imgi(slot->bitmap.width, slot->bitmap.rows, 32);
-      imgi.setAlphaBuffer(true);
+      g->width = slot->bitmap.width;
+      g->height = slot->bitmap.rows;
+      g->shrunkenCharacter = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, g->width, g->height);
 
-      // Do QPixmaps fully support the alpha channel? If yes, we use
-      // that. Otherwise, use other routines as a fallback
-      if (parent->font_pool->QPixmapSupportsAlpha) {
-        // If the alpha channel is properly supported, we set the
-        // character glyph to a colored rectangle, and define the
-        // character outline only using the alpha channel. That
-        // ensures good quality rendering for overlapping characters.
-        uchar *srcScanLine = slot->bitmap.buffer;
-        for(int row=0; row<slot->bitmap.rows; row++) {
-          uchar *destScanLine = imgi.scanLine(row);
-          for(int col=0; col<slot->bitmap.width; col++) {
-            destScanLine[4*col+0] = color.blue();
-            destScanLine[4*col+1] = color.green();
-            destScanLine[4*col+2] = color.red();
-            destScanLine[4*col+3] = srcScanLine[col];
-          }
-          srcScanLine += slot->bitmap.pitch;
-        }
-      } else {
-        // If the alpha channel is not supported... QT seems to turn
-        // the alpha channel into a crude bitmap which is used to mask
-        // the resulting QPixmap. In this case, we define the
-        // character outline using the image data, and use the alpha
-        // channel only to store "maximally opaque" or "completely
-        // transparent" values. When characters are rendered,
-        // overlapping characters are no longer correctly drawn, but
-        // quality is still sufficient for most purposes. One notable
-        // exception is output from the gftodvi program, which will be
-        // partially unreadable.
-        Q_UINT16 rInv = 0xFF - color.red();
-        Q_UINT16 gInv = 0xFF - color.green();
-        Q_UINT16 bInv = 0xFF - color.blue();
+      cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+      cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
 
-        for(Q_UINT16 y=0; y<slot->bitmap.rows; y++) {
-          Q_UINT8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
-          unsigned int *destScanLine = (unsigned int *)imgi.scanLine(y);
-          for(Q_UINT16 col=0; col<slot->bitmap.width; col++) {
-            Q_UINT16 data =  *srcScanLine;
-            // The value stored in "data" now has the following meaning:
-            // data = 0 -> white; data = 0xff -> use "color"
-            *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
-                                  0xFF - (gInv*data + 0x7F) / 0xFF,
-                                  0xFF - (bInv*data + 0x7F) / 0xFF,
-                                  (data > 0x03) ? 0xff : 0x00);
-            destScanLine++;
-            srcScanLine++;
-          }
+      // Initialize the buffer as fully transparent.
+      cairo_save(glyphSurface);
+      cairo_set_operator(glyphSurface, CAIRO_OPERATOR_SOURCE);
+      cairo_set_source_rgba(glyphSurface, 1.0, 1.0, 1.0, 0.0);
+      cairo_paint(glyphSurface);
+      cairo_restore(glyphSurface);
+
+      double red = color.red() / 255.0;
+      double green = color.green() / 255.0;
+      double blue = color.blue() / 255.0;
+
+      // If the alpha channel is properly supported, we set the
+      // character glyph to a colored rectangle, and define the
+      // character outline only using the alpha channel. That
+      // ensures good quality rendering for overlapping characters.
+      uchar *srcScanLine = slot->bitmap.buffer;
+      for(int row=0; row<slot->bitmap.rows; row++)
+      {
+        for(int col=0; col<slot->bitmap.width; col++)
+        {
+          double alpha = srcScanLine[col] / 255.0;
+
+          cairo_set_source_rgba(glyphSurface, red, green, blue, alpha);
+          cairo_rectangle(glyphSurface, (double)col, (double)row, 1.0, 1.0);
+          cairo_fill(glyphSurface);
         }
+        srcScanLine += slot->bitmap.pitch;
       }
-
-      qApp->lock();
-      g->shrunkenCharacter.convertFromImage (imgi, 0);
-      qApp->unlock();
       g->x2 = -slot->bitmap_left;
       g->y2 = slot->bitmap_top;
+
+      cairo_destroy(glyphSurface);
     }
   }
 

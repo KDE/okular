@@ -61,7 +61,8 @@
 
 #include <qapplication.h>
 #include <qfile.h>
-#include <qimage.h>
+
+#include <cairo.h>
 
 #include <cmath>
 
@@ -156,7 +157,7 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
   // At this point, g points to a properly loaded character. Generate
   // a smoothly scaled QPixmap if the user asks for it.
   if ((generateCharacterPixmap == true) &&
-      ((g->shrunkenCharacter.isNull()) || (color != g->color)) &&
+      ((g->shrunkenCharacter == 0) || (color != g->color)) &&
       (characterBitmaps[ch]->w != 0)) {
     g->color = color;
     double shrinkFactor = 1200 / parent->displayResolution_in_dpi;
@@ -262,56 +263,39 @@ glyph* TeXFont_PK::getGlyph(Q_UINT16 ch, bool generateCharacterPixmap, const QCo
         xydata[shrunk_width*y + x] = (int)(value/shrinkFactor);
       }
 
-    QImage im32(shrunk_width, shrunk_height, 32);
-    im32.setAlphaBuffer(true);
-    // Do QPixmaps fully support the alpha channel? If yes, we use
-    // that. Otherwise, use other routines as a fallback
-    if (parent->font_pool->QPixmapSupportsAlpha) {
-      // If the alpha channel is properly supported, we set the
-      // character glyph to a colored rectangle, and define the
-      // character outline only using the alpha channel. That ensures
-      // good quality rendering for overlapping characters.
-      im32.fill(qRgb(color.red(), color.green(), color.blue()));
-      for(Q_UINT16 y=0; y<shrunk_height; y++) {
-        Q_UINT8 *destScanLine = (Q_UINT8 *)im32.scanLine(y);
-        for(Q_UINT16 col=0; col<shrunk_width; col++)
-          destScanLine[4*col+3] = xydata[shrunk_width*y + col];
-      }
-    } else {
-      // If the alpha channel is not supported... QT seems to turn the
-      // alpha channel into a crude bitmap which is used to mask the
-      // resulting QPixmap. In this case, we define the character
-      // outline using the image data, and use the alpha channel only
-      // to store "maximally opaque" or "completely transparent"
-      // values. When characters are rendered, overlapping characters
-      // are no longer correctly drawn, but quality is still
-      // sufficient for most purposes. One notable exception is output
-      // from the gftodvi program, which will be partially unreadable.
-      Q_UINT16 rInv = 0xFF - color.red();
-      Q_UINT16 gInv = 0xFF - color.green();
-      Q_UINT16 bInv = 0xFF - color.blue();
+    g->width = shrunk_width;
+    g->height = shrunk_height;
+    g->shrunkenCharacter = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, g->width, g->height);
 
-      Q_UINT8 *srcScanLine = xydata;
-      for(Q_UINT16 y=0; y<shrunk_height; y++) {
-        unsigned int *destScanLine = (unsigned int *)im32.scanLine(y);
-        for(Q_UINT16 col=0; col<shrunk_width; col++) {
-          Q_UINT16 data =  *srcScanLine;
-          // The value stored in "data" now has the following meaning:
-          // data = 0 -> white; data = 0xff -> use "color"
-          *destScanLine = qRgba(0xFF - (rInv*data + 0x7F) / 0xFF,
-                                0xFF - (gInv*data + 0x7F) / 0xFF,
-                                0xFF - (bInv*data + 0x7F) / 0xFF,
-                                (data > 0x03) ? 0xff : 0x00);
-          destScanLine++;
-          srcScanLine++;
-        }
+    cairo_t* glyphSurface = cairo_create(g->shrunkenCharacter);
+    cairo_set_antialias(glyphSurface, CAIRO_ANTIALIAS_NONE);
+
+    // If the alpha channel is properly supported, we set the
+    // character glyph to a colored rectangle, and define the
+    // character outline only using the alpha channel. That ensures
+    // good quality rendering for overlapping characters.
+    double red = color.red() / 255.0;
+    double green = color.green() / 255.0;
+    double blue = color.blue() / 255.0;
+
+    cairo_set_source_rgba(glyphSurface, red, green, blue, 1.0);
+    cairo_paint(glyphSurface);
+
+    cairo_save(glyphSurface);
+    cairo_set_operator(glyphSurface, CAIRO_OPERATOR_SOURCE);
+    for(Q_UINT16 y=0; y<shrunk_height; y++)
+    {
+      for(Q_UINT16 col=0; col<shrunk_width; col++)
+      {
+        double alpha = xydata[shrunk_width*y + col] / 255.0;
+
+        cairo_set_source_rgba(glyphSurface, red, green, blue, alpha);
+        cairo_rectangle(glyphSurface, (double)col, (double)y, 1.0, 1.0);
+        cairo_fill(glyphSurface);
       }
     }
-
-    qApp->lock();
-    g->shrunkenCharacter.convertFromImage(im32,0);
-    g->shrunkenCharacter.setOptimization(QPixmap::BestOptim);
-    qApp->unlock();
+    cairo_restore(glyphSurface);
+    cairo_destroy(glyphSurface);
   }
   return g;
 }

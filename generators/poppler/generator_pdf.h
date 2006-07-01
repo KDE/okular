@@ -90,6 +90,10 @@ class PDFGenerator : public Generator
         // [INHERITED] reparse configuration
         bool reparseConfig();
 
+        // [INHERITED] text exporting
+        bool canExportToText() { return true; };
+        bool exportToText( const QString & fileName );
+
     private slots:
         // (async related) receive data from the generator thread
         void threadFinished();

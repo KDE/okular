@@ -9,8 +9,10 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qfile.h>
 #include <qimage.h>
 #include <qregexp.h>
+#include <qtextstream.h>
 #include <kauthorized.h>
 #include <klocale.h>
 #include <kpassworddialog.h>
@@ -738,6 +740,29 @@ bool PDFGenerator::reparseConfig()
     }
     return false;
 }
+
+bool PDFGenerator::exportToText( const QString & fileName )
+{
+    QFile f( fileName );
+    if ( !f.open( QIODevice::WriteOnly ) )
+        return false;
+
+    QTextStream ts( &f );
+    int num = m_document->pages();
+    for ( int i = 0; i < num; ++i )
+    {
+        docLock.lock();
+        Poppler::Page *pp = pdfdoc->page(i);
+        QString text = pp->text(QRect());
+        docLock.unlock();
+        ts << text;
+        delete pp;
+    }
+    f.close();
+
+    return true;
+}
+
 //END Generator inherited functions
 
 inline void append (KPDFTextPage* ktp,

@@ -182,6 +182,48 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   page->img = img;
 //page->setImage(img);
  
+  // Postprocess hyperlinks
+  // Without that, based on the way TeX draws certain characters like german "Umlaute",
+  // some hyperlinks would be broken into two overlapping parts, in the middle of a word.
+  QVector<Hyperlink>::iterator i = page->hyperLinkList.begin();
+  QVector<Hyperlink>::iterator j;
+  while (i != page->hyperLinkList.end())
+  {
+    // Iterator j always points to the element after i.
+    j = i;
+    j++;
+
+    if (j == page->hyperLinkList.end())
+      break;
+
+    Hyperlink& hi = *i;
+    Hyperlink& hj = *j;
+
+    bool merged = false;
+
+    // Merge all hyperlinks that point to the same target, and have the same baseline.
+    while (hi.linkText == hj.linkText && hi.baseline == hj.baseline)
+    {
+      merged = true;
+      hi.box = hi.box.unite(hj.box);
+
+      j++;
+      if (j == page->hyperLinkList.end())
+        break;
+
+      hj = *j;
+    }
+
+    if (merged)
+    {
+      i = page->hyperLinkList.erase(++i, j);
+    }
+    else
+    {
+      i++;
+    }
+  }
+
 #if 0
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
@@ -518,17 +560,11 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   PostScriptOutPutString = NULL;
 
 #if 0
-  Q3ValueVector<PreBookmark>::iterator it;
-  for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
-     kDebug() << "preb:" << (*it).title << " - " << (*it).anchorName << " - " << (*it).noOfChildren << endl;
-  }
-#endif
-#if 0
   // Generate the list of bookmarks
   bookmarks.clear();
   Q3PtrStack<Bookmark> stack;
   stack.setAutoDelete (false);
-  Q3ValueVector<PreBookmark>::iterator it;
+  QVector<PreBookmark>::iterator it;
   for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
     Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
     if (stack.isEmpty())
@@ -552,7 +588,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   pageSizes.resize(0);
   if (dviFile->suggestedPageSize != 0) {
     // Fill the vector pageSizes with total_pages identical entries
-    pageSizes.resize(dviFile->total_pages, *(dviFile->suggestedPageSize));
+    pageSizes.fill(*(dviFile->suggestedPageSize), dviFile->total_pages);
   }
   QApplication::restoreOverrideCursor();
   return true;
@@ -620,8 +656,8 @@ Anchor dviRenderer::parseReference(const QString &reference)
     // document.
     bool anchorForRefFileFound = false; // Flag that is set if source file anchors for the refFileName could be found at all
 
-    Q3ValueVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
-    Q3ValueVector<DVI_SourceFileAnchor>::iterator it;
+    QVector<DVI_SourceFileAnchor>::iterator bestMatch = sourceHyperLinkAnchors.end();
+    QVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.trimmed() == it->fileName.trimmed()
       || refFileName.trimmed() == it->fileName.trimmed() + ".tex"

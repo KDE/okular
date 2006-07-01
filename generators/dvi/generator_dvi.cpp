@@ -20,6 +20,7 @@
 #include <QX11Info>
 #include <qstring.h>
 #include <qurl.h>
+#include <qvector.h>
 #include <qstack.h>
 
 #include <kdebug.h>
@@ -268,8 +269,8 @@ KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orie
 {
     QList<KPDFTextEntity*> textOfThePage;
 
-    Q3ValueVector<TextBox>::ConstIterator it = pageInfo->textBoxList.constBegin();
-    Q3ValueVector<TextBox>::ConstIterator itEnd = pageInfo->textBoxList.constEnd();
+    QVector<TextBox>::ConstIterator it = pageInfo->textBoxList.constBegin();
+    QVector<TextBox>::ConstIterator itEnd = pageInfo->textBoxList.constEnd();
     QRect tmpRect;
 
     int pageWidth = 0, pageHeight = 0;
@@ -331,13 +332,13 @@ const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
  
     QStack<QDomElement*> stack;
 
-    Q3ValueVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
+    QVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
 
     if ( prebookmarks.isEmpty() ) 
         return m_docSynopsis;
 
-    Q3ValueVector<PreBookmark>::ConstIterator it = prebookmarks.begin();
-    Q3ValueVector<PreBookmark>::ConstIterator itEnd = prebookmarks.end();
+    QVector<PreBookmark>::ConstIterator it = prebookmarks.begin();
+    QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.end();
     for( ; it != itEnd; ++it ) 
     {
         QDomElement *domel = new QDomElement; 

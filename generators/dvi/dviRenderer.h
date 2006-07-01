@@ -29,8 +29,8 @@
 #include <kprogressdialog.h>
 #include <Q3IntDict>
 #include <Q3PointArray>
-#include <Q3ValueStack>
-#include <Q3ValueVector>
+#include <QStack>
+#include <QVector>
 #include <QTimer>
 #include <QMutex>
 
@@ -170,7 +170,7 @@ public slots:
 
   SimplePageSize sizeOfPage(const PageNumber& page);
 
-  Q3ValueVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
+  QVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
 
 private slots:
   /** This method shows a dialog that tells the user that source
@@ -226,7 +226,7 @@ private:
   void          prescan_setChar(unsigned int ch);
 
   /* */
-  Q3ValueVector<PreBookmark> prebookmarks;
+  QVector<PreBookmark> prebookmarks;
 
 
 
@@ -258,7 +258,7 @@ private:
   // List of source-hyperlinks on all pages. This vector is generated
   // when the DVI-file is first loaded, i.e. when draw_part is called
   // with PostScriptOutPutString != NULL
-  Q3ValueVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
+  QVector<DVI_SourceFileAnchor>  sourceHyperLinkAnchors;
 
   // If not NULL, the text currently drawn represents a source
   // hyperlink to the (relative) URL given in the string;
@@ -273,11 +273,11 @@ private:
   /** Stack for register compounds, used for the DVI-commands PUSH/POP
       as explained in section 2.5 and 2.6.2 of the DVI driver standard,
       Level 0, published by the TUG DVI driver standards committee. */
-  Q3ValueStack<struct framedata> stack;
+  QStack<framedata> stack;
 
   /** A stack where color are stored, according to the documentation of
       DVIPS */
-  Q3ValueStack<QColor> colorStack;
+  QStack<QColor> colorStack;
 
   /** The global color is to be used when the color stack is empty */
   QColor              globalColor;
@@ -325,7 +325,7 @@ private:
   quint16  numPages;
 
   //TODO: merge into dviPageInfo
-  Q3ValueVector<SimplePageSize> pageSizes;
+  QVector<SimplePageSize> pageSizes;
 
   QMap<QString, Anchor> anchorList;
 };

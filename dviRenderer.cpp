@@ -200,6 +200,48 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
   //image.setAlphaBuffer(false);
   page->setImage(image);
 
+  // Postprocess hyperlinks
+  // Without that, based on the way TeX draws certain characters like german "Umlaute",
+  // some hyperlinks would be broken into two overlapping parts, in the middle of a word.
+  QValueVector<Hyperlink>::iterator i = page->hyperLinkList.begin();
+  QValueVector<Hyperlink>::iterator j;
+  while (i != page->hyperLinkList.end())
+  {
+    // Iterator j always points to the element after i.
+    j = i;
+    j++;
+
+    if (j == page->hyperLinkList.end())
+      break;
+
+    Hyperlink& hi = *i;
+    Hyperlink& hj = *j;
+
+    bool merged = false;
+
+    // Merge all hyperlinks that point to the same target, and have the same baseline.
+    while (hi.linkText == hj.linkText && hi.baseline == hj.baseline)
+    {
+      merged = true;
+      hi.box = hi.box.unite(hj.box);
+
+      j++;
+      if (j == page->hyperLinkList.end())
+        break;
+
+      hj = *j;
+    }
+
+    if (merged)
+    {
+      i = page->hyperLinkList.erase(++i, j);
+    }
+    else
+    {
+      i++;
+    }
+  }
+
   cairo_surface_destroy(cairoImage);
 
   page->isEmpty = false;

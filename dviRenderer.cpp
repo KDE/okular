@@ -174,39 +174,45 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
 
   cairo_destroy(painter);
 
-#if defined HAVE_CAIRO_1_2
-  // Cairo 1.2 allows us to obtain the used image buffer directly.
-  unsigned char* buffer =  cairo_image_surface_get_data(cairoImage);
-  QImage* image = new QImage(buffer, pageWidth, pageHeight, 32, 0, 16777216, QImage::LittleEndian);
-  page->setImage(image->copy());
-  delete image;
-#else
-  // In Cairo 1.0 we need to write the cairo image into a temporary file
-  // before we can load it into the QImage.
-
-  // Using  cairo_surface_write_to_png_stream() should also work, and would
-  // probably be much faster, but since it is not really documented, I have no
-  // idea how it works.
-
-  // Generate a PNG-file
-  KTempFile tempPNGfile(QString::null, ".png");
-  tempPNGfile.setAutoDelete(1);
-  tempPNGfile.close(); // we are want the filename, not the file
-
-  cairo_surface_write_to_png(cairoImage, tempPNGfile.name().latin1());
-
-  QImage image;
-  bool ok = image.load(tempPNGfile.name(), "PNG");
-  tempPNGfile.unlink();
-
-  if (!ok)
+  // We use resolution == 0 when we are only interested in the metadata of the page
+  // for example when searching. No need to construct an image in this case. It would
+  // be a null-image anyway.
+  if (resolution != 0)
   {
-    kdError() << "Loading temporary image file failed." << endl;
-    return 0;
-  }
+#if defined HAVE_CAIRO_1_2
+    // Cairo 1.2 allows us to obtain the used image buffer directly.
+    unsigned char* buffer =  cairo_image_surface_get_data(cairoImage);
+    QImage* image = new QImage(buffer, pageWidth, pageHeight, 32, 0, 16777216, QImage::LittleEndian);
+    page->setImage(image->copy());
+    delete image;
+#else
+    // In Cairo 1.0 we need to write the cairo image into a temporary file
+    // before we can load it into the QImage.
 
-  page->setImage(image);
+    // Using  cairo_surface_write_to_png_stream() should also work, and would
+    // probably be much faster, but since it is not really documented, I have no
+    // idea how it works.
+
+    // Generate a PNG-file
+    KTempFile tempPNGfile(QString::null, ".png");
+    tempPNGfile.setAutoDelete(1);
+    tempPNGfile.close(); // we are want the filename, not the file
+
+    cairo_surface_write_to_png(cairoImage, tempPNGfile.name().latin1());
+
+    QImage image;
+    bool ok = image.load(tempPNGfile.name(), "PNG");
+    tempPNGfile.unlink();
+
+    if (!ok)
+    {
+      kdError() << "Loading temporary image file failed." << endl;
+      return 0;
+    }
+
+    page->setImage(image);
 #endif
+  }
 
   // Postprocess hyperlinks
   // Without that, based on the way TeX draws certain characters like german "Umlaute",

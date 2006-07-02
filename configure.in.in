@@ -46,11 +46,17 @@ if test -n "$FREETYPE_CONFIG"; then
   fi
 fi
 
-CAIRO_VERSION="1.0"
-AC_SUBST(CAIRO_VERSION)
-PKG_CHECK_MODULES(CAIRO, cairo >= $CAIRO_VERSION fontconfig)
+AC_DEFUN(PKG_CHECK_CAIRO, [
+  PKG_CHECK_MODULES(CAIRO, cairo >= 1.2 fontconfig,
+  [
+    AC_DEFINE_UNQUOTED(HAVE_CAIRO_1_2, 1, [Defines that your system has cairo >= 1.2 installed])
+  ],
+  [
+    PKG_CHECK_MODULES(CAIRO, cairo >= 1.0 fontconfig)
+  ])
+])
 
-AH_TEMPLATE([HAVE_CAIRO], [Use cairo for rendering.])
+PKG_CHECK_CAIRO()
 
 AC_SUBST(LIBFREETYPE_LIBS)
 AC_SUBST(LIBFREETYPE_CFLAGS)

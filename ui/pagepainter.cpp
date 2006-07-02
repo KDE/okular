@@ -13,8 +13,10 @@
 #include <qpixmap.h>
 #include <qimage.h>
 #include <qapplication.h>
+#include <kglobal.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
+#include <kstaticdeleter.h>
 #include <kdebug.h>
 
 // system includes
@@ -26,6 +28,9 @@
 #include "core/page.h"
 #include "core/annotations.h"
 #include "settings.h"
+
+static KStaticDeleter<QPixmap> sd;
+QPixmap * busyPixmap = 0;
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
@@ -66,12 +71,22 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         else
             destPainter->fillRect( limits, Qt::white );
 
-        // draw a cross (to  that the pixmap as not yet been loaded)
-        // helps a lot on pages that take much to render
-        destPainter->setPen( Qt::gray );
-        destPainter->drawLine( 0, 0, scaledWidth-1, scaledHeight-1 );
-        destPainter->drawLine( 0, scaledHeight-1, scaledWidth-1, 0 );
-        // idea here: draw a hourglass (or kpdf icon :-) on top-left corner
+        if ( !busyPixmap )
+        {
+            sd.setObject(busyPixmap, new QPixmap());
+            *busyPixmap = KGlobal::iconLoader()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, 0, true);
+        }
+        // draw something on the blank page: the okular icon or a cross (as a fallback)
+        if ( busyPixmap && !busyPixmap->isNull() )
+        {
+            destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
+        }
+        else
+        {
+            destPainter->setPen( Qt::gray );
+            destPainter->drawLine( 0, 0, scaledWidth-1, scaledHeight-1 );
+            destPainter->drawLine( 0, scaledHeight-1, scaledWidth-1, 0 );
+        }
         return;
     }
 

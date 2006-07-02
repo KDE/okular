@@ -22,7 +22,7 @@
 #include "infodialog.h"
 
 infoDialog::infoDialog( QWidget* parent )
-  : KDialogBase( Tabbed, "Document Info", Ok, Ok, parent, "Document Info", false, false)
+  : KDialogBase( Tabbed, i18n("Document Info"), Ok, Ok, parent, "Document Info", false, false)
 {
   QFrame *page1 = addPage( i18n("DVI File") );
   QVBoxLayout *topLayout1 = new QVBoxLayout( page1, 0, 6 );

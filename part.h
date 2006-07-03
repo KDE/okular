@@ -23,7 +23,7 @@
 #include "core/observer.h"
 #include "core/document.h"
 
-#include <dbus/qdbus.h>
+#include <QtDBus/QtDBus>
 
 class QAction;
 class QWidget;
@@ -81,8 +81,8 @@ public:
 	static KAboutData* createAboutData();
 
 public slots: // dbus
-	Q_SCRIPTABLE Q_ASYNC void goToPage(uint page);
-	Q_SCRIPTABLE Q_ASYNC void openDocument(KUrl doc);
+	Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
+	Q_SCRIPTABLE Q_NOREPLY void openDocument(KUrl doc);
 	Q_SCRIPTABLE uint pages();
 	Q_SCRIPTABLE uint currentPage();
 	Q_SCRIPTABLE KUrl currentDocument();

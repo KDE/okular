@@ -45,7 +45,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-#include <dbus/qdbus.h>
+#include <QtDBus/QtDBus>
 
 // system includes
 #include <math.h>
@@ -1382,7 +1382,7 @@ if (d->document->handleEvent( e ) )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = KFileDialog::getSaveFileName( QString::null, "image/png image/jpeg", this );
+                    QString fileName = KFileDialog::getSaveFileName( KUrl(), "image/png image/jpeg", this );
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
@@ -1415,8 +1415,13 @@ if (d->document->handleEvent( e ) )
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
                     // If KTTSD not running, start it.
+#warning check if this is the right wat to check if a service is active
 #warning need to check the name the kttsd service gets and fix it here
-                    if (!QDBus::sessionBus().busService()->nameHasOwner("org.kde.kttsd"))
+                    QDBusReply<bool> reply = QDBus::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
+                    bool kttsdactive = false;
+                    if ( reply.isValid() )
+                        kttsdactive = reply.value();
+                    if ( kttsdactive )
                     {
                         QString error;
                         if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
@@ -1448,9 +1453,9 @@ if (d->document->handleEvent( e ) )
                             client->send("kttsd", "KSpeech", "startText(uint)", data2 );
                         }*/
 #warning this is probably wrong, check when kttsd is dbus ported
-                        QDBusInterfacePtr kspeech("org.kde.kttsd", "/modules/KSpeech", "org.kde.KSpeech");
-                        kspeech->call("setText", selectedText, QString());
-                        kspeech->call("startText", 0);
+                        QDBusInterface kspeech("org.kde.kttsd", "/modules/KSpeech", "org.kde.KSpeech");
+                        kspeech.call("setText", selectedText, QString());
+                        kspeech.call("startText", 0);
                     }
                 }
             }

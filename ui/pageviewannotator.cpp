@@ -370,7 +370,7 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage 
     m_toolBar( 0 ), m_engine( 0 ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
-    QFile infoFile( locate("data", "okular/tools.xml") );
+    QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
     if ( infoFile.exists() && infoFile.open( QIODevice::ReadOnly ) )
     {
         QDomDocument doc( "annotatingTools" );

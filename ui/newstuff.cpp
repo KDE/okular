@@ -112,7 +112,7 @@ class AvailableItem : public Entry
                 m_destinationFile = KGlobalSettings::desktopPath() + "/" + fileName;
             // place kpdf data on the local share/apps/kpdf/stuff
             else if ( typeString == "kpdf/tool" )
-                m_destinationFile = locateLocal( "data", "okular/stuff/" + fileName );
+                m_destinationFile = KStandardDirs::locateLocal( "data", "okular/stuff/" + fileName );
             // warn about unrecognized type
             else kDebug() << "NewStuffDialog: AvailableItem: unrecognized provider name: '"
                 << typeString << "'." << endl;
@@ -292,8 +292,8 @@ class ItemsView : public KHTMLPart
         {
             QString hoverColor = "#000000"; //QApplication::palette().active().highlightedText().name();
             QString hoverBackground = "#f8f8f8"; //QApplication::palette().active().highlight().name();
-            QString starIconPath = locate( "data", "okular/pics/ghns_star.png" );
-            QString starBgIconPath = locate( "data", "okular/pics/ghns_star_gray.png" );
+            QString starIconPath = KStandardDirs::locate( "data", "okular/pics/ghns_star.png" );
+            QString starBgIconPath = KStandardDirs::locate( "data", "okular/pics/ghns_star_gray.png" );
 
             // default elements style
             QString style;
@@ -438,7 +438,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     horLay->setMargin( 11 );
 
     // create left picture widget (if picture found)
-    QPixmap p( locate( "data", "okular/pics/ghns.png" ) );
+    QPixmap p( KStandardDirs::locate( "data", "okular/pics/ghns.png" ) );
     if ( !p.isNull() )
        horLay->addWidget( new ExtendImageWidget( p, this ) );
 

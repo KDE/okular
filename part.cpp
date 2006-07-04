@@ -510,7 +510,7 @@ bool Part::slotImportPSFile()
 		return false;
 	}
 
-    KUrl url = KFileDialog::getOpenURL( KUrl(), "application/postscript", this->widget() );
+    KUrl url = KFileDialog::getOpenUrl( KUrl(), "application/postscript", this->widget() );
     KTempFile tf( QString::null, ".pdf" );
 
     if ( tf.status() == 0 && url.isLocalFile())
@@ -909,7 +909,7 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-    KUrl saveURL = KFileDialog::getSaveURL( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    KUrl saveURL = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
     if ( saveURL.isValid() && !saveURL.isEmpty() )
     {
         if ( KIO::NetAccess::exists( saveURL, false, widget() ) )

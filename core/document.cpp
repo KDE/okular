@@ -150,7 +150,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
     fn = "kpdf/" + QString::number(fileReadTest.size()) + "." + fn + ".xml";
     fileReadTest.close();
-    d->xmlFileName = locateLocal( "data", fn );
+    d->xmlFileName = KStandardDirs::locateLocal( "data", fn );
 
     if (mime.count()<=0)
 	return false;

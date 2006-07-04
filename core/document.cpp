@@ -1376,7 +1376,8 @@ void KPDFDocument::sendGeneratorRequest()
         generator->generatePixmap ( request );
     }
     else
-        QTimer::singleShot( 10, this, SLOT(sendGeneratorRequest()) );
+        // pino (7/4/2006): set the polling interval from 10 to 30
+        QTimer::singleShot( 30, this, SLOT(sendGeneratorRequest()) );
 }
 
 void KPDFDocument::cleanupPixmapMemory( int /*sure? bytesOffset*/ )

@@ -1,6 +1,5 @@
 
-install_files( ${KCFG_INSTALL_DIR} FILES  gssettings.kcfg )
-
+install(FILES gssettings.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 
 
 #original Makefile.am contents follow:

@@ -1,4 +1,4 @@
-install_files( ${SERVICETYPES_INSTALL_DIR} FILES  okularGenerator.desktop )
+install( FILES okularGenerator.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
 
 #original Makefile.am contents follow:
 

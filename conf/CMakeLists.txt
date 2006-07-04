@@ -1,4 +1,4 @@
-install_files( ${KCFG_INSTALL_DIR} FILES  okular.kcfg )
+install(FILES okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 
 #original Makefile.am contents follow:
 

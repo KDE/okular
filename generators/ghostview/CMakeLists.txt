@@ -20,7 +20,7 @@ kde4_add_executable(okulargsasyncgenerator ${okulargsasyncgenerator_SRCS})
 
 target_link_libraries(okulargsasyncgenerator  ${KDE4_KDECORE_LIBS} qgs )
 
-install_targets(/bin okulargsasyncgenerator )
+install(TARGETS okulargsasyncgenerator DESTINATION bin)
 
 
 ########### next target ###############
@@ -49,12 +49,12 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
 
 target_link_libraries(okularGenerator_ghostview  ${KDE4_KDECORE_LIBS} okularcore qgs ${KDE4_KDEUI_LIBRARY} ${KDE4_KDEPRINT_LIBRARY} )
 
-install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_ghostview )
+install(TARGETS okularGenerator_ghostview DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_ghostview.desktop okularGhostview.desktop )
+install( FILES libokularGenerator_ghostview.desktop okularGhostview.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 
 

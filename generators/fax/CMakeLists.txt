@@ -19,12 +19,12 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
 target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} okularcore ${KDE4_KDEUI_LIBS} kfaximage )
 
-install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_fax )
+install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_fax.desktop )
+install( FILES libokularGenerator_fax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 

@@ -16,13 +16,12 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} kio_msits )
 
 target_link_libraries(kio_msits  ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${CHM_LIBRARY} )
 
-install_targets(${PLUGIN_INSTALL_DIR} kio_msits )
+install(TARGETS kio_msits DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  msits.protocol )
-
+install( FILES msits.protocol DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 
 #original Makefile.am contents follow:

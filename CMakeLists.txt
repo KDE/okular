@@ -63,7 +63,7 @@ kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
 target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
 
-install_targets(${LIB_INSTALL_DIR} okularcore )
+install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 
 # okularpart
 
@@ -97,13 +97,13 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularpart )
 
 target_link_libraries(okularpart  okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m ${X11_Xrender_LIB} )
 
-install_targets(${PLUGIN_INSTALL_DIR} okularpart )
+install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  okular_part.desktop )
-install_files( ${DATA_INSTALL_DIR}/okularpart FILES  part.rc )
+install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES part.rc DESTINATION ${DATA_INSTALL_DIR}/okularpart )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 

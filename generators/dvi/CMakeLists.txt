@@ -46,10 +46,10 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_dvi )
 
 target_link_libraries(okularGenerator_dvi ${KDE4_KDECORE_LIBS} okularcore m ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} )
 
-install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_dvi )
+install(TARGETS okularGenerator_dvi DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_dvi.desktop )
+install( FILES libokularGenerator_dvi.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 

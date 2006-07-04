@@ -20,11 +20,11 @@ kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_djvu )
 
 target_link_libraries(okularGenerator_djvu ${KDE4_KDECORE_LIBS} okularcore ${DJVULIBRE_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} )
 
-install_targets(${PLUGIN_INSTALL_DIR} okularGenerator_djvu )
+install(TARGETS okularGenerator_djvu DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install_files( ${SERVICES_INSTALL_DIR} FILES  libokularGenerator_djvu.desktop )
+install( FILES libokularGenerator_djvu.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 

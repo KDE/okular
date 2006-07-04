@@ -1,18 +1,19 @@
 # install annotator xml tools description
-install_files(${DATA_INSTALL_DIR}/okular FILES
+install(FILES
    tools.xml
-)
+   DESTINATION ${DATA_INSTALL_DIR}/okular)
+
 # install annotation tool images
-install_files(${DATA_INSTALL_DIR}/okular/pics FILES
+install(FILES
    tool_eraser.png
    tool_hl_orange.png
    tool_hl_pink.png
    tool_hl_yellow.png
    tool_ink_green.png
    tool_note.png
-)
+   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation page images
-install_files(${DATA_INSTALL_DIR}/okular/pics FILES
+install(FILES
    checkmark.png
    circle.png
    comment.png
@@ -28,13 +29,13 @@ install_files(${DATA_INSTALL_DIR}/okular/pics FILES
    star.png
    uparrow.png
    upleftarrow.png
-)
+   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install misc images
-install_files(${DATA_INSTALL_DIR}/okular/pics FILES
+install(FILES
    ghns.png
    ghns_star.png
    ghns_star_gray.png
-)
+   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 
 #original Makefile.am contents follow:
 

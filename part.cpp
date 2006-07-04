@@ -207,13 +207,13 @@ Part::Part(QWidget *parentWidget,
 
 	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
-	m_prevPage->setShortcut( Qt::Key_Backspace );
+	m_prevPage->setShortcut( 0 );
 	// dirty way to activate prev page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
-	m_nextPage->setShortcut( Qt::Key_Space );
+	m_nextPage->setShortcut( 0 );
 	// dirty way to activate next page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 

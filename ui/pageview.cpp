@@ -851,6 +851,7 @@ if (d->document->handleEvent( e ) )
     {
         case Qt::Key_Up:
         case Qt::Key_PageUp:
+        case Qt::Key_Backspace:
             // if in single page mode and at the top of the screen, go to \ page
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
             {
@@ -873,6 +874,7 @@ if (d->document->handleEvent( e ) )
             break;
         case Qt::Key_Down:
         case Qt::Key_PageDown:
+        case Qt::Key_Space:
             // if in single page mode and at the bottom of the screen, go to next page
             if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
             {

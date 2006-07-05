@@ -165,6 +165,12 @@ private:
 
   void fillRect(cairo_t*, double x, double y, double width, double height, QColor color);
 
+  /** \brief Looks up a anchor in the "anchorList".
+  
+      @returns the anchor found, or an invalid anchor otherwise.
+  */
+  Anchor findAnchor(const QString &);
+  
   friend class DVIExportToPS;
   friend class DVISourceEditor;
 
@@ -254,6 +260,17 @@ private:
   // the (relative) URL given in the string;
   QString          *HTML_href;
 
+  /** map of anchors in a document.
+
+  This map contains the anchors that are contained in the
+  document. The values in this map are set by the setFile() method,
+  and cleared by the constructor and the clear() method.
+
+  @warning Only the constructor and the methods setFile() and clear()
+  may write to this member.
+  */
+  QMap<QString, Anchor> anchorList;
+  
   QString           editorCommand;
 
   /** Stack for register compounds, used for the DVI-commands PUSH/POP

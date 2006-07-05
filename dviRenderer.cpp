@@ -256,6 +256,13 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
     }
   }
 
+  // And finally add anchors to the links
+  for (i = page->hyperLinkList.begin(); i != page->hyperLinkList.end(); i++)
+  {
+    Anchor anchor = findAnchor((*i).linkText);
+    (*i).anchor = anchor;
+  }
+  
   cairo_surface_destroy(cairoImage);
 
   page->isEmpty = false;
@@ -840,6 +847,16 @@ void dviRenderer::export_finished(const DVIExport* key)
   ExportMap::iterator it = all_exports_.find(key);
   if (it != all_exports_.end())
     all_exports_.erase(key);
+}
+
+
+Anchor dviRenderer::findAnchor(const QString &locallink)
+{
+  QMap<QString,Anchor>::Iterator it = anchorList.find(locallink);
+  if (it != anchorList.end())
+    return *it;
+  else
+    return Anchor();
 }
 
 #include "dviRenderer.moc"

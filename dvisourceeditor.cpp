@@ -69,7 +69,7 @@ DVISourceEditor::DVISourceEditor(dviRenderer& parent,
                                          i18n("Need to Specify Editor"),
                                          i18n("Use KDE's Editor Kate for Now"));
     if (result == KMessageBox::Continue)
-      command = "kate %f";
+      command = "kate --line %l %f";
     else
       return;
   }

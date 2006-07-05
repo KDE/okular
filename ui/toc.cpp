@@ -203,7 +203,7 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     }
     else
     {
-        m_document->setViewport( getViewport( e ), TOC_ID );
+        m_document->setViewport( getViewport( e ) );
     }
 }
 

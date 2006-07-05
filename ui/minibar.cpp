@@ -19,7 +19,7 @@
 #include <QStylePainter>
 #include <qvalidator.h>
 #include <qpainter.h>
-#include <kiconloader.h>
+#include <kicon.h>
 #include <kacceleratormanager.h>
 #include <kdeversion.h>
 
@@ -104,7 +104,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addWidget( m_progressWidget, 0, 0, 1, 5 );
      // bottom: left prev_page button
      m_prevButton = new HoverButton( this );
-     m_prevButton->setIcon( SmallIconSet("1leftarrow") );
+     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ) );
      gridLayout->addWidget( m_prevButton, 1, 0 );
      // bottom: left lineEdit (current page box)
      m_pagesEdit = new PagesEdit( this );
@@ -116,7 +116,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addWidget( m_pagesButton, 1, 3 );
      // bottom: right next_page button
      m_nextButton = new HoverButton( this );
-     m_nextButton->setIcon( SmallIconSet("1rightarrow") );
+     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) );
      gridLayout->addWidget( m_nextButton, 1, 4 );
     horLayout->addLayout( gridLayout );
 

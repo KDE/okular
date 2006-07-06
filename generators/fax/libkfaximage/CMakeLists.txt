@@ -16,7 +16,7 @@ install(TARGETS kfaximage DESTINATION ${LIB_INSTALL_DIR} )
 
 ########### install files ###############
 
-install_files( /include FILES  kfaximage.h )
+install(FILES kfaximage.h DESTINATION ${INCLUDE_INSTALL_DIR})
 
 
 

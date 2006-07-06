@@ -338,10 +338,6 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
 PagesEdit::PagesEdit( MiniBar * parent )
     : QLineEdit( parent ), m_miniBar( parent ), m_eatClick( false )
 {
-    // customize look
-#warning dont know how to port setFrameShadow
-//    setFrameShadow( QFrame::Raised );
-
     // use an integer validator
     m_validator = new QIntValidator( 1, 1, this );
     setValidator( m_validator );
@@ -376,8 +372,6 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
     if ( e->reason() == Qt::MouseFocusReason )
         m_eatClick = true;
     // change background color to the default 'edit' color
-#warning dont know how to port setLineWidth
-//  setLineWidth( 2 );
     QPalette pal = palette();
     pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
     setPalette( pal );
@@ -388,8 +382,6 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
 void PagesEdit::focusOutEvent( QFocusEvent * e )
 {
     // change background color to a dark tone
-#warning dont know how to port setLineWidth
-//  setLineWidth( 1 );
     QPalette pal = palette();
     pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
     setPalette( pal );

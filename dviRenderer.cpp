@@ -256,11 +256,72 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
     }
   }
 
+  QRegExp chapterExp("chapter\\.(.*)");
+  QRegExp sectionExp("section\\.(.*)");
+  QRegExp subsectionExp("subsection\\.(.*)");
+  QRegExp figureExp("figure\\.(.*)");
+  QRegExp theoremExp("thm\\.(.*)");
+  QRegExp lemmaExp("lem\\.(.*)");
+  QRegExp remarkExp("rem\\.(.*)");
+  QRegExp exampleExp("bsp\\.(.*)");
+  QRegExp equationExp("equation\\.(.*)");
+  QRegExp itemExp("item\\.(.*)");
+  QRegExp citeExp("cite\\.(.*)");
+  
   // And finally add anchors to the links
   for (i = page->hyperLinkList.begin(); i != page->hyperLinkList.end(); i++)
   {
     Anchor anchor = findAnchor((*i).linkText);
     (*i).anchor = anchor;
+
+    // Also replace the targetnames created by the hyperref package,
+    // with proper translatable names.
+    QString temp = (*i).linkText;
+
+    if (chapterExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Chapter %1").arg(chapterExp.cap(1));
+    }
+    else if (sectionExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Section %1").arg(sectionExp.cap(1));
+    }
+    else if (subsectionExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Subsection %1").arg(subsectionExp.cap(1));
+    }
+    else if (figureExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Figure %1").arg(figureExp.cap(1));
+    }
+    else if (theoremExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Theorem %1").arg(theoremExp.cap(1));
+    }
+    else if (lemmaExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Lemma %1").arg(lemmaExp.cap(1));
+    }
+    else if (remarkExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Remark %1").arg(remarkExp.cap(1));
+    }
+    else if (exampleExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Example %1").arg(exampleExp.cap(1));
+    }
+    else if (equationExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Equation %1").arg(equationExp.cap(1));
+    }
+    else if (itemExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Item %1").arg(itemExp.cap(1));
+    }
+    else if (citeExp.exactMatch(temp))
+    {
+      (*i).linkText = i18n("Citation [%1]").arg(citeExp.cap(1));
+    }
   }
   
   cairo_surface_destroy(cairoImage);

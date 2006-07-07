@@ -14,6 +14,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qimage.h>
+#include <QtAlgorithms>
 #include <qtextstream.h>
 #include <qvector.h>
 #include <qtimer.h>
@@ -134,6 +135,10 @@ KPDFDocument::~KPDFDocument()
     delete d;
 }
 
+static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
+{
+    return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
+}
 
 bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &mime )
 {
@@ -161,10 +166,12 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
     if (offers.isEmpty())
     {
-	kWarning() << "No plugin for '" << mime->name() << "' mimetype." << endl;
+        kWarning() << "No plugin for mimetype '" << mime->name() << "'." << endl;
 	   return false;
     }
     int hRank=0;
+    // order the offers: the offers with an higher priority come before
+    qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
 
     // best ranked offer search
     if (offers.count() > 1 && KpdfSettings::chooseGenerators() )
@@ -175,7 +182,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         {
             list << offers[i]->property("Name").toString();
         }
-        ChooseEngineDialog * choose = new ChooseEngineDialog (list, mime->name(), 0);
+        ChooseEngineDialog * choose = new ChooseEngineDialog (list, mime, 0);
 
         int retval=choose->exec();
         int index=choose->selectedGenerator();

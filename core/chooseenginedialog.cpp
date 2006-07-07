@@ -15,7 +15,7 @@
 
 #include "chooseenginedialog.h"
 
-ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QString &mime, QWidget * parent )
+ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent )
     : KDialog( parent )
 {
     setCaption( i18n( "Generator Selection" ) );
@@ -29,8 +29,8 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QSt
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
-        i18n( "More than one generator found for mimetype \"%1\".\n"
-              "Please select which one to use:", mime ) );
+        i18n( "More than one generator found for mimetype \"%1\" (%2).\n"
+              "Please select which one to use:", mime->comment(), mime->name() ) );
 }
 
 int ChooseEngineDialog::selectedGenerator() const

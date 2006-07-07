@@ -180,7 +180,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
         int count=offers.count();
         for (int i=0;i<count;++i)
         {
-            list << offers[i]->property("Name").toString();
+            list << offers.at(i)->name();
         }
         ChooseEngineDialog * choose = new ChooseEngineDialog (list, mime, 0);
 

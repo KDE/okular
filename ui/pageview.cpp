@@ -175,7 +175,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseTextSelectionPainted=0;
     d->aPaperSizes=0;
 
-    setAttribute( Qt::WA_OpaquePaintEvent );
     setAttribute( Qt::WA_StaticContents );
 
     setObjectName( QLatin1String( "okular::pageView" ) );

@@ -22,20 +22,3 @@ install(TARGETS okularGenerator_kimgio DESTINATION ${PLUGIN_INSTALL_DIR})
 
 install( FILES libokularGenerator_kimgio.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
-
-
-#original Makefile.am contents follow:
-
-#kde_module_LTLIBRARIES = \
-#    libokularGenerator_kimgio.la
-#
-#INCLUDES = -I$(srcdir)/../.. -I../../ $(all_includes)
-#
-#libokularGenerator_kimgio_la_LIBADD = ../../core/libokularcore.la \
-#	../../conf/libokularconf.la $(LIB_KDEUI)
-#libokularGenerator_kimgio_la_LDFLAGS = -module -avoid-version  $(KDE_PLUGIN)  $(all_libraries)
-#libokularGenerator_kimgio_la_SOURCES = generator_kimgio.cpp
-#
-#METASOURCES = AUTO 
-#
-#kde_services_DATA = libokularGenerator_kimgio.desktop

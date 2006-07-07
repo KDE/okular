@@ -28,31 +28,3 @@ install( FILES libokularGenerator_fax.desktop  DESTINATION  ${SERVICES_INSTALL_D
 
 kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
 
-
-
-
-
-#original Makefile.am contents follow:
-
-#INCLUDES = -I$(srcdir)/../../ -I$(srcdir)/libkfaximage $(all_includes) 
-#
-#SUBDIRS = libkfaximage .
-#
-#kde_module_LTLIBRARIES = \
-#    libokularGenerator_fax.la
-#
-#libokularGenerator_fax_la_LIBADD = ../../core/libokularcore.la \
-#	../../conf/libokularconf.la $(LIB_KDEUI) \
-#	libkfaximage/libkfaximage.la
-#
-#libokularGenerator_fax_la_LDFLAGS = -module -avoid-version  $(KDE_PLUGIN)  $(all_libraries)
-#libokularGenerator_fax_la_SOURCES = faxrenderer.cpp
-#
-#METASOURCES = AUTO 
-#
-#kde_services_DATA = libokularGenerator_fax.desktop
-#
-#KDE_ICON = kfaxview
-#
-#messages: rc.cpp
-#	$(XGETTEXT) *.cpp -o $(podir)/kfaxview.pot

@@ -1,5 +1,4 @@
 
-
 ########### next target ###############
 
 set(kfaximage_LIB_SRCS kfaximage.cpp faxexpand.cpp faxinit.cpp )
@@ -18,21 +17,3 @@ install(TARGETS kfaximage DESTINATION ${LIB_INSTALL_DIR} )
 
 install(FILES kfaximage.h DESTINATION ${INCLUDE_INSTALL_DIR})
 
-
-
-#original Makefile.am contents follow:
-
-#INCLUDES = -I$(top_srcdir) $(all_includes) 
-#
-#lib_LTLIBRARIES = libkfaximage.la
-#libkfaximage_la_LDFLAGS = $(all_libraries) -no-undefined -avoid-version
-#libkfaximage_la_LIBADD  = $(LIB_QTCORE) $(LIB_QT) $(LIB_KDECORE)
-#libkfaximage_la_SOURCES = kfaximage.cpp faxexpand.cpp faxinit.cpp
-#
-#include_HEADERS = kfaximage.h
-#noinst_HEADERS = faxexpand.h
-#
-#METASOURCES = AUTO
-#
-#messages: rc.cpp
-#	$(XGETTEXT) $(libkfaximage_la_SOURCES) -o $(podir)/libkfaximgage.pot

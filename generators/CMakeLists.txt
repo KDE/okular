@@ -19,19 +19,3 @@ if(TIFF_FOUND)
   add_subdirectory(tiff)
 endif(TIFF_FOUND)
 
-#original Makefile.am contents follow:
-
-#if include_ghostscript
-#GSPLUGINDIR = ghostview
-#endif
-#
-#if include_chm
-#CHMPLUGINDIR = chm
-#endif
-#
-#if include_pdf
-#PDFPLUGINDIR = poppler
-#endif
-#
-#SUBDIRS = $(GSPLUGINDIR) poppler fax kimgio $(CHMPLUGINDIR)
-#

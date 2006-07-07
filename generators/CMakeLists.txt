@@ -15,6 +15,9 @@ if(DJVULIBRE_FOUND)
   add_subdirectory(djvu)
 endif(DJVULIBRE_FOUND)
 add_subdirectory(dvi)
+if(TIFF_FOUND)
+  add_subdirectory(tiff)
+endif(TIFF_FOUND)
 
 #original Makefile.am contents follow:
 

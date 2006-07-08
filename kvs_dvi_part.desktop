@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=kviewshell
+Name=KViewShell
+MimeType=application/x-dvi;application/x-gzdvi;application/x-bz2dvi;
+InitialPreference=7
+ServiceTypes=KParts/ReadOnlyPart
+X-KDE-Library=kviewerpart
+Type=Service

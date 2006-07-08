@@ -75,6 +75,9 @@ plugin_DATA = kdvi_part.rc
 
 kde_services_DATA = kdvimultipage.desktop
 
+partdesktopdir = $(kde_servicesdir)
+partdesktop_DATA = kvs_dvi_part.desktop
+
 psheader.c: psheader.txt squeeze
 	./squeeze $(srcdir)/psheader.txt $@
 

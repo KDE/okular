@@ -31,6 +31,7 @@ kdbgstream &operator<<( kdbgstream & s, const ddjvu_rect_t &r )
 
 static void which_ddjvu_message( const ddjvu_message_t *msg )
 {
+#ifdef KDJVU_DEBUG
     kDebug() << "which_djvu_message(...): " << msg->m_any.tag << endl;
     switch( msg->m_any.tag )
     {
@@ -47,6 +48,9 @@ static void which_ddjvu_message( const ddjvu_message_t *msg )
             break;
         default: ;
     }
+#else
+    Q_UNUSED( msg );
+#endif
 }
 
 /**
@@ -223,18 +227,24 @@ QPixmap KDjVu::Private::generatePixmapTile( ddjvu_page_t *djvupage, int& res,
     int realheight = qMin( height - renderrect.y, ydelta );
     renderrect.w = realwidth;
     renderrect.h = realheight;
+#ifdef KDJVU_DEBUG
     kDebug() << "renderrect: " << renderrect << endl;
+#endif
     ddjvu_rect_t pagerect;
     pagerect.x = 0;
     pagerect.y = 0;
     pagerect.w = width;
     pagerect.h = height;
+#ifdef KDJVU_DEBUG
     kDebug() << "pagerect: " << pagerect << endl;
+#endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     char* imagebuffer = new char[ realwidth * realheight * 4 + 1 ];
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, realwidth * 4, imagebuffer );
+#ifdef KDJVU_DEBUG
     kDebug() << "rendering result: " << res << endl;
+#endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     QPixmap pix;
     if ( res )

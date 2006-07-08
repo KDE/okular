@@ -268,7 +268,58 @@ class PickPointEngine : public AnnotatorEngine
         }
 
         Annotation * end()
-        { return 0; }
+        {
+            // find out annotation's description node
+            const QDomElement & annElement = m_engineElement.firstChild().toElement();
+            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+                return 0;
+
+            // find out annotation's type
+            Annotation * ann = 0;
+            QString typeString = annElement.attribute( "type" );
+
+            // create TextAnnotation from path
+            if ( typeString == "Text")	//<annotation type="Text" 
+            {
+				//find if chlicked a text annoteation, if there is, load it, or create it.
+				//note dialog
+				QString prompt = i18n( "Please input the note:" ) ;
+				bool resok;
+				QString note ="";
+				
+				note= KInputDialog::getText( i18n("Note"), prompt, note,&resok );
+				if(resok)
+				{
+					//add note
+					TextAnnotation * ta = new TextAnnotation();
+					ann = ta;
+					ta->inplaceText=note;
+					ta->textType = TextAnnotation::InPlace;
+					ta->boundary=this->rect;
+	
+				}
+            }
+            // create StampAnnotation from path
+            else if ( typeString == "Stamp" )
+            {
+                StampAnnotation * sa = new StampAnnotation();
+                ann = sa;
+				sa->stampIconName="okular";
+            }
+
+            // safety check
+            if ( !ann )
+                return 0;
+
+            // set common attributes
+            ann->style.color = annElement.hasAttribute( "color" ) ?
+                annElement.attribute( "color" ) : m_engineColor;
+            if ( annElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+
+            // return annotation
+            return ann;
+        }
 
     private:
         bool clicked;
@@ -353,7 +404,41 @@ class TwoPointsEngine : public AnnotatorEngine
 
         Annotation * end()
         {
-            return 0;
+			// find out annotation's description node
+            const QDomElement & annElement = m_engineElement.firstChild().toElement();
+            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+                return 0;
+
+            // find out annotation's type
+            Annotation * ann = 0;
+            QString typeString = annElement.attribute( "type" );
+
+            // create LineAnnotation from path
+            if ( typeString == "Line")	//<annotation type="Text" 
+            {
+				
+            if ( points.count() != 2 )
+                return 0;
+				//add note
+				LineAnnotation * la = new LineAnnotation();
+				ann = la;
+				la->linePoints.append(points[0]);
+				la->linePoints.append(points[1]);
+				la->boundary=this->rect;
+				
+            }
+
+            // safety check
+            if ( !ann )
+                return 0;
+
+            // set common attributes
+            ann->style.color = annElement.hasAttribute( "color" ) ?
+                annElement.attribute( "color" ) : m_engineColor;
+            if ( annElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+            // return annotation
+            return ann;
         }
 
     private:

@@ -513,6 +513,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
             lineElement.appendChild( pElement );
             pElement.setAttribute( "x", p.x );
             pElement.setAttribute( "y", p.y );
+			it++; //to avoid loop
         }
     }
 }

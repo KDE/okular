@@ -290,20 +290,26 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 // draw LineAnnotation MISSING: all
                 else if ( type == Annotation::ALine )
                 {
-                    // TODO
                     // get the annotation
-                    /*LineAnnotation * la = (LineAnnotation *) a;
+                    LineAnnotation * la = (LineAnnotation *) a;
 
                     NormalizedPath path;
                     // normalize page point to image
-                    const NormalizedPoint & inkPoint = *pIt;
+					
+                    NormalizedPoint inkPoint = la->linePoints.first();
                     NormalizedPoint point;
                     point.x = (inkPoint.x - xOffset) * xScale;
                     point.y = (inkPoint.y - yOffset) * yScale;
                     path.append( point );
-                    // draw the normalized path into image
-                    drawShapeOnImage( backImage, path, false, QPen( a->style.color ), QBrush(), pageScale );
-                    */
+					inkPoint = la->linePoints.last();
+					
+                    point.x = (inkPoint.x - xOffset) * xScale;
+                    point.y = (inkPoint.y - yOffset) * yScale;
+                    path.append( point );
+				
+                    // draw the line as normalized path into image
+                    drawShapeOnImage( backImage, path, false, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
+
                 }
                 // draw GeomAnnotation MISSING: all
                 else if ( type == Annotation::AGeom )
@@ -429,12 +435,36 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 
             Annotation::SubType type = a->subType();
 
-            // draw TextAnnotation (only the 'Linked' variant)
+            // draw TextAnnotation (NOT only the 'Linked' variant)
             if ( type == Annotation::AText )
             {
                 TextAnnotation * text = (TextAnnotation *)a;
-                if ( text->textType != TextAnnotation::Linked )
-                    continue;
+                if ( text->textType == TextAnnotation::InPlace )
+				{					
+					int ny=annotRect.top();
+					int nx=annotRect.left();
+					QString title="Author:";
+					QString note=text->inplaceText;
+					title+=text->author;
+					int nwidth=10+qMax(title.length(),note.length())*7;
+					int nheight=40;//annotBoundary.height();
+
+					QBrush br(QColor::fromRgb(255,255,0));
+					mixedPainter->setBrush(br);
+					mixedPainter->setPen(QColor::fromRgb(0,0,0));
+					if(annotBoundary.width()<25)
+						mixedPainter->drawRoundRect(annotBoundary);
+					else
+					{
+						mixedPainter->drawRoundRect(nx,ny,nwidth,nheight);
+						mixedPainter->drawText(nx+5,ny+10,title);
+						mixedPainter->drawText(nx+5,ny+25,text->inplaceText);
+					}
+					//	mixedPainter->setBrush(br);
+					continue;
+				}
+				if(text->textType != TextAnnotation::Linked)
+					continue;
 
                 // get pixmap, colorize and alpha-blend it
                 QPixmap pixmap = DesktopIcon( text->textIcon );

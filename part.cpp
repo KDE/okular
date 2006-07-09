@@ -328,7 +328,7 @@ Part::Part(QWidget *parentWidget,
 
 	// [SPEECH] check for KTTSD presence and usability
 	KService::List offers = KServiceTypeTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
-	KpdfSettings::setUseKTTSD( (offers.count() > 0) );
+	KpdfSettings::setUseKTTSD( !offers.isEmpty() );
 	KpdfSettings::writeConfig();
 
 	// set our XML-UI resource file

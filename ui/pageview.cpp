@@ -1416,47 +1416,28 @@ if (d->document->handleEvent( e ) )
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
                     // If KTTSD not running, start it.
-#warning check if this is the right wat to check if a service is active
-#warning need to check the name the kttsd service gets and fix it here
                     QDBusReply<bool> reply = QDBus::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
                     bool kttsdactive = false;
                     if ( reply.isValid() )
                         kttsdactive = reply.value();
-                    if ( kttsdactive )
+                    if ( !kttsdactive )
                     {
                         QString error;
                         if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
                         {
                             d->messageWindow->display( i18n("Starting KTTSD Failed: %1", error) );
-                            KpdfSettings::setUseKTTSD(false);
-                            KpdfSettings::writeConfig();
+                        }
+                        else
+                        {
+                            kttsdactive = true;
                         }
                     }
-                    if ( KpdfSettings::useKTTSD() )
+                    if ( kttsdactive )
                     {
-                        // serialize the text to speech (selectedText) and the
-                        // preferred reader ("" is the default voice) ...
-                       /*
-                        OLD DCOP CODE
-                        QByteArray data;
-                        QDataStream arg( &data, IO_WriteOnly );
-                        arg.setVersion(QDataStream::Qt_3_1);
-                        arg << selectedText;
-                        arg << QString();
-                        DCOPCString replyType;
-                        QByteArray replyData;
-                        // ..and send it to KTTSD
-                        if (client->call( "kttsd", "KSpeech", "setText(QString,QString)", data, replyType, replyData, true ))
-                        {
-                            QByteArray  data2;
-                            QDataStream arg2(&data2, IO_WriteOnly);
-                            arg2 << 0;
-                            client->send("kttsd", "KSpeech", "startText(uint)", data2 );
-                        }*/
-#warning this is probably wrong, check when kttsd is dbus ported
-                        QDBusInterface kspeech("org.kde.kttsd", "/modules/KSpeech", "org.kde.KSpeech");
-                        kspeech.call("setText", selectedText, QString());
-                        kspeech.call("startText", 0);
+                        // creating the connection to the kspeech interface
+                        QDBusInterface kspeech("org.kde.kttsd", "/KSpeech", "org.kde.KSpeech");
+                        kspeech.call("setApplicationName", "okular");
+                        kspeech.call("say", selectedText, 0);
                     }
                 }
             }

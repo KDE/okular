@@ -1060,7 +1060,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 }
 
                 // Albert: this is not a leak!
-                KRun *r = new KRun(url);
+                new KRun(url);
             }
             } break;
 

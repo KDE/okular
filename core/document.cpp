@@ -1274,12 +1274,10 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     openRelativeFile(url.mid(5));
                     return;
                 }
-                // get service for web browsing
-                KService::Ptr ptr = KMimeTypeTrader::self()->preferredService("text/html", "Application");
-                KUrl::List lst;
-                // append 'url' parameter to the service and run it
-                lst.append( url );
-                KRun::run( *ptr, lst, 0 );
+
+                // Albert: this is not a leak! 
+                // TODO: find a widget to pass as second parameter
+                new KRun( KUrl(url), 0 ); 
             }
             } break;
 

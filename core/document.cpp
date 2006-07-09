@@ -1059,12 +1059,8 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     return;
                 }
 
-                // get service for web browsing
-                KService::Ptr ptr = KServiceTypeProfile::preferredService("text/html", "Application");
-                KURL::List lst;
-                // append 'url' parameter to the service and run it
-                lst.append( url );
-                KRun::run( *ptr, lst );
+		// Albert: this is not a leak!
+		KRun *r = new KRun(url);
             }
             } break;
 

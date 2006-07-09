@@ -65,6 +65,10 @@
 
 #define ROUND(x) (int(x + 0.5))
 
+static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
+                       PagePainter::EnhanceImages | PagePainter::Highlights |
+                       PagePainter::Annotations;
+
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -1590,10 +1594,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         {
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
             pixmapRect.translate( -itemGeometry.left(), -itemGeometry.top() );
-            int flags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
-                        PagePainter::EnhanceImages | PagePainter::Highlights |
-                        PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( p, item->page(), PAGEVIEW_ID, flags,
+            PagePainter::paintPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
                 itemGeometry.width(), itemGeometry.height(), pixmapRect );
         }
 

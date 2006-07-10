@@ -13,6 +13,7 @@
 #include <qpixmap.h>
 #include <qthread.h>
 #include <kimageeffect.h>
+#include <klocale.h>
 
 #include "core/page.h"
 #include "generator_tiff.h"
@@ -131,7 +132,7 @@ void TIFFGeneratorThread::run()
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
 TIFFGenerator::TIFFGenerator( KPDFDocument * document ) : Generator( document ),
-  d( new Private ), ready( false )
+  d( new Private ), ready( false ), m_docInfo( 0 )
 {
     thread = new TIFFGeneratorThread();
     connect( thread, SIGNAL( finished() ), this, SLOT( slotThreadFinished() ), Qt::QueuedConnection );
@@ -149,6 +150,7 @@ TIFFGenerator::~TIFFGenerator()
         thread->wait();
     }
     delete thread;
+    delete m_docInfo;
 
     delete d;
 }
@@ -160,6 +162,8 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
     {
         TIFFClose( d->tiff );
         d->tiff = 0;
+        delete m_docInfo;
+        m_docInfo = 0;
     }
 
     d->tiff = TIFFOpen( QFile::encodeName( fileName ), "r" );
@@ -239,6 +243,37 @@ void TIFFGenerator::generatePixmap( PixmapRequest * request )
 
     // signal that the request has been accomplished
     signalRequestDone( request );
+}
+
+const DocumentInfo * TIFFGenerator::generateDocumentInfo()
+{
+    if ( !d->tiff )
+        return 0;
+
+    if ( m_docInfo )
+        return m_docInfo;
+
+    m_docInfo = new DocumentInfo();
+
+    m_docInfo->set( "mimeType", "image/tiff" );
+
+    char* buffer = 0;
+    TIFFGetField( d->tiff, TIFFTAG_IMAGEDESCRIPTION, &buffer );
+    m_docInfo->set( "description", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Description" ) );
+
+    buffer = 0;
+    TIFFGetField( d->tiff, TIFFTAG_SOFTWARE, &buffer );
+    m_docInfo->set( "software", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Software" ) );
+
+    buffer = 0;
+    TIFFGetField( d->tiff, TIFFTAG_COPYRIGHT, &buffer );
+    m_docInfo->set( "copyright", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Copyright" ) );
+
+    buffer = 0;
+    TIFFGetField( d->tiff, TIFFTAG_ARTIST, &buffer );
+    m_docInfo->set( "artist", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Artist" ) );
+
+    return m_docInfo;
 }
 
 void TIFFGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )

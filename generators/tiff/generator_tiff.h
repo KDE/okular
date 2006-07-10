@@ -26,6 +26,8 @@ class TIFFGenerator : public Generator
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
 
+        const DocumentInfo * generateDocumentInfo();
+
         bool supportsRotation() { return true; };
         void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
 
@@ -41,6 +43,7 @@ class TIFFGenerator : public Generator
         void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
 
         bool ready;
+        DocumentInfo * m_docInfo;
 };
 
 #endif

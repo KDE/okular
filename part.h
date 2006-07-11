@@ -158,6 +158,9 @@ private:
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
 	DocumentViewport m_viewportDirty;
+	
+	// Remember the search history
+	QStringList m_searchHistory;
 
 	// actions
 	KAction *m_gotoPage;

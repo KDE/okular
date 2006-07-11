@@ -96,6 +96,7 @@ class KPDFDocument : public QObject
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );
         void resetSearch( int searchID );
+        bool continueLastSearch();
         void toggleBookmark( int page );
         void processLink( const KPDFLink * link );
         bool print( KPrinter &printer );

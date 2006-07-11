@@ -23,6 +23,8 @@
 #include <qapplication.h>
 #include <qdir.h>
 
+#include <stdlib.h>
+
 extern const char psheader[];
 
 //#define DEBUG_PSGS
@@ -227,7 +229,10 @@ bool ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 #endif
 
   proc << argus;
-  if (proc.start(KProcess::Block) == false) {
+
+#warning LOOK AT THIS
+  //  if (proc.start(KProcess::Block) == false) {
+  if (system(argus.join(" ").latin1()) != 0) {
     // Starting ghostscript did not work.
     // TODO: Issue error message, switch PS support off.
     kdError(kvs::dvi) << "ghostscript could not be started" << endl;

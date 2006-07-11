@@ -50,6 +50,7 @@ class KPDFDocumentPrivate
     public:
         // find descriptors, mapped by ID (we handle multiple searches)
         QMap< int, RunningSearch * > searches;
+        int m_lastSearchID;
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
@@ -121,6 +122,7 @@ KPDFDocument::KPDFDocument( QHash<QString, Generator*> * genList )
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
     d->saveBookmarksTimer = 0;
+    d->m_lastSearchID = -1;
     d->warnedOutOfMemory = false;
     d->rotation = 0;
     m_usingCachedGenerator = false;
@@ -840,6 +842,11 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
         search->continueOnPage = -1;
         d->searches[ searchID ] = search;
     }
+    if (d->m_lastSearchID != searchID)
+    {
+        resetSearch(d->m_lastSearchID);
+    }
+    d->m_lastSearchID = searchID;
     RunningSearch * s = d->searches[ searchID ];
 
     // update search stucture
@@ -1116,6 +1123,10 @@ void KPDFDocument::resetSearch( int searchID )
     delete s;
 }
 
+bool KPDFDocument::continueLastSearch()
+{
+    return continueSearch( d->m_lastSearchID );
+}
 
 
 void KPDFDocument::toggleBookmark( int n )

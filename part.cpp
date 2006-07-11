@@ -887,11 +887,14 @@ void Part::slotFind()
 {
     KFindDialog dlg( widget() );
     dlg.setHasCursor( false );
+    if ( !m_searchHistory.empty() )
+        dlg.setFindHistory( m_searchHistory );
     dlg.setSupportsBackwardsFind( false );
     dlg.setSupportsWholeWordsFind( false );
     dlg.setSupportsRegularExpressionFind( false );
     if ( dlg.exec() == QDialog::Accepted )
     {
+        m_searchHistory = dlg.findHistory();
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
         m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFind::CaseSensitive,
@@ -901,9 +904,7 @@ void Part::slotFind()
 
 void Part::slotFindNext()
 {
-    if ( m_searchStarted )
-        m_document->continueSearch( PART_SEARCH_ID );
-    else
+    if (!m_document->continueLastSearch())
         slotFind();
 }
 

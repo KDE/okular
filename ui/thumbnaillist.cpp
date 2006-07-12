@@ -524,6 +524,9 @@ void ThumbnailWidget::setSelected( bool selected )
 
 void ThumbnailWidget::setVisibleRect( const NormalizedRect & rect )
 {
+    if ( rect == m_visibleRect )
+       return;
+
     m_visibleRect = rect;
     update();
 }

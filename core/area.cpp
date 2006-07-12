@@ -11,6 +11,8 @@
 #include "link.h"
 #include "area.h"
 
+#include <math.h>
+
 /** class NormalizedPoint **/
 NormalizedPoint::NormalizedPoint()
     : x( 0.0 ), y( 0.0 ) {}
@@ -86,6 +88,15 @@ NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r )
     top = r.top;
     bottom = r.bottom;
     return *this;
+}
+
+bool NormalizedRect::operator==( const NormalizedRect & r ) const
+{
+    return ( isNull() && r.isNull() ) ||
+       ( fabs( left - r.left ) < 1e-4 &&
+         fabs( right - r.right ) < 1e-4 &&
+         fabs( top - r.top ) < 1e-4 &&
+         fabs( bottom - r.bottom ) < 1e-4 );
 }
 
 /*

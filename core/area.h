@@ -52,6 +52,7 @@ class OKULAR_EXPORT NormalizedRect
 	NormalizedRect operator| (const NormalizedRect & r) const;
 	NormalizedRect& operator|= (const NormalizedRect & r);
         NormalizedRect& operator=( const NormalizedRect & r );
+        bool operator==( const NormalizedRect & r ) const;
 };
 
 // kdbgstream& operator << (kdbgstream &, const NormalizedRect &);

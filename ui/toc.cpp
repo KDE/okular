@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qapplication.h>
 #include <qheaderview.h>
 #include <qlayout.h>
 #include <qstringlist.h>
@@ -56,7 +55,7 @@ class TOCItem : public QTreeWidgetItem
 
         void setSelected( bool selected )
         {
-            setIcon( 0, selected ? KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) : QIcon() );
+            setIcon( 0, selected ? KIcon( treeWidget()->layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) : QIcon() );
         }
 
     private:

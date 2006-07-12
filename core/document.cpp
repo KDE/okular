@@ -226,7 +226,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KUrl& url, const
             kWarning() << "Sth broke." << endl;
             return false;
         }
-        if ( offers[hRank]->property("[X-KDE-okularHasInternalSettings]").toBool() )
+        if ( offers.at(hRank)->property( "X-KDE-okularHasInternalSettings" ).toBool() )
         {
             m_loadedGenerators->insert(propName,generator);
             m_usingCachedGenerator=true;

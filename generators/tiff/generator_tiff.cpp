@@ -7,11 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qdatetime.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qlist.h>
 #include <qpixmap.h>
 #include <qthread.h>
+#include <kglobal.h>
 #include <kimageeffect.h>
 #include <klocale.h>
 
@@ -128,6 +130,13 @@ void TIFFGeneratorThread::run()
     }
 }
 
+static QDateTime convertTIFFDateTime( const char* tiffdate )
+{
+    if ( !tiffdate )
+        return QDateTime();
+
+    return QDateTime::fromString( QString::fromLatin1( tiffdate ), "yyyy:MM:dd HH:mm:ss" );
+}
 
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
@@ -272,6 +281,11 @@ const DocumentInfo * TIFFGenerator::generateDocumentInfo()
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_ARTIST, &buffer );
     m_docInfo->set( "artist", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Artist" ) );
+
+    buffer = 0;
+    TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
+    QDateTime date = convertTIFFDateTime( buffer );
+    m_docInfo->set( "dateTime", date.isValid() ? KGlobal::locale()->formatDateTime( date, false, true  ) : i18n( "Unknown" ), i18n( "Creation date" ) );
 
     return m_docInfo;
 }

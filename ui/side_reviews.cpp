@@ -17,7 +17,6 @@
 #include <qtreewidget.h>
 #include <kaction.h>
 #include <klocale.h>
-#include <qapplication.h>
 #include <kiconloader.h>
 #include <ktreewidgetsearchline.h>
 
@@ -56,10 +55,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_toolBar1->setIconSize( QSize( 16, 16 ) );
     m_toolBar1->setMovable( false );
     // - add Clear button
-    QString clearIconName = QApplication::layoutDirection() ==
- Qt::RightToLeft ? "clear_left" : "locationbar_erase";
-    QAction * clearAction = m_toolBar1->addAction(
-        KIcon( clearIconName ), i18n( "Clear filter" ), m_searchLine, SLOT( clear() ) );
+    m_toolBar1->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ), i18n( "Clear filter" ), m_searchLine, SLOT( clear() ) );
     // - add Search line
     m_toolBar1->addWidget(m_searchLine);
 

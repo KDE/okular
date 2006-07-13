@@ -159,7 +159,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
             KDjVu::Link *curlink = (*it);
             KPDFLink *newlink = 0;
             int newpage = -1;
-            switch ( (*it)->type() )
+            switch ( curlink->type() )
             {
                 case KDjVu::Link::PageLink:
                 {
@@ -235,9 +235,11 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                 }
                 if ( newrect )
                     rects.append( newrect );
+                else
+                    delete newlink;
             }
             // delete the links as soon as we process them
-            delete (*it);
+            delete curlink;
         }
         if ( rects.count() > 0 )
             m_request->page->setObjectRects( rects );

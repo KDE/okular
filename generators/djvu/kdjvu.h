@@ -63,18 +63,18 @@ class KDjVu : public QObject
                 virtual ~Link();
 
                 enum LinkType { PageLink, UrlLink };
-                enum LinkArea { RectArea, EllipseArea, PolygonArea };
+                enum LinkArea { UnknownArea, RectArea, EllipseArea, PolygonArea };
                 virtual int type() const = 0;
                 LinkArea areaType() const;
                 QPoint point() const;
                 QSize size() const;
-                QPolygonF polygon() const;
+                QPolygon polygon() const;
 
             private:
                 LinkArea m_area;
                 QPoint m_point;
                 QSize m_size;
-                QPolygonF m_poly;
+                QPolygon m_poly;
         };
 
         /**

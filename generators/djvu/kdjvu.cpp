@@ -159,7 +159,7 @@ QSize KDjVu::Link::size() const
     return m_size;
 }
 
-QPolygonF KDjVu::Link::polygon() const
+QPolygon KDjVu::Link::polygon() const
 {
     return m_poly;
 }
@@ -498,6 +498,7 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
         }
         if ( link )
         {
+            link->m_area = KDjVu::Link::UnknownArea;
             miniexp_t area = miniexp_nth( 3, cur );
             int arealength = miniexp_length( area );
             if ( ( arealength == 5 ) && miniexp_symbolp( miniexp_nth( 0, area ) ) &&
@@ -515,9 +516,21 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
                     link->m_area = KDjVu::Link::EllipseArea;
                 }
             }
+            else if ( ( arealength > 0 ) && ( arealength % 2 == 1 ) &&
+                      miniexp_symbolp( miniexp_nth( 0, area ) ) &&
+                      ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "poly", 4 ) == 0 ) )
+            {
+                link->m_area = KDjVu::Link::PolygonArea;
+                QPolygon poly;
+                for ( int j = 1; j < arealength; j += 2 ) 
+                {
+                    poly << QPoint( miniexp_to_int( miniexp_nth( j, area ) ), miniexp_to_int( miniexp_nth( j + 1, area ) ) );
+                }
+                link->m_poly = poly;
+            }
             // TODO: other link shapes
 
-            if ( !( link->m_point.isNull() || link->m_size.isNull() ) )
+            if ( link->m_area != KDjVu::Link::UnknownArea )
                 ret.append( link );
         }
     }

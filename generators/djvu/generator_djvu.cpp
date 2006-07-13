@@ -194,7 +194,8 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                 const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
                 int width = p->width();
                 int height = p->height();
-                if ( m_request->documentRotation % 2 == 1 )
+                bool scape_orientation = ( m_request->documentRotation % 2 == 1 );
+                if ( scape_orientation )
                     qSwap( width, height );
                 ObjectRect *newrect = 0;
                 switch ( curlink->areaType() )
@@ -205,6 +206,29 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                         QRect r( QPoint( curlink->point().x(), p->height() - curlink->point().y() - curlink->size().height() ), curlink->size() );
                         bool ellipse = ( curlink->areaType() == KDjVu::Link::EllipseArea );
                         newrect = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ellipse, ObjectRect::Link, newlink );
+                        break;
+                    }
+                    case KDjVu::Link::PolygonArea:
+                    {
+                        QPolygon poly = curlink->polygon();
+                        QPolygonF newpoly;
+                        for ( int i = 0; i < poly.count(); ++i )
+                        {
+                            int x = poly.at(i).x();
+                            int y = poly.at(i).y();
+                            if ( scape_orientation )
+                                qSwap( x, y );
+                            else
+                            {
+                                y = height - y;
+                            }
+                            newpoly << QPointF( (double)(x)/width, (double)(y)/height );
+                        }
+                        if ( !newpoly.isEmpty() )
+                        {
+                            newpoly << newpoly.first();
+                            newrect = new ObjectRect( newpoly, ObjectRect::Link, newlink );
+                        }
                         break;
                     }
                     default: ;

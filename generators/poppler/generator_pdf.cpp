@@ -160,7 +160,7 @@ static QLinkedList<ObjectRect*> generateKPDFLinks( const QList<Poppler::Link*> &
 		       nr = linkArea.right() / (double)width,
 		       nb = linkArea.bottom() / (double)height;
 		// create the rect using normalized coords and attach the KPDFLink to it
-		ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, createKPDFLinkFromPopplerLink(popplerLink, pdfdoc) );
+		ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, false, ObjectRect::Link, createKPDFLinkFromPopplerLink(popplerLink, pdfdoc) );
 		// add the ObjectRect to the container
 		kpdfLinks.push_front( rect );
 	}

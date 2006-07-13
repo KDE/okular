@@ -434,7 +434,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
     // compute link geometry if destination rect present
     if ( geometry )
     {
-        *geometry = object->geometry( frameGeometry.width(), frameGeometry.height() );
+        *geometry = object->boundingRect( frameGeometry.width(), frameGeometry.height() );
         geometry->translate( frameGeometry.left(), frameGeometry.top() );
     }
 

@@ -128,17 +128,38 @@ HighlightAreaRect::HighlightAreaRect(RegularAreaRect *area)
 
 /** class ObjectRect **/
 
-ObjectRect::ObjectRect( double l, double t, double r, double b, ObjectType type, void * pnt )
-    // assign coordinates swapping them if negative width or height    
-    : NormalizedRect( r > l ? l : r, b > t ? t : b, r > l ? r : l, b > t ? b : t ),
-    m_objectType( type ), m_pointer( pnt )
+ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType type, void * pnt )
+    : m_objectType( type ), m_pointer( pnt )
 {
+    // assign coordinates swapping them if negative width or height
+    QRectF rect( r > l ? l : r, b > t ? t : b, fabs( r - l ), fabs( b - t ) );
+    if ( ellipse )
+        m_path.addEllipse( rect );
+    else
+        m_path.addRect( rect );
 }
 
-ObjectRect::ObjectRect( NormalizedRect x, ObjectType type, void * pnt )
-    : NormalizedRect( x ),
-    m_objectType( type ), m_pointer( pnt )
+ObjectRect::ObjectRect( NormalizedRect x, bool ellipse, ObjectType type, void * pnt )
+    : m_objectType( type ), m_pointer( pnt )
 {
+    QRectF rect( x.left, x.top, fabs( x.right - x.left ), fabs( x.bottom - x.top ) );
+    if ( ellipse )
+        m_path.addEllipse( rect );
+    else
+        m_path.addRect( rect );
+}
+
+ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt )
+    : m_objectType( type ), m_pointer( pnt )
+{
+    m_path.addPolygon( poly );
+}
+
+QRect ObjectRect::boundingRect( int xScale, int yScale ) const
+{
+    const QRectF &br = m_path.boundingRect();
+    return QRect( (int)( br.left() * xScale ), (int)( br.top() * yScale ),
+                  (int)( br.width() * xScale ), (int)( br.height() * yScale ) );
 }
 
 ObjectRect::~ObjectRect()

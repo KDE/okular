@@ -300,6 +300,7 @@ void CHMGenerator::additionalRequestData()
                     {
                         objRects.push_back(
                             new ObjectRect ( NormalizedRect(r,xScale,yScale),
+                            false,
                             ObjectRect::Link,
                             new KPDFLinkBrowse ( url )));
                     }
@@ -307,6 +308,7 @@ void CHMGenerator::additionalRequestData()
                     {
                         objRects.push_back(
                             new ObjectRect ( NormalizedRect(r,xScale,yScale),
+                            false,
                             ObjectRect::Link,
                             new KPDFLinkGoto ( QString::null, viewport)));
                     }
@@ -326,6 +328,7 @@ void CHMGenerator::additionalRequestData()
                 {
                     objRects.push_back(
                             new ObjectRect ( NormalizedRect(n.getRect(),xScale,yScale),
+                            false,
                             ObjectRect::Image,
                             0));
                 }

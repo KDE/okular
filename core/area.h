@@ -12,6 +12,8 @@
 #include "okular_export.h"
 #include <qlist.h>
 #include <qcolor.h>
+#include <qpolygon.h>
+#include <qpainterpath.h>
 #include <kdebug.h>
 class QRect;
 class KPDFLink;
@@ -69,24 +71,29 @@ class OKULAR_EXPORT NormalizedRect
  *  - Link      : class KPDFLink  : description of a link
  *  - Image     : class KPDFImage : description of an image (n/a)
  */
-class OKULAR_EXPORT ObjectRect : public NormalizedRect
+class OKULAR_EXPORT ObjectRect
 {
     public:
         // definition of the types of storable objects
         enum ObjectType { Link, Image };
 
         // default constructor: initialize all parameters
-        ObjectRect( double l, double t, double r, double b, ObjectType typ, void * obj );
-        ObjectRect( NormalizedRect x, ObjectType type, void * pnt ) ;
+        ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType typ, void * obj );
+        ObjectRect( NormalizedRect x, bool ellipse, ObjectType type, void * pnt ) ;
+        ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt ) ;
         ~ObjectRect();
 
         // query type and get a const pointer to the stored object
         inline ObjectType objectType() const { return m_objectType; }
         inline const void * pointer() const { return m_pointer; }
+        inline const QPainterPath &region() const { return m_path; }
+        QRect boundingRect( int xScale, int yScale ) const;
+        inline bool contains( double x, double y ) const { return m_path.contains( QPointF( x, y ) ); }
 
     private:
         ObjectType m_objectType;
         void * m_pointer;
+        QPainterPath m_path;
 };
 
 /**

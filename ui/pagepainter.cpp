@@ -524,6 +524,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     /** 6 -- MIXED FLOW. Draw LINKS+IMAGES BORDER on ACTIVE PAINTER  **/
     if ( enhanceLinks || enhanceImages )
     {
+        mixedPainter->save();
+        mixedPainter->scale( scaledWidth, scaledHeight );
+
         QColor normalColor = QApplication::palette().color( QPalette::Active, QPalette::Highlight );
         QColor lightColor = normalColor.light( 140 );
         // enlarging limits for intersection is like growing the 'rectGeometry' below
@@ -537,20 +540,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             if ( (enhanceLinks && rect->objectType() == ObjectRect::Link) ||
                  (enhanceImages && rect->objectType() == ObjectRect::Image) )
             {
-                QRect rectGeometry = rect->geometry( scaledWidth, scaledHeight );
-                if ( rectGeometry.intersects( limitsEnlarged ) )
+                if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ) ) )
                 {
-                    // expand rect and draw inner border
-                    rectGeometry.adjust( -1,-1,1,1 );
-                    mixedPainter->setPen( lightColor );
-                    mixedPainter->drawRect( rectGeometry );
-                    // expand rect to draw outer border
-                    rectGeometry.adjust( -1,-1,1,1 );
-                    mixedPainter->setPen( normalColor );
-                    mixedPainter->drawRect( rectGeometry );
+                    mixedPainter->strokePath( rect->region(), QPen( normalColor ) );
                 }
             }
         }
+        mixedPainter->restore();
     }
 
     /** 7 -- BUFFERED FLOW. Copy BACKPIXMAP on DESTINATION PAINTER **/

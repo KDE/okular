@@ -164,7 +164,7 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
         }
         if ( okuLink ) 
         {
-            ObjectRect *orlink = new ObjectRect( nl, nt, nr, nb, ObjectRect::Link, 
+            ObjectRect *orlink = new ObjectRect( nl, nt, nr, nb, false, ObjectRect::Link, 
                                                  okuLink );
             dviLinks.push_front( orlink );
         }

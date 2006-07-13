@@ -156,12 +156,14 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
         QList<KDjVu::Link*>::ConstIterator itEnd = links.constEnd();
         for ( ; it != itEnd; ++it )
         {
-            ObjectRect *newlink = 0;
+            KDjVu::Link *curlink = (*it);
+            KPDFLink *newlink = 0;
+            int newpage = -1;
             switch ( (*it)->type() )
             {
                 case KDjVu::Link::PageLink:
                 {
-                    KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( (*it) );
+                    KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( curlink );
                     bool ok = true;
                     QString target = l->page();
                     if ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) )
@@ -173,35 +175,43 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                         if ( !target.isEmpty() )
                         {
                             vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
+                            newpage = vp.pageNumber;
                         }
-                        KPDFLinkGoto* go = new KPDFLinkGoto( QString::null, vp );
-                        const KDjVu::Page* p = m_djvu->pages().at( vp.pageNumber == -1 ? page : vp.pageNumber );
-                        int width = p->width();
-                        int height = p->height();
-                        if ( m_request->documentRotation % 2 == 1 )
-                            qSwap( width, height );
-                        QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                        newlink = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, go );
+                        newlink = new KPDFLinkGoto( QString::null, vp );
                     }
                     break;
                 }
                 case KDjVu::Link::UrlLink:
                 {
-                    KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( (*it) );
+                    KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( curlink );
                     QString url = l->url();
-                    KPDFLinkBrowse* browse = new KPDFLinkBrowse( url );
-                    const KDjVu::Page* p = m_djvu->pages().at( page );
-                    int width = p->width();
-                    int height = p->height();
-                    if ( m_request->documentRotation % 2 == 1 )
-                        qSwap( width, height );
-                    QRect r( QPoint( l->point().x(), p->height() - l->point().y() - l->size().height() ), l->size() );
-                    newlink = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ObjectRect::Link, browse );
+                    newlink = new KPDFLinkBrowse( url );
                     break;
                 }
             }
             if ( newlink )
-                rects.append( newlink );
+            {
+                const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
+                int width = p->width();
+                int height = p->height();
+                if ( m_request->documentRotation % 2 == 1 )
+                    qSwap( width, height );
+                ObjectRect *newrect = 0;
+                switch ( curlink->areaType() )
+                {
+                    case KDjVu::Link::RectArea:
+                    case KDjVu::Link::EllipseArea:
+                    {
+                        QRect r( QPoint( curlink->point().x(), p->height() - curlink->point().y() - curlink->size().height() ), curlink->size() );
+                        bool ellipse = ( curlink->areaType() == KDjVu::Link::EllipseArea );
+                        newrect = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ellipse, ObjectRect::Link, newlink );
+                        break;
+                    }
+                    default: ;
+                }
+                if ( newrect )
+                    rects.append( newrect );
+            }
             // delete the links as soon as we process them
             delete (*it);
         }

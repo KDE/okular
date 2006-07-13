@@ -144,6 +144,11 @@ KDjVu::Link::~Link()
 {
 }
 
+KDjVu::Link::LinkArea KDjVu::Link::areaType() const
+{
+    return m_area;
+}
+
 QPoint KDjVu::Link::point() const
 {
     return m_point;
@@ -152,6 +157,11 @@ QPoint KDjVu::Link::point() const
 QSize KDjVu::Link::size() const
 {
     return m_size;
+}
+
+QPolygonF KDjVu::Link::polygon() const
+{
+    return m_poly;
 }
 
 // KDjVu::PageLink
@@ -491,10 +501,19 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
             miniexp_t area = miniexp_nth( 3, cur );
             int arealength = miniexp_length( area );
             if ( ( arealength == 5 ) && miniexp_symbolp( miniexp_nth( 0, area ) ) &&
-                 ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 ) )
+                 ( ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 ) ||
+                   ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "oval", 4 ) == 0 ) ) )
             {
                 link->m_point = QPoint( miniexp_to_int( miniexp_nth( 1, area ) ), miniexp_to_int( miniexp_nth( 2, area ) ) );
                 link->m_size = QSize( miniexp_to_int( miniexp_nth( 3, area ) ), miniexp_to_int( miniexp_nth( 4, area ) ) );
+                if ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 )
+                {
+                    link->m_area = KDjVu::Link::RectArea;
+                }
+                else
+                {
+                    link->m_area = KDjVu::Link::EllipseArea;
+                }
             }
             // TODO: other link shapes
 

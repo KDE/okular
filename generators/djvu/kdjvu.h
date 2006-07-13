@@ -11,6 +11,7 @@
 #define _KDJVU_
 
 #include <qobject.h>
+#include <qpolygon.h>
 #include <qpixmap.h>
 #include <qvector.h>
 
@@ -62,13 +63,18 @@ class KDjVu : public QObject
                 virtual ~Link();
 
                 enum LinkType { PageLink, UrlLink };
+                enum LinkArea { RectArea, EllipseArea, PolygonArea };
                 virtual int type() const = 0;
+                LinkArea areaType() const;
                 QPoint point() const;
                 QSize size() const;
+                QPolygonF polygon() const;
 
             private:
+                LinkArea m_area;
                 QPoint m_point;
                 QSize m_size;
+                QPolygonF m_poly;
         };
 
         /**

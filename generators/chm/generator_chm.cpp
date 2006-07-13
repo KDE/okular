@@ -294,7 +294,7 @@ void CHMGenerator::additionalRequestData()
                     r=n.getRect();
                     kDebug() << "Adding rect: " << url << " "  << r << endl;
                     // there is no way for us to support javascript properly
-                    if (url.startsWith("JavaScript:"))
+                    if (url.startsWith("JavaScript:"), Qt::CaseInsensitive)
                         continue;
                     else if (url.contains (":"))
                     {

@@ -45,7 +45,7 @@ More items (first items will enter 'In progress list' first):
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
-   than using QScrollView + inserted Widgets and saves 8% on document loading)
+   than using QScrollArea + inserted Widgets and saves 8% on document loading)
 -> thumbnailslist: clinking on highlighted rect should bring the viewport to that search result (BR98334)
 -> Dom framework to cache document metadata. It should archive those types of data:
    (NOTE: already Dom'ed object is marked with 'X')
@@ -91,7 +91,6 @@ More items (first items will enter 'In progress list' first):
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler, measure: distance, perimeter, ?area?, color picker
--> export: all text in plain_text(fast)/html(hard) (BR91146)
 -> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
 -> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> history as a toolbox child (collecting Doc's viewport changes notifications)
@@ -105,6 +104,8 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> CHG: support links with shapes different than a rectangle
+-> ADD: export: give the generators the ability to export all the text to plain file (if supported), the PDF generator already use this (BR91146)
 -> CHG: search: use shortcut for 'find next' action (not the default one) in find-ahead
 -> CHG: use shortcuts for next and prev page even in presentation mode (by Tobias Koenig)
 -> ADD: bookmarks: go to next/previous actions (showing in thumbnailslist rmb popup too)

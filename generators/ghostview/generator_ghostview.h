@@ -26,6 +26,7 @@ class GSGenerator : public Generator
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        bool closeDocument();
 
         // Document description and Table of contents
         const DocumentInfo * generateDocumentInfo();

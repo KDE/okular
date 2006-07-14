@@ -65,6 +65,8 @@ class OKULAR_EXPORT Generator : public QObject
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
         virtual bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector ) = 0;
+        // the current document is no more useful, close it
+        virtual bool closeDocument() = 0;
 
         // page contents generation
         virtual bool canGeneratePixmap( bool async ) = 0;

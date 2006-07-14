@@ -22,6 +22,7 @@ class TIFFGenerator : public Generator
         virtual ~TIFFGenerator();
 
         bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool closeDocument();
 
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );

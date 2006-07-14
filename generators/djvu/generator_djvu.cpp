@@ -61,17 +61,24 @@ DjVuGenerator::DjVuGenerator( KPDFDocument * doc ) : Generator ( doc ),
 
 bool DjVuGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
 {
-    delete m_docInfo;
-    m_docInfo = 0;
-    delete m_docSyn;
-    m_docSyn = 0;
-
     if ( !m_djvu->openFile( fileName ) )
         return false;
 
     loadPages( pagesVector, 0 );
 
     ready = true;
+    return true;
+}
+
+bool DjVuGenerator::closeDocument()
+{
+    delete m_docInfo;
+    m_docInfo = 0;
+    delete m_docSyn;
+    m_docSyn = 0;
+
+    ready = false;
+
     return true;
 }
 

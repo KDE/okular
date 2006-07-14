@@ -21,6 +21,7 @@ class KIMGIOGenerator : public Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool closeDocument();
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );

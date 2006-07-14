@@ -217,6 +217,11 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > 
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
+bool GSGenerator::closeDocument()
+{
+    return true;
+}
+
 void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
     kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;

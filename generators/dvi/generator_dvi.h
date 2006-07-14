@@ -23,6 +23,7 @@ class DviGenerator : public Generator
     public:
         DviGenerator( KPDFDocument * doc );
         bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        bool closeDocument();
 
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );

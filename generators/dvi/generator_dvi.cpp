@@ -39,13 +39,6 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
     //kDebug() << "file: " << qPrintable( fileName ) << endl;
     KUrl base( fileName );
 
-    delete m_docInfo;
-    m_docInfo = 0;
-    delete m_docSynopsis;
-    m_docSynopsis = 0;
-
-    delete m_dviRenderer;
-
     m_dviRenderer = new dviRenderer();
     if ( ! m_dviRenderer->setFile( fileName, base ) )
         return false;
@@ -56,6 +49,20 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
     loadPages( pagesVector, 0 );
 
     ready = true;
+    return true;
+}
+
+bool DviGenerator::closeDocument()
+{
+    delete m_docInfo;
+    m_docInfo = 0;
+    delete m_docSynopsis;
+    m_docSynopsis = 0;
+    delete m_dviRenderer;
+    m_dviRenderer = 0;
+
+    ready = false;
+
     return true;
 }
 

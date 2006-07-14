@@ -199,16 +199,12 @@ PDFGenerator::PDFGenerator( KPDFDocument * doc )
 
 PDFGenerator::~PDFGenerator()
 {
-    // first stop and delete the generator thread
+    // stop and delete the generator thread
     if ( generatorThread )
     {
         generatorThread->wait();
         delete generatorThread;
     }
-    // remove other internal objects
-    docLock.lock();
-    delete pdfdoc;
-    docLock.unlock();
 }
 
 void PDFGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)
@@ -295,6 +291,17 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
     loadPages(pagesVector, 0, false);
 
     // the file has been loaded correctly
+    return true;
+}
+
+bool PDFGenerator::closeDocument()
+{
+    // remove internal objects
+    docLock.lock();
+    delete pdfdoc;
+    pdfdoc = 0;
+    docLock.unlock();
+
     return true;
 }
 

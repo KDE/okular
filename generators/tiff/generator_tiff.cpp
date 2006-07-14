@@ -166,6 +166,19 @@ TIFFGenerator::~TIFFGenerator()
 
 bool TIFFGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
 {
+    d->tiff = TIFFOpen( QFile::encodeName( fileName ), "r" );
+    if ( !d->tiff )
+        return false;
+
+    loadPages( pagesVector, 0 );
+
+    ready = true;
+
+    return true;
+}
+
+bool TIFFGenerator::closeDocument()
+{
     // closing the old document
     if ( d->tiff )
     {
@@ -175,13 +188,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
         m_docInfo = 0;
     }
 
-    d->tiff = TIFFOpen( QFile::encodeName( fileName ), "r" );
-    if ( !d->tiff )
-        return false;
-
-    loadPages( pagesVector, 0 );
-
-    ready = true;
+    ready = false;
 
     return true;
 }

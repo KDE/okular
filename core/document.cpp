@@ -317,9 +317,12 @@ void KPDFDocument::setupGUI(KActionCollection* ac, QToolBox* tBox )
 
 void KPDFDocument::closeDocument()
 {
-    // save document info if a document is still opened
+    // close the current document and save document info if a document is still opened
     if ( generator && pages_vector.size() > 0 )
+    {
+        generator->closeDocument();
         saveDocumentInfo();
+    }
 
     // stop timers
     if ( d->memCheckTimer )

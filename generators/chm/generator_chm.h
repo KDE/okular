@@ -28,6 +28,7 @@ class CHMGenerator : public Generator
     public:
         CHMGenerator(KPDFDocument * doc );
         bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        bool closeDocument();
 
         const DocumentInfo * generateDocumentInfo();
         const DocumentSynopsis * generateDocumentSynopsis();

@@ -45,10 +45,6 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
     m_file=new CHMFile (fileName);
     m_file->ParseAndFillTopicsTree (&m_docSyn);
 
-    // delete the document information of the old document
-    delete m_docInfo;
-    m_docInfo=0;
-
     QPrinter p; 
     p.setPageSize(static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ));
     p.setFullPage(true);
@@ -71,6 +67,15 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
             m_syncGen->view()->contentsHeight(),0);
         kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
+    return true;
+}
+
+bool CHMGenerator::closeDocument()
+{
+    // delete the document information of the old document
+    delete m_docInfo;
+    m_docInfo=0;
+
     return true;
 }
 

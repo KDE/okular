@@ -21,6 +21,7 @@ class DjVuGenerator : public Generator
     public:
         DjVuGenerator( KPDFDocument * doc );
         bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool closeDocument();
 
         // pixmap generation
         bool canGeneratePixmap( bool async );

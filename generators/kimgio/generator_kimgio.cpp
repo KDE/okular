@@ -24,7 +24,6 @@ KIMGIOGenerator::KIMGIOGenerator( KPDFDocument * document ) : Generator( documen
 
 KIMGIOGenerator::~KIMGIOGenerator()
 {
-    delete m_pix;
 }
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
@@ -35,6 +34,14 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*>
 
     KPDFPage * page = new KPDFPage( 0, m_pix->width(), m_pix->height(), 0 );
     pagesVector[0] = page;
+
+    return true;
+}
+
+bool KIMGIOGenerator::closeDocument()
+{
+    delete m_pix;
+    m_pix = 0;
 
     return true;
 }

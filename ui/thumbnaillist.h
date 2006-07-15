@@ -32,9 +32,9 @@ class ThumbnailWidget;
 class ThumbnailList : public QScrollArea, public DocumentObserver
 {
 Q_OBJECT
-	public:
-		ThumbnailList(QWidget *parent, KPDFDocument *document);
-		~ThumbnailList();
+    public:
+        ThumbnailList(QWidget *parent, KPDFDocument *document);
+        ~ThumbnailList();
 
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
@@ -63,40 +63,40 @@ Q_OBJECT
         // these are connected to ThumbnailController buttons
         void slotFilterBookmarks( bool filterOn );
 
-	protected:
-		// scroll up/down the view
-		void keyPressEvent( QKeyEvent * e );
+    protected:
+        // scroll up/down the view
+        void keyPressEvent( QKeyEvent * e );
 
-		// resize thumbnails to fit the width
-		void viewportResizeEvent( QResizeEvent * );
-		// catch the viewport event and filter them if necessary
-		bool viewportEvent( QEvent * );
+        // resize thumbnails to fit the width
+        void viewportResizeEvent( QResizeEvent * );
+        // catch the viewport event and filter them if necessary
+        bool viewportEvent( QEvent * );
 
-		// file drop related events (an url may be dropped even here)
-		void dragEnterEvent( QDragEnterEvent* );
-		void dropEvent( QDropEvent* );
+        // file drop related events (an url may be dropped even here)
+        void dragEnterEvent( QDragEnterEvent* );
+        void dropEvent( QDropEvent* );
 
-	signals:
-		void urlDropped( const KUrl& );
-		void rightClick( const KPDFPage *, const QPoint & );
+    signals:
+        void urlDropped( const KUrl& );
+        void rightClick( const KPDFPage *, const QPoint & );
 
-	private:
-		void delayedRequestVisiblePixmaps( int delayMs = 0 );
-		KPDFDocument *m_document;
-		ThumbnailWidget *m_selected;
-		QTimer *m_delayTimer;
-		QPixmap *m_bookmarkOverlay;
-		QVector<ThumbnailWidget *> m_thumbnails;
-		QList<ThumbnailWidget *> m_visibleThumbnails;
-		int m_vectorIndex;
-		QWidget *m_pagesWidget;
-		QVBoxLayout *m_pagesLayout;
+    private:
+        void delayedRequestVisiblePixmaps( int delayMs = 0 );
+        KPDFDocument *m_document;
+        ThumbnailWidget *m_selected;
+        QTimer *m_delayTimer;
+        QPixmap *m_bookmarkOverlay;
+        QVector<ThumbnailWidget *> m_thumbnails;
+        QList<ThumbnailWidget *> m_visibleThumbnails;
+        int m_vectorIndex;
+        QWidget *m_pagesWidget;
+        QVBoxLayout *m_pagesLayout;
 
-	private slots:
-		// make requests for generating pixmaps for visible thumbnails
-		void slotRequestVisiblePixmaps( int newContentsY = -1 );
-		// delay timeout: resize overlays and requests pixmaps
-		void slotDelayTimeout();
+    private slots:
+        // make requests for generating pixmaps for visible thumbnails
+        void slotRequestVisiblePixmaps( int newContentsY = -1 );
+        // delay timeout: resize overlays and requests pixmaps
+        void slotDelayTimeout();
 };
 
 /**
@@ -104,9 +104,9 @@ Q_OBJECT
  */
 class ThumbnailsBox : public KVBox
 {
-	public:
-		ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {};
-		QSize sizeHint() const { return QSize(); }
+    public:
+        ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {};
+        QSize sizeHint() const { return QSize(); }
 };
 
 /**

@@ -75,39 +75,39 @@ class ThumbnailWidget : public QWidget
 /** ThumbnailList implementation **/
 
 ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
-	: QScrollArea( parent ),
-	m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
+    : QScrollArea( parent ),
+    m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
 {
-	setObjectName( "okular::Thumbnails" );
-	// set scrollbars
-	setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-	setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+    setObjectName( "okular::Thumbnails" );
+    // set scrollbars
+    setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
 
-	setAttribute( Qt::WA_StaticContents );
+    setAttribute( Qt::WA_StaticContents );
 
-	setAcceptDrops( true );
+    setAcceptDrops( true );
 
-	QPalette pal = palette();
-	// set contents background to the 'base' color
-	QPalette viewportPal = viewport()->palette();
-	viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
-	viewport()->setPalette( viewportPal );
+    QPalette pal = palette();
+    // set contents background to the 'base' color
+    QPalette viewportPal = viewport()->palette();
+    viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
+    viewport()->setPalette( viewportPal );
 
-	m_pagesWidget = new QWidget();
-	setWidget( m_pagesWidget );
-	// widget setup: can be focused by tab and mouse click (not wheel)
-	m_pagesWidget->setFocusPolicy( Qt::StrongFocus );
-	m_pagesWidget->show();
-	QPalette widgetPal = m_pagesWidget->palette();
-	widgetPal.setColor( m_pagesWidget->backgroundRole(), pal.color( QPalette::Base ) );
-	m_pagesWidget->setPalette( widgetPal );
-	m_pagesLayout = new QVBoxLayout( m_pagesWidget );
-	m_pagesLayout->setMargin( 0 );
-	m_pagesLayout->setSpacing( 4 );
+    m_pagesWidget = new QWidget();
+    setWidget( m_pagesWidget );
+    // widget setup: can be focused by tab and mouse click (not wheel)
+    m_pagesWidget->setFocusPolicy( Qt::StrongFocus );
+    m_pagesWidget->show();
+    QPalette widgetPal = m_pagesWidget->palette();
+    widgetPal.setColor( m_pagesWidget->backgroundRole(), pal.color( QPalette::Base ) );
+    m_pagesWidget->setPalette( widgetPal );
+    m_pagesLayout = new QVBoxLayout( m_pagesWidget );
+    m_pagesLayout->setMargin( 0 );
+    m_pagesLayout->setSpacing( 4 );
 
-	setFrameStyle( StyledPanel | Raised );
+    setFrameStyle( StyledPanel | Raised );
 
-	connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
+    connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
 }
 
 ThumbnailList::~ThumbnailList()
@@ -119,27 +119,27 @@ ThumbnailList::~ThumbnailList()
 //BEGIN DocumentObserver inherited methods
 void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
 {
-	// if there was a widget selected, save its pagenumber to restore
-	// its selection (if available in the new set of pages)
-	int prevPage = -1;
-	if ( !documentChanged && m_selected )
-	{
-		prevPage = m_selected->page()->number();
-	}
+    // if there was a widget selected, save its pagenumber to restore
+    // its selection (if available in the new set of pages)
+    int prevPage = -1;
+    if ( !documentChanged && m_selected )
+    {
+        prevPage = m_selected->page()->number();
+    }
 
-	// delete all the Thumbnails
-	QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
-	for ( ; tIt != tEnd; ++tIt )
-		delete *tIt;
-	m_thumbnails.clear();
-	m_visibleThumbnails.clear();
-	m_selected = 0;
+    // delete all the Thumbnails
+    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+        delete *tIt;
+    m_thumbnails.clear();
+    m_visibleThumbnails.clear();
+    m_selected = 0;
 
-	if ( pages.count() < 1 )
-	{
-		m_pagesWidget->resize( 0, 0 );
-		return;
-	}
+    if ( pages.count() < 1 )
+    {
+        m_pagesWidget->resize( 0, 0 );
+        return;
+    }
 
     // show pages containing hilighted text or bookmarked ones
     //RESTORE THIS int flags = KpdfSettings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
@@ -187,34 +187,34 @@ void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool docum
 
 void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 {
-	// skip notifies for the current page (already selected)
-	int newPage = m_document->viewport().pageNumber;
-	if ( m_selected && m_selected->pageNumber() == newPage )
-		return;
+    // skip notifies for the current page (already selected)
+    int newPage = m_document->viewport().pageNumber;
+    if ( m_selected && m_selected->pageNumber() == newPage )
+        return;
 
-	// deselect previous thumbnail
-	if ( m_selected )
-		m_selected->setSelected( false );
-	m_selected = 0;
+    // deselect previous thumbnail
+    if ( m_selected )
+        m_selected->setSelected( false );
+    m_selected = 0;
 
-	// select the page with viewport and ensure it's centered in the view
-	m_vectorIndex = 0;
-	QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
-	for ( ; tIt != tEnd; ++tIt )
-	{
-		if ( (*tIt)->pageNumber() == newPage )
-		{
-			m_selected = *tIt;
-			m_selected->setSelected( true );
-			if ( KpdfSettings::syncThumbnailsViewport() )
-			{
-				int yOffset = qMax( viewport()->height() / 4, m_selected->height() / 2 );
-				ensureVisible( 0, m_selected->pos().y() + m_selected->height()/2, 0, yOffset );
-			}
-			break;
-		}
-		m_vectorIndex++;
-	}
+    // select the page with viewport and ensure it's centered in the view
+    m_vectorIndex = 0;
+    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        if ( (*tIt)->pageNumber() == newPage )
+        {
+            m_selected = *tIt;
+            m_selected->setSelected( true );
+            if ( KpdfSettings::syncThumbnailsViewport() )
+            {
+                int yOffset = qMax( viewport()->height() / 4, m_selected->height() / 2 );
+                ensureVisible( 0, m_selected->pos().y() + m_selected->height()/2, 0, yOffset );
+            }
+            break;
+        }
+        m_vectorIndex++;
+    }
 }
 
 void ThumbnailList::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
@@ -326,101 +326,101 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 //BEGIN widget events 
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
-	if ( m_thumbnails.count() < 1 )
-		return keyEvent->ignore();
+    if ( m_thumbnails.count() < 1 )
+        return keyEvent->ignore();
 
-	int nextPage = -1;
-	if ( keyEvent->key() == Qt::Key_Up )
-	{
-		if ( !m_selected )
-			nextPage = 0;
-		else if ( m_vectorIndex > 0 )
-			nextPage = m_thumbnails[ m_vectorIndex - 1 ]->pageNumber();
-	}
-	else if ( keyEvent->key() == Qt::Key_Down )
-	{
-		if ( !m_selected )
-			nextPage = 0;
-		else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
-			nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
-	}
-	else if ( keyEvent->key() == Qt::Key_PageUp )
-		verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
-	else if ( keyEvent->key() == Qt::Key_PageDown )
-		verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
-	else if ( keyEvent->key() == Qt::Key_Home )
-		nextPage = m_thumbnails[ 0 ]->pageNumber();
-	else if ( keyEvent->key() == Qt::Key_End )
-		nextPage = m_thumbnails[ m_thumbnails.count() - 1 ]->pageNumber();
+    int nextPage = -1;
+    if ( keyEvent->key() == Qt::Key_Up )
+    {
+        if ( !m_selected )
+            nextPage = 0;
+        else if ( m_vectorIndex > 0 )
+            nextPage = m_thumbnails[ m_vectorIndex - 1 ]->pageNumber();
+    }
+    else if ( keyEvent->key() == Qt::Key_Down )
+    {
+        if ( !m_selected )
+            nextPage = 0;
+        else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
+            nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
+    }
+    else if ( keyEvent->key() == Qt::Key_PageUp )
+        verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
+    else if ( keyEvent->key() == Qt::Key_PageDown )
+        verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
+    else if ( keyEvent->key() == Qt::Key_Home )
+        nextPage = m_thumbnails[ 0 ]->pageNumber();
+    else if ( keyEvent->key() == Qt::Key_End )
+        nextPage = m_thumbnails[ m_thumbnails.count() - 1 ]->pageNumber();
 
-	if ( nextPage == -1 )
-		return keyEvent->ignore();
+    if ( nextPage == -1 )
+        return keyEvent->ignore();
 
-	keyEvent->accept();
-	if ( m_selected )
-		m_selected->setSelected( false );
-	m_selected = 0;
-	m_document->setViewportPage( nextPage );
+    keyEvent->accept();
+    if ( m_selected )
+        m_selected->setSelected( false );
+    m_selected = 0;
+    m_document->setViewportPage( nextPage );
 }
 
 bool ThumbnailList::viewportEvent( QEvent * e )
 {
-	switch ( e->type() )
-	{
-		case QEvent::Resize:
-		{
-			viewportResizeEvent( (QResizeEvent*)e );
-			break;
-		}
-		default:
-			;
-	}
-	return QScrollArea::viewportEvent( e );
+    switch ( e->type() )
+    {
+        case QEvent::Resize:
+        {
+            viewportResizeEvent( (QResizeEvent*)e );
+            break;
+        }
+        default:
+            ;
+    }
+    return QScrollArea::viewportEvent( e );
 }
 
 void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 {
-	if ( m_thumbnails.count() < 1 || width() < 1 )
-		return;
+    if ( m_thumbnails.count() < 1 || width() < 1 )
+        return;
 
-	// if width changed resize all the Thumbnails, reposition them to the
-	// right place and recalculate the contents area
-	if ( e->size().width() != e->oldSize().width() )
-	{
-		// runs the timer avoiding a thumbnail regeneration by 'contentsMoving'
-		delayedRequestVisiblePixmaps( 2000 );
+    // if width changed resize all the Thumbnails, reposition them to the
+    // right place and recalculate the contents area
+    if ( e->size().width() != e->oldSize().width() )
+    {
+        // runs the timer avoiding a thumbnail regeneration by 'contentsMoving'
+        delayedRequestVisiblePixmaps( 2000 );
 
-		// resize and reposition items
-		int newWidth = contentsRect().width() - verticalScrollBar()->width();
-		int newHeight = 0;
-		QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
-		for ( ; tIt != tEnd; ++tIt )
-		{
-			ThumbnailWidget *t = *tIt;
-			t->resizeFitWidth( newWidth );
-			newHeight += t->height() + m_pagesLayout->spacing();
-		}
+        // resize and reposition items
+        int newWidth = contentsRect().width() - verticalScrollBar()->width();
+        int newHeight = 0;
+        QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+        for ( ; tIt != tEnd; ++tIt )
+        {
+            ThumbnailWidget *t = *tIt;
+            t->resizeFitWidth( newWidth );
+            newHeight += t->height() + m_pagesLayout->spacing();
+        }
 
-		// update scrollview's contents size (sets scrollbars limits)
-		newHeight -= m_pagesLayout->spacing();
-		m_pagesWidget->resize( newWidth, newHeight );
+        // update scrollview's contents size (sets scrollbars limits)
+        newHeight -= m_pagesLayout->spacing();
+        m_pagesWidget->resize( newWidth, newHeight );
 
-		// ensure selected item remains visible
-		if ( m_selected )
-			ensureVisible( 0, m_selected->mapToParent( QPoint( 0, 0 ) ).y() + m_selected->height()/2, 0, viewport()->height()/2 );
-	}
-	else if ( e->size().height() <= e->oldSize().height() )
-		return;
+        // ensure selected item remains visible
+        if ( m_selected )
+            ensureVisible( 0, m_selected->mapToParent( QPoint( 0, 0 ) ).y() + m_selected->height()/2, 0, viewport()->height()/2 );
+    }
+    else if ( e->size().height() <= e->oldSize().height() )
+        return;
 
-	// invalidate the bookmark overlay
-	if ( m_bookmarkOverlay )
-	{
-		delete m_bookmarkOverlay;
-		m_bookmarkOverlay = 0;
-	}
+    // invalidate the bookmark overlay
+    if ( m_bookmarkOverlay )
+    {
+        delete m_bookmarkOverlay;
+        m_bookmarkOverlay = 0;
+    }
 
-	// update Thumbnails since width has changed or height has increased
-	delayedRequestVisiblePixmaps( 500 );
+    // update Thumbnails since width has changed or height has increased
+    delayedRequestVisiblePixmaps( 500 );
 }
 
 void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
@@ -485,13 +485,13 @@ void ThumbnailList::slotDelayTimeout()
 
 void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 {
-	if ( !m_delayTimer )
-	{
-		m_delayTimer = new QTimer( this );
-		m_delayTimer->setSingleShot( true );
-		connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotDelayTimeout() ) );
-	}
-	m_delayTimer->start( delayMs );
+    if ( !m_delayTimer )
+    {
+        m_delayTimer = new QTimer( this );
+        m_delayTimer->setSingleShot( true );
+        connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotDelayTimeout() ) );
+    }
+    m_delayTimer->start( delayMs );
 }
 
 

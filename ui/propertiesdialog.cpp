@@ -97,10 +97,15 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
     view->header()->setClickable(true);
     view->header()->setSortIndicatorShown(true);
     // creating a proxy model so we can sort the data
+#ifdef ENABLE_PROPERTIESDIALOG_PROXYMODEL
     QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
     FontsListModel *model = new FontsListModel(view);
     proxymodel->setSourceModel(model);
     view->setModel(proxymodel);
+#else
+    FontsListModel *model = new FontsListModel(view);
+    view->setModel(model);
+#endif
     // populate the klistview
     for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
       QDomElement e = node.toElement();

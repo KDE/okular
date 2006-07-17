@@ -13,6 +13,7 @@
 #include <qheaderview.h>
 #include <qsortfilterproxymodel.h>
 #include <qtreeview.h>
+#include <kicon.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
@@ -30,7 +31,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 
   // PROPERTIES
   QFrame *page = new QFrame();
-  addPage( page, i18n( "Properties" ) );
+  KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
+  item->setIcon( KIcon( "info" ) );
   QGridLayout *layout = new QGridLayout( page );
   layout->setMargin( marginHint() );
   layout->setSpacing( spacingHint() );
@@ -85,7 +87,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   if ( fonts ) {
     // create fonts tab and layout it
     QFrame *page2 = new QFrame();
-    addPage(page2, i18n("Fonts"));
+    KPageWidgetItem *item2 = addPage(page2, i18n("&Fonts"));
+    item2->setIcon( KIcon( "fonts" ) );
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(marginHint());
     page2Layout->setSpacing(spacingHint());

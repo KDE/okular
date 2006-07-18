@@ -44,7 +44,7 @@ class GSGenerator : public Generator
         bool supportsRotation() { return true; } ;
         void setOrientation(QVector<KPDFPage*>&, int);
 
-        // paper size managment
+        // paper size management
         bool supportsPaperSizes();
         QStringList paperSizes();
         void setPaperSize( QVector<KPDFPage*> & pagesVector, int newsize );

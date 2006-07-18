@@ -61,7 +61,7 @@ GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_er
     {
         m_fallbackMedia = pageSizeToString( static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ) );
         m_overrideOrientation = CDSC_ORIENT_UNKNOWN;
-        m_overrideMedia = QString::null;
+        m_overrideMedia = QString();
 
         scanDSC();
 

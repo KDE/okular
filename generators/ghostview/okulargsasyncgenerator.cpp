@@ -32,7 +32,7 @@ extern GC kde_xget_temp_gc( int scrn, bool monochrome );                // get t
 
 GSInterpreterLib *interpreter;
 int mem;
-int anwser;
+int answer;
 PageInfo pData;
 FILE * f;
 
@@ -65,7 +65,7 @@ void PixHandler::slotPixmap(const QImage* img)
 
     XSync(QX11Info::display(), false);
     int x=3;
-    write (anwser,&x,sizeof(int));
+    write (answer,&x,sizeof(int));
 }
 
 void process()
@@ -80,7 +80,7 @@ void process()
     if (! pData.sync )
     {
         int x=3;
-        write (anwser,&x,sizeof(int));
+        write (answer,&x,sizeof(int));
     }
 }
 
@@ -110,7 +110,7 @@ int main (int argc, char* argv[])
         QObject::connect(interpreter,SIGNAL(Finished(const QImage* )),&pxHandler,SLOT(slotPixmap(const QImage* )));
     
         int request;
-        anwser = open( argv[3] , O_RDWR );
+        answer = open( argv[3] , O_RDWR );
         mem = open( argv[2] , O_RDONLY );
         while( read ( mem, &request, sizeof(int) ) > 0 )
         {

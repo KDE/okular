@@ -109,7 +109,7 @@ class AvailableItem : public Entry
             QString typeString = category();
             // place books on the desktop
             if ( typeString == "kpdf/book" )
-                m_destinationFile = KGlobalSettings::desktopPath() + "/" + fileName;
+                m_destinationFile = KGlobalSettings::desktopPath() + '/' + fileName;
             // place kpdf data on the local share/apps/kpdf/stuff
             else if ( typeString == "kpdf/tool" )
                 m_destinationFile = KStandardDirs::locateLocal( "data", "okular/stuff/" + fileName );
@@ -191,9 +191,9 @@ class ItemsView : public KHTMLPart
             executeScript( "document.getElementById('bar" + idString + "').style.width='" +
                            QString::number( pixelProgress ) + "px'" );
             executeScript( "document.getElementById('bc" + idString + "').style.backgroundColor='" +
-                           (showProgress ? "gray" : "transparent") + "'" );
+                           (showProgress ? "gray" : "transparent") + '\'' );
             executeScript( "document.getElementById('btn" + idString + "').value='" +
-                           (item->installed() ? i18n( "Uninstall" ) : i18n( "Install" )) + "'" );
+                           (item->installed() ? i18n( "Uninstall" ) : i18n( "Install" )) + '\'' );
         }
 
     private:
@@ -581,7 +581,7 @@ void NewStuffDialog::installItem( AvailableItem * item )
     // safety check
     if ( item->url().isEmpty() || item->destinationPath().isEmpty() )
     {
-        displayMessage( i18n("I don't know how to install this. Sorry, my fault."), Info );
+        displayMessage( i18n("I do not know how to install this. Sorry, my fault."), Info );
         return;
     }
 
@@ -594,7 +594,7 @@ void NewStuffDialog::removeItem( AvailableItem * item )
     // safety check
     if ( item->destinationPath().isEmpty() )
     {
-        displayMessage( i18n("I don't know how to uninstall this. Sorry, my fault."), Info );
+        displayMessage( i18n("I do not know how to uninstall this. Sorry, my fault."), Info );
         return;
     }
 
@@ -686,7 +686,7 @@ void NewStuffDialog::slotProvidersListResult( KJob * job )
     }
     else if ( d->providersListJob.receivedData.contains("404 Not Found") )
     {
-        displayMessage( i18n("Network: Can't find the list of providers!"), Error );
+        displayMessage( i18n("Network: Cannot find the list of providers!"), Error );
         return;
     }
     else if ( !doc.setContent( d->providersListJob.receivedData ) )
@@ -895,7 +895,7 @@ void NewStuffDialog::slotItemResult( KIO::Job * job )
     // error handling
     if ( job->error() )
     {
-        displayMessage( i18n( "Network error while retrieving %1. Installation cancelled.", item->name() ), Error );
+        displayMessage( i18n( "Network error while retrieving %1. Installation canceled.", item->name() ), Error );
         return;
     }
 

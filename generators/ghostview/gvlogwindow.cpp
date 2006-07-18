@@ -163,7 +163,7 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const char* buf, int 
     }
     m_lastInt=num;
 
-    //    kDebug()<< "LogWindow before split: " << msgString << " lenght" << num << endl;    
+    //    kDebug()<< "LogWindow before split: " << msgString << " length: " << num << endl;
 
 }
 

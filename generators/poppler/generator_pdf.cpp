@@ -813,7 +813,7 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
             for (j = 0; j < charCount; j++)
             {
                 s = word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
+                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
                     // this letters boundary
                     word->edge(j)/width,
                     wordRect->bottom/height,
@@ -838,7 +838,7 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
             for (j=0;j<charCount;j++)
             {
                 s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
+                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
                     wordRect->left/width,
                     word->edge(j)/height,
                     wordRect->right/width,
@@ -860,7 +860,7 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
             for (j=0;j<charCount;j++)
             {
                 s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
+                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
                     word->edge(j+1)/width,
                     wordRect->bottom/height,
                     word->edge(j)/width,
@@ -883,7 +883,7 @@ KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &te
             for (j=0;j<charCount;j++)
             {
                 s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + "\n") : s,
+                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
                     wordRect->left/width,
                     word->edge(j+1)/height,
                     wordRect->right/width,

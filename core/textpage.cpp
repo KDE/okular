@@ -242,7 +242,7 @@ RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QStri
 #endif
             j++;
             queryLeft--;
-            // since we dont really need to increment this after this
+            // since we do not really need to increment this after this
             // run of the loop finishes because we are not comparing it 
             // to any entity, rather we are deducing a situation in a document
             dontIncrement=true;
@@ -264,7 +264,7 @@ RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QStri
                 )
             {
                     // we not have matched
-                    // this means we dont have a complete match
+                    // this means we do not have a complete match
                     // we need to get back to query start
                     // and continue the search from this place
                     haveMatch=false;

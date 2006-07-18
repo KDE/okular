@@ -339,7 +339,7 @@ bool GSGenerator::initInterpreter()
         if( pixGenerator->start(true) && internalDoc->dsc()->isStructured() )
         {
             kWarning() << "setStructure\n";
-            // this 0 is ok here, we will not be getting a PAGE anwser from those
+            // this 0 is ok here, we will not be getting a PAGE answer from those
             pixGenerator->run ( internalDoc->file() , internalDoc->prolog(), false);
             pixGenerator->run ( internalDoc->file() , internalDoc->setup(), false );
         }

@@ -20,7 +20,7 @@ ELSE (DEFINED CACHED_IMLIB)
   # in the FIND_PATH() and FIND_LIBRARY() calls
   INCLUDE(UsePkgConfig)
   
-  PKGCONFIG(libagg _IMLIBIncDir _IMLIBLinkDir _IMLIBLinkFlags _IMLIBCflags)
+  PKGCONFIG(imlib _IMLIBIncDir _IMLIBLinkDir _IMLIBLinkFlags _IMLIBCflags)
   
   set(IMLIB_DEFINITIONS ${_IMLIBCflags})
   
@@ -30,17 +30,17 @@ ELSE (DEFINED CACHED_IMLIB)
     /usr/local/include
   )
   
-  FIND_LIBRARY(IMLIB_LIBRARIES NAMES Imlib
+  FIND_LIBRARY(IMLIB_LIBRARIES NAMES Imlib libImlib
     PATHS
     ${_IMLIBLinkDir}
     /usr/lib
     /usr/local/lib
   )
-  
+
   if (IMLIB_INCLUDE_DIR AND IMLIB_LIBRARIES)
-     SET(imlib_found true)
+     SET(IMLIB_FOUND true)
   endif (IMLIB_INCLUDE_DIR AND IMLIB_LIBRARIES)
-  
+ 
   if (IMLIB_FOUND)
     set(CACHED_IMLIB "YES")
     if (NOT IMLIB_FIND_QUIETLY)
@@ -48,6 +48,9 @@ ELSE (DEFINED CACHED_IMLIB)
     endif (NOT IMLIB_FIND_QUIETLY)
   else (IMLIB_FOUND)
     set(CACHED_IMLIB "NO")
+    if (NOT IMLIB_FIND_QUIETLY)
+      message(STATUS "didn't find IMLIB")
+    endif (NOT IMLIB_FIND_QUIETLY)
     if (IMLIB_FIND_REQUIRED)
       message(FATAL_ERROR "Could NOT find IMLIB")
     endif (IMLIB_FIND_REQUIRED)

@@ -72,6 +72,8 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * 
 
 bool DjVuGenerator::closeDocument()
 {
+    m_djvu->closeFile();
+
     delete m_docInfo;
     m_docInfo = 0;
     delete m_docSyn;

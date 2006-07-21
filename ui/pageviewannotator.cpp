@@ -132,7 +132,7 @@ class SmoothPathEngine : public AnnotatorEngine
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
         {
-            // draw SmoothPaths whith at least 2 points
+            // draw SmoothPaths with at least 2 points
             if ( points.count() > 1 )
             {
                 // use engine's color for painting

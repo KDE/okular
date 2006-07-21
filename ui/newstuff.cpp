@@ -65,8 +65,9 @@ class ExtendImageWidget : public QWidget
             // paint all own pixels
             setAttribute( Qt::WA_OpaquePaintEvent, true );
             // create the tile image from last line of pixmap
-            m_tile.resize( pix.width(), 1 );
-            copyBlt( &m_tile, 0,0, &pix, 0,pix.height()-2, pix.width(),1 );
+            m_tile = QPixmap( pix.width(), 1 );
+            QPainter p(&m_tile);
+            p.drawPixmap(0, 0, pix, 0,pix.height()-2, pix.width(),1 );
         }
 
         // internal paint function

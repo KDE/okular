@@ -242,7 +242,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aZoom = new KSelectAction( KIcon( "viewmag" ), i18n( "Zoom" ), ac, "zoom_to" );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 13 );
-    connect( d->aZoom, SIGNAL( triggered() ), this, SLOT( slotZoom() ) );
+    connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
     KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );

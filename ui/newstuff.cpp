@@ -838,12 +838,12 @@ void NewStuffDialog::slotDownloadItem( AvailableItem * item )
     // create a job that will download the file
     KIO::FileCopyJob * job = KIO::file_copy( item->url(), item->destinationPath(),
         -1 /*perms*/, true /*overwrite*/, false /*resume*/, false /*showProgressInfo*/ );
-    connect( job, SIGNAL( infoMessage( KIO::Job *, const QString & ) ),
-             this, SLOT( slotItemMessage( KIO::Job *, const QString & ) ) );
-    connect( job, SIGNAL( percent ( KIO::Job *, unsigned long ) ),
-             this, SLOT( slotItemPercentage( KIO::Job *, unsigned long ) ) );
-    connect( job, SIGNAL( result( KIO::Job * ) ),
-             this, SLOT( slotItemResult( KIO::Job * ) ) );
+    connect( job, SIGNAL( infoMessage( KJob *, const QString & ) ),
+             this, SLOT( slotItemMessage( KJob *, const QString & ) ) );
+    connect( job, SIGNAL( percent ( KJob *, unsigned long ) ),
+             this, SLOT( slotItemPercentage( KJob *, unsigned long ) ) );
+    connect( job, SIGNAL( result( KJob * ) ),
+             this, SLOT( slotItemResult( KJob * ) ) );
 
     // create a job description and data holder
     ItemTransferInfo info;
@@ -859,7 +859,7 @@ void NewStuffDialog::slotDownloadItem( AvailableItem * item )
     displayMessage( i18n( "Installing '%1', this could take some time ...", item->name() ) );
 }
 
-void NewStuffDialog::slotItemMessage( KIO::Job * job, const QString & message )
+void NewStuffDialog::slotItemMessage( KJob * job, const QString & message )
 {
     // safety check
     if ( !d->transferJobs.contains( job ) )
@@ -871,7 +871,7 @@ void NewStuffDialog::slotItemMessage( KIO::Job * job, const QString & message )
     d->itemsView->updateItem( item );
 }
 
-void NewStuffDialog::slotItemPercentage( KIO::Job * job, unsigned long percent )
+void NewStuffDialog::slotItemPercentage( KJob * job, unsigned long percent )
 {
     // safety check
     if ( !d->transferJobs.contains( job ) )
@@ -883,7 +883,7 @@ void NewStuffDialog::slotItemPercentage( KIO::Job * job, unsigned long percent )
     d->itemsView->updateItem( item );
 }
 
-void NewStuffDialog::slotItemResult( KIO::Job * job )
+void NewStuffDialog::slotItemResult( KJob * job )
 {
     // safety check
     if ( !d->transferJobs.contains( job ) )

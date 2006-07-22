@@ -60,9 +60,9 @@ class NewStuffDialog : public QDialog
         void slotProviderInfoResult( KJob * );
         // file downloading
         void slotDownloadItem( AvailableItem * );
-        void slotItemMessage( KIO::Job *, const QString & );
-        void slotItemPercentage( KIO::Job *, unsigned long );
-        void slotItemResult( KIO::Job * );
+        void slotItemMessage( KJob *, const QString & );
+        void slotItemPercentage( KJob *, unsigned long );
+        void slotItemResult( KJob * );
 };
 
 #endif

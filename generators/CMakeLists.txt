@@ -1,7 +1,7 @@
 # let's enable the generators properly configured
 
 if(POPPLER_FOUND)
-		#add_subdirectory(poppler)
+  add_subdirectory(poppler)
 endif(POPPLER_FOUND)
 if(LIBGS_FOUND)
   add_subdirectory(ghostview)

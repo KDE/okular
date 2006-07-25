@@ -17,7 +17,7 @@ kde4_add_plugin(okularGenerator_fax WITH_PREFIX ${okularGenerator_fax_PART_SRCS}
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_fax )
 
-target_link_libraries(okularGenerator_fax  ${KDE4_KDECORE_LIBS} okularcore ${KDE4_KDEUI_LIBS} kfaximage )
+target_link_libraries(okularGenerator_fax  okularcore ${KDE4_KDEUI_LIBS} kfaximage )
 
 install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
 

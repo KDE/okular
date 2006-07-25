@@ -7,9 +7,9 @@ kde4_automoc(${okular_SRCS})
 
 kde4_add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} )
+target_link_libraries(okular  ${KDE4_KPARTS_LIBS} )
 
-install(TARGETS okular DESTINATION bin)
+install(TARGETS okular DESTINATION ${BIN_INSTALL_DIR})
 
 ########### install files ###############
 

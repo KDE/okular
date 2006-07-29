@@ -1774,8 +1774,6 @@ void PageView::selectionClear()
 
 void PageView::updateZoom( ZoomMode newZoomMode )
 {
-    kDebug () << "PageView::updateZoom(newZoomMode=" << newZoomMode << ")" << endl;
-
     if ( newZoomMode == ZoomFixed )
     {
         if ( d->aZoom->currentItem() == 0 )
@@ -1790,12 +1788,10 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     {
         case ZoomFixed:{ //ZoomFixed case
             QString z = d->aZoom->currentText();
-            kDebug () << "\tcurrentText=" << z << endl;
             // kdelibs4 sometimes adds accelerators to actions' text directly :(
             z.remove ('&');
             z.remove ('%');
             newFactor = KGlobal::locale()->readNumber( z ) / 100.0;
-            kDebug () << "\tnewFactor=" << newFactor << endl;
             }break;
         case ZoomIn:
             newFactor += (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;
@@ -1826,7 +1822,6 @@ void PageView::updateZoom( ZoomMode newZoomMode )
 
     if ( newZoomMode != d->zoomMode || (newZoomMode == ZoomFixed && newFactor != d->zoomFactor ) )
     {
-        kDebug () << "\tcausing update=" << newFactor << endl;
         // rebuild layout and update the whole viewport
         d->zoomMode = newZoomMode;
         d->zoomFactor = newFactor;
@@ -1856,7 +1851,6 @@ void PageView::updateZoomText()
     if ( d->zoomMode != ZoomFixed && d->items.count() > 0 )
         d->zoomFactor = d->items[ qMax( 0, (int)d->document->currentPage() ) ]->zoomFactor();
     float newFactor = d->zoomFactor;
-    kDebug () << "PageView::updateZoomText() newFactor=" << newFactor << endl;
     d->aZoom->removeAllActions();
 
     // add items that describe fit actions
@@ -1869,17 +1863,11 @@ void PageView::updateZoomText()
     int idx = 0,
         selIdx = 2; // use 3 if "fit text" present
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
-    kDebug () << "\tloop" << endl;
     while ( idx < 10 || !inserted )
     {
-        kDebug () << "\t\tidx=" << idx << " inserted=" << inserted << endl;
         float value = idx < 10 ? zoomValue[ idx ] : newFactor;
-        kDebug () << "\t\t\tvalue=" << value << endl;
         if ( !inserted && newFactor < (value - 0.0001) )
-        {
             value = newFactor;
-            kDebug () << "\t\t\t\tnewFactor might come before us; value=newFactor=" << newFactor << endl;
-        }
         else
             idx ++;
         if ( value > (newFactor - 0.0001) && value < (newFactor + 0.0001) )
@@ -1888,10 +1876,8 @@ void PageView::updateZoomText()
             selIdx++;
         QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 2 ) );
         localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
-        kDebug () << "\t\t\tadding '" << localValue << "'" << endl;
         translated << QString( "%1%" ).arg( localValue );
     }
-    kDebug () << "\tsetItems(" << translated << ")" << endl;
     d->aZoom->setItems( translated );
 
     // select current item in list

@@ -120,7 +120,7 @@ HighlightAreaRect::HighlightAreaRect(RegularAreaRect *area)
 	RegularAreaRect::Iterator i;
 	for (i=area->begin();i!=area->end();++i)
 	{
-		append(*i);
+		append(new NormalizedRect(*(*i)));
 	}
 	s_id=-1;
 	color=QColor();

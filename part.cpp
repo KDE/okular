@@ -1083,8 +1083,11 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	if (page && reallyShow)
 	{
 		QAction *res = popup->exec(point);
+		if (res)
+		{
 		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );
 		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
+		}
 	}
 	delete popup;
 }

@@ -23,10 +23,12 @@
 // qt/kde includes
 #include <qcursor.h>
 #include <qevent.h>
+#include <qgraphicsscene.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qpushbutton.h>
+#include <qscrollbar.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <QX11Info>
@@ -65,10 +67,6 @@
 
 #define ROUND(x) (int(x + 0.5))
 
-static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
-                       PagePainter::EnhanceImages | PagePainter::Highlights |
-                       PagePainter::Annotations;
-
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -88,8 +86,7 @@ public:
     bool mouseMidZooming;
     int mouseMidLastY;
     bool mouseSelecting;
-    QRect mouseSelectionRect;
-    QColor mouseSelectionColor;
+    RubberBandItem * rubberBand;
     bool mouseTextSelecting;
     bool mouseTextSelectionPainted;
     QList<QRect>* mouseTextSelectionRect;
@@ -123,6 +120,7 @@ public:
     KSelectAction * aPaperSizes;
     KAction * aMouseNormal;
     KAction * aMouseSelect;
+    KAction * aMouseTextSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
@@ -147,7 +145,7 @@ public:
  * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, KPDFDocument *document )
-    : Q3ScrollView( parent )
+    : QGraphicsView( parent )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate();
@@ -159,6 +157,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
+    d->rubberBand = 0;
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
     d->typeAheadActive = false;
@@ -179,22 +178,21 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->mouseTextSelectionPainted=0;
     d->aPaperSizes=0;
 
-    setAttribute( Qt::WA_StaticContents );
-
     setObjectName( QLatin1String( "okular::pageView" ) );
 
     // widget setup: setup focus, accept drops and track mouse
     viewport()->setFocusProxy( this );
     viewport()->setFocusPolicy( Qt::StrongFocus );
-    //viewport()->setPaletteBackgroundColor( Qt::white );
-    viewport()->setAttribute( Qt::WA_OpaquePaintEvent );
-    setResizePolicy( Manual );
     setAcceptDrops( true );
-    setDragAutoScroll( false );
     viewport()->setMouseTracking( true );
 
+    // scene setup
+    setScene( new QGraphicsScene() );
+    scene()->setBackgroundBrush( QBrush( Qt::gray ) );
+
     // conntect the padding of the viewport to pixmaps requests
-    connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
+    connect( horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()) );
+    connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()) );
 
     // show initial welcome text
     d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
@@ -292,6 +290,11 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
 
+    d->aMouseTextSelect = new KAction( KIcon( "text" ), i18n("&Text Selection Tool"), ac, "mouse_textselect" );
+    connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
+    d->aMouseTextSelect->setCheckable( true );
+    d->aMouseTextSelect->setActionGroup( actGroup );
+
     d->aToggleAnnotator = new KToggleAction( KIcon( "pencil" ), i18n("&Review"), ac, "mouse_toggle_annotate" );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
@@ -366,7 +369,10 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     // delete all widgets (one for each page in pageSet)
     QVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
+    {
+        scene()->removeItem( *dIt );
         delete *dIt;
+    }
     d->items.clear();
     d->visibleItems.clear();
 
@@ -375,6 +381,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     for ( ; setIt != setEnd; ++setIt )
     {
         d->items.push_back( new PageViewItem( *setIt ) );
+        scene()->addItem( d->items.last() );
 #ifdef PAGEVIEW_DEBUG
         kDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
 #endif
@@ -392,8 +399,8 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     {
         // update the mouse cursor when closing because we may have close through a link and
         // want the cursor to come back to the normal cursor
-        updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
-        resizeContents( 0, 0 );
+        updateCursor( mapFromGlobal( QCursor::pos() ) + mapToScene( 0, 0 ).toPoint() );
+        setSceneRect( 0, 0, 0, 0 );
     }
 
     // OSD to display pages
@@ -448,27 +455,27 @@ void PageView::notifyViewportChanged( bool smoothMove )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
-    const QRect & r = item->geometry();
-    int newCenterX = r.left(),
+    const QRectF & r = item->geometry();
+    double newCenterX = r.left(),
         newCenterY = r.top();
     if ( vp.rePos.enabled )
     {
         if ( vp.rePos.pos == DocumentViewport::Center )
         {
-            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() );
-            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() );
+            newCenterX += (int)( vp.rePos.normalizedX * r.width() );
+            newCenterY += (int)( vp.rePos.normalizedY * r.height() );
         }
         else
         {
             // TopLeft
-            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() + viewport()->width() / 2 );
-            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() + viewport()->height() / 2 );
+            newCenterX += (int)( vp.rePos.normalizedX * r.width() + viewport()->width() / 2 );
+            newCenterY += (int)( vp.rePos.normalizedY * r.height() + viewport()->height() / 2 );
         }
     }
     else
     {
         newCenterX += r.width() / 2;
-        newCenterY += visibleHeight() / 2 - 10;
+        newCenterY += viewport()->rect().height() / 2 - 10;
     }
 
     // if smooth movement requested, setup parameters and start it
@@ -489,7 +496,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         horizontalScrollBar()->setEnabled( false );
     }
     else
-        center( newCenterX, newCenterY );
+        centerOn( newCenterX, newCenterY );
     d->blockPixmapsRequest = false;
 
     // request visible pixmaps in the current viewport and recompute it
@@ -503,7 +510,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         updateZoomText();
 
     // since the page has moved below cursor, update it
-    updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+    updateCursor( mapFromGlobal( QCursor::pos() ) + mapToScene( 0, 0 ).toPoint() );
 }
 
 void PageView::notifyPageChanged( int pageNumber, int changedFlags )
@@ -517,16 +524,18 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     for ( ; iIt != iEnd; ++iIt )
         if ( (*iIt)->pageNumber() == pageNumber )
         {
+/*
             // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->geometry();
+            QRectF expandedRect = (*iIt)->geometry();
             expandedRect.adjust( -1, -1, 3, 3 );
-            updateContents( expandedRect );
+*/
+            (*iIt)->update();
 
             // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
             if ( cursor().shape() != Qt::SizeVerCursor )
             {
                 // since the page has been regenerated below cursor, update it
-                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+                updateCursor( mapFromGlobal( QCursor::pos() ) + mapToScene( 0, 0 ).toPoint() );
             }
             break;
         }
@@ -552,9 +561,9 @@ bool PageView::canUnloadPixmap( int pageNumber )
 //END DocumentObserver inherited methods
 
 //BEGIN widget events
-void PageView::viewportPaintEvent( QPaintEvent * pe )
+/*
+void PageView::paintEvent( QPaintEvent * pe )
 {
-
 if ( d->document->handleEvent( pe ) )
 {
     // create the rect into contents from the clipped screen rect
@@ -731,8 +740,9 @@ if ( d->document->handleEvent( pe ) )
     }
 }
 }
+*/
 
-void PageView::viewportResizeEvent( QResizeEvent * event)
+void PageView::resizeEvent( QResizeEvent * event)
 {
 if (d->document->handleEvent( event ) )
 {
@@ -928,7 +938,7 @@ if (d->document->handleEvent( e ) )
 }
 }
 
-void PageView::contentsMouseMoveEvent( QMouseEvent * e )
+void PageView::mouseMoveEvent( QMouseEvent * e )
 {
 if (d->document->handleEvent( e ) )
 {
@@ -1014,16 +1024,35 @@ if (d->document->handleEvent( e ) )
                     d->mouseGrabPos = mousePos;
 
                     // scroll page by position increment
-                    scrollBy( delta.x(), delta.y() );
+                    scrollContentsBy( -delta.x(), -delta.y() );
                 }
             }
-            else if ( rightButton && !d->mousePressPos.isNull() )
+/*
+*/
+            else
+            {
+                // only hovering the page, so update the cursor
+                updateCursor( e->pos() + mapToScene( 0, 0 ).toPoint() );
+            }
+            break;
+
+        case MouseZoom:
+        case MouseSelect:
+            // set second corner of selection
+            if ( d->rubberBand && d->mouseSelecting )
+            {
+                d->rubberBand->resizeTo( mapToScene( 0, 0 ) + e->pos() );
+            }
+            break;
+        case MouseTextSelect:
+            if ( !d->mousePressPos.isNull() || d->mouseTextSelecting )
             {
                 // if mouse moves 5 px away from the press point, do 'textselection'
                 int deltaX = e->x() - d->mouseSelectPos.x(),
                   deltaY = e->y() - d->mouseSelectPos.y();
                 if ( d->document->supportsSearching() && ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 ) )
                 {
+                    d->mouseTextSelecting = true;
                     PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 //                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
                     const KPDFPage * kpdfPage = currentItem->page();
@@ -1031,7 +1060,7 @@ if (d->document->handleEvent( e ) )
 //                     QRect rect (d->mouseSelectPos,e->pos());
 //                     rect=rect.normalize();
 //                     
-                    QRect vRect = currentItem->geometry();
+                    QRect vRect = currentItem->geometry().toRect();
 //                     kDebug() << "viewport " << vRect << endl;
 //                     kDebug() << "selection (UN) " << rect << endl;
 //                     // move selection area over to relevant viewport
@@ -1050,40 +1079,30 @@ if (d->document->handleEvent( e ) )
                     NormalizedPoint endCursor(e->x()-vRect.left(),e->y()-vRect.top(),vRect.width(), vRect.height());
 
                     if ( ! d->mouseTextSelectionInfo )
-                      d->mouseTextSelectionInfo=new TextSelection(startCursor,endCursor);
+                      d->mouseTextSelectionInfo=new ::TextSelection(startCursor,endCursor);
                     else
                       d->mouseTextSelectionInfo->end(endCursor);
 		    RegularAreaRect * selectionArea=kpdfPage->getTextArea(d->mouseTextSelectionInfo);
                     kWarning () << "text areas: " << selectionArea->count() << endl;
                     if ( selectionArea->count() > 0 )
                     { 
+                      setCursor( Qt::IBeamCursor );
                       QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
+/*
                       textSelection(selectionArea->geometry(vRect.width(),vRect.height(),vRect.left(),vRect.top())
                           ,selColor);
+*/
+                        d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
                     }                    
                     delete selectionArea;
-                    break;
                 }
             }
-            else
-            {
-                // only hovering the page, so update the cursor
-                updateCursor( e->pos() );
-            }
-            break;
-
-        case MouseZoom:
-        case MouseSelect:
-            // set second corner of selection
-            // TODO: does this condition make sense?
-            if ( d->mouseSelecting || (d->mouseSelecting && d->aPrevAction) )
-                selectionEndPoint( e->x(), e->y() );
             break;
     }
 }
 }
 
-void PageView::contentsMousePressEvent( QMouseEvent * e )
+void PageView::mousePressEvent( QMouseEvent * e )
 {
 if ( d->document->handleEvent( e ) )
 {
@@ -1123,12 +1142,12 @@ if ( d->document->handleEvent( e ) )
     d->mousePressPos = e->globalPos();
 
     // handle mode dependant mouse press actions
-    bool leftButton = e->button() & Qt::LeftButton,
-         rightButton = e->button() & Qt::RightButton;
+    bool leftButton = e->button() == Qt::LeftButton,
+         rightButton = e->button() == Qt::RightButton;
         
 //   Not sure we should erase the selection when clicking with left.
-     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
-       textSelectionClear();
+     if ( d->mouseMode != MouseTextSelect )
+       textSelectionClear( e->pos() + mapToScene( 0, 0 ).toPoint() );
     
     switch ( d->mouseMode )
     {
@@ -1139,29 +1158,31 @@ if ( d->document->handleEvent( e ) )
                 if ( !d->mouseOnRect )
                     setCursor( Qt::SizeAllCursor );
             }
-            else if (rightButton)
-              d->mouseSelectPos=e->pos() ; // just check
             break;
-
         case MouseZoom:     // set first corner of the zoom rect
             if ( leftButton )
-                selectionStart( e->x(), e->y(), palette().color( QPalette::Active, QPalette::Highlight ), false );
+                selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ), false );
             else if ( rightButton )
                 updateZoom( ZoomOut );
             break;
-
         case MouseSelect:   // set first corner of the selection rect
 //             if ( leftButton )
 //             {
-                QColor selColor = palette().color( QPalette::Active, QPalette::Highlight ).light( 120 );
-                selectionStart( e->x(), e->y(), selColor, false );
+                selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
 //             }
+            break;
+        case MouseTextSelect:
+            d->mouseSelectPos = e->pos() + mapToScene( 0, 0 ).toPoint();
+            if ( !rightButton )
+            {
+                textSelectionClear( d->mouseSelectPos );
+            }
             break;
     }
 }
 }
 
-void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
+void PageView::mouseReleaseEvent( QMouseEvent * e )
 {
 if (d->document->handleEvent( e ) )
 {
@@ -1185,7 +1206,7 @@ if (d->document->handleEvent( e ) )
         // request pixmaps since it was disabled during drag
         slotRequestVisiblePixmaps();
         // the cursor may now be over a link.. update it
-        updateCursor( e->pos() );
+        updateCursor( e->pos() + mapToScene( 0, 0 ).toPoint() );
         return;
     }
 
@@ -1197,22 +1218,23 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->buttons() & Qt::LeftButton,
-         rightButton = e->buttons() & Qt::RightButton;
+    bool leftButton = e->button() == Qt::LeftButton,
+         rightButton = e->button() == Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:{
             // return the cursor to its normal state after dragging
             if ( cursor().shape() == Qt::SizeAllCursor )
-                updateCursor( e->pos() );
+                updateCursor( e->pos() + mapToScene( 0, 0 ).toPoint() );
 
-            PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+            QPoint mapped = e->pos() + mapToScene( 0, 0 ).toPoint();
+            PageViewItem * pageItem = pickItemOnPoint( mapped.x(), mapped.y() );
 
             // if the mouse has not moved since the press, that's a -click-
             if ( leftButton && pageItem && d->mousePressPos == e->globalPos())
             {
-                double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
-                       nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
+                double nX = (double)(mapped.x() - pageItem->geometry().left()) / (double)pageItem->width(),
+                       nY = (double)(mapped.y() - pageItem->geometry().top()) / (double)pageItem->height();
                 const ObjectRect * rect;
                 rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
                 if ( rect )
@@ -1241,36 +1263,82 @@ if (d->document->handleEvent( e ) )
             }
             else if ( rightButton )
             {
-              if ( d->mouseTextSelecting )
-              {
-                d->mouseTextSelecting = false;
-                delete d->mouseTextSelectionInfo;
-                d->mouseTextSelectionInfo=0;
-//                textSelectionClear();
-//                 textSelectionToClipboard();
-              }
-              else    
-                // right click (if not within 5 px of the press point, the mode
-                // had been already changed to 'Selection' instead of 'Normal')
-                emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                if ( pageItem && d->mousePressPos == e->globalPos() )
+                {
+                    double nX = (double)(mapped.x() - pageItem->geometry().left()) / (double)pageItem->width(),
+                           nY = (double)(mapped.y() - pageItem->geometry().top()) / (double)pageItem->height();
+                    const ObjectRect * rect;
+                    rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
+                    if ( rect )
+                    {
+                        // handle right click over a link
+                        const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                        // creating the menu and its actions
+                        KMenu menu( this );
+                        QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
+                        QAction * actCopyLinkLocation = 0;
+                        if ( dynamic_cast< const KPDFLinkBrowse * >( link ) )
+                            actCopyLinkLocation = menu.addAction( i18n( "Copy Link Location" ) );
+                        QAction * res = menu.exec( e->globalPos() );
+                        if ( res )
+                        {
+                            if ( res == actProcessLink )
+                            {
+                                d->document->processLink( link );
+                            }
+                            else if ( res == actCopyLinkLocation )
+                            {
+                                const KPDFLinkBrowse * browseLink = static_cast< const KPDFLinkBrowse * >( link );
+                                QClipboard *cb = QApplication::clipboard();
+                                cb->setText( browseLink->url(), QClipboard::Clipboard );
+                                if ( cb->supportsSelection() )
+                                    cb->setText( browseLink->url(), QClipboard::Selection );
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // a link can move us to another page or even to another document, there's no point in trying to
+                        //  process the click on the image once we have processes the click on the link
+                        rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY );
+                        if ( rect )
+                        {
+                            // handle right click over a image
+                        }
+                        else
+                        {
+                            // right click (if not within 5 px of the press point, the mode
+                            // had been already changed to 'Selection' instead of 'Normal')
+                            emit rightClick( pageItem->page(), e->globalPos() );
+                        }
+                    }
+                }
+                else
+                {
+                    // right click (if not within 5 px of the press point, the mode
+                    // had been already changed to 'Selection' instead of 'Normal')
+                    emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                }
             }
             }break;
 
         case MouseZoom:
             // if a selection rect has been defined, zoom into it
-            if ( leftButton && d->mouseSelecting )
+            if ( leftButton && d->mouseSelecting && d->rubberBand )
             {
-                QRect selRect = d->mouseSelectionRect.normalized();
+                const QRectF & selRect = d->rubberBand->geometry();
                 if ( selRect.width() <= 8 && selRect.height() <= 8 )
                 {
                     selectionClear();
                     break;
                 }
 
+                const QRect & visibleRect = viewport()->rect();
+                const QRectF & sceneRect = scene()->sceneRect();
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
-                double zoom = qMin( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
-                double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentsWidth());
-                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentsHeight());
+                double zoom = qMin( (double)visibleRect.width() / selRect.width(), (double)visibleRect.height() / selRect.height() );
+                double nX = (selRect.left() + selRect.right()) / (2.0 * sceneRect.width());
+                double nY = (selRect.top() + selRect.bottom()) / (2.0 * sceneRect.height());
 
                 // zoom up to 400%
                 if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
@@ -1282,8 +1350,8 @@ if (d->document->handleEvent( e ) )
                 }
 
                 // recenter view and update the viewport
-                center( (int)(nX * contentsWidth()), (int)(nY * contentsHeight()) );
-                updateContents();
+                centerOn( nX * sceneRect.width(), nY * sceneRect.height() );
+//                update();
 
                 // hide message box and delete overlay window
                 selectionClear();
@@ -1292,27 +1360,31 @@ if (d->document->handleEvent( e ) )
 
         case MouseSelect:{
             // if mouse is released and selection is null this is a rightClick
+            // FIXME!!!!
+/*
             if ( rightButton && !d->mouseSelecting )
             {
                 PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
                 emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
                 break;
             }
-
+*/
             // if a selection is defined, display a popup
-            if ( (!leftButton && !d->aPrevAction) || (!rightButton && d->aPrevAction) ||
-                 !d->mouseSelecting )
+            if ( !d->rubberBand || !d->mouseSelecting )
                 break;
 
-            QRect selectionRect = d->mouseSelectionRect.normalized();
+            const QRectF & selectionRect = d->rubberBand->geometry();
+            d->mouseSelecting = false;
             if ( selectionRect.width() <= 8 && selectionRect.height() <= 8 )
             {
                 selectionClear();
+/*
                 if ( d->aPrevAction )
                 {
                     d->aPrevAction->trigger();
                     d->aPrevAction = 0;
                 }
+*/
                 break;
             }
 
@@ -1327,7 +1399,7 @@ if (d->document->handleEvent( e ) )
 		for ( ; iIt != iEnd; ++iIt )
 		{
 		    PageViewItem * item = *iIt;
-		    const QRect & itemRect = item->geometry();
+		    const QRectF & itemRect = item->geometry();
 		    if ( selectionRect.intersects( itemRect ) )
 		    {
 			// request the textpage if there isn't one
@@ -1336,7 +1408,7 @@ if (d->document->handleEvent( e ) )
 			if ( !kpdfPage->hasSearchPage() )
 			    d->document->requestTextPage( kpdfPage->number() );
 			// grab text in the rect that intersects itemRect
-			QRect relativeRect = selectionRect.intersect( itemRect );
+			QRect relativeRect = selectionRect.intersect( itemRect ).toRect();
 			relativeRect.translate( -itemRect.left(), -itemRect.top() );
 			rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
 		    }
@@ -1363,6 +1435,8 @@ if (d->document->handleEvent( e ) )
             imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
+            // clear widget selection and invalidate rect
+            selectionClear();
             // check if the user really selected an action
             if ( choice )
             {
@@ -1370,10 +1444,17 @@ if (d->document->handleEvent( e ) )
             if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap
+//kDebug() << "SELECTION: " << selectionRect << endl;
+/*
                 QPixmap copyPix( selectionRect.width(), selectionRect.height() );
                 QPainter copyPainter( &copyPix );
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
                 drawDocumentOnPainter( selectionRect, &copyPainter );
+*/
+                QPixmap copyPix( selectionRect.toRect().size() );
+                QPainter copyPainter( &copyPix );
+                scene()->render( &copyPainter, QRectF(), selectionRect.toRect() );
+                copyPainter.end();
 
                 if ( choice == imageToClipboard )
                 {
@@ -1446,20 +1527,42 @@ if (d->document->handleEvent( e ) )
                 }
             }
             }
-            // clear widget selection and invalidate rect
-            selectionClear();
 
+/*
             // restore previous action if came from it using right button
             if ( d->aPrevAction )
             {
                 d->aPrevAction->trigger();
                 d->aPrevAction = 0;
             }
+*/
             }break;
+            case MouseTextSelect:
+                setCursor( Qt::ArrowCursor );
+                // TODO: clear the selections (aka, notify the document to set null selections to the pages)
+                if ( d->mouseTextSelecting )
+                {
+                    d->mouseTextSelecting = false;
+                    delete d->mouseTextSelectionInfo;
+                    d->mouseTextSelectionInfo=0;
+//                    textSelectionClear();
+                }
+                else if ( !d->mousePressPos.isNull() )
+                {
+                    QPoint mapped = e->pos() + mapToScene( 0, 0 ).toPoint();
+                    PageViewItem * pageItem = pickItemOnPoint( mapped.x(), mapped.y() );
+                    const KPDFPage * page = pageItem ? pageItem->page() : 0;
+                    if ( page )
+                    {
+                    }
+                }
+            break;
     }
 
     // reset mouse press / 'drag start' position
     d->mousePressPos = QPoint();
+
+//    update();
 }
 }
 
@@ -1474,7 +1577,7 @@ if (d->document->handleEvent( e ) )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->state() & Qt::ControlButton) == Qt::ControlButton ) {
+    if ( (e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else
@@ -1511,10 +1614,9 @@ if (d->document->handleEvent( e ) )
         }
     }
     else
-        Q3ScrollView::wheelEvent( e );
+        QGraphicsView::wheelEvent( e );
 
-    QPoint cp = viewportToContents(e->pos());
-    updateCursor(cp);
+    updateCursor( e->pos() + mapToScene( 0, 0 ).toPoint() );
 }
 }
 
@@ -1524,6 +1626,14 @@ if (d->document->handleEvent( ev ) )
 {
     ev->accept();
 }
+}
+
+void PageView::dragMoveEvent( QDragMoveEvent * ev )
+{
+    if ( !d->document->handleEvent( ev ) )
+        return;
+
+    ev->accept();
 }
 
 void PageView::dropEvent( QDropEvent * ev )
@@ -1536,6 +1646,7 @@ if (d->document->handleEvent( ev ) )
 }
 //END widget events
 
+/*
 void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 {
     // when checking if an Item is contained in contentsRect, instead of
@@ -1557,7 +1668,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 
         // get item and item's outline geometries
         PageViewItem * item = *iIt;
-        QRect itemGeometry = item->geometry(),
+        QRect itemGeometry = item->geometry().toRect(),
               outlineGeometry = itemGeometry;
         outlineGeometry.adjust( -1, -1, 3, 3 );
 
@@ -1606,10 +1717,11 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     // fill with background color the unpainted area
     QVector<QRect> backRects = remainingArea.rects();
     int backRectsNumber = backRects.count();
-    QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
+    QColor backColor = / * d->items.isEmpty() ? Qt::lightGray : * / Qt::gray;
     for ( int jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], backColor );
 }
+*/
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )
 {
@@ -1651,7 +1763,7 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
-        const QRect & r = i->geometry();
+        const QRectF & r = i->geometry();
         if ( x < r.right() && x > r.left() && y < r.bottom() )
         {
             if ( y > r.top() )
@@ -1694,31 +1806,44 @@ void PageView::textSelection( QList<QRect> * area, const QColor & color )
         r |= (*it).adjusted( 0, 0, 1, 1 );
     }
     if ( !r.isNull() )
-        updateContents( r );
+        scene()->update( r );
     d->mouseTextSelectionPainted=true;
 }
     
-void PageView::textSelectionClear()
+void PageView::textSelectionClear( const QPoint & pos )
 {
   // nothing no clear
-  if ( !d->mouseTextSelectionRect ) return;
+//  if ( !d->mouseTextSelectionRect ) return;
 
   setCursor( Qt::ArrowCursor  );
+  // TODO: clear the selections (aka, notify the document to set null selections to the pages)
+    PageViewItem * pageItem = pickItemOnPoint( pos.x(), pos.y() );
+    if ( pageItem )
+    {
+        d->document->setPageTextSelection( pageItem->pageNumber(), 0, QColor() );
+    }
+/*
   QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
     end=d->mouseTextSelectionRect->end();
  for (;it!=end;++it)
   {
-    updateContents( *it );
+    scene()->update( *it );
   }
+*/
+/*
   delete d->mouseTextSelectionRect;
   d->mouseTextSelectionRect=0;
+*/
 }
 
-void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveAll*/ )
+void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*aboveAll*/ )
 {
+    selectionClear();
     d->mouseSelecting = true;
-    d->mouseSelectionRect.setRect( x, y, 1, 1 );
-    d->mouseSelectionColor = color;
+    d->rubberBand = new RubberBandItem( color );
+    scene()->addItem( d->rubberBand );
+    d->rubberBand->setPos( mapToScene( 0, 0 ) + pos );
+    d->rubberBand->resize( 1, 1 );
     // ensures page doesn't scroll
     if ( d->autoScrollTimer )
     {
@@ -1727,49 +1852,17 @@ void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveA
     }
 }
 
-void PageView::selectionEndPoint( int x, int y )
-{
-    // clip selection to the viewport
-    QRect viewportRect( viewport()->rect() );
-    x = qBound( viewportRect.left(), x, viewportRect.right() );
-    y = qBound( viewportRect.top(), y, viewportRect.bottom() );
-    // if selection changed update rect
-    if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
-    {
-        // send incremental paint events
-        QRect oldRect = d->mouseSelectionRect.normalized();
-        d->mouseSelectionRect.setRight( x );
-        d->mouseSelectionRect.setBottom( y );
-        QRect newRect = d->mouseSelectionRect.normalized();
-        // generate diff region: [ OLD.unite(NEW) - OLD.intersect(NEW) ]
-        QRegion compoundRegion = QRegion( oldRect ).unite( newRect );
-        if ( oldRect.intersects( newRect ) )
-        {
-            QRect intersection = oldRect.intersect( newRect );
-            intersection.adjust( 1, 1, -1, -1 );
-            if ( intersection.width() > 20 && intersection.height() > 20 )
-                compoundRegion -= intersection;
-        }
-        // tassellate region with rects and enqueue a global paint event
-        QVector<QRect> rects = compoundRegion.rects();
-        QRect r;
-        if ( rects.count() > 0 )
-            r = rects.at(0).adjusted( 0, 0, 1, 1 );
-        for ( int i = 0; i < rects.count(); i++ )
-        {
-            r |= rects.at(i).adjusted( 0, 0, 1, 1 );
-        }
-        if ( !r.isNull() )
-            updateContents( r );
-    }
-}
-
 void PageView::selectionClear()
 {
-    QRect updatedRect = d->mouseSelectionRect.normalized().adjusted( 0, 0, 1, 1 );
     d->mouseSelecting = false;
-    d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
-    updateContents( updatedRect );
+    if ( d->rubberBand )
+    {
+        scene()->removeItem( d->rubberBand );
+        const QRectF & updatedRect = d->rubberBand->geometry();
+        scene()->update( updatedRect );
+        delete d->rubberBand;
+        d->rubberBand = 0;
+    }
 }
 
 void PageView::updateZoom( ZoomMode newZoomMode )
@@ -1896,8 +1989,9 @@ void PageView::updateCursor( const QPoint &p )
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
     if ( pageItem )
     {
-        double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
-               nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
+        const QRectF & geom = pageItem->geometry();
+        double nX = (p.x() - geom.left()) / geom.width(),
+               nY = (p.y() - geom.top()) / geom.height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
         d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
@@ -1938,7 +2032,7 @@ void PageView::slotRelayoutPages()
     int pageCount = d->items.count();
     if ( pageCount < 1 )
     {
-        resizeContents( 0, 0 );
+        setSceneRect( 0, 0, 0, 0 );
         return;
     }
 
@@ -1953,11 +2047,11 @@ void PageView::slotRelayoutPages()
 
     // common iterator used in this method and viewport parameters
     QVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
-    int viewportWidth = visibleWidth(),
-        viewportHeight = visibleHeight(),
+    QRect viewportRect = viewport()->rect().translated( mapToScene( 0, 0 ).toPoint() );
+    int viewportWidth = viewportRect.width(),
+        viewportHeight = viewportRect.height(),
         fullWidth = 0,
         fullHeight = 0;
-    QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
@@ -2168,41 +2262,42 @@ void PageView::slotRelayoutPages()
     d->dirtyLayout = false;
 
     // 4) update scrollview's contents size and recenter view
-    bool wasUpdatesEnabled = viewport()->updatesEnabled();
-    if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
+    bool wasUpdatesEnabled = updatesEnabled();
+    if ( fullWidth != viewportWidth || fullHeight != viewportHeight )
     {
         // disable updates and resize the viewportContents
         if ( wasUpdatesEnabled )
-            viewport()->setUpdatesEnabled( false );
-        resizeContents( fullWidth, fullHeight );
+            setUpdatesEnabled( false );
+//        setSceneRect( 0, 0, fullWidth, fullHeight );
+        setSceneRect( QRectF() );
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )
         {
             const DocumentViewport & vp = d->document->viewport();
             if ( vp.pageNumber >= 0 )
             {
-                int prevX = contentsX(),
-                    prevY = contentsY();
-                const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
+                int prevX = viewportRect.left(),
+                    prevY = viewportRect.top();
+                const QRectF & geometry = d->items[ vp.pageNumber ]->geometry();
                 double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
                        nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
-                center( geometry.left() + ROUND( nX * (double)geometry.width() ),
-                        geometry.top() + ROUND( nY * (double)geometry.height() ) );
-                // center() usually moves the viewport, that requests pixmaps too.
+                centerOn( geometry.left() + ROUND( nX * geometry.width() ),
+                        geometry.top() + ROUND( nY * geometry.height() ) );
+                // centerOn() usually moves the viewport, that requests pixmaps too.
                 // if that doesn't happen we have to request them by hand
-                if ( prevX == contentsX() && prevY == contentsY() )
+                if ( prevX == viewportRect.left() && prevY == viewportRect.top() )
                     slotRequestVisiblePixmaps();
             }
             // or else go to center page
             else
-                center( fullWidth / 2, 0 );
-            viewport()->setUpdatesEnabled( true );
+                centerOn( fullWidth / 2, 0 );
+            setUpdatesEnabled( true );
         }
     }
 
     // 5) update the whole viewport if updated enabled
     if ( wasUpdatesEnabled )
-        updateContents();
+        update();
 }
 
 void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
@@ -2213,10 +2308,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
-    bool isEvent = newLeft != -1 && newTop != -1 && !d->blockViewport;
-    QRect viewportRect( isEvent ? newLeft : contentsX(),
-                        isEvent ? newTop : contentsY(),
-                        visibleWidth(), visibleHeight() );
+    bool isEvent = /*newLeft != -1 && newTop != -1 &&*/ !d->blockViewport;
+    QRect viewportRect = viewport()->rect().translated( mapToScene( 0, 0 ).toPoint() );
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
@@ -2236,16 +2329,16 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         PageViewItem * i = *iIt;
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking page " << i->pageNumber() << endl;
-        kWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
+        kWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry().toRect() ) << endl;
 #endif
         // if the item doesn't intersect the viewport, skip it
-        QRect intersectionRect = viewportRect.intersect( i->geometry() );
+        QRect intersectionRect = viewportRect.intersect( i->geometry().toRect() );
         if ( intersectionRect.isEmpty() )
             continue;
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
-        VisiblePageRect * vItem = new VisiblePageRect( i->pageNumber(), NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
+        VisiblePageRect * vItem = new VisiblePageRect( i->pageNumber(), NormalizedRect( intersectionRect.translated( -i->geometry().toRect().topLeft() ), i->width(), i->height() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
@@ -2266,7 +2359,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         // position between the item and the viewport center
         if ( isEvent )
         {
-            const QRect & geometry = i->geometry();
+            const QRectF & geometry = i->geometry();
             // compute distance between item center and viewport center (slightly moved left)
             double distance = hypot( (geometry.left() + geometry.right()) / 2 - (viewportCenterX - 4),
                                      (geometry.top() + geometry.bottom()) / 2 - viewportCenterY );
@@ -2276,8 +2369,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             minDistance = distance;
             if ( geometry.height() > 0 && geometry.width() > 0 )
             {
-                focusedX = ( viewportCenterX - (double)geometry.left() ) / (double)geometry.width();
-                focusedY = ( viewportCenterY - (double)geometry.top() ) / (double)geometry.height();
+                focusedX = ( viewportCenterX - geometry.left() ) / geometry.width();
+                focusedY = ( viewportCenterY - geometry.top() ) / geometry.height();
             }
         }
     }
@@ -2335,7 +2428,7 @@ void PageView::slotMoveViewport()
     int diffTime = d->viewportMoveTime.elapsed();
     if ( diffTime >= 667 || !d->viewportMoveActive )
     {
-        center( d->viewportMoveDest.x(), d->viewportMoveDest.y() );
+        centerOn( d->viewportMoveDest.x(), d->viewportMoveDest.y() );
         d->viewportMoveTimer->stop();
         d->viewportMoveActive = false;
         slotRequestVisiblePixmaps();
@@ -2344,14 +2437,17 @@ void PageView::slotMoveViewport()
         return;
     }
 
+//    const QRect & viewportRect = viewport()->rect();
+    QRect viewportRect = viewport()->rect().translated( mapToScene( 0, 0 ).toPoint() );
     // move the viewport smoothly (kmplot: p(x)=1+0.47*(x-1)^3-0.25*(x-1)^4)
+   // FIXME!!!!!
     float convergeSpeed = (float)diffTime / 667.0,
-          x = ((float)visibleWidth() / 2.0) + contentsX(),
-          y = ((float)visibleHeight() / 2.0) + contentsY(),
+          x = ((float)viewportRect.width() / 2.0) + viewportRect.left(),
+          y = ((float)viewportRect.height() / 2.0) + viewportRect.top(),
           diffX = (float)d->viewportMoveDest.x() - x,
           diffY = (float)d->viewportMoveDest.y() - y;
     convergeSpeed *= convergeSpeed * (1.4 - convergeSpeed);
-    center( (int)(x + diffX * convergeSpeed),
+    centerOn( (int)(x + diffX * convergeSpeed),
             (int)(y + diffY * convergeSpeed ) );
 }
 
@@ -2377,7 +2473,7 @@ void PageView::slotAutoScoll()
     const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
     d->autoScrollTimer->start( scrollDelay[ index ] );
-    scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
+    scrollContentsBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
 }
 
 void PageView::slotStopFindAhead()
@@ -2475,6 +2571,16 @@ void PageView::slotSetMouseSelect()
     d->mouseMode = MouseSelect;
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
+    // force hiding of annotator toolbar
+    if ( d->annotator )
+        d->annotator->setEnabled( false );
+}
+
+void PageView::slotSetMouseTextSelect()
+{
+    d->mouseMode = MouseTextSelect;
+    // change the text in messageWindow (and show it if hidden)
+    d->messageWindow->display( i18n( "Select text." ), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );

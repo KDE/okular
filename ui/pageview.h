@@ -19,7 +19,7 @@
 #ifndef _KPDF_PAGEVIEW_H_
 #define _KPDF_PAGEVIEW_H_
 
-#include <q3scrollview.h>
+#include <qgraphicsview.h>
 #include <qvector.h>
 #include <qlinkedlist.h>
 #include "ui/pageviewutils.h"
@@ -35,7 +35,7 @@ class PageViewPrivate;
  * @short display of course :-)
  * ...
  */
-class PageView : public Q3ScrollView, public DocumentObserver
+class PageView : public QGraphicsView, public DocumentObserver
 {
     Q_OBJECT
 
@@ -46,7 +46,7 @@ class PageView : public Q3ScrollView, public DocumentObserver
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseTextSelect };
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -87,37 +87,35 @@ class PageView : public Q3ScrollView, public DocumentObserver
 
     protected:
         // viewport events
-        void viewportPaintEvent( QPaintEvent * pe );
-        void viewportResizeEvent( QResizeEvent* );
+//        void paintEvent( QPaintEvent * pe );
+        void resizeEvent( QResizeEvent* );
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* );
-        void contentsMouseMoveEvent( QMouseEvent* );
-        void contentsMousePressEvent( QMouseEvent* );
-        void contentsMouseReleaseEvent( QMouseEvent* );
+        void mouseMoveEvent( QMouseEvent* );
+        void mousePressEvent( QMouseEvent* );
+        void mouseReleaseEvent( QMouseEvent* );
         void wheelEvent( QWheelEvent* );
 
         // drag and drop related events
         void dragEnterEvent( QDragEnterEvent* );
+        void dragMoveEvent( QDragMoveEvent* );
         void dropEvent( QDropEvent* );
 
     private:
-        // draw background and items on the opened qpainter
-        void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );
         // update item width and height using current zoom parameters
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
-        void selectionStart( int x, int y, const QColor & color, bool aboveAll = false );
-        void selectionEndPoint( int x, int y );
+        void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionClear();
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
 	void textSelection( QList<QRect> * , const QColor & );
-	void textSelectionClear();
+	void textSelectionClear( const QPoint & pos );
         // updates cursor
         void updateCursor( const QPoint &p );
 	int viewColumns();
@@ -150,6 +148,7 @@ class PageView : public Q3ScrollView, public DocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
+        void slotSetMouseTextSelect();
         void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();

@@ -10,6 +10,7 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <qbitmap.h>
+#include <qgraphicsscene.h>
 #include <qimage.h>
 #include <qpainter.h>
 #include <qevent.h>
@@ -25,7 +26,9 @@
 #include <math.h>
 
 // local includes
+#include "pagepainter.h"
 #include "pageviewutils.h"
+#include "core/observer.h"
 #include "core/page.h"
 #include "settings.h"
 
@@ -33,9 +36,50 @@
 /** PageViewItem     */
 /*********************/
 
+static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
+                       PagePainter::EnhanceImages | PagePainter::Highlights |
+                       PagePainter::TextSelection | PagePainter::Annotations;
+
 PageViewItem::PageViewItem( const KPDFPage * page )
-    : m_page( page ), m_zoomFactor( 1.0 )
+    : QGraphicsItem(), m_page( page ), m_zoomFactor( 1.0 ),
+      m_size( QSize( 0, 0 ) ), m_globalSize( QSize( 0, 0 ) )
 {
+    setFlags( QGraphicsItem::GraphicsItemFlags() );
+}
+
+QRectF PageViewItem::boundingRect() const
+{
+    return QRectF( QPointF( 0, 0 ), QSizeF( m_globalSize ) );
+}
+
+void PageViewItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
+{
+    PagePainter::paintPageOnPainter( painter, m_page, PAGEVIEW_ID, pageflags,
+        width(), height(), option->exposedRect.toRect() );
+
+    const QBrush & bgbrush = scene()->backgroundBrush();
+    painter->fillRect( width() + 1, 0, 2, 2, bgbrush );
+    painter->fillRect( 0, height() + 1, 2, 2, bgbrush );
+
+    painter->setPen( Qt::black );
+    painter->drawRect( 0, 0, width(), height() );
+
+    // draw bottom/right gradient
+    static int levels = 2;
+    int r = QColor(Qt::gray).red() / (levels + 2),
+        g = QColor(Qt::gray).green() / (levels + 2),
+        b = QColor(Qt::gray).blue() / (levels + 2);
+    for ( int i = 1; i <= levels; ++i )
+    {
+        painter->setPen( QColor( r * ( i + 1 ), g * ( i + 1 ), b * ( i + 1 ) ) );
+        painter->drawLine( i, i + height(), i + width(), i + height() );
+        painter->drawLine( i + width(), i, i + width(), i + height() );
+    }
+}
+
+int PageViewItem::type() const
+{
+    return UserType + 1;
 }
 
 const KPDFPage * PageViewItem::page() const
@@ -48,19 +92,19 @@ int PageViewItem::pageNumber() const
     return m_page->number();
 }
 
-const QRect& PageViewItem::geometry() const
+QRectF PageViewItem::geometry() const
 {
-    return m_geometry;
+    return QRectF( pos(), QSizeF( m_globalSize ) );
 }
 
 int PageViewItem::width() const
 {
-    return m_geometry.width();
+    return m_size.width();
 }
 
 int PageViewItem::height() const
 {
-    return m_geometry.height();
+    return m_size.height();
 }
 
 double PageViewItem::zoomFactor() const
@@ -70,25 +114,90 @@ double PageViewItem::zoomFactor() const
 
 void PageViewItem::setGeometry( int x, int y, int width, int height )
 {
-    m_geometry.setRect( x, y, width, height );
+    m_size = QSize( width, height );
+    m_globalSize = m_size + QSize( 2, 2 );
+    setPos( x, y );
+    show();
 }
 
 void PageViewItem::setWHZ( int w, int h, double z )
 {
-    m_geometry.setWidth( w );
-    m_geometry.setHeight( h );
+    m_size = QSize( w, h );
+    m_globalSize = m_size + QSize( 2, 2 );
     m_zoomFactor = z;
+    show();
 }
 
 void PageViewItem::moveTo( int x, int y )
 {
-    m_geometry.moveLeft( x );
-    m_geometry.moveTop( y );
+    setPos( x, y );
 }
 
 void PageViewItem::invalidate()
 {
-    m_geometry.setRect( 0, 0, 0, 0 );
+    m_size = QSize( 0, 0 );
+    m_globalSize = QSize( 0, 0 );
+    hide();
+}
+
+/*********************/
+/** RubberBandItem   */
+/*********************/
+
+RubberBandItem::RubberBandItem( const QColor & color )
+    : QGraphicsItem(), m_size( QSize( 0, 0 ) ), m_color( color )
+{
+    setFlags( QGraphicsItem::GraphicsItemFlags() );
+    setZValue( 10 );
+    show();
+}
+
+QRectF RubberBandItem::boundingRect() const
+{
+    return QRectF( QPointF( 0, 0 ), QSizeF( m_size ) );
+}
+
+void RubberBandItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
+{
+    QColor color = ( m_size.width() <= 8 && m_size.height() <= 8 ) ? Qt::red : m_color;
+
+    if ( KpdfSettings::enableCompositing() )
+    {
+        painter->fillRect( option->exposedRect, QBrush( color, Qt::Dense4Pattern ) );
+    }
+    painter->setPen( color );
+    painter->drawRect( boundingRect() );
+}
+
+int RubberBandItem::type() const
+{
+    return UserType + 2;
+}
+
+QRectF RubberBandItem::geometry() const
+{
+    return QRectF( pos(), QSizeF( m_size ) ).normalized();
+}
+
+void RubberBandItem::resize( int width, int height )
+{
+    QRectF updatedRect = geometry();
+
+    m_size = QSize( width, height );
+    updatedRect |= geometry();
+
+    scene()->update( updatedRect );
+}
+
+void RubberBandItem::resizeTo( const QPointF & finalPoint )
+{
+    QRectF updatedRect = geometry();
+
+    QPointF delta = finalPoint - pos();
+    m_size = QSize( (int)delta.x(), (int)delta.y() );
+
+    updatedRect |= geometry();
+    scene()->update( updatedRect );
 }
 
 /*********************/

@@ -568,9 +568,9 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         button = AnnotatorEngine::Right;
 
     // find out normalized mouse coords inside current item
-    const QRect & itemRect = item->geometry();
-    double itemWidth = (double)itemRect.width();
-    double itemHeight = (double)itemRect.height();
+    const QRectF & itemRect = item->geometry();
+    double itemWidth = itemRect.width();
+    double itemHeight = itemRect.height();
     double nX = (double)(e->x() - itemRect.left()) / itemWidth;
     double nY = (double)(e->y() - itemRect.top()) / itemHeight;
 
@@ -593,7 +593,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         // 3.2. decompose paint region in rects and send paint events
         QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
         for ( int i = 0; i < rects.count(); i++ )
-            m_pageView->updateContents( rects[i] );
+            m_pageView->update( rects[i] );
     }
 
     // 4. if engine has finished, apply Annotation to the page
@@ -626,7 +626,7 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
         painter->drawRect( paintRect );
 #endif
     // move painter to current itemGeometry rect
-    const QRect & itemGeometry = m_lockedItem->geometry();
+    const QRectF & itemGeometry = m_lockedItem->geometry();
     painter->save();
     painter->translate( itemGeometry.left(), itemGeometry.top() );
 
@@ -650,7 +650,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
     m_lockedItem = 0;
     if ( m_lastDrawnRect.isValid() )
     {
-        m_pageView->updateContents( m_lastDrawnRect );
+        m_pageView->update( m_lastDrawnRect );
         m_lastDrawnRect = QRect();
     }
 

@@ -86,12 +86,14 @@ class OKULAR_EXPORT KPDFPage
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
+        void setTextSelections( RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
         // operations: delete contents (by KPDFDocument)
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
+        void deleteTextSelections();
         void deleteAnnotations();
 
         // operations to save/restore page state (by KPDFDocument)
@@ -109,6 +111,7 @@ class OKULAR_EXPORT KPDFPage
         KPDFTextPage * m_text;
         QLinkedList< ObjectRect * > m_rects;
         QLinkedList< HighlightAreaRect * > m_highlights;
+        HighlightAreaRect * m_textSelections;
         QLinkedList< Annotation * > m_annotations;
         KPDFPageTransition * m_transition;
 };

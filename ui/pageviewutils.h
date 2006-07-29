@@ -10,6 +10,7 @@
 #ifndef _PAGEVIEW_UTILS_H_
 #define _PAGEVIEW_UTILS_H_
 
+#include <qgraphicsitem.h>
 #include <qwidget.h>
 #include <qpixmap.h>
 #include <qrect.h>
@@ -23,14 +24,19 @@ class KPDFPage;
  * It has methods for settings Item's geometry and other visual properties such
  * as the individual zoom factor.
  */
-class PageViewItem
+class PageViewItem : public QGraphicsItem
 {
     public:
         PageViewItem( const KPDFPage * page );
 
+        // reimplementations from QGraphicsViewItem
+        QRectF boundingRect() const;
+        void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+        int type() const;
+
         const KPDFPage * page() const;
         int pageNumber() const;
-        const QRect& geometry() const;
+        QRectF geometry() const;
         int width() const;
         int height() const;
         double zoomFactor() const;
@@ -43,9 +49,35 @@ class PageViewItem
     private:
         const KPDFPage * m_page;
         double m_zoomFactor;
-        QRect m_geometry;
+        QSize m_size;
+        QSize m_globalSize;
 };
 
+
+/**
+ * @short RubberBandItem represents a rubber band patch into the PageView.
+ *
+ * ...
+ */
+class RubberBandItem : public QGraphicsItem
+{
+    public:
+        RubberBandItem( const QColor &color );
+
+        // reimplementations from QGraphicsViewItem
+        QRectF boundingRect() const;
+        void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+        int type() const;
+
+        QRectF geometry() const;
+
+        void resize( int width, int height );
+        void resizeTo( const QPointF & finalPoint );
+
+    private:
+        QSize m_size;
+        QColor m_color;
+};
 
 /**
  * @short A widget that displays messages in the top-left corner.

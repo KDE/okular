@@ -29,7 +29,7 @@ class TextSelection;
 
 KPDFPage::KPDFPage( uint page, double w, double h, int o )
     : m_number( page ), m_orientation( o ), m_width( w ), m_height( h ),
-    m_bookmarked( false ), m_text( 0 ), m_transition( 0 )
+    m_bookmarked( false ), m_text( 0 ), m_textSelections( 0 ), m_transition( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
 /*    if ( r == 90 || r == 270 )
@@ -220,6 +220,14 @@ void KPDFPage::setHighlight( int s_id, RegularAreaRect *rect, const QColor & col
 	}*/
 }	
 
+void KPDFPage::setTextSelections( RegularAreaRect *r, const QColor & color )
+{
+    deleteTextSelections();
+    HighlightAreaRect * hr = new HighlightAreaRect( r );
+    hr->s_id = -1;
+    hr->color = color;
+    m_textSelections = hr;
+}
 
 void KPDFPage::addAnnotation( Annotation * annotation )
 {
@@ -268,6 +276,12 @@ void KPDFPage::deleteHighlights( int s_id )
         else
             ++it;
     }
+}
+
+void KPDFPage::deleteTextSelections()
+{
+    delete m_textSelections;
+    m_textSelections = 0;
 }
 
 void KPDFPage::deleteAnnotations()

@@ -724,6 +724,23 @@ void KPDFDocument::addPageAnnotation( int page, Annotation * annotation )
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
+
+void KPDFDocument::setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color )
+{
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+
+    // add or remove the selection basing whether rect is null or not
+    if ( rect )
+        kp->setTextSelections( rect, color );
+    else
+        kp->deleteTextSelections();
+
+    // notify observers about the change
+    foreachObserver( notifyPageChanged( page, DocumentObserver::TextSelection ) );
+}
+
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code
 void KPDFDocument::setNextPage()
 {

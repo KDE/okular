@@ -580,7 +580,7 @@ bool Part::openFile()
     if ( !ok )
     {
         // if can't open document, update windows so they display blank contents
-        m_pageView->updateContents();
+        m_pageView->update();
         m_thumbnailList->update();
         return false;
     }
@@ -967,12 +967,12 @@ void Part::slotNewConfig()
         m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
-    Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
-        Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
-    if ( m_pageView->hScrollBarMode() != scrollBarMode )
+    Qt::ScrollBarPolicy scrollBarPolicy = KpdfSettings::showScrollBars() ?
+        Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff;
+    if ( m_pageView->horizontalScrollBarPolicy() != scrollBarPolicy )
     {
-        m_pageView->setHScrollBarMode( scrollBarMode );
-        m_pageView->setVScrollBarMode( scrollBarMode );
+        m_pageView->setHorizontalScrollBarPolicy( scrollBarPolicy );
+        m_pageView->setVerticalScrollBarPolicy( scrollBarPolicy );
     }
 
     // update document settings
@@ -980,7 +980,7 @@ void Part::slotNewConfig()
 
     // update Main View and ThumbnailList contents
     // TODO do this only when changing KpdfSettings::renderMode()
-    m_pageView->updateContents();
+    m_pageView->update();
     if ( KpdfSettings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
 }
@@ -1083,8 +1083,11 @@ void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
 	if (page && reallyShow)
 	{
 		QAction *res = popup->exec(point);
+		if (res)
+		{
 		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );
 		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
+		}
 	}
 	delete popup;
 }

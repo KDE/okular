@@ -127,8 +127,8 @@ class PageView : public QGraphicsView, public DocumentObserver
     private slots:
         // activated either directly or via QTimer on the viewportResizeEvent
         void slotRelayoutPages();
-        // activated either directly or via the contentsMoving(int,int) signal
-        void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
+        // activated either directly or via the valueChanged(int) signal
+        void slotRequestVisiblePixmaps( int value = -1 );
         // activated by the viewport move timer
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)

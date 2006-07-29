@@ -191,8 +191,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     scene()->setBackgroundBrush( QBrush( Qt::gray ) );
 
     // conntect the padding of the viewport to pixmaps requests
-    connect( horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()) );
-    connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()) );
+    connect( horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
+    connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
 
     // show initial welcome text
     d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
@@ -2028,6 +2028,9 @@ int PageView::viewRows()
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotRenderMode, slotContinuousToggled, updateZoom
 {
+    // first reset the scene rect
+    setSceneRect( QRectF() );
+
     // set an empty container if we have no pages
     int pageCount = d->items.count();
     if ( pageCount < 1 )
@@ -2268,8 +2271,7 @@ void PageView::slotRelayoutPages()
         // disable updates and resize the viewportContents
         if ( wasUpdatesEnabled )
             setUpdatesEnabled( false );
-//        setSceneRect( 0, 0, fullWidth, fullHeight );
-        setSceneRect( QRectF() );
+        setSceneRect( sceneRect() );
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )
         {
@@ -2300,7 +2302,7 @@ void PageView::slotRelayoutPages()
         update();
 }
 
-void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
+void PageView::slotRequestVisiblePixmaps( int value )
 {
     // if requests are blocked (because raised by an unwanted event), exit
     if ( d->blockPixmapsRequest || d->viewportMoveActive ||
@@ -2308,7 +2310,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
-    bool isEvent = /*newLeft != -1 && newTop != -1 &&*/ !d->blockViewport;
+    bool isEvent = value != -1 && !d->blockViewport;
     QRect viewportRect = viewport()->rect().translated( mapToScene( 0, 0 ).toPoint() );
 
     // some variables used to determine the viewport

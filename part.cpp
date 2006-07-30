@@ -611,7 +611,16 @@ bool Part::openURL(const KUrl &url)
     bool openOk = KParts::ReadOnlyPart::openURL(url);
 
     if ( openOk )
+    {
         m_viewportDirty = 0;
+
+        // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
+        QString title = m_document->getMetaData( "DocumentTitle" );
+        if ( !title.isEmpty() && !title.trimmed().isEmpty() )
+        {
+            emit setWindowCaption( title );
+        }
+    }
     else
         KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyUrl() ) );
     emit enablePrintAction(openOk);

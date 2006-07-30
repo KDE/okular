@@ -58,7 +58,7 @@ class CHMGenerator : public Generator
         bool canConfigurePrinter( ) ;
         bool print( KPrinter& /*printer*/ ) ;
 
-        QString getMetaData( const QString &/*key*/, const QString &/*option*/ );
+        QString getMetaData( const QString & key, const QString & option );
         bool reparseConfig() ;
         void addPages( KConfigDialog* /*dlg*/) ;
         bool handleEvent (QEvent * /*event*/ ) ;

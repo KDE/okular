@@ -35,10 +35,12 @@ static inline double clip01(double x) {
 
 //------------------------------------------------------------------------
 
-static struct {
+struct gfxBlendModeName {
   char *name;
   GfxBlendMode mode;
-} gfxBlendModeNames[] = {
+};
+
+static gfxBlendModeName gfxBlendModeNames[] = {
   { "Normal",     gfxBlendNormal },
   { "Compatible", gfxBlendNormal },
   { "Multiply",   gfxBlendMultiply },
@@ -59,7 +61,7 @@ static struct {
 };
 
 #define nGfxBlendModeNames \
-          ((int)((sizeof(gfxBlendModeNames) / sizeof(char *))))
+          ((int)((sizeof(gfxBlendModeNames) / sizeof(gfxBlendModeName))))
 
 //------------------------------------------------------------------------
 

@@ -15,6 +15,10 @@
 
 // engines are defined and implemented in the cpp
 class AnnotatorEngine;
+class KPDFDocument;
+class PageView;
+class PageViewItem;
+class PageViewToolBar;
 
 /**
  * @short PageView object devoted to annotation creation/handling.
@@ -44,7 +48,7 @@ class PageViewAnnotator : public QObject
 
         // methods used when creating the annotation
         bool routeEvents() const;
-        void routeEvent( QMouseEvent * event, PageViewItem * item );
+        QRect routeEvent( QMouseEvent * event, const QPointF & scenePos, PageViewItem * item );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
 

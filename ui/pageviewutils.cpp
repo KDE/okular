@@ -27,6 +27,7 @@
 
 // local includes
 #include "pagepainter.h"
+#include "pageviewannotator.h"
 #include "pageviewutils.h"
 #include "core/observer.h"
 #include "core/page.h"
@@ -42,7 +43,7 @@ static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
 
 PageViewItem::PageViewItem( const KPDFPage * page )
     : QGraphicsItem(), m_page( page ), m_zoomFactor( 1.0 ),
-      m_size( QSize( 0, 0 ) ), m_globalSize( QSize( 0, 0 ) )
+      m_size( QSize( 0, 0 ) ), m_globalSize( QSize( 0, 0 ) ), m_annotator( 0 )
 {
     setFlags( QGraphicsItem::GraphicsItemFlags() );
 }
@@ -74,6 +75,11 @@ void PageViewItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * o
         painter->setPen( QColor( r * ( i + 1 ), g * ( i + 1 ), b * ( i + 1 ) ) );
         painter->drawLine( i, i + height(), i + width(), i + height() );
         painter->drawLine( i + width(), i, i + width(), i + height() );
+    }
+
+    if ( m_annotator && m_annotator->routePaints( option->exposedRect.toRect() ) )
+    {
+        m_annotator->routePaint( painter, option->exposedRect.toRect() );
     }
 }
 
@@ -138,6 +144,11 @@ void PageViewItem::invalidate()
     m_size = QSize( 0, 0 );
     m_globalSize = QSize( 0, 0 );
     hide();
+}
+
+void PageViewItem::setAnnotator( PageViewAnnotator * annotator )
+{
+    m_annotator = annotator;
 }
 
 /*********************/

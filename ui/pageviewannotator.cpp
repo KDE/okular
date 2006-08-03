@@ -548,9 +548,9 @@ bool PageViewAnnotator::routeEvents() const
     return m_engine && m_toolBar;
 }
 
-void PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
+QRect PageViewAnnotator::routeEvent( QMouseEvent * e, const QPointF & scenePos, PageViewItem * item )
 {
-if ( !item ) return; //STRAPAAAATCH !!! FIXME
+    if ( !item ) return QRect();
 
     // find out mouse event type
     AnnotatorEngine::EventType eventType = AnnotatorEngine::Press;
@@ -571,12 +571,14 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
     const QRectF & itemRect = item->geometry();
     double itemWidth = itemRect.width();
     double itemHeight = itemRect.height();
-    double nX = (double)(e->x() - itemRect.left()) / itemWidth;
-    double nY = (double)(e->y() - itemRect.top()) / itemHeight;
+    double nX = (scenePos.x() - itemRect.left()) / itemWidth;
+    double nY = (scenePos.y() - itemRect.top()) / itemHeight;
+
+    QRect modifiedRect;
 
     // 1. lock engine to current item
     if ( m_lockedItem && item != m_lockedItem )
-        return;
+        return QRect();
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
         m_lockedItem = item;
 
@@ -587,13 +589,9 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
     if ( paintRect.isValid() )
     {
         // 3.1. unite old and new painting regions
-        QRegion compoundRegion( m_lastDrawnRect );
+        QRect compoundRegion( m_lastDrawnRect );
         m_lastDrawnRect = paintRect;
-        m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
-        // 3.2. decompose paint region in rects and send paint events
-        QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
-        for ( int i = 0; i < rects.count(); i++ )
-            m_pageView->update( rects[i] );
+        modifiedRect = compoundRegion | m_lastDrawnRect;
     }
 
     // 4. if engine has finished, apply Annotation to the page
@@ -611,6 +609,8 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         // go on creating annotations of the same type
         slotToolSelected( m_lastToolID );
     }
+
+    return modifiedRect;
 }
 
 bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const
@@ -625,18 +625,11 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
     if ( KpdfSettings::debugDrawAnnotationRect() )
         painter->drawRect( paintRect );
 #endif
-    // move painter to current itemGeometry rect
-    const QRectF & itemGeometry = m_lockedItem->geometry();
-    painter->save();
-    painter->translate( itemGeometry.left(), itemGeometry.top() );
 
-    // transform cliprect from absolute to item relative coords
     QRect annotRect = paintRect.intersect( m_lastDrawnRect );
-    annotRect.translate( itemGeometry.left(), itemGeometry.top() );
 
     // use current engine for painting
     m_engine->paint( painter, m_lockedItem->width(), m_lockedItem->height(), annotRect );
-    painter->restore();
 }
 
 void PageViewAnnotator::slotToolSelected( int toolID )
@@ -650,7 +643,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
     m_lockedItem = 0;
     if ( m_lastDrawnRect.isValid() )
     {
-        m_pageView->update( m_lastDrawnRect );
+//        m_pageView->update( m_lastDrawnRect );
         m_lastDrawnRect = QRect();
     }
 

@@ -28,6 +28,7 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qpushbutton.h>
+#include <qset.h>
 #include <qscrollbar.h>
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -88,10 +89,13 @@ public:
     bool mouseSelecting;
     RubberBandItem * rubberBand;
     bool mouseTextSelecting;
+/*
     bool mouseTextSelectionPainted;
     QList<QRect>* mouseTextSelectionRect;
     QColor mouseTextSelectionColor;
     TextSelection * mouseTextSelectionInfo;
+*/
+    QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
                              
     // type ahead find
@@ -173,9 +177,11 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->aPrevAction = 0;
+/*
     d->mouseTextSelectionRect=0;
     d->mouseTextSelectionInfo=0;
     d->mouseTextSelectionPainted=0;
+*/
     d->aPaperSizes=0;
 
     setObjectName( QLatin1String( "okular::pageView" ) );
@@ -380,10 +386,12 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
     {
-        d->items.push_back( new PageViewItem( *setIt ) );
-        scene()->addItem( d->items.last() );
+        PageViewItem * newitem = new PageViewItem( *setIt );
+        d->items.push_back( newitem );
+        scene()->addItem( newitem );
+        newitem->setAnnotator( d->annotator );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
+        kDebug() << "geom for " << newitem->pageNumber() << " is " << newitem->geometry() << endl;
 #endif
     }
 
@@ -987,8 +995,14 @@ if (d->document->handleEvent( e ) )
     // if we're editing an annotation, dispatch event to it
     if ( d->annotator && d->annotator->routeEvents() )
     {
-        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-        d->annotator->routeEvent( e, pageItem );
+        QPointF mapped = mapToScene( 0, 0 ) + e->pos();
+        PageViewItem * pageItem = pickItemOnPoint( (int)mapped.x(), (int)mapped.y() );
+        if ( pageItem )
+        {
+            QRect updated = d->annotator->routeEvent( e, mapped, pageItem );
+            if ( !updated.isEmpty() )
+                pageItem->update( QRectF( updated ) );
+        }
         return;
     }
 
@@ -1045,14 +1059,66 @@ if (d->document->handleEvent( e ) )
             }
             break;
         case MouseTextSelect:
-            if ( !d->mousePressPos.isNull() || d->mouseTextSelecting )
+            // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
+            if ( !d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ( ( e->pos() - d->mouseSelectPos ).manhattanLength() > 5 ) )
             {
-                // if mouse moves 5 px away from the press point, do 'textselection'
-                int deltaX = e->x() - d->mouseSelectPos.x(),
-                  deltaY = e->y() - d->mouseSelectPos.y();
-                if ( d->document->supportsSearching() && ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 ) )
+                d->mouseTextSelecting = true;
+            }
+            if ( d->mouseTextSelecting )
+            {
+                QLinkedList< PageViewItem * > affectedItems;
+//                QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).translated( mapToScene( 0, 0 ).toPoint() ).normalized();
+                QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).normalized();
+                foreach( QGraphicsItem * item, items( selectionRect ) )
                 {
-                    d->mouseTextSelecting = true;
+                    PageViewItem * pageItem = qgraphicsitem_cast< PageViewItem * >( item );
+                    if ( !pageItem ) continue;
+
+                    affectedItems.push_back( pageItem );
+                }
+                kDebug() << ">>>> affected items (hence pages): " << affectedItems.count() << endl;
+                QSet< int > pagesWithSelectionSet;
+/*
+                QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
+                if ( !affectedItems.isEmpty() )
+                {
+//                    setCursor( Qt::IBeamCursor );
+//                    QLinkedList< KPDFPage * > pagesWithSelection;
+                    foreach( PageViewItem * item, affectedItems )
+                    {
+                        NormalizedRect rect( item->geometry().intersect( selectionRect.translated( mapToScene( 0, 0 ).toPoint() ) / *.translated( -item->pos().toPoint() ) * / ).normalized().toRect(), item->width(), item->height() );
+                        kDebug() << ">>>> [" << rect.top << "," << rect.left << " - " << fabs( rect.left - rect.right ) << "x" << fabs( rect.top - rect.bottom ) << "]" << endl;
+                        NormalizedPoint startCursor( rect.top, rect.left );
+                        NormalizedPoint endCursor( rect.bottom, rect.right );
+                        ::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
+                        mouseTextSelectionInfo.end( endCursor );
+
+                        const KPDFPage * kpdfPage = item->page();
+
+                        if ( !kpdfPage->hasSearchPage() )
+                            d->document->requestTextPage( kpdfPage->number() );
+
+                        RegularAreaRect * selectionArea = kpdfPage->getTextArea( &mouseTextSelectionInfo );
+                        if ( selectionArea && ( !selectionArea->isEmpty() ) )
+                        {
+                            kDebug() << "text areas (" << kpdfPage->number() << "): " << selectionArea->count() << endl;
+//                            pagesWithSelection.push_back( kpdfPage );
+                            pagesWithSelectionSet.insert( kpdfPage->number() );
+                            d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
+                        }
+                        delete selectionArea;
+                    }
+                }
+*/
+                QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
+                foreach( int p, noMoreSelectedPages )
+                {
+                    d->document->setPageTextSelection( p, 0, QColor() );
+                }
+                d->pagesWithTextSelection = pagesWithSelectionSet;
+            }
+
+/*
                     PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 //                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
                     const KPDFPage * kpdfPage = currentItem->page();
@@ -1092,11 +1158,13 @@ if (d->document->handleEvent( e ) )
                       textSelection(selectionArea->geometry(vRect.width(),vRect.height(),vRect.left(),vRect.top())
                           ,selColor);
 */
+/*
                         d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
                     }                    
                     delete selectionArea;
                 }
             }
+*/
             break;
     }
 }
@@ -1133,8 +1201,14 @@ if ( d->document->handleEvent( e ) )
     // if we're editing an annotation, dispatch event to it
     if ( d->annotator && d->annotator->routeEvents() )
     {
-        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-        d->annotator->routeEvent( e, pageItem );
+        QPointF mapped = mapToScene( 0, 0 ) + e->pos();
+        PageViewItem * pageItem = pickItemOnPoint( (int)mapped.x(), (int)mapped.y() );
+        if ( pageItem )
+        {
+            QRect updated = d->annotator->routeEvent( e, mapped, pageItem );
+            if ( !updated.isEmpty() )
+                pageItem->update( QRectF( updated ) );
+        }
         return;
     }
 
@@ -1213,8 +1287,14 @@ if (d->document->handleEvent( e ) )
     // if we're editing an annotation, dispatch event to it
     if ( d->annotator && d->annotator->routeEvents() )
     {
-        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-        d->annotator->routeEvent( e, pageItem );
+        QPointF mapped = mapToScene( 0, 0 ) + e->pos();
+        PageViewItem * pageItem = pickItemOnPoint( (int)mapped.x(), (int)mapped.y() );
+        if ( pageItem )
+        {
+            QRect updated = d->annotator->routeEvent( e, mapped, pageItem );
+            if ( !updated.isEmpty() )
+                pageItem->update( QRectF( updated ) );
+        }
         return;
     }
 
@@ -1543,8 +1623,10 @@ if (d->document->handleEvent( e ) )
                 if ( d->mouseTextSelecting )
                 {
                     d->mouseTextSelecting = false;
+/*
                     delete d->mouseTextSelectionInfo;
                     d->mouseTextSelectionInfo=0;
+*/
 //                    textSelectionClear();
                 }
                 else if ( !d->mousePressPos.isNull() )
@@ -1774,6 +1856,7 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
+/*
 void PageView::textSelection( QList<QRect> * area, const QColor & color )
 {
     setCursor( Qt::IBeamCursor );
@@ -1809,6 +1892,7 @@ void PageView::textSelection( QList<QRect> * area, const QColor & color )
         scene()->update( r );
     d->mouseTextSelectionPainted=true;
 }
+*/
     
 void PageView::textSelectionClear( const QPoint & pos )
 {
@@ -1817,10 +1901,19 @@ void PageView::textSelectionClear( const QPoint & pos )
 
   setCursor( Qt::ArrowCursor  );
   // TODO: clear the selections (aka, notify the document to set null selections to the pages)
+/*
     PageViewItem * pageItem = pickItemOnPoint( pos.x(), pos.y() );
     if ( pageItem )
     {
         d->document->setPageTextSelection( pageItem->pageNumber(), 0, QColor() );
+    }
+*/
+    if ( !d->pagesWithTextSelection.isEmpty() )
+    {
+        QSet< int >::ConstIterator it = d->pagesWithTextSelection.constBegin(), itEnd = d->pagesWithTextSelection.constEnd();
+        for ( ; it != itEnd; ++it )
+            d->document->setPageTextSelection( *it, 0, QColor() );
+        d->pagesWithTextSelection.clear();
     }
 /*
   QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
@@ -1994,11 +2087,16 @@ void PageView::updateCursor( const QPoint &p )
                nY = (p.y() - geom.top()) / geom.height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
-        if ( d->mouseOnRect )
-            setCursor( Qt::PointingHandCursor );
+        if ( d->mouseMode == MouseTextSelect )
+            setCursor( Qt::IBeamCursor );
         else
-            setCursor( Qt::ArrowCursor );
+        {
+            d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
+            if ( d->mouseOnRect )
+                setCursor( Qt::PointingHandCursor );
+            else
+                setCursor( Qt::ArrowCursor );
+        }
     }
     else
     {
@@ -2596,7 +2694,12 @@ void PageView::slotToggleAnnotator( bool on )
 
     // create the annotator object if not present
     if ( !d->annotator )
+    {
         d->annotator = new PageViewAnnotator( this, d->document );
+        QVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
+        for ( ; dIt != dEnd; ++dIt )
+            (*dIt)->setAnnotator( d->annotator );
+    }
 
     // initialize/reset annotator (and show/hide toolbar)
     d->annotator->setEnabled( on );

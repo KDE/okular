@@ -17,6 +17,7 @@
 
 class QTimer;
 class KPDFPage;
+class PageViewAnnotator;
 
 /**
  * @short PageViewItem represents graphically a kpdfpage into the PageView.
@@ -46,11 +47,14 @@ class PageViewItem : public QGraphicsItem
         void moveTo( int x, int y );
         void invalidate();
 
+        void setAnnotator( PageViewAnnotator * annotator );
+
     private:
         const KPDFPage * m_page;
         double m_zoomFactor;
         QSize m_size;
         QSize m_globalSize;
+        PageViewAnnotator * m_annotator;
 };
 
 

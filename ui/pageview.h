@@ -114,7 +114,7 @@ class PageView : public QGraphicsView, public DocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-	void textSelection( QList<QRect> * , const QColor & );
+//	void textSelection( QList<QRect> * , const QColor & );
 	void textSelectionClear( const QPoint & pos );
         // updates cursor
         void updateCursor( const QPoint &p );

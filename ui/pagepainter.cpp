@@ -601,6 +601,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
 void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     int scaledWidth, int scaledHeight, const QRect & cropRect )
 {
+#warning scalePixmapOnImage() needs to be properly fixed
     // {source, destination, scaling} params
     int srcWidth = src->width(),
         srcHeight = src->height(),
@@ -611,11 +612,11 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
 
     // destination image (same geometry as the pageLimits rect)
     dest = QImage( destWidth, destHeight, 32 );
-    unsigned int * destData = (unsigned int *)dest.bits();
+    uchar* destData = dest.bits();
 
     // source image (1:1 conversion from pixmap)
     QImage srcImage = src->toImage();
-    unsigned int * srcData = (unsigned int *)srcImage.bits();
+    uchar* srcData = srcImage.bits();
 
     // precalc the x correspondancy conversion in a lookup table
     unsigned int xOffset[ destWidth ];
@@ -628,7 +629,12 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     {
         unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / scaledHeight);
         for ( int x = 0; x < destWidth; x++ )
+        {
             (*destData++) = srcData[ srcOffset + xOffset[x] ];
+            (*destData++) = srcData[ srcOffset + xOffset[x] + 1 ];
+            (*destData++) = srcData[ srcOffset + xOffset[x] + 2 ];
+            (*destData++) = srcData[ srcOffset + xOffset[x] + 3 ];
+        }
     }
 }
 

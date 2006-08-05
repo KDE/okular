@@ -19,7 +19,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <ktreewidgetsearchline.h>
-
+#include <kicon.h>
 // local includes
 #include "core/annotations.h"
 #include "core/document.h"

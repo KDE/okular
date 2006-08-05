@@ -54,7 +54,7 @@
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kio/job.h>
-
+#include <kicon.h>
 // local includes
 #include "part.h"
 #include "ui/pageview.h"

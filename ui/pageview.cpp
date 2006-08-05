@@ -44,7 +44,7 @@
 #include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-
+#include <kicon.h>
 #include <QtDBus/QtDBus>
 
 // system includes

@@ -50,6 +50,7 @@ KPDFPage::~KPDFPage()
     deleteHighlights();
     deleteAnnotations();
     delete m_text;
+    delete m_textSelections;
     delete m_transition;
 }
 

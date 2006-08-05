@@ -47,7 +47,7 @@
 #include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-
+#include <kicon.h>
 #include <QtDBus/QtDBus>
 
 // system includes
@@ -1066,51 +1066,75 @@ if (d->document->handleEvent( e ) )
             }
             if ( d->mouseTextSelecting )
             {
-                QLinkedList< PageViewItem * > affectedItems;
-//                QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).translated( mapToScene( 0, 0 ).toPoint() ).normalized();
+                QSet< int > affectedItemsSet;
                 QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).normalized();
                 foreach( QGraphicsItem * item, items( selectionRect ) )
                 {
                     PageViewItem * pageItem = qgraphicsitem_cast< PageViewItem * >( item );
                     if ( !pageItem ) continue;
 
-                    affectedItems.push_back( pageItem );
+                    affectedItemsSet.insert( pageItem->pageNumber() );
                 }
-                kDebug() << ">>>> affected items (hence pages): " << affectedItems.count() << endl;
+                kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
                 QSet< int > pagesWithSelectionSet;
-/*
-                QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
-                if ( !affectedItems.isEmpty() )
+
+                if ( !affectedItemsSet.isEmpty() )
                 {
-//                    setCursor( Qt::IBeamCursor );
-//                    QLinkedList< KPDFPage * > pagesWithSelection;
-                    foreach( PageViewItem * item, affectedItems )
+                    int min = d->document->pages();
+                    int max = 0;
+                    foreach( int p, affectedItemsSet )
                     {
-                        NormalizedRect rect( item->geometry().intersect( selectionRect.translated( mapToScene( 0, 0 ).toPoint() ) / *.translated( -item->pos().toPoint() ) * / ).normalized().toRect(), item->width(), item->height() );
-                        kDebug() << ">>>> [" << rect.top << "," << rect.left << " - " << fabs( rect.left - rect.right ) << "x" << fabs( rect.top - rect.bottom ) << "]" << endl;
-                        NormalizedPoint startCursor( rect.top, rect.left );
-                        NormalizedPoint endCursor( rect.bottom, rect.right );
-                        ::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
-                        mouseTextSelectionInfo.end( endCursor );
+                        if ( p < min ) min = p;
+                        if ( p > max ) max = p;
+                    }
 
-                        const KPDFPage * kpdfPage = item->page();
+                    QList< int > affectedItemsIds;
+                    for ( int i = min; i <= max; ++i )
+                        affectedItemsIds.append( i );
+                    kDebug() << ">>>> pages: " << affectedItemsIds << endl;
 
-                        if ( !kpdfPage->hasSearchPage() )
-                            d->document->requestTextPage( kpdfPage->number() );
+                    // is the mouse drag line the ne-sw diagonal of the selection rect?
+                    bool direction_ne_sw = e->pos().x() == selectionRect.right();
+                    // transform the selection rect coords into scene coords
+                    selectionRect.translate( mapToScene( 0, 0 ).toPoint() );
 
-                        RegularAreaRect * selectionArea = kpdfPage->getTextArea( &mouseTextSelectionInfo );
-                        if ( selectionArea && ( !selectionArea->isEmpty() ) )
+                    if ( affectedItemsIds.count() == 1 )
+                    {
+                        PageViewItem * item = d->items[ affectedItemsIds.first() ];
+                        selectionRect.translate( -item->pos().toPoint() );
+                        textSelectionForItem( item,
+                            direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(),
+                            direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() );
+                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
+                    }
+                    else
+                    {
+                        // first item
+                        PageViewItem * first = d->items[ affectedItemsIds.first() ];
+                        QRect geom = first->geometry().intersect( selectionRect ).translated( -first->pos() ).toRect();
+                        textSelectionForItem( first,
+                            direction_ne_sw ? geom.topRight() : geom.topLeft(),
+                            QPoint() );
+                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
+                        // last item
+                        PageViewItem * last = d->items[ affectedItemsIds.last() ];
+                        geom = last->geometry().intersect( selectionRect ).translated( -last->pos() ).toRect();
+                        textSelectionForItem( last,
+                            QPoint(),
+                            direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() );
+                        pagesWithSelectionSet.insert( affectedItemsIds.last() );
+                        affectedItemsIds.removeFirst();
+                        affectedItemsIds.removeLast();
+                        // item between the two above
+                        foreach( int page, affectedItemsIds )
                         {
-                            kDebug() << "text areas (" << kpdfPage->number() << "): " << selectionArea->count() << endl;
-//                            pagesWithSelection.push_back( kpdfPage );
-                            pagesWithSelectionSet.insert( kpdfPage->number() );
-                            d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
+                            textSelectionForItem( d->items[ page ] );
+                            pagesWithSelectionSet.insert( page );
                         }
-                        delete selectionArea;
                     }
                 }
-*/
                 QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
+                // clear the selection from pages not selected anymore
                 foreach( int p, noMoreSelectedPages )
                 {
                     d->document->setPageTextSelection( p, 0, QColor() );
@@ -1221,7 +1245,7 @@ if ( d->document->handleEvent( e ) )
         
 //   Not sure we should erase the selection when clicking with left.
      if ( d->mouseMode != MouseTextSelect )
-       textSelectionClear( e->pos() + mapToScene( 0, 0 ).toPoint() );
+       textSelectionClear();
     
     switch ( d->mouseMode )
     {
@@ -1246,10 +1270,10 @@ if ( d->document->handleEvent( e ) )
 //             }
             break;
         case MouseTextSelect:
-            d->mouseSelectPos = e->pos() + mapToScene( 0, 0 ).toPoint();
+            d->mouseSelectPos = e->pos();
             if ( !rightButton )
             {
-                textSelectionClear( d->mouseSelectPos );
+                textSelectionClear();
             }
             break;
     }
@@ -1894,12 +1918,12 @@ void PageView::textSelection( QList<QRect> * area, const QColor & color )
 }
 */
     
-void PageView::textSelectionClear( const QPoint & pos )
+void PageView::textSelectionClear()
 {
   // nothing no clear
 //  if ( !d->mouseTextSelectionRect ) return;
 
-  setCursor( Qt::ArrowCursor  );
+//  setCursor( Qt::ArrowCursor  );
   // TODO: clear the selections (aka, notify the document to set null selections to the pages)
 /*
     PageViewItem * pageItem = pickItemOnPoint( pos.x(), pos.y() );
@@ -1943,6 +1967,44 @@ void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*
         d->scrollIncrement = 0;
         d->autoScrollTimer->stop();
     }
+}
+
+void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
+{
+    QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
+    const QRectF & geometry = item->geometry();
+    NormalizedPoint startCursor;
+    if ( startPoint.isNull() )
+    {
+        startCursor = NormalizedPoint( 0.0, 0.0 );
+    }
+    else
+    {
+        startCursor = NormalizedPoint( startPoint.x(), startPoint.y(), geometry.width(), geometry.height() );
+    }
+    NormalizedPoint endCursor;
+    if ( endPoint.isNull() )
+    {
+        endCursor = NormalizedPoint( 1.0, 1.0 );
+    }
+    else
+    {
+        endCursor = NormalizedPoint( endPoint.x(), endPoint.y(), geometry.width(), geometry.height() );
+    }
+    ::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
+
+    const KPDFPage * kpdfPage = item->page();
+
+    if ( !kpdfPage->hasSearchPage() )
+        d->document->requestTextPage( kpdfPage->number() );
+
+    RegularAreaRect * selectionArea = kpdfPage->getTextArea( &mouseTextSelectionInfo );
+    if ( selectionArea && ( !selectionArea->isEmpty() ) )
+    {
+        kDebug() << "text areas (" << kpdfPage->number() << "): " << selectionArea->count() << endl;
+        d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
+    }
+    delete selectionArea;
 }
 
 void PageView::selectionClear()

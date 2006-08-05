@@ -52,7 +52,9 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
         const NormalizedPoint * endC=sel->end();
         if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
         {
+#ifdef TEXTPAGE_DEBUG
           kWarning() << "running first loop\n";
+#endif
           for (it=0;it<m_words.count();it++)
           {
               tmp=m_words[it]->area;
@@ -62,7 +64,9 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (rx,ry)x(tx,ty)   
                   itB=it;
+#ifdef TEXTPAGE_DEBUG
                   kWarning() << "start is " << itB << " count is " << m_words.count() << endl;
+#endif
                   break;
               }
   
@@ -70,11 +74,15 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
           sel->itB(itB);
         }
         itB=sel->itB();
+#ifdef TEXTPAGE_DEBUG
         kWarning() << "direction is " << sel->dir() << endl;
         kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+#endif
         if (sel->dir() == 0 || (sel->itE() == -1 && sel->dir()==1))
         {
+#ifdef TEXTPAGE_DEBUG
           kWarning() << "running second loop\n";
+#endif
           for (it=m_words.count()-1; it>=itB;it--)
           {
               tmp=m_words[it]->area;
@@ -84,17 +92,21 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (ux,uy)x(vx,vy)   
                   itE=it;
+#ifdef TEXTPAGE_DEBUG
                   kWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
                   kWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
                     << ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x ) << " " <<
                     ( tmp->top >= endC->y) << endl;
+#endif
 
                   break;
               }
           }
           sel->itE(itE);
         }
+#ifdef TEXTPAGE_DEBUG
         kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+#endif
 
         if (sel->itB()!=-1 && sel->itE()!=-1)
         {

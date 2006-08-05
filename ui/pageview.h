@@ -110,12 +110,13 @@ class PageView : public QGraphicsView, public DocumentObserver
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionClear();
+        void textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
 //	void textSelection( QList<QRect> * , const QColor & );
-	void textSelectionClear( const QPoint & pos );
+	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
 	int viewColumns();

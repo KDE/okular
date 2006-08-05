@@ -19,6 +19,7 @@
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>
+#include <kicon.h>
 
 // system includes
 #include <math.h>

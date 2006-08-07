@@ -786,9 +786,9 @@ inline void append (KPDFTextPage* ktp,
                 ktp->append( s ,
                     new NormalizedRect(
                     l,
-                    b,
+                    t,
                     r,
-                    t
+                    b
                     ));
 }
 

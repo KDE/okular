@@ -423,7 +423,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         }
 
         // 4B.5. create the back pixmap converting from the local image
-        backPixmap = new QPixmap( backImage );
+        backPixmap = new QPixmap( QPixmap::fromImage( backImage ) );
 
         // 4B.6. create a painter over the pixmap and set it as the active one
         mixedPainter = new QPainter( backPixmap );
@@ -519,7 +519,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 //GeomAnnotation * geom = (GeomAnnotation *)a;
                 //if ( geom->geomType == GeomAnnotation::InscribedSquare )
                 //{
-                    QImage rectImage( innerRect.width(), innerRect.height(), 32 );
+                    QImage rectImage( innerRect.width(), innerRect.height(), QImage::Format_RGB32 );
                     const QColor & c = a->style.color;
                     unsigned int color = qRgba( c.red(), c.green(), c.blue(), opacity );
                     rectImage.fill( color );
@@ -592,9 +592,9 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
-        QPixmap croppedPixmap( r.width(), r.height() );
-        copyBlt( &croppedPixmap, 0, 0, src, r.left(), r.top(), r.width(), r.height() );
-        dest = croppedPixmap.toImage();
+        dest = QImage(r.width(), r.height(), QImage::Format_RGB32);
+        QPainter painter(&dest);
+        painter.drawPixmap(0, 0, *src, r.left(), r.top(), r.width(), r.height() );
     }
 }
 
@@ -611,7 +611,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
         destHeight = cropRect.height();
 
     // destination image (same geometry as the pageLimits rect)
-    dest = QImage( destWidth, destHeight, 32 );
+    dest = QImage( destWidth, destHeight, QImage::Format_RGB32 );
     uchar* destData = dest.bits();
 
     // source image (1:1 conversion from pixmap)

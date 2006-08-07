@@ -1080,21 +1080,27 @@ if (d->document->handleEvent( e ) )
 
                 if ( !affectedItemsSet.isEmpty() )
                 {
-                    int min = d->document->pages();
-                    int max = 0;
+                    // is the mouse drag line the ne-sw diagonal of the selection rect?
+                    bool direction_ne_sw = e->pos() == selectionRect.topRight() || e->pos() == selectionRect.bottomLeft();
+
+                    int tmpmin = d->document->pages();
+                    int tmpmax = 0;
                     foreach( int p, affectedItemsSet )
                     {
-                        if ( p < min ) min = p;
-                        if ( p > max ) max = p;
+                        if ( p < tmpmin ) tmpmin = p;
+                        if ( p > tmpmax ) tmpmax = p;
                     }
+
+                    PageViewItem * a = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.right() : selectionRect.left() ), (int)selectionRect.top() );
+                    int min = a && ( a->pageNumber() != tmpmax ) ? a->pageNumber() : tmpmin;
+                    PageViewItem * b = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.left() : selectionRect.right() ), (int)selectionRect.bottom() );
+                    int max = b && ( b->pageNumber() != tmpmin ) ? b->pageNumber() : tmpmax;
 
                     QList< int > affectedItemsIds;
                     for ( int i = min; i <= max; ++i )
                         affectedItemsIds.append( i );
                     kDebug() << ">>>> pages: " << affectedItemsIds << endl;
 
-                    // is the mouse drag line the ne-sw diagonal of the selection rect?
-                    bool direction_ne_sw = e->pos().x() == selectionRect.right();
                     // transform the selection rect coords into scene coords
                     selectionRect.translate( mapToScene( 0, 0 ).toPoint() );
 
@@ -1107,13 +1113,13 @@ if (d->document->handleEvent( e ) )
                             direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() );
                         pagesWithSelectionSet.insert( affectedItemsIds.first() );
                     }
-                    else
+                    else if ( affectedItemsIds.count() > 1 )
                     {
                         // first item
                         PageViewItem * first = d->items[ affectedItemsIds.first() ];
                         QRect geom = first->geometry().intersect( selectionRect ).translated( -first->pos() ).toRect();
                         textSelectionForItem( first,
-                            direction_ne_sw ? geom.topRight() : geom.topLeft(),
+                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
                             QPoint() );
                         pagesWithSelectionSet.insert( affectedItemsIds.first() );
                         // last item
@@ -1121,7 +1127,8 @@ if (d->document->handleEvent( e ) )
                         geom = last->geometry().intersect( selectionRect ).translated( -last->pos() ).toRect();
                         textSelectionForItem( last,
                             QPoint(),
-                            direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() );
+//                            direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() );
+                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() ) : ( direction_ne_sw ? geom.topLeft() : geom.topRight() ) );
                         pagesWithSelectionSet.insert( affectedItemsIds.last() );
                         affectedItemsIds.removeFirst();
                         affectedItemsIds.removeLast();

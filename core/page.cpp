@@ -49,8 +49,8 @@ KPDFPage::~KPDFPage()
     deletePixmapsAndRects();
     deleteHighlights();
     deleteAnnotations();
+    deleteTextSelections();
     delete m_text;
-    delete m_textSelections;
     delete m_transition;
 }
 
@@ -281,8 +281,12 @@ void KPDFPage::deleteHighlights( int s_id )
 
 void KPDFPage::deleteTextSelections()
 {
-    delete m_textSelections;
-    m_textSelections = 0;
+    if (m_textSelections)
+    {
+        qDeleteAll(*m_textSelections);
+        delete m_textSelections;
+        m_textSelections = 0;
+    }
 }
 
 void KPDFPage::deleteAnnotations()

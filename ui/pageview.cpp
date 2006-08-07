@@ -2003,6 +2003,7 @@ void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPo
         kDebug() << "text areas (" << kpdfPage->number() << "): " << selectionArea->count() << endl;
         d->document->setPageTextSelection( kpdfPage->number(), selectionArea, selColor );
     }
+    qDeleteAll(*selectionArea);
     delete selectionArea;
 }
 

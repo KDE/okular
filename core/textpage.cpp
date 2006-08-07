@@ -145,7 +145,7 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
             {
                 tmp=m_words[it]->area;
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
-                  ret->append(tmp);
+                  ret->append(new NormalizedRect(*tmp));
             }
 
 //           }

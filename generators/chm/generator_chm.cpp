@@ -426,6 +426,10 @@ QString CHMGenerator::getMetaData( const QString &key, const QString &option )
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
+    else if ( key == "DocumentTitle" )
+    {
+        return m_file->Title();
+    }
     return QString::null;
 }
 

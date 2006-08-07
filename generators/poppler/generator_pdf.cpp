@@ -727,6 +727,13 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
+    else if ( key == "DocumentTitle" )
+    {
+        docLock.lock();
+        QString title = pdfdoc->info( "Title" );
+        docLock.unlock();
+        return title;
+    }
     return QString();
 }
 

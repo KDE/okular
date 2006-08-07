@@ -1980,21 +1980,13 @@ void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPo
 {
     QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
     const QRectF & geometry = item->geometry();
-    NormalizedPoint startCursor;
-    if ( startPoint.isNull() )
-    {
-        startCursor = NormalizedPoint( 0.0, 0.0 );
-    }
-    else
+    NormalizedPoint startCursor( 0.0, 0.0 );
+    if ( !startPoint.isNull() )
     {
         startCursor = NormalizedPoint( startPoint.x(), startPoint.y(), geometry.width(), geometry.height() );
     }
-    NormalizedPoint endCursor;
-    if ( endPoint.isNull() )
-    {
-        endCursor = NormalizedPoint( 1.0, 1.0 );
-    }
-    else
+    NormalizedPoint endCursor( 1.0, 1.0 );
+    if ( !endPoint.isNull() )
     {
         endCursor = NormalizedPoint( endPoint.x(), endPoint.y(), geometry.width(), geometry.height() );
     }

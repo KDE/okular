@@ -29,6 +29,7 @@ class KActionCollection;
 
 class KPDFDocument;
 class PageViewPrivate;
+struct Annotation;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
@@ -42,6 +43,9 @@ class PageView : public Q3ScrollView, public DocumentObserver
     public:
         PageView( QWidget *parent, KPDFDocument *document );
         ~PageView();
+
+        //set pop-up annotation window states,such as hide/open ,position...
+        void setAnnotsWindow(Annotation * annot);
 
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,

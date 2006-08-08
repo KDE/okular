@@ -724,6 +724,26 @@ void KPDFDocument::addPageAnnotation( int page, Annotation * annotation )
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
+
+void KPDFDocument::modifyPageAnnotation( int page, QString * annuniqueName,Annotation * newannotation )
+{
+    //TODO: modify or add/delete annotations
+    if(newannotation==0 && annuniqueName==0)
+        return; //FIXME
+    if(newannotation==0)
+    {
+        ;//delete
+    }
+    else if(annuniqueName==0)
+    {
+        ;//add annotation
+    }
+    else    //modify
+    {
+        ;
+    }
+}
+        
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code
 void KPDFDocument::setNextPage()
 {

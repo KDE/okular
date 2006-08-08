@@ -18,6 +18,7 @@
 #include <kinputdialog.h>
 #include <kuser.h>
 #include <kdebug.h>
+#include <kmenu.h>
 
 // system includes
 #include <math.h>
@@ -28,6 +29,7 @@
 #include "core/annotations.h"
 #include "settings.h"
 #include "pageview.h"
+#include "annotationpropertiesdialog.h"
 #include "pageviewutils.h"
 #include "pageviewannotator.h"
 
@@ -208,7 +210,7 @@ class PickPointEngine : public AnnotatorEngine
 {
     public:
         PickPointEngine( const QDomElement & engineElement )
-            : AnnotatorEngine( engineElement ), clicked( false )
+    : AnnotatorEngine( engineElement ), clicked( false ), xscale(1.0), yscale(1.0)
         {
             // parse engine specific attributes
             QString pixmapName = engineElement.attribute( "hoverIcon" );
@@ -224,11 +226,13 @@ class PickPointEngine : public AnnotatorEngine
             delete pixmap;
         }
 
-        QRect event( EventType type, Button /*button*/, double nX, double nY, double xScale, double yScale )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
         {
+            xscale=xScale;
+            yscale=yScale;
             // only proceed if pressing left button
-            //if ( button != Left )
-            //    return QRect();
+            if ( button != Left )
+                return QRect();
 
             // start operation on click
             if ( type == Press && clicked == false )
@@ -279,32 +283,45 @@ class PickPointEngine : public AnnotatorEngine
             QString typeString = annElement.attribute( "type" );
 
             // create TextAnnotation from path
-            if ( typeString == "Text")	//<annotation type="Text" 
+            if ( typeString == "FreeText")	//<annotation type="Text"
             {
-				//find if chlicked a text annoteation, if there is, load it, or create it.
-				//note dialog
-				QString prompt = i18n( "Please input the note:" ) ;
-				bool resok;
-				QString note ="";
-				
-				note= KInputDialog::getText( i18n("Note"), prompt, note,&resok );
-				if(resok)
-				{
-					//add note
-					TextAnnotation * ta = new TextAnnotation();
-					ann = ta;
-					ta->inplaceText=note;
-					ta->textType = TextAnnotation::InPlace;
-					ta->boundary=this->rect;
-	
-				}
+                //note dialog
+                QString prompt = i18n( "Please input the free text:" ) ;
+                bool resok;
+                QString note ="";
+
+                note= KInputDialog::getText( i18n("FreeText"), prompt, note,&resok );
+                if(resok)
+                {
+                    //add note
+                    TextAnnotation * ta = new TextAnnotation();
+                    ann = ta;
+                    ta->inplaceText=note;
+                    ta->textType = TextAnnotation::InPlace;
+                    //set boundary
+                    QFontMetricsF mf(ta->textFont);
+                    QRectF rcf=mf.boundingRect(ta->inplaceText);
+                    rect.right =rect.left + ((rcf.width()+5) / xscale) ;
+                    rect.bottom = rect.top + ((rcf.height()+5) / yscale) ;
+                    ta->boundary=this->rect;
+                }
+            }
+            else if ( typeString == "Text")
+            {
+                TextAnnotation * ta = new TextAnnotation();
+                ann = ta;
+                ta->textType = TextAnnotation::Linked;
+                ta->window.text="This is a text annotation";
+                //ta->window.flags &= ~(Annotation::Hidden);
+                ta->textIcon="comment";
+                ta->boundary=this->rect;
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )
             {
                 StampAnnotation * sa = new StampAnnotation();
                 ann = sa;
-				sa->stampIconName="okular";
+                sa->stampIconName="okular";
             }
 
             // safety check
@@ -313,9 +330,10 @@ class PickPointEngine : public AnnotatorEngine
 
             // set common attributes
             ann->style.color = annElement.hasAttribute( "color" ) ?
-                annElement.attribute( "color" ) : m_engineColor;
+                    annElement.attribute( "color" ) : m_engineColor;
             if ( annElement.hasAttribute( "opacity" ) )
                 ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+            ann->creationDate=ann->modifyDate=QDateTime::currentDateTime();
 
             // return annotation
             return ann;
@@ -326,6 +344,7 @@ class PickPointEngine : public AnnotatorEngine
         NormalizedRect rect;
         NormalizedPoint point;
         QPixmap * pixmap;
+        double xscale,yscale;
 };
 
 /** @short TwoPointsEngine */
@@ -414,18 +433,17 @@ class TwoPointsEngine : public AnnotatorEngine
             QString typeString = annElement.attribute( "type" );
 
             // create LineAnnotation from path
-            if ( typeString == "Line")	//<annotation type="Text" 
+            if ( typeString == "Line")	//<annotation type="Text"
             {
-				
-            if ( points.count() != 2 )
-                return 0;
-				//add note
-				LineAnnotation * la = new LineAnnotation();
-				ann = la;
-				la->linePoints.append(points[0]);
-				la->linePoints.append(points[1]);
-				la->boundary=this->rect;
-				
+                if ( points.count() != 2 )
+                    return 0;
+                //add note
+                LineAnnotation * la = new LineAnnotation();
+                ann = la;
+                la->linePoints.append(points[0]);
+                la->linePoints.append(points[1]);
+                la->boundary=this->rect;
+
             }
 
             // safety check
@@ -434,11 +452,10 @@ class TwoPointsEngine : public AnnotatorEngine
 
             // set common attributes
             ann->style.color = annElement.hasAttribute( "color" ) ?
-                annElement.attribute( "color" ) : m_engineColor;
+                    annElement.attribute( "color" ) : m_engineColor;
             if ( annElement.hasAttribute( "opacity" ) )
                 ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
             // return annotation
-            return ann;
         }
 
     private:
@@ -579,7 +596,72 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         return;
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
         m_lockedItem = item;
+    // 1.5 check if there is any exist annotations on (nX,nY)......Astario
+    if( e->type() == QEvent::MouseButtonRelease ) //m_selectedAnnotationName.isEmpty()
+    {
+        const KPDFPage * page = item->page();
+        
+        QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd =page->m_annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
+        {
+            Annotation * ann = *aIt;
+            if ( ann->boundary.contains( nX, nY ) )
+            {
+                Annotation::SubType type = ann->subType();
+                if(type==Annotation::AText)
+                {
+                    m_selectedAnnotationName=ann->uniqueName;
+                    if(buttonState == Qt::RightButton) //pop up content menu
+                    {
+                        KMenu menu( this->m_pageView );
+                        QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
+                        menu.addTitle( i18n("Annotation"));
+                        if(ann->window.flags & Annotation::Hidden)
+                            popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
+                        else
+                            popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
+                        deleteNote = menu.addAction( SmallIconSet("delete"), i18n( "&Delete" ) );
+                        showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
+                        QAction *choice = menu.exec( e->globalPos() );
+
+            // check if the user really selected an action
+                        if ( choice )
+                        {
+                            if ( choice == popoutWindow)
+                            {
+                                //怎么表示窗口是否已经弹出？看文档  NM(Optional; PDF 1.4) The annotation name, a text string uniquely identifying it   among all the annotations on its page.
+                                if(ann->window.flags & Annotation::Hidden)
+                                {
+                                    kDebug()<<"astario: select popoutWindow"<<endl;
+                                }
+                                else
+                                {
+                                    kDebug()<<"astario: select close annotsWindow"<<endl;
+                                }
+                                ann->window.flags ^= Annotation::Hidden;
+                                m_pageView->setAnnotsWindow(ann);
+
+                            }
+                            if(choice==deleteNote)
+                            {
+                                kDebug()<<"astario: select deleteNote"<<endl;
+                            }
+                            if(choice==showProperties)
+                            {
+                                kDebug()<<"astario: select showProperties"<<endl;
+                                AnnotsPropertiesDialog propdialog( m_pageView, m_document, ann );
+                                propdialog.exec();
+                            }
+                        };
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+    
     // 2. use engine to perform operations
     QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight );
 

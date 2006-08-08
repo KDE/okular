@@ -64,6 +64,8 @@ class PageViewAnnotator : public QObject
         int m_lastToolID;
         QRect m_lastDrawnRect;
         PageViewItem * m_lockedItem;
+        //selected annotation name
+        QString m_selectedAnnotationName;
 };
 
 #endif

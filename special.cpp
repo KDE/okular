@@ -650,7 +650,26 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // line break is encountered) 
     if (special_command.startsWith("ps:SDict begin [") && special_command.endsWith(" pdfmark end")) {
       if (!currentlyDrawnPage->hyperLinkList.isEmpty()) {
-	QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
+        // Parse the PostScript literal text string inside parentheses
+        // and store it into 'targetName'.  The scanner works
+        // according to "PostScript language reference, third edition"
+        // - Sec. 3.2.2. The specification is implemented completely:
+        // balanced parentheses and all escape sequences are
+        // considered.
+        QString tmpTargetName = special_command.section('(', 1);
+        QString targetName;
+        int parencount = 1;
+        for(int i=0; i<tmpTargetName.length(); i++) {
+          if (tmpTargetName[i] == '(')
+            parencount++;
+          if (tmpTargetName[i] == ')')
+            parencount--;
+          if (parencount == 0)
+            break;
+          targetName += tmpTargetName[i];
+        }
+        targetName = PDFencodingToQString(targetName);
+	
 	QValueVector<Hyperlink>::iterator it;
         for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it ) 
 	  if (it->linkText == "glopglyph")

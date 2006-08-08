@@ -457,43 +457,49 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             {
                 TextAnnotation * text = (TextAnnotation *)a;
                 if ( text->textType == TextAnnotation::InPlace )
-				{					
-					int ny=annotRect.top();
-					int nx=annotRect.left();
-					QString title="Author:";
-					QString note=text->inplaceText;
-					title+=text->author;
-					int nwidth=10+qMax(title.length(),note.length())*7;
-					int nheight=40;//annotBoundary.height();
-
-					QBrush br(QColor::fromRgb(255,255,0));
-					mixedPainter->setBrush(br);
-					mixedPainter->setPen(QColor::fromRgb(0,0,0));
-					if(annotBoundary.width()<25)
-						mixedPainter->drawRoundRect(annotBoundary);
-					else
-					{
-						mixedPainter->drawRoundRect(nx,ny,nwidth,nheight);
-						mixedPainter->drawText(nx+5,ny+10,title);
-						mixedPainter->drawText(nx+5,ny+25,text->inplaceText);
-					}
-					//	mixedPainter->setBrush(br);
-					continue;
-				}
-				if(text->textType != TextAnnotation::Linked)
-					continue;
-
+                {
+                    //Have the square of fixed size and adapting text font
+                    QFontMetricsF mf(text->textFont);
+                    QRectF rcf=mf.boundingRect(text->inplaceText);
+                    QSize sz(int(rcf.width()+5), int(rcf.height()+5));
+                    
+                    QPixmap pixmap(sz);
+                    pixmap.fill( a->style.color );
+                    QPainter painter;
+                    painter.begin( &pixmap );
+                    painter.setPen( Qt::black );//( NoPen );
+                    //painter.setBrush( bule);
+                    painter.drawRect( 0, 0, sz.width()-1, sz.height()-1 );
+                    painter.drawText(2,sz.height()-3,text->inplaceText);
+                    //kDebug()<<"astario:    w,h="<<sz.width()<<", "<<sz.height()<<endl;
+                    painter.end();
+                    QImage scaledImage;
+                    scalePixmapOnImage( scaledImage, &pixmap,
+                                        annotBoundary.width(),
+                                        annotBoundary.height(), innerRect );
+                    //colorizeImage( scaledImage, a->style.color, opacity );
+                    //scaledImage.setAlphaBuffer( true );
+                    pixmap = QPixmap::fromImage( scaledImage );
+                    
+                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                }
+                
+                if ( text->textType == TextAnnotation::Linked )
+                {
                 // get pixmap, colorize and alpha-blend it
-                QPixmap pixmap = DesktopIcon( text->textIcon );
-                QImage scaledImage;
-                scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
-                    annotBoundary.height(), innerRect );
-                colorizeImage( scaledImage, a->style.color, opacity );
-                scaledImage.setAlphaBuffer( true );
-                pixmap = QPixmap::fromImage( scaledImage );
+                    QPixmap pixmap = DesktopIcon( text->textIcon );
+                    QImage scaledImage;
+                    scalePixmapOnImage( scaledImage, &pixmap,
+                                        annotBoundary.width(),
+                                        annotBoundary.height(), innerRect );
+                    colorizeImage( scaledImage, a->style.color, opacity );
+                    scaledImage.setAlphaBuffer( true );
+                    pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the mangled image to painter
-                mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                }
+
             }
             // draw StampAnnotation
             else if ( type == Annotation::AStamp )

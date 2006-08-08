@@ -58,6 +58,8 @@
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
+#include "core/annotations.h"
+#include "embeddedannotationdialog.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -112,6 +114,8 @@ public:
     QTimer * autoScrollTimer;
     // annotations
     PageViewAnnotator * annotator;
+    //text annotation dialogs list
+    QList<EmbeddedAnnotationDialog *> m_annowindows;
     // other stuff
     QTimer * delayResizeTimer;
     bool dirtyLayout;
@@ -214,6 +218,11 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 PageView::~PageView()
 {
     // delete the local storage structure
+    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    {
+        if(tempwnd)
+            delete tempwnd;
+    }
     d->document->removeObserver( this );
     delete d;
 }
@@ -336,6 +345,43 @@ void PageView::fitPageWidth( int page )
     d->document->setViewportPage( page );
     updateZoomText();
     setFocus();
+}
+
+void PageView::setAnnotsWindow(Annotation * annot)
+{
+    if(!annot)
+        return;
+    //find the annot window
+    EmbeddedAnnotationDialog* existWindow=0;
+    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    {
+        if(tempwnd)
+        {
+            if(tempwnd->m_annot==annot)
+            {
+                existWindow=tempwnd;
+                break;
+            }
+        }
+    }
+    
+    if(annot->window.flags & Annotation::Hidden)
+    {
+        if(existWindow)
+        {
+            existWindow->hide();
+        }
+    }
+    else
+    {
+        if(existWindow==0)
+        {
+            existWindow=new EmbeddedAnnotationDialog(this,annot);
+            d->m_annowindows<<existWindow;
+        }
+        existWindow->show();
+    }
+    return;
 }
 
 void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )

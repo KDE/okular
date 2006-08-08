@@ -17,45 +17,53 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-  <tool id="1" name="Green Highlighter" pixmap="tool_ink_green">
-      <tooltip>.. is ..</tooltip>
-      <engine type="SmoothLine" color="#00FF00">
-          <annotation type="Ink" color="#00FF00" width="2" />
-      </engine>
-      <shortcut>1</shortcut>
-  </tool>
-  <tool id="2" name="Pink Highlighter" pixmap="tool_hl_pink">
-      <tooltip>.. is ..</tooltip>
-      <engine type="SmoothLine" color="#FF0080">
-          <annotation type="Ink" color="#FF0080" width="4" />
-      </engine>
-      <shortcut>2</shortcut>
-  </tool>
-  <tool id="3" name="Yellow Highlighter" pixmap="tool_hl_yellow">
-      <tooltip>this ..</tooltip>
-      <engine type="SmoothLine" color="#FFFF00">
-          <annotation type="Highlight" color="#FFFF00" />
-      </engine>
-      <shortcut>3</shortcut>
-  </tool>
-  <tool id="4" name="note" pixmap="pinnote">
-    <tooltip>.. tooltip ..</tooltip>
-    <engine type="PickPoint" color="#FF00FF" hoverIcon="tool_note">
-      <annotation type="Text" color="#FF00FF" />
-    </engine>
-    <shortcut>4</shortcut>
-  </tool>
-  <tool id="5" name="Straight Yellow Line" pixmap="tool_hl_yellow">
-    <tooltip>.. test</tooltip>
-    <engine type="TwoPoints" color="#FFE000">
-      <annotation type="Line" width="4" color="#FFE000" />
-    </engine>
-    <shortcut>5</shortcut>
-  </tool>
-  <tool id="6" name="Warning Stamp" pixmap="messagebox_warning">
-    <engine type="PickPoint" hoverIcon="messagebox_warning">
-      <annotation type="Stamp" icon="messagebox_warning" />
-    </engine>
-    <shortcut>7</shortcut>
+    <tool id="1" name="Note" pixmap="tool_note">
+        <tooltip>Text Annotation</tooltip>
+        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note">
+            <annotation type="Text" color="#FFFF00" />
+        </engine>
+        <shortcut>1</shortcut>
+    </tool>
+    <tool id="2" name="FreeText" pixmap="pinnote">
+        <tooltip>Free Text Annotation</tooltip>
+        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note">
+            <annotation type="FreeText" color="#FFFF00" />
+        </engine>
+        <shortcut>2</shortcut>
+    </tool>
+    <tool id="3" name="Green Highlighter" pixmap="tool_ink_green">
+        <tooltip>Green Ink</tooltip>
+        <engine type="SmoothLine" color="#00FF00">
+            <annotation type="Ink" color="#00FF00" width="2" />
+        </engine>
+        <shortcut>3</shortcut>
+    </tool>
+    <tool id="4" name="Pink Highlighter" pixmap="tool_hl_pink">
+        <tooltip>Pink Ink</tooltip>
+        <engine type="SmoothLine" color="#FF0080">
+            <annotation type="Ink" color="#FF0080" width="4" />
+        </engine>
+        <shortcut>4</shortcut>
+    </tool>
+    <tool id="5" name="Yellow Highlighter" pixmap="tool_hl_yellow">
+        <tooltip>Yellow Highlight</tooltip>
+        <engine type="SmoothLine" color="#FFFF00">
+            <annotation type="Highlight" color="#FFFF00" />
+        </engine>
+        <shortcut>5</shortcut>
+    </tool>
+    <tool id="6" name="Straight Yellow Line" pixmap="tool_hl_yellow">
+        <tooltip>Straight Yellow Line</tooltip>
+        <engine type="TwoPoints" color="#FFE000">
+            <annotation type="Line" width="4" color="#FFE000" />
+        </engine>
+        <shortcut>6</shortcut>
+    </tool>
+    <tool id="7" name="Warning Stamp" pixmap="messagebox_warning">
+        <tooltip>Warning Stamp</tooltip>
+        <engine type="PickPoint" hoverIcon="messagebox_warning">
+            <annotation type="Stamp" icon="messagebox_warning" />
+        </engine>
+        <shortcut>7</shortcut>
   </tool>
 </annotatingTools>

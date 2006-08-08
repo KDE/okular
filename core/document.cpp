@@ -725,6 +725,26 @@ void KPDFDocument::addPageAnnotation( int page, Annotation * annotation )
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
 
+void KPDFDocument::modifyPageAnnotation( int page, QString * annuniqueName,Annotation * newannotation )
+{
+    //TODO: modify or add/delete annotations
+    if(newannotation==0 && annuniqueName==0)
+        return; //FIXME
+    if(newannotation==0)
+    {
+        ;//delete
+    }
+    else if(annuniqueName==0)
+    {
+        ;//add annotation
+    }
+    else    //modify
+    {
+        ;
+    }
+}
+        
+
 void KPDFDocument::setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color )
 {
     KPDFPage * kp = pages_vector[ page ];

@@ -70,6 +70,8 @@ install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 set(okularpart_SRCS
    part.cpp
    ui/embeddedfilesdialog.cpp
+   ui/embeddedannotationdialog.cpp
+   ui/annotationpropertiesdialog.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
    ui/pagepainter.cpp

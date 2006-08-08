@@ -102,6 +102,7 @@ class OKULAR_EXPORT KPDFPage
 
     private:
         friend class PagePainter;
+        friend class PageViewAnnotator;
         int m_number;
         int m_orientation;
         double m_width, m_height;

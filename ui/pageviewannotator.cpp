@@ -456,6 +456,8 @@ class TwoPointsEngine : public AnnotatorEngine
             if ( annElement.hasAttribute( "opacity" ) )
                 ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
             // return annotation
+
+            return ann;
         }
 
     private:

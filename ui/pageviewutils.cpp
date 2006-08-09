@@ -158,8 +158,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // resize pixmap, mask and widget
     static QBitmap mask;
-    mask.resize( geometry.size() + QSize( 1, 1 ) );
-    m_pixmap.resize( geometry.size() + QSize( 1, 1 ) );
+    mask = QBitmap( geometry.size() + QSize( 1, 1 ) );
+    m_pixmap = QPixmap( geometry.size() + QSize( 1, 1 ) );
     resize( geometry.size() + QSize( 1, 1 ) );
 
     // create and set transparency mask
@@ -502,8 +502,8 @@ void PageViewToolBar::buildToolBar()
 
     // 3. resize pixmap, mask and widget
     static QBitmap mask;
-    mask.resize( myWidth + 1, myHeight + 1 );
-    d->backgroundPixmap.resize( myWidth + 1, myHeight + 1 );
+    mask = QBitmap( myWidth + 1, myHeight + 1 );
+    d->backgroundPixmap = QPixmap( myWidth + 1, myHeight + 1 );
     resize( myWidth + 1, myHeight + 1 );
 
     // 4. create and set transparency mask

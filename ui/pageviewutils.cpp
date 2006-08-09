@@ -170,7 +170,7 @@ QRectF RubberBandItem::boundingRect() const
 
 void RubberBandItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
 {
-    QColor color = ( m_size.width() <= 8 && m_size.height() <= 8 ) ? Qt::red : m_color;
+    QColor color = ( abs( m_size.width() ) <= 8 && abs( m_size.height() ) <= 8 ) ? Qt::red : m_color;
 
     if ( KpdfSettings::enableCompositing() )
     {

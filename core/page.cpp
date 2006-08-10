@@ -29,7 +29,7 @@ class TextSelection;
 
 KPDFPage::KPDFPage( uint page, double w, double h, int o )
     : m_number( page ), m_orientation( o ), m_width( w ), m_height( h ),
-    m_bookmarked( false ), m_text( 0 ), m_transition( 0 )
+    m_bookmarked( false ), m_text( 0 ), m_transition( 0 ), m_maxuniqueNum( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
 /*    if ( r == 90 || r == 270 )
@@ -42,7 +42,6 @@ KPDFPage::KPDFPage( uint page, double w, double h, int o )
         m_width = 1;
     if ( m_height <= 0 )
         m_height = 1;
-    m_maxuniqueNum=1;
 }
 
 KPDFPage::~KPDFPage()

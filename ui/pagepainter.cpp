@@ -445,6 +445,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     QFontMetricsF mf(text->textFont);
                     QRectF rcf=mf.boundingRect(text->inplaceText);
                     QSize sz(int(rcf.width()+5), int(rcf.height()+5));
+                    if(sz.height()<annotBoundary.height())
+                        sz.setHeight(annotBoundary.height());
+                    if(sz.width()<annotBoundary.width())
+                        sz.setWidth(annotBoundary.width());
                     
                     QPixmap pixmap(sz);
                     pixmap.fill( a->style.color );
@@ -452,8 +456,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     painter.begin( &pixmap );
                     painter.setPen( Qt::black );//( NoPen );
                     //painter.setBrush( bule);
-                    painter.drawRect( 0, 0, sz.width()-1, sz.height()-1 );
-                    painter.drawText(2,sz.height()-3,text->inplaceText);
+                    painter.drawRect( 0, 0, sz.width()-2, sz.height()-2 );
+                    painter.drawText(2,sz.height()/2+int(rcf.height()/2),text->inplaceText);
                     //kDebug()<<"astario:    w,h="<<sz.width()<<", "<<sz.height()<<endl;
                     painter.end();
                     QImage scaledImage;

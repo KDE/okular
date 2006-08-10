@@ -122,9 +122,9 @@ Annotation::Annotation( const QDomNode & annNode )
     if ( e.hasAttribute( "uniqueName" ) )
         uniqueName = e.attribute( "uniqueName" );
     if ( e.hasAttribute( "modifyDate" ) )
-        modifyDate = QDateTime::fromString( e.attribute( "modifyDate" ) );
+        modifyDate = QDateTime::fromString( e.attribute("modifyDate"), Qt::ISODate );
     if ( e.hasAttribute( "creationDate" ) )
-        creationDate = QDateTime::fromString( e.attribute( "creationDate" ) );
+        creationDate = QDateTime::fromString( e.attribute("creationDate"), Qt::ISODate );
 
     // parse -other- attributes
     if ( e.hasAttribute( "flags" ) )
@@ -221,9 +221,9 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     if ( !uniqueName.isEmpty() )
         e.setAttribute( "uniqueName", uniqueName );
     if ( modifyDate.isValid() )
-        e.setAttribute( "modifyDate", modifyDate.toString() );
+        e.setAttribute( "modifyDate", modifyDate.toString(Qt::ISODate) );
     if ( creationDate.isValid() )
-        e.setAttribute( "creationDate", creationDate.toString() );
+        e.setAttribute( "creationDate", creationDate.toString(Qt::ISODate) );
 
     // store -other- attributes
     if ( flags )

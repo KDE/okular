@@ -1286,7 +1286,7 @@ if (d->document->handleEvent( e ) )
                 if(choice==showProperties)
                 {
                     kDebug()<<"astario: select showProperties"<<endl;
-                    AnnotsPropertiesDialog propdialog( this, d->document, ann );
+                    AnnotsPropertiesDialog propdialog( this, ann );
                     propdialog.exec();
                 }
             }

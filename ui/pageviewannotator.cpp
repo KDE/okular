@@ -237,6 +237,8 @@ class PickPointEngine : public AnnotatorEngine
             if ( type == Press && clicked == false )
             {
                 clicked = true;
+                startpoint.x=nX;
+                startpoint.y=nY;
             }
             // repaint if moving while pressing
             else if ( type == Move && clicked == true )
@@ -276,11 +278,10 @@ class PickPointEngine : public AnnotatorEngine
             const QDomElement & annElement = m_engineElement.firstChild().toElement();
             if ( annElement.isNull() || annElement.tagName() != "annotation" )
                 return 0;
-
+            
             // find out annotation's type
             Annotation * ann = 0;
             QString typeString = annElement.attribute( "type" );
-
             // create TextAnnotation from path
             if ( typeString == "FreeText")	//<annotation type="Text"
             {
@@ -300,8 +301,14 @@ class PickPointEngine : public AnnotatorEngine
                     //set boundary
                     QFontMetricsF mf(ta->textFont);
                     QRectF rcf=mf.boundingRect(ta->inplaceText);
-                    rect.right =rect.left + ((rcf.width()+5) / xscale) ;
-                    rect.bottom = rect.top + ((rcf.height()+5) / yscale) ;
+                    rect.left = qMin(startpoint.x,point.x);
+                    rect.top = qMin(startpoint.y,point.y);
+                    rect.right = qMax(startpoint.x,point.x);
+                    rect.bottom = qMax(startpoint.y,point.y);
+                    kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
+                    double pixfactor=0.002;
+                    rect.right = qMax(rect.right, rect.left+rcf.width()*pixfactor);
+                    rect.bottom = qMax(rect.bottom, rect.top+rcf.height()*pixfactor*xscale/yscale);
                     ta->boundary=this->rect;
                 }
             }
@@ -313,6 +320,11 @@ class PickPointEngine : public AnnotatorEngine
                 ta->window.text="This is a text annotation";
                 //ta->window.flags &= ~(Annotation::Hidden);
                 ta->textIcon="comment";
+                double iconhei=0.03;
+                rect.left = point.x;
+                rect.top = point.y;
+                rect.right=rect.left+iconhei;
+                rect.bottom=rect.top+iconhei*xscale/yscale;
                 ta->boundary=this->rect;
             }
             // create StampAnnotation from path
@@ -341,6 +353,7 @@ class PickPointEngine : public AnnotatorEngine
     private:
         bool clicked;
         NormalizedRect rect;
+        NormalizedPoint startpoint;
         NormalizedPoint point;
         QPixmap * pixmap;
         double xscale,yscale;

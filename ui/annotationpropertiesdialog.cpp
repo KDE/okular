@@ -26,13 +26,17 @@
 #include "annotationpropertiesdialog.h"
 
 
-AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent, KPDFDocument *doc, Annotation* ann)
+AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     : KPageDialog( parent ), modified( false )
 {
     setFaceType( Tabbed );
+    resize(400,300);
     m_annot=ann;
     setCaptionTextbyAnnotType();
     setButtons( Ok | Apply | Cancel );
+    connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
+    connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
+
 
     QLabel* tmplabel;
   //1. Appearance
@@ -44,18 +48,17 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent, KPDFDocument *do
     m_layout[0]->setSpacing( spacingHint() );
 
     colorBn = new QPushButton(m_page[0]);
+    
+    m_selcol=ann->style.color;
     QPalette pal = colorBn->palette();
-    pal.setColor( QPalette::Active, QPalette::Button, ann->style.color );
-    pal.setColor( QPalette::Inactive, QPalette::Button, ann->style.color );
-    pal.setColor( QPalette::Disabled, QPalette::Button, ann->style.color );
+    pal.setColor( QPalette::Active, QPalette::Button, m_selcol );
+    pal.setColor( QPalette::Inactive, QPalette::Button, m_selcol );
+    pal.setColor( QPalette::Disabled, QPalette::Button, m_selcol );
     colorBn->setPalette( pal );
-    //colorBn->setText(i18n( "&Color" ));
- //   QString colorsz;
- //   QTextStream(&colorsz) << "(" << ann->style.color.red()<<", "
- //         << ann->style.color.green()<<", "<< ann->style.color.blue()<<")";
-    tmplabel = new QLabel( ann->style.color.name(), m_page[0] );
+    colorBn->setText(i18n( "&Color" ));
     m_layout[0]->addWidget( colorBn, 0, 0, Qt::AlignRight );
-    m_layout[0]->addWidget( tmplabel, 0, 1 );
+    
+    QObject::connect(colorBn, SIGNAL(clicked()), this, SLOT(slotChooseColor()));
     
     tmplabel = new QLabel( i18n( "Opacity" ), m_page[0] );
     QString szopacity;
@@ -110,11 +113,23 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent, KPDFDocument *do
     m_layout[2]->addWidget( tmplabel, 1, 0 );
     contentsEdit = new QLineEdit( ann->contents, m_page[2] );
     m_layout[2]->addWidget( contentsEdit, 1, 1 );
-    
+
+    QString tmpstr;
+    tmpstr.setNum(m_annot->flags);
+    tmplabel = new QLabel( i18n( "flags:" ), m_page[2] );
+    m_layout[2]->addWidget( tmplabel, 2, 0 );
+    flagsEdit = new QLineEdit( tmpstr, m_page[2] );
+    m_layout[2]->addWidget( flagsEdit, 2, 1 );
+
+    QTextStream(&tmpstr)<<m_annot->boundary.left<<","<<m_annot->boundary.top
+            <<","<<m_annot->boundary.right<<","<<m_annot->boundary.bottom;
+    tmplabel = new QLabel( i18n( "boundary:" ), m_page[2] );
+    m_layout[2]->addWidget( tmplabel, 3, 0 );
+    boundaryEdit = new QLineEdit( tmpstr, m_page[2] );
+    m_layout[2]->addWidget( boundaryEdit, 3, 1 );
     //END advance
     
     
-    QObject::connect(colorBn, SIGNAL(clicked()), this, SLOT(slotChooseColor()));
     
 }
 AnnotsPropertiesDialog::~AnnotsPropertiesDialog()
@@ -158,10 +173,23 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
 void AnnotsPropertiesDialog::slotChooseColor()
 {
     
-    QColor col = QColorDialog::getColor(m_annot->style.color, this);
+    QColor col = QColorDialog::getColor(m_selcol, this);
     if (!col.isValid())
         return;
-    m_annot->style.color=col;
+    m_selcol=col;
+    QPalette pal = colorBn->palette();
+    pal.setColor( QPalette::Active, QPalette::Button, m_selcol );
+    pal.setColor( QPalette::Inactive, QPalette::Button, m_selcol );
+    pal.setColor( QPalette::Disabled, QPalette::Button, m_selcol );
+    colorBn->setPalette( pal );
+}
+void AnnotsPropertiesDialog::slotapply()
+{
+    m_annot->author=AuthorEdit->text();
+    m_annot->contents=contentsEdit->text();
+    m_annot->style.color=m_selcol;
+    m_annot->modifyDate=QDateTime::currentDateTime();
+    m_annot->flags=flagsEdit->text().toInt();
 }
     
 #include "annotationpropertiesdialog.moc"

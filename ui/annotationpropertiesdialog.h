@@ -33,7 +33,7 @@ class AnnotsPropertiesDialog : public KPageDialog
 {
     Q_OBJECT
 public:
-    AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *doc, Annotation* ann );
+    AnnotsPropertiesDialog( QWidget *parent,Annotation* ann );
     ~AnnotsPropertiesDialog();
     bool modified;
 
@@ -47,14 +47,18 @@ private:
     QLineEdit *opacityEdit;
     QLineEdit *AuthorEdit;
     QLineEdit *uniqueNameEdit;
-    QLineEdit *contentsEdit;
+    QLineEdit *contentsEdit,
+        *flagsEdit,
+        *boundaryEdit;
     QPushButton* colorBn;
     QSlider *opacitySlider;
+    QColor m_selcol;
     
     void setCaptionTextbyAnnotType();
 
 public slots:
     void slotChooseColor();
+    void slotapply();
 };
 
 

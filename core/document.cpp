@@ -725,23 +725,31 @@ void KPDFDocument::addPageAnnotation( int page, Annotation * annotation )
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
 
-void KPDFDocument::modifyPageAnnotation( int page, QString * annuniqueName,Annotation * newannotation )
+void KPDFDocument::modifyPageAnnotation( int page, Annotation * newannotation )
 {
-    //TODO: modify or add/delete annotations
-    if(newannotation==0 && annuniqueName==0)
-        return; //FIXME
-    if(newannotation==0)
-    {
-        ;//delete
-    }
-    else if(annuniqueName==0)
-    {
-        ;//add annotation
-    }
-    else    //modify
-    {
-        ;
-    }
+    //TODO: modify annotations
+    
+    // find out the page
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+    
+    kp->modifyAnnotation( newannotation );
+    // notify observers about the change
+    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+}
+
+
+void KPDFDocument::removePageAnnotation( int page, Annotation * annotation )
+{
+    // find out the page
+    KPDFPage * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+    
+    kp->removeAnnotation( annotation );
+    // notify observers about the change
+    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
         
 

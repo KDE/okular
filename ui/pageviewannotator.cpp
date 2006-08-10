@@ -29,7 +29,6 @@
 #include "core/annotations.h"
 #include "settings.h"
 #include "pageview.h"
-#include "annotationpropertiesdialog.h"
 #include "pageviewutils.h"
 #include "pageviewannotator.h"
 
@@ -600,72 +599,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, const QPointF & scenePos, 
         return QRect();
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
         m_lockedItem = item;
-    // 1.5 check if there is any exist annotations on (nX,nY)......Astario
-    if( e->type() == QEvent::MouseButtonRelease ) //m_selectedAnnotationName.isEmpty()
-    {
-        const KPDFPage * page = item->page();
-        
-        QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd =page->m_annotations.end();
-        for ( ; aIt != aEnd; ++aIt )
-        {
-            Annotation * ann = *aIt;
-            if ( ann->boundary.contains( nX, nY ) )
-            {
-                Annotation::SubType type = ann->subType();
-                if(type==Annotation::AText)
-                {
-                    m_selectedAnnotationName=ann->uniqueName;
-                    if(buttonState == Qt::RightButton) //pop up content menu
-                    {
-                        KMenu menu( this->m_pageView );
-                        QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
-                        menu.addTitle( i18n("Annotation"));
-                        if(ann->window.flags & Annotation::Hidden)
-                            popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
-                        else
-                            popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
-                        deleteNote = menu.addAction( SmallIconSet("delete"), i18n( "&Delete" ) );
-                        showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
-                        QAction *choice = menu.exec( e->globalPos() );
-
-            // check if the user really selected an action
-                        if ( choice )
-                        {
-                            if ( choice == popoutWindow)
-                            {
-                                //怎么表示窗口是否已经弹出？看文档  NM(Optional; PDF 1.4) The annotation name, a text string uniquely identifying it   among all the annotations on its page.
-                                if(ann->window.flags & Annotation::Hidden)
-                                {
-                                    kDebug()<<"astario: select popoutWindow"<<endl;
-                                }
-                                else
-                                {
-                                    kDebug()<<"astario: select close annotsWindow"<<endl;
-                                }
-                                ann->window.flags ^= Annotation::Hidden;
-                                m_pageView->setAnnotsWindow(ann);
-
-                            }
-                            if(choice==deleteNote)
-                            {
-                                kDebug()<<"astario: select deleteNote"<<endl;
-                            }
-                            if(choice==showProperties)
-                            {
-                                kDebug()<<"astario: select showProperties"<<endl;
-                                AnnotsPropertiesDialog propdialog( m_pageView, m_document, ann );
-                                propdialog.exec();
-                            }
-                        };
-                        
-                    }
-                }
-                
-            }
-        }
-    }
-    
     // 2. use engine to perform operations
     QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight );
 
@@ -790,6 +724,20 @@ void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     KpdfSettings::setEditToolBarPlacement( (int)side );
     KpdfSettings::writeConfig();
+}
+
+Annotation* PageViewAnnotator::getAnnotationbyPos(const KPDFPage * page, double nX, double nY )
+{
+    QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd =page->m_annotations.end();
+    for ( ; aIt != aEnd; ++aIt )
+    {
+        Annotation * ann = *aIt;
+        if ( ann->boundary.contains( nX, nY ) )
+        {
+            return ann;
+        }
+    }
+    return 0;
 }
 
 #include "pageviewannotator.moc"

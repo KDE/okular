@@ -51,6 +51,7 @@ class PageViewAnnotator : public QObject
         QRect routeEvent( QMouseEvent * event, const QPointF & scenePos, PageViewItem * item );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
+        static Annotation* getAnnotationbyPos(const KPDFPage * page, double nX, double nY );
 
     private slots:
         void slotToolSelected( int toolID );
@@ -69,7 +70,7 @@ class PageViewAnnotator : public QObject
         QRect m_lastDrawnRect;
         PageViewItem * m_lockedItem;
         //selected annotation name
-        QString m_selectedAnnotationName;
+        //QString m_selectedAnnotationName;
 };
 
 #endif

@@ -632,7 +632,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
                         {
                             if ( choice == popoutWindow)
                             {
-                                //怎么表示窗口是否已经弹出？看文档  NM(Optional; PDF 1.4) The annotation name, a text string uniquely identifying it   among all the annotations on its page.
+                                //????±í???°????·?????????????????  NM(Optional; PDF 1.4) The annotation name, a text string uniquely identifying it   among all the annotations on its page.
                                 if(ann->window.flags & Annotation::Hidden)
                                 {
                                     kDebug()<<"astario: select popoutWindow"<<endl;
@@ -648,6 +648,9 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
                             if(choice==deleteNote)
                             {
                                 kDebug()<<"astario: select deleteNote"<<endl;
+                                m_document->removePageAnnotation(page->number(),ann);
+                                
+                                kDebug()<<"astario: deleted Note"<<endl;
                             }
                             if(choice==showProperties)
                             {
@@ -656,7 +659,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
                                 propdialog.exec();
                             }
                         };
-                        
+                        break;
                     }
                 }
                 

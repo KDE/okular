@@ -128,8 +128,9 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         void requestPixmaps( const QLinkedList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
         void addPageAnnotation( int page, Annotation * annotation );
-        void modifyPageAnnotation( int page, QString * annuniqueName,Annotation * newannotation );
-
+        void modifyPageAnnotation( int page, Annotation * newannotation );
+        void removePageAnnotation( int page, Annotation * annotation );
+        
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );

@@ -13,7 +13,7 @@
 #include <qlabel.h>
 #include <qheaderview.h>
 #include <qsortfilterproxymodel.h>
-#include <qtreeview.h>
+#include <QColorDialog>
 #include <kicon.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
@@ -25,115 +25,138 @@
 #include "core/annotations.h"
 #include "annotationpropertiesdialog.h"
 
+
 AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent, KPDFDocument *doc, Annotation* ann)
-    : KPageDialog( parent ), m_annot( ann )
+    : KPageDialog( parent ), modified( false )
 {
     setFaceType( Tabbed );
-    QString captiontext;
-    if(ann->subType()==Annotation::AText)
-    {
-        if(((TextAnnotation*)ann)->textType==TextAnnotation::Linked)
-            captiontext=i18n( "Note Properties" );
-        else
-            captiontext=i18n( "FreeText Properties" );
-    }
-    else if(ann->subType()==Annotation::AHighlight)
-    {
-        captiontext=i18n( "Highlight Properties" );
-    }
-    else if(ann->subType()==Annotation::AInk)
-    {
-        captiontext=i18n( "Ink Properties" );
-    }
-    else if(ann->subType()==Annotation::ALine)
-    {
-        captiontext=i18n( "Line Properties" );
-    }
-    else if(ann->subType()==Annotation::AStamp)
-    {
-        captiontext=i18n( "Properties" );
-    }
-    else
-        captiontext=i18n( "Properties" );
-    setCaption( captiontext );
+    m_annot=ann;
+    setCaptionTextbyAnnotType();
     setButtons( Ok | Apply | Cancel );
 
+    QLabel* tmplabel;
   //1. Appearance
-    QFrame *page = new QFrame();
-    KPageWidgetItem *item = addPage( page, i18n( "&Appearance" ) );
-    QGridLayout *layout = new QGridLayout( page );
-    layout->setMargin( marginHint() );
-    layout->setSpacing( spacingHint() );
+    //BEGIN tab1
+    m_page[0] = new QFrame();
+    m_tabitem[0] = addPage( m_page[0], i18n( "&Appearance" ) );
+    m_layout[0] = new QGridLayout( m_page[0] );
+    m_layout[0]->setMargin( marginHint() );
+    m_layout[0]->setSpacing( spacingHint() );
 
-    QLabel *key=0,*value =0;
-        // create labels and layout them
-   // key = new QLabel( i18n( "&Color" ), page );
-    QPushButton* colorBn = new QPushButton(page);
-    colorBn->setObjectName("ColorButton");
+    colorBn = new QPushButton(m_page[0]);
     colorBn->setText(i18n( "&Color" ));
-    QString colorsz;
-    QTextStream(&colorsz) << "(" << ann->style.color.red()<<", "
-            << ann->style.color.green()<<", "<< ann->style.color.blue()<<")";
-    value = new KSqueezedTextLabel( colorsz, page );
-    layout->addWidget( colorBn, 0, 0, Qt::AlignRight );
-    layout->addWidget( value, 0, 1 );
+ //   QString colorsz;
+ //   QTextStream(&colorsz) << "(" << ann->style.color.red()<<", "
+ //         << ann->style.color.green()<<", "<< ann->style.color.blue()<<")";
+    tmplabel = new QLabel( ann->style.color.name(), m_page[0] );
+    m_layout[0]->addWidget( colorBn, 0, 0, Qt::AlignRight );
+    m_layout[0]->addWidget( tmplabel, 0, 1 );
     
-    key = new QLabel( i18n( "Opacity" ), page );
+    tmplabel = new QLabel( i18n( "Opacity" ), m_page[0] );
     QString szopacity;
     szopacity.setNum( int(ann->style.opacity*100),10);
-    opacityEdit = new QLineEdit(szopacity,page);
-    opacityEdit->setObjectName(QString::fromUtf8("opacityEdit"));
-    //opacityEdit->setGeometry(QRect(150, 90, 113, 28));
-    //value = new KSqueezedTextLabel( "KSqueezedTextLabel", page );
-    layout->addWidget( key, 1, 0, Qt::AlignRight );
-    layout->addWidget( opacityEdit, 1, 1 );
+    opacityEdit = new QLineEdit(szopacity,m_page[0]);
+    m_layout[0]->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    m_layout[0]->addWidget( opacityEdit, 1, 1 );
     
-    opacitySlider=new QSlider(page);
-    opacitySlider->setObjectName(QString::fromUtf8("opacitySlider"));
-   // opacitySlider->setGeometry(QRect(110, 130, 160, 16));
+    opacitySlider=new QSlider(m_page[0]);
     opacitySlider->setMaximum(100);
     opacitySlider->setValue(100);
     opacitySlider->setSliderPosition(100);
     opacitySlider->setOrientation(Qt::Horizontal);
-    layout->addWidget( opacitySlider, 2, 0 );
-
-
+    m_layout[0]->addWidget( opacitySlider, 2, 1 );
+    //END tab1
     
-    QLineEdit *AuthorEdit;
-    Annotation* m_annot;
+    //BEGIN tab 2
+    m_page[1] = new QFrame();
+    m_tabitem[1] = addPage(m_page[1], i18n("&General"));
+//    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
+    m_layout[1] = new QGridLayout(m_page[1]);
+    m_layout[1]->setMargin(marginHint());
+    m_layout[1]->setSpacing(spacingHint());
+    tmplabel = new QLabel( i18n( "Author" ), m_page[1] );
+    AuthorEdit= new QLineEdit(ann->author,m_page[1]);
+    m_layout[1]->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    m_layout[1]->addWidget( AuthorEdit, 0, 1 );
     
-    QGridLayout *page2Layout = 0;
-    QFrame *page2 = new QFrame();
-    KPageWidgetItem *item2 = addPage(page2, i18n("&General"));
-    item2->setIcon( KIcon( "fonts" ) );
-    page2Layout = new QGridLayout(page2);
-    page2Layout->setMargin(marginHint());
-    page2Layout->setSpacing(spacingHint());
-    // create labels and layout them
-    key = new QLabel( i18n( "Author" ), page2 );
-    AuthorEdit= new QLineEdit(page2);
-    AuthorEdit->setObjectName(QString::fromUtf8("AuthorEdit"));
-    AuthorEdit->setText(ann->author);
-    page2Layout->addWidget( key, 0, 0, Qt::AlignRight );
-    page2Layout->addWidget( AuthorEdit, 0, 1 );
+    tmplabel = new QLabel( i18n( "Created:" ), m_page[1] );
+    m_layout[1]->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    tmplabel = new QLabel(ann->creationDate.toString("hh:mm:ss, dd.MM.yyyy"), m_page[1] );//time
+    m_layout[1]->addWidget( tmplabel, 1, 1 );
     
-    key = new QLabel( i18n( "Created" ), page2 );
-    value = new KSqueezedTextLabel(ann->creationDate.toString("hh:mm:ss, dd.MM.yyyy"), page2 );//time
-    page2Layout->addWidget( key, 1, 0, Qt::AlignRight );
-    page2Layout->addWidget( value, 1, 1 );
+    tmplabel = new QLabel( i18n( "Modified:" ), m_page[1] );
+        m_layout[1]->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+    tmplabel = new QLabel(ann->modifyDate.toString("hh:mm:ss, dd.MM.yyyy"), m_page[1] );//time
+    m_layout[1]->addWidget( tmplabel, 2, 1 );
+    //END tab 2
+    //BEGIN advance properties:
+    m_page[2] = new QFrame();
+    m_tabitem[2] = addPage(m_page[2], i18n("&Advance"));
+    m_layout[2] = new QGridLayout(m_page[2]);
+    m_layout[2]->setMargin(marginHint());
+    m_layout[2]->setSpacing(spacingHint());
     
-    key = new QLabel( i18n( "Modified" ), page2 );
-    value = new KSqueezedTextLabel(ann->modifyDate.toString("hh:mm:ss, dd.MM.yyyy"), page2 );//time
-    page2Layout->addWidget( key, 2, 0, Qt::AlignRight );
-    page2Layout->addWidget( value, 2, 1 );
+    tmplabel = new QLabel( i18n( "uniqueName:" ), m_page[2] );
+    m_layout[2]->addWidget( tmplabel, 0, 0 );
+    uniqueNameEdit = new QLineEdit( ann->uniqueName, m_page[2] );
+    m_layout[2]->addWidget( uniqueNameEdit, 0, 1 );
+    
+    tmplabel = new QLabel( i18n( "contents:" ), m_page[2] );
+    m_layout[2]->addWidget( tmplabel, 1, 0 );
+    contentsEdit = new QLineEdit( ann->contents, m_page[2] );
+    m_layout[2]->addWidget( contentsEdit, 1, 1 );
+    
+    //END advance
     
     
     QObject::connect(colorBn, SIGNAL(clicked()), this, SLOT(slotChooseColor()));
     
 }
+AnnotsPropertiesDialog::~AnnotsPropertiesDialog()
+{
+}
+
+
+void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
+{
+    Annotation::SubType type=m_annot->subType();
+    QString captiontext;
+    switch(type)
+    {
+        case Annotation::AText:
+            if(((TextAnnotation*)m_annot)->textType==TextAnnotation::Linked)
+                captiontext="Note Properties";
+            else
+                captiontext="FreeText Properties";
+            break;
+        case Annotation::ALine:
+            captiontext="Line Properties";
+            break;
+        case Annotation::AGeom:
+            captiontext="Geom Properties";
+            break;
+        case Annotation::AHighlight:
+            captiontext="Highlight Properties";
+            break;
+        case Annotation::AStamp:
+            captiontext="Stamp Properties";
+            break;
+        case Annotation::AInk:
+            captiontext="Ink Properties";
+            break;
+        default:
+            captiontext="Base Properties";
+            break;
+    }
+        setCaption( captiontext );
+}
 void AnnotsPropertiesDialog::slotChooseColor()
 {
-    ;
+    
+    QColor col = QColorDialog::getColor(m_annot->style.color, this);
+    if (!col.isValid())
+        return;
+    m_annot->style.color=col;
 }
     
 #include "annotationpropertiesdialog.moc"

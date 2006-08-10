@@ -42,6 +42,7 @@ KPDFPage::KPDFPage( uint page, double w, double h, int o )
         m_width = 1;
     if ( m_height <= 0 )
         m_height = 1;
+    m_maxuniqueNum=1;
 }
 
 KPDFPage::~KPDFPage()
@@ -223,7 +224,63 @@ void KPDFPage::setHighlight( int s_id, RegularAreaRect *rect, const QColor & col
 
 void KPDFPage::addAnnotation( Annotation * annotation )
 {
+    //uniqueName: okular-PAGENUM-ID
+    if(annotation->uniqueName.isEmpty())
+    {
+        annotation->uniqueName = "okular-";
+        annotation->uniqueName += ( QString::number(m_number) + "-" +
+                QString::number(++m_maxuniqueNum) );
+        kDebug()<<"astario:     inc m_maxuniqueNum="<<m_maxuniqueNum<<endl;
+    }
     m_annotations.append( annotation );
+}
+
+void KPDFPage::modifyAnnotation(Annotation * newannotation )
+{
+    if(!newannotation)
+        return;
+    bool founded=false;
+    QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    for ( ; aIt != aEnd; ++aIt )
+    {
+        if((*aIt)==newannotation)
+            return; //modified already
+        if((*aIt) && (*aIt)->uniqueName==newannotation->uniqueName)
+        {
+            founded=true;
+            break;
+        }
+    }
+    if(founded)
+    {
+        delete *aIt;
+//        m_annotations.erase(aIt);
+//        m_annotations.insert(aIt, newannotation );
+        *aIt=newannotation;
+    }
+}
+
+void KPDFPage::removeAnnotation( Annotation * annotation )
+{
+    if(!annotation)
+        return;
+    bool founded=false;
+    QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    for ( ; aIt != aEnd; ++aIt )
+    {
+        if((*aIt) && (*aIt)->uniqueName==annotation->uniqueName)
+        {
+            founded=true;
+            break;
+        }
+    }
+    
+    if(founded)
+    {
+        delete *aIt;
+            m_annotations.erase(aIt);
+            kDebug()<<"astario: removed annot:"<<annotation->uniqueName<<endl;
+    }
 }
 
 void KPDFPage::setTransition( KPDFPageTransition * transition )
@@ -306,7 +363,18 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
 
                 // append annotation to the list or show warning
                 if ( annotation )
+                {
                     m_annotations.append( annotation );
+                    int pos = annotation->uniqueName.lastIndexOf("-");
+                    if(pos != -1)
+                    {
+                        int uniqID=annotation->uniqueName.right(annotation->uniqueName.length()-pos-1).toInt();
+                        if(m_maxuniqueNum<uniqID)
+                            m_maxuniqueNum=uniqID;
+                    }
+                    
+                    kDebug()<<"astario:  restored annot:"<<annotation->uniqueName<<endl;
+                }
                 else
                     kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
             }
@@ -366,6 +434,7 @@ void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document
                 QDomElement annElement = document.createElement( "annotation" );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
+                kDebug()<<"astario:  save annot:"<<a->uniqueName<<endl;
             }
         }
 

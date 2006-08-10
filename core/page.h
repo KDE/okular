@@ -87,6 +87,8 @@ class OKULAR_EXPORT KPDFPage
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
+        void modifyAnnotation( Annotation * newannotation );
+        void removeAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
         // operations: delete contents (by KPDFDocument)
         void deletePixmap( int p_id );
@@ -105,6 +107,7 @@ class OKULAR_EXPORT KPDFPage
         int m_orientation;
         double m_width, m_height;
         bool m_bookmarked;
+        int m_maxuniqueNum;
 
         QMap< int, QPixmap * > m_pixmaps;
         KPDFTextPage * m_text;

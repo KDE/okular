@@ -27,18 +27,31 @@
 #include <QtGui/QWidget>
 
 #include <kpagedialog.h>
+
 class KPDFDocument;
 class AnnotsPropertiesDialog : public KPageDialog
 {
     Q_OBJECT
 public:
     AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *doc, Annotation* ann );
+    ~AnnotsPropertiesDialog();
+    bool modified;
 
 private:
+    
+    Annotation* m_annot;    //source annotation
+    //dialog widgets:
+    QFrame *m_page[3];
+    KPageWidgetItem *m_tabitem[3];
+    QGridLayout * m_layout[3];
     QLineEdit *opacityEdit;
-    QSlider *opacitySlider;
     QLineEdit *AuthorEdit;
-    Annotation* m_annot;
+    QLineEdit *uniqueNameEdit;
+    QLineEdit *contentsEdit;
+    QPushButton* colorBn;
+    QSlider *opacitySlider;
+    
+    void setCaptionTextbyAnnotType();
 
 public slots:
     void slotChooseColor();

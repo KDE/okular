@@ -57,6 +57,7 @@
 #include "pagepainter.h"
 #include "core/annotations.h"
 #include "embeddedannotationdialog.h"
+#include "annotationpropertiesdialog.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -1235,6 +1236,63 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
+    //specially, if rightClick on exist annotation,popup a menu
+    if(e->button() == Qt::RightButton && d->mouseMode != MouseZoom)
+    {
+        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+        // find out normalized mouse coords inside current item
+        const QRect & itemRect = pageItem->geometry();
+        double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
+        double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
+        Annotation * ann=PageViewAnnotator::getAnnotationbyPos(pageItem->page(),nX,nY);
+        if(ann)
+        {
+            KMenu menu( this );
+            QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
+            menu.addTitle( i18n("Annotation"));
+            if(ann->window.flags & Annotation::Hidden)
+                popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
+            else
+                popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
+            deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
+            showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
+
+            QAction *choice = menu.exec( e->globalPos() );
+
+        // check if the user really selected an action
+            if ( choice )
+            {
+                if ( choice == popoutWindow)
+                {
+                    if(ann->window.flags & Annotation::Hidden)
+                    {
+                        kDebug()<<"astario: select popoutWindow"<<endl;
+                    }
+                    else
+                    {
+                        kDebug()<<"astario: select close annotsWindow"<<endl;
+                    }
+                    ann->window.flags ^= Annotation::Hidden;
+                    this->setAnnotsWindow(ann);
+
+                }
+                if(choice==deleteNote)
+                {
+                    kDebug()<<"astario: select deleteNote"<<endl;
+                    d->document->removePageAnnotation(pageItem->page()->number(),ann);
+
+                    kDebug()<<"astario: deleted Note"<<endl;
+                }
+                if(choice==showProperties)
+                {
+                    kDebug()<<"astario: select showProperties"<<endl;
+                    AnnotsPropertiesDialog propdialog( this, d->document, ann );
+                    propdialog.exec();
+                }
+            }
+        return;
+        }
+    }
     // if we're editing an annotation, dispatch event to it
     if ( d->annotator && d->annotator->routeEvents() )
     {

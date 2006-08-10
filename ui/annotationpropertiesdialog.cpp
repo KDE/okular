@@ -44,7 +44,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent, KPDFDocument *do
     m_layout[0]->setSpacing( spacingHint() );
 
     colorBn = new QPushButton(m_page[0]);
-    colorBn->setText(i18n( "&Color" ));
+    QPalette pal = colorBn->palette();
+    pal.setColor( QPalette::Active, QPalette::Button, ann->style.color );
+    pal.setColor( QPalette::Inactive, QPalette::Button, ann->style.color );
+    pal.setColor( QPalette::Disabled, QPalette::Button, ann->style.color );
+    colorBn->setPalette( pal );
+    //colorBn->setText(i18n( "&Color" ));
  //   QString colorsz;
  //   QTextStream(&colorsz) << "(" << ann->style.color.red()<<", "
  //         << ann->style.color.green()<<", "<< ann->style.color.blue()<<")";

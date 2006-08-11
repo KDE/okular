@@ -56,7 +56,7 @@
 #include "pageviewutils.h"
 #include "pagepainter.h"
 #include "core/annotations.h"
-#include "embeddedannotationdialog.h"
+#include "annotwindow.h"    //"embeddedannotationdialog.h"
 #include "annotationpropertiesdialog.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
@@ -115,7 +115,7 @@ public:
     // annotations
     PageViewAnnotator * annotator;
     //text annotation dialogs list
-    QList<EmbeddedAnnotationDialog *> m_annowindows;
+    QList<AnnotWindow *> m_annowindows;
     // other stuff
     QTimer * delayResizeTimer;
     bool dirtyLayout;
@@ -215,7 +215,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 PageView::~PageView()
 {
     // delete the local storage structure
-    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    foreach(AnnotWindow* tempwnd, d->m_annowindows)
     {
         if(tempwnd)
             delete tempwnd;
@@ -344,8 +344,8 @@ void PageView::setAnnotsWindow(Annotation * annot)
     if(!annot)
         return;
     //find the annot window
-    EmbeddedAnnotationDialog* existWindow=0;
-    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    AnnotWindow* existWindow=0;
+    foreach(AnnotWindow* tempwnd, d->m_annowindows)
     {
         if(tempwnd)
         {
@@ -357,7 +357,7 @@ void PageView::setAnnotsWindow(Annotation * annot)
         }
     }
     
-    if(annot->window.flags & Annotation::Hidden)
+   /* if(annot->window.flags & Annotation::Hidden)
     {
         if(existWindow)
         {
@@ -365,14 +365,15 @@ void PageView::setAnnotsWindow(Annotation * annot)
         }
     }
     else
-    {
+    {*/
         if(existWindow==0)
         {
-            existWindow=new EmbeddedAnnotationDialog(this,annot);
+            existWindow=new AnnotWindow(this,annot);
+            
             d->m_annowindows<<existWindow;
         }
         existWindow->show();
-    }
+    //}
     return;
 }
 
@@ -1250,10 +1251,10 @@ if (d->document->handleEvent( e ) )
             KMenu menu( this );
             QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
             menu.addTitle( i18n("Annotation"));
-            if(ann->window.flags & Annotation::Hidden)
+        //    if(ann->window.flags & Annotation::Hidden)
                 popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
-            else
-                popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
+        //    else
+        //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
             showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
@@ -1264,21 +1265,22 @@ if (d->document->handleEvent( e ) )
             {
                 if ( choice == popoutWindow)
                 {
-                    if(ann->window.flags & Annotation::Hidden)
-                    {
-                        kDebug()<<"astario: select popoutWindow"<<endl;
-                    }
-                    else
-                    {
-                        kDebug()<<"astario: select close annotsWindow"<<endl;
-                    }
-                    ann->window.flags ^= Annotation::Hidden;
+                 //   ann->window.flags ^= Annotation::Hidden;
                     this->setAnnotsWindow(ann);
 
                 }
                 if(choice==deleteNote)
                 {
                     kDebug()<<"astario: select deleteNote"<<endl;
+                    //find and close the annotwindow
+                    foreach(AnnotWindow* annwnd, d->m_annowindows)
+                    {
+                        if(ann==annwnd->m_annot)
+                        {
+                            delete annwnd;
+                            break;
+                        }
+                    }
                     d->document->removePageAnnotation(pageItem->page()->number(),ann);
 
                     kDebug()<<"astario: deleted Note"<<endl;

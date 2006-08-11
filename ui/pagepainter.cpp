@@ -457,8 +457,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     painter.setPen( Qt::black );//( NoPen );
                     //painter.setBrush( bule);
                     painter.drawRect( 0, 0, sz.width()-2, sz.height()-2 );
-                    painter.drawText(2,sz.height()/2+int(rcf.height()/2),text->inplaceText);
-                    //kDebug()<<"astario:    w,h="<<sz.width()<<", "<<sz.height()<<endl;
+                    //painter.drawText(2,sz.height()/2+int(rcf.height()/2),text->inplaceText);
+                    painter.drawText(0,0,sz.width(),sz.height(),
+                                     Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWrapAnywhere,
+                                     text->inplaceText);
                     painter.end();
                     QImage scaledImage;
                     scalePixmapOnImage( scaledImage, &pixmap,

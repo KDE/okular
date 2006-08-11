@@ -3,7 +3,7 @@
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Scott Wheeler <wheeler@kde.org>                 *
- *   Copyright (C) 2003 by Ingo Klöcker <kloecker@kde.org>                 *
+ *   Copyright (C) 2003 by Ingo KlÃ¶ker <kloecker@kde.org>                 *
  *   Copyright (C) 2003 by Will Andrews <will@csociety.org>                *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
@@ -330,7 +330,10 @@ DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest *
         dest = m_doc->findDest( namedDest );
 
     if ( !dest || !dest->isOk() )
+    {
+        delete dest;
         return vp;
+    }
 
     // get destination page number
     if ( !dest->isPageRef() )
@@ -383,6 +386,7 @@ DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest *
             break;
     }
 
+    delete dest;
     return vp;
 }
 //END - private helpers

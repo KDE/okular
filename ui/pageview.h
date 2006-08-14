@@ -96,6 +96,7 @@ class PageView : public QGraphicsView, public DocumentObserver
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* );
+        void inputMethodEvent( QInputMethodEvent * );
         void mouseMoveEvent( QMouseEvent* );
         void mousePressEvent( QMouseEvent* );
         void mouseReleaseEvent( QMouseEvent* );
@@ -123,6 +124,9 @@ class PageView : public QGraphicsView, public DocumentObserver
 	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
+        // does the type ahead search
+        void doTypeAheadSearch();
+
 	int viewColumns();
 	int viewRows();
 

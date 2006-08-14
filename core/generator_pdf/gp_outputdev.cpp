@@ -3,7 +3,7 @@
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Scott Wheeler <wheeler@kde.org>                 *
- *   Copyright (C) 2003 by Ingo Klöker <kloecker@kde.org>                 *
+ *   Copyright (C) 2003 by Ingo Klöcker <kloecker@kde.org>                 *
  *   Copyright (C) 2003 by Will Andrews <will@csociety.org>                *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *

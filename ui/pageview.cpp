@@ -168,6 +168,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    setCornerWidget( resizeButton );
 //    resizeButton->setEnabled( false );
     // connect(...);
+    setInputMethodEnabled( true );
 }
 
 PageView::~PageView()
@@ -625,12 +626,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
         else if( !e->text().isEmpty() )
         {
             d->typeAheadString += e->text();
-            bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
-                    KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
-            QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
-            d->messageWindow->display( status.arg(d->typeAheadString.lower()),
-                                       found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
-            d->findTimeoutTimer->start( 3000, true );
+            doTypeAheadSearch();
         }
         return;
     }
@@ -735,6 +731,19 @@ void PageView::keyPressEvent( QKeyEvent * e )
     {
         d->scrollIncrement = 0;
         d->autoScrollTimer->stop();
+    }
+}
+
+void PageView::imEndEvent( QIMEvent * e )
+{
+    if( d->typeAheadActive )
+    {
+        if( !e->text().isEmpty() )
+        {
+            d->typeAheadString += e->text();
+            doTypeAheadSearch();
+            e->accept();
+        }
     }
 }
 
@@ -1522,6 +1531,16 @@ void PageView::updateCursor( const QPoint &p )
         d->mouseOnRect = false;
         setCursor( KCursor::arrowCursor() );
     }
+}
+
+void PageView::doTypeAheadSearch()
+{
+    bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
+                                          KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
+    QString status = found ? i18n("Text found: \"%1\".") : i18n("Text not found: \"%1\".");
+    d->messageWindow->display( status.arg(d->typeAheadString.lower()),
+                               found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
+    d->findTimeoutTimer->start( 3000, true );
 }
 
 //BEGIN private SLOTS

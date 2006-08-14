@@ -76,6 +76,7 @@ class PageView : public QScrollView, public DocumentObserver
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* );
+        void imEndEvent( QIMEvent * );
         void contentsMouseMoveEvent( QMouseEvent* );
         void contentsMousePressEvent( QMouseEvent* );
         void contentsMouseReleaseEvent( QMouseEvent* );
@@ -102,6 +103,8 @@ class PageView : public QScrollView, public DocumentObserver
         void updateZoomText();
         // updates cursor
         void updateCursor( const QPoint &p );
+        // does the type ahead search
+        void doTypeAheadSearch();
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

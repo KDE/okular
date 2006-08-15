@@ -61,7 +61,7 @@ kde4_automoc(${okularcore_SRCS})
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
-target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
+target_link_libraries(okularcore  ${KDE4_KPARTS_LIBS} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

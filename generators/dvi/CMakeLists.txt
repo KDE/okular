@@ -44,7 +44,7 @@ kde4_add_plugin(okularGenerator_dvi WITH_PREFIX ${okularGenerator_dvi_SRCS})
 
 kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_dvi )
 
-target_link_libraries(okularGenerator_dvi okularcore m ${KDE4_KDEPRINT_LIBS} ${KDE4_KDEUI_LIBS} )
+target_link_libraries(okularGenerator_dvi okularcore m ${KDE4_KDEPRINT_LIBS} )
 
 install(TARGETS okularGenerator_dvi DESTINATION ${PLUGIN_INSTALL_DIR})
 

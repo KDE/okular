@@ -1,5 +1,5 @@
 # set the include path for X, qt and KDE
-INCLUDES= -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/shell \
+INCLUDES= -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/kviewshell/shell \
 	-I$(top_builddir)/shell \
 	$(all_includes) $(LIBFREETYPE_CFLAGS) $(CAIRO_CFLAGS)
 # claim, which subdirectories you want to install
@@ -52,7 +52,7 @@ kde_kcfg_DATA = kdvi.kcfg
 
 kdvipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
 kdvipart_la_LIBADD = $(LIBFREETYPE_LIBS) $(CAIRO_LIBS) -lkparts \
-			$(top_builddir)/shell/libkmultipage.la
+			$(top_builddir)/kviewshell/shell/libkmultipage.la
 
 # Which sources should be compiled for squeeze.
 squeeze_SOURCES	= squeeze.c

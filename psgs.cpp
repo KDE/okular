@@ -221,7 +221,7 @@ bool ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
   argus << QString("-r%1").arg(resolution);                       // resolution in dpi
   argus << "-dTextAlphaBits=4 -dGraphicsAlphaBits=2"; // Antialiasing
-  argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
+  argus << "-c" << KProcess::quote("<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe");
   argus << "-f" << PSfile.name();
 
 #ifdef DEBUG_PSGS

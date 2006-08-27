@@ -22,7 +22,6 @@
 #include <kparts/genericfactory.h>
 #include <kstdaction.h>
 #include <ktempfile.h>
-#include <ktip.h>
 
 #include <qlabel.h>
 #include <qtimer.h>
@@ -61,13 +60,9 @@ KDVIMultiPage::KDVIMultiPage(QObject *parent, const char *name, const QStringLis
   exportPSAction   = new KAction(i18n("PostScript..."), 0, &DVIRenderer, SLOT(exportPS()), actionCollection(), "export_postscript");
   exportPDFAction  = new KAction(i18n("PDF..."), 0, &DVIRenderer, SLOT(exportPDF()), actionCollection(), "export_pdf");
 
-  KStdAction::tipOfDay(this, SLOT(showTip()), actionCollection(), "help_tipofday");
-
   setXMLFile("kdvi_part.rc");
 
   enableActions(false);
-  // Show tip of the day, when the first main window is shown.
-  QTimer::singleShot(0,this,SLOT(showTipOnStart()));
 }
 
 
@@ -142,7 +137,7 @@ bool KDVIMultiPage::slotSave(const QString &fileName)
     return false;
   if (fileName.isEmpty())
     return false;
-  
+
   bool r = DVIRenderer.dviFile->saveAs(fileName);
   if (r == false)
     KMessageBox::error(parentWdg, i18n("<qt>Error saving the document to the file <strong>%1</strong>. The document is <strong>not</strong> saved.</qt>").arg(fileName),
@@ -374,19 +369,6 @@ void KDVIMultiPage::doEnableWarnings()
 {
   KMessageBox::information (parentWdg, i18n("All messages and warnings will now be shown."));
   KMessageBox::enableAllMessages();
-  KTipDialog::setShowOnStart(true);
-}
-
-
-void KDVIMultiPage::showTip()
-{
-  KTipDialog::showTip(parentWdg, "kdvi/tips", true);
-}
-
-
-void KDVIMultiPage::showTipOnStart()
-{
-  KTipDialog::showTip(parentWdg, "kdvi/tips");
 }
 
 

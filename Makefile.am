@@ -63,12 +63,7 @@ KDE_OPTIONS = nofinal
 noinst_HEADERS = dvi.h dviRenderer.h xdvi.h
 
 messages: rc.cpp
-	$(PREPARETIPS) > tips.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kdvi.pot
-	rm -f tips.cpp
-
-tip_DATA = tips
-tipdir = $(kde_datadir)/kdvi
 
 plugindir = $(kde_datadir)
 plugin_DATA = kdvi_part.rc

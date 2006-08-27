@@ -18,9 +18,6 @@
   <Action name="enable_msgs" group="additional_settings_merge"/>
  </Menu>
 
- <Menu name="help"><text>&amp;Help</text>
-  <Action name="help_tipofday" group="help_top"/>
- </Menu>
 </MenuBar>
 
 </kpartgui>

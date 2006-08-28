@@ -1535,7 +1535,7 @@ if (d->document->handleEvent( e ) )
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
                     // If KTTSD not running, start it.
-                    QDBusReply<bool> reply = QDBus::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
+                    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
                     bool kttsdactive = false;
                     if ( reply.isValid() )
                         kttsdactive = reply.value();

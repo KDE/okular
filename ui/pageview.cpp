@@ -1507,7 +1507,7 @@ if (d->document->handleEvent( e ) )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
                     {
-                        KMimeType::Ptr mime = KMimeType::findByURL( fileName );
+                        KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
                         QString type;
                         if ( !mime )
                             type = "PNG";

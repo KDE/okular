@@ -349,9 +349,9 @@ Part::~Part()
 
 void Part::openURLFromDocument(const KUrl &url)
 {
-    m_bExtension->openURLNotify();
-    m_bExtension->setLocationBarURL(url.prettyUrl());
-    openURL(url);
+    m_bExtension->openUrlNotify();
+    m_bExtension->setLocationBarUrl(url.prettyUrl());
+    openUrl(url);
 }
 
 void Part::supportedMimetypes()
@@ -608,7 +608,7 @@ bool Part::openURL(const KUrl &url)
     // KTar and proceed with the URL of the temporary file
 
     // this calls in sequence the 'closeURL' and 'openFile' methods
-    bool openOk = KParts::ReadOnlyPart::openURL(url);
+    bool openOk = KParts::ReadOnlyPart::openUrl(url);
 
     if ( openOk )
     {
@@ -660,7 +660,7 @@ bool Part::closeURL()
     m_document->closeDocument();
     updateViewActions();
     m_searchWidget->clearText();
-    return KParts::ReadOnlyPart::closeURL();
+    return KParts::ReadOnlyPart::closeUrl();
 }
 
 void Part::close()
@@ -730,7 +730,7 @@ void Part::slotDoFileDirty()
     }
 
     // close and (try to) reopen the document
-    if ( KParts::ReadOnlyPart::openURL(m_file) )
+    if ( KParts::ReadOnlyPart::openUrl(m_file) )
     {
         // on successfull opening, restore the previous viewport
         if ( m_viewportDirty.pageNumber >= (int) m_document->pages() ) 

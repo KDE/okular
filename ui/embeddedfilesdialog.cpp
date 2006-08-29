@@ -44,7 +44,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 		KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
 		if (mime)
 		{
-			twi->setIcon(0, KIcon(mime->icon()));
+			twi->setIcon(0, KIcon(mime->iconName()));
 		}
 		twi->setText(1, ef->description());
 		twi->setText(2, KGlobal::locale()->formatDateTime( ef->creationDate(), false, true ));

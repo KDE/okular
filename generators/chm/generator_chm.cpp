@@ -86,7 +86,7 @@ void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
     kDebug() << "Url: " << pAddress  << endl;
     m_syncGen->setZoomFactor(zoom);
     m_doneFlagSet=false;
-    m_syncGen->openURL(pAddress);
+    m_syncGen->openUrl(pAddress);
     m_syncGen->view()->layout();
     while (!m_doneFlagSet) { qApp->processEvents(QEventLoop::AllEvents, 50); }
 }
@@ -192,7 +192,7 @@ void CHMGenerator::generatePixmap( PixmapRequest * request )
     m_request=request;
     m_state=1;
     // will emit openURL without problems
-    m_syncGen->openURL ( pAddress );
+    m_syncGen->openUrl ( pAddress );
 }
 
 

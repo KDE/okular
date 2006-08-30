@@ -114,7 +114,7 @@ void Shell::init()
 
 void Shell::delayedOpen()
 {
-   openURL(m_openUrl);
+   openUrl(m_openUrl);
 }
 
 Shell::~Shell()
@@ -124,7 +124,7 @@ Shell::~Shell()
     if ( m_tempfile ) delete m_tempfile; 
 }
 
-void Shell::openURL( const KUrl & url )
+void Shell::openUrl( const KUrl & url )
 {
     if ( m_part )
     {
@@ -157,9 +157,9 @@ void Shell::writeSettings()
 void Shell::setupActions()
 {
   KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStdAction::openRecent( this, SLOT( openURL( const KUrl& ) ), actionCollection() );
+  m_recent = KStdAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
-  connect( m_recent, SIGNAL( urlSelected( const KUrl& ) ), this, SLOT( openURL( const KUrl& ) ) );
+  connect( m_recent, SIGNAL( urlSelected( const KUrl& ) ), this, SLOT( openUrl( const KUrl& ) ) );
   connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
@@ -374,7 +374,7 @@ void Shell::fileOpen()
             }
         }
         if (reallyOpen)
-            openURL(url);
+            openUrl(url);
     }
     else
     {

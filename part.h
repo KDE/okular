@@ -100,15 +100,15 @@ signals:
 protected:
 	// reimplemented from KParts::ReadOnlyPart
 	bool openFile();
-	bool openURL(const KUrl &url);
-	bool closeURL();
+	bool openUrl(const KUrl &url);
+	bool closeUrl();
 	// filter that watches for splitter size changes
 	bool eventFilter( QObject * watched, QEvent * e );
 	void supportedMimetypes();
 
 protected slots:
 	// connected to actions
-	void openURLFromDocument(const KUrl &url);
+	void openUrlFromDocument(const KUrl &url);
 	void slotGoToPage();
 	void slotHistoryBack();
 	void slotHistoryNext();

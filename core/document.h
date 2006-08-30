@@ -158,7 +158,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         void linkGoToPage();
         void linkPresentation();
         void linkEndPresentation();
-        void openURL(const KUrl &url);
+        void openUrl(const KUrl &url);
         void error(const QString & string, int duration);
         void warning(const QString & string, int duration);
         void notice(const QString & string, int duration);

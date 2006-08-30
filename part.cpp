@@ -104,7 +104,7 @@ Part::Part(QWidget *parentWidget,
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openURL(const KUrl &) ), this, SLOT( openURLFromDocument(const KUrl &) ) );
+	connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 	
 	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
@@ -151,7 +151,7 @@ Part::Part(QWidget *parentWidget,
 	m_searchWidget = new SearchWidget( thumbsBox, m_document );
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )) );
+	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
@@ -181,7 +181,7 @@ Part::Part(QWidget *parentWidget,
 //	rightLayout->addWidget( rtb );
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
-	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openURLFromDocument( const KUrl & )));
+	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 	connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
@@ -347,7 +347,7 @@ Part::~Part()
     delete m_document;
 }
 
-void Part::openURLFromDocument(const KUrl &url)
+void Part::openUrlFromDocument(const KUrl &url)
 {
     m_bExtension->openUrlNotify();
     m_bExtension->setLocationBarUrl(url.prettyUrl());
@@ -471,7 +471,7 @@ void Part::goToPage(uint i)
 
 void Part::openDocument(KUrl doc)
 {
-    openURL(doc);
+    openUrl(doc);
 }
 
 uint Part::pages()
@@ -601,13 +601,13 @@ bool Part::openFile()
     return true;
 }
 
-bool Part::openURL(const KUrl &url)
+bool Part::openUrl(const KUrl &url)
 {
     // note: this can be the right place to check the file for gz or bz2 extension
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
-    // this calls in sequence the 'closeURL' and 'openFile' methods
+    // this calls in sequence the 'closeUrl' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openUrl(url);
 
     if ( openOk )
@@ -627,7 +627,7 @@ bool Part::openURL(const KUrl &url)
     return openOk;
 }
 
-bool Part::closeURL()
+bool Part::closeUrl()
 {
     if (!m_temporaryLocalFile.isNull())
     {
@@ -667,7 +667,7 @@ void Part::close()
 {
   if (parent() && (parent()->objectName() == QLatin1String("okular::Shell")))
   {
-    closeURL();
+    closeUrl();
   }
   else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF");
 }
@@ -919,17 +919,17 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-    KUrl saveURL = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
-    if ( saveURL.isValid() && !saveURL.isEmpty() )
+    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
-        if ( KIO::NetAccess::exists( saveURL, false, widget() ) )
+        if ( KIO::NetAccess::exists( saveUrl, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveURL.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
                 return;
         }
 
-        if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveURL.prettyUrl() ) );
+        if ( !KIO::NetAccess::file_copy( url(), saveUrl, -1, true ) )
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
     }
 }
 
@@ -1197,7 +1197,7 @@ void Part::doPrint(KPrinter &printer)
 
 void Part::restoreDocument(const KUrl &url, int page)
 {
-  if (openURL(url)) goToPage(page);
+  if (openUrl(url)) goToPage(page);
 }
 
 void Part::saveDocumentRestoreInfo(KConfig* config)

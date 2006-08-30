@@ -594,7 +594,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
 
     // find out the pressed button
     AnnotatorEngine::Button button = AnnotatorEngine::None;
-    Qt::ButtonState buttonState = ( eventType == AnnotatorEngine::Move ) ? e->state() : e->button();
+    Qt::ButtonState buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
     if ( buttonState == Qt::LeftButton )
         button = AnnotatorEngine::Left;
     else if ( buttonState == Qt::RightButton )

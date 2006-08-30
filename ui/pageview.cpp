@@ -210,7 +210,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    setCornerWidget( resizeButton );
 //    resizeButton->setEnabled( false );
     // connect(...);
-    setInputMethodEnabled( true );
+    setAttribute( Qt::WA_InputMethodEnabled, true );
 }
 
 PageView::~PageView()
@@ -631,11 +631,11 @@ if ( d->document->handleEvent( pe ) )
 
     // subdivide region into rects
     QVector<QRect> allRects = pe->region().rects();
-    int numRects = allRects.count();
+    uint numRects = allRects.count();
 
     // preprocess rects area to see if it worths or not using subdivision
     uint summedArea = 0;
-    for ( int i = 0; i < numRects; i++ )
+    for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
         summedArea += r.width() * r.height();
@@ -672,10 +672,10 @@ if ( d->document->handleEvent( pe ) )
             XRenderColor col;
             float alpha=0.2f;
             QColor blCol=selBlendColor.dark(140);
-            col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
-            col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
-            col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
-            col.alpha=alpha*0xffff;
+            col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
+            col.green=(int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
+            col.blue=(int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
+            col.alpha=( int )(alpha*(float)0xffff);
 
             // 1) Layer 0: paint items and clear bg on unpainted rects
             drawDocumentOnPainter( contentsRect, &pixmapPainter );
@@ -689,7 +689,8 @@ if ( d->document->handleEvent( pe ) )
                 {
                     // grab current pixmap into a new one to colorize contents
                     QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                    copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                    QPainter p( &blendedPixmap );
+                    p.drawPixmap( 0, 0, doubleBuffer,
                                 blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                                 blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
@@ -712,10 +713,10 @@ if ( d->document->handleEvent( pe ) )
               XRenderColor col;
               float alpha=0.2f;
               QColor blCol=d->mouseTextSelectionColor.dark(140);
-              col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
-              col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
-              col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
-              col.alpha=alpha*0xffff;
+              col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha );
+              col.green=(int)((float) ( (blCol.green() << 8) | blCol.green() )*alpha );
+              col.blue=(int)((float) ( (blCol.blue() << 8) | blCol.blue())*alpha );
+              col.alpha=(int)(alpha*(float)0xffff );
 
               for (;it!=end;++it)
               {
@@ -723,7 +724,8 @@ if ( d->document->handleEvent( pe ) )
                   continue;
                 blendRect = (*it).intersect(contentsRect);
                 QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                QPainter p( &blendedPixmap );
+                p.drawPixmap( 0, 0, doubleBuffer,
                           blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                           blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
@@ -930,7 +932,7 @@ if (d->document->handleEvent( e ) )
                 else
                     verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
             }
-            else if ( d->document->currentPage() < d->items.count() - 1 )
+            else if ( (int)d->document->currentPage() < d->items.count() - 1 )
             {
                 // more optimized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
@@ -998,7 +1000,7 @@ if (d->document->handleEvent( e ) )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( d->mouseMidZooming && (e->state() & Qt::MidButton) )
+    if ( d->mouseMidZooming && (e->buttons() & Qt::MidButton) )
     {
         int mouseY = e->globalPos().y();
         int deltaY = d->mouseMidLastY - mouseY;
@@ -1039,8 +1041,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->state() & Qt::LeftButton,
-         rightButton = e->state() & Qt::RightButton;
+    bool leftButton = e->buttons() & Qt::LeftButton,
+         rightButton = e->buttons() & Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1589,7 +1591,7 @@ if (d->document->handleEvent( e ) )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->state() & Qt::ControlButton) == Qt::ControlButton ) {
+    if ( (e->buttons() & Qt::ControlButton) == Qt::ControlButton ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else
@@ -1598,7 +1600,7 @@ if (d->document->handleEvent( e ) )
     else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
     {
         // go to next page
-        if ( d->document->currentPage() < d->items.count() - 1 )
+        if ( (int)d->document->currentPage() < d->items.count() - 1 )
         {
             // more optimized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();

@@ -713,6 +713,9 @@ void dviRenderer::clearStatusBar()
 
 void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *win)
 {
+  Q_UNUSED( linkText );
+  Q_UNUSED( point );
+  Q_UNUSED( win );
 #if 0
   KSharedPtr<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
   if (editor->started())
@@ -765,6 +768,9 @@ void dviRenderer::exportPDF()
 
 void dviRenderer::exportPS(const QString& fname, const QStringList& options, KPrinter* printer)
 {
+  Q_UNUSED( fname );
+  Q_UNUSED( options );
+  Q_UNUSED( printer );
 #if 0
   KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
   if (exporter->started())

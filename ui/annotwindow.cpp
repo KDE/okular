@@ -159,17 +159,17 @@ void AnnotWindow::slotPaintCloseBtn(QPaintEvent* )
     pnter.drawLine(rc.topRight(),rc.bottomLeft());
 }
 
-void AnnotWindow::slotCloseBtn( QMouseEvent* e)
+void AnnotWindow::slotCloseBtn( QMouseEvent* )
 {
     this->hide();
 }
-void AnnotWindow::slotOptionBtn( QMouseEvent* e)
+void AnnotWindow::slotOptionBtn( QMouseEvent* )
 {
     //TODO: call context menu in pageview
     //emit sig...
 }
  void AnnotWindow::slotsaveWindowText()
 {
-    m_annot->window.text=textEdit->text();
+    m_annot->window.text=textEdit->toPlainText();
 }
 #include "annotwindow.moc"

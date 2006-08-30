@@ -22,7 +22,7 @@
  *  Constructs a fontProgressDialog which is a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'
  */
-fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, const QString& name, bool progressbar)
+fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip, QWidget* parent, bool progressbar)
   : KDialog( parent),
     TextLabel2(0),
     TextLabel1(0),

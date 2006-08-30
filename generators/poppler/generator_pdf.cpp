@@ -316,7 +316,7 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
         QSize pSize = p->pageSize();
         w = pSize.width();
         h = pSize.height();
-        int orientation;
+        int orientation = 0;
         switch (p->orientation())
         {
           case Poppler::Page::Landscape: orientation = 1; break;

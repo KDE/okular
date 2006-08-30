@@ -58,8 +58,7 @@ protected:
   void initialise_progress_dialog(int total_steps,
                                   const QString& label_text,
                                   const QString& whats_this_text,
-                                  const QString& tooltip_text,
-                                  const QString& caption);
+                                  const QString& tooltip_text);
 
   /** Spawns the external process having connected slots to the child
    *  process's stdin and stdout streams.

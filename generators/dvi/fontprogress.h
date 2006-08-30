@@ -35,7 +35,7 @@ class fontProgressDialog : public KDialog
 
 public:
     fontProgressDialog(const QString& helpIndex, const QString& label, const QString& abortTip, const QString& whatsThis, const QString& ttip,
-                       QWidget* parent = 0, const QString &name = 0, bool progressbar=true );
+                       QWidget* parent = 0, bool progressbar=true );
     ~fontProgressDialog();
 
     /** The number of steps already done is increased, the text received

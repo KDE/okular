@@ -156,7 +156,7 @@ void Shell::writeSettings()
 
 void Shell::setupActions()
 {
-  KAction * openAction = KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStdAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   connect( m_recent, SIGNAL( urlSelected( const KUrl& ) ), this, SLOT( openUrl( const KUrl& ) ) );

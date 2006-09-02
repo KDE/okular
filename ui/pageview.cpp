@@ -758,7 +758,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( (e->state() & MidButton) && d->mouseMidStartY > 0 )
+    if ( (e->state() & MidButton) && d->mouseMidStartY >= 0 )
     {
         int deltaY = d->mouseMidStartY - e->globalPos().y();
         d->mouseMidStartY = e->globalPos().y();

@@ -430,7 +430,7 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
     }
 
     // Hack in order to make printing of PDF files work. FIXME
-    CDSC* dsc;
+    CDSC* dsc = NULL;
 
     if( m_format == PS )
 	   dsc = m_dsc->cdsc();

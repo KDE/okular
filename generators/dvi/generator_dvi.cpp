@@ -370,6 +370,8 @@ const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         }
         for ( int i = 0; i < (*it).noOfChildren; ++i )
             stack.push( domel );
+        if (!(*it).noOfChildren)
+            delete domel;
     }
 
     return m_docSynopsis;

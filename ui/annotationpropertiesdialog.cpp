@@ -132,27 +132,27 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
     {
         case Annotation::AText:
             if(((TextAnnotation*)m_annot)->textType==TextAnnotation::Linked)
-                captiontext="Note Properties";
+                captiontext = i18n( "Note Properties" );
             else
-                captiontext="FreeText Properties";
+                captiontext = i18n( "FreeText Properties" );
             break;
         case Annotation::ALine:
-            captiontext="Line Properties";
+            captiontext = i18n( "Line Properties" );
             break;
         case Annotation::AGeom:
-            captiontext="Geom Properties";
+            captiontext = i18n( "Geom Properties" );
             break;
         case Annotation::AHighlight:
-            captiontext="Highlight Properties";
+            captiontext = i18n( "Highlight Properties" );
             break;
         case Annotation::AStamp:
-            captiontext="Stamp Properties";
+            captiontext = i18n( "Stamp Properties" );
             break;
         case Annotation::AInk:
-            captiontext="Ink Properties";
+            captiontext = i18n( "Ink Properties" );
             break;
         default:
-            captiontext="Base Properties";
+            captiontext = i18n( "Annotation Properties" );
             break;
     }
         setCaption( captiontext );

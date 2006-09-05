@@ -1663,7 +1663,7 @@ bool KPDFDocument::openRelativeFile( const QString & fileName )
 
     kDebug() << "openDocument: '" << absFileName << "'" << endl;
 
-    emit openURL( absFileName );
+    emit openUrl( absFileName );
     return true;
 }
 

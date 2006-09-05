@@ -61,7 +61,7 @@ kde4_automoc(${okularcore_SRCS})
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
-target_link_libraries(okularcore  ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} m )
+target_link_libraries(okularcore  ${KDE4_KPARTS_LIBS} ${QT_QTCORE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 
@@ -70,7 +70,7 @@ install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 set(okularpart_SRCS
    part.cpp
    ui/embeddedfilesdialog.cpp
-   ui/embeddedannotationdialog.cpp
+   ui/annotwindow.cpp
    ui/annotationpropertiesdialog.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
@@ -107,5 +107,5 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES part.rc DESTINATION ${DATA_INSTALL_DIR}/okularpart )
 
-kde4_install_icons( ${ICON_INSTALL_DIR}  hicolor )
+kde4_install_icons( ${ICON_INSTALL_DIR}   )
 

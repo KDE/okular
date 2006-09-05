@@ -59,7 +59,7 @@
 #include "pageviewutils.h"
 #include "pagepainter.h"
 #include "core/annotations.h"
-#include "embeddedannotationdialog.h"
+#include "annotwindow.h"    //"embeddedannotationdialog.h"
 #include "annotationpropertiesdialog.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
@@ -116,7 +116,7 @@ public:
     // annotations
     PageViewAnnotator * annotator;
     //text annotation dialogs list
-    QList<EmbeddedAnnotationDialog *> m_annowindows;
+    QList<AnnotWindow *> m_annowindows;
     // other stuff
     QTimer * delayResizeTimer;
     bool dirtyLayout;
@@ -214,13 +214,13 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    setCornerWidget( resizeButton );
 //    resizeButton->setEnabled( false );
     // connect(...);
-    setInputMethodEnabled( true );
+    setAttribute( Qt::WA_InputMethodEnabled, true );
 }
 
 PageView::~PageView()
 {
     // delete the local storage structure
-    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    foreach(AnnotWindow* tempwnd, d->m_annowindows)
     {
         if(tempwnd)
             delete tempwnd;
@@ -354,8 +354,8 @@ void PageView::setAnnotsWindow(Annotation * annot)
     if(!annot)
         return;
     //find the annot window
-    EmbeddedAnnotationDialog* existWindow=0;
-    foreach(EmbeddedAnnotationDialog* tempwnd, d->m_annowindows)
+    AnnotWindow* existWindow=0;
+    foreach(AnnotWindow* tempwnd, d->m_annowindows)
     {
         if(tempwnd)
         {
@@ -367,7 +367,7 @@ void PageView::setAnnotsWindow(Annotation * annot)
         }
     }
     
-    if(annot->window.flags & Annotation::Hidden)
+   /* if(annot->window.flags & Annotation::Hidden)
     {
         if(existWindow)
         {
@@ -375,14 +375,15 @@ void PageView::setAnnotsWindow(Annotation * annot)
         }
     }
     else
-    {
+    {*/
         if(existWindow==0)
         {
-            existWindow=new EmbeddedAnnotationDialog(this,annot);
+            existWindow=new AnnotWindow(this,annot);
+            
             d->m_annowindows<<existWindow;
         }
         existWindow->show();
-    }
+    //}
     return;
 }
 
@@ -647,11 +648,11 @@ if ( d->document->handleEvent( pe ) )
 
     // subdivide region into rects
     QVector<QRect> allRects = pe->region().rects();
-    int numRects = allRects.count();
+    uint numRects = allRects.count();
 
     // preprocess rects area to see if it worths or not using subdivision
     uint summedArea = 0;
-    for ( int i = 0; i < numRects; i++ )
+    for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
         summedArea += r.width() * r.height();
@@ -688,10 +689,10 @@ if ( d->document->handleEvent( pe ) )
             XRenderColor col;
             float alpha=0.2f;
             QColor blCol=selBlendColor.dark(140);
-            col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
-            col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
-            col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
-            col.alpha=alpha*0xffff;
+            col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
+            col.green=(int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
+            col.blue=(int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
+            col.alpha=( int )(alpha*(float)0xffff);
 
             // 1) Layer 0: paint items and clear bg on unpainted rects
             drawDocumentOnPainter( contentsRect, &pixmapPainter );
@@ -705,7 +706,8 @@ if ( d->document->handleEvent( pe ) )
                 {
                     // grab current pixmap into a new one to colorize contents
                     QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                    copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                    QPainter p( &blendedPixmap );
+                    p.drawPixmap( 0, 0, doubleBuffer,
                                 blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                                 blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
@@ -728,10 +730,10 @@ if ( d->document->handleEvent( pe ) )
               XRenderColor col;
               float alpha=0.2f;
               QColor blCol=d->mouseTextSelectionColor.dark(140);
-              col.red=( (blCol.red() << 8) | blCol.red() ) * alpha;
-              col.green=( (blCol.green() << 8) | blCol.green() )*alpha;
-              col.blue=( (blCol.blue() << 8) | blCol.blue())*alpha;
-              col.alpha=alpha*0xffff;
+              col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha );
+              col.green=(int)((float) ( (blCol.green() << 8) | blCol.green() )*alpha );
+              col.blue=(int)((float) ( (blCol.blue() << 8) | blCol.blue())*alpha );
+              col.alpha=(int)(alpha*(float)0xffff );
 
               for (;it!=end;++it)
               {
@@ -739,7 +741,8 @@ if ( d->document->handleEvent( pe ) )
                   continue;
                 blendRect = (*it).intersect(contentsRect);
                 QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                copyBlt( &blendedPixmap, 0,0, &doubleBuffer,
+                QPainter p( &blendedPixmap );
+                p.drawPixmap( 0, 0, doubleBuffer,
                           blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                           blendRect.width(), blendRect.height() );
                     // blend selBlendColor into the background pixmap
@@ -947,7 +950,7 @@ if (d->document->handleEvent( e ) )
                 else
                     verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
             }
-            else if ( d->document->currentPage() < d->items.count() - 1 )
+            else if ( (int)d->document->currentPage() < d->items.count() - 1 )
             {
                 // more optimized than document->setNextPage and then move view to top
                 DocumentViewport newViewport = d->document->viewport();
@@ -1015,7 +1018,7 @@ if (d->document->handleEvent( e ) )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( d->mouseMidZooming && (e->state() & Qt::MidButton) )
+    if ( d->mouseMidZooming && (e->buttons() & Qt::MidButton) )
     {
         int mouseY = e->globalPos().y();
         int deltaY = d->mouseMidLastY - mouseY;
@@ -1062,8 +1065,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->state() & Qt::LeftButton,
-         rightButton = e->state() & Qt::RightButton;
+    bool leftButton = e->buttons() & Qt::LeftButton,
+         rightButton = e->buttons() & Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1301,10 +1304,10 @@ if ( d->document->handleEvent( e ) )
             KMenu menu( this );
             QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
             menu.addTitle( i18n("Annotation"));
-            if(ann->window.flags & Annotation::Hidden)
+        //    if(ann->window.flags & Annotation::Hidden)
                 popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
-            else
-                popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
+        //    else
+        //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
             showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
@@ -1315,21 +1318,22 @@ if ( d->document->handleEvent( e ) )
             {
                 if ( choice == popoutWindow)
                 {
-                    if(ann->window.flags & Annotation::Hidden)
-                    {
-                        kDebug()<<"astario: select popoutWindow"<<endl;
-                    }
-                    else
-                    {
-                        kDebug()<<"astario: select close annotsWindow"<<endl;
-                    }
-                    ann->window.flags ^= Annotation::Hidden;
+                 //   ann->window.flags ^= Annotation::Hidden;
                     this->setAnnotsWindow(ann);
 
                 }
                 if(choice==deleteNote)
                 {
                     kDebug()<<"astario: select deleteNote"<<endl;
+                    //find and close the annotwindow
+                    foreach(AnnotWindow* annwnd, d->m_annowindows)
+                    {
+                        if(ann==annwnd->m_annot)
+                        {
+                            delete annwnd;
+                            break;
+                        }
+                    }
                     d->document->removePageAnnotation(pageItem->page()->number(),ann);
 
                     kDebug()<<"astario: deleted Note"<<endl;
@@ -1702,7 +1706,7 @@ if (d->document->handleEvent( e ) )
                         d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
                     else
                     {
-                        KMimeType::Ptr mime = KMimeType::findByURL( fileName );
+                        KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
                         QString type;
                         if ( !mime )
                             type = "PNG";
@@ -1730,7 +1734,7 @@ if (d->document->handleEvent( e ) )
                     // Albert says is this ever necessary?
                     // we already attached on Part constructor
                     // If KTTSD not running, start it.
-                    QDBusReply<bool> reply = QDBus::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
+                    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
                     bool kttsdactive = false;
                     if ( reply.isValid() )
                         kttsdactive = reply.value();
@@ -1817,7 +1821,7 @@ if (d->document->handleEvent( e ) )
     else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
     {
         // go to next page
-        if ( d->document->currentPage() < d->items.count() - 1 )
+        if ( (int)d->document->currentPage() < d->items.count() - 1 )
         {
             // more optimized than document->setNextPage and then move view to top
             DocumentViewport newViewport = d->document->viewport();

@@ -328,7 +328,8 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 void PageViewMessage::paintEvent( QPaintEvent * e )
 {
     // paint the internal pixmap over the widget
-    bitBlt( this, e->rect().topLeft(), &m_pixmap, e->rect() );
+    QPainter p( this );
+    p.drawPixmap( e->rect().topLeft(), m_pixmap, e->rect() );
 }
 
 void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
@@ -529,7 +530,8 @@ bool PageViewToolBar::eventFilter( QObject * obj, QEvent * e )
 void PageViewToolBar::paintEvent( QPaintEvent * e )
 {
     // paint the internal pixmap over the widget
-    bitBlt( this, e->rect().topLeft(), &d->backgroundPixmap, e->rect() );
+    QPainter p( this );
+    p.drawPixmap( e->rect().topLeft(), d->backgroundPixmap, e->rect() );
 }
 
 void PageViewToolBar::mousePressEvent( QMouseEvent * e )
@@ -541,7 +543,7 @@ void PageViewToolBar::mousePressEvent( QMouseEvent * e )
 
 void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
 {
-    if ( e->state() != Qt::LeftButton )
+    if ( e->button() != Qt::LeftButton )
         return;
 
     // compute the nearest side to attach the widget to

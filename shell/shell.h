@@ -85,7 +85,7 @@ class Part;
     void slotUpdateFullScreen();
     void slotShowMenubar();
 
-    void openURL( const KUrl & url );
+    void openUrl( const KUrl & url );
     void delayedOpen();
 
   signals:

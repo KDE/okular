@@ -545,11 +545,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   // simpler -even if somewhat slower approach and detect the ordering
   // at runtime. That should of course be changed in the future.
 
-  int wordSize;
-  bool bigEndian;
-  qSysInfo (&wordSize, &bigEndian);
-
-  if (bigEndian) {
+  if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
     // Routine for big Endian machines. Applies e.g. to Motorola and
     // (Ultra-)Sparc processors.
 

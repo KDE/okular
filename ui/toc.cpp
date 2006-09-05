@@ -156,7 +156,8 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
         if ( p == newpage )
         {
             m_current = tmp;
-            m_current->setSelected( true );
+            if (m_current)
+                m_current->setSelected( true );
         }
         ++it;
     }

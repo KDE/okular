@@ -310,6 +310,7 @@ class PickPointEngine : public AnnotatorEngine
                     rect.right = qMax(rect.right, rect.left+rcf.width()*pixfactor);
                     rect.bottom = qMax(rect.bottom, rect.top+rcf.height()*pixfactor*xscale/yscale);
                     ta->boundary=this->rect;
+                    ta->window.summary="TextBox";
                 }
             }
             else if ( typeString == "Text")
@@ -317,7 +318,7 @@ class PickPointEngine : public AnnotatorEngine
                 TextAnnotation * ta = new TextAnnotation();
                 ann = ta;
                 ta->textType = TextAnnotation::Linked;
-                ta->window.text="This is a text annotation";
+                ta->window.text="";
                 //ta->window.flags &= ~(Annotation::Hidden);
                 ta->textIcon="comment";
                 double iconhei=0.03;
@@ -326,6 +327,7 @@ class PickPointEngine : public AnnotatorEngine
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
                 ta->boundary=this->rect;
+                ta->window.summary="Note";
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )
@@ -592,7 +594,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, const QPointF & scenePos, 
 
     // find out the pressed button
     AnnotatorEngine::Button button = AnnotatorEngine::None;
-    Qt::ButtonState buttonState = ( eventType == AnnotatorEngine::Move ) ? e->state() : e->button();
+    Qt::ButtonState buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
     if ( buttonState == Qt::LeftButton )
         button = AnnotatorEngine::Left;
     else if ( buttonState == Qt::RightButton )

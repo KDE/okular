@@ -58,8 +58,7 @@ DVIExport::~DVIExport()
 void DVIExport::initialise_progress_dialog(int total_steps,
                                            const QString& label_text,
                                            const QString& whats_this_text,
-                                           const QString& tooltip_text,
-                                           const QString& caption)
+                                           const QString& tooltip_text)
 {
   assert(!progress_);
   progress_ = new fontProgressDialog(QString(),
@@ -68,7 +67,6 @@ void DVIExport::initialise_progress_dialog(int total_steps,
                                      whats_this_text,
                                      tooltip_text,
                                      parent_widget_,
-                                     caption,
                                      false);
 
   if (progress_) {
@@ -290,8 +288,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
                                   "convert your DVI-file to PDF. Sometimes that can take "
                                   "a while because dvipdfm needs to generate its own bitmap fonts "
                                   "Please be patient."),
-                             i18n("Waiting for dvipdfm to finish..."),
-                             i18n("dvipdfm progress dialog"));
+                             i18n("Waiting for dvipdfm to finish...") );
 
   parent.update_info_dialog(i18n("Export: %1 to PDF", dvi.filename),
                               true);
@@ -445,8 +442,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                                   "convert your DVI-file to PostScript. Sometimes that can take "
                                   "a while because dvips needs to generate its own bitmap fonts "
                                   "Please be patient."),
-                             i18n("Waiting for dvips to finish..."),
-                             i18n("dvips progress dialog"));
+                             i18n("Waiting for dvips to finish...") );
 
   parent.update_info_dialog(i18n("Export: %1 to PostScript", dvi.filename),
                               true);

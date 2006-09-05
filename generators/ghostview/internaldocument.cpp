@@ -414,9 +414,6 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
     kDebug(4656) << "Copying pages from " << inputFile << " to "
     << outputFile << endl;
 
-    from = fopen( QFile::encodeName( inputFile ), "r" );
-    to = fopen( QFile::encodeName( outputFile ), "w" );
-
     pages = pageList.size();
 
     if( pages == 0 ) 
@@ -426,11 +423,15 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
             i18n( "Printing failed because the list of "
                 "pages to be printed was empty." ),
             i18n( "Error Printing" ) );*/
+
         return false;
     }
 
+    from = fopen( QFile::encodeName( inputFile ), "r" );
+    to = fopen( QFile::encodeName( outputFile ), "w" );
+
     // Hack in order to make printing of PDF files work. FIXME
-    CDSC* dsc;
+    CDSC* dsc = NULL;
 
     if( m_format == PS )
 	   dsc = m_dsc->cdsc();

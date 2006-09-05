@@ -510,7 +510,7 @@ void ThumbnailWidget::resizeFitWidth( int width )
 {
     m_pixmapWidth = width - m_margin;
     m_pixmapHeight = (int)round( m_page->ratio() * (double)m_pixmapWidth );
-    resize( width, heightHint() );
+    setFixedSize( QSize( width, heightHint() ) );
 }
 
 void ThumbnailWidget::setSelected( bool selected )

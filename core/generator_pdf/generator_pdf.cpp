@@ -832,7 +832,8 @@ void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *d
         viewport.pageNumber = pdfdoc->findPage( ref.num, ref.gen ) - 1;
     }
 
-    if (viewport.pageNumber == -1) return;
+    if (viewport.pageNumber < 0) return;
+    if (viewport.pageNumber >= pdfdoc->getNumPages()) return;
 
     // get destination position
     // TODO add other attributes to the viewport (taken from link)

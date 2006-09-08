@@ -456,10 +456,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     painter.begin( &pixmap );
                     painter.setPen( Qt::black );//( NoPen );
                     //painter.setBrush( bule);
-                    painter.drawRect( 0, 0, sz.width()-2, sz.height()-2 );
+                    painter.drawRect( 0, 0, sz.width()-1, sz.height()-1 );
                     //painter.drawText(2,sz.height()/2+int(rcf.height()/2),text->inplaceText);
+                    Qt::AlignmentFlag halign = ( text->inplaceAlign == 1 ? Qt::AlignHCenter : ( text->inplaceAlign == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
                     painter.drawText(0,0,sz.width(),sz.height(),
-                                     Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWrapAnywhere,
+                                     Qt::AlignTop|halign|Qt::TextWrapAnywhere,
                                      text->inplaceText);
                     painter.end();
                     QImage scaledImage;

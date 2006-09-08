@@ -320,7 +320,6 @@ class PickPointEngine : public AnnotatorEngine
                 ta->textType = TextAnnotation::Linked;
                 ta->window.text="";
                 //ta->window.flags &= ~(Annotation::Hidden);
-                ta->textIcon="comment";
                 double iconhei=0.03;
                 rect.left = point.x;
                 rect.top = point.y;
@@ -346,7 +345,6 @@ class PickPointEngine : public AnnotatorEngine
                     annElement.attribute( "color" ) : m_engineColor;
             if ( annElement.hasAttribute( "opacity" ) )
                 ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
-            ann->creationDate=ann->modifyDate=QDateTime::currentDateTime();
 
             // return annotation
             return ann;
@@ -637,6 +635,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         // attach the newly filled annotation to the page
         if ( annotation )
         {
+            annotation->creationDate = annotation->modifyDate = QDateTime::currentDateTime();
             annotation->author = KpdfSettings::annotationsAuthor();
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
         }

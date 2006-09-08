@@ -12,6 +12,7 @@
 #include <qcolor.h>
 #include <qevent.h>
 #include <qpainter.h>
+#include <qvariant.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -213,11 +214,12 @@ class PickPointEngine : public AnnotatorEngine
         {
             // parse engine specific attributes
             QString pixmapName = engineElement.attribute( "hoverIcon" );
-            if ( pixmapName.isNull() )
+            if ( pixmapName.simplified().isEmpty() )
                 pixmapName = "okular";
+            center = QVariant( engineElement.attribute( "center" ) ).toBool();
 
             // create engine objects
-            pixmap = new QPixmap( DesktopIcon( "okular", 32 ) );
+            pixmap = new QPixmap( DesktopIcon( pixmapName, 32 ) );
         }
 
         ~PickPointEngine()
@@ -255,10 +257,20 @@ class PickPointEngine : public AnnotatorEngine
             // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            rect.left = nX - (16.0 / (double)xScale) ;
-            rect.right = nX + (17.0 / (double)xScale) ;
-            rect.top = nY - (16.0 / (double)yScale) ;
-            rect.bottom = nY + (17.0 / (double)yScale) ;
+            if ( center )
+            {
+                rect.left = nX - ( pixmap->width() / ( (double)xScale * 2.0 ) );
+                rect.right = nX + ( pixmap->width() / ( (double)xScale * 2.0 ) );
+                rect.top = nY - ( pixmap->width() / ( (double)yScale * 2.0 ) );
+                rect.bottom = nY + ( pixmap->width() / ( (double)yScale * 2.0 ) );
+            }
+            else
+            {
+                rect.left = nX;
+                rect.right = nX + ( pixmap->width() / (double)xScale );
+                rect.top = nY;
+                rect.bottom = nY + ( pixmap->width() / (double)yScale );
+            }
             return rect.geometry( (int)xScale, (int)yScale );
         }
 
@@ -268,7 +280,10 @@ class PickPointEngine : public AnnotatorEngine
             {
                 int pX = (int)(point.x * (double)xScale);
                 int pY = (int)(point.y * (double)yScale);
-                painter->drawPixmap( pX - 15, pY - 15, *pixmap );
+                if ( center )
+                    painter->drawPixmap( pX - pixmap->width() / 2, pY - pixmap->height() / 2, *pixmap );
+                else
+                    painter->drawPixmap( pX, pY, *pixmap );
             }
         }
 
@@ -357,6 +372,7 @@ class PickPointEngine : public AnnotatorEngine
         NormalizedPoint point;
         QPixmap * pixmap;
         double xscale,yscale;
+        bool center;
 };
 
 /** @short TwoPointsEngine */

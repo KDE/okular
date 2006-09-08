@@ -477,7 +477,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( text->textType == TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
-                    QPixmap pixmap = DesktopIcon( text->textIcon );
+                    QPixmap pixmap = DesktopIcon( text->textIcon.toLower() );
                     QImage scaledImage;
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         annotBoundary.width(),

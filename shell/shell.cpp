@@ -159,7 +159,6 @@ void Shell::setupActions()
   KStdAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStdAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
-  connect( m_recent, SIGNAL( urlSelected( const KUrl& ) ), this, SLOT( openUrl( const KUrl& ) ) );
   connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );

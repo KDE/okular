@@ -445,9 +445,10 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
 	dsc_fixup( dsc );
 	fclose( fp );
 
-	if( !dsc )
-	    return false;
     }*/
+
+    if( !dsc )
+        return false;
 
     here = dsc->begincomments;
     while( ( comment = pscopyuntil( from, to, here,

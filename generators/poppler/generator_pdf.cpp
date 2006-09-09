@@ -980,11 +980,13 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page 
         kDebug( )<<"astario:    "<<szanno<<endl;*/
         // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
         //TODO add annotations after poppler write feather is full suported
-        /*QDomDocument doc;
+        QDomDocument doc;
         QDomElement root = doc.createElement("root");
         doc.appendChild(root);
-        a->store( root, doc );
-        page->addAnnotation( new Annotation( doc ) );*/
+        Poppler::AnnotationUtils::storeAnnotation(a, root, doc);
+        Annotation * newann = AnnotationUtils::createAnnotation(root);
+        if (newann)
+            page->addAnnotation(newann);
     }
     qDeleteAll(popplerAnnotations);
 }

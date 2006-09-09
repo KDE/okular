@@ -614,6 +614,11 @@ void KPDFDocument::setNextViewport()
     }
 }
 
+void KPDFDocument::setNextDocumentViewport( const DocumentViewport & viewport )
+{
+    d->nextDocumentViewport = viewport;
+}
+
 
 bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )

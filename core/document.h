@@ -88,6 +88,7 @@ class KPDFDocument : public QObject
         void setViewport( const DocumentViewport & viewport, int excludeId = -1, bool smoothMove = false );
         void setPrevViewport();
         void setNextViewport();
+        void setNextDocumentViewport( const DocumentViewport & viewport );
         void requestPixmaps( const QValueList< PixmapRequest * > & requests );
         void requestTextPage( uint page );
 

@@ -124,7 +124,7 @@ protected slots:
 public slots:
 	// connected to Shell action (and browserExtension), not local one
 	void slotPrint();
-	void restoreDocument(const KURL &url, int page);
+	void restoreDocument(KConfig* config);
 	void saveDocumentRestoreInfo(KConfig* config);
 	void slotFileDirty( const QString& );
 	void slotDoFileDirty();

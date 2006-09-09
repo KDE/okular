@@ -85,7 +85,7 @@ namespace KPDF
     void delayedOpen();
 
   signals:
-      void restoreDocument(const KURL &url, int page);
+      void restoreDocument(KConfig* config);
       void saveDocumentRestoreInfo(KConfig* config);
      
      

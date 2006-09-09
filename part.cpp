@@ -955,15 +955,21 @@ void Part::doPrint(KPrinter &printer)
     }
 }
 
-void Part::restoreDocument(const KURL &url, int page)
+void Part::restoreDocument(KConfig* config)
 {
-  if (openURL(url)) goToPage(page);
+  KURL url ( config->readPathEntry( "URL" ) );
+  if ( url.isValid() )
+  {
+    QString viewport = config->readEntry( "Viewport" );
+    if (!viewport.isEmpty()) m_document->setNextDocumentViewport( DocumentViewport( viewport ) );
+    openURL( url );
+  }
 }
 
 void Part::saveDocumentRestoreInfo(KConfig* config)
 {
   config->writePathEntry( "URL", url().url() );
-  if (m_document->pages() > 0) config->writeEntry( "Page", m_document->currentPage() + 1 );
+  config->writeEntry( "Viewport", m_document->viewport().toString() );
 }
 
 /*

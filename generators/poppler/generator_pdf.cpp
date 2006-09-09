@@ -986,7 +986,11 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page 
         Poppler::AnnotationUtils::storeAnnotation(a, root, doc);
         Annotation * newann = AnnotationUtils::createAnnotation(root);
         if (newann)
+        {
+            // the Contents field has lines separated by \r
+            newann->contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
             page->addAnnotation(newann);
+        }
     }
     qDeleteAll(popplerAnnotations);
 }

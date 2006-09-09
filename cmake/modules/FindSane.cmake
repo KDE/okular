@@ -1,9 +1,13 @@
-# Marcus Hufgard <Hufgardm@hufgard.de> 2006
 # cmake macro to test if we use sane
 #
 #  SANE_FOUND - system has SANE libs
 #  SANE_INCLUDE_DIR - the SANE include directory
 #  SANE_LIBRARIES - The libraries needed to use SANE
+
+# Copyright (c) 2006, Marcus Hufgard <hufgardm@hufgard.de> 2006
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 if (SANE_INCLUDE_DIR)
   # Already in cache, be silent

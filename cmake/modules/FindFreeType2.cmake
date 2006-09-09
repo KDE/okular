@@ -5,7 +5,12 @@
 #  FreeType2_LIBRARIES    - Link these to use FreeType2
 #
 # TODO: This script should use the program 
+
+# Copyright (c) 2006, Stefan Kebekus, <kebekus@kde.org>
 #
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 
 IF(UNIX)
   FIND_PATH(FreeType2_INCLUDE_DIR 

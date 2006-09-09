@@ -1,9 +1,13 @@
+# cmake macro to test if we use gphoto2
 #  GPHOTO2_FOUND - system has the GPHOTO2 library
 #  GPHOTO2_INCLUDE_DIR - the GPHOTO2 include directory
 #  GPHOTO2_LIBRARIES - The libraries needed to use GPHOTO2
 
-# Laurent Montel <montel@kde.org> 2006
-# cmake macro to test if we use gphoto2
+# Copyright (c) 2006, Laurent Montel, <montel@kde.org>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 
 option(KDE4_GPHOTO2 "do not build kamera (gphoto2 required)")
 if (KDE4_GPHOTO2 )

@@ -5,7 +5,12 @@
 #  IMLIB_INCLUDE_DIR - the IMLIB include directory
 #  IMLIB_LIBRARIES - Link these to use IMLIB
 #  IMLIB_DEFINITIONS - Compiler switches required for using IMLIB
+
+# Copyright (c) 2006, Dirk Mueller, <mueller@kde.org>
 #
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 
 IF (DEFINED CACHED_IMLIB)
 

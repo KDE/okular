@@ -85,10 +85,6 @@ PresentationWidget::~PresentationWidget()
     // remove this widget from document observer
     m_document->removeObserver( this );
 
-    // set a new viewport in document if page number differs
-    if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
-        m_document->setViewportPage( m_frameIndex/*, PRESENTATION_ID*/ );
-
     // delete frames
     QValueVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
@@ -456,6 +452,10 @@ void PresentationWidget::changePage( int newPage )
         // make the background pixmap
         generatePage();
     }
+    
+    // set a new viewport in document if page number differs
+    if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
+        m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
 }
 
 void PresentationWidget::generatePage()

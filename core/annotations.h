@@ -71,7 +71,7 @@ struct OKULAR_EXPORT Annotation
     /** properties: contents related */
     QString         author;                 // ''
     QString         contents;               // ''
-    QString         uniqueName;             // 'kpdf-#NUMBER#'
+    QString         uniqueName;             // 'okular-#NUMBER#'
     QDateTime       modifyDate;             // before or equal to currentDateTime()
     QDateTime       creationDate;           // before or equal to modifyDate
 

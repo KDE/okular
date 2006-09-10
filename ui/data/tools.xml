@@ -59,10 +59,10 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>6</shortcut>
     </tool>
-    <tool id="7" name="Warning Stamp" pixmap="messagebox_warning">
-        <tooltip>Warning Stamp</tooltip>
-        <engine type="PickPoint" hoverIcon="messagebox_warning">
-            <annotation type="Stamp" icon="messagebox_warning" />
+    <tool id="7" name="Stamp" pixmap="stamp">
+        <tooltip>Put a stamp symbol</tooltip>
+        <engine type="PickPoint" hoverIcon="okular" center="true" size="64">
+            <annotation type="Stamp" icon="okular"/>
         </engine>
         <shortcut>7</shortcut>
   </tool>

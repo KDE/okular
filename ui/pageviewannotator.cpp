@@ -213,13 +213,17 @@ class PickPointEngine : public AnnotatorEngine
     : AnnotatorEngine( engineElement ), clicked( false ), xscale(1.0), yscale(1.0)
         {
             // parse engine specific attributes
-            QString pixmapName = engineElement.attribute( "hoverIcon" );
+            pixmapName = engineElement.attribute( "hoverIcon" );
             if ( pixmapName.simplified().isEmpty() )
                 pixmapName = "okular";
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
+            bool ok = true;
+            size = engineElement.attribute( "size", "32" ).toInt( &ok );
+            if ( !ok )
+                size = 32;
 
             // create engine objects
-            pixmap = new QPixmap( DesktopIcon( pixmapName, 32 ) );
+            pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
         }
 
         ~PickPointEngine()
@@ -259,31 +263,24 @@ class PickPointEngine : public AnnotatorEngine
             point.y = nY;
             if ( center )
             {
-                rect.left = nX - ( pixmap->width() / ( (double)xScale * 2.0 ) );
-                rect.right = nX + ( pixmap->width() / ( (double)xScale * 2.0 ) );
-                rect.top = nY - ( pixmap->width() / ( (double)yScale * 2.0 ) );
-                rect.bottom = nY + ( pixmap->width() / ( (double)yScale * 2.0 ) );
+                rect.left = nX - ( pixmap->width() / ( xScale * 2.0 ) );
+                rect.top = nY - ( pixmap->height() / ( yScale * 2.0 ) );
             }
             else
             {
                 rect.left = nX;
-                rect.right = nX + ( pixmap->width() / (double)xScale );
                 rect.top = nY;
-                rect.bottom = nY + ( pixmap->width() / (double)yScale );
             }
-            return rect.geometry( (int)xScale, (int)yScale );
+            rect.right = rect.left + ( pixmap->width() / xScale );
+            rect.bottom = rect.top + ( pixmap->height() / yScale );
+            return rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
         {
             if ( clicked && pixmap )
             {
-                int pX = (int)(point.x * (double)xScale);
-                int pY = (int)(point.y * (double)yScale);
-                if ( center )
-                    painter->drawPixmap( pX - pixmap->width() / 2, pY - pixmap->height() / 2, *pixmap );
-                else
-                    painter->drawPixmap( pX, pY, *pixmap );
+                painter->drawPixmap( QPointF( rect.left * xScale, rect.top * yScale ), *pixmap );
             }
         }
 
@@ -303,9 +300,7 @@ class PickPointEngine : public AnnotatorEngine
                 //note dialog
                 QString prompt = i18n( "Please input the free text:" ) ;
                 bool resok;
-                QString note ="";
-
-                note= KInputDialog::getText( i18n("FreeText"), prompt, note,&resok );
+                QString note = KInputDialog::getMultiLineText( i18n( "Free Text" ), prompt, QString::null, &resok );
                 if(resok)
                 {
                     //add note
@@ -314,16 +309,16 @@ class PickPointEngine : public AnnotatorEngine
                     ta->inplaceText=note;
                     ta->textType = TextAnnotation::InPlace;
                     //set boundary
-                    QFontMetricsF mf(ta->textFont);
-                    QRectF rcf=mf.boundingRect(ta->inplaceText);
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);
                     rect.right = qMax(startpoint.x,point.x);
                     rect.bottom = qMax(startpoint.y,point.y);
                     kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
-                    double pixfactor=0.002;
-                    rect.right = qMax(rect.right, rect.left+rcf.width()*pixfactor);
-                    rect.bottom = qMax(rect.bottom, rect.top+rcf.height()*pixfactor*xscale/yscale);
+                    static int padding = 2;
+                    QFontMetricsF mf(ta->textFont);
+                    QRectF rcf=mf.boundingRect( NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)xscale, (int)yscale ).adjusted( padding, padding, -padding, -padding ), Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
+                    rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/xscale);
+                    rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/yscale);
                     ta->boundary=this->rect;
                     ta->window.summary="TextBox";
                 }
@@ -348,7 +343,22 @@ class PickPointEngine : public AnnotatorEngine
             {
                 StampAnnotation * sa = new StampAnnotation();
                 ann = sa;
-                sa->stampIconName="okular";
+                sa->stampIconName = pixmapName;
+                double stampxscale = size / xscale;
+                double stampyscale = size / yscale;
+                if ( center )
+                {
+                    rect.left = point.x - stampxscale / 2;
+                    rect.top = point.y - stampyscale / 2;
+                }
+                else
+                {
+                    rect.left = point.x;
+                    rect.top = point.y;
+                }
+                rect.right = rect.left + stampxscale;
+                rect.bottom = rect.top + stampyscale;
+                sa->boundary = rect;
             }
 
             // safety check
@@ -371,6 +381,8 @@ class PickPointEngine : public AnnotatorEngine
         NormalizedPoint startpoint;
         NormalizedPoint point;
         QPixmap * pixmap;
+        QString pixmapName;
+        int size;
         double xscale,yscale;
         bool center;
 };

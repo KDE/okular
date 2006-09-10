@@ -34,26 +34,18 @@ class CHMGenerator : public Generator
         const DocumentSynopsis * generateDocumentSynopsis();
         const DocumentFonts * generateDocumentFonts();
 
-
-        bool isAllowed( int /*Document::Permisison(s)*/ );
-
         bool canGeneratePixmap( bool async );
         void generatePixmap( PixmapRequest * request );
 
         bool canGenerateTextPage();
         void generateSyncTextPage( KPDFPage * page );
 
-        QString getXMLFile();
-        void setupGUI(KActionCollection  * ac , QToolBox * tBox );
-
         bool supportsSearching();
         bool prefersInternalSearching();
-        bool supportsRotation();
 
         RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
                     const RegularAreaRect * lastRect, KPDFPage * page);
         QString getText( const RegularAreaRect * area, KPDFPage * page );
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
 
         bool canConfigurePrinter( ) ;
         bool print( KPrinter& /*printer*/ ) ;
@@ -61,7 +53,7 @@ class CHMGenerator : public Generator
         QString getMetaData( const QString & key, const QString & option );
         bool reparseConfig() ;
         void addPages( KConfigDialog* /*dlg*/) ;
-        bool handleEvent (QEvent * /*event*/ ) ;
+
     public slots:
         void slotCompleted();
 

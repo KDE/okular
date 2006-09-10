@@ -85,7 +85,7 @@ Part::Part(QWidget *parentWidget,
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
-	QDBusConnection::sessionBus().registerObject("/okular", this);
+	QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *   Copyright (C) 2006 by Chu Xiaodong <xiaodongchu@gmail.com>            *
  *                                                                         *
@@ -9,15 +8,15 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qframe.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qlineedit.h>
 #include <qheaderview.h>
-#include <qsortfilterproxymodel.h>
-#include <QColorDialog>
+#include <kcolorbutton.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <ksqueezedtextlabel.h>
-#include <kglobalsettings.h>
+#include <knuminput.h>
 
 // local includes
 #include "core/document.h"
@@ -30,7 +29,6 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     : KPageDialog( parent ), modified( false )
 {
     setFaceType( Tabbed );
-    resize(400,300);
     m_annot=ann;
     setCaptionTextbyAnnotType();
     setButtons( Ok | Apply | Cancel );
@@ -41,96 +39,85 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     QLabel* tmplabel;
   //1. Appearance
     //BEGIN tab1
-    m_page[0] = new QFrame();
-    m_tabitem[0] = addPage( m_page[0], i18n( "&Appearance" ) );
-    m_layout[0] = new QGridLayout( m_page[0] );
-    m_layout[0]->setMargin( marginHint() );
-    m_layout[0]->setSpacing( spacingHint() );
+    QFrame *page = new QFrame();
+    addPage( page, i18n( "&Appearance" ) );
+    QVBoxLayout * lay = new QVBoxLayout( page );
 
-    colorBn = new QPushButton(m_page[0]);
-    
-    m_selcol=ann->style.color;
-    QPalette pal = colorBn->palette();
-    pal.setColor( QPalette::Active, QPalette::Button, m_selcol );
-    pal.setColor( QPalette::Inactive, QPalette::Button, m_selcol );
-    pal.setColor( QPalette::Disabled, QPalette::Button, m_selcol );
-    colorBn->setPalette( pal );
-    colorBn->setText(i18n( "&Color" ));
-    m_layout[0]->addWidget( colorBn, 0, 0, Qt::AlignRight );
-    
-    QObject::connect(colorBn, SIGNAL(clicked()), this, SLOT(slotChooseColor()));
-    
-    tmplabel = new QLabel( i18n( "Opacity" ), m_page[0] );
-    QString szopacity;
-    szopacity.setNum( int(ann->style.opacity*100),10);
-    opacityEdit = new QLineEdit(szopacity,m_page[0]);
-    m_layout[0]->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_layout[0]->addWidget( opacityEdit, 1, 1 );
-    
-    opacitySlider=new QSlider(m_page[0]);
-    opacitySlider->setMaximum(100);
-    opacitySlider->setValue(100);
-    opacitySlider->setSliderPosition(100);
-    opacitySlider->setOrientation(Qt::Horizontal);
-    m_layout[0]->addWidget( opacitySlider, 2, 1 );
+    QHBoxLayout * hlay = new QHBoxLayout();
+    lay->addLayout( hlay );
+    tmplabel = new QLabel( i18n( "&Color:" ), page );
+    hlay->addWidget( tmplabel );
+    colorBn = new KColorButton( page );
+    colorBn->setColor( ann->style.color );
+    tmplabel->setBuddy( colorBn );
+    hlay->addWidget( colorBn );
+
+    hlay = new QHBoxLayout();
+    lay->addLayout( hlay );
+    tmplabel = new QLabel( i18n( "&Opacity:" ), page );
+    hlay->addWidget( tmplabel );
+    m_opacity = new KIntNumInput( page );
+    m_opacity->setRange( 0, 100, 1, true );
+    m_opacity->setValue( (int)( ann->style.opacity * 100 ) );
+    tmplabel->setBuddy( m_opacity );
+    hlay->addWidget( m_opacity );
+
+    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ) );
     //END tab1
     
     //BEGIN tab 2
-    m_page[1] = new QFrame();
-    m_tabitem[1] = addPage(m_page[1], i18n("&General"));
+    page = new QFrame();
+    addPage( page, i18n( "&General" ) );
 //    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
-    m_layout[1] = new QGridLayout(m_page[1]);
-    m_layout[1]->setMargin(marginHint());
-    m_layout[1]->setSpacing(spacingHint());
-    tmplabel = new QLabel( i18n( "Author" ), m_page[1] );
-    AuthorEdit= new QLineEdit(ann->author,m_page[1]);
-    m_layout[1]->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    m_layout[1]->addWidget( AuthorEdit, 0, 1 );
+    QGridLayout * gridlayout = new QGridLayout( page );
+    tmplabel = new QLabel( i18n( "&Author:" ), page );
+    AuthorEdit = new QLineEdit( ann->author, page );
+    tmplabel->setBuddy( AuthorEdit );
+    gridlayout->addWidget( tmplabel, 0, 0 );
+    gridlayout->addWidget( AuthorEdit, 0, 1 );
     
-    tmplabel = new QLabel( i18n( "Created:" ), m_page[1] );
-    m_layout[1]->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    tmplabel = new QLabel(ann->creationDate.toString("hh:mm:ss, dd.MM.yyyy"), m_page[1] );//time
-    m_layout[1]->addWidget( tmplabel, 1, 1 );
+    tmplabel = new QLabel( i18n( "Created:" ), page );
+    gridlayout->addWidget( tmplabel, 1, 0 );
+    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate, false, true ), page );//time
+    gridlayout->addWidget( tmplabel, 1, 1 );
     
-    tmplabel = new QLabel( i18n( "Modified:" ), m_page[1] );
-        m_layout[1]->addWidget( tmplabel, 2, 0, Qt::AlignRight );
-    tmplabel = new QLabel(ann->modifyDate.toString("hh:mm:ss, dd.MM.yyyy"), m_page[1] );//time
-    m_layout[1]->addWidget( tmplabel, 2, 1 );
+    tmplabel = new QLabel( i18n( "Modified:" ), page );
+    gridlayout->addWidget( tmplabel, 2, 0 );
+    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modifyDate, false, true ), page );//time
+    gridlayout->addWidget( tmplabel, 2, 1 );
+
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 3, 0 );
     //END tab 2
     //BEGIN advance properties:
-    m_page[2] = new QFrame();
-    m_tabitem[2] = addPage(m_page[2], i18n("&Advance"));
-    m_layout[2] = new QGridLayout(m_page[2]);
-    m_layout[2]->setMargin(marginHint());
-    m_layout[2]->setSpacing(spacingHint());
+    page = new QFrame();
+    addPage( page, i18n( "&Advanced" ) );
+    gridlayout = new QGridLayout( page );
     
-    tmplabel = new QLabel( i18n( "uniqueName:" ), m_page[2] );
-    m_layout[2]->addWidget( tmplabel, 0, 0 );
-    uniqueNameEdit = new QLineEdit( ann->uniqueName, m_page[2] );
-    m_layout[2]->addWidget( uniqueNameEdit, 0, 1 );
+    tmplabel = new QLabel( i18n( "uniqueName:" ), page );
+    gridlayout->addWidget( tmplabel, 0, 0 );
+    uniqueNameEdit = new QLineEdit( ann->uniqueName, page );
+    gridlayout->addWidget( uniqueNameEdit, 0, 1 );
     
-    tmplabel = new QLabel( i18n( "contents:" ), m_page[2] );
-    m_layout[2]->addWidget( tmplabel, 1, 0 );
-    contentsEdit = new QLineEdit( ann->contents, m_page[2] );
-    m_layout[2]->addWidget( contentsEdit, 1, 1 );
+    tmplabel = new QLabel( i18n( "contents:" ), page );
+    gridlayout->addWidget( tmplabel, 1, 0 );
+    contentsEdit = new QLineEdit( ann->contents, page );
+    gridlayout->addWidget( contentsEdit, 1, 1 );
 
-    QString tmpstr;
-    tmpstr.setNum(m_annot->flags);
-    tmplabel = new QLabel( i18n( "flags:" ), m_page[2] );
-    m_layout[2]->addWidget( tmplabel, 2, 0 );
-    flagsEdit = new QLineEdit( tmpstr, m_page[2] );
-    m_layout[2]->addWidget( flagsEdit, 2, 1 );
+    tmplabel = new QLabel( i18n( "flags:" ), page );
+    gridlayout->addWidget( tmplabel, 2, 0 );
+    flagsEdit = new QLineEdit( QString::number( m_annot->flags ), page );
+    gridlayout->addWidget( flagsEdit, 2, 1 );
 
-    QTextStream(&tmpstr)<<m_annot->boundary.left<<","<<m_annot->boundary.top
-            <<","<<m_annot->boundary.right<<","<<m_annot->boundary.bottom;
-    tmplabel = new QLabel( i18n( "boundary:" ), m_page[2] );
-    m_layout[2]->addWidget( tmplabel, 3, 0 );
-    boundaryEdit = new QLineEdit( tmpstr, m_page[2] );
-    m_layout[2]->addWidget( boundaryEdit, 3, 1 );
+    QString tmpstr = QString( "%1,%2,%3,%4" ).arg( m_annot->boundary.left ).arg( m_annot->boundary.top ).arg( m_annot->boundary.right ).arg( m_annot->boundary.bottom );
+    tmplabel = new QLabel( i18n( "boundary:" ), page );
+    gridlayout->addWidget( tmplabel, 3, 0 );
+    boundaryEdit = new QLineEdit( tmpstr, page );
+    gridlayout->addWidget( boundaryEdit, 3, 1 );
+
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance
-    
-    
-    
+
+    resize( sizeHint() );
 }
 AnnotsPropertiesDialog::~AnnotsPropertiesDialog()
 {
@@ -145,51 +132,40 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
     {
         case Annotation::AText:
             if(((TextAnnotation*)m_annot)->textType==TextAnnotation::Linked)
-                captiontext="Note Properties";
+                captiontext = i18n( "Note Properties" );
             else
-                captiontext="FreeText Properties";
+                captiontext = i18n( "FreeText Properties" );
             break;
         case Annotation::ALine:
-            captiontext="Line Properties";
+            captiontext = i18n( "Line Properties" );
             break;
         case Annotation::AGeom:
-            captiontext="Geom Properties";
+            captiontext = i18n( "Geom Properties" );
             break;
         case Annotation::AHighlight:
-            captiontext="Highlight Properties";
+            captiontext = i18n( "Highlight Properties" );
             break;
         case Annotation::AStamp:
-            captiontext="Stamp Properties";
+            captiontext = i18n( "Stamp Properties" );
             break;
         case Annotation::AInk:
-            captiontext="Ink Properties";
+            captiontext = i18n( "Ink Properties" );
             break;
         default:
-            captiontext="Base Properties";
+            captiontext = i18n( "Annotation Properties" );
             break;
     }
         setCaption( captiontext );
 }
-void AnnotsPropertiesDialog::slotChooseColor()
-{
-    
-    QColor col = QColorDialog::getColor(m_selcol, this);
-    if (!col.isValid())
-        return;
-    m_selcol=col;
-    QPalette pal = colorBn->palette();
-    pal.setColor( QPalette::Active, QPalette::Button, m_selcol );
-    pal.setColor( QPalette::Inactive, QPalette::Button, m_selcol );
-    pal.setColor( QPalette::Disabled, QPalette::Button, m_selcol );
-    colorBn->setPalette( pal );
-}
+
 void AnnotsPropertiesDialog::slotapply()
 {
     m_annot->author=AuthorEdit->text();
     m_annot->contents=contentsEdit->text();
-    m_annot->style.color=m_selcol;
+    m_annot->style.color = colorBn->color();
     m_annot->modifyDate=QDateTime::currentDateTime();
     m_annot->flags=flagsEdit->text().toInt();
+    m_annot->style.opacity = (double)m_opacity->value() / 100.0;
 }
     
 #include "annotationpropertiesdialog.moc"

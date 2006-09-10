@@ -157,7 +157,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 {
                     Annotation::SubType type = ann->subType();
                     if ( type == Annotation::ALine || type == Annotation::AHighlight ||
-                         type == Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
+                         type == Annotation::AInk || /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/
+                         ( type == Annotation::AText && ((TextAnnotation*)ann)->textType == TextAnnotation::InPlace ) )
                     {
                         if ( !bufferedAnnotations )
                             bufferedAnnotations = new QList< Annotation * >();
@@ -302,7 +303,24 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 // draw TextAnnotation (InPlace) MISSING: all
                 if ( type == Annotation::AText )
                 {
-                    // TODO
+                    TextAnnotation * text = (TextAnnotation *)a;
+                    if ( text->textType == TextAnnotation::InPlace )
+                    {
+                        QPainter textPainter( &backImage );
+                        textPainter.translate( -limits.left(), -limits.top() );
+                        QRect annotBoundary = a->boundary.geometry( scaledWidth, scaledHeight );
+
+                        textPainter.setPen( Qt::black );
+                        QColor tmpcolor = a->style.color;
+                        tmpcolor.setAlphaF( a->style.opacity );
+                        textPainter.setBrush( tmpcolor );
+                        textPainter.drawRect( annotBoundary.adjusted( 0, 0, -1, -1 ) );
+                        textPainter.setBrush( Qt::NoBrush );
+                        Qt::AlignmentFlag halign = ( text->inplaceAlign == 1 ? Qt::AlignHCenter : ( text->inplaceAlign == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
+                        textPainter.drawText( annotBoundary.adjusted( 2, 2, -2, -2 ),
+                                              Qt::AlignTop | halign | Qt::TextWordWrap,
+                                              text->inplaceText );
+                    }
                 }
                 // draw LineAnnotation MISSING: all
                 else if ( type == Annotation::ALine )
@@ -456,44 +474,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             if ( type == Annotation::AText )
             {
                 TextAnnotation * text = (TextAnnotation *)a;
-                if ( text->textType == TextAnnotation::InPlace )
-                {
-                    //Have the square of fixed size and adapting text font
-                    QFontMetricsF mf(text->textFont);
-                    QRectF rcf=mf.boundingRect(text->inplaceText);
-                    QSize sz(int(rcf.width()+5), int(rcf.height()+5));
-                    if(sz.height()<annotBoundary.height())
-                        sz.setHeight(annotBoundary.height());
-                    if(sz.width()<annotBoundary.width())
-                        sz.setWidth(annotBoundary.width());
-                    
-                    QPixmap pixmap(sz);
-                    pixmap.fill( a->style.color );
-                    QPainter painter;
-                    painter.begin( &pixmap );
-                    painter.setPen( Qt::black );//( NoPen );
-                    //painter.setBrush( bule);
-                    painter.drawRect( 0, 0, sz.width()-2, sz.height()-2 );
-                    //painter.drawText(2,sz.height()/2+int(rcf.height()/2),text->inplaceText);
-                    painter.drawText(0,0,sz.width(),sz.height(),
-                                     Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWrapAnywhere,
-                                     text->inplaceText);
-                    painter.end();
-                    QImage scaledImage;
-                    scalePixmapOnImage( scaledImage, &pixmap,
-                                        annotBoundary.width(),
-                                        annotBoundary.height(), innerRect );
-                    //colorizeImage( scaledImage, a->style.color, opacity );
-                    //scaledImage.setAlphaBuffer( true );
-                    pixmap = QPixmap::fromImage( scaledImage );
-                    
-                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
-                }
-                
                 if ( text->textType == TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
-                    QPixmap pixmap = DesktopIcon( text->textIcon );
+                    QPixmap pixmap = DesktopIcon( text->textIcon.toLower() );
                     QImage scaledImage;
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         annotBoundary.width(),

@@ -147,11 +147,6 @@ const DocumentFonts * CHMGenerator::generateDocumentFonts()
     return 0L;
 }
 
-bool CHMGenerator::isAllowed( int /*Document::Permisison(s)*/ )
-{
-    return true;
-}
-
 bool CHMGenerator::canGeneratePixmap ( bool /*async*/ )
 {
 /*    if (async)
@@ -370,25 +365,12 @@ void CHMGenerator::generateSyncTextPage( KPDFPage * page )
     syncLock.unlock();
 }
 
-QString CHMGenerator::getXMLFile()
-{
-    return QString::null;
-}
-
-void CHMGenerator::setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ )
-{ ; }
-
 bool CHMGenerator::supportsSearching()
 {
     return true;
 }
 
 bool CHMGenerator::prefersInternalSearching()
-{
-    return false;
-}
-
-bool CHMGenerator::supportsRotation()
 {
     return false;
 }
@@ -403,9 +385,6 @@ QString CHMGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*pa
 {
     return QString();
 }
-
-void CHMGenerator::setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/)
-{ ; }
 
 bool CHMGenerator::canConfigurePrinter( )
 {
@@ -441,10 +420,6 @@ bool CHMGenerator::reparseConfig()
 void CHMGenerator::addPages( KConfigDialog* /*dlg*/)
 { ; }
 
-bool CHMGenerator::handleEvent (QEvent * /*event*/ )
-{
-    return true;
-}
 /*
 void PixmapThreader::run()
 {

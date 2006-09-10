@@ -310,14 +310,16 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 
 
 /** TextAnnotation [Annotation] */
-
+/*
+  The default textIcon for text annotation is Note as the PDF Reference says
+*/
 TextAnnotation::TextAnnotation()
-    : Annotation(), textType( Linked ), textIcon( "Comment" ),
+    : Annotation(), textType( Linked ), textIcon( "Note" ),
     inplaceAlign( 0 ), inplaceIntent( Unknown )
 {}
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( node ), textType( Linked ), textIcon( "Comment" ),
+    : Annotation( node ), textType( Linked ), textIcon( "Note" ),
     inplaceAlign( 0 ), inplaceIntent( Unknown )
 {
     // loop through the whole children looking for a 'text' element

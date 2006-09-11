@@ -45,6 +45,11 @@ class AnnotatorEngine
             // parse common engine attributes
             if ( engineElement.hasAttribute( "color" ) )
                 m_engineColor = QColor( engineElement.attribute( "color" ) );
+
+            // get the annotation element
+            QDomElement annElement = m_engineElement.firstChild().toElement();
+            if ( !annElement.isNull() && annElement.tagName() == "annotation" )
+                m_annotElement = annElement;
         }
         virtual ~AnnotatorEngine() {};
 
@@ -64,6 +69,7 @@ class AnnotatorEngine
     protected:
         // common engine attributes (the element includes annotation desc)
         QDomElement m_engineElement;
+        QDomElement m_annotElement;
         QColor m_engineColor;
         // other vars (remove this!)
         bool m_creationCompleted;
@@ -155,14 +161,15 @@ class SmoothPathEngine : public AnnotatorEngine
 
         Annotation * end()
         {
+            m_creationCompleted = false;
+
             // find out annotation's description node
-            const QDomElement & annElement = m_engineElement.firstChild().toElement();
-            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+            if ( m_annotElement.isNull() )
                 return 0;
 
             // find out annotation's type
             Annotation * ann = 0;
-            QString typeString = annElement.attribute( "type" );
+            QString typeString = m_annotElement.attribute( "type" );
 
             // create HighlightAnnotation from path
             if ( typeString == "Highlight" )
@@ -176,8 +183,8 @@ class SmoothPathEngine : public AnnotatorEngine
             {
                 InkAnnotation * ia = new InkAnnotation();
                 ann = ia;
-                if ( annElement.hasAttribute( "width" ) )
-                    ann->style.width = annElement.attribute( "width" ).toDouble();
+                if ( m_annotElement.hasAttribute( "width" ) )
+                    ann->style.width = m_annotElement.attribute( "width" ).toDouble();
                 // fill points
                 ia->inkPaths.append( points );
                 // set boundaries
@@ -189,10 +196,10 @@ class SmoothPathEngine : public AnnotatorEngine
                 return 0;
 
             // set common attributes
-            ann->style.color = annElement.hasAttribute( "color" ) ?
-                annElement.attribute( "color" ) : m_engineColor;
-            if ( annElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
+                m_annotElement.attribute( "color" ) : m_engineColor;
+            if ( m_annotElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
 
             // return annotation
             return ann;
@@ -214,6 +221,9 @@ class PickPointEngine : public AnnotatorEngine
         {
             // parse engine specific attributes
             pixmapName = engineElement.attribute( "hoverIcon" );
+            QString stampname = m_annotElement.attribute( "icon" );
+            if ( m_annotElement.attribute( "type" ) == "Stamp" && !stampname.simplified().isEmpty() )
+                pixmapName = stampname;
             if ( pixmapName.simplified().isEmpty() )
                 pixmapName = "okular";
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
@@ -286,14 +296,15 @@ class PickPointEngine : public AnnotatorEngine
 
         Annotation * end()
         {
+            m_creationCompleted = false;
+
             // find out annotation's description node
-            const QDomElement & annElement = m_engineElement.firstChild().toElement();
-            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+            if ( m_annotElement.isNull() )
                 return 0;
             
             // find out annotation's type
             Annotation * ann = 0;
-            QString typeString = annElement.attribute( "type" );
+            QString typeString = m_annotElement.attribute( "type" );
             // create TextAnnotation from path
             if ( typeString == "FreeText")	//<annotation type="Text"
             {
@@ -366,10 +377,10 @@ class PickPointEngine : public AnnotatorEngine
                 return 0;
 
             // set common attributes
-            ann->style.color = annElement.hasAttribute( "color" ) ?
-                    annElement.attribute( "color" ) : m_engineColor;
-            if ( annElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
+                    m_annotElement.attribute( "color" ) : m_engineColor;
+            if ( m_annotElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
 
             // return annotation
             return ann;
@@ -387,65 +398,87 @@ class PickPointEngine : public AnnotatorEngine
         bool center;
 };
 
-/** @short TwoPointsEngine */
-class TwoPointsEngine : public AnnotatorEngine
+/** @short PolyLineEngine */
+class PolyLineEngine : public AnnotatorEngine
 {
     public:
-        TwoPointsEngine( const QDomElement & engineElement )
-            : AnnotatorEngine( engineElement )
+        PolyLineEngine( const QDomElement & engineElement )
+            : AnnotatorEngine( engineElement ), last( false )
         {
             // parse engine specific attributes
             m_block = engineElement.attribute( "block" ) == "true";
+            bool ok = true;
+            // numofpoints represents the max number of points for the current
+            // polygon/polyline, with a pair of exceptions:
+            // -1 means: the polyline must close on the first point (polygon)
+            // 0 means: construct as many points as you want, right-click
+            //   to construct the last point
+            numofpoints = engineElement.attribute( "points" ).toInt( &ok );
+            if ( !ok )
+                numofpoints = -1;
         }
 
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
         {
             // only proceed if pressing left button
-            if ( button != Left )
-                return QRect();
+//            if ( button != Left )
+//                return rect;
 
             // start operation
-            if ( type == Press && points.isEmpty() )
+            if ( type == Press )
             {
-                NormalizedPoint newPoint;
                 newPoint.x = nX;
                 newPoint.y = nY;
-                rect.left = rect.right =newPoint.x;
-                rect.top = rect.bottom =newPoint.y;
-                points.append( newPoint );
-                return QRect();
+                if ( button == Right )
+                    last = true;
             }
             // move the second point
-            else if ( type == Move && !points.isEmpty() )
+            else if ( type == Move )
             {
-                if ( points.count() == 2 )
-                    points.pop_back();
-                NormalizedPoint newPoint;
-                newPoint.x = nX;
-                newPoint.y = nY;
-                points.append( newPoint );
-                NormalizedPoint firstPoint = points.front();
-                rect.left = qMin( firstPoint.x, nX ) - 2.0 / (double)xScale;
-                rect.right = qMax( firstPoint.x, nX ) + 2.0 / (double)xScale;
-                rect.top = qMin( firstPoint.y, nY ) - 2.0 / (double)yScale;
-                rect.bottom = qMax( firstPoint.y, nY ) + 2.0 / (double)yScale;
+                movingpoint.x = nX;
+                movingpoint.y = nY;
+                QRect oldmovingrect = movingrect;
+                movingrect = rect | QRect( (int)( movingpoint.x * xScale ), (int)( movingpoint.y * yScale ), 1, 1 );
+                return oldmovingrect | movingrect;
             }
-            // end creation if we have 2 points
-            else if ( type == Release && points.count() == 2 )
-                m_creationCompleted = true;
+            else if ( type == Release )
+            {
+                NormalizedPoint tmppoint;
+                tmppoint.x = nX;
+                tmppoint.y = nY;
+                if ( fabs( tmppoint.x - newPoint.x + tmppoint.y - newPoint.y ) > 1e-2 )
+                    return rect;
 
-            return rect.geometry( (int)xScale, (int)yScale );
+                if ( numofpoints == -1 && points.count() > 1 && ( fabs( points[0].x - newPoint.x + points[0].y - newPoint.y ) < 1e-2 ) )
+                {
+                    last = true;
+                }
+                else
+                {
+                    points.append( newPoint );
+                    rect |= QRect( (int)( newPoint.x * xScale ), (int)( newPoint.y * yScale ), 1, 1 );
+                }
+                // end creation if we have constructed the last point of enough points
+                if ( last || points.count() == numofpoints )
+                {
+                    m_creationCompleted = true;
+                    last = false;
+                    normRect = NormalizedRect( rect, xScale, yScale );
+                }
+            }
+
+            return rect;
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
         {
-            if ( points.count() != 2 )
+            if ( points.count() < 1 )
                 return;
 
-            NormalizedPoint first = points[0];
-            NormalizedPoint second = points[1];
-            if ( m_block )
+            if ( m_block && points.count() == 2 )
             {
+                NormalizedPoint first = points[0];
+                NormalizedPoint second = points[1];
                 // draw a semitransparent block around the 2 points
                 painter->setPen( m_engineColor );
                 painter->setBrush( QBrush( m_engineColor.light(), Qt::Dense4Pattern ) );
@@ -454,35 +487,41 @@ class TwoPointsEngine : public AnnotatorEngine
             }
             else
             {
-                // draw a line that connects the 2 points
+                // draw a polyline that connects the constructed points
                 painter->setPen( QPen( m_engineColor, 2 ) );
-                painter->drawLine( (int)(first.x * (double)xScale), (int)(first.y * (double)yScale),
-                                   (int)(second.x * (double)xScale), (int)(second.y * (double)yScale) );
+                for ( int i = 1; i < points.count(); ++i )
+                    painter->drawLine( (int)(points[i - 1].x * (double)xScale), (int)(points[i - 1].y * (double)yScale),
+                                       (int)(points[i].x * (double)xScale), (int)(points[i].y * (double)yScale) );
+                painter->drawLine( (int)(points.last().x * (double)xScale), (int)(points.last().y * (double)yScale),
+                                   (int)(movingpoint.x * (double)xScale), (int)(movingpoint.y * (double)yScale) );
             }
         }
 
         Annotation * end()
         {
+            m_creationCompleted = false;
+
 			// find out annotation's description node
-            const QDomElement & annElement = m_engineElement.firstChild().toElement();
-            if ( annElement.isNull() || annElement.tagName() != "annotation" )
+            if ( m_annotElement.isNull() )
                 return 0;
 
             // find out annotation's type
             Annotation * ann = 0;
-            QString typeString = annElement.attribute( "type" );
+            QString typeString = m_annotElement.attribute( "type" );
 
             // create LineAnnotation from path
-            if ( typeString == "Line")	//<annotation type="Text"
+            if ( typeString == "Line" || typeString == "Polyline" || typeString == "Polygon" )
             {
-                if ( points.count() != 2 )
+                if ( points.count() < 2 )
                     return 0;
                 //add note
                 LineAnnotation * la = new LineAnnotation();
                 ann = la;
-                la->linePoints.append(points[0]);
-                la->linePoints.append(points[1]);
-                la->boundary=this->rect;
+                for ( int i = 0; i < points.count(); ++i )
+                    la->linePoints.append( points[i] );
+                if ( numofpoints == -1 )
+                    la->linePoints.append( points[0] );
+                la->boundary = normRect;
 
             }
 
@@ -491,10 +530,10 @@ class TwoPointsEngine : public AnnotatorEngine
                 return 0;
 
             // set common attributes
-            ann->style.color = annElement.hasAttribute( "color" ) ?
-                    annElement.attribute( "color" ) : m_engineColor;
-            if ( annElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = annElement.attribute( "opacity" ).toDouble();
+            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
+                    m_annotElement.attribute( "color" ) : m_engineColor;
+            if ( m_annotElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
             // return annotation
 
             return ann;
@@ -502,8 +541,14 @@ class TwoPointsEngine : public AnnotatorEngine
 
     private:
         QList<NormalizedPoint> points;
-        NormalizedRect rect;
+        NormalizedPoint newPoint;
+        NormalizedPoint movingpoint;
+        QRect rect;
+        QRect movingrect;
+        NormalizedRect normRect;
         bool m_block;
+        bool last;
+        int numofpoints;
 };
 
 
@@ -675,11 +720,15 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
 
 bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const
 {
-    return m_engine && m_toolBar && wantedRect.intersects( m_lastDrawnRect );
+    return m_engine && m_toolBar && wantedRect.intersects( m_lastDrawnRect ) && m_lockedItem;
 }
 
 void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect )
 {
+    // if there's no locked item, then there's no decided place to draw on
+    if ( !m_lockedItem )
+        return;
+
 #ifndef NDEBUG
     // [DEBUG] draw the paint region if enabled
     if ( KpdfSettings::debugDrawAnnotationRect() )
@@ -750,8 +799,8 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                     m_engine = new SmoothPathEngine( toolSubElement );
                 else if ( type == "PickPoint" )
                     m_engine = new PickPointEngine( toolSubElement );
-                else if ( type == "TwoPoints" )
-                    m_engine = new TwoPointsEngine( toolSubElement );
+                else if ( type == "PolyLine" )
+                    m_engine = new PolyLineEngine( toolSubElement );
                 else
                     kWarning() << "tools.xml: engine type:'" << type << "' is not defined!" << endl;
             }

@@ -283,6 +283,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 Annotation * a = *aIt;
                 Annotation::SubType type = a->subType();
 
+                // precalc the color of the style with the specified opacity
+                QColor alphacolor = a->style.color;
+                alphacolor.setAlphaF( a->style.opacity );
+
                 // draw TextAnnotation (InPlace) MISSING: all
                 if ( type == Annotation::AText )
                 {
@@ -294,9 +298,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                         QRect annotBoundary = a->boundary.geometry( scaledWidth, scaledHeight );
 
                         textPainter.setPen( Qt::black );
-                        QColor tmpcolor = a->style.color;
-                        tmpcolor.setAlphaF( a->style.opacity );
-                        textPainter.setBrush( tmpcolor );
+                        textPainter.setBrush( alphacolor );
                         textPainter.drawRect( annotBoundary.adjusted( 0, 0, -1, -1 ) );
                         textPainter.setBrush( Qt::NoBrush );
                         Qt::AlignmentFlag halign = ( text->inplaceAlign == 1 ? Qt::AlignHCenter : ( text->inplaceAlign == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
@@ -313,18 +315,16 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 
                     NormalizedPath path;
                     // normalize page point to image
-					
-                    NormalizedPoint inkPoint = la->linePoints.first();
-                    NormalizedPoint point;
-                    point.x = (inkPoint.x - xOffset) * xScale;
-                    point.y = (inkPoint.y - yOffset) * yScale;
-                    path.append( point );
-					inkPoint = la->linePoints.last();
-					
-                    point.x = (inkPoint.x - xOffset) * xScale;
-                    point.y = (inkPoint.y - yOffset) * yScale;
-                    path.append( point );
-				
+                    QLinkedList<NormalizedPoint>::const_iterator it = la->linePoints.begin();
+                    QLinkedList<NormalizedPoint>::const_iterator itEnd = la->linePoints.end();
+                    for ( ; it != itEnd; ++it )
+                    {
+                        NormalizedPoint point;
+                        point.x = ( (*it).x - xOffset) * xScale;
+                        point.y = ( (*it).y - yOffset) * yScale;
+                        path.append( point );
+                    }
+
                     // draw the line as normalized path into image
                     drawShapeOnImage( backImage, path, false, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
 
@@ -480,7 +480,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 StampAnnotation * stamp = (StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QPixmap pixmap = DesktopIcon( stamp->stampIconName );
+                QPixmap pixmap = DesktopIcon( stamp->stampIconName, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect );

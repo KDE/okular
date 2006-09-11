@@ -105,7 +105,7 @@ XpsPage* XpsDocument::page(int pageNum) const
     return m_pages.at(pageNum);
 }
 
-XpsFile::XpsFile()
+XpsFile::XpsFile() : m_docInfo( 0 )
 {
 };
 
@@ -343,7 +343,7 @@ bool XpsGenerator::closeDocument()
 
 bool XpsGenerator::canGeneratePixmap( bool /*async*/ )
 {
-    return true; // ???
+    return false; // for now
 }
 
 void XpsGenerator::generatePixmap( PixmapRequest * request )

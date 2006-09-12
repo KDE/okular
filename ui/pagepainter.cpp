@@ -465,7 +465,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         annotBoundary.width(),
                                         annotBoundary.height(), innerRect );
-                    colorizeImage( scaledImage, a->style.color, opacity );
+                    // if the annotation color is valid (ie it was set), then
+                    // use it to colorize the icon, otherwise the icon will be
+                    // "gray"
+                    if ( a->style.color.isValid() )
+                        colorizeImage( scaledImage, a->style.color, opacity );
                     scaledImage.setAlphaBuffer( true );
                     pixmap = QPixmap::fromImage( scaledImage );
 

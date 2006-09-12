@@ -16,6 +16,7 @@ class QLineEdit;
 class KColorButton;
 class KIntNumInput;
 class Annotation;
+class AnnotationWidget;
 class KPDFDocument;
 
 class AnnotsPropertiesDialog : public KPageDialog
@@ -36,6 +37,7 @@ private:
         *boundaryEdit;
     KColorButton *colorBn;
     KIntNumInput *m_opacity;
+    AnnotationWidget *m_annotWidget;
     
     void setCaptionTextbyAnnotType();
 

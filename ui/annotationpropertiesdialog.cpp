@@ -23,6 +23,7 @@
 #include "core/page.h"
 #include "core/annotations.h"
 #include "annotationpropertiesdialog.h"
+#include "annotationwidgets.h"
 
 
 AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
@@ -35,6 +36,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
 
+    m_annotWidget = AnnotationWidgetFactory::widgetFor( ann );
 
     QLabel* tmplabel;
   //1. Appearance
@@ -61,6 +63,9 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     m_opacity->setValue( (int)( ann->style.opacity * 100 ) );
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
+
+    if ( m_annotWidget )
+        lay->addWidget( m_annotWidget->widget() );
 
     lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ) );
     //END tab1
@@ -166,6 +171,9 @@ void AnnotsPropertiesDialog::slotapply()
     m_annot->modifyDate=QDateTime::currentDateTime();
     m_annot->flags=flagsEdit->text().toInt();
     m_annot->style.opacity = (double)m_opacity->value() / 100.0;
+
+    if ( m_annotWidget )
+        m_annotWidget->applyChanges();
 }
     
 #include "annotationpropertiesdialog.moc"

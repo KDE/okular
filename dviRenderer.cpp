@@ -194,7 +194,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
   // Reset colors
   colorStack.clear();
   globalColor = Qt::black;
-  
+
   QApplication::setOverrideCursor( waitCursor );
   foreGroundPainter = page->getPainter();
   if (foreGroundPainter != 0) {
@@ -203,6 +203,7 @@ void dviRenderer::drawPage(double resolution, RenderedDocumentPage *page)
     page->returnPainter(foreGroundPainter);
   }
   QApplication::restoreOverrideCursor();
+  
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
@@ -455,6 +456,16 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     return false;
   }
   
+  // Check if the file is a valid DVI file.
+  if (!isValidFile(filename))
+  {
+    KMessageBox::sorry( parentWidget,
+                        i18n("<qt>File corruption! KDVI had trouble interpreting your DVI file. Most "
+                             "likely this means that the DVI file is broken.</qt>")
+                        .arg( fname ) );
+    return false;
+  }
+
   QApplication::setOverrideCursor( waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
   
@@ -594,7 +605,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
 #ifdef DEBUG_DVIRENDERER
   kdError(4300) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
-  
+
   if (dviFile == 0) {
     mutex.unlock();
     return Anchor();

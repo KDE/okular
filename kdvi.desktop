@@ -70,6 +70,7 @@ Name[af]=Kdvi
 Name[ar]=برنامج KDVI
 Name[eo]=DVI-rigardilo
 Name[hi]=के-डीवीआई
+Name[zh_TW]=KDVI 檢視器
 MimeType=application/x-dvi;application/x-gzdvi;application/x-bz2dvi;
 InitialPreference=6
 Exec=kdvi %f -caption "%c" %i %m

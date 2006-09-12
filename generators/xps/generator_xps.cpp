@@ -64,6 +64,8 @@ QSize XpsPage::size() const
 
 XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
 {
+    kDebug() << "document file name: " << fileName << endl;
+
     KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
     QIODevice* documentDevice = documentFile->device();
@@ -83,7 +85,13 @@ XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
         QDomElement element = node.toElement();
         if( !element.isNull() ) {
             if (element.tagName() == "PageContent") {
-                XpsPage *page = new XpsPage( archive, element.attribute("Source") );
+                QString pagePath = element.attribute("Source");
+                if (pagePath.startsWith('/') == false ) {
+                    int offset = fileName.lastIndexOf('/');
+                    QString thisDir = fileName.mid(0,  offset) + '/';
+                    pagePath.prepend(thisDir);
+                }
+                XpsPage *page = new XpsPage( archive, pagePath );
                 m_pages.append(page);
             } else {
                 kDebug() << "Unhandled entry in FixedDocument" << element.tagName() << endl;
@@ -200,7 +208,6 @@ bool XpsFile::loadDocument(const QString &filename)
 
     delete fixedRepDevice;
 
-    kDebug() << "Parsed stage 1" << endl;
     return true;
 }
 

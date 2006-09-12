@@ -118,7 +118,7 @@ XpsFile::~XpsFile()
 bool XpsFile::loadDocument(const QString &filename)
 {
     xpsArchive = new KZip( filename );
-    if ( xpsArchive->open( IO_ReadOnly ) == true ) {
+    if ( xpsArchive->open( QIODevice::ReadOnly ) == true ) {
         kDebug() << "Successful open of " << xpsArchive->fileName() << endl;
     } else {
         kDebug() << "Could not open XPS archive: " << xpsArchive->fileName() << endl;

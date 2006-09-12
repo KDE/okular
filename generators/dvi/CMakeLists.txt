@@ -3,6 +3,7 @@ include_directories(
    ${CMAKE_BINARY_DIR}/okular
 )
 
+add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 #add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN)
 
 ########### next target ###############

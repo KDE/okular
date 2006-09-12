@@ -54,16 +54,23 @@ Engine/Annotation Types [specific attributes]:
     </tool>
     <tool id="6" name="Straight Yellow Line" pixmap="tool_hl_yellow">
         <tooltip>Straight Yellow Line</tooltip>
-        <engine type="TwoPoints" color="#FFE000">
+        <engine type="PolyLine" color="#FFE000" points="2">
             <annotation type="Line" width="4" color="#FFE000" />
         </engine>
         <shortcut>6</shortcut>
     </tool>
-    <tool id="7" name="Stamp" pixmap="stamp">
+    <tool id="7" name="Blue Polygon" pixmap="polygon">
+        <tooltip>Draw a polygon (click on the first point to close it)</tooltip>
+        <engine type="PolyLine" color="#007EEE" points="-1">
+            <annotation type="Line" width="4" color="#007EEE" />
+        </engine>
+        <shortcut>7</shortcut>
+    </tool>
+    <tool id="8" name="Stamp" pixmap="stamp">
         <tooltip>Put a stamp symbol</tooltip>
         <engine type="PickPoint" hoverIcon="okular" center="true" size="64">
             <annotation type="Stamp" icon="okular"/>
         </engine>
-        <shortcut>7</shortcut>
+        <shortcut>8</shortcut>
   </tool>
 </annotatingTools>

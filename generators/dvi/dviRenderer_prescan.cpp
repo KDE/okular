@@ -103,7 +103,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
       errorMsg += i18n("Page %1: The PDF file <strong>%2</strong> could not be converted to PostScript.<br>", page+1, originalFName);
     else
       errorMsg += i18n("Page %1: The PostScript file <strong>%2</strong> could not be found.<br>", page+1, originalFName);
-    embedPS_progress->progressBar()->advance(1);
+    embedPS_progress->progressBar()->setValue(embedPS_progress->progressBar()->value()+1);
     qApp->processEvents();
     return;
   }
@@ -217,7 +217,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
   dviFile->setNewData(newDVI);
 
-  embedPS_progress->progressBar()->advance(1);
+  embedPS_progress->progressBar()->setValue(embedPS_progress->progressBar()->value()+1);
   qApp->processEvents();
   return;
 }

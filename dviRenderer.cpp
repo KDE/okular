@@ -83,7 +83,7 @@ dviRenderer::~dviRenderer()
 #endif
 
   QMutexLocker lock(&mutex);
-  
+
   delete PS_interface;
   delete dviFile;
 }
@@ -267,7 +267,7 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
   QRegExp equationExp("equation\\.(.*)");
   QRegExp itemExp("item\\.(.*)");
   QRegExp citeExp("cite\\.(.*)");
-  
+
   // And finally add anchors to the links
   for (i = page->hyperLinkList.begin(); i != page->hyperLinkList.end(); i++)
   {
@@ -323,7 +323,7 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
       (*i).linkText = i18n("Citation [%1]").arg(citeExp.cap(1));
     }
   }
-  
+
   cairo_surface_destroy(cairoImage);
 
   page->isEmpty = false;
@@ -586,6 +586,16 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
     return false;
   }
 
+  // Check if the file is a valid DVI file.
+  if (!isValidFile(filename))
+  {
+    KMessageBox::sorry( parentWidget,
+                        i18n("<qt>File corruption! KDVI had trouble interpreting the file <nobr><strong>%1</strong></nobr>. Most "
+                             "likely this means that the DVI file is broken.</qt>")
+                        .arg( fname ) );
+    return false;
+  }
+
   QApplication::setOverrideCursor( waitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
 
@@ -728,7 +738,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
 
   if (dviFile == 0)
     return Anchor();
-  
+
   // case 1: The reference is a number, which we'll interpret as a
   // page number.
   bool ok;

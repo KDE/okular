@@ -326,7 +326,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     }
 
                     // draw the line as normalized path into image
-                    drawShapeOnImage( backImage, path, false, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
+                    drawShapeOnImage( backImage, path, la->lineClosed, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
 
                 }
                 // draw GeomAnnotation MISSING: all

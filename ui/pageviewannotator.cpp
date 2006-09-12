@@ -520,7 +520,7 @@ class PolyLineEngine : public AnnotatorEngine
                 for ( int i = 0; i < points.count(); ++i )
                     la->linePoints.append( points[i] );
                 if ( numofpoints == -1 )
-                    la->linePoints.append( points[0] );
+                    la->lineClosed = true;
                 la->boundary = normRect;
 
             }

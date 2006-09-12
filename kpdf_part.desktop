@@ -4,6 +4,7 @@ Icon=kpdf
 Name=KPDF
 Name[ar]=برنامج KPDF
 Name[hi]=के-पीडीएफ
+Name[zh_TW]=KPDF 檢視器
 MimeType=application/pdf
 InitialPreference=7
 ServiceTypes=KParts/ReadOnlyPart

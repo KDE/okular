@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=OpenDocument format
+Comment=OpenDocument backend for okular
+ServiceTypes=okular/Generator
+MimeType=application/vnd.oasis.opendocument.text
+X-KDE-Library=libokularGenerator_ooo
+X-KDE-Priority=1
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

@@ -1224,6 +1224,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
 if (d->document->handleEvent( e ) )
 {
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -1437,28 +1438,29 @@ if (d->document->handleEvent( e ) )
             QString selectedText;
             if (d->document->supportsSearching())
             {
-		// grab text in selection by extracting it from all intersected pages
-		RegularAreaRect * rects=new RegularAreaRect;
-		const KPDFPage * kpdfPage=0;
-		QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
-		for ( ; iIt != iEnd; ++iIt )
-		{
-		    PageViewItem * item = *iIt;
-		    const QRect & itemRect = item->geometry();
-		    if ( selectionRect.intersects( itemRect ) )
-		    {
-			// request the textpage if there isn't one
-			kpdfPage= item->page();
-			kWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
-			if ( !kpdfPage->hasSearchPage() )
-			    d->document->requestTextPage( kpdfPage->number() );
-			// grab text in the rect that intersects itemRect
-			QRect relativeRect = selectionRect.intersect( itemRect );
-			relativeRect.translate( -itemRect.left(), -itemRect.top() );
-			rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
-		    }
-		}
-		if (kpdfPage) selectedText = kpdfPage->getText( rects );
+                // grab text in selection by extracting it from all intersected pages
+                RegularAreaRect * rects=new RegularAreaRect;
+                const KPDFPage * kpdfPage=0;
+                QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
+                for ( ; iIt != iEnd; ++iIt )
+                {
+                    PageViewItem * item = *iIt;
+                    const QRect & itemRect = item->geometry();
+                    if ( selectionRect.intersects( itemRect ) )
+                    {
+                        // request the textpage if there isn't one
+                        kpdfPage= item->page();
+                        kWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
+                        if ( !kpdfPage->hasSearchPage() )
+                            d->document->requestTextPage( kpdfPage->number() );
+                        // grab text in the rect that intersects itemRect
+                        QRect relativeRect = selectionRect.intersect( itemRect );
+                        relativeRect.translate( -itemRect.left(), -itemRect.top() );
+                        rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
+                    }
+                }
+                if (kpdfPage)
+                  selectedText = kpdfPage->getText( rects );
             }
 
             // popup that ask to copy:text and copy/save:image

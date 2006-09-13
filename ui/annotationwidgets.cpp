@@ -85,7 +85,7 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 {
     m_icon = icon;
     QString path;
-    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path );
+    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path, true );
     if ( path.isEmpty() )
         pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );
@@ -163,6 +163,8 @@ QWidget * TextAnnotationWidget::widget()
     m_pixmapSelector->setItems( items );
     m_pixmapSelector->setIcon( m_textAnn->textIcon );
 
+    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+
     return m_widget;
 }
 
@@ -222,6 +224,8 @@ QWidget * StampAnnotationWidget::widget()
     m_pixmapSelector->setItems( items );
     m_pixmapSelector->setIcon( m_stampAnn->stampIconName );
     m_pixmapSelector->setPreviewSize( 64 );
+
+    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
 
     return m_widget;
 }

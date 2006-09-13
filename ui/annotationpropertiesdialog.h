@@ -23,11 +23,13 @@ class AnnotsPropertiesDialog : public KPageDialog
 {
     Q_OBJECT
 public:
-    AnnotsPropertiesDialog( QWidget *parent,Annotation* ann );
+    AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *document, int docpage, Annotation *ann );
     ~AnnotsPropertiesDialog();
-    bool modified;
 
 private:
+    KPDFDocument *m_document;
+    int m_page;
+    bool modified;
     Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
@@ -41,7 +43,8 @@ private:
     
     void setCaptionTextbyAnnotType();
 
-public slots:
+private slots:
+    void setModified();
     void slotapply();
 };
 

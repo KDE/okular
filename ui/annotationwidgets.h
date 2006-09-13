@@ -73,6 +73,9 @@ public:
 
     virtual void applyChanges() = 0;
 
+signals:
+    void dataChanged();
+
 protected:
     AnnotationWidget( Annotation * ann );
 

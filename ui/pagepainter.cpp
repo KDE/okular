@@ -460,7 +460,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( text->textType == TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
-                    QPixmap pixmap = DesktopIcon( text->textIcon.toLower() );
+                    QString path;
+                    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
+                    if ( path.isEmpty() )
+                        pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::NoGroup, 32 );
                     QImage scaledImage;
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         annotBoundary.width(),
@@ -484,7 +487,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 StampAnnotation * stamp = (StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QPixmap pixmap = DesktopIcon( stamp->stampIconName, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                QString path;
+                QPixmap pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
+                if ( path.isEmpty() )
+                    pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect );

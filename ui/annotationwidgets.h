@@ -79,6 +79,24 @@ protected:
     Annotation * m_ann;
 };
 
+class TextAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    TextAnnotationWidget( Annotation * ann );
+
+    virtual QWidget * widget();
+
+    virtual void applyChanges();
+
+private:
+    TextAnnotation * m_textAnn;
+    QWidget * m_widget;
+    PixmapPreviewSelector * m_pixmapSelector;
+};
+
 class StampAnnotationWidget
   : public AnnotationWidget
 {

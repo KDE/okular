@@ -21,8 +21,6 @@
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qwidget.h>
-#include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -86,7 +84,10 @@ int PixmapPreviewSelector::previewSize() const
 void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 {
     m_icon = icon;
-    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon, K3Icon::NoGroup, m_previewSize );
+    QString path;
+    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path );
+    if ( path.isEmpty() )
+        pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );
 }
 
@@ -97,6 +98,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Annotation * ann )
     {
         case Annotation::AStamp:
             return new StampAnnotationWidget( ann );
+            break;
+        case Annotation::AText:
+            return new TextAnnotationWidget( ann );
             break;
         // shut up gcc
         default:
@@ -119,6 +123,55 @@ AnnotationWidget::~AnnotationWidget()
 Annotation::SubType AnnotationWidget::annotationType()
 {
     return m_ann->subType();
+}
+
+
+TextAnnotationWidget::TextAnnotationWidget( Annotation * ann )
+    : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
+{
+    m_textAnn = static_cast< TextAnnotation * >( ann );
+}
+
+QWidget * TextAnnotationWidget::widget()
+{
+    // only Linked TextAnnotations are supported for now
+    if ( m_textAnn->textType != TextAnnotation::Linked )
+        return 0;
+
+    if ( m_widget )
+        return m_widget;
+
+    m_widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    lay->setMargin( 0 );
+    QGroupBox * gb = new QGroupBox( m_widget );
+    lay->addWidget( gb );
+    gb->setTitle( i18n( "Icon" ) );
+    QHBoxLayout * gblay = new QHBoxLayout( gb );
+    m_pixmapSelector = new PixmapPreviewSelector( gb );
+    gblay->addWidget( m_pixmapSelector );
+
+    QStringList items;
+    items
+      << "Comment"
+      << "Help"
+      << "Insert"
+      << "Key"
+      << "NewParagraph"
+      << "Note"
+      << "Paragraph";
+    m_pixmapSelector->setItems( items );
+    m_pixmapSelector->setIcon( m_textAnn->textIcon );
+
+    return m_widget;
+}
+
+void TextAnnotationWidget::applyChanges()
+{
+    if ( m_textAnn->textType == TextAnnotation::Linked )
+    {
+        m_textAnn->textIcon = m_pixmapSelector->icon();
+    }
 }
 
 

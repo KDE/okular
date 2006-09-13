@@ -10,11 +10,45 @@
 #ifndef _ANNOTATIONWIDGETS_H_
 #define _ANNOTATIONWIDGETS_H_
 
+#include <qwidget.h>
+
 #include "core/annotations.h"
 
+class QComboBox;
 class QLabel;
 class QWidget;
 class AnnotationWidget;
+
+class PixmapPreviewSelector
+  : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit PixmapPreviewSelector( QWidget * parent = 0 );
+    virtual ~PixmapPreviewSelector();
+
+    void setIcon( const QString& icon );
+    QString icon() const;
+
+    void setItems( const QStringList& items );
+
+    void setPreviewSize( int size );
+    int previewSize() const;
+
+signals:
+    void iconChanged( const QString& );
+
+private slots:
+    void iconComboChanged( const QString& icon );
+
+private:
+    QString m_icon;
+    QLabel * m_iconLabel;
+    QComboBox * m_comboItems;
+    int m_previewSize;
+};
+
 
 /**
  * A factory to create AnnotationWidget's.
@@ -57,14 +91,10 @@ public:
 
     virtual void applyChanges();
 
-private slots:
-    void iconChanged( const QString& );
-
 private:
     StampAnnotation * m_stampAnn;
     QWidget * m_widget;
-    QLabel * m_iconLabel;
-    QString m_currentIcon;
+    PixmapPreviewSelector * m_pixmapSelector;
 };
 
 #endif

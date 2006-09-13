@@ -22,11 +22,74 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qwidget.h>
+#include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
 // local includes
 #include "annotationwidgets.h"
+
+PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
+  : QWidget( parent )
+{
+    QHBoxLayout * mainlay = new QHBoxLayout( this );
+    mainlay->setMargin( 0 );
+    m_comboItems = new QComboBox( this );
+    mainlay->addWidget( m_comboItems );
+    m_iconLabel = new QLabel( this );
+    mainlay->addWidget( m_iconLabel );
+    m_iconLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    m_iconLabel->setAlignment( Qt::AlignCenter );
+    m_iconLabel->setFrameStyle( QFrame::StyledPanel );
+    setPreviewSize( 32 );
+
+    connect( m_comboItems, SIGNAL( currentIndexChanged( const QString& ) ), this, SLOT( iconComboChanged( const QString& ) ) );
+    connect( m_comboItems, SIGNAL( currentIndexChanged( const QString& ) ), this, SIGNAL( iconChanged( const QString& ) ) );
+}
+
+PixmapPreviewSelector::~PixmapPreviewSelector()
+{
+}
+
+void PixmapPreviewSelector::setIcon( const QString& icon )
+{
+    int id = m_comboItems->findText( icon );
+    if ( id > -1 )
+    {
+        m_comboItems->setCurrentIndex( id );
+    }
+}
+
+QString PixmapPreviewSelector::icon() const
+{
+    return m_icon;
+}
+
+void PixmapPreviewSelector::setItems( const QStringList& items )
+{
+    m_comboItems->addItems( items );
+    setIcon( m_icon );
+}
+
+void PixmapPreviewSelector::setPreviewSize( int size )
+{
+    m_previewSize = size;
+    m_iconLabel->setFixedSize( m_previewSize + 8, m_previewSize + 8 );
+    iconComboChanged( m_icon );
+}
+
+int PixmapPreviewSelector::previewSize() const
+{
+    return m_previewSize;
+}
+
+void PixmapPreviewSelector::iconComboChanged( const QString& icon )
+{
+    m_icon = icon;
+    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon, K3Icon::NoGroup, m_previewSize );
+    m_iconLabel->setPixmap( pixmap );
+}
+
 
 AnnotationWidget * AnnotationWidgetFactory::widgetFor( Annotation * ann )
 {
@@ -60,7 +123,7 @@ Annotation::SubType AnnotationWidget::annotationType()
 
 
 StampAnnotationWidget::StampAnnotationWidget( Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 ), m_iconLabel( 0 )
+    : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
 {
     m_stampAnn = static_cast< StampAnnotation * >( ann );
 }
@@ -77,61 +140,44 @@ QWidget * StampAnnotationWidget::widget()
     lay->addWidget( gb );
     gb->setTitle( i18n( "Stamp Symbol" ) );
     QHBoxLayout * gblay = new QHBoxLayout( gb );
-    QComboBox * cb = new QComboBox( gb );
-    gblay->addWidget( cb );
-    m_iconLabel = new QLabel( gb );
-    gblay->addWidget( m_iconLabel );
-    m_iconLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    m_iconLabel->setFixedSize( 40, 40 );
-    m_iconLabel->setAlignment( Qt::AlignCenter );
-    m_iconLabel->setFrameStyle( QFrame::StyledPanel );
+    m_pixmapSelector = new PixmapPreviewSelector( gb );
+    gblay->addWidget( m_pixmapSelector );
 
+    QStringList items;
     // FIXME!!! use the standard names instead (when we'll have the artwork)
-    cb->addItem( "okular" );
-    cb->addItem( "kmenu" );
-    cb->addItem( "kttsd" );
-    cb->addItem( "password" );
-    cb->addItem( "Approved" );
+    items
+      << "okular"
+      << "kmenu"
+      << "kttsd"
+      << "password";
 #if 0
-    cb->addItem( "AsIs" );
-    cb->addItem( "Confidential" );
-    cb->addItem( "Departmental" );
-    cb->addItem( "Draft" );
-    cb->addItem( "Experimental" );
-    cb->addItem( "Expired" );
-    cb->addItem( "Final" );
-    cb->addItem( "ForComment" );
-    cb->addItem( "ForPublicRelease" );
-    cb->addItem( "NotApproved" );
-    cb->addItem( "NotForPublicRelease" );
-    cb->addItem( "Sold" );
-    cb->addItem( "TopSecret" );
+      << "Approved"
+      << "AsIs"
+      << "Confidential"
+      << "Departmental"
+      << "Draft"
+      << "Experimental"
+      << "Expired"
+      << "Final"
+      << "ForComment"
+      << "ForPublicRelease"
+      << "NotApproved"
+      << "NotForPublicRelease"
+      << "Sold"
+      << "TopSecret";
 #endif
-
-    connect( cb, SIGNAL( currentIndexChanged( const QString& ) ), this, SLOT( iconChanged( const QString& ) ) );
-
-    // fire the event manually
-    iconChanged( m_stampAnn->stampIconName );
-    int id = cb->findText( m_currentIcon );
-    if ( id > -1 )
-        cb->setCurrentIndex( id );
+    m_pixmapSelector->setItems( items );
+    m_pixmapSelector->setIcon( m_stampAnn->stampIconName );
+    m_pixmapSelector->setPreviewSize( 64 );
 
     return m_widget;
 }
 
 void StampAnnotationWidget::applyChanges()
 {
-    m_stampAnn->stampIconName = m_currentIcon;
+    m_stampAnn->stampIconName = m_pixmapSelector->icon();
 }
 
-void StampAnnotationWidget::iconChanged( const QString& icon )
-{
-    if ( !m_iconLabel ) return;
-
-    m_currentIcon = icon;
-    QPixmap pixmap = DesktopIcon( icon, 32 );
-    m_iconLabel->setPixmap( pixmap );
-}
 
 
 #include "annotationwidgets.moc"

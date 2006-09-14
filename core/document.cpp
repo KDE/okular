@@ -746,10 +746,13 @@ void KPDFDocument::removePageAnnotation( int page, Annotation * annotation )
     KPDFPage * kp = pages_vector[ page ];
     if ( !generator || !kp )
         return;
-    
-    kp->removeAnnotation( annotation );
-    // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+    // try to remove the annotation
+    if ( kp->removeAnnotation( annotation ) )
+    {
+        // in case of success, notify observers about the change
+        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    }
 }
         
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code

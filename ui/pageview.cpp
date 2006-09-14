@@ -1268,6 +1268,8 @@ if (d->document->handleEvent( e ) )
         //    else
         //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
+            if ( ann->flags & Annotation::DenyDelete )
+                deleteNote->setEnabled( false );
             showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
             QAction *choice = menu.exec( e->globalPos() );

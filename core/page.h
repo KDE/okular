@@ -88,7 +88,7 @@ class OKULAR_EXPORT KPDFPage
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void modifyAnnotation( Annotation * newannotation );
-        void removeAnnotation( Annotation * annotation );
+        bool removeAnnotation( Annotation * annotation );
         void setTransition( KPDFPageTransition * transition );
         // operations: delete contents (by KPDFDocument)
         void deletePixmap( int p_id );

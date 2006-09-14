@@ -136,6 +136,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * ann = *aIt;
+                if ( ann->flags & Annotation::Hidden )
+                    continue;
+
                 if ( ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
                 {
                     Annotation::SubType type = ann->subType();

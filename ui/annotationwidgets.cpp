@@ -8,21 +8,14 @@
  ***************************************************************************/
 
 // qt/kde includes
-/*
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qheaderview.h>
-#include <kcolorbutton.h>
-#include <kicon.h>
-#include <knuminput.h>
-*/
 #include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qvariant.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 // local includes
 #include "annotationwidgets.h"
@@ -51,7 +44,9 @@ PixmapPreviewSelector::~PixmapPreviewSelector()
 
 void PixmapPreviewSelector::setIcon( const QString& icon )
 {
-    int id = m_comboItems->findText( icon );
+    int id = m_comboItems->findData( QVariant( icon ), Qt::UserRole, Qt::MatchFixedString );
+    if ( id > -1 )
+        id = m_comboItems->findText( icon, Qt::MatchFixedString );
     if ( id > -1 )
     {
         m_comboItems->setCurrentIndex( id );
@@ -63,9 +58,9 @@ QString PixmapPreviewSelector::icon() const
     return m_icon;
 }
 
-void PixmapPreviewSelector::setItems( const QStringList& items )
+void PixmapPreviewSelector::addItem( const QString& item, const QString& id )
 {
-    m_comboItems->addItems( items );
+    m_comboItems->addItem( item, QVariant( id ) );
     setIcon( m_icon );
 }
 
@@ -83,7 +78,11 @@ int PixmapPreviewSelector::previewSize() const
 
 void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 {
-    m_icon = icon;
+    int id = m_comboItems->findText( icon, Qt::MatchFixedString );
+    if ( id < 0 )
+        return;
+
+    m_icon = m_comboItems->itemData( id ).toString();
     QString path;
     QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path, true );
     if ( path.isEmpty() )
@@ -151,16 +150,13 @@ QWidget * TextAnnotationWidget::widget()
     m_pixmapSelector = new PixmapPreviewSelector( gb );
     gblay->addWidget( m_pixmapSelector );
 
-    QStringList items;
-    items
-      << "Comment"
-      << "Help"
-      << "Insert"
-      << "Key"
-      << "NewParagraph"
-      << "Note"
-      << "Paragraph";
-    m_pixmapSelector->setItems( items );
+    m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
+    m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
+    m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
+    m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
+    m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
+    m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
+    m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
     m_pixmapSelector->setIcon( m_textAnn->textIcon );
 
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
@@ -198,30 +194,27 @@ QWidget * StampAnnotationWidget::widget()
     m_pixmapSelector = new PixmapPreviewSelector( gb );
     gblay->addWidget( m_pixmapSelector );
 
-    QStringList items;
     // FIXME!!! use the standard names instead (when we'll have the artwork)
-    items
-      << "okular"
-      << "kmenu"
-      << "kttsd"
-      << "password";
+    m_pixmapSelector->addItem( i18n( "okular" ), "okular" );
+    m_pixmapSelector->addItem( i18n( "KMenu" ), "kmenu" );
+    m_pixmapSelector->addItem( i18n( "KTTSD" ), "kttsd" );
+    m_pixmapSelector->addItem( i18n( "Password" ), "password" );
 #if 0
-      << "Approved"
-      << "AsIs"
-      << "Confidential"
-      << "Departmental"
-      << "Draft"
-      << "Experimental"
-      << "Expired"
-      << "Final"
-      << "ForComment"
-      << "ForPublicRelease"
-      << "NotApproved"
-      << "NotForPublicRelease"
-      << "Sold"
-      << "TopSecret";
+    m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
+    m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );
+    m_pixmapSelector->addItem( i18n( "Confidential" ), "Confidential" );
+    m_pixmapSelector->addItem( i18n( "Departmental" ), "Departmental" );
+    m_pixmapSelector->addItem( i18n( "Draft" ), "Draft" );
+    m_pixmapSelector->addItem( i18n( "Experimental" ), "Experimental" );
+    m_pixmapSelector->addItem( i18n( "Expired" ), "Expired" );
+    m_pixmapSelector->addItem( i18n( "Final" ), "Final" );
+    m_pixmapSelector->addItem( i18n( "For Comment" ), "ForComment" );
+    m_pixmapSelector->addItem( i18n( "For Public Release" ), "ForPublicRelease" );
+    m_pixmapSelector->addItem( i18n( "Not Approved" ), "NotApproved" );
+    m_pixmapSelector->addItem( i18n( "Not For Public Release" ), "NotForPublicRelease" );
+    m_pixmapSelector->addItem( i18n( "Sold" ), "Sold" );
+    m_pixmapSelector->addItem( i18n( "Top Secret" ), "TopSecret" );
 #endif
-    m_pixmapSelector->setItems( items );
     m_pixmapSelector->setIcon( m_stampAnn->stampIconName );
     m_pixmapSelector->setPreviewSize( 64 );
 

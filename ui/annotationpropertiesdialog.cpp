@@ -200,6 +200,9 @@ void AnnotsPropertiesDialog::slotapply()
         m_annotWidget->applyChanges();
 
     m_document->modifyPageAnnotation( m_page, m_annot );
+
+    modified = false;
+    enableButton( Apply, false );
 }
     
 #include "annotationpropertiesdialog.moc"

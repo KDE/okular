@@ -31,7 +31,7 @@ public:
     void setIcon( const QString& icon );
     QString icon() const;
 
-    void setItems( const QStringList& items );
+    void addItem( const QString& item, const QString& id );
 
     void setPreviewSize( int size );
     int previewSize() const;

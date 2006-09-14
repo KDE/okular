@@ -268,12 +268,13 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
   QRegExp itemExp("item\\.(.*)");
   QRegExp citeExp("cite\\.(.*)");
 
-  // And finally add anchors to the links
+  // And finally add anchors to the links, if the links are local
   for (i = page->hyperLinkList.begin(); i != page->hyperLinkList.end(); i++)
   {
-    Anchor anchor = findAnchor((*i).linkText);
-    (*i).anchor = anchor;
-
+#warning TODO: remove link if anchor cannot be found
+    if ((*i).linkText[0] == '#') // is local link?
+      (*i).anchor = findAnchor((*i).linkText.mid(1));
+    
     // Also replace the targetnames created by the hyperref package,
     // with proper translatable names.
     QString temp = (*i).linkText;
@@ -926,8 +927,12 @@ Anchor dviRenderer::findAnchor(const QString &locallink)
   QMap<QString,Anchor>::Iterator it = anchorList.find(locallink);
   if (it != anchorList.end())
     return *it;
-  else
+  else {
+#ifdef DEBUG_DVIRENDERER
+    kdDebug(kvs::dvi) << QString("dviRenderer::findAnchor(%1): no anchor found.").arg(locallink) << endl;
+#endif
     return Anchor();
+  }
 }
 
 #include "dviRenderer.moc"

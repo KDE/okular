@@ -271,7 +271,7 @@ Part::Part(QWidget *parentWidget,
 	m_showLeftPanel = new KToggleAction( KIcon( "show_side_panel" ), i18n( "Show &Navigation Panel"), ac, "show_leftpanel" );
 	connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
 	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
-	m_showLeftPanel->setCheckedState( i18n( "Hide &Navigation Panel" ) );
+	m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
 	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
 	slotShowLeftPanel();
 
@@ -924,7 +924,7 @@ void Part::slotSaveFileAs()
     {
         if ( KIO::NetAccess::exists( saveUrl, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString::null, i18n("Overwrite")) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString::null, KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
                 return;
         }
 

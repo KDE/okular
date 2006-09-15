@@ -711,7 +711,6 @@ void PagePainter::drawShapeOnImage(
     //float antiAliasRadius
     )
 {
-op = Multiply;
     // safety checks
     int pointsNumber = normPath.size();
     if ( pointsNumber < 2 )
@@ -737,7 +736,6 @@ op = Multiply;
     // create 'pixel buffer', 'clipped renderer', 'scanline renderer' on bgra32 format
     typedef agg::pixfmt_bgra32 bgra32;
     typedef agg::renderer_base< bgra32 > rb_bgra32;
-    kDebug() << (op == Multiply) << endl;
     bgra32 pixels( buffer, op == Multiply ? 1 : 0 );
     rb_bgra32 rb( pixels );
     agg::renderer_scanline_aa_solid< rb_bgra32 > render( rb );

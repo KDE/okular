@@ -53,7 +53,7 @@ class PagePainter
 
         // my pretty dear raster function
         typedef QList< NormalizedPoint > NormalizedPath;
-        enum RasterOperation { Normal = 0, Multiply = 1 };
+        enum RasterOperation { Normal, Multiply };
         static void drawShapeOnImage(
             QImage & image,
             const NormalizedPath & imagePoints,

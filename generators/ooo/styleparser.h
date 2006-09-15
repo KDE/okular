@@ -40,7 +40,7 @@ class StyleParser
     TextFormatProperty parseTextProperty( QDomElement& );
     PageFormatProperty parsePageProperty( QDomElement& );
 
-    int convertPoints( const QString& ) const;
+    double convertUnit( const QString& ) const;
 
     const Document *mDocument;
     StyleInformation *mStyleInformation;

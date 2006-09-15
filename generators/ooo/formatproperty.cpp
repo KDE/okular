@@ -135,15 +135,15 @@ StyleFormatProperty::StyleFormatProperty( const StyleInformation *information )
 {
 }
 
-void StyleFormatProperty::apply( QTextFormat *format ) const
+void StyleFormatProperty::apply( QTextBlockFormat *blockFormat, QTextCharFormat *textFormat ) const
 {
   if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
     const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.apply( format );
+    property.apply( blockFormat, textFormat );
   }
 
-  mParagraphFormat.apply( format );
-  mTextFormat.apply( format );
+  mParagraphFormat.apply( blockFormat );
+  mTextFormat.apply( textFormat );
 }
 
 void StyleFormatProperty::setParentStyleName( const QString &parentStyleName )
@@ -195,32 +195,32 @@ void PageFormatProperty::setPageUsage( PageUsage usage )
   mPageUsage = usage;
 }
 
-void PageFormatProperty::setBottomMargin( int margin )
+void PageFormatProperty::setBottomMargin( double margin )
 {
   mBottomMargin = margin;
 }
 
-void PageFormatProperty::setLeftMargin( int margin )
+void PageFormatProperty::setLeftMargin( double margin )
 {
   mLeftMargin = margin;
 }
 
-void PageFormatProperty::setTopMargin( int margin )
+void PageFormatProperty::setTopMargin( double margin )
 {
   mTopMargin = margin;
 }
 
-void PageFormatProperty::setRightMargin( int margin )
+void PageFormatProperty::setRightMargin( double margin )
 {
   mRightMargin = margin;
 }
 
-void PageFormatProperty::setHeight( int height )
+void PageFormatProperty::setHeight( double height )
 {
   mHeight = height;
 }
 
-void PageFormatProperty::setWidth( int width )
+void PageFormatProperty::setWidth( double width )
 {
   mWidth = width;
 }
@@ -230,12 +230,12 @@ void PageFormatProperty::setPrintOrientation( PrintOrientation orientation )
   mPrintOrientation = orientation;
 }
 
-int PageFormatProperty::width() const
+double PageFormatProperty::width() const
 {
   return mWidth;
 }
 
-int PageFormatProperty::height() const
+double PageFormatProperty::height() const
 {
   return mHeight;
 }

@@ -24,12 +24,15 @@
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 
-KOOOGenerator::KOOOGenerator( KPDFDocument * document ) : Generator( document )
+KOOOGenerator::KOOOGenerator( KPDFDocument * document )
+  : Generator( document ), mDocument( 0 )
 {
 }
 
 KOOOGenerator::~KOOOGenerator()
 {
+  delete mDocument;
+  mDocument = 0;
 }
 
 bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
@@ -84,7 +87,8 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
   pm->fill( Qt::white );
 
 
-  QPainter p( pm );
+  QPainter p;
+  p.begin( pm );
 
   qreal width = request->width;
   qreal height = request->height;
@@ -98,16 +102,16 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
       break;
     case 1:
       p.rotate( 90 );
-      p.translate( QPoint( 0, -size.height() * (height / (qreal)size.height()) ) );
+      p.translate( QPoint( 0, qRound(-size.height() * (height / (qreal)size.height())) ) );
       break;
     case 2:
       p.rotate( 180 );
-      p.translate( QPoint( -size.width() * (width / (qreal)size.width()),
-                           -size.height() * (height / (qreal)size.height()) ) );
+      p.translate( QPoint( qRound(-size.width() * (width / (qreal)size.width())),
+                           qRound(-size.height() * (height / (qreal)size.height())) ) );
       break;
     case 3:
       p.rotate( 270 );
-      p.translate( QPoint( -size.width() * (width / (qreal)size.width()), 0 ) );
+      p.translate( QPoint( qRound(-size.width() * (width / (qreal)size.width())), 0 ) );
       break;
   }
 
@@ -117,6 +121,7 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
   rect = QRect( 0, request->pageNumber * size.height(), size.width(), size.height() );
   p.translate( QPoint( 0, request->pageNumber * size.height() * -1 ) );
   mDocument->drawContents( &p, rect );
+  p.end();
 
   request->page->setPixmap( request->id, pm );
 

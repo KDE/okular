@@ -19,7 +19,8 @@ using namespace OOO;
 
 Converter::Converter( const Document *document )
   : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
-    mStyleInformation( new StyleInformation ), mInParagraph( false )
+    mStyleInformation( new StyleInformation ), mInParagraph( false ),
+    mInHeader( false )
 {
 }
 
@@ -43,7 +44,7 @@ bool Converter::convert()
 
   const QString masterLayout = mStyleInformation->masterLayout( "Standard" );
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
-  mTextDocument->setPageSize( QSize( property.width(), property.height() ) );
+  mTextDocument->setPageSize( QSize( qRound( property.width() ), qRound( property.height() ) ) );
 
   QXmlSimpleReader reader;
   reader.setContentHandler( this );
@@ -66,11 +67,11 @@ MetaInformation::List Converter::metaInformation() const
 
 bool Converter::characters( const QString &ch )
 {
-  if ( !mInParagraph )
+  if ( !mInParagraph && !mInHeader )
     return true;
 
   if ( !ch.isEmpty() )
-    mCursor->insertText( ch, mFormat );
+    mCursor->insertText( ch, mTextFormat );
 
   return true;
 }
@@ -84,16 +85,37 @@ bool Converter::startElement( const QString &namespaceUri, const QString &localN
     const QString styleName = attributes.value( "text:style-name" );
     const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
-    property.apply( &mFormat );
+    mBlockFormat = QTextBlockFormat();
+    mTextFormat = QTextCharFormat();
+
+    property.apply( &mBlockFormat, &mTextFormat );
+    mCursor->insertBlock();
+    mCursor->setBlockFormat( mBlockFormat );
   }
 
-  if ( mInParagraph && localName == QLatin1String( "span" ) ) {
-    mSpanStack.push( mFormat );
-    mFormat = QTextCharFormat();
+  if ( localName == QLatin1String( "h" ) ) {
+    mInHeader = true;
 
     const QString styleName = attributes.value( "text:style-name" );
     const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
-    property.apply( &mFormat );
+
+    mBlockFormat = QTextBlockFormat();
+    mTextFormat = QTextCharFormat();
+
+    property.apply( &mBlockFormat, &mTextFormat );
+    mCursor->insertBlock();
+    mCursor->setBlockFormat( mBlockFormat );
+  }
+
+  if ( mInParagraph && localName == QLatin1String( "span" ) ) {
+    mSpanStack.push( QPair<QTextBlockFormat, QTextCharFormat>( mBlockFormat, mTextFormat ) );
+
+    mBlockFormat = QTextBlockFormat();
+    mTextFormat = QTextCharFormat();
+
+    const QString styleName = attributes.value( "text:style-name" );
+    const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
+    property.apply( &mBlockFormat, &mTextFormat );
   }
 
   return true;
@@ -103,11 +125,16 @@ bool Converter::endElement( const QString &namespaceUri, const QString &localNam
 {
   if ( localName == QLatin1String( "p" ) ) {
     mInParagraph = false;
-    mCursor->insertText( "\n" );
+  }
+
+  if ( localName == QLatin1String( "h" ) ) {
+    mInHeader = false;
   }
 
   if ( mInParagraph && localName == QLatin1String( "span" ) ) {
-    mFormat = mSpanStack.pop();
+    const QPair<QTextBlockFormat, QTextCharFormat> formats = mSpanStack.pop();
+    mBlockFormat = formats.first;
+    mTextFormat = formats.second;
   }
 
   return true;

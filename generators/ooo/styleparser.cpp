@@ -298,7 +298,7 @@ TextFormatProperty StyleParser::parseTextProperty( QDomElement &parent )
 
   QString fontSize = parent.attribute( "font-size" );
   if ( !fontSize.isEmpty() )
-    property.setFontSize( convertPoints( fontSize ) );
+    property.setFontSize( qRound( convertUnit( fontSize ) ) );
 
   QColor color( parent.attribute( "color" ) );
   if ( color.isValid() ) {
@@ -317,17 +317,55 @@ PageFormatProperty StyleParser::parsePageProperty( QDomElement &parent )
 {
   PageFormatProperty property;
 
-  property.setBottomMargin( convertPoints( parent.attribute( "margin-bottom" ) ) );
-  property.setLeftMargin( convertPoints( parent.attribute( "margin-left" ) ) );
-  property.setTopMargin( convertPoints( parent.attribute( "margin-top" ) ) );
-  property.setRightMargin( convertPoints( parent.attribute( "margin-right" ) ) );
-  property.setWidth( convertPoints( parent.attribute( "page-width" ) ) );
-  property.setHeight( convertPoints( parent.attribute( "page-height" ) ) );
+  property.setBottomMargin( convertUnit( parent.attribute( "margin-bottom" ) ) );
+  property.setLeftMargin( convertUnit( parent.attribute( "margin-left" ) ) );
+  property.setTopMargin( convertUnit( parent.attribute( "margin-top" ) ) );
+  property.setRightMargin( convertUnit( parent.attribute( "margin-right" ) ) );
+  property.setWidth( convertUnit( parent.attribute( "page-width" ) ) );
+  property.setHeight( convertUnit( parent.attribute( "page-height" ) ) );
 
   return property;
 }
 
-int StyleParser::convertPoints( const QString &data ) const
+double StyleParser::convertUnit( const QString &data ) const
 {
-  return data.left( data.length() - 2 ).toInt();
+  #define MM_TO_POINT(mm) ((mm)*2.83465058)
+  #define CM_TO_POINT(cm) ((cm)*28.3465058)
+  #define DM_TO_POINT(dm) ((dm)*283.465058)
+  #define INCH_TO_POINT(inch) ((inch)*72.0)
+  #define PI_TO_POINT(pi) ((pi)*12)
+  #define DD_TO_POINT(dd) ((dd)*154.08124)
+  #define CC_TO_POINT(cc) ((cc)*12.840103)
+
+  if ( data.endsWith( "pt" ) ) {
+    return data.left( data.length() - 2 ).toDouble();
+  } else if ( data.endsWith( "cm" ) ) {
+    double value = data.left( data.length() - 2 ).toDouble();
+    return CM_TO_POINT( value );
+  } else if ( data.endsWith( "mm" ) ) {
+    double value = data.left( data.length() - 2 ).toDouble();
+    return MM_TO_POINT( value );
+  } else if ( data.endsWith( "dm" ) ) {
+    double value = data.left( data.length() - 2 ).toDouble();
+    return DM_TO_POINT( value );
+  } else if ( data.endsWith( "in" ) ) {
+    double value = data.left( data.length() - 2 ).toDouble();
+    return INCH_TO_POINT( value );
+  } else if ( data.endsWith( "inch" ) ) {
+    double value = data.left( data.length() - 4 ).toDouble();
+    return INCH_TO_POINT( value );
+  } else if ( data.endsWith( "pi" ) ) {
+    double value = data.left( data.length() - 4 ).toDouble();
+    return PI_TO_POINT( value );
+  } else if ( data.endsWith( "dd" ) ) {
+    double value = data.left( data.length() - 4 ).toDouble();
+    return DD_TO_POINT( value );
+  } else if ( data.endsWith( "cc" ) ) {
+    double value = data.left( data.length() - 4 ).toDouble();
+    return CC_TO_POINT( value );
+  } else {
+    qDebug( "unknown unit %s", qPrintable( data ) );
+  }
+
+  return 0;
 }

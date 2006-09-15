@@ -43,8 +43,10 @@ class Converter : public QXmlDefaultHandler
     StyleInformation *mStyleInformation;
 
     bool mInParagraph;
-    QTextCharFormat mFormat;
-    QStack<QTextCharFormat> mSpanStack;
+    bool mInHeader;
+    QTextBlockFormat mBlockFormat;
+    QTextCharFormat mTextFormat;
+    QStack< QPair<QTextBlockFormat, QTextCharFormat> > mSpanStack;
 };
 
 }

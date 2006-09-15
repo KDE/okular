@@ -12,6 +12,8 @@
 
 #include <QtGui/QColor>
 
+class QTextBlockFormat;
+class QTextCharFormat;
 class QTextFormat;
 
 namespace OOO {
@@ -96,14 +98,14 @@ class TextFormatProperty : public FormatProperty
     QColor mBackgroundColor;
 };
 
-class StyleFormatProperty : public FormatProperty
+class StyleFormatProperty
 {
   public:
     StyleFormatProperty();
     StyleFormatProperty( const StyleInformation *information );
     virtual ~StyleFormatProperty() {}
 
-    virtual void apply( QTextFormat *format ) const;
+    virtual void apply( QTextBlockFormat *blockFormat, QTextCharFormat *textFormat ) const;
 
     void setParentStyleName( const QString &parentStyleName );
     QString parentStyleName() const;
@@ -146,25 +148,25 @@ class PageFormatProperty : public FormatProperty
     virtual void apply( QTextFormat *format ) const;
 
     void setPageUsage( PageUsage usage );
-    void setBottomMargin( int margin );
-    void setLeftMargin( int margin );
-    void setTopMargin( int margin );
-    void setRightMargin( int margin );
-    void setHeight( int height );
-    void setWidth( int width );
+    void setBottomMargin( double margin );
+    void setLeftMargin( double margin );
+    void setTopMargin( double margin );
+    void setRightMargin( double margin );
+    void setHeight( double height );
+    void setWidth( double width );
     void setPrintOrientation( PrintOrientation orientation );
 
-    int width() const;
-    int height() const;
+    double width() const;
+    double height() const;
 
   private:
     PageUsage mPageUsage;
-    int mBottomMargin;
-    int mLeftMargin;
-    int mTopMargin;
-    int mRightMargin;
-    int mHeight;
-    int mWidth;
+    double mBottomMargin;
+    double mLeftMargin;
+    double mTopMargin;
+    double mRightMargin;
+    double mHeight;
+    double mWidth;
     PrintOrientation mPrintOrientation;
 };
 

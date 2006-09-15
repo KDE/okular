@@ -28,3 +28,5 @@ endif(TIFF_FOUND)
 
 add_subdirectory(xps)
 
+add_subdirectory(ooo)
+

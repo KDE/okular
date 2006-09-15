@@ -89,7 +89,7 @@ class Part;
     void delayedOpen();
 
   signals:
-    void restoreDocument(const KUrl &url, int page);
+    void restoreDocument(KConfig* config);
     void saveDocumentRestoreInfo(KConfig* config);
 
   private:

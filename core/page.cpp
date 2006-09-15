@@ -268,10 +268,11 @@ void KPDFPage::modifyAnnotation(Annotation * newannotation )
     }
 }
 
-void KPDFPage::removeAnnotation( Annotation * annotation )
+bool KPDFPage::removeAnnotation( Annotation * annotation )
 {
-    if(!annotation)
-        return;
+    if ( !annotation || ( annotation->flags & Annotation::DenyDelete ) )
+        return false;
+
     bool founded=false;
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
@@ -289,6 +290,7 @@ void KPDFPage::removeAnnotation( Annotation * annotation )
             m_annotations.erase(aIt);
             kDebug()<<"astario: removed annot:"<<annotation->uniqueName<<endl;
     }
+    return true;
 }
 
 void KPDFPage::setTransition( KPDFPageTransition * transition )

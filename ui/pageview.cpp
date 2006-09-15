@@ -1065,8 +1065,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->buttons() & Qt::LeftButton,
-         rightButton = e->buttons() & Qt::RightButton;
+    bool leftButton = (e->button() == Qt::LeftButton);
+    bool rightButton = (e->button() == Qt::RightButton);
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1309,6 +1309,8 @@ if ( d->document->handleEvent( e ) )
         //    else
         //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
+            if ( ann->flags & Annotation::DenyDelete )
+                deleteNote->setEnabled( false );
             showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
 
             QAction *choice = menu.exec( e->globalPos() );
@@ -1341,7 +1343,7 @@ if ( d->document->handleEvent( e ) )
                 if(choice==showProperties)
                 {
                     kDebug()<<"astario: select showProperties"<<endl;
-                    AnnotsPropertiesDialog propdialog( this, ann );
+                    AnnotsPropertiesDialog propdialog( this, d->document, pageItem->pageNumber(), ann );
                     propdialog.exec();
                 }
             }
@@ -1413,6 +1415,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 {
 if (d->document->handleEvent( e ) )
 {
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {

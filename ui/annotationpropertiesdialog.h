@@ -16,17 +16,20 @@ class QLineEdit;
 class KColorButton;
 class KIntNumInput;
 class Annotation;
+class AnnotationWidget;
 class KPDFDocument;
 
 class AnnotsPropertiesDialog : public KPageDialog
 {
     Q_OBJECT
 public:
-    AnnotsPropertiesDialog( QWidget *parent,Annotation* ann );
+    AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *document, int docpage, Annotation *ann );
     ~AnnotsPropertiesDialog();
-    bool modified;
 
 private:
+    KPDFDocument *m_document;
+    int m_page;
+    bool modified;
     Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
@@ -36,10 +39,12 @@ private:
         *boundaryEdit;
     KColorButton *colorBn;
     KIntNumInput *m_opacity;
+    AnnotationWidget *m_annotWidget;
     
     void setCaptionTextbyAnnotType();
 
-public slots:
+private slots:
+    void setModified();
     void slotapply();
 };
 

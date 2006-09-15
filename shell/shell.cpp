@@ -96,7 +96,7 @@ void Shell::init()
     m_part = 0;
     return;
   }
-  connect( this, SIGNAL( restoreDocument(const KUrl &, int) ),m_part, SLOT( restoreDocument(const KUrl &, int)));
+  connect( this, SIGNAL( restoreDocument(KConfig*) ),m_part, SLOT( restoreDocument(KConfig*)));
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
 
@@ -188,8 +188,7 @@ void Shell::readProperties(KConfig* config)
   // in 'saveProperties'
   if(m_part)
   {
-    KUrl url ( config->readPathEntry( "URL" ) );
-    if ( url.isValid() ) emit restoreDocument(url, config->readEntry( "Page", 1 ));
+    emit restoreDocument(config);
   }
 }
 

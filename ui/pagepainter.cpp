@@ -153,6 +153,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             for ( ; aIt != aEnd; ++aIt )
             {
                 Annotation * ann = *aIt;
+                if ( ann->flags & Annotation::Hidden )
+                    continue;
+
                 if ( ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
                 {
                     Annotation::SubType type = ann->subType();
@@ -343,7 +346,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     }
 
                     // draw the line as normalized path into image
-                    drawShapeOnImage( backImage, path, false, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
+                    drawShapeOnImage( backImage, path, la->lineClosed, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
 
                 }
                 // draw GeomAnnotation MISSING: all
@@ -477,12 +480,19 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( text->textType == TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
-                    QPixmap pixmap = DesktopIcon( text->textIcon.toLower() );
+                    QString path;
+                    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
+                    if ( path.isEmpty() )
+                        pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::NoGroup, 32 );
                     QImage scaledImage;
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         annotBoundary.width(),
                                         annotBoundary.height(), innerRect );
-                    colorizeImage( scaledImage, a->style.color, opacity );
+                    // if the annotation color is valid (ie it was set), then
+                    // use it to colorize the icon, otherwise the icon will be
+                    // "gray"
+                    if ( a->style.color.isValid() )
+                        colorizeImage( scaledImage, a->style.color, opacity );
                     scaledImage.setAlphaBuffer( true );
                     pixmap = QPixmap::fromImage( scaledImage );
 
@@ -497,7 +507,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 StampAnnotation * stamp = (StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QPixmap pixmap = DesktopIcon( stamp->stampIconName, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                QString path;
+                QPixmap pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
+                if ( path.isEmpty() )
+                    pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect );

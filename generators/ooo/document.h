@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Luigi Toscano <luigi.toscano@tiscali.it>        *
+ *   Copyright (C) 2006 by Tobias Koenig <tokoe@kde.org>                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,24 +7,32 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_UTILS_H_
-#define _OKULAR_UTILS_H_
+#ifndef OOO_DOCUMENT_H
+#define OOO_DOCUMENT_H
 
-#include "okular_export.h"
+#include <QtCore/QByteArray>
+#include <QtCore/QString>
 
-#include <qrect.h>
+namespace OOO {
 
-/**
- * Namespace with utility functions
- */
-namespace okularUtils
+class Document
 {
-    /**
-     * Rotate the rect \p source in the area \p width x \p height with the
-     * specified \p orientation .
-     */
-    QRect OKULAR_EXPORT rotateRect( const QRect & source, int width, int height, int orientation );
-}
+  public:
+    Document( const QString &fileName );
 
+    bool open();
+
+    QByteArray content() const;
+    QByteArray meta() const;
+    QByteArray styles() const;
+
+  private:
+    QString mFileName;
+    QByteArray mContent;
+    QByteArray mMeta;
+    QByteArray mStyles;
+};
+
+}
 
 #endif

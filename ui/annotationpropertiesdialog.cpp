@@ -23,18 +23,21 @@
 #include "core/page.h"
 #include "core/annotations.h"
 #include "annotationpropertiesdialog.h"
+#include "annotationwidgets.h"
 
 
-AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
-    : KPageDialog( parent ), modified( false )
+AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *document, int docpage, Annotation *ann )
+    : KPageDialog( parent ), m_document( document ), m_page( docpage ), modified( false )
 {
     setFaceType( Tabbed );
     m_annot=ann;
     setCaptionTextbyAnnotType();
     setButtons( Ok | Apply | Cancel );
+    enableButton( Apply, false );
     connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
 
+    m_annotWidget = AnnotationWidgetFactory::widgetFor( ann );
 
     QLabel* tmplabel;
   //1. Appearance
@@ -61,6 +64,9 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     m_opacity->setValue( (int)( ann->style.opacity * 100 ) );
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
+
+    if ( m_annotWidget )
+        lay->addWidget( m_annotWidget->widget() );
 
     lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ) );
     //END tab1
@@ -112,10 +118,24 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog(QWidget *parent,Annotation* ann)
     tmplabel = new QLabel( i18n( "boundary:" ), page );
     gridlayout->addWidget( tmplabel, 3, 0 );
     boundaryEdit = new QLineEdit( tmpstr, page );
+    boundaryEdit->setReadOnly( true );
     gridlayout->addWidget( boundaryEdit, 3, 1 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance
+
+    //BEGIN connections
+    connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );
+    connect( m_opacity, SIGNAL( valueChanged( int ) ), this, SLOT( setModified() ) );
+    connect( AuthorEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
+    connect( uniqueNameEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
+    connect( contentsEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
+    connect( flagsEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
+    if ( m_annotWidget )
+    {
+        connect( m_annotWidget, SIGNAL( dataChanged() ), this, SLOT( setModified() ) );
+    }
+    //END
 
     resize( sizeHint() );
 }
@@ -158,14 +178,31 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
         setCaption( captiontext );
 }
 
+void AnnotsPropertiesDialog::setModified()
+{
+    modified = true;
+    enableButton( Apply, true );
+}
+
 void AnnotsPropertiesDialog::slotapply()
 {
+    if ( !modified )
+        return;
+
     m_annot->author=AuthorEdit->text();
     m_annot->contents=contentsEdit->text();
     m_annot->style.color = colorBn->color();
     m_annot->modifyDate=QDateTime::currentDateTime();
     m_annot->flags=flagsEdit->text().toInt();
     m_annot->style.opacity = (double)m_opacity->value() / 100.0;
+
+    if ( m_annotWidget )
+        m_annotWidget->applyChanges();
+
+    m_document->modifyPageAnnotation( m_page, m_annot );
+
+    modified = false;
+    enableButton( Apply, false );
 }
     
 #include "annotationpropertiesdialog.moc"

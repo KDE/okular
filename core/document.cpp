@@ -746,10 +746,13 @@ void KPDFDocument::removePageAnnotation( int page, Annotation * annotation )
     KPDFPage * kp = pages_vector[ page ];
     if ( !generator || !kp )
         return;
-    
-    kp->removeAnnotation( annotation );
-    // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+    // try to remove the annotation
+    if ( kp->removeAnnotation( annotation ) )
+    {
+        // in case of success, notify observers about the change
+        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    }
 }
         
 
@@ -875,6 +878,10 @@ void KPDFDocument::setNextViewport()
     }
 }
 
+void KPDFDocument::setNextDocumentViewport( const DocumentViewport & viewport )
+{
+    d->nextDocumentViewport = viewport;
+}
 
 bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )

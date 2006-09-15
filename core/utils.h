@@ -24,7 +24,7 @@ namespace okularUtils
      * specified \p orientation .
      */
     QRect OKULAR_EXPORT rotateRect( const QRect & source, int width, int height, int orientation );
-};
+}
 
 
 #endif

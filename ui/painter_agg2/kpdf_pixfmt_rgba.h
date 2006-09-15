@@ -40,6 +40,8 @@
 #include "agg_color_rgba.h"
 #include "agg_rendering_buffer.h"
 
+#include <stdio.h>
+
 namespace agg
 {
     // Nice trick from Qt4's Arthur
@@ -135,7 +137,9 @@ namespace agg
         //--------------------------------------------------------------------
         pixel_formats_rgba( rendering_buffer& rb, int rasterMode ) :
             m_rbuf(&rb), m_mode( rasterMode )
-        {}
+        {
+		printf("B %d\n", m_mode);
+	}
 
         //--------------------------------------------------------------------
         AGG_INLINE unsigned width()  const { return m_rbuf->width();  }
@@ -150,6 +154,7 @@ namespace agg
             value_type* p = (value_type*)m_rbuf->row(y) + (x << 2);
 
             calc_type alpha = (calc_type(c.a) * (cover + 1)) >> 8;
+		printf ("A %d\n", m_mode);
             if ( !m_mode )
             {
                 if(alpha == base_mask)

@@ -123,7 +123,7 @@ AnnotationWidget::~AnnotationWidget()
 {
 }
 
-Annotation::SubType AnnotationWidget::annotationType()
+Annotation::SubType AnnotationWidget::annotationType() const
 {
     return m_ann->subType();
 }

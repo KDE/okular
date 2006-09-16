@@ -68,7 +68,7 @@ class AnnotationWidget
 public:
     virtual ~AnnotationWidget();
 
-    virtual Annotation::SubType annotationType();
+    virtual Annotation::SubType annotationType() const;
 
     virtual QWidget * widget() = 0;
 

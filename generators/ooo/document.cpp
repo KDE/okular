@@ -55,6 +55,18 @@ bool Document::open()
   file = static_cast<const KArchiveFile*>( directory->entry( "meta.xml" ) );
   mMeta = file->data();
 
+  if ( !entries.contains( "Pictures" ) ) {
+    return false;
+  }
+
+  const KArchiveDirectory *imagesDirectory = static_cast<const KArchiveDirectory*>( directory->entry( "Pictures" ) );
+
+  const QStringList imagesEntries = imagesDirectory->entries();
+  for ( int i = 0; i < imagesEntries.count(); ++i ) {
+    file = static_cast<const KArchiveFile*>( imagesDirectory->entry( imagesEntries[ i ] ) );
+    mImages.insert( QString( "Pictures/%1" ).arg( imagesEntries[ i ] ), file->data() );
+  }
+
   zip.close();
 
   return true;
@@ -73,4 +85,9 @@ QByteArray Document::meta() const
 QByteArray Document::styles() const
 {
   return mStyles;
+}
+
+QMap<QString, QByteArray> Document::images() const
+{
+  return mImages;
 }

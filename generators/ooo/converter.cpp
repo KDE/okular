@@ -7,6 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QtCore/QUrl>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
@@ -60,6 +61,15 @@ bool Converter::convert()
   StyleParser styleParser( mDocument, mStyleInformation );
   if ( !styleParser.parse() )
     return false;
+
+  // add images to resource framework
+  const QMap<QString, QByteArray> images = mDocument->images();
+  QMapIterator<QString, QByteArray> it( images );
+  while ( it.hasNext() ) {
+    it.next();
+
+    mTextDocument->addResource( QTextDocument::ImageResource, QUrl( it.key() ), QImage::fromData( it.value() ) );
+  }
 
   const QString masterLayout = mStyleInformation->masterLayout( "Standard" );
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
@@ -187,6 +197,15 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
       if ( childElement.tagName() == QLatin1String( "span" ) ) {
         if ( !convertSpan( cursor, childElement, textFormat ) )
           return false;
+      } else if ( childElement.tagName() == QLatin1String( "tab" ) ) {
+        mCursor->insertText( "    " );
+      } else if ( childElement.tagName() == QLatin1String( "s" ) ) {
+        QString spaces;
+        spaces.fill( ' ', childElement.attribute( "c" ).toInt() );
+        mCursor->insertText( spaces );
+      } else if ( childElement.tagName() == QLatin1String( "frame" ) ) {
+        if ( !convertFrame( childElement ) )
+          return false;
       }
     } else if ( child.isText() ) {
       const QDomText childText = child.toText();
@@ -272,6 +291,25 @@ bool Converter::convertTable( const QDomElement &element )
   return true;
 }
 
+bool Converter::convertFrame( const QDomElement &element )
+{
+  QDomElement child = element.firstChildElement();
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "image" ) ) {
+      const QString href = child.attribute( "href" );
+      QTextImageFormat format;
+      format.setWidth( StyleParser::convertUnit( element.attribute( "width" ) ) );
+      format.setHeight( StyleParser::convertUnit( element.attribute( "height" ) ) );
+      format.setName( href );
+
+      mCursor->insertImage( format );
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  return true;
+}
 
 QTextDocument *Converter::textDocument() const
 {

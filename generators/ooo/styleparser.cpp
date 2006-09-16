@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include <QtCore/QDateTime>
+#include <QtGui/QFont>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QXmlSimpleReader>
@@ -162,6 +163,7 @@ bool StyleParser::parseMetaFile()
 
   return true;
 }
+
 bool StyleParser::parseDocumentCommonAttrs( QDomElement& )
 {
   return true;
@@ -227,6 +229,10 @@ bool StyleParser::parseAutomaticStyles( QDomElement &parent )
     } else if ( element.tagName() == QLatin1String( "list-style" ) ) {
       const ListFormatProperty property = parseListProperty( element );
       mStyleInformation->addListProperty( element.attribute( "name" ), property );
+    } else if ( element.tagName() == QLatin1String( "default-style" ) ) {
+      StyleFormatProperty property = parseStyleProperty( element );
+      property.setDefaultStyle( true );
+      mStyleInformation->addStyleProperty( element.attribute( "family" ), property );
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -292,6 +298,10 @@ ParagraphFormatProperty StyleParser::parseParagraphProperty( QDomElement &parent
     property.setTextAlignment( alignMap[ parent.attribute( "text-align", "left" ) ] );
   }
 
+  if ( parent.hasAttribute( "background-color" ) ) {
+    property.setBackgroundColor( parent.attribute( "background-color" ) );
+  }
+
   return property;
 }
 
@@ -299,11 +309,21 @@ TextFormatProperty StyleParser::parseTextProperty( QDomElement &parent )
 {
   TextFormatProperty property;
 
-  QString fontSize = parent.attribute( "font-size" );
+  const QString fontSize = parent.attribute( "font-size" );
   if ( !fontSize.isEmpty() )
     property.setFontSize( qRound( convertUnit( fontSize ) ) );
 
-  QColor color( parent.attribute( "color" ) );
+  static QMap<QString, QFont::Weight> weightMap;
+  if ( weightMap.isEmpty() ) {
+    weightMap.insert( "normal", QFont::Normal );
+    weightMap.insert( "bold", QFont::Bold );
+  }
+
+  const QString fontWeight = parent.attribute( "font-weight" );
+  if ( !fontWeight.isEmpty() )
+    property.setFontWeight( weightMap[ fontWeight ] );
+
+  const QColor color( parent.attribute( "color" ) );
   if ( color.isValid() ) {
     property.setColor( color );
   }
@@ -355,7 +375,7 @@ ListFormatProperty StyleParser::parseListProperty( QDomElement &parent )
   return property;
 }
 
-double StyleParser::convertUnit( const QString &data ) const
+double StyleParser::convertUnit( const QString &data )
 {
   #define MM_TO_POINT(mm) ((mm)*2.83465058)
   #define CM_TO_POINT(cm) ((cm)*28.3465058)
@@ -365,35 +385,36 @@ double StyleParser::convertUnit( const QString &data ) const
   #define DD_TO_POINT(dd) ((dd)*154.08124)
   #define CC_TO_POINT(cc) ((cc)*12.840103)
 
+  double points = 0;
   if ( data.endsWith( "pt" ) ) {
-    return data.left( data.length() - 2 ).toDouble();
+    points = data.left( data.length() - 2 ).toDouble();
   } else if ( data.endsWith( "cm" ) ) {
     double value = data.left( data.length() - 2 ).toDouble();
-    return CM_TO_POINT( value );
+    points = CM_TO_POINT( value );
   } else if ( data.endsWith( "mm" ) ) {
     double value = data.left( data.length() - 2 ).toDouble();
-    return MM_TO_POINT( value );
+    points = MM_TO_POINT( value );
   } else if ( data.endsWith( "dm" ) ) {
     double value = data.left( data.length() - 2 ).toDouble();
-    return DM_TO_POINT( value );
+    points = DM_TO_POINT( value );
   } else if ( data.endsWith( "in" ) ) {
     double value = data.left( data.length() - 2 ).toDouble();
-    return INCH_TO_POINT( value );
+    points = INCH_TO_POINT( value );
   } else if ( data.endsWith( "inch" ) ) {
     double value = data.left( data.length() - 4 ).toDouble();
-    return INCH_TO_POINT( value );
+    points = INCH_TO_POINT( value );
   } else if ( data.endsWith( "pi" ) ) {
     double value = data.left( data.length() - 4 ).toDouble();
-    return PI_TO_POINT( value );
+    points = PI_TO_POINT( value );
   } else if ( data.endsWith( "dd" ) ) {
     double value = data.left( data.length() - 4 ).toDouble();
-    return DD_TO_POINT( value );
+    points = DD_TO_POINT( value );
   } else if ( data.endsWith( "cc" ) ) {
     double value = data.left( data.length() - 4 ).toDouble();
-    return CC_TO_POINT( value );
+    points = CC_TO_POINT( value );
   } else {
     qDebug( "unknown unit %s", qPrintable( data ) );
   }
 
-  return 0;
+  return points;
 }

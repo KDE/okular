@@ -55,6 +55,7 @@ class Converter
     bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
     bool convertList( const QDomElement &element );
     bool convertTable( const QDomElement &element );
+    bool convertFrame( const QDomElement &element );
 
   private:
     const Document *mDocument;

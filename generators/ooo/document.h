@@ -11,6 +11,7 @@
 #define OOO_DOCUMENT_H
 
 #include <QtCore/QByteArray>
+#include <QtCore/QMap>
 #include <QtCore/QString>
 
 namespace OOO {
@@ -25,12 +26,14 @@ class Document
     QByteArray content() const;
     QByteArray meta() const;
     QByteArray styles() const;
+    QMap<QString, QByteArray> images() const;
 
   private:
     QString mFileName;
     QByteArray mContent;
     QByteArray mMeta;
     QByteArray mStyles;
+    QMap<QString, QByteArray> mImages;
 };
 
 }

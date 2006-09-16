@@ -48,6 +48,9 @@ void ParagraphFormatProperty::apply( QTextFormat *format ) const
   }
 
   format->setProperty( QTextFormat::FrameWidth, 595 );
+
+  if ( mBackgroundColor.isValid() )
+    format->setBackground( mBackgroundColor );
 }
 
 void ParagraphFormatProperty::setPageNumber( int number )
@@ -66,27 +69,25 @@ void ParagraphFormatProperty::setTextAlignment( Qt::Alignment alignment )
   mAlignment = alignment;
 }
 
+void ParagraphFormatProperty::setBackgroundColor( const QColor &color )
+{
+  mBackgroundColor = color;
+}
+
 TextFormatProperty::TextFormatProperty()
-  : mStyleInformation( 0 ), mHasFontSize( false ), mTextPosition( 0 )
+  : mStyleInformation( 0 ), mHasFontSize( false ),
+    mFontWeight( -1 ), mTextPosition( 0 )
 {
 }
 
 TextFormatProperty::TextFormatProperty( const StyleInformation *information )
-  : mStyleInformation( information ), mHasFontSize( false ), mTextPosition( 0 )
+  : mStyleInformation( information ), mHasFontSize( false ),
+    mFontWeight( -1 ), mTextPosition( 0 )
 {
 }
 
-void TextFormatProperty::apply( QTextFormat *format ) const
+void TextFormatProperty::apply( QTextCharFormat *format ) const
 {
-  if ( mHasFontSize )
-    format->setProperty( QTextFormat::FontPointSize, mFontSize );
-
-  if ( mColor.isValid() )
-    format->setForeground( mColor );
-
-  if ( mBackgroundColor.isValid() )
-    format->setBackground( mBackgroundColor );
-
   if ( !mFontName.isEmpty() ) {
     if ( mStyleInformation ) {
       const FontFormatProperty property = mStyleInformation->fontProperty( mFontName );
@@ -94,9 +95,26 @@ void TextFormatProperty::apply( QTextFormat *format ) const
     }
   }
 
+  if ( mFontWeight != -1 ) {
+    QFont font = format->font();
+    font.setWeight( mFontWeight );
+    format->setFont( font );
+  }
+
+  if ( mHasFontSize ) {
+    QFont font = format->font();
+    font.setPointSize( mFontSize );
+    format->setFont( font );
+  }
+
+  if ( mColor.isValid() )
+    format->setForeground( mColor );
+
+  if ( mBackgroundColor.isValid() )
+    format->setBackground( mBackgroundColor );
+
   // TODO: get FontFormatProperty and apply it
   // TODO: how to set the base line?!?
-
 }
 
 void TextFormatProperty::setFontSize( int size )
@@ -108,6 +126,11 @@ void TextFormatProperty::setFontSize( int size )
 void TextFormatProperty::setFontName( const QString &name )
 {
   mFontName = name;
+}
+
+void TextFormatProperty::setFontWeight( int weight )
+{
+  mFontWeight = weight;
 }
 
 void TextFormatProperty::setTextPosition( int position )
@@ -126,17 +149,22 @@ void TextFormatProperty::setBackgroundColor( const QColor &color )
 }
 
 StyleFormatProperty::StyleFormatProperty()
-  : mStyleInformation( 0 )
+  : mStyleInformation( 0 ), mDefaultStyle( false )
 {
 }
 
 StyleFormatProperty::StyleFormatProperty( const StyleInformation *information )
-  : mStyleInformation( information )
+  : mStyleInformation( information ), mDefaultStyle( false )
 {
 }
 
 void StyleFormatProperty::apply( QTextBlockFormat *blockFormat, QTextCharFormat *textFormat ) const
 {
+  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
+    property.apply( blockFormat, textFormat );
+  }
+
   if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
     const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
     property.apply( blockFormat, textFormat );
@@ -159,6 +187,11 @@ QString StyleFormatProperty::parentStyleName() const
 void StyleFormatProperty::setFamily( const QString &family )
 {
   mFamily = family;
+}
+
+void StyleFormatProperty::setDefaultStyle( bool defaultStyle )
+{
+  mDefaultStyle = defaultStyle;
 }
 
 void StyleFormatProperty::setMasterPageName( const QString &masterPageName )

@@ -58,7 +58,7 @@ class AnnotatorEngine
         enum Button { None, Left, Right };
 
         // perform operations
-        virtual QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale ) = 0;
+        virtual QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * page ) = 0;
         virtual void paint( QPainter * painter, double xScale, double yScale, const QRect & clipRect ) = 0;
         virtual Annotation * end() = 0;
 
@@ -85,7 +85,7 @@ class SmoothPathEngine : public AnnotatorEngine
             // parse engine specific attributes
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * /*page*/ )
         {
             // only proceed if pressing left button
             if ( button != Left )
@@ -241,10 +241,12 @@ class PickPointEngine : public AnnotatorEngine
             delete pixmap;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * page )
         {
             xscale=xScale;
             yscale=yScale;
+            pagewidth = page->width();
+            pageheight = page->height();
             // only proceed if pressing left button
             if ( button != Left )
                 return QRect();
@@ -328,8 +330,8 @@ class PickPointEngine : public AnnotatorEngine
                     static int padding = 2;
                     QFontMetricsF mf(ta->textFont);
                     QRectF rcf=mf.boundingRect( NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)xscale, (int)yscale ).adjusted( padding, padding, -padding, -padding ), Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
-                    rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/xscale);
-                    rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/yscale);
+                    rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
+                    rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
                     ta->boundary=this->rect;
                     ta->window.summary="TextBox";
                 }
@@ -395,6 +397,7 @@ class PickPointEngine : public AnnotatorEngine
         QString pixmapName;
         int size;
         double xscale,yscale;
+        double pagewidth, pageheight;
         bool center;
 };
 
@@ -418,7 +421,7 @@ class PolyLineEngine : public AnnotatorEngine
                 numofpoints = -1;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * /*page*/ )
         {
             // only proceed if pressing left button
 //            if ( button != Left )
@@ -685,7 +688,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         m_lockedItem = item;
 
     // 2. use engine to perform operations
-    QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight );
+    QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight, item->page() );
 
     // 3. update absolute extents rect and send paint event(s)
     if ( paintRect.isValid() )

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *   Copyright (C) 2006 by Chu Xiaodong <xiaodongchu@gmail.com>            *
  *                                                                         *
@@ -7,9 +6,14 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-#include <QPainter>
-#include "annotwindow.h"
 
+// qt/kde includes
+#include <QPainter>
+#include <kglobal.h>
+#include <klocale.h>
+
+// local includes
+#include "annotwindow.h"
 
 MouseBox::MouseBox( QWidget * parent)
     : QWidget(parent),pointpressed(0,0)//pointpressed(QPoint(0,0))// m_parent(parent)
@@ -41,7 +45,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Annotation * annot)
     textEdit=new QTextEdit(m_annot->window.text, this);
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
-    modTime=m_annot->modifyDate.toString(Qt::ISODate);
+    modTime = KGlobal::locale()->formatDateTime( m_annot->modifyDate, true, true );
     
     setPalette( QPalette(m_annot->style.color));
     QPalette pl=textEdit->palette();

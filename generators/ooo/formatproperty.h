@@ -10,10 +10,12 @@
 #ifndef OOO_FORMATPROPERTY_H
 #define OOO_FORMATPROPERTY_H
 
+#include <QtCore/QVector>
 #include <QtGui/QColor>
 
 class QTextBlockFormat;
 class QTextCharFormat;
+class QTextListFormat;
 class QTextFormat;
 
 namespace OOO {
@@ -158,6 +160,7 @@ class PageFormatProperty : public FormatProperty
 
     double width() const;
     double height() const;
+    double margin() const;
 
   private:
     PageUsage mPageUsage;
@@ -168,6 +171,28 @@ class PageFormatProperty : public FormatProperty
     double mHeight;
     double mWidth;
     PrintOrientation mPrintOrientation;
+};
+
+class ListFormatProperty
+{
+  public:
+    enum Type
+    {
+      Number,
+      Bullet
+    };
+
+    ListFormatProperty();
+    ListFormatProperty( Type type );
+    virtual ~ListFormatProperty();
+
+    virtual void apply( QTextListFormat *format, int level ) const;
+
+    void addItem( int level, double indent = 0 );
+
+  private:
+    Type mType;
+    QVector<double> mIndents;
 };
 
 }

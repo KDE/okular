@@ -16,11 +16,27 @@
 
 #include "styleinformation.h"
 
+class QDomElement;
+class QDomText;
+
 namespace OOO {
 
 class Document;
 
-class Converter : public QXmlDefaultHandler
+class Style
+{
+  public:
+    Style( const QTextBlockFormat &blockFormat, const QTextCharFormat &textFormat );
+
+    QTextBlockFormat blockFormat() const;
+    QTextCharFormat textFormat() const;
+
+  private:
+    QTextBlockFormat mBlockFormat;
+    QTextCharFormat mTextFormat;
+};
+
+class Converter
 {
   public:
     Converter( const Document *document );
@@ -31,22 +47,22 @@ class Converter : public QXmlDefaultHandler
     QTextDocument *textDocument() const;
     MetaInformation::List metaInformation() const;
 
-    virtual bool characters( const QString& );
-    virtual bool startElement( const QString&, const QString&, const QString&, const QXmlAttributes& );
-    virtual bool endElement( const QString&, const QString&, const QString& );
+    bool convertBody( const QDomElement &element );
+    bool convertText( const QDomElement &element );
+    bool convertHeader( QTextCursor *cursor, const QDomElement &element );
+    bool convertParagraph( QTextCursor *cursor, const QDomElement &element );
+    bool convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format );
+    bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
+    bool convertList( const QDomElement &element );
+    bool convertTable( const QDomElement &element );
 
   private:
     const Document *mDocument;
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;
+    QTextBlock *mLastTextBlock;
 
     StyleInformation *mStyleInformation;
-
-    bool mInParagraph;
-    bool mInHeader;
-    QTextBlockFormat mBlockFormat;
-    QTextCharFormat mTextFormat;
-    QStack< QPair<QTextBlockFormat, QTextCharFormat> > mSpanStack;
 };
 
 }

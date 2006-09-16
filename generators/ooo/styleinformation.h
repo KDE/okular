@@ -48,6 +48,9 @@ class StyleInformation
     void addPageProperty( const QString &name, const PageFormatProperty &property );
     PageFormatProperty pageProperty( const QString &name ) const;
 
+    void addListProperty( const QString &name, const ListFormatProperty &property );
+    ListFormatProperty listProperty( const QString &name ) const;
+
     void addMasterLayout( const QString &name, const QString &layoutName );
     QString masterLayout( const QString &name );
 
@@ -60,6 +63,7 @@ class StyleInformation
     QMap<QString, FontFormatProperty> mFontProperties;
     QMap<QString, StyleFormatProperty> mStyleProperties;
     QMap<QString, PageFormatProperty> mPageProperties;
+    QMap<QString, ListFormatProperty> mListProperties;
     QMap<QString, QString> mMasterLayouts;
     MetaInformation::List mMetaInformation;
 };

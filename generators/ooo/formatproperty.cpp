@@ -239,3 +239,43 @@ double PageFormatProperty::height() const
 {
   return mHeight;
 }
+
+double PageFormatProperty::margin() const
+{
+  return mLeftMargin;
+}
+
+ListFormatProperty::ListFormatProperty()
+  : mType( Number )
+{
+  mIndents.resize( 10 );
+}
+
+ListFormatProperty::ListFormatProperty( Type type )
+  : mType( type )
+{
+  mIndents.resize( 10 );
+}
+
+ListFormatProperty::~ListFormatProperty()
+{
+}
+
+void ListFormatProperty::apply( QTextListFormat *format, int level ) const
+{
+  if ( mType == Number )
+    format->setStyle( QTextListFormat::ListDecimal );
+  else {
+    format->setStyle( QTextListFormat::ListDisc );
+    if ( level > 0 && level < 10 )
+      format->setIndent( qRound( mIndents[ level ] ) );
+  }
+}
+
+void ListFormatProperty::addItem( int level, double indent )
+{
+  if ( level < 0 || level >= 10 )
+    return;
+
+  mIndents[ level ] = indent;
+}

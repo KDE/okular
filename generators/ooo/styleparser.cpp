@@ -212,18 +212,21 @@ bool StyleParser::parseAutomaticStyles( QDomElement &parent )
   QDomElement element = parent.firstChildElement();
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "style" ) ) {
-      StyleFormatProperty property = parseStyleProperty( element );
+      const StyleFormatProperty property = parseStyleProperty( element );
       mStyleInformation->addStyleProperty( element.attribute( "name" ), property );
     } else if ( element.tagName() == QLatin1String( "page-layout" ) ) {
       QDomElement child = element.firstChildElement();
       while ( !child.isNull() ) {
         if ( child.tagName() == QLatin1String( "page-layout-properties" ) ) {
-          PageFormatProperty property = parsePageProperty( child );
+          const PageFormatProperty property = parsePageProperty( child );
           mStyleInformation->addPageProperty( element.attribute( "name" ), property );
         }
 
         child = child.nextSiblingElement();
       }
+    } else if ( element.tagName() == QLatin1String( "list-style" ) ) {
+      const ListFormatProperty property = parseListProperty( element );
+      mStyleInformation->addListProperty( element.attribute( "name" ), property );
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -323,6 +326,31 @@ PageFormatProperty StyleParser::parsePageProperty( QDomElement &parent )
   property.setRightMargin( convertUnit( parent.attribute( "margin-right" ) ) );
   property.setWidth( convertUnit( parent.attribute( "page-width" ) ) );
   property.setHeight( convertUnit( parent.attribute( "page-height" ) ) );
+
+  return property;
+}
+
+ListFormatProperty StyleParser::parseListProperty( QDomElement &parent )
+{
+  ListFormatProperty property;
+
+  QDomElement element = parent.firstChildElement();
+  if ( element.tagName() == QLatin1String( "list-level-style-number" ) )
+    property = ListFormatProperty( ListFormatProperty::Number );
+  else
+    property = ListFormatProperty( ListFormatProperty::Bullet );
+
+  while ( !element.isNull() ) {
+    if ( element.tagName() == QLatin1String( "list-level-style-number" ) ) {
+      int level = element.attribute( "level" ).toInt();
+      property.addItem( level, 0.0 );
+    } else if ( element.tagName() == QLatin1String( "list-level-style-bullet" ) ) {
+      int level = element.attribute( "level" ).toInt();
+      property.addItem( level, convertUnit( element.attribute( "space-before" ) ) );
+    }
+
+    element = element.nextSiblingElement();
+  }
 
   return property;
 }

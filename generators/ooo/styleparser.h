@@ -39,6 +39,7 @@ class StyleParser
     ParagraphFormatProperty parseParagraphProperty( QDomElement& );
     TextFormatProperty parseTextProperty( QDomElement& );
     PageFormatProperty parsePageProperty( QDomElement& );
+    ListFormatProperty parseListProperty( QDomElement& );
 
     double convertUnit( const QString& ) const;
 

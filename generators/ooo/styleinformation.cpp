@@ -69,6 +69,16 @@ PageFormatProperty StyleInformation::pageProperty( const QString &name ) const
   return mPageProperties[ name ];
 }
 
+void StyleInformation::addListProperty( const QString &name, const ListFormatProperty &property )
+{
+  mListProperties[ name ] = property;
+}
+
+ListFormatProperty StyleInformation::listProperty( const QString &name ) const
+{
+  return mListProperties[ name ];
+}
+
 void StyleInformation::addMasterLayout( const QString &name, const QString &layoutName )
 {
   mMasterLayouts.insert( name, layoutName );

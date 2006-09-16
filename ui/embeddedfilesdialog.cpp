@@ -32,11 +32,11 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 	header.append(i18n("Name"));
 	header.append(i18n("Description"));
 	header.append(i18n("Created"));
-	header.append(i18n("Modificated"));
+	header.append(i18n("Modified"));
 	m_tw->setHeaderLabels(header);
 	m_tw->setRootIsDecorated(false);
 	m_tw->setSelectionMode(QAbstractItemView::MultiSelection);
-	
+
 	foreach(EmbeddedFile* ef, *document->embeddedFiles())
 	{
 		QTreeWidgetItem *twi = new QTreeWidgetItem();
@@ -52,7 +52,14 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 		m_tw->addTopLevelItem(twi);
 		m_files.insert(twi, ef);
 	}
-	
+        // Having filled the columns, it is nice to resize them to be able to read the contents
+        for (int lv = 0; lv <  m_tw->columnCount(); ++lv) {
+                m_tw->resizeColumnToContents(lv);
+        }
+        // This is a bit dubious, but I'm not seeing a nice way to say "expand to fit contents"
+        m_tw->setMinimumWidth(640);
+        m_tw->updateGeometry();
+
 	connect(this, SIGNAL(user1Clicked()), this, SLOT(saveFile()));
 }
 

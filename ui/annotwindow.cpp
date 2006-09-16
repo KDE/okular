@@ -8,12 +8,33 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qframe.h>
 #include <QPainter>
+#include <qpushbutton.h>
+#include <qstyle.h>
+#include <qtextedit.h>
 #include <kglobal.h>
 #include <klocale.h>
 
 // local includes
 #include "annotwindow.h"
+#include "core/annotations.h"
+
+
+class CloseButton
+  : public QPushButton
+{
+public:
+    CloseButton( QWidget * parent = 0 )
+      : QPushButton( parent )
+    {
+        setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        setFixedSize( 14, 14 );
+        setIcon( style()->standardIcon( QStyle::SP_DockWidgetCloseButton ) );
+        setIconSize( QSize( 14, 14 ) );
+        setToolTip( i18n( "Close" ) );
+    }
+};
 
 MouseBox::MouseBox( QWidget * parent)
     : QWidget(parent),pointpressed(0,0)//pointpressed(QPoint(0,0))// m_parent(parent)
@@ -61,11 +82,8 @@ AnnotWindow::AnnotWindow( QWidget * parent, Annotation * annot)
              this,SLOT(slotResizerMouseMove(QMouseEvent*)));
     connect( resizerBox,SIGNAL(paintevent(QPaintEvent*)),
              this,SLOT(slotResizerPaint(QPaintEvent*)));
-    btnClose=new MouseBox(this);
-    connect( btnClose,SIGNAL(mousereleaseevent( QMouseEvent* )),
-             this,SLOT(slotCloseBtn( QMouseEvent* )));
-             connect( btnClose,SIGNAL(paintevent( QPaintEvent* )),
-                      this,SLOT(slotPaintCloseBtn( QPaintEvent* )));
+    btnClose = new CloseButton(this);
+    connect( btnClose, SIGNAL( clicked() ), this, SLOT( hide() ) );
     btnOption=new MouseBox(this);
     
     connect( btnOption,SIGNAL(mousereleaseevent( QMouseEvent* )),
@@ -115,7 +133,7 @@ void AnnotWindow::paintEvent(QPaintEvent *)
 void AnnotWindow::resizeEvent ( QResizeEvent * e )
 {    //size:
     QSize sz=e->size();
-    btnClose->setGeometry( sz.width()-16,2,14,14);
+    btnClose->move( sz.width() - 16, 2 );
     btnOption->setGeometry( sz.width()-80,16,75,16);
     titleBox->setGeometry(0,0,sz.width(),32);
     textEdit->setGeometry(0,32,sz.width(),sz.height()-32-14);
@@ -151,22 +169,6 @@ void AnnotWindow::slotResizerPaint(QPaintEvent* )
     }
 }
 
-
-void AnnotWindow::slotPaintCloseBtn(QPaintEvent* )
-{
-    //draw close button
-    QPainter pnter(btnClose);
-    QRect rc=btnClose->rect();
-    rc.moveTo( 0,0);
-    pnter.drawRect(rc.left(),rc.top(),rc.width()-1,rc.height()-1);
-    pnter.drawLine(rc.topLeft(),rc.bottomRight());
-    pnter.drawLine(rc.topRight(),rc.bottomLeft());
-}
-
-void AnnotWindow::slotCloseBtn( QMouseEvent* )
-{
-    this->hide();
-}
 void AnnotWindow::slotOptionBtn( QMouseEvent* )
 {
     //TODO: call context menu in pageview

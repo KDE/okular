@@ -6,18 +6,17 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-//annotwindow.h
+
 #ifndef _ANNOTWINDOW_H_
 #define _ANNOTWINDOW_H_
 
 #include <QtGui/qwidget.h>
-#include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QTextEdit>
 
-#include "core/annotations.h"
+class QFrame;
+class QTextEdit;
+class Annotation;
+class CloseButton;
+
 //this widget is for the titlebar and size griper
 class MouseBox : public QWidget
 {
@@ -56,7 +55,7 @@ class AnnotWindow : public QWidget
         //QSizeGrip *resizer;
         MouseBox* titleBox;
         MouseBox* resizerBox;
-        MouseBox* btnClose;
+        CloseButton* btnClose;
         MouseBox* btnOption;
         QString modTime;
         
@@ -75,9 +74,7 @@ class AnnotWindow : public QWidget
         void slotTitleMouseMove(QMouseEvent* e);
         void slotResizerMouseMove(QMouseEvent* e);
         void slotResizerPaint(QPaintEvent* e);
-        void slotPaintCloseBtn(QPaintEvent* e);
  //       void slotPaintOptionBtn(QPaintEvent* e);
-        void slotCloseBtn( QMouseEvent* e);
         void slotOptionBtn( QMouseEvent* e);
         void slotsaveWindowText();
 

@@ -12,6 +12,7 @@
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qspinbox.h>
 #include <qvariant.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -100,6 +101,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Annotation * ann )
             break;
         case Annotation::AText:
             return new TextAnnotationWidget( ann );
+            break;
+        case Annotation::ALine:
+            return new LineAnnotationWidget( ann );
             break;
         // shut up gcc
         default:
@@ -226,6 +230,67 @@ QWidget * StampAnnotationWidget::widget()
 void StampAnnotationWidget::applyChanges()
 {
     m_stampAnn->stampIconName = m_pixmapSelector->icon();
+}
+
+
+
+LineAnnotationWidget::LineAnnotationWidget( Annotation * ann )
+    : AnnotationWidget( ann ), m_widget( 0 )
+{
+    m_lineAnn = static_cast< LineAnnotation * >( ann );
+    if ( m_lineAnn->linePoints.count() == 2 )
+        m_lineType = 0; // line
+    else if ( m_lineAnn->lineClosed )
+        m_lineType = 1; // polygon
+    else
+        m_lineType = 2; // polyline
+}
+
+QWidget * LineAnnotationWidget::widget()
+{
+    // only lines are supported for now
+    if ( m_lineType != 0 )
+        return 0;
+
+    if ( m_widget )
+        return m_widget;
+
+    m_widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    lay->setMargin( 0 );
+    QGroupBox * gb = new QGroupBox( m_widget );
+    lay->addWidget( gb );
+    gb->setTitle( i18n( " Line Extensions" ) );
+    QGridLayout * gridlay = new QGridLayout( gb );
+    QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
+    gridlay->addWidget( tmplabel, 0, 0 );
+    m_spinLL = new QDoubleSpinBox( gb );
+    gridlay->addWidget( m_spinLL, 0, 1 );
+    tmplabel->setBuddy( m_spinLL );
+    tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
+    gridlay->addWidget( tmplabel, 1, 0 );
+    m_spinLLE = new QDoubleSpinBox( gb );
+    gridlay->addWidget( m_spinLLE, 1, 1 );
+    tmplabel->setBuddy( m_spinLLE );
+
+    m_spinLL->setRange( -500, 500 );
+    m_spinLL->setValue( m_lineAnn->lineLeadingFwdPt );
+    m_spinLLE->setRange( 0, 500 );
+    m_spinLLE->setValue( m_lineAnn->lineLeadingBackPt );
+
+    connect( m_spinLL, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_spinLLE, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+
+    return m_widget;
+}
+
+void LineAnnotationWidget::applyChanges()
+{
+    if ( m_lineType == 0 )
+    {
+        m_lineAnn->lineLeadingFwdPt = m_spinLL->value();
+        m_lineAnn->lineLeadingBackPt = m_spinLLE->value();
+    }
 }
 
 

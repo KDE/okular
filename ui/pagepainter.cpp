@@ -331,6 +331,48 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     // draw the line as normalized path into image
                     drawShapeOnImage( backImage, path, la->lineClosed, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
 
+                    if ( path.count() == 2 && fabs( la->lineLeadingFwdPt ) > 0.1 )
+                    {
+                        NormalizedPoint delta( la->linePoints.last().x - la->linePoints.first().x, la->linePoints.first().y - la->linePoints.last().y );
+                        double angle = atan2( delta.y, delta.x );
+                        if ( delta.y < 0 )
+                            angle += 2 * M_PI;
+
+                        int sign = la->lineLeadingFwdPt > 0.0 ? 1 : -1;
+                        double LLx = fabs( la->lineLeadingFwdPt ) * cos( angle + sign * M_PI_2 + 2 * M_PI ) / page->width();
+                        double LLy = fabs( la->lineLeadingFwdPt ) * sin( angle + sign * M_PI_2 + 2 * M_PI ) / page->height();
+
+                        NormalizedPath path2;
+                        NormalizedPath path3;
+
+                        NormalizedPoint point;
+                        point.x = ( la->linePoints.first().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->linePoints.first().y - LLy - yOffset ) * yScale;
+                        path2.append( point );
+                        point.x = ( la->linePoints.last().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->linePoints.last().y - LLy - yOffset ) * yScale;
+                        path3.append( point );
+                        // do we have the extension on the "back"?
+                        if ( fabs( la->lineLeadingBackPt ) > 0.1 )
+                        {
+                            double LLEx = la->lineLeadingBackPt * cos( angle - sign * M_PI_2 + 2 * M_PI ) / page->width();
+                            double LLEy = la->lineLeadingBackPt * sin( angle - sign * M_PI_2 + 2 * M_PI ) / page->height();
+                            point.x = ( la->linePoints.first().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->linePoints.first().y - LLEy - yOffset ) * yScale;
+                            path2.append( point );
+                            point.x = ( la->linePoints.last().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->linePoints.last().y - LLEy - yOffset ) * yScale;
+                            path3.append( point );
+                        }
+                        else
+                        {
+                            path2.append( path[0] );
+                            path3.append( path[1] );
+                        }
+
+                        drawShapeOnImage( backImage, path2, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale, Multiply );
+                        drawShapeOnImage( backImage, path3, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale, Multiply );
+                    }
                 }
                 // draw GeomAnnotation MISSING: all
                 else if ( type == Annotation::AGeom )

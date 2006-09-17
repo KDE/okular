@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QPaintDevice>
+#include <QProgressBar>
 #include <QTextStream>
 
 

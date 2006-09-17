@@ -38,6 +38,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QProgressBar>
 #include <QRegExp>
 
 

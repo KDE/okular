@@ -20,7 +20,6 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kprocio.h>
-#include <kprogressbar.h>
 
 #include <Q3MemArray>
 #include <QApplication>

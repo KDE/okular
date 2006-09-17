@@ -28,7 +28,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprogressbar.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
 

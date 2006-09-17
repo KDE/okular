@@ -12,7 +12,7 @@
 
 #include <QPointer>
 
-class KProgressBar;
+class QProgressBar;
 class QLabel;
 class QProcess;
 
@@ -58,7 +58,7 @@ private slots:
 
 private:
    QLabel* TextLabel1;
-   KProgressBar* ProgressBar1;
+   QProgressBar* ProgressBar1;
    int progress;
    QPointer<QProcess> process;
 };

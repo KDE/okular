@@ -9,13 +9,13 @@
 #include "fontprogress.h"
 
 #include <klocale.h>
-#include <kprogressbar.h>
 #include <kvbox.h>
 
 #include <QApplication>
 #include <QLabel>
 #include <QProcess>
 #include <QToolTip>
+#include <QProgressBar>
 
 
 /*
@@ -54,7 +54,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   TextLabel1->setToolTip( ttip );
 
   if (progressbar) {
-    ProgressBar1 = new KProgressBar( page );
+    ProgressBar1 = new QProgressBar( page );
     ProgressBar1->setFormat(i18n("%v of %m"));
     ProgressBar1->setWhatsThis( whatsThis );
     ProgressBar1->setToolTip( ttip );

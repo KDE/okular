@@ -329,7 +329,8 @@ class PickPointEngine : public AnnotatorEngine
                     kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
                     static int padding = 2;
                     QFontMetricsF mf(ta->textFont);
-                    QRectF rcf=mf.boundingRect( NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)xscale, (int)yscale ).adjusted( padding, padding, -padding, -padding ), Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
+                    QRectF rcf = mf.boundingRect( NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
+                                                  Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
                     ta->boundary=this->rect;

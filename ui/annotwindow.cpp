@@ -195,9 +195,10 @@ AnnotWindow::AnnotWindow( QWidget * parent, Annotation * annot)
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     
-    setPalette( QPalette(m_annot->style.color));
+    QColor col = m_annot->style.color.isValid() ? m_annot->style.color : Qt::yellow;
+    setPalette( QPalette( col ) );
     QPalette pl=textEdit->palette();
-    pl.setColor(QPalette::Base,m_annot->style.color);
+    pl.setColor( QPalette::Base, col );
     textEdit->setPalette(pl);
 
     QVBoxLayout * mainlay = new QVBoxLayout( this );

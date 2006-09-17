@@ -87,10 +87,10 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *d
     tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate, false, true ), page );//time
     gridlayout->addWidget( tmplabel, 1, 1 );
     
-    tmplabel = new QLabel( i18n( "Modified:" ), page );
-    gridlayout->addWidget( tmplabel, 2, 0 );
-    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modifyDate, false, true ), page );//time
-    gridlayout->addWidget( tmplabel, 2, 1 );
+    m_modifyDateLabel = new QLabel( i18n( "Modified:" ), page );
+    gridlayout->addWidget( m_modifyDateLabel, 2, 0 );
+    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modifyDate, false, true ), page );//time
+    gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 3, 0 );
     //END tab 2
@@ -200,6 +200,8 @@ void AnnotsPropertiesDialog::slotapply()
         m_annotWidget->applyChanges();
 
     m_document->modifyPageAnnotation( m_page, m_annot );
+
+    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modifyDate, false, true ) );
 
     modified = false;
     enableButton( Apply, false );

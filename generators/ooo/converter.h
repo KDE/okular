@@ -16,6 +16,8 @@
 
 #include "styleinformation.h"
 
+#include "core/document.h"
+
 class QDomElement;
 class QDomText;
 
@@ -46,6 +48,7 @@ class Converter
 
     QTextDocument *textDocument() const;
     MetaInformation::List metaInformation() const;
+    DocumentSynopsis tableOfContents() const;
 
     bool convertBody( const QDomElement &element );
     bool convertText( const QDomElement &element );
@@ -64,6 +67,7 @@ class Converter
     QTextBlock *mLastTextBlock;
 
     StyleInformation *mStyleInformation;
+    DocumentSynopsis mTableOfContents;
 };
 
 }

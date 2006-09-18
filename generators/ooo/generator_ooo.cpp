@@ -10,6 +10,8 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QAbstractTextDocumentLayout>
 
+#include <QTime>
+
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -43,10 +45,14 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
 
   OOO::Converter converter( &document );
 
+  QTime time;
+  time.start();
   if ( !converter.convert() )
     return false;
+  qDebug( "creation time elapsed: %d", time.elapsed() );
 
   mDocument = converter.textDocument();
+  mDocumentSynopsis = converter.tableOfContents();
 
   OOO::MetaInformation::List metaInformation = converter.metaInformation();
   for ( int i = 0; i < metaInformation.count(); ++i ) {
@@ -163,10 +169,17 @@ bool KOOOGenerator::print( KPrinter& printer )
   return true;
 }
 
-const DocumentInfo * KOOOGenerator::generateDocumentInfo()
+const DocumentInfo* KOOOGenerator::generateDocumentInfo()
 {
   return &mDocumentInfo;
 }
 
+const DocumentSynopsis* KOOOGenerator::generateDocumentSynopsis()
+{
+  if ( !mDocumentSynopsis.hasChildNodes() )
+    return 0;
+  else
+    return &mDocumentSynopsis;
+}
 #include "generator_ooo.moc"
 

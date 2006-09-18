@@ -7,11 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QDebug>
+
 #include <QtCore/QUrl>
+#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
 #include <QtGui/QTextList>
+#include <QtGui/QTextTableCell>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomText>
@@ -140,6 +144,9 @@ bool Converter::convertText( const QDomElement &element )
     } else if ( child.tagName() == QLatin1String( "list" ) ) {
       if ( !convertList( child ) )
         return false;
+    } else if ( child.tagName() == QLatin1String( "table" ) ) {
+      if ( !convertTable( child ) )
+        return false;
     }
 
     child = child.nextSiblingElement();
@@ -174,6 +181,45 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
     }
 
     child = child.nextSibling();
+  }
+
+  const QSizeF pageSize = mTextDocument->pageSize();
+
+  QTextBlock currentBlock = cursor->block();
+  const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( currentBlock );
+  // const QRectF rect(0, 0, 0, 0);
+
+  int page = qRound( rect.y() ) / qRound( pageSize.height() );
+  int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+
+  DocumentViewport viewport( page );
+  viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
+  viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
+  viewport.rePos.enabled = true;
+  viewport.rePos.pos = DocumentViewport::Center;
+
+  static QStack<QDomNode> parentNodeStack;
+  static QDomNode parentNode = mTableOfContents;
+  static int level = 2;
+
+  QDomElement item = mTableOfContents.createElement( element.text() );
+  item.setAttribute( "Viewport", viewport.toString() );
+
+  int newLevel = element.attribute( "outline-level" ).toInt();
+  if ( newLevel == level ) {
+    parentNode.appendChild( item );
+  } else if ( newLevel > level ) {
+    parentNodeStack.push( parentNode );
+    parentNode = parentNode.lastChildElement();
+    parentNode.appendChild( item );
+    level++;
+  } else {
+    for ( int i = level; i > newLevel; i-- ) {
+      level--;
+      parentNode = parentNodeStack.pop();
+    }
+
+    parentNode.appendChild( item );
   }
 
   return true;
@@ -288,6 +334,74 @@ bool Converter::convertList( const QDomElement &element )
 
 bool Converter::convertTable( const QDomElement &element )
 {
+  /**
+   * Find out dimension of the table
+   */
+  QDomElement rowElement = element.firstChildElement();
+
+  int rowCounter = 0;
+  int columnCounter = 0;
+  while ( !rowElement.isNull() ) {
+    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+      rowCounter++;
+
+      int counter = 0;
+      QDomElement columnElement = rowElement.firstChildElement();
+      while ( !columnElement.isNull() ) {
+        if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
+          counter++;
+        }
+        columnElement = columnElement.nextSiblingElement();
+      }
+
+      columnCounter = qMax( columnCounter, counter );
+    }
+
+    rowElement = rowElement.nextSiblingElement();
+  }
+
+  /**
+   * Create table
+   */
+  QTextTable *table = mCursor->insertTable( rowCounter, columnCounter );
+
+  /**
+   * Fill table
+   */
+  rowElement = element.firstChildElement();
+
+  rowCounter = 0;
+  while ( !rowElement.isNull() ) {
+    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+
+      int columnCounter = 0;
+      QDomElement columnElement = rowElement.firstChildElement();
+      while ( !columnElement.isNull() ) {
+        if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
+
+          QDomElement paragraphElement = columnElement.firstChildElement();
+          while ( !paragraphElement.isNull() ) {
+            if ( paragraphElement.tagName() == QLatin1String( "p" ) ) {
+              QTextTableCell cell = table->cellAt( rowCounter, columnCounter );
+              QTextCursor cursor = cell.firstCursorPosition();
+
+              if ( !convertParagraph( &cursor, paragraphElement ) )
+                return false;
+            }
+
+            paragraphElement = paragraphElement.nextSiblingElement();
+          }
+          columnCounter++;
+        }
+        columnElement = columnElement.nextSiblingElement();
+      }
+
+      rowCounter++;
+    }
+
+    rowElement = rowElement.nextSiblingElement();
+  }
+
   return true;
 }
 
@@ -320,3 +434,9 @@ MetaInformation::List Converter::metaInformation() const
 {
   return mStyleInformation->metaInformation();
 }
+
+DocumentSynopsis Converter::tableOfContents() const
+{
+  return mTableOfContents;
+}
+

@@ -38,10 +38,12 @@ class KOOOGenerator : public Generator
     bool print( KPrinter& printer );
 
     const DocumentInfo* generateDocumentInfo();
+    const DocumentSynopsis* generateDocumentSynopsis();
 
   private:
     QTextDocument *mDocument;
     DocumentInfo mDocumentInfo;
+    DocumentSynopsis mDocumentSynopsis;
 };
 
 #endif

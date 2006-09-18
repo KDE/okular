@@ -59,14 +59,22 @@ bool Converter::convert()
   delete mTextDocument;
   delete mCursor;
 
+  mHeaderInfos.clear();
+
   mTextDocument = new QTextDocument;
   mCursor = new QTextCursor( mTextDocument );
 
+  /**
+   * Read the style properties, so the are available when
+   * parsing the content.
+   */
   StyleParser styleParser( mDocument, mStyleInformation );
   if ( !styleParser.parse() )
     return false;
 
-  // add images to resource framework
+  /**
+   * Add all images of the document to resource framework
+   */
   const QMap<QString, QByteArray> images = mDocument->images();
   QMapIterator<QString, QByteArray> it( images );
   while ( it.hasNext() ) {
@@ -75,6 +83,9 @@ bool Converter::convert()
     mTextDocument->addResource( QTextDocument::ImageResource, QUrl( it.key() ), QImage::fromData( it.value() ) );
   }
 
+  /**
+   * Set the correct page size
+   */
   const QString masterLayout = mStyleInformation->masterLayout( "Standard" );
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
   mTextDocument->setPageSize( QSize( qRound( property.width() ), qRound( property.height() ) ) );
@@ -85,6 +96,9 @@ bool Converter::convert()
   QTextFrame *rootFrame = mTextDocument->rootFrame();
   rootFrame->setFrameFormat( frameFormat );
 
+  /**
+   * Parse the content of the document
+   */
   QXmlSimpleReader reader;
 
   QXmlInputSource source;
@@ -110,6 +124,12 @@ bool Converter::convert()
 
     element = element.nextSiblingElement();
   }
+
+  /**
+   * Create table of contents
+   */
+  if ( !createTableOfContents() )
+    return false;
 
   return true;
 }
@@ -183,44 +203,12 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
     child = child.nextSibling();
   }
 
-  const QSizeF pageSize = mTextDocument->pageSize();
+  HeaderInfo headerInfo;
+  headerInfo.block = cursor->block();
+  headerInfo.text = element.text();
+  headerInfo.level = element.attribute( "outline-level" ).toInt();
 
-  QTextBlock currentBlock = cursor->block();
-  const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( currentBlock );
-  // const QRectF rect(0, 0, 0, 0);
-
-  int page = qRound( rect.y() ) / qRound( pageSize.height() );
-  int offset = qRound( rect.y() ) % qRound( pageSize.height() );
-
-  DocumentViewport viewport( page );
-  viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
-  viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
-  viewport.rePos.enabled = true;
-  viewport.rePos.pos = DocumentViewport::Center;
-
-  static QStack<QDomNode> parentNodeStack;
-  static QDomNode parentNode = mTableOfContents;
-  static int level = 2;
-
-  QDomElement item = mTableOfContents.createElement( element.text() );
-  item.setAttribute( "Viewport", viewport.toString() );
-
-  int newLevel = element.attribute( "outline-level" ).toInt();
-  if ( newLevel == level ) {
-    parentNode.appendChild( item );
-  } else if ( newLevel > level ) {
-    parentNodeStack.push( parentNode );
-    parentNode = parentNode.lastChildElement();
-    parentNode.appendChild( item );
-    level++;
-  } else {
-    for ( int i = level; i > newLevel; i-- ) {
-      level--;
-      parentNode = parentNodeStack.pop();
-    }
-
-    parentNode.appendChild( item );
-  }
+  mHeaderInfos.append( headerInfo );
 
   return true;
 }
@@ -420,6 +408,52 @@ bool Converter::convertFrame( const QDomElement &element )
     }
 
     child = child.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::createTableOfContents()
+{
+  const QSizeF pageSize = mTextDocument->pageSize();
+
+  for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
+    const HeaderInfo headerInfo = mHeaderInfos[ i ];
+
+    const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( headerInfo.block );
+
+    int page = qRound( rect.y() ) / qRound( pageSize.height() );
+    int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+
+    DocumentViewport viewport( page );
+    viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
+    viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
+    viewport.rePos.enabled = true;
+    viewport.rePos.pos = DocumentViewport::Center;
+
+    QStack<QDomNode> parentNodeStack;
+    QDomNode parentNode = mTableOfContents;
+    int level = 2;
+
+    QDomElement item = mTableOfContents.createElement( headerInfo.text );
+    item.setAttribute( "Viewport", viewport.toString() );
+
+    int newLevel = headerInfo.level;
+    if ( newLevel == level ) {
+      parentNode.appendChild( item );
+    } else if ( newLevel > level ) {
+      parentNodeStack.push( parentNode );
+      parentNode = parentNode.lastChildElement();
+      parentNode.appendChild( item );
+      level++;
+    } else {
+      for ( int i = level; i > newLevel; i-- ) {
+        level--;
+        parentNode = parentNodeStack.pop();
+      }
+
+      parentNode.appendChild( item );
+    }
   }
 
   return true;

@@ -11,6 +11,7 @@
 #define OOO_CONVERTER_H
 
 #include <QtCore/QStack>
+#include <QtGui/QTextBlock>
 #include <QtGui/QTextCharFormat>
 #include <QtXml/QXmlDefaultHandler>
 
@@ -61,6 +62,8 @@ class Converter
     bool convertFrame( const QDomElement &element );
 
   private:
+    bool createTableOfContents();
+
     const Document *mDocument;
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;
@@ -68,6 +71,15 @@ class Converter
 
     StyleInformation *mStyleInformation;
     DocumentSynopsis mTableOfContents;
+
+    struct HeaderInfo
+    {
+      QTextBlock block;
+      QString text;
+      int level;
+    };
+
+    QList<HeaderInfo> mHeaderInfos;
 };
 
 }

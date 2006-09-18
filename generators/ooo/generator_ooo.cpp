@@ -10,8 +10,6 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QAbstractTextDocumentLayout>
 
-#include <QTime>
-
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -45,11 +43,8 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
 
   OOO::Converter converter( &document );
 
-  QTime time;
-  time.start();
   if ( !converter.convert() )
     return false;
-  qDebug( "creation time elapsed: %d", time.elapsed() );
 
   mDocument = converter.textDocument();
   mDocumentSynopsis = converter.tableOfContents();

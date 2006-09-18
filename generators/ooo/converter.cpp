@@ -300,8 +300,10 @@ bool Converter::convertList( const QDomElement &element )
       loop++;
 
       const QDomElement paragraphElement = child.firstChildElement();
-      if ( paragraphElement.tagName() != QLatin1String( "p" ) )
+      if ( paragraphElement.tagName() != QLatin1String( "p" ) ) {
+        child = child.nextSiblingElement();
         continue;
+      }
 
         // FIXME: as soon as Qt is fixed
 //      if ( loop > 1 )

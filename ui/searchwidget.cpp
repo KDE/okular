@@ -26,7 +26,7 @@
 
 SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     : QToolBar( parent ), m_document( document ),
-    m_searchType( 0 ), m_caseSensitive( false )
+    m_searchType( 0 )
 {
     setObjectName( "iSearchBar" );
     // change toolbar appearance
@@ -91,8 +91,8 @@ void SearchWidget::clearText()
 void SearchWidget::slotTextChanged( const QString & text )
 {
     QPalette qAppPalette = QApplication::palette();
-    // if length<3 set 'red' text and send a blank string to document
-    QColor color = text.length() < 3 ? Qt::darkRed : qAppPalette.color( QPalette::Text );
+    // if 0<length<3 set 'red' text and send a blank string to document
+    QColor color = text.length() < 3 && text.length() > 0 ? Qt::darkRed : qAppPalette.color( QPalette::Text );
     QPalette pal = m_lineEdit->palette();
     pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
     pal.setColor( QPalette::Text, color );
@@ -106,8 +106,7 @@ void SearchWidget::slotMenuChaged( QAction * act )
     // update internal variables and checked state
     if ( act == m_caseSensitiveAction )
     {
-        m_caseSensitive = !m_caseSensitive;
-        m_caseSensitiveAction->setChecked( m_caseSensitive );
+        // do nothing, just update the search
     }
     else if ( act == m_matchPhraseAction )
     {
@@ -135,10 +134,11 @@ void SearchWidget::startSearch()
     bool ok = true;
     if ( text.length() >= 3 )
     {
+        bool caseSensitive = m_caseSensitiveAction->isChecked();
         KPDFDocument::SearchType type = !m_searchType ? KPDFDocument::AllDoc :
                                         ( (m_searchType > 1) ? KPDFDocument::GoogleAny :
                                         KPDFDocument::GoogleAll );
-        ok = m_document->searchText( SW_SEARCH_ID, text, true, m_caseSensitive,
+        ok = m_document->searchText( SW_SEARCH_ID, text, true, caseSensitive,
                                      type, false, qRgb( 0, 183, 255 ) );
     }
     else

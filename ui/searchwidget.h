@@ -37,7 +37,6 @@ class SearchWidget : public QToolBar
         QMenu * m_menu;
         QTimer * m_inputDelayTimer;
         int m_searchType;
-        bool m_caseSensitive;
         QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
         KLineEdit *m_lineEdit;
 

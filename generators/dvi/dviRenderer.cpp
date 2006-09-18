@@ -28,7 +28,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kprogressbar.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
 
@@ -39,6 +38,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
+#include <QProgressBar>
 #include <QRegExp>
 
 

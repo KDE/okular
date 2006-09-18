@@ -1,175 +1,235 @@
-
 /***************************************************************************
  *   Copyright (C) 2006 by Chu Xiaodong <xiaodongchu@gmail.com>            *
+ *   Copyright (C) 2006 by Pino Toscano <pino@kde.org>                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+
+// qt/kde includes
+#include <qapplication.h>
+#include <qevent.h>
+#include <qfont.h>
+#include <qframe.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <QPainter>
+#include <qpushbutton.h>
+#include <qstyle.h>
+#include <qstyleoption.h>
+#include <qstylepainter.h>
+#include <qtextedit.h>
+#include <qtoolbutton.h>
+#include <kglobal.h>
+#include <klocale.h>
+
+// local includes
 #include "annotwindow.h"
+#include "core/annotations.h"
 
 
-MouseBox::MouseBox( QWidget * parent)
-    : QWidget(parent),pointpressed(0,0)//pointpressed(QPoint(0,0))// m_parent(parent)
+class CloseButton
+  : public QPushButton
 {
-}
+public:
+    CloseButton( QWidget * parent = 0 )
+      : QPushButton( parent )
+    {
+        setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        QSize size = QSize( 14, 14 ).expandedTo( QApplication::globalStrut() );
+        setFixedSize( size );
+        setIcon( style()->standardIcon( QStyle::SP_DockWidgetCloseButton ) );
+        setIconSize( size );
+        setToolTip( i18n( "Close" ) );
+    }
+};
 
-void MouseBox::paintEvent(QPaintEvent *e)
+
+class MovableTitle
+  : public QWidget
 {
-    emit paintevent(e);
-}
-void MouseBox::mousePressEvent(QMouseEvent *e)
+public:
+    MovableTitle( QWidget * parent )
+      : QWidget( parent )
+    {
+        QVBoxLayout * mainlay = new QVBoxLayout( this );
+        mainlay->setMargin( 0 );
+        mainlay->setSpacing( 0 );
+        // close button row
+        QHBoxLayout * buttonlay = new QHBoxLayout();
+        mainlay->addLayout( buttonlay );
+        titleLabel = new QLabel( this );
+        QFont f = titleLabel->font();
+        f.setBold( true );
+        titleLabel->setFont( f );
+        titleLabel->setCursor( Qt::SizeAllCursor );
+        buttonlay->addWidget( titleLabel );
+        dateLabel = new QLabel( this );
+        dateLabel->setAlignment( Qt::AlignTop | Qt::AlignRight );
+        dateLabel->setCursor( Qt::SizeAllCursor );
+        buttonlay->addWidget( dateLabel );
+        CloseButton * close = new CloseButton( this );
+        connect( close, SIGNAL( clicked() ), parent, SLOT( hide() ) );
+        buttonlay->addWidget( close );
+        // option button row
+        QHBoxLayout * optionlay = new QHBoxLayout();
+        mainlay->addLayout( optionlay );
+        authorLabel = new QLabel( this );
+        authorLabel->setCursor( Qt::SizeAllCursor );
+        authorLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+        optionlay->addWidget( authorLabel );
+        optionButton = new QToolButton( this );
+        optionButton->setText( i18n( "Options" ) );
+        optionButton->setAutoRaise( true );
+        optionButton->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+        optionlay->addWidget( optionButton );
+
+        titleLabel->installEventFilter( this );
+        dateLabel->installEventFilter( this );
+        authorLabel->installEventFilter( this );
+    }
+
+    virtual bool eventFilter( QObject * obj, QEvent * e )
+    {
+        if ( obj != titleLabel && obj != authorLabel && obj != dateLabel )
+            return false;
+
+        QMouseEvent * me = 0;
+        switch ( e->type() )
+        {
+            case QEvent::MouseButtonPress:
+                me = (QMouseEvent*)e;
+                mousePressPos = me->pos();
+                break;
+            case QEvent::MouseButtonRelease:
+                mousePressPos = QPoint();
+                break;
+            case QEvent::MouseMove:
+                me = (QMouseEvent*)e;
+                parentWidget()->move( me->pos() - mousePressPos + parentWidget()->pos() );
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+
+    void setTitle( const QString& title )
+    {
+        titleLabel->setText( QString( " " ) + title );
+    }
+
+    void setDate( const QDateTime& dt )
+    {
+        dateLabel->setText( KGlobal::locale()->formatDateTime( dt, true, true ) + ' ' );
+    }
+
+    void setAuthor( const QString& author )
+    {
+        authorLabel->setText( QString( " " ) + author );
+    }
+
+    void connectOptionButton( QObject * recv, const char* method )
+    {
+        connect( optionButton, SIGNAL( clicked() ), recv, method );
+    }
+
+private:
+    QLabel * titleLabel;
+    QLabel * dateLabel;
+    QLabel * authorLabel;
+    QPoint mousePressPos;
+    QToolButton * optionButton;
+};
+
+
+class ResizeBox
+  : public QWidget
 {
-    pointpressed=e->pos();
-    //kDebug( )<<"astario:  mousebox pressed"<<endl;
-    emit mousepressevent(e);
-}
-void MouseBox::mouseMoveEvent(QMouseEvent *e)
-{
-    emit mousemoveevent(e);
-}
-void MouseBox::mouseReleaseEvent(QMouseEvent *e)
-{
-    emit mousereleaseevent(e);
-}
+public:
+    ResizeBox( QWidget * parent )
+      : QWidget( parent )
+    {
+        setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        setFixedSize( style()->sizeFromContents( QStyle::CT_SizeGrip, 0, QSize( 11, 11 ) ) );
+        setCursor( layoutDirection() == Qt::LeftToRight ? Qt::SizeFDiagCursor : Qt::SizeBDiagCursor );
+    }
+
+    virtual void paintEvent( QPaintEvent * )
+    {
+        QStyleOptionSizeGrip opt;
+        opt.initFrom( this );
+        opt.corner = layoutDirection() == Qt::LeftToRight ? Qt::BottomRightCorner : Qt::BottomLeftCorner;
+        QStylePainter sp( this );
+        sp.drawControl( QStyle::CE_SizeGrip, opt );
+    }
+
+    virtual void mousePressEvent( QMouseEvent * e )
+    {
+        mousePressPos = e->pos();
+    }
+
+    virtual void mouseMoveEvent( QMouseEvent * e )
+    {
+        QSize sz = parentWidget()->size();
+        QPoint dpt = e->pos() - mousePressPos;
+        sz.setHeight( qMax( parentWidget()->minimumHeight(), sz.height() + dpt.y() ) );
+        sz.setWidth( qMax( parentWidget()->minimumWidth(), sz.width() + dpt.x() ) );
+        parentWidget()->resize( sz );
+    }
+
+private:
+    QPoint mousePressPos;
+};
+
 
 AnnotWindow::AnnotWindow( QWidget * parent, Annotation * annot)
-    : QWidget(parent,Qt::SubWindow), m_annot( annot )
+    : QFrame( parent ), m_annot( annot )
 {
+    setAutoFillBackground( true );
+    setFrameStyle( Panel | Raised );
+
     textEdit=new QTextEdit(m_annot->window.text, this);
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
-    modTime=m_annot->modifyDate.toString(Qt::ISODate);
     
-    setPalette( QPalette(m_annot->style.color));
+    QColor col = m_annot->style.color.isValid() ? m_annot->style.color : Qt::yellow;
+    setPalette( QPalette( col ) );
     QPalette pl=textEdit->palette();
-    pl.setColor(QPalette::Base,m_annot->style.color);
+    pl.setColor( QPalette::Base, col );
     textEdit->setPalette(pl);
-    titleBox=new MouseBox(this);
-    titleBox->setCursor(Qt::SizeAllCursor);
-    resizerBox=new MouseBox(this);
-    resizerBox->setCursor(Qt::SizeFDiagCursor);
-    connect( titleBox,SIGNAL(mousemoveevent(QMouseEvent*)),
-             this,SLOT(slotTitleMouseMove(QMouseEvent*)));
-    connect( resizerBox,SIGNAL(mousemoveevent(QMouseEvent*)),
-             this,SLOT(slotResizerMouseMove(QMouseEvent*)));
-    connect( resizerBox,SIGNAL(paintevent(QPaintEvent*)),
-             this,SLOT(slotResizerPaint(QPaintEvent*)));
-    btnClose=new MouseBox(this);
-    connect( btnClose,SIGNAL(mousereleaseevent( QMouseEvent* )),
-             this,SLOT(slotCloseBtn( QMouseEvent* )));
-             connect( btnClose,SIGNAL(paintevent( QPaintEvent* )),
-                      this,SLOT(slotPaintCloseBtn( QPaintEvent* )));
-    btnOption=new MouseBox(this);
-    
-    connect( btnOption,SIGNAL(mousereleaseevent( QMouseEvent* )),
-             this,SLOT(slotOptionBtn( QMouseEvent* )));
- //   connect( btnOption,SIGNAL(paintevent( QPaintEvent* )),
- //            this,SLOT(slotPaintOptionBtn( QPaintEvent* )));
-    
+
+    QVBoxLayout * mainlay = new QVBoxLayout( this );
+    mainlay->setMargin( 2 );
+    mainlay->setSpacing( 0 );
+    m_title = new MovableTitle( this );
+    mainlay->addWidget( m_title );
+    mainlay->addWidget( textEdit );
+    QHBoxLayout * lowerlay = new QHBoxLayout();
+    mainlay->addLayout( lowerlay );
+    lowerlay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Fixed ) );
+    ResizeBox * sb = new ResizeBox( this );
+    lowerlay->addWidget( sb );
+
+    m_title->setTitle( m_annot->window.summary );
+    m_title->setDate( m_annot->modifyDate );
+    m_title->setAuthor( m_annot->author );
+    m_title->connectOptionButton( this, SLOT( slotOptionBtn() ) );
 
     setGeometry(10,10,300,300 );
-    
-
-    
 }
 
-void AnnotWindow::paintEvent(QPaintEvent *)
-{
-    QPainter annopainter(this);
-    QRect rc=rect();
-    QPen pen=QPen(Qt::black);
-    annopainter.setPen(pen);
-    annopainter.setBrush(m_annot->style.color);
-    annopainter.drawRect( rc );
-    annopainter.translate( rc.topLeft() );
-
-//    QFont qft=annopainter.font();
-//    qft.setPointSize( 10 );
-//    annopainter.setFont( qft);
-    annopainter.drawText(rc.right()-150,16,modTime);
-    annopainter.drawText(2,32,m_annot->author);
-    
-    pen.setWidth(2);
-    annopainter.setPen(pen);
-    annopainter.drawText(2,16,m_annot->window.summary);
-
-    
-    //draw options button:
-    pen.setWidth(1);
-    annopainter.setPen(pen);
-    rc=btnOption->geometry();   //(0,0,x,x)
-    annopainter.drawRect(rc.left(),rc.top(),rc.width()-1,rc.height()-1);
-    annopainter.drawText( rc.left(),rc.top(),rc.width(),rc.height(),Qt::AlignLeft,"options");
-    
-//    annopainter.drawLine( 0,10,rc.width(),10);
-}
-
-
-void AnnotWindow::resizeEvent ( QResizeEvent * e )
-{    //size:
-    QSize sz=e->size();
-    btnClose->setGeometry( sz.width()-16,2,14,14);
-    btnOption->setGeometry( sz.width()-80,16,75,16);
-    titleBox->setGeometry(0,0,sz.width(),32);
-    textEdit->setGeometry(0,32,sz.width(),sz.height()-32-14);
-    resizerBox->setGeometry(sz.width()-14,sz.height()-14,14,14);
-    //titlerc.setRect( 0,0,sz.width(),20);
-    //sizegriprc.setRect(sz.width()-14,sz.height()-14,14,14);
-}
-
-void AnnotWindow::slotTitleMouseMove(QMouseEvent* e)
-{
-    if (e->buttons() != Qt::LeftButton)
-        return;
-    move(e->pos()-titleBox->pointpressed+pos());
-}
-void AnnotWindow::slotResizerMouseMove(QMouseEvent* e)
-{
-    if (e->buttons() != Qt::LeftButton)
-        return;
-    QSize sz=size();
-    QPoint dpt=e->pos()-resizerBox->pointpressed;
-    sz.setHeight(qMax(10,sz.height()+dpt.y()));
-    sz.setWidth(qMax(20,sz.width()+dpt.x()));
-    resize(sz);
-}
-void AnnotWindow::slotResizerPaint(QPaintEvent* )
-{
-    //draw Size griper:
-    QPainter pnter(resizerBox);
-    int w=resizerBox->rect().width(),h=resizerBox->rect().height();
-    for(int i=0;i<5;i++)
-    {
-        pnter.drawLine( w-1-i*3,h,w,h-1-i*3);
-    }
-}
-
-
-void AnnotWindow::slotPaintCloseBtn(QPaintEvent* )
-{
-    //draw close button
-    QPainter pnter(btnClose);
-    QRect rc=btnClose->rect();
-    rc.moveTo( 0,0);
-    pnter.drawRect(rc.left(),rc.top(),rc.width()-1,rc.height()-1);
-    pnter.drawLine(rc.topLeft(),rc.bottomRight());
-    pnter.drawLine(rc.topRight(),rc.bottomLeft());
-}
-
-void AnnotWindow::slotCloseBtn( QMouseEvent* )
-{
-    this->hide();
-}
-void AnnotWindow::slotOptionBtn( QMouseEvent* )
+void AnnotWindow::slotOptionBtn()
 {
     //TODO: call context menu in pageview
     //emit sig...
 }
+
  void AnnotWindow::slotsaveWindowText()
 {
     m_annot->window.text=textEdit->toPlainText();
 }
+
 #include "annotwindow.moc"

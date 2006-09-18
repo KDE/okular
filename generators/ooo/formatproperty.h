@@ -10,10 +10,12 @@
 #ifndef OOO_FORMATPROPERTY_H
 #define OOO_FORMATPROPERTY_H
 
+#include <QtCore/QVector>
 #include <QtGui/QColor>
 
 class QTextBlockFormat;
 class QTextCharFormat;
+class QTextListFormat;
 class QTextFormat;
 
 namespace OOO {
@@ -65,25 +67,28 @@ class ParagraphFormatProperty : public FormatProperty
     void setPageNumber( int number );
     void setWritingMode( WritingMode mode );
     void setTextAlignment( Qt::Alignment alignment );
+    void setBackgroundColor( const QColor &color );
 
   private:
     int mPageNumber;
     WritingMode mWritingMode;
     Qt::Alignment mAlignment;
     bool mHasAlignment;
+    QColor mBackgroundColor;
 };
 
-class TextFormatProperty : public FormatProperty
+class TextFormatProperty
 {
   public:
     TextFormatProperty();
     TextFormatProperty( const StyleInformation *information );
     virtual ~TextFormatProperty() {}
 
-    virtual void apply( QTextFormat *format ) const;
+    virtual void apply( QTextCharFormat *format ) const;
 
     void setFontSize( int size );
     void setFontName( const QString &name );
+    void setFontWeight( int weight );
     void setTextPosition( int position );
     void setColor( const QColor &color );
     void setBackgroundColor( const QColor &color );
@@ -92,6 +97,7 @@ class TextFormatProperty : public FormatProperty
     const StyleInformation *mStyleInformation;
     int mFontSize;
     bool mHasFontSize;
+    int mFontWeight;
     QString mFontName;
     int mTextPosition;
     QColor mColor;
@@ -111,6 +117,8 @@ class StyleFormatProperty
     QString parentStyleName() const;
 
     void setFamily( const QString &family );
+    void setDefaultStyle( bool defaultStyle );
+
     void setMasterPageName( const QString &masterPageName );
 
     void setParagraphFormat( const ParagraphFormatProperty &format );
@@ -123,6 +131,7 @@ class StyleFormatProperty
     ParagraphFormatProperty mParagraphFormat;
     TextFormatProperty mTextFormat;
     const StyleInformation *mStyleInformation;
+    bool mDefaultStyle;
 };
 
 class PageFormatProperty : public FormatProperty
@@ -158,6 +167,7 @@ class PageFormatProperty : public FormatProperty
 
     double width() const;
     double height() const;
+    double margin() const;
 
   private:
     PageUsage mPageUsage;
@@ -168,6 +178,28 @@ class PageFormatProperty : public FormatProperty
     double mHeight;
     double mWidth;
     PrintOrientation mPrintOrientation;
+};
+
+class ListFormatProperty
+{
+  public:
+    enum Type
+    {
+      Number,
+      Bullet
+    };
+
+    ListFormatProperty();
+    ListFormatProperty( Type type );
+    virtual ~ListFormatProperty();
+
+    virtual void apply( QTextListFormat *format, int level ) const;
+
+    void addItem( int level, double indent = 0 );
+
+  private:
+    Type mType;
+    QVector<double> mIndents;
 };
 
 }

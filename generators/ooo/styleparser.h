@@ -24,6 +24,8 @@ class StyleParser
 
     bool parse();
 
+    static double convertUnit( const QString& );
+
   private:
     bool parseContentFile();
     bool parseStyleFile();
@@ -39,8 +41,7 @@ class StyleParser
     ParagraphFormatProperty parseParagraphProperty( QDomElement& );
     TextFormatProperty parseTextProperty( QDomElement& );
     PageFormatProperty parsePageProperty( QDomElement& );
-
-    double convertUnit( const QString& ) const;
+    ListFormatProperty parseListProperty( QDomElement& );
 
     const Document *mDocument;
     StyleInformation *mStyleInformation;

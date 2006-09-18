@@ -15,6 +15,7 @@
 #include "core/annotations.h"
 
 class QComboBox;
+class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class AnnotationWidget;
@@ -67,7 +68,7 @@ class AnnotationWidget
 public:
     virtual ~AnnotationWidget();
 
-    virtual Annotation::SubType annotationType();
+    virtual Annotation::SubType annotationType() const;
 
     virtual QWidget * widget() = 0;
 
@@ -116,6 +117,26 @@ private:
     StampAnnotation * m_stampAnn;
     QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
+};
+
+class LineAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    LineAnnotationWidget( Annotation * ann );
+
+    virtual QWidget * widget();
+
+    virtual void applyChanges();
+
+private:
+    LineAnnotation * m_lineAnn;
+    int m_lineType;
+    QWidget * m_widget;
+    QDoubleSpinBox * m_spinLL;
+    QDoubleSpinBox * m_spinLLE;
 };
 
 #endif

@@ -12,6 +12,7 @@
 
 #include <kpagedialog.h>
 
+class QLabel;
 class QLineEdit;
 class KColorButton;
 class KIntNumInput;
@@ -40,6 +41,7 @@ private:
     KColorButton *colorBn;
     KIntNumInput *m_opacity;
     AnnotationWidget *m_annotWidget;
+    QLabel *m_modifyDateLabel;
     
     void setCaptionTextbyAnnotType();
 

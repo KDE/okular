@@ -446,6 +446,7 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
     : QWidget( parent ), d( new ToolBarPrivate )
 {
     setAttribute( Qt::WA_OpaquePaintEvent, true );
+    setMouseTracking( true );
 
     // initialize values of the private data storage structure
     d->anchorWidget = anchorWidget;
@@ -543,7 +544,7 @@ void PageViewToolBar::mousePressEvent( QMouseEvent * e )
 
 void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
 {
-    if ( e->button() != Qt::LeftButton )
+    if ( ( QApplication::mouseButtons() & Qt::LeftButton ) != Qt::LeftButton )
         return;
 
     // compute the nearest side to attach the widget to

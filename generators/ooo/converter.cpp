@@ -7,8 +7,18 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QDebug>
+
+#include <QtCore/QUrl>
+#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
+#include <QtGui/QTextFrame>
+#include <QtGui/QTextList>
+#include <QtGui/QTextTableCell>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomText>
 
 #include "converter.h"
 #include "document.h"
@@ -17,10 +27,24 @@
 
 using namespace OOO;
 
+Style::Style( const QTextBlockFormat &blockFormat, const QTextCharFormat &textFormat )
+  : mBlockFormat( blockFormat ), mTextFormat( textFormat )
+{
+}
+
+QTextBlockFormat Style::blockFormat() const
+{
+  return mBlockFormat;
+}
+
+QTextCharFormat Style::textFormat() const
+{
+  return mTextFormat;
+}
+
 Converter::Converter( const Document *document )
   : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
-    mStyleInformation( new StyleInformation ), mInParagraph( false ),
-    mInHeader( false )
+    mStyleInformation( new StyleInformation )
 {
 }
 
@@ -35,24 +59,406 @@ bool Converter::convert()
   delete mTextDocument;
   delete mCursor;
 
+  mHeaderInfos.clear();
+
   mTextDocument = new QTextDocument;
   mCursor = new QTextCursor( mTextDocument );
 
+  /**
+   * Read the style properties, so the are available when
+   * parsing the content.
+   */
   StyleParser styleParser( mDocument, mStyleInformation );
   if ( !styleParser.parse() )
     return false;
 
+  /**
+   * Add all images of the document to resource framework
+   */
+  const QMap<QString, QByteArray> images = mDocument->images();
+  QMapIterator<QString, QByteArray> it( images );
+  while ( it.hasNext() ) {
+    it.next();
+
+    mTextDocument->addResource( QTextDocument::ImageResource, QUrl( it.key() ), QImage::fromData( it.value() ) );
+  }
+
+  /**
+   * Set the correct page size
+   */
   const QString masterLayout = mStyleInformation->masterLayout( "Standard" );
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
   mTextDocument->setPageSize( QSize( qRound( property.width() ), qRound( property.height() ) ) );
 
+  QTextFrameFormat frameFormat;
+  frameFormat.setMargin( qRound( property.margin() ) );
+
+  QTextFrame *rootFrame = mTextDocument->rootFrame();
+  rootFrame->setFrameFormat( frameFormat );
+
+  /**
+   * Parse the content of the document
+   */
   QXmlSimpleReader reader;
-  reader.setContentHandler( this );
 
   QXmlInputSource source;
   source.setData( mDocument->content() );
 
-  return reader.parse( &source, true );
+  QString errorMsg;
+  int errorLine, errorCol;
+
+  QDomDocument document;
+  if ( !document.setContent( &source, &reader, &errorMsg, &errorLine, &errorCol ) ) {
+    qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol );
+    return false;
+  }
+
+  const QDomElement documentElement = document.documentElement();
+
+  QDomElement element = documentElement.firstChildElement();
+  while ( !element.isNull() ) {
+    if ( element.tagName() == QLatin1String( "body" ) ) {
+      if ( !convertBody( element ) )
+        return false;
+    }
+
+    element = element.nextSiblingElement();
+  }
+
+  /**
+   * Create table of contents
+   */
+  if ( !createTableOfContents() )
+    return false;
+
+  return true;
+}
+
+bool Converter::convertBody( const QDomElement &element )
+{
+  QDomElement child = element.firstChildElement();
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "text" ) ) {
+      if ( !convertText( child ) )
+        return false;
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::convertText( const QDomElement &element )
+{
+  QDomElement child = element.firstChildElement();
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "p" ) ) {
+      mCursor->insertBlock();
+      if ( !convertParagraph( mCursor, child ) )
+        return false;
+    } else if ( child.tagName() == QLatin1String( "h" ) ) {
+      mCursor->insertBlock();
+      if ( !convertHeader( mCursor, child ) )
+        return false;
+    } else if ( child.tagName() == QLatin1String( "list" ) ) {
+      if ( !convertList( child ) )
+        return false;
+    } else if ( child.tagName() == QLatin1String( "table" ) ) {
+      if ( !convertTable( child ) )
+        return false;
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
+{
+  const QString styleName = element.attribute( "style-name" );
+  const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
+
+  QTextBlockFormat blockFormat;
+  QTextCharFormat textFormat;
+  property.apply( &blockFormat, &textFormat );
+
+  cursor->setBlockFormat( blockFormat );
+
+  QDomNode child = element.firstChild();
+  while ( !child.isNull() ) {
+    if ( child.isElement() ) {
+      const QDomElement childElement = child.toElement();
+      if ( childElement.tagName() == QLatin1String( "span" ) ) {
+        if ( !convertSpan( cursor, childElement, textFormat ) )
+          return false;
+      }
+    } else if ( child.isText() ) {
+      const QDomText childText = child.toText();
+      if ( !convertTextNode( cursor, childText, textFormat ) )
+        return false;
+    }
+
+    child = child.nextSibling();
+  }
+
+  HeaderInfo headerInfo;
+  headerInfo.block = cursor->block();
+  headerInfo.text = element.text();
+  headerInfo.level = element.attribute( "outline-level" ).toInt();
+
+  mHeaderInfos.append( headerInfo );
+
+  return true;
+}
+
+bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element )
+{
+  const QString styleName = element.attribute( "style-name" );
+  const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
+
+  QTextBlockFormat blockFormat;
+  QTextCharFormat textFormat;
+  property.apply( &blockFormat, &textFormat );
+
+  cursor->setBlockFormat( blockFormat );
+
+  QDomNode child = element.firstChild();
+  while ( !child.isNull() ) {
+    if ( child.isElement() ) {
+      const QDomElement childElement = child.toElement();
+      if ( childElement.tagName() == QLatin1String( "span" ) ) {
+        if ( !convertSpan( cursor, childElement, textFormat ) )
+          return false;
+      } else if ( childElement.tagName() == QLatin1String( "tab" ) ) {
+        mCursor->insertText( "    " );
+      } else if ( childElement.tagName() == QLatin1String( "s" ) ) {
+        QString spaces;
+        spaces.fill( ' ', childElement.attribute( "c" ).toInt() );
+        mCursor->insertText( spaces );
+      } else if ( childElement.tagName() == QLatin1String( "frame" ) ) {
+        if ( !convertFrame( childElement ) )
+          return false;
+      }
+    } else if ( child.isText() ) {
+      const QDomText childText = child.toText();
+      if ( !convertTextNode( cursor, childText, textFormat ) )
+        return false;
+    }
+
+    child = child.nextSibling();
+  }
+
+  return true;
+}
+
+bool Converter::convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format )
+{
+  cursor->insertText( element.data(), format );
+
+  return true;
+}
+
+bool Converter::convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format )
+{
+  const QString styleName = element.attribute( "style-name" );
+  const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
+
+  QTextBlockFormat blockFormat;
+  QTextCharFormat textFormat = format;
+  property.apply( &blockFormat, &textFormat );
+
+  QDomNode child = element.firstChild();
+  while ( !child.isNull() ) {
+    if ( child.isText() ) {
+      const QDomText childText = child.toText();
+      if ( !convertTextNode( cursor, childText, textFormat ) )
+        return false;
+    }
+
+    child = child.nextSibling();
+  }
+
+  return true;
+}
+
+bool Converter::convertList( const QDomElement &element )
+{
+  const QString styleName = element.attribute( "style-name" );
+  const ListFormatProperty property = mStyleInformation->listProperty( styleName );
+
+  QTextListFormat format;
+  property.apply( &format, 0 );
+
+  QTextList *list = mCursor->insertList( format );
+
+  QDomElement child = element.firstChildElement();
+  int loop = 0;
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "list-item" ) ) {
+      loop++;
+
+      const QDomElement paragraphElement = child.firstChildElement();
+      if ( paragraphElement.tagName() != QLatin1String( "p" ) ) {
+        child = child.nextSiblingElement();
+        continue;
+      }
+
+        // FIXME: as soon as Qt is fixed
+//      if ( loop > 1 )
+        mCursor->insertBlock();
+
+      if ( !convertParagraph( mCursor, paragraphElement ) )
+        return false;
+
+//      if ( loop > 1 )
+        list->add( mCursor->block() );
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::convertTable( const QDomElement &element )
+{
+  /**
+   * Find out dimension of the table
+   */
+  QDomElement rowElement = element.firstChildElement();
+
+  int rowCounter = 0;
+  int columnCounter = 0;
+  while ( !rowElement.isNull() ) {
+    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+      rowCounter++;
+
+      int counter = 0;
+      QDomElement columnElement = rowElement.firstChildElement();
+      while ( !columnElement.isNull() ) {
+        if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
+          counter++;
+        }
+        columnElement = columnElement.nextSiblingElement();
+      }
+
+      columnCounter = qMax( columnCounter, counter );
+    }
+
+    rowElement = rowElement.nextSiblingElement();
+  }
+
+  /**
+   * Create table
+   */
+  QTextTable *table = mCursor->insertTable( rowCounter, columnCounter );
+
+  /**
+   * Fill table
+   */
+  rowElement = element.firstChildElement();
+
+  rowCounter = 0;
+  while ( !rowElement.isNull() ) {
+    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+
+      int columnCounter = 0;
+      QDomElement columnElement = rowElement.firstChildElement();
+      while ( !columnElement.isNull() ) {
+        if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
+
+          QDomElement paragraphElement = columnElement.firstChildElement();
+          while ( !paragraphElement.isNull() ) {
+            if ( paragraphElement.tagName() == QLatin1String( "p" ) ) {
+              QTextTableCell cell = table->cellAt( rowCounter, columnCounter );
+              QTextCursor cursor = cell.firstCursorPosition();
+
+              if ( !convertParagraph( &cursor, paragraphElement ) )
+                return false;
+            }
+
+            paragraphElement = paragraphElement.nextSiblingElement();
+          }
+          columnCounter++;
+        }
+        columnElement = columnElement.nextSiblingElement();
+      }
+
+      rowCounter++;
+    }
+
+    rowElement = rowElement.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::convertFrame( const QDomElement &element )
+{
+  QDomElement child = element.firstChildElement();
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "image" ) ) {
+      const QString href = child.attribute( "href" );
+      QTextImageFormat format;
+      format.setWidth( StyleParser::convertUnit( element.attribute( "width" ) ) );
+      format.setHeight( StyleParser::convertUnit( element.attribute( "height" ) ) );
+      format.setName( href );
+
+      mCursor->insertImage( format );
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  return true;
+}
+
+bool Converter::createTableOfContents()
+{
+  const QSizeF pageSize = mTextDocument->pageSize();
+
+  for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
+    const HeaderInfo headerInfo = mHeaderInfos[ i ];
+
+    const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( headerInfo.block );
+
+    int page = qRound( rect.y() ) / qRound( pageSize.height() );
+    int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+
+    DocumentViewport viewport( page );
+    viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
+    viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
+    viewport.rePos.enabled = true;
+    viewport.rePos.pos = DocumentViewport::Center;
+
+    QStack<QDomNode> parentNodeStack;
+    QDomNode parentNode = mTableOfContents;
+    int level = 2;
+
+    QDomElement item = mTableOfContents.createElement( headerInfo.text );
+    item.setAttribute( "Viewport", viewport.toString() );
+
+    int newLevel = headerInfo.level;
+    if ( newLevel == level ) {
+      parentNode.appendChild( item );
+    } else if ( newLevel > level ) {
+      parentNodeStack.push( parentNode );
+      parentNode = parentNode.lastChildElement();
+      parentNode.appendChild( item );
+      level++;
+    } else {
+      for ( int i = level; i > newLevel; i-- ) {
+        level--;
+        parentNode = parentNodeStack.pop();
+      }
+
+      parentNode.appendChild( item );
+    }
+  }
+
+  return true;
 }
 
 QTextDocument *Converter::textDocument() const
@@ -65,77 +471,8 @@ MetaInformation::List Converter::metaInformation() const
   return mStyleInformation->metaInformation();
 }
 
-bool Converter::characters( const QString &ch )
+DocumentSynopsis Converter::tableOfContents() const
 {
-  if ( !mInParagraph && !mInHeader )
-    return true;
-
-  if ( !ch.isEmpty() )
-    mCursor->insertText( ch, mTextFormat );
-
-  return true;
+  return mTableOfContents;
 }
 
-bool Converter::startElement( const QString &namespaceUri, const QString &localName, const QString &qName,
-                             const QXmlAttributes &attributes )
-{
-  if ( localName == QLatin1String( "p" ) ) {
-    mInParagraph = true;
-
-    const QString styleName = attributes.value( "text:style-name" );
-    const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
-
-    mBlockFormat = QTextBlockFormat();
-    mTextFormat = QTextCharFormat();
-
-    property.apply( &mBlockFormat, &mTextFormat );
-    mCursor->insertBlock();
-    mCursor->setBlockFormat( mBlockFormat );
-  }
-
-  if ( localName == QLatin1String( "h" ) ) {
-    mInHeader = true;
-
-    const QString styleName = attributes.value( "text:style-name" );
-    const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
-
-    mBlockFormat = QTextBlockFormat();
-    mTextFormat = QTextCharFormat();
-
-    property.apply( &mBlockFormat, &mTextFormat );
-    mCursor->insertBlock();
-    mCursor->setBlockFormat( mBlockFormat );
-  }
-
-  if ( mInParagraph && localName == QLatin1String( "span" ) ) {
-    mSpanStack.push( QPair<QTextBlockFormat, QTextCharFormat>( mBlockFormat, mTextFormat ) );
-
-    mBlockFormat = QTextBlockFormat();
-    mTextFormat = QTextCharFormat();
-
-    const QString styleName = attributes.value( "text:style-name" );
-    const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
-    property.apply( &mBlockFormat, &mTextFormat );
-  }
-
-  return true;
-}
-
-bool Converter::endElement( const QString &namespaceUri, const QString &localName, const QString &qName )
-{
-  if ( localName == QLatin1String( "p" ) ) {
-    mInParagraph = false;
-  }
-
-  if ( localName == QLatin1String( "h" ) ) {
-    mInHeader = false;
-  }
-
-  if ( mInParagraph && localName == QLatin1String( "span" ) ) {
-    const QPair<QTextBlockFormat, QTextCharFormat> formats = mSpanStack.pop();
-    mBlockFormat = formats.first;
-    mTextFormat = formats.second;
-  }
-
-  return true;
-}

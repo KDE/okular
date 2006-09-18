@@ -2108,12 +2108,12 @@ void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPo
     NormalizedPoint startCursor( 0.0, 0.0 );
     if ( !startPoint.isNull() )
     {
-        startCursor = NormalizedPoint( startPoint.x(), startPoint.y(), geometry.width(), geometry.height() );
+        startCursor = NormalizedPoint( startPoint.x(), startPoint.y(), (int)geometry.width(), (int)geometry.height() );
     }
     NormalizedPoint endCursor( 1.0, 1.0 );
     if ( !endPoint.isNull() )
     {
-        endCursor = NormalizedPoint( endPoint.x(), endPoint.y(), geometry.width(), geometry.height() );
+        endCursor = NormalizedPoint( endPoint.x(), endPoint.y(), (int)geometry.width(), (int)geometry.height() );
     }
     ::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
 

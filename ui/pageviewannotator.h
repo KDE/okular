@@ -47,7 +47,6 @@ class PageViewAnnotator : public QObject
         void routeEvent( QMouseEvent * event, PageViewItem * item );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
-        static Annotation* getAnnotationbyPos(const KPDFPage * page, double nX, double nY );
 
     private slots:
         void slotToolSelected( int toolID );

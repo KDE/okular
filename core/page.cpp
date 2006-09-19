@@ -11,6 +11,7 @@
 #include <qstring.h>
 #include <qmap.h>
 #include <qdom.h>
+#include <qset.h>
 #include <kdebug.h>
 
 // local includes
@@ -23,7 +24,21 @@
 
 // temp includes
 #include <sys/time.h>
+
 class TextSelection;
+
+static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<ObjectRect::ObjectType>& which )
+{
+    QLinkedList< ObjectRect * >::iterator it = rects.begin(), end = rects.end();
+    for ( ; it != end; )
+        if ( which.contains( (*it)->objectType() ) )
+        {
+            delete *it;
+            it = rects.erase( it );
+        }
+        else
+            ++it;
+}
 
 /** class KPDFPage **/
 
@@ -81,13 +96,13 @@ RegularAreaRect * KPDFPage::getTextArea ( TextSelection * sel ) const
     return 0;
 }
 
-bool KPDFPage::hasObjectRect( double x, double y ) const
+bool KPDFPage::hasObjectRect( double x, double y, double xScale, double yScale ) const
 {
-    if ( m_rects.count() < 1 )
+    if ( m_rects.isEmpty() )
         return false;
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( (*it)->contains( x, y ) )
+        if ( (*it)->contains( x, y, xScale, yScale ) )
             return true;
     return false;
 }
@@ -143,11 +158,11 @@ QString KPDFPage::getText( const RegularAreaRect * area ) const
 	return ret;
 }
 
-const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double x, double y ) const
+const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
 {
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( (*it)->contains( x, y ) && ((*it)->objectType() == type) )
+        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
             return *it;
     return 0;
 }
@@ -178,8 +193,10 @@ void KPDFPage::setBookmark( bool state )
 
 void KPDFPage::setObjectRects( const QLinkedList< ObjectRect * > rects )
 {
-    qDeleteAll(m_rects);
-    m_rects = rects;
+    QSet<ObjectRect::ObjectType> which;
+    which << ObjectRect::Link << ObjectRect::Image;
+    deleteObjectRects( m_rects, which );
+    m_rects << rects;
 }
 
 /*
@@ -232,13 +249,14 @@ void KPDFPage::addAnnotation( Annotation * annotation )
         kDebug()<<"astario:     inc m_maxuniqueNum="<<m_maxuniqueNum<<endl;
     }
     m_annotations.append( annotation );
+    m_rects.append( new AnnotationObjectRect( annotation ) );
 }
 
 void KPDFPage::modifyAnnotation(Annotation * newannotation )
 {
     if(!newannotation)
         return;
-    bool founded=false;
+
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
     {
@@ -246,16 +264,19 @@ void KPDFPage::modifyAnnotation(Annotation * newannotation )
             return; //modified already
         if((*aIt) && (*aIt)->uniqueName==newannotation->uniqueName)
         {
-            founded=true;
+            int rectfound = false;
+            QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+            for ( ; it != end && !rectfound; ++it )
+                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->pointer() == (*aIt) ) )
+                {
+                    delete *it;
+                    *it = new AnnotationObjectRect( newannotation );
+                    rectfound = true;
+                }
+            delete *aIt;
+            *aIt = newannotation;
             break;
         }
-    }
-    if(founded)
-    {
-        delete *aIt;
-//        m_annotations.erase(aIt);
-//        m_annotations.insert(aIt, newannotation );
-        *aIt=newannotation;
     }
 }
 
@@ -264,23 +285,27 @@ bool KPDFPage::removeAnnotation( Annotation * annotation )
     if ( !annotation || ( annotation->flags & Annotation::DenyDelete ) )
         return false;
 
-    bool founded=false;
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
     {
         if((*aIt) && (*aIt)->uniqueName==annotation->uniqueName)
         {
-            founded=true;
+            int rectfound = false;
+            QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+            for ( ; it != end && !rectfound; ++it )
+                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->pointer() == (*aIt) ) )
+                {
+                    delete *it;
+                    m_rects.erase( it );
+                    rectfound = true;
+                }
+            delete *aIt;
+            m_annotations.erase( aIt );
+            kDebug() << "astario: removed annot: " <<annotation->uniqueName << endl;
             break;
         }
     }
-    
-    if(founded)
-    {
-        delete *aIt;
-            m_annotations.erase(aIt);
-            kDebug()<<"astario: removed annot:"<<annotation->uniqueName<<endl;
-    }
+
     return true;
 }
 
@@ -306,9 +331,10 @@ void KPDFPage::deletePixmapsAndRects()
     for ( ; it != end; ++it )
         delete *it;
     m_pixmaps.clear();
-    // delete ObjectRects
-    qDeleteAll(m_rects);
-    m_rects.clear();
+    // delete ObjectRects of type Link and Image
+    QSet<ObjectRect::ObjectType> which;
+    which << ObjectRect::Link << ObjectRect::Image;
+    deleteObjectRects( m_rects, which );
 }
 
 void KPDFPage::deleteHighlights( int s_id )
@@ -330,6 +356,8 @@ void KPDFPage::deleteHighlights( int s_id )
 
 void KPDFPage::deleteAnnotations()
 {
+    // delete ObjectRects of type Annotation
+    deleteObjectRects( m_rects, QSet<ObjectRect::ObjectType>() << ObjectRect::OAnnotation );
     // delete all stored annotations
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
@@ -366,6 +394,7 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
                 if ( annotation )
                 {
                     m_annotations.append( annotation );
+                    m_rects.append( new AnnotationObjectRect( annotation ) );
                     int pos = annotation->uniqueName.lastIndexOf("-");
                     if(pos != -1)
                     {

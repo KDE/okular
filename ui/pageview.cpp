@@ -1273,7 +1273,7 @@ if (d->document->handleEvent( e ) )
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
             if ( ann->flags & Annotation::DenyDelete )
                 deleteNote->setEnabled( false );
-            showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
+            showProperties = menu.addAction( SmallIconSet("configure"), i18n( "&Properties..." ) );
 
             QAction *choice = menu.exec( e->globalPos() );
 

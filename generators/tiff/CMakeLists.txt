@@ -23,5 +23,5 @@ install(TARGETS okularGenerator_tiff DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_tiff.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES libokularGenerator_tiff.desktop okularTiff.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 

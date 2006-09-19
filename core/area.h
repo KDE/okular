@@ -15,7 +15,9 @@
 #include <qpolygon.h>
 #include <qpainterpath.h>
 #include <kdebug.h>
+
 class QRect;
+class Annotation;
 class KPDFLink;
 
 class NormalizedShape;
@@ -71,30 +73,45 @@ class OKULAR_EXPORT NormalizedRect
  * Type / Class correspondency tab:
  *  - Link      : class KPDFLink  : description of a link
  *  - Image     : class KPDFImage : description of an image (n/a)
+ *  - Annotation: class Annotation: description of an annotation
  */
 class OKULAR_EXPORT ObjectRect
 {
     public:
         // definition of the types of storable objects
-        enum ObjectType { Link, Image };
+        enum ObjectType { Link, Image, OAnnotation };
 
         // default constructor: initialize all parameters
         ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType typ, void * obj );
         ObjectRect( NormalizedRect x, bool ellipse, ObjectType type, void * pnt ) ;
         ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt ) ;
-        ~ObjectRect();
+        virtual ~ObjectRect();
 
         // query type and get a const pointer to the stored object
         inline ObjectType objectType() const { return m_objectType; }
         inline const void * pointer() const { return m_pointer; }
         inline const QPainterPath &region() const { return m_path; }
-        QRect boundingRect( int xScale, int yScale ) const;
-        inline bool contains( double x, double y ) const { return m_path.contains( QPointF( x, y ) ); }
+        virtual QRect boundingRect( double xScale, double yScale ) const;
+        virtual bool contains( double x, double y, double /*xScale*/, double /*yScale*/ ) const { return m_path.contains( QPointF( x, y ) ); }
 
-    private:
+    protected:
         ObjectType m_objectType;
         void * m_pointer;
         QPainterPath m_path;
+};
+
+class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
+{
+    public:
+        AnnotationObjectRect( Annotation * ann );
+        virtual ~AnnotationObjectRect();
+
+        virtual QRect boundingRect( double xScale, double yScale ) const;
+        virtual bool contains( double x, double y, double xScale, double yScale ) const;
+        inline Annotation * annotation() const { return m_ann; }
+
+    private:
+        Annotation * m_ann;
 };
 
 /**

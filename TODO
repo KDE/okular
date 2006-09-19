@@ -15,6 +15,7 @@ In progress [working on]:
 -> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
+-> text selection in wordprocessor style
 -> link: add a KPDFAnchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
@@ -65,7 +66,6 @@ More items (first items will enter 'In progress list' first):
 -> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
--> text selection in wordprocessor style (very hard, not impossible)
 -> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> wallet: use asynchronous interface (to prevent ui-blocking)
@@ -73,7 +73,7 @@ More items (first items will enter 'In progress list' first):
 -> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)
 -> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
--> core: pdf forms support (BR91809)
+-> core: forms support (mainly for pdf) (BR91809)
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages

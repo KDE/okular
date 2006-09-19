@@ -12,6 +12,8 @@
 #include <qapplication.h>
 #include <qevent.h>
 #include <qfont.h>
+#include <qfontinfo.h>
+#include <qfontmetrics.h>
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -24,6 +26,7 @@
 #include <qtoolbutton.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 // local includes
 #include "annotwindow.h"
@@ -68,6 +71,9 @@ public:
         buttonlay->addWidget( titleLabel );
         dateLabel = new QLabel( this );
         dateLabel->setAlignment( Qt::AlignTop | Qt::AlignRight );
+        f = dateLabel->font();
+        f.setPointSize( QFontInfo( f ).pointSize() - 2 );
+        dateLabel->setFont( f );
         dateLabel->setCursor( Qt::SizeAllCursor );
         buttonlay->addWidget( dateLabel );
         CloseButton * close = new CloseButton( this );
@@ -81,9 +87,12 @@ public:
         authorLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
         optionlay->addWidget( authorLabel );
         optionButton = new QToolButton( this );
-        optionButton->setText( i18n( "Options" ) );
+        QString opttext = i18n( "Options" );
+        optionButton->setText( opttext );
         optionButton->setAutoRaise( true );
-        optionButton->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+        QSize s = QFontMetrics( optionButton->font() ).boundingRect( opttext ).size() + QSize( 8, 8 );
+        optionButton->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        optionButton->setFixedSize( s );
         optionlay->addWidget( optionButton );
 
         titleLabel->installEventFilter( this );

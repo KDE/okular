@@ -24,7 +24,7 @@ install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_fax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
 kde4_install_icons( ${ICON_INSTALL_DIR}   )
 

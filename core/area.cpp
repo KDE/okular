@@ -6,9 +6,11 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+
 #include <qrect.h>
 #include <kdebug.h>
 #include "link.h"
+#include "annotations.h"
 #include "area.h"
 
 #include <math.h>
@@ -161,7 +163,7 @@ ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt )
     m_path.addPolygon( poly );
 }
 
-QRect ObjectRect::boundingRect( int xScale, int yScale ) const
+QRect ObjectRect::boundingRect( double xScale, double yScale ) const
 {
     const QRectF &br = m_path.boundingRect();
     return QRect( (int)( br.left() * xScale ), (int)( br.top() * yScale ),
@@ -178,3 +180,32 @@ ObjectRect::~ObjectRect()
     else
         kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }
+
+/** class AnnotationObjectRect **/
+
+AnnotationObjectRect::AnnotationObjectRect( Annotation * ann )
+    : ObjectRect( QPolygonF(), OAnnotation, ann ), m_ann( ann )
+{
+}
+
+QRect AnnotationObjectRect::boundingRect( double xScale, double yScale ) const
+{
+    if ( m_ann->subType() == Annotation::AText && ( ( (TextAnnotation*)m_ann )->textType == TextAnnotation::Linked ) )
+    {
+        return QRect( (int)( m_ann->boundary.left * xScale ), (int)( m_ann->boundary.top * yScale ), 24, 24 );
+    }
+    return m_ann->boundary.geometry( (int)xScale, (int)yScale );
+}
+
+bool AnnotationObjectRect::contains( double x, double y, double xScale, double yScale ) const
+{
+    return boundingRect( xScale, yScale ).contains( (int)( x * xScale ), (int)( y * yScale ), false );
+}
+
+AnnotationObjectRect::~AnnotationObjectRect()
+{
+    // the annotation pointer is kept elsewehere (in KPDFPage, most probably),
+    // so just release its pointer
+    m_pointer = 0;
+}
+

@@ -803,7 +803,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             }
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
-                m_pageView->displayMessage( toolSubElement.text() );
+                m_pageView->displayMessage( toolSubElement.text(), PageViewMessage::Annotation );
         }
 
         // consistancy warning
@@ -819,20 +819,6 @@ void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     KpdfSettings::setEditToolBarPlacement( (int)side );
     KpdfSettings::writeConfig();
-}
-
-Annotation* PageViewAnnotator::getAnnotationbyPos(const KPDFPage * page, double nX, double nY )
-{
-    QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd =page->m_annotations.end();
-    for ( ; aIt != aEnd; ++aIt )
-    {
-        Annotation * ann = *aIt;
-        if ( ann->boundary.contains( nX, nY ) )
-        {
-            return ann;
-        }
-    }
-    return 0;
 }
 
 #include "pageviewannotator.moc"

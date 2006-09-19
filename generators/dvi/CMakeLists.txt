@@ -52,5 +52,5 @@ install(TARGETS okularGenerator_dvi DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_dvi.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES libokularGenerator_dvi.desktop okularDvi.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 

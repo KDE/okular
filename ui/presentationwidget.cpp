@@ -423,7 +423,8 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
         return 0;
 
     // check if 1) there is an object and 2) it's a link
-    const ObjectRect * object = page->getObjectRect( ObjectRect::Link, nx, ny );
+    QRect d = KGlobalSettings::desktopGeometry( const_cast< PresentationWidget * >( this ) );
+    const ObjectRect * object = page->getObjectRect( ObjectRect::Link, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
 

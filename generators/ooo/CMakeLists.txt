@@ -28,5 +28,5 @@ install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_ooo.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 

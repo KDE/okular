@@ -1298,7 +1298,10 @@ if ( d->document->handleEvent( e ) )
         const QRect & itemRect = pageItem->geometry();
         double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
         double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
-        Annotation * ann=PageViewAnnotator::getAnnotationbyPos(pageItem->page(),nX,nY);
+        Annotation * ann = 0;
+        const ObjectRect * orect = pageItem->page()->getObjectRect( ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+        if ( orect )
+            ann = ( (AnnotationObjectRect *)orect )->annotation();
         if(ann)
         {
             KMenu menu( this );
@@ -1311,7 +1314,7 @@ if ( d->document->handleEvent( e ) )
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
             if ( ann->flags & Annotation::DenyDelete )
                 deleteNote->setEnabled( false );
-            showProperties = menu.addAction( SmallIconSet("thumbnail"), i18n( "&Properties..." ) );
+            showProperties = menu.addAction( SmallIconSet("configure"), i18n( "&Properties..." ) );
 
             QAction *choice = menu.exec( e->globalPos() );
 
@@ -1472,7 +1475,7 @@ if (d->document->handleEvent( e ) )
                 double nX = (double)(mapped.x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(mapped.y() - pageItem->geometry().top()) / (double)pageItem->height();
                 const ObjectRect * rect;
-                rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
+                rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
                 {
                     // handle click over a link
@@ -1483,7 +1486,7 @@ if (d->document->handleEvent( e ) )
                 {
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
-                    rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY );
+                    rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle click over a image
@@ -1504,7 +1507,7 @@ if (d->document->handleEvent( e ) )
                     double nX = (double)(mapped.x() - pageItem->geometry().left()) / (double)pageItem->width(),
                            nY = (double)(mapped.y() - pageItem->geometry().top()) / (double)pageItem->height();
                     const ObjectRect * rect;
-                    rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
+                    rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle right click over a link
@@ -1536,7 +1539,7 @@ if (d->document->handleEvent( e ) )
                     {
                         // a link can move us to another page or even to another document, there's no point in trying to
                         //  process the click on the image once we have processes the click on the link
-                        rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY );
+                        rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
                         if ( rect )
                         {
                             // handle right click over a image
@@ -2278,7 +2281,7 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::IBeamCursor );
         else
         {
-            d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY );
+            d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY, geom.width(), geom.height() );
             if ( d->mouseOnRect )
                 setCursor( Qt::PointingHandCursor );
             else

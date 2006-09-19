@@ -12,6 +12,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
+#include <qvarlengtharray.h>
 #include <qapplication.h>
 #include <kglobal.h>
 #include <kimageeffect.h>
@@ -31,6 +32,8 @@
 
 static KStaticDeleter<QPixmap> sd;
 QPixmap * busyPixmap = 0;
+
+#define TEXTANNOTATION_ICONSIZE 24
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
@@ -156,7 +159,17 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                 if ( ann->flags & Annotation::Hidden )
                     continue;
 
-                if ( ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax ) )
+                bool intersects = ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax );
+                if ( ann->subType() == Annotation::AText )
+                {
+                    TextAnnotation * ta = static_cast< TextAnnotation * >( ann );
+                    if ( ta->textType == TextAnnotation::Linked )
+                    {
+                        NormalizedRect iconrect( ann->boundary.left, ann->boundary.top, ann->boundary.left + TEXTANNOTATION_ICONSIZE / page->width(), ann->boundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
+                        intersects = iconrect.intersects( nXMin, nYMin, nXMax, nYMax );
+                    }
+                }
+                if ( intersects )
                 {
                     Annotation::SubType type = ann->subType();
                     if ( type == Annotation::ALine || type == Annotation::AHighlight ||
@@ -535,9 +548,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     if ( path.isEmpty() )
                         pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::NoGroup, 32 );
                     QImage scaledImage;
+                    QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
+                    QRect annotRect2 = annotBoundary2.intersect( limits );
+                    QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
+                    annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
                     scalePixmapOnImage( scaledImage, &pixmap,
-                                        annotBoundary.width(),
-                                        annotBoundary.height(), innerRect );
+                                        TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE,
+                                        innerRect2 );
                     // if the annotation color is valid (ie it was set), then
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
@@ -684,7 +701,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     uchar* srcData = srcImage.bits();
 
     // precalc the x correspondancy conversion in a lookup table
-    unsigned int xOffset[ destWidth ];
+    QVarLengthArray<unsigned int> xOffset( destWidth );
     for ( int x = 0; x < destWidth; x++ )
         xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
 

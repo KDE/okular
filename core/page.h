@@ -64,7 +64,7 @@ class OKULAR_EXPORT KPDFPage
         bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasBookmark() const;
-        bool hasObjectRect( double x, double y ) const;
+        bool hasObjectRect( double x, double y, double xScale, double yScale ) const;
         bool hasHighlights( int s_id = -1 ) const;
         //bool hasAnnotation( double x, double y ) const;
         bool hasTransition() const;
@@ -73,7 +73,7 @@ class OKULAR_EXPORT KPDFPage
         QString getText( const RegularAreaRect * rect ) const;
 	RegularAreaRect * getTextArea ( TextSelection * ) const;
 //	const ObjectRect * getObjectRect( double x, double y ) const;
-        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y ) const;
+        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
         const KPDFPageTransition * getTransition() const;
         //FIXME TEMP:
@@ -104,7 +104,6 @@ class OKULAR_EXPORT KPDFPage
 
     private:
         friend class PagePainter;
-        friend class PageViewAnnotator;
         int m_number;
         int m_orientation;
         double m_width, m_height;

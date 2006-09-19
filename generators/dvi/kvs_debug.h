@@ -16,6 +16,6 @@ namespace kvs
 {
    static const int dvi = 4650;
    static const int shell = 4650;
-};
+}
 
 #endif

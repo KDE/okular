@@ -30,7 +30,7 @@
 #include "core/page.h"
 #include "generator_xps.h"
 
-OKULAR_EXPORT_PLUGIN(XpsGenerator);
+OKULAR_EXPORT_PLUGIN(XpsGenerator)
 
 
 XpsPage::XpsPage(KZip *archive, const QString &fileName)
@@ -115,12 +115,12 @@ XpsPage* XpsDocument::page(int pageNum) const
 
 XpsFile::XpsFile() : m_docInfo( 0 )
 {
-};
+}
 
 
 XpsFile::~XpsFile()
 {
-};
+}
 
 
 bool XpsFile::loadDocument(const QString &filename)

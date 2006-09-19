@@ -12,6 +12,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
+#include <qvarlengtharray.h>
 #include <qapplication.h>
 #include <kglobal.h>
 #include <kimageeffect.h>
@@ -660,7 +661,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     unsigned int * srcData = (unsigned int *)srcImage.bits();
 
     // precalc the x correspondancy conversion in a lookup table
-    unsigned int xOffset[ destWidth ];
+    QVarLengthArray<unsigned int> xOffset( destWidth );
     for ( int x = 0; x < destWidth; x++ )
         xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
 

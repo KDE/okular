@@ -810,7 +810,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             }
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
-                m_pageView->displayMessage( toolSubElement.text() );
+                m_pageView->displayMessage( toolSubElement.text(), PageViewMessage::Annotation );
         }
 
         // consistancy warning

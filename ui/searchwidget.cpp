@@ -42,16 +42,10 @@ SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
     connect( m_inputDelayTimer, SIGNAL( timeout() ),
              this, SLOT( startSearch() ) );
 
-    // 1. clear button
-    QAction *clearAction = addAction(
-        KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase"),
-        i18n( "Clear filter" ) );
-
     // 2. text line
     m_lineEdit = new KLineEdit(this);
     m_lineEdit->setToolTip(i18n( "Enter at least 3 letters to filter pages" ));
     connect(m_lineEdit, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
-    connect(clearAction, SIGNAL( triggered() ), m_lineEdit, SLOT( clear() ));
     addWidget(m_lineEdit);
 
     // 3.1. create the popup menu for changing filtering features

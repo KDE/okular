@@ -120,6 +120,8 @@ class PageView : public QScrollView, public DocumentObserver
         void slotAutoScoll();
         // type-ahead find timeout
         void findAheadStop();
+        // sow the welcome message
+        void slotShowWelcome();
 
         // connected to local actions (toolbar, menu, ..)
         void slotZoom();

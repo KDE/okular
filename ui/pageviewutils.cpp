@@ -27,7 +27,9 @@ PageViewMessage::PageViewMessage( QWidget * parent )
     setFocusPolicy( NoFocus );
     setBackgroundMode( NoBackground );
     setPaletteBackgroundColor(kapp->palette().color(QPalette::Active, QColorGroup::Background));
-    move( 10, 10 );
+    // if the layout is LtR, we can safely place it in the right position
+    if ( !QApplication::reverseLayout() )
+        move( 10, 10 );
     resize( 0, 0 );
     hide();
 }
@@ -105,6 +107,11 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
     bufferPainter.setPen( foregroundColor() );
     bufferPainter.drawText( 5 + textXOffset, yText, message );
+
+    // if the layout is RtL, we can move it to the right place only after we
+    // know how much size it will take
+    if ( QApplication::reverseLayout() )
+        move( parentWidget()->width() - geometry.width() - 10, 10 );
 
     // show widget and schedule a repaint
     show();

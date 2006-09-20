@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt / kde includes
+#include <qapplication.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -96,7 +97,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addMultiCellWidget( m_progressWidget, 0, 0, 0, 4 );
      // bottom: left prev_page button
      m_prevButton = new HoverButton( this );
-     m_prevButton->setIconSet( SmallIconSet("1leftarrow") );
+     m_prevButton->setIconSet( SmallIconSet( QApplication::reverseLayout() ? "1rightarrow" : "1leftarrow" ) );
      gridLayout->addWidget( m_prevButton, 1, 0 );
      // bottom: left lineEdit (current page box)
      m_pagesEdit = new PagesEdit( this );
@@ -108,7 +109,7 @@ MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
      gridLayout->addWidget( m_pagesButton, 1, 3 );
      // bottom: right next_page button
      m_nextButton = new HoverButton( this );
-     m_nextButton->setIconSet( SmallIconSet("1rightarrow") );
+     m_nextButton->setIconSet( SmallIconSet( QApplication::reverseLayout() ? "1leftarrow" : "1rightarrow" ) );
      gridLayout->addWidget( m_nextButton, 1, 4 );
     horLayout->addLayout( gridLayout );
 
@@ -275,13 +276,13 @@ void ProgressWidget::setProgress( float percentage )
 void ProgressWidget::mouseMoveEvent( QMouseEvent * e )
 {
     if ( e->state() == Qt::LeftButton && width() > 0 )
-        m_miniBar->slotGotoNormalizedPage( (float)e->x() / (float)width() );
+        m_miniBar->slotGotoNormalizedPage( (float)( QApplication::reverseLayout() ? width() - e->x() : e->x() ) / (float)width() );
 }
 
 void ProgressWidget::mousePressEvent( QMouseEvent * e )
 {
     if ( e->button() == Qt::LeftButton && width() > 0 )
-        m_miniBar->slotGotoNormalizedPage( (float)e->x() / (float)width() );
+        m_miniBar->slotGotoNormalizedPage( (float)( QApplication::reverseLayout() ? width() - e->x() : e->x() ) / (float)width() );
 }
 
 void ProgressWidget::wheelEvent( QWheelEvent * e )
@@ -301,8 +302,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     int w = width(),
         h = height(),
         l = (int)( (float)w * m_progressPercentage );
-    QRect cRect = QRect( l, 0, w - l, h ).intersect( e->rect() );
-    QRect fRect = QRect( 0, 0, l, h ).intersect( e->rect() );
+    QRect cRect = ( QApplication::reverseLayout() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersect( e->rect() );
+    QRect fRect = ( QApplication::reverseLayout() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersect( e->rect() );
 
     // paint rects and a separator line
     QPainter p( this );
@@ -313,7 +314,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     if ( l && l != w  )
     {
         p.setPen( palette().active().highlight().dark( 120 ) );
-        p.drawLine( l, 0, l, h );
+        int delta = QApplication::reverseLayout() ? w - l : l;
+        p.drawLine( delta, 0, delta, h );
     }
     // draw a frame-like outline
     //p.setPen( palette().active().mid() );

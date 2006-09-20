@@ -201,9 +201,6 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     // conntect the padding of the viewport to pixmaps requests
     connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
 
-    // show initial welcome text
-    d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
-
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
 //    resizeButton->setPixmap( SmallIcon("crop") );
@@ -211,6 +208,9 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 //    resizeButton->setEnabled( false );
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
+
+    // schedule the welcome message
+    QTimer::singleShot( 0, this, SLOT( slotShowWelcome() ) );
 }
 
 PageView::~PageView()
@@ -2523,6 +2523,12 @@ void PageView::slotStopFindAhead()
     // to a accel and without grabbing the keyboard you can not vim-search for space
     // because it activates the accel
     releaseKeyboard();
+}
+
+void PageView::slotShowWelcome()
+{
+    // show initial welcome text
+    d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
 }
 
 void PageView::slotZoom()

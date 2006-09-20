@@ -104,7 +104,9 @@ PageViewMessage::PageViewMessage( QWidget * parent )
     QPalette pal = palette();
     pal.setColor( QPalette::Active, QPalette::Window, QApplication::palette().color( QPalette::Active, QPalette::Window ) );
     setPalette( pal );
-    move( 10, 10 );
+    // if the layout is LtR, we can safely place it in the right position
+    if ( QApplication::isLeftToRight() )
+        move( 10, 10 );
     resize( 0, 0 );
     hide();
 }
@@ -186,6 +188,11 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
     bufferPainter.setPen( pal.color( QPalette::WindowText ) );
     bufferPainter.drawText( 5 + textXOffset, yText, message );
+
+    // if the layout is RtL, we can move it to the right place only after we
+    // know how much size it will take
+    if ( QApplication::isRightToLeft() )
+        move( parentWidget()->width() - geometry.width() - 10 - 1, 10 );
 
     // show widget and schedule a repaint
     show();

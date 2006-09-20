@@ -270,6 +270,7 @@ class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
 {
     public:
         DocumentSynopsis();
+        DocumentSynopsis( const QDomDocument &document );
 };
 
 /**

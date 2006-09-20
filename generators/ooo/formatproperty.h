@@ -15,28 +15,20 @@
 
 class QTextBlockFormat;
 class QTextCharFormat;
-class QTextListFormat;
 class QTextFormat;
+class QTextListFormat;
+class QTextTableFormat;
 
 namespace OOO {
 
 class StyleInformation;
 
-class FormatProperty
-{
-  public:
-    virtual ~FormatProperty() {}
-
-    virtual void apply( QTextFormat *format ) const = 0;
-};
-
-class FontFormatProperty : public FormatProperty
+class FontFormatProperty
 {
   public:
     FontFormatProperty();
-    virtual ~FontFormatProperty() {}
 
-    virtual void apply( QTextFormat *format ) const;
+    void apply( QTextFormat *format ) const;
 
     void setFamily( const QString &name );
 
@@ -44,7 +36,7 @@ class FontFormatProperty : public FormatProperty
     QString mFamily;
 };
 
-class ParagraphFormatProperty : public FormatProperty
+class ParagraphFormatProperty
 {
   public:
     enum WritingMode
@@ -60,9 +52,8 @@ class ParagraphFormatProperty : public FormatProperty
     };
 
     ParagraphFormatProperty();
-    virtual ~ParagraphFormatProperty() {}
 
-    virtual void apply( QTextFormat *format ) const;
+    void apply( QTextFormat *format ) const;
 
     void setPageNumber( int number );
     void setWritingMode( WritingMode mode );
@@ -82,9 +73,8 @@ class TextFormatProperty
   public:
     TextFormatProperty();
     TextFormatProperty( const StyleInformation *information );
-    virtual ~TextFormatProperty() {}
 
-    virtual void apply( QTextCharFormat *format ) const;
+    void apply( QTextCharFormat *format ) const;
 
     void setFontSize( int size );
     void setFontName( const QString &name );
@@ -104,37 +94,7 @@ class TextFormatProperty
     QColor mBackgroundColor;
 };
 
-class StyleFormatProperty
-{
-  public:
-    StyleFormatProperty();
-    StyleFormatProperty( const StyleInformation *information );
-    virtual ~StyleFormatProperty() {}
-
-    virtual void apply( QTextBlockFormat *blockFormat, QTextCharFormat *textFormat ) const;
-
-    void setParentStyleName( const QString &parentStyleName );
-    QString parentStyleName() const;
-
-    void setFamily( const QString &family );
-    void setDefaultStyle( bool defaultStyle );
-
-    void setMasterPageName( const QString &masterPageName );
-
-    void setParagraphFormat( const ParagraphFormatProperty &format );
-    void setTextFormat( const TextFormatProperty &format );
-
-  private:
-    QString mParentStyleName;
-    QString mFamily;
-    QString mMasterPageName;
-    ParagraphFormatProperty mParagraphFormat;
-    TextFormatProperty mTextFormat;
-    const StyleInformation *mStyleInformation;
-    bool mDefaultStyle;
-};
-
-class PageFormatProperty : public FormatProperty
+class PageFormatProperty
 {
   public:
     enum PageUsage
@@ -152,9 +112,8 @@ class PageFormatProperty : public FormatProperty
     };
 
     PageFormatProperty();
-    virtual ~PageFormatProperty() {}
 
-    virtual void apply( QTextFormat *format ) const;
+    void apply( QTextFormat *format ) const;
 
     void setPageUsage( PageUsage usage );
     void setBottomMargin( double margin );
@@ -191,15 +150,81 @@ class ListFormatProperty
 
     ListFormatProperty();
     ListFormatProperty( Type type );
-    virtual ~ListFormatProperty();
 
-    virtual void apply( QTextListFormat *format, int level ) const;
+    void apply( QTextListFormat *format, int level ) const;
 
     void addItem( int level, double indent = 0 );
 
   private:
     Type mType;
     QVector<double> mIndents;
+};
+
+class TableColumnFormatProperty
+{
+  public:
+    TableColumnFormatProperty();
+
+    void apply( QTextTableFormat *format ) const;
+
+    void setWidth( double width );
+
+  private:
+    double mWidth;
+};
+
+class TableCellFormatProperty
+{
+  public:
+    TableCellFormatProperty();
+
+    void apply( QTextBlockFormat *format ) const;
+
+    void setBackgroundColor( const QColor &color );
+    void setPadding( double padding );
+    void setAlignment( Qt::Alignment alignment );
+
+  private:
+    QColor mBackgroundColor;
+    double mPadding;
+    Qt::Alignment mAlignment;
+    bool mHasAlignment;
+};
+
+class StyleFormatProperty
+{
+  public:
+    StyleFormatProperty();
+    StyleFormatProperty( const StyleInformation *information );
+
+    void applyBlock( QTextBlockFormat *format ) const;
+    void applyText( QTextCharFormat *format ) const;
+    void applyTableColumn( QTextTableFormat *format ) const;
+    void applyTableCell( QTextBlockFormat *format ) const;
+
+    void setParentStyleName( const QString &parentStyleName );
+    QString parentStyleName() const;
+
+    void setFamily( const QString &family );
+    void setDefaultStyle( bool defaultStyle );
+
+    void setMasterPageName( const QString &masterPageName );
+
+    void setParagraphFormat( const ParagraphFormatProperty &format );
+    void setTextFormat( const TextFormatProperty &format );
+    void setTableColumnFormat( const TableColumnFormatProperty &format );
+    void setTableCellFormat( const TableCellFormatProperty &format );
+
+  private:
+    QString mParentStyleName;
+    QString mFamily;
+    QString mMasterPageName;
+    ParagraphFormatProperty mParagraphFormat;
+    TextFormatProperty mTextFormat;
+    TableColumnFormatProperty mTableColumnFormat;
+    TableCellFormatProperty mTableCellFormat;
+    const StyleInformation *mStyleInformation;
+    bool mDefaultStyle;
 };
 
 }

@@ -21,8 +21,40 @@
 #define _OKULAR_GENERATOR_XPS_H_
 
 #include "core/generator.h"
+#include <QXmlDefaultHandler>
 
 #include <kzip.h>
+
+class XpsPage;
+
+class XpsHandler: public QXmlDefaultHandler
+{
+public:
+    XpsHandler( QPixmap *p, XpsPage *page );
+    ~XpsHandler();
+
+    bool startElement( const QString & nameSpace,
+                       const QString & localName,
+                       const QString & qname,
+                       const QXmlAttributes & atts );
+    bool endElement( const QString & nameSpace,
+                     const QString & localName,
+                     const QString & qname );
+    bool startDocument();
+
+private:
+    XpsPage *m_page;
+    QPixmap *m_pixmap;
+    QPainter *m_painter;
+    
+    QBrush m_currentBrush;
+    QPen m_currentPen;
+    QPainterPath m_currentPath;
+    
+    QImage m_image;
+    QRectF m_viewbox;
+    QRectF m_viewport;
+};
 
 class XpsPage
 {
@@ -31,8 +63,14 @@ public:
     ~XpsPage();
 
     QSize size() const;
-
+    bool renderToPixmap( QPixmap *p );
+    
+    QImage loadImageFromFile( const QString &filename );
+    int loadFontByName( const QString &fontName );
+    
 private:
+    KZip *m_archive;
+    const QString m_fileName;
     QDomDocument m_dom;
 
     QSize m_pageSize;
@@ -42,6 +80,8 @@ private:
     QImage m_thumbnail;
     bool m_thumbnailIsLoaded;
 
+    QPixmap *m_pagePixmap;
+    bool m_pageIsRendered;
 };
 
 /**
@@ -101,16 +141,27 @@ public:
     int numPages() const;
 
     /**
+       a page from the file
+
+        \param pageNum the page number of the page to return
+
+        \note page numbers are zero based - they run from 0 to 
+        numPages() - 1
+    */
+    XpsPage* page(int pageNum) const;
+
+    /**
        obtain a certain document from this file
 
        \param documentNum the number of the document to return
 
-       \note page numbers are zero based - they run from 0 to 
+       \note document numbers are zero based - they run from 0 to 
        numDocuments() - 1
     */
     XpsDocument* document(int documentNum) const;
 private:
     QList<XpsDocument*> m_documents;
+    QList<XpsPage*> m_pages;
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;

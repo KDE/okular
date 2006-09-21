@@ -37,10 +37,6 @@ class GSGenerator : public Okular::Generator
         bool canGeneratePixmap( bool async ) ;
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
-        // can generate a KPDFText Page
-        bool canGenerateTextPage() { return false; } ;
-        void generateSyncTextPage( Okular::Page * /*page*/ ) { ; } ;
-
         bool supportsRotation() { return true; } ;
         void setOrientation(QVector<Okular::Page*>&, int);
 
@@ -52,10 +48,7 @@ class GSGenerator : public Okular::Generator
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
         void freeGUI() ;
-        // internal search and gettext
-        Okular::RegularAreaRect * findText( const QString & /* text*/, Okular::SearchDir /* dir*/, const bool /* strictCase*/,
-                    const Okular::RegularAreaRect  * /*lastRect*/, Okular::Page  * /* page*/) { return 0L;} ;
-        QString getText( const Okular::RegularAreaRect * /*area*/, Okular::Page  * /*page */) { return QString(); };
+
     	// may come useful later
         //virtual bool hasFonts() const ;
 

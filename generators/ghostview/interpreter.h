@@ -1,5 +1,5 @@
-#ifndef _KPDF_INTERPETER_H_
-#define _KPDF_INTERPETER_H_
+#ifndef _OKULAR_INTERPETER_H_
+#define _OKULAR_INTERPETER_H_
 #include <qgs.h>
 #include <QX11Info>
 

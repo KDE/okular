@@ -12,7 +12,7 @@
 
 using namespace Okular;
 
-/** class KPDFPageTransition **/
+/** class Okular::PageTransition **/
 
 PageTransition::PageTransition( Type type )
   : m_type( type ),

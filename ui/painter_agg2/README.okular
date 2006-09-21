@@ -1,19 +1,20 @@
-File: okular/ui/painter_agg2/README.kpdf
+File: okular/ui/painter_agg2/README.okular
 Created by: Enrico Ros @ KPDF project 2005
+Renamed to README.okular by: Tobias Koenig @ okular project 2006
 
 >> Anti-Grain Geometry 2.3
 The files contained in this directory are from the Anti-Grain Geometry library,
 that provides many loosely copuled algorithms and classes for performing fine
 rendering. All files in there are using a good bsd-like licence compatible with
-kpdf development.
+okular development.
 No external dependancies required other than a standard C++ compiler suite.
 
 >> File Naming
 - "agg_" prefixed files are from the Anti-Grain Geometry distribution. Those
   files are updated to the 2.3 release of that library
-- "kpdf_" prefixed files are made by kpdf developers to extend library
+- "okular_" prefixed files are made by okular developers to extend library
   capabilities and fit the needs of that project.
-- README.kpdf must be updated to reflect changes happening in that directory.
+- README.okular must be updated to reflect changes happening in that directory.
 
 >> Directory contents
 As AGG is a template based collection of tools, there is no need for the full
@@ -24,7 +25,7 @@ from:
   .cpp: agg23/src
 Note that directories "agg23/src/platform" (crossplatform GUI support),
 "agg23/src/ctrl" (GUI widgets), "agg23/gpc" (generic polygon clipper),
-"agg23/svg" (SVG viewer tool) are NOT USED AT ALL in the kpdf project.
+"agg23/svg" (SVG viewer tool) are NOT USED AT ALL in the okular project.
 
 >> File inclusion by scope
 < Memory Buffer, RGBA color buffer, ScanLine, ScanLine Renderer,
@@ -41,10 +42,10 @@ agg_bezier_arc.cpp, agg_path_storage.cpp, agg_rasterizer_scanline_aa.cpp,
  agg_trans_affine.cpp, agg_vcgen_stroke.cpp
 
 < Raster Ops on RGBA color buffer >
-kpdf_pixfmt_rgba.h (removed: agg_pixfmt_rgba.h)
+okular_pixfmt_rgba.h (removed: agg_pixfmt_rgba.h)
 
 < ..for every new algo added.. >
 ..append added files here..
 
 >> For Maxim Shemanarev
-Thanks for your work - the kpdf team
+Thanks for your work - the okular team

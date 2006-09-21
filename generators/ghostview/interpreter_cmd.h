@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GSINTERPETERCMD_H_
-#define _KPDF_GSINTERPETERCMD_H_
+#ifndef _OKULAR_GSINTERPETERCMD_H_
+#define _OKULAR_GSINTERPETERCMD_H_
 
 #include <sys/types.h>
 

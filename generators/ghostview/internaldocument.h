@@ -10,8 +10,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GSINTERNALDOC_H_
-#define _KPDF_GSINTERNALDOC_H_
+#ifndef _OKULAR_GSINTERNALDOC_H_
+#define _OKULAR_GSINTERNALDOC_H_
 
 #include <errno.h>
 

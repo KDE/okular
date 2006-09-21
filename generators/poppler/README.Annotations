@@ -1,8 +1,9 @@
-Summary: PDF 1.6 Annotations specs and KPDF support.
+Summary: PDF 1.6 Annotations specs and okular support.
 Author: Enrico Ros - KPDF project - 2005
+        okular team - 2006
 
-** Relations to KPDF:
- KDPF tries to support ALL annotations and ALL parameters in PDF specs. If
+** Relations to okular:
+ okular tries to support ALL annotations and ALL parameters in PDF specs. If
  this can't be done, we must support at least the most common ones and the
  most common parameters.
  Current Data Structure status:
@@ -15,9 +16,9 @@ Author: Enrico Ros - KPDF project - 2005
      link (handled in another way), caret, {fileattachment, sound, movie},
      screen, widget, {printermark, trapnet, watermark}, 3d
 
-** Notes on parsing in relation to KPDF:
+** Notes on parsing in relation to okular:
  Different Data Structures:
-   To adapt the 'plain' pdf storage to kpdf data structures we use a couple
+   To adapt the 'plain' pdf storage to okular data structures we use a couple
    of queues to store cross-dependant objects for each page and then adapt
    objects to our DSs resolving crossdeps at the end of the loops.
 

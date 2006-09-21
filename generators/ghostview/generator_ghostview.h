@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GSGENERATOR_H_
-#define _KPDF_GSGENERATOR_H_
+#ifndef _OKULAR_GENERATOR_GHOSTVIEW_H_
+#define _OKULAR_GENERATOR_GHOSTVIEW_H_
 
 #include "core/generator.h"
 

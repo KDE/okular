@@ -9,7 +9,7 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 
-option(KDE4_GPHOTO2 "do not build kamera (gphoto2 required)")
+option(KDE4_GPHOTO2 "do not build kamera (gphoto2 required)" ON)
 if (KDE4_GPHOTO2 )
 	IF (GPHOTO2_LIBRARIES AND GPHOTO2_INCLUDE_DIR)
   	# in cache already

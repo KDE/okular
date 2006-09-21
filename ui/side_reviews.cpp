@@ -54,8 +54,6 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     m_searchLine = new KTreeWidgetSearchLine( m_toolBar1, m_listView );
     m_toolBar1->setIconSize( QSize( 16, 16 ) );
     m_toolBar1->setMovable( false );
-    // - add Clear button
-    m_toolBar1->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ), i18n( "Clear filter" ), m_searchLine, SLOT( clear() ) );
     // - add Search line
     m_toolBar1->addWidget(m_searchLine);
 

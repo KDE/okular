@@ -1922,6 +1922,10 @@ DocumentSynopsis::DocumentSynopsis()
     // void implementation, only subclassed for naming
 }
 
+DocumentSynopsis::DocumentSynopsis( const QDomDocument &document )
+  : QDomDocument( document )
+{
+}
 
 /** DocumentFonts **/
 

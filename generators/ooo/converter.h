@@ -13,11 +13,9 @@
 #include <QtCore/QStack>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextCharFormat>
-#include <QtXml/QXmlDefaultHandler>
+#include <QtXml/QDomDocument>
 
 #include "styleinformation.h"
-
-#include "core/document.h"
 
 class QDomElement;
 class QDomText;
@@ -42,6 +40,16 @@ class Style
 class Converter
 {
   public:
+    class LinkInfo
+    {
+      public:
+        typedef QList<LinkInfo> List;
+
+        int page;
+        QRectF boundingRect;
+        QString url;
+    };
+
     Converter( const Document *document );
     ~Converter();
 
@@ -49,28 +57,31 @@ class Converter
 
     QTextDocument *textDocument() const;
     MetaInformation::List metaInformation() const;
-    DocumentSynopsis tableOfContents() const;
+    QDomDocument tableOfContents() const;
+    LinkInfo::List links() const;
 
+  private:
     bool convertBody( const QDomElement &element );
     bool convertText( const QDomElement &element );
     bool convertHeader( QTextCursor *cursor, const QDomElement &element );
-    bool convertParagraph( QTextCursor *cursor, const QDomElement &element );
+    bool convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &format = QTextBlockFormat() );
     bool convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format );
     bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
+    bool convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
     bool convertList( const QDomElement &element );
     bool convertTable( const QDomElement &element );
     bool convertFrame( const QDomElement &element );
 
-  private:
     bool createTableOfContents();
+    bool createLinksList();
 
     const Document *mDocument;
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;
-    QTextBlock *mLastTextBlock;
 
     StyleInformation *mStyleInformation;
-    DocumentSynopsis mTableOfContents;
+    QDomDocument mTableOfContents;
+    LinkInfo::List mLinkInfos;
 
     struct HeaderInfo
     {
@@ -80,6 +91,14 @@ class Converter
     };
 
     QList<HeaderInfo> mHeaderInfos;
+
+    struct InternalLinkInfo
+    {
+      QTextBlock block;
+      QString url;
+    };
+
+    QList<InternalLinkInfo> mInternalLinkInfos;
 };
 
 }

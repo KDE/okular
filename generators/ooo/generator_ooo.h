@@ -11,6 +11,7 @@
 #define _OKULAR_GENERATOR_OOO_H_
 
 #include "core/generator.h"
+#include "converter.h"
 
 class QTextDocument;
 
@@ -44,6 +45,7 @@ class KOOOGenerator : public Generator
     QTextDocument *mDocument;
     DocumentInfo mDocumentInfo;
     DocumentSynopsis mDocumentSynopsis;
+    OOO::Converter::LinkInfo::List mLinks;
 };
 
 #endif

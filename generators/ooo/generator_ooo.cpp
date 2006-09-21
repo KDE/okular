@@ -7,20 +7,21 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtGui/QTextDocument>
 #include <QtGui/QAbstractTextDocumentLayout>
+#include <QtGui/QPainter>
+#include <QtGui/QPixmap>
+#include <QtGui/QTextDocument>
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <kimageeffect.h>
+#include <QDebug> 
+
 #include <kprinter.h>
 
-#include "core/page.h"
-#include "generator_ooo.h"
-
-#include "document.h"
 #include "converter.h"
+#include "core/link.h"
+#include "core/page.h"
+#include "document.h"
+
+#include "generator_ooo.h"
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 
@@ -48,6 +49,7 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
 
   mDocument = converter.textDocument();
   mDocumentSynopsis = converter.tableOfContents();
+  mLinks = converter.links();
 
   OOO::MetaInformation::List metaInformation = converter.metaInformation();
   for ( int i = 0; i < metaInformation.count(); ++i ) {
@@ -125,6 +127,23 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
   p.end();
 
   request->page->setPixmap( request->id, pm );
+
+  /**
+   * Add link information
+   */
+  QLinkedList<ObjectRect*> objects;
+  for ( int i = 0; i < mLinks.count(); ++i ) {
+    if ( mLinks[ i ].page == request->pageNumber ) {
+      const QRectF rect = mLinks[ i ].boundingRect;
+      double x = rect.x() / request->width;
+      double y = rect.y() / request->height;
+      double w = rect.width() / request->width;
+      double h = rect.height() / request->height;
+      objects.append( new ObjectRect( x, y, w, h, false,
+                                      ObjectRect::Link, new KPDFLinkBrowse( mLinks[ i ].url ) ) );
+    }
+  }
+  request->page->setObjectRects( objects );
 
   signalRequestDone( request );
 }

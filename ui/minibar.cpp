@@ -285,13 +285,13 @@ void ProgressWidget::setProgress( float percentage )
 void ProgressWidget::mouseMoveEvent( QMouseEvent * e )
 {
     if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && width() > 0 )
-        m_miniBar->slotGotoNormalizedPage( (float)e->x() / (float)width() );
+        m_miniBar->slotGotoNormalizedPage( (float)( QApplication::isRightToLeft() ? width() - e->x() : e->x() ) / (float)width() );
 }
 
 void ProgressWidget::mousePressEvent( QMouseEvent * e )
 {
     if ( e->button() == Qt::LeftButton && width() > 0 )
-        m_miniBar->slotGotoNormalizedPage( (float)e->x() / (float)width() );
+        m_miniBar->slotGotoNormalizedPage( (float)( QApplication::isRightToLeft() ? width() - e->x() : e->x() ) / (float)width() );
 }
 
 void ProgressWidget::wheelEvent( QWheelEvent * e )
@@ -311,8 +311,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     int w = width(),
         h = height(),
         l = (int)( (float)w * m_progressPercentage );
-    QRect cRect = QRect( l, 0, w - l, h ).intersect( e->rect() );
-    QRect fRect = QRect( 0, 0, l, h ).intersect( e->rect() );
+    QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersect( e->rect() );
+    QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersect( e->rect() );
     QPainter p( this );
 
     QPalette pal = palette();
@@ -328,7 +328,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     if ( l && l != w  )
     {
         p.setPen( pal.color( QPalette::Active, QPalette::Highlight ).dark( 120 ) );
-        p.drawLine( l, 0, l, h );
+        int delta = QApplication::isRightToLeft() ? w - l : l;
+        p.drawLine( delta, 0, delta, h );
     }
 }
 

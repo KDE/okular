@@ -16,14 +16,16 @@
 #include <QtGui/QTextFrame>
 #include <QtGui/QTextList>
 #include <QtGui/QTextTableCell>
-#include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomText>
+#include <QtXml/QXmlSimpleReader>
 
 #include "converter.h"
 #include "document.h"
 #include "styleinformation.h"
 #include "styleparser.h"
+
+#include "core/document.h"
 
 using namespace OOO;
 
@@ -46,6 +48,7 @@ Converter::Converter( const Document *document )
   : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
     mStyleInformation( new StyleInformation )
 {
+  mTableOfContents = QDomDocument( "DocumentSynopsis" );
 }
 
 Converter::~Converter()
@@ -59,7 +62,10 @@ bool Converter::convert()
   delete mTextDocument;
   delete mCursor;
 
+  mTableOfContents.clear();
   mHeaderInfos.clear();
+  mInternalLinkInfos.clear();
+  mLinkInfos.clear();
 
   mTextDocument = new QTextDocument;
   mCursor = new QTextCursor( mTextDocument );
@@ -131,6 +137,12 @@ bool Converter::convert()
   if ( !createTableOfContents() )
     return false;
 
+  /**
+   * Create list of links
+   */
+  if ( !createLinksList() )
+    return false;
+
   return true;
 }
 
@@ -182,7 +194,8 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
 
   QTextBlockFormat blockFormat;
   QTextCharFormat textFormat;
-  property.apply( &blockFormat, &textFormat );
+  property.applyBlock( &blockFormat );
+  property.applyText( &textFormat );
 
   cursor->setBlockFormat( blockFormat );
 
@@ -213,14 +226,15 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
   return true;
 }
 
-bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element )
+bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &parentFormat )
 {
   const QString styleName = element.attribute( "style-name" );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
-  QTextBlockFormat blockFormat;
+  QTextBlockFormat blockFormat( parentFormat );
   QTextCharFormat textFormat;
-  property.apply( &blockFormat, &textFormat );
+  property.applyBlock( &blockFormat );
+  property.applyText( &textFormat );
 
   cursor->setBlockFormat( blockFormat );
 
@@ -239,6 +253,9 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
         mCursor->insertText( spaces );
       } else if ( childElement.tagName() == QLatin1String( "frame" ) ) {
         if ( !convertFrame( childElement ) )
+          return false;
+      } else if ( childElement.tagName() == QLatin1String( "a" ) ) {
+        if ( !convertLink( cursor, childElement, textFormat ) )
           return false;
       }
     } else if ( child.isText() ) {
@@ -265,9 +282,8 @@ bool Converter::convertSpan( QTextCursor *cursor, const QDomElement &element, co
   const QString styleName = element.attribute( "style-name" );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
-  QTextBlockFormat blockFormat;
-  QTextCharFormat textFormat = format;
-  property.apply( &blockFormat, &textFormat );
+  QTextCharFormat textFormat( format );
+  property.applyText( &textFormat );
 
   QDomNode child = element.firstChild();
   while ( !child.isNull() ) {
@@ -360,6 +376,8 @@ bool Converter::convertTable( const QDomElement &element )
    */
   rowElement = element.firstChildElement();
 
+  QTextTableFormat tableFormat;
+
   rowCounter = 0;
   while ( !rowElement.isNull() ) {
     if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
@@ -368,14 +386,19 @@ bool Converter::convertTable( const QDomElement &element )
       QDomElement columnElement = rowElement.firstChildElement();
       while ( !columnElement.isNull() ) {
         if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
+          const StyleFormatProperty property = mStyleInformation->styleProperty( columnElement.attribute( "style-name" ) );
+
+          QTextBlockFormat format;
+          property.applyTableCell( &format );
 
           QDomElement paragraphElement = columnElement.firstChildElement();
           while ( !paragraphElement.isNull() ) {
             if ( paragraphElement.tagName() == QLatin1String( "p" ) ) {
               QTextTableCell cell = table->cellAt( rowCounter, columnCounter );
               QTextCursor cursor = cell.firstCursorPosition();
+              cursor.setBlockFormat( format );
 
-              if ( !convertParagraph( &cursor, paragraphElement ) )
+              if ( !convertParagraph( &cursor, paragraphElement, format ) )
                 return false;
             }
 
@@ -389,8 +412,15 @@ bool Converter::convertTable( const QDomElement &element )
       rowCounter++;
     }
 
+    if ( rowElement.tagName() == QLatin1String( "table-column" ) ) {
+      const StyleFormatProperty property = mStyleInformation->styleProperty( rowElement.attribute( "style-name" ) );
+      property.applyTableColumn( &tableFormat );
+    }
+
     rowElement = rowElement.nextSiblingElement();
   }
+
+  table->setFormat( tableFormat );
 
   return true;
 }
@@ -411,6 +441,34 @@ bool Converter::convertFrame( const QDomElement &element )
 
     child = child.nextSiblingElement();
   }
+
+  return true;
+}
+
+bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format )
+{
+  QDomNode child = element.firstChild();
+  while ( !child.isNull() ) {
+    if ( child.isElement() ) {
+      const QDomElement childElement = child.toElement();
+      if ( childElement.tagName() == QLatin1String( "span" ) ) {
+        if ( !convertSpan( cursor, childElement, format ) )
+          return false;
+      }
+    } else if ( child.isText() ) {
+      const QDomText childText = child.toText();
+      if ( !convertTextNode( cursor, childText, format ) )
+        return false;
+    }
+
+    child = child.nextSibling();
+  }
+
+  InternalLinkInfo linkInfo;
+  linkInfo.block = cursor->block();
+  linkInfo.url = element.attribute( "href" );
+
+  mInternalLinkInfos.append( linkInfo );
 
   return true;
 }
@@ -461,6 +519,34 @@ bool Converter::createTableOfContents()
   return true;
 }
 
+bool Converter::createLinksList()
+{
+  const QSizeF pageSize = mTextDocument->pageSize();
+
+  for ( int i = 0; i < mInternalLinkInfos.count(); ++i ) {
+    const InternalLinkInfo internalLinkInfo = mInternalLinkInfos[ i ];
+
+    const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( internalLinkInfo.block );
+
+    int page = qRound( rect.y() ) / qRound( pageSize.height() );
+    int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+
+    double x = (double)rect.x() / (double)pageSize.width();
+    double y = (double)offset / (double)pageSize.height();
+    double width = (double)rect.width() / (double)pageSize.width();
+    double height = (double)rect.height() / (double)pageSize.height();
+
+    LinkInfo linkInfo;
+    linkInfo.page = page;
+    linkInfo.boundingRect = QRectF( rect.x(), offset, rect.width(), rect.height() );
+    linkInfo.url = internalLinkInfo.url;
+
+    mLinkInfos.append( linkInfo );
+  }
+
+  return true;
+}
+
 QTextDocument *Converter::textDocument() const
 {
   return mTextDocument;
@@ -471,8 +557,12 @@ MetaInformation::List Converter::metaInformation() const
   return mStyleInformation->metaInformation();
 }
 
-DocumentSynopsis Converter::tableOfContents() const
+QDomDocument Converter::tableOfContents() const
 {
   return mTableOfContents;
 }
 
+Converter::LinkInfo::List Converter::links() const
+{
+  return mLinkInfos;
+}

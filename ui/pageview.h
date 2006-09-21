@@ -144,6 +144,8 @@ class PageView : public QGraphicsView, public DocumentObserver
         void slotAutoScoll();
         // type-ahead find timeout
         void slotStopFindAhead();
+        // sow the welcome message
+        void slotShowWelcome();
 
         // connected to local actions (toolbar, menu, ..)
         void slotZoom();

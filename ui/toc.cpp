@@ -70,14 +70,8 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(
     QHBoxLayout *searchlay = new QHBoxLayout();
     searchlay->setSpacing( 2 );
     mainlay->addLayout( searchlay );
-    QToolButton *clearBtn =  new QToolButton( this );
-    clearBtn->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ) );
-    clearBtn->setToolTip( i18n( "Clear filter" ) );
-    clearBtn->setAutoRaise( true );
-    searchlay->addWidget( clearBtn );
 
     m_searchLine = new KTreeWidgetSearchLine( this );
-    connect( clearBtn, SIGNAL( clicked() ), m_searchLine, SLOT( clear() ) );
     searchlay->addWidget( m_searchLine );
 
     m_treeView = new QTreeWidget( this );

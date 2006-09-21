@@ -39,6 +39,8 @@ class StyleParser
 
     StyleFormatProperty parseStyleProperty( QDomElement& );
     ParagraphFormatProperty parseParagraphProperty( QDomElement& );
+    TableColumnFormatProperty parseTableColumnProperty( QDomElement& );
+    TableCellFormatProperty parseTableCellProperty( QDomElement& );
     TextFormatProperty parseTextProperty( QDomElement& );
     PageFormatProperty parsePageProperty( QDomElement& );
     ListFormatProperty parseListProperty( QDomElement& );

@@ -254,11 +254,17 @@ StyleFormatProperty StyleParser::parseStyleProperty( QDomElement &parent )
   QDomElement element = parent.firstChildElement();
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "paragraph-properties" ) ) {
-      ParagraphFormatProperty paragraphProperty = parseParagraphProperty( element );
+      const ParagraphFormatProperty paragraphProperty = parseParagraphProperty( element );
       property.setParagraphFormat( paragraphProperty );
     } else if ( element.tagName() == QLatin1String( "text-properties" ) ) {
-      TextFormatProperty textProperty = parseTextProperty( element );
+      const TextFormatProperty textProperty = parseTextProperty( element );
       property.setTextFormat( textProperty );
+    } else if ( element.tagName() == QLatin1String( "table-column-properties" ) ) {
+      const TableColumnFormatProperty tableColumnProperty = parseTableColumnProperty( element );
+      property.setTableColumnFormat( tableColumnProperty );
+    } else if ( element.tagName() == QLatin1String( "table-cell-properties" ) ) {
+      const TableCellFormatProperty tableCellProperty = parseTableCellProperty( element );
+      property.setTableCellFormat( tableCellProperty );
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -370,6 +376,46 @@ ListFormatProperty StyleParser::parseListProperty( QDomElement &parent )
     }
 
     element = element.nextSiblingElement();
+  }
+
+  return property;
+}
+
+TableColumnFormatProperty StyleParser::parseTableColumnProperty( QDomElement &parent )
+{
+  TableColumnFormatProperty property;
+
+  const double width = convertUnit( parent.attribute( "column-width" ) );
+  property.setWidth( width );
+
+  return property;
+}
+
+TableCellFormatProperty StyleParser::parseTableCellProperty( QDomElement &parent )
+{
+  TableCellFormatProperty property;
+
+  if ( parent.hasAttribute( "background-color" ) )
+    property.setBackgroundColor( QColor( parent.attribute( "background-color" ) ) );
+
+  property.setPadding( convertUnit( parent.attribute( "padding" ) ) );
+
+  static QMap<QString, Qt::Alignment> map;
+  if ( map.isEmpty() ) {
+    map.insert( "top", Qt::AlignTop );
+    map.insert( "middle", Qt::AlignVCenter );
+    map.insert( "bottom", Qt::AlignBottom );
+    map.insert( "left", Qt::AlignLeft );
+    map.insert( "right", Qt::AlignRight );
+    map.insert( "center", Qt::AlignHCenter );
+  }
+
+  if ( parent.hasAttribute( "align" ) && parent.hasAttribute( "vertical-align" ) ) {
+    property.setAlignment( map[ parent.attribute( "align" ) ] | map[ parent.attribute( "vertical-align" ) ] );
+  } else if ( parent.hasAttribute( "align" ) ) {
+    property.setAlignment( map[ parent.attribute( "align" ) ] );
+  } else if ( parent.hasAttribute( "vertical-align" ) ) {
+    property.setAlignment( map[ parent.attribute( "vertical-align" ) ] );
   }
 
   return property;

@@ -158,20 +158,64 @@ StyleFormatProperty::StyleFormatProperty( const StyleInformation *information )
 {
 }
 
-void StyleFormatProperty::apply( QTextBlockFormat *blockFormat, QTextCharFormat *textFormat ) const
+void StyleFormatProperty::applyBlock( QTextBlockFormat *format ) const
 {
   if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
     const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
-    property.apply( blockFormat, textFormat );
+    property.applyBlock( format );
   }
 
   if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
     const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.apply( blockFormat, textFormat );
+    property.applyBlock( format );
   }
 
-  mParagraphFormat.apply( blockFormat );
-  mTextFormat.apply( textFormat );
+  mParagraphFormat.apply( format );
+}
+
+void StyleFormatProperty::applyText( QTextCharFormat *format ) const
+{
+  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
+    property.applyText( format );
+  }
+
+  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
+    property.applyText( format );
+  }
+
+  mTextFormat.apply( format );
+}
+
+void StyleFormatProperty::applyTableColumn( QTextTableFormat *format ) const
+{
+  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
+    property.applyTableColumn( format );
+  }
+
+  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
+    property.applyTableColumn( format );
+  }
+
+  mTableColumnFormat.apply( format );
+}
+
+void StyleFormatProperty::applyTableCell( QTextBlockFormat *format ) const
+{
+  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
+    property.applyTableCell( format );
+  }
+
+  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
+    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
+    property.applyTableCell( format );
+  }
+
+  mTableCellFormat.apply( format );
 }
 
 void StyleFormatProperty::setParentStyleName( const QString &parentStyleName )
@@ -207,6 +251,16 @@ void StyleFormatProperty::setParagraphFormat( const ParagraphFormatProperty &for
 void StyleFormatProperty::setTextFormat( const TextFormatProperty &format )
 {
   mTextFormat = format;
+}
+
+void StyleFormatProperty::setTableColumnFormat( const TableColumnFormatProperty &format )
+{
+  mTableColumnFormat = format;
+}
+
+void StyleFormatProperty::setTableCellFormat( const TableCellFormatProperty &format )
+{
+  mTableCellFormat = format;
 }
 
 PageFormatProperty::PageFormatProperty()
@@ -290,10 +344,6 @@ ListFormatProperty::ListFormatProperty( Type type )
   mIndents.resize( 10 );
 }
 
-ListFormatProperty::~ListFormatProperty()
-{
-}
-
 void ListFormatProperty::apply( QTextListFormat *format, int level ) const
 {
   if ( mType == Number )
@@ -311,4 +361,52 @@ void ListFormatProperty::addItem( int level, double indent )
     return;
 
   mIndents[ level ] = indent;
+}
+
+TableColumnFormatProperty::TableColumnFormatProperty()
+  : mWidth( 0 )
+{
+}
+
+void TableColumnFormatProperty::apply( QTextTableFormat *format ) const
+{
+  QVector<QTextLength> lengths = format->columnWidthConstraints();
+  lengths.append( QTextLength( QTextLength::FixedLength, mWidth ) );
+
+  format->setColumnWidthConstraints( lengths );
+}
+
+void TableColumnFormatProperty::setWidth( double width )
+{
+  mWidth = width;
+}
+
+TableCellFormatProperty::TableCellFormatProperty()
+  : mPadding( 0 ), mHasAlignment( false )
+{
+}
+
+void TableCellFormatProperty::apply( QTextBlockFormat *format ) const
+{
+  if ( mBackgroundColor.isValid() )
+    format->setBackground( mBackgroundColor );
+
+  if ( mHasAlignment )
+    format->setAlignment( mAlignment );
+}
+
+void TableCellFormatProperty::setBackgroundColor( const QColor &color )
+{
+  mBackgroundColor = color;
+}
+
+void TableCellFormatProperty::setPadding( double padding )
+{
+  mPadding = padding;
+}
+
+void TableCellFormatProperty::setAlignment( Qt::Alignment alignment )
+{
+  mAlignment = alignment;
+  mHasAlignment = true;
 }

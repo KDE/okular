@@ -83,7 +83,7 @@ class GSInterpreterCMD : public QThread
         // communication stuff
 
         PageInfo m_info;
-        PixmapRequest *m_req;
+        Okular::PixmapRequest *m_req;
         ProcessData * m_processData;
 
         // stopping list

@@ -19,43 +19,43 @@ class GSInternalDocument;
 class KTempFile;
 class KActionCollection;
 
-class GSGenerator : public Generator
+class GSGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 
         // Document description and Table of contents
-        const DocumentInfo * generateDocumentInfo();
-        const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
-        const DocumentFonts * generateDocumentFonts() { return 0L; }
+        const Okular::DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
+        const Okular::DocumentFonts * generateDocumentFonts() { return 0L; }
 
         // page contents generation
         bool canGeneratePixmap( bool async ) ;
-        void generatePixmap( PixmapRequest * request ) ;
+        void generatePixmap( Okular::PixmapRequest * request ) ;
 
         // can generate a KPDFText Page
         bool canGenerateTextPage() { return false; } ;
-        void generateSyncTextPage( KPDFPage * /*page*/ ) { ; } ;
+        void generateSyncTextPage( Okular::Page * /*page*/ ) { ; } ;
 
         bool supportsRotation() { return true; } ;
-        void setOrientation(QVector<KPDFPage*>&, int);
+        void setOrientation(QVector<Okular::Page*>&, int);
 
         // paper size management
         bool supportsPaperSizes();
         QStringList paperSizes();
-        void setPaperSize( QVector<KPDFPage*> & pagesVector, int newsize );
+        void setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize );
 
         QString getXMLFile() { return QString::null; };
         void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
         void freeGUI() ;
         // internal search and gettext
-        RegularAreaRect * findText( const QString & /* text*/, SearchDir /* dir*/, const bool /* strictCase*/,
-                    const RegularAreaRect  * /*lastRect*/, KPDFPage  * /* page*/) { return 0L;} ;
-        QString getText( const RegularAreaRect * /*area*/, KPDFPage  * /*page */) { return QString(); };
+        Okular::RegularAreaRect * findText( const QString & /* text*/, Okular::SearchDir /* dir*/, const bool /* strictCase*/,
+                    const Okular::RegularAreaRect  * /*lastRect*/, Okular::Page  * /* page*/) { return 0L;} ;
+        QString getText( const Okular::RegularAreaRect * /*area*/, Okular::Page  * /*page */) { return QString(); };
     	// may come useful later
         //virtual bool hasFonts() const ;
 
@@ -69,7 +69,7 @@ class GSGenerator : public Generator
 
         void addPages( KConfigDialog* dlg );
         /** constructor: takes the Document as a parameter **/
-        GSGenerator( KPDFDocument * doc );
+        GSGenerator( Okular::Document * doc );
         ~GSGenerator();
 
     public slots:
@@ -82,10 +82,10 @@ class GSGenerator : public Generator
         KTempFile * dscForPDF;
         QMutex convertLock;
         GSInterpreterLib* m_convert;
-//         QVector<KPDFPage*> m_pages;
+//         QVector<Okular::Page*> m_pages;
 
-        bool loadDocumentWithDSC( const QString & name, QVector< KPDFPage * > & pagesVector , bool ps );
-        bool loadPages( QVector< KPDFPage * > & pagesVector );
+        bool loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector , bool ps );
+        bool loadPages( QVector< Okular::Page * > & pagesVector );
         bool initInterpreter();
         int rotation( CDSC_ORIENTATION_ENUM orientation );
         int angle( CDSC_ORIENTATION_ENUM orientation );
@@ -95,8 +95,8 @@ class GSGenerator : public Generator
         bool m_asyncBusy;
 
         // pixmap requests
-        PixmapRequest* m_asRequest;
-        PixmapRequest* m_sRequest;
+        Okular::PixmapRequest* m_asRequest;
+        Okular::PixmapRequest* m_sRequest;
 
         // backendish stuff
         GSInterpreterLib* pixGenerator;

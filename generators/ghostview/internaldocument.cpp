@@ -110,14 +110,14 @@ GSInternalDocument::~GSInternalDocument()
     delete docInfo;
 }
 
-const DocumentInfo * GSInternalDocument::generateDocumentInfo()
+const Okular::DocumentInfo * GSInternalDocument::generateDocumentInfo()
 {
     if (! m_dsc->dsc() )
         return 0L;
 
     if (!docInfo)
     {
-        docInfo = new DocumentInfo();
+        docInfo = new Okular::DocumentInfo();
 
         docInfo->set( "title", m_dsc->dsc_title(), i18n("Title") );
         docInfo->set( "author", m_dsc->dsc_for(), i18n("Author") );

@@ -37,8 +37,8 @@
 
 OKULAR_EXPORT_PLUGIN(GSGenerator)
 
-GSGenerator::GSGenerator( KPDFDocument * doc ) :
-    Generator ( doc ),
+GSGenerator::GSGenerator( Okular::Document * doc ) :
+    Okular::Generator ( doc ),
     m_converted(false)
 {
     pixGenerator = 0;
@@ -138,7 +138,7 @@ bool GSGenerator::print( KPrinter& printer )
     return false; 
 }
 
-bool GSGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
+bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     QString name=fileName;
 
@@ -242,11 +242,11 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     docLock.unlock();
 }
 
-void GSGenerator::setOrientation(QVector<KPDFPage*>& pages, int rot) 
+void GSGenerator::setOrientation(QVector<Okular::Page*>& pages, int rot) 
 {
     internalDoc->setOrientation(orientation(rot));
     loadPages (pages);
-    NotifyRequest r(DocumentObserver::Setup, false);
+    Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
     m_document->notifyObservers( &r );
 }
 
@@ -260,12 +260,12 @@ QStringList GSGenerator::paperSizes()
     return GSInternalDocument::paperSizes();
 }
 
-void GSGenerator::setPaperSize( QVector<KPDFPage*> & pagesVector, int newsize )
+void GSGenerator::setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize )
 {
     internalDoc->setMedia(paperSizes().at(newsize));
     loadPages(pagesVector);
 // FIXME: is it needed to notify the observers? doesn't the document do that already?
-    NotifyRequest r(DocumentObserver::Setup, false);
+    Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
     m_document->notifyObservers( &r );
 }
 
@@ -287,7 +287,7 @@ void GSGenerator::freeGUI()
     }
 }
 
-bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )
+bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 {
     QSize pSize;
     bool atLeastOne=false;
@@ -310,7 +310,7 @@ bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )
             pSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
             pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
             pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
-            pagesVector[i]=new KPDFPage( i, pSize.width(),
+            pagesVector[i]=new Okular::Page( i, pSize.width(),
                 pSize.height() , rotation (internalDoc ->  orientation(i) ) );
             internalDoc -> insertPageData (i,qMakePair(tmpPage->begin, tmpPage->end));
             atLeastOne=true;
@@ -325,7 +325,7 @@ bool GSGenerator::loadPages( QVector< KPDFPage * > & pagesVector )
         unsigned long end = f.size();
         internalDoc -> insertPageData (0,qMakePair((unsigned long) 0, end));
         pagesVector.resize(1);
-        pagesVector[0]=new KPDFPage( 0, pSize.width(),
+        pagesVector[0]=new Okular::Page( 0, pSize.width(),
             pSize.height() , rotation (internalDoc ->  orientation() ) );
         atLeastOne=true;
     }
@@ -347,7 +347,7 @@ bool GSGenerator::initInterpreter()
     return pixGenerator->running();
 }
 
-bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< KPDFPage * > & pagesVector, bool ps )
+bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector, bool ps )
 {
     if ( internalDoc )
     {
@@ -360,7 +360,7 @@ bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< KPDFPage *
     return loadPages (pagesVector);
 }
 
-void GSGenerator::generatePixmap( PixmapRequest * req )
+void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
     kWarning() << "receiving req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
     int pgNo=req->pageNumber;
@@ -434,7 +434,7 @@ bool GSGenerator::canGeneratePixmap( bool async )
       return !syncLock.locked();
 }
 
-const DocumentInfo * GSGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()
 {
     return internalDoc->generateDocumentInfo();
 }

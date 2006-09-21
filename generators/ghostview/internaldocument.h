@@ -68,7 +68,7 @@ class GSInternalDocument
         GSInterpreterLib::Position setup() { return m_setup; }
 
         Format format() const { return m_format; };
-        const DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentInfo * generateDocumentInfo();
         bool psCopyDoc( const QString& inputFile,
             const QString& outputFile, const PageList& pageList );
         bool savePages( const QString& saveFileName, const PageList& pageList );
@@ -84,7 +84,7 @@ class GSInternalDocument
         QString m_fileName;
         QStringList m_mediaNames;
 
-        DocumentInfo* docInfo;
+        Okular::DocumentInfo* docInfo;
         FILE* m_internalFile;
         KDSC* m_dsc;
         Format m_format;

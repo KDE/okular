@@ -7,14 +7,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_LINK_H_
-#define _KPDF_LINK_H_
+#ifndef _OKULAR_LINK_H_
+#define _OKULAR_LINK_H_
 
 #include "okular_export.h"
 
-#include <qstring.h>
-#include <qrect.h>
+#include <QtCore/QRect>
+#include <QtCore/QString>
+
 #include "document.h" // for DocumentViewport
+
+namespace Okular {
 
 /**
  * @short Encapsulates data that describes a link.
@@ -23,7 +26,7 @@
  * widgets to reimplement the 'linkType' method and return the type of
  * the link described by the reimplemented class.
  */
-class OKULAR_EXPORT KPDFLink
+class OKULAR_EXPORT Link
 {
     public:
         // get link type (inherited classes mustreturn an unique identifier)
@@ -32,12 +35,12 @@ class OKULAR_EXPORT KPDFLink
         virtual QString linkTip() const;
 
         // virtual destructor (remove warnings)
-        virtual ~KPDFLink();
+        virtual ~Link();
 };
 
 
 /** Goto: a viewport and maybe a reference to an external filename **/
-class OKULAR_EXPORT KPDFLinkGoto : public KPDFLink
+class OKULAR_EXPORT LinkGoto : public Link
 {
     public:
         // query for goto parameters
@@ -45,8 +48,8 @@ class OKULAR_EXPORT KPDFLinkGoto : public KPDFLink
         const QString & fileName() const { return m_extFileName; }
         const DocumentViewport & destViewport() const { return m_vp; }
 
-        // create a KPDFLink_Goto
-        KPDFLinkGoto( QString extFileName, const DocumentViewport & vp ) { m_extFileName = extFileName; m_vp = vp; }
+        // create a Link_Goto
+        LinkGoto( QString extFileName, const DocumentViewport & vp ) { m_extFileName = extFileName; m_vp = vp; }
         LinkType linkType() const { return Goto; }
         QString linkTip() const;
 
@@ -56,15 +59,15 @@ class OKULAR_EXPORT KPDFLinkGoto : public KPDFLink
 };
 
 /** Execute: filename and parameters to execute **/
-class OKULAR_EXPORT KPDFLinkExecute : public KPDFLink
+class OKULAR_EXPORT LinkExecute : public Link
 {
     public:
         // query for filename / parameters
         const QString & fileName() const { return m_fileName; }
         const QString & parameters() const { return m_parameters; }
 
-        // create a KPDFLink_Execute
-        KPDFLinkExecute( const QString & file, const QString & params ) { m_fileName = file; m_parameters = params; }
+        // create a Link_Execute
+        LinkExecute( const QString & file, const QString & params ) { m_fileName = file; m_parameters = params; }
         LinkType linkType() const { return Execute; }
         QString linkTip() const;
 
@@ -74,14 +77,14 @@ class OKULAR_EXPORT KPDFLinkExecute : public KPDFLink
 };
 
 /** Browse: an URL to open, ranging from 'http://' to 'mailto:' etc.. **/
-class OKULAR_EXPORT KPDFLinkBrowse : public KPDFLink
+class OKULAR_EXPORT LinkBrowse : public Link
 {
     public:
         // query for URL
         const QString & url() const { return m_url; }
 
-        // create a KPDFLink_Browse
-        KPDFLinkBrowse( const QString &url ) { m_url = url; }
+        // create a Link_Browse
+        LinkBrowse( const QString &url ) { m_url = url; }
         LinkType linkType() const { return Browse; }
         QString linkTip() const;
 
@@ -89,8 +92,8 @@ class OKULAR_EXPORT KPDFLinkBrowse : public KPDFLink
         QString m_url;
 };
 
-/** Action: contains an action to perform on document / kpdf **/
-class OKULAR_EXPORT KPDFLinkAction : public KPDFLink
+/** Action: contains an action to perform on document / okular **/
+class OKULAR_EXPORT LinkAction : public Link
 {
     public:
         // define types of actions
@@ -111,8 +114,8 @@ class OKULAR_EXPORT KPDFLinkAction : public KPDFLink
         // query for action type
         ActionType actionType() const { return m_type; }
 
-        // create a KPDFLink_Action
-        KPDFLinkAction( enum ActionType actionType ) { m_type = actionType; }
+        // create a Link_Action
+        LinkAction( enum ActionType actionType ) { m_type = actionType; }
         LinkType linkType() const { return Action; }
         QString linkTip() const;
 
@@ -121,12 +124,14 @@ class OKULAR_EXPORT KPDFLinkAction : public KPDFLink
 };
 
 /** Movie: Not yet defined -> think renaming to 'Media' link **/
-class KPDFLinkMovie : public KPDFLink
+class LinkMovie : public Link
 // TODO this (Movie link)
 {
     public:
-        KPDFLinkMovie() {};
+        LinkMovie() {};
         LinkType linkType() const { return Movie; }
 };
+
+}
 
 #endif

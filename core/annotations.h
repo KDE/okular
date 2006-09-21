@@ -7,15 +7,19 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_ANNOTATIONS_H_
-#define _KPDF_ANNOTATIONS_H_
+#ifndef _OKULAR_ANNOTATIONS_H_
+#define _OKULAR_ANNOTATIONS_H_
 
-#include <qstring.h>
-#include <qdatetime.h>
-#include <qlinkedlist.h>
-#include <qdom.h>
-#include <qfont.h>
+#include <QtCore/QString>
+#include <QtCore/QDateTime>
+#include <QtCore/QLinkedList>
+#include <QtGui/QFont>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+
 #include "page.h"
+
+namespace Okular {
 
 class Annotation;
 
@@ -50,7 +54,7 @@ class AnnotationUtils
  * @short Annotation struct holds properties shared by all annotations.
  *
  * An Annotation is an object (text note, highlight, sound, popup window, ..)
- * contained by a KPDFPage in the document.
+ * contained by a Page in the document.
  *
  * For current state in relations to pdf embedded annotations:
  * @see generator_pdf/README.Annotations
@@ -129,7 +133,7 @@ struct OKULAR_EXPORT Annotation
 
     // methods: query annotation's type for runtime type identification
     virtual SubType subType() const { return A_BASE; }
-    //QRect geometry( int scaledWidth, int scaledHeight, KPDFPage * page );
+    //QRect geometry( int scaledWidth, int scaledHeight, Page * page );
 
     // methods: storage/retrieval from xml nodes
     Annotation( const QDomNode & node );
@@ -240,5 +244,7 @@ struct OKULAR_EXPORT InkAnnotation : public Annotation
     // data fields
     QList< QLinkedList<NormalizedPoint> > inkPaths;
 };
+
+}
 
 #endif

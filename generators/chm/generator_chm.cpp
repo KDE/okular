@@ -28,7 +28,7 @@
 
 OKULAR_EXPORT_PLUGIN(CHMGenerator)
 
-CHMGenerator::CHMGenerator( KPDFDocument * doc ) : Generator ( doc )
+CHMGenerator::CHMGenerator( Okular::Document * doc ) : Okular::Generator ( doc )
 {
     m_syncGen=0;
     m_file=0;
@@ -39,7 +39,7 @@ CHMGenerator::CHMGenerator( KPDFDocument * doc ) : Generator ( doc )
     m_pixmapRequestZoom=1;
 }
 
-bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
+bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
@@ -63,7 +63,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * >
     {
         preparePageForSyncOperation(100,it.key());
         int i= it.value() - 1;
-        pagesVector[ i ] = new KPDFPage (i, m_syncGen->view()->contentsWidth(),
+        pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(),0);
         kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
@@ -124,11 +124,11 @@ void CHMGenerator::slotCompleted()
     }
 }
 
-const DocumentInfo * CHMGenerator::generateDocumentInfo() 
+const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo() 
 {
     if (!m_docInfo)
     {
-        m_docInfo=new DocumentInfo();
+        m_docInfo=new Okular::DocumentInfo();
 
         m_docInfo->set( "mimeType", "application/x-chm" );
 
@@ -137,12 +137,12 @@ const DocumentInfo * CHMGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-const DocumentSynopsis * CHMGenerator::generateDocumentSynopsis()
+const Okular::DocumentSynopsis * CHMGenerator::generateDocumentSynopsis()
 {
     return &m_docSyn;
 }
 
-const DocumentFonts * CHMGenerator::generateDocumentFonts() 
+const Okular::DocumentFonts * CHMGenerator::generateDocumentFonts() 
 {
     return 0L;
 }
@@ -157,7 +157,7 @@ bool CHMGenerator::canGeneratePixmap ( bool /*async*/ )
     return !syncLock.locked();
 }
 
-void CHMGenerator::generatePixmap( PixmapRequest * request ) 
+void CHMGenerator::generatePixmap( Okular::PixmapRequest * request ) 
 {
     QString a="S";
     if (request->async) a="As";
@@ -191,7 +191,7 @@ void CHMGenerator::generatePixmap( PixmapRequest * request )
 }
 
 
-void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
+void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
 {
     if (node.nodeType() == DOM::Node::TEXT_NODE)
     {
@@ -199,7 +199,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         QRect r=node.getRect();
         int vWidth=m_syncGen->view()->contentsWidth();
         int vHeight=m_syncGen->view()->contentsHeight();
-        NormalizedRect *nodeNormRect;
+        Okular::NormalizedRect *nodeNormRect;
 #define NOEXP
 #ifndef NOEXP
         int x,y,height;
@@ -207,7 +207,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
         int nodeTextLength = nodeText.length();
         if (nodeTextLength==1)
         {
-            nodeNormRect=new NormalizedRect (r,vWidth,vHeight);
+            nodeNormRect=new Okular::NormalizedRect (r,vWidth,vHeight);
             tp->append(nodeText,nodeNormRect,nodeNormRect->bottom,0,(nodeText=="\n"));
             kDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
                 << "] [" << nodeNormRect->right << "x" << nodeNormRect->bottom << "]" << endl;
@@ -224,21 +224,21 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
 //                     if (nodeType[i+1]
                     node.getCursor(i+1,x_next,y_next,height_next);
                     kDebug() << "DL/L/R " << r.left() << "/" << x << "/" << x_next << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
+                    nodeNormRect=new Okular::NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else if ( i <nodeTextLength -1 )
                 // i is between zero and the last element
                 {
                     node.getCursor(i+1,x_next,y_next,height_next);
                     kDebug() << "L/R" << x << "/" << x_next << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
+                    nodeNormRect=new Okular::NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else
                 // the last element use right rect boundary
                 {
                     node.getCursor(i-1,x_next,y_next,height_next);
                     kDebug() << "L/R" << x_next << "/" << r.right() << endl;
-                    nodeNormRect=new NormalizedRect (QRect(x,y,r.right()-x-1,height),vWidth,vHeight);
+                    nodeNormRect=new Okular::NormalizedRect (QRect(x,y,r.right()-x-1,height),vWidth,vHeight);
                 }
                 tp->append(QString(nodeText[i]),nodeNormRect,nodeNormRect->bottom,0,(nodeText[i]=='\n'));
                 kDebug () << "Working with offset : " << i << endl;
@@ -248,7 +248,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
             }
         }
 #else
-        nodeNormRect=new NormalizedRect (r,vWidth,vHeight);
+        nodeNormRect=new Okular::NormalizedRect (r,vWidth,vHeight);
         tp->append(nodeText,nodeNormRect/*,0*/);
 #endif
     }
@@ -263,7 +263,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp)
 
 void CHMGenerator::additionalRequestData() 
 {
-    KPDFPage * page=m_request->page;
+    Okular::Page * page=m_request->page;
     bool genObjectRects = m_request->id & (PAGEVIEW_ID | PRESENTATION_ID);
     bool genTextPage = !m_request->page->hasSearchPage() && genObjectRects;
 
@@ -274,7 +274,7 @@ void CHMGenerator::additionalRequestData()
     if ( genObjectRects )
     {
         kDebug() << "Generating ObjRects - start" << endl;
-        QLinkedList< ObjectRect * > objRects;
+        QLinkedList< Okular::ObjectRect * > objRects;
         int xScale=m_request->width;
         int yScale=m_request->height;
         // getting links
@@ -290,7 +290,7 @@ void CHMGenerator::additionalRequestData()
                 if ( !n.isNull() )
                 {
                     QString url = n.attributes().getNamedItem("href").nodeValue().string();
-                    DocumentViewport viewport(getMetaData( url, QString::number(page->number() - 1) ));
+                    Okular::DocumentViewport viewport(getMetaData( url, QString::number(page->number() - 1) ));
                     r=n.getRect();
                     kDebug() << "Adding rect: " << url << " "  << r << endl;
                     // there is no way for us to support javascript properly
@@ -299,18 +299,18 @@ void CHMGenerator::additionalRequestData()
                     else if (url.contains (":"))
                     {
                         objRects.push_back(
-                            new ObjectRect ( NormalizedRect(r,xScale,yScale),
+                            new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                             false,
-                            ObjectRect::Link,
-                            new KPDFLinkBrowse ( url )));
+                            Okular::ObjectRect::Link,
+                            new Okular::LinkBrowse ( url )));
                     }
                     else
                     {
                         objRects.push_back(
-                            new ObjectRect ( NormalizedRect(r,xScale,yScale),
+                            new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                             false,
-                            ObjectRect::Link,
-                            new KPDFLinkGoto ( QString::null, viewport)));
+                            Okular::ObjectRect::Link,
+                            new Okular::LinkGoto ( QString::null, viewport)));
                     }
                 }
             }
@@ -327,9 +327,9 @@ void CHMGenerator::additionalRequestData()
                 if ( !n.isNull() )
                 {
                     objRects.push_back(
-                            new ObjectRect ( NormalizedRect(n.getRect(),xScale,yScale),
+                            new Okular::ObjectRect ( Okular::NormalizedRect(n.getRect(),xScale,yScale),
                             false,
-                            ObjectRect::Image,
+                            Okular::ObjectRect::Image,
                             0));
                 }
             }
@@ -340,7 +340,7 @@ void CHMGenerator::additionalRequestData()
     if ( genTextPage )
     {
         kDebug() << "Generating text page - start" << endl;
-        KPDFTextPage *tp=new KPDFTextPage();
+        Okular::TextPage *tp=new Okular::TextPage();
         recursiveExploreNodes(domDoc,tp);
         page->setSearchPage (tp);
     }
@@ -352,14 +352,14 @@ bool CHMGenerator::canGenerateTextPage()
     return true;
 }
 
-void CHMGenerator::generateSyncTextPage( KPDFPage * page )
+void CHMGenerator::generateSyncTextPage( Okular::Page * page )
 {
     syncLock.lock();
-    double zoomP=KpdfSettings::zoomFactor();
+    double zoomP=Okular::Settings::zoomFactor();
     int zoom = zoomP * 100;
     m_syncGen->view()->resize(page->width() * zoomP , page->height() * zoomP);
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
-    KPDFTextPage *tp=new KPDFTextPage();
+    Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
     page->setSearchPage(tp);
     syncLock.unlock();
@@ -375,13 +375,13 @@ bool CHMGenerator::prefersInternalSearching()
     return false;
 }
 
-RegularAreaRect * CHMGenerator::findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
-    const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/)
+Okular::RegularAreaRect * CHMGenerator::findText( const QString & /*text*/, Okular::SearchDir /*dir*/, const bool /*strictCase*/,
+    const Okular::RegularAreaRect * /*lastRect*/, Okular::Page * /*page*/)
 {
     return 0L;
 }
 
-QString CHMGenerator::getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ )
+QString CHMGenerator::getText( const Okular::RegularAreaRect * /*area*/, Okular::Page * /*page*/ )
 {
     return QString();
 }
@@ -400,7 +400,7 @@ QString CHMGenerator::getMetaData( const QString &key, const QString &option )
 {
     if ( key == "NamedViewport" && !option.isEmpty() )
     {
-        DocumentViewport viewport;
+        Okular::DocumentViewport viewport;
         viewport.pageNumber = m_file->getPageNum( option ) -1;
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();

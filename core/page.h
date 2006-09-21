@@ -7,40 +7,34 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PAGE_H_
-#define _KPDF_PAGE_H_
+#ifndef _OKULAR_PAGE_H_
+#define _OKULAR_PAGE_H_
 
+#include <QtCore/QLinkedList>
+#include <QtCore/QMap>
+
+#include "area.h"
 #include "okular_export.h"
+#include "textpage.h"
 
-#include <qmap.h>
-#include <qlinkedlist.h>
-
-
+class QDomDocument;
+class QDomNode;
 class QPixmap;
 class QRect;
-class QDomNode;
-class QDomDocument;
-class KPDFPageTransition;
-class Annotation;
-class KPDFTextPage;
-class TextSelection;
-// didnt work with forward declarations
-#include "area.h"
-#include "textpage.h"
-/*
-class NormalizedRect;
-class NormalizedPoint;
-class RegularAreaRect;
-class HighlightRect;
-class HighlightAreaRect;
-class ObjectRect;
-*/
 
+class PagePainter;
+
+namespace Okular {
+
+class Annotation;
+class PageTransition;
+class TextPage;
+class TextSelection;
 
 /**
  * @short Collector for all the data belonging to a page.
  *
- * The KPDFPage class contains pixmaps (referenced using observers id as key),
+ * The Page class contains pixmaps (referenced using observers id as key),
  * a search page (a class used internally for retrieving text), rect classes
  * (that describe links or other active areas in the current page) and more.
  *
@@ -49,11 +43,11 @@ class ObjectRect;
  *
  * Note: The class takes ownership of all objects.
  */
-class OKULAR_EXPORT KPDFPage
+class OKULAR_EXPORT Page
 {
     public:
-        KPDFPage( uint number, double width, double height, int orientation );
-        ~KPDFPage();
+        Page( uint number, double width, double height, int orientation );
+        ~Page();
 
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
@@ -71,37 +65,37 @@ class OKULAR_EXPORT KPDFPage
 
         RegularAreaRect * findText( int searchID, const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
         QString getText( const RegularAreaRect * rect ) const;
-	RegularAreaRect * getTextArea ( TextSelection * ) const;
-//	const ObjectRect * getObjectRect( double x, double y ) const;
+        RegularAreaRect * getTextArea ( TextSelection * ) const;
+        //const ObjectRect * getObjectRect( double x, double y ) const;
         const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
-        const KPDFPageTransition * getTransition() const;
+        const PageTransition * getTransition() const;
         //FIXME TEMP:
         bool hasAnnotations() const { return !m_annotations.isEmpty(); }
         const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }
 
-        // operations: set contents (by KPDFDocument)
+        // operations: set contents (by Document)
         void setPixmap( int p_id, QPixmap * pixmap );
-        void setSearchPage( KPDFTextPage * text );
+        void setSearchPage( TextPage * text );
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void modifyAnnotation( Annotation * newannotation );
         bool removeAnnotation( Annotation * annotation );
-        void setTransition( KPDFPageTransition * transition );
-        // operations: delete contents (by KPDFDocument)
+        void setTransition( PageTransition * transition );
+        // operations: delete contents (by Document)
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
         void deleteAnnotations();
 
-        // operations to save/restore page state (by KPDFDocument)
+        // operations to save/restore page state (by Document)
         void restoreLocalContents( const QDomNode & pageNode );
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
 
     private:
-        friend class PagePainter;
+        friend class ::PagePainter;
         int m_number;
         int m_orientation;
         double m_width, m_height;
@@ -109,11 +103,13 @@ class OKULAR_EXPORT KPDFPage
         int m_maxuniqueNum;
 
         QMap< int, QPixmap * > m_pixmaps;
-        KPDFTextPage * m_text;
+        TextPage * m_text;
         QLinkedList< ObjectRect * > m_rects;
         QLinkedList< HighlightAreaRect * > m_highlights;
         QLinkedList< Annotation * > m_annotations;
-        KPDFPageTransition * m_transition;
+        PageTransition * m_transition;
 };
+
+}
 
 #endif

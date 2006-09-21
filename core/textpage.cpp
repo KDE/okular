@@ -6,27 +6,31 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-#include "textpage.h"
-#include "area.h"
-#include "misc.h"
+
 #include <kdebug.h>
 
-struct SearchPoint
+#include "area.h"
+#include "misc.h"
+#include "textpage.h"
+
+using namespace Okular;
+
+struct Okular::SearchPoint
 {
     SearchPoint() : theIt( 0 ), offset_begin( -1 ), offset_end( -1 ) {}
-    QList<KPDFTextEntity*>::Iterator theIt;
+    QList<TextEntity*>::Iterator theIt;
     int offset_begin;
     int offset_end;
 };
 
 
-KPDFTextPage::~KPDFTextPage()
+TextPage::~TextPage()
 {
     qDeleteAll(m_words);
     qDeleteAll(m_searchPoints);
 }
 
-RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
+RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
 {
 /**
   It works like this:
@@ -144,15 +148,15 @@ RegularAreaRect * KPDFTextPage::getTextArea ( TextSelection * sel) const
 }
 
 
-RegularAreaRect* KPDFTextPage::findText(int searchID, const QString &query, SearchDir & direct,
+RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDir & direct,
     bool strictCase, const RegularAreaRect *area)
 {
     SearchDir dir=direct;
     // invalid search request
     if ( query.isEmpty() || area->isNull() )
         return 0;
-    QList<KPDFTextEntity*>::Iterator start;
-    QList<KPDFTextEntity*>::Iterator end;
+    QList<TextEntity*>::Iterator start;
+    QList<TextEntity*>::Iterator end;
     if ( !m_searchPoints.contains( searchID ) )
     {
         // if no previous run of this search is found, then set it to start
@@ -204,24 +208,24 @@ RegularAreaRect* KPDFTextPage::findText(int searchID, const QString &query, Sear
 }
 
 
-RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QString &query,
-        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start,
-        const QList<KPDFTextEntity*>::Iterator &end)
+RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &query,
+        bool strictCase, const QList<TextEntity*>::Iterator &start,
+        const QList<TextEntity*>::Iterator &end)
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
 
     // j is the current position in our query
-    // len is the length of the string in kpdftextentity
+    // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
     QString str;
-    KPDFTextEntity* curEntity = 0;
+    TextEntity* curEntity = 0;
     int j=0, len=0, queryLeft=query.length();
     int offset = 0;
     bool haveMatch=false;
     bool dontIncrement=false;
     bool offsetMoved = false;
-    QList<KPDFTextEntity*>::Iterator it = start;
+    QList<TextEntity*>::Iterator it = start;
     for ( ; it != end; ++it )
     {
         curEntity = *it;
@@ -321,14 +325,14 @@ RegularAreaRect* KPDFTextPage::findTextInternalForward(int searchID, const QStri
     return 0;
 }
 
-QString KPDFTextPage::getText(const RegularAreaRect *area) const
+QString TextPage::getText(const RegularAreaRect *area) const
 {
     if (!area || area->isNull())
         return QString();
 
     QString ret = "";
-    QList<KPDFTextEntity*>::ConstIterator it,end = m_words.end();
-    KPDFTextEntity * last=0;
+    QList<TextEntity*>::ConstIterator it,end = m_words.end();
+    TextEntity * last=0;
 	for( it=m_words.begin() ; it != end;  ++it )
 	{
         // provide the string FIXME?: newline handling

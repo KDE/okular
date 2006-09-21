@@ -7,15 +7,18 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_SIDE_REVIEWS_H_
-#define _KPDF_SIDE_REVIEWS_H_
+#ifndef _OKULAR_SIDE_REVIEWS_H_
+#define _OKULAR_SIDE_REVIEWS_H_
 
 #include <qwidget.h>
 #include <qvector.h>
 #include "core/observer.h"
 
-class KPDFDocument;
-class KPDFPage;
+namespace Okular {
+class Document;
+class Page;
+}
+
 class QToolBar;
 class QTreeWidget;
 class KTreeWidgetSearchLine;
@@ -24,15 +27,15 @@ class QTimer;
 /**
  * @short ...
  */
-class Reviews : public QWidget, public DocumentObserver
+class Reviews : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        Reviews( QWidget * parent, KPDFDocument * document );
+        Reviews( QWidget * parent, Okular::Document * document );
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return REVIEWS_ID; }
-        void notifySetup( const QVector< KPDFPage * > & pages, bool );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
 
@@ -44,7 +47,7 @@ class Reviews : public QWidget, public DocumentObserver
 
     private:
         // add all annotations of a page to the listView taking care of grouping
-        void addContents( const KPDFPage * page );
+        void addContents( const Okular::Page * page );
         // delay an update to the listView
         void requestListViewUpdate( int delayms = 200 );
 
@@ -54,8 +57,8 @@ class Reviews : public QWidget, public DocumentObserver
         QTreeWidget * m_listView;
         KTreeWidgetSearchLine * m_searchLine;
         // internal storage
-        KPDFDocument * m_document;
-        QVector< KPDFPage * > m_pages;
+        Okular::Document * m_document;
+        QVector< Okular::Page * > m_pages;
         QTimer * m_delayTimer;
         int m_currentPage;
 };

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_THUMBNAILLIST_H_
-#define _KPDF_THUMBNAILLIST_H_
+#ifndef _OKULAR_THUMBNAILLIST_H_
+#define _OKULAR_THUMBNAILLIST_H_
 
 #include <qscrollarea.h>
 
@@ -20,26 +20,28 @@
 class QTimer;
 class QVBoxLayout;
 class KActionCollection;
-
-class KPDFDocument;
 class ThumbnailWidget;
+
+namespace Okular {
+class Document;
+}
 
 /**
  * @short A scrollview that displays pages pixmaps previews (aka thumbnails).
  *
  * ...
  */
-class ThumbnailList : public QScrollArea, public DocumentObserver
+class ThumbnailList : public QScrollArea, public Okular::DocumentObserver
 {
 Q_OBJECT
     public:
-        ThumbnailList(QWidget *parent, KPDFDocument *document);
+        ThumbnailList(QWidget *parent, Okular::Document *document);
         ~ThumbnailList();
 
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
         void notifyViewportChanged( bool smoothMove );
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
@@ -55,7 +57,7 @@ Q_OBJECT
         void updateWidgets();
 
         // called by ThumbnailWidgets to send (forward) the mouse click signals
-        void forwardClick( const KPDFPage *, const QPoint &, Qt::MouseButton );
+        void forwardClick( const Okular::Page *, const QPoint &, Qt::MouseButton );
         // called by ThumbnailWidgets to get the overlay bookmark pixmap
         const QPixmap * getBookmarkOverlay() const;
 
@@ -78,11 +80,11 @@ Q_OBJECT
 
     signals:
         void urlDropped( const KUrl& );
-        void rightClick( const KPDFPage *, const QPoint & );
+        void rightClick( const Okular::Page *, const QPoint & );
 
     private:
         void delayedRequestVisiblePixmaps( int delayMs = 0 );
-        KPDFDocument *m_document;
+        Okular::Document *m_document;
         ThumbnailWidget *m_selected;
         QTimer *m_delayTimer;
         QPixmap *m_bookmarkOverlay;

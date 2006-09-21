@@ -36,7 +36,7 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
             int page = el.attribute( "destination" ).toInt( &ok );
             if ( ok && ( page > 0 ) )
             {
-                DocumentViewport vp;
+                Okular::DocumentViewport vp;
                 vp.pageNumber = page - 1;
                 newel.setAttribute( "Viewport", vp.toString() );
             }
@@ -52,14 +52,14 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
 
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
-DjVuGenerator::DjVuGenerator( KPDFDocument * doc ) : Generator ( doc ),
+DjVuGenerator::DjVuGenerator( Okular::Document * doc ) : Okular::Generator ( doc ),
   m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
     m_djvu = new KDjVu();
     connect( m_djvu, SIGNAL( pixmapGenerated( int, const QPixmap & ) ), this, SLOT( djvuPixmapGenerated( int, const QPixmap & ) ) );
 }
 
-bool DjVuGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
+bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     if ( !m_djvu->openFile( fileName ) )
         return false;
@@ -89,7 +89,7 @@ bool DjVuGenerator::canGeneratePixmap( bool /*async*/ )
     return ready;
 }
 
-void DjVuGenerator::generatePixmap( PixmapRequest * request )
+void DjVuGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     ready = false;
 
@@ -107,12 +107,12 @@ void DjVuGenerator::generatePixmap( PixmapRequest * request )
     }
 }
 
-const DocumentInfo * DjVuGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
 {
     if ( m_docInfo )
         return m_docInfo;
 
-    m_docInfo = new DocumentInfo();
+    m_docInfo = new Okular::DocumentInfo();
 
     m_docInfo->set( "mimeType", "image/x-djvu" );
 
@@ -133,7 +133,7 @@ const DocumentInfo * DjVuGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-const DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
+const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 {
     if ( m_docSyn )
         return m_docSyn;
@@ -141,14 +141,14 @@ const DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     const QDomDocument *doc = m_djvu->documentBookmarks();
     if ( doc )
     {
-        m_docSyn = new DocumentSynopsis();
+        m_docSyn = new Okular::DocumentSynopsis();
         recurseCreateTOC( *m_docSyn, *const_cast<QDomDocument*>( doc ), *m_docSyn );
     }
 
     return m_docSyn;
 }
 
-void DjVuGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void DjVuGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
     loadPages( pagesVector, orientation );
 }
@@ -160,13 +160,13 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
     QList<KDjVu::Link*> links = m_djvu->linksForPage( page );
     if ( links.count() > 0 )
     {
-        QLinkedList<ObjectRect *> rects;
+        QLinkedList<Okular::ObjectRect *> rects;
         QList<KDjVu::Link*>::ConstIterator it = links.constBegin();
         QList<KDjVu::Link*>::ConstIterator itEnd = links.constEnd();
         for ( ; it != itEnd; ++it )
         {
             KDjVu::Link *curlink = (*it);
-            KPDFLink *newlink = 0;
+            Okular::Link *newlink = 0;
             int newpage = -1;
             switch ( curlink->type() )
             {
@@ -180,13 +180,13 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     int tmppage = target.toInt( &ok );
                     if ( ok || target.isEmpty() )
                     {
-                        DocumentViewport vp;
+                        Okular::DocumentViewport vp;
                         if ( !target.isEmpty() )
                         {
                             vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
                             newpage = vp.pageNumber;
                         }
-                        newlink = new KPDFLinkGoto( QString::null, vp );
+                        newlink = new Okular::LinkGoto( QString::null, vp );
                     }
                     break;
                 }
@@ -194,7 +194,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                 {
                     KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( curlink );
                     QString url = l->url();
-                    newlink = new KPDFLinkBrowse( url );
+                    newlink = new Okular::LinkBrowse( url );
                     break;
                 }
             }
@@ -206,7 +206,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                 bool scape_orientation = ( m_request->documentRotation % 2 == 1 );
                 if ( scape_orientation )
                     qSwap( width, height );
-                ObjectRect *newrect = 0;
+                Okular::ObjectRect *newrect = 0;
                 switch ( curlink->areaType() )
                 {
                     case KDjVu::Link::RectArea:
@@ -214,7 +214,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     {
                         QRect r( QPoint( curlink->point().x(), p->height() - curlink->point().y() - curlink->size().height() ), curlink->size() );
                         bool ellipse = ( curlink->areaType() == KDjVu::Link::EllipseArea );
-                        newrect = new ObjectRect( NormalizedRect( okularUtils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ellipse, ObjectRect::Link, newlink );
+                        newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
                         break;
                     }
                     case KDjVu::Link::PolygonArea:
@@ -236,7 +236,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                         if ( !newpoly.isEmpty() )
                         {
                             newpoly << newpoly.first();
-                            newrect = new ObjectRect( newpoly, ObjectRect::Link, newlink );
+                            newrect = new Okular::ObjectRect( newpoly, Okular::ObjectRect::Link, newlink );
                         }
                         break;
                     }
@@ -258,7 +258,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
     signalRequestDone( m_request );
 }
 
-void DjVuGenerator::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
+void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )
 {
     const QVector<KDjVu::Page*> &djvu_pages = m_djvu->pages();
     int numofpages = djvu_pages.count();
@@ -273,7 +273,7 @@ void DjVuGenerator::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
         int h = p->height();
         if ( rotation % 2 == 1 )
             qSwap( w, h );
-        KPDFPage *page = new KPDFPage( i, w, h, p->orientation() + rotation );
+        Okular::Page *page = new Okular::Page( i, w, h, p->orientation() + rotation );
         pagesVector[i] = page;
     }
 }

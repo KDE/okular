@@ -15,39 +15,39 @@
 
 class KDjVu;
 
-class DjVuGenerator : public Generator
+class DjVuGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        DjVuGenerator( KPDFDocument * doc );
-        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        DjVuGenerator( Okular::Document * doc );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
         // pixmap generation
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
         // document information
-        const DocumentInfo * generateDocumentInfo();
-        const DocumentSynopsis * generateDocumentSynopsis();
+        const Okular::DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
         // rotation handling
         bool supportsRotation() { return true; };
-        void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+        void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     private slots:
         void djvuPixmapGenerated( int page, const QPixmap & pix );
 
     private:
-        void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
+        void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
 
         KDjVu *m_djvu;
 
-        DocumentInfo *m_docInfo;
-        DocumentSynopsis *m_docSyn;
+        Okular::DocumentInfo *m_docInfo;
+        Okular::DocumentSynopsis *m_docSyn;
         bool ready;
 
-        PixmapRequest *m_request;
+        Okular::PixmapRequest *m_request;
 };
 
 #endif

@@ -1,4 +1,5 @@
-ClassName=KpdfSettings
+ClassName=Settings
+Namespace=Okular
 File=okular.kcfg
 Mutators=true
 Singleton=true

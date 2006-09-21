@@ -8,14 +8,15 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qdom.h>
-#include <qcolor.h>
-#include <qapplication.h>
+#include <QtGui/QApplication>
+#include <QtGui/QColor>
+
 #include <kdebug.h>
 
 // local includes
 #include "annotations.h"
 
+using namespace Okular;
 
 //BEGIN AnnotationUtils implementation
 Annotation * AnnotationUtils::createAnnotation( const QDomElement & annElement )

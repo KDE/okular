@@ -13,20 +13,24 @@
 #include <kdialog.h>
 
 class QTreeWidgetItem;
-class KPDFDocument;
+
+namespace Okular {
+class Document;
+class EmbeddedFile;
+}
 
 class EmbeddedFilesDialog : public KDialog
 {
 Q_OBJECT
 	public:
-		EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document);
+		EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document);
 	
 	private slots:
 		void saveFile();
 	
 	private:
 		QTreeWidget *m_tw;
-		QHash<QTreeWidgetItem *, EmbeddedFile*> m_files;
+		QHash<QTreeWidgetItem *, Okular::EmbeddedFile*> m_files;
 };
 
 #endif

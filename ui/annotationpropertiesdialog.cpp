@@ -26,7 +26,7 @@
 #include "annotationwidgets.h"
 
 
-AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *document, int docpage, Annotation *ann )
+AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Document *document, int docpage, Okular::Annotation *ann )
     : KPageDialog( parent ), m_document( document ), m_page( docpage ), modified( false )
 {
     setFaceType( Tabbed );
@@ -146,29 +146,29 @@ AnnotsPropertiesDialog::~AnnotsPropertiesDialog()
 
 void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
 {
-    Annotation::SubType type=m_annot->subType();
+    Okular::Annotation::SubType type=m_annot->subType();
     QString captiontext;
     switch(type)
     {
-        case Annotation::AText:
-            if(((TextAnnotation*)m_annot)->textType==TextAnnotation::Linked)
+        case Okular::Annotation::AText:
+            if(((Okular::TextAnnotation*)m_annot)->textType==Okular::TextAnnotation::Linked)
                 captiontext = i18n( "Note Properties" );
             else
                 captiontext = i18n( "FreeText Properties" );
             break;
-        case Annotation::ALine:
+        case Okular::Annotation::ALine:
             captiontext = i18n( "Line Properties" );
             break;
-        case Annotation::AGeom:
+        case Okular::Annotation::AGeom:
             captiontext = i18n( "Geom Properties" );
             break;
-        case Annotation::AHighlight:
+        case Okular::Annotation::AHighlight:
             captiontext = i18n( "Highlight Properties" );
             break;
-        case Annotation::AStamp:
+        case Okular::Annotation::AStamp:
             captiontext = i18n( "Stamp Properties" );
             break;
-        case Annotation::AInk:
+        case Okular::Annotation::AInk:
             captiontext = i18n( "Ink Properties" );
             break;
         default:

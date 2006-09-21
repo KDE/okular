@@ -31,8 +31,8 @@
 //#define KF_DEBUG
 OKULAR_EXPORT_PLUGIN(FaxRenderer)
 
-FaxRenderer::FaxRenderer(KPDFDocument * doc) 
-    :   Generator( doc )
+FaxRenderer::FaxRenderer(Okular::Document * doc) 
+    : Okular::Generator( doc )
 {
     kWarning() << "fax generator has landed" <<endl;
 }
@@ -89,7 +89,7 @@ void FaxRenderer::generatePixmap( PixmapRequest * request )
 }
 
 
-bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector )
+bool FaxRenderer::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
 #ifdef KF_DEBUG
   kDebug() << "FaxRenderer::setFile(" << fname << ") called" << endl;
@@ -132,12 +132,12 @@ bool FaxRenderer::loadDocument( const QString & fileName, QVector< KPDFPage * > 
   return true;
 }
 
-void FaxRenderer::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void FaxRenderer::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
   loadPages( pagesVector, orientation );
 }
 
-void FaxRenderer::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
+void FaxRenderer::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )
 {
   // Set the number of pages page sizes
   quint16 pages = fax.numPages();
@@ -162,7 +162,7 @@ void FaxRenderer::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
       qSwap( width, height );
 
     delete pagesVector[pg];
-    pagesVector[pg] = new KPDFPage(pg, width, height, rotation);
+    pagesVector[pg] = new Okular::Page(pg, width, height, rotation);
   }
 }
 

@@ -92,17 +92,17 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 }
 
 
-AnnotationWidget * AnnotationWidgetFactory::widgetFor( Annotation * ann )
+AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann )
 {
     switch ( ann->subType() )
     {
-        case Annotation::AStamp:
+        case Okular::Annotation::AStamp:
             return new StampAnnotationWidget( ann );
             break;
-        case Annotation::AText:
+        case Okular::Annotation::AText:
             return new TextAnnotationWidget( ann );
             break;
-        case Annotation::ALine:
+        case Okular::Annotation::ALine:
             return new LineAnnotationWidget( ann );
             break;
         // shut up gcc
@@ -114,7 +114,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Annotation * ann )
 }
 
 
-AnnotationWidget::AnnotationWidget( Annotation * ann )
+AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
     : QObject(), m_ann( ann )
 {
 }
@@ -123,22 +123,22 @@ AnnotationWidget::~AnnotationWidget()
 {
 }
 
-Annotation::SubType AnnotationWidget::annotationType() const
+Okular::Annotation::SubType AnnotationWidget::annotationType() const
 {
     return m_ann->subType();
 }
 
 
-TextAnnotationWidget::TextAnnotationWidget( Annotation * ann )
+TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
 {
-    m_textAnn = static_cast< TextAnnotation * >( ann );
+    m_textAnn = static_cast< Okular::TextAnnotation * >( ann );
 }
 
 QWidget * TextAnnotationWidget::widget()
 {
     // only Linked TextAnnotations are supported for now
-    if ( m_textAnn->textType != TextAnnotation::Linked )
+    if ( m_textAnn->textType != Okular::TextAnnotation::Linked )
         return 0;
 
     if ( m_widget )
@@ -170,17 +170,17 @@ QWidget * TextAnnotationWidget::widget()
 
 void TextAnnotationWidget::applyChanges()
 {
-    if ( m_textAnn->textType == TextAnnotation::Linked )
+    if ( m_textAnn->textType == Okular::TextAnnotation::Linked )
     {
         m_textAnn->textIcon = m_pixmapSelector->icon();
     }
 }
 
 
-StampAnnotationWidget::StampAnnotationWidget( Annotation * ann )
+StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
 {
-    m_stampAnn = static_cast< StampAnnotation * >( ann );
+    m_stampAnn = static_cast< Okular::StampAnnotation * >( ann );
 }
 
 QWidget * StampAnnotationWidget::widget()
@@ -234,10 +234,10 @@ void StampAnnotationWidget::applyChanges()
 
 
 
-LineAnnotationWidget::LineAnnotationWidget( Annotation * ann )
+LineAnnotationWidget::LineAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_widget( 0 )
 {
-    m_lineAnn = static_cast< LineAnnotation * >( ann );
+    m_lineAnn = static_cast< Okular::LineAnnotation * >( ann );
     if ( m_lineAnn->linePoints.count() == 2 )
         m_lineType = 0; // line
     else if ( m_lineAnn->lineClosed )

@@ -73,10 +73,8 @@
 #include "core/generator.h"
 #include "core/page.h"
 
-typedef KParts::GenericFactory<okular::Part> okularPartFactory;
+typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
-
-using namespace okular;
 
 Part::Part(QWidget *parentWidget,
            QObject *parent,
@@ -99,7 +97,7 @@ Part::Part(QWidget *parentWidget,
 	setInstance(okularPartFactory::instance());
 
 	// build the document
-	m_document = new KPDFDocument(&m_loadedGenerators);
+	m_document = new Okular::Document(&m_loadedGenerators);
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
@@ -152,7 +150,7 @@ Part::Part(QWidget *parentWidget,
 	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
-	connect( m_thumbnailList, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+	connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
 	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
 	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
@@ -182,7 +180,7 @@ Part::Part(QWidget *parentWidget,
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
-	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
+	connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
 	connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
@@ -272,7 +270,7 @@ Part::Part(QWidget *parentWidget,
 	connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
 	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
 	m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
-	m_showLeftPanel->setChecked( KpdfSettings::showLeftPanel() );
+	m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
 	slotShowLeftPanel();
 
 	KAction * importPS= new KAction(KIcon("psimport"), i18n("&Import Postscript as PDF..."), ac, "import_ps");
@@ -305,7 +303,7 @@ Part::Part(QWidget *parentWidget,
 	m_pageView->setupActions( ac );
 
 	// apply configuration (both internal settings and GUI configured items)
-	QList<int> splitterSizes = KpdfSettings::splitterSizes();
+	QList<int> splitterSizes = Okular::Settings::splitterSizes();
 	if ( !splitterSizes.count() )
 	{
 		// the first time use 1/10 for the panel and 9/10 for the pageView
@@ -328,8 +326,8 @@ Part::Part(QWidget *parentWidget,
 
 	// [SPEECH] check for KTTSD presence and usability
 	KService::List offers = KServiceTypeTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
-	KpdfSettings::setUseKTTSD( !offers.isEmpty() );
-	KpdfSettings::writeConfig();
+	Okular::Settings::setUseKTTSD( !offers.isEmpty() );
+	Okular::Settings::writeConfig();
 
 	// set our XML-UI resource file
 	setXMLFile("part.rc");
@@ -410,7 +408,7 @@ void Part::fillGenerators()
 		continue;
             }
 
-            Generator* (*create_plugin)(KPDFDocument* doc) = ( Generator* (*)(KPDFDocument* doc) ) lib->symbol( "create_plugin" );
+            Okular::Generator* (*create_plugin)(Okular::Document* doc) = ( Okular::Generator* (*)(Okular::Document* doc) ) lib->symbol( "create_plugin" );
             if ( !create_plugin )
             {
                 kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
@@ -436,10 +434,10 @@ void Part::slotGeneratorPreferences( )
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", KpdfSettings::self() );
+    KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
     dialog->setCaption( i18n( "Configure Backends" ) );
 
-    QHashIterator<QString, Generator*> it(m_loadedGenerators);
+    QHashIterator<QString, Okular::Generator*> it(m_loadedGenerators);
     while(it.hasNext())
     {
         it.next();
@@ -556,12 +554,12 @@ bool Part::openFile()
     if ( ok )
     {
         m_exportItems = m_document->exportFormats();
-        QList<ExportEntry*>::ConstIterator it = m_exportItems.constBegin();
-        QList<ExportEntry*>::ConstIterator itEnd = m_exportItems.constEnd();
+        QList<Okular::ExportEntry*>::ConstIterator it = m_exportItems.constBegin();
+        QList<Okular::ExportEntry*>::ConstIterator itEnd = m_exportItems.constEnd();
         QMenu *menu = m_exportAs->menu();
         for ( ; it != itEnd; ++it )
         {
-            ExportEntry* cur = *it;
+            Okular::ExportEntry* cur = *it;
             if ( !cur->icon.isEmpty() )
             {
                 menu->addAction( KIcon( cur->icon ), cur->description );
@@ -669,12 +667,12 @@ void Part::close()
   {
     closeUrl();
   }
-  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInKPDF");
+  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInOkular::");
 }
 
 void Part::cannotQuit()
 {
-	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInKPDF");
+	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInOkular::");
 }
 
 bool Part::eventFilter( QObject * watched, QEvent * e )
@@ -690,8 +688,8 @@ bool Part::eventFilter( QObject * watched, QEvent * e )
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
-    KpdfSettings::setShowLeftPanel( showLeft );
-    KpdfSettings::writeConfig();
+    Okular::Settings::setShowLeftPanel( showLeft );
+    Okular::Settings::writeConfig();
     // show/hide left panel
     m_leftPanel->setVisible( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
@@ -700,8 +698,8 @@ void Part::slotShowLeftPanel()
 
 void Part::saveSplitterSize()
 {
-    KpdfSettings::setSplitterSizes( m_splitter->sizes() );
-    KpdfSettings::writeConfig();
+    Okular::Settings::setSplitterSizes( m_splitter->sizes() );
+    Okular::Settings::writeConfig();
 }
 
 void Part::slotFileDirty( const QString& fileName )
@@ -723,7 +721,7 @@ void Part::slotDoFileDirty()
     if ( m_viewportDirty.pageNumber == -1 )
     {
         // store the current viewport
-        m_viewportDirty = DocumentViewport( m_document->viewport() );
+        m_viewportDirty = Okular::DocumentViewport( m_document->viewport() );
 
         // inform the user about the operation in progress
         m_pageView->displayMessage( i18n("Reloading the document...") );
@@ -780,10 +778,10 @@ void Part::enableTOC(bool enable)
 }
 
 //BEGIN go to page dialog
-class KPDFGotoPageDialog : public KDialog
+class GotoPageDialog : public KDialog
 {
 public:
-	KPDFGotoPageDialog(QWidget *p, int current, int max) : KDialog(p) {
+	  GotoPageDialog(QWidget *p, int current, int max) : KDialog(p) {
 		setCaption(i18n("Go to Page"));
 		setButtons(Ok | Cancel);
 		setDefaultButton(Ok);
@@ -818,7 +816,7 @@ public:
 
 void Part::slotGoToPage()
 {
-    KPDFGotoPageDialog pageDialog( m_pageView, m_document->currentPage() + 1, m_document->pages() );
+    GotoPageDialog pageDialog( m_pageView, m_document->currentPage() + 1, m_document->pages() );
     if ( pageDialog.exec() == QDialog::Accepted )
         m_document->setViewportPage( pageDialog.getPage() - 1 );
 }
@@ -907,7 +905,7 @@ void Part::slotFind()
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
         m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFind::CaseSensitive,
-                                KPDFDocument::NextMatch, true, qRgb( 255, 255, 64 ) );
+                                Okular::Document::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }
 
@@ -949,7 +947,7 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, KpdfSettings::self() );
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self() );
     // keep us informed when the user changes settings
     connect( dialog, SIGNAL( settingsChanged( const QString & ) ), this, SLOT( slotNewConfig() ) );
 
@@ -962,7 +960,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = KpdfSettings::watchFile();
+    bool watchFile = Okular::Settings::watchFile();
     if ( watchFile && m_watcher->isStopped() )
         m_watcher->startScan();
     if ( !watchFile && !m_watcher->isStopped() )
@@ -971,12 +969,12 @@ void Part::slotNewConfig()
         m_watcher->stopScan();
     }
 
-    bool showSearch = KpdfSettings::showSearchBar();
+    bool showSearch = Okular::Settings::showSearchBar();
     if ( !m_searchWidget->isHidden() != showSearch )
         m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
-    Q3ScrollView::ScrollBarMode scrollBarMode = KpdfSettings::showScrollBars() ?
+    Q3ScrollView::ScrollBarMode scrollBarMode = Okular::Settings::showScrollBars() ?
         Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
     if ( m_pageView->hScrollBarMode() != scrollBarMode )
     {
@@ -988,9 +986,9 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update Main View and ThumbnailList contents
-    // TODO do this only when changing KpdfSettings::renderMode()
+    // TODO do this only when changing Okular::Settings::renderMode()
     m_pageView->updateContents();
-    if ( KpdfSettings::showLeftPanel() && !m_thumbnailList->isHidden() )
+    if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
 }
 
@@ -1001,7 +999,7 @@ void Part::slotPrintPreview()
     double width, height;
     int landscape, portrait;
     KPrinter printer;
-    const KPDFPage *page;
+    const Okular::Page *page;
 
     printer.setMinMax(1, m_document->pages());
     printer.setPreviewOnly( true );
@@ -1025,7 +1023,7 @@ void Part::slotPrintPreview()
     doPrint(printer);
 }
 
-void Part::slotShowMenu(const KPDFPage *page, const QPoint &point)
+void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 {
 	bool reallyShow = false;
 	if (!m_actionsSearched)
@@ -1154,7 +1152,7 @@ void Part::slotPrint()
     double width, height;
     int landscape, portrait;
     KPrinter printer;
-    const KPDFPage *page;
+    const Okular::Page *page;
 
     printer.setPageSelection(KPrinter::ApplicationSide);
     printer.setMinMax(1, m_document->pages());
@@ -1183,7 +1181,7 @@ void Part::slotPrint()
 
 void Part::doPrint(KPrinter &printer)
 {
-    if (!m_document->isAllowed(KPDFDocument::AllowPrint))
+    if (!m_document->isAllowed(Okular::Document::AllowPrint))
     {
         KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
         return;
@@ -1201,7 +1199,7 @@ void Part::restoreDocument(KConfig* config)
   if ( url.isValid() )
   {
     QString viewport = config->readEntry( "Viewport" );
-    if (!viewport.isEmpty()) m_document->setNextDocumentViewport( DocumentViewport( viewport ) );
+    if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
     openUrl( url );
   }
 }

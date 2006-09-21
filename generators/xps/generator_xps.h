@@ -85,7 +85,7 @@ public:
     bool loadDocument( const QString & fileName );
     bool closeDocument();
 
-    const DocumentInfo * generateDocumentInfo();
+    const Okular::DocumentInfo * generateDocumentInfo();
 
     QImage thumbnail();
 
@@ -118,29 +118,29 @@ private:
     bool m_thumbnailIsLoaded;
 
     QString m_corePropertiesFileName;
-    DocumentInfo * m_docInfo;
+    Okular::DocumentInfo * m_docInfo;
 
     KZip *xpsArchive;
 };
 
 
-class XpsGenerator : public Generator
+class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        XpsGenerator( KPDFDocument * document );
+        XpsGenerator( Okular::Document * document );
         virtual ~XpsGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
-        const DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentInfo * generateDocumentInfo();
 
         bool supportsRotation() { return true; };
-        void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+        void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     private slots:
 

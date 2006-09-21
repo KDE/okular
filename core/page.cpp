@@ -7,23 +7,26 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qpixmap.h>
-#include <qstring.h>
-#include <qmap.h>
-#include <qdom.h>
-#include <qset.h>
+#include <QtCore/QSet>
+#include <QtCore/QString>
+#include <QtGui/QPixmap>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+
 #include <kdebug.h>
 
 // local includes
+#include "annotations.h"
+#include "area.h"
+#include "link.h"
 #include "page.h"
 #include "pagetransition.h"
-#include "link.h"
-#include "annotations.h"
 #include "settings.h"
-#include "area.h"
 
 // temp includes
 #include <sys/time.h>
+
+using namespace Okular;
 
 class TextSelection;
 
@@ -40,9 +43,9 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
             ++it;
 }
 
-/** class KPDFPage **/
+/** class Page **/
 
-KPDFPage::KPDFPage( uint page, double w, double h, int o )
+Page::Page( uint page, double w, double h, int o )
     : m_number( page ), m_orientation( o ), m_width( w ), m_height( h ),
     m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 )
 {
@@ -59,7 +62,7 @@ KPDFPage::KPDFPage( uint page, double w, double h, int o )
         m_height = 1;
 }
 
-KPDFPage::~KPDFPage()
+Page::~Page()
 {
     deletePixmapsAndRects();
     deleteHighlights();
@@ -69,7 +72,7 @@ KPDFPage::~KPDFPage()
 }
 
 
-bool KPDFPage::hasPixmap( int id, int width, int height ) const
+bool Page::hasPixmap( int id, int width, int height ) const
 {
     if ( !m_pixmaps.contains( id ) )
         return false;
@@ -79,24 +82,24 @@ bool KPDFPage::hasPixmap( int id, int width, int height ) const
     return p ? ( p->width() == width && p->height() == height ) : false;
 }
 
-bool KPDFPage::hasSearchPage() const
+bool Page::hasSearchPage() const
 {
     return m_text != 0;
 }
 
-bool KPDFPage::hasBookmark() const
+bool Page::hasBookmark() const
 {
     return m_bookmarked;
 }
 
-RegularAreaRect * KPDFPage::getTextArea ( TextSelection * sel ) const
+RegularAreaRect * Page::getTextArea ( TextSelection * sel ) const
 {
     if (m_text)
 	return m_text->getTextArea (sel);
     return 0;
 }
 
-bool KPDFPage::hasObjectRect( double x, double y, double xScale, double yScale ) const
+bool Page::hasObjectRect( double x, double y, double xScale, double yScale ) const
 {
     if ( m_rects.isEmpty() )
         return false;
@@ -107,7 +110,7 @@ bool KPDFPage::hasObjectRect( double x, double y, double xScale, double yScale )
     return false;
 }
 
-bool KPDFPage::hasHighlights( int s_id ) const
+bool Page::hasHighlights( int s_id ) const
 {
     // simple case: have no highlights
     if ( m_highlights.isEmpty() )
@@ -123,13 +126,13 @@ bool KPDFPage::hasHighlights( int s_id ) const
     return false;
 }
 
-bool KPDFPage::hasTransition() const
+bool Page::hasTransition() const
 {
     return m_transition != 0;
 }
 
 
-RegularAreaRect * KPDFPage::findText( int searchID, const QString & text, SearchDir dir, bool strictCase,
+RegularAreaRect * Page::findText( int searchID, const QString & text, SearchDir dir, bool strictCase,
 	const RegularAreaRect * lastRect/*, const Generator &generator */) const
 {
 	RegularAreaRect* ret=0;
@@ -146,7 +149,7 @@ RegularAreaRect * KPDFPage::findText( int searchID, const QString & text, Search
     */
 }
 
-QString KPDFPage::getText( const RegularAreaRect * area ) const
+QString Page::getText( const RegularAreaRect * area ) const
 {
 	QString ret;
 
@@ -158,7 +161,7 @@ QString KPDFPage::getText( const RegularAreaRect * area ) const
 	return ret;
 }
 
-const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
+const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
 {
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
@@ -167,31 +170,31 @@ const ObjectRect * KPDFPage::getObjectRect( ObjectRect::ObjectType type, double 
     return 0;
 }
 
-const KPDFPageTransition * KPDFPage::getTransition() const
+const PageTransition * Page::getTransition() const
 {
     return m_transition;
 }
 
 
-void KPDFPage::setPixmap( int id, QPixmap * pixmap )
+void Page::setPixmap( int id, QPixmap * pixmap )
 {
     if ( m_pixmaps.contains( id ) )
         delete m_pixmaps[id];
     m_pixmaps[id] = pixmap;
 }
 
-void KPDFPage::setSearchPage( KPDFTextPage * tp )
+void Page::setSearchPage( TextPage * tp )
 {
     delete m_text;
     m_text = tp;
 }
 
-void KPDFPage::setBookmark( bool state )
+void Page::setBookmark( bool state )
 {
     m_bookmarked = state;
 }
 
-void KPDFPage::setObjectRects( const QLinkedList< ObjectRect * > rects )
+void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
 {
     QSet<ObjectRect::ObjectType> which;
     which << ObjectRect::Link << ObjectRect::Image;
@@ -200,7 +203,7 @@ void KPDFPage::setObjectRects( const QLinkedList< ObjectRect * > rects )
 }
 
 /*
-void KPDFPage::setHighlight( int s_id, const QColor & color )
+void Page::setHighlight( int s_id, const QColor & color )
 {
 	QLinkedList<HighlightAreaRect*>::Iterator it=m_highlights.begin();
 	HighlightAreaRect* tmp;
@@ -214,7 +217,7 @@ void KPDFPage::setHighlight( int s_id, const QColor & color )
 }*/
 
 // 
-void KPDFPage::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
+void Page::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
 {
     HighlightAreaRect * hr = new HighlightAreaRect(rect);
     hr->s_id = s_id;
@@ -238,7 +241,7 @@ void KPDFPage::setHighlight( int s_id, RegularAreaRect *rect, const QColor & col
 }	
 
 
-void KPDFPage::addAnnotation( Annotation * annotation )
+void Page::addAnnotation( Annotation * annotation )
 {
     //uniqueName: okular-PAGENUM-ID
     if(annotation->uniqueName.isEmpty())
@@ -252,7 +255,7 @@ void KPDFPage::addAnnotation( Annotation * annotation )
     m_rects.append( new AnnotationObjectRect( annotation ) );
 }
 
-void KPDFPage::modifyAnnotation(Annotation * newannotation )
+void Page::modifyAnnotation(Annotation * newannotation )
 {
     if(!newannotation)
         return;
@@ -280,7 +283,7 @@ void KPDFPage::modifyAnnotation(Annotation * newannotation )
     }
 }
 
-bool KPDFPage::removeAnnotation( Annotation * annotation )
+bool Page::removeAnnotation( Annotation * annotation )
 {
     if ( !annotation || ( annotation->flags & Annotation::DenyDelete ) )
         return false;
@@ -309,13 +312,13 @@ bool KPDFPage::removeAnnotation( Annotation * annotation )
     return true;
 }
 
-void KPDFPage::setTransition( KPDFPageTransition * transition )
+void Page::setTransition( PageTransition * transition )
 {
     delete m_transition;
     m_transition = transition;
 }
 
-void KPDFPage::deletePixmap( int id )
+void Page::deletePixmap( int id )
 {
     if ( m_pixmaps.contains( id ) )
     {
@@ -324,7 +327,7 @@ void KPDFPage::deletePixmap( int id )
     }
 }
 
-void KPDFPage::deletePixmapsAndRects()
+void Page::deletePixmapsAndRects()
 {
     // delete all stored pixmaps
     QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
@@ -337,7 +340,7 @@ void KPDFPage::deletePixmapsAndRects()
     deleteObjectRects( m_rects, which );
 }
 
-void KPDFPage::deleteHighlights( int s_id )
+void Page::deleteHighlights( int s_id )
 {
     // delete highlights by ID
     QLinkedList< HighlightAreaRect* >::iterator it = m_highlights.begin(), end = m_highlights.end();
@@ -354,7 +357,7 @@ void KPDFPage::deleteHighlights( int s_id )
     }
 }
 
-void KPDFPage::deleteAnnotations()
+void Page::deleteAnnotations()
 {
     // delete ObjectRects of type Annotation
     deleteObjectRects( m_rects, QSet<ObjectRect::ObjectType>() << ObjectRect::OAnnotation );
@@ -365,7 +368,7 @@ void KPDFPage::deleteAnnotations()
     m_annotations.clear();
 }
 
-void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
+void Page::restoreLocalContents( const QDomNode & pageNode )
 {
     // iterate over all chilren (bookmark, annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
@@ -420,7 +423,7 @@ void KPDFPage::restoreLocalContents( const QDomNode & pageNode )
     }
 }
 
-void KPDFPage::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
+void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
 {
     // only add a node if there is some stuff to write into
     if ( !m_bookmarked && m_annotations.isEmpty() )

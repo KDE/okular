@@ -7,9 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_MISC_H_
-#define _KPDF_MISC_H_
+#ifndef _OKULAR_MISC_H_
+#define _OKULAR_MISC_H_
+
 #include "area.h"
+
+namespace Okular {
 
 /**
   @short Wrapper around the information needed to generate the selection area
@@ -61,5 +64,7 @@ class TextSelection
     int it[2];
     NormalizedPoint cur[2];
 };
+
+}
 
 #endif

@@ -12,19 +12,24 @@
 
 #include "okular_export.h"
 
-#include <qrect.h>
+#include <QtCore/QRect>
 
 /**
  * Namespace with utility functions
  */
-namespace okularUtils
+namespace Okular
 {
+
+class OKULAR_EXPORT Utils
+{
+  public:
     /**
      * Rotate the rect \p source in the area \p width x \p height with the
      * specified \p orientation .
      */
-    QRect OKULAR_EXPORT rotateRect( const QRect & source, int width, int height, int orientation );
-}
+    static QRect rotateRect( const QRect & source, int width, int height, int orientation );
+};
 
+}
 
 #endif

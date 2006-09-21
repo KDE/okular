@@ -24,7 +24,7 @@
 #include "core/document.h"
 #include "settings.h"
 
-SearchWidget::SearchWidget( QWidget * parent, KPDFDocument * document )
+SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     : QToolBar( parent ), m_document( document ),
     m_searchType( 0 )
 {
@@ -129,9 +129,9 @@ void SearchWidget::startSearch()
     if ( text.length() >= 3 )
     {
         bool caseSensitive = m_caseSensitiveAction->isChecked();
-        KPDFDocument::SearchType type = !m_searchType ? KPDFDocument::AllDoc :
-                                        ( (m_searchType > 1) ? KPDFDocument::GoogleAny :
-                                        KPDFDocument::GoogleAll );
+        Okular::Document::SearchType type = !m_searchType ? Okular::Document::AllDoc :
+                                        ( (m_searchType > 1) ? Okular::Document::GoogleAny :
+                                        Okular::Document::GoogleAll );
         ok = m_document->searchText( SW_SEARCH_ID, text, true, caseSensitive,
                                      type, false, qRgb( 0, 183, 255 ) );
     }

@@ -15,12 +15,14 @@
 
 #include <kpagedialog.h>
 
-class KPDFDocument;
+namespace Okular {
+class Document;
+}
 
 class PropertiesDialog : public KPageDialog
 {
   public:
-  	PropertiesDialog( QWidget *parent, KPDFDocument *doc );
+  	PropertiesDialog( QWidget *parent, Okular::Document *doc );
 };
 
 class LocalFontInfoStruct;

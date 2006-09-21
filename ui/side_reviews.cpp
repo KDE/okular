@@ -28,7 +28,7 @@
 #include "side_reviews.h"
 
 
-Reviews::Reviews( QWidget * parent, KPDFDocument * document )
+Reviews::Reviews( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ), m_delayTimer( 0 ), m_currentPage( -1 )
 {
     // create widgets and layout them vertically
@@ -64,19 +64,19 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
     QAction * groupByPageAction = m_toolBar2->addAction( KIcon( "txt" ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
     connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
-    groupByPageAction->setChecked( KpdfSettings::groupByPage() );
+    groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
     QAction * groupByAuthorAction = m_toolBar2->addAction( KIcon( "personal" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
-    groupByAuthorAction->setChecked( KpdfSettings::groupByAuthor() );
+    groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
     // - add separator
     m_toolBar2->addSeparator();
     // - add Current Page Only button
     QAction * curPageOnlyAction = m_toolBar2->addAction( KIcon( "1downarrow" ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
     connect( curPageOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotCurrentPageOnly( bool ) ) );
-    curPageOnlyAction->setChecked( KpdfSettings::currentPageOnly() );
+    curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );
 
     // customize listview appearance
     QStringList cols;
@@ -88,7 +88,7 @@ Reviews::Reviews( QWidget * parent, KPDFDocument * document )
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
-void Reviews::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
+void Reviews::notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged )
 {
     // grab the page array when document changes
     if ( documentChanged )
@@ -109,7 +109,7 @@ void Reviews::notifyViewportChanged( bool /*smoothMove*/ )
     if ( page != m_currentPage )
     {
         m_currentPage = page;
-        if ( KpdfSettings::currentPageOnly() )
+        if ( Okular::Settings::currentPageOnly() )
             requestListViewUpdate();
     }
 }
@@ -117,10 +117,10 @@ void Reviews::notifyViewportChanged( bool /*smoothMove*/ )
 void Reviews::notifyPageChanged( int pageNumber, int changedFlags )
 {
     // only check if there are changes to annotations
-    if ( changedFlags & DocumentObserver::Annotations )
+    if ( changedFlags & Okular::DocumentObserver::Annotations )
     {
         // if filtering-on-page and the page is not the active one, return
-        if ( KpdfSettings::currentPageOnly() && pageNumber != m_currentPage )
+        if ( Okular::Settings::currentPageOnly() && pageNumber != m_currentPage )
             return;
         // request an update to the listview
         // TODO selective update on modified page only
@@ -137,21 +137,21 @@ void Reviews::notifyPageChanged( int pageNumber, int changedFlags )
 void Reviews::slotPageEnabled( bool on )
 {
     // store toggle state in Settings and update the listview
-    KpdfSettings::setGroupByPage( on );
+    Okular::Settings::setGroupByPage( on );
     requestListViewUpdate();
 }
 
 void Reviews::slotAuthorEnabled( bool on )
 {
     // store toggle state in Settings and update the listview
-    KpdfSettings::setGroupByAuthor( on );
+    Okular::Settings::setGroupByAuthor( on );
     requestListViewUpdate();
 }
 
 void Reviews::slotCurrentPageOnly( bool on )
 {
     // store toggle state in Settings and update the listview
-    KpdfSettings::setCurrentPageOnly( on );
+    Okular::Settings::setCurrentPageOnly( on );
     requestListViewUpdate();
 }
 //END GUI Slots
@@ -175,12 +175,12 @@ void Reviews::slotUpdateListView()
     m_listView->setRootIsDecorated( true );
     m_listView->setSelectionMode( QAbstractItemView::SingleSelection );
 
-    if ( KpdfSettings::currentPageOnly() )
+    if ( Okular::Settings::currentPageOnly() )
     {
         // handle the 'filter on current page'
         if ( m_currentPage >= 0 && m_currentPage < (int)m_pages.count() )
         {
-            const KPDFPage * page = m_pages[ m_currentPage ];
+            const Okular::Page * page = m_pages[ m_currentPage ];
             if ( page->hasAnnotations() )
                 addContents( page );
         }
@@ -188,10 +188,10 @@ void Reviews::slotUpdateListView()
     else
     {
         // grab all annotations from pages
-        QVector< KPDFPage * >::iterator it = m_pages.begin(), end = m_pages.end();
+        QVector< Okular::Page * >::iterator it = m_pages.begin(), end = m_pages.end();
         for ( ; it != end; ++it )
         {
-            const KPDFPage * page = *it;
+            const Okular::Page * page = *it;
             if ( page->hasAnnotations() )
                 addContents( page );
         }
@@ -206,11 +206,11 @@ void Reviews::slotUpdateListView()
     }
 }
 
-void Reviews::addContents( const KPDFPage * page )
+void Reviews::addContents( const Okular::Page * page )
 {
     // if page-grouping -> create Page subnode
     QTreeWidgetItem * pageItem = 0;
-    if ( KpdfSettings::groupByPage() )
+    if ( Okular::Settings::groupByPage() )
     {
         QString pageText = i18n( "page %1", page->number() + 1 );
         pageItem = new QTreeWidgetItem( m_listView );
@@ -223,16 +223,16 @@ void Reviews::addContents( const KPDFPage * page )
             QTreeWidgetItemIterator::HasChildren;
 
     // iterate over all annotations in this page
-    const QLinkedList< Annotation * > & annots = page->getAnnotations();
-    QLinkedList< Annotation * >::const_iterator aIt = annots.begin(), aEnd = annots.end();
+    const QLinkedList< Okular::Annotation * > & annots = page->getAnnotations();
+    QLinkedList< Okular::Annotation * >::const_iterator aIt = annots.begin(), aEnd = annots.end();
     for ( ; aIt != aEnd; ++aIt )
     {
         // get annotation
-        Annotation * annotation = *aIt;
+        Okular::Annotation * annotation = *aIt;
 
         // if page-grouping -> create Author subnode
         QTreeWidgetItem * authorItem = pageItem;
-        if ( KpdfSettings::groupByAuthor() )
+        if ( Okular::Settings::groupByAuthor() )
         {
             // get author's name
             QString author = annotation->author;

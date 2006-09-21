@@ -13,32 +13,34 @@
 // local includes
 #include "link.h"
 
-KPDFLink::~KPDFLink()
+using namespace Okular;
+
+Link::~Link()
 {
 }
 
-QString KPDFLink::linkTip() const
+QString Link::linkTip() const
 {
     return "";
 }
 
 // Link Tips
-QString KPDFLinkGoto::linkTip() const
+QString LinkGoto::linkTip() const
 {
     return m_extFileName.isEmpty() ? "" : i18n("Open external file");
 }
 
-QString KPDFLinkExecute::linkTip() const
+QString LinkExecute::linkTip() const
 {
     return i18n( "Execute '%1'...", m_fileName );
 }
 
-QString KPDFLinkBrowse::linkTip() const
+QString LinkBrowse::linkTip() const
 {
     return m_url;
 }
 
-QString KPDFLinkAction::linkTip() const
+QString LinkAction::linkTip() const
 {
     switch ( m_type )
     {

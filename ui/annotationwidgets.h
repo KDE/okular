@@ -57,7 +57,7 @@ private:
 class AnnotationWidgetFactory
 {
 public:
-    static AnnotationWidget * widgetFor( Annotation * ann );
+    static AnnotationWidget * widgetFor( Okular::Annotation * ann );
 };
 
 class AnnotationWidget
@@ -68,7 +68,7 @@ class AnnotationWidget
 public:
     virtual ~AnnotationWidget();
 
-    virtual Annotation::SubType annotationType() const;
+    virtual Okular::Annotation::SubType annotationType() const;
 
     virtual QWidget * widget() = 0;
 
@@ -78,9 +78,9 @@ signals:
     void dataChanged();
 
 protected:
-    AnnotationWidget( Annotation * ann );
+    AnnotationWidget( Okular::Annotation * ann );
 
-    Annotation * m_ann;
+    Okular::Annotation * m_ann;
 };
 
 class TextAnnotationWidget
@@ -89,14 +89,14 @@ class TextAnnotationWidget
     Q_OBJECT
 
 public:
-    TextAnnotationWidget( Annotation * ann );
+    TextAnnotationWidget( Okular::Annotation * ann );
 
     virtual QWidget * widget();
 
     virtual void applyChanges();
 
 private:
-    TextAnnotation * m_textAnn;
+    Okular::TextAnnotation * m_textAnn;
     QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
 };
@@ -107,14 +107,14 @@ class StampAnnotationWidget
     Q_OBJECT
 
 public:
-    StampAnnotationWidget( Annotation * ann );
+    StampAnnotationWidget( Okular::Annotation * ann );
 
     virtual QWidget * widget();
 
     virtual void applyChanges();
 
 private:
-    StampAnnotation * m_stampAnn;
+    Okular::StampAnnotation * m_stampAnn;
     QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
 };
@@ -125,14 +125,14 @@ class LineAnnotationWidget
     Q_OBJECT
 
 public:
-    LineAnnotationWidget( Annotation * ann );
+    LineAnnotationWidget( Okular::Annotation * ann );
 
     virtual QWidget * widget();
 
     virtual void applyChanges();
 
 private:
-    LineAnnotation * m_lineAnn;
+    Okular::LineAnnotation * m_lineAnn;
     int m_lineType;
     QWidget * m_widget;
     QDoubleSpinBox * m_spinLL;

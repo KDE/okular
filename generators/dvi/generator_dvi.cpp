@@ -29,12 +29,12 @@
 
 OKULAR_EXPORT_PLUGIN(DviGenerator)
 
-DviGenerator::DviGenerator( KPDFDocument * doc ) : Generator ( doc ),
+DviGenerator::DviGenerator( Okular::Document * doc ) : Okular::Generator ( doc ),
   m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
 }
 
-bool DviGenerator::loadDocument( const QString & fileName, QVector< KPDFPage * > &pagesVector )
+bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
 {
     //kDebug() << "file: " << qPrintable( fileName ) << endl;
     KUrl base( fileName );
@@ -107,7 +107,7 @@ static void rotateCoordinates( const double iWidth, const double iHeight,
 
 }
 
-void DviGenerator::fillViewportFromAnchor( DocumentViewport &vp,
+void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
                                            const Anchor &anch, int pW, int pH, 
                                            int orientation ) 
 {
@@ -130,13 +130,13 @@ void DviGenerator::fillViewportFromAnchor( DocumentViewport &vp,
     vp.rePos.normalizedX = vp_x;
     vp.rePos.normalizedY = vp_y;
     vp.rePos.enabled = true;
-    vp.rePos.pos = DocumentViewport::Center;
+    vp.rePos.pos = Okular::DocumentViewport::Center;
 }
 
-QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *pageInfo,   
+QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *pageInfo,   
                                                          int orientation )
 {
-    QLinkedList<ObjectRect*> dviLinks;
+    QLinkedList<Okular::ObjectRect*> dviLinks;
 
     int pageWidth = 0, pageHeight = 0;
 
@@ -145,7 +145,7 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
 
     foreach( const Hyperlink dviLink, pageInfo->hyperLinkList )
     {
-        QRect boxArea = okularUtils::rotateRect( dviLink.box, pageWidth, pageHeight, 
+        QRect boxArea = Okular::Utils::rotateRect( dviLink.box, pageWidth, pageHeight, 
                                                  orientation );
         double nl = (double)boxArea.left() / pageWidth,
                nt = (double)boxArea.top() / pageHeight,
@@ -154,24 +154,24 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
 
         Anchor anch = m_dviRenderer->findAnchor(dviLink.linkText);
 
-        KPDFLink *okuLink = 0;
+        Okular::Link *okuLink = 0;
 
         /* distinguish between local (-> anchor) and remote links */
         if (anch.isValid())
         {
             /* internal link */
-            DocumentViewport vp;
+            Okular::DocumentViewport vp;
             fillViewportFromAnchor( vp, anch, pageWidth, pageHeight,
                                     orientation );
-            okuLink = new KPDFLinkGoto( "", vp );
+            okuLink = new Okular::LinkGoto( "", vp );
         }
         else
         {
-            okuLink = new KPDFLinkBrowse( dviLink.linkText );
+            okuLink = new Okular::LinkBrowse( dviLink.linkText );
         }
         if ( okuLink ) 
         {
-            ObjectRect *orlink = new ObjectRect( nl, nt, nr, nb, false, ObjectRect::Link, 
+            Okular::ObjectRect *orlink = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Link, 
                                                  okuLink );
             dviLinks.push_front( orlink );
         }
@@ -180,7 +180,7 @@ QLinkedList<ObjectRect*> DviGenerator::generateDviLinks( const dviPageInfo *page
     return dviLinks; 
 }
 
-void DviGenerator::generatePixmap( PixmapRequest *request )
+void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
 {
 
     dviPageInfo *pageInfo = new dviPageInfo();
@@ -246,9 +246,9 @@ bool DviGenerator::canGenerateTextPage()
     return true;
 }
 
-void DviGenerator::generateSyncTextPage( KPDFPage* page )
+void DviGenerator::generateSyncTextPage( Okular::Page* page )
 {
-    kDebug() << "DviGenerator::generateSyncTextPage( KPDFPage * page )" << endl;
+    kDebug() << "DviGenerator::generateSyncTextPage( Okular::Page * page )" << endl;
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
 
@@ -266,15 +266,15 @@ void DviGenerator::generateSyncTextPage( KPDFPage* page )
     {
         m_dviRenderer->getText( pageInfo );
 
-        KPDFTextPage *ktp = extractTextFromPage( pageInfo, page->orientation() );
+        Okular::TextPage *ktp = extractTextFromPage( pageInfo, page->orientation() );
         page->setSearchPage( ktp );
     }
     delete pageInfo;
 }
 
-KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orientation )
+Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orientation )
 {
-    QList<KPDFTextEntity*> textOfThePage;
+    QList<Okular::TextEntity*> textOfThePage;
 
     QVector<TextBox>::ConstIterator it = pageInfo->textBoxList.constBegin();
     QVector<TextBox>::ConstIterator itEnd = pageInfo->textBoxList.constEnd();
@@ -289,7 +289,7 @@ KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orie
     {
         TextBox curTB = *it;
  
-        tmpRect = okularUtils::rotateRect( curTB.box, pageWidth, pageHeight, orientation );
+        tmpRect = Okular::Utils::rotateRect( curTB.box, pageWidth, pageHeight, orientation );
 
 #if 0
         kDebug() << "orientation: " << orientation
@@ -298,21 +298,21 @@ KPDFTextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orie
                  << ", ( " << pageWidth << "," << pageHeight << " )" 
                <<endl;
 #endif
-        textOfThePage.push_back( new KPDFTextEntity( curTB.text,
-              new NormalizedRect( tmpRect, pageWidth, pageHeight ) ) );
+        textOfThePage.push_back( new Okular::TextEntity( curTB.text,
+              new Okular::NormalizedRect( tmpRect, pageWidth, pageHeight ) ) );
     }
 
-    KPDFTextPage* ktp = new KPDFTextPage( textOfThePage );
+    Okular::TextPage* ktp = new Okular::TextPage( textOfThePage );
 
     return ktp;
 }
 
-const DocumentInfo *DviGenerator::generateDocumentInfo()
+const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
 {
     if ( m_docInfo )
         return m_docInfo;
 
-    m_docInfo = new DocumentInfo();
+    m_docInfo = new Okular::DocumentInfo();
 
     m_docInfo->set( "mimeType", "application/x-dvi" );
 
@@ -330,12 +330,12 @@ const DocumentInfo *DviGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
+const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 {
     if ( m_docSynopsis )
         return m_docSynopsis;
 
-    m_docSynopsis = new DocumentSynopsis();
+    m_docSynopsis = new Okular::DocumentSynopsis();
  
     QStack<QDomElement*> stack;
 
@@ -354,9 +354,9 @@ const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if ( a.isValid() )
         {
-            DocumentViewport vp;
+            Okular::DocumentViewport vp;
  
-            const KPDFPage *p = m_document->page( a.page - 1 );
+            const Okular::Page *p = m_document->page( a.page - 1 );
             /* Don't care about rotations... */
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height(), 0 );
             domel->setAttribute( "Viewport", vp.toString() );
@@ -377,12 +377,12 @@ const DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     return m_docSynopsis;
 }
 
-void DviGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)
+void DviGenerator::setOrientation(QVector<Okular::Page*> & pagesVector, int orientation)
 {
     loadPages( pagesVector, orientation );
 }
 
-void DviGenerator::loadPages( QVector< KPDFPage * > &pagesVector, int orientation )
+void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orientation )
 {
     QSize pageRequiredSize;
 
@@ -420,7 +420,7 @@ void DviGenerator::loadPages( QVector< KPDFPage * > &pagesVector, int orientatio
             delete pagesVector[i];
         }
 
-        KPDFPage * page = new KPDFPage( i,
+        Okular::Page * page = new Okular::Page( i,
                                         pageRequiredSize.width(),
                                         pageRequiredSize.height(),
                                         orientation );

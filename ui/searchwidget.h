@@ -7,12 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_SEARCHWIDGET_H_
-#define _KPDF_SEARCHWIDGET_H_
+#ifndef _OKULAR_SEARCHWIDGET_H_
+#define _OKULAR_SEARCHWIDGET_H_
 
 #include <qtoolbar.h>
 
-class KPDFDocument;
+namespace Okular {
+class Document;
+}
+
 class KLineEdit;
 class QAction;
 class QTimer;
@@ -21,7 +24,7 @@ class QTimer;
  * @short A widget for find-as-you-type search. Outputs to the Document.
  *
  * This widget accepts keyboard input and performs a call to findTextAll(..)
- * in the KPDFDocument class when there are 3 or more chars to search for.
+ * in the Okular::Document class when there are 3 or more chars to search for.
  * It supports case sensitive/unsensitive(default) and provieds a button
  * for switching between the 2 modes.
  */
@@ -29,11 +32,11 @@ class SearchWidget : public QToolBar
 {
     Q_OBJECT
     public:
-        SearchWidget( QWidget *parent, KPDFDocument *document );
+        SearchWidget( QWidget *parent, Okular::Document *document );
         void clearText();
 
     private:
-        KPDFDocument * m_document;
+        Okular::Document * m_document;
         QMenu * m_menu;
         QTimer * m_inputDelayTimer;
         int m_searchType;

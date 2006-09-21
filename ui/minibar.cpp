@@ -81,7 +81,7 @@ class HoverButton : public QPushButton
 
 /** MiniBar **/
 
-MiniBar::MiniBar( QWidget * parent, KPDFDocument * document )
+MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     : QFrame( parent ), m_document( document ),
     m_currentPage( -1 )
 {
@@ -142,7 +142,7 @@ MiniBar::~MiniBar()
     m_document->removeObserver( this );
 }
 
-void MiniBar::notifySetup( const QVector< KPDFPage * > & pageVector, bool changed )
+void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, bool changed )
 {
     // only process data when document changes
     if ( !changed )

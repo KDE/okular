@@ -37,21 +37,21 @@
 class ThumbnailWidget : public QWidget
 {
     public:
-        ThumbnailWidget( QWidget * parent, const KPDFPage * page, ThumbnailList * tl );
+        ThumbnailWidget( QWidget * parent, const Okular::Page * page, ThumbnailList * tl );
 
         // set internal parameters to fit the page in the given width
         void resizeFitWidth( int width );
         // set thumbnail's selected state
         void setSelected( bool selected );
         // set the visible rect of the current page
-        void setVisibleRect( const NormalizedRect & rect );
+        void setVisibleRect( const Okular::NormalizedRect & rect );
 
         // query methods
         int heightHint() const { return m_pixmapHeight + m_labelHeight + m_margin; }
         int pixmapWidth() const { return m_pixmapWidth; }
         int pixmapHeight() const { return m_pixmapHeight; }
         int pageNumber() const { return m_page->number(); }
-        const KPDFPage * page() const { return m_page; }
+        const Okular::Page * page() const { return m_page; }
         QSize sizeHint() const;
 
     protected:
@@ -65,17 +65,17 @@ class ThumbnailWidget : public QWidget
 
         // used to access 'forwardClick( .. )' and 'getBookmarkOverlay()'
         ThumbnailList * m_tl;
-        const KPDFPage * m_page;
+        const Okular::Page * m_page;
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
         int m_labelHeight, m_labelNumber;
-        NormalizedRect m_visibleRect;
+        Okular::NormalizedRect m_visibleRect;
 };
 
 
 /** ThumbnailList implementation **/
 
-ThumbnailList::ThumbnailList( QWidget *parent, KPDFDocument *document )
+ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     : QScrollArea( parent ),
     m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
 {
@@ -118,7 +118,7 @@ ThumbnailList::~ThumbnailList()
 }
 
 //BEGIN DocumentObserver inherited methods
-void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged )
+void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged )
 {
     // if there was a widget selected, save its pagenumber to restore
     // its selection (if available in the new set of pages)
@@ -143,10 +143,10 @@ void ThumbnailList::notifySetup( const QVector< KPDFPage * > & pages, bool docum
     }
 
     // show pages containing hilighted text or bookmarked ones
-    //RESTORE THIS int flags = KpdfSettings::filterBookmarks() ? KPDFPage::Bookmark : KPDFPage::Highlight;
+    //RESTORE THIS int flags = Okular::Settings::filterBookmarks() ? Okular::Page::Bookmark : Okular::Page::Highlight;
 
     // if no page matches filter rule, then display all pages
-    QVector< KPDFPage * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
+    QVector< Okular::Page * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
     bool skipCheck = true;
     for ( ; pIt != pEnd ; ++pIt )
         //if ( (*pIt)->attributes() & flags )
@@ -207,7 +207,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
         {
             m_selected = *tIt;
             m_selected->setSelected( true );
-            if ( KpdfSettings::syncThumbnailsViewport() )
+            if ( Okular::Settings::syncThumbnailsViewport() )
             {
                 int yOffset = qMax( viewport()->height() / 4, m_selected->height() / 2 );
                 ensureVisible( 0, m_selected->pos().y() + m_selected->height()/2, 0, yOffset );
@@ -244,13 +244,13 @@ void ThumbnailList::notifyContentsCleared( int changedFlags )
 void ThumbnailList::notifyVisibleRectsChanged()
 {
     bool found = false;
-    const QVector<VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
+    const QVector<Okular::VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
     QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
-    QVector<VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
+    QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for ( ; tIt != tEnd; ++tIt )
     {
         found = false;
-        QVector<VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
+        QVector<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
         for ( ; ( vIt != vEnd ) && !found; ++vIt )
         {
             if ( (*tIt)->pageNumber() == (*vIt)->pageNumber )
@@ -261,7 +261,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
         }
         if ( !found )
         {
-            (*tIt)->setVisibleRect( NormalizedRect() );
+            (*tIt)->setVisibleRect( Okular::NormalizedRect() );
         }
     }
 }
@@ -296,7 +296,7 @@ void ThumbnailList::updateWidgets()
     }
 }
 
-void ThumbnailList::forwardClick( const KPDFPage * p, const QPoint & t, Qt::MouseButton button )
+void ThumbnailList::forwardClick( const Okular::Page * p, const QPoint & t, Qt::MouseButton button )
 {
     if ( button == Qt::RightButton )
         emit rightClick( p, t );
@@ -315,8 +315,8 @@ const QPixmap * ThumbnailList::getBookmarkOverlay() const
 void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
-    KpdfSettings::setFilterBookmarks( filterOn );
-    KpdfSettings::writeConfig();
+    Okular::Settings::setFilterBookmarks( filterOn );
+    Okular::Settings::writeConfig();
     // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
     m_document->removeObserver( this );
@@ -445,7 +445,7 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
-    QLinkedList< PixmapRequest * > requestedPixmaps;
+    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
     QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
     {
@@ -458,7 +458,7 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         // if pixmap not present add it to requests
         if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
         {
-            PixmapRequest * p = new PixmapRequest(
+            Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );
             requestedPixmaps.push_back( p );
         }
@@ -498,7 +498,7 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 
 /** ThumbnailWidget implementation **/
 
-ThumbnailWidget::ThumbnailWidget( QWidget * parent, const KPDFPage * kp, ThumbnailList * tl )
+ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Page * kp, ThumbnailList * tl )
     : QWidget( parent ), m_tl( tl ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
@@ -523,7 +523,7 @@ void ThumbnailWidget::setSelected( bool selected )
     }
 }
 
-void ThumbnailWidget::setVisibleRect( const NormalizedRect & rect )
+void ThumbnailWidget::setVisibleRect( const Okular::NormalizedRect & rect )
 {
     if ( rect == m_visibleRect )
        return;
@@ -641,7 +641,7 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
         KIcon( "bookmark" ), i18n( "Show bookmarked pages only" ) );
     showBoomarkOnlyAction->setCheckable( true );
     connect( showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), list, SLOT( slotFilterBookmarks( bool ) ) );
-    showBoomarkOnlyAction->setChecked( KpdfSettings::filterBookmarks() );
+    showBoomarkOnlyAction->setChecked( Okular::Settings::filterBookmarks() );
     //insertLineSeparator();
 }
 

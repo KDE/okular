@@ -10,9 +10,11 @@
 // local includes
 #include "pagetransition.h"
 
+using namespace Okular;
+
 /** class KPDFPageTransition **/
 
-KPDFPageTransition::KPDFPageTransition( Type type )
+PageTransition::PageTransition( Type type )
   : m_type( type ),
     m_duration( 1 ),
     m_alignment( Horizontal ),
@@ -23,6 +25,6 @@ KPDFPageTransition::KPDFPageTransition( Type type )
 {
 }
 
-KPDFPageTransition::~KPDFPageTransition()
+PageTransition::~PageTransition()
 {
 }

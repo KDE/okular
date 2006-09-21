@@ -35,7 +35,7 @@ QPixmap * busyPixmap = 0;
 
 #define TEXTANNOTATION_ICONSIZE 24
 
-void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * page,
+void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
@@ -68,9 +68,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
          (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
     {
-        if ( KpdfSettings::changeColors() &&
-             KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper )
-            destPainter->fillRect( limits, KpdfSettings::paperColor() );
+        if ( Okular::Settings::changeColors() &&
+             Okular::Settings::renderMode() == Okular::Settings::EnumRenderMode::Paper )
+            destPainter->fillRect( limits, Okular::Settings::paperColor() );
         else
             destPainter->fillRect( limits, Qt::white );
 
@@ -96,14 +96,14 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
-    bool enhanceLinks = (flags & EnhanceLinks) && KpdfSettings::highlightLinks();
-    bool enhanceImages = (flags & EnhanceImages) && KpdfSettings::highlightImages();
+    bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
+    bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we dont need 
     // to know s_id here! we are only drawing this right?
-    QList< QPair<QColor, NormalizedRect *> > * bufferedHighlights = 0;
-    QList< Annotation * > * bufferedAnnotations = 0;
-    QList< Annotation * > * unbufferedAnnotations = 0;
+    QList< QPair<QColor, Okular::NormalizedRect *> > * bufferedHighlights = 0;
+    QList< Okular::Annotation * > * bufferedAnnotations = 0;
+    QList< Okular::Annotation * > * unbufferedAnnotations = 0;
     // fill up lists with visible annotation/highlight objects
     if ( canDrawHighlights || canDrawAnnotations )
     {
@@ -116,13 +116,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( canDrawHighlights )
         {
             if ( !bufferedHighlights )
-                 bufferedHighlights = new QList< QPair<QColor, NormalizedRect *>  >();
+                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect *>  >();
 /*            else
             {*/
                 
-                NormalizedRect* limitRect = new NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                QLinkedList< HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
-                QList< NormalizedRect * >::const_iterator hIt;
+                Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
+                QLinkedList< Okular::HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+                QList< Okular::NormalizedRect * >::const_iterator hIt;
                 for ( ; h2It != hEnd; ++h2It )
                     for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
                     {
@@ -135,37 +135,37 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // append annotations inside limits to the un/buffered list
         if ( canDrawAnnotations )
         {
-            QLinkedList< Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+            QLinkedList< Okular::Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
             for ( ; aIt != aEnd; ++aIt )
             {
-                Annotation * ann = *aIt;
-                if ( ann->flags & Annotation::Hidden )
+                Okular::Annotation * ann = *aIt;
+                if ( ann->flags & Okular::Annotation::Hidden )
                     continue;
 
                 bool intersects = ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax );
-                if ( ann->subType() == Annotation::AText )
+                if ( ann->subType() == Okular::Annotation::AText )
                 {
-                    TextAnnotation * ta = static_cast< TextAnnotation * >( ann );
-                    if ( ta->textType == TextAnnotation::Linked )
+                    Okular::TextAnnotation * ta = static_cast< Okular::TextAnnotation * >( ann );
+                    if ( ta->textType == Okular::TextAnnotation::Linked )
                     {
-                        NormalizedRect iconrect( ann->boundary.left, ann->boundary.top, ann->boundary.left + TEXTANNOTATION_ICONSIZE / page->width(), ann->boundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
+                        Okular::NormalizedRect iconrect( ann->boundary.left, ann->boundary.top, ann->boundary.left + TEXTANNOTATION_ICONSIZE / page->width(), ann->boundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
                         intersects = iconrect.intersects( nXMin, nYMin, nXMax, nYMax );
                     }
                 }
                 if ( intersects )
                 {
-                    Annotation::SubType type = ann->subType();
-                    if ( type == Annotation::ALine || type == Annotation::AHighlight ||
-                         type == Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
+                    Okular::Annotation::SubType type = ann->subType();
+                    if ( type == Okular::Annotation::ALine || type == Okular::Annotation::AHighlight ||
+                         type == Okular::Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
                     {
                         if ( !bufferedAnnotations )
-                            bufferedAnnotations = new QList< Annotation * >();
+                            bufferedAnnotations = new QList< Okular::Annotation * >();
                         bufferedAnnotations->append( ann );
                     }
                     else
                     {
                         if ( !unbufferedAnnotations )
-                            unbufferedAnnotations = new QList< Annotation * >();
+                            unbufferedAnnotations = new QList< Okular::Annotation * >();
                         unbufferedAnnotations->append( ann );
                     }
                 }
@@ -175,7 +175,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
-    bool bufferAccessibility = (flags & Accessibility) && KpdfSettings::changeColors() && (KpdfSettings::renderMode() != KpdfSettings::EnumRenderMode::Paper);
+    bool bufferAccessibility = (flags & Accessibility) && Okular::Settings::changeColors() && (Okular::Settings::renderMode() != Okular::Settings::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
@@ -213,21 +213,21 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
         {
-            switch ( KpdfSettings::renderMode() )
+            switch ( Okular::Settings::renderMode() )
             {
-                case KpdfSettings::EnumRenderMode::Inverted:
+                case Okular::Settings::EnumRenderMode::Inverted:
                     // Invert image pixels using QImage internal function
                     backImage.invertPixels(QImage::InvertRgb);
                     break;
-                case KpdfSettings::EnumRenderMode::Recolor:
+                case Okular::Settings::EnumRenderMode::Recolor:
                     // Recolor image using KImageEffect::flatten with dither:0
-                    KImageEffect::flatten( backImage, KpdfSettings::recolorForeground(), KpdfSettings::recolorBackground() );
+                    KImageEffect::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
                     break;
-                case KpdfSettings::EnumRenderMode::BlackWhite:
+                case Okular::Settings::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
                     unsigned int * data = (unsigned int *)backImage.bits();
                     int val, pixels = backImage.width() * backImage.height(),
-                        con = KpdfSettings::bWContrast(), thr = 255 - KpdfSettings::bWThreshold();
+                        con = Okular::Settings::bWContrast(), thr = 255 - Okular::Settings::bWThreshold();
                     for( int i = 0; i < pixels; ++i )
                     {
                         val = qGray( data[i] );
@@ -252,10 +252,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
+            QList< QPair<QColor, Okular::NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
             for ( ; hIt != hEnd; ++hIt )
             {
-                NormalizedRect * r = (*hIt).second;
+                Okular::NormalizedRect * r = (*hIt).second;
                 // find out the rect to highlight on pixmap
                 QRect highlightRect = r->geometry( scaledWidth, scaledHeight ).intersect( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
@@ -292,25 +292,25 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
-            QList< Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
+            QList< Okular::Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
             for ( ; aIt != aEnd; ++aIt )
             {
-                Annotation * a = *aIt;
-                Annotation::SubType type = a->subType();
+                Okular::Annotation * a = *aIt;
+                Okular::Annotation::SubType type = a->subType();
 
                 // draw LineAnnotation MISSING: all
-                if ( type == Annotation::ALine )
+                if ( type == Okular::Annotation::ALine )
                 {
                     // get the annotation
-                    LineAnnotation * la = (LineAnnotation *) a;
+                    Okular::LineAnnotation * la = (Okular::LineAnnotation *) a;
 
                     NormalizedPath path;
                     // normalize page point to image
-                    QLinkedList<NormalizedPoint>::const_iterator it = la->linePoints.begin();
-                    QLinkedList<NormalizedPoint>::const_iterator itEnd = la->linePoints.end();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = la->linePoints.begin();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = la->linePoints.end();
                     for ( ; it != itEnd; ++it )
                     {
-                        NormalizedPoint point;
+                        Okular::NormalizedPoint point;
                         point.x = ( (*it).x - xOffset) * xScale;
                         point.y = ( (*it).y - yOffset) * yScale;
                         path.append( point );
@@ -321,7 +321,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 
                     if ( path.count() == 2 && fabs( la->lineLeadingFwdPt ) > 0.1 )
                     {
-                        NormalizedPoint delta( la->linePoints.last().x - la->linePoints.first().x, la->linePoints.first().y - la->linePoints.last().y );
+                        Okular::NormalizedPoint delta( la->linePoints.last().x - la->linePoints.first().x, la->linePoints.first().y - la->linePoints.last().y );
                         double angle = atan2( delta.y, delta.x );
                         if ( delta.y < 0 )
                             angle += 2 * M_PI;
@@ -333,7 +333,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                         NormalizedPath path2;
                         NormalizedPath path3;
 
-                        NormalizedPoint point;
+                        Okular::NormalizedPoint point;
                         point.x = ( la->linePoints.first().x + LLx - xOffset ) * xScale;
                         point.y = ( la->linePoints.first().y - LLy - yOffset ) * yScale;
                         path2.append( point );
@@ -363,27 +363,27 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     }
                 }
                 // draw GeomAnnotation MISSING: all
-                else if ( type == Annotation::AGeom )
+                else if ( type == Okular::Annotation::AGeom )
                 {
                     // TODO
                 }
                 // draw HighlightAnnotation MISSING: under/strike width, feather, capping
-                else if ( type == Annotation::AHighlight )
+                else if ( type == Okular::Annotation::AHighlight )
                 {
                     // get the annotation
-                    HighlightAnnotation * ha = (HighlightAnnotation *) a;
-                    HighlightAnnotation::HighlightType type = ha->highlightType;
+                    Okular::HighlightAnnotation * ha = (Okular::HighlightAnnotation *) a;
+                    Okular::HighlightAnnotation::HighlightType type = ha->highlightType;
 
                     // draw each quad of the annotation
                     int quads = ha->highlightQuads.size();
                     for ( int q = 0; q < quads; q++ )
                     {
                         NormalizedPath path;
-                        const HighlightAnnotation::Quad & quad = ha->highlightQuads[ q ];
+                        const Okular::HighlightAnnotation::Quad & quad = ha->highlightQuads[ q ];
                         // normalize page point to image
                         for ( int i = 0; i < 4; i++ )
                         {
-                            NormalizedPoint point;
+                            Okular::NormalizedPoint point;
                             point.x = (quad.points[ i ].x - xOffset) * xScale;
                             point.y = (quad.points[ i ].y - yOffset) * yScale;
                             path.append( point );
@@ -392,11 +392,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                         switch ( type )
                         {
                             // highlight the whole rect
-                            case HighlightAnnotation::Highlight:
+                            case Okular::HighlightAnnotation::Highlight:
                                 drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
                                 break;
                             // highlight the bottom part of the rect
-                            case HighlightAnnotation::Squiggly:
+                            case Okular::HighlightAnnotation::Squiggly:
                                 path[ 0 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
                                 path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
                                 path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
@@ -404,7 +404,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
                                 break;
                             // make a line at 3/4 of the height
-                            case HighlightAnnotation::Underline:
+                            case Okular::HighlightAnnotation::Underline:
                                 path[ 0 ].x = ( path[ 0 ].x + 3*path[ 3 ].x ) / 4.0;
                                 path[ 0 ].y = ( path[ 0 ].y + 3*path[ 3 ].y ) / 4.0;
                                 path[ 1 ].x = ( path[ 1 ].x + 3*path[ 2 ].x ) / 4.0;
@@ -414,7 +414,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                                 drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );
                                 break;
                             // make a line at 1/2 of the height
-                            case HighlightAnnotation::StrikeOut:
+                            case Okular::HighlightAnnotation::StrikeOut:
                                 path[ 0 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
                                 path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
                                 path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
@@ -427,24 +427,24 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
                     }
                 }
                 // draw InkAnnotation MISSING:invar width, PENTRACER
-                else if ( type == Annotation::AInk )
+                else if ( type == Okular::Annotation::AInk )
                 {
                     // get the annotation
-                    InkAnnotation * ia = (InkAnnotation *) a;
+                    Okular::InkAnnotation * ia = (Okular::InkAnnotation *) a;
 
                     // draw each ink path
                     int paths = ia->inkPaths.size();
                     for ( int p = 0; p < paths; p++ )
                     {
                         NormalizedPath path;
-                        const QLinkedList<NormalizedPoint> & inkPath = ia->inkPaths[ p ];
+                        const QLinkedList<Okular::NormalizedPoint> & inkPath = ia->inkPaths[ p ];
 
                         // normalize page point to image
-                        QLinkedList<NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
+                        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
                         for ( ; pIt != pEnd; ++pIt )
                         {
-                            const NormalizedPoint & inkPoint = *pIt;
-                            NormalizedPoint point;
+                            const Okular::NormalizedPoint & inkPoint = *pIt;
+                            Okular::NormalizedPoint point;
                             point.x = (inkPoint.x - xOffset) * xScale;
                             point.y = (inkPoint.y - yOffset) * yScale;
                             path.append( point );
@@ -468,10 +468,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
     if ( unbufferedAnnotations )
     {
         // iterate over annotations and paint AText, AGeom, AStamp
-        QList< Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
+        QList< Okular::Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
         for ( ; aIt != aEnd; ++aIt )
         {
-            Annotation * a = *aIt;
+            Okular::Annotation * a = *aIt;
 
             // honour opacity settings on supported types
             unsigned int opacity = (unsigned int)( 255.0 * a->style.opacity );
@@ -484,13 +484,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
 
-            Annotation::SubType type = a->subType();
+            Okular::Annotation::SubType type = a->subType();
 
             // draw TextAnnotation
-            if ( type == Annotation::AText )
+            if ( type == Okular::Annotation::AText )
             {
-                TextAnnotation * text = (TextAnnotation *)a;
-                if ( text->textType == TextAnnotation::InPlace )
+                Okular::TextAnnotation * text = (Okular::TextAnnotation *)a;
+                if ( text->textType == Okular::TextAnnotation::InPlace )
                 {
                     QRect bigRect = a->boundary.geometry( (int)page->width(), (int)page->height() );
 
@@ -523,7 +523,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 //                    mixedPainter->drawImage( annotBoundary.topLeft(), image.scaled( annotBoundary.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );
                 }
-                else if ( text->textType == TextAnnotation::Linked )
+                else if ( text->textType == Okular::TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
                     QString path;
@@ -552,9 +552,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
 
             }
             // draw StampAnnotation
-            else if ( type == Annotation::AStamp )
+            else if ( type == Okular::Annotation::AStamp )
             {
-                StampAnnotation * stamp = (StampAnnotation *)a;
+                Okular::StampAnnotation * stamp = (Okular::StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
                 QString path;
@@ -588,7 +588,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
             }
 
             // draw extents rectangle
-            if ( KpdfSettings::debugDrawAnnotationRect() )
+            if ( Okular::Settings::debugDrawAnnotationRect() )
             {
                 mixedPainter->setPen( a->style.color );
                 mixedPainter->drawRect( annotBoundary );
@@ -608,12 +608,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const KPDFPage * p
         QRect limitsEnlarged = limits;
         limitsEnlarged.adjust( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QLinkedList< ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
+        QLinkedList< Okular::ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
         for ( ; lIt != lEnd; ++lIt )
         {
-            ObjectRect * rect = *lIt;
-            if ( (enhanceLinks && rect->objectType() == ObjectRect::Link) ||
-                 (enhanceImages && rect->objectType() == ObjectRect::Image) )
+            Okular::ObjectRect * rect = *lIt;
+            if ( (enhanceLinks && rect->objectType() == Okular::ObjectRect::Link) ||
+                 (enhanceImages && rect->objectType() == Okular::ObjectRect::Image) )
             {
                 if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ) ) )
                 {
@@ -758,7 +758,7 @@ void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
 // directory. This is to be replaced by Arthur calls for drawing antialiased
 // primitives, but until that AGG2 does its job very fast and good-looking.
 
-#include "kpdf_pixfmt_rgba.h"
+#include "okular_pixfmt_rgba.h"
 #include "agg_rendering_buffer.h"
 #include "agg_renderer_base.h"
 #include "agg_scanline_u.h"

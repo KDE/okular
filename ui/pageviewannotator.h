@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PAGEVIEWANNOTATOR_H_
-#define _KPDF_PAGEVIEWANNOTATOR_H_
+#ifndef _OKULAR_PAGEVIEWANNOTATOR_H_
+#define _OKULAR_PAGEVIEWANNOTATOR_H_
 
 #include <qobject.h>
 #include <qdom.h>
@@ -19,7 +19,7 @@ class AnnotatorEngine;
 /**
  * @short PageView object devoted to annotation creation/handling.
  *
- * PageViewAnnotator is the kpdf class used for visually creating annotations.
+ * PageViewAnnotator is the okular class used for visually creating annotations.
  * It uses internal 'engines' for interacting with user events and attaches
  * the newly created annotation to the document when the creation is complete.
  * In the meanwhile all PageView events (actually mouse/paint ones) are routed
@@ -36,7 +36,7 @@ class PageViewAnnotator : public QObject
 {
     Q_OBJECT
     public:
-        PageViewAnnotator( PageView * parent, KPDFDocument * storage );
+        PageViewAnnotator( PageView * parent, Okular::Document * storage );
         ~PageViewAnnotator();
 
         // called to show/hide the editing toolbar
@@ -54,7 +54,7 @@ class PageViewAnnotator : public QObject
 
     private:
         // global class pointers
-        KPDFDocument * m_document;
+        Okular::Document * m_document;
         PageView * m_pageView;
         PageViewToolBar * m_toolBar;
         AnnotatorEngine * m_engine;

@@ -22,7 +22,7 @@
 #include "propertiesdialog.h"
 #include "core/document.h"
 
-PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
+PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   : KPageDialog( parent )
 {
   setFaceType( Tabbed );
@@ -38,7 +38,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
   layout->setSpacing( spacingHint() );
 
   // get document info, if not present display blank data and a warning
-  const DocumentInfo * info = doc->documentInfo();
+  const Okular::DocumentInfo * info = doc->documentInfo();
   if ( !info ) {
     layout->addWidget( new QLabel( i18n( "No document opened." ), page ), 0, 0 );
     return;
@@ -83,7 +83,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, KPDFDocument *doc)
 
   // FONTS
   QVBoxLayout *page2Layout = 0;
-  const DocumentFonts * fonts = doc->documentFonts();
+  const Okular::DocumentFonts * fonts = doc->documentFonts();
   if ( fonts ) {
     // create fonts tab and layout it
     QFrame *page2 = new QFrame();

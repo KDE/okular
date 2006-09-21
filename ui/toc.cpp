@@ -36,7 +36,7 @@ class TOCItem : public QTreeWidgetItem
             : QTreeWidgetItem( parent, after ), m_element( e )
         {
             setText( 0, e.tagName() );
-            if ( KpdfSettings::tocPageColumn() && e.hasAttribute( "Page" ) )
+            if ( Okular::Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
         }
 
@@ -44,7 +44,7 @@ class TOCItem : public QTreeWidgetItem
             : QTreeWidgetItem( parent, after ), m_element( e )
         {
             setText( 0, e.tagName() );
-            if ( KpdfSettings::tocPageColumn() && e.hasAttribute( "Page" ) )
+            if ( Okular::Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
                 setText( 1, e.attribute( "Page" ) );
         }
 
@@ -62,7 +62,7 @@ class TOCItem : public QTreeWidgetItem
         QDomElement m_element;
 };
 
-TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
+TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
@@ -78,7 +78,7 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : QWidget(parent), m_document(
     mainlay->addWidget( m_treeView );
     QStringList cols;
     cols.append( i18n("Topic") );
-    if (KpdfSettings::tocPageColumn())
+    if (Okular::Settings::tocPageColumn())
         cols.append( i18n("Page") );
     m_treeView->setHeaderLabels( cols );
     m_treeView->setSortingEnabled( false );
@@ -102,7 +102,7 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentChanged )
+void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool documentChanged )
 {
     if ( !documentChanged )
         return;
@@ -114,7 +114,7 @@ void TOC::notifySetup( const QVector< KPDFPage * > & /*pages*/, bool documentCha
     m_currentPage = -1;
 
     // request synopsis description (is a dom tree)
-    const DocumentSynopsis * syn = m_document->documentSynopsis();
+    const Okular::DocumentSynopsis * syn = m_document->documentSynopsis();
 
     // if not present, disable the contents tab
     if ( !syn )
@@ -192,7 +192,7 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     QString externalFileName = e.attribute( "ExternalFileName" );
     if ( !externalFileName.isEmpty() )
     {
-        KPDFLinkGoto link( externalFileName, getViewport( e ) );
+        Okular::LinkGoto link( externalFileName, getViewport( e ) );
         m_document->processLink( &link );
     }
     else
@@ -201,12 +201,12 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     }
 }
 
-DocumentViewport TOC::getViewport( const QDomElement &e ) const
+Okular::DocumentViewport TOC::getViewport( const QDomElement &e ) const
 {
     if ( e.hasAttribute( "Viewport" ) )
     {
         // if the node has a viewport, set it
-        return DocumentViewport( e.attribute( "Viewport" ) );
+        return Okular::DocumentViewport( e.attribute( "Viewport" ) );
     }
     else if ( e.hasAttribute( "ViewportName" ) )
     {
@@ -214,9 +214,9 @@ DocumentViewport TOC::getViewport( const QDomElement &e ) const
         const QString & page = e.attribute( "ViewportName" );
         const QString & viewport = m_document->getMetaData( "NamedViewport", page );
         if ( !viewport.isNull() )
-            return DocumentViewport( viewport );
+            return Okular::DocumentViewport( viewport );
     }
-    return DocumentViewport();
+    return Okular::DocumentViewport();
 }
 
 #include "toc.moc"

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PRESENTATIONWIDGET_H_
-#define _KPDF_PRESENTATIONWIDGET_H_
+#ifndef _OKULAR_PRESENTATIONWIDGET_H_
+#define _OKULAR_PRESENTATIONWIDGET_H_
 
 #include <qdialog.h>
 #include <qlist.h>
@@ -21,27 +21,29 @@ class QLineEdit;
 class QToolBar;
 class QTimer;
 class KActionCollection;
-
-class KPDFDocument;
-class KPDFPage;
-class KPDFLink;
 class PresentationFrame;
+
+namespace Okular {
+class Document;
+class Page;
+class Link;
+}
 
 /**
  * @short A widget that shows pages as fullscreen slides (with transitions fx).
  *
  * This is a fullscreen widget that displays 
  */
-class PresentationWidget : public QDialog, public DocumentObserver
+class PresentationWidget : public QDialog, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        PresentationWidget( QWidget * parent, KPDFDocument * doc );
+        PresentationWidget( QWidget * parent, Okular::Document * doc );
         ~PresentationWidget();
 
         // inherited from DocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
-        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber );
@@ -60,7 +62,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void paintEvent( QPaintEvent * e );
 
     private:
-        const KPDFLink * getLink( int x, int y, QRect * geometry = 0 ) const;
+        const Okular::Link * getLink( int x, int y, QRect * geometry = 0 ) const;
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );
@@ -68,9 +70,9 @@ class PresentationWidget : public QDialog, public DocumentObserver
         void generateIntroPage( QPainter & p );
         void generateContentsPage( int page, QPainter & p );
         void generateOverlay();
-        void initTransition( const KPDFPageTransition *transition );
-        const KPDFPageTransition defaultTransition() const;
-        const KPDFPageTransition defaultTransition( int ) const;
+        void initTransition( const Okular::PageTransition *transition );
+        const Okular::PageTransition defaultTransition() const;
+        const Okular::PageTransition defaultTransition( int ) const;
 
         // cache stuff
         int m_width;
@@ -78,7 +80,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QPixmap m_lastRenderedPixmap;
         QPixmap m_lastRenderedOverlay;
         QRect m_overlayGeometry;
-        const KPDFLink * m_pressedLink;
+        const Okular::Link * m_pressedLink;
         bool m_handCursor;
 
         // transition related
@@ -89,7 +91,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         QList< QRect > m_transitionRects;
 
         // misc stuff
-        KPDFDocument * m_document;
+        Okular::Document * m_document;
         QVector< PresentationFrame * > m_frames;
         int m_frameIndex;
         QStringList m_metaStrings;

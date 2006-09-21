@@ -194,7 +194,7 @@ private:
 };
 
 
-AnnotWindow::AnnotWindow( QWidget * parent, Annotation * annot)
+AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     : QFrame( parent ), m_annot( annot )
 {
     setAutoFillBackground( true );

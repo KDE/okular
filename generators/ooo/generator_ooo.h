@@ -15,36 +15,36 @@
 
 class QTextDocument;
 
-class KOOOGenerator : public Generator
+class KOOOGenerator : public Okular::Generator
 {
   Q_OBJECT
 
   public:
-    KOOOGenerator( KPDFDocument * document );
+    KOOOGenerator( Okular::Document * document );
     virtual ~KOOOGenerator();
 
     // [INHERITED] load a document and fill up the pagesVector
-    bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+    bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
     bool closeDocument();
 
     // [INHERITED] perform actions on document / pages
     bool canGeneratePixmap( bool async );
-    void generatePixmap( PixmapRequest * request );
+    void generatePixmap( Okular::PixmapRequest * request );
 
     // [INHERITED] rotation capability
     bool supportsRotation() { return true; };
-    void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+    void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     // [INHERITED] print document using already configured kprinter
     bool print( KPrinter& printer );
 
-    const DocumentInfo* generateDocumentInfo();
-    const DocumentSynopsis* generateDocumentSynopsis();
+    const Okular::DocumentInfo* generateDocumentInfo();
+    const Okular::DocumentSynopsis* generateDocumentSynopsis();
 
   private:
     QTextDocument *mDocument;
-    DocumentInfo mDocumentInfo;
-    DocumentSynopsis mDocumentSynopsis;
+    Okular::DocumentInfo mDocumentInfo;
+    Okular::DocumentSynopsis mDocumentSynopsis;
     OOO::Converter::LinkInfo::List mLinks;
 };
 

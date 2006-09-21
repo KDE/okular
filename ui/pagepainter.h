@@ -7,15 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PAGEPAINTER_H_
-#define _KPDF_PAGEPAINTER_H_
+#ifndef _OKULAR_PAGEPAINTER_H_
+#define _OKULAR_PAGEPAINTER_H_
 
 #include "core/page.h"  // for NormalizedPoint
 class QPainter;
 class QRect;
 
 /**
- * @short Paints a KPDFPage to an open painter using given flags.
+ * @short Paints a Okular::Page to an open painter using given flags.
  */
 class PagePainter
 {
@@ -29,7 +29,7 @@ class PagePainter
         // draw (using painter 'p') the 'page' requested by 'id' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
         // 'scaledWidth' and 'scaledHeight' the expected size of page contents
-        static void paintPageOnPainter( QPainter * p, const KPDFPage * page, int pixID,
+        static void paintPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
     private:
@@ -52,7 +52,7 @@ class PagePainter
             unsigned int alpha = 255 );
 
         // my pretty dear raster function
-        typedef QList< NormalizedPoint > NormalizedPath;
+        typedef QList< Okular::NormalizedPoint > NormalizedPath;
         enum RasterOperation { Normal, Multiply };
         static void drawShapeOnImage(
             QImage & image,

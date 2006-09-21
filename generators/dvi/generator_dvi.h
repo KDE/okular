@@ -14,32 +14,35 @@
 
 class dviRenderer;
 class dviPageInfo;
-class DocumentViewport;
 class Anchor;
 
-class DviGenerator : public Generator
+namespace Okular {
+class DocumentViewport;
+}
+
+class DviGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        DviGenerator( KPDFDocument * doc );
-        bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        DviGenerator( Okular::Document * doc );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
         bool canGenerateTextPage();
-        void generateSyncTextPage( KPDFPage * page );
+        void generateSyncTextPage( Okular::Page * page );
 
         // document information
-        const DocumentInfo *generateDocumentInfo();
+        const Okular::DocumentInfo *generateDocumentInfo();
 
         // table of contents
-        const DocumentSynopsis *generateDocumentSynopsis();
+        const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
         // rotation
         bool supportsRotation() { return true; };
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
+        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
 
         // searching
         bool supportsSearching() { return true; };
@@ -47,17 +50,17 @@ class DviGenerator : public Generator
    private:
         double m_resolution;
 
-        DocumentInfo *m_docInfo;
-        DocumentSynopsis *m_docSynopsis;
+        Okular::DocumentInfo *m_docInfo;
+        Okular::DocumentSynopsis *m_docSynopsis;
 
         bool ready;
         dviRenderer *m_dviRenderer;
 
-        void loadPages( QVector< KPDFPage * > & pagesVector, int orientation );
-        KPDFTextPage *extractTextFromPage( dviPageInfo *pageInfo, int orientation );
-        void fillViewportFromAnchor( DocumentViewport &vp, const Anchor &anch, 
+        void loadPages( QVector< Okular::Page * > & pagesVector, int orientation );
+        Okular::TextPage *extractTextFromPage( dviPageInfo *pageInfo, int orientation );
+        void fillViewportFromAnchor( Okular::DocumentViewport &vp, const Anchor &anch, 
                                      int pW, int pH, int orientation ); 
-        QLinkedList<ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo, 
+        QLinkedList<Okular::ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo, 
                                                    int orientation );
 };
 

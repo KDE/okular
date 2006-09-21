@@ -38,16 +38,16 @@ class TIFFGeneratorThread : public QThread
     public:
         TIFFGeneratorThread();
 
-        void startGeneration( PixmapRequest* request, TIFF* tiff );
+        void startGeneration( Okular::PixmapRequest* request, TIFF* tiff );
         void endGeneration();
 
-        PixmapRequest *request() const;
+        Okular::PixmapRequest *request() const;
         QPixmap * takePixmap();
 
     private:
         void run();
 
-        PixmapRequest* m_request;
+        Okular::PixmapRequest* m_request;
         QPixmap* m_pix;
         TIFF* m_tiff;
 };
@@ -57,7 +57,7 @@ TIFFGeneratorThread::TIFFGeneratorThread()
 {
 }
 
-void TIFFGeneratorThread::startGeneration( PixmapRequest* request, TIFF* tiff )
+void TIFFGeneratorThread::startGeneration( Okular::PixmapRequest* request, TIFF* tiff )
 {
     m_request = request;
     m_tiff = tiff;
@@ -70,7 +70,7 @@ void TIFFGeneratorThread::endGeneration()
     m_tiff = 0;
 }
 
-PixmapRequest* TIFFGeneratorThread::request() const
+Okular::PixmapRequest* TIFFGeneratorThread::request() const
 {
     return m_request;
 }
@@ -140,7 +140,7 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
 
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
-TIFFGenerator::TIFFGenerator( KPDFDocument * document ) : Generator( document ),
+TIFFGenerator::TIFFGenerator( Okular::Document * document ) : Okular::Generator( document ),
   d( new Private ), ready( false ), m_docInfo( 0 )
 {
     thread = new TIFFGeneratorThread();
@@ -164,7 +164,7 @@ TIFFGenerator::~TIFFGenerator()
     delete d;
 }
 
-bool TIFFGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
+bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
     d->tiff = TIFFOpen( QFile::encodeName( fileName ), "r" );
     if ( !d->tiff )
@@ -198,7 +198,7 @@ bool TIFFGenerator::canGeneratePixmap( bool /*async*/ )
     return ready;
 }
 
-void TIFFGenerator::generatePixmap( PixmapRequest * request )
+void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     ready = false;
 
@@ -261,7 +261,7 @@ void TIFFGenerator::generatePixmap( PixmapRequest * request )
     signalRequestDone( request );
 }
 
-const DocumentInfo * TIFFGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
 {
     if ( !d->tiff )
         return 0;
@@ -269,7 +269,7 @@ const DocumentInfo * TIFFGenerator::generateDocumentInfo()
     if ( m_docInfo )
         return m_docInfo;
 
-    m_docInfo = new DocumentInfo();
+    m_docInfo = new Okular::DocumentInfo();
 
     m_docInfo->set( "mimeType", "image/tiff" );
 
@@ -297,14 +297,14 @@ const DocumentInfo * TIFFGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-void TIFFGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void TIFFGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
     loadPages( pagesVector, orientation );
 }
 
 void TIFFGenerator::slotThreadFinished()
 {
-    PixmapRequest * request = thread->request();
+    Okular::PixmapRequest * request = thread->request();
     thread->endGeneration();
 
     request->page->setPixmap( request->id, thread->takePixmap() );
@@ -314,7 +314,7 @@ void TIFFGenerator::slotThreadFinished()
     signalRequestDone( request );
 }
 
-void TIFFGenerator::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
+void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )
 {
     if ( !d->tiff )
         return;
@@ -338,7 +338,7 @@ void TIFFGenerator::loadPages( QVector<KPDFPage*> & pagesVector, int rotation )
             qSwap( width, height );
 
         delete pagesVector[i];
-        KPDFPage * page = new KPDFPage( i, width, height, rotation );
+        Okular::Page * page = new Okular::Page( i, width, height, rotation );
         pagesVector[i] = page;
 
     }

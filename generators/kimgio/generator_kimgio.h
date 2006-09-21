@@ -12,26 +12,26 @@
 
 #include "core/generator.h"
 
-class KIMGIOGenerator : public Generator
+class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        KIMGIOGenerator( KPDFDocument * document );
+        KIMGIOGenerator( Okular::Document * document );
         virtual ~KIMGIOGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
 //        bool hasFonts() const;
 
         // [INHERITED] rotation capability
         bool supportsRotation() { return true; };
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
+        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );

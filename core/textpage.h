@@ -7,14 +7,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_TETXTPAGE_H_
-#define _KPDF_TETXTPAGE_H_
+#ifndef _OKULAR_TETXTPAGE_H_
+#define _OKULAR_TETXTPAGE_H_
 
 
-#include <qlist.h>
-#include <qmap.h>
-#include <qstringlist.h>
+#include <QtCore/QMap>
+#include <QtCore/QStringList>
+
 #include "area.h"
+
+namespace Okular {
+
 class TextSelection;
 
 /*! @enum SearchDir
@@ -36,8 +39,8 @@ class TextSelection;
  */
 typedef enum SearchDir{ FromTop, FromBottom, NextRes, PrevRes };
 
-/*! @struct  KPDFTextEntity
- * @short Abstract textentity of KPDF
+/*! @struct  TextEntity
+ * @short Abstract textentity of Okular
  * @par The context
  * A document can provide different forms of information about textual representation
  * of its contents. It can include information about positions of every character on the 
@@ -52,37 +55,38 @@ typedef enum SearchDir{ FromTop, FromBottom, NextRes, PrevRes };
  * We need several
  */
 
-struct KPDFTextEntity
+struct TextEntity
 {
     // 
     QString txt;
     NormalizedRect* area;
-    KPDFTextEntity(QString text, NormalizedRect* ar) : txt(text) 
+    TextEntity(QString text, NormalizedRect* ar) : txt(text) 
         { area=ar; };
-    ~KPDFTextEntity() { delete area; };
+    ~TextEntity() { delete area; };
 };
 
 struct SearchPoint;
 
-class KPDFTextPage {
+class TextPage
+{
   public:
     RegularAreaRect* findText(int searchID, const QString &query, SearchDir & direct,
         bool strictCase, const RegularAreaRect *area);
     QString getText(const RegularAreaRect *rect) const;
     RegularAreaRect * getTextArea ( TextSelection* ) const;
-    KPDFTextPage(QList<KPDFTextEntity*> words) : m_words(words) {};
-    KPDFTextPage() : m_words() {};
+    TextPage(QList<TextEntity*> words) : m_words(words) {};
+    TextPage() : m_words() {};
     void append(QString txt, NormalizedRect*  area) 
-        { m_words.append(new KPDFTextEntity(txt,area) ); };
-    ~KPDFTextPage();
+        { m_words.append(new TextEntity(txt,area) ); };
+    ~TextPage();
   private:
     RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
-        bool strictCase, const QList<KPDFTextEntity*>::Iterator &start,
-        const QList<KPDFTextEntity*>::Iterator &end);
-    QList<KPDFTextEntity*>  m_words;
-    QMap<int, SearchPoint*> m_searchPoints;
-  };
+        bool strictCase, const QList<TextEntity*>::Iterator &start,
+        const QList<TextEntity*>::Iterator &end);
+    QList<TextEntity*>  m_words;
+    QMap<int, Okular::SearchPoint*> m_searchPoints;
+};
 
-
+}
 
 #endif 

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_NEWSTUFF_H_
-#define _KPDF_NEWSTUFF_H_
+#ifndef _OKULAR_NEWSTUFF_H_
+#define _OKULAR_NEWSTUFF_H_
 
 #include <qdialog.h>
 #include <knewstuff/provider.h>

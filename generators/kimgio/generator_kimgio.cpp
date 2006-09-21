@@ -18,7 +18,7 @@
 
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 
-KIMGIOGenerator::KIMGIOGenerator( KPDFDocument * document ) : Generator( document )
+KIMGIOGenerator::KIMGIOGenerator( Okular::Document * document ) : Generator( document )
 {
 }
 
@@ -26,13 +26,13 @@ KIMGIOGenerator::~KIMGIOGenerator()
 {
 }
 
-bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
+bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
     m_pix = new QPixmap(fileName);
 
     pagesVector.resize( 1 );
 
-    KPDFPage * page = new KPDFPage( 0, m_pix->width(), m_pix->height(), 0 );
+    Okular::Page * page = new Okular::Page( 0, m_pix->width(), m_pix->height(), 0 );
     pagesVector[0] = page;
 
     return true;
@@ -51,7 +51,7 @@ bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ )
     return true;
 }
 
-void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
+void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     // perform a smooth scaled generation
     QImage smoothImage = m_pix->toImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
@@ -68,7 +68,7 @@ void KIMGIOGenerator::generatePixmap( PixmapRequest * request )
     signalRequestDone(request);
 }
 
-void KIMGIOGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void KIMGIOGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
    int w = m_pix->width();
    int h = m_pix->height();
@@ -77,7 +77,7 @@ void KIMGIOGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orie
 
     delete pagesVector[0];
 
-    KPDFPage * page = new KPDFPage( 0, w, h, orientation );
+    Okular::Page * page = new Okular::Page( 0, w, h, orientation );
     pagesVector[0] = page;
 }
 

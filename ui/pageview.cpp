@@ -77,7 +77,7 @@ class PageViewPrivate
 {
 public:
     // the document, pageviewItems and the 'visible cache'
-    KPDFDocument * document;
+    Okular::Document * document;
     QVector< PageViewItem * > items;
     QLinkedList< PageViewItem * > visibleItems;
 
@@ -97,7 +97,7 @@ public:
     bool mouseTextSelectionPainted;
     QList<QRect>* mouseTextSelectionRect;
     QColor mouseTextSelectionColor;
-    TextSelection * mouseTextSelectionInfo;
+    Okular::TextSelection * mouseTextSelectionInfo;
     bool mouseOnRect;
                              
     // type ahead find
@@ -151,7 +151,7 @@ public:
  *  other misc functions: only slotRequestVisiblePixmaps and pickItemOnPoint noticeable,
  * and many insignificant stuff like this comment :-)
  */
-PageView::PageView( QWidget *parent, KPDFDocument *document )
+PageView::PageView( QWidget *parent, Okular::Document *document )
     : Q3ScrollView( parent )
 {
     // create and initialize private storage structure
@@ -159,8 +159,8 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->document = document;
     d->aOrientation = 0;
     d->aRenderMode = 0;
-    d->zoomMode = (PageView::ZoomMode) KpdfSettings::zoomMode();
-    d->zoomFactor = KpdfSettings::zoomFactor();
+    d->zoomMode = (PageView::ZoomMode) Okular::Settings::zoomMode();
+    d->zoomFactor = Okular::Settings::zoomFactor();
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
@@ -278,11 +278,11 @@ void PageView::setupActions( KActionCollection * ac )
     d->aRenderMode = new KSelectAction( KIcon( "view_left_right" ), i18n("&Render Mode"), ac, "view_render_mode" );
     connect( d->aRenderMode, SIGNAL( triggered( int ) ), SLOT( slotRenderMode( int ) ) );
     d->aRenderMode->setItems( renderModes );
-    d->aRenderMode->setCurrentItem( KpdfSettings::renderMode() );
+    d->aRenderMode->setCurrentItem( Okular::Settings::renderMode() );
 
     d->aViewContinuous = new KToggleAction( KIcon( "view_text" ), i18n("&Continuous"), ac, "view_continuous" );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
-    d->aViewContinuous->setChecked( KpdfSettings::viewContinuous() );
+    d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
     // Mouse-Mode actions
     QActionGroup * actGroup = new QActionGroup( this );
@@ -320,14 +320,14 @@ void PageView::setupActions( KActionCollection * ac )
 
 bool PageView::canFitPageWidth()
 {
-    return KpdfSettings::renderMode() != 0 || d->zoomMode != ZoomFitWidth;
+    return Okular::Settings::renderMode() != 0 || d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
-    KpdfSettings::setRenderMode( 0 );
+    Okular::Settings::setRenderMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
     d->aZoomFitText->setChecked( false );
@@ -340,7 +340,7 @@ void PageView::fitPageWidth( int page )
     setFocus();
 }
 
-void PageView::setAnnotsWindow(Annotation * annot)
+void PageView::setAnnotsWindow(Okular::Annotation * annot)
 {
     if(!annot)
         return;
@@ -380,7 +380,7 @@ void PageView::setAnnotsWindow(Annotation * annot)
 
 void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )
 {
-    if ( !KpdfSettings::showOSD() )
+    if ( !Okular::Settings::showOSD() )
     {
         if (icon == PageViewMessage::Error)
             KMessageBox::error( this, message );
@@ -399,7 +399,7 @@ void PageView::displayMessage( const QString & message,PageViewMessage::Icon ico
 }
 
 //BEGIN DocumentObserver inherited methods
-void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool documentChanged )
+void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
 {
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged )
@@ -420,7 +420,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     d->visibleItems.clear();
 
     // create children widgets
-    QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
+    QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
     {
         d->items.push_back( new PageViewItem( *setIt ) );
@@ -446,7 +446,7 @@ void PageView::notifySetup( const QVector< KPDFPage * > & pageSet, bool document
     }
 
     // OSD to display pages
-    if ( documentChanged && pageSet.count() > 0 && KpdfSettings::showOSD() )
+    if ( documentChanged && pageSet.count() > 0 && Okular::Settings::showOSD() )
         d->messageWindow->display(
             i18np(" Loaded a one-page document.",
                  " Loaded a %n-page document.",
@@ -473,7 +473,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
     d->blockViewport = true;
 
     // find PageViewItem matching the viewport description
-    const DocumentViewport & vp = d->document->viewport();
+    const Okular::DocumentViewport & vp = d->document->viewport();
     PageViewItem * item = 0;
     QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
@@ -493,7 +493,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
-    if ( !KpdfSettings::viewContinuous() || d->dirtyLayout )
+    if ( !Okular::Settings::viewContinuous() || d->dirtyLayout )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
@@ -502,7 +502,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         newCenterY = r.top();
     if ( vp.rePos.enabled )
     {
-        if ( vp.rePos.pos == DocumentViewport::Center )
+        if ( vp.rePos.pos == Okular::DocumentViewport::Center )
         {
             newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() );
             newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() );
@@ -661,7 +661,7 @@ if ( d->document->handleEvent( pe ) )
         bool wantCompositing = ( !selectionRect.isNull() && contentsRect.intersects( selectionRect ) )
             || d->mouseTextSelecting;
 
-        if ( wantCompositing && KpdfSettings::enableCompositing() )
+        if ( wantCompositing && Okular::Settings::enableCompositing() )
         {
             // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
             QPixmap doubleBuffer( contentsRect.size() );
@@ -748,7 +748,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                 d->annotator->routePaint( &pixmapPainter, contentsRect );
             // 4) Layer 2: overlays
-            if ( KpdfSettings::debugDrawBoundaries() )
+            if ( Okular::Settings::debugDrawBoundaries() )
             {
                 pixmapPainter.setPen( Qt::blue );
                 pixmapPainter.drawRect( contentsRect );
@@ -773,7 +773,7 @@ if ( d->document->handleEvent( pe ) )
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                 d->annotator->routePaint( &screenPainter, contentsRect );
             // 4) Layer 2: overlays
-            if ( KpdfSettings::debugDrawBoundaries() )
+            if ( Okular::Settings::debugDrawBoundaries() )
             {
                 screenPainter.setPen( Qt::red );
                 screenPainter.drawRect( contentsRect );
@@ -821,7 +821,7 @@ if (d->document->handleEvent( e ) )
             {
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
                 bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
-                        KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
+                        Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
                 KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
                 d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -902,7 +902,7 @@ if (d->document->handleEvent( e ) )
         case Qt::Key_PageUp:
         case Qt::Key_Backspace:
             // if in single page mode and at the top of the screen, go to \ page
-            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
+            if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
             {
                 if ( e->key() == Qt::Key_Up )
                     verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
@@ -912,7 +912,7 @@ if (d->document->handleEvent( e ) )
             else if ( d->document->currentPage() > 0 )
             {
                 // more optimized than document->setPrevPage and then move view to bottom
-                DocumentViewport newViewport = d->document->viewport();
+                Okular::DocumentViewport newViewport = d->document->viewport();
                 newViewport.pageNumber -= viewColumns();
                 if ( newViewport.pageNumber < 0 )
                     newViewport.pageNumber = 0;
@@ -925,7 +925,7 @@ if (d->document->handleEvent( e ) )
         case Qt::Key_PageDown:
         case Qt::Key_Space:
             // if in single page mode and at the bottom of the screen, go to next page
-            if ( KpdfSettings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
+            if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
             {
                 if ( e->key() == Qt::Key_Down )
                     verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
@@ -935,7 +935,7 @@ if (d->document->handleEvent( e ) )
             else if ( (int)d->document->currentPage() < d->items.count() - 1 )
             {
                 // more optimized than document->setNextPage and then move view to top
-                DocumentViewport newViewport = d->document->viewport();
+                Okular::DocumentViewport newViewport = d->document->viewport();
                 newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
                 if ( newViewport.pageNumber >= (int)d->items.count() )
                     newViewport.pageNumber = d->items.count() - 1;
@@ -1085,7 +1085,7 @@ if (d->document->handleEvent( e ) )
                 {
                     PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 //                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
-                    const KPDFPage * kpdfPage = currentItem->page();
+                    const Okular::Page * okularPage = currentItem->page();
                     // build a proper rectangle (make sure left/top is to the left of right/bottom)
 //                     QRect rect (d->mouseSelectPos,e->pos());
 //                     rect=rect.normalize();
@@ -1102,17 +1102,17 @@ if (d->document->handleEvent( e ) )
 //                     FIXME: width and height are greater by 1 then the selection.
 //                     rect.addCoords(1,1,-1,-1);
                                         
-                    if ( !kpdfPage->hasSearchPage() )
-                    	 d->document->requestTextPage( kpdfPage->number() );
-                    NormalizedPoint startCursor(d->mouseSelectPos.x()-vRect.left(),d->mouseSelectPos.y()-vRect.top(),
+                    if ( !okularPage->hasSearchPage() )
+                    	 d->document->requestTextPage( okularPage->number() );
+                    Okular::NormalizedPoint startCursor(d->mouseSelectPos.x()-vRect.left(),d->mouseSelectPos.y()-vRect.top(),
                                 vRect.width(), vRect.height());
-                    NormalizedPoint endCursor(e->x()-vRect.left(),e->y()-vRect.top(),vRect.width(), vRect.height());
+                    Okular::NormalizedPoint endCursor(e->x()-vRect.left(),e->y()-vRect.top(),vRect.width(), vRect.height());
 
                     if ( ! d->mouseTextSelectionInfo )
-                      d->mouseTextSelectionInfo=new TextSelection(startCursor,endCursor);
+                      d->mouseTextSelectionInfo=new Okular::TextSelection(startCursor,endCursor);
                     else
                       d->mouseTextSelectionInfo->end(endCursor);
-		    RegularAreaRect * selectionArea=kpdfPage->getTextArea(d->mouseTextSelectionInfo);
+                    Okular::RegularAreaRect * selectionArea=okularPage->getTextArea(d->mouseTextSelectionInfo);
                     kWarning () << "text areas: " << selectionArea->count() << endl;
                     if ( selectionArea->count() > 0 )
                     { 
@@ -1257,10 +1257,10 @@ if (d->document->handleEvent( e ) )
         const QRect & itemRect = pageItem->geometry();
         double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
         double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
-        Annotation * ann = 0;
-        const ObjectRect * orect = pageItem->page()->getObjectRect( ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+        Okular::Annotation * ann = 0;
+        const Okular::ObjectRect * orect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
         if ( orect )
-            ann = ( (AnnotationObjectRect *)orect )->annotation();
+            ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
         if(ann)
         {
             KMenu menu( this );
@@ -1271,7 +1271,7 @@ if (d->document->handleEvent( e ) )
         //    else
         //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
             deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
-            if ( ann->flags & Annotation::DenyDelete )
+            if ( ann->flags & Okular::Annotation::DenyDelete )
                 deleteNote->setEnabled( false );
             showProperties = menu.addAction( SmallIconSet("configure"), i18n( "&Properties..." ) );
 
@@ -1336,19 +1336,19 @@ if (d->document->handleEvent( e ) )
             {
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
-                const ObjectRect * rect;
-                rect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                const Okular::ObjectRect * rect;
+                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
                 {
                     // handle click over a link
-                    const KPDFLink * link = static_cast< const KPDFLink * >( rect->pointer() );
+                    const Okular::Link * link = static_cast< const Okular::Link * >( rect->pointer() );
                     d->document->processLink( link );
                 }
                 else
                 {
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
-                    rect = pageItem->page()->getObjectRect( ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle click over a image
@@ -1444,8 +1444,8 @@ if (d->document->handleEvent( e ) )
             if (d->document->supportsSearching())
             {
                 // grab text in selection by extracting it from all intersected pages
-                RegularAreaRect * rects=new RegularAreaRect;
-                const KPDFPage * kpdfPage=0;
+                Okular::RegularAreaRect * rects=new Okular::RegularAreaRect;
+                const Okular::Page * okularPage=0;
                 QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
                 for ( ; iIt != iEnd; ++iIt )
                 {
@@ -1454,18 +1454,18 @@ if (d->document->handleEvent( e ) )
                     if ( selectionRect.intersects( itemRect ) )
                     {
                         // request the textpage if there isn't one
-                        kpdfPage= item->page();
-                        kWarning() << "checking if page " << item->pageNumber() << " has text " << kpdfPage->hasSearchPage() << endl;
-                        if ( !kpdfPage->hasSearchPage() )
-                            d->document->requestTextPage( kpdfPage->number() );
+                        okularPage= item->page();
+                        kWarning() << "checking if page " << item->pageNumber() << " has text " << okularPage->hasSearchPage() << endl;
+                        if ( !okularPage->hasSearchPage() )
+                            d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
                         QRect relativeRect = selectionRect.intersect( itemRect );
                         relativeRect.translate( -itemRect.left(), -itemRect.top() );
-                        rects->append(new NormalizedRect( relativeRect, item->width(), item->height() ));
+                        rects->append(new Okular::NormalizedRect( relativeRect, item->width(), item->height() ));
                     }
                 }
-                if (kpdfPage)
-                  selectedText = kpdfPage->getText( rects );
+                if (okularPage)
+                  selectedText = okularPage->getText( rects );
             }
 
             // popup that ask to copy:text and copy/save:image
@@ -1475,12 +1475,12 @@ if (d->document->handleEvent( e ) )
             {
                 menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
-                if ( !d->document->isAllowed( KPDFDocument::AllowCopy ) )
+                if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )
                 {
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
-                if ( KpdfSettings::useKTTSD() )
+                if ( Okular::Settings::useKTTSD() )
                     speakText = menu.addAction( SmallIconSet("kttsd"), i18n( "Speak Text" ) );
             }
             menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
@@ -1604,13 +1604,13 @@ if (d->document->handleEvent( e ) )
         else
             slotZoomIn();
     }
-    else if ( delta <= -120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
+    else if ( delta <= -120 && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
     {
         // go to next page
         if ( (int)d->document->currentPage() < d->items.count() - 1 )
         {
             // more optimized than document->setNextPage and then move view to top
-            DocumentViewport newViewport = d->document->viewport();
+            Okular::DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
             if ( newViewport.pageNumber >= (int)d->items.count() )
                 newViewport.pageNumber = d->items.count() - 1;
@@ -1619,13 +1619,13 @@ if (d->document->handleEvent( e ) )
             d->document->setViewport( newViewport );
         }
     }
-    else if ( delta >= 120 && !KpdfSettings::viewContinuous() && vScroll == verticalScrollBar()->minimum() )
+    else if ( delta >= 120 && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->minimum() )
     {
         // go to prev page
         if ( d->document->currentPage() > 0 )
         {
             // more optimized than document->setPrevPage and then move view to bottom
-            DocumentViewport newViewport = d->document->viewport();
+            Okular::DocumentViewport newViewport = d->document->viewport();
             newViewport.pageNumber -= viewColumns();
             if ( newViewport.pageNumber < 0 )
                 newViewport.pageNumber = 0;
@@ -1737,9 +1737,9 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )
 {
-    const KPDFPage * kpdfPage = item->page();
-    double width = kpdfPage->width(),
-           height = kpdfPage->height(),
+    const Okular::Page * okularPage = item->page();
+    double width = okularPage->width(),
+           height = okularPage->height(),
            zoom = d->zoomFactor;
 
     if ( d->zoomMode == ZoomFixed )
@@ -1750,7 +1750,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
     else if ( d->zoomMode == ZoomFitWidth )
     {
-        height = kpdfPage->ratio() * colWidth;
+        height = okularPage->ratio() * colWidth;
         item->setWHZ( colWidth, (int)height, (double)colWidth / width );
         d->zoomFactor = (double)colWidth / width;
     }
@@ -1963,9 +1963,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         // store zoom settings
-        KpdfSettings::setZoomMode( newZoomMode );
-        KpdfSettings::setZoomFactor( newFactor );
-        KpdfSettings::writeConfig();
+        Okular::Settings::setZoomMode( newZoomMode );
+        Okular::Settings::setZoomFactor( newFactor );
+        Okular::Settings::writeConfig();
     }
 }
 
@@ -2024,7 +2024,7 @@ void PageView::updateCursor( const QPoint &p )
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        d->mouseOnRect = pageItem->page()->getObjectRect( ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+        d->mouseOnRect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
         if ( d->mouseOnRect )
             setCursor( Qt::PointingHandCursor );
         else
@@ -2041,23 +2041,23 @@ void PageView::updateCursor( const QPoint &p )
 
 int PageView::viewColumns()
 {
-    int nr=KpdfSettings::renderMode();
+    int nr=Okular::Settings::renderMode();
     if (nr<2)
 	return nr+1;
-    return KpdfSettings::viewColumns();
+    return Okular::Settings::viewColumns();
 }
 
 int PageView::viewRows()
 {
-    if (KpdfSettings::renderMode()<2)
+    if (Okular::Settings::renderMode()<2)
 	return 1;
-    return KpdfSettings::viewRows();
+    return Okular::Settings::viewRows();
 }
 
 void PageView::doTypeAheadSearch()
 {
     bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
-                                          KPDFDocument::NextMatch, true, qRgb( 128, 255, 128 ), true );
+                                          Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
     KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
     d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -2095,10 +2095,10 @@ void PageView::slotRelayoutPages()
 
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
-    bool centerFirstPage = KpdfSettings::centerFirstPageInRow() && nCols > 1;
+    bool centerFirstPage = Okular::Settings::centerFirstPageInRow() && nCols > 1;
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
-    if ( KpdfSettings::viewContinuous() )
+    if ( Okular::Settings::viewContinuous() )
     {
         // handle the 'centering on first row' stuff
         if ( centerFirstPage )
@@ -2107,11 +2107,11 @@ void PageView::slotRelayoutPages()
         // so we can place widgets 'centered in virtual cells'.
 	int nRows;
 
-// 	if ( KpdfSettings::renderMode() < 2 )
+// 	if ( Okular::Settings::renderMode() < 2 )
         	nRows = (int)ceil( (float)pageCount / (float)nCols );
-// 		nRows=(int)ceil( (float)pageCount / (float) KpdfSettings::viewRows() );
+// 		nRows=(int)ceil( (float)pageCount / (float) Okular::Settings::viewRows() );
 // 	else
-// 		nRows = KpdfSettings::viewRows();
+// 		nRows = Okular::Settings::viewRows();
 
         int * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
@@ -2201,7 +2201,7 @@ void PageView::slotRelayoutPages()
 	int nRows=viewRows();
 
         // handle the 'centering on first row' stuff
-        if ( centerFirstPage && d->document->currentPage() < 1 && KpdfSettings::renderMode() == 1 )
+        if ( centerFirstPage && d->document->currentPage() < 1 && Okular::Settings::renderMode() == 1 )
             nCols = 1, nRows=1;
 
         // setup varialbles for a M(row) x N(columns) grid
@@ -2312,7 +2312,7 @@ void PageView::slotRelayoutPages()
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )
         {
-            const DocumentViewport & vp = d->document->viewport();
+            const Okular::DocumentViewport & vp = d->document->viewport();
             if ( vp.pageNumber >= 0 )
             {
                 int prevX = contentsX(),
@@ -2362,8 +2362,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // iterate over all items
     d->visibleItems.clear();
-    QLinkedList< PixmapRequest * > requestedPixmaps;
-    QVector< VisiblePageRect * > visibleRects;
+    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+    QVector< Okular::VisiblePageRect * > visibleRects;
     QVector< PageViewItem * >::iterator iIt = d->items.begin(), iEnd = d->items.end();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -2379,7 +2379,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
-        VisiblePageRect * vItem = new VisiblePageRect( i->pageNumber(), NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
+        Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
@@ -2391,7 +2391,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
 #endif
-            PixmapRequest * p = new PixmapRequest(
+            Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
         }
@@ -2418,8 +2418,8 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
 
     // if preloading is enabled, add the pages before and after in preloading
     if ( !d->visibleItems.isEmpty() &&
-         KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low &&
-         KpdfSettings::enableThreading() )
+         Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low &&
+         Okular::Settings::enableThreading() )
     {
         // add the page before the 'visible series' in preload
         int headRequest = d->visibleItems.first()->pageNumber() - 1;
@@ -2428,7 +2428,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             PageViewItem * i = d->items[ headRequest ];
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
-                requestedPixmaps.push_back( new PixmapRequest(
+                requestedPixmaps.push_back( new Okular::PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
 
@@ -2439,7 +2439,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
             PageViewItem * i = d->items[ tailRequest ];
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
-                requestedPixmaps.push_back( new PixmapRequest(
+                requestedPixmaps.push_back( new Okular::PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
     }
@@ -2453,7 +2453,7 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
     if ( isEvent && nearPageNumber != -1 )
     {
         // determine the document viewport
-        DocumentViewport newViewport( nearPageNumber );
+        Okular::DocumentViewport newViewport( nearPageNumber );
         newViewport.rePos.enabled = true;
         newViewport.rePos.normalizedX = focusedX;
         newViewport.rePos.normalizedY = focusedY;
@@ -2568,12 +2568,12 @@ void PageView::slotRenderMode( int nr )
     if (nr<2)
 	newColumns = nr+1;
     else
-	newColumns = KpdfSettings::viewColumns();
+	newColumns = Okular::Settings::viewColumns();
 
-    if ( KpdfSettings::renderMode() != nr )
+    if ( Okular::Settings::renderMode() != nr )
     {
-        KpdfSettings::setRenderMode( nr );
-        KpdfSettings::writeConfig();
+        Okular::Settings::setRenderMode( nr );
+        Okular::Settings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -2581,10 +2581,10 @@ void PageView::slotRenderMode( int nr )
 
 void PageView::slotContinuousToggled( bool on )
 {
-    if ( KpdfSettings::viewContinuous() != on )
+    if ( Okular::Settings::viewContinuous() != on )
     {
-        KpdfSettings::setViewContinuous( on );
-        KpdfSettings::writeConfig();
+        Okular::Settings::setViewContinuous( on );
+        Okular::Settings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }

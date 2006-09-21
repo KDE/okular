@@ -11,6 +11,8 @@
 
 #include "generator.h"
 
+using namespace Okular;
+
 QTextStream& operator<< (QTextStream& str, const PixmapRequest *req)
 {
     QString s;

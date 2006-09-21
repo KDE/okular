@@ -13,8 +13,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PART_H_
-#define _KPDF_PART_H_
+#ifndef _PART_H_
+#define _PART_H_
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
@@ -40,7 +40,6 @@ class KSelectAction;
 class KAboutData;
 class KPrinter;
 
-class KPDFDocument;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
@@ -48,9 +47,11 @@ class PresentationWidget;
 class SearchWidget;
 class TOC;
 class MiniBar;
-class ExportEntry;
 
-namespace okular {
+namespace Okular {
+class Document;
+class ExportEntry;
+}
 
 class BrowserExtension;
 
@@ -62,7 +63,7 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public DocumentObserver
+class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver
 {
 Q_OBJECT
 Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
@@ -118,7 +119,7 @@ protected slots:
 	void slotSaveFileAs();
 	void slotGetNewStuff();
 	void slotNewConfig();
-	void slotShowMenu(const KPDFPage *page, const QPoint &point);
+	void slotShowMenu(const Okular::Page *page, const QPoint &point);
 	void slotShowProperties();
 	void slotShowEmbeddedFiles();
 	void slotShowLeftPanel();
@@ -148,7 +149,7 @@ private:
     void fillGenerators();
 
 	// the document
-	KPDFDocument * m_document;
+	Okular::Document * m_document;
 	QString m_temporaryLocalFile;
 
 	// main widgets
@@ -165,7 +166,7 @@ private:
 	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
-	DocumentViewport m_viewportDirty;
+	Okular::DocumentViewport m_viewportDirty;
 
 	// Remember the search history
 	QStringList m_searchHistory;
@@ -197,15 +198,15 @@ private:
 	bool m_searchStarted;
 	BrowserExtension *m_bExtension;
 
-    // QHash: key is the name of the generator
-   QHash<QString, Generator*> m_loadedGenerators;
-    // list of names of the generators that have settings
-    QStringList m_generatorsWithSettings;
-    QStringList m_supportedMimeTypes;
-    KSelectAction * m_confGens;
-	QList<ExportEntry*> m_exportItems;
+  // QHash: key is the name of the generator
+  QHash<QString, Okular::Generator*> m_loadedGenerators;
+  // list of names of the generators that have settings
+  QStringList m_generatorsWithSettings;
+  QStringList m_supportedMimeTypes;
+  KSelectAction * m_confGens;
+	QList<Okular::ExportEntry*> m_exportItems;
 
-    private slots:
+private slots:
     void slotGeneratorPreferences();
 };
 
@@ -221,8 +222,6 @@ public slots:
 	// Automatically detected by the host.
 	void print();
 };
-
-}
 
 #endif
 

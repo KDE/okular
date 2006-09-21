@@ -56,21 +56,21 @@ int main(int argc, char** argv)
     // see if we are starting with session management
     if (app.isSessionRestored())
     {
-        RESTORE(okular::Shell);
+        RESTORE(Shell);
     } else {
         // no session.. just start up normally
         KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
         if (args->count() == 0)
         {
-            okular::Shell* widget = new okular::Shell;
+            Shell* widget = new Shell;
             widget->show();
         }
         else
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                okular::Shell* widget = new okular::Shell(args->url(i));
+                Shell* widget = new Shell(args->url(i));
                 widget->show();
             }
         }

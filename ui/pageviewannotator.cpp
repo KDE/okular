@@ -58,9 +58,9 @@ class AnnotatorEngine
         enum Button { None, Left, Right };
 
         // perform operations
-        virtual QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * page ) = 0;
+        virtual QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page ) = 0;
         virtual void paint( QPainter * painter, double xScale, double yScale, const QRect & clipRect ) = 0;
-        virtual Annotation * end() = 0;
+        virtual Okular::Annotation * end() = 0;
 
         // query creation state
         //PageViewItem * editingItem() const { return m_lockedItem; }
@@ -85,7 +85,7 @@ class SmoothPathEngine : public AnnotatorEngine
             // parse engine specific attributes
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * /*page*/ )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
         {
             // only proceed if pressing left button
             if ( button != Left )
@@ -107,7 +107,7 @@ class SmoothPathEngine : public AnnotatorEngine
                 //if ( dist > 0.0001 )
                 //{
                     // append mouse position (as normalized point) to the list
-                    NormalizedPoint nextPoint = NormalizedPoint( nX, nY );
+                    Okular::NormalizedPoint nextPoint = Okular::NormalizedPoint( nX, nY );
                     points.append( nextPoint );
                     // update total rect
                     double dX = 2.0 / (double)xScale;
@@ -117,7 +117,7 @@ class SmoothPathEngine : public AnnotatorEngine
                     totalRect.right = qMax( nX + dX, totalRect.right );
                     totalRect.bottom = qMax( nY + dY, totalRect.bottom );
                     // paint the difference to previous full rect
-                    NormalizedRect incrementalRect;
+                    Okular::NormalizedRect incrementalRect;
                     incrementalRect.left = qMin( nextPoint.x, lastPoint.x ) - dX;
                     incrementalRect.right = qMax( nextPoint.x, lastPoint.x ) + dX;
                     incrementalRect.top = qMin( nextPoint.y, lastPoint.y ) - dY;
@@ -146,12 +146,12 @@ class SmoothPathEngine : public AnnotatorEngine
                 // use engine's color for painting
                 painter->setPen( QPen( m_engineColor, 1 ) );
 
-                QLinkedList<NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
-                NormalizedPoint pA = *pIt;
+                QLinkedList<Okular::NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
+                Okular::NormalizedPoint pA = *pIt;
                 ++pIt;
                 for ( ; pIt != pEnd; ++pIt )
                 {
-                    NormalizedPoint pB = *pIt;
+                    Okular::NormalizedPoint pB = *pIt;
                     painter->drawLine( (int)(pA.x * (double)xScale), (int)(pA.y * (double)yScale),
                                     (int)(pB.x * (double)xScale), (int)(pB.y * (double)yScale) );
                     pA = pB;
@@ -159,7 +159,7 @@ class SmoothPathEngine : public AnnotatorEngine
             }
         }
 
-        Annotation * end()
+        Okular::Annotation * end()
         {
             m_creationCompleted = false;
 
@@ -168,20 +168,20 @@ class SmoothPathEngine : public AnnotatorEngine
                 return 0;
 
             // find out annotation's type
-            Annotation * ann = 0;
+            Okular::Annotation * ann = 0;
             QString typeString = m_annotElement.attribute( "type" );
 
             // create HighlightAnnotation from path
             if ( typeString == "Highlight" )
             {
-                HighlightAnnotation * ha = new HighlightAnnotation();
+                Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ann = ha;
                 // TODO
             }
             // create InkAnnotation from path
             else if ( typeString == "Ink" )
             {
-                InkAnnotation * ia = new InkAnnotation();
+                Okular::InkAnnotation * ia = new Okular::InkAnnotation();
                 ann = ia;
                 if ( m_annotElement.hasAttribute( "width" ) )
                     ann->style.width = m_annotElement.attribute( "width" ).toDouble();
@@ -207,9 +207,9 @@ class SmoothPathEngine : public AnnotatorEngine
 
     private:
         // data
-        QLinkedList<NormalizedPoint> points;
-        NormalizedRect totalRect;
-        NormalizedPoint lastPoint;
+        QLinkedList<Okular::NormalizedPoint> points;
+        Okular::NormalizedRect totalRect;
+        Okular::NormalizedPoint lastPoint;
 };
 
 /** @short PickPointEngine */
@@ -241,7 +241,7 @@ class PickPointEngine : public AnnotatorEngine
             delete pixmap;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * page )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page )
         {
             xscale=xScale;
             yscale=yScale;
@@ -296,7 +296,7 @@ class PickPointEngine : public AnnotatorEngine
             }
         }
 
-        Annotation * end()
+        Okular::Annotation * end()
         {
             m_creationCompleted = false;
 
@@ -305,7 +305,7 @@ class PickPointEngine : public AnnotatorEngine
                 return 0;
             
             // find out annotation's type
-            Annotation * ann = 0;
+            Okular::Annotation * ann = 0;
             QString typeString = m_annotElement.attribute( "type" );
             // create TextAnnotation from path
             if ( typeString == "FreeText")	//<annotation type="Text"
@@ -317,10 +317,10 @@ class PickPointEngine : public AnnotatorEngine
                 if(resok)
                 {
                     //add note
-                    TextAnnotation * ta = new TextAnnotation();
+                    Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                     ann = ta;
                     ta->inplaceText=note;
-                    ta->textType = TextAnnotation::InPlace;
+                    ta->textType = Okular::TextAnnotation::InPlace;
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);
@@ -329,7 +329,7 @@ class PickPointEngine : public AnnotatorEngine
                     kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
                     static int padding = 2;
                     QFontMetricsF mf(ta->textFont);
-                    QRectF rcf = mf.boundingRect( NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
+                    QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
                                                   Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
@@ -339,11 +339,11 @@ class PickPointEngine : public AnnotatorEngine
             }
             else if ( typeString == "Text")
             {
-                TextAnnotation * ta = new TextAnnotation();
+                Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
-                ta->textType = TextAnnotation::Linked;
+                ta->textType = Okular::TextAnnotation::Linked;
                 ta->window.text="";
-                //ta->window.flags &= ~(Annotation::Hidden);
+                //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 double iconhei=0.03;
                 rect.left = point.x;
                 rect.top = point.y;
@@ -355,7 +355,7 @@ class PickPointEngine : public AnnotatorEngine
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )
             {
-                StampAnnotation * sa = new StampAnnotation();
+                Okular::StampAnnotation * sa = new Okular::StampAnnotation();
                 ann = sa;
                 sa->stampIconName = pixmapName;
                 double stampxscale = size / xscale;
@@ -391,9 +391,9 @@ class PickPointEngine : public AnnotatorEngine
 
     private:
         bool clicked;
-        NormalizedRect rect;
-        NormalizedPoint startpoint;
-        NormalizedPoint point;
+        Okular::NormalizedRect rect;
+        Okular::NormalizedPoint startpoint;
+        Okular::NormalizedPoint point;
         QPixmap * pixmap;
         QString pixmapName;
         int size;
@@ -422,7 +422,7 @@ class PolyLineEngine : public AnnotatorEngine
                 numofpoints = -1;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const KPDFPage * /*page*/ )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
         {
             // only proceed if pressing left button
 //            if ( button != Left )
@@ -447,7 +447,7 @@ class PolyLineEngine : public AnnotatorEngine
             }
             else if ( type == Release )
             {
-                NormalizedPoint tmppoint;
+                Okular::NormalizedPoint tmppoint;
                 tmppoint.x = nX;
                 tmppoint.y = nY;
                 if ( fabs( tmppoint.x - newPoint.x + tmppoint.y - newPoint.y ) > 1e-2 )
@@ -467,7 +467,7 @@ class PolyLineEngine : public AnnotatorEngine
                 {
                     m_creationCompleted = true;
                     last = false;
-                    normRect = NormalizedRect( rect, xScale, yScale );
+                    normRect = Okular::NormalizedRect( rect, xScale, yScale );
                 }
             }
 
@@ -481,8 +481,8 @@ class PolyLineEngine : public AnnotatorEngine
 
             if ( m_block && points.count() == 2 )
             {
-                NormalizedPoint first = points[0];
-                NormalizedPoint second = points[1];
+                Okular::NormalizedPoint first = points[0];
+                Okular::NormalizedPoint second = points[1];
                 // draw a semitransparent block around the 2 points
                 painter->setPen( m_engineColor );
                 painter->setBrush( QBrush( m_engineColor.light(), Qt::Dense4Pattern ) );
@@ -501,7 +501,7 @@ class PolyLineEngine : public AnnotatorEngine
             }
         }
 
-        Annotation * end()
+        Okular::Annotation * end()
         {
             m_creationCompleted = false;
 
@@ -510,7 +510,7 @@ class PolyLineEngine : public AnnotatorEngine
                 return 0;
 
             // find out annotation's type
-            Annotation * ann = 0;
+            Okular::Annotation * ann = 0;
             QString typeString = m_annotElement.attribute( "type" );
 
             // create LineAnnotation from path
@@ -519,7 +519,7 @@ class PolyLineEngine : public AnnotatorEngine
                 if ( points.count() < 2 )
                     return 0;
                 //add note
-                LineAnnotation * la = new LineAnnotation();
+                Okular::LineAnnotation * la = new Okular::LineAnnotation();
                 ann = la;
                 for ( int i = 0; i < points.count(); ++i )
                     la->linePoints.append( points[i] );
@@ -544,12 +544,12 @@ class PolyLineEngine : public AnnotatorEngine
         }
 
     private:
-        QList<NormalizedPoint> points;
-        NormalizedPoint newPoint;
-        NormalizedPoint movingpoint;
+        QList<Okular::NormalizedPoint> points;
+        Okular::NormalizedPoint newPoint;
+        Okular::NormalizedPoint movingpoint;
         QRect rect;
         QRect movingrect;
-        NormalizedRect normRect;
+        Okular::NormalizedRect normRect;
         bool m_block;
         bool last;
         int numofpoints;
@@ -558,7 +558,7 @@ class PolyLineEngine : public AnnotatorEngine
 
 /** PageViewAnnotator **/
 
-PageViewAnnotator::PageViewAnnotator( PageView * parent, KPDFDocument * storage )
+PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
     m_toolBar( 0 ), m_engine( 0 ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
@@ -628,10 +628,10 @@ void PageViewAnnotator::setEnabled( bool on )
     }
 
     // show the toolBar
-    m_toolBar->showItems( (PageViewToolBar::Side)KpdfSettings::editToolBarPlacement(), items );
+    m_toolBar->showItems( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement(), items );
 
     // ask for Author's name if not already set
-    if ( KpdfSettings::annotationsAuthor().isEmpty() )
+    if ( Okular::Settings::annotationsAuthor().isEmpty() )
     {
         // get default username from the kdelibs/kdecore/KUser
         KUser currentUser;
@@ -646,8 +646,8 @@ void PageViewAnnotator::setEnabled( bool on )
             firstTry = false;
         }
         // save the name
-        KpdfSettings::setAnnotationsAuthor( userName );
-        KpdfSettings::writeConfig();
+        Okular::Settings::setAnnotationsAuthor( userName );
+        Okular::Settings::writeConfig();
     }
 }
 
@@ -708,12 +708,12 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
     if ( m_engine->creationCompleted() )
     {
         // apply engine data to Annotation and reset engine
-        Annotation * annotation = m_engine->end();
+        Okular::Annotation * annotation = m_engine->end();
         // attach the newly filled annotation to the page
         if ( annotation )
         {
             annotation->creationDate = annotation->modifyDate = QDateTime::currentDateTime();
-            annotation->author = KpdfSettings::annotationsAuthor();
+            annotation->author = Okular::Settings::annotationsAuthor();
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
         }
 
@@ -735,7 +735,7 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
 
 #ifndef NDEBUG
     // [DEBUG] draw the paint region if enabled
-    if ( KpdfSettings::debugDrawAnnotationRect() )
+    if ( Okular::Settings::debugDrawAnnotationRect() )
         painter->drawRect( paintRect );
 #endif
     // move painter to current itemGeometry rect
@@ -824,8 +824,8 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 
 void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
-    KpdfSettings::setEditToolBarPlacement( (int)side );
-    KpdfSettings::writeConfig();
+    Okular::Settings::setEditToolBarPlacement( (int)side );
+    Okular::Settings::writeConfig();
 }
 
 #include "pageviewannotator.moc"

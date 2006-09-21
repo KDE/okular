@@ -7,8 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qcombobox.h>
-#include <qlabel.h>
+#include <QtGui/QComboBox>
+#include <QtGui/QLabel>
+
 #include <klocale.h>
 
 #include "ui_chooseenginewidget.h"

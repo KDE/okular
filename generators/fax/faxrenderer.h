@@ -33,7 +33,7 @@ implementation. This class is responsible for providing abstract layer of okular
 with all the needed document information.
 */
 
-class FaxRenderer : public Generator
+class FaxRenderer : public Okular::Generator
 {
   Q_OBJECT
 
@@ -43,7 +43,7 @@ public:
        This constructor simply prints a message (if debugging is
        enabled) and calls the default constructor.
    */
-   FaxRenderer(KPDFDocument * doc);
+   FaxRenderer(Okular::Document * doc);
 
    /** Destructor
 
@@ -63,7 +63,7 @@ public:
       @param pagesVector the vector of pages with information about their sizes and rotation
       @return returns true if the document was loaded, false if not
   */
-  bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+  bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 
   /** Rendering a page
 
@@ -80,10 +80,10 @@ public:
 
   // rotation
   bool supportsRotation() { return true; };
-  void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+  void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
 private:
-  void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
+  void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
 
   /** This class holds the fax file */
     KFaxImage fax;

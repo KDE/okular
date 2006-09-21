@@ -22,7 +22,7 @@
 //----------------------------------------------------------------------------
 
 /**
- * @short KPDF modified rgba pixel format provider for rastering operations
+ * @short Okular modified rgba pixel format provider for rastering operations
  * This is the agg_pixfmt_rgba.h file with some added code. When syncing to
  * the latest agg counterpart, diff the mods and apply them again after
  * copying the legacy file over this.
@@ -112,7 +112,7 @@ namespace agg
     //=======================================================pixel_formats_rgba
     /** The following functions have been modified for using different blenders:
      *   blend_pixel, blend_hline, blend_solid_hspan
-     * (the others are not used by kpdf and have been removed)
+     * (the others are not used by okular and have been removed)
      */
     template<class ColorT, class Order, class PixelT> class pixel_formats_rgba
     {
@@ -260,7 +260,7 @@ namespace agg
 
     //-----------------------------------------------------------------------
     // Order Types: order_rgba, order_argb, order_abgr, [order_bgra]
-    // the RBGA32 is used by kpdf/qimage ( 0xAARRGGBB in memory )
+    // the RBGA32 is used by okular/qimage ( 0xAARRGGBB in memory )
     typedef pixel_formats_rgba<rgba8, order_bgra, int32u> pixfmt_bgra32;
 }
 

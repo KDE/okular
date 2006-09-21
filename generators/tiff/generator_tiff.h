@@ -14,23 +14,23 @@
 
 class TIFFGeneratorThread;
 
-class TIFFGenerator : public Generator
+class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        TIFFGenerator( KPDFDocument * document );
+        TIFFGenerator( Okular::Document * document );
         virtual ~TIFFGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
-        const DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentInfo * generateDocumentInfo();
 
         bool supportsRotation() { return true; };
-        void setOrientation( QVector<KPDFPage*> & pagesVector, int orientation );
+        void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     private slots:
         void slotThreadFinished();
@@ -41,10 +41,10 @@ class TIFFGenerator : public Generator
 
         TIFFGeneratorThread* thread;
 
-        void loadPages( QVector<KPDFPage*> & pagesVector, int rotation );
+        void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
 
         bool ready;
-        DocumentInfo * m_docInfo;
+        Okular::DocumentInfo * m_docInfo;
 };
 
 #endif

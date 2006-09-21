@@ -8,8 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GENERATOR_PDF_H_
-#define _KPDF_GENERATOR_PDF_H_
+#ifndef _OKULAR_GENERATOR_PDF_H_
+#define _OKULAR_GENERATOR_PDF_H_
 
 #define UNSTABLE_POPPLER_QT4
 
@@ -24,7 +24,10 @@
 #include "core/link.h"
 #include "core/textpage.h"
 
+namespace Okular {
 class ObjectRect;
+}
+
 class PDFPixmapGeneratorThread;
 
 /**
@@ -33,7 +36,7 @@ class PDFPixmapGeneratorThread;
  * All Generator features are supported and implented by this one.
  * Internally this holds a reference to xpdf's core objects and provides
  * contents generation using the PDFDoc object and a couple of OutputDevices
- * called KPDFOutputDev and KPDFTextDev (both defined in gp_outputdev.h).
+ * called Okular::OutputDev and Okular::TextDev (both defined in gp_outputdev.h).
  *
  * For generating page contents we tell PDFDoc to render a page and grab
  * contents from out OutputDevs when rendering finishes.
@@ -41,31 +44,31 @@ class PDFPixmapGeneratorThread;
  * Background asynchronous contents providing is done via a QThread inherited
  * class defined at the bottom of the file.
  */
-class PDFGenerator : public Generator
+class PDFGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        PDFGenerator( KPDFDocument * document );
+        PDFGenerator( Okular::Document * document );
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
-        void loadPages(QVector<KPDFPage*> &pagesVector, int rotation=-1, bool clear=false);
+        void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
-        const DocumentInfo * generateDocumentInfo();
-        const DocumentSynopsis * generateDocumentSynopsis();
-        const DocumentFonts * generateDocumentFonts();
-        const QList<EmbeddedFile*> * embeddedFiles();
+        const Okular::DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        const Okular::DocumentFonts * generateDocumentFonts();
+        const QList<Okular::EmbeddedFile*> * embeddedFiles();
 
         // [INHERITED] document information
         bool isAllowed( int permissions );
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
         bool canGenerateTextPage();
-        void generateSyncTextPage( KPDFPage * page );
+        void generateSyncTextPage( Okular::Page * page );
 
         // bah
         QString getXMLFile() { return QString::null; };
@@ -75,12 +78,12 @@ class PDFGenerator : public Generator
         bool supportsRotation() { return true; };
         bool prefersInternalSearching() { return false; };
 
-        RegularAreaRect * findText (const QString & text, SearchDir dir, 
-          const bool strictCase, const RegularAreaRect * lastRect, 
-          KPDFPage * page );
-        QString getText( const RegularAreaRect * area, KPDFPage * page );
+        Okular::RegularAreaRect * findText (const QString & text, Okular::SearchDir dir, 
+          const bool strictCase, const Okular::RegularAreaRect * lastRect, 
+          Okular::Page * page );
+        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page );
 
-        void setOrientation(QVector<KPDFPage*> & pagesVector, int orientation);
+        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
@@ -106,11 +109,11 @@ class PDFGenerator : public Generator
         // create the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );
         // fetch annotations from the pdf file and add they to the page
-        void addAnnotations( Poppler::Page * popplerPage, KPDFPage * page );
+        void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the transition information and add it to the page
-        void addTransition( Poppler::Page * popplerPage, KPDFPage * page );
+        void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
         
-        KPDFTextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
+        Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
         
         // poppler dependant stuff
         QMutex docLock;
@@ -121,15 +124,15 @@ class PDFGenerator : public Generator
 
         // misc variables for document info and synopsis caching
         bool ready;
-        PixmapRequest * pixmapRequest;
+        Okular::PixmapRequest * pixmapRequest;
         bool docInfoDirty;
-        DocumentInfo docInfo;
+        Okular::DocumentInfo docInfo;
         bool docSynopsisDirty;
-        DocumentSynopsis docSyn;
+        Okular::DocumentSynopsis docSyn;
         bool docFontsDirty;
-        DocumentFonts docFonts;
+        Okular::DocumentFonts docFonts;
         bool docEmbeddedFilesDirty;
-        QList<EmbeddedFile*> docEmbeddedFiles;
+        QList<Okular::EmbeddedFile*> docEmbeddedFiles;
 };
 
 
@@ -144,16 +147,16 @@ class PDFPixmapGeneratorThread : public QThread
         ~PDFPixmapGeneratorThread();
 
         // set the request to the thread (it will be reparented)
-        void startGeneration( PixmapRequest * request );
+        void startGeneration( Okular::PixmapRequest * request );
         // end generation
         void endGeneration();
 
-        PixmapRequest *request() const;
+        Okular::PixmapRequest *request() const;
 
         // methods for getting contents from the GUI thread
         QImage * takeImage() const;
         QList<Poppler::TextBox*> takeText();
-        QLinkedList< ObjectRect * > takeObjectRects() const;
+        QLinkedList< Okular::ObjectRect * > takeObjectRects() const;
 
     private:
         // can't be called from the outside (but from startGeneration)

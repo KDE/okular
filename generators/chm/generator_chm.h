@@ -20,32 +20,35 @@ class CHMFile;
 class KHTMLPart;
 class PixmapThreader;
 class QCustomEvent;
-class KPDFTextPage;
 
-class CHMGenerator : public Generator
+namespace Okular {
+class TextPage;
+}
+
+class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        CHMGenerator(KPDFDocument * doc );
-        bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector );
+        CHMGenerator(Okular::Document * doc );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 
-        const DocumentInfo * generateDocumentInfo();
-        const DocumentSynopsis * generateDocumentSynopsis();
-        const DocumentFonts * generateDocumentFonts();
+        const Okular::DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        const Okular::DocumentFonts * generateDocumentFonts();
 
         bool canGeneratePixmap( bool async );
-        void generatePixmap( PixmapRequest * request );
+        void generatePixmap( Okular::PixmapRequest * request );
 
         bool canGenerateTextPage();
-        void generateSyncTextPage( KPDFPage * page );
+        void generateSyncTextPage( Okular::Page * page );
 
         bool supportsSearching();
         bool prefersInternalSearching();
 
-        RegularAreaRect * findText( const QString & text, SearchDir dir, const bool strictCase,
-                    const RegularAreaRect * lastRect, KPDFPage * page);
-        QString getText( const RegularAreaRect * area, KPDFPage * page );
+        Okular::RegularAreaRect * findText( const QString & text, Okular::SearchDir dir, const bool strictCase,
+                    const Okular::RegularAreaRect * lastRect, Okular::Page * page);
+        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page );
 
         bool canConfigurePrinter( ) ;
         bool print( KPrinter& /*printer*/ ) ;
@@ -59,10 +62,10 @@ class CHMGenerator : public Generator
 
     private:
         void additionalRequestData ();
-        void recursiveExploreNodes(DOM::Node node,KPDFTextPage *tp);
+        void recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp);
         void preparePageForSyncOperation( int zoom , const QString & url);
 //         void customEvent( QCustomEvent * e );
-        DocumentSynopsis m_docSyn;
+        Okular::DocumentSynopsis m_docSyn;
         CHMFile* m_file;
         KHTMLPart *m_syncGen;
 //         KHTMLPart *m_asyncGen;
@@ -77,10 +80,10 @@ class CHMGenerator : public Generator
         // 1 is requesting pixmaps
         // -1 is internal error :)
         int m_state;
-        PixmapRequest* m_request;
+        Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
         volatile bool m_doneFlagSet;
-        DocumentInfo* m_docInfo;
+        Okular::DocumentInfo* m_docInfo;
 };
 
 // for now impossible to use KHTMLPart outside the main app, maybe in KDE4

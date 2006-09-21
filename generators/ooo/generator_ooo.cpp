@@ -25,8 +25,8 @@
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 
-KOOOGenerator::KOOOGenerator( KPDFDocument * document )
-  : Generator( document ), mDocument( 0 )
+KOOOGenerator::KOOOGenerator( Okular::Document * document )
+  : Okular::Generator( document ), mDocument( 0 )
 {
 }
 
@@ -36,7 +36,7 @@ KOOOGenerator::~KOOOGenerator()
   mDocument = 0;
 }
 
-bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
+bool KOOOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
   OOO::Document document( fileName );
   if ( !document.open() )
@@ -62,7 +62,7 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> &
 
   const QSize size = mDocument->pageSize().toSize();
   for ( int i = 0; i < mDocument->pageCount(); ++i ) {
-    KPDFPage * page = new KPDFPage( i, size.width(), size.height(), 0 );
+    Okular::Page * page = new Okular::Page( i, size.width(), size.height(), 0 );
     pagesVector[ i ] = page;
   }
 
@@ -82,7 +82,7 @@ bool KOOOGenerator::canGeneratePixmap( bool )
   return true;
 }
 
-void KOOOGenerator::generatePixmap( PixmapRequest * request )
+void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
   const QSize size = mDocument->pageSize().toSize();
 
@@ -131,7 +131,7 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
   /**
    * Add link information
    */
-  QLinkedList<ObjectRect*> objects;
+  QLinkedList<Okular::ObjectRect*> objects;
   for ( int i = 0; i < mLinks.count(); ++i ) {
     if ( mLinks[ i ].page == request->pageNumber ) {
       const QRectF rect = mLinks[ i ].boundingRect;
@@ -139,8 +139,8 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
       double y = rect.y() / request->height;
       double w = rect.width() / request->width;
       double h = rect.height() / request->height;
-      objects.append( new ObjectRect( x, y, w, h, false,
-                                      ObjectRect::Link, new KPDFLinkBrowse( mLinks[ i ].url ) ) );
+      objects.append( new Okular::ObjectRect( x, y, w, h, false,
+                                              Okular::ObjectRect::Link, new Okular::LinkBrowse( mLinks[ i ].url ) ) );
     }
   }
   request->page->setObjectRects( objects );
@@ -148,7 +148,7 @@ void KOOOGenerator::generatePixmap( PixmapRequest * request )
   signalRequestDone( request );
 }
 
-void KOOOGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void KOOOGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
   const QSize size = mDocument->pageSize().toSize();
 
@@ -161,7 +161,7 @@ void KOOOGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orient
   qDeleteAll( pagesVector );
 
   for ( int i = 0; i < mDocument->pageCount(); ++i ) {
-    KPDFPage * page = new KPDFPage( i, width, height, 0 );
+    Okular::Page * page = new Okular::Page( i, width, height, 0 );
     pagesVector[ i ] = page;
   }
 }
@@ -183,12 +183,12 @@ bool KOOOGenerator::print( KPrinter& printer )
   return true;
 }
 
-const DocumentInfo* KOOOGenerator::generateDocumentInfo()
+const Okular::DocumentInfo* KOOOGenerator::generateDocumentInfo()
 {
   return &mDocumentInfo;
 }
 
-const DocumentSynopsis* KOOOGenerator::generateDocumentSynopsis()
+const Okular::DocumentSynopsis* KOOOGenerator::generateDocumentSynopsis()
 {
   if ( !mDocumentSynopsis.hasChildNodes() )
     return 0;

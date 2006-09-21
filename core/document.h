@@ -8,39 +8,43 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_DOCUMENT_H_
-#define _KPDF_DOCUMENT_H_
+#ifndef _OKULAR_DOCUMENT_H_
+#define _OKULAR_DOCUMENT_H_
 
 #include "okular_export.h"
 
-#include <qobject.h>
-#include <qvector.h>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qdom.h>
-#include <qhash.h>
+#include <QtCore/QHash>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
+#include <QtCore/QVector>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+
 #include <kmimetype.h>
 
 #include "area.h"
 
-class KPDFPage;
-class KPDFLink;
-class DocumentObserver;
-class DocumentViewport;
-class DocumentInfo;
-class DocumentSynopsis;
-class DocumentFonts;
-class EmbeddedFile;
-class Generator;
-class PixmapRequest;
-class Annotation;
 class KPrinter;
 class KUrl;
 class KActionCollection;
 class QToolBox;
-class NotifyRequest;
-class VisiblePageRect;
+
+namespace Okular {
+
+class Annotation;
+class DocumentFonts;
+class DocumentInfo;
+class DocumentObserver;
+class DocumentSynopsis;
+class DocumentViewport;
+class EmbeddedFile;
 class ExportEntry;
+class Generator;
+class Link;
+class NotifyRequest;
+class Page;
+class PixmapRequest;
+class VisiblePageRect;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -51,7 +55,7 @@ class ExportEntry;
 /**
  * @short The Document. Heart of everything. Actions take place here.
  *
- * The Document is the main object in KPDF. All views query the Document to
+ * The Document is the main object in Okular. All views query the Document to
  * get data/properties or even for accessing pages (in a 'const' way).
  *
  * It is designed to keep it detached from the document type (pdf, ps, you
@@ -59,18 +63,18 @@ class ExportEntry;
  * generator to do the job and return results in a format-indepedent way.
  *
  * Apart from the generator (the currently running one) the document stores
- * all the Pages ('KPDFPage' class) of the current document in a vector and
+ * all the Pages ('Page' class) of the current document in a vector and
  * notifies all the registered DocumentObservers when some content changes.
  *
  * For a better understanding of hieracies @see README.internals.png
- * @see DocumentObserver, KPDFPage
+ * @see DocumentObserver, Page
  */
-class OKULAR_EXPORT KPDFDocument : public QObject
+class OKULAR_EXPORT Document : public QObject
 {
     Q_OBJECT
     public:
-        KPDFDocument( QHash<QString, Generator*> * genList );
-        ~KPDFDocument();
+        Document( QHash<QString, Generator*> * genList );
+        ~Document();
 
         // communication with the part
 
@@ -93,7 +97,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         const DocumentSynopsis * documentSynopsis() const;
         const DocumentFonts * documentFonts() const;
         const QList<EmbeddedFile*> *embeddedFiles() const;
-        const KPDFPage * page( int page ) const;
+        const Page * page( int page ) const;
         const DocumentViewport & viewport() const;
         const QVector< VisiblePageRect * > & visiblePageRects() const;
         void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId = -1 );
@@ -140,7 +144,7 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         bool continueLastSearch();
 
         void toggleBookmark( int page );
-        void processLink( const KPDFLink * link );
+        void processLink( const Link * link );
         bool canConfigurePrinter() const;
         bool print( KPrinter &printer );
         bool handleEvent (QEvent * event);
@@ -176,9 +180,9 @@ class OKULAR_EXPORT KPDFDocument : public QObject
         QHash<QString, Generator*>* m_loadedGenerators ;
         Generator * generator;
         bool m_usingCachedGenerator;
-        QVector< KPDFPage * > pages_vector;
+        QVector< Page * > pages_vector;
         QVector< VisiblePageRect * > page_rects;
-        class KPDFDocumentPrivate * d;
+        class DocumentPrivate * d;
 
     private slots:
         void saveDocumentInfo() const;
@@ -318,5 +322,7 @@ class VisiblePageRect
         int pageNumber;
         NormalizedRect rect;
 };
+
+}
 
 #endif

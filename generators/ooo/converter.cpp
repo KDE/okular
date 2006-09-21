@@ -485,11 +485,11 @@ bool Converter::createTableOfContents()
     int page = qRound( rect.y() ) / qRound( pageSize.height() );
     int offset = qRound( rect.y() ) % qRound( pageSize.height() );
 
-    DocumentViewport viewport( page );
+    Okular::DocumentViewport viewport( page );
     viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
     viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
     viewport.rePos.enabled = true;
-    viewport.rePos.pos = DocumentViewport::Center;
+    viewport.rePos.pos = Okular::DocumentViewport::Center;
 
     QStack<QDomNode> parentNodeStack;
     QDomNode parentNode = mTableOfContents;

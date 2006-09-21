@@ -9,10 +9,9 @@
 
 #include "utils.h"
 
-namespace okularUtils
-{
+using namespace Okular;
 
-QRect rotateRect( const QRect & source, int width, int height, int orientation )
+QRect Utils::rotateRect( const QRect & source, int width, int height, int orientation )
 {
     QRect ret;
 
@@ -37,6 +36,4 @@ QRect rotateRect( const QRect & source, int width, int height, int orientation )
     }
 
     return ret;
-}
-
 }

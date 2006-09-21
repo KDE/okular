@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_TOC_H_
-#define _KPDF_TOC_H_
+#ifndef _OKULAR_TOC_H_
+#define _OKULAR_TOC_H_
 
 #include <qdom.h>
 #include <qwidget.h>
@@ -18,19 +18,22 @@
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
-class KPDFDocument;
 class TOCItem;
 
-class TOC : public QWidget, public DocumentObserver
+namespace Okular {
+class Document;
+}
+
+class TOC : public QWidget, public Okular::DocumentObserver
 {
 Q_OBJECT
     public:
-        TOC(QWidget *parent, KPDFDocument *document);
+        TOC(QWidget *parent, Okular::Document *document);
         ~TOC();
 
         // inherited from DocumentObserver
         uint observerId() const;
-        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
 
     signals:
@@ -41,8 +44,8 @@ Q_OBJECT
 
     private:
         void addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem = 0 );
-        DocumentViewport getViewport( const QDomElement &e ) const;
-        KPDFDocument *m_document;
+        Okular::DocumentViewport getViewport( const QDomElement &e ) const;
+        Okular::Document *m_document;
         QTreeWidget *m_treeView;
         KTreeWidgetSearchLine *m_searchLine;
         TOCItem *m_current;

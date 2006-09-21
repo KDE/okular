@@ -211,12 +211,12 @@ bool XpsFile::loadDocument(const QString &filename)
     return true;
 }
 
-const DocumentInfo * XpsFile::generateDocumentInfo()
+const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
 {
     if ( m_docInfo )
         return m_docInfo;
 
-    m_docInfo = new DocumentInfo();
+    m_docInfo = new Okular::DocumentInfo();
 
     m_docInfo->set( "mimeType", "application/vnd.ms-xpsdocument" );
 
@@ -310,7 +310,8 @@ XpsDocument* XpsFile::document(int documentNum) const
     return m_documents.at(documentNum);
 }
 
-XpsGenerator::XpsGenerator( KPDFDocument * document ) : Generator( document )
+XpsGenerator::XpsGenerator( Okular::Document * document )
+  : Okular::Generator( document )
 {
     m_xpsFile = new XpsFile;
 }
@@ -320,7 +321,7 @@ XpsGenerator::~XpsGenerator()
     delete m_xpsFile;
 }
 
-bool XpsGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & pagesVector )
+bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
     m_xpsFile->loadDocument( fileName );
     pagesVector.resize( m_xpsFile->numPages() );
@@ -333,7 +334,7 @@ bool XpsGenerator::loadDocument( const QString & fileName, QVector<KPDFPage*> & 
         for (int pageNum = 0; pageNum < doc->numPages(); ++pageNum )
         {
             QSize pageSize = doc->page( pageNum )->size();
-            pagesVector[pagesVectorOffset] = new KPDFPage( pagesVectorOffset, pageSize.width(), pageSize.height(), 0 );
+            pagesVector[pagesVectorOffset] = new Okular::Page( pagesVectorOffset, pageSize.width(), pageSize.height(), 0 );
             ++pagesVectorOffset;
         }
     }
@@ -353,7 +354,7 @@ bool XpsGenerator::canGeneratePixmap( bool /*async*/ )
     return false; // for now
 }
 
-void XpsGenerator::generatePixmap( PixmapRequest * request )
+void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     QPixmap * p = new QPixmap( request->width, request->height );
 
@@ -409,7 +410,7 @@ void XpsGenerator::generatePixmap( PixmapRequest * request )
 #endif
 }
 
-const DocumentInfo * XpsGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
 {
     kDebug() << "generating document metadata" << endl;
 
@@ -417,7 +418,7 @@ const DocumentInfo * XpsGenerator::generateDocumentInfo()
 }
 
 
-void XpsGenerator::setOrientation( QVector<KPDFPage*> & pagesVector, int orientation )
+void XpsGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
 {
     // TODO
 }

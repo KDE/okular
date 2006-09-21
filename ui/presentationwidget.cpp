@@ -50,12 +50,12 @@
 // transition effect to the next frame
 struct PresentationFrame
 {
-    const KPDFPage * page;
+    const Okular::Page * page;
     QRect geometry;
 };
 
 
-PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
+PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 ),
     m_topBar( 0 ), m_pagesEdit( 0 )
@@ -80,12 +80,12 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
 
     // handle cursor appearance as specified in configuration
-    if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::HiddenDelay )
+    if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
     {
         KCursor::setAutoHideCursor( this, true );
         KCursor::setHideCursorDelay( 3000 );
     }
-    else if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::Hidden )
+    else if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden )
     {
         setCursor( KCursor::blankCursor() );
     }
@@ -105,7 +105,7 @@ PresentationWidget::~PresentationWidget()
 }
 
 
-void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
+void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet, bool /*documentChanged*/ )
 {
     // delete previous frames (if any (shouldn't be))
     QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
@@ -116,7 +116,7 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
     m_frames.clear();
 
     // create the new frames
-    QVector< KPDFPage * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
+    QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     float screenRatio = (float)m_height / (float)m_width;
     for ( ; setIt != setEnd; ++setIt )
     {
@@ -139,7 +139,7 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
 
     // get metadata from the document
     m_metaStrings.clear();
-    const DocumentInfo * info = m_document->documentInfo();
+    const Okular::DocumentInfo * info = m_document->documentInfo();
     if ( info )
     {
         if ( !info->get( "title" ).isNull() )
@@ -154,15 +154,15 @@ void PresentationWidget::notifySetup( const QVector< KPDFPage * > & pageSet, boo
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // discard notifications if displaying the summary
-    if ( m_frameIndex == -1 && KpdfSettings::slidesShowSummary() )
+    if ( m_frameIndex == -1 && Okular::Settings::slidesShowSummary() )
         return;
 
     // display the current page
     changePage( m_document->viewport().pageNumber );
 
     // auto advance to the next page if set
-    if ( KpdfSettings::slidesAdvance() )
-        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+    if ( Okular::Settings::slidesAdvance() )
+        QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -191,7 +191,7 @@ bool PresentationWidget::event( QEvent * e )
     {
         QHelpEvent * he = (QHelpEvent*)e;
 
-        const KPDFLink * link = getLink( he->x(), he->y(), 0 );
+        const Okular::Link * link = getLink( he->x(), he->y(), 0 );
 
         if ( link )
         {
@@ -277,7 +277,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
     // if releasing on the same link we pressed over, execute it
     if ( m_pressedLink && e->button() == Qt::LeftButton )
     {
-        const KPDFLink * link = getLink( e->x(), e->y() );
+        const Okular::Link * link = getLink( e->x(), e->y() );
         if ( link == m_pressedLink )
             m_document->processLink( link );
         m_pressedLink = 0;
@@ -291,7 +291,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         return;
 
     // update cursor and tooltip if hovering a link
-    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+    if ( Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
         testCursorOnLink( e->x(), e->y() );
 
     if ( !m_topBar->isHidden() )
@@ -354,7 +354,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_document->addObserver( this );
 
         // show summary if requested
-        if ( KpdfSettings::slidesShowSummary() )
+        if ( Okular::Settings::slidesShowSummary() )
             generatePage();
     }
 
@@ -373,7 +373,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( KpdfSettings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
+        if ( Okular::Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
             QPixmap backPixmap( r.size() );
@@ -401,7 +401,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 // </widget events>
 
 
-const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
 {
     // no links on invalid pages
     if ( geometry && !geometry->isNull() )
@@ -411,7 +411,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
 
     // get frame, page and geometry
     const PresentationFrame * frame = m_frames[ m_frameIndex ];
-    const KPDFPage * page = frame->page;
+    const Okular::Page * page = frame->page;
     const QRect & frameGeometry = frame->geometry;
 
     // compute normalized x and y
@@ -424,7 +424,7 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
 
     // check if 1) there is an object and 2) it's a link
     QRect d = KGlobalSettings::desktopGeometry( const_cast< PresentationWidget * >( this ) );
-    const ObjectRect * object = page->getObjectRect( ObjectRect::Link, nx, ny, d.width(), d.height() );
+    const Okular::ObjectRect * object = page->getObjectRect( Okular::ObjectRect::Link, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
 
@@ -436,12 +436,12 @@ const KPDFLink * PresentationWidget::getLink( int x, int y, QRect * geometry ) c
     }
 
     // return the link pointer
-    return (KPDFLink *)object->pointer();
+    return (Okular::Link *)object->pointer();
 }
 
 void PresentationWidget::testCursorOnLink( int x, int y )
 {
-    const KPDFLink * link = getLink( x, y, 0 );
+    const Okular::Link * link = getLink( x, y, 0 );
 
     // only react on changes (in/out from a link)
     if ( (link && !m_handCursor) || (!link && m_handCursor) )
@@ -485,15 +485,15 @@ void PresentationWidget::changePage( int newPage )
     m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
     m_pagesEdit->blockSignals( signalsBlocked );
 
-    // if pixmap not inside the KPDFPage we request it and wait for
+    // if pixmap not inside the Okular::Page we request it and wait for
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
         // operation will take long: set busy cursor
         QApplication::setOverrideCursor( KCursor::workingCursor() );
         // request the pixmap
-        QLinkedList< PixmapRequest * > request;
-        request.push_back( new PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, rot, PRESENTATION_PRIO ) );
+        QLinkedList< Okular::PixmapRequest * > request;
+        request.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, rot, PRESENTATION_PRIO ) );
         m_document->requestPixmaps( request );
         // restore cursor
         QApplication::restoreOverrideCursor();
@@ -527,22 +527,22 @@ void PresentationWidget::generatePage()
 
     // generate the top-right corner overlay
 #ifdef ENABLE_PROGRESS_OVERLAY
-    if ( KpdfSettings::slidesShowProgress() && m_frameIndex != -1 )
+    if ( Okular::Settings::slidesShowProgress() && m_frameIndex != -1 )
         generateOverlay();
 #endif
 
     // start transition on pages that have one
-    const KPDFPageTransition * transition = m_frameIndex != -1 ?
+    const Okular::PageTransition * transition = m_frameIndex != -1 ?
         m_frames[ m_frameIndex ]->page->getTransition() : 0;
     if ( transition )
         initTransition( transition );
     else {
-        KPDFPageTransition trans = defaultTransition();
+        Okular::PageTransition trans = defaultTransition();
         initTransition( &trans );
     }
 
     // update cursor + tooltip
-    if ( KpdfSettings::slidesCursor() != KpdfSettings::EnumSlidesCursor::Hidden )
+    if ( Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
     {
         QPoint p = mapFromGlobal( QCursor::pos() );
         testCursorOnLink( p.x(), p.y() );
@@ -625,7 +625,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     for ( int i = 0; i < rects.count(); i++ )
     {
         const QRect & r = rects[i];
-        p.fillRect( r, KpdfSettings::slidesBackgroundColor() );
+        p.fillRect( r, Okular::Settings::slidesBackgroundColor() );
     }
 }
 
@@ -747,7 +747,7 @@ void PresentationWidget::generateOverlay()
 void PresentationWidget::slotNextPage()
 {
     // loop when configured
-    if ( m_frameIndex == (int)m_frames.count() - 1 && KpdfSettings::slidesLoop() )
+    if ( m_frameIndex == (int)m_frames.count() - 1 && Okular::Settings::slidesLoop() )
         m_frameIndex = -1;
 
     if ( m_frameIndex < (int)m_frames.count() - 1 )
@@ -755,13 +755,13 @@ void PresentationWidget::slotNextPage()
         // go to next page
         changePage( m_frameIndex + 1 );
         // auto advance to the next page if set
-        if ( KpdfSettings::slidesAdvance() )
-            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+        if ( Okular::Settings::slidesAdvance() )
+            QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
     else
     {
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( KpdfSettings::slidesShowProgress() )
+        if ( Okular::Settings::slidesShowProgress() )
             generateOverlay();
 #endif
         if ( m_transitionTimer->isActive() )
@@ -782,13 +782,13 @@ void PresentationWidget::slotPrevPage()
         changePage( m_frameIndex - 1 );
 
         // auto advance to the next page if set
-        if ( KpdfSettings::slidesAdvance() )
-            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+        if ( Okular::Settings::slidesAdvance() )
+            QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
     }
     else
     {
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( KpdfSettings::slidesShowProgress() )
+        if ( Okular::Settings::slidesShowProgress() )
             generateOverlay();
 #endif
         if ( m_transitionTimer->isActive() )
@@ -850,155 +850,155 @@ void PresentationWidget::slotPageChanged()
     changePage( p - 1 );
 }
 
-const KPDFPageTransition PresentationWidget::defaultTransition() const
+const Okular::PageTransition PresentationWidget::defaultTransition() const
 {
-    return defaultTransition( KpdfSettings::slidesTransition() );
+    return defaultTransition( Okular::Settings::slidesTransition() );
 }
 
-const KPDFPageTransition PresentationWidget::defaultTransition( int type ) const
+const Okular::PageTransition PresentationWidget::defaultTransition( int type ) const
 {
     switch ( type )
     {
-        case KpdfSettings::EnumSlidesTransition::BlindsHorizontal:
+        case Okular::Settings::EnumSlidesTransition::BlindsHorizontal:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Blinds );
-            transition.setAlignment( KPDFPageTransition::Horizontal );
+            Okular::PageTransition transition( Okular::PageTransition::Blinds );
+            transition.setAlignment( Okular::PageTransition::Horizontal );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::BlindsVertical:
+        case Okular::Settings::EnumSlidesTransition::BlindsVertical:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Blinds );
-            transition.setAlignment( KPDFPageTransition::Vertical );
+            Okular::PageTransition transition( Okular::PageTransition::Blinds );
+            transition.setAlignment( Okular::PageTransition::Vertical );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::BoxIn:
+        case Okular::Settings::EnumSlidesTransition::BoxIn:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Box );
-            transition.setDirection( KPDFPageTransition::Inward );
+            Okular::PageTransition transition( Okular::PageTransition::Box );
+            transition.setDirection( Okular::PageTransition::Inward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::BoxOut:
+        case Okular::Settings::EnumSlidesTransition::BoxOut:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Box );
-            transition.setDirection( KPDFPageTransition::Outward );
+            Okular::PageTransition transition( Okular::PageTransition::Box );
+            transition.setDirection( Okular::PageTransition::Outward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::Dissolve:
+        case Okular::Settings::EnumSlidesTransition::Dissolve:
         {
-            return KPDFPageTransition( KPDFPageTransition::Dissolve );
+            return Okular::PageTransition( Okular::PageTransition::Dissolve );
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::GlitterDown:
+        case Okular::Settings::EnumSlidesTransition::GlitterDown:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            Okular::PageTransition transition( Okular::PageTransition::Glitter );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::GlitterRight:
+        case Okular::Settings::EnumSlidesTransition::GlitterRight:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            Okular::PageTransition transition( Okular::PageTransition::Glitter );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::GlitterRightDown:
+        case Okular::Settings::EnumSlidesTransition::GlitterRightDown:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Glitter );
+            Okular::PageTransition transition( Okular::PageTransition::Glitter );
             transition.setAngle( 315 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::Random:
+        case Okular::Settings::EnumSlidesTransition::Random:
         {
             return defaultTransition( KRandom::random() % 18 );
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::SplitHorizontalIn:
+        case Okular::Settings::EnumSlidesTransition::SplitHorizontalIn:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Split );
-            transition.setAlignment( KPDFPageTransition::Horizontal );
-            transition.setDirection( KPDFPageTransition::Inward );
+            Okular::PageTransition transition( Okular::PageTransition::Split );
+            transition.setAlignment( Okular::PageTransition::Horizontal );
+            transition.setDirection( Okular::PageTransition::Inward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::SplitHorizontalOut:
+        case Okular::Settings::EnumSlidesTransition::SplitHorizontalOut:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Split );
-            transition.setAlignment( KPDFPageTransition::Horizontal );
-            transition.setDirection( KPDFPageTransition::Outward );
+            Okular::PageTransition transition( Okular::PageTransition::Split );
+            transition.setAlignment( Okular::PageTransition::Horizontal );
+            transition.setDirection( Okular::PageTransition::Outward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::SplitVerticalIn:
+        case Okular::Settings::EnumSlidesTransition::SplitVerticalIn:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Split );
-            transition.setAlignment( KPDFPageTransition::Vertical );
-            transition.setDirection( KPDFPageTransition::Inward );
+            Okular::PageTransition transition( Okular::PageTransition::Split );
+            transition.setAlignment( Okular::PageTransition::Vertical );
+            transition.setDirection( Okular::PageTransition::Inward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::SplitVerticalOut:
+        case Okular::Settings::EnumSlidesTransition::SplitVerticalOut:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Split );
-            transition.setAlignment( KPDFPageTransition::Vertical );
-            transition.setDirection( KPDFPageTransition::Outward );
+            Okular::PageTransition transition( Okular::PageTransition::Split );
+            transition.setAlignment( Okular::PageTransition::Vertical );
+            transition.setDirection( Okular::PageTransition::Outward );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::WipeDown:
+        case Okular::Settings::EnumSlidesTransition::WipeDown:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            Okular::PageTransition transition( Okular::PageTransition::Wipe );
             transition.setAngle( 270 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::WipeRight:
+        case Okular::Settings::EnumSlidesTransition::WipeRight:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            Okular::PageTransition transition( Okular::PageTransition::Wipe );
             transition.setAngle( 0 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::WipeLeft:
+        case Okular::Settings::EnumSlidesTransition::WipeLeft:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            Okular::PageTransition transition( Okular::PageTransition::Wipe );
             transition.setAngle( 180 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::WipeUp:
+        case Okular::Settings::EnumSlidesTransition::WipeUp:
         {
-            KPDFPageTransition transition( KPDFPageTransition::Wipe );
+            Okular::PageTransition transition( Okular::PageTransition::Wipe );
             transition.setAngle( 90 );
             return transition;
             break;
         }
-        case KpdfSettings::EnumSlidesTransition::Replace:
+        case Okular::Settings::EnumSlidesTransition::Replace:
         default:
-            return KPDFPageTransition( KPDFPageTransition::Replace );
+            return Okular::PageTransition( Okular::PageTransition::Replace );
             break;
     }
     // should not happen, just make gcc happy
-    return KPDFPageTransition();
+    return Okular::PageTransition();
 }
 
 /** ONLY the TRANSITIONS GENERATION function from here on **/
-void PresentationWidget::initTransition( const KPDFPageTransition *transition )
+void PresentationWidget::initTransition( const Okular::PageTransition *transition )
 {
     // if it's just a 'replace' transition, repaint the screen
-    if ( transition->type() == KPDFPageTransition::Replace )
+    if ( transition->type() == Okular::PageTransition::Replace )
     {
         update();
         return;
     }
 
-    const bool isInward = transition->direction() == KPDFPageTransition::Inward;
-    const bool isHorizontal = transition->alignment() == KPDFPageTransition::Horizontal;
+    const bool isInward = transition->direction() == Okular::PageTransition::Inward;
+    const bool isHorizontal = transition->alignment() == Okular::PageTransition::Horizontal;
     const float totalTime = transition->duration();
 
     m_transitionRects.clear();
@@ -1006,7 +1006,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
     switch( transition->type() )
     {
             // split: horizontal / vertical and inward / outward
-        case KPDFPageTransition::Split:
+        case Okular::PageTransition::Split:
         {
             const int steps = isHorizontal ? 100 : 75;
             if ( isHorizontal )
@@ -1064,7 +1064,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
             // blinds: horizontal(l-to-r) / vertical(t-to-b)
-        case KPDFPageTransition::Blinds:
+        case Okular::PageTransition::Blinds:
         {
             const int blinds = isHorizontal ? 8 : 6;
             const int steps = m_width / (4 * blinds);
@@ -1105,7 +1105,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
             // box: inward / outward
-        case KPDFPageTransition::Box:
+        case Okular::PageTransition::Box:
         {
             const int steps = m_width / 10;
             if ( isInward )
@@ -1149,7 +1149,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
             // wipe: implemented for 4 canonical angles
-        case KPDFPageTransition::Wipe:
+        case Okular::PageTransition::Wipe:
         {
             const int angle = transition->angle();
             const int steps = (angle == 0) || (angle == 180) ? m_width / 8 : m_height / 8;
@@ -1203,7 +1203,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
             // dissolve: replace 'random' rects
-        case KPDFPageTransition::Dissolve:
+        case Okular::PageTransition::Dissolve:
         {
             const int gridXsteps = 50;
             const int gridYsteps = 38;
@@ -1242,7 +1242,7 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
             // glitter: similar to dissolve but has a direction
-        case KPDFPageTransition::Glitter:
+        case Okular::PageTransition::Glitter:
         {
             const int gridXsteps = 50;
             const int gridYsteps = 38;
@@ -1334,15 +1334,15 @@ void PresentationWidget::initTransition( const KPDFPageTransition *transition )
         } break;
 
         // implement missing transitions (a binary raster engine needed here)
-        case KPDFPageTransition::Fly:
+        case Okular::PageTransition::Fly:
 
-        case KPDFPageTransition::Push:
+        case Okular::PageTransition::Push:
 
-        case KPDFPageTransition::Cover:
+        case Okular::PageTransition::Cover:
 
-        case KPDFPageTransition::Uncover:
+        case Okular::PageTransition::Uncover:
 
-        case KPDFPageTransition::Fade:
+        case Okular::PageTransition::Fade:
 
         default:
             update();

@@ -8,11 +8,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_DOCUMENTOBSERVER_H_
-#define _KPDF_DOCUMENTOBSERVER_H_
+#ifndef _OKULAR_DOCUMENTOBSERVER_H_
+#define _OKULAR_DOCUMENTOBSERVER_H_
 
-#include <qvector.h>
-#include <qrect.h>
+#include <QtCore/QRect>
+#include <QtCore/QVector>
+
+namespace Okular {
 
 /** IDs for observers. Globally defined here. **/
 #define PRESENTATION_ID 1
@@ -32,13 +34,13 @@
 #define THUMBNAILS_PRELOAD_PRIO 4
 #define PRESENTATION_PRIO 0
 
-class KPDFPage;
+class Page;
 class VisiblePageRect;
 
 /**
  * @short Base class for objects being notified when something changes.
  *
- * Inherit this class and call KPDFDocument->addObserver( yourClass ) to get
+ * Inherit this class and call Document->addObserver( yourClass ) to get
  * notified of asynchronous events (new pixmap generated, or changed, etc..).
  */
 class DocumentObserver
@@ -52,7 +54,7 @@ class DocumentObserver
         // commands from the Document to all observers
         enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, Annotations = 8 };
         enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8, VisibleAreas = 16 };
-        virtual void notifySetup( const QVector< KPDFPage * > & /*pages*/, bool /*documentChanged*/ ) {};
+        virtual void notifySetup( const QVector< Okular::Page * > & /*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
         virtual void notifyContentsCleared( int /*changedFlags*/ ) {};
@@ -76,5 +78,7 @@ struct NotifyRequest
     NotifyRequest (DocumentObserver::NotifyType t, int p)
         : type(t), toggle(false), page(p), flags(0) { ; };
 };
+
+}
 
 #endif

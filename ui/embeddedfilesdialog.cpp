@@ -19,7 +19,7 @@
 #include "core/document.h"
 #include "embeddedfilesdialog.h"
 
-EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *document) : KDialog(parent)
+EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : KDialog(parent)
 {
 	setCaption(i18n("Embedded Files"));
 	setButtons(Close | User1);
@@ -37,7 +37,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const KPDFDocument *do
 	m_tw->setRootIsDecorated(false);
 	m_tw->setSelectionMode(QAbstractItemView::MultiSelection);
 
-	foreach(EmbeddedFile* ef, *document->embeddedFiles())
+	foreach(Okular::EmbeddedFile* ef, *document->embeddedFiles())
 	{
 		QTreeWidgetItem *twi = new QTreeWidgetItem();
 		twi->setText(0, ef->name());
@@ -68,7 +68,7 @@ void EmbeddedFilesDialog::saveFile()
 	QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
 	foreach(QTreeWidgetItem *twi, selected)
 	{
-		EmbeddedFile* ef = m_files[twi];
+		Okular::EmbeddedFile* ef = m_files[twi];
 		QString path = KFileDialog::getSaveFileName(ef->name(), QString(), this, i18n("Where do you want to save %1?", ef->name()));
 		if (!path.isEmpty())
 		{

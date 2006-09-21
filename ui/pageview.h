@@ -16,8 +16,8 @@
  ***************************************************************************/
 // This file follows coding style described in kdebase/kicker/HACKING
 
-#ifndef _KPDF_PAGEVIEW_H_
-#define _KPDF_PAGEVIEW_H_
+#ifndef _OKULAR_PAGEVIEW_H_
+#define _OKULAR_PAGEVIEW_H_
 
 #include <q3scrollview.h>
 #include <qvector.h>
@@ -27,25 +27,28 @@
 
 class KActionCollection;
 
-class KPDFDocument;
-class PageViewPrivate;
+namespace Okular {
+class Document;
 struct Annotation;
+}
+
+class PageViewPrivate;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
  * ...
  */
-class PageView : public Q3ScrollView, public DocumentObserver
+class PageView : public Q3ScrollView, public Okular::DocumentObserver
 {
     Q_OBJECT
 
     public:
-        PageView( QWidget *parent, KPDFDocument *document );
+        PageView( QWidget *parent, Okular::Document *document );
         ~PageView();
 
         //set pop-up annotation window states,such as hide/open ,position...
-        void setAnnotsWindow(Annotation * annot);
+        void setAnnotsWindow(Okular::Annotation * annot);
 
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
@@ -63,7 +66,7 @@ class PageView : public Q3ScrollView, public DocumentObserver
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
-        void notifySetup( const QVector< KPDFPage * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );
@@ -87,7 +90,7 @@ class PageView : public Q3ScrollView, public DocumentObserver
 
     signals:
         void urlDropped( const KUrl& );
-        void rightClick( const KPDFPage *, const QPoint & );
+        void rightClick( const Okular::Page *, const QPoint & );
 
     protected:
         // viewport events

@@ -8,13 +8,16 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_MINIBAR_H_
-#define _KPDF_MINIBAR_H_
+#ifndef _OKULAR_MINIBAR_H_
+#define _OKULAR_MINIBAR_H_
 
 #include <qframe.h>
 #include "core/observer.h"
 
-class KPDFDocument;
+namespace Okular {
+class Document;
+}
+
 class PagesEdit;
 class HoverButton;
 class ProgressWidget;
@@ -22,16 +25,16 @@ class ProgressWidget;
 /**
  * @short A widget to display page number and change current page.
  */
-class MiniBar : public QFrame, public DocumentObserver
+class MiniBar : public QFrame, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        MiniBar( QWidget *parent, KPDFDocument * document );
+        MiniBar( QWidget *parent, Okular::Document * document );
         ~MiniBar();
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return MINIBAR_ID; }
-        void notifySetup( const QVector< KPDFPage * > & pages, bool );
+        void notifySetup( const QVector< Okular::Page * > & pages, bool );
         void notifyViewportChanged( bool smoothMove );
 
     signals:
@@ -49,7 +52,7 @@ class MiniBar : public QFrame, public DocumentObserver
         void resizeEvent( QResizeEvent * );
 
     private:
-        KPDFDocument * m_document;
+        Okular::Document * m_document;
         PagesEdit * m_pagesEdit;
         HoverButton * m_prevButton;
         HoverButton * m_pagesButton;

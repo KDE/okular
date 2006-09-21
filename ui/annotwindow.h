@@ -13,24 +13,29 @@
 
 #include <qframe.h>
 
-class QTextEdit;
+namespace Okular {
 class Annotation;
+}
+
+class QTextEdit;
 class MovableTitle;
 
 class AnnotWindow : public QFrame
 {
     Q_OBJECT
     public:
-        AnnotWindow( QWidget * parent, Annotation * annot);
+        AnnotWindow( QWidget * parent, Okular::Annotation * annot);
         
     private:
         MovableTitle * m_title;
         QTextEdit *textEdit;
     public:
-        Annotation* m_annot;
+        Okular::Annotation* m_annot;
 
     private slots:
         void slotOptionBtn();
         void slotsaveWindowText();
 };
+
+
 #endif

@@ -7,19 +7,24 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_AREA_H_
-#define _KPDF_AREA_H_
-#include "okular_export.h"
-#include <qlist.h>
-#include <qcolor.h>
-#include <qpolygon.h>
-#include <qpainterpath.h>
+#ifndef _OKULAR_AREA_H_
+#define _OKULAR_AREA_H_
+
+#include <QtCore/QList>
+#include <QtGui/QColor>
+#include <QtGui/QPainterPath>
+#include <QtGui/QPolygon>
+
 #include <kdebug.h>
 
-class QRect;
-class Annotation;
-class KPDFLink;
+#include "okular_export.h"
 
+class QRect;
+
+namespace Okular {
+
+class Annotation;
+class Link;
 class NormalizedShape;
 
 /**
@@ -53,8 +58,8 @@ class OKULAR_EXPORT NormalizedRect
         bool intersects( double l, double t, double r, double b ) const;
         bool intersects( const NormalizedRect * r ) const;
         QRect geometry( int xScale, int yScale ) const;
-	NormalizedRect operator| (const NormalizedRect & r) const;
-	NormalizedRect& operator|= (const NormalizedRect & r);
+        NormalizedRect operator| (const NormalizedRect & r) const;
+        NormalizedRect& operator|= (const NormalizedRect & r);
         NormalizedRect& operator=( const NormalizedRect & r );
         bool operator==( const NormalizedRect & r ) const;
 };
@@ -70,8 +75,8 @@ class OKULAR_EXPORT NormalizedRect
  * are reparented to this class.
  *
  * Type / Class correspondency tab:
- *  - Link      : class KPDFLink  : description of a link
- *  - Image     : class KPDFImage : description of an image (n/a)
+ *  - Link      : class Link  : description of a link
+ *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation
  */
 class OKULAR_EXPORT ObjectRect
@@ -304,5 +309,7 @@ class HighlightAreaRect : public RegularAreaRect {
 		// color of the highlight
 		QColor color;
 };
+
+}
 
 #endif

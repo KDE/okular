@@ -15,10 +15,13 @@
 #include <qrect.h>
 
 class QTimer;
-class KPDFPage;
+
+namespace Okular {
+class Page;
+}
 
 /**
- * @short PageViewItem represents graphically a kpdfpage into the PageView.
+ * @short PageViewItem represents graphically a page into the PageView.
  *
  * It has methods for settings Item's geometry and other visual properties such
  * as the individual zoom factor.
@@ -26,9 +29,9 @@ class KPDFPage;
 class PageViewItem
 {
     public:
-        PageViewItem( const KPDFPage * page );
+        PageViewItem( const Okular::Page * page );
 
-        const KPDFPage * page() const;
+        const Okular::Page * page() const;
         int pageNumber() const;
         const QRect& geometry() const;
         int width() const;
@@ -41,7 +44,7 @@ class PageViewItem
         void invalidate();
 
     private:
-        const KPDFPage * m_page;
+        const Okular::Page * m_page;
         double m_zoomFactor;
         QRect m_geometry;
 };

@@ -16,22 +16,25 @@ class QLabel;
 class QLineEdit;
 class KColorButton;
 class KIntNumInput;
-class Annotation;
 class AnnotationWidget;
-class KPDFDocument;
+
+namespace Okular {
+class Annotation;
+class Document;
+}
 
 class AnnotsPropertiesDialog : public KPageDialog
 {
     Q_OBJECT
 public:
-    AnnotsPropertiesDialog( QWidget *parent, KPDFDocument *document, int docpage, Annotation *ann );
+    AnnotsPropertiesDialog( QWidget *parent, Okular::Document *document, int docpage, Okular::Annotation *ann );
     ~AnnotsPropertiesDialog();
 
 private:
-    KPDFDocument *m_document;
+    Okular::Document *m_document;
     int m_page;
     bool modified;
-    Annotation* m_annot;    //source annotation
+    Okular::Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
     QLineEdit *uniqueNameEdit;

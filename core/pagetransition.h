@@ -7,15 +7,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_PAGE_TRANSITION_H_
-#define _KPDF_PAGE_TRANSITION_H_
+#ifndef _OKULAR_PAGE_TRANSITION_H_
+#define _OKULAR_PAGE_TRANSITION_H_
 
 #include "okular_export.h"
+
+namespace Okular {
 
 /**
  * @short Information object for the transition effect of a page.
  */
-class OKULAR_EXPORT KPDFPageTransition
+class OKULAR_EXPORT PageTransition
 {
     public:
         enum Type {
@@ -43,8 +45,8 @@ class OKULAR_EXPORT KPDFPageTransition
             Outward
         };
 
-        KPDFPageTransition( Type type = Replace );
-        ~KPDFPageTransition();
+        PageTransition( Type type = Replace );
+        ~PageTransition();
 
         // Get type of the transition.
         inline Type type() const { return m_type; }
@@ -84,5 +86,7 @@ class OKULAR_EXPORT KPDFPageTransition
         double m_scale;
         bool m_rectangular;
 };
+
+}
 
 #endif

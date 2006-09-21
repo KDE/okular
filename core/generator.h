@@ -8,31 +8,36 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_GENERATOR_H_
-#define _KPDF_GENERATOR_H_
+#ifndef _OKULAR_GENERATOR_H_
+#define _OKULAR_GENERATOR_H_
 
 #include "okular_export.h"
 
 #define OKULAR_EXPORT_PLUGIN( classname ) \
     extern "C" { \
-         OKULAR_EXPORT Generator* create_plugin(KPDFDocument* doc) { return new classname(doc); } \
+         OKULAR_EXPORT Okular::Generator* create_plugin(Okular::Document* doc) { return new classname(doc); } \
     }
 
 
-#include <qobject.h>
-#include <qvector.h>
-#include <qlist.h>
-#include <qstring.h>
-#include <ostream>
+#include <QtCore/QList>
+#include <QtCore/QObject>
+#include <QtCore/QString>
+#include <QtCore/QVector>
+
 #include <kmimetype.h>
+
 #include "document.h"
 #include "textpage.h"
-class KPrinter;
-class KPDFPage;
-class KPDFLink;
-class PixmapRequest;
+
 class KConfigDialog;
+class KPrinter;
+
+namespace Okular {
+
 class ExportEntry;
+class Link;
+class Page;
+class PixmapRequest;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.
@@ -40,7 +45,7 @@ class ExportEntry;
  * - Async request must be done in real background. That usually means a
  *   thread, such as QThread derived classes.
  * Once contents are available, they must be immediately stored in the
- * KPDFPage they refer to, and a signal is emitted as soon as storing
+ * Page they refer to, and a signal is emitted as soon as storing
  * (even for sync or async queries) has been done.
  */
 
@@ -50,8 +55,8 @@ class ExportEntry;
  * Most of class members are pure virtuals and they must be implemented to
  * provide a class that builds contents (graphics and text).
  *
- * Generation/query is requested by the 'KPDFDocument' class only, and that
- * class stores the resulting data into 'KPDFPage's. The data will then be
+ * Generation/query is requested by the 'Document' class only, and that
+ * class stores the resulting data into 'Page's. The data will then be
  * displayed by the GUI components (pageView, thumbnailList, etc..).
  */
 class OKULAR_EXPORT Generator : public QObject
@@ -60,11 +65,11 @@ class OKULAR_EXPORT Generator : public QObject
 
     public:
         /** constructor: takes the Document as a parameter **/
-        Generator( KPDFDocument * doc ) : m_document( doc ) {};
+        Generator( Document * doc ) : m_document( doc ) {};
 
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        virtual bool loadDocument( const QString & fileName, QVector< KPDFPage * > & pagesVector ) = 0;
+        virtual bool loadDocument( const QString & fileName, QVector< Page * > & pagesVector ) = 0;
         // the current document is no more useful, close it
         virtual bool closeDocument() = 0;
 
@@ -72,9 +77,9 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool canGeneratePixmap( bool async ) = 0;
         virtual void generatePixmap( PixmapRequest * request ) = 0;
 
-        // can generate a KPDFTextPage
+        // can generate a TextPage
         virtual bool canGenerateTextPage() { return false; };
-        virtual void generateSyncTextPage( KPDFPage * /*page*/ ) {;};
+        virtual void generateSyncTextPage( Page * /*page*/ ) {;};
 
         // Document description and Table of contents
         virtual const DocumentInfo * generateDocumentInfo() { return 0L; }
@@ -94,17 +99,17 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool supportsSearching() { return false; };
         virtual bool prefersInternalSearching() { return false; };
         virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
-                    const RegularAreaRect * /*lastRect*/, KPDFPage * /*page*/) { return 0L; };
-        virtual QString getText( const RegularAreaRect * /*area*/, KPDFPage * /*page*/ ) { return QString(); }
+                    const RegularAreaRect * /*lastRect*/, Page * /*page*/) { return 0L; };
+        virtual QString getText( const RegularAreaRect * /*area*/, Page * /*page*/ ) { return QString(); }
 
         // rotation
         virtual bool supportsRotation() { return false; };
-        virtual void setOrientation(QVector<KPDFPage*> & /*pagesVector*/, int /*orientation*/) { ; };
+        virtual void setOrientation(QVector<Page*> & /*pagesVector*/, int /*orientation*/) { ; };
 
         // paper size
         virtual bool supportsPaperSizes () { return false; }
         virtual QStringList paperSizes ()  { return QStringList(); }
-        virtual void setPaperSize (QVector<KPDFPage*> & /*pagesVector*/, int /*newsize*/) { ; }
+        virtual void setPaperSize (QVector<Page*> & /*pagesVector*/, int /*newsize*/) { ; }
 
         // may come useful later
         //virtual bool hasFonts() const = 0;
@@ -134,7 +139,7 @@ class OKULAR_EXPORT Generator : public QObject
         // in the pageview after your handling (use with caution)
         virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
 
-        void setDocument( KPDFDocument * doc ) { m_document=doc; };
+        void setDocument( Document * doc ) { m_document=doc; };
 
     signals:
         void error(const QString & string, int duration);
@@ -142,11 +147,11 @@ class OKULAR_EXPORT Generator : public QObject
         void notice(const QString & string, int duration);
 
     protected:
-        /** 'signals' to send events the KPDFDocument **/
+        /** 'signals' to send events the Document **/
         // tell the document that the job has been completed
         void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
 
-        KPDFDocument * m_document;
+        Document * m_document;
 };
 
 /**
@@ -174,7 +179,7 @@ struct OKULAR_EXPORT PixmapRequest
     // these fields are set by the Document prior passing the
     // request to the generator
     int documentRotation;
-    KPDFPage * page;
+    Page * page;
 
 };
 
@@ -198,5 +203,7 @@ struct OKULAR_EXPORT ExportEntry
     // the icon to be shown in the menu item
     QString icon;
 };
+
+}
 
 #endif

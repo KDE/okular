@@ -13,8 +13,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _KPDF_SHELL_H_
-#define _KPDF_SHELL_H_
+#ifndef _OKULAR_SHELL_H_
+#define _OKULAR_SHELL_H_
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -27,91 +27,89 @@ class KRecentFilesAction;
 class KTempFile;
 class KToggleAction;
 
-namespace okular
-{
 class Part;
+
+/**
+ * This is the application "Shell".  It has a menubar and a toolbar
+ * but relies on the "Part" to do all the real work.
+ *
+ * @short Application Shell
+ * @author Wilco Greven <greven@kde.org>
+ * @version 0.1
+ */
+class Shell : public KParts::MainWindow
+{
+  Q_OBJECT
+
+public:
   /**
-   * This is the application "Shell".  It has a menubar and a toolbar
-   * but relies on the "Part" to do all the real work.
-   *
-   * @short Application Shell
-   * @author Wilco Greven <greven@kde.org>
-   * @version 0.1
+   * Default Constructor
    */
-  class Shell : public KParts::MainWindow
-  {
-    Q_OBJECT
+  Shell();
 
-  public:
-    /**
-     * Default Constructor
-     */
-    Shell();
+  /**
+   * Open an url
+   */
+  Shell(const KUrl &url);
 
-    /**
-     * Open an url
-     */
-    Shell(const KUrl &url);
+  /**
+   * Default Destructor
+   */
+  virtual ~Shell();
+public slots:
+  void slotQuit();
 
-    /**
-     * Default Destructor
-     */
-    virtual ~Shell();
-  public slots:
-    void slotQuit();
+protected:
+  /**
+   * This method is called when it is time for the app to save its
+   * properties for session management purposes.
+   */
+  void saveProperties(KConfig*);
 
-  protected:
-    /**
-     * This method is called when it is time for the app to save its
-     * properties for session management purposes.
-     */
-    void saveProperties(KConfig*);
+  /**
+   * This method is called when this app is restored.  The KConfig
+   * object points to the session management config file that was saved
+   * with @ref saveProperties
+   */
+  void readProperties(KConfig*);
+  void readSettings();
+  void writeSettings();
+  void setFullScreen( bool );
 
-    /**
-     * This method is called when this app is restored.  The KConfig
-     * object points to the session management config file that was saved
-     * with @ref saveProperties
-     */
-    void readProperties(KConfig*);
-    void readSettings();
-    void writeSettings();
-    void setFullScreen( bool );
+private slots:
+  void fileOpen();
 
-  private slots:
-    void fileOpen();
+  void optionsConfigureToolbars();
+  void applyNewToolbarConfig();
+  void slotUpdateFullScreen();
+  void slotShowMenubar();
 
-    void optionsConfigureToolbars();
-    void applyNewToolbarConfig();
-    void slotUpdateFullScreen();
-    void slotShowMenubar();
+  void openUrl( const KUrl & url );
+  void delayedOpen();
 
-    void openUrl( const KUrl & url );
-    void delayedOpen();
+signals:
+  void restoreDocument(KConfig* config);
+  void saveDocumentRestoreInfo(KConfig* config);
 
-  signals:
-    void restoreDocument(KConfig* config);
-    void saveDocumentRestoreInfo(KConfig* config);
+private:
+  void setupAccel();
+  void setupActions();
+  void init();
+  bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
+  QStringList* fileFormats();
 
-  private:
-    void setupAccel();
-    void setupActions();
-    void init();
-    bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
-    QStringList* fileFormats();
-
-  private:
-    KParts::ReadOnlyPart* m_part;
-    KTempFile* m_tempfile;
-    KRecentFilesAction* m_recent;
-    QStringList* m_fileformats;
-    KAction* m_printAction;
-    KToggleAction* m_fullScreenAction;
-    KToggleAction* m_showMenuBarAction;
-    KToggleAction* m_showToolBarAction;
-    bool m_menuBarWasShown, m_toolBarWasShown;
-    KUrl m_openUrl;
-  };
-}
+private:
+  KParts::ReadOnlyPart* m_part;
+  KTempFile* m_tempfile;
+  KRecentFilesAction* m_recent;
+  QStringList* m_fileformats;
+  KAction* m_printAction;
+  KToggleAction* m_fullScreenAction;
+  KToggleAction* m_showMenuBarAction;
+  KToggleAction* m_showToolBarAction;
+  bool m_menuBarWasShown, m_toolBarWasShown;
+  KUrl m_openUrl;
+};
 
 #endif
 

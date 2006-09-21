@@ -7,13 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qrect.h>
-#include <kdebug.h>
-#include "link.h"
-#include "annotations.h"
-#include "area.h"
+#include <QtCore/QRect>
 
 #include <math.h>
+
+#include "annotations.h"
+#include "area.h"
+#include "link.h"
+
+using namespace Okular;
 
 /** class NormalizedPoint **/
 NormalizedPoint::NormalizedPoint()
@@ -170,7 +172,7 @@ ObjectRect::~ObjectRect()
         return;
 
     if ( m_objectType == Link )
-        delete static_cast<KPDFLink*>( m_pointer );
+        delete static_cast<Okular::Link*>( m_pointer );
     else
         kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }
@@ -198,7 +200,7 @@ bool AnnotationObjectRect::contains( double x, double y, double xScale, double y
 
 AnnotationObjectRect::~AnnotationObjectRect()
 {
-    // the annotation pointer is kept elsewehere (in KPDFPage, most probably),
+    // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
     m_pointer = 0;
 }

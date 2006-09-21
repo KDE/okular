@@ -33,7 +33,7 @@
 #include <config.h>
 #include <config-okular.h>
 
-class PDFEmbeddedFile : public EmbeddedFile
+class PDFEmbeddedFile : public Okular::EmbeddedFile
 {
     public:
         PDFEmbeddedFile(Poppler::EmbeddedFile *f) : ef(f)
@@ -69,7 +69,7 @@ class PDFEmbeddedFile : public EmbeddedFile
         Poppler::EmbeddedFile *ef;
 };
 
-static void fillViewportFromLinkDestination( DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
+static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
     viewport.pageNumber = destination.pageNumber() - 1;
 
@@ -93,7 +93,7 @@ static void fillViewportFromLinkDestination( DocumentViewport &viewport, const P
                 viewport.rePos.normalizedX = (double)left / (double)pageSize.width();
                 viewport.rePos.normalizedY = (double)top / (double)pageSize.height();
                 viewport.rePos.enabled = true;
-                viewport.rePos.pos = DocumentViewport::TopLeft;
+                viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
             }
             /* TODO
             if ( dest->getChangeZoom() )
@@ -106,14 +106,14 @@ static void fillViewportFromLinkDestination( DocumentViewport &viewport, const P
 //     }
 }
 
-static KPDFLink* createKPDFLinkFromPopplerLink(const Poppler::Link *popplerLink, const Poppler::Document *pdfdoc)
+static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink, const Poppler::Document *pdfdoc)
 {
-	KPDFLink *kpdfLink = 0;
+	Okular::Link *link = 0;
 	const Poppler::LinkGoto *popplerLinkGoto;
 	const Poppler::LinkExecute *popplerLinkExecute;
 	const Poppler::LinkBrowse *popplerLinkBrowse;
 	const Poppler::LinkAction *popplerLinkAction;
-	DocumentViewport viewport;
+	Okular::DocumentViewport viewport;
 	
 	switch(popplerLink->linkType())
 	{
@@ -123,22 +123,22 @@ static KPDFLink* createKPDFLinkFromPopplerLink(const Poppler::Link *popplerLink,
 		case Poppler::Link::Goto:
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
 			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination(), pdfdoc );
-			kpdfLink = new KPDFLinkGoto(popplerLinkGoto->fileName(), viewport);
+			link = new Okular::LinkGoto(popplerLinkGoto->fileName(), viewport);
 		break;
 		
 		case Poppler::Link::Execute:
 			popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
-			kpdfLink = new KPDFLinkExecute( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
+			link = new Okular::LinkExecute( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
 		break;
 		
 		case Poppler::Link::Browse:
 			popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-			kpdfLink = new KPDFLinkBrowse( popplerLinkBrowse->url() );
+			link = new Okular::LinkBrowse( popplerLinkBrowse->url() );
 		break;
 		
 		case Poppler::Link::Action:
 			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-			kpdfLink = new KPDFLinkAction( (KPDFLinkAction::ActionType)popplerLinkAction->actionType() );
+			link = new Okular::LinkAction( (Okular::LinkAction::ActionType)popplerLinkAction->actionType() );
 		break;
 		
 		case Poppler::Link::Movie:
@@ -146,12 +146,12 @@ static KPDFLink* createKPDFLinkFromPopplerLink(const Poppler::Link *popplerLink,
 		break;
 	}
 	
-	return kpdfLink;
+	return link;
 }
 
-static QLinkedList<ObjectRect*> generateKPDFLinks( const QList<Poppler::Link*> &popplerLinks, int width, int height, const Poppler::Document *pdfdoc )
+static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks, int width, int height, const Poppler::Document *pdfdoc )
 {
-	QLinkedList<ObjectRect*> kpdfLinks;
+	QLinkedList<Okular::ObjectRect*> links;
 	foreach(const Poppler::Link *popplerLink, popplerLinks)
 	{
 		QRectF linkArea = popplerLink->linkArea();
@@ -159,13 +159,13 @@ static QLinkedList<ObjectRect*> generateKPDFLinks( const QList<Poppler::Link*> &
 		       nt = linkArea.top() / (double)height,
 		       nr = linkArea.right() / (double)width,
 		       nb = linkArea.bottom() / (double)height;
-		// create the rect using normalized coords and attach the KPDFLink to it
-		ObjectRect * rect = new ObjectRect( nl, nt, nr, nb, false, ObjectRect::Link, createKPDFLinkFromPopplerLink(popplerLink, pdfdoc) );
+		// create the rect using normalized coords and attach the Okular::Link to it
+		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Link, createLinkFromPopplerLink(popplerLink, pdfdoc) );
 		// add the ObjectRect to the container
-		kpdfLinks.push_front( rect );
+		links.push_front( rect );
 	}
 	qDeleteAll(popplerLinks);
-	return kpdfLinks;
+	return links;
 }
 
 /** NOTES on threading:
@@ -185,7 +185,7 @@ static QLinkedList<ObjectRect*> generateKPDFLinks( const QList<Poppler::Link*> &
 
 OKULAR_EXPORT_PLUGIN(PDFGenerator)
 
-PDFGenerator::PDFGenerator( KPDFDocument * doc )
+PDFGenerator::PDFGenerator( Okular::Document * doc )
     : Generator( doc ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docFontsDirty( true ), docEmbeddedFilesDirty( true )
@@ -207,13 +207,13 @@ PDFGenerator::~PDFGenerator()
     }
 }
 
-void PDFGenerator::setOrientation(QVector<KPDFPage*> & pagesVector, int orientation)
+void PDFGenerator::setOrientation(QVector<Okular::Page*> & pagesVector, int orientation)
 {
     loadPages(pagesVector,orientation,true);
 }
 
 //BEGIN Generator inherited functions
-bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & pagesVector )
+bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*> & pagesVector )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -240,10 +240,10 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<KPDFPage*> & 
             wallet = KWallet::Wallet::openWallet( walletName );
             if ( wallet )
             {
-                // use the KPdf folder (and create if missing)
-                if ( !wallet->hasFolder( "KPdf" ) )
-                    wallet->createFolder( "KPdf" );
-                wallet->setFolder( "KPdf" );
+                // use the Okular:: folder (and create if missing)
+                if ( !wallet->hasFolder( "Okular::" ) )
+                    wallet->createFolder( "Okular::" );
+                wallet->setFolder( "Okular::" );
 
                 // look for the pass in that folder
                 QString retrievedPass;
@@ -305,7 +305,7 @@ bool PDFGenerator::closeDocument()
     return true;
 }
 
-void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool clear)
+void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, bool clear)
 {
     // TODO XPDF 3.01 check
     int count=pagesVector.count(),w=0,h=0;
@@ -326,8 +326,8 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
         }
         if (rotation % 2 == 1)
           qSwap(w,h);
-        // init a kpdfpage, add transition and annotation information
-        KPDFPage * page = new KPDFPage( i, w, h, orientation );
+        // init a Okular::page, add transition and annotation information
+        Okular::Page * page = new Okular::Page( i, w, h, orientation );
         addTransition( p, page );
         if ( true ) //TODO real check
           addAnnotations( p, page );
@@ -345,13 +345,13 @@ void PDFGenerator::loadPages(QVector<KPDFPage*> &pagesVector, int rotation, bool
 
         if (clear && pagesVector[i])
             delete pagesVector[i];
-        // set the kpdfpage at the right position in document's pages vector
+        // set the Okular::page at the right position in document's pages vector
         pagesVector[i] = page;
 // 	kWarning() << page->width() << "x" << page->height() << endl;
     }
 }
 
-QString PDFGenerator::getText( const RegularAreaRect * area, KPDFPage * page  )
+QString PDFGenerator::getText( const Okular::RegularAreaRect * area, Okular::Page * page  )
 {
     QRect rect = area->first()->geometry((int)page->width(),(int)page->height());
     Poppler::Page *pp = pdfdoc->page( page->number() );
@@ -360,13 +360,13 @@ QString PDFGenerator::getText( const RegularAreaRect * area, KPDFPage * page  )
     return text;
 }
 
-RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir, 
-    const bool strictCase, const RegularAreaRect * sRect, KPDFPage * page )
+Okular::RegularAreaRect * PDFGenerator::findText (const QString & text, Okular::SearchDir dir, 
+    const bool strictCase, const Okular::RegularAreaRect * sRect, Okular::Page * page )
 {
-    dir = sRect ? NextRes : FromTop;
+    dir = sRect ? Okular::NextRes : Okular::FromTop;
     QRectF rect;
 
-    if ( dir == NextRes )
+    if ( dir == Okular::NextRes )
     {
         // when using thein ternal search we only play with normrects
         rect.setLeft( sRect->first()->left * page->width() );
@@ -384,9 +384,9 @@ RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir,
     else sm = Poppler::Page::CaseInsensitive;
     while ( !found )
     {
-        if ( dir == FromTop ) found = pp->search(text, rect, Poppler::Page::FromTop, sm);
-        else if ( dir == NextRes ) found = pp->search(text, rect, Poppler::Page::NextResult, sm);
-        else if ( dir == PrevRes ) found = pp->search(text, rect, Poppler::Page::PreviousResult, sm);
+        if ( dir == Okular::FromTop ) found = pp->search(text, rect, Poppler::Page::FromTop, sm);
+        else if ( dir == Okular::NextRes ) found = pp->search(text, rect, Poppler::Page::NextResult, sm);
+        else if ( dir == Okular::PrevRes ) found = pp->search(text, rect, Poppler::Page::PreviousResult, sm);
 
         // if not found (even in case unsensitive search), terminate
         if ( !found )
@@ -398,15 +398,15 @@ RegularAreaRect * PDFGenerator::findText (const QString & text, SearchDir dir,
     // if the page was found, return a new normalizedRect
     if ( found )
     {
-        RegularAreaRect *ret=new RegularAreaRect;
-        ret->append (new NormalizedRect( rect.left() / page->width(), rect.top() / page->height(), 
+        Okular::RegularAreaRect *ret=new Okular::RegularAreaRect;
+        ret->append (new Okular::NormalizedRect( rect.left() / page->width(), rect.top() / page->height(), 
             rect.right() / page->width(), rect.bottom() / page->height() ) );
         return ret;
     }
     return 0;
 }
 
-const DocumentInfo * PDFGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
 {
     if ( docInfoDirty )
     {
@@ -462,7 +462,7 @@ const DocumentInfo * PDFGenerator::generateDocumentInfo()
     return &docInfo;
 }
 
-const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
+const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
 {
     if ( !docSynopsisDirty )
         return &docSyn;
@@ -476,7 +476,7 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     if ( !toc )
         return NULL;
 
-    docSyn = DocumentSynopsis();
+    docSyn = Okular::DocumentSynopsis();
     addSynopsisChildren(toc, &docSyn);
     delete toc;
 
@@ -484,13 +484,13 @@ const DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     return &docSyn;
 }
 
-const DocumentFonts * PDFGenerator::generateDocumentFonts()
+const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
 {
     if ( !docFontsDirty )
         return &docFonts;
 
     // initialize fonts dom
-    docFonts = DocumentFonts();
+    docFonts = Okular::DocumentFonts();
     docFonts.appendChild( docFonts.createElement( "Fonts" ) );
 
     docLock.lock();
@@ -531,7 +531,7 @@ const DocumentFonts * PDFGenerator::generateDocumentFonts()
     return &docFonts;
 }
 
-const QList<EmbeddedFile*> *PDFGenerator::embeddedFiles()
+const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles()
 {
     if (docEmbeddedFilesDirty)
     {
@@ -552,14 +552,14 @@ const QList<EmbeddedFile*> *PDFGenerator::embeddedFiles()
 bool PDFGenerator::isAllowed( int permissions )
 {
 #if !OKULAR_FORCE_DRM
-    if (KAuthorized::authorize("skip_drm") && !KpdfSettings::obeyDRM()) return true;
+    if (KAuthorized::authorize("skip_drm") && !Okular::Settings::obeyDRM()) return true;
 #endif
 
     bool b = true;
-    if (permissions & KPDFDocument::AllowModify) b = b && pdfdoc->okToChange();
-    if (permissions & KPDFDocument::AllowCopy) b = b && pdfdoc->okToCopy();
-    if (permissions & KPDFDocument::AllowPrint) b = b && pdfdoc->okToPrint();
-    if (permissions & KPDFDocument::AllowNotes) b = b && pdfdoc->okToAddNotes();
+    if (permissions & Okular::Document::AllowModify) b = b && pdfdoc->okToChange();
+    if (permissions & Okular::Document::AllowCopy) b = b && pdfdoc->okToCopy();
+    if (permissions & Okular::Document::AllowPrint) b = b && pdfdoc->okToPrint();
+    if (permissions & Okular::Document::AllowNotes) b = b && pdfdoc->okToAddNotes();
     return b;
 }
 
@@ -568,7 +568,7 @@ bool PDFGenerator::canGeneratePixmap( bool /* async */)
     return ready;
 }
 
-void PDFGenerator::generatePixmap( PixmapRequest * request )
+void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
 #ifndef NDEBUG
     if ( !ready )
@@ -591,11 +591,11 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
 
     /** synchronous request: in-place generation **/
     // compute dpi used to get an image with desired width and height
-    KPDFPage * page = request->page;
+    Okular::Page * page = request->page;
     double fakeDpiX = request->width * 72.0 / page->width(),
            fakeDpiY = request->height * 72.0 / page->height();
 
-    // setup kpdf output device: text page is generated only if we are at 72dpi.
+    // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
     bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
                        (request->height == page->height());
@@ -617,7 +617,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     	// TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
-        page->setObjectRects( generateKPDFLinks(p->links(), request->width, request->height, pdfdoc) );
+        page->setObjectRects( generateLinks(p->links(), request->width, request->height, pdfdoc) );
     }
 
     // 3. UNLOCK [re-enables shared access]
@@ -642,10 +642,10 @@ bool PDFGenerator::canGenerateTextPage()
     return true;
 }
 
-void PDFGenerator::generateSyncTextPage( KPDFPage * page )
+void PDFGenerator::generateSyncTextPage( Okular::Page * page )
 {
 // TODO i think this is wrong because we need the "optative rotation", not the original rotation, but AFAIK it's never called
-    kDebug() << "calling generateSyncTextPage( KPDFPage * page )" << endl;
+    kDebug() << "calling generateSyncTextPage( Okular::Page * page )" << endl;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
@@ -715,7 +715,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
     {
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
-        DocumentViewport viewport;
+        Okular::DocumentViewport viewport;
         docLock.lock();
         Poppler::LinkDestination *ld = pdfdoc->linkDestination( option );
         docLock.unlock();
@@ -740,8 +740,8 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
 bool PDFGenerator::reparseConfig()
 {
     // load paper color from Settings or use the white default color
-    QColor color = ( (KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper ) &&
-                     KpdfSettings::changeColors() ) ? KpdfSettings::paperColor() : Qt::white;
+    QColor color = ( (Okular::Settings::renderMode() == Okular::Settings::EnumRenderMode::Paper ) &&
+                     Okular::Settings::changeColors() ) ? Okular::Settings::paperColor() : Qt::white;
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.
@@ -779,12 +779,12 @@ bool PDFGenerator::exportToText( const QString & fileName )
 
 //END Generator inherited functions
 
-inline void append (KPDFTextPage* ktp,
+inline void append (Okular::TextPage* ktp,
     QString s, double l, double b, double r, double t)
 {
 //       kWarning() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
                 ktp->append( s ,
-                    new NormalizedRect(
+                    new Okular::NormalizedRect(
                     l,
                     t,
                     r,
@@ -792,15 +792,15 @@ inline void append (KPDFTextPage* ktp,
                     ));
 }
 
-KPDFTextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
+Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
 {    
-    KPDFTextPage* ktp=new KPDFTextPage;
+    Okular::TextPage* ktp=new Okular::TextPage;
     Poppler::TextBox *next; 
     kWarning() << "getting text page in generator pdf - rotation: " << rot << endl;
     int charCount=0;
     int j;
     QString s;
-    NormalizedRect * wordRect = new NormalizedRect;
+    Okular::NormalizedRect * wordRect = new Okular::NormalizedRect;
     
     rot = (rot + m_document->rotation()) % 4;
     
@@ -929,7 +929,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
         if (!e.attribute("DestinationName").isNull()) item.setAttribute("ViewportName", e.attribute("DestinationName"));
         if (!e.attribute("Destination").isNull())
         {
-            DocumentViewport vp;
+            Okular::DocumentViewport vp;
             fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute("Destination")), pdfdoc );
             item.setAttribute( "Viewport", vp.toString() );
         }
@@ -940,7 +940,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
     }
 }
 
-void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page )
+void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * page )
 {
     QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
     foreach(Poppler::Annotation *a, popplerAnnotations)
@@ -984,7 +984,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page 
         QDomElement root = doc.createElement("root");
         doc.appendChild(root);
         Poppler::AnnotationUtils::storeAnnotation(a, root, doc);
-        Annotation * newann = AnnotationUtils::createAnnotation(root);
+        Okular::Annotation * newann = Okular::AnnotationUtils::createAnnotation(root);
         if (newann)
         {
             // the Contents field has lines separated by \r
@@ -995,50 +995,50 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, KPDFPage * page 
     qDeleteAll(popplerAnnotations);
 }
 
-void PDFGenerator::addTransition( Poppler::Page * pdfPage, KPDFPage * page )
+void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
 // called on opening when MUTEX is not used
 {
     Poppler::PageTransition *pdfTransition = pdfPage->transition();
     if ( !pdfTransition || pdfTransition->type() == Poppler::PageTransition::Replace )
         return;
 
-    KPDFPageTransition *transition = new KPDFPageTransition();
+    Okular::PageTransition *transition = new Okular::PageTransition();
     switch ( pdfTransition->type() ) {
         case Poppler::PageTransition::Replace:
             // won't get here, added to avoid warning
             break;
         case Poppler::PageTransition::Split:
-            transition->setType( KPDFPageTransition::Split );
+            transition->setType( Okular::PageTransition::Split );
             break;
         case Poppler::PageTransition::Blinds:
-            transition->setType( KPDFPageTransition::Blinds );
+            transition->setType( Okular::PageTransition::Blinds );
             break;
         case Poppler::PageTransition::Box:
-            transition->setType( KPDFPageTransition::Box );
+            transition->setType( Okular::PageTransition::Box );
             break;
         case Poppler::PageTransition::Wipe:
-            transition->setType( KPDFPageTransition::Wipe );
+            transition->setType( Okular::PageTransition::Wipe );
             break;
         case Poppler::PageTransition::Dissolve:
-            transition->setType( KPDFPageTransition::Dissolve );
+            transition->setType( Okular::PageTransition::Dissolve );
             break;
         case Poppler::PageTransition::Glitter:
-            transition->setType( KPDFPageTransition::Glitter );
+            transition->setType( Okular::PageTransition::Glitter );
             break;
         case Poppler::PageTransition::Fly:
-            transition->setType( KPDFPageTransition::Fly );
+            transition->setType( Okular::PageTransition::Fly );
             break;
         case Poppler::PageTransition::Push:
-            transition->setType( KPDFPageTransition::Push );
+            transition->setType( Okular::PageTransition::Push );
             break;
         case Poppler::PageTransition::Cover:
-            transition->setType( KPDFPageTransition::Cover );
+            transition->setType( Okular::PageTransition::Cover );
             break;
         case Poppler::PageTransition::Uncover:
-            transition->setType( KPDFPageTransition::Uncover );
+            transition->setType( Okular::PageTransition::Uncover );
             break;
         case Poppler::PageTransition::Fade:
-            transition->setType( KPDFPageTransition::Fade );
+            transition->setType( Okular::PageTransition::Fade );
             break;
     }
 
@@ -1046,19 +1046,19 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, KPDFPage * page )
 
     switch ( pdfTransition->alignment() ) {
         case Poppler::PageTransition::Horizontal:
-            transition->setAlignment( KPDFPageTransition::Horizontal );
+            transition->setAlignment( Okular::PageTransition::Horizontal );
             break;
         case Poppler::PageTransition::Vertical:
-            transition->setAlignment( KPDFPageTransition::Vertical );
+            transition->setAlignment( Okular::PageTransition::Vertical );
             break;
     }
 
     switch ( pdfTransition->direction() ) {
         case Poppler::PageTransition::Inward:
-            transition->setDirection( KPDFPageTransition::Inward );
+            transition->setDirection( Okular::PageTransition::Inward );
             break;
         case Poppler::PageTransition::Outward:
-            transition->setDirection( KPDFPageTransition::Outward );
+            transition->setDirection( Okular::PageTransition::Outward );
             break;
     }
 
@@ -1102,11 +1102,11 @@ void PDFGenerator::threadFinished()
         docLock.unlock();
     }
 
-    // 2. put thread's generated data into the KPDFPage
-    PixmapRequest * request = generatorThread->request();
+    // 2. put thread's generated data into the Okular::Page
+    Okular::PixmapRequest * request = generatorThread->request();
     QImage * outImage = generatorThread->takeImage();
     QList<Poppler::TextBox*> outText = generatorThread->takeText();
-    QLinkedList< ObjectRect * > outRects = generatorThread->takeObjectRects();
+    QLinkedList< Okular::ObjectRect * > outRects = generatorThread->takeObjectRects();
 
     QPixmap * newpix = new QPixmap();
     *newpix = QPixmap::fromImage( *outImage );
@@ -1138,12 +1138,12 @@ struct PPGThreadPrivate
 {
     // reference to main objects
     PDFGenerator * generator;
-    PixmapRequest * currentRequest;
+    Okular::PixmapRequest * currentRequest;
 
     // internal temp stored items. don't delete this.
     QImage * m_image;
     QList<Poppler::TextBox*> m_textList;
-    QLinkedList< ObjectRect * > m_rects;
+    QLinkedList< Okular::ObjectRect * > m_rects;
     bool m_rectsTaken;
 };
 
@@ -1171,7 +1171,7 @@ PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
     delete d;
 }
 
-void PDFPixmapGeneratorThread::startGeneration( PixmapRequest * request )
+void PDFPixmapGeneratorThread::startGeneration( Okular::PixmapRequest * request )
 {
 #ifndef NDEBUG
     // check if a generation is already running
@@ -1217,7 +1217,7 @@ void PDFPixmapGeneratorThread::endGeneration()
     d->currentRequest = 0;
 }
 
-PixmapRequest *PDFPixmapGeneratorThread::request() const
+Okular::PixmapRequest *PDFPixmapGeneratorThread::request() const
 {
     return d->currentRequest;
 }
@@ -1236,7 +1236,7 @@ QList<Poppler::TextBox*> PDFPixmapGeneratorThread::takeText()
     return tl;
 }
 
-QLinkedList< ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
+QLinkedList< Okular::ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
 {
     d->m_rectsTaken = true;
     return d->m_rects;
@@ -1247,13 +1247,13 @@ void PDFPixmapGeneratorThread::run()
 // @see PDFGenerator::generatePixmap( .. ) (and be aware to sync the code)
 {
     // compute dpi used to get an image with desired width and height
-    KPDFPage * page = d->currentRequest->page;
+    Okular::Page * page = d->currentRequest->page;
     int width = d->currentRequest->width,
         height = d->currentRequest->height;
     double fakeDpiX = width * 72.0 / page->width(),
            fakeDpiY = height * 72.0 / page->height();
 
-    // setup kpdf output device: text page is generated only if we are at 72dpi.
+    // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
     bool genTextPage = !page->hasSearchPage() &&
                        ( width == page->width() ) &&
@@ -1279,7 +1279,7 @@ void PDFPixmapGeneratorThread::run()
     
     if ( genObjectRects )
     {
-    	d->m_rects = generateKPDFLinks(pp->links(), width, height, d->generator->pdfdoc);
+    	d->m_rects = generateLinks(pp->links(), width, height, d->generator->pdfdoc);
     }
     else d->m_rectsTaken = false;
 

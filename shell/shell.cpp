@@ -45,8 +45,6 @@
 // local includes
 #include "shell.h"
 
-using namespace okular;
-
 Shell::Shell()
   : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {

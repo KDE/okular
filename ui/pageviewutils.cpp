@@ -33,12 +33,12 @@
 /** PageViewItem     */
 /*********************/
 
-PageViewItem::PageViewItem( const KPDFPage * page )
+PageViewItem::PageViewItem( const Okular::Page * page )
     : m_page( page ), m_zoomFactor( 1.0 )
 {
 }
 
-const KPDFPage * PageViewItem::page() const
+const Okular::Page * PageViewItem::page() const
 {
     return m_page;
 }
@@ -115,7 +115,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 // give Caesar what belongs to Caesar: code taken from Amarok's osd.h/.cpp
 // "redde (reddite, pl.) cesari quae sunt cesaris", just btw.  :)
 {
-    if ( !KpdfSettings::showOSD() )
+    if ( !Okular::Settings::showOSD() )
     {
         hide();
         return;

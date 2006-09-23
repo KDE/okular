@@ -74,6 +74,8 @@ private:
     QDomDocument m_dom;
 
     QSize m_pageSize;
+    
+    QFontDatabase m_fontDatabase;
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
@@ -82,6 +84,8 @@ private:
 
     QPixmap *m_pagePixmap;
     bool m_pageIsRendered;
+    
+    friend class XpsHandler;
 };
 
 /**

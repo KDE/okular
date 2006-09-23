@@ -112,7 +112,7 @@ static QPainterPath abbreviatedDataToPath( const QString &data)
     kDebug() << data << endl;
 
     enum OperationType { moveTo, relMoveTo, lineTo, relLineTo, cubicTo, relCubicTo };
-    OperationType operation;
+    OperationType operation = moveTo;
     // TODO: Implement a proper parser here.
     for (int curPos = 0; curPos < data.length(); ++curPos) {
         // kDebug() << "curPos: " << curPos << endl;
@@ -176,15 +176,14 @@ bool XpsHandler::startElement( const QString &nameSpace,
                                const QXmlAttributes & atts )
 {
     if (localName == "Glyphs") {
-        QFontDatabase fontDB;
         m_painter->save();
         int fontId = m_page->loadFontByName( atts.value("FontUri") );
-        kDebug() << "Font families: " << QFontDatabase::applicationFontFamilies( fontId ).at(0) << endl;
-        QString fontFamily = fontDB.applicationFontFamilies( fontId ).at(0);
-        // TODO: this handling of font styles is broken
-        kDebug() << "Styles: " << fontDB.styles( fontFamily ) << endl;
-        kDebug() << "Families: " << fontDB.families() << endl;
-        QFont font = fontDB.font(fontFamily, QString("Normal"), qRound(atts.value("FontRenderingEmSize").toFloat()) );
+        // kDebug() << "Font families: (" << fontId << ") " << QFontDatabase::applicationFontFamilies( fontId ).at(0) << endl;
+        QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
+        // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
+        QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
+        // TODO: We may not be picking the best font size here
+        QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(atts.value("FontRenderingEmSize").toFloat()) );
         m_painter->setFont(font);
         QPointF origin( atts.value("OriginX").toDouble(), atts.value("OriginY").toDouble() );
         QColor fillColor = hexToRgba( atts.value("Fill").toLatin1() );
@@ -310,16 +309,19 @@ QSize XpsPage::size() const
 
 int XpsPage::loadFontByName( const QString &fileName )
 {
-    kDebug() << "font file name: " << fileName << endl;
+    // kDebug() << "font file name: " << fileName << endl;
 
     KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
 
     QByteArray fontData = fontFile->data(); // once per file, according to the docs
 
-    bool result = QFontDatabase::addApplicationFontFromData( fontData );
+    int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {
         kDebug() << "Failed to load application font from data" << endl;
     }
+    
+    // kDebug() << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result ) << endl;
+    
     return result; // a font ID
 }
 

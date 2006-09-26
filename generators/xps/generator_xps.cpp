@@ -104,12 +104,9 @@ static QPointF getPointFromString( const QString &data, int *curPos )
     return QPointF( firstVal, secondVal );
 }
 
-// TODO: convert this into a member
-static QPainterPath abbreviatedDataToPath( const QString &data)
+void XpsHandler::parseAbbreviatedPathData( const QString &data)
 {
-    QPainterPath path;
-
-    kDebug() << data << endl;
+    // kDebug() << data << endl;
 
     enum OperationType { moveTo, relMoveTo, lineTo, relLineTo, cubicTo, relCubicTo };
     OperationType operation = moveTo;
@@ -126,14 +123,14 @@ static QPainterPath abbreviatedDataToPath( const QString &data)
             operation = cubicTo;
         } else if ( (data.at(curPos) == 'z') || (data.at(curPos) == 'Z') ){
             // kDebug() << "operation close" << endl;
-            path.closeSubpath();
+            m_currentPath.closeSubpath();
         } else if (data.at(curPos).isNumber()) {
             if ( operation == moveTo ) {
                 QPointF point = getPointFromString( data, &curPos );
-                path.moveTo( point );
+                m_currentPath.moveTo( point );
             } else if ( operation == lineTo ) {
                 QPointF point = getPointFromString( data, &curPos );
-                path.lineTo( point );
+                m_currentPath.lineTo( point );
             } else if (operation == cubicTo ) {
                 QPointF point1 = getPointFromString( data, &curPos );
                 while ((data.at(curPos).isSpace())) { ++curPos; }
@@ -141,7 +138,7 @@ static QPainterPath abbreviatedDataToPath( const QString &data)
                 while (data.at(curPos).isSpace()) { curPos++; }
                 QPointF point3 = getPointFromString( data, &curPos );
                 // kDebug() << "cubic" << point1 << " : " << point2 << " : " << point3 << endl;
-                path.cubicTo( point1, point2, point3 );
+                m_currentPath.cubicTo( point1, point2, point3 );
             }
         } else if (data.at(curPos) == ' ') {
             // Do nothing
@@ -150,11 +147,19 @@ static QPainterPath abbreviatedDataToPath( const QString &data)
             kDebug() << "Unexpected data: " << data.at(curPos) << endl;
         }
     }
-
-    return path;
+}
+QMatrix XpsHandler::attsToMatrix( const QString &csv )
+{
+    QStringList values = csv.split( ',' );
+    if ( values.count() != 6 ) {
+        return QMatrix(); // that is an identity matrix - no effect
+    } 
+    return QMatrix( values.at(0).toDouble(), values.at(1).toDouble(),
+                    values.at(2).toDouble(), values.at(3).toDouble(),
+                    values.at(4).toDouble(), values.at(5).toDouble() );
 }
 
-XpsHandler::XpsHandler(QPixmap *p, XpsPage *page): m_page(page), m_pixmap( p )
+XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
 }
 
@@ -164,8 +169,8 @@ XpsHandler::~XpsHandler()
 bool XpsHandler::startDocument()
 {
     // kDebug() << "start document" << endl;
-    m_pixmap->fill(); // default fill colour is white
-    m_painter = new QPainter(m_pixmap);
+    m_page->m_pageImage->fill( QColor("White").rgba() ); 
+    m_painter = new QPainter(m_page->m_pageImage);
     return true;
 }
 
@@ -187,16 +192,18 @@ bool XpsHandler::startElement( const QString &nameSpace,
         m_painter->setFont(font);
         QPointF origin( atts.value("OriginX").toDouble(), atts.value("OriginY").toDouble() );
         QColor fillColor = hexToRgba( atts.value("Fill").toLatin1() );
+        kDebug() << "Indices " << atts.value("Indices") << endl;
         m_painter->setBrush(fillColor);
+        m_painter->setPen(fillColor);
         m_painter->drawText( origin, atts.value("UnicodeString") );
         m_painter->restore();
-        kDebug() << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
-        kDebug() << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
-        kDebug() << "    Unicode: " << atts.value("UnicodeString") << endl;
+        // kDebug() << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
+        // kDebug() << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
+        // kDebug() << "    Unicode: " << atts.value("UnicodeString") << endl;
     } else if (localName == "Path") {
         // kDebug() << "Path: " << atts.value("Data") << ", " << atts.value("Fill") << endl;
         if (! atts.value("Data").isEmpty() ) {
-            m_currentPath = abbreviatedDataToPath( atts.value("Data") );
+            parseAbbreviatedPathData( atts.value("Data") );
         }
         if (! atts.value("Fill").isEmpty() ) {
             QColor fillColor;
@@ -206,12 +213,14 @@ bool XpsHandler::startElement( const QString &nameSpace,
                 kDebug() << "Unknown / unhandled fill color representation:" << atts.value("Fill") << ":ende" << endl;
             }
             m_currentBrush = QBrush( fillColor );
+            m_currentPen = QPen ( fillColor );
         }
     } else if ( localName == "SolidColorBrush" ) {
         if (! atts.value("Color").isEmpty() ) {
             QColor fillColor;
             if (atts.value("Color").startsWith('#') ) {
                 fillColor = hexToRgba( atts.value("Color").toLatin1() );
+                // kDebug() << "Solid colour: " << fillColor << endl;
             } else {
                 kDebug() << "Unknown / unhandled fill color representation:" << atts.value("Color") << ":ende" << endl;
             }
@@ -222,6 +231,12 @@ bool XpsHandler::startElement( const QString &nameSpace,
         m_image = m_page->loadImageFromFile( atts.value("ImageSource" ) );
         m_viewbox = stringToRectF( atts.value("Viewbox") );
         m_viewport = stringToRectF( atts.value("Viewport") );
+    } else if ( localName == "Canvas" ) {
+        // TODO
+        m_painter->save();
+    } else if ( localName == "MatrixTransform" ) {
+        // kDebug() << "Matrix transform: " << atts.value("Matrix") << endl;
+        m_painter->setWorldMatrix( attsToMatrix( atts.value("Matrix") ), true );
     } else if ( localName == "Path.Fill" ) {
         // this doesn't have any attributes - just other elements that we handle elsewhere
     } else {
@@ -250,6 +265,8 @@ bool XpsHandler::endElement( const QString &nameSpace,
         m_currentBrush = QBrush();
         m_currentPen = QPen();
         m_image = QImage();
+    } else if ( localName == "Canvas" ) {
+        m_painter->restore();
     }
     return true;
 }
@@ -274,14 +291,14 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
     QDomElement element = m_dom.documentElement().toElement();
     m_pageSize.setWidth( element.attribute("Width").toInt() );
     m_pageSize.setHeight( element.attribute("Height").toInt() );
-    m_pagePixmap = new QPixmap( m_pageSize );
+    m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
     delete pageDevice;
 }
 
-bool XpsPage::renderToPixmap( QPixmap *p )
+bool XpsPage::renderToImage( QImage *p )
 {
     if (! m_pageIsRendered) {
-        XpsHandler *handler = new XpsHandler( m_pagePixmap, this );
+        XpsHandler *handler = new XpsHandler( this );
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
@@ -296,9 +313,9 @@ bool XpsPage::renderToPixmap( QPixmap *p )
     }
 
     if ( size() == p->size() )
-        *p = *m_pagePixmap;
+        *p = *m_pageImage;
     else
-        *p = m_pagePixmap->scaled( p->size(), Qt::KeepAspectRatio );
+        *p = m_pageImage->scaled( p->size(), Qt::KeepAspectRatio );
 
     return true;
 }
@@ -637,9 +654,11 @@ bool XpsGenerator::canGeneratePixmap( bool /*async*/ )
 void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     QSize size( (int)request->page->width(), (int)request->page->height() );
-    QPixmap * p = new QPixmap(size);
+    QPixmap * p = new QPixmap( size );
+    QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page->number() );
-    pageToRender->renderToPixmap( p );
+    pageToRender->renderToImage( &image );
+    *p = QPixmap::fromImage( image );
     request->page->setPixmap( request->id, p );
 #if 0
     if ( TIFFSetDirectory( d->tiff, request->page->number() ) )

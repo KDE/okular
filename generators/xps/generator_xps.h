@@ -30,7 +30,7 @@ class XpsPage;
 class XpsHandler: public QXmlDefaultHandler
 {
 public:
-    XpsHandler( QPixmap *p, XpsPage *page );
+    XpsHandler( XpsPage *page );
     ~XpsHandler();
 
     bool startElement( const QString & nameSpace,
@@ -43,8 +43,27 @@ public:
     bool startDocument();
 
 private:
+    /**
+        Parse an abbreviated path "Data" description
+        \param data the string containing the whitespace separated values
+        
+        \note sets the m_currentPath and possibly other private variables
+    
+        \see XPS specification 4.2.3 and Appendix G
+    */
+    void parseAbbreviatedPathData( const QString &data);
+    
+    /**
+        Parse a "Matrix" attribute string
+        \param csv the comma separated list of values
+        \return the QMatrix corresponding to the affine transform
+        given in the attribute
+    
+        \see XPS specification 7.4.1
+    */
+    QMatrix attsToMatrix( const QString &csv );
+    
     XpsPage *m_page;
-    QPixmap *m_pixmap;
     QPainter *m_painter;
     
     QBrush m_currentBrush;
@@ -63,7 +82,7 @@ public:
     ~XpsPage();
 
     QSize size() const;
-    bool renderToPixmap( QPixmap *p );
+    bool renderToImage( QImage *p );
     
     QImage loadImageFromFile( const QString &filename );
     int loadFontByName( const QString &fontName );
@@ -82,7 +101,7 @@ private:
     QImage m_thumbnail;
     bool m_thumbnailIsLoaded;
 
-    QPixmap *m_pagePixmap;
+    QImage *m_pageImage;
     bool m_pageIsRendered;
     
     friend class XpsHandler;

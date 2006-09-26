@@ -656,9 +656,9 @@ bool PageViewAnnotator::routeEvents() const
     return m_engine && m_toolBar;
 }
 
-void PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
+QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
 {
-if ( !item ) return; //STRAPAAAATCH !!! FIXME
+    if ( !item ) return QRect();
 
     // find out mouse event type
     AnnotatorEngine::EventType eventType = AnnotatorEngine::Press;
@@ -682,9 +682,11 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
     double nX = (double)(e->x() - itemRect.left()) / itemWidth;
     double nY = (double)(e->y() - itemRect.top()) / itemHeight;
 
+    QRect modifiedRect;
+
     // 1. lock engine to current item
     if ( m_lockedItem && item != m_lockedItem )
-        return;
+        return QRect();
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
         m_lockedItem = item;
 
@@ -702,6 +704,7 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
         for ( int i = 0; i < rects.count(); i++ )
             m_pageView->updateContents( rects[i] );
+        modifiedRect = compoundRegion.boundingRect() | m_lastDrawnRect;
     }
 
     // 4. if engine has finished, apply Annotation to the page
@@ -720,6 +723,8 @@ if ( !item ) return; //STRAPAAAATCH !!! FIXME
         // go on creating annotations of the same type
         slotToolSelected( m_lastToolID );
     }
+
+    return modifiedRect;
 }
 
 bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const

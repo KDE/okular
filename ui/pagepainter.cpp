@@ -95,6 +95,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
+    bool canDrawTextSelection = (flags & TextSelection) && page->m_textSelections;
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
@@ -104,8 +105,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     QList< QPair<QColor, Okular::NormalizedRect *> > * bufferedHighlights = 0;
     QList< Okular::Annotation * > * bufferedAnnotations = 0;
     QList< Okular::Annotation * > * unbufferedAnnotations = 0;
-    // fill up lists with visible annotation/highlight objects
-    if ( canDrawHighlights || canDrawAnnotations )
+    // fill up lists with visible annotation/highlight objects/text selections
+    if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
         double nXMin = (double)limits.left() / (double)scaledWidth,
@@ -129,6 +130,22 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         if ((*hIt)->intersects(limitRect))
                             bufferedHighlights->append( qMakePair((*h2It)->color,*hIt) );
                     }
+                delete limitRect;
+            //}
+        }
+        if ( canDrawTextSelection )
+        {
+            if ( !bufferedHighlights )
+                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect *>  >();
+/*            else
+            {*/
+                Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
+                QList< Okular::NormalizedRect * >::const_iterator hIt = page->m_textSelections->begin(), hEnd = page->m_textSelections->end();
+                for ( ; hIt != hEnd; ++hIt )
+                {
+                    if ( (*hIt)->intersects( limitRect ) )
+                        bufferedHighlights->append( qMakePair( page->m_textSelections->color, *hIt ) );
+                }
                 delete limitRect;
             //}
         }

@@ -56,7 +56,9 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
         const NormalizedPoint * endC=sel->end();
         if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
         {
+#ifdef DEBUG_TEXTPAGE
           kWarning() << "running first loop\n";
+#endif
           for (it=0;it<m_words.count();it++)
           {
               tmp=m_words[it]->area;
@@ -66,7 +68,9 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (rx,ry)x(tx,ty)   
                   itB=it;
+#ifdef DEBUG_TEXTPAGE
                   kWarning() << "start is " << itB << " count is " << m_words.count() << endl;
+#endif
                   break;
               }
   
@@ -74,11 +78,15 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
           sel->itB(itB);
         }
         itB=sel->itB();
+#ifdef DEBUG_TEXTPAGE
         kWarning() << "direction is " << sel->dir() << endl;
         kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+#endif
         if (sel->dir() == 0 || (sel->itE() == -1 && sel->dir()==1))
         {
+#ifdef DEBUG_TEXTPAGE
           kWarning() << "running second loop\n";
+#endif
           for (it=m_words.count()-1; it>=itB;it--)
           {
               tmp=m_words[it]->area;
@@ -88,17 +96,21 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
               {
                   /// we have found the (ux,uy)x(vx,vy)   
                   itE=it;
+#ifdef DEBUG_TEXTPAGE
                   kWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
                   kWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
                     << ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x ) << " " <<
                     ( tmp->top >= endC->y) << endl;
+#endif
 
                   break;
               }
           }
           sel->itE(itE);
         }
+#ifdef DEBUG_TEXTPAGE
         kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+#endif
 
         if (sel->itB()!=-1 && sel->itE()!=-1)
         {
@@ -109,7 +121,9 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
           first.right=1;
           /// if (rx,ry)x(1,ty) intersects the end cursor, there is only one line
           bool sameBaseline=end->intersects(first);
+#ifdef DEBUG_TEXTPAGE
           kWarning() << "sameBaseline : " << sameBaseline << endl;
+#endif
           if (sameBaseline)
           {
               first=*start;
@@ -137,7 +151,7 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
             {
                 tmp=m_words[it]->area;
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
-                  ret->append(tmp);
+                  ret->append(new NormalizedRect(*tmp));
             }
 
 //           }

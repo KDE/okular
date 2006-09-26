@@ -44,7 +44,7 @@ class PageViewAnnotator : public QObject
 
         // methods used when creating the annotation
         bool routeEvents() const;
-        void routeEvent( QMouseEvent * event, PageViewItem * item );
+        QRect routeEvent( QMouseEvent * event, PageViewItem * item );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
 

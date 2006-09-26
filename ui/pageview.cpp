@@ -27,6 +27,7 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qpushbutton.h>
+#include <qset.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <QX11Info>
@@ -70,7 +71,7 @@
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
-                       PagePainter::Annotations;
+                       PagePainter::TextSelection | PagePainter::Annotations;
 
 // structure used internally by PageView for data storage
 class PageViewPrivate
@@ -94,10 +95,7 @@ public:
     QRect mouseSelectionRect;
     QColor mouseSelectionColor;
     bool mouseTextSelecting;
-    bool mouseTextSelectionPainted;
-    QList<QRect>* mouseTextSelectionRect;
-    QColor mouseTextSelectionColor;
-    Okular::TextSelection * mouseTextSelectionInfo;
+    QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
                              
     // type ahead find
@@ -128,6 +126,7 @@ public:
     KSelectAction * aPaperSizes;
     KAction * aMouseNormal;
     KAction * aMouseSelect;
+    KAction * aMouseTextSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
@@ -179,9 +178,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->aPrevAction = 0;
-    d->mouseTextSelectionRect=0;
-    d->mouseTextSelectionInfo=0;
-    d->mouseTextSelectionPainted=0;
     d->aPaperSizes=0;
 
     setAttribute( Qt::WA_StaticContents );
@@ -302,6 +298,11 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
+
+    d->aMouseTextSelect = new KAction( KIcon( "text" ), i18n("&Text Selection Tool"), ac, "mouse_textselect" );
+    connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
+    d->aMouseTextSelect->setCheckable( true );
+    d->aMouseTextSelect->setActionGroup( actGroup );
 
     d->aToggleAnnotator = new KToggleAction( KIcon( "pencil" ), i18n("&Review"), ac, "mouse_toggle_annotate" );
     d->aToggleAnnotator->setCheckable( true );
@@ -658,8 +659,7 @@ if ( d->document->handleEvent( pe ) )
         }
 
         // note: this check will take care of all things requiring alpha blending (not only selection)
-        bool wantCompositing = ( !selectionRect.isNull() && contentsRect.intersects( selectionRect ) )
-            || d->mouseTextSelecting;
+        bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
 
         if ( wantCompositing && Okular::Settings::enableCompositing() )
         {
@@ -704,45 +704,6 @@ if ( d->document->handleEvent( pe ) )
                 // draw border (red if the selection is too small)
                 pixmapPainter.setPen( selBlendColor );
                 pixmapPainter.drawRect( selectionRect );
-            }
-            if ( d->mouseTextSelecting )
-            {
-              QRect blendRect;
-              QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
-              end=d->mouseTextSelectionRect->end();
-              XRenderColor col;
-              float alpha=0.2f;
-              QColor blCol=d->mouseTextSelectionColor.dark(140);
-              col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha );
-              col.green=(int)((float) ( (blCol.green() << 8) | blCol.green() )*alpha );
-              col.blue=(int)((float) ( (blCol.blue() << 8) | blCol.blue())*alpha );
-              col.alpha=(int)(alpha*(float)0xffff );
-
-              for (;it!=end;++it)
-              {
-                if (! ((*it).intersects( contentsRect )))
-                  continue;
-                blendRect = (*it).intersect(contentsRect);
-                QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                QPainter p( &blendedPixmap );
-                p.drawPixmap( 0, 0, doubleBuffer,
-                          blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                          blendRect.width(), blendRect.height() );
-                    // blend selBlendColor into the background pixmap
-                XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
-                  0,0, blendRect.width(), blendRect.height());
-
-//                 KImageEffect::blend( d->mouseTextSelectionColor.dark(140), blendedImage, 0.2 );
-
-                // copy the blended pixmap back to its place
-                pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
-              
-                // draw border (red if the selection is too small)
-                pixmapPainter.setPen( d->mouseTextSelectionColor );
-                pixmapPainter.drawRect( selectionRect );
-              }
-                 
-              
             }
             // 3) Layer 1: give annotator painting control
             if ( d->annotator && d->annotator->routePaints( contentsRect ) )
@@ -1041,8 +1002,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = e->buttons() & Qt::LeftButton,
-         rightButton = e->buttons() & Qt::RightButton;
+    bool leftButton = (e->button() == Qt::LeftButton);
+//    bool rightButton = (e->button() == Qt::RightButton);
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1076,67 +1037,103 @@ if (d->document->handleEvent( e ) )
                     scrollBy( delta.x(), delta.y() );
                 }
             }
-            else if ( rightButton && !d->mousePressPos.isNull() )
-            {
-                // if mouse moves 5 px away from the press point, do 'textselection'
-                int deltaX = e->x() - d->mouseSelectPos.x(),
-                  deltaY = e->y() - d->mouseSelectPos.y();
-                if ( d->document->supportsSearching() && ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 ) )
-                {
-                    PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
-//                     PageViewItem* item=pickItemOnPoint(e->x(),e->y());
-                    const Okular::Page * okularPage = currentItem->page();
-                    // build a proper rectangle (make sure left/top is to the left of right/bottom)
-//                     QRect rect (d->mouseSelectPos,e->pos());
-//                     rect=rect.normalize();
-//                     
-                    QRect vRect = currentItem->geometry();
-//                     kDebug() << "viewport " << vRect << endl;
-//                     kDebug() << "selection (UN) " << rect << endl;
-//                     // move selection area over to relevant viewport
-//                     rect.moveBy(-vRect.left(),-vRect.top()); 
-//                     kDebug() << "selection (MV) " << rect << endl;
-                    // clip to viewport
-//                     rect &= vRect;
-//                     kDebug() << "selection (CL) " << rect << endl;
-//                     FIXME: width and height are greater by 1 then the selection.
-//                     rect.addCoords(1,1,-1,-1);
-                                        
-                    if ( !okularPage->hasSearchPage() )
-                    	 d->document->requestTextPage( okularPage->number() );
-                    Okular::NormalizedPoint startCursor(d->mouseSelectPos.x()-vRect.left(),d->mouseSelectPos.y()-vRect.top(),
-                                vRect.width(), vRect.height());
-                    Okular::NormalizedPoint endCursor(e->x()-vRect.left(),e->y()-vRect.top(),vRect.width(), vRect.height());
-
-                    if ( ! d->mouseTextSelectionInfo )
-                      d->mouseTextSelectionInfo=new Okular::TextSelection(startCursor,endCursor);
-                    else
-                      d->mouseTextSelectionInfo->end(endCursor);
-                    Okular::RegularAreaRect * selectionArea=okularPage->getTextArea(d->mouseTextSelectionInfo);
-                    kWarning () << "text areas: " << selectionArea->count() << endl;
-                    if ( selectionArea->count() > 0 )
-                    { 
-                      QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
-                      textSelection(selectionArea->geometry(vRect.width(),vRect.height(),vRect.left(),vRect.top())
-                          ,selColor);
-                    }                    
-                    delete selectionArea;
-                    break;
-                }
-            }
             else
             {
                 // only hovering the page, so update the cursor
-                updateCursor( e->pos() );
+                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
             }
             break;
 
         case MouseZoom:
         case MouseSelect:
             // set second corner of selection
-            // TODO: does this condition make sense?
-            if ( d->mouseSelecting || (d->mouseSelecting && d->aPrevAction) )
-                selectionEndPoint( e->x(), e->y() );
+            if ( d->mouseSelecting )
+                selectionEndPoint( e->pos() );
+            break;
+        case MouseTextSelect:
+            // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
+            if ( !d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ( ( e->pos() - d->mouseSelectPos ).manhattanLength() > 5 ) )
+            {
+                d->mouseTextSelecting = true;
+            }
+            if ( d->mouseTextSelecting )
+            {
+                QSet< int > affectedItemsSet;
+                QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).normalized();
+                foreach( PageViewItem * item, d->items )
+                {
+                    if ( selectionRect.intersects( item->geometry() ) )
+                        affectedItemsSet.insert( item->pageNumber() );
+                }
+                kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
+                QSet< int > pagesWithSelectionSet;
+
+                if ( !affectedItemsSet.isEmpty() )
+                {
+                    // is the mouse drag line the ne-sw diagonal of the selection rect?
+                    bool direction_ne_sw = e->pos() == selectionRect.topRight() || e->pos() == selectionRect.bottomLeft();
+
+                    int tmpmin = d->document->pages();
+                    int tmpmax = 0;
+                    foreach( int p, affectedItemsSet )
+                    {
+                        if ( p < tmpmin ) tmpmin = p;
+                        if ( p > tmpmax ) tmpmax = p;
+                    }
+
+                    PageViewItem * a = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.right() : selectionRect.left() ), (int)selectionRect.top() );
+                    int min = a && ( a->pageNumber() != tmpmax ) ? a->pageNumber() : tmpmin;
+                    PageViewItem * b = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.left() : selectionRect.right() ), (int)selectionRect.bottom() );
+                    int max = b && ( b->pageNumber() != tmpmin ) ? b->pageNumber() : tmpmax;
+
+                    QList< int > affectedItemsIds;
+                    for ( int i = min; i <= max; ++i )
+                        affectedItemsIds.append( i );
+                    kDebug() << ">>>> pages: " << affectedItemsIds << endl;
+
+                    if ( affectedItemsIds.count() == 1 )
+                    {
+                        PageViewItem * item = d->items[ affectedItemsIds.first() ];
+                        selectionRect.translate( -item->geometry().topLeft() );
+                        textSelectionForItem( item,
+                            direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(),
+                            direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() );
+                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
+                    }
+                    else if ( affectedItemsIds.count() > 1 )
+                    {
+                        // first item
+                        PageViewItem * first = d->items[ affectedItemsIds.first() ];
+                        QRect geom = first->geometry().intersect( selectionRect ).translated( -first->geometry().topLeft() );
+                        textSelectionForItem( first,
+                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
+                            QPoint() );
+                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
+                        // last item
+                        PageViewItem * last = d->items[ affectedItemsIds.last() ];
+                        geom = last->geometry().intersect( selectionRect ).translated( -last->geometry().topLeft() );
+                        textSelectionForItem( last,
+                            QPoint(),
+                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() ) : ( direction_ne_sw ? geom.topLeft() : geom.topRight() ) );
+                        pagesWithSelectionSet.insert( affectedItemsIds.last() );
+                        affectedItemsIds.removeFirst();
+                        affectedItemsIds.removeLast();
+                        // item between the two above
+                        foreach( int page, affectedItemsIds )
+                        {
+                            textSelectionForItem( d->items[ page ] );
+                            pagesWithSelectionSet.insert( page );
+                        }
+                    }
+                }
+                QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
+                // clear the selection from pages not selected anymore
+                foreach( int p, noMoreSelectedPages )
+                {
+                    d->document->setPageTextSelection( p, 0, QColor() );
+                }
+                d->pagesWithTextSelection = pagesWithSelectionSet;
+            }
             break;
     }
 }
@@ -1182,11 +1179,11 @@ if ( d->document->handleEvent( e ) )
     d->mousePressPos = e->globalPos();
 
     // handle mode dependant mouse press actions
-    bool leftButton = e->button() & Qt::LeftButton,
-         rightButton = e->button() & Qt::RightButton;
+    bool leftButton = e->button() == Qt::LeftButton,
+         rightButton = e->button() == Qt::RightButton;
         
 //   Not sure we should erase the selection when clicking with left.
-     if ( !(rightButton && d->mouseMode==MouseNormal) && d->mouseTextSelectionPainted )
+     if ( d->mouseMode != MouseTextSelect )
        textSelectionClear();
     
     switch ( d->mouseMode )
@@ -1198,13 +1195,71 @@ if ( d->document->handleEvent( e ) )
                 if ( !d->mouseOnRect )
                     setCursor( Qt::SizeAllCursor );
             }
-            else if (rightButton)
-              d->mouseSelectPos=e->pos() ; // just check
+            else if ( rightButton )
+            {
+                PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+                if ( pageItem )
+                {
+                    // find out normalized mouse coords inside current item
+                    const QRect & itemRect = pageItem->geometry();
+                    double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
+                    double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
+                    Okular::Annotation * ann = 0;
+                    const Okular::ObjectRect * orect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+                    if ( orect )
+                        ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
+                    if ( ann )
+                    {
+                        KMenu menu( this );
+                        QAction *popoutWindow = 0;
+                        QAction *deleteNote = 0;
+                        QAction *showProperties = 0;
+                        menu.addTitle( i18n( "Annotation" ) );
+                        popoutWindow = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
+                        deleteNote = menu.addAction( KIcon( "remove" ), i18n( "&Delete" ) );
+                        if ( ann->flags & Okular::Annotation::DenyDelete )
+                            deleteNote->setEnabled( false );
+                        showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties..." ) );
+
+                        QAction *choice = menu.exec( e->globalPos() );
+                        // check if the user really selected an action
+                        if ( choice )
+                        {
+                            if ( choice == popoutWindow )
+                            {
+                                //ann->window.flags ^= Annotation::Hidden;
+                                setAnnotsWindow( ann );
+                            }
+                            else if( choice == deleteNote )
+                            {
+                                kDebug() << "astario: select deleteNote" << endl;
+                               // find and close the annotwindow
+                               foreach( AnnotWindow* annwnd, d->m_annowindows )
+                               {
+                                   if( ann == annwnd->m_annot )
+                                   {
+                                       delete annwnd;
+                                       break;
+                                   }
+                               }
+                               d->document->removePageAnnotation( pageItem->page()->number(), ann );
+                               kDebug() << "astario: deleted Note" << endl;
+                            }
+                            else if( choice == showProperties )
+                            {
+                                kDebug() << "astario: select showProperties" << endl;
+                                AnnotsPropertiesDialog propdialog( this, d->document, pageItem->pageNumber(), ann );
+                                propdialog.exec();
+                            }
+                        }
+                    }
+                }
+            }
             break;
 
         case MouseZoom:     // set first corner of the zoom rect
             if ( leftButton )
-                selectionStart( e->x(), e->y(), palette().color( QPalette::Active, QPalette::Highlight ), false );
+                selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ), false );
             else if ( rightButton )
                 updateZoom( ZoomOut );
             break;
@@ -1212,9 +1267,15 @@ if ( d->document->handleEvent( e ) )
         case MouseSelect:   // set first corner of the selection rect
 //             if ( leftButton )
 //             {
-                QColor selColor = palette().color( QPalette::Active, QPalette::Highlight ).light( 120 );
-                selectionStart( e->x(), e->y(), selColor, false );
+                selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
 //             }
+            break;
+        case MouseTextSelect:
+            d->mouseSelectPos = e->pos();
+            if ( !rightButton )
+            {
+                textSelectionClear();
+            }
             break;
     }
 }
@@ -1249,69 +1310,6 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    //specially, if rightClick on exist annotation,popup a menu
-    if(e->button() == Qt::RightButton && d->mouseMode != MouseZoom)
-    {
-        PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-        // find out normalized mouse coords inside current item
-        const QRect & itemRect = pageItem->geometry();
-        double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
-        double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
-        Okular::Annotation * ann = 0;
-        const Okular::ObjectRect * orect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
-        if ( orect )
-            ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
-        if(ann)
-        {
-            KMenu menu( this );
-            QAction *popoutWindow=0, *deleteNote=0, *showProperties=0;
-            menu.addTitle( i18n("Annotation"));
-        //    if(ann->window.flags & Annotation::Hidden)
-                popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Open Pop-up Note" ) );
-        //    else
-        //        popoutWindow = menu.addAction( SmallIconSet("comment"), i18n( "&Close Pop-up Note" ) );
-            deleteNote = menu.addAction( SmallIconSet("remove"), i18n( "&Delete" ) );
-            if ( ann->flags & Okular::Annotation::DenyDelete )
-                deleteNote->setEnabled( false );
-            showProperties = menu.addAction( SmallIconSet("configure"), i18n( "&Properties..." ) );
-
-            QAction *choice = menu.exec( e->globalPos() );
-
-        // check if the user really selected an action
-            if ( choice )
-            {
-                if ( choice == popoutWindow)
-                {
-                 //   ann->window.flags ^= Annotation::Hidden;
-                    this->setAnnotsWindow(ann);
-
-                }
-                if(choice==deleteNote)
-                {
-                    kDebug()<<"astario: select deleteNote"<<endl;
-                    //find and close the annotwindow
-                    foreach(AnnotWindow* annwnd, d->m_annowindows)
-                    {
-                        if(ann==annwnd->m_annot)
-                        {
-                            delete annwnd;
-                            break;
-                        }
-                    }
-                    d->document->removePageAnnotation(pageItem->page()->number(),ann);
-
-                    kDebug()<<"astario: deleted Note"<<endl;
-                }
-                if(choice==showProperties)
-                {
-                    kDebug()<<"astario: select showProperties"<<endl;
-                    AnnotsPropertiesDialog propdialog( this, d->document, pageItem->pageNumber(), ann );
-                    propdialog.exec();
-                }
-            }
-        return;
-        }
-    }
     // if we're editing an annotation, dispatch event to it
     if ( d->annotator && d->annotator->routeEvents() )
     {
@@ -1320,8 +1318,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = (e->button() == Qt::LeftButton);
-    bool rightButton = (e->button() == Qt::RightButton);
+    bool leftButton = e->button() == Qt::LeftButton;
+    bool rightButton = e->button() == Qt::RightButton;
     switch ( d->mouseMode )
     {
         case MouseNormal:{
@@ -1364,18 +1362,62 @@ if (d->document->handleEvent( e ) )
             }
             else if ( rightButton )
             {
-              if ( d->mouseTextSelecting )
-              {
-                d->mouseTextSelecting = false;
-                delete d->mouseTextSelectionInfo;
-                d->mouseTextSelectionInfo=0;
-//                textSelectionClear();
-//                 textSelectionToClipboard();
-              }
-              else    
-                // right click (if not within 5 px of the press point, the mode
-                // had been already changed to 'Selection' instead of 'Normal')
-                emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                if ( pageItem && d->mousePressPos == e->globalPos() )
+                {
+                    double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
+                           nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
+                    const Okular::ObjectRect * rect;
+                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                    if ( rect )
+                    {
+                        // handle right click over a link
+                        const Okular::Link * link = static_cast< const Okular::Link * >( rect->pointer() );
+                        // creating the menu and its actions
+                        KMenu menu( this );
+                        QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
+                        QAction * actCopyLinkLocation = 0;
+                        if ( dynamic_cast< const Okular::LinkBrowse * >( link ) )
+                            actCopyLinkLocation = menu.addAction( i18n( "Copy Link Location" ) );
+                        QAction * res = menu.exec( e->globalPos() );
+                        if ( res )
+                        {
+                            if ( res == actProcessLink )
+                            {
+                                d->document->processLink( link );
+                            }
+                            else if ( res == actCopyLinkLocation )
+                            {
+                                const Okular::LinkBrowse * browseLink = static_cast< const Okular::LinkBrowse * >( link );
+                                QClipboard *cb = QApplication::clipboard();
+                                cb->setText( browseLink->url(), QClipboard::Clipboard );
+                                if ( cb->supportsSelection() )
+                                    cb->setText( browseLink->url(), QClipboard::Selection );
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // a link can move us to another page or even to another document, there's no point in trying to
+                        //  process the click on the image once we have processes the click on the link
+                        rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
+                        if ( rect )
+                        {
+                            // handle right click over a image
+                        }
+                        else
+                        {
+                            // right click (if not within 5 px of the press point, the mode
+                            // had been already changed to 'Selection' instead of 'Normal')
+                            emit rightClick( pageItem->page(), e->globalPos() );
+                        }
+                    }
+                }
+                else
+                {
+                    // right click (if not within 5 px of the press point, the mode
+                    // had been already changed to 'Selection' instead of 'Normal')
+                    emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                }
             }
             }break;
 
@@ -1580,6 +1622,22 @@ if (d->document->handleEvent( e ) )
                 d->aPrevAction = 0;
             }
             }break;
+            case MouseTextSelect:
+                setCursor( Qt::ArrowCursor );
+                if ( d->mouseTextSelecting )
+                {
+                    d->mouseTextSelecting = false;
+//                    textSelectionClear();
+                }
+                else if ( !d->mousePressPos.isNull() )
+                {
+                    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+                    const Okular::Page * page = pageItem ? pageItem->page() : 0;
+                    if ( page )
+                    {
+                    }
+                }
+            break;
     }
 
     // reset mouse press / 'drag start' position
@@ -1598,7 +1656,7 @@ if (d->document->handleEvent( e ) )
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();
-    if ( (e->buttons() & Qt::ControlButton) == Qt::ControlButton ) {
+    if ( (e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier ) {
         if ( e->delta() < 0 )
             slotZoomOut();
         else
@@ -1648,6 +1706,14 @@ if (d->document->handleEvent( ev ) )
 {
     ev->accept();
 }
+}
+
+void PageView::dragMoveEvent( QDragMoveEvent * ev )
+{
+    if ( !d->document->handleEvent( ev ) )
+        return;
+
+    ev->accept();
 }
 
 void PageView::dropEvent( QDropEvent * ev )
@@ -1786,62 +1852,23 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     return item;
 }
 
-void PageView::textSelection( QList<QRect> * area, const QColor & color )
-{
-    setCursor( Qt::IBeamCursor );
-    QList<QRect> toUpdate;
-    if ( d->mouseTextSelectionRect && d->mouseTextSelectionRect )
-    {
-      toUpdate+=*(d->mouseTextSelectionRect);
-      delete d->mouseTextSelectionRect;
-      d->mouseTextSelectionRect=0;
-    }
-    
-    if (area)
-      toUpdate+=*(area);
-    
-    d->mouseTextSelecting = true;
-    d->mouseTextSelectionRect = area;
-    d->mouseTextSelectionColor = color;
-    // ensures page doesn't scroll
-    if ( d->autoScrollTimer )
-    {
-        d->scrollIncrement = 0;
-        d->autoScrollTimer->stop();
-    }
-    QList<QRect>::Iterator it=toUpdate.begin(), end=toUpdate.end();
-    QRect r;
-    if ( it != end )
-        r = (*it).adjusted( 0, 0, 1, 1 );
-    for (;it!=end;++it)
-    {
-        r |= (*it).adjusted( 0, 0, 1, 1 );
-    }
-    if ( !r.isNull() )
-        updateContents( r );
-    d->mouseTextSelectionPainted=true;
-}
-    
 void PageView::textSelectionClear()
 {
-  // nothing no clear
-  if ( !d->mouseTextSelectionRect ) return;
-
-  setCursor( Qt::ArrowCursor  );
-  QList<QRect>::iterator it=d->mouseTextSelectionRect->begin(),
-    end=d->mouseTextSelectionRect->end();
- for (;it!=end;++it)
-  {
-    updateContents( *it );
-  }
-  delete d->mouseTextSelectionRect;
-  d->mouseTextSelectionRect=0;
+   // something to clear
+    if ( !d->pagesWithTextSelection.isEmpty() )
+    {
+        QSet< int >::ConstIterator it = d->pagesWithTextSelection.constBegin(), itEnd = d->pagesWithTextSelection.constEnd();
+        for ( ; it != itEnd; ++it )
+            d->document->setPageTextSelection( *it, 0, QColor() );
+        d->pagesWithTextSelection.clear();
+    }
 }
 
-void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveAll*/ )
+void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*aboveAll*/ )
 {
+    selectionClear();
     d->mouseSelecting = true;
-    d->mouseSelectionRect.setRect( x, y, 1, 1 );
+    d->mouseSelectionRect.setRect( pos.x(), pos.y(), 1, 1 );
     d->mouseSelectionColor = color;
     // ensures page doesn't scroll
     if ( d->autoScrollTimer )
@@ -1851,41 +1878,47 @@ void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveA
     }
 }
 
-void PageView::selectionEndPoint( int x, int y )
+void PageView::selectionEndPoint( const QPoint & pos )
 {
-    // clip selection to the viewport
-    QRect viewportRect( viewport()->rect() );
-    x = qBound( viewportRect.left(), x, viewportRect.right() );
-    y = qBound( viewportRect.top(), y, viewportRect.bottom() );
-    // if selection changed update rect
-    if ( d->mouseSelectionRect.right() != x || d->mouseSelectionRect.bottom() != y )
+    if ( !d->mouseSelecting )
+        return;
+
+    // update the selection rect
+    QRect updateRect = d->mouseSelectionRect;
+    d->mouseSelectionRect.setBottomLeft( pos );
+    updateRect |= d->mouseSelectionRect;
+    updateContents( updateRect.adjusted( -1, -1, 1, 1 ) );
+}
+
+void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
+{
+    QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
+    const QRect & geometry = item->geometry();
+    Okular::NormalizedPoint startCursor( 0.0, 0.0 );
+    if ( !startPoint.isNull() )
     {
-        // send incremental paint events
-        QRect oldRect = d->mouseSelectionRect.normalized();
-        d->mouseSelectionRect.setRight( x );
-        d->mouseSelectionRect.setBottom( y );
-        QRect newRect = d->mouseSelectionRect.normalized();
-        // generate diff region: [ OLD.unite(NEW) - OLD.intersect(NEW) ]
-        QRegion compoundRegion = QRegion( oldRect ).unite( newRect );
-        if ( oldRect.intersects( newRect ) )
-        {
-            QRect intersection = oldRect.intersect( newRect );
-            intersection.adjust( 1, 1, -1, -1 );
-            if ( intersection.width() > 20 && intersection.height() > 20 )
-                compoundRegion -= intersection;
-        }
-        // tassellate region with rects and enqueue a global paint event
-        QVector<QRect> rects = compoundRegion.rects();
-        QRect r;
-        if ( rects.count() > 0 )
-            r = rects.at(0).adjusted( 0, 0, 1, 1 );
-        for ( int i = 0; i < rects.count(); i++ )
-        {
-            r |= rects.at(i).adjusted( 0, 0, 1, 1 );
-        }
-        if ( !r.isNull() )
-            updateContents( r );
+        startCursor = Okular::NormalizedPoint( startPoint.x(), startPoint.y(), (int)geometry.width(), (int)geometry.height() );
     }
+    Okular::NormalizedPoint endCursor( 1.0, 1.0 );
+    if ( !endPoint.isNull() )
+    {
+        endCursor = Okular::NormalizedPoint( endPoint.x(), endPoint.y(), (int)geometry.width(), (int)geometry.height() );
+    }
+    Okular::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
+
+    const Okular::Page * okularPage = item->page();
+
+    if ( !okularPage->hasSearchPage() )
+        d->document->requestTextPage( okularPage->number() );
+
+    Okular::RegularAreaRect * selectionArea = okularPage->getTextArea( &mouseTextSelectionInfo );
+    if ( selectionArea && ( !selectionArea->isEmpty() ) )
+    {
+        kDebug() << "text areas (" << okularPage->number() << "): " << selectionArea->count() << endl;
+        d->document->setPageTextSelection( okularPage->number(), selectionArea, selColor );
+    }
+    qDeleteAll(*selectionArea);
+    delete selectionArea;
 }
 
 void PageView::selectionClear()
@@ -2024,11 +2057,16 @@ void PageView::updateCursor( const QPoint &p )
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        d->mouseOnRect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
-        if ( d->mouseOnRect )
-            setCursor( Qt::PointingHandCursor );
+        if ( d->mouseMode == MouseTextSelect )
+            setCursor( Qt::IBeamCursor );
         else
-            setCursor( Qt::ArrowCursor );
+        {
+            d->mouseOnRect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+            if ( d->mouseOnRect )
+                setCursor( Qt::PointingHandCursor );
+            else
+                setCursor( Qt::ArrowCursor );
+        }
     }
     else
     {
@@ -2615,6 +2653,16 @@ void PageView::slotSetMouseSelect()
     d->mouseMode = MouseSelect;
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
+    // force hiding of annotator toolbar
+    if ( d->annotator )
+        d->annotator->setEnabled( false );
+}
+
+void PageView::slotSetMouseTextSelect()
+{
+    d->mouseMode = MouseTextSelect;
+    // change the text in messageWindow (and show it if hidden)
+    d->messageWindow->display( i18n( "Select text." ), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );

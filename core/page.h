@@ -80,6 +80,7 @@ class OKULAR_EXPORT Page
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
+        void setTextSelections( RegularAreaRect *r, const QColor & color );
         void addAnnotation( Annotation * annotation );
         void modifyAnnotation( Annotation * newannotation );
         bool removeAnnotation( Annotation * annotation );
@@ -88,6 +89,7 @@ class OKULAR_EXPORT Page
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
         void deleteHighlights( int s_id = -1 );
+        void deleteTextSelections();
         void deleteAnnotations();
 
         // operations to save/restore page state (by Document)
@@ -108,6 +110,7 @@ class OKULAR_EXPORT Page
         QLinkedList< HighlightAreaRect * > m_highlights;
         QLinkedList< Annotation * > m_annotations;
         PageTransition * m_transition;
+        HighlightAreaRect * m_textSelections;
 };
 
 }

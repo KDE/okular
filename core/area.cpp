@@ -27,6 +27,13 @@ NormalizedPoint::NormalizedPoint( double dX, double dY )
 NormalizedPoint::NormalizedPoint( int iX, int iY, int xScale, int yScale )
     : x( (double)iX / (double)xScale ), y( (double)iY / (double)yScale ) {}
 
+NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p )
+{
+    x = p.x;
+    y = p.y;
+    return *this;
+}
+
 
 /** class NormalizedRect **/
 

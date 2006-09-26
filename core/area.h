@@ -38,6 +38,7 @@ class OKULAR_EXPORT NormalizedPoint
         NormalizedPoint();
         NormalizedPoint( double dX, double dY );
         NormalizedPoint( int ix, int iy, int xScale, int yScale );
+        NormalizedPoint& operator=( const NormalizedPoint & p );
 };
 
 /**

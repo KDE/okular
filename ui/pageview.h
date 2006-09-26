@@ -53,7 +53,7 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseTextSelect };
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -107,6 +107,7 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
 
         // drag and drop related events
         void dragEnterEvent( QDragEnterEvent* );
+        void dragMoveEvent( QDragMoveEvent* );
         void dropEvent( QDropEvent* );
 
     private:
@@ -117,14 +118,14 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
-        void selectionStart( int x, int y, const QColor & color, bool aboveAll = false );
-        void selectionEndPoint( int x, int y );
+        void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
+        void selectionEndPoint( const QPoint & pos );
         void selectionClear();
+        void textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-	void textSelection( QList<QRect> * , const QColor & );
 	void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
@@ -163,6 +164,7 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void slotSetMouseNormal();
         void slotSetMouseZoom();
         void slotSetMouseSelect();
+        void slotSetMouseTextSelect();
         void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();

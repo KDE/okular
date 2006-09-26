@@ -135,7 +135,9 @@ class OKULAR_EXPORT Document : public QObject
         void addPageAnnotation( int page, Annotation * annotation );
         void modifyPageAnnotation( int page, Annotation * newannotation );
         void removePageAnnotation( int page, Annotation * annotation );
-        
+
+        void setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color );
+
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
         bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );

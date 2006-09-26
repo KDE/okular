@@ -47,7 +47,8 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 
 Page::Page( uint page, double w, double h, int o )
     : m_number( page ), m_orientation( o ), m_width( w ), m_height( h ),
-    m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 )
+    m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 ),
+    m_textSelections( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
 /*    if ( r == 90 || r == 270 )
@@ -67,6 +68,7 @@ Page::~Page()
     deletePixmapsAndRects();
     deleteHighlights();
     deleteAnnotations();
+    deleteTextSelections();
     delete m_text;
     delete m_transition;
 }
@@ -240,6 +242,14 @@ void Page::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
 	}*/
 }	
 
+void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
+{
+    deleteTextSelections();
+    HighlightAreaRect * hr = new HighlightAreaRect( r );
+    hr->s_id = -1;
+    hr->color = color;
+    m_textSelections = hr;
+}
 
 void Page::addAnnotation( Annotation * annotation )
 {
@@ -354,6 +364,16 @@ void Page::deleteHighlights( int s_id )
         }
         else
             ++it;
+    }
+}
+
+void Page::deleteTextSelections()
+{
+    if (m_textSelections)
+    {
+        qDeleteAll(*m_textSelections);
+        delete m_textSelections;
+        m_textSelections = 0;
     }
 }
 

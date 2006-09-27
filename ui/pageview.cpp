@@ -622,7 +622,6 @@ bool PageView::event( QEvent* e )
 
         if ( link )
         {
-            // TODO make the rect for the object work
             QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
             r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
             QString tip = link->linkTip();

@@ -130,7 +130,12 @@ void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
 
 bool GSInterpreterCMD::ready()
 {
-    return !interpreterLock.locked();
+    bool isLocked = true;
+    if (interpreterLock.tryLock()) {
+        interpreterLock.unlock();
+        isLocked = false;
+    }
+    return !isLocked;
 }
 
 bool GSInterpreterCMD::interpreterRunning () 

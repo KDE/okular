@@ -430,8 +430,22 @@ kWarning() << "generator running : " << pixGenerator->running() << endl;
 bool GSGenerator::canGeneratePixmap( bool async )
 {
 //     kWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
-      if (async) return !docLock.locked();
-      return !syncLock.locked();
+    bool isLocked = true;
+    if (async)
+    {
+        if (docLock.tryLock()) {
+            docLock.unlock();
+            isLocked = false;
+        }
+    }
+    else
+    {
+        if (syncLock.tryLock()) {
+            syncLock.unlock();
+            isLocked = false;
+        }
+    }
+    return !isLocked;
 }
 
 const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()

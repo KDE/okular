@@ -1,4 +1,6 @@
 
+#if 0
+
 /***************************************************************************
  *   Copyright (C) 2005 by Georgy Yunaev                                   *
  *   tim@krasnogorsk.ru                                                    *
@@ -136,3 +138,6 @@ int KCHMMainTreeViewItem::width( const QFontMetrics & fm, const Q3ListView * lv,
             (QFontMetrics (myFont), lv, c));
 }
 */
+
+#endif
+

@@ -154,7 +154,12 @@ bool CHMGenerator::canGeneratePixmap ( bool /*async*/ )
         kDebug() << "async is locked " << asyncLock.locked() << endl;
         return !asyncLock.locked();
     }*/
-    return !syncLock.locked();
+    bool isLocked = true;
+    if (syncLock.tryLock()) {
+        syncLock.unlock();
+        isLocked = false;
+    }
+    return !isLocked;
 }
 
 void CHMGenerator::generatePixmap( Okular::PixmapRequest * request ) 

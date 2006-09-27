@@ -1,7 +1,5 @@
 add_subdirectory( kio-msits )
 
-add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
-
 include_directories(
    ${CMAKE_SOURCE_DIR}/okular
    ${CMAKE_BINARY_DIR}/okular

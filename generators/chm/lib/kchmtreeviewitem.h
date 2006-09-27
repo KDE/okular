@@ -1,3 +1,5 @@
+
+
 /***************************************************************************
  *   Copyright (C) 2005 by Georgy Yunaev                                   *
  *   tim@krasnogorsk.ru                                                    *
@@ -20,14 +22,16 @@
 #ifndef CTREEVIEWITEM_H
 #define CTREEVIEWITEM_H
 
-#include <k3listview.h>
-
 namespace KCHMImageType
 {
 	const int IMAGE_NONE = -1;
 	const int IMAGE_AUTO = -2;
 	const int IMAGE_INDEX = -3;
 };
+
+#if 0
+
+#include <k3listview.h>
 
 /**
 @author Georgy Yunaev
@@ -52,3 +56,5 @@ private:
 };
 
 #endif
+
+#endif 

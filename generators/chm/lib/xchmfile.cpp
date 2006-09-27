@@ -29,7 +29,7 @@
 #include <qeventloop.h>
 #include <qdom.h>
 #include <qfile.h>
-#include <k3listview.h>
+// #include <k3listview.h>
 
 #include "xchmfile.h"
 #include "iconstorage.h"
@@ -530,6 +530,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 	return true;
 }
 
+#if 0
 bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool asIndex)
 {
 	chmUnitInfo ui;
@@ -705,17 +706,21 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 	
 	return true;
 }
-
+#endif
 
 bool CHMFile::ParseAndFillTopicsTree(QDomDocument *tree)
 {
 	return ParseHhcAndFillTree (m_topicsFile, tree, false);
 }
 
+#if 0
+
 bool CHMFile::ParseAndFillIndex(K3ListView *indexlist)
 {
 	return ParseHhcAndFillTree (m_indexFile, indexlist, true);
 }
+
+#endif
 
 bool CHMFile::SearchWord (const QString& text, bool wholeWords, bool titlesOnly, KCHMSearchProgressResults_t& results,  bool phrase_search)
 {

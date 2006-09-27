@@ -627,7 +627,7 @@ bool PageView::event( QEvent* e )
             r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
             QString tip = link->linkTip();
             if ( !tip.isEmpty() )
-                QToolTip::showText( he->globalPos(), tip, this, r );
+                QToolTip::showText( he->globalPos(), tip, viewport(), r );
         }
         e->accept();
         return true;

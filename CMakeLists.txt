@@ -22,8 +22,6 @@ add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
 
-add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
-
 include_directories(
    ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/
 )

@@ -669,7 +669,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
 
     // find out the pressed button
     AnnotatorEngine::Button button = AnnotatorEngine::None;
-    Qt::ButtonState buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
+    Qt::MouseButtons buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
     if ( buttonState == Qt::LeftButton )
         button = AnnotatorEngine::Left;
     else if ( buttonState == Qt::RightButton )

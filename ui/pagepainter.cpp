@@ -554,13 +554,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
                     scalePixmapOnImage( scaledImage, &pixmap,
                                         TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE,
-                                        innerRect2 );
+                                        innerRect2, QImage::Format_ARGB32 );
                     // if the annotation color is valid (ie it was set), then
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
                     if ( a->style.color.isValid() )
                         colorizeImage( scaledImage, a->style.color, opacity );
-                    scaledImage.setAlphaBuffer( true );
                     pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the mangled image to painter
@@ -580,10 +579,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
-                                    annotBoundary.height(), innerRect );
+                                    annotBoundary.height(), innerRect, QImage::Format_ARGB32 );
                 if ( opacity < 255 )
                     changeImageAlpha( scaledImage, opacity );
-                scaledImage.setAlphaBuffer( true );
                 pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the scaled and al
@@ -675,7 +673,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
 }
 
 void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
-    int scaledWidth, int scaledHeight, const QRect & cropRect )
+    int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )
 {
     // {source, destination, scaling} params
     int srcWidth = src->width(),
@@ -686,7 +684,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
         destHeight = cropRect.height();
 
     // destination image (same geometry as the pageLimits rect)
-    dest = QImage( destWidth, destHeight, QImage::Format_RGB32 );
+    dest = QImage( destWidth, destHeight, format );
     unsigned int * destData = (unsigned int *)dest.bits();
 
     // source image (1:1 conversion from pixmap)

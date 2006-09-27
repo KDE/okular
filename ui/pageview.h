@@ -93,6 +93,8 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void rightClick( const Okular::Page *, const QPoint & );
 
     protected:
+        bool event( QEvent* );
+
         // viewport events
         void viewportPaintEvent( QPaintEvent * pe );
         void viewportResizeEvent( QResizeEvent* );

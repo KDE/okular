@@ -191,13 +191,14 @@ bool PresentationWidget::event( QEvent * e )
     {
         QHelpEvent * he = (QHelpEvent*)e;
 
-        const Okular::Link * link = getLink( he->x(), he->y(), 0 );
+        QRect r;
+        const Okular::Link * link = getLink( he->x(), he->y(), &r );
 
         if ( link )
         {
             QString tip = link->linkTip();
             if ( !tip.isEmpty() )
-                QToolTip::showText( he->globalPos(), tip, this );
+                QToolTip::showText( he->globalPos(), tip, this, r );
         }
         e->accept();
         return true;

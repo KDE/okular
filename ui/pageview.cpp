@@ -28,6 +28,7 @@
 #include <qdatetime.h>
 #include <qpushbutton.h>
 #include <qset.h>
+#include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <QX11Info>
@@ -602,6 +603,40 @@ bool PageView::canUnloadPixmap( int pageNumber )
 //END DocumentObserver inherited methods
 
 //BEGIN widget events
+bool PageView::event( QEvent* e )
+{
+    if ( e->type() == QEvent::ToolTip )
+    {
+        QHelpEvent * he = (QHelpEvent*)e;
+        PageViewItem * pageItem = pickItemOnPoint( he->x() + contentsX(), he->y() + contentsY() );
+        const Okular::ObjectRect * rect = 0;
+        const Okular::Link * link = 0;
+        if ( pageItem )
+        {
+            double nX = (double)( he->x() + contentsX() - pageItem->geometry().left() ) / (double)pageItem->width(),
+                   nY = (double)( he->y() + contentsY() - pageItem->geometry().top() ) / (double)pageItem->height();
+            rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+            if ( rect )
+                link = static_cast< const Okular::Link * >( rect->pointer() );
+        }
+
+        if ( link )
+        {
+            // TODO make the rect for the object work
+            QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
+            r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
+            QString tip = link->linkTip();
+            if ( !tip.isEmpty() )
+                QToolTip::showText( he->globalPos(), tip, this, r );
+        }
+        e->accept();
+        return true;
+    }
+    else
+        // do not stop the event
+        return Q3ScrollView::event( e );
+}
+
 void PageView::viewportPaintEvent( QPaintEvent * pe )
 {
 

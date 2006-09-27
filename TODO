@@ -76,7 +76,7 @@ More items (first items will enter 'In progress list' first):
 -> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> wallet: use asynchronous interface (to prevent ui-blocking)
--> open gzipped (.pdf.gz?) files
+-> open gzipped and bzipped documents (BR102704)
 -> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)
 -> kspeech TTS interface. speech {document(missing, BR118872) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)

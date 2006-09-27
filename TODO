@@ -5,6 +5,13 @@ Legend:
     FIX - FIXed (bug or regression)
     MRG - MeRGed (code from a branch or a patch)
 
+Bugs and wishes to close when moving okular to kdegraphics:
+-> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
+-> WISH 103362: kpdf shows complete filename including folder instead of just filename in taskbar
+-> WISH 119455: use poppler library for kpdf
+-> WISH 131045: Add context menu for URLs
+-> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince
+
 In progress [working on]:
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setSelected())
@@ -71,7 +78,7 @@ More items (first items will enter 'In progress list' first):
 -> wallet: use asynchronous interface (to prevent ui-blocking)
 -> open gzipped (.pdf.gz?) files
 -> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)
--> kspeech TTS interface. speech {document(missing) / page(missing) / selection(done)}
+-> kspeech TTS interface. speech {document(missing, BR118872) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
 -> core: forms support (mainly for pdf) (BR91809)
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)

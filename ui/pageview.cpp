@@ -1037,7 +1037,7 @@ if (d->document->handleEvent( e ) )
     }
 
     bool leftButton = (e->buttons() == Qt::LeftButton);
-//    bool rightButton = (e->buttons() == Qt::RightButton);
+    bool rightButton = (e->buttons() == Qt::RightButton);
     switch ( d->mouseMode )
     {
         case MouseNormal:
@@ -1069,6 +1069,21 @@ if (d->document->handleEvent( e ) )
 
                     // scroll page by position increment
                     scrollBy( delta.x(), delta.y() );
+                }
+            }
+            else if ( rightButton && !d->mousePressPos.isNull() )
+            {
+                // if mouse moves 5 px away from the press point, switch to 'selection'
+                int deltaX = d->mousePressPos.x() - e->globalPos().x(),
+                    deltaY = d->mousePressPos.y() - e->globalPos().y();
+                if ( deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5 )
+                {
+                    d->aPrevAction = d->aMouseNormal;
+                    d->aMouseSelect->trigger();
+                    QPoint newPos(e->x() + deltaX, e->y() + deltaY);
+                    selectionStart( newPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
+                    selectionEndPoint( e->pos() );
+                    break;
                 }
             }
             else

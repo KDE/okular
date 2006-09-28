@@ -1036,8 +1036,8 @@ if (d->document->handleEvent( e ) )
         return;
     }
 
-    bool leftButton = (e->button() == Qt::LeftButton);
-//    bool rightButton = (e->button() == Qt::RightButton);
+    bool leftButton = (e->buttons() == Qt::LeftButton);
+//    bool rightButton = (e->buttons() == Qt::RightButton);
     switch ( d->mouseMode )
     {
         case MouseNormal:

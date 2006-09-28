@@ -100,15 +100,10 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     view->header()->setClickable(true);
     view->header()->setSortIndicatorShown(true);
     // creating a proxy model so we can sort the data
-#ifdef ENABLE_PROPERTIESDIALOG_PROXYMODEL
     QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
     FontsListModel *model = new FontsListModel(view);
     proxymodel->setSourceModel(model);
     view->setModel(proxymodel);
-#else
-    FontsListModel *model = new FontsListModel(view);
-    view->setModel(model);
-#endif
     // populate the klistview
     for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
       QDomElement e = node.toElement();
@@ -150,7 +145,7 @@ FontsListModel::~FontsListModel()
 
 void FontsListModel::addFont( const QString &name, const QString &type, const QString &embedded, const QString &file )
 {
-  beginInsertRows( QModelIndex(), m_fonts.size() + 1, m_fonts.size() + 1 );
+  beginInsertRows( QModelIndex(), m_fonts.size(), m_fonts.size() );
 
   LocalFontInfoStruct *info = new LocalFontInfoStruct();
   info->name = name;

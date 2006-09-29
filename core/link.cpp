@@ -27,7 +27,7 @@ QString Link::linkTip() const
 // Link Tips
 QString LinkGoto::linkTip() const
 {
-    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1", m_vp.pageNumber ) : "" ) : i18n("Open external file");
+    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) : i18n("Open external file");
 }
 
 QString LinkExecute::linkTip() const

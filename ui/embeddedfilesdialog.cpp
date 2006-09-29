@@ -47,8 +47,22 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 			twi->setIcon(0, KIcon(mime->iconName()));
 		}
 		twi->setText(1, ef->description());
-		twi->setText(2, KGlobal::locale()->formatDateTime( ef->creationDate(), false, true ));
-		twi->setText(3, KGlobal::locale()->formatDateTime( ef->modificationDate(), false, true ));
+		if (ef->creationDate().isValid())
+		{
+			twi->setText(2, KGlobal::locale()->formatDateTime( ef->creationDate(), false, true ));
+		}
+		else
+		{
+			twi->setText(2, i18n("Unknown"));
+		}
+		if (ef->modificationDate().isValid())
+		{
+			twi->setText(3, KGlobal::locale()->formatDateTime( ef->modificationDate(), false, true ));
+		}
+		else
+		{
+			twi->setText(3, i18n("Unknown"));
+		}
 		m_tw->addTopLevelItem(twi);
 		m_files.insert(twi, ef);
 	}

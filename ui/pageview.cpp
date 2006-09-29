@@ -314,10 +314,12 @@ void PageView::setupActions( KActionCollection * ac )
     KAction * su = new KAction( i18n("Scroll Up"), ac, "view_scroll_up" );
     connect( su, SIGNAL( triggered() ), this, SLOT( slotScrollUp() ) );
     su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
+    addAction(su);
 
     KAction * sd = new KAction( i18n("Scroll Down"), ac, "view_scroll_down" );
     connect( sd, SIGNAL( triggered() ), this, SLOT( slotScrollDown() ) );
     sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
+    addAction(sd);
 }
 
 bool PageView::canFitPageWidth()

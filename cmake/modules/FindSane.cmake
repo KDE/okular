@@ -40,7 +40,7 @@ if (SANE_FOUND)
    endif (NOT Sane_FIND_QUIETLY)
 else (SANE_FOUND)
    if (NOT Sane_FIND_QUIETLY)
-      message(STATUS "didn't find SANE")
+      message(STATUS "Did not find SANE")
    endif (NOT Sane_FIND_QUIETLY)
 endif (SANE_FOUND)
 

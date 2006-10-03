@@ -20,9 +20,10 @@
 #define _OKULAR_PAGEVIEW_H_
 
 #include <q3scrollview.h>
+#include <qlist.h>
 #include <qvector.h>
-#include <qlinkedlist.h>
 #include "ui/pageviewutils.h"
+#include "core/area.h"
 #include "core/observer.h"
 
 class KActionCollection;
@@ -71,6 +72,8 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );
         bool canUnloadPixmap( int pageNum );
+
+        QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
 
     public slots:
         void errorMessage( const QString & message, int duration )
@@ -123,7 +126,7 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );
         void selectionClear();
-        void textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
+        Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one

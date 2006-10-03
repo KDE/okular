@@ -1109,79 +1109,22 @@ if (d->document->handleEvent( e ) )
             }
             if ( d->mouseTextSelecting )
             {
-                QSet< int > affectedItemsSet;
-                QRect selectionRect = QRect( e->pos(), d->mouseSelectPos ).normalized();
-                foreach( PageViewItem * item, d->items )
-                {
-                    if ( selectionRect.intersects( item->geometry() ) )
-                        affectedItemsSet.insert( item->pageNumber() );
-                }
-                kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
+                int first = -1;
+                QList< Okular::RegularAreaRect * > selections = textSelections( e->pos(), d->mouseSelectPos, first );
                 QSet< int > pagesWithSelectionSet;
+                for ( int i = 0; i < selections.count(); ++i )
+                    pagesWithSelectionSet.insert( i + first );
 
-                if ( !affectedItemsSet.isEmpty() )
-                {
-                    // is the mouse drag line the ne-sw diagonal of the selection rect?
-                    bool direction_ne_sw = e->pos() == selectionRect.topRight() || e->pos() == selectionRect.bottomLeft();
-
-                    int tmpmin = d->document->pages();
-                    int tmpmax = 0;
-                    foreach( int p, affectedItemsSet )
-                    {
-                        if ( p < tmpmin ) tmpmin = p;
-                        if ( p > tmpmax ) tmpmax = p;
-                    }
-
-                    PageViewItem * a = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.right() : selectionRect.left() ), (int)selectionRect.top() );
-                    int min = a && ( a->pageNumber() != tmpmax ) ? a->pageNumber() : tmpmin;
-                    PageViewItem * b = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.left() : selectionRect.right() ), (int)selectionRect.bottom() );
-                    int max = b && ( b->pageNumber() != tmpmin ) ? b->pageNumber() : tmpmax;
-
-                    QList< int > affectedItemsIds;
-                    for ( int i = min; i <= max; ++i )
-                        affectedItemsIds.append( i );
-                    kDebug() << ">>>> pages: " << affectedItemsIds << endl;
-
-                    if ( affectedItemsIds.count() == 1 )
-                    {
-                        PageViewItem * item = d->items[ affectedItemsIds.first() ];
-                        selectionRect.translate( -item->geometry().topLeft() );
-                        textSelectionForItem( item,
-                            direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(),
-                            direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() );
-                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
-                    }
-                    else if ( affectedItemsIds.count() > 1 )
-                    {
-                        // first item
-                        PageViewItem * first = d->items[ affectedItemsIds.first() ];
-                        QRect geom = first->geometry().intersect( selectionRect ).translated( -first->geometry().topLeft() );
-                        textSelectionForItem( first,
-                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
-                            QPoint() );
-                        pagesWithSelectionSet.insert( affectedItemsIds.first() );
-                        // last item
-                        PageViewItem * last = d->items[ affectedItemsIds.last() ];
-                        geom = last->geometry().intersect( selectionRect ).translated( -last->geometry().topLeft() );
-                        textSelectionForItem( last,
-                            QPoint(),
-                            selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() ) : ( direction_ne_sw ? geom.topLeft() : geom.topRight() ) );
-                        pagesWithSelectionSet.insert( affectedItemsIds.last() );
-                        affectedItemsIds.removeFirst();
-                        affectedItemsIds.removeLast();
-                        // item between the two above
-                        foreach( int page, affectedItemsIds )
-                        {
-                            textSelectionForItem( d->items[ page ] );
-                            pagesWithSelectionSet.insert( page );
-                        }
-                    }
-                }
                 QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
                 // clear the selection from pages not selected anymore
                 foreach( int p, noMoreSelectedPages )
                 {
                     d->document->setPageTextSelection( p, 0, QColor() );
+                }
+                // set the new selection for the selected pages
+                foreach( int p, pagesWithSelectionSet )
+                {
+                    d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
                 }
                 d->pagesWithTextSelection = pagesWithSelectionSet;
             }
@@ -1777,6 +1720,80 @@ if (d->document->handleEvent( ev ) )
 }
 //END widget events
 
+QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start, const QPoint& end, int& firstpage )
+{
+    firstpage = -1;
+    QList< Okular::RegularAreaRect * > ret;
+    QSet< int > affectedItemsSet;
+    QRect selectionRect = QRect( start, end ).normalized();
+    foreach( PageViewItem * item, d->items )
+    {
+        if ( selectionRect.intersects( item->geometry() ) )
+            affectedItemsSet.insert( item->pageNumber() );
+    }
+    kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
+
+    if ( !affectedItemsSet.isEmpty() )
+    {
+        // is the mouse drag line the ne-sw diagonal of the selection rect?
+        bool direction_ne_sw = start == selectionRect.topRight() || start == selectionRect.bottomLeft();
+
+        int tmpmin = d->document->pages();
+        int tmpmax = 0;
+        foreach( int p, affectedItemsSet )
+        {
+            if ( p < tmpmin ) tmpmin = p;
+            if ( p > tmpmax ) tmpmax = p;
+        }
+
+        PageViewItem * a = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.right() : selectionRect.left() ), (int)selectionRect.top() );
+        int min = a && ( a->pageNumber() != tmpmax ) ? a->pageNumber() : tmpmin;
+        PageViewItem * b = pickItemOnPoint( (int)( direction_ne_sw ? selectionRect.left() : selectionRect.right() ), (int)selectionRect.bottom() );
+        int max = b && ( b->pageNumber() != tmpmin ) ? b->pageNumber() : tmpmax;
+
+        QList< int > affectedItemsIds;
+        for ( int i = min; i <= max; ++i )
+            affectedItemsIds.append( i );
+        kDebug() << ">>>> pages: " << affectedItemsIds << endl;
+        firstpage = affectedItemsIds.first();
+
+        if ( affectedItemsIds.count() == 1 )
+        {
+            PageViewItem * item = d->items[ affectedItemsIds.first() ];
+            selectionRect.translate( -item->geometry().topLeft() );
+            ret.append( textSelectionForItem( item,
+                direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(),
+                direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() ) );
+        }
+        else if ( affectedItemsIds.count() > 1 )
+        {
+            // first item
+            PageViewItem * first = d->items[ affectedItemsIds.first() ];
+            QRect geom = first->geometry().intersect( selectionRect ).translated( -first->geometry().topLeft() );
+            ret.append( textSelectionForItem( first,
+                selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
+                QPoint() ) );
+            // last item
+            PageViewItem * last = d->items[ affectedItemsIds.last() ];
+            geom = last->geometry().intersect( selectionRect ).translated( -last->geometry().topLeft() );
+            // the last item needs to appended at last...
+            Okular::RegularAreaRect * lastArea = textSelectionForItem( last,
+                QPoint(),
+                selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.bottomLeft() : geom.bottomRight() ) : ( direction_ne_sw ? geom.topLeft() : geom.topRight() ) );
+            affectedItemsIds.removeFirst();
+            affectedItemsIds.removeLast();
+            // item between the two above
+            foreach( int page, affectedItemsIds )
+            {
+                ret.append( textSelectionForItem( d->items[ page ] ) );
+            }
+            ret.append( lastArea );
+        }
+    }
+    return ret;
+}
+
+
 void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 {
     // when checking if an Item is contained in contentsRect, instead of
@@ -1941,9 +1958,8 @@ void PageView::selectionEndPoint( const QPoint & pos )
     updateContents( updateRect.adjusted( -1, -1, 1, 1 ) );
 }
 
-void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
+Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
 {
-    QColor selColor = palette().color( QPalette::Active, QPalette::Highlight );
     const QRect & geometry = item->geometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
     if ( !startPoint.isNull() )
@@ -1963,13 +1979,8 @@ void PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPo
         d->document->requestTextPage( okularPage->number() );
 
     Okular::RegularAreaRect * selectionArea = okularPage->getTextArea( &mouseTextSelectionInfo );
-    if ( selectionArea && ( !selectionArea->isEmpty() ) )
-    {
-        kDebug() << "text areas (" << okularPage->number() << "): " << selectionArea->count() << endl;
-        d->document->setPageTextSelection( okularPage->number(), selectionArea, selColor );
-    }
-    qDeleteAll(*selectionArea);
-    delete selectionArea;
+    kDebug() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" ) << endl;
+    return selectionArea;
 }
 
 void PageView::selectionClear()

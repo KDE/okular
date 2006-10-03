@@ -43,6 +43,7 @@ class KPrinter;
 class ThumbnailList;
 class ThumbnailController;
 class PageView;
+class PageViewTopMessage;
 class PresentationWidget;
 class SearchWidget;
 class TOC;
@@ -157,6 +158,7 @@ private:
 	QWidget *m_leftPanel;
 	QToolBox *m_toolBox;
 	SearchWidget *m_searchWidget;
+	PageViewTopMessage * m_topMessage;
 	QPointer<ThumbnailList> m_thumbnailList;
 	QPointer<PageView> m_pageView;
 	QPointer<TOC> m_toc;

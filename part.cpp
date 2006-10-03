@@ -173,18 +173,22 @@ Part::Part(QWidget *parentWidget,
 	miniBarLayout->addWidget( m_miniBar );
 
 	// widgets: [] | [right 'pageView']
-//	QWidget * rightContainer = new QWidget( m_splitter );
-//	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
+	QWidget * rightContainer = new QWidget( m_splitter );
+	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
+	rightLayout->setMargin( 0 );
 //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
 //	rightLayout->addWidget( rtb );
-	m_pageView = new PageView( m_splitter, m_document );
+	m_topMessage = new PageViewTopMessage( rightContainer );
+	connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
+	rightLayout->addWidget( m_topMessage );
+	m_pageView = new PageView( rightContainer, m_document );
 	m_pageView->setFocus(); //usability setting
 	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
 	connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
 	connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
-//	rightLayout->addWidget( m_pageView );
+	rightLayout->addWidget( m_pageView );
 
 	// add document observers
 	m_document->addObserver( this );
@@ -549,7 +553,12 @@ bool Part::openFile()
     m_saveAs->setEnabled( ok );
     m_printPreview->setEnabled( ok );
     m_showProperties->setEnabled( ok );
-    m_showEmbeddedFiles->setEnabled( ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0);
+    bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
+    m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
+    if ( hasEmbeddedFiles )
+        m_topMessage->display( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ) );
+    else
+        m_topMessage->hide();
     m_showPresentation->setEnabled( ok );
     if ( ok )
     {

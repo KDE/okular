@@ -11,9 +11,12 @@
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qimage.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qpainter.h>
 #include <qevent.h>
 #include <qtimer.h>
+#include <qtoolbutton.h>
 #include <qpushbutton.h>
 #include <QStyleOptionButton>
 #include <kacceleratormanager.h>
@@ -224,6 +227,43 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
     if ( m_timer )
         m_timer->stop();
     hide();
+}
+
+
+/************************/
+/** PageViewTopMessage  */
+/************************/
+
+PageViewTopMessage::PageViewTopMessage( QWidget * parent )
+    : QWidget( parent )
+{
+    setAutoFillBackground( true );
+    QPalette pal = palette();
+    pal.setColor( QPalette::Active, QPalette::Window, Qt::yellow );
+    pal.setColor( QPalette::Inactive, QPalette::Window, Qt::yellow );
+    pal.setColor( QPalette::Disabled, QPalette::Window, Qt::yellow );
+    setPalette( pal );
+    QHBoxLayout * lay = new QHBoxLayout( this );
+    lay->setMargin( 4 );
+    m_label = new QLabel( this );
+    lay->addWidget( m_label );
+    m_label->setWordWrap( true );
+    connect( m_label, SIGNAL( linkActivated( const QString& ) ), this, SIGNAL( action() ) );
+    QToolButton * closeButton = new QToolButton( this );
+    lay->addWidget( closeButton );
+    closeButton->setAutoRaise( true );
+    closeButton->setIcon( closeButton->style()->standardIcon( QStyle::SP_TitleBarCloseButton ) );
+    closeButton->setIconSize( QSize( 32, 32 ) );
+    closeButton->setToolTip( i18n( "Close this message" ) );
+    connect( closeButton, SIGNAL( clicked() ), this, SLOT( hide() ) );
+    hide();
+}
+
+void PageViewTopMessage::display( const QString & message )
+{
+    m_label->setText( message );
+    resize( minimumSizeHint() );
+    show();
 }
 
 

@@ -14,6 +14,7 @@
 #include <qpixmap.h>
 #include <qrect.h>
 
+class QLabel;
 class QTimer;
 
 namespace Okular {
@@ -72,6 +73,27 @@ class PageViewMessage : public QWidget
     private:
         QPixmap m_pixmap;
         QTimer * m_timer;
+};
+
+
+/**
+ * @short A widget that displays messages in the top part of the page view.
+ *
+ * ...
+ */
+class PageViewTopMessage : public QWidget
+{
+    Q_OBJECT
+    public:
+        PageViewTopMessage( QWidget * parent );
+
+        void display( const QString & message );
+
+    signals:
+        void action();
+
+    private:
+        QLabel * m_label;
 };
 
 

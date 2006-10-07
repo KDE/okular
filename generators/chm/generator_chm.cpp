@@ -295,7 +295,6 @@ void CHMGenerator::additionalRequestData()
                 if ( !n.isNull() )
                 {
                     QString url = n.attributes().getNamedItem("href").nodeValue().string();
-                    Okular::DocumentViewport viewport(getMetaData( url, QString::number(page->number() - 1) ));
                     r=n.getRect();
                     kDebug() << "Adding rect: " << url << " "  << r << endl;
                     // there is no way for us to support javascript properly
@@ -311,6 +310,7 @@ void CHMGenerator::additionalRequestData()
                     }
                     else
                     {
+                        Okular::DocumentViewport viewport(getMetaData( "NamedViewport", '/' + url ));
                         objRects.push_back(
                             new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                             false,

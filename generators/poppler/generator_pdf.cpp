@@ -240,10 +240,10 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
             wallet = KWallet::Wallet::openWallet( walletName );
             if ( wallet )
             {
-                // use the Okular:: folder (and create if missing)
-                if ( !wallet->hasFolder( "Okular::" ) )
-                    wallet->createFolder( "Okular::" );
-                wallet->setFolder( "Okular::" );
+                // use the KPdf folder (and create if missing)
+                if ( !wallet->hasFolder( "KPdf" ) )
+                    wallet->createFolder( "KPdf" );
+                wallet->setFolder( "KPdf" );
 
                 // look for the pass in that folder
                 QString retrievedPass;

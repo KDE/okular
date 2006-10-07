@@ -587,7 +587,7 @@ bool Part::openFile()
     if ( !ok )
     {
         // if can't open document, update windows so they display blank contents
-        m_pageView->updateContents();
+        m_pageView->widget()->update();
         m_thumbnailList->update();
         return false;
     }
@@ -983,12 +983,12 @@ void Part::slotNewConfig()
         m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
-    Q3ScrollView::ScrollBarMode scrollBarMode = Okular::Settings::showScrollBars() ?
-        Q3ScrollView::AlwaysOn : Q3ScrollView::AlwaysOff;
-    if ( m_pageView->hScrollBarMode() != scrollBarMode )
+    Qt::ScrollBarPolicy scrollBarMode = Okular::Settings::showScrollBars() ?
+        Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff;
+    if ( m_pageView->horizontalScrollBarPolicy() != scrollBarMode )
     {
-        m_pageView->setHScrollBarMode( scrollBarMode );
-        m_pageView->setVScrollBarMode( scrollBarMode );
+        m_pageView->setHorizontalScrollBarPolicy( scrollBarMode );
+        m_pageView->setVerticalScrollBarPolicy( scrollBarMode );
     }
 
     // update document settings
@@ -996,7 +996,7 @@ void Part::slotNewConfig()
 
     // update Main View and ThumbnailList contents
     // TODO do this only when changing Okular::Settings::renderMode()
-    m_pageView->updateContents();
+    m_pageView->widget()->update();
     if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
 }

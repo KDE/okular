@@ -19,7 +19,7 @@
 #ifndef _OKULAR_PAGEVIEW_H_
 #define _OKULAR_PAGEVIEW_H_
 
-#include <q3scrollview.h>
+#include <qscrollarea.h>
 #include <qlist.h>
 #include <qvector.h>
 #include "ui/pageviewutils.h"
@@ -34,15 +34,18 @@ struct Annotation;
 }
 
 class PageViewPrivate;
+class PageViewWidget;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
  * ...
  */
-class PageView : public Q3ScrollView, public Okular::DocumentObserver
+class PageView : public QScrollArea, public Okular::DocumentObserver
 {
-    Q_OBJECT
+Q_OBJECT
+
+    friend class PageViewWidget;
 
     public:
         PageView( QWidget *parent, Okular::Document *document );
@@ -96,18 +99,11 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void rightClick( const Okular::Page *, const QPoint & );
 
     protected:
-        bool event( QEvent* );
-
-        // viewport events
-        void viewportPaintEvent( QPaintEvent * pe );
-        void viewportResizeEvent( QResizeEvent* );
+        void resizeEvent( QResizeEvent* );
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* );
         void inputMethodEvent( QInputMethodEvent * );
-        void contentsMouseMoveEvent( QMouseEvent* );
-        void contentsMousePressEvent( QMouseEvent* );
-        void contentsMouseReleaseEvent( QMouseEvent* );
         void wheelEvent( QWheelEvent* );
 
         // drag and drop related events
@@ -116,6 +112,11 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void dropEvent( QDropEvent* );
 
     private:
+        void contentsPaintEvent( QPaintEvent *e );
+        void contentsMouseMoveEvent( QMouseEvent *e );
+        void contentsMousePressEvent( QMouseEvent *e );
+        void contentsMouseReleaseEvent( QMouseEvent *e );
+
         // draw background and items on the opened qpainter
         void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );
         // update item width and height using current zoom parameters
@@ -131,14 +132,16 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
-	void textSelectionClear();
+        void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
         // does the type ahead search
         void doTypeAheadSearch();
 
-	int viewColumns();
-	int viewRows();
+        int viewColumns();
+        int viewRows();
+
+        void center(int cx, int cy);
 
         // don't want to expose classes in here
         class PageViewPrivate * d;
@@ -147,7 +150,7 @@ class PageView : public Q3ScrollView, public Okular::DocumentObserver
         // activated either directly or via QTimer on the viewportResizeEvent
         void slotRelayoutPages();
         // activated either directly or via the contentsMoving(int,int) signal
-        void slotRequestVisiblePixmaps( int left = -1, int top = -1 );
+        void slotRequestVisiblePixmaps();
         // activated by the viewport move timer
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)

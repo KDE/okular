@@ -28,6 +28,7 @@
 #include <qdatetime.h>
 #include <qpushbutton.h>
 #include <qset.h>
+#include <qscrollbar.h>
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -98,7 +99,7 @@ public:
     bool mouseTextSelecting;
     QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
-                             
+
     // type ahead find
     bool typeAheadActive;
     QString typeAheadString;
@@ -139,7 +140,70 @@ public:
     KActionCollection * actionCollection;
 };
 
+class PageViewWidget : public QWidget
+{
+public:
+    PageViewWidget(PageView *pv) : QWidget(pv), m_pageView(pv) {}
 
+protected:
+    bool event( QEvent *e )
+    {
+        if ( e->type() == QEvent::ToolTip )
+        {
+            QHelpEvent * he = (QHelpEvent*)e;
+            PageViewItem * pageItem = m_pageView->pickItemOnPoint( he->x(), he->y() );
+            const Okular::ObjectRect * rect = 0;
+            const Okular::Link * link = 0;
+            if ( pageItem )
+            {
+                double nX = (double)( he->x() - pageItem->geometry().left() ) / (double)pageItem->width();
+                double nY = (double)( he->y() - pageItem->geometry().top() ) / (double)pageItem->height();
+                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                if ( rect )
+                    link = static_cast< const Okular::Link * >( rect->pointer() );
+            }
+
+            if ( link )
+            {
+                QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
+                r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
+                QString tip = link->linkTip();
+                if ( !tip.isEmpty() )
+                    QToolTip::showText( he->globalPos(), tip, this, r );
+            }
+            e->accept();
+            return true;
+        }
+        else
+            // do not stop the event
+            return QWidget::event( e );
+    }
+
+    // viewport events
+    void paintEvent( QPaintEvent *e )
+    {
+        m_pageView->contentsPaintEvent(e);
+    }
+
+    void mouseMoveEvent( QMouseEvent *e )
+    {
+        m_pageView->contentsMouseMoveEvent(e);
+    }
+
+    void mousePressEvent( QMouseEvent *e )
+    {
+        m_pageView->contentsMousePressEvent(e);
+    }
+
+    void mouseReleaseEvent( QMouseEvent *e )
+    {
+        m_pageView->contentsMouseReleaseEvent(e);
+    }
+
+
+private:
+   PageView *m_pageView;
+};
 
 /* PageView. What's in this file? -> quick overview.
  * Code weight (in rows) and meaning:
@@ -152,7 +216,7 @@ public:
  * and many insignificant stuff like this comment :-)
  */
 PageView::PageView( QWidget *parent, Okular::Document *document )
-    : Q3ScrollView( parent )
+    : QScrollArea( parent )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate();
@@ -186,17 +250,18 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     setObjectName( QLatin1String( "okular::pageView" ) );
 
     // widget setup: setup focus, accept drops and track mouse
+    setWidget(new PageViewWidget(this));
     viewport()->setFocusProxy( this );
     viewport()->setFocusPolicy( Qt::StrongFocus );
-    //viewport()->setPaletteBackgroundColor( Qt::white );
-    viewport()->setAttribute( Qt::WA_OpaquePaintEvent );
-    setResizePolicy( Manual );
+    widget()->setAttribute( Qt::WA_OpaquePaintEvent );
+    widget()->setAttribute( Qt::WA_NoSystemBackground );
     setAcceptDrops( true );
-    setDragAutoScroll( false );
-    viewport()->setMouseTracking( true );
+    widget()->setMouseTracking( true );
+    setWidgetResizable(true);
 
     // conntect the padding of the viewport to pixmaps requests
-    connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -445,8 +510,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
     {
         // update the mouse cursor when closing because we may have close through a link and
         // want the cursor to come back to the normal cursor
-        updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
-        resizeContents( 0, 0 );
+        updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
+        setWidgetResizable(true);
     }
 
     // OSD to display pages
@@ -521,7 +586,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
     else
     {
         newCenterX += r.width() / 2;
-        newCenterY += visibleHeight() / 2 - 10;
+        newCenterY += viewport()->height() / 2 - 10;
     }
 
     // if smooth movement requested, setup parameters and start it
@@ -556,7 +621,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         updateZoomText();
 
     // since the page has moved below cursor, update it
-    updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+    updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
 }
 
 void PageView::notifyPageChanged( int pageNumber, int changedFlags )
@@ -573,13 +638,13 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
             // update item's rectangle plus the little outline
             QRect expandedRect = (*iIt)->geometry();
             expandedRect.adjust( -1, -1, 3, 3 );
-            updateContents( expandedRect );
+            widget()->update( expandedRect );
 
             // if we were "zoom-dragging" do not overwrite the "zoom-drag" cursor
             if ( cursor().shape() != Qt::SizeVerCursor )
             {
                 // since the page has been regenerated below cursor, update it
-                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+                updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
             }
             break;
         }
@@ -605,182 +670,151 @@ bool PageView::canUnloadPixmap( int pageNumber )
 //END DocumentObserver inherited methods
 
 //BEGIN widget events
-bool PageView::event( QEvent* e )
+void PageView::contentsPaintEvent(QPaintEvent *pe)
 {
-    if ( e->type() == QEvent::ToolTip )
+    if ( d->document->handleEvent( pe ) )
     {
-        QHelpEvent * he = (QHelpEvent*)e;
-        PageViewItem * pageItem = pickItemOnPoint( he->x() + contentsX(), he->y() + contentsY() );
-        const Okular::ObjectRect * rect = 0;
-        const Okular::Link * link = 0;
-        if ( pageItem )
+        // create the rect into contents from the clipped screen rect
+        QRect viewportRect = viewport()->rect();
+        viewportRect.translate( horizontalScrollBar()->value(), verticalScrollBar()->value() );
+        QRect contentsRect = pe->rect().intersect( viewportRect );
+        if ( !contentsRect.isValid() )
+            return;
+
+        kDebug() << "paintevent " << contentsRect << endl;
+
+        // create the screen painter. a pixel painted at contentsX,contentsY
+        // appears to the top-left corner of the scrollview.
+        QPainter screenPainter( widget() );
+
+        // selectionRect is the normalized mouse selection rect
+        QRect selectionRect = d->mouseSelectionRect;
+        if ( !selectionRect.isNull() )
+            selectionRect = selectionRect.normalized();
+        // selectionRectInternal without the border
+        QRect selectionRectInternal = selectionRect;
+        selectionRectInternal.adjust( 1, 1, -1, -1 );
+        // color for blending
+        QColor selBlendColor = (selectionRect.width() > 8 || selectionRect.height() > 8) ?
+                            d->mouseSelectionColor : Qt::red;
+
+        // subdivide region into rects
+        QVector<QRect> allRects = pe->region().rects();
+        uint numRects = allRects.count();
+
+        // preprocess rects area to see if it worths or not using subdivision
+        uint summedArea = 0;
+        for ( uint i = 0; i < numRects; i++ )
         {
-            double nX = (double)( he->x() + contentsX() - pageItem->geometry().left() ) / (double)pageItem->width(),
-                   nY = (double)( he->y() + contentsY() - pageItem->geometry().top() ) / (double)pageItem->height();
-            rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
-            if ( rect )
-                link = static_cast< const Okular::Link * >( rect->pointer() );
+            const QRect & r = allRects[i];
+            summedArea += r.width() * r.height();
         }
+        // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
+        bool useSubdivision = summedArea < (0.6 * contentsRect.width() * contentsRect.height());
+        if ( !useSubdivision )
+            numRects = 1;
 
-        if ( link )
+        // iterate over the rects (only one loop if not using subdivision)
+        for ( uint i = 0; i < numRects; i++ )
         {
-            QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
-            r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-            QString tip = link->linkTip();
-            if ( !tip.isEmpty() )
-                QToolTip::showText( he->globalPos(), tip, viewport(), r );
-        }
-        e->accept();
-        return true;
-    }
-    else
-        // do not stop the event
-        return Q3ScrollView::event( e );
-}
-
-void PageView::viewportPaintEvent( QPaintEvent * pe )
-{
-
-if ( d->document->handleEvent( pe ) )
-{
-    // create the rect into contents from the clipped screen rect
-    QRect viewportRect = viewport()->rect();
-    QRect contentsRect = pe->rect().intersect( viewportRect );
-    contentsRect.translate( contentsX(), contentsY() );
-    if ( !contentsRect.isValid() )
-        return;
-
-    // create the screen painter. a pixel painted at contentsX,contentsY
-    // appears to the top-left corner of the scrollview.
-    QPainter screenPainter( viewport() );
-    screenPainter.translate( -contentsX(), -contentsY() );
-
-    // selectionRect is the normalized mouse selection rect
-    QRect selectionRect = d->mouseSelectionRect;
-    if ( !selectionRect.isNull() )
-        selectionRect = selectionRect.normalized();
-    // selectionRectInternal without the border
-    QRect selectionRectInternal = selectionRect;
-    selectionRectInternal.adjust( 1, 1, -1, -1 );
-    // color for blending
-    QColor selBlendColor = (selectionRect.width() > 8 || selectionRect.height() > 8) ?
-                           d->mouseSelectionColor : Qt::red;
-
-    // subdivide region into rects
-    QVector<QRect> allRects = pe->region().rects();
-    uint numRects = allRects.count();
-
-    // preprocess rects area to see if it worths or not using subdivision
-    uint summedArea = 0;
-    for ( uint i = 0; i < numRects; i++ )
-    {
-        const QRect & r = allRects[i];
-        summedArea += r.width() * r.height();
-    }
-    // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
-    bool useSubdivision = summedArea < (0.6 * contentsRect.width() * contentsRect.height());
-    if ( !useSubdivision )
-        numRects = 1;
-
-    // iterate over the rects (only one loop if not using subdivision)
-    for ( uint i = 0; i < numRects; i++ )
-    {
-        if ( useSubdivision )
-        {
-            // set 'contentsRect' to a part of the sub-divided region
-            contentsRect = allRects[i].normalized().intersect( viewportRect );
-            contentsRect.translate( contentsX(), contentsY() );
-            if ( !contentsRect.isValid() )
-                continue;
-        }
-
-        // note: this check will take care of all things requiring alpha blending (not only selection)
-        bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
-
-        if ( wantCompositing && Okular::Settings::enableCompositing() )
-        {
-            // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
-            QPixmap doubleBuffer( contentsRect.size() );
-            QPainter pixmapPainter( &doubleBuffer );
-            pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
-
-            // calculate the color
-            XRenderColor col;
-            float alpha=0.2f;
-            QColor blCol=selBlendColor.dark(140);
-            col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
-            col.green=(int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
-            col.blue=(int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
-            col.alpha=( int )(alpha*(float)0xffff);
-
-            // 1) Layer 0: paint items and clear bg on unpainted rects
-            drawDocumentOnPainter( contentsRect, &pixmapPainter );
-            // 2) Layer 1a: paint (blend) transparent selection
-            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
-                 !selectionRectInternal.contains( contentsRect ) )
+            if ( useSubdivision )
             {
-                QRect blendRect = selectionRectInternal.intersect( contentsRect );
-                // skip rectangles covered by the selection's border
-                if ( blendRect.isValid() )
+                // set 'contentsRect' to a part of the sub-divided region
+                contentsRect = allRects[i].normalized().intersect( viewportRect );
+                contentsRect.translate( horizontalScrollBar()->value(), verticalScrollBar()->value() );
+                if ( !contentsRect.isValid() )
+                    continue;
+            }
+            
+            kDebug() << contentsRect << endl;
+
+            // note: this check will take care of all things requiring alpha blending (not only selection)
+            bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
+
+            if ( wantCompositing && Okular::Settings::enableCompositing() )
+            {
+                // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
+                QPixmap doubleBuffer( contentsRect.size() );
+                QPainter pixmapPainter( &doubleBuffer );
+                pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
+
+                // calculate the color
+                XRenderColor col;
+                float alpha=0.2f;
+                QColor blCol=selBlendColor.dark(140);
+                col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
+                col.green=(int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
+                col.blue=(int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
+                col.alpha=( int )(alpha*(float)0xffff);
+
+                // 1) Layer 0: paint items and clear bg on unpainted rects
+                drawDocumentOnPainter( contentsRect, &pixmapPainter );
+                // 2) Layer 1a: paint (blend) transparent selection
+                if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
+                    !selectionRectInternal.contains( contentsRect ) )
                 {
-                    // grab current pixmap into a new one to colorize contents
-                    QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
-                    QPainter p( &blendedPixmap );
-                    p.drawPixmap( 0, 0, doubleBuffer,
-                                blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                                blendRect.width(), blendRect.height() );
-                    // blend selBlendColor into the background pixmap
-//                     QImage blendedImage = blendedPixmap.convertToImage();
-//                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
-                    XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
-                      0,0, blendRect.width(), blendRect.height());
-                    // copy the blended pixmap back to its place
-                    pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
+                    QRect blendRect = selectionRectInternal.intersect( contentsRect );
+                    // skip rectangles covered by the selection's border
+                    if ( blendRect.isValid() )
+                    {
+                        // grab current pixmap into a new one to colorize contents
+                        QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                        QPainter p( &blendedPixmap );
+                        p.drawPixmap( 0, 0, doubleBuffer,
+                                    blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                                    blendRect.width(), blendRect.height() );
+                        // blend selBlendColor into the background pixmap
+    //                     QImage blendedImage = blendedPixmap.convertToImage();
+    //                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
+                        XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
+                        0,0, blendRect.width(), blendRect.height());
+                        // copy the blended pixmap back to its place
+                        pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
+                    }
+                    // draw border (red if the selection is too small)
+                    pixmapPainter.setPen( selBlendColor );
+                    pixmapPainter.drawRect( selectionRect );
                 }
-                // draw border (red if the selection is too small)
-                pixmapPainter.setPen( selBlendColor );
-                pixmapPainter.drawRect( selectionRect );
-            }
-            // 3) Layer 1: give annotator painting control
-            if ( d->annotator && d->annotator->routePaints( contentsRect ) )
-                d->annotator->routePaint( &pixmapPainter, contentsRect );
-            // 4) Layer 2: overlays
-            if ( Okular::Settings::debugDrawBoundaries() )
-            {
-                pixmapPainter.setPen( Qt::blue );
-                pixmapPainter.drawRect( contentsRect );
-            }
+                // 3) Layer 1: give annotator painting control
+                if ( d->annotator && d->annotator->routePaints( contentsRect ) )
+                    d->annotator->routePaint( &pixmapPainter, contentsRect );
+                // 4) Layer 2: overlays
+                if ( Okular::Settings::debugDrawBoundaries() )
+                {
+                    pixmapPainter.setPen( Qt::blue );
+                    pixmapPainter.drawRect( contentsRect );
+                }
 
-            // finish painting and draw contents
-            pixmapPainter.end();
-            screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
-        }
-        else
-        {
-            // 1) Layer 0: paint items and clear bg on unpainted rects
-            drawDocumentOnPainter( contentsRect, &screenPainter );
-            // 2) Layer 1: paint opaque selection
-            if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
-                 !selectionRectInternal.contains( contentsRect ) )
-            {
-                screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).dark(110) );
-                screenPainter.drawRect( selectionRect );
+                // finish painting and draw contents
+                pixmapPainter.end();
+                screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
             }
-            // 3) Layer 1: give annotator painting control
-            if ( d->annotator && d->annotator->routePaints( contentsRect ) )
-                d->annotator->routePaint( &screenPainter, contentsRect );
-            // 4) Layer 2: overlays
-            if ( Okular::Settings::debugDrawBoundaries() )
+            else
             {
-                screenPainter.setPen( Qt::red );
-                screenPainter.drawRect( contentsRect );
+                // 1) Layer 0: paint items and clear bg on unpainted rects
+                drawDocumentOnPainter( contentsRect, &screenPainter );
+                // 2) Layer 1: paint opaque selection
+                if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
+                    !selectionRectInternal.contains( contentsRect ) )
+                {
+                    screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).dark(110) );
+                    screenPainter.drawRect( selectionRect );
+                }
+                // 3) Layer 1: give annotator painting control
+                if ( d->annotator && d->annotator->routePaints( contentsRect ) )
+                    d->annotator->routePaint( &screenPainter, contentsRect );
+                // 4) Layer 2: overlays
+                if ( Okular::Settings::debugDrawBoundaries() )
+                {
+                    screenPainter.setPen( Qt::red );
+                    screenPainter.drawRect( contentsRect );
+                }
             }
         }
     }
 }
-}
 
-void PageView::viewportResizeEvent( QResizeEvent * event)
+void PageView::resizeEvent( QResizeEvent * event)
 {
 if (d->document->handleEvent( event ) )
 {
@@ -1070,7 +1104,8 @@ if (d->document->handleEvent( e ) )
                     d->mouseGrabPos = mousePos;
 
                     // scroll page by position increment
-                    scrollBy( delta.x(), delta.y() );
+                    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + delta.x());
+                    verticalScrollBar()->setValue(verticalScrollBar()->value() + delta.y());
                 }
             }
             else if ( rightButton && !d->mousePressPos.isNull() )
@@ -1091,7 +1126,7 @@ if (d->document->handleEvent( e ) )
             else
             {
                 // only hovering the page, so update the cursor
-                updateCursor( viewportToContents( mapFromGlobal( QCursor::pos() ) ) );
+                updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
             }
             break;
 
@@ -1427,9 +1462,9 @@ if (d->document->handleEvent( e ) )
                 }
 
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
-                double zoom = qMin( (double)visibleWidth() / (double)selRect.width(), (double)visibleHeight() / (double)selRect.height() );
-                double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentsWidth());
-                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentsHeight());
+                double zoom = qMin( (double)viewport()->width() / (double)selRect.width(), (double)viewport()->height() / (double)selRect.height() );
+                double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)widget()->width());
+                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)viewport()->height());
 
                 // zoom up to 400%
                 if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
@@ -1441,8 +1476,8 @@ if (d->document->handleEvent( e ) )
                 }
 
                 // recenter view and update the viewport
-                center( (int)(nX * contentsWidth()), (int)(nY * contentsHeight()) );
-                updateContents();
+                center( (int)(nX * widget()->width()), (int)(nY * viewport()->height()) );
+                widget()->update();
 
                 // hide message box and delete overlay window
                 selectionClear();
@@ -1687,9 +1722,9 @@ if (d->document->handleEvent( e ) )
         }
     }
     else
-        Q3ScrollView::wheelEvent( e );
+        QScrollArea::wheelEvent( e );
 
-    QPoint cp = viewportToContents(e->pos());
+    QPoint cp = widget()->mapFromGlobal(mapToGlobal(e->pos()));
     updateCursor(cp);
 }
 }
@@ -1955,7 +1990,7 @@ void PageView::selectionEndPoint( const QPoint & pos )
     QRect updateRect = d->mouseSelectionRect;
     d->mouseSelectionRect.setBottomLeft( pos );
     updateRect |= d->mouseSelectionRect;
-    updateContents( updateRect.adjusted( -1, -1, 1, 1 ) );
+    widget()->update( updateRect.adjusted( -1, -1, 1, 1 ) );
 }
 
 Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
@@ -1988,7 +2023,7 @@ void PageView::selectionClear()
     QRect updatedRect = d->mouseSelectionRect.normalized().adjusted( 0, 0, 1, 1 );
     d->mouseSelecting = false;
     d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
-    updateContents( updatedRect );
+    widget()->update( updatedRect );
 }
 
 void PageView::updateZoom( ZoomMode newZoomMode )
@@ -2154,6 +2189,12 @@ int PageView::viewRows()
     return Okular::Settings::viewRows();
 }
 
+void PageView::center(int cx, int cy)
+{
+    horizontalScrollBar()->setValue(cx - viewport()->width() / 2);
+    verticalScrollBar()->setValue(cy - viewport()->height() / 2);
+}
+
 void PageView::doTypeAheadSearch()
 {
     bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
@@ -2172,7 +2213,7 @@ void PageView::slotRelayoutPages()
     int pageCount = d->items.count();
     if ( pageCount < 1 )
     {
-        resizeContents( 0, 0 );
+        setWidgetResizable(true);
         return;
     }
 
@@ -2187,11 +2228,11 @@ void PageView::slotRelayoutPages()
 
     // common iterator used in this method and viewport parameters
     QVector< PageViewItem * >::iterator iIt, iEnd = d->items.end();
-    int viewportWidth = visibleWidth(),
-        viewportHeight = visibleHeight(),
+    int viewportWidth = viewport()->width(),
+        viewportHeight = viewport()->height(),
         fullWidth = 0,
         fullHeight = 0;
-    QRect viewportRect( contentsX(), contentsY(), viewportWidth, viewportHeight );
+    QRect viewportRect( horizontalScrollBar()->value(), verticalScrollBar()->value(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
@@ -2403,20 +2444,21 @@ void PageView::slotRelayoutPages()
 
     // 4) update scrollview's contents size and recenter view
     bool wasUpdatesEnabled = viewport()->updatesEnabled();
-    if ( fullWidth != contentsWidth() || fullHeight != contentsHeight() )
+    if ( fullWidth != widget()->width() || fullHeight != viewport()->height() )
     {
         // disable updates and resize the viewportContents
         if ( wasUpdatesEnabled )
             viewport()->setUpdatesEnabled( false );
-        resizeContents( fullWidth, fullHeight );
+        setWidgetResizable(false);
+        widget()->resize( fullWidth, fullHeight );
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )
         {
             const Okular::DocumentViewport & vp = d->document->viewport();
             if ( vp.pageNumber >= 0 )
             {
-                int prevX = contentsX(),
-                    prevY = contentsY();
+                int prevX = horizontalScrollBar()->value(),
+                    prevY = verticalScrollBar()->value();
                 const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
                 double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
                        nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
@@ -2424,7 +2466,7 @@ void PageView::slotRelayoutPages()
                         geometry.top() + ROUND( nY * (double)geometry.height() ) );
                 // center() usually moves the viewport, that requests pixmaps too.
                 // if that doesn't happen we have to request them by hand
-                if ( prevX == contentsX() && prevY == contentsY() )
+                if ( prevX == horizontalScrollBar()->value() && prevY == verticalScrollBar()->value() )
                     slotRequestVisiblePixmaps();
             }
             // or else go to center page
@@ -2436,10 +2478,10 @@ void PageView::slotRelayoutPages()
 
     // 5) update the whole viewport if updated enabled
     if ( wasUpdatesEnabled )
-        updateContents();
+        widget()->update();
 }
 
-void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
+void PageView::slotRequestVisiblePixmaps()
 {
     // if requests are blocked (because raised by an unwanted event), exit
     if ( d->blockPixmapsRequest || d->viewportMoveActive ||
@@ -2447,10 +2489,10 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
-    bool isEvent = newLeft != -1 && newTop != -1 && !d->blockViewport;
-    QRect viewportRect( isEvent ? newLeft : contentsX(),
-                        isEvent ? newTop : contentsY(),
-                        visibleWidth(), visibleHeight() );
+    bool isEvent = !d->blockViewport;
+    QRect viewportRect( horizontalScrollBar()->value(),
+                        verticalScrollBar()->value(),
+                        viewport()->width(), viewport()->height() );
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
@@ -2580,8 +2622,8 @@ void PageView::slotMoveViewport()
 
     // move the viewport smoothly (kmplot: p(x)=1+0.47*(x-1)^3-0.25*(x-1)^4)
     float convergeSpeed = (float)diffTime / 667.0,
-          x = ((float)visibleWidth() / 2.0) + contentsX(),
-          y = ((float)visibleHeight() / 2.0) + contentsY(),
+          x = ((float)viewport()->width() / 2.0) + horizontalScrollBar()->value(),
+          y = ((float)viewport()->height() / 2.0) + verticalScrollBar()->value(),
           diffX = (float)d->viewportMoveDest.x() - x,
           diffY = (float)d->viewportMoveDest.y() - y;
     convergeSpeed *= convergeSpeed * (1.4 - convergeSpeed);
@@ -2611,7 +2653,8 @@ void PageView::slotAutoScoll()
     const int scrollDelay[10] =  { 200, 100, 50, 30, 20, 30, 25, 20, 30, 20 };
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
     d->autoScrollTimer->start( scrollDelay[ index ] );
-    scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
+    int delta = d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ];
+    verticalScrollBar()->setValue(verticalScrollBar()->value() + delta);
 }
 
 void PageView::slotStopFindAhead()

@@ -168,6 +168,39 @@ class ReviewItem : public QTreeWidgetItem
         }
 };
 
+class AnnotationItem : public QTreeWidgetItem
+{
+    public:
+        AnnotationItem( QTreeWidget * parent, Okular::Annotation * ann )
+            : QTreeWidgetItem( parent )
+        {
+            init( ann );
+        }
+
+        AnnotationItem( QTreeWidgetItem * parent, Okular::Annotation * ann )
+            : QTreeWidgetItem( parent )
+        {
+            init( ann );
+        }
+
+        void init( Okular::Annotation * ann )
+        {
+            m_ann = ann;
+            setText( 0, Okular::AnnotationUtils::captionForAnnotation( m_ann ) );
+            setIcon( 0, KIcon( "okular" ) );
+            setToolTip( 0, QString( "<qt>%1</qt>" )
+                .arg( i18n( "Author: %1", m_ann->author ) ) );
+        }
+
+        Okular::Annotation * anotation()
+        {
+            return m_ann;
+        }
+
+    private:
+        Okular::Annotation * m_ann;
+};
+
 void Reviews::slotUpdateListView()
 {
     // reset listview to default
@@ -261,10 +294,9 @@ void Reviews::addContents( const Okular::Page * page )
 
         // create Annotation subnode
         QTreeWidgetItem * singleItem = authorItem ?
-            new QTreeWidgetItem( authorItem ) :
-            new QTreeWidgetItem( m_listView );
-        singleItem->setText( 0, annotation->contents );
-        singleItem->setIcon( 0, KIcon( "okular" ) );
+            new AnnotationItem( authorItem, annotation ) :
+            new AnnotationItem( m_listView, annotation );
+        Q_UNUSED( singleItem );
     }
 }
 

@@ -45,6 +45,10 @@ class AnnotationUtils
         static QDomElement findChildElement( const QDomNode & parentNode,
             const QString & name );
 
+        // return the translated string with the type of the annotation
+        // specified
+        static QString captionForAnnotation( Annotation * ann );
+
         //static inline QRect annotationGeometry( const Annotation * ann,
         //    int pageWidth, int pageHeight, int scaledWidth, int scaledHeight ) const;
 };

@@ -2444,7 +2444,7 @@ void PageView::slotRelayoutPages()
 
     // 4) update scrollview's contents size and recenter view
     bool wasUpdatesEnabled = viewport()->updatesEnabled();
-    if ( fullWidth != widget()->width() || fullHeight != viewport()->height() )
+    if ( fullWidth != widget()->width() || fullHeight != widget()->height() )
     {
         // disable updates and resize the viewportContents
         if ( wasUpdatesEnabled )

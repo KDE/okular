@@ -159,7 +159,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool d
         {
             ThumbnailWidget * t = new ThumbnailWidget( widget(), *pIt, this );
             t->setFocusProxy( this );
-	    t->move(0, height);
+            t->move(0, height);
             // add to the internal queue
             m_thumbnails.push_back( t );
             // update total height (asking widget its own height)
@@ -394,7 +394,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         for ( ; tIt != tEnd; ++tIt )
         {
             ThumbnailWidget *t = *tIt;
-	    t->move(0, newHeight);
+            t->move(0, newHeight);
             t->resizeFitWidth( newWidth );
             newHeight += t->height() + KDialog::spacingHint();
         }

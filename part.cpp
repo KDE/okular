@@ -984,7 +984,7 @@ void Part::slotNewConfig()
 
     // Main View (pageView)
     Qt::ScrollBarPolicy scrollBarMode = Okular::Settings::showScrollBars() ?
-        Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff;
+        Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff;
     if ( m_pageView->horizontalScrollBarPolicy() != scrollBarMode )
     {
         m_pageView->setHorizontalScrollBarPolicy( scrollBarMode );

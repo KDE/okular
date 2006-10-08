@@ -44,6 +44,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
 
     // 2. text line
     m_lineEdit = new KLineEdit(this);
+    m_lineEdit->setClearButtonShown( true );
     m_lineEdit->setToolTip(i18n( "Enter at least 3 letters to filter pages" ));
     connect(m_lineEdit, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
     addWidget(m_lineEdit);

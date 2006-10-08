@@ -9,7 +9,6 @@
 
 // qt/kde includes
 #include <qevent.h>
-#include <qlayout.h>
 #include <qtimer.h>
 #include <qpainter.h>
 #include <qscrollbar.h>
@@ -17,6 +16,7 @@
 #include <klocale.h>
 #include <kurl.h>
 #include <kaction.h>
+#include <kdialog.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>
 #include <kicon.h>
@@ -102,9 +102,6 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     QPalette widgetPal = m_pagesWidget->palette();
     widgetPal.setColor( m_pagesWidget->backgroundRole(), pal.color( QPalette::Base ) );
     m_pagesWidget->setPalette( widgetPal );
-    m_pagesLayout = new QVBoxLayout( m_pagesWidget );
-    m_pagesLayout->setMargin( 0 );
-    m_pagesLayout->setSpacing( 4 );
 
     setFrameStyle( StyledPanel | Raised );
 
@@ -162,8 +159,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool d
         {
             ThumbnailWidget * t = new ThumbnailWidget( widget(), *pIt, this );
             t->setFocusProxy( this );
-            // add to the scrollview
-            m_pagesLayout->addWidget( t );
+	    t->move(0, height);
             // add to the internal queue
             m_thumbnails.push_back( t );
             // update total height (asking widget its own height)
@@ -175,11 +171,11 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool d
                 m_selected->setSelected( true );
             }
             t->show();
-            height += t->height() + m_pagesLayout->spacing();
+            height += t->height() + KDialog::spacingHint();
         }
 
     // update scrollview's contents size (sets scrollbars limits)
-    height -= m_pagesLayout->spacing();
+    height -= KDialog::spacingHint();
     m_pagesWidget->resize( width, height );
 
     // request for thumbnail generation
@@ -398,12 +394,13 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         for ( ; tIt != tEnd; ++tIt )
         {
             ThumbnailWidget *t = *tIt;
+	    t->move(0, newHeight);
             t->resizeFitWidth( newWidth );
-            newHeight += t->height() + m_pagesLayout->spacing();
+            newHeight += t->height() + KDialog::spacingHint();
         }
 
         // update scrollview's contents size (sets scrollbars limits)
-        newHeight -= m_pagesLayout->spacing();
+        newHeight -= KDialog::spacingHint();
         m_pagesWidget->resize( newWidth, newHeight );
 
         // ensure selected item remains visible

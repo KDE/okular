@@ -18,7 +18,6 @@
 #include "core/observer.h"
 
 class QTimer;
-class QVBoxLayout;
 class KActionCollection;
 class ThumbnailWidget;
 
@@ -92,7 +91,6 @@ Q_OBJECT
         QList<ThumbnailWidget *> m_visibleThumbnails;
         int m_vectorIndex;
         QWidget *m_pagesWidget;
-        QVBoxLayout *m_pagesLayout;
 
     private slots:
         // make requests for generating pixmaps for visible thumbnails

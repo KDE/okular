@@ -347,8 +347,8 @@ QString TextPage::getText(const RegularAreaRect *area) const
     QString ret = "";
     QList<TextEntity*>::ConstIterator it,end = m_words.end();
     TextEntity * last=0;
-	for( it=m_words.begin() ; it != end;  ++it )
-	{
+    for ( it = m_words.begin(); it != end; ++it )
+    {
         // provide the string FIXME?: newline handling
         if (area->intersects((*it)->area))
         {
@@ -356,7 +356,7 @@ QString TextPage::getText(const RegularAreaRect *area) const
             ret += (*it)->txt;
             last=*it;
         }
-	}
+    }
     return ret;
 }
- 
+

@@ -1745,8 +1745,23 @@ void Document::slotRotation( int rotation )
 {
     if ( generator->supportsRotation() )
     {
+        // tell the pages to rotate
+        QVector< Okular::Page * >::iterator pIt = pages_vector.begin();
+        QVector< Okular::Page * >::iterator pEnd = pages_vector.end();
+        for ( ; pIt != pEnd; ++pIt )
+            (*pIt)->rotateAt( rotation );
+        // clear 'memory allocation' descriptors
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        for ( ; aIt != aEnd; ++aIt )
+            delete *aIt;
+        d->allocatedPixmapsFifo.clear();
+        d->allocatedPixmapsTotalMemory = 0;
+        // notify the generator that the current rotation has changed
+        generator->rotationChanged( rotation, d->rotation );
+        // set the new rotation
         d->rotation = rotation;
-        generator->setOrientation(pages_vector,rotation);
+
         foreachObserver( notifySetup( pages_vector, true ) );
         foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
 //         foreachObserver( notifyViewportChanged( false /*disables smoothMove*/ ));

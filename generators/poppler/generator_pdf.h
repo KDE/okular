@@ -83,8 +83,6 @@ class PDFGenerator : public Okular::Generator
           Okular::Page * page );
         QString getText( const Okular::RegularAreaRect * area, Okular::Page * page );
 
-        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
-
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 

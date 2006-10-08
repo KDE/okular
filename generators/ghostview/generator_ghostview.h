@@ -38,7 +38,7 @@ class GSGenerator : public Okular::Generator
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
         bool supportsRotation() { return true; } ;
-        void setOrientation(QVector<Okular::Page*>&, int);
+        void rotationChanged( int newOrientation, int oldOrientation );
 
         // paper size management
         bool supportsPaperSizes();

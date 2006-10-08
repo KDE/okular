@@ -148,24 +148,6 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
   signalRequestDone( request );
 }
 
-void KOOOGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
-{
-  const QSize size = mDocument->pageSize().toSize();
-
-  int width = size.width();
-  int height = size.height();
-
-  if ( orientation % 2 == 1 )
-    qSwap( width, height );
-
-  qDeleteAll( pagesVector );
-
-  for ( int i = 0; i < mDocument->pageCount(); ++i ) {
-    Okular::Page * page = new Okular::Page( i, width, height, 0 );
-    pagesVector[ i ] = page;
-  }
-}
-
 bool KOOOGenerator::print( KPrinter& printer )
 {
   QPainter p( &printer );

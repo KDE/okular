@@ -148,11 +148,6 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     return m_docSyn;
 }
 
-void DjVuGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
-{
-    loadPages( pagesVector, orientation );
-}
-
 void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
 {
     m_request->page->setPixmap( m_request->id, new QPixmap( pix ) );

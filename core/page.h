@@ -52,6 +52,8 @@ class OKULAR_EXPORT Page
         // query properties (const read-only methods)
         inline int number() const { return m_number; }
         inline int orientation() const { return m_orientation; }
+        inline int rotation() const { return m_rotation; }
+        inline int totalOrientation() const { return ( m_orientation + m_rotation ) % 4; }
         inline double width() const { return m_width; }
         inline double height() const { return m_height; }
         inline double ratio() const { return m_height / m_width; }
@@ -73,6 +75,9 @@ class OKULAR_EXPORT Page
         //FIXME TEMP:
         bool hasAnnotations() const { return !m_annotations.isEmpty(); }
         const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }
+
+        // operations for rotate the page
+        void rotateAt( int orientation );
 
         // operations: set contents (by Document)
         void setPixmap( int p_id, QPixmap * pixmap );
@@ -100,6 +105,7 @@ class OKULAR_EXPORT Page
         friend class ::PagePainter;
         int m_number;
         int m_orientation;
+        int m_rotation;
         double m_width, m_height;
         bool m_bookmarked;
         int m_maxuniqueNum;

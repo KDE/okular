@@ -214,7 +214,6 @@ class XpsGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
 
         bool supportsRotation() { return true; };
-        void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     private slots:
 

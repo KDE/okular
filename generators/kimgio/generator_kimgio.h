@@ -31,7 +31,6 @@ class KIMGIOGenerator : public Okular::Generator
 
         // [INHERITED] rotation capability
         bool supportsRotation() { return true; };
-        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );

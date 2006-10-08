@@ -104,7 +104,7 @@ class OKULAR_EXPORT Generator : public QObject
 
         // rotation
         virtual bool supportsRotation() { return false; };
-        virtual void setOrientation(QVector<Page*> & /*pagesVector*/, int /*orientation*/) { ; };
+        virtual void rotationChanged( int /*orientation*/, int /*oldOrientation*/ ) { ; };
 
         // paper size
         virtual bool supportsPaperSizes () { return false; }

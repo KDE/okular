@@ -46,7 +46,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 /** class Page **/
 
 Page::Page( uint page, double w, double h, int o )
-    : m_number( page ), m_orientation( o ), m_width( w ), m_height( h ),
+    : m_number( page ), m_orientation( o ), m_rotation( 0 ), m_width( w ), m_height( h ),
     m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 ),
     m_textSelections( 0 )
 {
@@ -161,6 +161,24 @@ QString Page::getText( const RegularAreaRect * area ) const
 	ret = m_text->getText( area );
 
 	return ret;
+}
+
+void Page::rotateAt( int orientation )
+{
+    int neworientation = orientation % 4;
+    if ( neworientation == m_rotation )
+        return;
+
+    deletePixmapsAndRects();
+    deleteHighlights();
+    deleteTextSelections();
+    delete m_text;
+    m_text = 0;
+
+    if ( ( m_orientation + m_rotation ) % 2 != ( m_orientation + neworientation ) % 2 )
+        qSwap( m_width, m_height );
+
+    m_rotation = neworientation;
 }
 
 const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const

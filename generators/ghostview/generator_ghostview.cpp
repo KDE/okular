@@ -242,12 +242,9 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     docLock.unlock();
 }
 
-void GSGenerator::setOrientation(QVector<Okular::Page*>& pages, int rot) 
+void GSGenerator::rotationChanged( int newOrientation, int /*oldOrientation*/ )
 {
-    internalDoc->setOrientation(orientation(rot));
-    loadPages (pages);
-    Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
-    m_document->notifyObservers( &r );
+    internalDoc->setOrientation(orientation(newOrientation));
 }
 
 bool GSGenerator::supportsPaperSizes()

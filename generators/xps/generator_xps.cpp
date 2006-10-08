@@ -720,10 +720,5 @@ const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
 }
 
 
-void XpsGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
-{
-    // TODO
-}
-
 #include "generator_xps.moc"
 

@@ -68,19 +68,6 @@ void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalRequestDone(request);
 }
 
-void KIMGIOGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
-{
-   int w = m_pix->width();
-   int h = m_pix->height();
-   if ( orientation % 2 == 1 )
-       qSwap( w, h );
-
-    delete pagesVector[0];
-
-    Okular::Page * page = new Okular::Page( 0, w, h, orientation );
-    pagesVector[0] = page;
-}
-
 bool KIMGIOGenerator::print( KPrinter& printer )
 {
     QPainter p(&printer);

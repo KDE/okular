@@ -42,7 +42,6 @@ class DviGenerator : public Okular::Generator
 
         // rotation
         bool supportsRotation() { return true; };
-        void setOrientation(QVector<Okular::Page*> & pagesVector, int orientation);
 
         // searching
         bool supportsSearching() { return true; };

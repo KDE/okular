@@ -297,11 +297,6 @@ const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
     return m_docInfo;
 }
 
-void TIFFGenerator::setOrientation( QVector<Okular::Page*> & pagesVector, int orientation )
-{
-    loadPages( pagesVector, orientation );
-}
-
 void TIFFGenerator::slotThreadFinished()
 {
     Okular::PixmapRequest * request = thread->request();

@@ -33,7 +33,6 @@ class DjVuGenerator : public Okular::Generator
 
         // rotation handling
         bool supportsRotation() { return true; };
-        void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
     private slots:
         void djvuPixmapGenerated( int page, const QPixmap & pix );

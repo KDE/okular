@@ -207,11 +207,6 @@ PDFGenerator::~PDFGenerator()
     }
 }
 
-void PDFGenerator::setOrientation(QVector<Okular::Page*> & pagesVector, int orientation)
-{
-    loadPages(pagesVector,orientation,true);
-}
-
 //BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*> & pagesVector )
 {
@@ -338,7 +333,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 	docLock.lock();
 	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
 	docLock.unlock();
-	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), orientation));
+	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()));
 	
 	qDeleteAll(textList);
 	delete p;
@@ -624,8 +619,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     docLock.unlock();
     if ( genTextPage )
     {
-        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)m_document->rotation());
-        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->orientation()) );
+        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page->rotation());
+        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), request->page->totalOrientation()) );
         qDeleteAll(textList);
     }
     delete p;
@@ -649,11 +644,11 @@ void PDFGenerator::generateSyncTextPage( Okular::Page * page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
-    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)m_document->rotation());
+    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->rotation());
     docLock.unlock();
     delete pp;
     // ..and attach it to the page
-    page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->orientation()) );
+    page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()) );
     qDeleteAll(textList);
 }
 
@@ -802,7 +797,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
     QString s;
     Okular::NormalizedRect * wordRect = new Okular::NormalizedRect;
     
-    rot = (rot + m_document->rotation()) % 4;
+    rot = rot % 4;
     
     foreach (Poppler::TextBox *word, text)
     {
@@ -1115,7 +1110,7 @@ void PDFGenerator::threadFinished()
     if ( !outText.isEmpty() )
     {
         request->page->setSearchPage( abstractTextPage( outText , 
-            request->page->height(), request->page->width(),request->page->orientation()));
+            request->page->height(), request->page->width(),request->page->totalOrientation()));
         qDeleteAll(outText);
     }
     bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -1285,7 +1280,7 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
-        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->documentRotation);
+        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page->rotation());
     }
     delete pp;
     

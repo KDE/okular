@@ -253,7 +253,7 @@ void DviGenerator::generateSyncTextPage( Okular::Page* page )
     pageSize ps;
 
     rotateCoordinates( (int)(page->width()), (int)(page->height()),
-                       pageInfo->width, pageInfo->height, page->orientation() );
+                       pageInfo->width, pageInfo->height, page->totalOrientation() );
 
     pageInfo->pageNumber = page->number() + 1;
 
@@ -266,7 +266,7 @@ void DviGenerator::generateSyncTextPage( Okular::Page* page )
     {
         m_dviRenderer->getText( pageInfo );
 
-        Okular::TextPage *ktp = extractTextFromPage( pageInfo, page->orientation() );
+        Okular::TextPage *ktp = extractTextFromPage( pageInfo, page->totalOrientation() );
         page->setSearchPage( ktp );
     }
     delete pageInfo;
@@ -375,11 +375,6 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     }
 
     return m_docSynopsis;
-}
-
-void DviGenerator::setOrientation(QVector<Okular::Page*> & pagesVector, int orientation)
-{
-    loadPages( pagesVector, orientation );
 }
 
 void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orientation )

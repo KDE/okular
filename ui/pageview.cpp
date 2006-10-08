@@ -2450,6 +2450,8 @@ void PageView::slotRelayoutPages()
         if ( wasUpdatesEnabled )
             viewport()->setUpdatesEnabled( false );
         setWidgetResizable(false);
+        fullWidth = qMax(fullWidth, viewport()->width());
+        fullHeight = qMax(fullHeight, viewport()->height());
         widget()->resize( fullWidth, fullHeight );
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )

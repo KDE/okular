@@ -46,6 +46,12 @@ class TextSelection;
 class OKULAR_EXPORT Page
 {
     public:
+        enum PageAction
+        {
+            Opening,
+            Closing
+        };
+
         Page( uint number, double width, double height, int orientation );
         ~Page();
 
@@ -72,6 +78,7 @@ class OKULAR_EXPORT Page
         const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
         //const Annotation * getAnnotation( double x, double y ) const;
         const PageTransition * getTransition() const;
+        const Link * getPageAction( PageAction act ) const;
         //FIXME TEMP:
         bool hasAnnotations() const { return !m_annotations.isEmpty(); }
         const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }
@@ -90,6 +97,7 @@ class OKULAR_EXPORT Page
         void modifyAnnotation( Annotation * newannotation );
         bool removeAnnotation( Annotation * annotation );
         void setTransition( PageTransition * transition );
+        void setPageAction( PageAction act, Link * action );
         // operations: delete contents (by Document)
         void deletePixmap( int p_id );
         void deletePixmapsAndRects();
@@ -117,6 +125,8 @@ class OKULAR_EXPORT Page
         QLinkedList< Annotation * > m_annotations;
         PageTransition * m_transition;
         HighlightAreaRect * m_textSelections;
+        Link * m_openingAction;
+        Link * m_closingAction;
 };
 
 }

@@ -19,6 +19,8 @@
 
 namespace Okular {
 
+class Sound;
+
 /**
  * @short Encapsulates data that describes a link.
  *
@@ -30,7 +32,7 @@ class OKULAR_EXPORT Link
 {
     public:
         // get link type (inherited classes mustreturn an unique identifier)
-        enum LinkType { Goto, Execute, Browse, Action, Movie };
+        enum LinkType { Goto, Execute, Browse, Action, Sound, Movie };
         virtual LinkType linkType() const = 0;
         virtual QString linkTip() const;
 
@@ -121,6 +123,29 @@ class OKULAR_EXPORT LinkAction : public Link
 
     private:
         ActionType m_type;
+};
+
+/** Sound: a sound to be played **/
+class OKULAR_EXPORT LinkSound : public Link
+{
+    public:
+        // create a Link_Sound
+        LinkSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound ) { m_volume = volume; m_sync = sync; m_repeat = repeat; m_mix = mix; m_sound = sound; }
+
+        LinkType linkType() const { return Sound; };
+
+        double volume() const { return m_volume; }
+        bool synchronous() const { return m_sync; }
+        bool repeat() const { return m_repeat; }
+        bool mix() const { return m_mix; }
+        Okular::Sound *sound() const { return m_sound; }
+
+    private:
+        double m_volume;
+        bool m_sync;
+        bool m_repeat;
+        bool m_mix;
+        Okular::Sound *m_sound;
 };
 
 /** Movie: Not yet defined -> think renaming to 'Media' link **/

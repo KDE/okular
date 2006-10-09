@@ -48,7 +48,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 Page::Page( uint page, double w, double h, int o )
     : m_number( page ), m_orientation( o ), m_rotation( 0 ), m_width( w ), m_height( h ),
     m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 ),
-    m_textSelections( 0 )
+    m_textSelections( 0 ), m_openingAction( 0 ), m_closingAction( 0 )
 {
     // if landscape swap width <-> height (rotate 90deg CCW)
 /*    if ( r == 90 || r == 270 )
@@ -193,6 +193,20 @@ const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, d
 const PageTransition * Page::getTransition() const
 {
     return m_transition;
+}
+
+const Link * Page::getPageAction( PageAction act ) const
+{
+    switch ( act )
+    {
+        case Page::Opening:
+            return m_openingAction;
+            break;
+        case Page::Closing:
+            return m_closingAction;
+            break;
+    }
+    return 0;
 }
 
 
@@ -345,6 +359,20 @@ void Page::setTransition( PageTransition * transition )
     delete m_transition;
     m_transition = transition;
 }
+
+void Page::setPageAction( PageAction act, Link * action )
+{
+    switch ( act )
+    {
+        case Page::Opening:
+            m_openingAction = action;
+            break;
+        case Page::Closing:
+            m_closingAction = action;
+            break;
+    }
+}
+
 
 void Page::deletePixmap( int id )
 {

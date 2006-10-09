@@ -43,6 +43,7 @@ set(okularcore_SRCS
    core/link.cpp
    core/page.cpp
    core/pagetransition.cpp
+   core/sound.cpp
    core/textpage.cpp
    core/utils.cpp
 )

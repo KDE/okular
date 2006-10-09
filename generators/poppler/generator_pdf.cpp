@@ -28,6 +28,7 @@
 #include "core/page.h"
 #include "core/annotations.h"
 #include "core/pagetransition.h"
+#include "core/sound.h"
 #include "settings.h"
 
 #include <config.h>
@@ -113,6 +114,9 @@ static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink,
 	const Poppler::LinkExecute *popplerLinkExecute;
 	const Poppler::LinkBrowse *popplerLinkBrowse;
 	const Poppler::LinkAction *popplerLinkAction;
+#ifdef HAVE_POPPLER_HEAD
+	const Poppler::LinkSound *popplerLinkSound;
+#endif
 	Okular::DocumentViewport viewport;
 	
 	switch(popplerLink->linkType())
@@ -140,6 +144,35 @@ static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink,
 			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
 			link = new Okular::LinkAction( (Okular::LinkAction::ActionType)popplerLinkAction->actionType() );
 		break;
+		
+#ifdef HAVE_POPPLER_HEAD
+		case Poppler::Link::Sound:
+		{
+			popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
+			Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
+			Okular::Sound *sound = popplerSound->soundType() == Poppler::SoundObject::Embedded ? new Okular::Sound( popplerSound->data() ) : new Okular::Sound( popplerSound->url() );
+			sound->setSamplingRate( popplerSound->samplingRate() );
+			sound->setChannels( popplerSound->channels() );
+			sound->setBitsPerSample( popplerSound->bitsPerSample() );
+			switch ( popplerSound->soundEncoding() )
+			{
+				case Poppler::SoundObject::Raw:
+					sound->setSoundEncoding( Okular::Sound::Raw );
+					break;
+				case Poppler::SoundObject::Signed:
+					sound->setSoundEncoding( Okular::Sound::Signed );
+					break;
+				case Poppler::SoundObject::muLaw:
+					sound->setSoundEncoding( Okular::Sound::muLaw );
+					break;
+				case Poppler::SoundObject::ALaw:
+					sound->setSoundEncoding( Okular::Sound::ALaw );
+					break;
+			}
+			link = new Okular::LinkSound( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
+		}
+		break;
+#endif
 		
 		case Poppler::Link::Movie:
 			// not implemented
@@ -326,6 +359,14 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         addTransition( p, page );
         if ( true ) //TODO real check
           addAnnotations( p, page );
+#ifdef HAVE_POPPLER_HEAD
+        Poppler::Link * tmplink = p->action( Poppler::Page::Opening );
+        if ( tmplink )
+            page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink, pdfdoc ) );
+        tmplink = p->action( Poppler::Page::Closing );
+        if ( tmplink )
+            page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink, pdfdoc ) );
+#endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
 // need a way to find efficient (maybe background textpage generation)

@@ -26,8 +26,33 @@ endif(_PopplerLinkFlags)
 if (POPPLER_FOUND)
   set(POPPLER_INCLUDE_DIR ${_PopplerIncDir})
   set(POPPLER_LIBRARY ${_PopplerLinkFlags})
+
+  # check whether we're using poppler HEAD
+  set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR}/poppler ${QT_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
+check_cxx_source_compiles("
+#define UNSTABLE_POPPLER_QT4
+
+#include <poppler-qt4.h>
+
+int main()
+{
+  Poppler::SoundObject * so = 0;
+  (void)so;
+
+  return 0;
+}
+" HAVE_POPPLER_HEAD )
+  set(CMAKE_REQUIRED_INCLUDES)
+  set(CMAKE_REQUIRED_LIBRARIES)
+  if (HAVE_POPPLER_HEAD)
+    set(popplerHeadMessage "yes")
+  else (HAVE_POPPLER_HEAD)
+    set(popplerHeadMessage "no")
+  endif (HAVE_POPPLER_HEAD)
+
   if (NOT POPPLER_FIND_QUIETLY)
-    message(STATUS "Found Poppler-qt4: ${POPPLER_LIBRARY}")
+    message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, HEAD? ${popplerHeadMessage}")
   endif (NOT POPPLER_FIND_QUIETLY)
 else (POPPLER_FOUND)
   if (POPPLER_FIND_REQUIRED)

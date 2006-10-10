@@ -51,7 +51,7 @@ QString Sound::url() const
 QByteArray Sound::data() const
 {
     return m_type == Sound::Embedded ? m_data.toByteArray() : QByteArray();
-};
+}
 
 double Sound::samplingRate() const
 {

@@ -222,12 +222,13 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
 }
 
 
-RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &query,
+RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &_query,
         bool strictCase, const QList<TextEntity*>::Iterator &start,
         const QList<TextEntity*>::Iterator &end)
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
+    QString query = strictCase ? _query : _query.toLower();
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -271,14 +272,14 @@ RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
-            kDebug(1223) << str.mid(offset,min) << " : " << query.mid(j,min) << endl;
+            kDebug(1223) << str.mid(offset,min) << " : " << _query.mid(j,min) << endl;
 #endif
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 
             if ((strictCase)
                 ? (str.mid(offset,min) != query.mid(j,min))
-                : (str.mid(offset,min).toLower() != query.mid(j,min).toLower())
+                : (str.mid(offset,min).toLower() != query.mid(j,min))
                 )
             {
                     // we not have matched

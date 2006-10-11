@@ -1865,9 +1865,9 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
                 itemHeight = itemGeometry.height();
             // draw simple outline
             p->setPen( Qt::black );
-            p->drawRect( -1, -1, itemWidth + 2, itemHeight + 2 );
+            p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
             // draw bottom/right gradient
-            int levels = 2;
+            static int levels = 2;
             int r = QColor(Qt::gray).red() / (levels + 2),
                 g = QColor(Qt::gray).green() / (levels + 2),
                 b = QColor(Qt::gray).blue() / (levels + 2);

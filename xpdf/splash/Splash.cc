@@ -2346,6 +2346,8 @@ SplashError Splash::fillImageMask(SplashImageMaskSource src, void *srcData,
 	   (double)mat[3], (double)mat[4], (double)mat[5]);
   }
 
+  if (w == 0 && h == 0) return splashErrZeroImage;
+
   // check for singular matrix
   if (splashAbs(mat[0] * mat[3] - mat[1] * mat[2]) < 0.000001) {
     return splashErrSingularMatrix;

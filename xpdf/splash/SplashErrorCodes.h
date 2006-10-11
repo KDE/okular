@@ -29,4 +29,6 @@
 
 #define splashErrSingularMatrix  8	// matrix is singular
 
+#define splashErrZeroImage       9      // image of 0x0
+
 #endif

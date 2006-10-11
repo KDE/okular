@@ -180,7 +180,9 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                 this->removeAll( m_remove.last() );
                 m_remove.pop_back();
             }
+#ifdef DEBUG_REGULARAREA
             kDebug() << "from " << end << " to " << this->count() << endl;
+#endif
 }
 
 template <class NormalizedShape, class Shape>

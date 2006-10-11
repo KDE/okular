@@ -721,7 +721,6 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
             {
                 // set 'contentsRect' to a part of the sub-divided region
                 contentsRect = allRects[i].normalized().intersect( viewportRect );
-                contentsRect.translate( horizontalScrollBar()->value(), verticalScrollBar()->value() );
                 if ( !contentsRect.isValid() )
                     continue;
             }

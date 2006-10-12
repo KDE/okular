@@ -306,7 +306,7 @@ typedef RegularArea<NormalizedRect*,QRect> RegularAreaRect;
 
 class HighlightAreaRect : public RegularAreaRect {
 	public:
-		HighlightAreaRect(RegularAreaRect *area);
+		HighlightAreaRect( const RegularAreaRect *area = 0 );
 		// searchID of the highlight owner
 		int s_id;
 		// color of the highlight

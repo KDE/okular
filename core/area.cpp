@@ -130,15 +130,18 @@ QRect NormalizedRect::geometry( int xScale, int yScale ) const
     return QRect( l, t, r - l + 1, b - t + 1 );
 }
 
-HighlightAreaRect::HighlightAreaRect(RegularAreaRect *area)
+HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
+    : RegularAreaRect(), s_id( -1 )
 {
-	RegularAreaRect::Iterator i;
-	for (i=area->begin();i!=area->end();++i)
-	{
-		append(new NormalizedRect(*(*i)));
-	}
-	s_id=-1;
-	color=QColor();
+    if ( area )
+    {
+        RegularAreaRect::ConstIterator it = area->begin();
+        RegularAreaRect::ConstIterator itEnd = area->end();
+        for ( ; it != itEnd; ++it )
+        {
+            append( new NormalizedRect( *(*it) ) );
+        }
+    }
 }
 
 /** class ObjectRect **/

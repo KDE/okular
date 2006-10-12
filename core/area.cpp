@@ -89,7 +89,11 @@ NormalizedRect NormalizedRect::operator| (const NormalizedRect & r) const
 
 NormalizedRect& NormalizedRect::operator|= (const NormalizedRect & r)
 {
-	return ((*this) = (*this) | r );
+    left = qMin( left, r.left );
+    top = qMin( top, r.top );
+    bottom = qMax( bottom, r.bottom );
+    right = qMax( right, r.right );
+    return *this;
 }
 
 NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r )

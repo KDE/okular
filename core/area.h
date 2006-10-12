@@ -146,9 +146,9 @@ public  QList<NormalizedShape>
 {
 	public:
 		bool contains( double x, double y ) const;
-                bool contains( NormalizedShape ) const;
+                bool contains( const NormalizedShape& shape ) const;
 		bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
-		bool intersects (const NormalizedShape shape) const;
+		bool intersects (const NormalizedShape& shape) const;
 		void appendArea (const RegularArea<NormalizedShape,Shape> *area);
 		void simplify ();
 		bool isNull() const;
@@ -194,7 +194,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape ns, *this)
+	foreach(const NormalizedShape& ns, *this)
 		if (!(ns->isNull()))
 			return false;
 	return true;
@@ -202,7 +202,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape rect) const
+bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape& rect) const
 {
 	if (!this)
 		return false;
@@ -210,7 +210,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape rect
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape ns, *this)
+	foreach(const NormalizedShape& ns, *this)
 	{
 		if(!(ns->isNull()) && ns->intersects (rect))
 			return true;
@@ -227,9 +227,9 @@ bool RegularArea<NormalizedShape, Shape>::intersects
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape ns, this)
+	foreach(const NormalizedShape& ns, this)
 	{
-		foreach(const Shape s, area)
+		foreach(const Shape& s, area)
 		{
 			if(!(ns->isNull) && ns->intersects (s))
 				return true;
@@ -245,7 +245,7 @@ void RegularArea<NormalizedShape, Shape>::appendArea
 	if (!this)
 		return false;
 
-	foreach(const Shape s, area)
+	foreach(const Shape& s, area)
 	{
 		this->append(s);
 	}
@@ -260,7 +260,7 @@ bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
 	if (this->isEmpty())
 		return false;
 
-	foreach(const NormalizedShape ns, this)
+	foreach(const NormalizedShape& ns, this)
 	{
 		if(ns->contains (x,y))
 			return true;
@@ -269,7 +269,7 @@ bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::contains (NormalizedShape shape) const
+bool RegularArea<NormalizedShape, Shape>::contains (const NormalizedShape& shape) const
 {
         if (!this)
                 return false;
@@ -291,7 +291,7 @@ RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, i
 
 	QList<Shape>* ret=new QList<Shape>;
         Shape t;
-	foreach(const NormalizedShape ns, *this)
+	foreach(const NormalizedShape& ns, *this)
 	{
             t=ns->geometry(xScale,yScale);
             t.translate(dx,dy);

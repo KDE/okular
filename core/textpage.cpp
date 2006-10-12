@@ -147,7 +147,8 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
             third=*end;
             third.left=second.left=0;
             second.bottom=end->top;
-            for (it=qMin(sel->itB(),sel->itE()); it<=qMax(sel->itB(),sel->itE());it++)
+            int selMax = qMax( sel->itB(), sel->itE() );
+            for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
             {
                 tmp=m_words[it]->area;
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))

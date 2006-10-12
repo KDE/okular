@@ -21,7 +21,7 @@
 static const char description[] =
 I18N_NOOP("okular, a Universal document viewer");
 
-static const char version[] = "0.5";
+static const char version[] = "0.5.81";
 
 static KCmdLineOptions options[] =
 {

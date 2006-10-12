@@ -88,7 +88,7 @@ class OKULAR_EXPORT ObjectRect
 
         // default constructor: initialize all parameters
         ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType typ, void * obj );
-        ObjectRect( NormalizedRect x, bool ellipse, ObjectType type, void * pnt ) ;
+        ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt ) ;
         ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt ) ;
         virtual ~ObjectRect();
 

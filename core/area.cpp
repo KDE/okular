@@ -157,7 +157,7 @@ ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, Ob
         m_path.addRect( rect );
 }
 
-ObjectRect::ObjectRect( NormalizedRect x, bool ellipse, ObjectType type, void * pnt )
+ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt )
     : m_objectType( type ), m_pointer( pnt )
 {
     QRectF rect( x.left, x.top, fabs( x.right - x.left ), fabs( x.bottom - x.top ) );

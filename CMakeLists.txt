@@ -56,7 +56,7 @@ kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
+kde4_add_kcfg_files(okularcore okularcore_SRCS conf/settings.kcfgc )
 
 kde4_automoc(okularcore ${okularcore_SRCS})
 

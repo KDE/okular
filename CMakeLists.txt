@@ -58,7 +58,7 @@ kde4_add_ui_files(okularcore_SRCS
 
 kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
 
-kde4_automoc(${okularcore_SRCS})
+kde4_automoc(okularcore ${okularcore_SRCS})
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
@@ -93,7 +93,7 @@ set(okularpart_SRCS
    ui/painter_agg2/agg_vcgen_stroke.cpp
 )
 
-kde4_automoc(${okularpart_SRCS})
+kde4_automoc(okularpart ${okularpart_SRCS})
 
 kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 

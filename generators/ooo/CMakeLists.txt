@@ -15,7 +15,7 @@ set(okularGenerator_ooo_PART_SRCS
   styleparser.cpp
 )
 
-kde4_automoc(${okularGenerator_ooo_PART_SRCS})
+kde4_automoc(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_ooo WITH_PREFIX ${okularGenerator_ooo_PART_SRCS})
 

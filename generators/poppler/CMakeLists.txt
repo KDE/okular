@@ -9,7 +9,7 @@ include_directories(
 
 set(okularGenerator_poppler_PART_SRCS generator_pdf.cpp )
 
-kde4_automoc(${okularGenerator_poppler_PART_SRCS})
+kde4_automoc(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_poppler WITH_PREFIX ${okularGenerator_poppler_PART_SRCS})
 

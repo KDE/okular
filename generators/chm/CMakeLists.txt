@@ -24,7 +24,7 @@ set(okularGenerator_chmlib_SRCS
 
 set(okularGenerator_chmlib_PART_SRCS ${chmlib_SRCS} ${okularGenerator_chmlib_SRCS} )
 
-kde4_automoc(${okularGenerator_chmlib_PART_SRCS})
+kde4_automoc(okularGenerator_chmlib ${okularGenerator_chmlib_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_chmlib WITH_PREFIX ${okularGenerator_chmlib_PART_SRCS})
 

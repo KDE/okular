@@ -3,7 +3,7 @@
 
 set(okular_SRCS main.cpp shell.cpp )
 
-kde4_automoc(${okular_SRCS})
+kde4_automoc(okular ${okular_SRCS})
 
 kde4_add_executable(okular ${okular_SRCS})
 

@@ -329,6 +329,12 @@ bool PDFGenerator::closeDocument()
     delete pdfdoc;
     pdfdoc = 0;
     docLock.unlock();
+    docInfoDirty = true;
+    docSynopsisDirty = true;
+    docFontsDirty = true;
+    docEmbeddedFilesDirty = true;
+    qDeleteAll(docEmbeddedFiles);
+    docEmbeddedFiles.clear();
 
     return true;
 }
@@ -563,6 +569,8 @@ const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
         // 4. set Path
         fontElem.setAttribute( "File", font.file() );
     }
+
+    docFontsDirty = false;
 
     return &docFonts;
 }

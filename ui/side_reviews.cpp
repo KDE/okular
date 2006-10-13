@@ -188,8 +188,8 @@ class AnnotationItem : public QTreeWidgetItem
             m_ann = ann;
             setText( 0, Okular::AnnotationUtils::captionForAnnotation( m_ann ) );
             setIcon( 0, KIcon( "okular" ) );
-            setToolTip( 0, QString( "<qt>%1</qt>" )
-                .arg( i18n( "Author: %1", m_ann->author ) ) );
+            setToolTip( 0, QString( "<qt><b>%1</b><hr>%2</qt>" )
+                .arg( i18n( "Author: %1", m_ann->author ), m_ann->contents ) );
         }
 
         Okular::Annotation * anotation()

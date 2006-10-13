@@ -104,8 +104,6 @@ protected:
 	bool openFile();
 	bool openUrl(const KUrl &url);
 	bool closeUrl();
-	// filter that watches for splitter size changes
-	bool eventFilter( QObject * watched, QEvent * e );
 	void supportedMimetypes();
 
 protected slots:
@@ -130,6 +128,7 @@ protected slots:
 	bool slotImportPSFile();
 	void close();
 	void cannotQuit();
+	void splitterMoved( int pos, int index );
 	void setMimeTypes(KIO::Job *job);
 	void saveSplitterSize();
 	// can be connected to widget elements

@@ -130,6 +130,7 @@ Part::Part(QWidget *parentWidget,
 	m_leftPanel->setMaximumWidth( 300 );
 	QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
 	leftPanelLayout->setMargin( 0 );
+	m_splitter->setCollapsible( 0, true );
 
 	// widgets: [left toolbox/..] | []
 	m_toolBox = new QToolBox( m_leftPanel );
@@ -315,9 +316,8 @@ Part::Part(QWidget *parentWidget,
 		splitterSizes.push_back( 500 );
 	}
 	m_splitter->setSizes( splitterSizes );
-	// get notified about splitter size changes (HACK that will be removed
-	// by connecting to Qt4::QSplitter's sliderMoved())
-	m_pageView->installEventFilter( this );
+	// get notified about splitter size changes
+	connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
 
 	// document watcher and reloader
 	m_watcher = new KDirWatch( this );
@@ -684,14 +684,11 @@ void Part::cannotQuit()
 	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInOkular::");
 }
 
-bool Part::eventFilter( QObject * watched, QEvent * e )
+void Part::splitterMoved( int /*pos*/, int index )
 {
     // if pageView has been resized, save splitter sizes
-    if ( watched == m_pageView && e->type() == QEvent::Resize )
+    if ( index == 1 )
         saveSplitterSize();
-
-    // only intercept events, don't block them
-    return false;
 }
 
 void Part::slotShowLeftPanel()

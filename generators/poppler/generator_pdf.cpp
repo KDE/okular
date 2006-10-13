@@ -376,7 +376,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
 // need a way to find efficient (maybe background textpage generation)
-	kDebug() << "loadpages with rotation" << rotation << " and orientation " << orientation << endl;
+	kDebug() << "load page " << i << " with rotation " << rotation << " and orientation " << orientation << endl;
 	docLock.lock();
 	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
 	docLock.unlock();
@@ -389,7 +389,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             delete pagesVector[i];
         // set the Okular::page at the right position in document's pages vector
         pagesVector[i] = page;
-// 	kWarning() << page->width() << "x" << page->height() << endl;
     }
 }
 
@@ -688,7 +687,6 @@ bool PDFGenerator::canGenerateTextPage()
 
 void PDFGenerator::generateSyncTextPage( Okular::Page * page )
 {
-// TODO i think this is wrong because we need the "optative rotation", not the original rotation, but AFAIK it's never called
     kDebug() << "calling generateSyncTextPage( Okular::Page * page )" << endl;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );

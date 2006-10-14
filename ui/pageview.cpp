@@ -293,11 +293,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 PageView::~PageView()
 {
     // delete the local storage structure
-    foreach(AnnotWindow* tempwnd, d->m_annowindows)
-    {
-        if(tempwnd)
-            delete tempwnd;
-    }
+    qDeleteAll(d->m_annowindows);
     d->document->removeObserver( this );
     delete d;
 }
@@ -1277,11 +1273,14 @@ if ( d->document->handleEvent( e ) )
                             {
                                 kDebug() << "astario: select deleteNote" << endl;
                                // find and close the annotwindow
-                               foreach( AnnotWindow* annwnd, d->m_annowindows )
+                               QList<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
+                               QList<AnnotWindow *>::Iterator itEnd = d->m_annowindows.end();
+                               for ( ; it != itEnd; ++it )
                                {
-                                   if( ann == annwnd->m_annot )
+                                   if ( ann == (*it)->m_annot )
                                    {
-                                       delete annwnd;
+                                       delete *it;
+                                       it = d->m_annowindows.erase( it );
                                        break;
                                    }
                                }

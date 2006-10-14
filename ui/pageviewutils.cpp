@@ -15,10 +15,9 @@
 #include <qlayout.h>
 #include <qpainter.h>
 #include <qevent.h>
+#include <qstyle.h>
 #include <qtimer.h>
 #include <qtoolbutton.h>
-#include <qpushbutton.h>
-#include <QStyleOptionButton>
 #include <kacceleratormanager.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
@@ -271,34 +270,27 @@ void PageViewTopMessage::display( const QString & message )
 /** PageViewToolBar  */
 /*********************/
 
-class ToolBarButton : public QPushButton
+class ToolBarButton : public QToolButton
 {
     public:
         static const int iconSize = 32;
         static const int buttonSize = 40;
 
-        ToolBarButton( QWidget * parent, const ToolBarItem & item, const QPixmap & parentPix );
+        ToolBarButton( QWidget * parent, const ToolBarItem & item );
         int buttonID() const { return m_id; }
-
-    protected:
-        void mouseMoveEvent( QMouseEvent * e );
-        void paintEvent( QPaintEvent * e );
 
     private:
         int m_id;
-        bool m_hovering;
-        const QPixmap & m_background;
 };
 
-ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const QPixmap & pix )
-    : QPushButton( parent ), m_id( item.id ), m_hovering( false ), m_background( pix )
+ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item )
+    : QToolButton( parent ), m_id( item.id )
 {
-    setMouseTracking( true );
     setCheckable( true );
+    setAutoRaise( true );
     resize( buttonSize, buttonSize );
     setIconSize( QSize( iconSize, iconSize ) );
     setIcon( DesktopIconSet( item.pixmap, iconSize ) );
-    setAttribute( Qt::WA_OpaquePaintEvent );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setShortcut( QKeySequence( item.shortcut ) );
@@ -311,40 +303,6 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item, const 
         setToolTip( QString("%1 [%2]").arg( item.text ).arg( accelString ) );
     else
         setToolTip( item.text );
-}
-
-void ToolBarButton::mouseMoveEvent( QMouseEvent * e )
-{
-    // if hovering changes, update gfx
-    bool hover = QRect( 0, 0, width(), height() ) .contains( e->pos() );
-    if ( m_hovering != hover )
-    {
-        m_hovering = hover;
-        update();
-    }
-}
-
-void ToolBarButton::paintEvent( QPaintEvent * e )
-{
-    // if the button is pressed or we're hovering it, use QPushButton style
-    if ( isChecked() || m_hovering )
-    {
-        QPushButton::paintEvent( e );
-        return;
-    }
-
-    // draw button's pixmap over the parent's background (fake transparency)
-    QPainter p( this );
-    QRect backRect = e->rect();
-    backRect.translate( x(), y() );
-    p.drawPixmap( e->rect().topLeft(), m_background, backRect );
-    QStyleOptionButton opt;
-    opt.initFrom( this );
-    opt.features = QStyleOptionButton::Flat;
-    opt.icon = icon();
-    opt.iconSize = QSize( iconSize, iconSize );
-    opt.text = text();
-    style()->drawControl( QStyle::CE_PushButton, &opt, &p, this );
 }
 
 /* PageViewToolBar */
@@ -413,7 +371,7 @@ void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & ite
     QLinkedList<ToolBarItem>::const_iterator it = items.begin(), end = items.end();
     for ( ; it != end; ++it )
     {
-        ToolBarButton * button = new ToolBarButton( this, *it, d->backgroundPixmap );
+        ToolBarButton * button = new ToolBarButton( this, *it );
         connect( button, SIGNAL( clicked() ), this, SLOT( slotButtonClicked() ) );
         d->buttons.append( button );
     }

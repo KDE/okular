@@ -23,6 +23,7 @@ In progress [working on]:
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
 -> text selection in wordprocessor style
+-> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a KPDFAnchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
@@ -84,8 +85,6 @@ More items (first items will enter 'In progress list' first):
 -> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> rotate the whole document / individual pages (on screen/print?) (BR99352)
-   Have a look at the fifth parameter of displayPage, it is the rotation, so it should not be THAT hard to implement
 -> presentation: add page counter and a widget to manually set pages on the top bar
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> presentation: implement missing transitions (6/11 done)

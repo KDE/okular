@@ -68,6 +68,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     mainlay->setMargin( 0 );
 
     QHBoxLayout *searchlay = new QHBoxLayout();
+    searchlay->setMargin( 2 );
     searchlay->setSpacing( 2 );
     mainlay->addLayout( searchlay );
 

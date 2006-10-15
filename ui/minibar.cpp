@@ -73,21 +73,21 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->setMargin( 0 );
     horLayout->setSpacing( 0 );
 
-     // bottom: left prev_page button
-     m_prevButton = new HoverButton( this );
-     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ) );
+    // bottom: left prev_page button
+    m_prevButton = new HoverButton( this );
+    m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ) );
     horLayout->addWidget( m_prevButton );
-     // bottom: left lineEdit (current page box)
-     m_pagesEdit = new PagesEdit( this );
+    // bottom: left lineEdit (current page box)
+    m_pagesEdit = new PagesEdit( this );
     horLayout->addWidget( m_pagesEdit );
-     // bottom: central '/' label
+    // bottom: central '/' label
     horLayout->addWidget( new QLabel( "/", this ) );
-     // bottom: right button
-     m_pagesButton = new HoverButton( this );
+    // bottom: right button
+    m_pagesButton = new HoverButton( this );
     horLayout->addWidget( m_pagesButton );
-     // bottom: right next_page button
-     m_nextButton = new HoverButton( this );
-     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) );
+    // bottom: right next_page button
+    m_nextButton = new HoverButton( this );
+    m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) );
     horLayout->addWidget( m_nextButton );
 
     // customize own look
@@ -385,6 +385,7 @@ HoverButton::HoverButton( QWidget * parent )
 {
     setMouseTracking( true );
     KAcceleratorManager::setNoAccel( this );
+    setFocusPolicy(Qt::NoFocus);
 }
 
 void HoverButton::enterEvent( QEvent * e )

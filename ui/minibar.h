@@ -20,7 +20,6 @@ class Document;
 
 class PagesEdit;
 class HoverButton;
-class ProgressWidget;
 
 /**
  * @short A widget to display page number and change current page.
@@ -44,12 +43,8 @@ class MiniBar : public QFrame, public Okular::DocumentObserver
 
     public slots:
         void slotChangePage();
-        void slotGotoNormalizedPage( float normIndex );
         void slotEmitNextPage();
         void slotEmitPrevPage();
-
-    protected:
-        void resizeEvent( QResizeEvent * );
 
     private:
         Okular::Document * m_document;
@@ -57,8 +52,41 @@ class MiniBar : public QFrame, public Okular::DocumentObserver
         HoverButton * m_prevButton;
         HoverButton * m_pagesButton;
         HoverButton * m_nextButton;
-        ProgressWidget * m_progressWidget;
         int m_currentPage;
+};
+
+/**
+ * @short A small progress bar.
+ */
+class ProgressWidget : public QWidget, public Okular::DocumentObserver
+{
+    Q_OBJECT
+    public:
+        ProgressWidget( QWidget * parent, Okular::Document * document );
+        ~ProgressWidget();
+
+        // [INHERITED] from DocumentObserver
+        uint observerId() const { return PROGRESSWIDGET_ID; }
+        void notifyViewportChanged( bool smoothMove );
+
+        void slotGotoNormalizedPage( float index );
+
+    signals:
+        void prevPage();
+        void nextPage();
+
+    protected:
+        void setProgress( float percentage );
+
+        void mouseMoveEvent( QMouseEvent * e );
+        void mousePressEvent( QMouseEvent * e );
+        void wheelEvent( QWheelEvent * e );
+        void paintEvent( QPaintEvent * e );
+
+    private:
+        Okular::Document * m_document;
+        int m_currentPage;
+        float m_progressPercentage;
 };
 
 #endif

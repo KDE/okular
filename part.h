@@ -45,6 +45,7 @@ class ThumbnailController;
 class PageView;
 class PageViewTopMessage;
 class PresentationWidget;
+class ProgressWidget;
 class SearchWidget;
 class TOC;
 class MiniBar;
@@ -163,6 +164,7 @@ private:
 	QPointer<TOC> m_toc;
 	QPointer<MiniBar> m_miniBar;
 	QPointer<PresentationWidget> m_presentationWidget;
+	QPointer<ProgressWidget> m_progressWidget;
 
 	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;

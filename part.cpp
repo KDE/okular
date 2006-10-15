@@ -166,17 +166,22 @@ Part::Part(QWidget *parentWidget,
 	QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
 	miniBarLayout->setMargin( 0 );
 	// widgets: [../[spacer/..]] | []
-	QWidget * miniSpacer = new QWidget( miniBarContainer );
-	miniSpacer->setFixedHeight( 6 );
-	miniBarLayout->addWidget( miniSpacer );
+	miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
 	// widgets: [../[../MiniBar]] | []
-	m_miniBar = new MiniBar( miniBarContainer, m_document );
-	miniBarLayout->addWidget( m_miniBar );
+	QFrame * bevelContainer = new QFrame( miniBarContainer );
+	bevelContainer->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+	QVBoxLayout * bevelContainerLayout = new QVBoxLayout( bevelContainer );
+	bevelContainerLayout->setMargin( 4 );
+	m_progressWidget = new ProgressWidget( bevelContainer, m_document );
+	bevelContainerLayout->addWidget( m_progressWidget );
+	miniBarLayout->addWidget( bevelContainer );
+	miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
 
 	// widgets: [] | [right 'pageView']
 	QWidget * rightContainer = new QWidget( m_splitter );
 	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
 	rightLayout->setMargin( 0 );
+	rightLayout->setSpacing( 0 );
 //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
 //	rightLayout->addWidget( rtb );
 	m_topMessage = new PageViewTopMessage( rightContainer );
@@ -190,6 +195,15 @@ Part::Part(QWidget *parentWidget,
 	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
 	connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
 	rightLayout->addWidget( m_pageView );
+	QWidget * bottomBar = new QWidget( rightContainer );
+	QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
+	bottomBarLayout->setMargin( 0 );
+	bottomBarLayout->setSpacing( 0 );
+	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+	m_miniBar = new MiniBar( bottomBar, m_document );
+	bottomBarLayout->addWidget( m_miniBar );
+	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+	rightLayout->addWidget( bottomBar );
 
 	// add document observers
 	m_document->addObserver( this );
@@ -197,6 +211,7 @@ Part::Part(QWidget *parentWidget,
 	m_document->addObserver( m_pageView );
 	m_document->addObserver( m_toc );
 	m_document->addObserver( m_miniBar );
+	m_document->addObserver( m_progressWidget );
 	m_document->addObserver( reviewsWidget );
 
 	// ACTIONS
@@ -213,12 +228,14 @@ Part::Part(QWidget *parentWidget,
 	m_prevPage->setShortcut( 0 );
 	// dirty way to activate prev page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+	connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
 	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( 0 );
 	// dirty way to activate next page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+	connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
 	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
@@ -345,6 +362,7 @@ Part::~Part()
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
+    delete m_progressWidget;
 
     delete m_document;
 }

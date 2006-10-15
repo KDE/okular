@@ -42,6 +42,7 @@ class KPrinter;
 
 class ThumbnailList;
 class ThumbnailController;
+class PageSizeLabel;
 class PageView;
 class PageViewTopMessage;
 class PresentationWidget;
@@ -165,6 +166,7 @@ private:
 	QPointer<MiniBar> m_miniBar;
 	QPointer<PresentationWidget> m_presentationWidget;
 	QPointer<ProgressWidget> m_progressWidget;
+	QPointer<PageSizeLabel> m_pageSizeLabel;
 
 	// document watcher (and reloader) variables
 	KDirWatch *m_watcher;

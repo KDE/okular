@@ -77,6 +77,7 @@ set(okularpart_SRCS
    ui/minibar.cpp
    ui/newstuff.cpp
    ui/pagepainter.cpp
+   ui/pagesizelabel.cpp
    ui/pageviewannotator.cpp
    ui/pageview.cpp
    ui/pageviewutils.cpp

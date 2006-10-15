@@ -67,6 +67,7 @@
 #include "ui/embeddedfilesdialog.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
+#include "ui/pagesizelabel.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/document.h"
@@ -197,12 +198,15 @@ Part::Part(QWidget *parentWidget,
 	rightLayout->addWidget( m_pageView );
 	QWidget * bottomBar = new QWidget( rightContainer );
 	QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
+	m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
 	bottomBarLayout->setMargin( 0 );
 	bottomBarLayout->setSpacing( 0 );
+	bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
 	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
 	m_miniBar = new MiniBar( bottomBar, m_document );
 	bottomBarLayout->addWidget( m_miniBar );
 	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+	bottomBarLayout->addWidget( m_pageSizeLabel );
 	rightLayout->addWidget( bottomBar );
 
 	// add document observers
@@ -213,6 +217,7 @@ Part::Part(QWidget *parentWidget,
 	m_document->addObserver( m_miniBar );
 	m_document->addObserver( m_progressWidget );
 	m_document->addObserver( reviewsWidget );
+	m_document->addObserver( m_pageSizeLabel );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -363,6 +368,7 @@ Part::~Part()
     delete m_thumbnailList;
     delete m_miniBar;
     delete m_progressWidget;
+    delete m_pageSizeLabel;
 
     delete m_document;
 }

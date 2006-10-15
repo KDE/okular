@@ -500,7 +500,17 @@ bool Document::canConfigurePrinter( ) const
 
 const DocumentInfo * Document::documentInfo() const
 {
-    return generator ? generator->generateDocumentInfo() : NULL;
+    if (generator)
+    {
+        DocumentInfo *info = const_cast<DocumentInfo *>(generator->generateDocumentInfo());
+        QString pagesSize = pagesSizeString();
+        if (!pagesSize.isEmpty())
+        {
+            info->set( "pagesSize", pagesSize, i18n("Pages Size") );
+        }
+        return info;
+    }
+    else return NULL;
 }
 
 const DocumentSynopsis * Document::documentSynopsis() const
@@ -625,6 +635,36 @@ QString Document::getMetaData( const QString & key, const QString & option ) con
 int Document::rotation() const
 {
     return d->rotation;
+}
+
+QSizeF Document::allPagesSize() const
+{
+    bool allPagesSameSize = true;
+    QSizeF size;
+    for (int i = 0; allPagesSameSize && i < pages_vector.count(); ++i)
+    {
+        Page *p = pages_vector[i];
+        if (i == 0) size = QSizeF(p->width(), p->height());
+        else
+        {
+            allPagesSameSize = (size == QSizeF(p->width(), p->height()));
+        }
+    }
+    if (allPagesSameSize) return size;
+    else return QSizeF();
+}
+
+QString Document::pageSizeString(int page) const
+{
+    if (generator)
+    {
+        if (generator->pagesSizeMetric() != Generator::None)
+        {
+            Page *p = pages_vector[page];
+            return localizedSize(QSizeF(p->width(), p->height()));
+        }
+    }
+    return QString();
 }
 
 void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
@@ -1449,6 +1489,44 @@ void Document::sendGeneratorRequest()
     else
         // pino (7/4/2006): set the polling interval from 10 to 30
         QTimer::singleShot( 30, this, SLOT(sendGeneratorRequest()) );
+}
+
+QString Document::pagesSizeString() const
+{
+    if (generator)
+    {
+        if (generator->pagesSizeMetric() != Generator::None)
+        {
+            QSizeF size = allPagesSize();
+            if (size.isValid()) return localizedSize(size);
+            else return QString();
+        }
+        else return QString();
+    }
+    else return QString();
+}
+
+QString Document::localizedSize(const QSizeF &size) const
+{
+    double inchesWidth, inchesHeight;
+    switch (generator->pagesSizeMetric())
+    {
+        case Generator::Points:
+            inchesWidth = size.width() / 72.0;
+            inchesHeight = size.height() / 72.0;
+        break;
+
+        case Generator::None:
+        break;
+    }
+    if (KGlobal::locale()->measureSystem() == KLocale::Imperial)
+    {
+        return i18n("%1 x %2 in", inchesWidth, inchesHeight);
+    }
+    else
+    {
+        return i18n("%1 x %2 mm", inchesWidth * 25.4, inchesHeight * 25.4);
+    }
 }
 
 void Document::cleanupPixmapMemory( int /*sure? bytesOffset*/ )

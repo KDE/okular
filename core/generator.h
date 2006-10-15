@@ -86,6 +86,10 @@ class OKULAR_EXPORT Generator : public QObject
         virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
         virtual const DocumentFonts * generateDocumentFonts() { return 0L; }
         virtual const QList<EmbeddedFile*> * embeddedFiles() { return 0L; }
+        // None = page size is not defined in a physical metric
+        // Points = page size is given in 1/72 inches
+        enum PageSizeMetric { None, Points };
+        virtual PageSizeMetric pagesSizeMetric() { return None; }
 
         // DRM handling
         virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }

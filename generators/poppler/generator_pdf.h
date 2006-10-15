@@ -60,6 +60,7 @@ class PDFGenerator : public Okular::Generator
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         const Okular::DocumentFonts * generateDocumentFonts();
         const QList<Okular::EmbeddedFile*> * embeddedFiles();
+        PageSizeMetric pagesSizeMetric() { return Points; }
 
         // [INHERITED] document information
         bool isAllowed( int permissions );

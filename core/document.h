@@ -119,6 +119,8 @@ class OKULAR_EXPORT Document : public QObject
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;
         int rotation() const;
+        QSizeF allPagesSize() const;
+        QString pageSizeString(int page) const;
 
         // gui altering stuff
         QString getXMLFile();
@@ -171,6 +173,8 @@ class OKULAR_EXPORT Document : public QObject
         void notice(const QString & string, int duration);
 
     private:
+        QString pagesSizeString() const;
+        QString localizedSize(const QSizeF &size) const;
         // memory management related functions
         void cleanupPixmapMemory( int bytesOffset = 0 );
         int getTotalMemory();

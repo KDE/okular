@@ -79,7 +79,7 @@ K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
 Part::Part(QWidget *parentWidget,
            QObject *parent,
            const QStringList & /*args*/ )
-	: KParts::ReadOnlyPart(parent), m_viewportDirty( 0 ),
+	: KParts::ReadOnlyPart(parent), 
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false)
 {
@@ -619,7 +619,7 @@ bool Part::openUrl(const KUrl &url)
 
     if ( openOk )
     {
-        m_viewportDirty = 0;
+        m_viewportDirty.pageNumber = -1;
 
         // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
         QString title = m_document->getMetaData( "DocumentTitle" );
@@ -727,7 +727,11 @@ void Part::slotDoFileDirty()
     if ( m_viewportDirty.pageNumber == -1 )
     {
         // store the current viewport
-        m_viewportDirty = Okular::DocumentViewport( m_document->viewport() );
+        m_viewportDirty = m_document->viewport();
+
+        // store if presentation view was open
+	qDebug("PRESENTATION %lx", (PresentationWidget*)m_presentationWidget);
+        m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
 
         // inform the user about the operation in progress
         m_pageView->displayMessage( i18n("Reloading the document...") );
@@ -741,6 +745,7 @@ void Part::slotDoFileDirty()
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
+        if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true);
     }
     else

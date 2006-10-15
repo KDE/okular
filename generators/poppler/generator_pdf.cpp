@@ -257,7 +257,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     bool firstInput = true;
     bool triedWallet = false;
     KWallet::Wallet * wallet = 0;
-    while ( !pdfdoc && pdfdoc->isLocked() )
+    while ( pdfdoc && pdfdoc->isLocked() )
     {
         QByteArray password;
 

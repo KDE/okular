@@ -730,7 +730,6 @@ void Part::slotDoFileDirty()
         m_viewportDirty = m_document->viewport();
 
         // store if presentation view was open
-	qDebug("PRESENTATION %lx", (PresentationWidget*)m_presentationWidget);
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
 
         // inform the user about the operation in progress

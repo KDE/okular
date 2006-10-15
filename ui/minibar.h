@@ -11,7 +11,7 @@
 #ifndef _OKULAR_MINIBAR_H_
 #define _OKULAR_MINIBAR_H_
 
-#include <qframe.h>
+#include <qwidget.h>
 #include "core/observer.h"
 
 namespace Okular {
@@ -24,7 +24,7 @@ class HoverButton;
 /**
  * @short A widget to display page number and change current page.
  */
-class MiniBar : public QFrame, public Okular::DocumentObserver
+class MiniBar : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:

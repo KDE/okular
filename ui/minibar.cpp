@@ -11,6 +11,7 @@
 // qt / kde includes
 #include <qapplication.h>
 #include <qevent.h>
+#include <qframe.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -64,15 +65,21 @@ class HoverButton : public QPushButton
 /** MiniBar **/
 
 MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
-    : QFrame( parent ), m_document( document ),
+    : QWidget( parent ), m_document( document ),
     m_currentPage( -1 )
 {
     setObjectName( "miniBar" );
-    // left spacer
+
     QHBoxLayout * horLayout = new QHBoxLayout( this );
     horLayout->setMargin( 0 );
     horLayout->setSpacing( 0 );
 
+    QFrame * frame = 0;
+    // left line
+    frame = new QFrame( this );
+    frame->setFrameStyle( QFrame::VLine | QFrame::Plain );
+    frame->setLineWidth( 1 );
+    horLayout->addWidget( frame );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ) );
@@ -89,9 +96,11 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     m_nextButton = new HoverButton( this );
     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) );
     horLayout->addWidget( m_nextButton );
-
-    // customize own look
-    setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    // right line
+    frame = new QFrame( this );
+    frame->setFrameStyle( QFrame::VLine | QFrame::Plain );
+    frame->setLineWidth( 1 );
+    horLayout->addWidget( frame );
 
     QSizePolicy sp = sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Fixed );

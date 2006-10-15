@@ -158,6 +158,7 @@ private:
 	KDirWatch *m_watcher;
 	QTimer *m_dirtyHandler;
 	DocumentViewport m_viewportDirty;
+	bool m_wasPresentationOpen;
 	
 	// Remember the search history
 	QStringList m_searchHistory;

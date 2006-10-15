@@ -526,6 +526,7 @@ void Part::slotDoFileDirty()
   if (m_viewportDirty.pageNumber == -1)
   {
     m_viewportDirty = m_document->viewport();
+    m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
     m_pageView->showText(i18n("Reloading the document..."), 0);
   }
 
@@ -534,6 +535,7 @@ void Part::slotDoFileDirty()
     if (m_viewportDirty.pageNumber >= (int)m_document->pages()) m_viewportDirty.pageNumber = (int)m_document->pages() - 1;
     m_document->setViewport(m_viewportDirty);
     m_viewportDirty.pageNumber = -1;
+    if (m_wasPresentationOpen) slotShowPresentation();
     emit enablePrintAction(true);
   }
   else

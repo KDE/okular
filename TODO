@@ -7,7 +7,9 @@ Legend:
 
 Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
+-> WISH 102788: Current page number visible
 -> WISH 103362: kpdf shows complete filename including folder instead of just filename in taskbar
+-> WISH 107998: kpdf horizontal scroll bar
 -> WISH 119455: use poppler library for kpdf
 -> WISH 131045: Add context menu for URLs
 -> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince

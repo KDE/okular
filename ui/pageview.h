@@ -138,8 +138,8 @@ Q_OBJECT
         // does the type ahead search
         void doTypeAheadSearch();
 
-        int viewColumns();
-        int viewRows();
+        int viewColumns() const;
+        int viewRows() const;
 
         void center(int cx, int cy);
 

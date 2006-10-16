@@ -2191,7 +2191,7 @@ void PageView::updateCursor( const QPoint &p )
     }
 }
 
-int PageView::viewColumns()
+int PageView::viewColumns() const
 {
     int nr=Okular::Settings::renderMode();
     if (nr<2)
@@ -2199,7 +2199,7 @@ int PageView::viewColumns()
     return Okular::Settings::viewColumns();
 }
 
-int PageView::viewRows()
+int PageView::viewRows() const
 {
     if (Okular::Settings::renderMode()<2)
 	return 1;

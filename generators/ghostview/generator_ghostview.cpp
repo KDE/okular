@@ -22,7 +22,7 @@
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprinter.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 #include "core/page.h"
 #include "core/observer.h"
@@ -127,13 +127,17 @@ inline QString GSGenerator::fileName() { return internalDoc->fileName(); };
 
 bool GSGenerator::print( KPrinter& printer ) 
 {
-    KTempFile tf( QString::null, ".ps" );
-    if( tf.status() == 0 ) 
+    KTemporaryFile tf;
+    tf.setSuffix( ".ps" );
+    if ( tf.open() )
     {
-        if ( internalDoc->savePages( tf.name(), printer.pageList() ) )
+        bool result = false;
+        if ( internalDoc->savePages( tf.fileName(), printer.pageList() ) )
         {
-            return printer.printFiles( QStringList( tf.name() ), true );
+            result = printer.printFiles( QStringList( tf.fileName() ), true );
         }
+        tf.close();
+        return result;
     }
     return false; 
 }

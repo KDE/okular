@@ -38,7 +38,7 @@
 #include <kservicetypetrader.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
-#include <ktempfile.h>
+#include <k3tempfile.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
 
@@ -261,7 +261,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    m_tempfile = new KTempFile;
+    m_tempfile = new K3TempFile;
     if ( !m_tempfile )
     {
         KMessageBox::error(this, 

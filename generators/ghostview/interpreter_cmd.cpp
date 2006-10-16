@@ -23,15 +23,15 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <k3tempfile.h>
 
 #include "interpreter_cmd.h"
 
 ProcessData :: ProcessData ()
 {
-    KTempFile* tmp[2];
-    tmp[0] = new KTempFile();
-    tmp[1] = new KTempFile();
+    K3TempFile* tmp[2];
+    tmp[0] = new K3TempFile();
+    tmp[1] = new K3TempFile();
     tmp[0]->close();
     tmp[1]->close();
     names[0]=QFile::encodeName( tmp[0]->name() );

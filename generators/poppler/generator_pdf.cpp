@@ -18,7 +18,7 @@
 #include <kpassworddialog.h>
 #include <kwallet.h>
 #include <kprinter.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
@@ -723,7 +723,12 @@ bool PDFGenerator::print( KPrinter& printer )
         height = dummy.height();
     }
 
-    KTempFile tf( QString::null, ".ps" );
+    KTemporaryFile tf;
+    tf.setSuffix( ".ps" );
+    if ( !tf.open() )
+        return false;
+    QString tempfilename = tf.fileName();
+    tf.close();
 
     QList<int> pageList;
     if (!printer.previewOnly()) pageList = printer.pageList();
@@ -731,10 +736,10 @@ bool PDFGenerator::print( KPrinter& printer )
     
     docLock.lock();
     // TODO rotation
-    if (pdfdoc->print(tf.name(), pageList, 72, 72, 0, width, height))
+    if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
         docLock.unlock();
-        printer.printFiles(QStringList(tf.name()), true);
+        printer.printFiles(QStringList(tempfilename), true);
         return true;
     }
     else

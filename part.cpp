@@ -50,7 +50,7 @@
 #include <kprocess.h>
 #include <kservicetypetrader.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kio/job.h>
@@ -537,13 +537,17 @@ bool Part::slotImportPSFile()
 	}
 
     KUrl url = KFileDialog::getOpenUrl( KUrl(), "application/postscript", this->widget() );
-    KTempFile tf( QString::null, ".pdf" );
-
-    if ( tf.status() == 0 && url.isLocalFile())
+    if ( url.isLocalFile() )
     {
+        KTemporaryFile tf;
+        tf.setSuffix( ".pdf" );
+        tf.setAutoRemove( false );
+        if ( !tf.open() )
+            return false;
+        m_temporaryLocalFile = tf.fileName();
         tf.close();
+
         m_file = url.path();
-        m_temporaryLocalFile = tf.name();
         KProcess *p = new KProcess;
         *p << app;
         *p << m_file << m_temporaryLocalFile;

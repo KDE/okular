@@ -159,32 +159,32 @@ protected:
             {
                 double nX = (double)( he->x() - pageItem->geometry().left() ) / (double)pageItem->width();
                 double nY = (double)( he->y() - pageItem->geometry().top() ) / (double)pageItem->height();
-                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
-                    link = static_cast< const Okular::Link * >( rect->pointer() );
+                    ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
                 else
                 {
-                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
-                        ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
+                        link = static_cast< const Okular::Link * >( rect->pointer() );
                 }
             }
 
-            if ( link )
-            {
-                QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
-                r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                QString tip = link->linkTip();
-                if ( !tip.isEmpty() )
-                    QToolTip::showText( he->globalPos(), tip, this, r );
-            }
-            else if ( ann )
+            if ( ann )
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
                 QString tip = QString( "<qt><b>%1</b><hr>%2</qt>" )
                     .arg( i18n( "Author: %1", ann->author ), ann->contents );
                 QToolTip::showText( he->globalPos(), tip, this, r );
+            }
+            else if ( link )
+            {
+                QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
+                r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
+                QString tip = link->linkTip();
+                if ( !tip.isEmpty() )
+                    QToolTip::showText( he->globalPos(), tip, this, r );
             }
             e->accept();
             return true;
@@ -2171,9 +2171,13 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::IBeamCursor );
         else
         {
-            d->mouseOnRect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
-            if ( d->mouseOnRect )
+            const Okular::ObjectRect * linkobj = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+            const Okular::ObjectRect * annotobj = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+            if ( linkobj && !annotobj )
+            {
+                d->mouseOnRect = true;
                 setCursor( Qt::PointingHandCursor );
+            }
             else
                 setCursor( Qt::ArrowCursor );
         }

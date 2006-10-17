@@ -16,13 +16,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <X11/Xlib.h>
-#include <X11/extensions/Xrender.h>
-#include <fixx11h.h>
-
 // qt/kde includes
 #include <qcursor.h>
 #include <qevent.h>
+#include <qimage.h>
 #include <qpainter.h>
 #include <qtimer.h>
 #include <qdatetime.h>
@@ -68,6 +65,14 @@
 #include "core/link.h"
 #include "core/generator.h"
 #include "settings.h"
+
+#include <config-okular.h>
+
+#ifdef HAVE_XRENDER
+#include <X11/Xlib.h>
+#include <X11/extensions/Xrender.h>
+#include <fixx11h.h>
+#endif
 
 #define ROUND(x) (int(x + 0.5))
 
@@ -748,15 +753,6 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                 QPainter pixmapPainter( &doubleBuffer );
                 pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
-                // calculate the color
-                XRenderColor col;
-                float alpha=0.2f;
-                QColor blCol=selBlendColor.dark(140);
-                col.red=(int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
-                col.green=(int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
-                col.blue=(int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
-                col.alpha=( int )(alpha*(float)0xffff);
-
                 // 1) Layer 0: paint items and clear bg on unpainted rects
                 drawDocumentOnPainter( contentsRect, &pixmapPainter );
                 // 2) Layer 1a: paint (blend) transparent selection
@@ -767,19 +763,39 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                     // skip rectangles covered by the selection's border
                     if ( blendRect.isValid() )
                     {
+#ifdef HAVE_XRENDER
                         // grab current pixmap into a new one to colorize contents
                         QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
                         QPainter p( &blendedPixmap );
                         p.drawPixmap( 0, 0, doubleBuffer,
                                     blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                                     blendRect.width(), blendRect.height() );
-                        // blend selBlendColor into the background pixmap
-    //                     QImage blendedImage = blendedPixmap.convertToImage();
-    //                     KImageEffect::blend( selBlendColor.dark(140), blendedImage, 0.2 );
+
+                        // calculate the color
+                        XRenderColor col;
+                        float alpha = 0.2f;
+                        QColor blCol = selBlendColor.dark( 140 );
+                        col.red = (int)((float)( (blCol.red() << 8) | blCol.red() ) * alpha);
+                        col.green = (int)((float)( (blCol.green() << 8) | blCol.green() )*alpha );
+                        col.blue = (int)((float)( (blCol.blue() << 8) | blCol.blue())*alpha );
+                        col.alpha = (int)(alpha*(float)0xffff);
+
                         XRenderFillRectangle(x11Info().display(), PictOpOver, blendedPixmap.x11PictureHandle(), &col, 
                         0,0, blendRect.width(), blendRect.height());
                         // copy the blended pixmap back to its place
                         pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
+#else
+                        // grab current pixmap into a new image to colorize contents
+                        QImage blendedImage( blendRect.width(), blendRect.height(), QImage::Format_ARGB32 );
+                        QPainter p( &blendedImage );
+                        p.drawPixmap( 0, 0, doubleBuffer,
+                                    blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                                    blendRect.width(), blendRect.height() );
+
+                        // blend selBlendColor into the background pixmap
+                        KImageEffect::blend( selBlendColor.dark( 140 ), blendedImage, 0.2 );
+                        pixmapPainter.drawImage( blendRect.left(), blendRect.top(), blendedImage );
+#endif
                     }
                     // draw border (red if the selection is too small)
                     pixmapPainter.setPen( selBlendColor );

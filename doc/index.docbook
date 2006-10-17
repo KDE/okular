@@ -4,6 +4,7 @@
   <!ENTITY kappname "&okular;">
   <!ENTITY package "kdegraphics">
   <!ENTITY kpdf "<application>KPDF</application>">
+  <!ENTITY PDF "<acronym>PDF</acronym>">
   <!ENTITY % English "INCLUDE">
   <!ENTITY % addindex "IGNORE">
 ]>
@@ -68,7 +69,7 @@
 -->
 	</chapter>
 	<chapter id="use">
-		<title>Using &okular;</title>
+		<title>Basic Usage</title>
 		<sect1 id="opening">
 			<title>Opening Files</title>
 			<para>
@@ -154,7 +155,7 @@
 				<listitem>
 					<para>
 						You can go to the next page of the document using 
-						<keycap>Space</keycap>, the <guibutton>Next Page</guibutton> Toolbar
+						<keycap>Space</keycap>, <keycap>Page Down</keycap>, the <guibutton>Next Page</guibutton> Toolbar
 						button or	using 
 						<menuchoice>
 							<guimenu>Go</guimenu>
@@ -165,7 +166,7 @@
 				<listitem>
 					<para>
 						You can go to the previous page of the document using 
-						<keycap>Backspace</keycap>, the <guibutton>Previous Page</guibutton> Toolbar
+						<keycap>Backspace</keycap>, <keycap>Page Up</keycap>, the <guibutton>Previous Page</guibutton> Toolbar
 						button or	using 
 						<menuchoice>
 							<guimenu>Go</guimenu>
@@ -186,7 +187,7 @@
 			</para>
 			<note>
 				<para>
-					PDF documents can even specify that they are always opened in presentation mode.
+					&PDF; documents can even specify that they are always opened in presentation mode.
 				</para>
 			</note>
 			<para>
@@ -207,6 +208,40 @@
 			<para>
 				Presentation mode has some configuration options, you can find their
 				description at <link linkend="configpresentation">Configuring &okular;</link>.
+			</para>
+		</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title>Advanced Features</title>
+		<sect1 id="embedded-files">
+			<title>Embedded Files</title>
+			<para>
+				If the current document has some files embedded in it, when opened a yellow bar
+				will appear above the page view to notify you about the embedded files.  
+			</para>
+			<screenshot>
+				<screeninfo>The embedded files bar</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The embedded files bar</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para>
+				In this case, you can either click on the link in the text of the bar or choose
+				<menuchoice><guimenu>File</guimenu><guimenuitem>Embedded Files</guimenuitem></menuchoice>
+				to open the embedded files dialog. The dialog allows you to view the embedded files and
+				to extract them.
+			</para>
+		</sect1>
+		<sect1 id="annotations">
+			<title>Annotations</title>
+			<para>
+				TODO...
 			</para>
 		</sect1>
 	</chapter>
@@ -305,6 +340,19 @@
 						<para><action>Display some basic information</action> about the document, such as
 							title, author, creation date, and details about the fonts used. The available information
 							depends on the type of document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>File</guimenu>
+							<guimenuitem>Embedded Files...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Show the files embedded</action> in the document, if the document has any.
+							For more information, see the section about the
+							<link linkend="embedded-files">Embedded Files</link>.</para>
 					</listitem>
 				</varlistentry>
 
@@ -657,7 +705,8 @@
 					</term>
 					<listitem>
 						<para><action>Open the review toolbar</action>. The review toolbar allows you to add
-							annotations on the document you are reading.</para>
+							annotations on the document you are reading. For more information, please see the
+							section about <link linkend="annotations">Annotations</link>.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -811,9 +860,9 @@
 				</mediaobject>
 			</screenshot>
 			<para>
-				Depending on the current installed plugins, the <menuchoice><guimenu>Settings</guimenu>
+				Depending on the current installed backends, the <menuchoice><guimenu>Settings</guimenu>
 				<guimenuitem>Configure Backends...</guimenuitem></menuchoice> menu item could be enabled.
-				This particular configuration dialogue holds the configurations of the plugins that can
+				This particular configuration dialogue holds the configurations of the backends that can
 				actually be configured.
 			</para>
 		</sect1>
@@ -860,7 +909,7 @@
 					<listitem>
 						<para>Whether &okular; should obey <firstterm>DRM</firstterm>
 							(Digital Rights Management) restrictions. DRM limitations are used
-							to make it impossible to perform certain actions with PDF documents,
+							to make it impossible to perform certain actions with &PDF; documents,
 							such as copying content to the clipboard. Note that in some configurations
 							of &okular;, this option is not available.</para>
 					</listitem>
@@ -1028,8 +1077,8 @@
 			<listitem><para>Albert Astals Cid<email>aacid@kde.org</email> Current maintainer</para></listitem>
 			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
-			<listitem><para>&Wilco.Greven; &Wilco.Greven.mail; Original author</para></listitem>
-			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> Refactoring for 3.4</para></listitem>
+			<listitem><para>&Wilco.Greven; &Wilco.Greven.mail; Original &kpdf; author</para></listitem>
+			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> &kpdf; refactoring for &kde; 3.4</para></listitem>
 			<listitem><para>Laurent Montel<email>montel@kde.org</email></para></listitem>
 		</itemizedlist>
 

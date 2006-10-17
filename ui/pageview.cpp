@@ -786,13 +786,14 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                         pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
 #else
                         // grab current pixmap into a new image to colorize contents
-                        QImage blendedImage( blendRect.width(), blendRect.height(), QImage::Format_ARGB32 );
-                        QPainter p( &blendedImage );
+                        QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                        QPainter p( &blendedPixmap );
                         p.drawPixmap( 0, 0, doubleBuffer,
                                     blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
                                     blendRect.width(), blendRect.height() );
 
                         // blend selBlendColor into the background pixmap
+                        QImage blendedImage = blendedPixmap.toImage();
                         KImageEffect::blend( selBlendColor.dark( 140 ), blendedImage, 0.2 );
                         pixmapPainter.drawImage( blendRect.left(), blendRect.top(), blendedImage );
 #endif

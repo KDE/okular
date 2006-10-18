@@ -6,6 +6,7 @@ Legend:
     MRG - MeRGed (code from a branch or a patch)
 
 Bugs and wishes to close when moving okular to kdegraphics:
+-> WISH 100341: first page at right, in two pages mode
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
 -> WISH 102788: Current page number visible
 -> WISH 103362: kpdf shows complete filename including folder instead of just filename in taskbar

@@ -306,8 +306,9 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
             wallet->writePassword( filePath.section('/', -1, -1), goodPass );
         }
     }
-    if ( !pdfdoc )
+    if ( !pdfdoc || pdfdoc->isLocked() )
     {
+        delete pdfdoc;
         pdfdoc = 0;
         return false;
     }

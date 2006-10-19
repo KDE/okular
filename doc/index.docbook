@@ -55,7 +55,7 @@
 	</bookinfo>
 	<chapter id="introduction">
 		<title>Introduction</title>
-		<para>&okular; is a &kde; univeral document viewer based on the code of the &kpdf; application.
+		<para>&okular; is a &kde; universal document viewer based on the code of the &kpdf; application.
 			Although being based on &kpdf; code, &okular; has some unique features such as overview mode,
 			improved presentation support and annotation support.
 		</para>
@@ -213,11 +213,11 @@
 	</chapter>
 
 	<chapter id="advanced">
-		<title>Advanced Features</title>
+		<title>&okular; Advanced Features</title>
 		<sect1 id="embedded-files">
 			<title>Embedded Files</title>
 			<para>
-				If the current document has some files embedded in it, when opened a yellow bar
+				If the current document has some files embedded in it, when you open it a yellow bar
 				will appear above the page view to notify you about the embedded files.  
 			</para>
 			<screenshot>
@@ -241,8 +241,53 @@
 		<sect1 id="annotations">
 			<title>Annotations</title>
 			<para>
-				TODO...
+				&okular; allows you to review and annotate your documents. 
 			</para>
+			<sect2 id="annotations-add">
+				<title>Adding annotations</title>
+				<para>
+					To add some annotations to the document, you have to activate the annotating toolbar.
+					This is done by either slecting
+					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
+					pressing <keycap>F6</keycap>. Once you have the annotating toolbar, just press one of
+					its buttons to start constructing that anotation.
+				</para>
+				<para>
+					You can stop the construction any time by pressing again on the button of the
+					annotation you are constructing.
+				</para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title>Removing annotations</title>
+				<para>
+					To remove an annotation, just click on it with the &RMB;, and select
+					<guimenuiem>Remove</guimenuitem>.
+				</para>
+				<para>
+					When removing the annotation, its window will be closed if open.
+				</para>
+				<note>
+					<para>
+						This option could not be enabled because the document does not allow removing
+						annotations.
+					</para>
+				</note>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title>Editing annotations</title>
+				<para>
+					To edit an annotation, click on it with the &RMB; and select
+					<guimenuiem>Properties...</guimenuitem>. A dialog will appear with the general
+					annotation settings (like color and opacity, author, &etc;) and the settings specific
+					to that annotation type.
+				</para>
+				<note>
+					<para>
+						Depending on the document permissions (typically &PDF; documents), some options can
+						be disabled.
+					</para>
+				</note>
+			</sect2>
 		</sect1>
 	</chapter>
 			
@@ -522,7 +567,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Changes the size of the paper</action> fo the pages of the
+						<para><action>Changes the size of the paper</action> of the pages of the
 							document.</para>
 						<note><para>This submenu is active only if the current type of document
 							supports different paper sizes.</para></note>
@@ -686,6 +731,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo><keycap>F6</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Text Selection Tool</guimenuitem>
 						</menuchoice>
@@ -860,7 +906,7 @@
 				</mediaobject>
 			</screenshot>
 			<para>
-				Depending on the current installed backends, the <menuchoice><guimenu>Settings</guimenu>
+				Depending on the currently installed backends, the <menuchoice><guimenu>Settings</guimenu>
 				<guimenuitem>Configure Backends...</guimenuitem></menuchoice> menu item could be enabled.
 				This particular configuration dialogue holds the configurations of the backends that can
 				actually be configured.
@@ -926,7 +972,7 @@
 					<listitem>
 						<para>Whether &okular; should ask the user which generator to use in case of more
 							than one generator able to open the current file. If unchecked, &okular; will
-							use the generaor with the highest priority.</para>
+							use the generator with the highest priority.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

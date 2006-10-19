@@ -697,14 +697,12 @@ bool PDFGenerator::print( KPrinter& printer )
 {
     int width, height;
     QString ps = printer.option("PageSize");
-    if (ps.indexOf(QRegExp("w\\d+h\\d+")) == 0)
+    QRegExp sizere( "w(\\d+)h(\\d+)" );
+    if ( sizere.exactMatch( ps ) )
     {
         // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
-        // remove the w
-        ps = ps.mid(1);
-        int hPos = ps.indexOf("h");
-        width = ps.left(hPos).toInt();
-        height = ps.mid(hPos+1).toInt();
+        width = sizere.cap( 1 ).toInt();
+        height = sizere.cap( 2 ).toInt();
     }
     else
     {

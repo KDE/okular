@@ -292,7 +292,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     setAttribute( Qt::WA_InputMethodEnabled, true );
 
     // schedule the welcome message
-    QTimer::singleShot( 0, this, SLOT( slotShowWelcome() ) );
+    QMetaObject::invokeMethod(this, "slotShowWelcome", Qt::QueuedConnection);
 }
 
 PageView::~PageView()
@@ -521,7 +521,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
         // because opening a pdf from another pdf will not trigger a viewportchange
         // so pages are never relayouted
-        QTimer::singleShot(0, this, SLOT(slotRelayoutPages())); // was used
+        QMetaObject::invokeMethod(this, "slotRelayoutPages", Qt::QueuedConnection);
     else
     {
         // update the mouse cursor when closing because we may have close through a link and
@@ -670,7 +670,7 @@ void PageView::notifyContentsCleared( int changedFlags )
 {
     // if pixmaps were cleared, re-ask them
     if ( changedFlags & DocumentObserver::Pixmap )
-        slotRequestVisiblePixmaps();
+        QMetaObject::invokeMethod(this, "slotRequestVisiblePixmaps", Qt::QueuedConnection);
 }
 
 bool PageView::canUnloadPixmap( int pageNumber )

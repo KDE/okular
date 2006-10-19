@@ -261,7 +261,7 @@
 				<title>Removing annotations</title>
 				<para>
 					To remove an annotation, just click on it with the &RMB;, and select
-					<guimenuiem>Remove</guimenuitem>.
+					<guimenuitem>Remove</guimenuitem>.
 				</para>
 				<para>
 					When removing the annotation, its window will be closed if open.
@@ -277,7 +277,7 @@
 				<title>Editing annotations</title>
 				<para>
 					To edit an annotation, click on it with the &RMB; and select
-					<guimenuiem>Properties...</guimenuitem>. A dialog will appear with the general
+					<guimenuitem>Properties...</guimenuitem>. A dialog will appear with the general
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
 				</para>

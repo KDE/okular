@@ -376,14 +376,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
-// need a way to find efficient (maybe background textpage generation)
 	kDebug() << "load page " << i << " with rotation " << rotation << " and orientation " << orientation << endl;
-	docLock.lock();
-	QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)rotation);
-	docLock.unlock();
-	page->setSearchPage(abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()));
-	
-	qDeleteAll(textList);
 	delete p;
 
         if (clear && pagesVector[i])

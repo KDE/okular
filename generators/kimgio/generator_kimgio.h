@@ -27,8 +27,6 @@ class KIMGIOGenerator : public Okular::Generator
         bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
-//        bool hasFonts() const;
-
         // [INHERITED] rotation capability
         bool supportsRotation() const { return true; };
 

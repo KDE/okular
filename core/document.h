@@ -113,8 +113,6 @@ class OKULAR_EXPORT Document : public QObject
         bool exportToText( const QString& fileName ) const;
         QList<ExportEntry*> exportFormats() const;
         bool exportTo( const QString& fileName, const KMimeType::Ptr& mime ) const;
-// might be useful later
-//	bool hasFonts() const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
         QString getMetaData( const QString & key, const QString & option = QString() ) const;

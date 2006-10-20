@@ -59,42 +59,38 @@ class PDFGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         const Okular::DocumentFonts * generateDocumentFonts();
-        const QList<Okular::EmbeddedFile*> * embeddedFiles();
-        PageSizeMetric pagesSizeMetric() { return Points; }
+        const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
+        PageSizeMetric pagesSizeMetric() const { return Points; }
 
         // [INHERITED] document information
-        bool isAllowed( int permissions );
+        bool isAllowed( int permissions ) const;
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap( bool async );
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
-        bool canGenerateTextPage();
+        bool canGenerateTextPage() const;
         void generateSyncTextPage( Okular::Page * page );
 
-        // bah
-        QString getXMLFile() { return QString::null; };
-        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) { ; };
-
-        bool supportsSearching() { return true; };
-        bool supportsRotation() { return true; };
-        bool prefersInternalSearching() { return false; };
+        bool supportsSearching() const { return true; };
+        bool supportsRotation() const { return true; };
+        bool prefersInternalSearching() const { return false; };
 
         Okular::RegularAreaRect * findText (const QString & text, Okular::SearchDir dir, 
           const bool strictCase, const Okular::RegularAreaRect * lastRect, 
-          Okular::Page * page );
-        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page );
+          Okular::Page * page ) const;
+        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page ) const;
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
         // [INHERITED] reply to some metadata requests
-        QString getMetaData( const QString & key, const QString & option );
+        QString metaData( const QString & key, const QString & option ) const;
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
 
         // [INHERITED] text exporting
-        bool canExportToText() { return true; };
+        bool canExportToText() const { return true; };
         bool exportToText( const QString & fileName );
 
     private slots:
@@ -115,7 +111,7 @@ class PDFGenerator : public Okular::Generator
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
         
         // poppler dependant stuff
-        QMutex docLock;
+        mutable QMutex docLock;
         Poppler::Document *pdfdoc;
 
         // asynchronous generation related stuff
@@ -130,8 +126,8 @@ class PDFGenerator : public Okular::Generator
         Okular::DocumentSynopsis docSyn;
         bool docFontsDirty;
         Okular::DocumentFonts docFonts;
-        bool docEmbeddedFilesDirty;
-        QList<Okular::EmbeddedFile*> docEmbeddedFiles;
+        mutable bool docEmbeddedFilesDirty;
+        mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
 };
 
 

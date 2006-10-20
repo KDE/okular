@@ -24,13 +24,13 @@ class KIMGIOGenerator : public Okular::Generator
         bool closeDocument();
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap( bool async );
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
 //        bool hasFonts() const;
 
         // [INHERITED] rotation capability
-        bool supportsRotation() { return true; };
+        bool supportsRotation() const { return true; };
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );

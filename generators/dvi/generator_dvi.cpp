@@ -66,7 +66,7 @@ bool DviGenerator::closeDocument()
     return true;
 }
 
-bool DviGenerator::canGeneratePixmap ( bool /*async*/ )
+bool DviGenerator::canGeneratePixmap ( bool /*async*/ ) const
 {
     return ready;
 }
@@ -241,7 +241,7 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     signalRequestDone( request );
 }
 
-bool DviGenerator::canGenerateTextPage()
+bool DviGenerator::canGenerateTextPage() const
 {
     return true;
 }

@@ -129,7 +129,7 @@ class KDjVu : public QObject
         /**
          * Get the metadata for the specified \p key, or a null string otherwise.
          */
-        QString getMetaData( const QString & key ) const;
+        QString metaData( const QString & key ) const;
 
         /**
          * Get ax XML document with the bookmarks of the current document (if any).

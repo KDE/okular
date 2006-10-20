@@ -24,7 +24,7 @@ class DjVuGenerator : public Okular::Generator
         bool closeDocument();
 
         // pixmap generation
-        bool canGeneratePixmap( bool async );
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
         // document information
@@ -32,7 +32,7 @@ class DjVuGenerator : public Okular::Generator
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
         // rotation handling
-        bool supportsRotation() { return true; };
+        bool supportsRotation() const { return true; };
 
     private slots:
         void djvuPixmapGenerated( int page, const QPixmap & pix );

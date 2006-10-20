@@ -251,12 +251,12 @@ void GSGenerator::rotationChanged( int newOrientation, int /*oldOrientation*/ )
     internalDoc->setOrientation(orientation(newOrientation));
 }
 
-bool GSGenerator::supportsPaperSizes()
+bool GSGenerator::supportsPaperSizes() const
 {
     return true;
 }
 
-QStringList GSGenerator::paperSizes()
+QStringList GSGenerator::paperSizes() const
 {
     return GSInternalDocument::paperSizes();
 }
@@ -428,21 +428,19 @@ kWarning() << "generator running : " << pixGenerator->running() << endl;
 }
 
 
-bool GSGenerator::canGeneratePixmap( bool async )
+bool GSGenerator::canGeneratePixmap( bool async ) const
 {
 //     kWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
     bool isLocked = true;
     if (async)
     {
-        if (docLock.tryLock()) {
-            docLock.unlock();
+        if (!docLock.isLocked()) {
             isLocked = false;
         }
     }
     else
     {
-        if (syncLock.tryLock()) {
-            syncLock.unlock();
+        if (!syncLock.isLocked()) {
             isLocked = false;
         }
     }

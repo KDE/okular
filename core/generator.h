@@ -64,97 +64,260 @@ class OKULAR_EXPORT Generator : public QObject
     Q_OBJECT
 
     public:
-        /** constructor: takes the Document as a parameter **/
-        Generator( Document * doc ) : m_document( doc ) {};
+        /**
+         * Creates a new generator which works on the given @p document
+         */
+        Generator( Document *document );
 
-        /** virtual methods to reimplement **/
-        // load a document and fill up the pagesVector
+
+        /**
+         * Destroys the generator.
+         */
+        virtual ~Generator();
+
+        /**
+         * Sets the current document the generator should work on.
+         */
+        void setDocument( Document * document );
+
+        /**
+         * Loads the document with the given @p fileName and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @returns true on success, false otherwise.
+         */
         virtual bool loadDocument( const QString & fileName, QVector< Page * > & pagesVector ) = 0;
-        // the current document is no more useful, close it
+
+        /**
+         * This method is called when the document is closed and not used
+         * any longer.
+         *
+         * @returns true on success, false otherwise.
+         */
         virtual bool closeDocument() = 0;
 
-        // page contents generation
-        virtual bool canGeneratePixmap( bool async ) = 0;
+        /**
+         * This method returns whether the generator can create pixmaps for
+         * each page in a synchronous or asynchronous way, depending on @p async.
+         */
+        virtual bool canGeneratePixmap( bool async ) const = 0;
+
+        /**
+         * This method is called to create a pixmap for a page. The page number,
+         * width and height is encapsulated in the page @p request.
+         */
         virtual void generatePixmap( PixmapRequest * request ) = 0;
 
-        // can generate a TextPage
-        virtual bool canGenerateTextPage() { return false; };
-        virtual void generateSyncTextPage( Page * /*page*/ ) {;};
+        /**
+         * This method returns whether the generator can create text pages,
+         * which are used for search and text extraction.
+         *
+         * @returns false as default.
+         */
+        virtual bool canGenerateTextPage() const;
 
-        // Document description and Table of contents
-        virtual const DocumentInfo * generateDocumentInfo() { return 0L; }
-        virtual const DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
-        virtual const DocumentFonts * generateDocumentFonts() { return 0L; }
-        virtual const QList<EmbeddedFile*> * embeddedFiles() { return 0L; }
-        // None = page size is not defined in a physical metric
-        // Points = page size is given in 1/72 inches
-        enum PageSizeMetric { None, Points };
-        virtual PageSizeMetric pagesSizeMetric() { return None; }
+        /**
+         * This method is called to create a so called 'text page' for the given @p page.
+         *
+         * A text page is an abstract description of the readable text of the page.
+         * It's used for search and text extraction.
+         */
+        virtual void generateSyncTextPage( Page *page );
 
-        // DRM handling
-        virtual bool isAllowed( int /*Document::Permisison(s)*/ ) { return true; }
+        /**
+         * Returns the general information object of the document or 0 if
+         * no information are available.
+         */
+        virtual const DocumentInfo * generateDocumentInfo();
+
+        /**
+         * Returns the 'table of content' object of the document or 0 if
+         * no table of content is available.
+         */
+        virtual const DocumentSynopsis * generateDocumentSynopsis();
+
+        /**
+         * Returns the 'list of embedded fonts' object of the document or 0 if
+         * no list of embedded fonts is available.
+         */
+        virtual const DocumentFonts * generateDocumentFonts();
+
+        /**
+         * Returns the 'list of embedded files' object of the document or 0 if
+         * no list of embedded files is available.
+         */
+        virtual const QList<EmbeddedFile*> * embeddedFiles() const;
+
+        /**
+         * This enum identifies the metric of the page size.
+         *
+         * @li None - page size is not defined in a physical metric
+         * @li Points - page size is given in 1/72 inches
+         */
+        enum PageSizeMetric
+        {
+          None,
+          Points
+        };
+
+        /**
+         * This method returns the metric of the page size. Default is @see None.
+         */
+        virtual PageSizeMetric pagesSizeMetric() const;
+
+        /**
+         * This method returns whether given action (@see Document::Permission) is
+         * allowed in this document.
+         */
+        virtual bool isAllowed( int action ) const;
 
         // gui stuff
-        virtual QString getXMLFile() { return QString::null; } ;
-        virtual void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /*tBox*/ ) {;};
-        virtual void freeGUI( ) {;};
+        virtual QString getXMLFile() const;
+        virtual void setupGUI( KActionCollection*, QToolBox* );
+        virtual void freeGUI();
 
-        // search capabilities
-        virtual bool supportsSearching() { return false; };
-        virtual bool prefersInternalSearching() { return false; };
-        virtual RegularAreaRect * findText( const QString & /*text*/, SearchDir /*dir*/, const bool /*strictCase*/,
-                    const RegularAreaRect * /*lastRect*/, Page * /*page*/) { return 0L; };
-        virtual QString getText( const RegularAreaRect * /*area*/, Page * /*page*/ ) { return QString(); }
+        /**
+         * This method returns whether the generator supports searching. Default is false.
+         */
+        virtual bool supportsSearching() const;
 
-        // rotation
-        virtual bool supportsRotation() { return false; };
-        virtual void rotationChanged( int /*orientation*/, int /*oldOrientation*/ ) { ; };
+        /**
+         * This method returns whether the generator prefers internal searching. Default is false.
+         */
+        virtual bool prefersInternalSearching() const;
 
-        // paper size
-        virtual bool supportsPaperSizes () { return false; }
-        virtual QStringList paperSizes ()  { return QStringList(); }
-        virtual void setPaperSize (QVector<Page*> & /*pagesVector*/, int /*newsize*/) { ; }
+        /**
+         * This method returns the rectangular of the area where the given @p text can be found
+         * on the given @p page.
+         *
+         * The search can be influenced by the parameters @p direction, @p caseSensitive and
+         * @p lastRect
+         *
+         * If no match is found, 0 is returned.
+         */
+        virtual RegularAreaRect * findText( const QString &text, SearchDir direction, const bool caseSensitive,
+                                            const RegularAreaRect *lastRect, Page *page ) const;
 
-        // may come useful later
-        //virtual bool hasFonts() const = 0;
+        /**
+         * This method returns the text which is enclosed by the given @p area on the given @p page.
+         */
+        virtual QString getText( const RegularAreaRect *area, Page *page ) const;
 
-        // return true if wanting to configure the printer yourself in backend
-        virtual bool canConfigurePrinter( ) { return false; }
-        // print the document (using a printer configured or not depending on the above function)
-        // note, if we are only asking for a preview this will be preconfigured
-        virtual bool print( KPrinter& /*printer*/ ) { return false; }
-        // access meta data of the generator
-        virtual QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
-        // tell generator to re-parse configuration and return true if something changed
-        virtual bool reparseConfig() { return false; }
+        /**
+         * Returns whether the generator supports rotation of the pages. Default is false.
+         */
+        virtual bool supportsRotation() const;
 
-        // add support for settings
-        virtual void addPages( KConfigDialog* /*dlg*/ ) {;};
-//         virtual void setConfigurationPointer( KConfigDialog* /*dlg*/) { ; } ;
+        /**
+         * This method is called when the orientation has been changed by the user.
+         */
+        virtual void rotationChanged( int orientation, int oldOrientation );
 
-        // support for exporting to text and to other formats
-        virtual bool canExportToText() { return false; };
-        virtual bool exportToText( const QString & /*fileName*/ ) { return false; };
-        virtual QList<ExportEntry*> exportFormats() { return QList<ExportEntry*>(); };
-        virtual bool exportTo( const QString & /*fileName*/, const KMimeType::Ptr & /*mime*/ ) { return false; };
+        /**
+         * Returns whether the generator supports paper sizes. Default is false.
+         */
+        virtual bool supportsPaperSizes() const;
 
-        // capture events
-        // return false if you don't wish okular to use its event handlers
-        // in the pageview after your handling (use with caution)
-        virtual bool handleEvent (QEvent * /*event*/ ) { return true; } ;
+        /**
+         * Returns the list of supported paper sizes.
+         */
+        virtual QStringList paperSizes() const;
 
-        void setDocument( Document * doc ) { m_document=doc; };
+        /**
+         * This method is called to set the paper size of the given @p pages
+         * to the given @p paperSize.
+         */
+        virtual void setPaperSize( QVector<Page*> &pages, int paperSize );
 
-    signals:
-        void error(const QString & string, int duration);
-        void warning(const QString & string, int duration);
-        void notice(const QString & string, int duration);
+        /**
+         * Returns true if the generator configures the printer itself, false otherwise.
+         */
+        virtual bool canConfigurePrinter() const;
+
+        /**
+         * This method is called to print the document to the given @p printer.
+         */
+        virtual bool print( KPrinter &printer );
+
+        /**
+         * This method returns the meta data of the given @p key with the given @p option
+         * of the document.
+         */
+        virtual QString metaData( const QString &key, const QString &option ) const;
+
+        /**
+         * This method is called to tell the generator to re-parse its configuration.
+         *
+         * Returns true if something has changed.
+         */
+        virtual bool reparseConfig();
+
+        /**
+         * This method allows the generator to add custom configuration pages to the
+         * config @p dialog of okular.
+         */
+        virtual void addPages( KConfigDialog *dialog );
+
+        /**
+         * Returns whether the generator can export the document to text format.
+         */
+        virtual bool canExportToText() const;
+
+        /**
+         * This method is called to export the document as text format and save it
+         * under the given @p fileName.
+         */
+        virtual bool exportToText( const QString &fileName );
+
+        /**
+         * Returns the list of additional supported export formats.
+         */
+        virtual QList<ExportEntry*> exportFormats() const;
+
+        /**
+         * This method is called to export the document in the given @p mimeType and save it
+         * under the given @p fileName. The mime type must be one of the supported export formats.
+         */
+        virtual bool exportTo( const QString &fileName, const KMimeType::Ptr &mimeType );
+
+        // TODO: remove
+        virtual bool handleEvent (QEvent * /*event*/ );
+
+    Q_SIGNALS:
+        /**
+         * This signal should be emitted whenever an error occured in the generator.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void error( const QString &message, int duration );
+
+        /**
+         * This signal should be emitted whenever the user should be warned.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void warning( const QString &message, int duration );
+
+        /**
+         * This signal should be emitted whenever the user should be noticed.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void notice( const QString &message, int duration );
 
     protected:
-        /** 'signals' to send events the Document **/
-        // tell the document that the job has been completed
-        void signalRequestDone( PixmapRequest * request ) { m_document->requestDone( request ); }
+        /**
+         * This method must be called when the pixmap request triggered by @see generatePixmap()
+         * has been finished.
+         */
+        void signalRequestDone( PixmapRequest * request );
 
+        /**
+         * The internal pointer to the document.
+         */
         Document * m_document;
 };
 

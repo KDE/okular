@@ -386,7 +386,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
     }
 }
 
-QString PDFGenerator::getText( const Okular::RegularAreaRect * area, Okular::Page * page  )
+QString PDFGenerator::getText( const Okular::RegularAreaRect * area, Okular::Page * page  ) const
 {
     QRect rect = area->first()->geometry((int)page->width(),(int)page->height());
     Poppler::Page *pp = pdfdoc->page( page->number() );
@@ -396,7 +396,7 @@ QString PDFGenerator::getText( const Okular::RegularAreaRect * area, Okular::Pag
 }
 
 Okular::RegularAreaRect * PDFGenerator::findText (const QString & text, Okular::SearchDir dir, 
-    const bool strictCase, const Okular::RegularAreaRect * sRect, Okular::Page * page )
+    const bool strictCase, const Okular::RegularAreaRect * sRect, Okular::Page * page ) const
 {
     dir = sRect ? Okular::NextRes : Okular::FromTop;
     QRectF rect;
@@ -568,7 +568,7 @@ const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
     return &docFonts;
 }
 
-const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles()
+const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
 {
     if (docEmbeddedFilesDirty)
     {
@@ -579,14 +579,14 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles()
             docEmbeddedFiles.append(new PDFEmbeddedFile(pef));
         }
         docLock.unlock();
-        
+
         docEmbeddedFilesDirty = false;
     }
-    
+
     return &docEmbeddedFiles;
 }
 
-bool PDFGenerator::isAllowed( int permissions )
+bool PDFGenerator::isAllowed( int permissions ) const
 {
 #if !OKULAR_FORCE_DRM
     if (KAuthorized::authorize("skip_drm") && !Okular::Settings::obeyDRM()) return true;
@@ -600,7 +600,7 @@ bool PDFGenerator::isAllowed( int permissions )
     return b;
 }
 
-bool PDFGenerator::canGeneratePixmap( bool /* async */)
+bool PDFGenerator::canGeneratePixmap( bool /* async */) const
 {
     return ready;
 }
@@ -674,7 +674,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalRequestDone( request );
 }
 
-bool PDFGenerator::canGenerateTextPage()
+bool PDFGenerator::canGenerateTextPage() const
 {
     return true;
 }
@@ -742,7 +742,7 @@ bool PDFGenerator::print( KPrinter& printer )
 	return false;
 }
 
-QString PDFGenerator::getMetaData( const QString & key, const QString & option )
+QString PDFGenerator::metaData( const QString & key, const QString & option ) const
 {
     if ( key == "StartFullScreen" )
     {

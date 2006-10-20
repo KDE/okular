@@ -77,7 +77,7 @@ bool KOOOGenerator::closeDocument()
   return true;
 }
 
-bool KOOOGenerator::canGeneratePixmap( bool )
+bool KOOOGenerator::canGeneratePixmap( bool ) const
 {
   return true;
 }

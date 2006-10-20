@@ -37,25 +37,16 @@ class CHMGenerator : public Okular::Generator
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         const Okular::DocumentFonts * generateDocumentFonts();
 
-        bool canGeneratePixmap( bool async );
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
-        bool canGenerateTextPage();
+        bool canGenerateTextPage() const;
         void generateSyncTextPage( Okular::Page * page );
 
-        bool supportsSearching();
-        bool prefersInternalSearching();
+        bool supportsSearching() const;
+        bool prefersInternalSearching() const;
 
-        Okular::RegularAreaRect * findText( const QString & text, Okular::SearchDir dir, const bool strictCase,
-                    const Okular::RegularAreaRect * lastRect, Okular::Page * page);
-        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page );
-
-        bool canConfigurePrinter( ) ;
-        bool print( KPrinter& /*printer*/ ) ;
-
-        QString getMetaData( const QString & key, const QString & option );
-        bool reparseConfig() ;
-        void addPages( KConfigDialog* /*dlg*/) ;
+        QString metaData( const QString & key, const QString & option ) const;
 
     public slots:
         void slotCompleted();
@@ -70,7 +61,7 @@ class CHMGenerator : public Okular::Generator
         KHTMLPart *m_syncGen;
 //         KHTMLPart *m_asyncGen;
 //         QSize m_size;
-        QMutex syncLock;
+        mutable QMutex syncLock;
         QString m_fileName;
 //         QMutex asyncLock;
         QMutex pageLock;

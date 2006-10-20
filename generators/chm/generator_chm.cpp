@@ -147,18 +147,14 @@ const Okular::DocumentFonts * CHMGenerator::generateDocumentFonts()
     return 0L;
 }
 
-bool CHMGenerator::canGeneratePixmap ( bool /*async*/ )
+bool CHMGenerator::canGeneratePixmap ( bool /*async*/ ) const
 {
-/*    if (async)
-    {
-        kDebug() << "async is locked " << asyncLock.locked() << endl;
-        return !asyncLock.locked();
-    }*/
     bool isLocked = true;
-    if (syncLock.tryLock()) {
+    if ( syncLock.tryLock() ) {
         syncLock.unlock();
         isLocked = false;
     }
+
     return !isLocked;
 }
 
@@ -310,7 +306,7 @@ void CHMGenerator::additionalRequestData()
                     }
                     else
                     {
-                        Okular::DocumentViewport viewport(getMetaData( "NamedViewport", '/' + url ));
+                        Okular::DocumentViewport viewport(metaData( "NamedViewport", '/' + url ));
                         objRects.push_back(
                             new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                             false,
@@ -352,7 +348,7 @@ void CHMGenerator::additionalRequestData()
     }
 }
 
-bool CHMGenerator::canGenerateTextPage() 
+bool CHMGenerator::canGenerateTextPage() const
 {
     return true;
 }
@@ -370,38 +366,17 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
     syncLock.unlock();
 }
 
-bool CHMGenerator::supportsSearching()
+bool CHMGenerator::supportsSearching() const
 {
     return true;
 }
 
-bool CHMGenerator::prefersInternalSearching()
+bool CHMGenerator::prefersInternalSearching() const
 {
     return false;
 }
 
-Okular::RegularAreaRect * CHMGenerator::findText( const QString & /*text*/, Okular::SearchDir /*dir*/, const bool /*strictCase*/,
-    const Okular::RegularAreaRect * /*lastRect*/, Okular::Page * /*page*/)
-{
-    return 0L;
-}
-
-QString CHMGenerator::getText( const Okular::RegularAreaRect * /*area*/, Okular::Page * /*page*/ )
-{
-    return QString();
-}
-
-bool CHMGenerator::canConfigurePrinter( )
-{
-    return false;
-}
-
-bool CHMGenerator::print( KPrinter& /*printer*/ )
-{
-    return false;
-}
-
-QString CHMGenerator::getMetaData( const QString &key, const QString &option )
+QString CHMGenerator::metaData( const QString &key, const QString &option ) const
 {
     if ( key == "NamedViewport" && !option.isEmpty() )
     {
@@ -414,16 +389,8 @@ QString CHMGenerator::getMetaData( const QString &key, const QString &option )
     {
         return m_file->Title();
     }
-    return QString::null;
+    return QString();
 }
-
-bool CHMGenerator::reparseConfig()
-{
-    return false;
-}
-
-void CHMGenerator::addPages( KConfigDialog* /*dlg*/)
-{ ; }
 
 /*
 void PixmapThreader::run()

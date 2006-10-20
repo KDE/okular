@@ -193,7 +193,7 @@ bool TIFFGenerator::closeDocument()
     return true;
 }
 
-bool TIFFGenerator::canGeneratePixmap( bool /*async*/ )
+bool TIFFGenerator::canGeneratePixmap( bool /*async*/ ) const
 {
     return ready;
 }

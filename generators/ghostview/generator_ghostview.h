@@ -34,30 +34,22 @@ class GSGenerator : public Okular::Generator
         const Okular::DocumentFonts * generateDocumentFonts() { return 0L; }
 
         // page contents generation
-        bool canGeneratePixmap( bool async ) ;
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
-        bool supportsRotation() { return true; } ;
+        bool supportsRotation() const { return true; } ;
         void rotationChanged( int newOrientation, int oldOrientation );
 
         // paper size management
-        bool supportsPaperSizes();
-        QStringList paperSizes();
+        bool supportsPaperSizes() const;
+        QStringList paperSizes() const;
         void setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize );
 
-        QString getXMLFile() { return QString::null; };
-        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */) ;
-        void freeGUI() ;
-
-    	// may come useful later
-        //virtual bool hasFonts() const ;
+        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */);
+        void freeGUI();
 
         // print document using already configured kprinter
         bool print( KPrinter& /*printer*/ );
-        // access meta data of the generator
-        QString getMetaData( const QString &/*key*/, const QString &/*option*/ ) { return QString(); }
-        // tell generator to re-parse configuration and return true if something changed
-        bool reparseConfig() { return false; }
         QString fileName();
 
         void addPages( KConfigDialog* dlg );
@@ -83,8 +75,8 @@ class GSGenerator : public Okular::Generator
         int rotation( CDSC_ORIENTATION_ENUM orientation );
         int angle( CDSC_ORIENTATION_ENUM orientation );
         CDSC_ORIENTATION_ENUM orientation( int rot );
-        QMutex docLock;
-        QMutex syncLock;
+        mutable QMutex docLock;
+        mutable QMutex syncLock;
         bool m_asyncBusy;
 
         // pixmap requests

@@ -46,7 +46,7 @@ bool KIMGIOGenerator::closeDocument()
     return true;
 }
 
-bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ )
+bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ ) const
 {
     return true;
 }

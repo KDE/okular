@@ -24,12 +24,12 @@ class TIFFGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        bool canGeneratePixmap( bool async );
+        bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
         const Okular::DocumentInfo * generateDocumentInfo();
 
-        bool supportsRotation() { return true; };
+        bool supportsRotation() const { return true; };
 
     private slots:
         void slotThreadFinished();

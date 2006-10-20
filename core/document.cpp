@@ -629,7 +629,7 @@ bool Document::historyAtEnd() const
 
 QString Document::getMetaData( const QString & key, const QString & option ) const
 {
-    return generator ? generator->getMetaData( key, option ) : QString();
+    return generator ? generator->metaData( key, option ) : QString();
 }
 
 int Document::rotation() const

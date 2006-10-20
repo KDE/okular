@@ -439,7 +439,7 @@ void KDjVu::closeFile()
     d->m_djvu_document = 0;
 }
 
-QString KDjVu::getMetaData( const QString & key ) const
+QString KDjVu::metaData( const QString & key ) const
 {
     return d->m_metaData.contains( key ) ? d->m_metaData[ key ] : QString();
 }

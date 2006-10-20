@@ -76,10 +76,10 @@ public:
 
   */
   void generatePixmap( PixmapRequest * request );
-  bool canGeneratePixmap( bool async ) { return !mutex.locked(); };
+  bool canGeneratePixmap( bool async ) const { return !mutex.locked(); };
 
   // rotation
-  bool supportsRotation() { return true; };
+  bool supportsRotation() const { return true; };
   void setOrientation( QVector<Okular::Page*> & pagesVector, int orientation );
 
 private:

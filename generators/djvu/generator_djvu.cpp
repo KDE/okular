@@ -84,7 +84,7 @@ bool DjVuGenerator::closeDocument()
     return true;
 }
 
-bool DjVuGenerator::canGeneratePixmap( bool /*async*/ )
+bool DjVuGenerator::canGeneratePixmap( bool /*async*/ ) const
 {
     return ready;
 }
@@ -119,9 +119,9 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
     if ( m_djvu )
     {
         // compile internal structure reading properties from KDjVu
-        QString doctype = m_djvu->getMetaData( "documentType" );
+        QString doctype = m_djvu->metaData( "documentType" );
         m_docInfo->set( "documentType", doctype.isEmpty() ? i18n( "Unknown" ) : doctype, i18n( "Type of document" ) );
-        QString numcomponents = m_djvu->getMetaData( "componentFile" );
+        QString numcomponents = m_djvu->metaData( "componentFile" );
         m_docInfo->set( "componentFile", numcomponents.isEmpty() ? i18n( "Unknown" ) : numcomponents, i18n( "Component Files" ) );
     }
     else

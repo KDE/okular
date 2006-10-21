@@ -22,11 +22,13 @@
 #include "interpreter.h"
 #include "dscparse_adapter.h"
 #include "dscparse.h"
-#include "core/generator.h"
 
 class KDSC;
 class QString;
 class QStringList;
+namespace Okular {
+    class DocumentInfo;
+}
 
 typedef QList<int> PageList;
 

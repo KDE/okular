@@ -20,6 +20,7 @@ extern "C" {
 #include "ps.h"
 }
 
+#include "core/document.h"
 #include "internaldocument.h"
 
 QStringList GSInternalDocument::paperSizes()

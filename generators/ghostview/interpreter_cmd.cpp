@@ -271,7 +271,7 @@ void GSInterpreterCMD::setMagnify( double magnify )
     unlock();
 }
 
-void GSInterpreterCMD::setMedia( QString media )
+void GSInterpreterCMD::setMedia( const QString &media )
 {
     lock();
     if( m_media != media )

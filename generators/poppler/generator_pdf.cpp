@@ -819,7 +819,7 @@ bool PDFGenerator::exportToText( const QString & fileName )
 //END Generator inherited functions
 
 inline void append (Okular::TextPage* ktp,
-    QString s, double l, double b, double r, double t)
+    const QString &s, double l, double b, double r, double t)
 {
 //       kWarning() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
                 ktp->append( s ,

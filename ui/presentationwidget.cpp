@@ -24,6 +24,7 @@
 #include <qtoolbar.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kinstance.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -64,6 +65,10 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setAttribute( Qt::WA_DeleteOnClose );
     setAttribute( Qt::WA_OpaquePaintEvent );
     setObjectName( "presentationWidget" );
+    QString caption = doc->getMetaData( "DocumentTitle" );
+    if ( caption.trimmed().isEmpty() )
+        caption = doc->currentDocument().fileName();
+    setWindowTitle( KInstance::makeStdCaption( caption ) );
 
     m_width = -1;
 

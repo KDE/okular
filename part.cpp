@@ -655,6 +655,10 @@ bool Part::openUrl(const KUrl &url)
         {
             emit setWindowCaption( title );
         }
+        else
+        {
+            emit setWindowCaption( url.fileName() );
+        }
     }
     else
         KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyUrl() ) );

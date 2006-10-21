@@ -43,8 +43,6 @@ More items (first items will enter 'In progress list' first):
 -> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
 -> evaluate changing KPDFLink to KPDFAction
--> evaluate changing KPDFLinkMovie to KPDFLinkResource (any kind)
--> evaluate completely handling links internally instead of asking xpdf structs
 -> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
    this will give better mvc consistancy
 -> other info on pdfs properties: number of accessed times, time spent on pdf, ...

@@ -51,6 +51,8 @@
 			<keyword>tiff</keyword>
 			<keyword>djvu</keyword>
 			<keyword>dvi</keyword>
+			<keyword>chm</keyword>
+			<keyword>xps</keyword>
 		</keywordset>
 	</bookinfo>
 	<chapter id="introduction">
@@ -250,8 +252,14 @@
 					This is done by either slecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once you have the annotating toolbar, just press one of
-					its buttons to start constructing that anotation.
+					its buttons to start constructing that annotation.
 				</para>
+				<note>
+					<para>
+						The annotating toolbar can be docked in any side of the pageview: just drag it to
+						move it to another place.
+					</para>
+				</note>
 				<para>
 					You can stop the construction any time by pressing again on the button of the
 					annotation you are constructing.
@@ -283,8 +291,8 @@
 				</para>
 				<note>
 					<para>
-						Depending on the document permissions (typically &PDF; documents), some options can
-						be disabled.
+						Depending on the document permissions (typically with &PDF; documents), some options
+						can be disabled.
 					</para>
 				</note>
 			</sect2>

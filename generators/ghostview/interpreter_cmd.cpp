@@ -406,7 +406,6 @@ void GSInterpreterCMD::run()
         QApplication::postEvent( this , readyEvent );*/
         
     }
-    kDebug() << "ME ACABO" << endl;
 }
 
 void GSInterpreterCMD::threadFinished()

@@ -434,14 +434,14 @@ bool GSGenerator::canGeneratePixmap( bool async ) const
     bool isLocked = true;
     if (async)
     {
-        if (!docLock.tryLock()) {
+        if (docLock.tryLock()) {
             docLock.unlock();
             isLocked = false;
         }
     }
     else
     {
-        if (!syncLock.tryLock()) {
+        if (syncLock.tryLock()) {
             syncLock.unlock();
             isLocked = false;
         }

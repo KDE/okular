@@ -426,7 +426,7 @@ void Part::fillGenerators()
         for (int i=0;i<count;i++)
         {
           propName=offers[i]->property("Name").toString();
-          // dont load already loaded generators
+          // don't load already loaded generators
           if (! m_loadedGenerators.take( propName ) )
           {
             KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
@@ -472,7 +472,7 @@ void Part::slotGeneratorPreferences( )
         it.value()->addPages(dialog);
     }
 
-    // (for now dont FIXME) keep us informed when the user changes settings
+    // (for now don't FIXME) keep us informed when the user changes settings
     // connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
     dialog->show();
 }

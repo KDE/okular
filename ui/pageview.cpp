@@ -1591,7 +1591,7 @@ if (d->document->handleEvent( e ) )
             // check if the user really selected an action
             if ( choice )
             {
-            // IMAGE operation choosen
+            // IMAGE operation chosen
             if ( choice == imageToClipboard || choice == imageToFile )
             {
                 // renders page into a pixmap
@@ -1628,7 +1628,7 @@ if (d->document->handleEvent( e ) )
                     }
                 }
             }
-            // TEXT operation choosen
+            // TEXT operation chosen
             else
             {
                 if ( choice == textToClipboard )
@@ -1867,7 +1867,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     QRect checkRect = contentsRect;
     checkRect.adjust( -3, -3, 1, 1 );
 
-    // create a region from wich we'll subtract painted rects
+    // create a region from which we'll subtract painted rects
     QRegion remainingArea( contentsRect );
 
     // iterate over all items painting the ones intersecting contentsRect
@@ -1912,7 +1912,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             }
         }
 
-        // draw the page using the PagePainter whith all flags active
+        // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
             QRect pixmapRect = contentsRect.intersect( itemGeometry );

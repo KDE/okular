@@ -70,7 +70,7 @@ class GSInterpreterCMD : public QThread
 
     signals:
         /**
-         * This signal gets emited whenever a page is finished, but contains a reference to the pixmap
+         * This signal gets emitted whenever a page is finished, but contains a reference to the pixmap
          * used to hold the image.
          *
          * Don't change the pixmap or bad things will happen. This is the backing pixmap of the display.
@@ -98,7 +98,7 @@ class GSInterpreterCMD : public QThread
         QString m_error;
         // FILE INFORMATION:
         // hold pointer to a file never delete it, it should 
-        // change everytime new request is done
+        // change every time a new request is done
         bool m_structurePending;
         double m_magnify;
         int m_aaText,m_aaGfx;

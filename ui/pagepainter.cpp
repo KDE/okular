@@ -100,7 +100,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
     // vectors containing objects to draw
-    // make this a qcolor, rect map, since we dont need 
+    // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
     QList< QPair<QColor, Okular::NormalizedRect *> > * bufferedHighlights = 0;
     QList< Okular::Annotation * > * bufferedAnnotations = 0;
@@ -490,7 +490,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         {
             Okular::Annotation * a = *aIt;
 
-            // honour opacity settings on supported types
+            // honor opacity settings on supported types
             unsigned int opacity = (unsigned int)( 255.0 * a->style.opacity );
             if ( opacity <= 0 )
                 continue;

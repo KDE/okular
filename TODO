@@ -18,7 +18,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 
 In progress [working on]:
 -> toc: highlight the row of the current page (BR127358)
-   (check if there's a better way to do the highlighting - in case just edit TOCItem::setSelected())
+   (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
 -> thumbnailslist: show Viewport in(blended/contour)
    (actually it's only a red contour)
 -> annotations: renderers in PagePainter (for the 6 annots)

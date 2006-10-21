@@ -53,7 +53,7 @@ class TOCItem : public QTreeWidgetItem
             return m_element;
         }
 
-        void setSelected( bool selected )
+        void setCurrent( bool selected )
         {
             setIcon( 0, selected ? KIcon( treeWidget()->layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) : QIcon() );
         }
@@ -139,7 +139,7 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
 
     if ( m_current )
     {
-        m_current->setSelected( false );
+        m_current->setCurrent( false );
         m_current = 0;
     }
 
@@ -152,7 +152,7 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
         {
             m_current = tmp;
             if (m_current)
-                m_current->setSelected( true );
+                m_current->setCurrent( true );
         }
         ++it;
     }

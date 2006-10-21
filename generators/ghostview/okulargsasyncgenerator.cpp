@@ -7,10 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-
 #include "okulargsasyncgenerator.h"
-
-#include <qgs.h>
 
 #include <qapplication.h>
 #include <qpainter.h>
@@ -25,7 +22,6 @@
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 
-// #include <qdialog.h>
 #include <QX11Info>
 
 extern GC kde_xget_temp_gc( int scrn, bool monochrome );                // get temporary GC

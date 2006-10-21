@@ -7,8 +7,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <math.h>
-#include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/ipc.h>
@@ -17,11 +15,10 @@
 #include <unistd.h>
 
 #include <qfile.h>
+#include <qpixmap.h>
 
-#include <qapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kprocess.h>
 #include <k3tempfile.h>
 

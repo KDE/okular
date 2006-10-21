@@ -18,17 +18,18 @@
 
 #include <kdebug.h>
 
-#include "core/generator.h"
-
 #include "okulargsasyncgenerator.h"
 #include "internaldocument.h"
 
 #define GS_DATAREADY_ID 6989
 
-class QCustomEvent;
+class QPixmap;
 class QString;
 class QStringList;
 class KProcess;
+namespace Okular {
+    class PixmapRequest;
+}
 
 struct ProcessData
 {

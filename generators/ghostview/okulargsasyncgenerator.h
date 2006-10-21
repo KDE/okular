@@ -10,10 +10,10 @@
 #ifndef _LIBGS_ASYNC_GENERATOR_
 #define _LIBGS_ASYNC_GENERATOR_
 
-#include <qpixmap.h>
-#include <interpreter.h>
-#include <core/generator.h>
+#include <qgs.h>
+
 class QImage;
+
 class PixHandler : public QObject
 {
     Q_OBJECT

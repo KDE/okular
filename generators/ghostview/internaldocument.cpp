@@ -20,6 +20,8 @@ extern "C" {
 #include "ps.h"
 }
 
+#include <errno.h>
+
 #include "core/document.h"
 #include "internaldocument.h"
 

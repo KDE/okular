@@ -13,8 +13,6 @@
 #ifndef _OKULAR_GSINTERNALDOC_H_
 #define _OKULAR_GSINTERNALDOC_H_
 
-#include <errno.h>
-
 #include <qlist.h>
 #include <qmap.h>
 #include <qprinter.h>

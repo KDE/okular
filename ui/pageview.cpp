@@ -22,8 +22,6 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <qtimer.h>
-#include <qdatetime.h>
-#include <qpushbutton.h>
 #include <qset.h>
 #include <qscrollbar.h>
 #include <qtooltip.h>

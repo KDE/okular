@@ -10,9 +10,13 @@
 #ifndef _OKULAR_PAGEPAINTER_H_
 #define _OKULAR_PAGEPAINTER_H_
 
-#include "core/page.h"  // for NormalizedPoint
+#include "core/area.h"  // for NormalizedPoint
+
 class QPainter;
 class QRect;
+namespace Okular {
+    class Page;
+}
 
 /**
  * @short Paints a Okular::Page to an open painter using given flags.

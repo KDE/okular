@@ -16,8 +16,6 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
-#include <QtGui/QComboBox>
-#include <QtGui/QLabel>
 
 #include <kconfigdialog.h>
 #include <kdebug.h>

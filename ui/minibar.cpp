@@ -22,7 +22,6 @@
 #include <qpainter.h>
 #include <kicon.h>
 #include <kacceleratormanager.h>
-#include <kdeversion.h>
 
 // local includes
 #include "core/document.h"

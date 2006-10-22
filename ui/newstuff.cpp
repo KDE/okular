@@ -29,7 +29,6 @@
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <khtml_part.h>

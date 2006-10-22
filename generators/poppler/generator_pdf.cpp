@@ -19,7 +19,6 @@
 #include <kwallet.h>
 #include <kprinter.h>
 #include <ktemporaryfile.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
 
 // local includes

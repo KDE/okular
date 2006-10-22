@@ -23,7 +23,6 @@
 
 // qt/kde includes
 #include <qsplitter.h>
-#include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <kvbox.h>
@@ -34,7 +33,6 @@
 #include <kinstance.h>
 #include <kprinter.h>
 #include <kstdaction.h>
-#include <kdeversion.h>
 #include <kparts/genericfactory.h>
 #include <kfiledialog.h>
 #include <kfind.h>

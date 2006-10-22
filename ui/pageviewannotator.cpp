@@ -665,7 +665,6 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->highlightType = type;
-kDebug() << ">>>>>>>> " << type << " vs " << ha->highlightType << endl;
                 ha->boundary = Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() );
                 foreach ( Okular::NormalizedRect * rect, *selection )
                 {

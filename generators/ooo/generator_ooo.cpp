@@ -25,8 +25,8 @@
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 
-KOOOGenerator::KOOOGenerator( Okular::Document * document )
-  : Okular::Generator( document ), mDocument( 0 )
+KOOOGenerator::KOOOGenerator()
+  : Okular::Generator(), mDocument( 0 )
 {
 }
 

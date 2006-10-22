@@ -53,8 +53,8 @@ class GSGenerator : public Okular::Generator
         QString fileName();
 
         void addPages( KConfigDialog* dlg );
-        /** constructor: takes the Document as a parameter **/
-        GSGenerator( Okular::Document * doc );
+        /** constructor **/
+        GSGenerator();
         ~GSGenerator();
 
     public slots:

@@ -52,7 +52,7 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
 
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
-DjVuGenerator::DjVuGenerator( Okular::Document * doc ) : Okular::Generator ( doc ),
+DjVuGenerator::DjVuGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
     m_djvu = new KDjVu();

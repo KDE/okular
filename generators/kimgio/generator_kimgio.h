@@ -16,7 +16,7 @@ class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        KIMGIOGenerator( Okular::Document * document );
+        KIMGIOGenerator();
         virtual ~KIMGIOGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

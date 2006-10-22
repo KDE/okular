@@ -18,7 +18,7 @@
 
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 
-KIMGIOGenerator::KIMGIOGenerator( Okular::Document * document ) : Generator( document )
+KIMGIOGenerator::KIMGIOGenerator() : Generator()
 {
 }
 
@@ -56,7 +56,7 @@ void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
     // perform a smooth scaled generation
     QImage smoothImage = m_pix->toImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     // rotate, if necessary
-    int rotation = m_document->rotation();
+    int rotation = request->page->rotation();
     QImage finalImage = rotation > 0
         ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
         : smoothImage;

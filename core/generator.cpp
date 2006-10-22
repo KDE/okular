@@ -13,8 +13,8 @@
 
 using namespace Okular;
 
-Generator::Generator( Document *document )
- : m_document( document )
+Generator::Generator()
+ : m_document( 0 )
 {
 }
 
@@ -176,6 +176,12 @@ void Generator::signalRequestDone( PixmapRequest * request )
 {
   m_document->requestDone( request );
 }
+
+Document * Generator::document() const
+{
+    return m_document;
+}
+
 
 QTextStream& operator<< (QTextStream& str, const PixmapRequest *req)
 {

@@ -24,7 +24,7 @@ class DviGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        DviGenerator( Okular::Document * doc );
+        DviGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 

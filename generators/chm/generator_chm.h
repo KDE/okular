@@ -29,7 +29,7 @@ class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        CHMGenerator(Okular::Document * doc );
+        CHMGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 

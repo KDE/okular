@@ -140,7 +140,7 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
 
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
-TIFFGenerator::TIFFGenerator( Okular::Document * document ) : Okular::Generator( document ),
+TIFFGenerator::TIFFGenerator() : Okular::Generator(),
   d( new Private ), ready( false ), m_docInfo( 0 )
 {
     thread = new TIFFGeneratorThread();

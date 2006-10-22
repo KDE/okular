@@ -607,8 +607,8 @@ XpsPage* XpsFile::page(int pageNum) const
     return m_pages.at( pageNum );
 }
 
-XpsGenerator::XpsGenerator( Okular::Document * document )
-  : Okular::Generator( document )
+XpsGenerator::XpsGenerator()
+  : Okular::Generator()
 {
     m_xpsFile = new XpsFile;
 }

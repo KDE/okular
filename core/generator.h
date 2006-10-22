@@ -15,7 +15,7 @@
 
 #define OKULAR_EXPORT_PLUGIN( classname ) \
     extern "C" { \
-         OKULAR_EXPORT Okular::Generator* create_plugin(Okular::Document* doc) { return new classname(doc); } \
+         OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
     }
 
 
@@ -65,9 +65,9 @@ class OKULAR_EXPORT Generator : public QObject
 
     public:
         /**
-         * Creates a new generator which works on the given @p document
+         * Creates a new generator.
          */
-        Generator( Document *document );
+        Generator();
 
 
         /**
@@ -315,6 +315,12 @@ class OKULAR_EXPORT Generator : public QObject
          */
         void signalRequestDone( PixmapRequest * request );
 
+        /**
+         * Returns a pointer to the document.
+         */
+        Document * document() const;
+
+    private:
         /**
          * The internal pointer to the document.
          */

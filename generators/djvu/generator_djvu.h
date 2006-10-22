@@ -19,7 +19,7 @@ class DjVuGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        DjVuGenerator( Okular::Document * doc );
+        DjVuGenerator();
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 

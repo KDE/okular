@@ -215,8 +215,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             return false;
         }
 
-        Generator* (*create_plugin)(Document* doc) = ( Generator* (*)(Document* doc) ) lib->symbol( "create_plugin" );
-        generator=create_plugin(this);
+        Generator* (*create_plugin)() = ( Generator* (*)() ) lib->symbol( "create_plugin" );
+        generator = create_plugin();
 
         if ( !generator )
         {
@@ -232,9 +232,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
     else
     {
-        generator -> setDocument( this );
         m_usingCachedGenerator=true;
     }
+    generator->setDocument( this );
+
     // connect error reporting signals
     connect( generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
     connect( generator, SIGNAL( warning( const QString&, int ) ), this, SIGNAL( warning( const QString&, int ) ) );

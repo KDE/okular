@@ -20,7 +20,7 @@ class KOOOGenerator : public Okular::Generator
   Q_OBJECT
 
   public:
-    KOOOGenerator( Okular::Document * document );
+    KOOOGenerator();
     virtual ~KOOOGenerator();
 
     // [INHERITED] load a document and fill up the pagesVector

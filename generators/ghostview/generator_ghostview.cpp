@@ -37,8 +37,8 @@
 
 OKULAR_EXPORT_PLUGIN(GSGenerator)
 
-GSGenerator::GSGenerator( Okular::Document * doc ) :
-    Okular::Generator ( doc ),
+GSGenerator::GSGenerator() :
+    Okular::Generator(),
     m_converted(false)
 {
     pixGenerator = 0;
@@ -267,7 +267,7 @@ void GSGenerator::setPaperSize( QVector<Okular::Page*> & pagesVector, int newsiz
     loadPages(pagesVector);
 // FIXME: is it needed to notify the observers? doesn't the document do that already?
     Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
-    m_document->notifyObservers( &r );
+    document()->notifyObservers( &r );
 }
 
 void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )

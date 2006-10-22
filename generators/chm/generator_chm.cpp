@@ -28,7 +28,8 @@
 
 OKULAR_EXPORT_PLUGIN(CHMGenerator)
 
-CHMGenerator::CHMGenerator( Okular::Document * doc ) : Okular::Generator ( doc )
+CHMGenerator::CHMGenerator()
+    : Okular::Generator()
 {
     m_syncGen=0;
     m_file=0;

@@ -48,7 +48,7 @@ class PDFGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        PDFGenerator( Okular::Document * document );
+        PDFGenerator();
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

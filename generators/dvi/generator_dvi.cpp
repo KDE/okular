@@ -29,7 +29,7 @@
 
 OKULAR_EXPORT_PLUGIN(DviGenerator)
 
-DviGenerator::DviGenerator( Okular::Document * doc ) : Okular::Generator ( doc ),
+DviGenerator::DviGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
 }
@@ -356,7 +356,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         {
             Okular::DocumentViewport vp;
  
-            const Okular::Page *p = m_document->page( a.page - 1 );
+            const Okular::Page *p = document()->page( a.page - 1 );
             /* Don't care about rotations... */
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height(), 0 );
             domel->setAttribute( "Viewport", vp.toString() );

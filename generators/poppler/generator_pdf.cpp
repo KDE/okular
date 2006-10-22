@@ -218,8 +218,8 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 
 OKULAR_EXPORT_PLUGIN(PDFGenerator)
 
-PDFGenerator::PDFGenerator( Okular::Document * doc )
-    : Generator( doc ), pdfdoc( 0 ), ready( true ),
+PDFGenerator::PDFGenerator()
+    : Generator(), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docFontsDirty( true ), docEmbeddedFilesDirty( true )
 {
@@ -647,7 +647,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)m_document->rotation()) );
+    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
     
     if ( genObjectRects )
     {
@@ -801,7 +801,7 @@ bool PDFGenerator::exportToText( const QString & fileName )
         return false;
 
     QTextStream ts( &f );
-    int num = m_document->pages();
+    int num = document()->pages();
     for ( int i = 0; i < num; ++i )
     {
         docLock.lock();

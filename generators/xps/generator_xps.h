@@ -202,7 +202,7 @@ class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        XpsGenerator( Okular::Document * document );
+        XpsGenerator();
         virtual ~XpsGenerator();
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );

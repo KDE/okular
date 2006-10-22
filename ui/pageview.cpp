@@ -308,7 +308,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
-    d->aPaperSizes=new KSelectAction( i18n( "&Paper sizes" ), ac, "view_papersizes" );
+    d->aPaperSizes=new KSelectAction( i18n( "&Paper Size" ), ac, "view_papersizes" );
     QStringList rotations;
     rotations.append( i18n( "Default" ) );
     rotations.append( i18n( "Rotated 90 Degrees" ) );

@@ -8,7 +8,7 @@
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
     <Action name="properties" group="file_print"/>
-    <Action name="embeddedFiles" group="file_print"/>
+    <Action name="embedded_files" group="file_print"/>
     <Action name="file_export_as" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
@@ -17,7 +17,6 @@
   </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
-    <Action name="orientation_menu"/>
     <Separator/>
     <Action name="zoom_in"/>
     <Action name="zoom_out"/>

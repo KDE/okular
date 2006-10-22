@@ -310,7 +310,7 @@ Part::Part(QWidget *parentWidget,
 	connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
 	m_showProperties->setEnabled( false );
 	
-	m_showEmbeddedFiles = new KAction(i18n("&Embedded Files"), ac, "embeddedFiles");
+	m_showEmbeddedFiles = new KAction(i18n("&Embedded Files"), ac, "embedded_files");
 	connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
 	m_showEmbeddedFiles->setEnabled( false );
 

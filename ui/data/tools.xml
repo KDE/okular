@@ -47,7 +47,7 @@ Engine/Annotation Types [specific attributes]:
     </tool>
     <tool id="5" name="Yellow Highlighter" pixmap="tool_hl_yellow">
         <tooltip>Yellow Highlight</tooltip>
-        <engine type="SmoothLine" color="#FFFF00">
+        <engine type="TextSelector" color="#FFFF00">
             <annotation type="Highlight" color="#FFFF00" />
         </engine>
         <shortcut>5</shortcut>

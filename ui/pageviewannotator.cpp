@@ -13,6 +13,7 @@
 #include <qevent.h>
 #include <qlist.h>
 #include <qpainter.h>
+#include <qset.h>
 #include <qvariant.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -26,6 +27,7 @@
 #include <math.h>
 
 // local includes
+#include "core/area.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "core/annotations.h"
@@ -67,13 +69,20 @@ class AnnotatorEngine
         //PageViewItem * editingItem() const { return m_lockedItem; }
         bool creationCompleted() const { return m_creationCompleted; }
 
+        void setItem( PageViewItem * item ) { m_item = item; }
+
     protected:
+        PageViewItem * item() { return m_item; }
+
         // common engine attributes (the element includes annotation desc)
         QDomElement m_engineElement;
         QDomElement m_annotElement;
         QColor m_engineColor;
         // other vars (remove this!)
         bool m_creationCompleted;
+
+    private:
+        PageViewItem * m_item;
 };
 
 /** @short SmoothPathEngine */
@@ -172,15 +181,8 @@ class SmoothPathEngine : public AnnotatorEngine
             Okular::Annotation * ann = 0;
             QString typeString = m_annotElement.attribute( "type" );
 
-            // create HighlightAnnotation from path
-            if ( typeString == "Highlight" )
-            {
-                Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
-                ann = ha;
-                // TODO
-            }
             // create InkAnnotation from path
-            else if ( typeString == "Ink" )
+            if ( typeString == "Ink" )
             {
                 Okular::InkAnnotation * ia = new Okular::InkAnnotation();
                 ann = ia;
@@ -556,6 +558,153 @@ class PolyLineEngine : public AnnotatorEngine
         int numofpoints;
 };
 
+/** @short TextSelectorEngine */
+class TextSelectorEngine : public AnnotatorEngine
+{
+    public:
+        TextSelectorEngine( const QDomElement & engineElement, PageView * pageView )
+            : AnnotatorEngine( engineElement ), m_pageView( pageView )
+        {
+            // parse engine specific attributes
+        }
+
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
+        {
+            // only proceed if pressing left button
+            if ( button != Left )
+                return QRect();
+
+            if ( type == Press )
+            {
+                lastPoint.x = nX;
+                lastPoint.y = nY;
+                QRect oldrect = rect;
+                rect = QRect();
+                return oldrect;
+            }
+            else if ( type == Move )
+            {
+                if ( item() )
+                {
+                    QPoint start( (int)( lastPoint.x * item()->width() ), (int)( lastPoint.y * item()->height() ) );
+                    QPoint end( (int)( nX * item()->width() ), (int)( nY * item()->height() ) );
+                    Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
+                    QList<QRect> * geom = newselection->geometry( (int)xScale, (int)yScale );
+                    QRect newrect;
+                    if ( geom )
+                    {
+                        foreach( QRect r, *geom )
+                        {
+                            if ( newrect.isNull() )
+                                newrect = r;
+                            else
+                                newrect |= r;
+                        }
+                    }
+                    rect |= newrect;
+                    delete selection;
+                    selection = newselection;
+                }
+            }
+            else if ( type == Release )
+            {
+                m_creationCompleted = true;
+            }
+            return rect;
+        }
+
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
+        {
+            if ( selection )
+            {
+                painter->setPen( Qt::NoPen );
+                painter->setBrush( m_engineColor );
+                foreach( Okular::NormalizedRect * r, *selection )
+                {
+                    painter->drawRect( r->geometry( (int)xScale, (int)yScale ) );
+                }
+            }
+        }
+
+        QList< Okular::Annotation* > end()
+        {
+            m_creationCompleted = false;
+
+            // find out annotation's description node
+            if ( m_annotElement.isNull() )
+                return QList< Okular::Annotation* >();
+
+            // find out annotation's type
+            Okular::Annotation * ann = 0;
+            QString typeString = m_annotElement.attribute( "type" );
+
+            Okular::HighlightAnnotation::HighlightType type = Okular::HighlightAnnotation::Highlight;
+            bool typevalid = false;
+            // create HighlightAnnotation's from the selected area
+            if ( typeString == "Highlight" )
+            {
+                type = Okular::HighlightAnnotation::Highlight;
+                typevalid = true;
+            }
+            else if ( typeString == "Squiggly" )
+            {
+                type = Okular::HighlightAnnotation::Squiggly;
+                typevalid = true;
+            }
+            else if ( typeString == "Underline" )
+            {
+                type = Okular::HighlightAnnotation::Underline;
+                typevalid = true;
+            }
+            else if ( typeString == "StrikeOut" )
+            {
+                type = Okular::HighlightAnnotation::StrikeOut;
+                typevalid = true;
+            }
+            if ( typevalid )
+            {
+                Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
+                ha->highlightType = type;
+kDebug() << ">>>>>>>> " << type << " vs " << ha->highlightType << endl;
+                ha->boundary = Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() );
+                foreach ( Okular::NormalizedRect * rect, *selection )
+                {
+                    Okular::HighlightAnnotation::Quad q;
+                    q.capStart = false;
+                    q.capEnd = false;
+                    q.feather = 1.0;
+                    q.points[0] = Okular::NormalizedPoint( rect->left, rect->bottom );
+                    q.points[1] = Okular::NormalizedPoint( rect->right, rect->bottom );
+                    q.points[2] = Okular::NormalizedPoint( rect->right, rect->top );
+                    q.points[3] = Okular::NormalizedPoint( rect->left, rect->top );
+                    ha->highlightQuads.append( q );
+                }
+                ann = ha;
+            }
+
+            // safety check
+            if ( !ann )
+                return QList< Okular::Annotation* >();
+
+            // set common attributes
+            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
+                m_annotElement.attribute( "color" ) : m_engineColor;
+            if ( m_annotElement.hasAttribute( "opacity" ) )
+                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
+
+            // return annotations
+            return QList< Okular::Annotation* >() << ann;
+        }
+
+    private:
+        // data
+        PageView * m_pageView;
+        // TODO: support more pages
+        Okular::RegularAreaRect * selection;
+        Okular::NormalizedPoint lastPoint;
+        QRect rect;
+};
+
 
 /** PageViewAnnotator **/
 
@@ -689,7 +838,10 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     if ( m_lockedItem && item != m_lockedItem )
         return QRect();
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
+    {
         m_lockedItem = item;
+        m_engine->setItem( m_lockedItem );
+    }
 
     // 2. use engine to perform operations
     QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight, item->page() );
@@ -813,6 +965,8 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                     m_engine = new PickPointEngine( toolSubElement );
                 else if ( type == "PolyLine" )
                     m_engine = new PolyLineEngine( toolSubElement );
+                else if ( type == "TextSelector" )
+                    m_engine = new TextSelectorEngine( toolSubElement, m_pageView );
                 else
                     kWarning() << "tools.xml: engine type:'" << type << "' is not defined!" << endl;
             }

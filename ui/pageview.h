@@ -77,6 +77,7 @@ Q_OBJECT
         bool canUnloadPixmap( int pageNum );
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
+        Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
 
     public slots:
         void errorMessage( const QString & message, int duration )
@@ -127,7 +128,6 @@ Q_OBJECT
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );
         void selectionClear();
-        Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one

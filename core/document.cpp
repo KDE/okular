@@ -60,9 +60,6 @@ class Okular::DocumentPrivate
         QString docFileName;
         QString xmlFileName;
 
-        // list of the mimetypes 'generator_kimgio' can understand
-        QStringList kimgioMimes;
-
         // viewport stuff
         QLinkedList< DocumentViewport > viewportHistory;
         QLinkedList< DocumentViewport >::iterator viewportIterator;

@@ -197,7 +197,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         }
     }
 
-    QString propName=offers[hRank]->property("Name").toString();
+    QString propName = offers.at(hRank)->name();
     m_usingCachedGenerator=false;
     generator=m_loadedGenerators->take(propName);
     if (!generator)
@@ -208,10 +208,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
             return false;
         }
-        KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[hRank]->library() ) );
+        KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers.at(hRank)->library() ) );
         if (!lib) 
         {
-            kWarning() << "Could not load '" << offers[hRank]->library() << "' library." << endl;
+            kWarning() << "Could not load '" << offers.at(hRank)->library() << "' library." << endl;
             return false;
         }
 

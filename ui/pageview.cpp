@@ -697,7 +697,9 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
         if ( !contentsRect.isValid() )
             return;
 
+#ifdef PAGEVIEW_DEBUG
         kDebug() << "paintevent " << contentsRect << endl;
+#endif
 
         // create the screen painter. a pixel painted at contentsX,contentsY
         // appears to the top-left corner of the scrollview.
@@ -740,8 +742,9 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                 if ( !contentsRect.isValid() )
                     continue;
             }
-            
+#ifdef PAGEVIEW_DEBUG
             kDebug() << contentsRect << endl;
+#endif
 
             // note: this check will take care of all things requiring alpha blending (not only selection)
             bool wantCompositing = !selectionRect.isNull() && contentsRect.intersects( selectionRect );
@@ -1288,7 +1291,6 @@ if ( d->document->handleEvent( e ) )
                             }
                             else if( choice == deleteNote )
                             {
-                                kDebug() << "astario: select deleteNote" << endl;
                                // find and close the annotwindow
                                QList<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
                                QList<AnnotWindow *>::Iterator itEnd = d->m_annowindows.end();
@@ -1302,11 +1304,9 @@ if ( d->document->handleEvent( e ) )
                                    }
                                }
                                d->document->removePageAnnotation( pageItem->page()->number(), ann );
-                               kDebug() << "astario: deleted Note" << endl;
                             }
                             else if( choice == showProperties )
                             {
-                                kDebug() << "astario: select showProperties" << endl;
                                 AnnotsPropertiesDialog propdialog( this, d->document, pageItem->pageNumber(), ann );
                                 propdialog.exec();
                             }

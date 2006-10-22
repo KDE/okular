@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QTextStream>
+#include <kdebug.h>
 
 #include "generator.h"
 
@@ -183,12 +183,17 @@ Document * Generator::document() const
 }
 
 
-QTextStream& operator<< (QTextStream& str, const PixmapRequest *req)
+kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )
 {
-    QString s;
-    s += QString(req->async ? "As" : "S") + QString("ync PixmapRequest (id: %1) (%2x%3) ").arg(req->id,req->width,req->height);
-    s += QString("prio: %1, pageNo: %2) ").arg(req->priority,req->pageNumber);
-    return (str << s);
+    QString s = QString( "%1 PixmapRequest (id: %2) (%3x%4), prio %5, pageNo %6" )
+        .arg( QString( req.async ? "Async" : "Sync" ) )
+        .arg( req.id )
+        .arg( req.width )
+        .arg( req.height )
+        .arg( req.priority )
+        .arg( req.pageNumber );
+    str << s;
+    return str;
 }
 
 #include "generator.moc"

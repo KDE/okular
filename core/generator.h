@@ -31,6 +31,7 @@
 
 class KConfigDialog;
 class KPrinter;
+class kdbgstream;
 
 namespace Okular {
 
@@ -356,8 +357,6 @@ struct OKULAR_EXPORT PixmapRequest
 
 };
 
-QTextStream& operator<< (QTextStream& str, const PixmapRequest *req);
-
 /**
  * @short Defines an entry for the export menu
  */
@@ -378,5 +377,7 @@ struct OKULAR_EXPORT ExportEntry
 };
 
 }
+
+kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req );
 
 #endif

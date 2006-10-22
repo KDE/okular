@@ -563,7 +563,8 @@ class TextSelectorEngine : public AnnotatorEngine
 {
     public:
         TextSelectorEngine( const QDomElement & engineElement, PageView * pageView )
-            : AnnotatorEngine( engineElement ), m_pageView( pageView )
+            : AnnotatorEngine( engineElement ), m_pageView( pageView ),
+            selection( 0 )
         {
             // parse engine specific attributes
         }

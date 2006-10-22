@@ -11,6 +11,7 @@
 #include <qfile.h>
 #include <qcolor.h>
 #include <qevent.h>
+#include <qlist.h>
 #include <qpainter.h>
 #include <qvariant.h>
 #include <kiconloader.h>
@@ -60,7 +61,7 @@ class AnnotatorEngine
         // perform operations
         virtual QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page ) = 0;
         virtual void paint( QPainter * painter, double xScale, double yScale, const QRect & clipRect ) = 0;
-        virtual Okular::Annotation * end() = 0;
+        virtual QList< Okular::Annotation* > end() = 0;
 
         // query creation state
         //PageViewItem * editingItem() const { return m_lockedItem; }
@@ -159,13 +160,13 @@ class SmoothPathEngine : public AnnotatorEngine
             }
         }
 
-        Okular::Annotation * end()
+        QList< Okular::Annotation* > end()
         {
             m_creationCompleted = false;
 
             // find out annotation's description node
             if ( m_annotElement.isNull() )
-                return 0;
+                return QList< Okular::Annotation* >();
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
@@ -193,7 +194,7 @@ class SmoothPathEngine : public AnnotatorEngine
 
             // safety check
             if ( !ann )
-                return 0;
+                return QList< Okular::Annotation* >();
 
             // set common attributes
             ann->style.color = m_annotElement.hasAttribute( "color" ) ?
@@ -202,7 +203,7 @@ class SmoothPathEngine : public AnnotatorEngine
                 ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
 
             // return annotation
-            return ann;
+            return QList< Okular::Annotation* >() << ann;
         }
 
     private:
@@ -296,13 +297,13 @@ class PickPointEngine : public AnnotatorEngine
             }
         }
 
-        Okular::Annotation * end()
+        QList< Okular::Annotation* > end()
         {
             m_creationCompleted = false;
 
             // find out annotation's description node
             if ( m_annotElement.isNull() )
-                return 0;
+                return QList< Okular::Annotation* >();
             
             // find out annotation's type
             Okular::Annotation * ann = 0;
@@ -377,7 +378,7 @@ class PickPointEngine : public AnnotatorEngine
 
             // safety check
             if ( !ann )
-                return 0;
+                return QList< Okular::Annotation* >();
 
             // set common attributes
             ann->style.color = m_annotElement.hasAttribute( "color" ) ?
@@ -386,7 +387,7 @@ class PickPointEngine : public AnnotatorEngine
                 ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
 
             // return annotation
-            return ann;
+            return QList< Okular::Annotation* >() << ann;
         }
 
     private:
@@ -501,13 +502,13 @@ class PolyLineEngine : public AnnotatorEngine
             }
         }
 
-        Okular::Annotation * end()
+        QList< Okular::Annotation* > end()
         {
             m_creationCompleted = false;
 
 			// find out annotation's description node
             if ( m_annotElement.isNull() )
-                return 0;
+                return QList< Okular::Annotation* >();
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
@@ -517,7 +518,7 @@ class PolyLineEngine : public AnnotatorEngine
             if ( typeString == "Line" || typeString == "Polyline" || typeString == "Polygon" )
             {
                 if ( points.count() < 2 )
-                    return 0;
+                    return QList< Okular::Annotation* >();
                 //add note
                 Okular::LineAnnotation * la = new Okular::LineAnnotation();
                 ann = la;
@@ -531,7 +532,7 @@ class PolyLineEngine : public AnnotatorEngine
 
             // safety check
             if ( !ann )
-                return 0;
+                return QList< Okular::Annotation* >();
 
             // set common attributes
             ann->style.color = m_annotElement.hasAttribute( "color" ) ?
@@ -540,7 +541,7 @@ class PolyLineEngine : public AnnotatorEngine
                 ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
             // return annotation
 
-            return ann;
+            return QList< Okular::Annotation* >() << ann;
         }
 
     private:
@@ -710,11 +711,13 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     // 4. if engine has finished, apply Annotation to the page
     if ( m_engine->creationCompleted() )
     {
-        // apply engine data to Annotation and reset engine
-        Okular::Annotation * annotation = m_engine->end();
-        // attach the newly filled annotation to the page
-        if ( annotation )
+        // apply engine data to the Annotation's and reset engine
+        QList< Okular::Annotation* > annotations = m_engine->end();
+        // attach the newly filled annotations to the page
+        foreach ( Okular::Annotation * annotation, annotations )
         {
+            if ( !annotation ) continue;
+
             annotation->creationDate = annotation->modifyDate = QDateTime::currentDateTime();
             annotation->author = Okular::Settings::annotationsAuthor();
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );

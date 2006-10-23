@@ -27,7 +27,6 @@
 #include <kmimetype.h>
 
 #include "document.h"
-#include "textpage.h"
 
 class KConfigDialog;
 class KPrinter;
@@ -39,6 +38,7 @@ class ExportEntry;
 class Link;
 class Page;
 class PixmapRequest;
+class TextPage;
 
 /* Note: on contents generation and asyncronous queries.
  * Many observers may want to request data syncronously or asyncronously.

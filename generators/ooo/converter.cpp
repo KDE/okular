@@ -62,7 +62,7 @@ bool Converter::convert()
   delete mTextDocument;
   delete mCursor;
 
-  mTableOfContents.clear();
+  mTableOfContents = QDomDocument( "DocumentSynopsis" );
   mHeaderInfos.clear();
   mInternalLinkInfos.clear();
   mLinkInfos.clear();
@@ -477,6 +477,10 @@ bool Converter::createTableOfContents()
 {
   const QSizeF pageSize = mTextDocument->pageSize();
 
+  QStack<QDomNode> parentNodeStack;
+  QDomNode parentNode = mTableOfContents;
+  int level = 2;
+
   for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
     const HeaderInfo headerInfo = mHeaderInfos[ i ];
 
@@ -491,10 +495,6 @@ bool Converter::createTableOfContents()
     viewport.rePos.enabled = true;
     viewport.rePos.pos = Okular::DocumentViewport::Center;
 
-    QStack<QDomNode> parentNodeStack;
-    QDomNode parentNode = mTableOfContents;
-    int level = 2;
-
     QDomElement item = mTableOfContents.createElement( headerInfo.text );
     item.setAttribute( "Viewport", viewport.toString() );
 
@@ -505,7 +505,7 @@ bool Converter::createTableOfContents()
       parentNodeStack.push( parentNode );
       parentNode = parentNode.lastChildElement();
       parentNode.appendChild( item );
-      level++;
+      level = newLevel;
     } else {
       for ( int i = level; i > newLevel; i-- ) {
         level--;

@@ -619,7 +619,9 @@ class TextSelectorEngine : public AnnotatorEngine
             if ( selection )
             {
                 painter->setPen( Qt::NoPen );
-                painter->setBrush( m_engineColor );
+                QColor col = m_engineColor;
+                col.setAlphaF( 0.5 );
+                painter->setBrush( col );
                 foreach( Okular::NormalizedRect * r, *selection )
                 {
                     painter->drawRect( r->geometry( (int)xScale, (int)yScale ) );

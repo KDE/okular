@@ -3,7 +3,7 @@
 
 set(kfaximage_LIB_SRCS kfaximage.cpp faxexpand.cpp faxinit.cpp )
 
-kde4_automoc(kfaximage ${kfaximage_LIB_SRCS})
+kde4_automoc(${kfaximage_LIB_SRCS})
 
 kde4_add_library(kfaximage SHARED ${kfaximage_LIB_SRCS})
 

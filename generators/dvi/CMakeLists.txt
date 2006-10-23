@@ -39,7 +39,7 @@ set(okularGenerator_dvi_SRCS
    dvisourcesplitter.cpp
 )
 
-kde4_automoc(okularGenerator_dvi ${okularGenerator_dvi_SRCS})
+kde4_automoc(${okularGenerator_dvi_SRCS})
 
 kde4_add_plugin(okularGenerator_dvi WITH_PREFIX ${okularGenerator_dvi_SRCS})
 

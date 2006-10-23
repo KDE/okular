@@ -9,7 +9,7 @@ set(okularGenerator_xps_SRCS
    generator_xps.cpp
 )
 
-kde4_automoc(okularGenerator_xps ${okularGenerator_xps_SRCS})
+kde4_automoc(${okularGenerator_xps_SRCS})
 
 kde4_add_plugin(okularGenerator_xps WITH_PREFIX ${okularGenerator_xps_SRCS})
 

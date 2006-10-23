@@ -11,7 +11,7 @@ include_directories(
 
 set(okularGenerator_fax_PART_SRCS faxrenderer.cpp )
 
-kde4_automoc(okularGenerator_fax ${okularGenerator_fax_PART_SRCS})
+kde4_automoc(${okularGenerator_fax_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_fax WITH_PREFIX ${okularGenerator_fax_PART_SRCS})
 

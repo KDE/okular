@@ -79,22 +79,6 @@ bool Generator::supportsSearching() const
   return false;
 }
 
-bool Generator::prefersInternalSearching() const
-{
-  return false;
-}
-
-RegularAreaRect * Generator::findText( const QString&, SearchDir, const bool,
-                                       const RegularAreaRect*, Page* ) const
-{
-  return 0;
-}
-
-QString Generator::getText( const RegularAreaRect*, Page* ) const
-{
-  return QString();
-}
-
 bool Generator::supportsRotation() const
 {
   return false;

@@ -183,28 +183,6 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool supportsSearching() const;
 
         /**
-         * This method returns whether the generator prefers internal searching. Default is false.
-         */
-        virtual bool prefersInternalSearching() const;
-
-        /**
-         * This method returns the rectangular of the area where the given @p text can be found
-         * on the given @p page.
-         *
-         * The search can be influenced by the parameters @p direction, @p caseSensitive and
-         * @p lastRect
-         *
-         * If no match is found, 0 is returned.
-         */
-        virtual RegularAreaRect * findText( const QString &text, SearchDir direction, const bool caseSensitive,
-                                            const RegularAreaRect *lastRect, Page *page ) const;
-
-        /**
-         * This method returns the text which is enclosed by the given @p area on the given @p page.
-         */
-        virtual QString getText( const RegularAreaRect *area, Page *page ) const;
-
-        /**
          * Returns whether the generator supports rotation of the pages. Default is false.
          */
         virtual bool supportsRotation() const;

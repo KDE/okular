@@ -372,11 +372,6 @@ bool CHMGenerator::supportsSearching() const
     return true;
 }
 
-bool CHMGenerator::prefersInternalSearching() const
-{
-    return false;
-}
-
 QString CHMGenerator::metaData( const QString &key, const QString &option ) const
 {
     if ( key == "NamedViewport" && !option.isEmpty() )

@@ -44,7 +44,6 @@ class CHMGenerator : public Okular::Generator
         void generateSyncTextPage( Okular::Page * page );
 
         bool supportsSearching() const;
-        bool prefersInternalSearching() const;
 
         QString metaData( const QString & key, const QString & option ) const;
 

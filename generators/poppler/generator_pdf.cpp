@@ -385,61 +385,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
     }
 }
 
-QString PDFGenerator::getText( const Okular::RegularAreaRect * area, Okular::Page * page  ) const
-{
-    QRect rect = area->first()->geometry((int)page->width(),(int)page->height());
-    Poppler::Page *pp = pdfdoc->page( page->number() );
-    QString text = pp->text(rect);
-    delete pp;
-    return text;
-}
-
-Okular::RegularAreaRect * PDFGenerator::findText (const QString & text, Okular::SearchDir dir, 
-    const bool strictCase, const Okular::RegularAreaRect * sRect, Okular::Page * page ) const
-{
-    dir = sRect ? Okular::NextRes : Okular::FromTop;
-    QRectF rect;
-
-    if ( dir == Okular::NextRes )
-    {
-        // when using thein ternal search we only play with normrects
-        rect.setLeft( sRect->first()->left * page->width() );
-        rect.setTop( sRect->first()->top * page->height() );
-        rect.setRight( sRect->first()->right * page->width() );
-        rect.setBottom( sRect->first()->bottom * page->height() );
-    }
-
-    // this loop is only for 'bad case' Reses
-    bool found = false;
-    Poppler::Page *pp = pdfdoc->page( page->number() );
-    docLock.lock();
-    Poppler::Page::SearchMode sm;
-    if (strictCase) sm = Poppler::Page::CaseSensitive;
-    else sm = Poppler::Page::CaseInsensitive;
-    while ( !found )
-    {
-        if ( dir == Okular::FromTop ) found = pp->search(text, rect, Poppler::Page::FromTop, sm);
-        else if ( dir == Okular::NextRes ) found = pp->search(text, rect, Poppler::Page::NextResult, sm);
-        else if ( dir == Okular::PrevRes ) found = pp->search(text, rect, Poppler::Page::PreviousResult, sm);
-
-        // if not found (even in case unsensitive search), terminate
-        if ( !found )
-            break;
-    }
-    docLock.unlock();
-    delete pp;
-
-    // if the page was found, return a new normalizedRect
-    if ( found )
-    {
-        Okular::RegularAreaRect *ret=new Okular::RegularAreaRect;
-        ret->append (new Okular::NormalizedRect( rect.left() / page->width(), rect.top() / page->height(), 
-            rect.right() / page->width(), rect.bottom() / page->height() ) );
-        return ret;
-    }
-    return 0;
-}
-
 const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
 {
     if ( docInfoDirty )

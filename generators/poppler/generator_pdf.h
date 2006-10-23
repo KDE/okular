@@ -73,12 +73,6 @@ class PDFGenerator : public Okular::Generator
 
         bool supportsSearching() const { return true; };
         bool supportsRotation() const { return true; };
-        bool prefersInternalSearching() const { return false; };
-
-        Okular::RegularAreaRect * findText (const QString & text, Okular::SearchDir dir, 
-          const bool strictCase, const Okular::RegularAreaRect * lastRect, 
-          Okular::Page * page ) const;
-        QString getText( const Okular::RegularAreaRect * area, Okular::Page * page ) const;
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );

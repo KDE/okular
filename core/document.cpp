@@ -721,7 +721,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
             // skip requests referencing an invalid page (must not happen)
             delete request;
             continue;
-        };
+        }
 
         request->setPage( pages_vector.value( request->pageNumber() ) );
 

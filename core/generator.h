@@ -59,57 +59,57 @@ class TextPage;
  */
 class OKULAR_EXPORT ExportFormat
 {
-  public:
-    typedef QList<ExportFormat> List;
+    public:
+        typedef QList<ExportFormat> List;
 
-    /**
-     * Creates an empty export format.
-     */
-    ExportFormat();
+        /**
+         * Creates an empty export format.
+         */
+        ExportFormat();
 
-    /**
-     * Creates a new export format.
-     *
-     * @param description The i18n'ed description of the format.
-     * @param mimeType The supported mime type of the format.
-     */
-    ExportFormat( const QString &description, const KMimeType::Ptr &mimeType );
+        /**
+         * Creates a new export format.
+         *
+         * @param description The i18n'ed description of the format.
+         * @param mimeType The supported mime type of the format.
+         */
+        ExportFormat( const QString &description, const KMimeType::Ptr &mimeType );
 
-    /**
-     * Creates a new export format.
-     *
-     * @param icon The icon used in the GUI for this format.
-     * @param description The i18n'ed description of the format.
-     * @param mimeType The supported mime type of the format.
-     */
-    ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
+        /**
+         * Creates a new export format.
+         *
+         * @param icon The icon used in the GUI for this format.
+         * @param description The i18n'ed description of the format.
+         * @param mimeType The supported mime type of the format.
+         */
+        ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
 
-    /**
-     * Destroys the export format.
-     */
-    ~ExportFormat();
+        /**
+         * Destroys the export format.
+         */
+        ~ExportFormat();
 
-    ExportFormat( const ExportFormat &other );
-    ExportFormat& operator=( const ExportFormat &other );
+        ExportFormat( const ExportFormat &other );
+        ExportFormat& operator=( const ExportFormat &other );
 
-    /**
-     * Returns the description of the format.
-     */
-    QString description() const;
+        /**
+         * Returns the description of the format.
+         */
+        QString description() const;
 
-    /**
-     * Returns the mime type of the format.
-     */
-    KMimeType::Ptr mimeType() const;
+        /**
+         * Returns the mime type of the format.
+         */
+        KMimeType::Ptr mimeType() const;
 
-    /**
-     * Returns the icon for GUI representations of the format.
-     */
-    KIcon icon() const;
+        /**
+         * Returns the icon for GUI representations of the format.
+         */
+        KIcon icon() const;
 
-  private:
-    class Private;
-    Private* const d;
+    private:
+        class Private;
+        Private* const d;
 };
 
 /**
@@ -359,87 +359,87 @@ class OKULAR_EXPORT Generator : public QObject
  */
 class OKULAR_EXPORT PixmapRequest
 {
-  friend class Document;
+    friend class Document;
 
-  public:
-    /**
-     * Creates a new pixmap request.
-     *
-     * @param id The observer id.
-     * @param pageNumber The page number.
-     * @param width The width of the page.
-     * @param height The height of the page.
-     * @param priority The priority of the request.
-     * @param asynchronous The mode of generation.
-     */
-    PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous );
+    public:
+        /**
+         * Creates a new pixmap request.
+         *
+         * @param id The observer id.
+         * @param pageNumber The page number.
+         * @param width The width of the page.
+         * @param height The height of the page.
+         * @param priority The priority of the request.
+         * @param asynchronous The mode of generation.
+         */
+        PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous );
 
-    /**
-     * Destroys the pixmap request.
-     */
-    ~PixmapRequest();
+        /**
+         * Destroys the pixmap request.
+         */
+        ~PixmapRequest();
 
-    /**
-     * Returns the observer id of the request.
-     */
-    int id() const;
+        /**
+         * Returns the observer id of the request.
+         */
+        int id() const;
 
-    /**
-     * Returns the page number of the request.
-     */
-    int pageNumber() const;
+        /**
+         * Returns the page number of the request.
+         */
+        int pageNumber() const;
 
-    /**
-     * Returns the page width of the requested pixmap.
-     */
-    int width() const;
+        /**
+         * Returns the page width of the requested pixmap.
+         */
+        int width() const;
 
-    /**
-     * Returns the page height of the requested pixmap.
-     */
-    int height() const;
+        /**
+         * Returns the page height of the requested pixmap.
+         */
+        int height() const;
 
-    /**
-     * Returns the priority (less it better, 0 is maximum) of the
-     * request.
-     */
-    int priority() const;
+        /**
+         * Returns the priority (less it better, 0 is maximum) of the
+         * request.
+         */
+        int priority() const;
 
-    /**
-     * Returns whether the generation should be done synchronous or
-     * asynchronous.
-     *
-     * If asynchronous, the pixmap is created in a thread and the observer
-     * is notified when the job is done.
-     */
-    bool asynchronous() const;
+        /**
+         * Returns whether the generation should be done synchronous or
+         * asynchronous.
+         *
+         * If asynchronous, the pixmap is created in a thread and the observer
+         * is notified when the job is done.
+         */
+        bool asynchronous() const;
 
-    /**
-     * Returns a pointer to the page where the pixmap shall be generated for.
-     */
-    Page *page() const;
+        /**
+         * Returns a pointer to the page where the pixmap shall be generated for.
+         */
+        Page *page() const;
 
-  protected:
-    /**
-     * Internal usage.
-     */
-    void setPriority( int priority );
+    protected:
+        /**
+         * Internal usage.
+         */
+        void setPriority( int priority );
 
-    /**
-     * Internal usage.
-     */
-    void setAsynchronous( bool asynchronous );
+        /**
+         * Internal usage.
+         */
+        void setAsynchronous( bool asynchronous );
 
-    /**
-     * Internal usage.
-     */
-    void setPage( Page *page );
+        /**
+         * Internal usage.
+         */
+        void setPage( Page *page );
 
-  private:
-    Q_DISABLE_COPY( PixmapRequest )
+    private:
+        Q_DISABLE_COPY( PixmapRequest )
 
-    class Private;
-    Private* const d;
+        class Private;
+        Private* const d;
 };
 
 }

@@ -591,7 +591,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id(), p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+    page->setImage( request->id(), p->splashRenderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
     
     if ( genObjectRects )
     {

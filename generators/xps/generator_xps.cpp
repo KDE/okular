@@ -654,12 +654,10 @@ bool XpsGenerator::canGeneratePixmap( bool /*async*/ ) const
 void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     QSize size( (int)request->page()->width(), (int)request->page()->height() );
-    QPixmap * p = new QPixmap( size );
     QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page()->number() );
     pageToRender->renderToImage( &image );
-    *p = QPixmap::fromImage( image );
-    request->page()->setPixmap( request->id(), p );
+    request->page()->setImage( request->id(), image );
 #if 0
     if ( TIFFSetDirectory( d->tiff, request->page->number() ) )
     {

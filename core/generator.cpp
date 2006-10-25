@@ -16,28 +16,28 @@ using namespace Okular;
 
 class Generator::Private
 {
-  public:
-    Private()
-      : m_document( 0 )
-    {
-    }
+    public:
+        Private()
+            : m_document( 0 )
+        {
+        }
 
-    Document * m_document;
+        Document * m_document;
 };
 
 Generator::Generator()
- : d( new Private )
+    : d( new Private )
 {
 }
 
 Generator::~Generator()
 {
-  delete d;
+    delete d;
 }
 
 bool Generator::canGenerateTextPage() const
 {
-  return false;
+    return false;
 }
 
 void Generator::generateSyncTextPage( Page* )
@@ -46,37 +46,37 @@ void Generator::generateSyncTextPage( Page* )
 
 const DocumentInfo * Generator::generateDocumentInfo()
 {
-  return 0;
+    return 0;
 }
 
 const DocumentSynopsis * Generator::generateDocumentSynopsis()
 {
-  return 0;
+    return 0;
 }
 
 const DocumentFonts * Generator::generateDocumentFonts()
 {
-  return 0;
+    return 0;
 }
 
 const QList<EmbeddedFile*> * Generator::embeddedFiles() const
 {
-  return 0;
+    return 0;
 }
 
 Generator::PageSizeMetric Generator::pagesSizeMetric() const
 {
-  return None;
+    return None;
 }
 
 bool Generator::isAllowed( int ) const
 {
-  return true;
+    return true;
 }
 
 QString Generator::getXMLFile() const
 {
-  return QString();
+    return QString();
 }
 
 void Generator::setupGUI( KActionCollection*, QToolBox* )
@@ -89,12 +89,12 @@ void Generator::freeGUI()
 
 bool Generator::supportsSearching() const
 {
-  return false;
+    return false;
 }
 
 bool Generator::supportsRotation() const
 {
-  return false;
+    return false;
 }
 
 void Generator::rotationChanged( int, int )
@@ -103,12 +103,12 @@ void Generator::rotationChanged( int, int )
 
 bool Generator::supportsPaperSizes () const
 {
-  return false;
+    return false;
 }
 
 QStringList Generator::paperSizes () const
 {
-  return QStringList();
+    return QStringList();
 }
 
 void Generator::setPaperSize( QVector<Page*>&, int )
@@ -117,22 +117,22 @@ void Generator::setPaperSize( QVector<Page*>&, int )
 
 bool Generator::canConfigurePrinter() const
 {
-  return false;
+    return false;
 }
 
 bool Generator::print( KPrinter& )
 {
-  return false;
+    return false;
 }
 
 QString Generator::metaData( const QString&, const QString& ) const
 {
-  return QString();
+    return QString();
 }
 
 bool Generator::reparseConfig()
 {
-  return false;
+    return false;
 }
 
 void Generator::addPages( KConfigDialog* )
@@ -141,30 +141,30 @@ void Generator::addPages( KConfigDialog* )
 
 ExportFormat::List Generator::exportFormats() const
 {
-  return ExportFormat::List();
+    return ExportFormat::List();
 }
 
 bool Generator::exportTo( const QString&, const ExportFormat& )
 {
-  return false;
+    return false;
 }
 
 bool Generator::handleEvent( QEvent* )
 {
-  return true;
+    return true;
 }
 
 void Generator::setDocument( Document *document )
 {
-  d->m_document = document;
+    d->m_document = document;
 }
 
 void Generator::signalRequestDone( PixmapRequest * request )
 {
-  if ( d->m_document )
-    d->m_document->requestDone( request );
-  else
-    Q_ASSERT( !"No document set for generator in signalRequestDone!" );
+    if ( d->m_document )
+        d->m_document->requestDone( request );
+    else
+        Q_ASSERT( !"No document set for generator in signalRequestDone!" );
 }
 
 Document * Generator::document() const
@@ -174,145 +174,145 @@ Document * Generator::document() const
 
 class PixmapRequest::Private
 {
-  public:
-    int mId;
-    int mPageNumber;
-    int mWidth;
-    int mHeight;
-    int mPriority;
-    bool mAsynchronous;
-    Page *mPage;
+    public:
+        int mId;
+        int mPageNumber;
+        int mWidth;
+        int mHeight;
+        int mPriority;
+        bool mAsynchronous;
+        Page *mPage;
 };
 
 
 PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous )
   : d( new Private )
 {
-  d->mId = id;
-  d->mPageNumber = pageNumber;
-  d->mWidth = width;
-  d->mHeight = height;
-  d->mPriority = priority;
-  d->mAsynchronous = asynchronous;
+    d->mId = id;
+    d->mPageNumber = pageNumber;
+    d->mWidth = width;
+    d->mHeight = height;
+    d->mPriority = priority;
+    d->mAsynchronous = asynchronous;
 }
 
 PixmapRequest::~PixmapRequest()
 {
-  delete d;
+    delete d;
 }
 
 int PixmapRequest::id() const
 {
-  return d->mId;
+    return d->mId;
 }
 
 int PixmapRequest::pageNumber() const
 {
-  return d->mPageNumber;
+    return d->mPageNumber;
 }
 
 int PixmapRequest::width() const
 {
-  return d->mWidth;
+    return d->mWidth;
 }
 
 int PixmapRequest::height() const
 {
-  return d->mHeight;
+    return d->mHeight;
 }
 
 int PixmapRequest::priority() const
 {
-  return d->mPriority;
+    return d->mPriority;
 }
 
 bool PixmapRequest::asynchronous() const
 {
-  return d->mAsynchronous;
+    return d->mAsynchronous;
 }
 
 Page* PixmapRequest::page() const
 {
-  return d->mPage;
+    return d->mPage;
 }
 
 void PixmapRequest::setPriority( int priority )
 {
-  d->mPriority = priority;
+    d->mPriority = priority;
 }
 
 void PixmapRequest::setAsynchronous( bool asynchronous )
 {
-  d->mAsynchronous = asynchronous;
+    d->mAsynchronous = asynchronous;
 }
 
 void PixmapRequest::setPage( Page *page )
 {
-  d->mPage = page;
+    d->mPage = page;
 }
 
 class ExportFormat::Private
 {
-  public:
-    Private( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
-      : mDescription( description ), mMimeType( mimeType ), mIcon( icon )
-    {
-    }
+    public:
+        Private( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
+            : mDescription( description ), mMimeType( mimeType ), mIcon( icon )
+        {
+        }
 
-    QString mDescription;
-    KMimeType::Ptr mMimeType;
-    KIcon mIcon;
+        QString mDescription;
+        KMimeType::Ptr mMimeType;
+        KIcon mIcon;
 };
 
 ExportFormat::ExportFormat()
-  : d( new Private( QString(), KMimeType::Ptr() ) )
+    : d( new Private( QString(), KMimeType::Ptr() ) )
 {
 }
 
 ExportFormat::ExportFormat( const QString &description, const KMimeType::Ptr &mimeType )
-  : d( new Private( description, mimeType ) )
+    : d( new Private( description, mimeType ) )
 {
 }
 
 ExportFormat::ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
-  : d( new Private( description, mimeType, icon ) )
+    : d( new Private( description, mimeType, icon ) )
 {
 }
 
 ExportFormat::~ExportFormat()
 {
-  delete d;
+    delete d;
 }
 
 ExportFormat::ExportFormat( const ExportFormat &other )
-  : d( new Private( QString(), KMimeType::Ptr() ) )
+    : d( new Private( QString(), KMimeType::Ptr() ) )
 {
-  *d = *other.d;
+    *d = *other.d;
 }
 
 ExportFormat& ExportFormat::operator=( const ExportFormat &other )
 {
-  if ( this == &other )
+    if ( this == &other )
+        return *this;
+
+    *d = *other.d;
+
     return *this;
-
-  *d = *other.d;
-
-  return *this;
 }
 
 QString ExportFormat::description() const
 {
-  return d->mDescription;
+    return d->mDescription;
 }
 
 KMimeType::Ptr ExportFormat::mimeType() const
 {
-  return d->mMimeType;
+    return d->mMimeType;
 }
 
 KIcon ExportFormat::icon() const
 {
-  return d->mIcon;
+    return d->mIcon;
 }
 
 kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )

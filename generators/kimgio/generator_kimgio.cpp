@@ -60,9 +60,7 @@ void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
     QImage finalImage = rotation > 0
         ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
         : smoothImage;
-    QPixmap * p = new QPixmap();
-    *p = QPixmap::fromImage( finalImage );
-    request->page()->setPixmap(request->id(), p);
+    request->page()->setImage(request->id(), finalImage);
 
     // signal that the request has been accomplished
     signalRequestDone(request);

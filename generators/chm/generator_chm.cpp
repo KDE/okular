@@ -102,25 +102,22 @@ void CHMGenerator::slotCompleted()
     else if (m_state==1)
     {
 //         kDebug() << "completed(1) " << m_request->id << endl;
-        QPixmap* pix=new QPixmap (m_request->width(),m_request->height());
-        pix->fill();
-        QPainter p (pix);
-        QRect r(0,0,m_request->width(),m_request->height());
+        QImage image( m_request->width(), m_request->height(), QImage::Format_ARGB32 );
+        image.fill( qRgb( 255, 255, 255 ) );
+        QPainter p( &image );
+        QRect r( 0, 0, m_request->width(), m_request->height() );
         bool moreToPaint;
 //                 m_syncGen->view()->layout();
-        m_syncGen->paint(&p, r,0,&moreToPaint);
+        m_syncGen->paint( &p, r, 0, &moreToPaint );
         p.end();
-        if (m_pixmapRequestZoom>1)
+        if ( m_pixmapRequestZoom > 1 )
         {
-            QPixmap* newpix=new QPixmap();
-            *newpix=pix->scaled(m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom);
-            delete pix;
-            pix=newpix;
-            m_pixmapRequestZoom=1;
+            image = image.scaled( m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom );
+            m_pixmapRequestZoom = 1;
         }
         additionalRequestData();
         syncLock.unlock();
-        m_request->page()->setPixmap( m_request->id(), pix );
+        m_request->page()->setImage( m_request->id(), image );
         signalRequestDone( m_request );
     }
 }

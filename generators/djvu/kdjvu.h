@@ -10,9 +10,9 @@
 #ifndef _KDJVU_
 #define _KDJVU_
 
+#include <qimage.h>
 #include <qobject.h>
 #include <qpolygon.h>
-#include <qpixmap.h>
 #include <qvector.h>
 
 class QDomDocument;
@@ -150,24 +150,24 @@ class KDjVu : public QObject
          */
         QList<KDjVu::Link*> linksForPage( int pageNum ) const;
 
-        // pixmap handling
+        // image handling
         /**
-         * Check if the pixmap for the specified \p page with the specified
+         * Check if the image for the specified \p page with the specified
          * \p width, \p height and \p rotation is already in cache, and returns
-         * it. If not, a null pixmap is returned.
+         * it. If not, a null image is returned.
          */
-        QPixmap pixmap( int page, int width, int height, int rotation );
+        QImage image( int page, int width, int height, int rotation );
         /**
          * Request to load the pixmap for \p page having the specified \p width,
          * \p height and \p rotation. It will emit pixmapGenerated() when done.
          */
-        void requestPixmap( int page, int width, int height, int rotation );
+        void requestImage( int page, int width, int height, int rotation );
 
     signals:
         /**
-         * The pixmap \p pix for page \p page was generated.
+         * The image \p pix for page \p page was generated.
          */
-        void pixmapGenerated( int page, const QPixmap & pix );
+        void imageGenerated( int page, const QImage & pix );
 
     private:
         class Private;

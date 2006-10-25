@@ -56,7 +56,7 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
     m_djvu = new KDjVu();
-    connect( m_djvu, SIGNAL( pixmapGenerated( int, const QPixmap & ) ), this, SLOT( djvuPixmapGenerated( int, const QPixmap & ) ) );
+    connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
 }
 
 bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
@@ -95,15 +95,15 @@ void DjVuGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     m_request = request;
 
-    QPixmap pix = m_djvu->pixmap( request->pageNumber(), request->width(), request->height(), 0 );
-    if ( pix.isNull() )
+    QImage img = m_djvu->image( request->pageNumber(), request->width(), request->height(), request->page()->rotation() );
+    if ( img.isNull() )
     {
 
-        m_djvu->requestPixmap( request->pageNumber(), request->width(), request->height(), 0 );
+        m_djvu->requestImage( request->pageNumber(), request->width(), request->height(), request->page()->rotation() );
     }
     else
     {
-        djvuPixmapGenerated( request->pageNumber(), pix );
+        djvuImageGenerated( request->pageNumber(), img );
     }
 }
 
@@ -148,9 +148,9 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     return m_docSyn;
 }
 
-void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
+void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 {
-    m_request->page()->setPixmap( m_request->id(), new QPixmap( pix ) );
+    m_request->page()->setImage( m_request->id(), img );
 
     QList<KDjVu::Link*> links = m_djvu->linksForPage( page );
     if ( links.count() > 0 )

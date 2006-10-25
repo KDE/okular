@@ -92,19 +92,18 @@ static int flipRotation( int r )
 }
 
 
-// PixmapCacheItem
+// ImageCacheItem
 
-class PixmapCacheItem
+class ImageCacheItem
 {
     public:
-        PixmapCacheItem( int p, int w, int h, int r, const QPixmap& px )
-          : page( p ), width( w ), height( h ), rotation( r ), pix( px ) { }
+        ImageCacheItem( int p, int w, int h, const QImage& i )
+          : page( p ), width( w ), height( h ), img( i ) { }
 
         int page;
         int width;
         int height;
-        int rotation;
-        QPixmap pix;
+        QImage img;
 };
 
 
@@ -207,7 +206,7 @@ class KDjVu::Private
         {
         }
 
-        QPixmap generatePixmapTile( ddjvu_page_t *djvupage, int& res,
+        QImage generateImageTile( ddjvu_page_t *djvupage, int& res,
             int width, int row, int xdelta, int height, int col, int ydelta );
 
         void readBookmarks();
@@ -221,13 +220,13 @@ class KDjVu::Private
         QVector<KDjVu::Page*> m_pages;
         QVector<ddjvu_page_t *> m_pages_cache;
 
-        QList<PixmapCacheItem*> mPixCache;
+        QList<ImageCacheItem*> mImgCache;
 
         QMap<QString, QString> m_metaData;
         QDomDocument * m_docBookmarks;
 };
 
-QPixmap KDjVu::Private::generatePixmapTile( ddjvu_page_t *djvupage, int& res,
+QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     int width, int row, int xdelta, int height, int col, int ydelta )
 {
     ddjvu_rect_t renderrect;
@@ -256,15 +255,15 @@ QPixmap KDjVu::Private::generatePixmapTile( ddjvu_page_t *djvupage, int& res,
     kDebug() << "rendering result: " << res << endl;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
-    QPixmap pix;
+    QImage res_img;
     if ( res )
     {
         QImage img( (uchar*)imagebuffer, realwidth, realheight, QImage::Format_RGB32 );
-        pix = QPixmap::fromImage( img );
+        res_img = img.copy();
     }
     delete [] imagebuffer;
 
-    return pix;
+    return res_img;
 }
 
 void KDjVu::Private::readBookmarks()
@@ -429,8 +428,8 @@ void KDjVu::closeFile()
     for ( ; it != itEnd; ++it )
         ddjvu_page_release( *it );
     d->m_pages_cache.clear();
-    // clearing the pixmap cache
-    qDeleteAll( d->mPixCache );
+    // clearing the image cache
+    qDeleteAll( d->mImgCache );
     // clearing the old metadata
     d->m_metaData.clear();
     // releasing the old document
@@ -542,37 +541,37 @@ const QVector<KDjVu::Page*> &KDjVu::pages() const
     return d->m_pages;
 }
 
-QPixmap KDjVu::pixmap( int page, int width, int height, int rotation )
+QImage KDjVu::image( int page, int width, int height, int rotation )
 {
     bool found = false;
-    QList<PixmapCacheItem*>::Iterator it = d->mPixCache.begin(), itEnd = d->mPixCache.end();
+    QList<ImageCacheItem*>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
     for ( ; ( it != itEnd ) && !found; ++it )
     {
-        PixmapCacheItem* cur = *it;
+        ImageCacheItem* cur = *it;
         if ( ( cur->page == page ) &&
-             ( cur->width == width ) &&
-             ( cur->height == height ) &&
-             ( cur->rotation == rotation ) )
+             ( rotation % 2 == 0
+               ? cur->width == width && cur->height == height
+               : cur->width == height && cur->height == width ) )
             found = true;
     }
     if ( !found )
-        return QPixmap();
+        return QImage();
 
     // taking the element and pushing to the top of the list
     --it;
-    PixmapCacheItem* cur2 = *it;
-    d->mPixCache.erase( it );
-    d->mPixCache.push_front( cur2 );
+    ImageCacheItem* cur2 = *it;
+    d->mImgCache.erase( it );
+    d->mImgCache.push_front( cur2 );
 
-    return cur2->pix;
+    return cur2->img;
 }
 
-void KDjVu::requestPixmap( int page, int width, int height, int rotation )
+void KDjVu::requestImage( int page, int width, int height, int rotation )
 {
-    QPixmap tmp = pixmap( page, width, height, rotation );
+    QImage tmp = image( page, width, height, rotation );
     if ( !tmp.isNull() )
     {
-        emit pixmapGenerated( page, tmp );
+        emit imageGenerated( page, tmp );
         return;
     }
 
@@ -587,12 +586,14 @@ void KDjVu::requestPixmap( int page, int width, int height, int rotation )
     }
     ddjvu_page_t *djvupage = d->m_pages_cache[page];
 
+/*
     if ( ddjvu_page_get_rotation( djvupage ) != flipRotation( rotation ) )
     {
 // TODO: test documents with initial rotation != 0
 //        ddjvu_page_set_rotation( djvupage, m_pages.at( page )->orientation() );
         ddjvu_page_set_rotation( djvupage, (ddjvu_page_rotation_t)flipRotation( rotation ) );
     }
+*/
 
     static const int xdelta = 1500;
     static const int ydelta = 1500;
@@ -600,13 +601,13 @@ void KDjVu::requestPixmap( int page, int width, int height, int rotation )
     int xparts = width / xdelta + 1;
     int yparts = height / ydelta + 1;
 
-    QPixmap newpix( width, height );
+    QImage newimg( width, height, QImage::Format_RGB32 );
 
     int res = 10000;
     if ( ( xparts == 1 ) && ( yparts == 1 ) )
     {
-         // only one part -- render at once with no need to auxiliary pixmap
-         newpix = d->generatePixmapTile( djvupage, res,
+         // only one part -- render at once with no need to auxiliary image
+         newimg = d->generateImageTile( djvupage, res,
                  width, 0, xdelta, height, 0, ydelta );
     }
     else
@@ -614,43 +615,42 @@ void KDjVu::requestPixmap( int page, int width, int height, int rotation )
         // more than one part -- need to render piece-by-piece and to compose
         // the results
         QPainter p;
-        p.begin( &newpix );
+        p.begin( &newimg );
         int parts = xparts * yparts;
         for ( int i = 0; i < parts; ++i )
         {
             int row = i % xparts;
             int col = i / xparts;
             int tmpres = 0;
-            QPixmap tempp = d->generatePixmapTile( djvupage, tmpres,
+            QImage tempp = d->generateImageTile( djvupage, tmpres,
                     width, row, xdelta, height, col, ydelta );
             if ( tmpres )
             {
-                p.drawPixmap( row * xdelta, col * ydelta, tempp );
+                p.drawImage( row * xdelta, col * ydelta, tempp );
             }
             res = qMin( tmpres, res );
         }
         p.end();
     }
 
-    QPixmap pix;
+    QImage resimg;
 
     if ( res )
     {
-        pix = newpix;
+        resimg = newimg;
 
         // delete all the cached pixmaps for the current page with a size that
         // differs no more than 35% of the new pixmap size
-        int pixsize = pix.width() * pix.height();
-        if ( pixsize > 0 )
+        int imgsize = resimg.width() * resimg.height();
+        if ( imgsize > 0 )
         {
-            for( int i = 0; i < d->mPixCache.count(); )
+            for( int i = 0; i < d->mImgCache.count(); )
             {
-                PixmapCacheItem* cur = d->mPixCache.at(i);
+                ImageCacheItem* cur = d->mImgCache.at(i);
                 if ( ( cur->page == page ) &&
-                     ( cur->rotation == rotation ) &&
-                     ( abs( cur->pix.width() * cur->pix.height() - pixsize ) < pixsize * 0.35 ) )
+                     ( abs( cur->img.width() * cur->img.height() - imgsize ) < imgsize * 0.35 ) )
                 {
-                    d->mPixCache.removeAt( i );
+                    d->mImgCache.removeAt( i );
                     delete cur;
                 }
                 else
@@ -658,17 +658,17 @@ void KDjVu::requestPixmap( int page, int width, int height, int rotation )
             }
         }
 
-        // the pixmap cache has too many elements, remove the last
-        if ( d->mPixCache.size() >= 10 )
+        // the image cache has too many elements, remove the last
+        if ( d->mImgCache.size() >= 10 )
         {
-            delete d->mPixCache.last();
-            d->mPixCache.removeLast();
+            delete d->mImgCache.last();
+            d->mImgCache.removeLast();
         }
-        PixmapCacheItem* pch = new PixmapCacheItem( page, width, height, rotation, pix );
-        d->mPixCache.push_front( pch );
+        ImageCacheItem* ich = new ImageCacheItem( page, width, height, newimg );
+        d->mImgCache.push_front( ich );
     }
 
-    emit pixmapGenerated( page, pix );
+    emit imageGenerated( page, newimg );
 }
 
 

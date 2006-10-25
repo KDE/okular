@@ -491,7 +491,7 @@ void dviRenderer::epsf_special(const QString& cp)
     }
     else
     {
-      QString text = i18n("File not found: \n %1").arg(EPSfilename_orig);
+      QString text = i18n("File not found: %1").arg(EPSfilename_orig);
       cairo_show_text(painter, text.utf8());
     }
 

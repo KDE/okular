@@ -348,14 +348,38 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KURL
       return fi2.absFilePath();
   }
 
+
+  // If all else fails, use kpsewhich to find the filename. Note: we
+  // can't use the convenient "KProcIO" class here because this
+  // crashes infrequently when this method is called from a
+  // non-GUI-thread. Instead, we use an ugly "system"-call, make
+  // kpsewhich write its output to a temporary file and read that
+  // file.
+  KTempFile outFile(QString::null);
+  outFile.setAutoDelete(1);
+  outFile.close(); // we are want the filename, not the file
+
+  QString cmd_line = "kpsewhich " + filename + ">" + outFile.name();
+  system(cmd_line.latin1());
+  QFile kpse_out(outFile.name());
+  if (kpse_out.open(IO_ReadOnly) == false) {
+    outFile.unlink();
+    return QString::null;
+  }
+  QString EPSfilename;
+  kpse_out.readLine( EPSfilename, 1024);
+  outFile.unlink();
+  return EPSfilename.stripWhiteSpace();
+
+  /*
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
   KProcIO proc;
   proc << "kpsewhich" << filename;
   proc.start(KProcess::Block);
   proc.readln(EPSfilename);
-
   return EPSfilename.stripWhiteSpace();
+  */
 }
 
 #include "psgs.moc"

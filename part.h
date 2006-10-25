@@ -53,7 +53,7 @@ class MiniBar;
 
 namespace Okular {
 class Document;
-class ExportEntry;
+class ExportFormat;
 }
 
 class BrowserExtension;
@@ -210,7 +210,7 @@ private:
   QStringList m_generatorsWithSettings;
   QStringList m_supportedMimeTypes;
   KSelectAction * m_confGens;
-	QList<Okular::ExportEntry*> m_exportItems;
+	QList<Okular::ExportFormat> m_exportFormats;
 
 private slots:
     void slotGeneratorPreferences();

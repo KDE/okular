@@ -228,20 +228,20 @@ bool GSGenerator::closeDocument()
 
 void GSGenerator::slotPixmapGenerated(const QImage* img)
 {
-    kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id << " " <<m_sRequest->width << "x" << m_sRequest->height << "@" << m_sRequest->pageNumber << " async == " << m_sRequest->async << endl;
+    kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id() << " " <<m_sRequest->width() << "x" << m_sRequest->height() << "@" << m_sRequest->pageNumber() << " async == " << m_sRequest->asynchronous() << endl;
 //    kWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
     QPixmap * rPix = new QPixmap();
     *rPix = QPixmap::fromImage( *img );
     kWarning() << "unlocking \n";
     syncLock.unlock();
-    m_sRequest->page->setPixmap( m_sRequest->id, rPix );
+    m_sRequest->page()->setPixmap( m_sRequest->id(), rPix );
     signalRequestDone( m_sRequest );
 }
 
 void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
 {
     kWarning() << "SlotASyncGenerated!\n";
-    m_asRequest->page->setPixmap( m_asRequest->id, pix );
+    m_asRequest->page()->setPixmap( m_asRequest->id(), pix );
     signalRequestDone( m_asRequest );
     docLock.unlock();
 }
@@ -363,9 +363,9 @@ bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Pa
 
 void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
-    kWarning() << "receiving req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
-    int pgNo=req->pageNumber;
-    if ( req->async )
+    kWarning() << "receiving req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() << endl;
+    int pgNo=req->pageNumber();
+    if ( req->asynchronous() )
     {
         docLock.lock();
         m_asRequest=req;
@@ -373,12 +373,12 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
         asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
 //         asyncGenerator->setBoundingBox( internalDoc->boundingBox(i));
         kWarning() << "setSize\n";
-        asyncGenerator->setSize(req->width ,req->height);
+        asyncGenerator->setSize(req->width() ,req->height());
         kWarning() << "setMedia\n";
         asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
         kWarning() << "setMagnify\n";
-        asyncGenerator->setMagnify(qMax(static_cast<double>(req->width)/req->page->width() ,
-                static_cast<double>(req->height)/req->page->height()));
+        asyncGenerator->setMagnify(qMax(static_cast<double>(req->width())/req->page()->width() ,
+                static_cast<double>(req->height())/req->page()->height()));
         GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
 //         kWarning ()  << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
         if (!asyncGenerator->interpreterRunning())
@@ -405,10 +405,10 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 //          this, SLOT(slotPixmapGenerated (const QImage*)));
 
       pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-      pixGenerator->setMagnify(qMax(static_cast<double>(req->width)/req->page->width() ,
-              static_cast<double>(req->height)/req->page->height()));
+      pixGenerator->setMagnify(qMax(static_cast<double>(req->width())/req->page()->width() ,
+              static_cast<double>(req->height())/req->page()->height()));
       pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-      pixGenerator->setSize(req->width ,req->height);
+      pixGenerator->setSize(req->width() ,req->height());
   //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
       
       
@@ -420,7 +420,7 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 /*       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
          this, SLOT(slotPixmapGenerated (const QImage*)));*/
       this->m_sRequest=req;
-kWarning() << "checking req id=" << req->id << " " <<req->width << "x" << req->height << "@" << req->pageNumber << " async == " << req->async << endl;
+kWarning() << "checking req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() << endl;
 kWarning() << "generator running : " << pixGenerator->running() << endl;
       pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo),true);
       

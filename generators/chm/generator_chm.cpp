@@ -102,10 +102,10 @@ void CHMGenerator::slotCompleted()
     else if (m_state==1)
     {
 //         kDebug() << "completed(1) " << m_request->id << endl;
-        QPixmap* pix=new QPixmap (m_request->width,m_request->height);
+        QPixmap* pix=new QPixmap (m_request->width(),m_request->height());
         pix->fill();
         QPainter p (pix);
-        QRect r(0,0,m_request->width,m_request->height);
+        QRect r(0,0,m_request->width(),m_request->height());
         bool moreToPaint;
 //                 m_syncGen->view()->layout();
         m_syncGen->paint(&p, r,0,&moreToPaint);
@@ -113,14 +113,14 @@ void CHMGenerator::slotCompleted()
         if (m_pixmapRequestZoom>1)
         {
             QPixmap* newpix=new QPixmap();
-            *newpix=pix->scaled(m_request->width/m_pixmapRequestZoom, m_request->height/m_pixmapRequestZoom);
+            *newpix=pix->scaled(m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom);
             delete pix;
             pix=newpix;
             m_pixmapRequestZoom=1;
         }
         additionalRequestData();
         syncLock.unlock();
-        m_request->page->setPixmap( m_request->id, pix );
+        m_request->page()->setPixmap( m_request->id(), pix );
         signalRequestDone( m_request );
     }
 }
@@ -162,30 +162,32 @@ bool CHMGenerator::canGeneratePixmap ( bool /*async*/ ) const
 void CHMGenerator::generatePixmap( Okular::PixmapRequest * request ) 
 {
     QString a="S";
-    if (request->async) a="As";
+    if (request->asynchronous()) a="As";
 
-    kDebug() << a << "ync PixmapRequest of " << request->width << "x" 
-    << request->height << " size, pageNo " << request->pageNumber 
-    << ", priority: " << request->priority << " id: " << request->id
+    kDebug() << a << "ync PixmapRequest of " << request->width() << "x" 
+    << request->height() << " size, pageNo " << request->pageNumber()
+    << ", priority: " << request->priority() << " id: " << request->id()
     <<  endl;
 
-    if (request->width<300)
+    int requestWidth = request->width();
+    int requestHeight = request->height();
+    if (requestWidth<300)
     {
-        m_pixmapRequestZoom=900/request->width;
-        request->width*=m_pixmapRequestZoom;
-        request->height*=m_pixmapRequestZoom;
+        m_pixmapRequestZoom=900/requestWidth;
+        requestWidth*=m_pixmapRequestZoom;
+        requestHeight*=m_pixmapRequestZoom;
     }
 
     syncLock.lock();
-    QString url= m_file->getUrlForPage ( request->pageNumber + 1 );
-    int zoom = qMax( static_cast<double>(request->width)/static_cast<double>(request->page->width())
-        , static_cast<double>(request->height)/static_cast<double>(request->page->height())
-        ) * 100;
+    QString url= m_file->getUrlForPage ( request->pageNumber() + 1 );
+    int zoom = qRound( qMax( static_cast<double>(requestWidth)/static_cast<double>(request->page()->width())
+        , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
+        ) ) * 100;
 
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
     kDebug() << "Page asked is: " << pAddress << " zoom is " << zoom << endl;
     m_syncGen->setZoomFactor(zoom);
-    m_syncGen->view()->resize(request->width,request->height);
+    m_syncGen->view()->resize(requestWidth,requestHeight);
     m_request=request;
     m_state=1;
     // will emit openURL without problems
@@ -265,9 +267,9 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
 
 void CHMGenerator::additionalRequestData() 
 {
-    Okular::Page * page=m_request->page;
-    bool genObjectRects = m_request->id & (PAGEVIEW_ID | PRESENTATION_ID);
-    bool genTextPage = !m_request->page->hasSearchPage() && genObjectRects;
+    Okular::Page * page=m_request->page();
+    bool genObjectRects = m_request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
+    bool genTextPage = !m_request->page()->hasSearchPage() && genObjectRects;
 
     if (genObjectRects || genTextPage )
     {
@@ -277,8 +279,8 @@ void CHMGenerator::additionalRequestData()
     {
         kDebug() << "Generating ObjRects - start" << endl;
         QLinkedList< Okular::ObjectRect * > objRects;
-        int xScale=m_request->width;
-        int yScale=m_request->height;
+        int xScale=m_request->width();
+        int yScale=m_request->height();
         // getting links
         DOM::HTMLCollection coll=domDoc.links();
         DOM::Node n;
@@ -336,7 +338,7 @@ void CHMGenerator::additionalRequestData()
                 }
             }
         }
-        m_request->page->setObjectRects( objRects );
+        m_request->page()->setObjectRects( objRects );
     }
 
     if ( genTextPage )
@@ -358,8 +360,8 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
 {
     syncLock.lock();
     double zoomP=Okular::Settings::zoomFactor();
-    int zoom = zoomP * 100;
-    m_syncGen->view()->resize(page->width() * zoomP , page->height() * zoomP);
+    int zoom = qRound( zoomP * 100 );
+    m_syncGen->view()->resize(qRound( page->width() * zoomP ) , qRound( page->height() * zoomP ));
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);

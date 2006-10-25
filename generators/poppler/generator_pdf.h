@@ -84,8 +84,8 @@ class PDFGenerator : public Okular::Generator
         bool reparseConfig();
 
         // [INHERITED] text exporting
-        bool canExportToText() const { return true; };
-        bool exportToText( const QString & fileName );
+        Okular::ExportFormat::List exportFormats() const;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
 
     private slots:
         // (async related) receive data from the generator thread
@@ -94,16 +94,16 @@ class PDFGenerator : public Okular::Generator
     private:
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
-        
+
         // create the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );
         // fetch annotations from the pdf file and add they to the page
         void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the transition information and add it to the page
         void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
-        
+
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
-        
+
         // poppler dependant stuff
         mutable QMutex docLock;
         Poppler::Document *pdfdoc;

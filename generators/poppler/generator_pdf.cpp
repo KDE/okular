@@ -563,7 +563,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     //kDebug() << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
 
     /** asynchronous requests (generation in PDFPixmapGeneratorThread::run() **/
-    if ( request->async )
+    if ( request->asynchronous() )
     {
         // start the generation into the thread
         generatorThread->startGeneration( request );
@@ -572,16 +572,16 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     /** synchronous request: in-place generation **/
     // compute dpi used to get an image with desired width and height
-    Okular::Page * page = request->page;
-    double fakeDpiX = request->width * 72.0 / page->width(),
-           fakeDpiY = request->height * 72.0 / page->height();
+    Okular::Page * page = request->page();
+    double fakeDpiX = request->width() * 72.0 / page->width(),
+           fakeDpiY = request->height() * 72.0 / page->height();
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
-    bool genTextPage = !page->hasSearchPage() && (request->width == page->width()) &&
-                       (request->height == page->height());
+    bool genTextPage = !page->hasSearchPage() && (request->width() == page->width()) &&
+                       (request->height() == page->height());
     // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
+    bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
 
     // 0. LOCK [waits for the thread end]
     docLock.lock();
@@ -591,22 +591,22 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id, p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+    page->setPixmap( request->id(), p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
     
     if ( genObjectRects )
     {
     	// TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
-        page->setObjectRects( generateLinks(p->links(), request->width, request->height, pdfdoc) );
+        page->setObjectRects( generateLinks(p->links(), request->width(), request->height(), pdfdoc) );
     }
 
     // 3. UNLOCK [re-enables shared access]
     docLock.unlock();
     if ( genTextPage )
     {
-        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page->rotation());
-        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), request->page->totalOrientation()) );
+        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->rotation());
+        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), request->page()->totalOrientation()) );
         qDeleteAll(textList);
     }
     delete p;
@@ -738,26 +738,40 @@ bool PDFGenerator::reparseConfig()
     return false;
 }
 
-bool PDFGenerator::exportToText( const QString & fileName )
+Okular::ExportFormat::List PDFGenerator::exportFormats() const
 {
-    QFile f( fileName );
-    if ( !f.open( QIODevice::WriteOnly ) )
-        return false;
-
-    QTextStream ts( &f );
-    int num = document()->pages();
-    for ( int i = 0; i < num; ++i )
-    {
-        docLock.lock();
-        Poppler::Page *pp = pdfdoc->page(i);
-        QString text = pp->text(QRect());
-        docLock.unlock();
-        ts << text;
-        delete pp;
+    static Okular::ExportFormat::List formats;
+    if ( formats.isEmpty() ) {
+      formats.append( Okular::ExportFormat( i18n( "Plain Text" ), KMimeType::mimeType( "text/plain" ) ) );
     }
-    f.close();
 
-    return true;
+    return formats;
+}
+
+bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
+{
+    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+        QFile f( fileName );
+        if ( !f.open( QIODevice::WriteOnly ) )
+            return false;
+
+        QTextStream ts( &f );
+        int num = document()->pages();
+        for ( int i = 0; i < num; ++i )
+        {
+            docLock.lock();
+            Poppler::Page *pp = pdfdoc->page(i);
+            QString text = pp->text(QRect());
+            docLock.unlock();
+            ts << text;
+            delete pp;
+        }
+        f.close();
+
+        return true;
+    }
+
+    return false;
 }
 
 //END Generator inherited functions
@@ -1093,16 +1107,16 @@ void PDFGenerator::threadFinished()
 
     QPixmap * newpix = new QPixmap();
     *newpix = QPixmap::fromImage( *outImage );
-    request->page->setPixmap( request->id, newpix );
+    request->page()->setPixmap( request->id(), newpix );
     delete outImage;
     if ( !outText.isEmpty() )
     {
-        request->page->setSearchPage( abstractTextPage( outText , 
-            request->page->height(), request->page->width(),request->page->totalOrientation()));
+        request->page()->setSearchPage( abstractTextPage( outText , 
+            request->page()->height(), request->page()->width(),request->page()->totalOrientation()));
         qDeleteAll(outText);
     }
-    bool genObjectRects = request->id & (PAGEVIEW_ID | PRESENTATION_ID);
-    if (genObjectRects) request->page->setObjectRects( outRects );
+    bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
+    if (genObjectRects) request->page()->setObjectRects( outRects );
 
     // 3. tell generator that data has been taken
     generatorThread->endGeneration();
@@ -1230,9 +1244,9 @@ void PDFPixmapGeneratorThread::run()
 // @see PDFGenerator::generatePixmap( .. ) (and be aware to sync the code)
 {
     // compute dpi used to get an image with desired width and height
-    Okular::Page * page = d->currentRequest->page;
-    int width = d->currentRequest->width,
-        height = d->currentRequest->height;
+    Okular::Page * page = d->currentRequest->page();
+    int width = d->currentRequest->width(),
+        height = d->currentRequest->height();
     double fakeDpiX = width * 72.0 / page->width(),
            fakeDpiY = height * 72.0 / page->height();
 
@@ -1243,7 +1257,7 @@ void PDFPixmapGeneratorThread::run()
                        ( height == page->height() );
 
     // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = d->currentRequest->id & (PAGEVIEW_ID | PRESENTATION_ID);
+    bool genObjectRects = d->currentRequest->id() & (PAGEVIEW_ID | PRESENTATION_ID);
 
     // 0. LOCK s[tart locking XPDF thread unsafe classes]
     d->generator->docLock.lock();
@@ -1258,7 +1272,7 @@ void PDFPixmapGeneratorThread::run()
     if ( !d->m_textList.isEmpty() )
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
-    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)d->currentRequest->documentRotation  ) );
+    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)0 ) );
     
     if ( genObjectRects )
     {
@@ -1268,7 +1282,7 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
-        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page->rotation());
+        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page()->rotation());
     }
     delete pp;
     

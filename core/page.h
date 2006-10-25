@@ -12,6 +12,8 @@
 
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
 
 #include "area.h"
 #include "okular_export.h"
@@ -19,7 +21,6 @@
 
 class QDomDocument;
 class QDomNode;
-class QPixmap;
 class QRect;
 
 class PagePainter;
@@ -88,6 +89,7 @@ class OKULAR_EXPORT Page
 
         // operations: set contents (by Document)
         void setPixmap( int p_id, QPixmap * pixmap );
+        void setImage( int p_id, const QImage &image );
         void setSearchPage( TextPage * text );
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
@@ -118,6 +120,7 @@ class OKULAR_EXPORT Page
         bool m_bookmarked;
         int m_maxuniqueNum;
 
+        QMap< int, QImage > m_images;
         QMap< int, QPixmap * > m_pixmaps;
         TextPage * m_text;
         QLinkedList< ObjectRect * > m_rects;

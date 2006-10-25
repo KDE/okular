@@ -29,12 +29,12 @@
 #include "document.h"
 
 class KConfigDialog;
+class KIcon;
 class KPrinter;
 class kdbgstream;
 
 namespace Okular {
 
-class ExportEntry;
 class Link;
 class Page;
 class PixmapRequest;
@@ -49,6 +49,68 @@ class TextPage;
  * Page they refer to, and a signal is emitted as soon as storing
  * (even for sync or async queries) has been done.
  */
+
+/**
+ * @short Defines an entry for the export menu
+ *
+ * This class encapsulates information about an export format.
+ * Every Generator can support 0 ore more export formats which can be
+ * queried with @see Generator::exportFormats().
+ */
+class OKULAR_EXPORT ExportFormat
+{
+  public:
+    typedef QList<ExportFormat> List;
+
+    /**
+     * Creates an empty export format.
+     */
+    ExportFormat();
+
+    /**
+     * Creates a new export format.
+     *
+     * @param description The i18n'ed description of the format.
+     * @param mimeType The supported mime type of the format.
+     */
+    ExportFormat( const QString &description, const KMimeType::Ptr &mimeType );
+
+    /**
+     * Creates a new export format.
+     *
+     * @param icon The icon used in the GUI for this format.
+     * @param description The i18n'ed description of the format.
+     * @param mimeType The supported mime type of the format.
+     */
+    ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
+
+    /**
+     * Destroys the export format.
+     */
+    ~ExportFormat();
+
+    ExportFormat( const ExportFormat &other );
+    ExportFormat& operator=( const ExportFormat &other );
+
+    /**
+     * Returns the description of the format.
+     */
+    QString description() const;
+
+    /**
+     * Returns the mime type of the format.
+     */
+    KMimeType::Ptr mimeType() const;
+
+    /**
+     * Returns the icon for GUI representations of the format.
+     */
+    KIcon icon() const;
+
+  private:
+    class Private;
+    Private* const d;
+};
 
 /**
  * @short [Abstract Class] The information generator.
@@ -69,7 +131,6 @@ class OKULAR_EXPORT Generator : public QObject
          * Creates a new generator.
          */
         Generator();
-
 
         /**
          * Destroys the generator.
@@ -238,26 +299,15 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void addPages( KConfigDialog *dialog );
 
         /**
-         * Returns whether the generator can export the document to text format.
-         */
-        virtual bool canExportToText() const;
-
-        /**
-         * This method is called to export the document as text format and save it
-         * under the given @p fileName.
-         */
-        virtual bool exportToText( const QString &fileName );
-
-        /**
          * Returns the list of additional supported export formats.
          */
-        virtual QList<ExportEntry*> exportFormats() const;
+        virtual ExportFormat::List exportFormats() const;
 
         /**
-         * This method is called to export the document in the given @p mimeType and save it
-         * under the given @p fileName. The mime type must be one of the supported export formats.
+         * This method is called to export the document in the given @p format and save it
+         * under the given @p fileName. The format must be one of the supported export formats.
          */
-        virtual bool exportTo( const QString &fileName, const KMimeType::Ptr &mimeType );
+        virtual bool exportTo( const QString &fileName, const ExportFormat &format );
 
         // TODO: remove
         virtual bool handleEvent (QEvent * /*event*/ );
@@ -300,58 +350,96 @@ class OKULAR_EXPORT Generator : public QObject
         Document * document() const;
 
     private:
-        /**
-         * The internal pointer to the document.
-         */
-        Document * m_document;
+        class Private;
+        Private* const d;
 };
 
 /**
  * @short Describes a pixmap type request.
  */
-struct OKULAR_EXPORT PixmapRequest
+class OKULAR_EXPORT PixmapRequest
 {
-    PixmapRequest( int rId, int n, int w, int h, /*double z,*/ int p, bool a )
-        : id( rId ), pageNumber( n ), width( w ), height( h ), /*zoom(z),*/
-        priority( p ), async( a ), page( 0 )  {};
+  friend class Document;
 
-    PixmapRequest() {;};
-    // observer id
-    int id;
-    // page number and size
-    int pageNumber;
-    int width;
-    int height;
-//    double zoom;
-    // asyncronous request priority (less is better, 0 is max)
-    int priority;
-    // generate the pixmap in a thread and notify observer when done
-    bool async;
+  public:
+    /**
+     * Creates a new pixmap request.
+     *
+     * @param id The observer id.
+     * @param pageNumber The page number.
+     * @param width The width of the page.
+     * @param height The height of the page.
+     * @param priority The priority of the request.
+     * @param asynchronous The mode of generation.
+     */
+    PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous );
 
-    // these fields are set by the Document prior passing the
-    // request to the generator
-    int documentRotation;
-    Page * page;
+    /**
+     * Destroys the pixmap request.
+     */
+    ~PixmapRequest();
 
-};
+    /**
+     * Returns the observer id of the request.
+     */
+    int id() const;
 
-/**
- * @short Defines an entry for the export menu
- */
-struct OKULAR_EXPORT ExportEntry
-{
-    ExportEntry( const QString & desc, const KMimeType::Ptr & _mime )
-        : description( desc ), mime( _mime ) {};
+    /**
+     * Returns the page number of the request.
+     */
+    int pageNumber() const;
 
-    ExportEntry( const QString & _icon, const QString & desc, const KMimeType::Ptr & _mime )
-        : description( desc ), mime( _mime ), icon( _icon ) {};
+    /**
+     * Returns the page width of the requested pixmap.
+     */
+    int width() const;
 
-    // the description to be shown in the Export menu
-    QString description;
-    // the mime associated
-    KMimeType::Ptr mime;
-    // the icon to be shown in the menu item
-    QString icon;
+    /**
+     * Returns the page height of the requested pixmap.
+     */
+    int height() const;
+
+    /**
+     * Returns the priority (less it better, 0 is maximum) of the
+     * request.
+     */
+    int priority() const;
+
+    /**
+     * Returns whether the generation should be done synchronous or
+     * asynchronous.
+     *
+     * If asynchronous, the pixmap is created in a thread and the observer
+     * is notified when the job is done.
+     */
+    bool asynchronous() const;
+
+    /**
+     * Returns a pointer to the page where the pixmap shall be generated for.
+     */
+    Page *page() const;
+
+  protected:
+    /**
+     * Internal usage.
+     */
+    void setPriority( int priority );
+
+    /**
+     * Internal usage.
+     */
+    void setAsynchronous( bool asynchronous );
+
+    /**
+     * Internal usage.
+     */
+    void setPage( Page *page );
+
+  private:
+    Q_DISABLE_COPY( PixmapRequest )
+
+    class Private;
+    Private* const d;
 };
 
 }

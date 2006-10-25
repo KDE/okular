@@ -54,15 +54,15 @@ bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ ) const
 void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     // perform a smooth scaled generation
-    QImage smoothImage = m_pix->toImage().scaled( request->width, request->height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    QImage smoothImage = m_pix->toImage().scaled( request->width(), request->height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
     // rotate, if necessary
-    int rotation = request->page->rotation();
+    int rotation = request->page()->rotation();
     QImage finalImage = rotation > 0
         ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
         : smoothImage;
     QPixmap * p = new QPixmap();
     *p = QPixmap::fromImage( finalImage );
-    request->page->setPixmap(request->id, p);
+    request->page()->setPixmap(request->id(), p);
 
     // signal that the request has been accomplished
     signalRequestDone(request);

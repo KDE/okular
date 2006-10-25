@@ -186,10 +186,10 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
 
-    rotateCoordinates( request->width, request->height, 
-                       pageInfo->width, pageInfo->height, request->documentRotation );
+    rotateCoordinates( request->width(), request->height(),
+                       pageInfo->width, pageInfo->height, 0 );
 
-    pageInfo->pageNumber = request->pageNumber + 1;
+    pageInfo->pageNumber = request->pageNumber() + 1;
 
 //  pageInfo->resolution = m_resolution;
 
@@ -221,16 +221,12 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
         {
             kDebug() << "Image OK" << endl;
 
-            if ( request->documentRotation > 0 )
-                pageInfo->img = KImageEffect::rotate( pageInfo->img,
-                   (KImageEffect::RotateDirection)( request->documentRotation - 1 ) );
-
             QPixmap *tmpPx = new QPixmap();
             *tmpPx = QPixmap::fromImage( pageInfo->img );
-            request->page->setPixmap( request->id, tmpPx );
+            request->page()->setPixmap( request->id(), tmpPx );
 
-            request->page->setObjectRects(
-                     generateDviLinks( pageInfo, request->documentRotation ) );
+            request->page()->setObjectRects(
+                     generateDviLinks( pageInfo, 0 ) );
         }
     }
 

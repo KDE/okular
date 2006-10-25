@@ -595,22 +595,40 @@ QStringList Document::paperSizes() const
 
 bool Document::canExportToText() const
 {
-    return generator ? generator->canExportToText() : false;
+    if ( !generator )
+        return false;
+
+    const ExportFormat::List formats = generator->exportFormats();
+    for ( int i = 0; i < formats.count(); ++i ) {
+        if ( formats[ i ].mimeType()->name() == QLatin1String( "text/plain" ) )
+            return true;
+    }
+
+    return false;
 }
 
 bool Document::exportToText( const QString& fileName ) const
 {
-    return generator ? generator->exportToText( fileName ) : false;
+    if ( !generator )
+        return false;
+
+    const ExportFormat::List formats = generator->exportFormats();
+    for ( int i = 0; i < formats.count(); ++i ) {
+        if ( formats[ i ].mimeType()->name() == QLatin1String( "text/plain" ) )
+            return generator->exportTo( fileName, formats[ i ] );
+    }
+
+    return false;
 }
 
-QList<ExportEntry*> Document::exportFormats() const
+ExportFormat::List Document::exportFormats() const
 {
-    return generator ? generator->exportFormats() : QList<ExportEntry*>();
+    return generator ? generator->exportFormats() : ExportFormat::List();
 }
 
-bool Document::exportTo( const QString& fileName, const KMimeType::Ptr& mime ) const
+bool Document::exportTo( const QString& fileName, const ExportFormat& format ) const
 {
-    return generator ? generator->exportTo( fileName, mime ) : false;
+    return generator ? generator->exportTo( fileName, format ) : false;
 }
 
 bool Document::historyAtBegin() const
@@ -676,11 +694,11 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
     }
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    int requesterID = requests.first()->id;
+    int requesterID = requests.first()->id();
     QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin(), sEnd = d->pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
-        if ( (*sIt)->id == requesterID )
+        if ( (*sIt)->id() == requesterID )
         {
             // delete request and remove it from stack
             delete *sIt;
@@ -697,24 +715,24 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kWarning() << "request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << endl;
-        if ( !(request->page = pages_vector[ request->pageNumber ]) )
+        kWarning() << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << endl;
+        if ( pages_vector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
             delete request;
             continue;
-        }
+        };
 
-        request->documentRotation = d->rotation;
+        request->setPage( pages_vector.value( request->pageNumber() ) );
 
-        if ( !request->async )
-            request->priority = 0;
+        if ( !request->asynchronous() )
+            request->setPriority( 0 );
 
-        if ( request->async && threadingDisabled )
-            request->async = false;
+        if ( request->asynchronous() && threadingDisabled )
+            request->setAsynchronous( false );
 
         // add request to the 'stack' at the right place
-        if ( !request->priority )
+        if ( !request->priority() )
             // add priority zero requests to the top of the stack
             d->pixmapRequestsStack.append( request );
         else
@@ -722,7 +740,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
             // insert in stack sorted by priority
             sIt = d->pixmapRequestsStack.begin();
             sEnd = d->pixmapRequestsStack.end();
-            while ( sIt != sEnd && (*sIt)->priority >= request->priority )
+            while ( sIt != sEnd && (*sIt)->priority() >= request->priority() )
                 ++sIt;
             d->pixmapRequestsStack.insert( sIt, request );
         }
@@ -1398,7 +1416,7 @@ bool Document::print( KPrinter &printer )
 void Document::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
-    if ( !generator->canGeneratePixmap( req->async ) )
+    if ( !generator->canGeneratePixmap( req->asynchronous() ) )
         kDebug() << "requestDone with generator not in READY state." << endl;
 #endif
 
@@ -1406,7 +1424,7 @@ void Document::requestDone( PixmapRequest * req )
     QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
     QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
-        if ( (*aIt)->page == req->pageNumber && (*aIt)->id == req->id )
+        if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
         {
             AllocatedPixmap * p = *aIt;
             d->allocatedPixmapsFifo.erase( aIt );
@@ -1416,14 +1434,14 @@ void Document::requestDone( PixmapRequest * req )
         }
 
     // [MEM] 1.2 append memory allocation descriptor to the FIFO
-    int memoryBytes = 4 * req->width * req->height;
-    AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id, req->pageNumber, memoryBytes );
+    int memoryBytes = 4 * req->width() * req->height();
+    AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
     d->allocatedPixmapsFifo.append( memoryPage );
     d->allocatedPixmapsTotalMemory += memoryBytes;
 
     // 2. notify an observer that its pixmap changed
-    if ( d->observers.contains( req->id ) )
-        d->observers[ req->id ]->notifyPageChanged( req->pageNumber, DocumentObserver::Pixmap );
+    if ( d->observers.contains( req->id() ) )
+        d->observers[ req->id() ]->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
 
     // 3. delete request
     delete req;
@@ -1445,22 +1463,22 @@ void Document::sendGeneratorRequest()
             d->pixmapRequestsStack.pop_back();
         }
         // request only if page isn't already present or request has invalid id
-        else if ( r->page->hasPixmap( r->id, r->width, r->height ) || r->id <= 0 || r->id >= MAX_OBSERVER_ID)
+        else if ( r->page()->hasPixmap( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
         {
             d->pixmapRequestsStack.pop_back();
             delete r;
         }
-        else if ( (long)r->width * (long)r->height > 20000000L )
+        else if ( (long)r->width() * (long)r->height() > 20000000L )
         {
             d->pixmapRequestsStack.pop_back();
             if ( !d->warnedOutOfMemory )
             {
-                kWarning() << "Running out of memory on page " << r->pageNumber
-                    << " (" << r->width << "x" << r->height << " px);" << endl;
+                kWarning() << "Running out of memory on page " << r->pageNumber()
+                    << " (" << r->width() << "x" << r->height() << " px);" << endl;
                 kWarning() << "this message will be reported only once." << endl;
                 d->warnedOutOfMemory = true;
             }
-	    delete r;
+            delete r;
         }
         else
             request = r;
@@ -1471,14 +1489,14 @@ void Document::sendGeneratorRequest()
         return;
 
     // [MEM] preventive memory freeing
-    int pixmapBytes = 4 * request->width * request->height;
+    int pixmapBytes = 4 * request->width() * request->height();
     if ( pixmapBytes > (1024 * 1024) )
         cleanupPixmapMemory( pixmapBytes );
 
     // submit the request to the generator
-    if ( generator->canGeneratePixmap( request->async ) )
+    if ( generator->canGeneratePixmap( request->asynchronous() ) )
     {
-        kWarning() << "sending request id=" << request->id << " " <<request->width << "x" << request->height << "@" << request->pageNumber << " async == " << request->async << endl;
+        kWarning() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
         d->pixmapRequestsStack.removeAll ( request );
         generator->generatePixmap ( request );
     }
@@ -1817,6 +1835,28 @@ void Document::slotTimedMemoryCheck()
 
 void Document::slotRotation( int rotation )
 {
+    // tell the pages to rotate
+    QVector< Okular::Page * >::iterator pIt = pages_vector.begin();
+    QVector< Okular::Page * >::iterator pEnd = pages_vector.end();
+    for ( ; pIt != pEnd; ++pIt )
+        (*pIt)->rotateAt( rotation );
+    // clear 'memory allocation' descriptors
+    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    for ( ; aIt != aEnd; ++aIt )
+        delete *aIt;
+    d->allocatedPixmapsFifo.clear();
+    d->allocatedPixmapsTotalMemory = 0;
+    // notify the generator that the current rotation has changed
+    generator->rotationChanged( rotation, d->rotation );
+    // set the new rotation
+    d->rotation = rotation;
+
+    foreachObserver( notifySetup( pages_vector, true ) );
+    foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
+    kDebug() << "Rotated: " << rotation << endl;
+
+/*
     if ( generator->supportsRotation() )
     {
         // tell the pages to rotate
@@ -1838,10 +1878,11 @@ void Document::slotRotation( int rotation )
 
         foreachObserver( notifySetup( pages_vector, true ) );
         foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
-//         foreachObserver( notifyViewportChanged( false /*disables smoothMove*/ ));
+//         foreachObserver( notifyViewportChanged( false ));
 //         foreachObserver( notifyPageChanged( ) );
         kDebug() << "Rotated: " << rotation << endl;
     }
+*/
 }
 
 void Document::slotPaperSizes( int newsize )

@@ -86,64 +86,42 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
   const QSize size = mDocument->pageSize().toSize();
 
-  QPixmap *pm = new QPixmap( request->width, request->height );
+  QPixmap *pm = new QPixmap( request->width(), request->height() );
   pm->fill( Qt::white );
 
 
   QPainter p;
   p.begin( pm );
 
-  qreal width = request->width;
-  qreal height = request->height;
-
-  if ( request->documentRotation % 2 == 1 )
-    qSwap( width, height );
-
-  switch ( request->documentRotation ) {
-    case 0:
-    default:
-      break;
-    case 1:
-      p.rotate( 90 );
-      p.translate( QPoint( 0, qRound(-size.height() * (height / (qreal)size.height())) ) );
-      break;
-    case 2:
-      p.rotate( 180 );
-      p.translate( QPoint( qRound(-size.width() * (width / (qreal)size.width())),
-                           qRound(-size.height() * (height / (qreal)size.height())) ) );
-      break;
-    case 3:
-      p.rotate( 270 );
-      p.translate( QPoint( qRound(-size.width() * (width / (qreal)size.width())), 0 ) );
-      break;
-  }
+  qreal width = request->width();
+  qreal height = request->height();
 
   p.scale( width / (qreal)size.width(), height / (qreal)size.height() );
 
   QRect rect;
-  rect = QRect( 0, request->pageNumber * size.height(), size.width(), size.height() );
-  p.translate( QPoint( 0, request->pageNumber * size.height() * -1 ) );
+  rect = QRect( 0, request->pageNumber() * size.height(), size.width(), size.height() );
+  p.translate( QPoint( 0, request->pageNumber() * size.height() * -1 ) );
   mDocument->drawContents( &p, rect );
   p.end();
 
-  request->page->setPixmap( request->id, pm );
+  request->page()->setPixmap( request->id(), pm );
 
   /**
    * Add link information
    */
   QLinkedList<Okular::ObjectRect*> objects;
   for ( int i = 0; i < mLinks.count(); ++i ) {
-    if ( mLinks[ i ].page == request->pageNumber ) {
+    if ( mLinks[ i ].page == request->pageNumber() ) {
       const QRectF rect = mLinks[ i ].boundingRect;
-      double x = rect.x() / request->width;
-      double y = rect.y() / request->height;
-      double w = rect.width() / request->width;
-      double h = rect.height() / request->height;
+      double x = rect.x() / request->width();
+      double y = rect.y() / request->height();
+      double w = rect.width() / request->width();
+      double h = rect.height() / request->height();
       objects.append( new Okular::ObjectRect( x, y, w, h, false,
                                               Okular::ObjectRect::Link, new Okular::LinkBrowse( mLinks[ i ].url ) ) );
     }
   }
-  request->page->setObjectRects( objects );
+  request->page()->setObjectRects( objects );
 
   signalRequestDone( request );
 }

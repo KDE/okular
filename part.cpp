@@ -588,20 +588,20 @@ bool Part::openFile()
     m_showPresentation->setEnabled( ok );
     if ( ok )
     {
-        m_exportItems = m_document->exportFormats();
-        QList<Okular::ExportEntry*>::ConstIterator it = m_exportItems.constBegin();
-        QList<Okular::ExportEntry*>::ConstIterator itEnd = m_exportItems.constEnd();
+        m_exportFormats = m_document->exportFormats();
+        QList<Okular::ExportFormat>::ConstIterator it = m_exportFormats.constBegin();
+        QList<Okular::ExportFormat>::ConstIterator itEnd = m_exportFormats.constEnd();
         QMenu *menu = m_exportAs->menu();
         for ( ; it != itEnd; ++it )
         {
-            Okular::ExportEntry* cur = *it;
-            if ( !cur->icon.isEmpty() )
+            const Okular::ExportFormat &format = *it;
+            if ( !format.icon().isNull() )
             {
-                menu->addAction( KIcon( cur->icon ), cur->description );
+                menu->addAction( format.icon(), format.description() );
             }
             else
             {
-                menu->addAction( cur->description );
+                menu->addAction( format.description() );
             }
         }
     }
@@ -680,7 +680,7 @@ bool Part::closeUrl()
     m_showProperties->setEnabled( false );
     m_showEmbeddedFiles->setEnabled( false );
     m_exportAsText->setEnabled( false );
-    m_exportItems.clear();
+    m_exportFormats.clear();
     QMenu *menu = m_exportAs->menu();
     QList<QAction*> acts = menu->actions();
     int num = acts.count();
@@ -1175,11 +1175,11 @@ void Part::slotExportAs(QAction * act)
     if ( ( id < 0 ) || ( id >= acts.count() ) )
         return;
 
-    QString filter = id == 0 ? "text/plain" : m_exportItems.at( id - 1 )->mime->name();
+    QString filter = id == 0 ? "text/plain" : m_exportFormats.at( id - 1 ).mimeType()->name();
     QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().fileName() : QString::null, filter, widget() );
     if ( !fileName.isEmpty() )
     {
-        bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportItems.at( id - 1 )->mime );
+        bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportFormats.at( id - 1 ) );
         if ( !saved )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
     }

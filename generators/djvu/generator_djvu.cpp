@@ -95,15 +95,15 @@ void DjVuGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     m_request = request;
 
-    QPixmap pix = m_djvu->pixmap( request->pageNumber, request->width, request->height, request->documentRotation );
+    QPixmap pix = m_djvu->pixmap( request->pageNumber(), request->width(), request->height(), 0 );
     if ( pix.isNull() )
     {
 
-        m_djvu->requestPixmap( request->pageNumber, request->width, request->height, request->documentRotation );
+        m_djvu->requestPixmap( request->pageNumber(), request->width(), request->height(), 0 );
     }
     else
     {
-        djvuPixmapGenerated( request->pageNumber, pix );
+        djvuPixmapGenerated( request->pageNumber(), pix );
     }
 }
 
@@ -150,7 +150,7 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 
 void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
 {
-    m_request->page->setPixmap( m_request->id, new QPixmap( pix ) );
+    m_request->page()->setPixmap( m_request->id(), new QPixmap( pix ) );
 
     QList<KDjVu::Link*> links = m_djvu->linksForPage( page );
     if ( links.count() > 0 )
@@ -198,7 +198,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                 const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
                 int width = p->width();
                 int height = p->height();
-                bool scape_orientation = ( m_request->documentRotation % 2 == 1 );
+                bool scape_orientation = false; // hack by tokoe, should always create default page
                 if ( scape_orientation )
                     qSwap( width, height );
                 Okular::ObjectRect *newrect = 0;
@@ -209,7 +209,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
                     {
                         QRect r( QPoint( curlink->point().x(), p->height() - curlink->point().y() - curlink->size().height() ), curlink->size() );
                         bool ellipse = ( curlink->areaType() == KDjVu::Link::EllipseArea );
-                        newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, m_request->documentRotation ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
+                        newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, 0 ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
                         break;
                     }
                     case KDjVu::Link::PolygonArea:
@@ -246,7 +246,7 @@ void DjVuGenerator::djvuPixmapGenerated( int page, const QPixmap & pix )
             delete curlink;
         }
         if ( rects.count() > 0 )
-            m_request->page->setObjectRects( rects );
+            m_request->page()->setObjectRects( rects );
     }
 
     ready = true;

@@ -434,7 +434,7 @@ void Part::fillGenerators()
 		continue;
             }
 
-            Okular::Generator* (*create_plugin)(Okular::Document* doc) = ( Okular::Generator* (*)(Okular::Document* doc) ) lib->symbol( "create_plugin" );
+            Okular::Generator* (*create_plugin)() = ( Okular::Generator* (*)() ) lib->symbol( "create_plugin" );
             if ( !create_plugin )
             {
                 kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
@@ -442,7 +442,7 @@ void Part::fillGenerators()
             }
 
             // the generator should do anything with the document if we are only configuring
-            m_loadedGenerators.insert(propName,create_plugin(m_document));
+            m_loadedGenerators.insert(propName,create_plugin());
             m_generatorsWithSettings << propName;
           }
         }

@@ -1161,6 +1161,12 @@ void PageView::wheelEvent( QWheelEvent *e )
     if ( d->viewportMoveActive )
         return;
 
+    if ( !d->document->isOpened() )
+    {
+        QScrollView::wheelEvent( e );
+        return;
+    }
+
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();

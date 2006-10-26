@@ -1710,6 +1710,12 @@ if (d->document->handleEvent( e ) )
     if ( d->viewportMoveActive )
         return;
 
+    if ( !d->document->isOpened() )
+    {
+        QScrollArea::wheelEvent( e );
+        return;
+    }
+
     int delta = e->delta(),
         vScroll = verticalScrollBar()->value();
     e->accept();

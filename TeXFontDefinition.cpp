@@ -226,7 +226,7 @@ void TeXFontDefinition::mark_as_used()
   if (flags & TeXFontDefinition::FONT_VIRTUAL) {
     QIntDictIterator<TeXFontDefinition> it(vf_table);
     while( it.current() ) {
-      it.current()->flags |= TeXFontDefinition::FONT_IN_USE;
+      it.current()->mark_as_used();
       ++it;
     }
   }

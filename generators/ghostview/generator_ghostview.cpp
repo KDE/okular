@@ -244,11 +244,6 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     docLock.unlock();
 }
 
-void GSGenerator::rotationChanged( int newOrientation, int /*oldOrientation*/ )
-{
-    internalDoc->setOrientation(orientation(newOrientation));
-}
-
 bool GSGenerator::supportsPaperSizes() const
 {
     return true;
@@ -363,6 +358,15 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
     kWarning() << "receiving req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() << endl;
     int pgNo=req->pageNumber();
+    double width = req->page()->width();
+    double height = req->page()->height();
+    int reqwidth = req->width();
+    int reqheight = req->height();
+    if ( req->page()->rotation() )
+    {
+        qSwap( width, height );
+        qSwap( reqwidth, reqheight );
+    }
     if ( req->asynchronous() )
     {
         docLock.lock();
@@ -371,12 +375,11 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
         asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
 //         asyncGenerator->setBoundingBox( internalDoc->boundingBox(i));
         kWarning() << "setSize\n";
-        asyncGenerator->setSize(req->width() ,req->height());
+        asyncGenerator->setSize( reqwidth, reqheight );
         kWarning() << "setMedia\n";
         asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
         kWarning() << "setMagnify\n";
-        asyncGenerator->setMagnify(qMax(static_cast<double>(req->width())/req->page()->width() ,
-                static_cast<double>(req->height())/req->page()->height()));
+        asyncGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
         GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
 //         kWarning ()  << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
         if (!asyncGenerator->interpreterRunning())
@@ -403,10 +406,9 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 //          this, SLOT(slotPixmapGenerated (const QImage*)));
 
       pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-      pixGenerator->setMagnify(qMax(static_cast<double>(req->width())/req->page()->width() ,
-              static_cast<double>(req->height())/req->page()->height()));
+      pixGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
       pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-      pixGenerator->setSize(req->width() ,req->height());
+      pixGenerator->setSize( reqwidth, reqheight );
   //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
       
       

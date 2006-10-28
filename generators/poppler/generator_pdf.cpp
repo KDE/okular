@@ -718,6 +718,11 @@ QString PDFGenerator::metaData( const QString & key, const QString & option ) co
         docLock.unlock();
         return title;
     }
+    else if ( key == "OpenTOC" )
+    {
+        if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
+            return "yes";
+    }
     return QString();
 }
 

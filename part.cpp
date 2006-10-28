@@ -622,6 +622,11 @@ bool Part::openFile()
     if ( !m_watcher->contains(m_file) )
         m_watcher->addFile(m_file);
 
+    // if the 'OpenTOC' flag is set, start presentation
+    if ( m_document->getMetaData( "OpenTOC" ) == "yes" && m_toolBox->isItemEnabled( 0 ) )
+    {
+        m_toolBox->setCurrentIndex( 0 );
+    }
     // if the 'StartFullScreen' flag is set, start presentation
     if ( m_document->getMetaData( "StartFullScreen" ) == "yes" )
     {

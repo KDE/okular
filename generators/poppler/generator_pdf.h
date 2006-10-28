@@ -78,7 +78,7 @@ class PDFGenerator : public Okular::Generator
         bool print( KPrinter& printer );
 
         // [INHERITED] reply to some metadata requests
-        QString metaData( const QString & key, const QString & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const;
 
         // [INHERITED] reparse configuration
         bool reparseConfig();

@@ -115,7 +115,7 @@ class OKULAR_EXPORT Document : public QObject
         bool exportTo( const QString& fileName, const ExportFormat& format ) const;
         bool historyAtBegin() const;
         bool historyAtEnd() const;
-        QString getMetaData( const QString & key, const QString & option = QString() ) const;
+        QVariant getMetaData( const QString & key, const QVariant & option = QVariant() ) const;
         int rotation() const;
         QSizeF allPagesSize() const;
         QString pageSizeString(int page) const;

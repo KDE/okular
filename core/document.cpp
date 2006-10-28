@@ -641,9 +641,9 @@ bool Document::historyAtEnd() const
     return d->viewportIterator == --(d->viewportHistory.end());
 }
 
-QString Document::getMetaData( const QString & key, const QString & option ) const
+QVariant Document::getMetaData( const QString & key, const QVariant & option ) const
 {
-    return generator ? generator->metaData( key, option ) : QString();
+    return generator ? generator->metaData( key, option ) : QVariant();
 }
 
 int Document::rotation() const

@@ -45,7 +45,7 @@ class CHMGenerator : public Okular::Generator
 
         bool supportsSearching() const;
 
-        QString metaData( const QString & key, const QString & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const;
 
     public slots:
         void slotCompleted();

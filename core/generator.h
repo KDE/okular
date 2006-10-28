@@ -22,6 +22,7 @@
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <QtCore/QVector>
 
 #include <kmimetype.h>
@@ -283,7 +284,7 @@ class OKULAR_EXPORT Generator : public QObject
          * This method returns the meta data of the given @p key with the given @p option
          * of the document.
          */
-        virtual QString metaData( const QString &key, const QString &option ) const;
+        virtual QVariant metaData( const QString &key, const QVariant &option ) const;
 
         /**
          * This method is called to tell the generator to re-parse its configuration.

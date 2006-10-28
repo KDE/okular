@@ -306,7 +306,7 @@ void CHMGenerator::additionalRequestData()
                     }
                     else
                     {
-                        Okular::DocumentViewport viewport(metaData( "NamedViewport", '/' + url ));
+                        Okular::DocumentViewport viewport( metaData( "NamedViewport", '/' + url ).toString() );
                         objRects.push_back(
                             new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                             false,
@@ -371,12 +371,12 @@ bool CHMGenerator::supportsSearching() const
     return true;
 }
 
-QString CHMGenerator::metaData( const QString &key, const QString &option ) const
+QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) const
 {
-    if ( key == "NamedViewport" && !option.isEmpty() )
+    if ( key == "NamedViewport" && !option.toString().isEmpty() )
     {
         Okular::DocumentViewport viewport;
-        viewport.pageNumber = m_file->getPageNum( option ) -1;
+        viewport.pageNumber = m_file->getPageNum( option.toString() ) -1;
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
@@ -384,7 +384,7 @@ QString CHMGenerator::metaData( const QString &key, const QString &option ) cons
     {
         return m_file->Title();
     }
-    return QString();
+    return QVariant();
 }
 
 /*

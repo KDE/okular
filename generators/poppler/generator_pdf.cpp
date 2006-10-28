@@ -687,21 +687,21 @@ bool PDFGenerator::print( KPrinter& printer )
 	return false;
 }
 
-QString PDFGenerator::metaData( const QString & key, const QString & option ) const
+QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const
 {
     if ( key == "StartFullScreen" )
     {
         // asking for the 'start in fullscreen mode' (pdf property)
         if ( pdfdoc->pageMode() == Poppler::Document::FullScreen )
-            return "yes";
+            return true;
     }
-    else if ( key == "NamedViewport" && !option.isEmpty() )
+    else if ( key == "NamedViewport" && !option.toString().isEmpty() )
     {
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         Okular::DocumentViewport viewport;
         docLock.lock();
-        Poppler::LinkDestination *ld = pdfdoc->linkDestination( option );
+        Poppler::LinkDestination *ld = pdfdoc->linkDestination( option.toString() );
         docLock.unlock();
         if ( ld )
         {
@@ -721,9 +721,9 @@ QString PDFGenerator::metaData( const QString & key, const QString & option ) co
     else if ( key == "OpenTOC" )
     {
         if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
-            return "yes";
+            return true;
     }
-    return QString();
+    return QVariant();
 }
 
 bool PDFGenerator::reparseConfig()

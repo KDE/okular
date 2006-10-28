@@ -125,9 +125,9 @@ bool Generator::print( KPrinter& )
     return false;
 }
 
-QString Generator::metaData( const QString&, const QString& ) const
+QVariant Generator::metaData( const QString&, const QVariant& ) const
 {
-    return QString();
+    return QVariant();
 }
 
 bool Generator::reparseConfig()

@@ -213,7 +213,7 @@ Okular::DocumentViewport TOC::getViewport( const QDomElement &e ) const
     {
         // if the node references a viewport, get the reference and set it
         const QString & page = e.attribute( "ViewportName" );
-        const QString & viewport = m_document->getMetaData( "NamedViewport", page );
+        QString viewport = m_document->getMetaData( "NamedViewport", page ).toString();
         if ( !viewport.isNull() )
             return Okular::DocumentViewport( viewport );
     }

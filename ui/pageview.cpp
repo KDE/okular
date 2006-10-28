@@ -893,7 +893,7 @@ if (d->document->handleEvent( e ) )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( d->mouseSelecting || d->mouseMidZooming )
+    if ( ( d->mouseSelecting && e->key() != Qt::Key_Escape ) || d->mouseMidZooming )
         return;
 
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
@@ -1034,6 +1034,15 @@ if (d->document->handleEvent( e ) )
             break;
         case Qt::Key_Right:
             horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
+            break;
+        case Qt::Key_Escape:
+            selectionClear();
+            d->mousePressPos = QPoint();
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->trigger();
+                d->aPrevAction = 0;
+            }
             break;
         case Qt::Key_Shift:
         case Qt::Key_Control:

@@ -141,6 +141,9 @@ public:
     KToggleAction * aViewContinuous;
     KAction * aPrevAction;
     KActionCollection * actionCollection;
+
+    int setting_renderMode;
+    int setting_renderCols;
 };
 
 class PageViewWidget : public QWidget
@@ -262,6 +265,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->messageWindow = new PageViewMessage(this);
     d->aPrevAction = 0;
     d->aPaperSizes=0;
+    d->setting_renderMode = Okular::Settings::renderMode();
+    d->setting_renderCols = Okular::Settings::viewColumns();
 
     setAttribute( Qt::WA_StaticContents );
 
@@ -479,6 +484,27 @@ void PageView::displayMessage( const QString & message,PageViewMessage::Icon ico
     if (duration==-1)
         duration = 500 + 100 * message.length();
     d->messageWindow->display( message, icon, duration );
+}
+
+void PageView::reparseConfig()
+{
+    // set the scroll bars policies
+    Qt::ScrollBarPolicy scrollBarMode = Okular::Settings::showScrollBars() ?
+        Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff;
+    if ( horizontalScrollBarPolicy() != scrollBarMode )
+    {
+        setHorizontalScrollBarPolicy( scrollBarMode );
+        setVerticalScrollBarPolicy( scrollBarMode );
+    }
+
+    if ( Okular::Settings::renderMode() == 2 &&
+         ( (int)Okular::Settings::viewColumns() != d->setting_renderCols ) )
+    {
+        d->setting_renderMode = Okular::Settings::renderMode();
+        d->setting_renderCols = Okular::Settings::viewColumns();
+
+        slotRelayoutPages();
+    }
 }
 
 //BEGIN DocumentObserver inherited methods

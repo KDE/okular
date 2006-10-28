@@ -1019,20 +1019,12 @@ void Part::slotNewConfig()
         m_searchWidget->setVisible( showSearch );
 
     // Main View (pageView)
-    Qt::ScrollBarPolicy scrollBarMode = Okular::Settings::showScrollBars() ?
-        Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff;
-    if ( m_pageView->horizontalScrollBarPolicy() != scrollBarMode )
-    {
-        m_pageView->setHorizontalScrollBarPolicy( scrollBarMode );
-        m_pageView->setVerticalScrollBarPolicy( scrollBarMode );
-    }
+    m_pageView->reparseConfig();
 
     // update document settings
     m_document->reparseConfig();
 
-    // update Main View and ThumbnailList contents
-    // TODO do this only when changing Okular::Settings::renderMode()
-    m_pageView->widget()->update();
+    // update ThumbnailList contents
     if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
 }

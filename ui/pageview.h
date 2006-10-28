@@ -79,6 +79,8 @@ Q_OBJECT
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
 
+        void reparseConfig();
+
     public slots:
         void errorMessage( const QString & message, int duration )
         {

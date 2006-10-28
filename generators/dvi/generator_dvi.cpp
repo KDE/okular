@@ -187,7 +187,7 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     pageSize ps;
 
     rotateCoordinates( request->width(), request->height(),
-                       pageInfo->width, pageInfo->height, 0 );
+                       pageInfo->width, pageInfo->height, request->page()->rotation() );
 
     pageInfo->pageNumber = request->pageNumber() + 1;
 

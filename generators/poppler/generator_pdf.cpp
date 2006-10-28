@@ -256,6 +256,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     bool firstInput = true;
     bool triedWallet = false;
     KWallet::Wallet * wallet = 0;
+    bool keep = true;
     while ( pdfdoc && pdfdoc->isLocked() )
     {
         QByteArray password;
@@ -291,15 +292,15 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            if ( KPasswordDialog::getPassword( 0, password, i18n( "Document Password" ), prompt ) != KPasswordDialog::Accepted )
+            if ( KPasswordDialog::getPassword( 0, password, i18n( "Document Password" ), prompt, wallet ? &keep : 0 ) != KPasswordDialog::Accepted )
                 break;
         }
 
         // 2. reopen the document using the password
         pdfdoc->unlock( password, password );
 
-        // 3. if the password is correct, store it to the wallet
-        if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() )
+        // 3. if the password is correct and the user chose to remember it, store it to the wallet
+        if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() && keep )
         {
             QString goodPass = QString::fromLocal8Bit( password.data() );
             wallet->writePassword( filePath.section('/', -1, -1), goodPass );

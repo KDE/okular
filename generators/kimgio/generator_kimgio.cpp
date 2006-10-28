@@ -8,9 +8,7 @@
  ***************************************************************************/
 
 #include <qpainter.h>
-#include <qpixmap.h>
 #include <qimage.h>
-#include <kimageeffect.h>
 #include <kprinter.h>
 
 #include "core/page.h"
@@ -54,13 +52,12 @@ bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ ) const
 void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     // perform a smooth scaled generation
-    QImage smoothImage = m_pix->toImage().scaled( request->width(), request->height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    // rotate, if necessary
-    int rotation = request->page()->rotation();
-    QImage finalImage = rotation > 0
-        ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
-        : smoothImage;
-    request->page()->setImage(request->id(), finalImage);
+    int width = request->width();
+    int height = request->height();
+    if ( request->page()->rotation() % 2 == 1 )
+        qSwap( width, height );
+    QImage image = m_pix->toImage().scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    request->page()->setImage( request->id(), image );
 
     // signal that the request has been accomplished
     signalRequestDone(request);

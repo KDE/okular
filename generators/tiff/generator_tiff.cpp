@@ -11,10 +11,8 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qlist.h>
-#include <qpixmap.h>
 #include <qthread.h>
 #include <kglobal.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 
 #include "core/page.h"
@@ -42,18 +40,18 @@ class TIFFGeneratorThread : public QThread
         void endGeneration();
 
         Okular::PixmapRequest *request() const;
-        QPixmap * takePixmap();
+        QImage takeImage();
 
     private:
         void run();
 
         Okular::PixmapRequest* m_request;
-        QPixmap* m_pix;
+        QImage m_img;
         TIFF* m_tiff;
 };
 
 TIFFGeneratorThread::TIFFGeneratorThread()
-  : QThread(), m_request( 0 ), m_pix( 0 ), m_tiff( 0 )
+  : QThread(), m_request( 0 ), m_tiff( 0 )
 {
 }
 
@@ -75,21 +73,20 @@ Okular::PixmapRequest* TIFFGeneratorThread::request() const
     return m_request;
 }
 
-QPixmap* TIFFGeneratorThread::takePixmap()
+QImage TIFFGeneratorThread::takeImage()
 {
-    QPixmap* p = m_pix;
-    m_pix = 0;
+    QImage p = m_img;
+    m_img = QImage();
     return p;
 }
 
 void TIFFGeneratorThread::run()
 {
     bool generated = false;
-    m_pix = new QPixmap( m_request->width(), m_request->height() );
 
     if ( TIFFSetDirectory( m_tiff, m_request->page()->number() ) )
     {
-        int rotation = 0;
+        int rotation = m_request->page()->rotation();
         uint32 width = (uint32)m_request->page()->width();
         uint32 height = (uint32)m_request->page()->height();
         if ( rotation % 2 == 1 )
@@ -114,11 +111,7 @@ void TIFFGeneratorThread::run()
             int reqheight = m_request->height();
             if ( rotation % 2 == 1 )
                 qSwap( reqwidth, reqheight );
-            QImage smoothImage = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-            QImage finalImage = rotation > 0
-                ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
-                : smoothImage;
-            *m_pix = QPixmap::fromImage( finalImage );
+            m_img = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
             generated = true;
         }
@@ -126,7 +119,8 @@ void TIFFGeneratorThread::run()
 
     if ( !generated )
     {
-        m_pix->fill();
+        m_img = QImage( m_request->width(), m_request->height(), QImage::Format_RGB32 );
+        m_img.fill( qRgb( 255, 255, 255 ) );
     }
 }
 
@@ -209,11 +203,11 @@ void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
     }
 
     bool generated = false;
-    QPixmap * p = new QPixmap( request->width(), request->height() );
+    QImage img;
 
     if ( TIFFSetDirectory( d->tiff, request->page()->number() ) )
     {
-        int rotation = 0;
+        int rotation = request->page()->rotation();
         uint32 width = (uint32)request->page()->width();
         uint32 height = (uint32)request->page()->height();
         if ( rotation % 2 == 1 )
@@ -238,11 +232,7 @@ void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
             int reqheight = request->height();
             if ( rotation % 2 == 1 )
                 qSwap( reqwidth, reqheight );
-            QImage smoothImage = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-            QImage finalImage = rotation > 0
-                ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
-                : smoothImage;
-            *p = QPixmap::fromImage( finalImage );
+            img = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
             generated = true;
         }
@@ -250,10 +240,11 @@ void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     if ( !generated )
     {
-        p->fill();
+        img = QImage( request->width(), request->height(), QImage::Format_RGB32 );
+        img.fill( qRgb( 255, 255, 255 ) );
     }
 
-    request->page()->setPixmap( request->id(), p );
+    request->page()->setImage( request->id(), img );
 
     ready = true;
 
@@ -302,7 +293,7 @@ void TIFFGenerator::slotThreadFinished()
     Okular::PixmapRequest * request = thread->request();
     thread->endGeneration();
 
-    request->page()->setPixmap( request->id(), thread->takePixmap() );
+    request->page()->setImage( request->id(), thread->takeImage() );
 
     ready = true;
 

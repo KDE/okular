@@ -711,12 +711,12 @@ void Part::close()
   {
     closeUrl();
   }
-  else KMessageBox::information(widget(), i18n("This link points to a close document action that does not work when using the embedded viewer."), QString::null, "warnNoCloseIfNotInOkular::");
+  else KMessageBox::information( widget(), i18n( "This link points to a close document action that does not work when using the embedded viewer." ), QString::null, "warnNoCloseIfNotInOkular" );
 }
 
 void Part::cannotQuit()
 {
-	KMessageBox::information(widget(), i18n("This link points to a quit application action that does not work when using the embedded viewer."), QString::null, "warnNoQuitIfNotInOkular::");
+    KMessageBox::information( widget(), i18n( "This link points to a quit application action that does not work when using the embedded viewer." ), QString::null, "warnNoQuitIfNotInOkular" );
 }
 
 void Part::splitterMoved( int /*pos*/, int index )

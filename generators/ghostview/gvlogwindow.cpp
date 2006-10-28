@@ -11,14 +11,11 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
-#include <qpixmap.h>
 #include <qstringlist.h>
 #include <qstring.h>
-#include <qtoolbutton.h>
 #include <qtreewidget.h>
 
 #include <kdebug.h>
-#include <kglobalsettings.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <ktreewidgetsearchline.h>
@@ -37,15 +34,9 @@ GSLogWindow::GSLogWindow( QWidget* parent )
     searchWidget->setSizePolicy( sp );
     QHBoxLayout *searchlay = new QHBoxLayout( searchWidget );
     searchlay->setSpacing( 2 );
-    searchlay->setMargin( 0 );
-    QToolButton *clearBtn =  new QToolButton( searchWidget );
-    clearBtn->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "clear_left" : "locationbar_erase" ) );
-    clearBtn->setToolTip( i18n( "Clear filter" ) );
-    clearBtn->setAutoRaise( true );
-    searchlay->addWidget( clearBtn );
+    searchlay->setMargin( 2 );
 
     m_searchLine = new KTreeWidgetSearchLine();
-    connect( clearBtn, SIGNAL( clicked() ), m_searchLine, SLOT( clear() ) );
     searchlay->addWidget( m_searchLine );
 
     m_msgList = new QTreeWidget( this );

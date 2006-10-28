@@ -1106,9 +1106,7 @@ void PDFGenerator::threadFinished()
     QList<Poppler::TextBox*> outText = generatorThread->takeText();
     QLinkedList< Okular::ObjectRect * > outRects = generatorThread->takeObjectRects();
 
-    QPixmap * newpix = new QPixmap();
-    *newpix = QPixmap::fromImage( *outImage );
-    request->page()->setPixmap( request->id(), newpix );
+    request->page()->setImage( request->id(), *outImage );
     delete outImage;
     if ( !outText.isEmpty() )
     {

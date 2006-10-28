@@ -13,12 +13,12 @@
 #include <QtCore/QList>
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
-#include <QtGui/QPolygon>
 
 #include <kdebug.h>
 
 #include "okular_export.h"
 
+class QPolygonF;
 class QRect;
 
 namespace Okular {

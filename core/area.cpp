@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include <QtCore/QRect>
+#include <QtGui/QPolygonF>
 
 #include <math.h>
 

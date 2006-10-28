@@ -109,6 +109,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
     bool firstInput = true;
     bool triedWallet = false;
     KWallet::Wallet * wallet = 0;
+    int keep = 1;
     while ( !pdfdoc->isOk() && pdfdoc->getErrorCode() == errEncrypted )
     {
         QCString password;
@@ -144,7 +145,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            if ( KPasswordDialog::getPassword( password, prompt ) != KPasswordDialog::Accepted )
+            if ( KPasswordDialog::getPassword( password, prompt, wallet ? &keep : 0 ) != KPasswordDialog::Accepted )
             break;
         }
 
@@ -154,8 +155,8 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
         pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), pwd2, pwd2 );
             delete pwd2;
 
-        // 3. if the password is correct, store it to the wallet
-        if ( pdfdoc->isOk() && wallet && /*safety check*/ wallet->isOpen() )
+        // 3. if the password is correct and the user chose to remember it, store it to the wallet
+        if ( pdfdoc->isOk() && wallet && /*safety check*/ wallet->isOpen() && keep > 0 )
         {
             QString goodPass = QString::fromLocal8Bit( password.data() );
             wallet->writePassword( filePath.section('/', -1, -1), goodPass );

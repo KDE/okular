@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Icon=okular
-Name=okular
-ServiceTypes=KParts/ReadOnlyPart
-X-KDE-Library=libokularpart
-Type=Service
-MimeType=image/fax-g3;image/tiff;

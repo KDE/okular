@@ -8,8 +8,6 @@ if(LIBGS_FOUND)
   add_subdirectory(ghostview)
 endif(LIBGS_FOUND)
 
-#add_subdirectory( fax )
-
 add_subdirectory( kimgio )
 
 if(CHM_FOUND)

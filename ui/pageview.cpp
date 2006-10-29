@@ -574,7 +574,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( !d->mouseSelectionRect.isNull() || d->mouseMidStartY != -1 )
+    if ( ( !d->mouseSelectionRect.isNull() && e->key() != Qt::Key_Escape ) || d->mouseMidStartY != -1 )
         return;
 
     // handle 'find as you type' (based on khtml/khtmlview.cpp)
@@ -711,6 +711,15 @@ void PageView::keyPressEvent( QKeyEvent * e )
         case Key_Right:
             horizontalScrollBar()->addLine();
             break;
+        case Qt::Key_Escape:
+            selectionClear();
+            d->mousePressPos = QPoint();
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->activate();
+                d->aPrevAction = 0;
+            }
+            break;
         case Key_Shift:
         case Key_Control:
             if ( d->autoScrollTimer )
@@ -810,7 +819,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         case MouseZoom:
         case MouseSelect:
             // set second corner of selection
-            if ( leftButton || d->aPrevAction )
+            if ( !d->mousePressPos.isNull() && ( leftButton || d->aPrevAction ) )
                 selectionEndPoint( e->x(), e->y() );
             break;
 

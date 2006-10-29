@@ -53,7 +53,7 @@ class GSInternalDocument
         void insertPageData (int n, GSInterpreterLib::Position p) { pagesInternalData.insert(n,p); };
 
         FILE * file () { return m_internalFile; };
-        GSInterpreterLib::Position pagePos (int i) { return pagesInternalData[i]; };
+        GSInterpreterLib::Position pagePos (int i) const { return pagesInternalData[i]; }
         const QString & fileName () const { return m_fileName ; };
 
         const KDSC* dsc () const { return m_dsc; };
@@ -63,9 +63,9 @@ class GSInternalDocument
         KDSCBBOX boundingBox() const;
 
         void setProlog( GSInterpreterLib::Position p )   { m_prolog=p; };
-        GSInterpreterLib::Position prolog() { return m_prolog ; }
+        GSInterpreterLib::Position prolog() const { return m_prolog ; }
         void setSetup( GSInterpreterLib::Position p) { m_setup=p; };
-        GSInterpreterLib::Position setup() { return m_setup; }
+        GSInterpreterLib::Position setup() const { return m_setup; }
 
         Format format() const { return m_format; };
         const Okular::DocumentInfo * generateDocumentInfo();

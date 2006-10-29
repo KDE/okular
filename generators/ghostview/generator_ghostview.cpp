@@ -70,7 +70,7 @@ void GSGenerator::addPages( KConfigDialog *dlg )
     dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), "kghostview", i18n("Ghostscript backend configuration") );
 }
 
-CDSC_ORIENTATION_ENUM GSGenerator::orientation( int  rot )
+CDSC_ORIENTATION_ENUM GSGenerator::orientation( int rot ) const
 {
     Q_ASSERT( rot >= 0 && rot < 4 );
     switch (rot)
@@ -88,7 +88,7 @@ CDSC_ORIENTATION_ENUM GSGenerator::orientation( int  rot )
     return CDSC_PORTRAIT;
 }
 
-int GSGenerator::rotation ( CDSC_ORIENTATION_ENUM orientation )
+int GSGenerator::rotation ( CDSC_ORIENTATION_ENUM orientation ) const
 {
     Q_ASSERT( orientation != CDSC_ORIENT_UNKNOWN );
     switch (orientation)
@@ -108,7 +108,7 @@ int GSGenerator::rotation ( CDSC_ORIENTATION_ENUM orientation )
 }
 
 // From kghostview
-int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation )
+int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation ) const
 {
     Q_ASSERT( orientation != CDSC_ORIENT_UNKNOWN );
     int angle = 0;
@@ -123,7 +123,7 @@ int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation )
     return angle;
 }
 
-inline QString GSGenerator::fileName() { return internalDoc->fileName(); };
+inline QString GSGenerator::fileName() const { return internalDoc->fileName(); };
 
 bool GSGenerator::print( KPrinter& printer ) 
 {

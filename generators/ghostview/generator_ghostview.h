@@ -49,7 +49,7 @@ class GSGenerator : public Okular::Generator
 
         // print document using already configured kprinter
         bool print( KPrinter& /*printer*/ );
-        QString fileName();
+        QString fileName() const;
 
         void addPages( KConfigDialog* dlg );
         /** constructor **/
@@ -71,9 +71,9 @@ class GSGenerator : public Okular::Generator
         bool loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector , bool ps );
         bool loadPages( QVector< Okular::Page * > & pagesVector );
         bool initInterpreter();
-        int rotation( CDSC_ORIENTATION_ENUM orientation );
-        int angle( CDSC_ORIENTATION_ENUM orientation );
-        CDSC_ORIENTATION_ENUM orientation( int rot );
+        int rotation( CDSC_ORIENTATION_ENUM orientation ) const;
+        int angle( CDSC_ORIENTATION_ENUM orientation ) const;
+        CDSC_ORIENTATION_ENUM orientation( int rot ) const;
         mutable QMutex docLock;
         mutable QMutex syncLock;
         bool m_asyncBusy;

@@ -9,6 +9,8 @@
 
 #include "utils.h"
 
+#include <QtCore/QRect>
+
 #ifdef Q_WS_X11
 #include <QX11Info>
 #endif

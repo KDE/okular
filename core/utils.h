@@ -12,14 +12,16 @@
 
 #include "okular_export.h"
 
-#include <QtCore/QRect>
+class QRect;
 
-/**
- * Namespace with utility functions
- */
 namespace Okular
 {
 
+/**
+ * @short General utility functions.
+ *
+ * This class contains some static functions of general utility.
+ */
 class OKULAR_EXPORT Utils
 {
   public:

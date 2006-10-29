@@ -10,7 +10,8 @@
 #ifndef LOGWINDOW_H
 #define LOGWINDOW_H
 
-#include "interpreter.h"
+#include <qgs.h>
+
 #include <kvbox.h>
 #include <qtimer.h>
 

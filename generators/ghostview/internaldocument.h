@@ -17,6 +17,8 @@
 #include <qmap.h>
 #include <qprinter.h>
 
+#include <qgs.h>
+
 #include "interpreter.h"
 #include "dscparse_adapter.h"
 #include "dscparse.h"

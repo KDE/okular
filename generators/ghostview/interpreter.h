@@ -9,13 +9,13 @@
 
 #ifndef _OKULAR_INTERPETER_H_
 #define _OKULAR_INTERPETER_H_
-#include <qgs.h>
-#include <QX11Info>
+
+#include "core/utils.h"
 
 namespace DPIMod
 {
-        const float X = QX11Info::appDpiX()/72.0;
-        const float Y = QX11Info::appDpiY()/72.0;
+        const float X = Okular::Utils::getDpiX() / 72.0;
+        const float Y = Okular::Utils::getDpiY() / 72.0;
 }
 
 #endif

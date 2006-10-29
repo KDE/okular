@@ -62,7 +62,12 @@ kde4_automoc(${okularcore_SRCS})
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
-target_link_libraries(okularcore  ${KDE4_KPARTS_LIBS} ${QT_QTCORE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} m )
+# Special handling for linking okularcore on OSX/Apple
+IF(APPLE)
+    SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
+ENDIF(APPLE)
+
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KPARTS_LIBS} ${QT_QTCORE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

@@ -28,6 +28,16 @@ class OKULAR_EXPORT Utils
      * specified \p orientation .
      */
     static QRect rotateRect( const QRect & source, int width, int height, int orientation );
+
+    /**
+     * Return the horizontal DPI of the main display
+     */
+    static double getDpiX();
+
+    /**
+     * Return the vertical DPI of the main display
+     */
+    static double getDpiY();
 };
 
 }

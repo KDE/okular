@@ -17,7 +17,6 @@
 #include "pageSize.h"
 
 #include <qapplication.h>
-#include <QX11Info>
 #include <qstring.h>
 #include <qurl.h>
 #include <qvector.h>
@@ -45,7 +44,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     kDebug() << "# of pages: " << m_dviRenderer->dviFile->total_pages << endl;
 
-    m_resolution = QX11Info::appDpiY();
+    m_resolution = Okular::Utils::getDpiY();
     loadPages( pagesVector, 0 );
 
     ready = true;

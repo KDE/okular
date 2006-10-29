@@ -310,9 +310,6 @@ class OKULAR_EXPORT Generator : public QObject
          */
         virtual bool exportTo( const QString &fileName, const ExportFormat &format );
 
-        // TODO: remove
-        virtual bool handleEvent (QEvent * /*event*/ );
-
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occured in the generator.

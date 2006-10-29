@@ -149,11 +149,6 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
     return false;
 }
 
-bool Generator::handleEvent( QEvent* )
-{
-    return true;
-}
-
 void Generator::setDocument( Document *document )
 {
     d->m_document = document;

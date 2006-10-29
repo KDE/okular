@@ -714,8 +714,6 @@ bool PageView::canUnloadPixmap( int pageNumber )
 //BEGIN widget events
 void PageView::contentsPaintEvent(QPaintEvent *pe)
 {
-    if ( d->document->handleEvent( pe ) )
-    {
         // create the rect into contents from the clipped screen rect
         QRect viewportRect = viewport()->rect();
         viewportRect.translate( horizontalScrollBar()->value(), verticalScrollBar()->value() );
@@ -867,12 +865,9 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                 }
             }
         }
-    }
 }
 
-void PageView::resizeEvent( QResizeEvent * event)
-{
-if (d->document->handleEvent( event ) )
+void PageView::resizeEvent( QResizeEvent * )
 {
     if ( d->items.isEmpty() )
         return;
@@ -886,11 +881,8 @@ if (d->document->handleEvent( event ) )
     }
     d->delayResizeTimer->start( 200 );
 }
-}
 
 void PageView::keyPressEvent( QKeyEvent * e )
-{
-if (d->document->handleEvent( e ) )
 {
     e->accept();
 
@@ -1068,7 +1060,6 @@ if (d->document->handleEvent( e ) )
         d->autoScrollTimer->stop();
     }
 }
-}
 
 void PageView::inputMethodEvent( QInputMethodEvent * e )
 {
@@ -1084,8 +1075,6 @@ void PageView::inputMethodEvent( QInputMethodEvent * e )
 }
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
-{
-if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -1231,11 +1220,8 @@ if (d->document->handleEvent( e ) )
             break;
     }
 }
-}
 
 void PageView::contentsMousePressEvent( QMouseEvent * e )
-{
-if ( d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -1373,13 +1359,9 @@ if ( d->document->handleEvent( e ) )
             break;
     }
 }
-}
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
-if (d->document->handleEvent( e ) )
-{
-
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -1737,11 +1719,8 @@ if (d->document->handleEvent( e ) )
     // reset mouse press / 'drag start' position
     d->mousePressPos = QPoint();
 }
-}
 
 void PageView::wheelEvent( QWheelEvent *e )
-{
-if (d->document->handleEvent( e ) )
 {
     // don't perform any mouse action when viewport is autoscrolling
     if ( d->viewportMoveActive )
@@ -1798,31 +1777,21 @@ if (d->document->handleEvent( e ) )
     QPoint cp = widget()->mapFromGlobal(mapToGlobal(e->pos()));
     updateCursor(cp);
 }
-}
 
 void PageView::dragEnterEvent( QDragEnterEvent * ev )
 {
-if (d->document->handleEvent( ev ) )
-{
     ev->accept();
-}
 }
 
 void PageView::dragMoveEvent( QDragMoveEvent * ev )
 {
-    if ( !d->document->handleEvent( ev ) )
-        return;
-
     ev->accept();
 }
 
 void PageView::dropEvent( QDropEvent * ev )
 {
-if (d->document->handleEvent( ev ) )
-{
     if (  KUrl::List::canDecode(  ev->mimeData() ) )
         emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
-}
 }
 //END widget events
 

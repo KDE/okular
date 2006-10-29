@@ -484,11 +484,6 @@ bool Document::isOpened() const
     return generator;
 }
 
-bool Document::handleEvent( QEvent * event )
-{
-    return generator ? generator->handleEvent( event ) : true;
-}
-
 bool Document::canConfigurePrinter( ) const
 {
     return generator ? generator->canConfigurePrinter() : false;

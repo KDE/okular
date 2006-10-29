@@ -149,7 +149,6 @@ class OKULAR_EXPORT Document : public QObject
         void processLink( const Link * link );
         bool canConfigurePrinter() const;
         bool print( KPrinter &printer );
-        bool handleEvent (QEvent * event);
         // notifications sent by generator
         void requestDone( PixmapRequest * request );
 //         inline pagesVector() { return pages_vector; };

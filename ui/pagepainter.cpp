@@ -414,18 +414,18 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 break;
                             // highlight the bottom part of the rect
                             case Okular::HighlightAnnotation::Squiggly:
-                                path[ 0 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
-                                path[ 0 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
-                                path[ 1 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
-                                path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
+                                path[ 3 ].x = ( path[ 0 ].x + path[ 3 ].x ) / 2.0;
+                                path[ 3 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
+                                path[ 2 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
+                                path[ 2 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
                                 drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
                                 break;
                             // make a line at 3/4 of the height
                             case Okular::HighlightAnnotation::Underline:
-                                path[ 0 ].x = ( path[ 0 ].x + 3*path[ 3 ].x ) / 4.0;
-                                path[ 0 ].y = ( path[ 0 ].y + 3*path[ 3 ].y ) / 4.0;
-                                path[ 1 ].x = ( path[ 1 ].x + 3*path[ 2 ].x ) / 4.0;
-                                path[ 1 ].y = ( path[ 1 ].y + 3*path[ 2 ].y ) / 4.0;
+                                path[ 0 ].x = ( 3 * path[ 0 ].x + path[ 3 ].x ) / 4.0;
+                                path[ 0 ].y = ( 3 * path[ 0 ].y + path[ 3 ].y ) / 4.0;
+                                path[ 1 ].x = ( 3 * path[ 1 ].x + path[ 2 ].x ) / 4.0;
+                                path[ 1 ].y = ( 3 * path[ 1 ].y + path[ 2 ].y ) / 4.0;
                                 path.pop_back();
                                 path.pop_back();
                                 drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );

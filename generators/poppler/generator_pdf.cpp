@@ -641,7 +641,7 @@ void PDFGenerator::generateSyncTextPage( Okular::Page * page )
 bool PDFGenerator::print( KPrinter& printer )
 {
     int width, height;
-    QString ps = printer.option("PageSize");
+    QString ps = printer.option( "kde-pagesize" );
     QRegExp sizere( "w(\\d+)h(\\d+)" );
     if ( sizere.exactMatch( ps ) )
     {

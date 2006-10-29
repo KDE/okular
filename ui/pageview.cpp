@@ -27,7 +27,11 @@
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
+
+#ifdef Q_WS_X11
 #include <QX11Info>
+#endif
+
 #include <kiconloader.h>
 #include <kaction.h>
 #include <kstdaccel.h>
@@ -66,7 +70,7 @@
 
 #include <config-okular.h>
 
-#ifdef HAVE_XRENDER
+#if defined(Q_WS_X11) && defined(HAVE_XRENDER)
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrender.h>
 #include <fixx11h.h>
@@ -790,7 +794,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                     // skip rectangles covered by the selection's border
                     if ( blendRect.isValid() )
                     {
-#ifdef HAVE_XRENDER
+#if defined(Q_WS_X11) && defined(HAVE_XRENDER)
                         // grab current pixmap into a new one to colorize contents
                         QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
                         QPainter p( &blendedPixmap );

@@ -76,8 +76,6 @@
 #include <fixx11h.h>
 #endif
 
-#define ROUND(x) (int(x + 0.5))
-
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
@@ -2541,8 +2539,8 @@ void PageView::slotRelayoutPages()
                 const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
                 double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
                        nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
-                center( geometry.left() + ROUND( nX * (double)geometry.width() ),
-                        geometry.top() + ROUND( nY * (double)geometry.height() ) );
+                center( geometry.left() + qRound( nX * (double)geometry.width() ),
+                        geometry.top() + qRound( nY * (double)geometry.height() ) );
                 // center() usually moves the viewport, that requests pixmaps too.
                 // if that doesn't happen we have to request them by hand
                 if ( prevX == horizontalScrollBar()->value() && prevY == verticalScrollBar()->value() )

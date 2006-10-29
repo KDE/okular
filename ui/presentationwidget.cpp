@@ -292,8 +292,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar = new KToolBar( this, "presentationBar" );
         m_topBar->setIconSize( 32 );
         m_topBar->setMovingEnabled( false );
-        m_topBar->insertButton( "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
-        m_topBar->insertButton( "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
+        m_topBar->insertButton( QApplication::reverseLayout() ? "1rightarrow" : "1leftarrow", 2, SIGNAL( clicked() ), this, SLOT( slotPrevPage() ) );
+        m_topBar->insertButton( QApplication::reverseLayout() ? "1leftarrow" : "1rightarrow", 3, SIGNAL( clicked() ), this, SLOT( slotNextPage() ) );
         m_topBar->insertButton( "exit", 1, SIGNAL( clicked() ), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
         m_topBar->alignItemRight( 1 );

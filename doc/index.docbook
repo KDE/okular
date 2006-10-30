@@ -124,8 +124,8 @@
 			</itemizedlist>
 			<para>
 				Some documents have links. In this case you can click on them and the view will
-				change to the page it links to. If the link is to a web page the default &kde;
-				browser will be invoked.
+				change to the page it links to. If the link is to a web page or some
+				other document the default &kde; handler for that format will be invoked.
 			</para>
 			<para>
 				Additionally, you may use the following functionality to quickly move to specific places

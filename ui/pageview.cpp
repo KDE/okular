@@ -1511,7 +1511,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 // find out new zoom ratio and normalized view center (relative to the contentsRect)
                 double zoom = qMin( (double)viewport()->width() / (double)selRect.width(), (double)viewport()->height() / (double)selRect.height() );
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)widget()->width());
-                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)viewport()->height());
+                double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)widget()->height());
 
                 // zoom up to 400%
                 if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
@@ -1523,7 +1523,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
 
                 // recenter view and update the viewport
-                center( (int)(nX * widget()->width()), (int)(nY * viewport()->height()) );
+                center( (int)(nX * widget()->width()), (int)(nY * widget()->height()) );
                 widget()->update();
 
                 // hide message box and delete overlay window

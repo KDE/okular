@@ -661,9 +661,11 @@ void dviRenderer::applicationDoSpecial(char *cp)
         int parencount = 1;
         for(int i=0; i<tmpTargetName.length(); i++) {
           if (tmpTargetName[i] == '(')
-            parencount++;
+	    if ((i == 0) || (tmpTargetName[i-1] != '\\'))
+	      parencount++;
           if (tmpTargetName[i] == ')')
-            parencount--;
+	    if ((i == 0) || (tmpTargetName[i-1] != '\\'))
+	      parencount--;
           if (parencount == 0)
             break;
           targetName += tmpTargetName[i];

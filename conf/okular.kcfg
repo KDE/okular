@@ -123,6 +123,9 @@
   <entry key="SlidesShowSummary" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="SlidesPencilColor" type="Color" >
+   <default code="true" >Qt::red</default>
+  </entry>
  </group>
  <group name="General" >
   <entry key="AnnotationsAuthor" type="String" />

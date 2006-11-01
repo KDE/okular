@@ -967,15 +967,16 @@ void PresentationWidget::togglePencilMode( bool on )
 {
     if ( on )
     {
+        QString colorstring = Okular::Settings::slidesPencilColor().name();
         // FIXME this should not be recreated every time
         QDomDocument doc( "engine" );
         QDomElement root = doc.createElement( "engine" );
-        root.setAttribute( "color", "#FF0000" );
+        root.setAttribute( "color", colorstring );
         doc.appendChild( root );
         QDomElement annElem = doc.createElement( "annotation" );
         root.appendChild( annElem );
         annElem.setAttribute( "type", "Ink" );
-        annElem.setAttribute( "color", "#FF0000" );
+        annElem.setAttribute( "color", colorstring );
         annElem.setAttribute( "width", "2" );
         m_drawingEngine = new SmoothPathEngine( root );
     }

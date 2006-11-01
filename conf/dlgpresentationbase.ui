@@ -1,7 +1,4 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>DlgPresentationBase</class>
  <widget class="QWidget" name="DlgPresentationBase" >
   <property name="geometry" >
@@ -9,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>275</height>
+    <height>376</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -268,6 +265,41 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>Pencil</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Pencil color:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KColorButton" name="kcfg_SlidesPencilColor" />
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
@@ -277,8 +309,8 @@
      </property>
      <property name="sizeHint" >
       <size>
-       <width>31</width>
-       <height>4</height>
+       <width>318</width>
+       <height>16</height>
       </size>
      </property>
     </spacer>
@@ -290,10 +322,8 @@
  <customwidgets>
   <customwidget>
    <class>KColorButton</class>
-   <extends>QWidget</extends>
+   <extends>QPushButton</extends>
    <header>kcolorbutton.h</header>
-   <container>1</container>
-   <pixmap></pixmap>
   </customwidget>
  </customwidgets>
  <resources/>

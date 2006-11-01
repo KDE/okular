@@ -653,6 +653,7 @@ bool PDFGenerator::print( KPrinter& printer )
     {
         // size is supported by Qt, we get either the pageSize name or nothing because the default pageSize is used
         QPrinter dummy(QPrinter::PrinterResolution);
+        dummy.setOrientation((QPrinter::Orientation)printer.orientation());
         dummy.setFullPage(true);
         dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
 

@@ -1055,7 +1055,11 @@ void Part::slotPrintPreview()
         if (width > height) landscape++;
         else portrait++;
     }
-    if (landscape > portrait) printer.setOption("orientation-requested", "4");
+    if (landscape > portrait)
+    {
+    //  printer.setOption("orientation-requested", "4");
+        printer.setOrientation(KPrinter::Landscape);
+    }
 
     doPrint(printer);
 }

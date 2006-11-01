@@ -78,6 +78,7 @@ set(okularpart_SRCS
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
    ui/annotationpropertiesdialog.cpp
+   ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/minibar.cpp
    ui/newstuff.cpp

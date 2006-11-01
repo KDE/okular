@@ -378,9 +378,9 @@ bool Page::removeAnnotation( Annotation * annotation )
                     m_rects.erase( it );
                     rectfound = true;
                 }
+            kDebug() << "removed annotation: " << annotation->uniqueName << endl;
             delete *aIt;
             m_annotations.erase( aIt );
-            kDebug() << "astario: removed annot: " <<annotation->uniqueName << endl;
             break;
         }
     }

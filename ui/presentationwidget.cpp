@@ -78,6 +78,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     // misc stuff
     setMouseTracking( true );
+    setContextMenuPolicy( Qt::PreventContextMenu );
     m_transitionTimer = new QTimer( this );
     m_transitionTimer->setSingleShot( true );
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );

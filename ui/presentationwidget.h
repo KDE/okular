@@ -21,9 +21,11 @@ class QLineEdit;
 class QToolBar;
 class QTimer;
 class KActionCollection;
+class AnnotatorEngine;
 class PresentationFrame;
 
 namespace Okular {
+struct Annotation;
 class Document;
 class Page;
 class Link;
@@ -66,13 +68,14 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );
-        void generatePage();
+        void generatePage( bool disableTransition = false );
         void generateIntroPage( QPainter & p );
         void generateContentsPage( int page, QPainter & p );
         void generateOverlay();
         void initTransition( const Okular::PageTransition *transition );
         const Okular::PageTransition defaultTransition() const;
         const Okular::PageTransition defaultTransition( int ) const;
+        QRect routeMouseDrawingEvent( QMouseEvent * );
 
         // cache stuff
         int m_width;
@@ -82,6 +85,9 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         QRect m_overlayGeometry;
         const Okular::Link * m_pressedLink;
         bool m_handCursor;
+        QList< Okular::Annotation * > m_currentPageDrawings;
+        AnnotatorEngine * m_drawingEngine;
+        QRect m_drawingRect;
 
         // transition related
         QTimer * m_transitionTimer;
@@ -108,6 +114,8 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void slotTransitionStep();
         void slotDelayedEvents();
         void slotPageChanged();
+        void togglePencilMode( bool );
+        void clearDrawings();
 };
 
 #endif

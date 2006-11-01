@@ -36,6 +36,7 @@
 
 // local includes
 #include "presentationwidget.h"
+#include "annotationtools.h"
 #include "pagepainter.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -58,8 +59,8 @@ struct PresentationFrame
 
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
-    m_pressedLink( 0 ), m_handCursor( false ), m_document( doc ), m_frameIndex( -1 ),
-    m_topBar( 0 ), m_pagesEdit( 0 )
+    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
+    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 )
 {
     setModal( true );
     setAttribute( Qt::WA_DeleteOnClose );
@@ -102,6 +103,9 @@ PresentationWidget::~PresentationWidget()
 {
     // remove this widget from document observer
     m_document->removeObserver( this );
+
+    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
+    delete m_drawingEngine;
 
     // delete frames
     QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
@@ -173,8 +177,8 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
     // check if it's the last requested pixmap. if so update the widget.
-    if ( (changedFlags & DocumentObserver::Pixmap) && pageNumber == m_frameIndex )
-        generatePage();
+    if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations ) ) && pageNumber == m_frameIndex )
+        generatePage( changedFlags & DocumentObserver::Annotations );
 }
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber )
@@ -256,6 +260,17 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
 
 void PresentationWidget::mousePressEvent( QMouseEvent * e )
 {
+    if ( m_drawingEngine )
+    {
+        QRect r = routeMouseDrawingEvent( e );
+        if ( r.isValid() )
+        {
+            m_drawingRect |= r.translated( m_frames[ m_frameIndex ]->geometry.topLeft() );
+            update( m_drawingRect );
+        }
+        return;
+    }
+
     // pressing left button
     if ( e->button() == Qt::LeftButton )
     {
@@ -280,6 +295,25 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
 
 void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
 {
+    if ( m_drawingEngine )
+    {
+        QRect r = routeMouseDrawingEvent( e );
+        (void)r;
+        if ( m_drawingEngine->creationCompleted() )
+        {
+            QList< Okular::Annotation * > annots = m_drawingEngine->end();
+            // manually disable and re-enable the pencil mode, so we can do
+            // cleaning of the actual drawer and create a new one just after
+            // that - that gives continuous drawing
+            togglePencilMode( false );
+            togglePencilMode( true );
+            foreach( Okular::Annotation * ann, annots )
+                m_document->addPageAnnotation( m_frameIndex, ann );
+            m_currentPageDrawings << annots;
+        }
+        return;
+    }
+
     // if releasing on the same link we pressed over, execute it
     if ( m_pressedLink && e->button() == Qt::LeftButton )
     {
@@ -297,7 +331,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         return;
 
     // update cursor and tooltip if hovering a link
-    if ( Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
+    if ( !m_drawingEngine && Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
         testCursorOnLink( e->x(), e->y() );
 
     if ( !m_topBar->isHidden() )
@@ -311,12 +345,23 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
     }
     else
     {
-        // show the bar if reaching top 2 pixels
-        if ( e->y() <= (geometry().top() + 1) )
-            m_topBar->show();
-        // handle "dragging the wheel" if clicking on its geometry
-        else if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && m_overlayGeometry.contains( e->pos() ) )
-            overlayClick( e->pos() );
+        if ( m_drawingEngine && e->buttons() != Qt::NoButton )
+        {
+            QRect r = routeMouseDrawingEvent( e );
+            {
+                m_drawingRect |= r.translated( m_frames[ m_frameIndex ]->geometry.topLeft() );
+                update( m_drawingRect );
+            }
+        }
+        else
+        {
+            // show the bar if reaching top 2 pixels
+            if ( e->y() <= (geometry().top() + 1) )
+                m_topBar->show();
+            // handle "dragging the wheel" if clicking on its geometry
+            else if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && m_overlayGeometry.contains( e->pos() ) )
+                overlayClick( e->pos() );
+        }
     }
 }
 
@@ -344,6 +389,12 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->addWidget( m_pagesEdit );
         connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
         m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        m_topBar->addSeparator();
+        QAction * drawingAct = m_topBar->addAction( KIcon( "pencil" ), i18n( "Toggle Drawing Mode" ) );
+        drawingAct->setCheckable( true );
+        connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
+        QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "eraser" ), i18n( "Erase Drawings" ) );
+        connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
         QWidget *spacer = new QWidget(m_topBar);
         spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
         m_topBar->addWidget( spacer );
@@ -401,6 +452,14 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 #endif
         // copy the rendered pixmap to the screen
         painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
+    }
+    if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
+    {
+        const QRect & geom = m_frames[ m_frameIndex ]->geometry;
+        painter.save();
+        painter.translate( geom.topLeft() );
+        m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+        painter.restore();
     }
     painter.end();
 }
@@ -512,10 +571,14 @@ void PresentationWidget::changePage( int newPage )
 
     // set a new viewport in document if page number differs
     if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
+    {
+        // remove the drawing on the old page before switching
+        clearDrawings();
         m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+    }
 }
 
-void PresentationWidget::generatePage()
+void PresentationWidget::generatePage( bool disableTransition )
 {
     if ( m_lastRenderedPixmap.isNull() )
         m_lastRenderedPixmap = QPixmap( m_width, m_height );
@@ -538,12 +601,20 @@ void PresentationWidget::generatePage()
 #endif
 
     // start transition on pages that have one
-    const Okular::PageTransition * transition = m_frameIndex != -1 ?
-        m_frames[ m_frameIndex ]->page->getTransition() : 0;
-    if ( transition )
-        initTransition( transition );
-    else {
-        Okular::PageTransition trans = defaultTransition();
+    if ( !disableTransition )
+    {
+        const Okular::PageTransition * transition = m_frameIndex != -1 ?
+            m_frames[ m_frameIndex ]->page->getTransition() : 0;
+        if ( transition )
+            initTransition( transition );
+        else {
+            Okular::PageTransition trans = defaultTransition();
+            initTransition( &trans );
+        }
+    }
+    else
+    {
+        Okular::PageTransition trans = defaultTransition( Okular::Settings::EnumSlidesTransition::Replace );
         initTransition( &trans );
     }
 
@@ -618,7 +689,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     geom.translate( -geom.left(), -geom.top() );
 
     // draw the page using the shared PagePainter class
-    int flags = PagePainter::Accessibility;
+    int flags = PagePainter::Accessibility | PagePainter::Annotations;
     PagePainter::paintPageOnPainter( &p, frame->page, PRESENTATION_ID, flags,
                                      geom.width(), geom.height(), geom );
 
@@ -749,6 +820,41 @@ void PresentationWidget::generateOverlay()
 }
 
 
+QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
+{
+    const QRect & geom = m_frames[ m_frameIndex ]->geometry;
+    const Okular::Page * page = m_frames[ m_frameIndex ]->page;
+
+    AnnotatorEngine::EventType eventType = AnnotatorEngine::Press;
+    if ( e->type() == QEvent::MouseMove )
+        eventType = AnnotatorEngine::Move;
+    else if ( e->type() == QEvent::MouseButtonRelease )
+        eventType = AnnotatorEngine::Release;
+
+    // find out the pressed button
+    AnnotatorEngine::Button button = AnnotatorEngine::None;
+    Qt::MouseButtons buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
+    if ( buttonState == Qt::LeftButton )
+        button = AnnotatorEngine::Left;
+    else if ( buttonState == Qt::RightButton )
+        button = AnnotatorEngine::Right;
+    static bool hasclicked = false;
+    if ( eventType == AnnotatorEngine::Press )
+        hasclicked = true;
+
+    double nX = ( (double)e->x() - (double)geom.left() ) / (double)geom.width();
+    double nY = ( (double)e->y() - (double)geom.top() ) / (double)geom.height();
+    QRect ret;
+    if ( hasclicked && nX >= 0 && nX < 1 && nY >= 0 && nY < 1 )
+        ret = m_drawingEngine->event( eventType, button, nX, nY, geom.width(), geom.height(), page );
+
+    if ( eventType == AnnotatorEngine::Release )
+        hasclicked = false;
+
+    return ret;
+}
+
+
 
 void PresentationWidget::slotNextPage()
 {
@@ -855,6 +961,37 @@ void PresentationWidget::slotPageChanged()
 
     changePage( p - 1 );
 }
+
+void PresentationWidget::togglePencilMode( bool on )
+{
+    if ( on )
+    {
+        // FIXME this should not be recreated every time
+        QDomDocument doc( "engine" );
+        QDomElement root = doc.createElement( "engine" );
+        root.setAttribute( "color", "#FF0000" );
+        doc.appendChild( root );
+        QDomElement annElem = doc.createElement( "annotation" );
+        root.appendChild( annElem );
+        annElem.setAttribute( "type", "Ink" );
+        annElem.setAttribute( "color", "#FF0000" );
+        annElem.setAttribute( "width", "2" );
+        m_drawingEngine = new SmoothPathEngine( root );
+    }
+    else
+    {
+        delete m_drawingEngine;
+        m_drawingEngine = 0;
+        m_drawingRect = QRect();
+    }
+}
+
+void PresentationWidget::clearDrawings()
+{
+    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
+    m_currentPageDrawings.clear();
+}
+
 
 const Okular::PageTransition PresentationWidget::defaultTransition() const
 {

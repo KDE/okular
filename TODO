@@ -93,7 +93,6 @@ More items (first items will enter 'In progress list' first):
 -> presentation: add page counter and a widget to manually set pages on the top bar
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
 -> presentation: implement missing transitions (6/11 done)
--> presentation: add a red pencil that creates ink annotations (author: i18n(author-presentation)))
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> presentation: 2 pages per view, for users reading ebooks with wide screens.
@@ -115,6 +114,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: presentation: add a red pencil that creates ink annotations
 -> CHG: support links with shapes different than a rectangle
 -> ADD: export: give the generators the ability to export all the text to plain file (if supported), the PDF generator already use this (BR91146)
 -> CHG: search: use shortcut for 'find next' action (not the default one) in find-ahead

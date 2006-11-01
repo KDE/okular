@@ -135,6 +135,7 @@ class OKULAR_EXPORT Document : public QObject
         void addPageAnnotation( int page, Annotation * annotation );
         void modifyPageAnnotation( int page, Annotation * newannotation );
         void removePageAnnotation( int page, Annotation * annotation );
+        void removePageAnnotations( int page, QList< Annotation * > annotations );
 
         void setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color );
 

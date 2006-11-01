@@ -803,7 +803,29 @@ void Document::removePageAnnotation( int page, Annotation * annotation )
         foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
     }
 }
-        
+
+void Document::removePageAnnotations( int page, QList< Annotation * > annotations )
+{
+    // find out the page
+    Page * kp = pages_vector[ page ];
+    if ( !generator || !kp )
+        return;
+
+    bool changed = false;
+    foreach ( Annotation * annotation, annotations )
+    {
+        // try to remove the annotation
+        if ( kp->removeAnnotation( annotation ) )
+        {
+            changed = true;
+        }
+    }
+    if ( changed )
+    {
+        // in case we removed even only one annotation, notify observers about the change
+        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    }
+}
 
 void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color )
 {

@@ -33,6 +33,7 @@ set(okularcore_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlggeneral.cpp
+   conf/dlgidentity.cpp
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
    core/annotations.cpp
@@ -51,6 +52,7 @@ set(okularcore_SRCS
 kde4_add_ui_files(okularcore_SRCS
    conf/dlgaccessibilitybase.ui
    conf/dlggeneralbase.ui
+   conf/dlgidentitybase.ui
    conf/dlgperformancebase.ui
    conf/dlgpresentationbase.ui
    core/chooseenginewidget.ui

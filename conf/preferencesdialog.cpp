@@ -14,6 +14,7 @@
 #include "dlgperformance.h"
 #include "dlgaccessibility.h"
 #include "dlgpresentation.h"
+#include "dlgidentity.h"
 
 // reimplementing this
 #include "preferencesdialog.h"
@@ -25,10 +26,13 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_performance = new DlgPerformance(0);
     m_accessibility = new DlgAccessibility(0);
     m_presentation = new DlgPresentation(0);
+    m_identity = new DlgIdentity(0);
 
     addPage( m_general, i18n("General"), "okular", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "access", i18n("Reading Aids") );
     addPage( m_performance, i18n("Performance"), "launch", i18n("Performance Tuning") );
     addPage( m_presentation, i18n("Presentation"), "kpresenter_kpr",
              i18n("Options for Presentation Mode") );
+    addPage( m_identity, i18n("Identity"), "identity",
+             i18n("Identity Settings") );
 }

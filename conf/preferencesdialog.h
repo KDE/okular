@@ -22,6 +22,7 @@ class DlgGeneral;
 class DlgPerformance;
 class DlgAccessibility;
 class DlgPresentation;
+class DlgIdentity;
 
 class OKULAR_EXPORT PreferencesDialog : public KConfigDialog
 {
@@ -41,6 +42,7 @@ class OKULAR_EXPORT PreferencesDialog : public KConfigDialog
         DlgPerformance * m_performance;
         DlgAccessibility * m_accessibility;
         DlgPresentation * m_presentation;
+        DlgIdentity * m_identity;
 };
 
 #endif

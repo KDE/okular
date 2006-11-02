@@ -128,7 +128,6 @@
   </entry>
  </group>
  <group name="General" >
-  <entry key="AnnotationsAuthor" type="String" />
   <entry key="ObeyDRM" type="Bool" >
    <default>true</default>
   </entry>	  	
@@ -204,5 +203,8 @@
     <min>0.1</min>
     <max>4.0</max>
   </entry>
+ </group>
+ <group name="Identity" >
+  <entry key="IdentityAuthor" type="String" />
  </group>
 </kcfg>

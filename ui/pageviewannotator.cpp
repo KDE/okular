@@ -605,7 +605,7 @@ void PageViewAnnotator::setEnabled( bool on )
     m_toolBar->showItems( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement(), items );
 
     // ask for Author's name if not already set
-    if ( Okular::Settings::annotationsAuthor().isEmpty() )
+    if ( Okular::Settings::identityAuthor().isEmpty() )
     {
         // get default username from the kdelibs/kdecore/KUser
         KUser currentUser;
@@ -620,7 +620,7 @@ void PageViewAnnotator::setEnabled( bool on )
             firstTry = false;
         }
         // save the name
-        Okular::Settings::setAnnotationsAuthor( userName );
+        Okular::Settings::setIdentityAuthor( userName );
         Okular::Settings::writeConfig();
     }
 }
@@ -695,7 +695,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
             if ( !annotation ) continue;
 
             annotation->creationDate = annotation->modifyDate = QDateTime::currentDateTime();
-            annotation->author = Okular::Settings::annotationsAuthor();
+            annotation->author = Okular::Settings::identityAuthor();
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
         }
 

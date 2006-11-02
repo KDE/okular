@@ -384,7 +384,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         sp.setHorizontalPolicy( QSizePolicy::Minimum );
         m_pagesEdit->setSizePolicy( sp );
         QFontMetrics fm( m_pagesEdit->font() );
-        m_pagesEdit->setMaximumWidth( fm.width( QString::number( m_document->pages() ) + "00" ) );
+        m_pagesEdit->setMaximumWidth( fm.width( QString::number( m_document->pages() ) ) * 2 );
         QIntValidator *validator = new QIntValidator( 1, m_document->pages(), m_pagesEdit );
         m_pagesEdit->setValidator( validator );
         m_topBar->addWidget( m_pagesEdit );

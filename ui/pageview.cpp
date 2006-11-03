@@ -343,13 +343,13 @@ void PageView::setupActions( KActionCollection * ac )
 
     KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
-    d->aZoomFitWidth = new KToggleAction( KIcon( "view_fit_width" ), i18n("Fit to Page &Width"), ac, "zoom_fit_width" );
+    d->aZoomFitWidth = new KToggleAction( KIcon( "view_fit_width" ), i18n("Fit &Width"), ac, "zoom_fit_width" );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-    d->aZoomFitPage = new KToggleAction( KIcon( "view_fit_window" ), i18n("Fit to &Page"), ac, "zoom_fit_page" );
+    d->aZoomFitPage = new KToggleAction( KIcon( "view_fit_window" ), i18n("Fit &Page"), ac, "zoom_fit_page" );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
-    d->aZoomFitText = new KToggleAction( KIcon( "viewmagfit" ), i18n("Fit to &Text"), ac, "zoom_fit_text" );
+    d->aZoomFitText = new KToggleAction( KIcon( "viewmagfit" ), i18n("Fit &Text"), ac, "zoom_fit_text" );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions

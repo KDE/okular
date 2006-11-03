@@ -1345,10 +1345,10 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             break;
 
         case MouseSelect:   // set first corner of the selection rect
-//             if ( leftButton )
-//             {
+             if ( leftButton )
+             {
                 selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
-//             }
+             }
             break;
         case MouseTextSelect:
             d->mouseSelectPos = e->pos();

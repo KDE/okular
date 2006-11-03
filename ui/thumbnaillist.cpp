@@ -453,7 +453,7 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         // add ThumbnailWidget to visible list
         m_visibleThumbnails.push_back( t );
         // if pixmap not present add it to requests
-        if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
+        if ( !t->page()->hasImage( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
         {
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );

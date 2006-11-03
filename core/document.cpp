@@ -428,7 +428,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         int observerId = pObserver->observerId();
         QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
-            (*it)->deletePixmap( observerId );
+            (*it)->deleteImage( observerId );
 
         // [MEM] free observer's allocation descriptors
         QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
@@ -457,8 +457,10 @@ void Document::reparseConfig()
     {
         // invalidate pixmaps
         QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
-        for ( ; it != end; ++it )
-            (*it)->deletePixmapsAndRects();
+        for ( ; it != end; ++it ) {
+            (*it)->deleteImages();
+            (*it)->deleteRects();
+        }
 
         // [MEM] remove allocation descriptors
         QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
@@ -1480,7 +1482,7 @@ void Document::sendGeneratorRequest()
             d->pixmapRequestsStack.pop_back();
         }
         // request only if page isn't already present or request has invalid id
-        else if ( r->page()->hasPixmap( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
+        else if ( r->page()->hasImage( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
         {
             d->pixmapRequestsStack.pop_back();
             delete r;
@@ -1601,7 +1603,7 @@ void Document::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
                 memoryToFree -= p->memory;
                 pagesFreed++;
                 // delete pixmap
-                pages_vector[ p->page ]->deletePixmap( p->id );
+                pages_vector[ p->page ]->deleteImage( p->id );
                 // delete allocation descriptor
                 delete p;
             } else

@@ -12,7 +12,7 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QTextDocument>
 
-#include <QDebug> 
+#include <QDebug>
 
 #include <kprinter.h>
 
@@ -86,12 +86,11 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
   const QSize size = mDocument->pageSize().toSize();
 
-  QImage image( request->width(), request->height(), QImage::Format_ARGB32 );
-  image.fill( qRgb( 255, 255, 255 ) );
-
+  QPixmap pixmap = QPixmap( request->width(), request->height() );
+  pixmap.fill( Qt::white );
 
   QPainter p;
-  p.begin( &image );
+  p.begin( &pixmap );
 
   qreal width = request->width();
   qreal height = request->height();
@@ -104,7 +103,7 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
   mDocument->drawContents( &p, rect );
   p.end();
 
-  request->page()->setImage( request->id(), image );
+  request->page()->setImage( request->id(), pixmap.toImage() );
 
   /**
    * Add link information

@@ -2570,11 +2570,11 @@ void PageView::slotRequestVisiblePixmaps()
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
+        kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasImage( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
 #endif
         kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasSearchPage() << "\n";
         // if the item has not the right pixmap, add a request for it
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+        if ( !i->page()->hasImage( PAGEVIEW_ID, i->width(), i->height() ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
@@ -2615,7 +2615,7 @@ void PageView::slotRequestVisiblePixmaps()
         {
             PageViewItem * i = d->items[ headRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
+            if ( !i->page()->hasImage( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new Okular::PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
@@ -2626,7 +2626,7 @@ void PageView::slotRequestVisiblePixmaps()
         {
             PageViewItem * i = d->items[ tailRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
+            if ( !i->page()->hasImage( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new Okular::PixmapRequest(
                         PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }

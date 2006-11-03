@@ -39,34 +39,34 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-    const QPixmap * pixmap = 0;
+    QImage image = QImage();
 
     // if a pixmap is present for given id, use it
-    if ( page->m_pixmaps.contains( pixID ) )
-        pixmap = page->m_pixmaps[ pixID ];
+    if ( page->m_rotated_images.contains( pixID ) )
+        image = page->m_rotated_images[ pixID ];
 
     // else find the closest match using pixmaps of other IDs (great optim!)
-    else if ( !page->m_pixmaps.isEmpty() )
+    else if ( !page->m_rotated_images.isEmpty() )
     {
         int minDistance = -1;
-        QMap< int,QPixmap * >::const_iterator it = page->m_pixmaps.begin(), end = page->m_pixmaps.end();
+        QMap< int, QImage >::const_iterator it = page->m_rotated_images.begin(), end = page->m_rotated_images.end();
         for ( ; it != end; ++it )
         {
-            int pixWidth = (*it)->width(),
+            int pixWidth = (*it).width(),
                 distance = pixWidth > scaledWidth ? pixWidth - scaledWidth : scaledWidth - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {
-                pixmap = *it;
+                image = *it;
                 minDistance = distance;
             }
         }
     }
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-    double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
-    long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
-    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-         (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
+    double pixmapRescaleRatio = !image.isNull() ? scaledWidth / (double)image.width() : -1;
+    long pixmapPixels = !image.isNull() ? (long)image.width() * (long)image.height() : 0;
+    if ( image.isNull() || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
+         (scaledWidth != image.width() && pixmapPixels > 6000000L) )
     {
         if ( Okular::Settings::changeColors() &&
              Okular::Settings::renderMode() == Okular::Settings::EnumRenderMode::Paper )
@@ -201,13 +201,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     if ( !useBackBuffer )
     {
         // 4A.1. if size is ok, draw the page pixmap using painter
-        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            destPainter->drawPixmap( limits.topLeft(), *pixmap, limits );
+        if ( image.width() == scaledWidth && image.height() == scaledHeight )
+            destPainter->drawImage( limits.topLeft(), image, limits );
         // else draw a scaled portion of the magnified pixmap
         else
         {
             QImage destImage;
-            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limits );
+            scaleImageOnImage( destImage, image, scaledWidth, scaledHeight, limits );
             destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
@@ -222,10 +222,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         QImage backImage;
 
         // 4B.1. draw the page pixmap: normal or scaled
-        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            cropPixmapOnImage( backImage, pixmap, limits );
+        if ( image.width() == scaledWidth && image.height() == scaledHeight )
+            cropImageOnImage( backImage, image, limits );
         else
-            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limits );
+            scaleImageOnImage( backImage, image, scaledWidth, scaledHeight, limits );
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
@@ -655,20 +655,20 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
 
 /** Private Helpers :: Pixmap conversion **/
-void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r )
+void PagePainter::cropImageOnImage( QImage & dest, const QImage &src, const QRect & r )
 {
     // handle quickly the case in which the whole pixmap has to be converted
-    if ( r == QRect( 0, 0, src->width(), src->height() ) )
+    if ( r == QRect( 0, 0, src.width(), src.height() ) )
     {
-        dest = src->toImage();
+        dest = src;
     }
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
-        QPixmap croppedPixmap( r.width(), r.height() );
-        QPainter p( &croppedPixmap );
-        p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
-        dest = croppedPixmap.toImage();
+        QImage croppedImage( r.width(), r.height(), QImage::Format_ARGB32 );
+        QPainter p( &croppedImage );
+        p.drawImage( 0, 0, src, r.left(), r.top(), r.width(), r.height() );
+        dest = croppedImage;
     }
 }
 
@@ -690,6 +690,39 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     // source image (1:1 conversion from pixmap)
     QImage srcImage = src->toImage();
     unsigned int * srcData = (unsigned int *)srcImage.bits();
+
+    // precalc the x correspondancy conversion in a lookup table
+    QVarLengthArray<unsigned int> xOffset( destWidth );
+    for ( int x = 0; x < destWidth; x++ )
+        xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
+
+    // for each pixel of the destination image apply the color of the
+    // corresponsing pixel on the source image (note: keep parenthesis)
+    for ( int y = 0; y < destHeight; y++ )
+    {
+        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / scaledHeight);
+        for ( int x = 0; x < destWidth; x++ )
+            (*destData++) = srcData[ srcOffset + xOffset[x] ];
+    }
+}
+
+void PagePainter::scaleImageOnImage ( QImage & dest, const QImage &src,
+    int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )
+{
+    // {source, destination, scaling} params
+    int srcWidth = src.width(),
+        srcHeight = src.height(),
+        destLeft = cropRect.left(),
+        destTop = cropRect.top(),
+        destWidth = cropRect.width(),
+        destHeight = cropRect.height();
+
+    // destination image (same geometry as the pageLimits rect)
+    dest = QImage( destWidth, destHeight, format );
+    unsigned int * destData = (unsigned int *)dest.bits();
+
+    // source image (1:1 conversion from pixmap)
+    unsigned int * srcData = (unsigned int *)src.bits();
 
     // precalc the x correspondancy conversion in a lookup table
     QVarLengthArray<unsigned int> xOffset( destWidth );

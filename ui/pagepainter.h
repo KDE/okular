@@ -37,15 +37,16 @@ class PagePainter
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
     private:
-        // create an image taking the 'cropRect' portion of a pixmap. the
-        // cropRect must be inside the source pixmap
-        static void cropPixmapOnImage( QImage & dest, const QPixmap * src,
-            const QRect & cropRect );
+        // create an image taking the 'cropRect' portion of an image.
+        // the cropRect must be inside the source image.
+        static void cropImageOnImage( QImage & dest, const QImage &src, const QRect & cropRect );
 
-        // create an image taking the 'cropRect' portion of a pixmap scaled
+        // create an image taking the 'cropRect' portion of an image scaled
         // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside
         // the QRect(0,0, scaledWidth,scaledHeight)
-        static void scalePixmapOnImage( QImage & dest, const QPixmap * src,
+        static void scaleImageOnImage( QImage & dest, const QImage &src,
+            int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format = QImage::Format_RGB32 );
+        static void scalePixmapOnImage( QImage & dest, const QPixmap *src,
             int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format = QImage::Format_RGB32 );
 
         // set the alpha component of the image to a given value

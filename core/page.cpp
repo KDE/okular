@@ -9,11 +9,11 @@
 // qt/kde includes
 #include <QtCore/QSet>
 #include <QtCore/QString>
-#include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
 #include <kdebug.h>
+#include <QTime>
 
 // local includes
 #include "annotations.h"
@@ -21,6 +21,7 @@
 #include "link.h"
 #include "page.h"
 #include "pagetransition.h"
+#include "rotationjob.h"
 #include "settings.h"
 
 // temp includes
@@ -43,18 +44,11 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
             ++it;
 }
 
-static QPixmap rotatedPixmap( const QImage &image, int rotation )
-{
-  QMatrix matrix;
-  matrix.rotate( rotation * 90 );
-
-  return QPixmap::fromImage( image.transformed( matrix ) );
-}
-
 /** class Page **/
 
 Page::Page( uint page, double w, double h, int o )
-    : m_number( page ), m_orientation( o ), m_rotation( 0 ), m_width( w ), m_height( h ),
+    : QObject( 0 ),
+    m_number( page ), m_orientation( o ), m_rotation( 0 ), m_width( w ), m_height( h ),
     m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 ),
     m_textSelections( 0 ), m_openingAction( 0 ), m_closingAction( 0 )
 {
@@ -73,7 +67,8 @@ Page::Page( uint page, double w, double h, int o )
 
 Page::~Page()
 {
-    deletePixmapsAndRects();
+    deleteImages();
+    deleteRects();
     deleteHighlights();
     deleteAnnotations();
     deleteTextSelections();
@@ -82,14 +77,17 @@ Page::~Page()
 }
 
 
-bool Page::hasPixmap( int id, int width, int height ) const
+bool Page::hasImage( int id, int width, int height ) const
 {
-    if ( !m_pixmaps.contains( id ) )
+    if ( !m_rotated_images.contains( id ) )
         return false;
+
     if ( width == -1 || height == -1 )
         return true;
-    QPixmap * p = m_pixmaps[ id ];
-    return p ? ( p->width() == width && p->height() == height ) : false;
+
+    const QImage &image = m_rotated_images[ id ];
+
+    return (image.width() == width && image.height() == height);
 }
 
 bool Page::hasSearchPage() const
@@ -177,7 +175,8 @@ void Page::rotateAt( int orientation )
     if ( neworientation == m_rotation )
         return;
 
-    deletePixmapsAndRects();
+    deleteImages();
+    deleteRects();
     deleteHighlights();
     deleteTextSelections();
     delete m_text;
@@ -188,15 +187,43 @@ void Page::rotateAt( int orientation )
 
     m_rotation = neworientation;
 
-    QMapIterator< int, QImage> it( m_images );
+    QMapIterator< int, QImage > it( m_images );
     while ( it.hasNext() ) {
         it.next();
-    
-        if ( m_pixmaps.contains( it.key() ) )
-            delete m_pixmaps[ it.key() ];
 
-        m_pixmaps[ it.key() ] = new QPixmap( rotatedPixmap( it.value(), m_rotation ) );
+        if ( m_rotated_images.contains( it.key() ) )
+            m_rotated_images[ it.key() ] = QImage();
+
+        RotationJob::Rotation rotation = RotationJob::Rotation0;
+        switch ( m_rotation ) {
+            case 1:
+                rotation = RotationJob::Rotation90;
+                break;
+            case 2:
+                rotation = RotationJob::Rotation180;
+                break;
+            case 3:
+                rotation = RotationJob::Rotation270;
+                break;
+            case 0:
+            default:
+                rotation = RotationJob::Rotation0;
+                break;
+        };
+
+        RotationJob *job = new RotationJob( it.value(), rotation, it.key() );
+        connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
+        job->start();
     }
+}
+
+void Page::imageRotationDone()
+{
+    RotationJob *job = static_cast<RotationJob*>( sender() );
+
+    m_rotated_images[ job->id() ] = job->image();
+
+    job->deleteLater();
 }
 
 const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
@@ -227,28 +254,24 @@ const Link * Page::getPageAction( PageAction act ) const
     return 0;
 }
 
-
-void Page::setPixmap( int id, QPixmap * pixmap )
-{
-    const QImage image = pixmap->toImage();
-    delete pixmap;
-
-    setImage( id, image );
-/*
-    if ( m_pixmaps.contains( id ) )
-        delete m_pixmaps[id];
-    m_pixmaps[id] = pixmap;
-*/
-}
-
 void Page::setImage( int id, const QImage &image )
 {
+    QTime time;
+    time.start();
+
     m_images[ id ] = image;
 
-    if ( m_pixmaps.contains( id ) )
-        delete m_pixmaps[ id ];
+    if ( m_rotated_images.contains( id ) )
+        m_rotated_images[ id ] = QImage();
 
-    m_pixmaps[ id ] = new QPixmap( rotatedPixmap( image, m_rotation ) );
+    if ( m_rotation == 0 ) {
+        m_rotated_images[ id ] = image;
+    } else {
+        QMatrix matrix;
+        matrix.rotate( m_rotation * 90 );
+
+        m_rotated_images[ id ] = image.transformed( matrix );
+    }
 }
 
 void Page::setSearchPage( TextPage * tp )
@@ -407,23 +430,18 @@ void Page::setPageAction( PageAction act, Link * action )
     }
 }
 
-
-void Page::deletePixmap( int id )
+void Page::deleteImage( int id )
 {
-    if ( m_pixmaps.contains( id ) )
-    {
-        delete m_pixmaps[ id ];
-        m_pixmaps.remove( id );
-    }
+    m_rotated_images.remove( id );
 }
 
-void Page::deletePixmapsAndRects()
+void Page::deleteImages()
 {
-    // delete all stored pixmaps
-    QMap<int,QPixmap *>::iterator it = m_pixmaps.begin(), end = m_pixmaps.end();
-    for ( ; it != end; ++it )
-        delete *it;
-    m_pixmaps.clear();
+    m_rotated_images.clear();
+}
+
+void Page::deleteRects()
+{
     // delete ObjectRects of type Link and Image
     QSet<ObjectRect::ObjectType> which;
     which << ObjectRect::Link << ObjectRect::Image;
@@ -586,3 +604,5 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
     if ( pageElement.hasChildNodes() )
         parentNode.appendChild( pageElement );
 }
+
+#include "page.moc"

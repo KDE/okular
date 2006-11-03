@@ -31,7 +31,7 @@ In progress [working on]:
 -> annotations: add the annot pane (cool plz!)
 -> text selection in wordprocessor style
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
--> link: add a KPDFAnchor link class
+-> link: add a Okular::Anchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
 -> check if fix was applied in head only (pageview.cpp 1676)
@@ -39,13 +39,11 @@ In progress [working on]:
 
 More items (first items will enter 'In progress list' first):
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
--> annotations: add config option for default name change
 -> annotations: toolbar: display tooltip only the first time
 -> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)
 -> GHNS: get hot new ebooks on the supported formats (pdf for now) (enrico)
--> popup context menu when using right button in selection mode (BR99315)
 -> pageview: add scrollbar marks for bookmarks (like kate)
--> evaluate changing KPDFLink to KPDFAction
+-> evaluate changing Okular::Link to Okular::Action
 -> pageview: change document viewport after mouse scrolling ended (not every scroll frame)
    this will give better mvc consistancy
 -> other info on pdfs properties: number of accessed times, time spent on pdf, ...
@@ -55,7 +53,7 @@ More items (first items will enter 'In progress list' first):
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
 -> viewport restoring: save the zoom/viewCols/continuous setting between runs (BR97307+patch)
 -> core: Delay TOC (DocumentSynopsis) generation (and move it on thread)
--> core: add a way to handle "named xpdf links" in KPDFLink instead of resolving all
+-> core: add a way to handle "named xpdf links" in Okular::Link instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
 -> toolbar: move the toolbar to the top of pageview (left panel is really at the left of the toolbar)
 -> thumbnailslist: refactor to do internal rendering as pageview does (way faster
@@ -76,7 +74,7 @@ More items (first items will enter 'In progress list' first):
    in a separated diagram or text file.
    - Plus think at storing xml data to an external shared server.. something that
    has to do with versioning data.. (shared annotations, bookmarks & co.)
--> add kpdf manual in PDF format loaded on the first startup or on menu->help->manual
+-> add okular manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
 -> zoom: fit text (with configurable margin)
@@ -108,12 +106,14 @@ More items (first items will enter 'In progress list' first):
 -> cleanup code and update README.png
 
 Icons needed:
-- KPDF (ToolBAR): 1 continuous, 2 tied-pages, 3 Normal (not scroll only, it
+- okular (ToolBAR): 1 continuous, 2 tied-pages, 3 Normal (not scroll only, it
     performs other ops), 4 Zoom, 5 Select, 6 Annotation/Review
-- KPDF (Edit Tools): highlighter( transp base, we colorize it)
+- okular (Edit Tools): highlighter( transp base, we colorize it)
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> FIX: regression: popup context menu when using right button in selection mode (BR99315)
+-> ADD: annotations: add config option for default name change
 -> ADD: presentation: add a red pencil that creates ink annotations
 -> CHG: support links with shapes different than a rectangle
 -> ADD: export: give the generators the ability to export all the text to plain file (if supported), the PDF generator already use this (BR91146)

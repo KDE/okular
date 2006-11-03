@@ -1128,7 +1128,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 		
 	}
 	
-	if (page && reallyShow)
+	if (reallyShow)
 	{
 		QAction *res = popup->exec(point);
 		if (res)

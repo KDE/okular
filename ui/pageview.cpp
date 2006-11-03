@@ -2170,6 +2170,9 @@ void PageView::updateZoomText()
             selIdx++;
         QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 2 ) );
         localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
+        // remove a trailing zero in numbers like 66.70
+        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KGlobal::locale()->decimalSymbol() ) > -1 )
+            localValue.chop( 1 );
         translated << QString( "%1%" ).arg( localValue );
     }
     d->aZoom->setItems( translated );

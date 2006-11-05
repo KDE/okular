@@ -272,14 +272,14 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
         if ( div > 3 )
             div = 3;
         while ( div-- )
-            slotPrevPage();
+            slotNextPage();
     }
     else if ( div < 0 )
     {
         if ( div < -3 )
             div = -3;
         while ( div++ )
-            slotNextPage();
+            slotPrevPage();
     }
 }
 

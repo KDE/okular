@@ -7,14 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
 #include <QtGui/QTextDocument>
 
-#include <QDebug>
-
 #include <kprinter.h>
+#include <klocale.h>
 
 #include "converter.h"
 #include "core/link.h"
@@ -154,5 +155,44 @@ const Okular::DocumentSynopsis* KOOOGenerator::generateDocumentSynopsis()
   else
     return &mDocumentSynopsis;
 }
+
+Okular::ExportFormat::List KOOOGenerator::exportFormats(   ) const
+{
+  static Okular::ExportFormat::List formats;
+  if ( formats.isEmpty() ) {
+    formats.append( Okular::ExportFormat( i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) ) );
+    formats.append( Okular::ExportFormat( i18n( "Plain Text" ), KMimeType::mimeType( "text/plain" ) ) );
+  }
+
+  return formats;
+}
+
+bool KOOOGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
+{
+  if ( format.mimeType()->name() == QLatin1String( "application/pdf" ) ) {
+    QFile file( fileName );
+    if ( !file.open( QIODevice::WriteOnly ) )
+      return false;
+
+    QPrinter printer( QPrinter::HighResolution );
+    printer.setOutputFormat( QPrinter::PdfFormat );
+    printer.setOutputFileName( fileName );
+    mDocument->print( &printer );
+
+    return true;
+  } else if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+    QFile file( fileName );
+    if ( !file.open( QIODevice::WriteOnly ) )
+      return false;
+
+    QTextStream out( &file );
+    out << mDocument->toPlainText();
+
+    return true;
+  }
+
+  return false;
+}
+
 #include "generator_ooo.moc"
 

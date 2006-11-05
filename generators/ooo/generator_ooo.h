@@ -37,6 +37,10 @@ class KOOOGenerator : public Okular::Generator
     // [INHERITED] print document using already configured kprinter
     bool print( KPrinter& printer );
 
+    // [INHERITED] text exporting
+    Okular::ExportFormat::List exportFormats() const;
+    bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
     const Okular::DocumentInfo* generateDocumentInfo();
     const Okular::DocumentSynopsis* generateDocumentSynopsis();
 

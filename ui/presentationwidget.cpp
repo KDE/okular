@@ -57,6 +57,30 @@ struct PresentationFrame
 };
 
 
+// a custom QToolBar that basically does not propagate the event if the widget
+// background is not automatically filled
+class PresentationToolBar : public QToolBar
+{
+    public:
+        PresentationToolBar( QWidget * parent = 0 )
+            : QToolBar( parent )
+        {}
+
+    protected:
+        void mousePressEvent( QMouseEvent * e )
+        {
+            QToolBar::mousePressEvent( e );
+            e->accept();
+        }
+
+        void mouseReleaseEvent( QMouseEvent * e )
+        {
+            QToolBar::mouseReleaseEvent( e );
+            e->accept();
+        }
+};
+
+
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
@@ -375,7 +399,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_height = d.height();
 
         // create top toolbar
-        m_topBar = new QToolBar( this );
+        m_topBar = new PresentationToolBar( this );
         m_topBar->setObjectName( "presentationBar" );
         m_topBar->setIconSize( QSize( 32, 32 ) );
         m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );

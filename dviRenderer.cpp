@@ -233,8 +233,13 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
 
     bool merged = false;
 
-    // Merge all hyperlinks that point to the same target, and have the same baseline.
-    while (hi.linkText == hj.linkText && hi.baseline == hj.baseline)
+    // Merge all hyperlinks that point to the same target, have the
+    // same baseline, and are no more than 3mm (but at least 2 pixels)
+    // apart
+    int minDistance = QMAX(2, 0.3/2.54*id.resolution); // Compute what 3mm is in pixels
+    while ((hi.linkText == hj.linkText) &&
+           (hi.baseline == hj.baseline) && 
+           ( hi.box.unite(hj.box).width() <= hi.box.width()+hj.box.width()+minDistance ))
     {
       merged = true;
       hi.box = hi.box.unite(hj.box);

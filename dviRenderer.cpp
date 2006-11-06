@@ -82,6 +82,8 @@ dviRenderer::~dviRenderer()
   kdDebug(kvs::dvi) << "~dviRenderer" << endl;
 #endif
 
+  clear();
+
   QMutexLocker lock(&mutex);
 
   delete PS_interface;
@@ -279,7 +281,7 @@ RenderedDocumentPagePixmap* dviRenderer::drawPage(const JobId& id)
 #warning TODO: remove link if anchor cannot be found
     if ((*i).linkText[0] == '#') // is local link?
       (*i).anchor = findAnchor((*i).linkText.mid(1));
-    
+
     // Also replace the targetnames created by the hyperref package,
     // with proper translatable names.
     QString temp = (*i).linkText;
@@ -553,7 +555,7 @@ bool dviRenderer::setFile(const QString &fname, const KURL &base)
   kdDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "', base='" << base << " )" << endl;
 #endif
 
-  //QMutexLocker lock(&mutex);
+  QMutexLocker lock(&mutex);
 
   QFileInfo fi(fname);
   QString   filename = fi.absFilePath();

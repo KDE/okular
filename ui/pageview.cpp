@@ -2153,7 +2153,7 @@ void PageView::updateZoomText()
 
     // add percent items
     QString double_oh( "00" );
-    const float zoomValue[10] = { 0.125, 0.25, 0.333, 0.5, 0.667, 0.75, 1, 1.25, 1.50, 2 };
+    const float zoomValue[10] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00 };
     int idx = 0,
         selIdx = 2; // use 3 if "fit text" present
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio

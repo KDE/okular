@@ -749,6 +749,9 @@ void dviRenderer::applicationDoSpecial(char *cp)
         }
         
         targetName = PDFencodingToQString(targetName);
+        if (special_command.contains("/URI") == 0)
+          targetName = "#" + targetName;
+
         QValueVector<Hyperlink>::iterator it;
         for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it )
           if (it->linkText == "glopglyph")

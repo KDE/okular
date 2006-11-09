@@ -14,6 +14,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 102788: Current page number visible
 -> WISH 103362: kpdf shows complete filename including folder instead of just filename in taskbar
 -> WISH 107998: kpdf horizontal scroll bar
+-> WISH 117805: Wish: Select pages like kghostview
 -> WISH 118938: No way to find out the page size(s)
 -> WISH 119455: use poppler library for kpdf
 -> WISH 131045: Add context menu for URLs

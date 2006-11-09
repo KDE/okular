@@ -1215,6 +1215,48 @@ void Part::slotPrint()
     }
     if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
+    // range detecting
+    QString range;
+    uint pages = m_document->pages();
+    int startId = -1;
+    int endId = -1;
+
+    for ( uint i = 0; i < pages; ++i )
+    {
+        if ( m_document->page( i )->hasBookmark() )
+        {
+            if ( startId < 0 )
+                startId = i;
+            if ( endId < 0 )
+                endId = startId;
+            else
+                ++endId;
+        }
+        else if ( startId >= 0 && endId >= 0 )
+        {
+            if ( !range.isEmpty() )
+                range += ',';
+
+            if ( endId - startId > 0 )
+                range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+            else
+                range += QString::number( startId + 1 );
+            startId = -1;
+            endId = -1;
+        }
+    }
+    if ( startId >= 0 && endId >= 0 )
+    {
+        if ( !range.isEmpty() )
+            range += ',';
+
+        if ( endId - startId > 0 )
+            range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+        else
+            range += QString::number( startId + 1 );
+    }
+    printer.setOption( "kde-range", range );
+
     if ( m_document->canConfigurePrinter() )
         doPrint( printer );
     else if (printer.setup(widget())) doPrint( printer );

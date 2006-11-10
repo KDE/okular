@@ -116,8 +116,13 @@ void Shell::openURL( const KURL & url )
     if ( m_part )
     {
         bool openOk = m_part->openURL( url );
-        if ( openOk ) m_recent->addURL( url );
-        else m_recent->removeURL( url );
+        if ( openOk )
+        {
+          m_recent->addURL( url );
+          setCaption(url.fileName());
+        }
+        else
+          m_recent->removeURL( url );
     }
 }
 

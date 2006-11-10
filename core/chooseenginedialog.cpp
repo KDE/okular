@@ -19,7 +19,7 @@
 ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent )
     : KDialog( parent )
 {
-    setCaption( i18n( "Generator Selection" ) );
+    setCaption( i18n( "Backend Selection" ) );
     setButtons( Ok | Cancel );
     setDefaultButton( Ok );
     QWidget *main = new QWidget( this );
@@ -30,7 +30,7 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMi
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
-        i18n( "More than one generator found for mimetype \"%1\" (%2).\n"
+        i18n( "More than one backend found for mimetype \"%1\" (%2).\n"
               "Please select which one to use:", mime->comment(), mime->name() ) );
 }
 

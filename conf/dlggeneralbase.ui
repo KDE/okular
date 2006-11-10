@@ -175,7 +175,7 @@
         <item>
          <widget class="QCheckBox" name="kcfg_ChooseGenerators" >
           <property name="text" >
-           <string>Show generator selection dialog</string>
+           <string>Show backend selection dialog</string>
           </property>
           <property name="shortcut" >
            <string/>

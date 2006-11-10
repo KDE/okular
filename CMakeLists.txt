@@ -30,12 +30,6 @@ include_directories(
 # okularcore
 
 set(okularcore_SRCS
-   conf/preferencesdialog.cpp
-   conf/dlgaccessibility.cpp
-   conf/dlggeneral.cpp
-   conf/dlgidentity.cpp
-   conf/dlgperformance.cpp
-   conf/dlgpresentation.cpp
    core/annotations.cpp
    core/area.cpp
    core/chooseenginedialog.cpp
@@ -51,11 +45,6 @@ set(okularcore_SRCS
 )
 
 kde4_add_ui_files(okularcore_SRCS
-   conf/dlgaccessibilitybase.ui
-   conf/dlggeneralbase.ui
-   conf/dlgidentitybase.ui
-   conf/dlgperformancebase.ui
-   conf/dlgpresentationbase.ui
    core/chooseenginewidget.ui
 )
 
@@ -78,6 +67,12 @@ install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 
 set(okularpart_SRCS
    part.cpp
+   conf/preferencesdialog.cpp
+   conf/dlgaccessibility.cpp
+   conf/dlggeneral.cpp
+   conf/dlgidentity.cpp
+   conf/dlgperformance.cpp
+   conf/dlgpresentation.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
    ui/annotationpropertiesdialog.cpp
@@ -101,6 +96,14 @@ set(okularpart_SRCS
    ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
    ui/painter_agg2/agg_trans_affine.cpp
    ui/painter_agg2/agg_vcgen_stroke.cpp
+)
+
+kde4_add_ui_files(okularpart_SRCS
+   conf/dlgaccessibilitybase.ui
+   conf/dlggeneralbase.ui
+   conf/dlgidentitybase.ui
+   conf/dlgperformancebase.ui
+   conf/dlgpresentationbase.ui
 )
 
 kde4_automoc(${okularpart_SRCS})

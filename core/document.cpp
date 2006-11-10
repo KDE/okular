@@ -46,6 +46,15 @@ class RunningSearch;
 class Okular::DocumentPrivate
 {
     public:
+        DocumentPrivate()
+          : m_lastSearchID( -1 ),
+            allocatedPixmapsTotalMemory( 0 ),
+            warnedOutOfMemory( false ),
+            rotation( 0 ),
+            memCheckTimer( 0 ),
+            saveBookmarksTimer( 0 )
+        {}
+
         // find descriptors, mapped by ID (we handle multiple searches)
         QMap< int, RunningSearch * > searches;
         int m_lastSearchID;
@@ -114,12 +123,6 @@ struct RunningSearch
 Document::Document( QHash<QString, Generator*> * genList )
     : m_loadedGenerators ( genList ), generator( 0 ),  d( new DocumentPrivate )
 {
-    d->allocatedPixmapsTotalMemory = 0;
-    d->memCheckTimer = 0;
-    d->saveBookmarksTimer = 0;
-    d->m_lastSearchID = -1;
-    d->warnedOutOfMemory = false;
-    d->rotation = 0;
     m_usingCachedGenerator = false;
 }
 

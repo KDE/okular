@@ -28,8 +28,6 @@ kde4_automoc(${okularGenerator_chmlib_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_chmlib WITH_PREFIX ${okularGenerator_chmlib_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_chmlib )
-
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_KHTML_LIBS} )
 
 install(TARGETS okularGenerator_chmlib DESTINATION ${PLUGIN_INSTALL_DIR})

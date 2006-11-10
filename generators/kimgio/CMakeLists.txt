@@ -11,8 +11,6 @@ kde4_automoc(${okularGenerator_kimgio_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_kimgio WITH_PREFIX ${okularGenerator_kimgio_PART_SRCS})
 
-kde4_install_libtool_file( ${PLUGIN_INSTALL_DIR} okularGenerator_kimgio )
-
 target_link_libraries(okularGenerator_kimgio  okularcore ${KDE4_KDEUI_LIBS} )
 
 install(TARGETS okularGenerator_kimgio DESTINATION ${PLUGIN_INSTALL_DIR})

@@ -501,7 +501,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Fit to Page Width</guimenuitem>
+							<guimenuitem>Fit Width</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -514,7 +514,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Fit to Page</guimenuitem>
+							<guimenuitem>Fit Page</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -901,6 +901,9 @@
 				<listitem>
 					<para><link linkend="configpresentation">Presentation</link></para>
 				</listitem>
+				<listitem>
+					<para><link linkend="configidentity">Identity</link></para>
+				</listitem>
 			</itemizedlist>
 			<screenshot>
 				<screeninfo>The configuration dialogue</screeninfo>
@@ -976,11 +979,11 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show generator selection dialog</term>
+					<term>Show backend selection dialog</term>
 					<listitem>
-						<para>Whether &okular; should ask the user which generator to use in case of more
-							than one generator able to open the current file. If unchecked, &okular; will
-							use the generator with the highest priority.</para>
+						<para>Whether &okular; should ask the user which backend to use in case of more
+							than one backend able to open the current file. If unchecked, &okular; will
+							use the backend with the highest priority.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1118,6 +1121,23 @@
 					<term>Show summary page</term>
 					<listitem>
 						<para>Whether to show a summary page at the beginning of the presentation with the title, author and number of pages of the document.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Pencil color</term>
+					<listitem>
+						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configidentity">
+			<title>Identity</title>
+			<variablelist>
+				<varlistentry>
+					<term>Author</term>
+					<listitem>
+						<para>The author of the contents added on a document.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

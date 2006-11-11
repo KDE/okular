@@ -124,12 +124,12 @@ class KDjVu : public QObject
 
                 enum AnnotationType { TextAnnotation, LineAnnotation };
                 virtual int type() const = 0;
-                QRect rect() const;
+                QPoint point() const;
                 QString comment() const;
                 QColor color() const;
 
             private:
-                QRect m_rect;
+                QPoint m_point;
                 QString m_comment;
                 QColor m_color;
         };
@@ -143,10 +143,12 @@ class KDjVu : public QObject
 
             public:
                 virtual int type() const;
+                QSize size() const;
                 bool inlineText() const;
 
             private:
                 TextAnnotation();
+                QSize m_size;
                 bool m_inlineText;
         };
 
@@ -159,11 +161,13 @@ class KDjVu : public QObject
 
             public:
                 virtual int type() const;
+                QPoint point2() const;
                 bool isArrow() const;
                 int width() const;
 
             private:
                 LineAnnotation();
+                QPoint m_point2;
                 bool m_isArrow;
                 int m_width;
         };

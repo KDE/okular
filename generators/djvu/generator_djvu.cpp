@@ -260,12 +260,22 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
         {
             KDjVu::Annotation *ann = (*it);
             Okular::Annotation *newann = 0;
+            const KDjVu::Page* p = m_djvu->pages().at( page );
+            int width = p->width();
+            int height = p->height();
+            bool scape_orientation = false; // hack by tokoe, should always create default page
+            if ( scape_orientation )
+                qSwap( width, height );
             switch ( ann->type() )
             {
                 case KDjVu::Annotation::TextAnnotation:
                 {
                     KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
                     Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
+                    // boundary
+                    QRect rect( QPoint( txtann->point().x(), height - txtann->point().y() - txtann->size().height() ), txtann->size() );
+                    newtxtann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, width, height, 0 ), width, height );
+                    // type
                     newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
                     newtxtann->style.opacity = txtann->color().alphaF();
                     newann = newtxtann;
@@ -275,17 +285,18 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
                 {
                     KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
                     Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
-                    const KDjVu::Page* p = m_djvu->pages().at( page );
-                    int width = p->width();
-                    int height = p->height();
-                    bool scape_orientation = false; // hack by tokoe, should always create default page
-                    if ( scape_orientation )
-                        qSwap( width, height );
-                    Okular::NormalizedRect tmprect( ann->rect(), width, height );
-                    newlineann->linePoints.append( Okular::NormalizedPoint( tmprect.left, tmprect.top ) );
-                    newlineann->linePoints.append( Okular::NormalizedPoint( tmprect.right, tmprect.bottom ) );
+                    // boundary
+                    QPoint a( lineann->point().x(), height - lineann->point().y() );
+                    QPoint b( lineann->point2().x(), height - lineann->point2().y() );
+                    QRect rect = QRect( a, b ).normalized();
+                    newlineann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, width, height, 0 ), width, height );
+                    // line points
+                    newlineann->linePoints.append( Okular::NormalizedPoint( a.x(), a.y(), width, height ) );
+                    newlineann->linePoints.append( Okular::NormalizedPoint( b.x(), b.y(), width, height ) );
+                    // arrow?
                     if ( lineann->isArrow() )
                         newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
+                    // width
                     newlineann->style.width = lineann->width();
                     newann = newlineann;
                     break;
@@ -294,13 +305,6 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
             if ( newann )
             {
                 // setting the common parameters
-                const KDjVu::Page* p = m_djvu->pages().at( page );
-                int width = p->width();
-                int height = p->height();
-                bool scape_orientation = false; // hack by tokoe, should always create default page
-                if ( scape_orientation )
-                    qSwap( width, height );
-                newann->boundary = Okular::NormalizedRect( ann->rect(), width, height );
                 newann->style.color = ann->color();
                 newann->contents = ann->comment();
 

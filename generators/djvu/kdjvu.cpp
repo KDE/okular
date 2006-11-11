@@ -201,9 +201,9 @@ KDjVu::Annotation::~Annotation()
 {
 }
 
-QRect KDjVu::Annotation::rect() const
+QPoint KDjVu::Annotation::point() const
 {
-    return m_rect;
+    return m_point;
 }
 
 QString KDjVu::Annotation::comment() const
@@ -221,6 +221,11 @@ QColor KDjVu::Annotation::color() const
 KDjVu::TextAnnotation::TextAnnotation()
   : m_inlineText( true )
 {
+}
+
+QSize KDjVu::TextAnnotation::size() const
+{
+    return m_size;
 }
 
 int KDjVu::TextAnnotation::type() const
@@ -243,6 +248,11 @@ KDjVu::LineAnnotation::LineAnnotation()
 int KDjVu::LineAnnotation::type() const
 {
     return KDjVu::Annotation::LineAnnotation;
+}
+
+QPoint KDjVu::LineAnnotation::point2() const
+{
+    return m_point2;
 }
 
 bool KDjVu::LineAnnotation::isArrow() const
@@ -577,14 +587,17 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
             int d = miniexp_to_int( miniexp_nth( 4, area ) );
             if ( type == QLatin1String( "text" ) )
             {
-                ann = new KDjVu::TextAnnotation();
-                ann->m_rect = QRect( a, b - d, c, d );
+                KDjVu::TextAnnotation * textann = new KDjVu::TextAnnotation();
+                textann->m_size = QSize( c, d );
+                ann = textann;
             }
             else if ( type == QLatin1String( "line" ) )
             {
-                ann = new KDjVu::LineAnnotation();
-                ann->m_rect = QRect( a, b, c - a, b - d );
+                KDjVu::LineAnnotation * lineann = new KDjVu::LineAnnotation();
+                lineann->m_point2 = QPoint( c, d );
+                ann = lineann;
             }
+            ann->m_point = QPoint( a, b );
             ann->m_comment = QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, cur ) ) );
         }
         if ( link )

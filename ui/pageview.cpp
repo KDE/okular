@@ -2209,7 +2209,10 @@ void PageView::updateCursor( const QPoint &p )
                 setCursor( Qt::PointingHandCursor );
             }
             else
+            {
+                d->mouseOnRect = false;
                 setCursor( Qt::ArrowCursor );
+            }
         }
     }
     else

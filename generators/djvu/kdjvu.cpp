@@ -654,6 +654,8 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
                         lineann->m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
                     else if ( id == QLatin1String( "arrow" ) )
                         lineann->m_isArrow = true;
+                    else if ( id == QLatin1String( "width" ) )
+                        lineann->m_width = miniexp_to_int( miniexp_nth( 1, curelem ) );
                 }
             }
             anns.append( ann );

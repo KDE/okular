@@ -12,8 +12,8 @@
 #include <qbytearray.h>
 #include <qdom.h>
 #include <qfile.h>
+#include <qhash.h>
 #include <qlist.h>
-#include <qmap.h>
 #include <qpainter.h>
 #include <qstring.h>
 
@@ -281,7 +281,7 @@ class KDjVu::Private
 
         QList<ImageCacheItem*> mImgCache;
 
-        QMap<QString, QString> m_metaData;
+        QHash<QString, QVariant> m_metaData;
         QDomDocument * m_docBookmarks;
 };
 
@@ -447,7 +447,7 @@ bool KDjVu::openFile( const QString & fileName )
     if ( !doctype.isEmpty() )
         d->m_metaData[ "documentType" ] = doctype;
     // get the number of components
-    d->m_metaData[ "componentFile" ] = QString::number( ddjvu_document_get_filenum( d->m_djvu_document ) );
+    d->m_metaData[ "componentFile" ] = ddjvu_document_get_filenum( d->m_djvu_document );
 
     // read the pages
     for ( int i = 0; i < numofpages; ++i )
@@ -497,9 +497,9 @@ void KDjVu::closeFile()
     d->m_djvu_document = 0;
 }
 
-QString KDjVu::metaData( const QString & key ) const
+QVariant KDjVu::metaData( const QString & key ) const
 {
-    return d->m_metaData.contains( key ) ? d->m_metaData[ key ] : QString();
+    return d->m_metaData.contains( key ) ? d->m_metaData[ key ] : QVariant();
 }
 
 const QDomDocument * KDjVu::documentBookmarks() const

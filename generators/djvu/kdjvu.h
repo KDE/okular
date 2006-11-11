@@ -14,6 +14,7 @@
 #include <qimage.h>
 #include <qobject.h>
 #include <qpolygon.h>
+#include <qvariant.h>
 #include <qvector.h>
 
 class QDomDocument;
@@ -185,9 +186,9 @@ class KDjVu : public QObject
         const QVector<KDjVu::Page*> &pages() const;
 
         /**
-         * Get the metadata for the specified \p key, or a null string otherwise.
+         * Get the metadata for the specified \p key, or a null variant otherwise.
          */
-        QString metaData( const QString & key ) const;
+        QVariant metaData( const QString & key ) const;
 
         /**
          * Get ax XML document with the bookmarks of the current document (if any).

@@ -120,10 +120,10 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
     if ( m_djvu )
     {
         // compile internal structure reading properties from KDjVu
-        QString doctype = m_djvu->metaData( "documentType" );
+        QString doctype = m_djvu->metaData( "documentType" ).toString();
         m_docInfo->set( "documentType", doctype.isEmpty() ? i18n( "Unknown" ) : doctype, i18n( "Type of document" ) );
-        QString numcomponents = m_djvu->metaData( "componentFile" );
-        m_docInfo->set( "componentFile", numcomponents.isEmpty() ? i18n( "Unknown" ) : numcomponents, i18n( "Component Files" ) );
+        QVariant numcomponents = m_djvu->metaData( "componentFile" );
+        m_docInfo->set( "componentFile", numcomponents.type() != QVariant::Int ? i18n( "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
     }
     else
     {

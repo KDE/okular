@@ -113,6 +113,9 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     m_prevButton->setFixedHeight( fixedHeight );
     m_nextButton->setFixedHeight( fixedHeight );
 
+    // resize width of widgets
+    resizeForPage( 0 );
+
     // connect signals from child widgets to internal handlers / signals bouncers
     connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotChangePage() ) );
     connect( m_pagesButton, SIGNAL( clicked() ), this, SIGNAL( gotoPage() ) );
@@ -146,11 +149,7 @@ void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, bool ch
     }
 
     // resize width of widgets
-    int numberWidth = 10 + fontMetrics().width( QString::number( pages ) );
-    m_pagesEdit->setMinimumWidth( numberWidth );
-    m_pagesEdit->setMaximumWidth( 2 * numberWidth );
-    m_pagesButton->setMinimumWidth( numberWidth );
-    m_pagesButton->setMaximumWidth( 2 * numberWidth );
+    resizeForPage( pages );
 
     // update child widgets
     m_pagesEdit->setPagesNumber( pages );
@@ -207,6 +206,15 @@ void MiniBar::slotEmitPrevPage()
 {
     // emit signal
     prevPage();
+}
+
+void MiniBar::resizeForPage( int pages )
+{
+    int numberWidth = 10 + fontMetrics().width( QString::number( pages ) );
+    m_pagesEdit->setMinimumWidth( numberWidth );
+    m_pagesEdit->setMaximumWidth( 2 * numberWidth );
+    m_pagesButton->setMinimumWidth( numberWidth );
+    m_pagesButton->setMaximumWidth( 2 * numberWidth );
 }
 
 

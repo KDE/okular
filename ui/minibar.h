@@ -47,6 +47,8 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
         void slotEmitPrevPage();
 
     private:
+        void resizeForPage( int pages );
+
         Okular::Document * m_document;
         PagesEdit * m_pagesEdit;
         HoverButton * m_prevButton;

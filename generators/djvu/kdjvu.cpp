@@ -474,26 +474,32 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
             continue;
 
         QString target;
+        bool targetread = false;
         KDjVu::Link* link = 0;
-        if ( miniexp_stringp( miniexp_nth( 1, cur ) ) )
+        miniexp_t urlexp = miniexp_nth( 1, cur );
+        if ( miniexp_stringp( urlexp ) )
         {
-            QString target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            if ( target.isEmpty() || ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) ) )
-            {
-                KDjVu::PageLink* plink = new KDjVu::PageLink();
-                plink->m_page = target;
-                link = plink;
-            }
-            else
-            {
-                KDjVu::UrlLink* ulink = new KDjVu::UrlLink();
-                ulink->m_url = target;
-                link = ulink;
-            }
+            target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+            targetread = true;
+        }
+        else if ( miniexp_listp( urlexp ) && ( miniexp_length( urlexp ) == 3 ) &&
+                  miniexp_symbolp( miniexp_nth( 0, urlexp ) ) &&
+                  ( qstrncmp( miniexp_to_name( miniexp_nth( 0, urlexp ) ), "url", 3 ) == 0 ) )
+        {
+            target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, urlexp ) ) );
+            targetread = true;
+        }
+        if ( targetread && ( target.isEmpty() || ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) ) ) )
+        {
+            KDjVu::PageLink* plink = new KDjVu::PageLink();
+            plink->m_page = target;
+            link = plink;
         }
         else
         {
-            // TODO: external hyperlink
+            KDjVu::UrlLink* ulink = new KDjVu::UrlLink();
+            ulink->m_url = target;
+            link = ulink;
         }
         if ( link )
         {

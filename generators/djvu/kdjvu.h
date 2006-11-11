@@ -10,6 +10,7 @@
 #ifndef _KDJVU_
 #define _KDJVU_
 
+#include <qcolor.h>
 #include <qimage.h>
 #include <qobject.h>
 #include <qpolygon.h>
@@ -111,6 +112,63 @@ class KDjVu : public QObject
 
 
         /**
+         * The base implementation for a DjVu annotation.
+         */
+        class Annotation
+        {
+            friend class KDjVu;
+
+            public:
+                virtual ~Annotation();
+
+                enum AnnotationType { TextAnnotation, LineAnnotation };
+                virtual int type() const = 0;
+                QRect rect() const;
+                QString comment() const;
+                QColor color() const;
+
+            private:
+                QRect m_rect;
+                QString m_comment;
+                QColor m_color;
+        };
+
+        /**
+         * A DjVu text annotation.
+         */
+        class TextAnnotation : public Annotation
+        {
+            friend class KDjVu;
+
+            public:
+                virtual int type() const;
+                bool inlineText() const;
+
+            private:
+                TextAnnotation();
+                bool m_inlineText;
+        };
+
+        /**
+         * A DjVu line annotation.
+         */
+        class LineAnnotation : public Annotation
+        {
+            friend class KDjVu;
+
+            public:
+                virtual int type() const;
+                bool isArrow() const;
+                int width() const;
+
+            private:
+                LineAnnotation();
+                bool m_isArrow;
+                int m_width;
+        };
+
+
+        /**
          * Opens the file \p fileName, closing the old one if necessary.
          */
         bool openFile( const QString & fileName );
@@ -146,9 +204,9 @@ class KDjVu : public QObject
         const QDomDocument * documentBookmarks() const;
 
         /**
-         * Return the links for the page \p pageNum
+         * Reads the links and the annotations for the page \p pageNum
          */
-        QList<KDjVu::Link*> linksForPage( int pageNum ) const;
+        void linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links, QList<KDjVu::Annotation*>& annotations ) const;
 
         // image handling
         /**

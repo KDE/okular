@@ -195,6 +195,65 @@ QString KDjVu::UrlLink::url() const
     return m_url;
 }
 
+// KDjVu::Annotation
+
+KDjVu::Annotation::~Annotation()
+{
+}
+
+QRect KDjVu::Annotation::rect() const
+{
+    return m_rect;
+}
+
+QString KDjVu::Annotation::comment() const
+{
+    return m_comment;
+}
+
+QColor KDjVu::Annotation::color() const
+{
+    return m_color;
+}
+
+// KDjVu::TextAnnotation
+
+KDjVu::TextAnnotation::TextAnnotation()
+  : m_inlineText( true )
+{
+}
+
+int KDjVu::TextAnnotation::type() const
+{
+    return KDjVu::Annotation::TextAnnotation;
+}
+
+bool KDjVu::TextAnnotation::inlineText() const
+{
+    return m_inlineText;
+}
+
+// KDjVu::LineAnnotation
+
+KDjVu::LineAnnotation::LineAnnotation()
+  : m_isArrow( false ), m_width( 1 )
+{
+}
+
+int KDjVu::LineAnnotation::type() const
+{
+    return KDjVu::Annotation::LineAnnotation;
+}
+
+bool KDjVu::LineAnnotation::isArrow() const
+{
+    return m_isArrow;
+}
+
+int KDjVu::LineAnnotation::width() const
+{
+    return m_width;
+}
 
 
 
@@ -450,69 +509,94 @@ const QDomDocument * KDjVu::documentBookmarks() const
     return d->m_docBookmarks;
 }
 
-QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
+void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links, QList<KDjVu::Annotation*>& annotations ) const
 {
     if ( ( pageNum < 0 ) || ( pageNum >= d->m_pages.count() ) )
-        return QList<KDjVu::Link*>();
+        return;
 
     miniexp_t annots;
     while ( ( annots = ddjvu_document_get_pageanno( d->m_djvu_document, pageNum ) ) == miniexp_dummy )
         handle_ddjvu_messages( d->m_djvu_cxt, true );
 
     if ( !miniexp_listp( annots ) )
-        return QList<KDjVu::Link*>();
+        return;
 
     QList<KDjVu::Link*> ret;
+    QList<KDjVu::Annotation*> anns;
 
     int l = miniexp_length( annots );
     for ( int i = 0; i < l; ++i )
     {
         miniexp_t cur = miniexp_nth( i, annots );
         int num = miniexp_length( cur );
-        if ( ( num <= 0 ) || !miniexp_symbolp( miniexp_nth( 0, cur ) ) ||
+        if ( ( num < 4 ) || !miniexp_symbolp( miniexp_nth( 0, cur ) ) ||
              ( qstrncmp( miniexp_to_name( miniexp_nth( 0, cur ) ), "maparea", 7 ) != 0 ) )
             continue;
 
         QString target;
-        bool targetread = false;
+        QString type;
+        if ( miniexp_symbolp( miniexp_nth( 0, miniexp_nth( 3, cur ) ) ) )
+            type = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, miniexp_nth( 3, cur ) ) ) );
         KDjVu::Link* link = 0;
+        KDjVu::Annotation* ann = 0;
         miniexp_t urlexp = miniexp_nth( 1, cur );
-        if ( miniexp_stringp( urlexp ) )
+        if ( type == QLatin1String( "rect" ) ||
+             type == QLatin1String( "oval" ) ||
+             type == QLatin1String( "poly" ) )
         {
-            target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            targetread = true;
+            if ( miniexp_stringp( urlexp ) )
+            {
+                target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+            }
+            else if ( miniexp_listp( urlexp ) && ( miniexp_length( urlexp ) == 3 ) &&
+                      miniexp_symbolp( miniexp_nth( 0, urlexp ) ) &&
+                      ( qstrncmp( miniexp_to_name( miniexp_nth( 0, urlexp ) ), "url", 3 ) == 0 ) )
+            {
+                target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, urlexp ) ) );
+            }
+            if ( target.isEmpty() || ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) ) )
+            {
+                KDjVu::PageLink* plink = new KDjVu::PageLink();
+                plink->m_page = target;
+                link = plink;
+            }
+            else
+            {
+                KDjVu::UrlLink* ulink = new KDjVu::UrlLink();
+                ulink->m_url = target;
+                link = ulink;
+            }
         }
-        else if ( miniexp_listp( urlexp ) && ( miniexp_length( urlexp ) == 3 ) &&
-                  miniexp_symbolp( miniexp_nth( 0, urlexp ) ) &&
-                  ( qstrncmp( miniexp_to_name( miniexp_nth( 0, urlexp ) ), "url", 3 ) == 0 ) )
+        else if ( type == QLatin1String( "text" ) ||
+                  type == QLatin1String( "line" ) )
         {
-            target = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, urlexp ) ) );
-            targetread = true;
-        }
-        if ( targetread && ( target.isEmpty() || ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) ) ) )
-        {
-            KDjVu::PageLink* plink = new KDjVu::PageLink();
-            plink->m_page = target;
-            link = plink;
-        }
-        else
-        {
-            KDjVu::UrlLink* ulink = new KDjVu::UrlLink();
-            ulink->m_url = target;
-            link = ulink;
+            miniexp_t area = miniexp_nth( 3, cur );
+            int a = miniexp_to_int( miniexp_nth( 1, area ) );
+            int b = miniexp_to_int( miniexp_nth( 2, area ) );
+            int c = miniexp_to_int( miniexp_nth( 3, area ) );
+            int d = miniexp_to_int( miniexp_nth( 4, area ) );
+            if ( type == QLatin1String( "text" ) )
+            {
+                ann = new KDjVu::TextAnnotation();
+                ann->m_rect = QRect( a, b - d, c, d );
+            }
+            else if ( type == QLatin1String( "line" ) )
+            {
+                ann = new KDjVu::LineAnnotation();
+                ann->m_rect = QRect( a, b, c - a, b - d );
+            }
+            ann->m_comment = QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, cur ) ) );
         }
         if ( link )
         {
             link->m_area = KDjVu::Link::UnknownArea;
             miniexp_t area = miniexp_nth( 3, cur );
             int arealength = miniexp_length( area );
-            if ( ( arealength == 5 ) && miniexp_symbolp( miniexp_nth( 0, area ) ) &&
-                 ( ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 ) ||
-                   ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "oval", 4 ) == 0 ) ) )
+            if ( ( arealength == 5 ) && ( type == QLatin1String( "rect" ) || type == QLatin1String( "oval" ) ) )
             {
                 link->m_point = QPoint( miniexp_to_int( miniexp_nth( 1, area ) ), miniexp_to_int( miniexp_nth( 2, area ) ) );
                 link->m_size = QSize( miniexp_to_int( miniexp_nth( 3, area ) ), miniexp_to_int( miniexp_nth( 4, area ) ) );
-                if ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "rect", 4 ) == 0 )
+                if ( type == QLatin1String( "rect" ) )
                 {
                     link->m_area = KDjVu::Link::RectArea;
                 }
@@ -522,8 +606,7 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
                 }
             }
             else if ( ( arealength > 0 ) && ( arealength % 2 == 1 ) &&
-                      miniexp_symbolp( miniexp_nth( 0, area ) ) &&
-                      ( qstrncmp( miniexp_to_name( miniexp_nth( 0, area ) ), "poly", 4 ) == 0 ) )
+                      type == QLatin1String( "poly" ) )
             {
                 link->m_area = KDjVu::Link::PolygonArea;
                 QPolygon poly;
@@ -533,13 +616,51 @@ QList<KDjVu::Link*> KDjVu::linksForPage( int pageNum ) const
                 }
                 link->m_poly = poly;
             }
-            // TODO: other link shapes
 
             if ( link->m_area != KDjVu::Link::UnknownArea )
                 ret.append( link );
         }
+        else if ( ann )
+        {
+            if ( type == QLatin1String( "text" ) )
+            {
+                KDjVu::TextAnnotation* txtann = (KDjVu::TextAnnotation*)ann;
+                txtann->m_color.setRgb( 255, 255, 255, 0 );
+                for ( int j = 4; j < num; ++j )
+                {
+                    miniexp_t curelem = miniexp_nth( j, cur );
+                    if ( !miniexp_listp( curelem ) )
+                        continue;
+
+                    QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
+                    if ( id == QLatin1String( "backclr" ) )
+                        txtann->m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
+                    else if ( id == QLatin1String( "pushpin" ) )
+                        txtann->m_inlineText = false;
+                }
+            }
+            else if ( type == QLatin1String( "line" ) )
+            {
+                KDjVu::LineAnnotation* lineann = (KDjVu::LineAnnotation*)ann;
+                lineann->m_color = Qt::black;
+                for ( int j = 4; j < num; ++j )
+                {
+                    miniexp_t curelem = miniexp_nth( j, cur );
+                    if ( !miniexp_listp( curelem ) )
+                        continue;
+
+                    QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
+                    if ( id == QLatin1String( "lineclr" ) )
+                        lineann->m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
+                    else if ( id == QLatin1String( "arrow" ) )
+                        lineann->m_isArrow = true;
+                }
+            }
+            anns.append( ann );
+        }
     }
-    return ret;
+    links = ret;
+    annotations = anns;
 }
 
 const QVector<KDjVu::Page*> &KDjVu::pages() const

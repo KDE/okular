@@ -9,6 +9,7 @@
 
 #include "generator_djvu.h"
 #include "kdjvu.h"
+#include "core/annotations.h"
 #include "core/area.h"
 #include "core/document.h"
 #include "core/link.h"
@@ -152,7 +153,9 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 {
     m_request->page()->setImage( m_request->id(), img );
 
-    QList<KDjVu::Link*> links = m_djvu->linksForPage( page );
+    QList<KDjVu::Link*> links;
+    QList<KDjVu::Annotation*> annots;
+    m_djvu->linksAndAnnotationsForPage( page, links, annots );
     if ( links.count() > 0 )
     {
         QLinkedList<Okular::ObjectRect *> rects;
@@ -247,6 +250,66 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
         }
         if ( rects.count() > 0 )
             m_request->page()->setObjectRects( rects );
+    }
+    m_request->page()->deleteAnnotations();
+    if ( annots.count() > 0 )
+    {
+        QList<KDjVu::Annotation*>::ConstIterator it = annots.constBegin();
+        QList<KDjVu::Annotation*>::ConstIterator itEnd = annots.constEnd();
+        for ( ; it != itEnd; ++it )
+        {
+            KDjVu::Annotation *ann = (*it);
+            Okular::Annotation *newann = 0;
+            switch ( ann->type() )
+            {
+                case KDjVu::Annotation::TextAnnotation:
+                {
+                    KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
+                    Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
+                    newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
+                    newtxtann->style.opacity = txtann->color().alphaF();
+                    newann = newtxtann;
+                    break;
+                }
+                case KDjVu::Annotation::LineAnnotation:
+                {
+                    KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
+                    Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
+                    const KDjVu::Page* p = m_djvu->pages().at( page );
+                    int width = p->width();
+                    int height = p->height();
+                    bool scape_orientation = false; // hack by tokoe, should always create default page
+                    if ( scape_orientation )
+                        qSwap( width, height );
+                    Okular::NormalizedRect tmprect( ann->rect(), width, height );
+                    newlineann->linePoints.append( Okular::NormalizedPoint( tmprect.left, tmprect.top ) );
+                    newlineann->linePoints.append( Okular::NormalizedPoint( tmprect.right, tmprect.bottom ) );
+                    if ( lineann->isArrow() )
+                        newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
+                    newlineann->style.width = lineann->width();
+                    newann = newlineann;
+                    break;
+                }
+            }
+            if ( newann )
+            {
+                // setting the common parameters
+                const KDjVu::Page* p = m_djvu->pages().at( page );
+                int width = p->width();
+                int height = p->height();
+                bool scape_orientation = false; // hack by tokoe, should always create default page
+                if ( scape_orientation )
+                    qSwap( width, height );
+                newann->boundary = Okular::NormalizedRect( ann->rect(), width, height );
+                newann->style.color = ann->color();
+                newann->contents = ann->comment();
+
+                // adding the newly converted annotation to the page
+                m_request->page()->addAnnotation( newann );
+            }
+            // delete the annotations as soon as we process them
+            delete ann;
+        }
     }
 
     ready = true;

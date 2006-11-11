@@ -182,11 +182,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         {
             list << offers.at(i)->name();
         }
-        ChooseEngineDialog * choose = new ChooseEngineDialog (list, mime, 0);
+        ChooseEngineDialog choose( list, mime, 0 );
 
-        int retval=choose->exec();
-        int index=choose->selectedGenerator();
-        delete choose;
+        int retval = choose.exec();
+        int index = choose.selectedGenerator();
         switch( retval )
         {
             case QDialog::Accepted:

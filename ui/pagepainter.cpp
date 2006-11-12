@@ -492,7 +492,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
             // honor opacity settings on supported types
             unsigned int opacity = (unsigned int)( 255.0 * a->style.opacity );
-            if ( opacity <= 0 )
+            // skip the annotation drawing if all the annotation is fully
+            // transparent, but not with text annotations
+            if ( opacity <= 0 && a->subType() != Okular::Annotation::AText )
                 continue;
 
             // get annotation boundary and drawn rect
@@ -517,7 +519,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     // otherwise draw it right after the text
                     bool bigger = mixedPainter->device()->width() > page->width();
                     QImage image( bigRect.size(), QImage::Format_ARGB32 );
-                    image.fill( qRgba( a->style.color.red(), a->style.color.green(), a->style.color.blue(), 255 ) );
+                    image.fill( qRgba( a->style.color.red(), a->style.color.green(), a->style.color.blue(), opacity ) );
                     QPainter painter( &image );
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont );

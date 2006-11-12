@@ -18,6 +18,7 @@
 
 #include <qdom.h>
 #include <qstring.h>
+#include <quuid.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -309,6 +310,12 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
                 // setting the common parameters
                 newann->style.color = ann->color();
                 newann->contents = ann->comment();
+                // creating an id as name for the annotation
+                QString uid = QUuid::createUuid().toString();
+                uid.remove( 0, 1 );
+                uid.chop( 1 );
+                uid.remove( QLatin1Char( '-' ) );
+                newann->uniqueName = uid;
 
                 // adding the newly converted annotation to the page
                 m_request->page()->addAnnotation( newann );

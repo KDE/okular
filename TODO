@@ -98,7 +98,7 @@ More items (first items will enter 'In progress list' first):
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
--> tools: ruler, measure: distance, perimeter, ?area?, color picker
+-> tools: ruler (BR111254), measure: distance, perimeter, ?area?, color picker
 -> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
 -> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> history as a toolbox child (collecting Doc's viewport changes notifications)
@@ -112,6 +112,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: basic support for Text and Line DjVu annotations
 -> FIX: regression: popup context menu when using right button in selection mode (BR99315)
 -> ADD: annotations: add config option for default name change
 -> ADD: presentation: add a red pencil that creates ink annotations

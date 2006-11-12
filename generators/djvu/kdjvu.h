@@ -195,7 +195,7 @@ class KDjVu : public QObject
         QVariant metaData( const QString & key ) const;
 
         /**
-         * Get ax XML document with the bookmarks of the current document (if any).
+         * Get an XML document with the bookmarks of the current document (if any).
          * The XML will look like this:
          * \verbatim
          * <!DOCTYPE KDjVuBookmarks>

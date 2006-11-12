@@ -349,7 +349,7 @@ Part::Part(QWidget *parentWidget,
 	slotNewConfig();
 
 	// [SPEECH] check for KTTSD presence and usability
-	KService::List offers = KServiceTypeTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
+	KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'KTTSD'");
 	Okular::Settings::setUseKTTSD( !offers.isEmpty() );
 	Okular::Settings::writeConfig();
 

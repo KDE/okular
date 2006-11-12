@@ -278,6 +278,8 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
                     // type
                     newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
                     newtxtann->style.opacity = txtann->color().alphaF();
+                    // FIXME remove once the annotation text handling is fixed
+                    newtxtann->inplaceText = ann->comment();
                     newann = newtxtann;
                     break;
                 }

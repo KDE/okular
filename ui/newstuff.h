@@ -35,12 +35,16 @@ class NewStuffDialog : public QDialog
 
         // remove an already installed item
         void removeItem( AvailableItem * item );
+	
+	void loadItem( const QString & fileName );
 
     signals:
         // tells that a file has been installed
         void installedFile( QString fileName, QString type );
         // tells that a file has been removed
         void removedFile( QString oldFileName );
+
+	void loadItemClicked( const KUrl & fileName );
 
     private:
         // private storage class

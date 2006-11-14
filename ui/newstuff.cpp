@@ -231,6 +231,10 @@ class ItemsView : public KHTMLPart
                 // precalc item's dynamic strings
                 QString idString = QString::number( (unsigned long)item );
                 QString clickString = "window.location.href=\"item:" + idString + "\";";
+                // open Installed item
+                QString openInstalledItem = item->installed() ? "window.location.href=\"itemload:" + idString + "\";" : "";
+		QString openInstalledItemStyles = item->installed() ? "class = itemLoad title='"+i18n ("Click for Open ")+titleString+"'" : "";
+
 
                 // precalc the string for displaying stars (normal+grayed)
                 int starPixels = 11 + 11 * (item->rating() / 10);
@@ -266,7 +270,7 @@ class ItemsView : public KHTMLPart
                          "<td class='contentsColumn'>"
                             // contents header: item name/score
                             "<table class='contentsHeader' cellspacing='2' cellpadding='0'><tr>"
-                              "<td>" + titleString + "</td>"
+                              "<td> <div "+ openInstalledItemStyles + "' onClick='"+ openInstalledItem + "'>"+ titleString + "</div></td>"
                               "<td align='right'>" + starsString +  "</td>"
                             "</tr></table>"
                             // contents body: item description
@@ -304,6 +308,7 @@ class ItemsView : public KHTMLPart
             // the main item container (custom element)
             style += ".itemBox { background-color: white; color: black; width: 100%;  border-bottom: 1px solid gray; margin: 0px 0px; }";
             style += ".itemBox:hover { background-color: " + hoverBackground + "; color: " + hoverColor + "; }";
+            style += ".itemLoad:hover{ cursor: pointer;}";
 
             // style of the item elements (4 cells with multiple containers)
             style += ".leftColumn { width: 100px; height:100%; text-align: center; }";
@@ -356,7 +361,26 @@ class ItemsView : public KHTMLPart
                     m_newStuffDialog->removeItem( item );   // synchronous
                 else
                     m_newStuffDialog->installItem( item );  // asynchronous
-            }
+            } else if ( urlProtocol == "itemload" )
+              {
+                bool ok;
+                unsigned long itemPointer = urlPath.toULong( &ok );
+                if ( !ok )
+                {
+                    kWarning() << "ItemsView: error converting item pointer." << endl;
+                    return;
+                }
+                AvailableItem * item = (AvailableItem *)itemPointer;
+                if ( !m_items.contains( item ) )
+                {
+                    kWarning() << "ItemsView: error retrieving item pointer." << endl;
+                    return;
+                }
+		if ( item->installed () )
+		     m_newStuffDialog->loadItem( item->destinationPath() ); 
+		return;
+
+              }
         }
 
         // delete all the classes we own
@@ -418,6 +442,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
     : QDialog( parentWidget ), d( new NewStuffDialogPrivate )
 {
     setObjectName( "okularNewStuff" );
+    setWindowTitle ( i18n ( "Get Books From Internet" ) );
     // initialize the private classes
     d->providersListJob.job = 0;
 
@@ -617,6 +642,12 @@ void NewStuffDialog::slotResetMessageColors() // SLOT
     pal.setColor( QPalette::Window, qAppPal.color( QPalette::Window ) );
     pal.setColor( QPalette::WindowText, qAppPal.color( QPalette::WindowText ) );
     d->messageLabel->setPalette( pal );
+}
+
+void NewStuffDialog::loadItem( const QString & fileName )
+{
+    done( 0 );
+    emit loadItemClicked ( KUrl ( fileName ) );
 }
 
 void NewStuffDialog::slotNetworkTimeout() // SLOT

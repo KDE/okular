@@ -980,6 +980,7 @@ void Part::slotGetNewStuff()
 {
     // show the modal dialog over pageview and execute it
     NewStuffDialog * dialog = new NewStuffDialog( m_pageView );
+    connect ( dialog , SIGNAL ( loadItemClicked( const KUrl & ) ), this , SLOT ( openUrlFromDocument ( const KUrl & ) ) );
     dialog->exec();
     delete dialog;
 }

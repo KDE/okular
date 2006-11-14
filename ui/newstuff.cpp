@@ -185,6 +185,9 @@ class ItemsView : public KHTMLPart
             AvailableItem::State state = item->state();
             bool showProgress = state != AvailableItem::Normal;
             int pixelProgress = showProgress ? (int)(item->progress() * 80.0) : 0;
+            QString titleString = item->name();
+            if ( item->version().length() > 0 )
+                    titleString += " v." + item->version();
 
             // perform internal scripting operations over the element
             executeScript( "document.getElementById('" + idString + "').style.color='red'" );
@@ -194,6 +197,12 @@ class ItemsView : public KHTMLPart
                            (showProgress ? "gray" : "transparent") + '\'' );
             executeScript( "document.getElementById('btn" + idString + "').value='" +
                            (item->installed() ? i18n( "Uninstall" ) : i18n( "Install" )) + '\'' );
+            executeScript( "document.getElementById('title" + idString + "').onClick='" +
+                           (item->installed() ? "window.location.href=\"itemload:" + idString +"\";": "")+ '\''  );
+            executeScript( "document.getElementById('title" + idString + "').className='" +
+                           (item->installed() ? "itemLoad" : "") + '\''   );
+            executeScript( "document.getElementById('title" + idString + "').title='" +
+                           (item->installed() ? i18n( "Click for Open %1", titleString ) : "" ) + '\''   );
         }
 
     private:
@@ -233,7 +242,7 @@ class ItemsView : public KHTMLPart
                 QString clickString = "window.location.href=\"item:" + idString + "\";";
                 // open Installed item
                 QString openInstalledItem = item->installed() ? "window.location.href=\"itemload:" + idString + "\";" : "";
-		QString openInstalledItemStyles = item->installed() ? "class = itemLoad title='"+i18n ("Click for Open ")+titleString+"'" : "";
+		QString openInstalledItemStyles = item->installed() ? "class = itemLoad title='"+ i18n ( "Click for Open %1", titleString )+"'" : "";
 
 
                 // precalc the string for displaying stars (normal+grayed)
@@ -270,7 +279,7 @@ class ItemsView : public KHTMLPart
                          "<td class='contentsColumn'>"
                             // contents header: item name/score
                             "<table class='contentsHeader' cellspacing='2' cellpadding='0'><tr>"
-                              "<td> <div "+ openInstalledItemStyles + "' onClick='"+ openInstalledItem + "'>"+ titleString + "</div></td>"
+                              "<td> <div id='title"+ idString +"' "+ openInstalledItemStyles + "' onClick='"+ openInstalledItem + "'>"+ titleString + "</div></td>"
                               "<td align='right'>" + starsString +  "</td>"
                             "</tr></table>"
                             // contents body: item description

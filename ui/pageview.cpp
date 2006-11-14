@@ -358,7 +358,7 @@ void PageView::setupActions( KActionCollection * ac )
     renderModes.append( i18n( "Facing" ) );
     renderModes.append( i18n( "Overview" ) );
 
-    d->aRenderMode = new KSelectAction( KIcon( "view_left_right" ), i18n("&Render Mode"), ac, "view_render_mode" );
+    d->aRenderMode = new KSelectAction( KIcon( "view_left_right" ), i18n("&View Mode"), ac, "view_render_mode" );
     connect( d->aRenderMode, SIGNAL( triggered( int ) ), SLOT( slotRenderMode( int ) ) );
     d->aRenderMode->setItems( renderModes );
     d->aRenderMode->setCurrentItem( Okular::Settings::renderMode() );

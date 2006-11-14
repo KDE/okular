@@ -231,7 +231,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3" >
      <property name="title" >
-      <string>Rendering Options</string>
+      <string>View Options</string>
      </property>
      <layout class="QVBoxLayout" >
       <property name="margin" >

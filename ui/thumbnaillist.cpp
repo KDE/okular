@@ -598,9 +598,11 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
 
         if ( !m_visibleRect.isNull() )
         {
-            p.setPen( QPen( QBrush( Qt::red ), 2 ) );
-            p.setBrush( Qt::NoBrush );
+            p.save();
+            p.setPen( QColor( 255, 255, 0, 200 ) );
+            p.setBrush( QColor( 0, 0, 0, 100 ) );
             p.drawRect( m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ) );
+            p.restore();
         }
 
         // draw the bookmark overlay on the top-right corner

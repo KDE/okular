@@ -592,7 +592,11 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
+#ifdef HAVE_POPPLER_HEAD
+    page->setImage( request->id(), p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+#else
     page->setImage( request->id(), p->splashRenderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+#endif
     
     if ( genObjectRects )
     {
@@ -1277,7 +1281,11 @@ void PDFPixmapGeneratorThread::run()
     if ( !d->m_textList.isEmpty() )
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
+#ifdef HAVE_POPPLER_HEAD
+    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, (Poppler::Page::Rotation)0 ) );
+#else
     d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)0 ) );
+#endif
     
     if ( genObjectRects )
     {

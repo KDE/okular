@@ -523,7 +523,7 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                         if(m_maxuniqueNum<uniqID)
                             m_maxuniqueNum=uniqID;
                     }
-                    
+
                     kDebug()<<"astario:  restored annot:"<<annotation->uniqueName<<endl;
                 }
                 else
@@ -565,10 +565,6 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
     // add annotations info if has got any
     if ( !m_annotations.isEmpty() )
     {
-#if 0
-        struct timeval ts, te;
-        gettimeofday( &ts, NULL );
-#endif
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );
 
@@ -592,12 +588,6 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
         // append the annotationList element if annotations have been set
         if ( annotListElement.hasChildNodes() )
             pageElement.appendChild( annotListElement );
-#if 0
-        gettimeofday( &te, NULL );
-        double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
-        double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-        kDebug() << "annots: XML Save Time: " << (endTime-startTime)*1000.0 << "ms" << endl;
-#endif
     }
 
     // append the page element only if has children

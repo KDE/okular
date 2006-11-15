@@ -24,9 +24,6 @@
 #include "rotationjob.h"
 #include "settings.h"
 
-// temp includes
-#include <sys/time.h>
-
 using namespace Okular;
 
 class TextSelection;
@@ -256,9 +253,6 @@ const Link * Page::getPageAction( PageAction act ) const
 
 void Page::setImage( int id, const QImage &image )
 {
-    QTime time;
-    time.start();
-
     m_images[ id ] = image;
 
     if ( m_rotated_images.contains( id ) )
@@ -498,8 +492,9 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
         // parse annotationList child element
         if ( childElement.tagName() == "annotationList" )
         {
-             struct timeval ts, te;
-             gettimeofday( &ts, NULL );
+            QTime time;
+            time.start();
+
             // iterate over all annotations
             QDomNode annotationNode = childElement.firstChild();
             while( annotationNode.isElement() )
@@ -529,10 +524,7 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                 else
                     kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
             }
-             gettimeofday( &te, NULL );
-             double startTime = (double)ts.tv_sec + ((double)ts.tv_usec) / 1000000.0;
-             double endTime = (double)te.tv_sec + ((double)te.tv_usec) / 1000000.0;
-             kDebug() << "annots: XML Load time: " << (endTime-startTime)*1000.0 << "ms" << endl;
+            kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
         }
 
         // parse bookmark child element

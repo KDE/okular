@@ -223,7 +223,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
         // 4B.1. draw the page pixmap: normal or scaled
         if ( image.width() == scaledWidth && image.height() == scaledHeight )
-            cropImageOnImage( backImage, image, limits );
+        {
+            if ( limits == QRect( 0, 0, image.width(), image.height() ) )
+                backImage = image;
+            else
+                backImage = image.copy( limits );
+        }
         else
             scaleImageOnImage( backImage, image, scaledWidth, scaledHeight, limits );
 
@@ -655,24 +660,6 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     delete unbufferedAnnotations;
 }
 
-
-/** Private Helpers :: Pixmap conversion **/
-void PagePainter::cropImageOnImage( QImage & dest, const QImage &src, const QRect & r )
-{
-    // handle quickly the case in which the whole pixmap has to be converted
-    if ( r == QRect( 0, 0, src.width(), src.height() ) )
-    {
-        dest = src;
-    }
-    // else copy a portion of the src to an internal pixmap (smaller) and convert it
-    else
-    {
-        QImage croppedImage( r.width(), r.height(), QImage::Format_ARGB32 );
-        QPainter p( &croppedImage );
-        p.drawImage( 0, 0, src, r.left(), r.top(), r.width(), r.height() );
-        dest = croppedImage;
-    }
-}
 
 void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )

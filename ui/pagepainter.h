@@ -37,10 +37,6 @@ class PagePainter
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
     private:
-        // create an image taking the 'cropRect' portion of an image.
-        // the cropRect must be inside the source image.
-        static void cropImageOnImage( QImage & dest, const QImage &src, const QRect & cropRect );
-
         // create an image taking the 'cropRect' portion of an image scaled
         // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside
         // the QRect(0,0, scaledWidth,scaledHeight)

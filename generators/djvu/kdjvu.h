@@ -210,8 +210,12 @@ class KDjVu : public QObject
 
         /**
          * Reads the links and the annotations for the page \p pageNum
+         *
+         * For both \p links and \p annotations , you can pass either a valid pointer
+         * (in case you want to extract that kind of information), or a null pointer
+         * (if you don't want that information).
          */
-        void linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links, QList<KDjVu::Annotation*>& annotations ) const;
+        void linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links, QList<KDjVu::Annotation*> *annotations ) const;
 
         // image handling
         /**

@@ -155,8 +155,7 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
     m_request->page()->setImage( m_request->id(), img );
 
     QList<KDjVu::Link*> links;
-    QList<KDjVu::Annotation*> annots;
-    m_djvu->linksAndAnnotationsForPage( page, links, annots );
+    m_djvu->linksAndAnnotationsForPage( page, &links, 0 );
     if ( links.count() > 0 )
     {
         QLinkedList<Okular::ObjectRect *> rects;
@@ -252,78 +251,6 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
         if ( rects.count() > 0 )
             m_request->page()->setObjectRects( rects );
     }
-    m_request->page()->deleteAnnotations();
-    if ( annots.count() > 0 )
-    {
-        QList<KDjVu::Annotation*>::ConstIterator it = annots.constBegin();
-        QList<KDjVu::Annotation*>::ConstIterator itEnd = annots.constEnd();
-        for ( ; it != itEnd; ++it )
-        {
-            KDjVu::Annotation *ann = (*it);
-            Okular::Annotation *newann = 0;
-            const KDjVu::Page* p = m_djvu->pages().at( page );
-            int width = p->width();
-            int height = p->height();
-            bool scape_orientation = false; // hack by tokoe, should always create default page
-            if ( scape_orientation )
-                qSwap( width, height );
-            switch ( ann->type() )
-            {
-                case KDjVu::Annotation::TextAnnotation:
-                {
-                    KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
-                    Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
-                    // boundary
-                    QRect rect( QPoint( txtann->point().x(), height - txtann->point().y() - txtann->size().height() ), txtann->size() );
-                    newtxtann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, width, height, 0 ), width, height );
-                    // type
-                    newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
-                    newtxtann->style.opacity = txtann->color().alphaF();
-                    // FIXME remove once the annotation text handling is fixed
-                    newtxtann->inplaceText = ann->comment();
-                    newann = newtxtann;
-                    break;
-                }
-                case KDjVu::Annotation::LineAnnotation:
-                {
-                    KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
-                    Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
-                    // boundary
-                    QPoint a( lineann->point().x(), height - lineann->point().y() );
-                    QPoint b( lineann->point2().x(), height - lineann->point2().y() );
-                    QRect rect = QRect( a, b ).normalized();
-                    newlineann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, width, height, 0 ), width, height );
-                    // line points
-                    newlineann->linePoints.append( Okular::NormalizedPoint( a.x(), a.y(), width, height ) );
-                    newlineann->linePoints.append( Okular::NormalizedPoint( b.x(), b.y(), width, height ) );
-                    // arrow?
-                    if ( lineann->isArrow() )
-                        newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
-                    // width
-                    newlineann->style.width = lineann->width();
-                    newann = newlineann;
-                    break;
-                }
-            }
-            if ( newann )
-            {
-                // setting the common parameters
-                newann->style.color = ann->color();
-                newann->contents = ann->comment();
-                // creating an id as name for the annotation
-                QString uid = QUuid::createUuid().toString();
-                uid.remove( 0, 1 );
-                uid.chop( 1 );
-                uid.remove( QLatin1Char( '-' ) );
-                newann->uniqueName = uid;
-
-                // adding the newly converted annotation to the page
-                m_request->page()->addAnnotation( newann );
-            }
-            // delete the annotations as soon as we process them
-            delete ann;
-        }
-    }
 
     ready = true;
     signalRequestDone( m_request );
@@ -346,6 +273,74 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
             qSwap( w, h );
         Okular::Page *page = new Okular::Page( i, w, h, p->orientation() + rotation );
         pagesVector[i] = page;
+
+        QList<KDjVu::Annotation*> annots;
+        m_djvu->linksAndAnnotationsForPage( i, 0, &annots );
+        if ( annots.count() > 0 )
+        {
+            QList<KDjVu::Annotation*>::ConstIterator it = annots.constBegin();
+            QList<KDjVu::Annotation*>::ConstIterator itEnd = annots.constEnd();
+            for ( ; it != itEnd; ++it )
+            {
+                KDjVu::Annotation *ann = (*it);
+                Okular::Annotation *newann = 0;
+                switch ( ann->type() )
+                {
+                    case KDjVu::Annotation::TextAnnotation:
+                    {
+                        KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
+                        Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
+                        // boundary
+                        QRect rect( QPoint( txtann->point().x(), h - txtann->point().y() - txtann->size().height() ), txtann->size() );
+                        newtxtann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h );
+                        // type
+                        newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
+                        newtxtann->style.opacity = txtann->color().alphaF();
+                        // FIXME remove once the annotation text handling is fixed
+                        newtxtann->inplaceText = ann->comment();
+                        newann = newtxtann;
+                        break;
+                    }
+                    case KDjVu::Annotation::LineAnnotation:
+                    {
+                        KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
+                        Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
+                        // boundary
+                        QPoint a( lineann->point().x(), h - lineann->point().y() );
+                        QPoint b( lineann->point2().x(), h - lineann->point2().y() );
+                        QRect rect = QRect( a, b ).normalized();
+                        newlineann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h );
+                        // line points
+                        newlineann->linePoints.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
+                        newlineann->linePoints.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
+                        // arrow?
+                        if ( lineann->isArrow() )
+                            newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
+                        // width
+                        newlineann->style.width = lineann->width();
+                        newann = newlineann;
+                        break;
+                    }
+                }
+                if ( newann )
+                {
+                    // setting the common parameters
+                    newann->style.color = ann->color();
+                    newann->contents = ann->comment();
+                    // creating an id as name for the annotation
+                    QString uid = QUuid::createUuid().toString();
+                    uid.remove( 0, 1 );
+                    uid.chop( 1 );
+                    uid.remove( QLatin1Char( '-' ) );
+                    newann->uniqueName = uid;
+
+                    // adding the newly converted annotation to the page
+                    page->addAnnotation( newann );
+                }
+                // delete the annotations as soon as we process them
+                delete ann;
+            }
+        }
     }
 }
 

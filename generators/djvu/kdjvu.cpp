@@ -519,9 +519,9 @@ const QDomDocument * KDjVu::documentBookmarks() const
     return d->m_docBookmarks;
 }
 
-void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links, QList<KDjVu::Annotation*>& annotations ) const
+void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links, QList<KDjVu::Annotation*> *annotations ) const
 {
-    if ( ( pageNum < 0 ) || ( pageNum >= d->m_pages.count() ) )
+    if ( ( pageNum < 0 ) || ( pageNum >= d->m_pages.count() ) || ( !links && !annotations ) )
         return;
 
     miniexp_t annots;
@@ -531,8 +531,10 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
     if ( !miniexp_listp( annots ) )
         return;
 
-    QList<KDjVu::Link*> ret;
-    QList<KDjVu::Annotation*> anns;
+    if ( links )
+        links->clear();
+    if ( annotations )
+        annotations->clear();
 
     int l = miniexp_length( annots );
     for ( int i = 0; i < l; ++i )
@@ -550,9 +552,10 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
         KDjVu::Link* link = 0;
         KDjVu::Annotation* ann = 0;
         miniexp_t urlexp = miniexp_nth( 1, cur );
-        if ( type == QLatin1String( "rect" ) ||
-             type == QLatin1String( "oval" ) ||
-             type == QLatin1String( "poly" ) )
+        if ( links &&
+             ( type == QLatin1String( "rect" ) ||
+               type == QLatin1String( "oval" ) ||
+               type == QLatin1String( "poly" ) ) )
         {
             if ( miniexp_stringp( urlexp ) )
             {
@@ -577,8 +580,9 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
                 link = ulink;
             }
         }
-        else if ( type == QLatin1String( "text" ) ||
-                  type == QLatin1String( "line" ) )
+        else if ( annotations &&
+                  ( type == QLatin1String( "text" ) ||
+                    type == QLatin1String( "line" ) ) )
         {
             miniexp_t area = miniexp_nth( 3, cur );
             int a = miniexp_to_int( miniexp_nth( 1, area ) );
@@ -600,7 +604,7 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
             ann->m_point = QPoint( a, b );
             ann->m_comment = QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, cur ) ) );
         }
-        if ( link )
+        if ( link /* safety check */ && links )
         {
             link->m_area = KDjVu::Link::UnknownArea;
             miniexp_t area = miniexp_nth( 3, cur );
@@ -631,9 +635,9 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
             }
 
             if ( link->m_area != KDjVu::Link::UnknownArea )
-                ret.append( link );
+                links->append( link );
         }
-        else if ( ann )
+        else if ( ann /* safety check */ && annotations )
         {
             if ( type == QLatin1String( "text" ) )
             {
@@ -671,11 +675,9 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*>& links,
                         lineann->m_width = miniexp_to_int( miniexp_nth( 1, curelem ) );
                 }
             }
-            anns.append( ann );
+            annotations->append( ann );
         }
     }
-    links = ret;
-    annotations = anns;
 }
 
 const QVector<KDjVu::Page*> &KDjVu::pages() const

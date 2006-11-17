@@ -15,12 +15,13 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+IF (NOT WIN32)
+   INCLUDE(UsePkgConfig)
 
-INCLUDE(UsePkgConfig)
+   PKGCONFIG(poppler-qt4 _PopplerQt4IncDir _PopplerQt4LinkDir _PopplerQt4LinkFlags _PopplerQt4Cflags)
   
-PKGCONFIG(poppler-qt4 _PopplerQt4IncDir _PopplerQt4LinkDir _PopplerQt4LinkFlags _PopplerQt4Cflags)
-  
-set(POPPLER_QT4_DEFINITIONS ${_PopplerQt4Cflags})
+   set(POPPLER_QT4_DEFINITIONS ${_PopplerQt4Cflags})
+ENDIF(NOT WIN32)
 
 FIND_PATH(POPPLER_QT4_INCLUDE_DIR poppler-qt4.h
   ${_PopplerQt4IncDir}/poppler

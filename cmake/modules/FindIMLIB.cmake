@@ -21,6 +21,7 @@ IF (DEFINED CACHED_IMLIB)
 
 ELSE (DEFINED CACHED_IMLIB)
 
+IF (NOT WIN32)
   # use pkg-config to get the directories and then use these values
   # in the FIND_PATH() and FIND_LIBRARY() calls
   INCLUDE(UsePkgConfig)
@@ -28,7 +29,8 @@ ELSE (DEFINED CACHED_IMLIB)
   PKGCONFIG(imlib _IMLIBIncDir _IMLIBLinkDir _IMLIBLinkFlags _IMLIBCflags)
   
   set(IMLIB_DEFINITIONS ${_IMLIBCflags})
-  
+ENDIF (NOT WIN32) 
+
   FIND_PATH(IMLIB_INCLUDE_DIR Imlib.h
     ${_IMLIBIncDir}
     /usr/include

@@ -791,7 +791,6 @@ void Part::slotPrintPreview()
 
     printer.setMinMax(1, m_document->pages());
     printer.setPreviewOnly( true );
-    printer.setMargins(0, 0, 0, 0);
 
     // if some pages are landscape and others are not the most common win as kprinter does
     // not accept a per page setting
@@ -923,7 +922,6 @@ void Part::slotPrint()
     printer.setPageSelection(KPrinter::ApplicationSide);
     printer.setMinMax(1, m_document->pages());
     printer.setCurrentPage(m_document->currentPage()+1);
-    printer.setMargins(0, 0, 0, 0);
 
     // if some pages are landscape and others are not the most common win as kprinter does
     // not accept a per page setting

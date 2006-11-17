@@ -409,14 +409,21 @@ void PDFGenerator::putFontInfo(KListView *list)
 bool PDFGenerator::print( KPrinter& printer )
 {
     QString ps = printer.option("PageSize");
+    int paperWidth, paperHeight;
+    int marginTop, marginLeft, marginRight, marginBottom;
+    marginTop = (int)printer.option("kde-margin-top").toDouble();
+    marginLeft = (int)printer.option("kde-margin-left").toDouble();
+    marginRight = (int)printer.option("kde-margin-right").toDouble();
+    marginBottom = (int)printer.option("kde-margin-bottom").toDouble();
+
     if (ps.find(QRegExp("w\\d+h\\d+")) == 0)
     {
         // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
         // remove the w
         ps = ps.mid(1);
         int hPos = ps.find("h");
-        globalParams->setPSPaperWidth(ps.left(hPos).toInt());
-        globalParams->setPSPaperHeight(ps.mid(hPos+1).toInt());
+        paperWidth = ps.left(hPos).toInt();
+        paperHeight = ps.mid(hPos+1).toInt();
     }
     else
     {
@@ -426,16 +433,31 @@ bool PDFGenerator::print( KPrinter& printer )
         dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
 
         QPaintDeviceMetrics metrics(&dummy);
-        globalParams->setPSPaperWidth(metrics.width());
-        globalParams->setPSPaperHeight(metrics.height());
+        paperWidth = metrics.width();
+        paperHeight = metrics.height();
     }
 
     KTempFile tf( QString::null, ".ps" );
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS);
+    globalParams->setPSPaperWidth(paperWidth);
+    globalParams->setPSPaperHeight(paperHeight);
+    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
 
     if (psOut->isOk())
     {
         std::list<int> pages;
+
+        double xScale = ((double)paperWidth - (double)marginLeft - (double)marginRight) / (double)paperWidth;
+        double yScale = ((double)paperHeight - (double)marginBottom - (double)marginTop) / (double)paperHeight;
+
+        if ( abs((int)(xScale * 100) - (int)(yScale * 100)) > 5 ) {
+            int result = KMessageBox::questionYesNo(0,
+                                       i18n("The margins you specified are changing the page aspect ratio. Do you want to print with the aspect ratio changed or do you want the margins to be adapted so that aspect ratio is preserved?"),
+                                       i18n("Aspect ratio change"),
+                                       i18n("Print with specified margins"),
+                                       i18n("Print adapting margins to keep aspect ratio"),
+                                       "kpdfStrictlyObeyMargins");
+            if (result == KMessageBox::Yes) psOut->setScale(xScale, yScale);
+        }
 
         if (!printer.previewOnly())
         {

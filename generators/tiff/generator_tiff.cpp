@@ -11,9 +11,11 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qlist.h>
+#include <qpainter.h>
 #include <qthread.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kprinter.h>
 
 #include "core/page.h"
 #include "generator_tiff.h"
@@ -328,6 +330,49 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
         pagesVector[i] = page;
 
     }
+}
+
+bool TIFFGenerator::print( KPrinter& printer )
+{
+    uint32 width = 0;
+    uint32 height = 0;
+
+    tdir_t dirs = TIFFNumberOfDirectories( d->tiff );
+
+    QPainter p( &printer );
+
+    for ( tdir_t i = 0; i < dirs; ++i )
+    {
+        if ( !TIFFSetDirectory( d->tiff, i ) )
+            continue;
+
+        if ( TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width ) != 1 ||
+             TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
+            continue;
+
+        QImage image( width, height, QImage::Format_RGB32 );
+        uint32 * data = (uint32 *)image.bits();
+
+        // read data
+        if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, ORIENTATION_TOPLEFT ) != 0 )
+        {
+            // an image read by ReadRGBAImage is ABGR, we need ARGB, so swap red and blue
+            uint32 size = width * height;
+            for ( uint32 i = 0; i < size; ++i )
+            {
+                uint32 red = ( data[i] & 0x00FF0000 ) >> 16;
+                uint32 blue = ( data[i] & 0x000000FF ) << 16;
+                data[i] = ( data[i] & 0xFF00FF00 ) + red + blue;
+            }
+        }
+
+        if ( i != 0 )
+            printer.newPage();
+
+        p.drawImage( 0, 0, image );
+    }
+
+    return true;
 }
 
 #include "generator_tiff.moc"

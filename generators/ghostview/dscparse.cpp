@@ -1692,7 +1692,7 @@ dsc_parse_document_media(CDSC *dsc)
 	lmedia.name = lmedia.colour = lmedia.type = (char *)NULL;
 	lmedia.width = lmedia.height = lmedia.weight = 0;
 	lmedia.mediabox = (CDSCBBOX *)NULL;
-	lmedia.name = dsc_copy_string(name, sizeof(name),
+	lmedia.name = dsc_copy_string(name, sizeof(name)-1,
 		dsc->line+n, dsc->line_length-n, &i);
 	n+=i;
 	if (i)
@@ -1705,11 +1705,11 @@ dsc_parse_document_media(CDSC *dsc)
 	    lmedia.weight = dsc_get_real(dsc->line+n, dsc->line_length-n, &i);
 	n+=i;
 	if (i)
-	    lmedia.colour = dsc_copy_string(colour, sizeof(colour),
+	    lmedia.colour = dsc_copy_string(colour, sizeof(colour)-1,
 		dsc->line+n, dsc->line_length-n, &i);
 	n+=i;
 	if (i)
-	    lmedia.type = dsc_copy_string(type, sizeof(type),
+	    lmedia.type = dsc_copy_string(type, sizeof(type)-1,
 		dsc->line+n, dsc->line_length-n, &i);
 
 	if (i==0)
@@ -3363,7 +3363,7 @@ dsc_parse_page(CDSC *dsc)
     int page_number;
 
     p = dsc->line + 7;
-    pl = dsc_copy_string(page_label, sizeof(page_label), p, dsc->line_length-7, &i);
+    pl = dsc_copy_string(page_label, sizeof(page_label)-1, p, dsc->line_length-7, &i);
     if (pl == NULL)
 	return CDSC_ERROR;
     p += i;

@@ -310,6 +310,47 @@ KIcon ExportFormat::icon() const
     return d->mIcon;
 }
 
+class SourceReference::Private
+{
+    public:
+        Private()
+            : row( 0 ), column( 0 )
+        {
+        }
+
+        QString filename;
+        int row;
+        int column;
+};
+
+SourceReference::SourceReference( const QString &fileName, int row, int column )
+    : d( new Private )
+{
+    d->filename = fileName;
+    d->row = row;
+    d->column = column;
+}
+
+SourceReference::~SourceReference()
+{
+    delete d;
+}
+
+QString SourceReference::fileName() const
+{
+    return d->filename;
+}
+
+int SourceReference::row() const
+{
+    return d->row;
+}
+
+int SourceReference::column() const
+{
+    return d->column;
+}
+
 kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )
 {
     QString s = QString( "%1 PixmapRequest (id: %2) (%3x%4), prio %5, pageNo %6" )

@@ -141,6 +141,17 @@
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="ExternalEditor" type="Enum" >
+   <default>Kate</default>
+   <choices>
+    <choice name="Kate" />
+    <choice name="Scite" />
+    <choice name="Custom" />
+   </choices>
+  </entry>
+  <entry key="ExternalEditorCommand" type="String">
+    <default>kate --use --line %l --column %c</default>
+  </entry>
  </group>
  <group name="Main View" >
   <entry key="ShowLeftPanel" type="Bool" >

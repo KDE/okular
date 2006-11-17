@@ -13,6 +13,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMap>
+#include <QtCore/QProcess>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
@@ -1427,6 +1428,46 @@ void Document::processLink( const Link * link )
             // TODO this (Movie link)
             break;
     }
+}
+
+void Document::processSourceReference( const SourceReference * ref )
+{
+    if ( !ref )
+        return;
+
+    static QHash< int, QString > editors;
+    // init the editors table if empty (on first run, usually)
+    if ( editors.isEmpty() )
+    {
+        editors[ Settings::EnumExternalEditor::Kate ] =
+            QLatin1String( "kate --use --line %l --column %c" );
+        editors[ Settings::EnumExternalEditor::Scite ] =
+            QLatin1String( "scite %f \"-goto:%l,%c\"" );
+    }
+
+    QHash< int, QString >::iterator it = editors.find( Settings::externalEditor() );
+    QString p;
+    if ( it != editors.end() )
+        p = *it;
+    else
+        p = Settings::externalEditorCommand();
+    // custom editor not yet configured
+    if ( p.isEmpty() )
+        return;
+
+    // replacing the placeholders
+    p.replace( QLatin1String( "%l" ), QString::number( ref->row() ) );
+    p.replace( QLatin1String( "%c" ), QString::number( ref->column() ) );
+    if ( p.indexOf( QLatin1String( "%f" ) ) > -1 )
+      p.replace( QLatin1String( "%f" ), ref->fileName() );
+    else
+      p.append( QLatin1String( " " ) + ref->fileName() );
+
+    // paranoic checks
+    if ( p.isEmpty() || p.trimmed() == ref->fileName() )
+        return;
+
+    QProcess::startDetached( p );
 }
 
 bool Document::print( KPrinter &printer )

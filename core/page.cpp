@@ -69,6 +69,7 @@ Page::~Page()
     deleteHighlights();
     deleteAnnotations();
     deleteTextSelections();
+    deleteSourceReferences();
     delete m_text;
     delete m_transition;
 }
@@ -334,6 +335,13 @@ void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
     m_textSelections = hr;
 }
 
+void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRects )
+{
+    deleteSourceReferences();
+    foreach( SourceRefObjectRect * rect, refRects )
+        m_rects << rect;
+}
+
 void Page::addAnnotation( Annotation * annotation )
 {
     //uniqueName: okular-PAGENUM-ID
@@ -467,6 +475,11 @@ void Page::deleteTextSelections()
         delete m_textSelections;
         m_textSelections = 0;
     }
+}
+
+void Page::deleteSourceReferences()
+{
+    deleteObjectRects( m_rects, QSet<ObjectRect::ObjectType>() << ObjectRect::SourceRef );
 }
 
 void Page::deleteAnnotations()

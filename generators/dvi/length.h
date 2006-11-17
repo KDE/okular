@@ -114,7 +114,7 @@ class Length
 
   /** @returns the length in pixel. The parameter @param res is the resolution of the
       used device in DPI. */
-  int getLength_in_pixel(double res) { return int(getLength_in_inch() * res); }
+  int getLength_in_pixel(double res) const { return int(getLength_in_inch() * res); }
 
   /** @returns true is lengths differ by no more than 2mm */
   bool isNearlyEqual(const Length &o) const {return fabs(length_in_mm-o.getLength_in_mm()) <= 2.0;}

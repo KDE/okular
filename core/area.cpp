@@ -14,6 +14,7 @@
 
 #include "annotations.h"
 #include "area.h"
+#include "generator.h"
 #include "link.h"
 
 using namespace Okular;
@@ -188,6 +189,8 @@ ObjectRect::~ObjectRect()
 
     if ( m_objectType == Link )
         delete static_cast<Okular::Link*>( m_pointer );
+    else if ( m_objectType == SourceRef )
+        delete static_cast<Okular::SourceReference*>( m_pointer );
     else
         kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }
@@ -218,5 +221,22 @@ AnnotationObjectRect::~AnnotationObjectRect()
     // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
     m_pointer = 0;
+}
+
+/** class SourceRefObjectRect **/
+
+SourceRefObjectRect::SourceRefObjectRect( const NormalizedPoint& point, void * srcRef )
+    : ObjectRect( point.x, point.y, .0, .0, false, SourceRef, srcRef ), m_point( point )
+{
+}
+
+QRect SourceRefObjectRect::boundingRect( double /*xScale*/, double /*yScale*/ ) const
+{
+    return QRect();
+}
+
+bool SourceRefObjectRect::contains( double x, double y, double xScale, double yScale ) const
+{
+    return ( pow( x - m_point.x, 2 ) + pow( y - m_point.y, 2 ) ) < ( pow( (double)7/xScale, 2 ) + pow( (double)7/yScale, 2 ) );
 }
 

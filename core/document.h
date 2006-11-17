@@ -44,6 +44,7 @@ class Link;
 class NotifyRequest;
 class Page;
 class PixmapRequest;
+class SourceReference;
 class VisiblePageRect;
 
 /** IDs for seaches. Globally defined here. **/
@@ -148,6 +149,7 @@ class OKULAR_EXPORT Document : public QObject
 
         void toggleBookmark( int page );
         void processLink( const Link * link );
+        void processSourceReference( const SourceReference * ref );
         bool canConfigurePrinter() const;
         bool print( KPrinter &printer );
         // notifications sent by generator

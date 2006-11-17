@@ -84,7 +84,7 @@ class OKULAR_EXPORT ObjectRect
 {
     public:
         // definition of the types of storable objects
-        enum ObjectType { Link, Image, OAnnotation };
+        enum ObjectType { Link, Image, OAnnotation, SourceRef };
 
         // default constructor: initialize all parameters
         ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType typ, void * obj );
@@ -117,6 +117,18 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
 
     private:
         Annotation * m_ann;
+};
+
+class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
+{
+    public:
+        SourceRefObjectRect( const NormalizedPoint& point, void * scrRef );
+
+        virtual QRect boundingRect( double xScale, double yScale ) const;
+        virtual bool contains( double x, double y, double xScale, double yScale ) const;
+
+    private:
+        NormalizedPoint m_point;
 };
 
 /**

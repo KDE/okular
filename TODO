@@ -20,6 +20,9 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince
 
 In progress [working on]:
+-> inverse search (BR113191)
+   find with an usability expert the "best" way to activate such a link
+   provide a configuration widget to choose the editor and configure a custom one
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
 -> thumbnailslist: show Viewport in(blended/contour)

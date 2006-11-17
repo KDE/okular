@@ -415,6 +415,22 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orient
         pagesVector[i] = page;
     }
     kDebug() << "pagesVector successfully inizialized ! " << endl;
+
+    // filling the pages with the source references rects
+    const QVector<DVI_SourceFileAnchor>& sourceAnchors = m_dviRenderer->sourceAnchors();
+    QVector< QLinkedList< Okular::SourceRefObjectRect * > > refRects( numofpages );
+    foreach ( const DVI_SourceFileAnchor& sfa, sourceAnchors )
+    {
+        if ( sfa.page < 1 || (int)sfa.page > numofpages )
+            continue;
+
+        Okular::NormalizedPoint p( 0.5, (double)sfa.distance_from_top.getLength_in_pixel( Okular::Utils::getDpiY() ) / (double)pageRequiredSize.height() );
+        Okular::SourceReference * sourceRef = new Okular::SourceReference( sfa.fileName, sfa.line );
+        refRects[ sfa.page - 1 ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
+    }
+    for ( int i = 0; i < refRects.size(); ++i )
+        if ( !refRects.at(i).isEmpty() )
+            pagesVector[i]->setSourceReferences( refRects.at(i) );
 }
 
 #include "generator_dvi.moc"

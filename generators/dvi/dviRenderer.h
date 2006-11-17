@@ -172,6 +172,8 @@ public slots:
 
   QVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
 
+  const QVector<DVI_SourceFileAnchor>& sourceAnchors() { return sourceHyperLinkAnchors; }
+
 private slots:
   /** This method shows a dialog that tells the user that source
       information is present, and gives the opportunity to open the

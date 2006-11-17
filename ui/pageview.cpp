@@ -1420,6 +1420,15 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
                 else
                 {
+                    // TODO: find a better way to activate the source reference "links"
+                    // for the moment they are activated with Shift + left click
+                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->getObjectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->width(), pageItem->height() ) : 0;
+                    if ( rect )
+                    {
+                        const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->pointer() );
+                        d->document->processSourceReference( ref );
+                    }
+#if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
                     rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
@@ -1434,6 +1443,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
                         d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
                     }*/
+#endif
                 }
             }
             else if ( rightButton )

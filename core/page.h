@@ -28,6 +28,7 @@ namespace Okular {
 
 class Annotation;
 class PageTransition;
+class SourceReference;
 class TextPage;
 class TextSelection;
 
@@ -95,6 +96,7 @@ class OKULAR_EXPORT Page : public QObject
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
         void setTextSelections( RegularAreaRect *r, const QColor & color );
+        void setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRects );
         void addAnnotation( Annotation * annotation );
         void modifyAnnotation( Annotation * newannotation );
         bool removeAnnotation( Annotation * annotation );
@@ -106,6 +108,7 @@ class OKULAR_EXPORT Page : public QObject
         void deleteRects();
         void deleteHighlights( int s_id = -1 );
         void deleteTextSelections();
+        void deleteSourceReferences();
         void deleteAnnotations();
 
         // operations to save/restore page state (by Document)

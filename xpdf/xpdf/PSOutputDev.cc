@@ -2570,7 +2570,7 @@ void PSOutputDev::startPage(int pageNum, GfxState *state) {
       writePSFmt("%g %g translate\n", tx, ty);
     }
     if (xScale != 1 || yScale != 1) {
-      writePSFmt("%0.4f %0.4f scale\n", xScale, xScale);
+      writePSFmt("%0.4f %0.4f scale\n", xScale, yScale);
     }
     if (clipLLX0 < clipURX0 && clipLLY0 < clipURY0) {
       writePSFmt("%g %g %g %g re W\n",

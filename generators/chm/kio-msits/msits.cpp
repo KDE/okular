@@ -73,7 +73,7 @@ ProtocolMSITS::~ProtocolMSITS()
 // A simple stat() wrapper
 static bool isDirectory ( const QString & filename )
 {
-	return filename[filename.length() - 1] == '/';
+    return filename.endsWith( '/' );
 }
 
 

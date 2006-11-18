@@ -154,7 +154,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     d->url = url;
     d->docFileName = docFile;
     QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-    fn = "kpdf/" + QString::number(fileReadTest.size()) + "." + fn + ".xml";
+    fn = "kpdf/" + QString::number(fileReadTest.size()) + '.' + fn + ".xml";
     fileReadTest.close();
     d->xmlFileName = KStandardDirs::locateLocal( "data", fn );
 
@@ -305,7 +305,7 @@ QString Document::getXMLFile()
     if (generator)
         return generator->getXMLFile();
    
-    return QString::null;
+    return QString();
 }
 
 void Document::setupGUI(KActionCollection* ac, QToolBox* tBox )
@@ -1826,7 +1826,7 @@ void Document::loadDocumentInfo()
 QString Document::giveAbsolutePath( const QString & fileName )
 {
     if ( !d->url.isValid() )
-        return QString::null;
+        return QString();
 
     return d->url.upUrl().url() + fileName;
 }

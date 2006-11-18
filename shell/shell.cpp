@@ -242,7 +242,7 @@ QStringList* Shell::fileFormats()
                 }
 	       	comment=mimePtr->comment();
 		if (! comment.contains("Unknown"))
-	                supportedPattern->append(extensions.join(" ") + "|" + comment);
+	                supportedPattern->append(extensions.join(" ") + '|' + comment);
                 allExt+=extensions.join(" ");
                 }
             }

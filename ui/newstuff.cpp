@@ -242,7 +242,7 @@ class ItemsView : public KHTMLPart
                 QString clickString = "window.location.href=\"item:" + idString + "\";";
                 // open Installed item
                 QString openInstalledItem = item->installed() ? "window.location.href=\"itemload:" + idString + "\";" : "";
-		QString openInstalledItemStyles = item->installed() ? "class = itemLoad title='"+ i18n ( "Click for Open %1", titleString )+"'" : "";
+		QString openInstalledItemStyles = item->installed() ? "class = itemLoad title='"+ i18n ( "Click for Open %1", titleString ) + ''' : "";
 
 
                 // precalc the string for displaying stars (normal+grayed)

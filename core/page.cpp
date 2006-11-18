@@ -347,7 +347,7 @@ void Page::addAnnotation( Annotation * annotation )
     if(annotation->uniqueName.isEmpty())
     {
         annotation->uniqueName = "okular-";
-        annotation->uniqueName += ( QString::number(m_number) + "-" +
+        annotation->uniqueName += ( QString::number(m_number) + '-' +
                 QString::number(++m_maxuniqueNum) );
         kDebug()<<"astario:     inc m_maxuniqueNum="<<m_maxuniqueNum<<endl;
     }

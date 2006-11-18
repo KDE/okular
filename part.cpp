@@ -555,7 +555,7 @@ bool Part::slotImportPSFile()
         return true;
     }
 
-    m_temporaryLocalFile = QString::null;
+    m_temporaryLocalFile.clear();
     return false;
 }
 
@@ -674,7 +674,7 @@ bool Part::closeUrl()
     if (!m_temporaryLocalFile.isNull())
     {
         QFile::remove( m_temporaryLocalFile );
-        m_temporaryLocalFile = QString::null;
+        m_temporaryLocalFile.clear();
     }
 
     slotHidePresentation();

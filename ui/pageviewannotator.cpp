@@ -429,7 +429,7 @@ class TextSelectorEngine : public AnnotatorEngine
                     selection = newselection;
                 }
             }
-            else if ( type == Release )
+            else if ( type == Release && selection )
             {
                 m_creationCompleted = true;
             }
@@ -455,8 +455,8 @@ class TextSelectorEngine : public AnnotatorEngine
         {
             m_creationCompleted = false;
 
-            // find out annotation's description node
-            if ( m_annotElement.isNull() )
+            // safety checks
+            if ( m_annotElement.isNull() || !selection )
                 return QList< Okular::Annotation* >();
 
             // find out annotation's type

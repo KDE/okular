@@ -34,7 +34,7 @@ namespace Okular {
 class TextSelection
 {
     public:
-    TextSelection (NormalizedPoint &a, NormalizedPoint &b)
+    TextSelection( const NormalizedPoint & a, const NormalizedPoint & b )
     { 
           if (b.y-a.y<0 || (b.y-a.y==0 && b.x-a.x <0))
             direction=1;
@@ -43,7 +43,7 @@ class TextSelection
           cur[0]=a,cur[1]=b;
           it[direction%2]=-1,it[(direction+1)%2]=-1;
     };
-    void end (NormalizedPoint & p) 
+    void end( const NormalizedPoint & p )
     {
       // changing direction as in 2b , assuming the bool->int conversion is correct
       int dir1=direction;
@@ -55,8 +55,8 @@ class TextSelection
     void itE (int p) { it[(direction+1)%2]=p; }
     void itB (int p) { it[(direction)%2]=p; }
     int dir () { return direction; }
-    const NormalizedPoint * start() {return &cur[direction%2];};
-    const NormalizedPoint * end() {return &cur[(direction+1)%2];};
+    NormalizedPoint start() const { return cur[direction%2]; }
+    NormalizedPoint end() const { return cur[(direction+1)%2]; }
     int itB() {return it[direction%2];}
     int itE() {return it[(direction+1)%2];}
     private:

@@ -52,8 +52,10 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
           
         // ending cursor is higher then start cursor, we need to find positions in reverse
         NormalizedRect *tmp=0,*start=0,*end=0;
-        const NormalizedPoint * startC=sel->start();
-        const NormalizedPoint * endC=sel->end();
+        NormalizedPoint startC=sel->start();
+        double startCx=startC.x,startCy=startC.y;
+        NormalizedPoint endC=sel->end();
+        double endCx=endC.x,endCy=endC.y;
         if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
         {
 #ifdef DEBUG_TEXTPAGE
@@ -62,9 +64,9 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
           for (it=0;it<m_words.count();it++)
           {
               tmp=m_words[it]->area;
-              if (tmp->contains(startC->x,startC->y) 
-                  || ( tmp->top <= startC->y && tmp->bottom >= startC->y && tmp->left >= startC->x )
-                  || ( tmp->top >= startC->y))
+              if (tmp->contains(startCx,startCy) 
+                  || ( tmp->top <= startCy && tmp->bottom >= startCy && tmp->left >= startCx )
+                  || ( tmp->top >= startCy))
               {
                   /// we have found the (rx,ry)x(tx,ty)   
                   itB=it;
@@ -90,17 +92,17 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
           for (it=m_words.count()-1; it>=itB;it--)
           {
               tmp=m_words[it]->area;
-              if (tmp->contains(endC->x,endC->y) 
-                  || ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x )
-                  || ( tmp->bottom <= endC->y))
+              if (tmp->contains(endCx,endCy) 
+                  || ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx )
+                  || ( tmp->bottom <= endCy))
               {
                   /// we have found the (ux,uy)x(vx,vy)   
                   itE=it;
 #ifdef DEBUG_TEXTPAGE
                   kWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
-                  kWarning () << "conditions " << tmp->contains(endC->x,endC->y) << " " 
-                    << ( tmp->top <= endC->y && tmp->bottom >= endC->y && tmp->right <= endC->x ) << " " <<
-                    ( tmp->top >= endC->y) << endl;
+                  kWarning () << "conditions " << tmp->contains(endCx,endCy) << " " 
+                    << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
+                    ( tmp->top >= endCy) << endl;
 #endif
 
                   break;

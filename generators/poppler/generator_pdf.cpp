@@ -703,15 +703,13 @@ bool PDFGenerator::print( KPrinter& printer )
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height, marginRight, marginBottom, marginLeft, marginTop, strictMargins))
     {
         docLock.unlock();
-        printer.printFiles(QStringList(tempfilename), true);
-        return true;
+        return printer.printFiles(QStringList(tempfilename), true);
     }
 #else
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
         docLock.unlock();
-        printer.printFiles(QStringList(tempfilename), true);
-        return true;
+        return printer.printFiles(QStringList(tempfilename), true);
     }
 #endif
     else

@@ -101,6 +101,8 @@ class PDFGenerator : public Okular::Generator
         void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the transition information and add it to the page
         void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
+        // load the source references from a pdfsync file
+        void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

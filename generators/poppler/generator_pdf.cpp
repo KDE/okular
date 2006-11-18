@@ -319,6 +319,9 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
 
     loadPages(pagesVector, 0, false);
 
+    if (QFile::exists(filePath + QLatin1String( "sync" )))
+        loadPdfSync(filePath, pagesVector);
+
     // the file has been loaded correctly
     return true;
 }
@@ -1077,6 +1080,137 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
     page->setTransition( transition );
 }
 
+struct pdfsyncpoint
+{
+    QString file;
+    qlonglong x;
+    qlonglong y;
+    int row;
+    int column;
+    int page;
+};
+
+void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*> & pagesVector )
+{
+    QFile f( filePath + QLatin1String( "sync" ) );
+    if ( !f.open( QIODevice::ReadOnly ) )
+        return;
+
+    QTextStream ts( &f );
+    // first row: core name of the pdf output - we skip it
+    ts.readLine();
+    // second row: version string, in the form 'Version %u'
+    QString versionstr = ts.readLine();
+    QRegExp versionre( "Version (\\d+)" );
+    versionre.setCaseSensitivity( Qt::CaseInsensitive );
+    if ( !versionre.exactMatch( versionstr ) )
+        return;
+
+    QHash<int, pdfsyncpoint> points;
+    QString currentfile;
+    int currentpage = -1;
+    QRegExp newfilere( "\\(\\s*([^\\s]+)" );
+    QRegExp linere( "l\\s+(\\d+)\\s+(\\d+)(\\s+(\\d+))?" );
+    QRegExp pagere( "s\\s+(\\d+)" );
+    QRegExp locre( "p\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
+    QRegExp locstarre( "p\\*\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
+
+    QString line;
+    while ( !ts.atEnd() )
+    {
+        line = ts.readLine();
+        if ( line.startsWith( QLatin1Char( 'l' ) ) && linere.exactMatch( line ) )
+        {
+            int id = linere.cap( 1 ).toInt();
+            QHash<int, pdfsyncpoint>::iterator it = points.find( id );
+            if ( it == points.end() )
+            {
+                pdfsyncpoint pt;
+                pt.x = 0;
+                pt.y = 0;
+                pt.row = linere.cap( 2 ).toInt();
+                pt.column = 0; // TODO
+                pt.page = -1;
+                pt.file = currentfile;
+                points[ id ] = pt;
+            }
+        }
+        else if ( line.startsWith( QLatin1Char( 's' ) ) && pagere.exactMatch( line ) )
+        {
+            currentpage = pagere.cap( 1 ).toInt() - 1;
+        }
+        else if ( line.startsWith( QLatin1String( "p*" ) ) && locstarre.exactMatch( line ) )
+        {
+            // TODO
+            kDebug(4651) << "PdfSync: 'p*' line ignored" << endl;
+        }
+        else if ( line.startsWith( QLatin1Char( 'p' ) ) && locre.exactMatch( line ) )
+        {
+            int id = locre.cap( 1 ).toInt();
+            QHash<int, pdfsyncpoint>::iterator it = points.find( id );
+            if ( it != points.end() )
+            {
+                it->x = locre.cap( 2 ).toInt();
+                it->y = locre.cap( 3 ).toInt();
+                it->page = currentpage;
+            }
+        }
+        else if ( line.startsWith( QLatin1Char( '(' ) ) && newfilere.exactMatch( line ) )
+        {
+            QString newfile = newfilere.cap( 1 );
+            if ( currentfile.isEmpty() )
+            {
+                currentfile = newfile;
+            }
+            else
+                kDebug(4651) << "PdfSync: more than one file level: " << newfile << endl;
+        }
+        else if ( line == QLatin1String( ")" ) )
+        {
+            if ( !currentfile.isEmpty() )
+            {
+                currentfile.clear();
+            }
+            else
+                kDebug(4651) << "PdfSync: going one level down: " << currentfile << endl;
+        }
+        else
+            kDebug(4651) << "PdfSync: unknown line format: '" << line << "'" << endl;
+
+    }
+
+    QVector< QLinkedList< Okular::SourceRefObjectRect * > > refRects( pagesVector.size() );
+    foreach ( const pdfsyncpoint& pt, points )
+    {
+        // drop pdfsync points not completely valid
+        if ( pt.page < 0 || pt.page >= pagesVector.size() )
+            continue;
+
+        // maginc numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
+        Okular::NormalizedPoint p(
+            ( pt.x * 72.0 ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
+            ( pt.y * 72.0 ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
+            );
+        QString file;
+        if ( !pt.file.isEmpty() )
+        {
+            file = pt.file;
+            int dotpos = file.lastIndexOf( QLatin1Char( '.' ) );
+            QString ext;
+            if ( dotpos == -1 )
+                file += QString::fromLatin1( ".tex" );
+        }
+        else
+        {
+            file = filePath;
+        }
+        Okular::SourceReference * sourceRef = new Okular::SourceReference( file, pt.row, pt.column );
+        refRects[ pt.page ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
+    }
+    for ( int i = 0; i < refRects.size(); ++i )
+        if ( !refRects.at(i).isEmpty() )
+            pagesVector[i]->setSourceReferences( refRects.at(i) );
+}
 
 
 void PDFGenerator::threadFinished()

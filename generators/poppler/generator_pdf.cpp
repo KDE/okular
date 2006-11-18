@@ -15,6 +15,7 @@
 #include <qtextstream.h>
 #include <kauthorized.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kwallet.h>
 #include <kprinter.h>
@@ -650,6 +651,11 @@ bool PDFGenerator::print( KPrinter& printer )
     int width, height;
     QString ps = printer.option( "PageSize" );
     QRegExp sizere( "w(\\d+)h(\\d+)" );
+    int marginTop, marginLeft, marginRight, marginBottom;
+    marginTop = (int)printer.option("kde-margin-top").toDouble();
+    marginLeft = (int)printer.option("kde-margin-left").toDouble();
+    marginRight = (int)printer.option("kde-margin-right").toDouble();
+    marginBottom = (int)printer.option("kde-margin-bottom").toDouble();
     if ( sizere.exactMatch( ps ) )
     {
         // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
@@ -681,12 +687,33 @@ bool PDFGenerator::print( KPrinter& printer )
     
     docLock.lock();
     // TODO rotation
+#ifdef HAVE_POPPLER_HEAD
+    double xScale = ((double)width - (double)marginLeft - (double)marginRight) / (double)width;
+    double yScale = ((double)height - (double)marginBottom - (double)marginTop) / (double)height;
+    bool strictMargins = false;
+    if ( abs((int)(xScale * 100) - (int)(yScale * 100)) > 5 ) {
+        int result = KMessageBox::questionYesNo(0,
+                                               i18n("The margins you specified are changing the page aspect ratio. Do you want to print with the aspect ratio changed or do you want the margins to be adapted so that aspect ratio is preserved?"),
+                                               i18n("Aspect ratio change"),
+                                               KGuiItem( i18n("Print with specified margins") ),
+                                               KGuiItem( i18n("Print adapting margins to keep aspect ratio") ),
+                                               "kpdfStrictlyObeyMargins");
+        if (result == KMessageBox::Yes) strictMargins = true;
+    }
+    if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height, marginRight, marginBottom, marginLeft, marginTop, strictMargins))
+    {
+        docLock.unlock();
+        printer.printFiles(QStringList(tempfilename), true);
+        return true;
+    }
+#else
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
         docLock.unlock();
         printer.printFiles(QStringList(tempfilename), true);
         return true;
     }
+#endif
     else
     {
         docLock.unlock();

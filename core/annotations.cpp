@@ -265,7 +265,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     // store -other- attributes
     if ( flags )
         e.setAttribute( "flags", flags );
-    if ( style.color.isValid() && style.color != Qt::black )
+    if ( style.color.isValid() )
         e.setAttribute( "color", style.color.name() );
     if ( style.opacity != 1.0 )
         e.setAttribute( "opacity", style.opacity );

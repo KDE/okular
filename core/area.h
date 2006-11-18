@@ -170,30 +170,26 @@ public  QList<NormalizedShape>
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::simplify()
 {
-            int end=this->count(),i=0,x=0;
-            QList <NormalizedShape> m_remove;
-            for (;i<end;i++)
+#ifdef DEBUG_REGULARAREA
+            int prev_end = this->count();
+#endif
+            int end = this->count() - 1, x = 0;
+            for ( int i = 0; i < end; ++i )
             {
-                if ( i < (end-1) )
-                {
                     if ( (*this)[x]->intersects( (*this)[i+1] ) )
                     {
                         *((*this)[x]) |= *((*this)[i+1]);
-                        m_remove.append( (*this)[i+1] );
+                        this->removeAt( i + 1 );
+                        --end;
+                        --i;
                     }
                     else
                     {
                         x=i+1;
                    }
-                }
-            }
-            while (!m_remove.isEmpty())
-            {
-                this->removeAll( m_remove.last() );
-                m_remove.pop_back();
             }
 #ifdef DEBUG_REGULARAREA
-            kDebug() << "from " << end << " to " << this->count() << endl;
+            kDebug() << "from " << prev_end << " to " << this->count() << endl;
 #endif
 }
 

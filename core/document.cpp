@@ -1435,6 +1435,12 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !ref )
         return;
 
+    if ( !QFile::exists( ref->fileName() ) )
+    {
+        kDebug() << "No such file: '" << ref->fileName() << "'" << endl;
+        return;
+    }
+
     static QHash< int, QString > editors;
     // init the editors table if empty (on first run, usually)
     if ( editors.isEmpty() )

@@ -76,6 +76,8 @@ bool CHMGenerator::closeDocument()
     // delete the document information of the old document
     delete m_docInfo;
     m_docInfo=0;
+    delete m_file;
+    m_file=0;
 
     return true;
 }

@@ -22,7 +22,6 @@
 #include "page.h"
 #include "pagetransition.h"
 #include "rotationjob.h"
-#include "settings.h"
 
 using namespace Okular;
 

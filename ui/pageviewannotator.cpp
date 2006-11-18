@@ -42,8 +42,8 @@ class PickPointEngine : public AnnotatorEngine
 {
     public:
         PickPointEngine( const QDomElement & engineElement )
-            : AnnotatorEngine( engineElement ), clicked( false ), xscale( 1.0 ),
-              yscale( 1.0 ), pixmap( 0 )
+            : AnnotatorEngine( engineElement ), clicked( false ), pixmap( 0 ),
+              xscale( 1.0 ), yscale( 1.0 )
         {
             // parse engine specific attributes
             pixmapName = engineElement.attribute( "hoverIcon" );
@@ -57,7 +57,7 @@ class PickPointEngine : public AnnotatorEngine
                 size = 32;
 
             // create engine objects
-            if ( pixmapName.simplified().isEmpty() )
+            if ( !pixmapName.simplified().isEmpty() )
                 pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
         }
 

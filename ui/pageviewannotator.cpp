@@ -42,15 +42,14 @@ class PickPointEngine : public AnnotatorEngine
 {
     public:
         PickPointEngine( const QDomElement & engineElement )
-    : AnnotatorEngine( engineElement ), clicked( false ), xscale(1.0), yscale(1.0)
+            : AnnotatorEngine( engineElement ), clicked( false ), xscale( 1.0 ),
+              yscale( 1.0 ), pixmap( 0 )
         {
             // parse engine specific attributes
             pixmapName = engineElement.attribute( "hoverIcon" );
             QString stampname = m_annotElement.attribute( "icon" );
             if ( m_annotElement.attribute( "type" ) == "Stamp" && !stampname.simplified().isEmpty() )
                 pixmapName = stampname;
-            if ( pixmapName.simplified().isEmpty() )
-                pixmapName = "okular";
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
             bool ok = true;
             size = engineElement.attribute( "size", "32" ).toInt( &ok );
@@ -58,7 +57,8 @@ class PickPointEngine : public AnnotatorEngine
                 size = 32;
 
             // create engine objects
-            pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
+            if ( pixmapName.simplified().isEmpty() )
+                pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
         }
 
         ~PickPointEngine()
@@ -98,7 +98,7 @@ class PickPointEngine : public AnnotatorEngine
             // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            if ( center )
+            if ( center && pixmap )
             {
                 rect.left = nX - ( pixmap->width() / ( xScale * 2.0 ) );
                 rect.top = nY - ( pixmap->height() / ( yScale * 2.0 ) );
@@ -108,8 +108,8 @@ class PickPointEngine : public AnnotatorEngine
                 rect.left = nX;
                 rect.top = nY;
             }
-            rect.right = rect.left + ( pixmap->width() / xScale );
-            rect.bottom = rect.top + ( pixmap->height() / yScale );
+            rect.right = rect.left + ( pixmap ? pixmap->width() / xScale : 0 );
+            rect.bottom = rect.top + ( pixmap ? pixmap->height() / yScale : 0 );
             return rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
         }
 

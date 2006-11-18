@@ -73,4 +73,11 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>8</shortcut>
   </tool>
+    <tool id="9" name="Black Underlining" pixmap="under">
+        <tooltip>Underline the text with a black line</tooltip>
+        <engine type="TextSelector" color="#000000">
+            <annotation type="Underline" color="#000000" />
+        </engine>
+        <shortcut>9</shortcut>
+    </tool>
 </annotatingTools>

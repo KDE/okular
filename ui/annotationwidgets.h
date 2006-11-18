@@ -139,4 +139,22 @@ private:
     QDoubleSpinBox * m_spinLLE;
 };
 
+class HighlightAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    HighlightAnnotationWidget( Okular::Annotation * ann );
+
+    virtual QWidget * widget();
+
+    virtual void applyChanges();
+
+private:
+    Okular::HighlightAnnotation * m_hlAnn;
+    QWidget * m_widget;
+    QComboBox * m_typeCombo;
+};
+
 #endif

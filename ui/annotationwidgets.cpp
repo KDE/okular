@@ -105,6 +105,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         case Okular::Annotation::ALine:
             return new LineAnnotationWidget( ann );
             break;
+        case Okular::Annotation::AHighlight:
+            return new HighlightAnnotationWidget( ann );
+            break;
         // shut up gcc
         default:
             ;
@@ -291,6 +294,46 @@ void LineAnnotationWidget::applyChanges()
         m_lineAnn->lineLeadingFwdPt = m_spinLL->value();
         m_lineAnn->lineLeadingBackPt = m_spinLLE->value();
     }
+}
+
+
+
+HighlightAnnotationWidget::HighlightAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann ), m_widget( 0 )
+{
+    m_hlAnn = static_cast< Okular::HighlightAnnotation * >( ann );
+}
+
+QWidget * HighlightAnnotationWidget::widget()
+{
+    if ( m_widget )
+        return m_widget;
+
+    m_widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    lay->setMargin( 0 );
+    QHBoxLayout * typelay = new QHBoxLayout();
+    lay->addLayout( typelay );
+    QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
+    typelay->addWidget( tmplabel );
+    m_typeCombo = new QComboBox( m_widget );
+    tmplabel->setBuddy( m_typeCombo );
+    typelay->addWidget( m_typeCombo );
+
+    m_typeCombo->addItem( i18n( "Highlight" ) );
+    m_typeCombo->addItem( i18n( "Squiggly" ) );
+    m_typeCombo->addItem( i18n( "Underline" ) );
+    m_typeCombo->addItem( i18n( "Striked out" ) );
+    m_typeCombo->setCurrentIndex( m_hlAnn->highlightType );
+
+    connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
+
+    return m_widget;
+}
+
+void HighlightAnnotationWidget::applyChanges()
+{
+    m_hlAnn->highlightType = (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex();
 }
 
 

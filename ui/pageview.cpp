@@ -2840,9 +2840,16 @@ void PageView::slotSetMouseTextSelect()
 
 void PageView::slotToggleAnnotator( bool on )
 {
-    // only use annotator in normal mouse mode
-    if ( on && d->mouseMode != MouseNormal )
+    // the 'inHere' trick is needed as the slotSetMouseZoom() calls this
+    static bool inHere = false;
+    if ( inHere )
         return;
+    inHere = true;
+
+    // the annotator can be used in normal mouse mode only, so if asked for it,
+    // switch to normal mode
+    if ( on && d->mouseMode != MouseNormal )
+        d->aMouseNormal->trigger();
 
     // create the annotator object if not present
     if ( !d->annotator )
@@ -2850,6 +2857,8 @@ void PageView::slotToggleAnnotator( bool on )
 
     // initialize/reset annotator (and show/hide toolbar)
     d->annotator->setEnabled( on );
+
+    inHere = false;
 }
 
 void PageView::slotScrollUp()

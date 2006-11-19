@@ -97,6 +97,10 @@ public:
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
 
+    // drag scroll
+    QPoint dragScrollVector;
+    QTimer dragScrollTimer;
+
     // actions
     KToggleAction * aMouseNormal;
     KToggleAction * aMouseSelect;
@@ -158,6 +162,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 
     // conntect the padding of the viewport to pixmaps requests
     connect( this, SIGNAL(contentsMoving(int, int)), this, SLOT(slotRequestVisiblePixmaps(int, int)) );
+    connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -897,6 +902,9 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    // stop the drag scrolling
+    d->dragScrollTimer.stop();
+
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
     {
@@ -1377,6 +1385,20 @@ void PageView::selectionStart( int x, int y, const QColor & color, bool /*aboveA
 
 void PageView::selectionEndPoint( int x, int y )
 {
+    if (x < contentsX()) d->dragScrollVector.setX(x - contentsX());
+    else if (contentsX() + viewport()->width() < x) d->dragScrollVector.setX(x - contentsX() - viewport()->width());
+    else d->dragScrollVector.setX(0);
+
+    if (y < contentsY()) d->dragScrollVector.setY(y - contentsY());
+    else if (contentsY() + viewport()->height() < y) d->dragScrollVector.setY(y - contentsY() - viewport()->height());
+    else d->dragScrollVector.setY(0);
+
+    if (d->dragScrollVector != QPoint(0, 0))
+    {
+       if (!d->dragScrollTimer.isActive()) d->dragScrollTimer.start(100);
+    }
+    else d->dragScrollTimer.stop();
+
     // clip selection to the viewport
     QRect viewportRect( contentsX(), contentsY(), visibleWidth(), visibleHeight() );
     x = QMAX( QMIN( x, viewportRect.right() ), viewportRect.left() );
@@ -1908,6 +1930,13 @@ void PageView::slotAutoScoll()
     const int scrollOffset[10] = {   1,   1,  1,  1,  1,  2,  2,  2,  4,  4 };
     d->autoScrollTimer->changeInterval( scrollDelay[ index ] );
     scrollBy( 0, d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ] );
+}
+
+void PageView::slotDragScroll()
+{
+    scrollBy(d->dragScrollVector.x(), d->dragScrollVector.y());
+    QPoint p = viewportToContents( mapFromGlobal( QCursor::pos() ) );
+    selectionEndPoint( p.x(), p.y() );
 }
 
 void PageView::findAheadStop()

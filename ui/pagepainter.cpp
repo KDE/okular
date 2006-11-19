@@ -473,7 +473,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        drawShapeOnImage( backImage, path, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale );
+                        QColor acolor( a->style.color.red(), a->style.color.green(), a->style.color.blue(), (int)( 255.0 * a->style.opacity ) );
+                        drawShapeOnImage( backImage, path, false, QPen( acolor, a->style.width ), QBrush(), pageScale );
                     }
                 }
             } // end current annotation drawing
@@ -894,7 +895,7 @@ void PagePainter::drawShapeOnImage(
     if ( brush.style() != Qt::NoBrush )
     {
         const QColor & brushColor = brush.color();
-        render.color( agg::rgba8( brushColor.red(), brushColor.green(), brushColor.blue() ) );
+        render.color( agg::rgba8( brushColor.red(), brushColor.green(), brushColor.blue(), (int)( agg::rgba8::base_mask * brushColor.alphaF() ) ) );
         rasterizer.add_path( path );
         agg::render_scanlines( rasterizer, scanline, render );
         rasterizer.reset();
@@ -905,7 +906,7 @@ void PagePainter::drawShapeOnImage(
     if ( penWidth > 0.1 )
     {
         const QColor & penColor = pen.color();
-        render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue() ) );
+        render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue(), (int)( agg::rgba8::base_mask * penColor.alphaF() ) ) );
 #if 0
         // BSPLINE curve over path
         typedef agg::conv_bspline< agg::path_storage > conv_bspline_type;

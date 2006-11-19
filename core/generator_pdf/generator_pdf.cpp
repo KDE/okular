@@ -315,7 +315,7 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     // note: thread safety is set on 'false' for the GUI (this) thread
     kpdfOutputDev->setParams( request->width, request->height, genObjectRects, genObjectRects, false );
     pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
-    pdfdoc->takeLinks(); // we will care of deleting the links
+    delete pdfdoc->takeLinks(); // we have already created the KPDFLinks so free the xpdf memory
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
@@ -1157,7 +1157,7 @@ void PDFPixmapGeneratorThread::run()
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
                                        fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
-    d->generator->pdfdoc->takeLinks(); // we will care of deleting the links
+    delete d->generator->pdfdoc->takeLinks(); // we have already created the KPDFLinks so free the xpdf memory
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG

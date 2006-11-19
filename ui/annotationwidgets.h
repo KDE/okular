@@ -14,10 +14,12 @@
 
 #include "core/annotations.h"
 
+class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
 class QWidget;
+class KColorButton;
 class AnnotationWidget;
 
 class PixmapPreviewSelector
@@ -155,6 +157,26 @@ private:
     Okular::HighlightAnnotation * m_hlAnn;
     QWidget * m_widget;
     QComboBox * m_typeCombo;
+};
+
+class GeomAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    GeomAnnotationWidget( Okular::Annotation * ann );
+
+    virtual QWidget * widget();
+
+    virtual void applyChanges();
+
+private:
+    Okular::GeomAnnotation * m_geomAnn;
+    QWidget * m_widget;
+    QComboBox * m_typeCombo;
+    QCheckBox * m_useColor;
+    KColorButton * m_innerColor;
 };
 
 #endif

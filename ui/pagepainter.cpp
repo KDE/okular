@@ -28,6 +28,7 @@
 #include "core/area.h"
 #include "core/page.h"
 #include "core/annotations.h"
+#include "core/utils.h"
 #include "settings.h"
 
 static KStaticDeleter<QPixmap> sd;
@@ -595,6 +596,35 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
             }
             // draw GeomAnnotation
+            else if ( type == Okular::Annotation::AGeom )
+            {
+                Okular::GeomAnnotation * geom = (Okular::GeomAnnotation *)a;
+                QImage shape( annotBoundary.size(), QImage::Format_ARGB32 );
+                shape.fill( qRgba( 0, 0, 0, 0 ) );
+                // width is already divided by two
+                double width = geom->geomWidthPt * Okular::Utils::getDpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                QPainter p( &shape );
+                p.setPen( QPen( QBrush( QColor( a->style.color.red(), a->style.color.green(), a->style.color.blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+                QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
+                r.adjust( width, width, -width, -width );
+                if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
+                    p.drawRect( r );
+                else
+                    p.drawEllipse( r );
+                if ( geom->geomInnerColor.isValid() )
+                {
+                    p.setPen( Qt::NoPen );
+                    p.setBrush( geom->geomInnerColor );
+                    r.adjust( width, width, -width, -width );
+                    if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
+                        p.drawRect( r );
+                    else
+                        p.drawEllipse( r );
+                }
+                p.end();
+                mixedPainter->drawImage( annotBoundary.topLeft(), shape );
+            }
+#if 0
             else // WARNING: TEMPORARY CODE! migrate everything to AGG
             {
                 //GeomAnnotation * geom = (GeomAnnotation *)a;
@@ -608,6 +638,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 //}
                 //else if ( geom->geomType == GeomAnnotation::InscribedCircle )
             }
+#endif
 
             // draw extents rectangle
             if ( Okular::Settings::debugDrawAnnotationRect() )

@@ -80,4 +80,11 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>9</shortcut>
     </tool>
+    <tool id="10" name="Cyan Ellipse" pixmap="ellipse">
+        <tooltip>A cyan ellipse</tooltip>
+        <engine type="PickPoint" color="#00ffff">
+            <annotation type="GeomCircle" color="#00ffff" />
+        </engine>
+        <shortcut>10</shortcut>
+    </tool>
 </annotatingTools>

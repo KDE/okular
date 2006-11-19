@@ -8,12 +8,14 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qspinbox.h>
 #include <qvariant.h>
+#include <kcolorbutton.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -107,6 +109,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
             break;
         case Okular::Annotation::AHighlight:
             return new HighlightAnnotationWidget( ann );
+            break;
+        case Okular::Annotation::AGeom:
+            return new GeomAnnotationWidget( ann );
             break;
         // shut up gcc
         default:
@@ -335,6 +340,67 @@ void HighlightAnnotationWidget::applyChanges()
 {
     m_hlAnn->highlightType = (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex();
 }
+
+
+
+GeomAnnotationWidget::GeomAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann ), m_widget( 0 )
+{
+    m_geomAnn = static_cast< Okular::GeomAnnotation * >( ann );
+}
+
+QWidget * GeomAnnotationWidget::widget()
+{
+    if ( m_widget )
+        return m_widget;
+
+    m_widget = new QWidget();
+    QGridLayout * lay = new QGridLayout( m_widget );
+    lay->setMargin( 0 );
+    QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
+    lay->addWidget( tmplabel, 0, 0 );
+    m_typeCombo = new QComboBox( m_widget );
+    tmplabel->setBuddy( m_typeCombo );
+    lay->addWidget( m_typeCombo, 0, 1 );
+    m_useColor = new QCheckBox( i18n( "Inner color:" ), m_widget );
+    lay->addWidget( m_useColor, 1, 0 );
+    m_innerColor = new KColorButton( m_widget );
+    lay->addWidget( m_innerColor, 1, 1 );
+
+    m_typeCombo->addItem( i18n( "Rectangle" ) );
+    m_typeCombo->addItem( i18n( "Ellipse" ) );
+    m_typeCombo->setCurrentIndex( m_geomAnn->geomType );
+    m_innerColor->setColor( m_geomAnn->geomInnerColor );
+    if ( m_geomAnn->geomInnerColor.isValid() )
+    {
+        m_useColor->setChecked( true );
+    }
+    else
+    {
+        m_innerColor->setEnabled( false );
+    }
+
+    connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_innerColor, SIGNAL( changed( const QColor & ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_useColor, SIGNAL( toggled( bool ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_useColor, SIGNAL( toggled( bool ) ), m_innerColor, SLOT( setEnabled( bool ) ) );
+
+    return m_widget;
+}
+
+void GeomAnnotationWidget::applyChanges()
+{
+    m_geomAnn->geomType = (Okular::GeomAnnotation::GeomType)m_typeCombo->currentIndex();
+    if ( !m_useColor->isChecked() )
+    {
+        m_geomAnn->geomInnerColor = QColor();
+    }
+    else
+    {
+        m_geomAnn->geomInnerColor = m_innerColor->color();
+    }
+}
+
 
 
 

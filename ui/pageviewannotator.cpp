@@ -199,6 +199,24 @@ class PickPointEngine : public AnnotatorEngine
                 rect.bottom = rect.top + stampyscale;
                 sa->boundary = rect;
             }
+            // create GeomAnnotation
+            else if ( typeString == "GeomSquare" || typeString == "GeomCircle" )
+            {
+                Okular::GeomAnnotation * ga = new Okular::GeomAnnotation();
+                ann = ga;
+                // set the type
+                if ( typeString == "GeomSquare" )
+                    ga->geomType = Okular::GeomAnnotation::InscribedSquare;
+                else
+                    ga->geomType = Okular::GeomAnnotation::InscribedCircle;
+                ga->geomWidthPt = 18;
+                //set boundary
+                rect.left = qMin( startpoint.x, point.x );
+                rect.top = qMin( startpoint.y, point.y );
+                rect.right = qMax( startpoint.x, point.x );
+                rect.bottom = qMax( startpoint.y, point.y );
+                ga->boundary = rect;
+            }
 
             // safety check
             if ( !ann )

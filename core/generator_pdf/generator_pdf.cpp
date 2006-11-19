@@ -755,7 +755,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         return i18n( "Unknown Date" );
 
     Object obj;
-    const char *s;
+    const char *s, *origS;
     int year, mon, day, hour, min, sec;
     Dict *infoDict = info.getDict();
     UnicodeMap *uMap = globalParams->getTextEncoding();
@@ -767,6 +767,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
     if ( infoDict->lookup( data.latin1(), &obj )->isString() )
     {
         s = UGString(*obj.getString()).getCString();
+        origS = s;
         if ( s[0] == 'D' && s[1] == ':' )
             s += 2;
 
@@ -781,6 +782,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         }
         else
             result = s;
+        delete[] origS;
     }
     else
         result = i18n( "Unknown Date" );

@@ -173,6 +173,10 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
 
 PageView::~PageView()
 {
+    // delete all widgets
+    QValueVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
+    for ( ; dIt != dEnd; ++dIt )
+        delete *dIt;
     d->document->removeObserver( this );
     delete d;
 }

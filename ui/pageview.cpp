@@ -304,6 +304,10 @@ PageView::~PageView()
 {
     // delete the local storage structure
     qDeleteAll(d->m_annowindows);
+    // delete all widgets
+    QVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
+    for ( ; dIt != dEnd; ++dIt )
+        delete *dIt;
     d->document->removeObserver( this );
     delete d;
 }

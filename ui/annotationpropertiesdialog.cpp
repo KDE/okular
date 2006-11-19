@@ -141,6 +141,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 }
 AnnotsPropertiesDialog::~AnnotsPropertiesDialog()
 {
+    delete m_annotWidget;
 }
 
 

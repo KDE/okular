@@ -867,10 +867,13 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
         }
 }
 
-void PageView::resizeEvent( QResizeEvent * )
+void PageView::resizeEvent( QResizeEvent *e )
 {
     if ( d->items.isEmpty() )
+    {
+        widget()->resize(e->size());
         return;
+    }
 
     // start a timer that will refresh the pixmap after 0.2s
     if ( !d->delayResizeTimer )

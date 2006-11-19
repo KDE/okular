@@ -531,9 +531,9 @@ void PageViewToolBar::buildToolBar()
     QColor fromColor = topLeft ? pal.color( QPalette::Active, QPalette::Button ) : pal.color( QPalette::Active, QPalette::Light );
     QColor toColor = topLeft ? pal.color( QPalette::Active, QPalette::Light ) : pal.color( QPalette::Active, QPalette::Button );
     QImage gradientPattern = KImageEffect::gradient(
-            vertical ? QSize( myWidth, 1) : QSize( 1, myHeight ), fromColor, toColor,
+            vertical ? QSize( myWidth + 1, 1 ) : QSize( 1, myHeight + 1 ), fromColor, toColor,
             vertical ? KImageEffect::HorizontalGradient : KImageEffect::VerticalGradient );
-    bufferPainter.drawTiledPixmap( 0, 0, myWidth, myHeight, QPixmap::fromImage(gradientPattern) );
+    bufferPainter.drawTiledPixmap( 0, 0, myWidth + 1, myHeight + 1, QPixmap::fromImage(gradientPattern) );
     // 5.2. draw rounded border
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Dark ) );
     if ( vertical )

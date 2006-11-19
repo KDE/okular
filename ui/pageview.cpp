@@ -412,7 +412,7 @@ void PageView::setupActions( KActionCollection * ac )
     addAction(sd);
 }
 
-bool PageView::canFitPageWidth()
+bool PageView::canFitPageWidth() const
 {
     return Okular::Settings::renderMode() != 0 || d->zoomMode != ZoomFitWidth;
 }

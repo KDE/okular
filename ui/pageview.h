@@ -63,7 +63,7 @@ Q_OBJECT
         void setupActions( KActionCollection * collection );
 
         // misc methods (from RMB menu/children)
-        bool canFitPageWidth();
+        bool canFitPageWidth() const;
         void fitPageWidth( int page );
         // keep in sync with pageviewutils
         void displayMessage( const QString & message , PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );

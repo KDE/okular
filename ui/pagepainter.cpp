@@ -614,7 +614,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 if ( geom->geomInnerColor.isValid() )
                 {
                     p.setPen( Qt::NoPen );
-                    p.setBrush( geom->geomInnerColor );
+                    p.setBrush( QColor( geom->geomInnerColor.red(), geom->geomInnerColor.green(), geom->geomInnerColor.blue(), opacity ) );
                     r.adjust( width, width, -width, -width );
                     if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
                         p.drawRect( r );

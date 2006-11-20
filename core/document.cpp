@@ -1653,7 +1653,7 @@ void Document::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
-            if ( d->observers[ p->id ]->canUnloadPixmap( p->page ) )
+            if ( d->observers.value( p->id )->canUnloadPixmap( p->page ) )
             {
                 // update internal variables
                 pIt = d->allocatedPixmapsFifo.erase( pIt );
@@ -1661,7 +1661,7 @@ void Document::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
                 memoryToFree -= p->memory;
                 pagesFreed++;
                 // delete pixmap
-                pages_vector[ p->page ]->deletePixmap( p->id );
+                pages_vector.at( p->page )->deletePixmap( p->id );
                 // delete allocation descriptor
                 delete p;
             } else

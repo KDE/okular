@@ -578,8 +578,15 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     /** synchronous request: in-place generation **/
     // compute dpi used to get an image with desired width and height
     Okular::Page * page = request->page();
-    double fakeDpiX = request->width() * 72.0 / page->width(),
-           fakeDpiY = request->height() * 72.0 / page->height();
+
+    double pageWidth = page->width(),
+           pageHeight = page->height();
+
+    if ( page->rotation() % 2 )
+        qSwap( pageWidth, pageHeight );
+
+    double fakeDpiX = request->width() * 72.0 / pageWidth,
+           fakeDpiY = request->height() * 72.0 / pageHeight;
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
@@ -1415,8 +1422,14 @@ void PDFPixmapGeneratorThread::run()
     Okular::Page * page = d->currentRequest->page();
     int width = d->currentRequest->width(),
         height = d->currentRequest->height();
-    double fakeDpiX = width * 72.0 / page->width(),
-           fakeDpiY = height * 72.0 / page->height();
+    double pageWidth = page->width(),
+           pageHeight = page->height();
+
+    if ( page->rotation() % 2 )
+        qSwap( pageWidth, pageHeight );
+
+    double fakeDpiX = width * 72.0 / pageWidth,
+           fakeDpiY = height * 72.0 / pageHeight;
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?

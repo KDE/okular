@@ -43,8 +43,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
-    if ( page->m_pixmaps.contains( pixID ) )
-        pixmap = page->m_pixmaps[ pixID ].m_pixmap;
+    QMap< int, Okular::Page::PixmapObject >::const_iterator itPixmap = page->m_pixmaps.find( pixID );
+    if ( itPixmap != page->m_pixmaps.end() )
+        pixmap = itPixmap.value().m_pixmap;
 
     // else find the closest match using pixmaps of other IDs (great optim!)
     else if ( !page->m_pixmaps.isEmpty() )

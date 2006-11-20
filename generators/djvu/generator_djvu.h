@@ -34,6 +34,9 @@ class DjVuGenerator : public Okular::Generator
         // rotation handling
         bool supportsRotation() const { return true; };
 
+        // printing
+        bool print( KPrinter& printer );
+
     private slots:
         void djvuImageGenerated( int page, const QImage & img );
 

@@ -21,6 +21,8 @@
 #include <quuid.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprinter.h>
+#include <ktemporaryfile.h>
 
 static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode &parentDestination )
 {
@@ -149,6 +151,33 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 
     return m_docSyn;
 }
+
+bool DjVuGenerator::print( KPrinter& printer )
+{
+    QList<int> pageList;
+    if ( !printer.previewOnly() )
+        pageList = printer.pageList();
+    else
+    {
+        int pages = m_djvu->pages().count();
+        for( int i = 1; i <= pages; ++i )
+            pageList.push_back(i);
+    }
+
+    KTemporaryFile tf;
+    tf.setSuffix( ".ps" );
+    if ( !tf.open() )
+        return false;
+    QString tempfilename = tf.fileName();
+    tf.close();
+
+    if ( m_djvu->exportAsPostScript( tempfilename, pageList ) )
+    {
+        return printer.printFiles( QStringList( tempfilename ), true );
+    }
+    return false;
+}
+
 
 void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 {

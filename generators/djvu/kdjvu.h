@@ -230,6 +230,12 @@ class KDjVu : public QObject
          */
         void requestImage( int page, int width, int height, int rotation );
 
+        /**
+         * Export the currently open document as PostScript file \p fileName.
+         * \returns whether the exporting was successful
+          */
+        bool exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const;
+
     signals:
         /**
          * The image \p pix for page \p page was generated.

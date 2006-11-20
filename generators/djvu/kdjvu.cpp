@@ -23,6 +23,8 @@
 #include <libdjvu/ddjvuapi.h>
 #include <libdjvu/miniexp.h>
 
+#include <stdio.h>
+
 kdbgstream &operator<<( kdbgstream & s, const ddjvu_rect_t &r )
 {
     s << "[" << r.x << "," << r.y << " - " << r.w << "x" << r.h << "]";
@@ -45,6 +47,9 @@ static void which_ddjvu_message( const ddjvu_message_t *msg )
             break;
         case DDJVU_CHUNK:
             kDebug() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'" << endl;
+            break;
+        case DDJVU_PROGRESS:
+            kDebug() << "PROGRESS: '" << msg->m_progress.percent << "'" << endl;
             break;
         default: ;
     }
@@ -813,6 +818,45 @@ void KDjVu::requestImage( int page, int width, int height, int rotation )
     }
 
     emit imageGenerated( page, newimg );
+}
+
+bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const
+{
+    if ( !d->m_djvu_document || pageList.isEmpty() )
+        return false;
+
+    QString pl;
+    foreach ( int p, pageList )
+    {
+        if ( !pl.isEmpty() )
+            pl += QString::fromLatin1( "," );
+        pl += QString::number( p );
+    }
+    pl.prepend( "-page=" );
+
+    QByteArray fn = QFile::encodeName( fileName );
+    FILE* f = fopen( fn.constData(), "w+" );
+    if ( !f )
+    {
+        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file" << endl;
+        return false;
+    }
+
+    // setting the options
+    static const int optc = 1;
+    const char ** optv = (const char**)malloc( 1 * sizeof( char* ) );
+    QByteArray plb = pl.toAscii();
+    optv[0] = plb.constData();
+
+    ddjvu_job_t *printjob = ddjvu_document_print( d->m_djvu_document, f, optc, optv );
+    while ( !ddjvu_job_done( printjob ) )
+       handle_ddjvu_messages( d->m_djvu_cxt, true );
+
+    free( optv );
+
+    // no need to close 'f' with fclose(), as it's already done by djvulibre
+
+    return true;
 }
 
 

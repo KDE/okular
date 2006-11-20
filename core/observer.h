@@ -63,7 +63,7 @@ class DocumentObserver
         virtual void notifyVisibleRectsChanged() {};
 
         // queries to observers
-        virtual bool canUnloadPixmap( int /*pageNum*/ ) { return true; }
+        virtual bool canUnloadPixmap( int /*pageNum*/ ) const { return true; }
 };
 
 struct NotifyRequest

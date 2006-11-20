@@ -549,7 +549,7 @@ void Page::deleteAnnotations()
     // delete ObjectRects of type Annotation
     deleteObjectRects( m_rects, QSet<ObjectRect::ObjectType>() << ObjectRect::OAnnotation );
     // delete all stored annotations
-    QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    QLinkedList< Annotation * >::const_iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     m_annotations.clear();
@@ -636,7 +636,7 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
         QDomElement annotListElement = document.createElement( "annotationList" );
 
         // add every annotation to the annotationList
-        QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+        QLinkedList< Annotation * >::const_iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
         for ( ; aIt != aEnd; ++aIt )
         {
             // get annotation

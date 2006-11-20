@@ -50,7 +50,7 @@ Q_OBJECT
         // inherited: the visible areas of the page have changed
         void notifyVisibleRectsChanged();
         // inherited: tell if pixmap is hidden and can be unloaded
-        bool canUnloadPixmap( int pageNumber );
+        bool canUnloadPixmap( int pageNumber ) const;
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();

@@ -206,7 +206,7 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
         generatePage( changedFlags & DocumentObserver::Annotations );
 }
 
-bool PresentationWidget::canUnloadPixmap( int pageNumber )
+bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 {
     // can unload all pixmaps except for the currently visible one
     return pageNumber != m_frameIndex;

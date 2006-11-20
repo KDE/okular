@@ -48,7 +48,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
-        bool canUnloadPixmap( int pageNumber );
+        bool canUnloadPixmap( int pageNumber ) const;
 
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );

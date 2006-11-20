@@ -115,7 +115,7 @@ struct RunningSearch
 };
 
 #define foreachObserver( cmd ) {\
-    QMap< int, DocumentObserver * >::iterator it=d->observers.begin(), end=d->observers.end();\
+    QMap< int, DocumentObserver * >::const_iterator it=d->observers.begin(), end=d->observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 
@@ -344,8 +344,8 @@ void Document::closeDocument()
     generator = 0;
     d->url = KUrl();
     // remove requests left in queue
-    QLinkedList< PixmapRequest * >::iterator sIt = d->pixmapRequestsStack.begin();
-    QLinkedList< PixmapRequest * >::iterator sEnd = d->pixmapRequestsStack.end();
+    QLinkedList< PixmapRequest * >::const_iterator sIt = d->pixmapRequestsStack.begin();
+    QLinkedList< PixmapRequest * >::const_iterator sEnd = d->pixmapRequestsStack.end();
     for ( ; sIt != sEnd; ++sIt )
         delete *sIt;
     d->pixmapRequestsStack.clear();
@@ -354,29 +354,29 @@ void Document::closeDocument()
     foreachObserver( notifySetup( QVector< Page * >(), true ) );
 
     // delete pages and clear 'pages_vector' container
-    QVector< Page * >::iterator pIt = pages_vector.begin();
-    QVector< Page * >::iterator pEnd = pages_vector.end();
+    QVector< Page * >::const_iterator pIt = pages_vector.begin();
+    QVector< Page * >::const_iterator pEnd = pages_vector.end();
     for ( ; pIt != pEnd; ++pIt )
         delete *pIt;
     pages_vector.clear();
 
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     d->allocatedPixmapsFifo.clear();
 
     // clear 'running searches' descriptors
-    QMap< int, RunningSearch * >::iterator rIt = d->searches.begin();
-    QMap< int, RunningSearch * >::iterator rEnd = d->searches.end();
+    QMap< int, RunningSearch * >::const_iterator rIt = d->searches.begin();
+    QMap< int, RunningSearch * >::const_iterator rEnd = d->searches.end();
     for ( ; rIt != rEnd; ++rIt )
         delete *rIt;
     d->searches.clear();
 
     // clear the visible areas and notify the observers
-    QVector< VisiblePageRect * >::iterator vIt = page_rects.begin();
-    QVector< VisiblePageRect * >::iterator vEnd = page_rects.end();
+    QVector< VisiblePageRect * >::const_iterator vIt = page_rects.begin();
+    QVector< VisiblePageRect * >::const_iterator vEnd = page_rects.end();
     for ( ; vIt != vEnd; ++vIt )
         delete *vIt;
     page_rects.clear();
@@ -434,7 +434,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
     {
         // free observer's pixmap data
         int observerId = pObserver->observerId();
-        QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector<Page*>::const_iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
             (*it)->deletePixmap( observerId );
 
@@ -464,15 +464,15 @@ void Document::reparseConfig()
     if ( generator && generator->reparseConfig() )
     {
         // invalidate pixmaps
-        QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector<Page*>::const_iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it ) {
             (*it)->deletePixmaps();
             (*it)->deleteRects();
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->allocatedPixmapsFifo.end();
         for ( ; aIt != aEnd; ++aIt )
             delete *aIt;
         d->allocatedPixmapsFifo.clear();
@@ -546,13 +546,13 @@ const QVector< VisiblePageRect * > & Document::visiblePageRects() const
 
 void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId )
 {
-    QVector< VisiblePageRect * >::iterator vIt = page_rects.begin();
-    QVector< VisiblePageRect * >::iterator vEnd = page_rects.end();
+    QVector< VisiblePageRect * >::const_iterator vIt = page_rects.begin();
+    QVector< VisiblePageRect * >::const_iterator vEnd = page_rects.end();
     for ( ; vIt != vEnd; ++vIt )
         delete *vIt;
     page_rects = visiblePageRects;
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::iterator it = d->observers.begin(), end = d->observers.end();
+    QMap< int, DocumentObserver * >::const_iterator it = d->observers.begin(), end = d->observers.end();
     for ( ; it != end ; ++ it )
         if ( it.key() != excludeId )
             (*it)->notifyVisibleRectsChanged();
@@ -908,7 +908,7 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     }
 
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::iterator it = d->observers.begin(), end = d->observers.end();
+    QMap< int, DocumentObserver * >::const_iterator it = d->observers.begin(), end = d->observers.end();
     for ( ; it != end ; ++ it )
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
@@ -949,7 +949,7 @@ void Document::setPrevViewport()
 void Document::setNextViewport()
 // restore next viewport from the history
 {
-    QLinkedList< DocumentViewport >::iterator nextIterator = d->viewportIterator;
+    QLinkedList< DocumentViewport >::const_iterator nextIterator = d->viewportIterator;
     ++nextIterator;
     if ( nextIterator != d->viewportHistory.end() )
     {
@@ -1000,7 +1000,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
 
     // remove highlights from pages and queue them for notifying changes
     pagesToNotify += s->highlightedPages;
-    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::const_iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
         pages_vector[ *it ]->deleteHighlights( searchID );
     s->highlightedPages.clear();
@@ -1012,7 +1012,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
     if ( type == AllDoc )
     {
         // search and highlight 'text' (as a solid phrase) on all pages
-        QVector< Page * >::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector< Page * >::const_iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
         {
             // get page (from the first to the last)
@@ -1148,7 +1148,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
             hueStep = (wordsCount > 1) ? (60 / (wordsCount - 1)) : 60,
             baseHue, baseSat, baseVal;
         color.getHsv( &baseHue, &baseSat, &baseVal );
-        QVector< Page * >::iterator it = pages_vector.begin(), end = pages_vector.end();
+        QVector< Page * >::const_iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
         {
             // get page (from the first to the last)
@@ -1212,7 +1212,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
     }
 
     // notify observers about highlights changes
-    QLinkedList< int >::iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
+    QLinkedList< int >::const_iterator nIt = pagesToNotify.begin(), nEnd = pagesToNotify.end();
     for ( ; nIt != nEnd; ++nIt )
         foreachObserver( notifyPageChanged( *nIt, DocumentObserver::Highlights ) );
 
@@ -1243,7 +1243,7 @@ void Document::resetSearch( int searchID )
     RunningSearch * s = d->searches[ searchID ];
 
     // unhighlight pages and inform observers about that
-    QLinkedList< int >::iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
+    QLinkedList< int >::const_iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
     {
         int pageNumber = *it;
@@ -1456,7 +1456,7 @@ void Document::processSourceReference( const SourceReference * ref )
             QLatin1String( "scite %f \"-goto:%l,%c\"" );
     }
 
-    QHash< int, QString >::iterator it = editors.find( Settings::externalEditor() );
+    QHash< int, QString >::const_iterator it = editors.find( Settings::externalEditor() );
     QString p;
     if ( it != editors.end() )
         p = *it;
@@ -1878,7 +1878,7 @@ void Document::saveDocumentInfo() const
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
         // <general info><history> ... </history> save history up to 10 viewports
-        QLinkedList< DocumentViewport >::iterator backIterator = d->viewportIterator;
+        QLinkedList< DocumentViewport >::const_iterator backIterator = d->viewportIterator;
         if ( backIterator != d->viewportHistory.end() )
         {
             // go back up to 10 steps from the current viewportIterator
@@ -1891,7 +1891,7 @@ void Document::saveDocumentInfo() const
             generalInfo.appendChild( historyNode );
 
             // add old[backIterator] and present[viewportIterator] items
-            QLinkedList< DocumentViewport >::iterator endIt = d->viewportIterator;
+            QLinkedList< DocumentViewport >::const_iterator endIt = d->viewportIterator;
             ++endIt;
             while ( backIterator != endIt )
             {
@@ -1922,13 +1922,13 @@ void Document::slotTimedMemoryCheck()
 void Document::slotRotation( int rotation )
 {
     // tell the pages to rotate
-    QVector< Okular::Page * >::iterator pIt = pages_vector.begin();
-    QVector< Okular::Page * >::iterator pEnd = pages_vector.end();
+    QVector< Okular::Page * >::const_iterator pIt = pages_vector.begin();
+    QVector< Okular::Page * >::const_iterator pEnd = pages_vector.end();
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->rotateAt( rotation );
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         delete *aIt;
     d->allocatedPixmapsFifo.clear();
@@ -1946,13 +1946,13 @@ void Document::slotRotation( int rotation )
     if ( generator->supportsRotation() )
     {
         // tell the pages to rotate
-        QVector< Okular::Page * >::iterator pIt = pages_vector.begin();
-        QVector< Okular::Page * >::iterator pEnd = pages_vector.end();
+        QVector< Okular::Page * >::const_iterator pIt = pages_vector.begin();
+        QVector< Okular::Page * >::const_iterator pEnd = pages_vector.end();
         for ( ; pIt != pEnd; ++pIt )
             (*pIt)->rotateAt( rotation );
         // clear 'memory allocation' descriptors
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->allocatedPixmapsFifo.end();
         for ( ; aIt != aEnd; ++aIt )
             delete *aIt;
         d->allocatedPixmapsFifo.clear();

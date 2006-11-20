@@ -126,7 +126,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool d
     }
 
     // delete all the Thumbnails
-    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
         delete *tIt;
     m_thumbnails.clear();
@@ -196,7 +196,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 
     // select the page with viewport and ensure it's centered in the view
     m_vectorIndex = 0;
-    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
     {
         if ( (*tIt)->pageNumber() == newPage )
@@ -221,7 +221,7 @@ void ThumbnailList::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
     //    return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
         {
@@ -241,7 +241,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
 {
     bool found = false;
     const QVector<Okular::VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
-    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for ( ; tIt != tEnd; ++tIt )
     {
@@ -262,10 +262,10 @@ void ThumbnailList::notifyVisibleRectsChanged()
     }
 }
 
-bool ThumbnailList::canUnloadPixmap( int pageNumber )
+bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 {
     // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
-    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
             return false;
@@ -279,7 +279,7 @@ void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
     QRect viewportRect = viewport()->rect().translated( viewport()->pos() );
-    QList<ThumbnailWidget *>::iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
@@ -390,7 +390,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         // resize and reposition items
         int newWidth = contentsRect().width() - verticalScrollBar()->width();
         int newHeight = 0;
-        QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+        QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
         for ( ; tIt != tEnd; ++tIt )
         {
             ThumbnailWidget *t = *tIt;
@@ -443,7 +443,7 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    QVector<ThumbnailWidget *>::iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
     {
         ThumbnailWidget * t = *tIt;

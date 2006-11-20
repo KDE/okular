@@ -455,7 +455,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     Okular::InkAnnotation * ia = (Okular::InkAnnotation *) a;
 
                     // draw each ink path
-                    int paths = ia->inkPaths.size();
+                    int paths = ia->transformedInkPaths.size();
                     for ( int p = 0; p < paths; p++ )
                     {
                         NormalizedPath path;

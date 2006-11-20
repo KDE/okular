@@ -362,7 +362,7 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     double height = req->page()->height();
     int reqwidth = req->width();
     int reqheight = req->height();
-    if ( req->page()->rotation() )
+    if ( req->page()->rotation() % 2 == 1 )
     {
         qSwap( width, height );
         qSwap( reqwidth, reqheight );

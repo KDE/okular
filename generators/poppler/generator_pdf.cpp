@@ -599,7 +599,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 #ifdef HAVE_POPPLER_HEAD
     page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) ) ) );
 #else
-    page->setImage( request->id(), p->splashRenderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) );
+    page->setPixmap( request->id(), p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) );
 #endif
     
     if ( genObjectRects )

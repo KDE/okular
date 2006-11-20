@@ -26,9 +26,10 @@ class RotationJob : public QThread
             Rotation270
         };
 
-        RotationJob( const QImage &image, Rotation rotation, int id );
+        RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id );
 
         QImage image() const;
+        Rotation rotation() const;
         int id() const;
 
     protected:
@@ -36,7 +37,8 @@ class RotationJob : public QThread
 
     private:
         const QImage mImage;
-        Rotation mRotation;
+        Rotation mOldRotation;
+        Rotation mNewRotation;
         int mId;
         QImage mRotatedImage;
 };

@@ -13,14 +13,19 @@
 
 using namespace Okular;
 
-RotationJob::RotationJob( const QImage &image, Rotation rotation, int id )
-    : mImage( image ), mRotation( rotation ), mId( id )
+RotationJob::RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id )
+    : mImage( image ), mOldRotation( oldRotation ), mNewRotation( newRotation ), mId( id )
 {
 }
 
 QImage RotationJob::image() const
 {
     return mRotatedImage;
+}
+
+RotationJob::Rotation RotationJob::rotation() const
+{
+    return mNewRotation;
 }
 
 int RotationJob::id() const
@@ -32,19 +37,39 @@ void RotationJob::run()
 {
     QMatrix matrix;
 
-    switch ( mRotation ) {
-        case Rotation90:
+    if ( mOldRotation == mNewRotation ) {
+        mRotatedImage = mImage;
+        return;
+    }
+
+    if ( mOldRotation == Rotation0 ) {
+        if ( mNewRotation == Rotation90 )
             matrix.rotate( 90 );
-            break;
-        case Rotation180:
+        else if ( mNewRotation == Rotation180 )
             matrix.rotate( 180 );
-            break;
-        case Rotation270:
+        else if ( mNewRotation == Rotation270 )
             matrix.rotate( 270 );
-            break;
-        case Rotation0:
-        default:
-            break;
+    } else if ( mOldRotation == Rotation90 ) {
+        if ( mNewRotation == Rotation180 )
+            matrix.rotate( 90 );
+        else if ( mNewRotation == Rotation270 )
+            matrix.rotate( 180 );
+        else if ( mNewRotation == Rotation0 )
+            matrix.rotate( 270 );
+    } else if ( mOldRotation == Rotation180 ) {
+        if ( mNewRotation == Rotation270 )
+            matrix.rotate( 90 );
+        else if ( mNewRotation == Rotation0 )
+            matrix.rotate( 180 );
+        else if ( mNewRotation == Rotation90 )
+            matrix.rotate( 270 );
+    } else if ( mOldRotation == Rotation270 ) {
+        if ( mNewRotation == Rotation0 )
+            matrix.rotate( 90 );
+        else if ( mNewRotation == Rotation90 )
+            matrix.rotate( 180 );
+        else if ( mNewRotation == Rotation180 )
+            matrix.rotate( 270 );
     }
 
     mRotatedImage = mImage.transformed( matrix );

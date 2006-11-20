@@ -37,37 +37,37 @@ QPixmap * busyPixmap = 0;
 #define TEXTANNOTATION_ICONSIZE 24
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
-    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect & limits )
+    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-    QImage image = QImage();
+    const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
-    if ( page->m_rotated_images.contains( pixID ) )
-        image = page->m_rotated_images[ pixID ];
+    if ( page->m_pixmaps.contains( pixID ) )
+        pixmap = page->m_pixmaps[ pixID ].m_pixmap;
 
     // else find the closest match using pixmaps of other IDs (great optim!)
-    else if ( !page->m_rotated_images.isEmpty() )
+    else if ( !page->m_pixmaps.isEmpty() )
     {
         int minDistance = -1;
-        QMap< int, QImage >::const_iterator it = page->m_rotated_images.begin(), end = page->m_rotated_images.end();
+        QMap< int, Okular::Page::PixmapObject >::const_iterator it = page->m_pixmaps.begin(), end = page->m_pixmaps.end();
         for ( ; it != end; ++it )
         {
-            int pixWidth = (*it).width(),
+            int pixWidth = (*it).m_pixmap->width(),
                 distance = pixWidth > scaledWidth ? pixWidth - scaledWidth : scaledWidth - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {
-                image = *it;
+                pixmap = (*it).m_pixmap;
                 minDistance = distance;
             }
         }
     }
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-    double pixmapRescaleRatio = !image.isNull() ? scaledWidth / (double)image.width() : -1;
-    long pixmapPixels = !image.isNull() ? (long)image.width() * (long)image.height() : 0;
-    if ( image.isNull() || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-         (scaledWidth != image.width() && pixmapPixels > 6000000L) )
+    double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
+    long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
+    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
+         (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
     {
         if ( Okular::Settings::changeColors() &&
              Okular::Settings::renderMode() == Okular::Settings::EnumRenderMode::Paper )
@@ -160,13 +160,16 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 if ( ann->flags & Okular::Annotation::Hidden )
                     continue;
 
-                bool intersects = ann->boundary.intersects( nXMin, nYMin, nXMax, nYMax );
+                bool intersects = ann->transformedBoundary.intersects( nXMin, nYMin, nXMax, nYMax );
                 if ( ann->subType() == Okular::Annotation::AText )
                 {
                     Okular::TextAnnotation * ta = static_cast< Okular::TextAnnotation * >( ann );
                     if ( ta->textType == Okular::TextAnnotation::Linked )
                     {
-                        Okular::NormalizedRect iconrect( ann->boundary.left, ann->boundary.top, ann->boundary.left + TEXTANNOTATION_ICONSIZE / page->width(), ann->boundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
+                        Okular::NormalizedRect iconrect( ann->transformedBoundary.left,
+                                                         ann->transformedBoundary.top,
+                                                         ann->transformedBoundary.left + TEXTANNOTATION_ICONSIZE / page->width(),
+                                                         ann->transformedBoundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
                         intersects = iconrect.intersects( nXMin, nYMin, nXMax, nYMax );
                     }
                 }
@@ -202,13 +205,14 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     if ( !useBackBuffer )
     {
         // 4A.1. if size is ok, draw the page pixmap using painter
-        if ( image.width() == scaledWidth && image.height() == scaledHeight )
-            destPainter->drawImage( limits.topLeft(), image, limits );
+        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
+            destPainter->drawPixmap( limits.topLeft(), *pixmap, limits );
+
         // else draw a scaled portion of the magnified pixmap
         else
         {
             QImage destImage;
-            scaleImageOnImage( destImage, image, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limits );
             destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
@@ -223,15 +227,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         QImage backImage;
 
         // 4B.1. draw the page pixmap: normal or scaled
-        if ( image.width() == scaledWidth && image.height() == scaledHeight )
-        {
-            if ( limits == QRect( 0, 0, image.width(), image.height() ) )
-                backImage = image;
-            else
-                backImage = image.copy( limits );
-        }
+        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
+            cropPixmapOnImage( backImage, pixmap, limits );
         else
-            scaleImageOnImage( backImage, image, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limits );
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
@@ -329,8 +328,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                     NormalizedPath path;
                     // normalize page point to image
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = la->linePoints.begin();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = la->linePoints.end();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = la->transformedLinePoints.begin();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = la->transformedLinePoints.end();
                     for ( ; it != itEnd; ++it )
                     {
                         Okular::NormalizedPoint point;
@@ -344,7 +343,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                     if ( path.count() == 2 && fabs( la->lineLeadingFwdPt ) > 0.1 )
                     {
-                        Okular::NormalizedPoint delta( la->linePoints.last().x - la->linePoints.first().x, la->linePoints.first().y - la->linePoints.last().y );
+                        Okular::NormalizedPoint delta( la->transformedLinePoints.last().x - la->transformedLinePoints.first().x, la->transformedLinePoints.first().y - la->transformedLinePoints.last().y );
                         double angle = atan2( delta.y, delta.x );
                         if ( delta.y < 0 )
                             angle += 2 * M_PI;
@@ -357,22 +356,22 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         NormalizedPath path3;
 
                         Okular::NormalizedPoint point;
-                        point.x = ( la->linePoints.first().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->linePoints.first().y - LLy - yOffset ) * yScale;
+                        point.x = ( la->transformedLinePoints.first().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->transformedLinePoints.first().y - LLy - yOffset ) * yScale;
                         path2.append( point );
-                        point.x = ( la->linePoints.last().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->linePoints.last().y - LLy - yOffset ) * yScale;
+                        point.x = ( la->transformedLinePoints.last().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->transformedLinePoints.last().y - LLy - yOffset ) * yScale;
                         path3.append( point );
                         // do we have the extension on the "back"?
                         if ( fabs( la->lineLeadingBackPt ) > 0.1 )
                         {
                             double LLEx = la->lineLeadingBackPt * cos( angle - sign * M_PI_2 + 2 * M_PI ) / page->width();
                             double LLEy = la->lineLeadingBackPt * sin( angle - sign * M_PI_2 + 2 * M_PI ) / page->height();
-                            point.x = ( la->linePoints.first().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->linePoints.first().y - LLEy - yOffset ) * yScale;
+                            point.x = ( la->transformedLinePoints.first().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->transformedLinePoints.first().y - LLEy - yOffset ) * yScale;
                             path2.append( point );
-                            point.x = ( la->linePoints.last().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->linePoints.last().y - LLEy - yOffset ) * yScale;
+                            point.x = ( la->transformedLinePoints.last().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->transformedLinePoints.last().y - LLEy - yOffset ) * yScale;
                             path3.append( point );
                         }
                         else
@@ -407,8 +406,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         for ( int i = 0; i < 4; i++ )
                         {
                             Okular::NormalizedPoint point;
-                            point.x = (quad.points[ i ].x - xOffset) * xScale;
-                            point.y = (quad.points[ i ].y - yOffset) * yScale;
+                            point.x = (quad.transformedPoints[ i ].x - xOffset) * xScale;
+                            point.y = (quad.transformedPoints[ i ].y - yOffset) * yScale;
                             path.append( point );
                         }
                         // draw the normalized path into image
@@ -460,7 +459,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     for ( int p = 0; p < paths; p++ )
                     {
                         NormalizedPath path;
-                        const QLinkedList<Okular::NormalizedPoint> & inkPath = ia->inkPaths[ p ];
+                        const QLinkedList<Okular::NormalizedPoint> & inkPath = ia->transformedInkPaths[ p ];
 
                         // normalize page point to image
                         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
@@ -505,7 +504,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 continue;
 
             // get annotation boundary and drawn rect
-            QRect annotBoundary = a->boundary.geometry( scaledWidth, scaledHeight );
+            QRect annotBoundary = a->transformedBoundary.geometry( scaledWidth, scaledHeight );
             QRect annotRect = annotBoundary.intersect( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
@@ -518,7 +517,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 Okular::TextAnnotation * text = (Okular::TextAnnotation *)a;
                 if ( text->textType == Okular::TextAnnotation::InPlace )
                 {
-                    QRect bigRect = a->boundary.geometry( (int)page->width(), (int)page->height() );
+                    QRect bigRect = a->transformedBoundary.geometry( (int)page->width(), (int)page->height() );
 
                     // the strategy behind 'bigger': if where are we going to
                     // draw is bigger than the Page, then draw the rect only
@@ -693,6 +692,24 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 }
 
 
+/** Private Helpers :: Pixmap conversion **/
+void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r )
+{
+    // handle quickly the case in which the whole pixmap has to be converted
+    if ( r == QRect( 0, 0, src->width(), src->height() ) )
+    {
+        dest = src->toImage();
+    }
+    // else copy a portion of the src to an internal pixmap (smaller) and convert it
+    else
+    {
+        QPixmap croppedPixmap( r.width(), r.height() );
+        QPainter p( &croppedPixmap );
+        p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
+        dest = croppedPixmap.toImage();
+    }
+}
+
 void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )
 {
@@ -711,39 +728,6 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     // source image (1:1 conversion from pixmap)
     QImage srcImage = src->toImage();
     unsigned int * srcData = (unsigned int *)srcImage.bits();
-
-    // precalc the x correspondancy conversion in a lookup table
-    QVarLengthArray<unsigned int> xOffset( destWidth );
-    for ( int x = 0; x < destWidth; x++ )
-        xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
-
-    // for each pixel of the destination image apply the color of the
-    // corresponsing pixel on the source image (note: keep parenthesis)
-    for ( int y = 0; y < destHeight; y++ )
-    {
-        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / scaledHeight);
-        for ( int x = 0; x < destWidth; x++ )
-            (*destData++) = srcData[ srcOffset + xOffset[x] ];
-    }
-}
-
-void PagePainter::scaleImageOnImage ( QImage & dest, const QImage &src,
-    int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )
-{
-    // {source, destination, scaling} params
-    int srcWidth = src.width(),
-        srcHeight = src.height(),
-        destLeft = cropRect.left(),
-        destTop = cropRect.top(),
-        destWidth = cropRect.width(),
-        destHeight = cropRect.height();
-
-    // destination image (same geometry as the pageLimits rect)
-    dest = QImage( destWidth, destHeight, format );
-    unsigned int * destData = (unsigned int *)dest.bits();
-
-    // source image (1:1 conversion from pixmap)
-    unsigned int * srcData = (unsigned int *)src.bits();
 
     // precalc the x correspondancy conversion in a lookup table
     QVarLengthArray<unsigned int> xOffset( destWidth );

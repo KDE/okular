@@ -156,11 +156,11 @@ class OKULAR_EXPORT Document : public QObject
         void requestDone( PixmapRequest * request );
 //         inline pagesVector() { return pages_vector; };
 
-    public slots:
+    public Q_SLOTS:
         void slotRotation( int rotation );
         void slotPaperSizes( int );
 
-    signals:
+    Q_SIGNALS:
         void close();
         void quit();
         void linkFind();
@@ -171,6 +171,9 @@ class OKULAR_EXPORT Document : public QObject
         void error(const QString & string, int duration);
         void warning(const QString & string, int duration);
         void notice(const QString & string, int duration);
+
+    private Q_SLOTS:
+        void rotationFinished( int page );
 
     private:
         QString pagesSizeString() const;

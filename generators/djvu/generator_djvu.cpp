@@ -152,7 +152,7 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 
 void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 {
-    m_request->page()->setImage( m_request->id(), img );
+    m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     QList<KDjVu::Link*> links;
     m_djvu->linksAndAnnotationsForPage( page, &links, 0 );

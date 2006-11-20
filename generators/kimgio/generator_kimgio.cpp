@@ -57,7 +57,7 @@ void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
     if ( request->page()->rotation() % 2 == 1 )
         qSwap( width, height );
     QImage image = m_pix->toImage().scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    request->page()->setImage( request->id(), image );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
 
     // signal that the request has been accomplished
     signalRequestDone(request);

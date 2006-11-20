@@ -245,6 +245,11 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( Qt::WaitCursor );
     bool openOk = generator->loadDocument( docFile, pages_vector );
+
+    for ( int i = 0; i < pages_vector.count(); ++i )
+        connect( pages_vector[ i ], SIGNAL( rotationFinished( int ) ),
+                 this, SLOT( rotationFinished( int ) ) );
+
     QApplication::restoreOverrideCursor();
     if ( !openOk || pages_vector.size() <= 0 )
     {
@@ -431,7 +436,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         int observerId = pObserver->observerId();
         QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it )
-            (*it)->deleteImage( observerId );
+            (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
         QLinkedList< AllocatedPixmap * >::iterator aIt = d->allocatedPixmapsFifo.begin();
@@ -461,7 +466,7 @@ void Document::reparseConfig()
         // invalidate pixmaps
         QVector<Page*>::iterator it = pages_vector.begin(), end = pages_vector.end();
         for ( ; it != end; ++it ) {
-            (*it)->deleteImages();
+            (*it)->deletePixmaps();
             (*it)->deleteRects();
         }
 
@@ -1531,7 +1536,7 @@ void Document::sendGeneratorRequest()
             d->pixmapRequestsStack.pop_back();
         }
         // request only if page isn't already present or request has invalid id
-        else if ( r->page()->hasImage( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
+        else if ( r->page()->hasPixmap( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
         {
             d->pixmapRequestsStack.pop_back();
             delete r;
@@ -1566,6 +1571,10 @@ void Document::sendGeneratorRequest()
     {
         kWarning() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
         d->pixmapRequestsStack.removeAll ( request );
+
+        if ( d->rotation % 2 )
+            request->swap();
+
         generator->generatePixmap ( request );
     }
     else
@@ -1652,7 +1661,7 @@ void Document::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
                 memoryToFree -= p->memory;
                 pagesFreed++;
                 // delete pixmap
-                pages_vector[ p->page ]->deleteImage( p->id );
+                pages_vector[ p->page ]->deletePixmap( p->id );
                 // delete allocation descriptor
                 delete p;
             } else
@@ -1970,6 +1979,11 @@ void Document::slotPaperSizes( int newsize )
         foreachObserver( notifySetup( pages_vector, true ) );
         kDebug() << "PaperSize no: " << newsize << endl;
     }
+}
+
+void Document::rotationFinished( int page )
+{
+    foreachObserver( notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations ) );
 }
 
 /** DocumentViewport **/

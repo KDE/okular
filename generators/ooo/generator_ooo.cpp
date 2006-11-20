@@ -87,11 +87,11 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
   const QSize size = mDocument->pageSize().toSize();
 
-  QPixmap pixmap = QPixmap( request->width(), request->height() );
-  pixmap.fill( Qt::white );
+  QPixmap *pixmap = new QPixmap( request->width(), request->height() );
+  pixmap->fill( Qt::white );
 
   QPainter p;
-  p.begin( &pixmap );
+  p.begin( pixmap );
 
   qreal width = request->width();
   qreal height = request->height();
@@ -104,7 +104,7 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
   mDocument->drawContents( &p, rect );
   p.end();
 
-  request->page()->setImage( request->id(), pixmap.toImage() );
+  request->page()->setPixmap( request->id(), pixmap );
 
   /**
    * Add link information

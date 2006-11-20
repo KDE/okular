@@ -246,6 +246,11 @@ void PixmapRequest::setPage( Page *page )
     d->mPage = page;
 }
 
+void PixmapRequest::swap()
+{
+    qSwap( d->mWidth, d->mHeight );
+}
+
 class ExportFormat::Private
 {
     public:

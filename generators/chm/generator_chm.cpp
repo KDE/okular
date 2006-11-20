@@ -119,7 +119,7 @@ void CHMGenerator::slotCompleted()
         }
         additionalRequestData();
         syncLock.unlock();
-        m_request->page()->setImage( m_request->id(), image );
+        m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
         signalRequestDone( m_request );
     }
 }

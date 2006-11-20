@@ -36,6 +36,10 @@ NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p )
     return *this;
 }
 
+void NormalizedPoint::transform( const QMatrix &matrix )
+{
+    matrix.map( x, y, &x, &y );
+}
 
 /** class NormalizedRect **/
 
@@ -129,7 +133,19 @@ QRect NormalizedRect::geometry( int xScale, int yScale ) const
         t = (int)( top * yScale ),
         r = (int)( right * xScale ),
         b = (int)( bottom * yScale );
+
     return QRect( l, t, r - l + 1, b - t + 1 );
+}
+
+void NormalizedRect::transform( const QMatrix &matrix )
+{
+    QRectF rect( left, top, right - left, bottom - top );
+    rect = matrix.mapRect( rect );
+
+    left = rect.left();
+    top = rect.top();
+    right = rect.right();
+    bottom = rect.bottom();
 }
 
 HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
@@ -157,6 +173,8 @@ ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, Ob
         m_path.addEllipse( rect );
     else
         m_path.addRect( rect );
+
+    m_transformed_path = m_path;
 }
 
 ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt )
@@ -167,19 +185,39 @@ ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, 
         m_path.addEllipse( rect );
     else
         m_path.addRect( rect );
+
+    m_transformed_path = m_path;
 }
 
 ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt )
     : m_objectType( type ), m_pointer( pnt )
 {
     m_path.addPolygon( poly );
+
+    m_transformed_path = m_path;
+}
+
+const QPainterPath &ObjectRect::region() const
+{
+    return m_transformed_path;
 }
 
 QRect ObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    const QRectF &br = m_path.boundingRect();
+    const QRectF &br = m_transformed_path.boundingRect();
+
     return QRect( (int)( br.left() * xScale ), (int)( br.top() * yScale ),
                   (int)( br.width() * xScale ), (int)( br.height() * yScale ) );
+}
+
+bool ObjectRect::contains( double x, double y, double, double ) const
+{
+    return m_transformed_path.contains( QPointF( x, y ) );
+}
+
+void ObjectRect::transform( const QMatrix &matrix )
+{
+    m_transformed_path = matrix.map( m_path );
 }
 
 ObjectRect::~ObjectRect()
@@ -206,9 +244,10 @@ QRect AnnotationObjectRect::boundingRect( double xScale, double yScale ) const
 {
     if ( m_ann->subType() == Annotation::AText && ( ( (TextAnnotation*)m_ann )->textType == TextAnnotation::Linked ) )
     {
-        return QRect( (int)( m_ann->boundary.left * xScale ), (int)( m_ann->boundary.top * yScale ), 24, 24 );
+        return QRect( (int)( m_ann->transformedBoundary.left * xScale ), (int)( m_ann->transformedBoundary.top * yScale ), 24, 24 );
     }
-    return m_ann->boundary.geometry( (int)xScale, (int)yScale );
+
+    return m_ann->transformedBoundary.geometry( (int)xScale, (int)yScale );
 }
 
 bool AnnotationObjectRect::contains( double x, double y, double xScale, double yScale ) const
@@ -221,6 +260,11 @@ AnnotationObjectRect::~AnnotationObjectRect()
     // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
     m_pointer = 0;
+}
+
+void AnnotationObjectRect::transform( const QMatrix &matrix )
+{
+    m_ann->transform( matrix );
 }
 
 /** class SourceRefObjectRect **/
@@ -239,4 +283,3 @@ bool SourceRefObjectRect::contains( double x, double y, double xScale, double yS
 {
     return ( pow( x - m_point.x, 2 ) + pow( y - m_point.y, 2 ) ) < ( pow( (double)7/xScale, 2 ) + pow( (double)7/yScale, 2 ) );
 }
-

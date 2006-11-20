@@ -246,7 +246,7 @@ void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
         img.fill( qRgb( 255, 255, 255 ) );
     }
 
-    request->page()->setImage( request->id(), img );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     ready = true;
 
@@ -295,7 +295,7 @@ void TIFFGenerator::slotThreadFinished()
     Okular::PixmapRequest * request = thread->request();
     thread->endGeneration();
 
-    request->page()->setImage( request->id(), thread->takeImage() );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( thread->takeImage() ) ) );
 
     ready = true;
 

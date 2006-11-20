@@ -63,7 +63,7 @@ Page::Page( uint page, double w, double h, int o )
 
 Page::~Page()
 {
-    deleteImages();
+    deletePixmaps();
     deleteRects();
     deleteHighlights();
     deleteAnnotations();
@@ -74,17 +74,17 @@ Page::~Page()
 }
 
 
-bool Page::hasImage( int id, int width, int height ) const
+bool Page::hasPixmap( int id, int width, int height ) const
 {
-    if ( !m_rotated_images.contains( id ) )
+    if ( !m_pixmaps.contains( id ) )
         return false;
 
     if ( width == -1 || height == -1 )
         return true;
 
-    const QImage &image = m_rotated_images[ id ];
+    const QPixmap *pixmap = m_pixmaps[ id ].m_pixmap;
 
-    return (image.width() == width && image.height() == height);
+    return (pixmap->width() == width && pixmap->height() == height);
 }
 
 bool Page::hasSearchPage() const
@@ -172,8 +172,6 @@ void Page::rotateAt( int orientation )
     if ( neworientation == m_rotation )
         return;
 
-    deleteImages();
-    deleteRects();
     deleteHighlights();
     deleteTextSelections();
     delete m_text;
@@ -184,41 +182,55 @@ void Page::rotateAt( int orientation )
 
     m_rotation = neworientation;
 
-    QMapIterator< int, QImage > it( m_images );
+    QMap< int, RotationJob::Rotation > rotationMap;
+    rotationMap.insert( 0, RotationJob::Rotation0 );
+    rotationMap.insert( 1, RotationJob::Rotation90 );
+    rotationMap.insert( 2, RotationJob::Rotation180 );
+    rotationMap.insert( 3, RotationJob::Rotation270 );
+
+    /**
+     * Rotate the images of the page.
+     */
+    QMapIterator< int, PixmapObject > it( m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
 
-        if ( m_rotated_images.contains( it.key() ) )
-            m_rotated_images[ it.key() ] = QImage();
+        const PixmapObject &object = m_pixmaps[ it.key() ];
 
-        RotationJob::Rotation rotation = RotationJob::Rotation0;
-        switch ( m_rotation ) {
-            case 1:
-                rotation = RotationJob::Rotation90;
-                break;
-            case 2:
-                rotation = RotationJob::Rotation180;
-                break;
-            case 3:
-                rotation = RotationJob::Rotation270;
-                break;
-            case 0:
-            default:
-                rotation = RotationJob::Rotation0;
-                break;
-        };
+        RotationJob::Rotation newRotation = rotationMap[ m_rotation ];
+        RotationJob::Rotation oldRotation = rotationMap[ object.m_rotation ];
 
-        RotationJob *job = new RotationJob( it.value(), rotation, it.key() );
+        RotationJob *job = new RotationJob( object.m_pixmap->toImage(), oldRotation, newRotation, it.key() );
         connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
         job->start();
     }
+
+    /**
+     * Rotate the object rects on the page.
+     */
+    const QMatrix matrix = rotationMatrix();
+    QLinkedList< ObjectRect * >::const_iterator objectIt = m_rects.begin(), end = m_rects.end();
+    for ( ; objectIt != end; ++objectIt )
+        (*objectIt)->transform( matrix );
 }
 
 void Page::imageRotationDone()
 {
     RotationJob *job = static_cast<RotationJob*>( sender() );
 
-    m_rotated_images[ job->id() ] = job->image();
+    if ( m_pixmaps.contains( job->id() ) ) {
+        PixmapObject &object = m_pixmaps[ job->id() ];
+        (*object.m_pixmap) = QPixmap::fromImage( job->image() );
+        object.m_rotation = job->rotation();
+    } else {
+        PixmapObject object;
+        object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
+        object.m_rotation = job->rotation();
+
+        m_pixmaps.insert( job->id(), object );
+    }
+
+    emit rotationFinished( m_number );
 
     job->deleteLater();
 }
@@ -251,20 +263,29 @@ const Link * Page::getPageAction( PageAction act ) const
     return 0;
 }
 
-void Page::setImage( int id, const QImage &image )
+void Page::setPixmap( int id, QPixmap *pixmap )
 {
-    m_images[ id ] = image;
-
-    if ( m_rotated_images.contains( id ) )
-        m_rotated_images[ id ] = QImage();
-
     if ( m_rotation == 0 ) {
-        m_rotated_images[ id ] = image;
-    } else {
-        QMatrix matrix;
-        matrix.rotate( m_rotation * 90 );
+        PixmapObject object;
 
-        m_rotated_images[ id ] = image.transformed( matrix );
+        object.m_pixmap = pixmap;
+        object.m_rotation = m_rotation;
+
+        m_pixmaps[ id ] = object;
+    } else {
+        static QMap< int, RotationJob::Rotation > rotationMap;
+        if ( rotationMap.isEmpty() ) {
+            rotationMap.insert( 0, RotationJob::Rotation0 );
+            rotationMap.insert( 1, RotationJob::Rotation90 );
+            rotationMap.insert( 2, RotationJob::Rotation180 );
+            rotationMap.insert( 3, RotationJob::Rotation270 );
+        }
+
+        RotationJob *job = new RotationJob( pixmap->toImage(), RotationJob::Rotation0, rotationMap[ m_rotation ], id );
+        connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
+        job->start();
+
+        delete pixmap;
     }
 }
 
@@ -284,7 +305,33 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
     QSet<ObjectRect::ObjectType> which;
     which << ObjectRect::Link << ObjectRect::Image;
     deleteObjectRects( m_rects, which );
+
+    /**
+     * Rotate the object rects of the page.
+     */
+    const QMatrix matrix = rotationMatrix();
+
+    QLinkedList< ObjectRect * >::const_iterator objectIt = rects.begin(), end = rects.end();
+    for ( ; objectIt != end; ++objectIt )
+        (*objectIt)->transform( matrix );
+
     m_rects << rects;
+}
+
+QMatrix Page::rotationMatrix() const
+{
+    QMatrix matrix;
+    matrix.rotate( m_rotation * 90 );
+
+    if ( m_rotation == 1 ) {
+      matrix.translate( 0, -1 );
+    } else if ( m_rotation == 2 ) {
+      matrix.translate( -1, -1 );
+    } else if ( m_rotation == 3 ) {
+      matrix.translate( -1, 0 );
+    }
+
+    return matrix;
 }
 
 /*
@@ -352,7 +399,16 @@ void Page::addAnnotation( Annotation * annotation )
         kDebug()<<"astario:     inc m_maxuniqueNum="<<m_maxuniqueNum<<endl;
     }
     m_annotations.append( annotation );
-    m_rects.append( new AnnotationObjectRect( annotation ) );
+
+    AnnotationObjectRect *rect = new AnnotationObjectRect( annotation );
+
+    /**
+     * Rotate the annotation on the page.
+     */
+    const QMatrix matrix = rotationMatrix();
+    rect->transform( matrix );
+
+    m_rects.append( rect );
 }
 
 void Page::modifyAnnotation(Annotation * newannotation )
@@ -431,14 +487,21 @@ void Page::setPageAction( PageAction act, Link * action )
     }
 }
 
-void Page::deleteImage( int id )
+void Page::deletePixmap( int id )
 {
-    m_rotated_images.remove( id );
+    PixmapObject object = m_pixmaps.take( id );
+    delete object.m_pixmap;
 }
 
-void Page::deleteImages()
+void Page::deletePixmaps()
 {
-    m_rotated_images.clear();
+    QMapIterator< int, PixmapObject > it( m_pixmaps );
+    while ( it.hasNext() ) {
+        it.next();
+        delete it.value().m_pixmap;
+    }
+
+    m_pixmaps.clear();
 }
 
 void Page::deleteRects()

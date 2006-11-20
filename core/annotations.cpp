@@ -242,6 +242,8 @@ Annotation::Annotation( const QDomNode & annNode )
         if ( rev.annotation );
             revisions.append( rev );
     }
+
+    transformedBoundary = boundary;
 }
 
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
@@ -343,7 +345,14 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         AnnotationUtils::storeAnnotation( revision.annotation, r, document );
     }
 }
-//END AnnotationUtils implementation
+
+void Annotation::transform( const QMatrix &matrix )
+{
+    transformedBoundary = boundary;
+    transformedBoundary.transform( matrix );
+}
+
+//END Annotation implementation
 
 
 /** TextAnnotation [Annotation] */
@@ -405,6 +414,9 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
         // loading complete
         break;
     }
+
+    for ( int i = 0; i < 3; ++i )
+        transformedInplaceCallout[i] = inplaceCallout[i];
 }
 
 void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -451,6 +463,15 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
+void TextAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+
+    for ( int i = 0; i < 3; ++i ) {
+        transformedInplaceCallout[i] = inplaceCallout[i];
+        transformedInplaceCallout[i].transform( matrix );
+    }
+}
 
 /** LineAnnotation [Annotation] */
 
@@ -511,6 +532,8 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
         // loading complete
         break;
     }
+
+    transformedLinePoints = linePoints;
 }
 
 void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -557,6 +580,16 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
+void LineAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+
+    transformedLinePoints = linePoints;
+
+    QMutableLinkedListIterator<NormalizedPoint> it( transformedLinePoints );
+    while ( it.hasNext() )
+        it.next().transform( matrix );
+}
 
 /** GeomAnnotation [Annotation] */
 
@@ -650,6 +683,12 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
             q.capStart = qe.hasAttribute( "start" );
             q.capEnd = qe.hasAttribute( "end" );
             q.feather = qe.attribute( "feather", "0.1" ).toDouble();
+
+            q.transformedPoints[0] = q.points[0];
+            q.transformedPoints[1] = q.points[1];
+            q.transformedPoints[2] = q.points[2];
+            q.transformedPoints[3] = q.points[3];
+
             highlightQuads.append( q );
         }
 
@@ -695,6 +734,20 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
     }
 }
 
+void HighlightAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+
+    QMutableListIterator<Quad> it( highlightQuads );
+    while ( it.hasNext() ) {
+        Quad &quad = it.next();
+
+        for ( int i = 0; i < 4; ++i ) {
+            quad.transformedPoints[i] = quad.points[i];
+            quad.transformedPoints[i].transform( matrix );
+        }
+    }
+}
 
 /** StampAnnotation [Annotation] */
 
@@ -820,5 +873,18 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
             pointElement.setAttribute( "x", point.x );
             pointElement.setAttribute( "y", point.y );
         }
+    }
+}
+
+void InkAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+
+    transformedInkPaths = inkPaths;
+
+    for ( int i = 0; i < transformedInkPaths.count(); ++i ) {
+        QMutableLinkedListIterator<NormalizedPoint> it( transformedInkPaths[ i ] );
+        while ( it.hasNext() )
+            it.next().transform( matrix );
     }
 }

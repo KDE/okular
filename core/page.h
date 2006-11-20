@@ -12,7 +12,6 @@
 
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
-#include <QtGui/QImage>
 
 #include "area.h"
 #include "okular_export.h"
@@ -66,7 +65,7 @@ class OKULAR_EXPORT Page : public QObject
         inline double width() const { return m_width; }
         inline double height() const { return m_height; }
         inline double ratio() const { return m_height / m_width; }
-        bool hasImage( int p_id, int width = -1, int height = -1 ) const;
+        bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
         bool hasSearchPage() const;
         bool hasBookmark() const;
         bool hasObjectRect( double x, double y, double xScale, double yScale ) const;
@@ -90,7 +89,7 @@ class OKULAR_EXPORT Page : public QObject
         void rotateAt( int orientation );
 
         // operations: set contents (by Document)
-        void setImage( int p_id, const QImage &image );
+        void setPixmap( int p_id, QPixmap *pixmap );
         void setSearchPage( TextPage * text );
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
@@ -103,8 +102,8 @@ class OKULAR_EXPORT Page : public QObject
         void setTransition( PageTransition * transition );
         void setPageAction( PageAction act, Link * action );
         // operations: delete contents (by Document)
-        void deleteImage( int s_id );
-        void deleteImages();
+        void deletePixmap( int s_id );
+        void deletePixmaps();
         void deleteRects();
         void deleteHighlights( int s_id = -1 );
         void deleteTextSelections();
@@ -115,11 +114,17 @@ class OKULAR_EXPORT Page : public QObject
         void restoreLocalContents( const QDomNode & pageNode );
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
 
+    Q_SIGNALS:
+        void rotationFinished( int page );
+
     private Q_SLOTS:
         void imageRotationDone();
 
     private:
         friend class ::PagePainter;
+
+        QMatrix rotationMatrix() const;
+
         int m_number;
         int m_orientation;
         int m_rotation;
@@ -127,8 +132,14 @@ class OKULAR_EXPORT Page : public QObject
         bool m_bookmarked;
         int m_maxuniqueNum;
 
-        QMap< int, QImage > m_images;
-        QMap< int, QImage > m_rotated_images;
+        class PixmapObject
+        {
+            public:
+                QPixmap *m_pixmap;
+                int m_rotation;
+        };
+        QMap< int, PixmapObject > m_pixmaps;
+
         TextPage * m_text;
         QLinkedList< ObjectRect * > m_rects;
         QLinkedList< HighlightAreaRect * > m_highlights;

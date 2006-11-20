@@ -39,6 +39,8 @@ class OKULAR_EXPORT NormalizedPoint
         NormalizedPoint( double dX, double dY );
         NormalizedPoint( int ix, int iy, int xScale, int yScale );
         NormalizedPoint& operator=( const NormalizedPoint & p );
+
+        void transform( const QMatrix &matrix );
 };
 
 /**
@@ -63,6 +65,8 @@ class OKULAR_EXPORT NormalizedRect
         NormalizedRect& operator|= (const NormalizedRect & r);
         NormalizedRect& operator=( const NormalizedRect & r );
         bool operator==( const NormalizedRect & r ) const;
+
+        void transform( const QMatrix &matrix );
 };
 
 // kdbgstream& operator << (kdbgstream &, const NormalizedRect &);
@@ -95,14 +99,16 @@ class OKULAR_EXPORT ObjectRect
         // query type and get a const pointer to the stored object
         inline ObjectType objectType() const { return m_objectType; }
         inline const void * pointer() const { return m_pointer; }
-        inline const QPainterPath &region() const { return m_path; }
+        const QPainterPath &region() const;
         virtual QRect boundingRect( double xScale, double yScale ) const;
-        virtual bool contains( double x, double y, double /*xScale*/, double /*yScale*/ ) const { return m_path.contains( QPointF( x, y ) ); }
+        virtual bool contains( double x, double y, double /*xScale*/, double /*yScale*/ ) const;
+        virtual void transform( const QMatrix &matrix );
 
     protected:
         ObjectType m_objectType;
         void * m_pointer;
         QPainterPath m_path;
+        QPainterPath m_transformed_path;
 };
 
 class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
@@ -114,6 +120,7 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
         virtual QRect boundingRect( double xScale, double yScale ) const;
         virtual bool contains( double x, double y, double xScale, double yScale ) const;
         inline Annotation * annotation() const { return m_ann; }
+        virtual void transform( const QMatrix &matrix );
 
     private:
         Annotation * m_ann;

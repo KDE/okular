@@ -597,9 +597,9 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     // 2. Take data from outputdev and attach it to the Page
 #ifdef HAVE_POPPLER_HEAD
-    page->setImage( request->id(), p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+    page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) ) ) );
 #else
-    page->setImage( request->id(), p->splashRenderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)document()->rotation()) );
+    page->setImage( request->id(), p->splashRenderToImage(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) );
 #endif
     
     if ( genObjectRects )
@@ -1275,7 +1275,7 @@ void PDFGenerator::threadFinished()
     QList<Poppler::TextBox*> outText = generatorThread->takeText();
     QLinkedList< Okular::ObjectRect * > outRects = generatorThread->takeObjectRects();
 
-    request->page()->setImage( request->id(), *outImage );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( *outImage ) ) );
     delete outImage;
     if ( !outText.isEmpty() )
     {
@@ -1441,9 +1441,9 @@ void PDFPixmapGeneratorThread::run()
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
 #ifdef HAVE_POPPLER_HEAD
-    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, (Poppler::Page::Rotation)0 ) );
+    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, Poppler::Page::Rotate0 ) );
 #else
-    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, (Poppler::Page::Rotation)0 ) );
+    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, Poppler::Page::Rotate0 ) );
 #endif
     
     if ( genObjectRects )

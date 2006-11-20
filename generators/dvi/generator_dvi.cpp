@@ -220,7 +220,7 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
         {
             kDebug() << "Image OK" << endl;
 
-            request->page()->setImage( request->id(), pageInfo->img );
+            request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( pageInfo->img ) ) );
 
             request->page()->setObjectRects(
                      generateDviLinks( pageInfo, 0 ) );

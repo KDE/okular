@@ -657,57 +657,10 @@ void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
     QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page()->number() );
     pageToRender->renderToImage( &image );
-    request->page()->setImage( request->id(), image );
-#if 0
-    if ( TIFFSetDirectory( d->tiff, request->page->number() ) )
-    {
-        int rotation = request->documentRotation;
-        uint32 width = (uint32)request->page->width();
-        uint32 height = (uint32)request->page->height();
-        if ( rotation % 2 == 1 )
-            qSwap( width, height );
-
-        QImage image( width, height, QImage::Format_RGB32 );
-        uint32 * data = (uint32 *)image.bits();
-
-        // read data
-        if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, ORIENTATION_TOPLEFT ) != 0 )
-        {
-            // an image read by ReadRGBAImage is ABGR, we need ARGB, so swap red and blue
-            uint32 size = width * height;
-            for ( uint32 i = 0; i < size; ++i )
-            {
-                uint32 red = ( data[i] & 0x00FF0000 ) >> 16;
-                uint32 blue = ( data[i] & 0x000000FF ) << 16;
-                data[i] = ( data[i] & 0xFF00FF00 ) + red + blue;
-            }
-
-            int reqwidth = request->width;
-            int reqheight = request->height;
-            if ( rotation % 2 == 1 )
-                qSwap( reqwidth, reqheight );
-            QImage smoothImage = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-            QImage finalImage = rotation > 0
-                ? KImageEffect::rotate( smoothImage, (KImageEffect::RotateDirection)( rotation - 1 ) )
-                : smoothImage;
-            *p = QPixmap::fromImage( finalImage );
-
-            generated = true;
-        }
-    }
-
-    if ( !generated )
-    {
-        p->fill();
-    }
-
-    request->page->setPixmap( request->id, p );
-
-    ready = true;
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
 
     // signal that the request has been accomplished
     signalRequestDone( request );
-#endif
 }
 
 const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()

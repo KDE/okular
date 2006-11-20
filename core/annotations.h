@@ -86,6 +86,7 @@ struct OKULAR_EXPORT Annotation
     /** properties: look/interaction related */
     int             flags;                  // 0
     NormalizedRect  boundary;               // valid or isNull()
+    NormalizedRect  transformedBoundary;
     struct Style
     {
         // appearance properties
@@ -143,6 +144,8 @@ struct OKULAR_EXPORT Annotation
     Annotation( const QDomNode & node );
     virtual void store( QDomNode & parentNode, QDomDocument & document ) const;
 
+    virtual void transform( const QMatrix &matrix );
+
     // methods: default constructor / virtual destructor
     Annotation();
     virtual ~Annotation();
@@ -172,7 +175,10 @@ struct OKULAR_EXPORT TextAnnotation : public Annotation
     int             inplaceAlign;           // 0:left, 1:center, 2:right
     QString         inplaceText;            // '' overrides contents
     NormalizedPoint inplaceCallout[3];      //
+    NormalizedPoint transformedInplaceCallout[3];
     InplaceIntent   inplaceIntent;          // Unknown
+
+    virtual void transform( const QMatrix &matrix );
 };
 
 struct OKULAR_EXPORT LineAnnotation : public Annotation
@@ -187,6 +193,7 @@ struct OKULAR_EXPORT LineAnnotation : public Annotation
 
     // data fields (note uses border for rendering style)
     QLinkedList<NormalizedPoint> linePoints;
+    QLinkedList<NormalizedPoint> transformedLinePoints;
     TermStyle       lineStartStyle;         // None
     TermStyle       lineEndStyle;           // None
     bool            lineClosed;             // false (if true draw close shape)
@@ -195,6 +202,8 @@ struct OKULAR_EXPORT LineAnnotation : public Annotation
     double          lineLeadingBackPt;      // 0.0
     bool            lineShowCaption;        // false
     LineIntent      lineIntent;             // Unknown
+
+    virtual void transform( const QMatrix &matrix );
 };
 
 struct OKULAR_EXPORT GeomAnnotation : public Annotation
@@ -224,11 +233,14 @@ struct OKULAR_EXPORT HighlightAnnotation : public Annotation
     struct Quad
     {
         NormalizedPoint points[4];          // 8 valid coords
+        NormalizedPoint transformedPoints[4];
         bool            capStart;           // false (vtx 1-4) [K]
         bool            capEnd;             // false (vtx 2-3) [K]
         double          feather;            // 0.1 (in range 0..1) [K]
     };
     QList< Quad >  highlightQuads;     // not empty
+
+    virtual void transform( const QMatrix &matrix );
 };
 
 struct OKULAR_EXPORT StampAnnotation : public Annotation
@@ -247,6 +259,9 @@ struct OKULAR_EXPORT InkAnnotation : public Annotation
 
     // data fields
     QList< QLinkedList<NormalizedPoint> > inkPaths;
+    QList< QLinkedList<NormalizedPoint> > transformedInkPaths;
+
+    virtual void transform( const QMatrix &matrix );
 };
 
 }

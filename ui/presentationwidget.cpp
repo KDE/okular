@@ -577,7 +577,7 @@ void PresentationWidget::changePage( int newPage )
 
     // if pixmap not inside the Okular::Page we request it and wait for
     // notifyPixmapChanged call or else we can proceed to pixmap generation
-    if ( !frame->page->hasImage( PRESENTATION_ID, pixW, pixH ) )
+    if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
         // operation will take long: set busy cursor
         QApplication::setOverrideCursor( KCursor::workingCursor() );

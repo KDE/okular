@@ -1686,9 +1686,10 @@ int Document::getTotalMemory()
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
     // and 'Cached' fields. consider swapped memory as used memory.
     QTextStream readStream( &memFile );
-    while ( !readStream.atEnd() )
+     while ( true )
     {
         QString entry = readStream.readLine();
+        if ( entry.isNull() ) break;  
         if ( entry.startsWith( "MemTotal:" ) )
             return (cachedValue = (1024 * entry.section( ' ', -2, -2 ).toInt()));
     }
@@ -1715,9 +1716,10 @@ int Document::getFreeMemory()
     int memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
-    while ( !readStream.atEnd() )
+    while ( true )
     {
         entry = readStream.readLine();
+        if ( entry.isNull() ) break;  
         if ( entry.startsWith( "MemFree:" ) ||
                 entry.startsWith( "Buffers:" ) ||
                 entry.startsWith( "Cached:" ) ||

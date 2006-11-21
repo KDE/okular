@@ -18,7 +18,7 @@ using namespace Okular;
 struct Okular::SearchPoint
 {
     SearchPoint() : theIt( 0 ), offset_begin( -1 ), offset_end( -1 ) {}
-    QList<TextEntity*>::Iterator theIt;
+    QList<TextEntity*>::ConstIterator theIt;
     int offset_begin;
     int offset_end;
 };
@@ -172,8 +172,8 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
     // invalid search request
     if ( query.isEmpty() || area->isNull() )
         return 0;
-    QList<TextEntity*>::Iterator start;
-    QList<TextEntity*>::Iterator end;
+    QList<TextEntity*>::ConstIterator start;
+    QList<TextEntity*>::ConstIterator end;
     if ( !m_searchPoints.contains( searchID ) )
     {
         // if no previous run of this search is found, then set it to start
@@ -226,8 +226,8 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
 
 
 RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &_query,
-        bool strictCase, const QList<TextEntity*>::Iterator &start,
-        const QList<TextEntity*>::Iterator &end)
+        bool strictCase, const QList<TextEntity*>::ConstIterator &start,
+        const QList<TextEntity*>::ConstIterator &end)
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
@@ -243,7 +243,7 @@ RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &
     bool haveMatch=false;
     bool dontIncrement=false;
     bool offsetMoved = false;
-    QList<TextEntity*>::Iterator it = start;
+    QList<TextEntity*>::ConstIterator it = start;
     for ( ; it != end; ++it )
     {
         curEntity = *it;

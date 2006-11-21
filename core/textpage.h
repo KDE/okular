@@ -81,8 +81,8 @@ class TextPage
     ~TextPage();
   private:
     RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
-        bool strictCase, const QList<TextEntity*>::Iterator &start,
-        const QList<TextEntity*>::Iterator &end);
+        bool strictCase, const QList<TextEntity*>::ConstIterator &start,
+        const QList<TextEntity*>::ConstIterator &end);
     QList<TextEntity*>  m_words;
     QMap<int, Okular::SearchPoint*> m_searchPoints;
 };

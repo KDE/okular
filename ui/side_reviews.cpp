@@ -85,6 +85,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_listView->header()->setResizeMode( QHeaderView::Stretch );
     m_listView->header()->hide();
     m_listView->setIndentation( 16 );
+    connect( m_listView, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ), this, SLOT( itemDoubleClicked( QTreeWidgetItem *, int ) ) );
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
@@ -171,35 +172,64 @@ class ReviewItem : public QTreeWidgetItem
 class AnnotationItem : public QTreeWidgetItem
 {
     public:
-        AnnotationItem( QTreeWidget * parent, Okular::Annotation * ann )
-            : QTreeWidgetItem( parent )
+        AnnotationItem( QTreeWidget * parent, Okular::Annotation * ann, int page )
+            : QTreeWidgetItem( parent ), m_ann( ann ), m_page( page )
         {
-            init( ann );
+            init();
         }
 
-        AnnotationItem( QTreeWidgetItem * parent, Okular::Annotation * ann )
-            : QTreeWidgetItem( parent )
+        AnnotationItem( QTreeWidgetItem * parent, Okular::Annotation * ann, int page )
+            : QTreeWidgetItem( parent ), m_ann( ann ), m_page( page )
         {
-            init( ann );
+            init();
         }
 
-        void init( Okular::Annotation * ann )
+        void init()
         {
-            m_ann = ann;
             setText( 0, Okular::AnnotationUtils::captionForAnnotation( m_ann ) );
             setIcon( 0, KIcon( "okular" ) );
             setToolTip( 0, QString( "<qt><b>%1</b><hr>%2</qt>" )
                 .arg( i18n( "Author: %1", m_ann->author ), m_ann->contents ) );
         }
 
-        Okular::Annotation * anotation()
+        Okular::Annotation * annotation()
         {
             return m_ann;
         }
 
+        int page() const
+        {
+            return m_page;
+        }
+
     private:
         Okular::Annotation * m_ann;
+        int m_page;
 };
+
+void Reviews::itemDoubleClicked( QTreeWidgetItem * item, int /*column*/ )
+{
+    AnnotationItem * annItem = dynamic_cast< AnnotationItem * >( item );
+    if ( !annItem )
+        return;
+
+    int pageNumber = annItem->page();
+    Okular::Annotation * ann = annItem->annotation();
+    const Okular::Page * page = m_document->page( pageNumber );
+    // calculating the right coordinates to center the view on the annotation
+    QRect rect = Okular::AnnotationUtils::annotationGeometry( ann, page->width(), page->height() );
+    Okular::NormalizedRect nr( rect, (int)page->width(), (int)page->height() );
+    // set the viewport parameters
+    Okular::DocumentViewport vp;
+    vp.pageNumber = pageNumber;
+    vp.rePos.enabled = true;
+    vp.rePos.pos = Okular::DocumentViewport::Center;
+    vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
+    vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
+    // setting the viewport
+    m_document->setViewport( vp, -1, true );
+}
+
 
 void Reviews::slotUpdateListView()
 {
@@ -294,8 +324,8 @@ void Reviews::addContents( const Okular::Page * page )
 
         // create Annotation subnode
         QTreeWidgetItem * singleItem = authorItem ?
-            new AnnotationItem( authorItem, annotation ) :
-            new AnnotationItem( m_listView, annotation );
+            new AnnotationItem( authorItem, annotation, page->number() ) :
+            new AnnotationItem( m_listView, annotation, page->number() );
         Q_UNUSED( singleItem );
     }
 }

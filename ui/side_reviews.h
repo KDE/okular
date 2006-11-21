@@ -45,6 +45,9 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void slotCurrentPageOnly( bool );
         void slotUpdateListView();
 
+    private slots:
+        void itemDoubleClicked( QTreeWidgetItem *, int );
+
     private:
         // add all annotations of a page to the listView taking care of grouping
         void addContents( const Okular::Page * page );

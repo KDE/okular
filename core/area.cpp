@@ -242,12 +242,7 @@ AnnotationObjectRect::AnnotationObjectRect( Annotation * ann )
 
 QRect AnnotationObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    if ( m_ann->subType() == Annotation::AText && ( ( (TextAnnotation*)m_ann )->textType == TextAnnotation::Linked ) )
-    {
-        return QRect( (int)( m_ann->transformedBoundary.left * xScale ), (int)( m_ann->transformedBoundary.top * yScale ), 24, 24 );
-    }
-
-    return m_ann->transformedBoundary.geometry( (int)xScale, (int)yScale );
+    return AnnotationUtils::annotationGeometry( m_ann, xScale, yScale );
 }
 
 bool AnnotationObjectRect::contains( double x, double y, double xScale, double yScale ) const

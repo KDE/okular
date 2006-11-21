@@ -115,6 +115,17 @@ QString AnnotationUtils::captionForAnnotation( Annotation * ann )
     }
     return ret;
 }
+
+QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
+    double scaledWidth, double scaledHeight )
+{
+    if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType == TextAnnotation::Linked ) )
+    {
+        return QRect( (int)( ann->transformedBoundary.left * scaledWidth ), (int)( ann->transformedBoundary.top * scaledHeight ), 24, 24 );
+    }
+
+    return ann->transformedBoundary.geometry( (int)scaledWidth, (int)scaledHeight );
+}
 //END AnnotationUtils implementation
 
 

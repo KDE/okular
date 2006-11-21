@@ -13,6 +13,7 @@
 #include <QtCore/QString>
 #include <QtCore/QDateTime>
 #include <QtCore/QLinkedList>
+#include <QtCore/QRect>
 #include <QtGui/QFont>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -49,8 +50,8 @@ class AnnotationUtils
         // specified
         static QString captionForAnnotation( Annotation * ann );
 
-        //static inline QRect annotationGeometry( const Annotation * ann,
-        //    int pageWidth, int pageHeight, int scaledWidth, int scaledHeight ) const;
+        static QRect annotationGeometry( const Annotation * ann,
+            double scaledWidth, double scaledHeight );
 };
 
 

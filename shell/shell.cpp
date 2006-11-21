@@ -47,6 +47,7 @@ Shell::Shell()
 }
 
 Shell::Shell(const KURL &url)
+ : KParts::MainWindow(0, "KPDF::Shell"), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   m_openUrl = url;
   init();

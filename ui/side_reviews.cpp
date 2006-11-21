@@ -85,7 +85,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_listView->header()->setResizeMode( QHeaderView::Stretch );
     m_listView->header()->hide();
     m_listView->setIndentation( 16 );
-    connect( m_listView, SIGNAL( itemDoubleClicked( QTreeWidgetItem *, int ) ), this, SLOT( itemDoubleClicked( QTreeWidgetItem *, int ) ) );
+    connect( m_listView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( itemActivated( QTreeWidgetItem *, int ) ) );
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
@@ -207,7 +207,7 @@ class AnnotationItem : public QTreeWidgetItem
         int m_page;
 };
 
-void Reviews::itemDoubleClicked( QTreeWidgetItem * item, int /*column*/ )
+void Reviews::itemActivated( QTreeWidgetItem * item, int /*column*/ )
 {
     AnnotationItem * annItem = dynamic_cast< AnnotationItem * >( item );
     if ( !annItem )

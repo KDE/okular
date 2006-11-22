@@ -157,9 +157,11 @@ Q_OBJECT
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)
         void slotAutoScoll();
+        // activated by the dragScroll timer
+        void slotDragScroll();
         // type-ahead find timeout
         void slotStopFindAhead();
-        // sow the welcome message
+        // show the welcome message
         void slotShowWelcome();
 
         // connected to local actions (toolbar, menu, ..)

@@ -128,6 +128,10 @@ public:
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
 
+    // drag scroll
+    QPoint dragScrollVector;
+    QTimer dragScrollTimer;
+
     // actions
     KSelectAction * aOrientation;
     KSelectAction * aPaperSizes;
@@ -287,6 +291,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // conntect the padding of the viewport to pixmaps requests
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
+    connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -1369,6 +1374,9 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
 
 void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 {
+    // stop the drag scrolling
+    d->dragScrollTimer.stop();
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -2042,6 +2050,20 @@ void PageView::selectionEndPoint( const QPoint & pos )
 {
     if ( !d->mouseSelecting )
         return;
+
+    if (pos.x() < horizontalScrollBar()->value()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value());
+    else if (horizontalScrollBar()->value() + viewport()->width() < pos.x()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value() - viewport()->width());
+    else d->dragScrollVector.setX(0);
+
+    if (pos.y() < verticalScrollBar()->value()) d->dragScrollVector.setY(pos.y() - verticalScrollBar()->value());
+    else if (verticalScrollBar()->value() + viewport()->height() < pos.y()) d->dragScrollVector.setY(pos.y() - verticalScrollBar()->value() - viewport()->height());
+    else d->dragScrollVector.setY(0);
+
+    if (d->dragScrollVector != QPoint(0, 0))
+    {
+        if (!d->dragScrollTimer.isActive()) d->dragScrollTimer.start(100);
+    }
+    else d->dragScrollTimer.stop();
 
     // update the selection rect
     QRect updateRect = d->mouseSelectionRect;
@@ -2724,6 +2746,14 @@ void PageView::slotAutoScoll()
     d->autoScrollTimer->start( scrollDelay[ index ] );
     int delta = d->scrollIncrement > 0 ? scrollOffset[ index ] : -scrollOffset[ index ];
     verticalScrollBar()->setValue(verticalScrollBar()->value() + delta);
+}
+
+void PageView::slotDragScroll()
+{
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + d->dragScrollVector.x());
+    verticalScrollBar()->setValue(verticalScrollBar()->value() + d->dragScrollVector.y());
+    QPoint p = widget()->mapFromGlobal( QCursor::pos() );
+    selectionEndPoint( p );
 }
 
 void PageView::slotStopFindAhead()

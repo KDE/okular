@@ -1432,6 +1432,9 @@ void Document::processLink( const Link * link )
             //const LinkMovie * browse = static_cast< const LinkMovie * >( link );
             // TODO this (Movie link)
             break;
+        case Link::Sound:
+            // TODO this (Sound link)
+            break;
     }
 }
 
@@ -1599,7 +1602,7 @@ QString Document::pagesSizeString() const
 
 QString Document::localizedSize(const QSizeF &size) const
 {
-    double inchesWidth, inchesHeight;
+    double inchesWidth = 0, inchesHeight = 0;
     switch (generator->pagesSizeMetric())
     {
         case Generator::Points:

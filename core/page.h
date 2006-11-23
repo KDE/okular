@@ -61,10 +61,10 @@ class OKULAR_EXPORT Page : public QObject
          * @param width The width of the page.
          * @param height The height of the page.
          * @param orientation The orientation of the page with
-         *                    0 = 0°
-         *                    1 = 90°
-         *                    2 = 180°
-         *                    3 = 270°
+         *                    0 = 0Â°
+         *                    1 = 90Â°
+         *                    2 = 180Â°
+         *                    3 = 270Â°
          */
         Page( uint number, double width, double height, int orientation );
 
@@ -81,10 +81,10 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Returns the orientation of the page.
          *
-         *    0 = 0°
-         *    1 = 90°
-         *    2 = 180°
-         *    3 = 270°
+         *    0 = 0Â°
+         *    1 = 90Â°
+         *    2 = 180Â°
+         *    3 = 270Â°
          */
         int orientation() const;
         int rotation() const;

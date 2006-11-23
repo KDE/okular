@@ -73,14 +73,37 @@ class OKULAR_EXPORT Page : public QObject
          */
         ~Page();
 
-        // query properties (const read-only methods)
-        inline int number() const { return m_number; }
-        inline int orientation() const { return m_orientation; }
-        inline int rotation() const { return m_rotation; }
-        inline int totalOrientation() const { return ( m_orientation + m_rotation ) % 4; }
-        inline double width() const { return m_width; }
-        inline double height() const { return m_height; }
-        inline double ratio() const { return m_height / m_width; }
+        /**
+         * Returns the number of the page in the document.
+         */
+        int number() const;
+
+        /**
+         * Returns the orientation of the page.
+         *
+         *    0 = 0°
+         *    1 = 90°
+         *    2 = 180°
+         *    3 = 270°
+         */
+        int orientation() const;
+        int rotation() const;
+        int totalOrientation() const;
+
+        /**
+         * Returns the width of the page.
+         */
+        double width() const;
+
+        /**
+         * Returns the height of the page.
+         */
+        double height() const;
+
+        /**
+         * Returns the ration (height / width) of the page.
+         */
+        double ratio() const;
 
         /**
          * Returns whether the page has a pixmap of size @p width x @p height
@@ -92,11 +115,6 @@ class OKULAR_EXPORT Page : public QObject
          * Returns whether the page provides a text page (@see TextPage).
          */
         bool hasTextPage() const;
-
-        /**
-         * Returns whether the page provides bookmarks.
-         */
-        bool hasBookmark() const;
 
         /**
          * Returns whether the page has an object rect which includes the point (@p x, @p y)
@@ -114,6 +132,16 @@ class OKULAR_EXPORT Page : public QObject
          * Returns whether the page provides a transition effect.
          */
         bool hasTransition() const;
+
+        /**
+         * Returns whether the page provides annotations.
+         */
+        bool hasAnnotations() const;
+
+        /**
+         * Returns whether the page is bookmarked.
+         */
+        bool isBookmarked() const;
 
         /**
          * Returns the bounding rect of the text which matches the following criteria
@@ -151,61 +179,141 @@ class OKULAR_EXPORT Page : public QObject
         const PageTransition * transition() const;
 
         /**
+         * Returns the list of annotations of the page.
+         */
+        const QLinkedList< Annotation* > annotations() const;
+
+        /**
          * Returns the @see Link object which is associated with the given page @p action
          * or 0 if no page action is set.
          */
         const Link * pageAction( PageAction action ) const;
 
-        //FIXME TEMP:
-        bool hasAnnotations() const { return !m_annotations.isEmpty(); }
-        const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }
-
-        // operations for rotate the page
+        /**
+         * Rotates the image and object rects of the page to the given @p orientation.
+         */
         void rotateAt( int orientation );
 
-        // operations: set contents (by Document)
-        void setPixmap( int p_id, QPixmap *pixmap );
+        /**
+         * Sets the @p pixmap for the observer with the given @p id.
+         */
+        void setPixmap( int id, QPixmap *pixmap );
+
+        /**
+         * Sets the @p text page.
+         */
         void setTextPage( TextPage * text );
-        void setBookmark( bool state );
+
+        /**
+         * Sets whether this page is bookmarked.
+         */
+        void setBookmarked( bool state );
+
+        /**
+         * Sets the list of object @p rects of the page.
+         */
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
-        void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );
-        void setTextSelections( RegularAreaRect *r, const QColor & color );
-        void setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRects );
+
+        /**
+         * Sets the @p color and @p area of the highlight for the observer with
+         * the given @p id.
+         */
+        void setHighlight( int id, RegularAreaRect *area, const QColor & color );
+
+        /**
+         * Sets the @p color and @p areas of text selections.
+         */
+        void setTextSelections( RegularAreaRect *areas, const QColor & color );
+
+        /**
+         * Sets the list of source reference objects @p rects.
+         */
+        void setSourceReferences( const QLinkedList< SourceRefObjectRect * > rects );
+
+        /**
+         * Adds a new @p annotation to the page.
+         */
         void addAnnotation( Annotation * annotation );
-        void modifyAnnotation( Annotation * newannotation );
+
+        /**
+         * Modifies an existing annotation by replacing it with a new @p annotation.
+         *
+         * The unique name is used to find the old annotation.
+         */
+        void modifyAnnotation( Annotation * annotation );
+
+        /**
+         * Removes the @p annotation from the page.
+         */
         bool removeAnnotation( Annotation * annotation );
+
+        /**
+         * Sets the page @p transition effect.
+         */
         void setTransition( PageTransition * transition );
-        void setPageAction( PageAction act, Link * action );
-        // operations: delete contents (by Document)
-        void deletePixmap( int s_id );
+
+        /**
+         * Sets the @p link object for the given page @p action.
+         */
+        void setPageAction( PageAction action, Link * link );
+
+        /**
+         * Deletes the pixmap for the observer with the given @p id.
+         */
+        void deletePixmap( int id );
+
+        /**
+         * Deletes all pixmaps of the page.
+         */
         void deletePixmaps();
+
+        /**
+         * Deletes all object rects of the page.
+         */
         void deleteRects();
-        void deleteHighlights( int s_id = -1 );
+
+        /**
+         * Deletes all highlight objects for the observer with the given @p id.
+         */
+        void deleteHighlights( int id = -1 );
+
+        /**
+         * Deletes all text selection objects of the page.
+         */
         void deleteTextSelections();
+
+        /**
+         * Deletes all source reference objects of the page.
+         */
         void deleteSourceReferences();
+
+        /**
+         * Deletes all annotations of the page.
+         */
         void deleteAnnotations();
 
-        // operations to save/restore page state (by Document)
+        /**
+         * Loads the local contents (e.g. annotations) of the page.
+         */
         void restoreLocalContents( const QDomNode & pageNode );
+
+        /**
+         * Saves the local contents (e.g. annotations) of the page.
+         */
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
 
     Q_SIGNALS:
         void rotationFinished( int page );
 
-    private Q_SLOTS:
-        void imageRotationDone();
-
     private:
+        class Private;
+        Private* const d;
+
+        /**
+         * To improve performance PagePainter accesses the following
+         * member variables directly.
+         */
         friend class ::PagePainter;
-
-        QMatrix rotationMatrix() const;
-
-        int m_number;
-        int m_orientation;
-        int m_rotation;
-        double m_width, m_height;
-        bool m_bookmarked;
-        int m_maxuniqueNum;
 
         class PixmapObject
         {
@@ -215,14 +323,14 @@ class OKULAR_EXPORT Page : public QObject
         };
         QMap< int, PixmapObject > m_pixmaps;
 
-        TextPage * m_text;
-        QLinkedList< ObjectRect * > m_rects;
-        QLinkedList< HighlightAreaRect * > m_highlights;
-        QLinkedList< Annotation * > m_annotations;
-        PageTransition * m_transition;
-        HighlightAreaRect * m_textSelections;
-        Link * m_openingAction;
-        Link * m_closingAction;
+        QLinkedList< ObjectRect* > m_rects;
+        QLinkedList< HighlightAreaRect* > m_highlights;
+        QLinkedList< Annotation* > m_annotations;
+        HighlightAreaRect *m_textSelections;
+
+        Q_DISABLE_COPY( Page )
+        Q_PRIVATE_SLOT( d, void imageRotationDone() )
+
 };
 
 }

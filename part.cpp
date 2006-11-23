@@ -909,7 +909,7 @@ void Part::slotPreviousBookmark()
 
     for ( int i = current - 1; i >= 0; --i )
     {
-        if ( m_document->page( i )->hasBookmark() )
+        if ( m_document->page( i )->isBookmarked() )
         {
             m_document->setViewportPage( i );
             break;
@@ -927,7 +927,7 @@ void Part::slotNextBookmark()
 
     for ( uint i = current + 1; i < pages; ++i )
     {
-        if ( m_document->page( i )->hasBookmark() )
+        if ( m_document->page( i )->isBookmarked() )
         {
             m_document->setViewportPage( i );
             break;
@@ -1100,7 +1100,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 	if (page)
 	{
 		popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-		if ( page->hasBookmark() )
+		if ( page->isBookmarked() )
 			toggleBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
 		else
 			toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
@@ -1223,7 +1223,7 @@ void Part::slotPrint()
 
     for ( uint i = 0; i < pages; ++i )
     {
-        if ( m_document->page( i )->hasBookmark() )
+        if ( m_document->page( i )->isBookmarked() )
         {
             if ( startId < 0 )
                 startId = i;

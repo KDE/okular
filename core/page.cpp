@@ -40,25 +40,90 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
             ++it;
 }
 
+class Page::Private
+{
+    public:
+        Private( Page *page, uint n, double w, double h, int o )
+            : m_page( page ), m_number( n ), m_orientation( o ),
+              m_width( w ), m_height( h ),
+              m_rotation( 0 ), m_bookmarked( false ), m_maxuniqueNum( 0 ),
+              m_text( 0 ), m_transition( 0 ),
+              m_openingAction( 0 ), m_closingAction( 0 )
+        {
+            // avoid Division-By-Zero problems in the program
+            if ( m_width <= 0 )
+                m_width = 1;
+
+            if ( m_height <= 0 )
+                m_height = 1;
+        }
+
+        ~Private()
+        {
+            delete m_text;
+            delete m_transition;
+        }
+
+        void imageRotationDone();
+        QMatrix rotationMatrix() const;
+
+        Page *m_page;
+        int m_number;
+        int m_orientation;
+        double m_width, m_height;
+        int m_rotation;
+        bool m_bookmarked;
+        int m_maxuniqueNum;
+
+        TextPage * m_text;
+        PageTransition * m_transition;
+        Link * m_openingAction;
+        Link * m_closingAction;
+};
+
+void Page::Private::imageRotationDone()
+{
+    RotationJob *job = static_cast<RotationJob*>( m_page->sender() );
+
+    if ( m_page->m_pixmaps.contains( job->id() ) ) {
+        PixmapObject &object = m_page->m_pixmaps[ job->id() ];
+        (*object.m_pixmap) = QPixmap::fromImage( job->image() );
+        object.m_rotation = job->rotation();
+    } else {
+        PixmapObject object;
+        object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
+        object.m_rotation = job->rotation();
+
+        m_page->m_pixmaps.insert( job->id(), object );
+    }
+
+    emit m_page->rotationFinished( m_number );
+
+    job->deleteLater();
+}
+
+QMatrix Page::Private::rotationMatrix() const
+{
+    QMatrix matrix;
+    matrix.rotate( m_rotation * 90 );
+
+    if ( m_rotation == 1 ) {
+      matrix.translate( 0, -1 );
+    } else if ( m_rotation == 2 ) {
+      matrix.translate( -1, -1 );
+    } else if ( m_rotation == 3 ) {
+      matrix.translate( -1, 0 );
+    }
+
+    return matrix;
+}
+
 /** class Page **/
 
 Page::Page( uint page, double w, double h, int o )
-    : QObject( 0 ),
-    m_number( page ), m_orientation( o ), m_rotation( 0 ), m_width( w ), m_height( h ),
-    m_bookmarked( false ), m_maxuniqueNum( 0 ), m_text( 0 ), m_transition( 0 ),
-    m_textSelections( 0 ), m_openingAction( 0 ), m_closingAction( 0 )
+    : QObject( 0 ), d( new Private( this, page, w, h, o ) ),
+      m_textSelections( 0 )
 {
-    // if landscape swap width <-> height (rotate 90deg CCW)
-/*    if ( r == 90 || r == 270 )
-    {
-        m_width = h;
-        m_height = w;
-    }*/
-    // avoid Division-By-Zero problems in the program
-    if ( m_width <= 0 )
-        m_width = 1;
-    if ( m_height <= 0 )
-        m_height = 1;
 }
 
 Page::~Page()
@@ -69,10 +134,44 @@ Page::~Page()
     deleteAnnotations();
     deleteTextSelections();
     deleteSourceReferences();
-    delete m_text;
-    delete m_transition;
+
+    delete d;
 }
 
+int Page::number() const
+{
+    return d->m_number;
+}
+
+int Page::orientation() const
+{
+    return d->m_orientation;
+}
+
+int Page::rotation() const
+{
+    return d->m_rotation;
+}
+
+int Page::totalOrientation() const
+{
+    return ( d->m_orientation + d->m_rotation ) % 4;
+}
+
+double Page::width() const
+{
+    return d->m_width;
+}
+
+double Page::height() const
+{
+    return d->m_height;
+}
+
+double Page::ratio() const
+{
+    return d->m_height / d->m_width;
+}
 
 bool Page::hasPixmap( int id, int width, int height ) const
 {
@@ -89,18 +188,18 @@ bool Page::hasPixmap( int id, int width, int height ) const
 
 bool Page::hasTextPage() const
 {
-    return m_text != 0;
+    return d->m_text != 0;
 }
 
-bool Page::hasBookmark() const
+bool Page::isBookmarked() const
 {
-    return m_bookmarked;
+    return d->m_bookmarked;
 }
 
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
 {
-    if ( m_text )
-        return m_text->textArea( selection );
+    if ( d->m_text )
+        return d->m_text->textArea( selection );
 
     return 0;
 }
@@ -109,10 +208,12 @@ bool Page::hasObjectRect( double x, double y, double xScale, double yScale ) con
 {
     if ( m_rects.isEmpty() )
         return false;
+
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
         if ( (*it)->contains( x, y, xScale, yScale ) )
             return true;
+
     return false;
 }
 
@@ -134,9 +235,13 @@ bool Page::hasHighlights( int s_id ) const
 
 bool Page::hasTransition() const
 {
-    return m_transition != 0;
+    return d->m_transition != 0;
 }
 
+bool Page::hasAnnotations() const
+{
+    return !m_annotations.isEmpty();
+}
 
 RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection direction,
                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect ) const
@@ -145,7 +250,7 @@ RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection 
     if ( text.isEmpty() )
         return rect;
 
-    rect = m_text->findText( id, text, direction, caseSensitivity, lastRect );
+    rect = d->m_text->findText( id, text, direction, caseSensitivity, lastRect );
     return rect;
 }
 
@@ -153,10 +258,10 @@ QString Page::text( const RegularAreaRect * area ) const
 {
     QString ret;
 
-    if ( !m_text )
+    if ( !d->m_text )
         return ret;
 
-    ret = m_text->text( area );
+    ret = d->m_text->text( area );
 
     return ret;
 }
@@ -164,18 +269,18 @@ QString Page::text( const RegularAreaRect * area ) const
 void Page::rotateAt( int orientation )
 {
     int neworientation = orientation % 4;
-    if ( neworientation == m_rotation )
+    if ( neworientation == d->m_rotation )
         return;
 
     deleteHighlights();
     deleteTextSelections();
-    delete m_text;
-    m_text = 0;
+    delete d->m_text;
+    d->m_text = 0;
 
-    if ( ( m_orientation + m_rotation ) % 2 != ( m_orientation + neworientation ) % 2 )
-        qSwap( m_width, m_height );
+    if ( ( d->m_orientation + d->m_rotation ) % 2 != ( d->m_orientation + neworientation ) % 2 )
+        qSwap( d->m_width, d->m_height );
 
-    m_rotation = neworientation;
+    d->m_rotation = neworientation;
 
     QMap< int, RotationJob::Rotation > rotationMap;
     rotationMap.insert( 0, RotationJob::Rotation0 );
@@ -192,7 +297,7 @@ void Page::rotateAt( int orientation )
 
         const PixmapObject &object = m_pixmaps[ it.key() ];
 
-        RotationJob::Rotation newRotation = rotationMap[ m_rotation ];
+        RotationJob::Rotation newRotation = rotationMap[ d->m_rotation ];
         RotationJob::Rotation oldRotation = rotationMap[ object.m_rotation ];
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), oldRotation, newRotation, it.key() );
@@ -203,31 +308,10 @@ void Page::rotateAt( int orientation )
     /**
      * Rotate the object rects on the page.
      */
-    const QMatrix matrix = rotationMatrix();
+    const QMatrix matrix = d->rotationMatrix();
     QLinkedList< ObjectRect * >::const_iterator objectIt = m_rects.begin(), end = m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
-}
-
-void Page::imageRotationDone()
-{
-    RotationJob *job = static_cast<RotationJob*>( sender() );
-
-    if ( m_pixmaps.contains( job->id() ) ) {
-        PixmapObject &object = m_pixmaps[ job->id() ];
-        (*object.m_pixmap) = QPixmap::fromImage( job->image() );
-        object.m_rotation = job->rotation();
-    } else {
-        PixmapObject object;
-        object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
-        object.m_rotation = job->rotation();
-
-        m_pixmaps.insert( job->id(), object );
-    }
-
-    emit rotationFinished( m_number );
-
-    job->deleteLater();
 }
 
 const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
@@ -241,30 +325,36 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
 
 const PageTransition * Page::transition() const
 {
-    return m_transition;
+    return d->m_transition;
 }
 
-const Link * Page::pageAction( PageAction act ) const
+const QLinkedList< Annotation* > Page::annotations() const
 {
-    switch ( act )
+    return m_annotations;
+}
+
+const Link * Page::pageAction( PageAction action ) const
+{
+    switch ( action )
     {
         case Page::Opening:
-            return m_openingAction;
+            return d->m_openingAction;
             break;
         case Page::Closing:
-            return m_closingAction;
+            return d->m_closingAction;
             break;
     }
+
     return 0;
 }
 
 void Page::setPixmap( int id, QPixmap *pixmap )
 {
-    if ( m_rotation == 0 ) {
+    if ( d->m_rotation == 0 ) {
         PixmapObject object;
 
         object.m_pixmap = pixmap;
-        object.m_rotation = m_rotation;
+        object.m_rotation = d->m_rotation;
 
         m_pixmaps[ id ] = object;
     } else {
@@ -276,7 +366,7 @@ void Page::setPixmap( int id, QPixmap *pixmap )
             rotationMap.insert( 3, RotationJob::Rotation270 );
         }
 
-        RotationJob *job = new RotationJob( pixmap->toImage(), RotationJob::Rotation0, rotationMap[ m_rotation ], id );
+        RotationJob *job = new RotationJob( pixmap->toImage(), RotationJob::Rotation0, rotationMap[ d->m_rotation ], id );
         connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
         job->start();
 
@@ -284,15 +374,15 @@ void Page::setPixmap( int id, QPixmap *pixmap )
     }
 }
 
-void Page::setTextPage( TextPage * tp )
+void Page::setTextPage( TextPage * textPage )
 {
-    delete m_text;
-    m_text = tp;
+    delete d->m_text;
+    d->m_text = textPage;
 }
 
-void Page::setBookmark( bool state )
+void Page::setBookmarked( bool state )
 {
-    m_bookmarked = state;
+    d->m_bookmarked = state;
 }
 
 void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
@@ -304,7 +394,7 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
     /**
      * Rotate the object rects of the page.
      */
-    const QMatrix matrix = rotationMatrix();
+    const QMatrix matrix = d->rotationMatrix();
 
     QLinkedList< ObjectRect * >::const_iterator objectIt = rects.begin(), end = rects.end();
     for ( ; objectIt != end; ++objectIt )
@@ -313,59 +403,13 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
     m_rects << rects;
 }
 
-QMatrix Page::rotationMatrix() const
-{
-    QMatrix matrix;
-    matrix.rotate( m_rotation * 90 );
-
-    if ( m_rotation == 1 ) {
-      matrix.translate( 0, -1 );
-    } else if ( m_rotation == 2 ) {
-      matrix.translate( -1, -1 );
-    } else if ( m_rotation == 3 ) {
-      matrix.translate( -1, 0 );
-    }
-
-    return matrix;
-}
-
-/*
-void Page::setHighlight( int s_id, const QColor & color )
-{
-	QLinkedList<HighlightAreaRect*>::Iterator it=m_highlights.begin();
-	HighlightAreaRect* tmp;
-	while(it!=m_highlights.end())
-	{
-		tmp = *(it);
-		if (tmp->s_id == s_id)
-			tmp->color=color;
-		++it;
-	}
-}*/
-
-// 
 void Page::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
 {
     HighlightAreaRect * hr = new HighlightAreaRect(rect);
     hr->s_id = s_id;
     hr->color = color;
     m_highlights.append( hr );
-
-/*	for (i=static_cast<RegularAreaRect::Iterator>(rect.begin());i!=rect.end();i++)
-	{
-		// create a HighlightRect descriptor taking values from params
-		NormalizedRect *t = new NormalizedRect;
-		t->left = i->left;
-		t->top = i->top;
-		t->right = i->right;
-		t->bottom = i->bottom;
-		// append the HighlightRect to the list
-		hr->append( t );
-		// delete old object and change reference (whyyy?)
-		delete rect;
-		rect = hr;
-	}*/
-}	
+}
 
 void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
 {
@@ -389,9 +433,9 @@ void Page::addAnnotation( Annotation * annotation )
     if(annotation->uniqueName.isEmpty())
     {
         annotation->uniqueName = "okular-";
-        annotation->uniqueName += ( QString::number(m_number) + '-' +
-                QString::number(++m_maxuniqueNum) );
-        kDebug()<<"astario:     inc m_maxuniqueNum="<<m_maxuniqueNum<<endl;
+        annotation->uniqueName += ( QString::number(d->m_number) + '-' +
+                QString::number(++(d->m_maxuniqueNum)) );
+        kDebug()<<"astario:     inc m_maxuniqueNum="<<d->m_maxuniqueNum<<endl;
     }
     m_annotations.append( annotation );
 
@@ -400,7 +444,7 @@ void Page::addAnnotation( Annotation * annotation )
     /**
      * Rotate the annotation on the page.
      */
-    const QMatrix matrix = rotationMatrix();
+    const QMatrix matrix = d->rotationMatrix();
     rect->transform( matrix );
 
     m_rects.append( rect );
@@ -465,19 +509,19 @@ bool Page::removeAnnotation( Annotation * annotation )
 
 void Page::setTransition( PageTransition * transition )
 {
-    delete m_transition;
-    m_transition = transition;
+    delete d->m_transition;
+    d->m_transition = transition;
 }
 
-void Page::setPageAction( PageAction act, Link * action )
+void Page::setPageAction( PageAction action, Link * link )
 {
-    switch ( act )
+    switch ( action )
     {
         case Page::Opening:
-            m_openingAction = action;
+            d->m_openingAction = link;
             break;
         case Page::Closing:
-            m_closingAction = action;
+            d->m_closingAction = link;
             break;
     }
 }
@@ -585,36 +629,36 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                     if(pos != -1)
                     {
                         int uniqID=annotation->uniqueName.right(annotation->uniqueName.length()-pos-1).toInt();
-                        if(m_maxuniqueNum<uniqID)
-                            m_maxuniqueNum=uniqID;
+                        if(d->m_maxuniqueNum<uniqID)
+                            d->m_maxuniqueNum=uniqID;
                     }
 
                     kDebug()<<"astario:  restored annot:"<<annotation->uniqueName<<endl;
                 }
                 else
-                    kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
+                    kWarning() << "page (" << d->m_number << "): can't restore an annotation from XML." << endl;
             }
             kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
         }
 
         // parse bookmark child element
         else if ( childElement.tagName() == "bookmark" )
-            m_bookmarked = true;
+            d->m_bookmarked = true;
     }
 }
 
 void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
 {
     // only add a node if there is some stuff to write into
-    if ( !m_bookmarked && m_annotations.isEmpty() )
+    if ( !d->m_bookmarked && m_annotations.isEmpty() )
         return;
 
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
-    pageElement.setAttribute( "number", m_number );
+    pageElement.setAttribute( "number", d->m_number );
 
     // add bookmark info if is bookmarked
-    if ( m_bookmarked )
+    if ( d->m_bookmarked )
     {
         // create the pageElement's 'bookmark' child
         QDomElement bookmarkElement = document.createElement( "bookmark" );

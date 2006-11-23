@@ -565,7 +565,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( clipRect.top() < m_pixmapHeight + m_margin )
     {
         // if page is bookmarked draw a colored border
-        bool isBookmarked = m_page->hasBookmark();
+        bool isBookmarked = m_page->isBookmarked();
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );

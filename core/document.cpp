@@ -1270,7 +1270,7 @@ void Document::toggleBookmark( int n )
     Page * page = ( n < (int)pages_vector.count() ) ? pages_vector[ n ] : 0;
     if ( page )
     {
-        page->setBookmark( !page->hasBookmark() );
+        page->setBookmarked( !page->isBookmarked() );
         foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
     }
 }

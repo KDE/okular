@@ -286,7 +286,7 @@ void Reviews::addContents( const Okular::Page * page )
             QTreeWidgetItemIterator::HasChildren;
 
     // iterate over all annotations in this page
-    const QLinkedList< Okular::Annotation * > & annots = page->getAnnotations();
+    const QLinkedList< Okular::Annotation * > & annots = page->annotations();
     QLinkedList< Okular::Annotation * >::const_iterator aIt = annots.begin(), aEnd = annots.end();
     for ( ; aIt != aEnd; ++aIt )
     {

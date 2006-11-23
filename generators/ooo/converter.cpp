@@ -447,6 +447,9 @@ bool Converter::convertFrame( const QDomElement &element )
 
 bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format )
 {
+  InternalLinkInfo linkInfo;
+  linkInfo.startPosition = cursor->position();
+
   QDomNode child = element.firstChild();
   while ( !child.isNull() ) {
     if ( child.isElement() ) {
@@ -464,8 +467,7 @@ bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, co
     child = child.nextSibling();
   }
 
-  InternalLinkInfo linkInfo;
-  linkInfo.block = cursor->block();
+  linkInfo.endPosition = cursor->position();
   linkInfo.url = element.attribute( "href" );
 
   mInternalLinkInfos.append( linkInfo );
@@ -526,19 +528,28 @@ bool Converter::createLinksList()
   for ( int i = 0; i < mInternalLinkInfos.count(); ++i ) {
     const InternalLinkInfo internalLinkInfo = mInternalLinkInfos[ i ];
 
-    const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( internalLinkInfo.block );
+    const QTextBlock block = mTextDocument->findBlock( internalLinkInfo.startPosition );
+    const QRectF boundingRect = mTextDocument->documentLayout()->blockBoundingRect( block );
 
-    int page = qRound( rect.y() ) / qRound( pageSize.height() );
-    int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+    QTextLayout *layout = block.layout();
 
-    double x = (double)rect.x() / (double)pageSize.width();
-    double y = (double)offset / (double)pageSize.height();
-    double width = (double)rect.width() / (double)pageSize.width();
-    double height = (double)rect.height() / (double)pageSize.height();
+    int startPos = internalLinkInfo.startPosition - block.position();
+    int endPos = internalLinkInfo.endPosition - block.position();
+    const QTextLine startLine = layout->lineForTextPosition( startPos );
+    const QTextLine endLine = layout->lineForTextPosition( endPos );
+
+    double x = boundingRect.x() + startLine.cursorToX( startPos );
+    double y = boundingRect.y() + startLine.y();
+    double r = boundingRect.x() + endLine.cursorToX( endPos );
+    double b = boundingRect.y() + endLine.y() + endLine.height();
+
+    int offset = qRound( y ) % qRound( pageSize.height() );
+    int page = qRound( y ) / qRound( pageSize.height() );
 
     LinkInfo linkInfo;
     linkInfo.page = page;
-    linkInfo.boundingRect = QRectF( rect.x(), offset, rect.width(), rect.height() );
+    linkInfo.boundingRect = QRectF( x / pageSize.width(), offset / pageSize.height(),
+                                    (r - x) / pageSize.width(), (b - y) / pageSize.height() );
     linkInfo.url = internalLinkInfo.url;
 
     mLinkInfos.append( linkInfo );

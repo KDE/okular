@@ -113,11 +113,7 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
   for ( int i = 0; i < mLinks.count(); ++i ) {
     if ( mLinks[ i ].page == request->pageNumber() ) {
       const QRectF rect = mLinks[ i ].boundingRect;
-      double x = rect.x() / request->width();
-      double y = rect.y() / request->height();
-      double w = rect.width() / request->width();
-      double h = rect.height() / request->height();
-      objects.append( new Okular::ObjectRect( x, y, w, h, false,
+      objects.append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
                                               Okular::ObjectRect::Link, new Okular::LinkBrowse( mLinks[ i ].url ) ) );
     }
   }

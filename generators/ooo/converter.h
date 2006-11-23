@@ -94,7 +94,8 @@ class Converter
 
     struct InternalLinkInfo
     {
-      QTextBlock block;
+      int startPosition;
+      int endPosition;
       QString url;
     };
 

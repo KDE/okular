@@ -15,19 +15,81 @@
 
 using namespace Okular;
 
-struct Okular::SearchPoint
+class SearchPoint
 {
-    SearchPoint() : theIt( 0 ), offset_begin( -1 ), offset_end( -1 ) {}
-    QList<TextEntity*>::ConstIterator theIt;
-    int offset_begin;
-    int offset_end;
+    public:
+        SearchPoint()
+            : theIt( 0 ), offset_begin( -1 ), offset_end( -1 )
+        {
+        }
+
+        TextEntity::List::ConstIterator theIt;
+        int offset_begin;
+        int offset_end;
+};
+
+TextEntity::TextEntity( const QString &text, NormalizedRect *area )
+    : m_text( text ), m_area( area ), d( 0 )
+{
+}
+
+TextEntity::~TextEntity()
+{
+    delete m_area;
+}
+
+QString TextEntity::text() const
+{
+    return m_text;
+}
+
+NormalizedRect* TextEntity::area() const
+{
+    return m_area;
+}
+
+class TextPage::Private
+{
+    public:
+        Private( const TextEntity::List &words )
+            : m_words( words )
+        {
+        }
+
+        ~Private()
+        {
+            qDeleteAll( m_words );
+            qDeleteAll( m_searchPoints );
+        }
+
+        RegularAreaRect * findTextInternalForward( int searchID, const QString &query,
+                                                   Qt::CaseSensitivity caseSensitivity,
+                                                   const TextEntity::List::ConstIterator &start,
+                                                   const TextEntity::List::ConstIterator &end );
+
+        TextEntity::List m_words;
+        QMap< int, SearchPoint* > m_searchPoints;
 };
 
 
+TextPage::TextPage()
+    : d( new Private( TextEntity::List() ) )
+{
+}
+
+TextPage::TextPage( const TextEntity::List &words )
+    : d( new Private( words ) )
+{
+}
+
 TextPage::~TextPage()
 {
-    qDeleteAll(m_words);
-    qDeleteAll(m_searchPoints);
+    delete d;
+}
+
+void TextPage::append( const QString &text, NormalizedRect *area )
+{
+    d->m_words.append( new TextEntity( text, area ) );
 }
 
 RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
@@ -61,9 +123,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #ifdef DEBUG_TEXTPAGE
           kWarning() << "running first loop\n";
 #endif
-          for (it=0;it<m_words.count();it++)
+          for (it=0;it<d->m_words.count();it++)
           {
-              tmp=m_words[it]->area;
+              tmp=d->m_words[it]->area();
               if (tmp->contains(startCx,startCy) 
                   || ( tmp->top <= startCy && tmp->bottom >= startCy && tmp->left >= startCx )
                   || ( tmp->top >= startCy))
@@ -71,7 +133,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                   /// we have found the (rx,ry)x(tx,ty)   
                   itB=it;
 #ifdef DEBUG_TEXTPAGE
-                  kWarning() << "start is " << itB << " count is " << m_words.count() << endl;
+                  kWarning() << "start is " << itB << " count is " << d->m_words.count() << endl;
 #endif
                   break;
               }
@@ -89,9 +151,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #ifdef DEBUG_TEXTPAGE
           kWarning() << "running second loop\n";
 #endif
-          for (it=m_words.count()-1; it>=itB;it--)
+          for (it=d->m_words.count()-1; it>=itB;it--)
           {
-              tmp=m_words[it]->area;
+              tmp=d->m_words[it]->area();
               if (tmp->contains(endCx,endCy) 
                   || ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx )
                   || ( tmp->bottom <= endCy))
@@ -99,7 +161,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                   /// we have found the (ux,uy)x(vx,vy)   
                   itE=it;
 #ifdef DEBUG_TEXTPAGE
-                  kWarning() << "ending is " << itE << " count is " << m_words.count() << endl;
+                  kWarning() << "ending is " << itE << " count is " << d->m_words.count() << endl;
                   kWarning () << "conditions " << tmp->contains(endCx,endCy) << " " 
                     << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
                     ( tmp->top >= endCy) << endl;
@@ -116,8 +178,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
         if (sel->itB()!=-1 && sel->itE()!=-1)
         {
-          start=m_words[sel->itB()]->area;
-          end=m_words[sel->itE()]->area;
+          start=d->m_words[sel->itB()]->area();
+          end=d->m_words[sel->itE()]->area();
 
           NormalizedRect first,second,third;/*
           first.right=1;
@@ -133,7 +195,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
               first.bottom=end->bottom;
               for (it=qMin(sel->itB(),sel->itE()); it<=qMax(sel->itB(),sel->itE());it++)
               {
-                tmp=m_words[it]->area;
+                tmp=d->m_words[it]->area();
                 if (tmp->intersects(&first))
                   ret->append(tmp);
               }
@@ -152,7 +214,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
             int selMax = qMax( sel->itB(), sel->itE() );
             for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
             {
-                tmp=m_words[it]->area;
+                tmp=d->m_words[it]->area();
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
                   ret->append(new NormalizedRect(*tmp));
             }
@@ -172,9 +234,9 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     // invalid search request
     if ( query.isEmpty() || area->isNull() )
         return 0;
-    QList<TextEntity*>::ConstIterator start;
-    QList<TextEntity*>::ConstIterator end;
-    if ( !m_searchPoints.contains( searchID ) )
+    TextEntity::List::ConstIterator start;
+    TextEntity::List::ConstIterator end;
+    if ( !d->m_searchPoints.contains( searchID ) )
     {
         // if no previous run of this search is found, then set it to start
         // from the beginning (respecting the search direction)
@@ -187,32 +249,32 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     switch ( dir )
     {
         case FromTop:
-            start = m_words.begin();
-            end = m_words.end();
+            start = d->m_words.begin();
+            end = d->m_words.end();
             break;
         case FromBottom:
-            start = m_words.end();
-            end = m_words.begin();
-            if ( !m_words.isEmpty() )
+            start = d->m_words.end();
+            end = d->m_words.begin();
+            if ( !d->m_words.isEmpty() )
             {
                 --start;
             }
             forward = false;
             break;
         case NextResult:
-            start = m_searchPoints[ searchID ]->theIt;
-            end = m_words.end();
+            start = d->m_searchPoints[ searchID ]->theIt;
+            end = d->m_words.end();
             break;
         case PreviousResult:
-            start = m_searchPoints[ searchID ]->theIt;
-            end = m_words.begin();
+            start = d->m_searchPoints[ searchID ]->theIt;
+            end = d->m_words.begin();
             forward = false;
             break;
     };
     RegularAreaRect* ret = 0;
     if ( forward )
     {
-        ret = findTextInternalForward( searchID, query, caseSensitivity, start, end );
+        ret = d->findTextInternalForward( searchID, query, caseSensitivity, start, end );
     }
     // TODO implement backward search
 #if 0
@@ -225,10 +287,10 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 }
 
 
-RegularAreaRect* TextPage::findTextInternalForward( int searchID, const QString &_query,
-                                                    Qt::CaseSensitivity caseSensitivity,
-                                                    const QList<TextEntity*>::ConstIterator &start,
-                                                    const QList<TextEntity*>::ConstIterator &end )
+RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const QString &_query,
+                                                             Qt::CaseSensitivity caseSensitivity,
+                                                             const TextEntity::List::ConstIterator &start,
+                                                             const TextEntity::List::ConstIterator &end )
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
@@ -244,11 +306,11 @@ RegularAreaRect* TextPage::findTextInternalForward( int searchID, const QString 
     bool haveMatch=false;
     bool dontIncrement=false;
     bool offsetMoved = false;
-    QList<TextEntity*>::ConstIterator it = start;
+    TextEntity::List::ConstIterator it = start;
     for ( ; it != end; ++it )
     {
         curEntity = *it;
-        str = curEntity->txt;
+        str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )
@@ -311,7 +373,7 @@ RegularAreaRect* TextPage::findTextInternalForward( int searchID, const QString 
             kDebug(1223) << "\tmatched" << endl;
 #endif
                     haveMatch=true;
-                    ret->append( curEntity->area );
+                    ret->append( curEntity->area() );
                     j+=min;
                     queryLeft-=min;
             }
@@ -350,15 +412,15 @@ QString TextPage::text(const RegularAreaRect *area) const
         return QString();
 
     QString ret = "";
-    QList<TextEntity*>::ConstIterator it,end = m_words.end();
+    TextEntity::List::ConstIterator it,end = d->m_words.end();
     TextEntity * last=0;
-    for ( it = m_words.begin(); it != end; ++it )
+    for ( it = d->m_words.begin(); it != end; ++it )
     {
         // provide the string FIXME?: newline handling
-        if (area->intersects((*it)->area))
+        if (area->intersects((*it)->area()))
         {
 //           kDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
-            ret += (*it)->txt;
+            ret += (*it)->text();
             last=*it;
         }
     }

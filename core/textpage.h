@@ -39,56 +39,114 @@ class TextSelection;
  */
 typedef enum SearchDirection{ FromTop, FromBottom, NextResult, PreviousResult };
 
-/*! @struct  TextEntity
+/*! @class TextEntity
  * @short Abstract textentity of Okular
  * @par The context
  * A document can provide different forms of information about textual representation
- * of its contents. It can include information about positions of every character on the 
- * page, this is the best possibility. 
- * 
- * But also it can provide information only about positions of every word on the page (not the character). 
+ * of its contents. It can include information about positions of every character on the
+ * page, this is the best possibility.
+ *
+ * But also it can provide information only about positions of every word on the page (not the character).
  * Furthermore it can provide information only about the position of the whole page's text on the page.
- * 
- * Also some document types have glyphes - sets of characters rendered as one, so in search they should 
+ *
+ * Also some document types have glyphes - sets of characters rendered as one, so in search they should
  * appear as a text but are only one character when drawn on screen. We need to allow this.
- * @par The idea
- * We need several
  */
-
-struct TextEntity
+class TextEntity
 {
-    // 
-    QString txt;
-    NormalizedRect* area;
-    TextEntity(QString text, NormalizedRect* ar) : txt(text) 
-        { area=ar; };
-    ~TextEntity() { delete area; };
+    public:
+        typedef QList<TextEntity*> List;
+
+        /**
+         * Creates a new text entity with the given @p text and the
+         * given @p area.
+         */
+        TextEntity( const QString &text, NormalizedRect *area );
+
+        /**
+         * Destroys the text entity.
+         */
+        ~TextEntity();
+
+        /**
+         * Returns the text of the text entity.
+         */
+        QString text() const;
+
+        /**
+         * Returns the bounding area of the text entity.
+         */
+        NormalizedRect* area() const;
+
+    private:
+        QString m_text;
+        NormalizedRect* m_area;
+
+        class Private;
+        Private *d;
+
+        Q_DISABLE_COPY( TextEntity )
 };
 
-struct SearchPoint;
-
+/**
+ * The TextPage class represents the text of a page by
+ * providing @see TextEntity items for every word/character of
+ * the page.
+ */
 class TextPage
 {
-  public:
-    RegularAreaRect* findText( int id, const QString &query, SearchDirection & direct,
-                               Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area);
+    public:
+        /**
+         * Creates a new text page.
+         */
+        TextPage();
 
-    QString text( const RegularAreaRect *rect ) const;
-    RegularAreaRect * textArea( TextSelection* ) const;
+        /**
+         * Creates a new text page with the given @p words.
+         */
+        TextPage( const TextEntity::List &words );
 
-    TextPage( QList<TextEntity*> words) : m_words(words) {};
-    TextPage() : m_words() {};
+        /**
+         * Destroys the text page.
+         */
+        ~TextPage();
 
-    void append(QString txt, NormalizedRect*  area) 
-        { m_words.append(new TextEntity(txt,area) ); };
-    ~TextPage();
+        /**
+         * Appends the given @p text with the given @p area as new
+         * @see TextItem to the page.
+         */
+        void append( const QString &text, NormalizedRect *area );
 
-  private:
-    RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
-        Qt::CaseSensitivity caseSensitivity, const QList<TextEntity*>::ConstIterator &start,
-        const QList<TextEntity*>::ConstIterator &end);
-    QList<TextEntity*>  m_words;
-    QMap<int, Okular::SearchPoint*> m_searchPoints;
+        /**
+         * Returns the bounding rect of the text which matches the following criteria
+         * or 0 if the search is not successful.
+         *
+         * @param id An unique id for this search.
+         * @param text The search text.
+         * @param direction The direction of the search (@see SearchDirection)
+         * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
+         *                        the search is case insensitive.
+         * @param lastRect If 0 the search starts at the beginning of the page, otherwise
+         *                 right/below the coordinates of the the given rect.
+         */
+        RegularAreaRect* findText( int id, const QString &text, SearchDirection & direction,
+                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
+
+        /**
+         * Returns the text which is included by rectangular area @p rect or an empty string.
+         */
+        QString text( const RegularAreaRect *rect ) const;
+
+        /**
+         * Returns the rectangular area of the given @p selection.
+         */
+        RegularAreaRect *textArea( TextSelection *selection ) const;
+
+    private:
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( TextPage )
 };
 
 }

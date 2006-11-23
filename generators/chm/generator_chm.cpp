@@ -268,7 +268,7 @@ void CHMGenerator::additionalRequestData()
 {
     Okular::Page * page=m_request->page();
     bool genObjectRects = m_request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
-    bool genTextPage = !m_request->page()->hasSearchPage() && genObjectRects;
+    bool genTextPage = !m_request->page()->hasTextPage() && genObjectRects;
 
     if (genObjectRects || genTextPage )
     {
@@ -345,7 +345,7 @@ void CHMGenerator::additionalRequestData()
         kDebug() << "Generating text page - start" << endl;
         Okular::TextPage *tp=new Okular::TextPage();
         recursiveExploreNodes(domDoc,tp);
-        page->setSearchPage (tp);
+        page->setTextPage (tp);
     }
     }
 }
@@ -364,7 +364,7 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
-    page->setSearchPage(tp);
+    page->setTextPage(tp);
     syncLock.unlock();
 }
 

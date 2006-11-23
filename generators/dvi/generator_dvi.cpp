@@ -260,7 +260,7 @@ void DviGenerator::generateSyncTextPage( Okular::Page* page )
         m_dviRenderer->getText( pageInfo );
 
         Okular::TextPage *ktp = extractTextFromPage( pageInfo, page->totalOrientation() );
-        page->setSearchPage( ktp );
+        page->setTextPage( ktp );
     }
     delete pageInfo;
 }

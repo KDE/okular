@@ -590,7 +590,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
-    bool genTextPage = !page->hasSearchPage() && (request->width() == page->width()) &&
+    bool genTextPage = !page->hasTextPage() && (request->width() == page->width()) &&
                        (request->height() == page->height());
     // generate links and image rects if rendering pages on pageview
     bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -622,7 +622,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     if ( genTextPage )
     {
         QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->rotation());
-        page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), request->page()->totalOrientation()) );
+        page->setTextPage( abstractTextPage(textList, page->height(), page->width(), request->page()->totalOrientation()) );
         qDeleteAll(textList);
     }
     delete p;
@@ -649,7 +649,7 @@ void PDFGenerator::generateSyncTextPage( Okular::Page * page )
     docLock.unlock();
     delete pp;
     // ..and attach it to the page
-    page->setSearchPage( abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()) );
+    page->setTextPage( abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()) );
     qDeleteAll(textList);
 }
 
@@ -1286,7 +1286,7 @@ void PDFGenerator::threadFinished()
     delete outImage;
     if ( !outText.isEmpty() )
     {
-        request->page()->setSearchPage( abstractTextPage( outText , 
+        request->page()->setTextPage( abstractTextPage( outText , 
             request->page()->height(), request->page()->width(),request->page()->totalOrientation()));
         qDeleteAll(outText);
     }
@@ -1433,7 +1433,7 @@ void PDFPixmapGeneratorThread::run()
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
-    bool genTextPage = !page->hasSearchPage() &&
+    bool genTextPage = !page->hasTextPage() &&
                        ( width == page->width() ) &&
                        ( height == page->height() );
 

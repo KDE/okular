@@ -87,7 +87,7 @@ bool Page::hasPixmap( int id, int width, int height ) const
     return (pixmap->width() == width && pixmap->height() == height);
 }
 
-bool Page::hasSearchPage() const
+bool Page::hasTextPage() const
 {
     return m_text != 0;
 }
@@ -289,7 +289,7 @@ void Page::setPixmap( int id, QPixmap *pixmap )
     }
 }
 
-void Page::setSearchPage( TextPage * tp )
+void Page::setTextPage( TextPage * tp )
 {
     delete m_text;
     m_text = tp;

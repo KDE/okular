@@ -1598,8 +1598,8 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page " << item->pageNumber() << " has text " << okularPage->hasSearchPage() << endl;
-                        if ( !okularPage->hasSearchPage() )
+                        kWarning() << "checking if page " << item->pageNumber() << " has text " << okularPage->hasTextPage() << endl;
+                        if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
                         QRect relativeRect = selectionRect.intersect( itemRect );
@@ -2089,7 +2089,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
 
     const Okular::Page * okularPage = item->page();
 
-    if ( !okularPage->hasSearchPage() )
+    if ( !okularPage->hasTextPage() )
         d->document->requestTextPage( okularPage->number() );
 
     Okular::RegularAreaRect * selectionArea = okularPage->getTextArea( &mouseTextSelectionInfo );
@@ -2617,7 +2617,7 @@ void PageView::slotRequestVisiblePixmaps()
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
 #endif
-        kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasSearchPage() << "\n";
+        kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasTextPage() << "\n";
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {

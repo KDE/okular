@@ -1020,7 +1020,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
             int pageNumber = page->number();
 
             // request search page if needed
-            if ( !page->hasSearchPage() )
+            if ( !page->hasTextPage() )
                 requestTextPage( pageNumber );
 
             // loop on a page adding highlights for all found items
@@ -1066,7 +1066,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
         int currentPage = fromStart ? 0 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
         Page * lastPage = fromStart ? 0 : pages_vector[ currentPage ];
 
-        // continue checking last SearchPage first (if it is the current page)
+        // continue checking last TextPage first (if it is the current page)
         RegularAreaRect * match = 0;
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
@@ -1094,7 +1094,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
                 // get page
                 Page * page = pages_vector[ currentPage ];
                 // request search page if needed
-                if ( !page->hasSearchPage() )
+                if ( !page->hasTextPage() )
                     requestTextPage( page->number() );
                 // if found a match on the current page, end the loop
                 if ( ( match = page->findText( searchID, text, FromTop, caseSensitive ) ) )
@@ -1156,7 +1156,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
             int pageNumber = page->number();
 
             // request search page if needed
-            if ( !page->hasSearchPage() )
+            if ( !page->hasTextPage() )
                 requestTextPage( pageNumber );
 
             // loop on a page adding highlights for all found items

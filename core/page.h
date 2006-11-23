@@ -54,7 +54,23 @@ class OKULAR_EXPORT Page : public QObject
             Closing
         };
 
+        /**
+         * Creates a new page.
+         *
+         * @param number The number of the page in the document.
+         * @param width The width of the page.
+         * @param height The height of the page.
+         * @param orientation The orientation of the page with
+         *                    0 = 0°
+         *                    1 = 90°
+         *                    2 = 180°
+         *                    3 = 270°
+         */
         Page( uint number, double width, double height, int orientation );
+
+        /**
+         * Destroys the page.
+         */
         ~Page();
 
         // query properties (const read-only methods)
@@ -65,8 +81,17 @@ class OKULAR_EXPORT Page : public QObject
         inline double width() const { return m_width; }
         inline double height() const { return m_height; }
         inline double ratio() const { return m_height / m_width; }
-        bool hasPixmap( int p_id, int width = -1, int height = -1 ) const;
-        bool hasSearchPage() const;
+
+        /**
+         * Returns whether the page has a pixmap of size @p width x @p height
+         * for the observer with given @p id.
+         */
+        bool hasPixmap( int id, int width = -1, int height = -1 ) const;
+
+        /**
+         * Returns whether the page provides a text page (@see TextPage).
+         */
+        bool hasTextPage() const;
         bool hasBookmark() const;
         bool hasObjectRect( double x, double y, double xScale, double yScale ) const;
         bool hasHighlights( int s_id = -1 ) const;
@@ -90,7 +115,7 @@ class OKULAR_EXPORT Page : public QObject
 
         // operations: set contents (by Document)
         void setPixmap( int p_id, QPixmap *pixmap );
-        void setSearchPage( TextPage * text );
+        void setTextPage( TextPage * text );
         void setBookmark( bool state );
         void setObjectRects( const QLinkedList< ObjectRect * > rects );
         void setHighlight( int s_id, RegularAreaRect *r, const QColor & color );

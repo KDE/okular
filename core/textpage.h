@@ -78,9 +78,20 @@ class TextEntity
          */
         NormalizedRect* area() const;
 
+        /**
+         * Returns the transformed area of the text entity.
+         */
+        NormalizedRect* transformedArea() const;
+
+        /**
+         * Transforms the area coordinates of the text entity.
+         */
+        void transform( const QMatrix &matrix );
+
     private:
         QString m_text;
         NormalizedRect* m_area;
+        NormalizedRect* m_transformed_area;
 
         class Private;
         Private *d;
@@ -141,6 +152,11 @@ class TextPage
          * Returns the rectangular area of the given @p selection.
          */
         RegularAreaRect *textArea( TextSelection *selection ) const;
+
+        /**
+         * Transforms the area coordinates of the text entities.
+         */
+        void transform( const QMatrix &matrix );
 
     private:
         class Private;

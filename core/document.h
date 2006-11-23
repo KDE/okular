@@ -141,7 +141,7 @@ class OKULAR_EXPORT Document : public QObject
         void setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color );
 
         enum SearchType { NextMatch, PrevMatch, AllDoc, GoogleAll, GoogleAny };
-        bool searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
+        bool searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
         bool continueSearch( int searchID );
         void resetSearch( int searchID );

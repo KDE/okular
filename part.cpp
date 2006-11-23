@@ -949,7 +949,8 @@ void Part::slotFind()
         m_searchHistory = dlg.findHistory();
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
-        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFind::CaseSensitive,
+        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false,
+                                dlg.options() & KFind::CaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
                                 Okular::Document::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }

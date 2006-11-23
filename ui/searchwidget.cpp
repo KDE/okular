@@ -129,11 +129,13 @@ void SearchWidget::startSearch()
     bool ok = true;
     if ( text.length() >= 3 )
     {
-        bool caseSensitive = m_caseSensitiveAction->isChecked();
+        Qt::CaseSensitivity caseSensitivity = m_caseSensitiveAction->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+
         Okular::Document::SearchType type = !m_searchType ? Okular::Document::AllDoc :
                                         ( (m_searchType > 1) ? Okular::Document::GoogleAny :
                                         Okular::Document::GoogleAll );
-        ok = m_document->searchText( SW_SEARCH_ID, text, true, caseSensitive,
+
+        ok = m_document->searchText( SW_SEARCH_ID, text, true, caseSensitivity,
                                      type, false, qRgb( 0, 183, 255 ) );
     }
     else

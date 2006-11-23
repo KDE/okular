@@ -20,24 +20,24 @@ namespace Okular {
 
 class TextSelection;
 
-/*! @enum SearchDir
+/*! @enum SearchDirection
  *  The enum holding the direction of searching.
- *! @enum SearchDir FromTop
+ *! @enum SearchDirection FromTop
  *  Searching from top of the page, next result is to be found,
  *  there was no earlier search result.
- *! @enum SearchDir FromBottom
+ *! @enum SearchDirection FromBottom
  *  Searching from bottom of the page, next result is to be found,
  *  there was no earlier search result.
- *! @enum SearchDir NextRes
+ *! @enum SearchDirection NextResult
  *  Searching for the next result on the page, earlier result should be 
  *  located so we search from the last result not from the beginning of the 
  *  page.
- *! @enum SearchDir PrevRes
+ *! @enum SearchDirection PreviousResult
  *  Searching for the previous result on the page, earlier result should be 
  *  located so we search from the last result not from the beginning of the 
  *  page.
  */
-typedef enum SearchDir{ FromTop, FromBottom, NextRes, PrevRes };
+typedef enum SearchDirection{ FromTop, FromBottom, NextResult, PreviousResult };
 
 /*! @struct  TextEntity
  * @short Abstract textentity of Okular
@@ -70,8 +70,8 @@ struct SearchPoint;
 class TextPage
 {
   public:
-    RegularAreaRect* findText(int searchID, const QString &query, SearchDir & direct,
-        bool strictCase, const RegularAreaRect *area);
+    RegularAreaRect* findText( int id, const QString &query, SearchDirection & direct,
+                               Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area);
     QString getText(const RegularAreaRect *rect) const;
     RegularAreaRect * getTextArea ( TextSelection* ) const;
     TextPage(QList<TextEntity*> words) : m_words(words) {};
@@ -81,7 +81,7 @@ class TextPage
     ~TextPage();
   private:
     RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
-        bool strictCase, const QList<TextEntity*>::ConstIterator &start,
+        Qt::CaseSensitivity caseSensitivity, const QList<TextEntity*>::ConstIterator &start,
         const QList<TextEntity*>::ConstIterator &end);
     QList<TextEntity*>  m_words;
     QMap<int, Okular::SearchPoint*> m_searchPoints;

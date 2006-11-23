@@ -165,10 +165,10 @@ RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
 }
 
 
-RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDir & direct,
-    bool strictCase, const RegularAreaRect *area)
+RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchDirection & direct,
+                                     Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area )
 {
-    SearchDir dir=direct;
+    SearchDirection dir=direct;
     // invalid search request
     if ( query.isEmpty() || area->isNull() )
         return 0;
@@ -178,9 +178,9 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
     {
         // if no previous run of this search is found, then set it to start
         // from the beginning (respecting the search direction)
-        if ( dir == NextRes )
+        if ( dir == NextResult )
             dir = FromTop;
-        else if ( dir == PrevRes )
+        else if ( dir == PreviousResult )
             dir = FromBottom;
     }
     bool forward = true;
@@ -199,11 +199,11 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
             }
             forward = false;
             break;
-        case NextRes:
+        case NextResult:
             start = m_searchPoints[ searchID ]->theIt;
             end = m_words.end();
             break;
-        case PrevRes:
+        case PreviousResult:
             start = m_searchPoints[ searchID ]->theIt;
             end = m_words.begin();
             forward = false;
@@ -212,26 +212,27 @@ RegularAreaRect* TextPage::findText(int searchID, const QString &query, SearchDi
     RegularAreaRect* ret = 0;
     if ( forward )
     {
-        ret = findTextInternalForward( searchID, query, strictCase, start, end );
+        ret = findTextInternalForward( searchID, query, caseSensitivity, start, end );
     }
     // TODO implement backward search
 #if 0
     else
     {
-        ret = findTextInternalBackward( searchID, query, strictCase, start, end );
+        ret = findTextInternalBackward( searchID, query, caseSensitivity, start, end );
     }
 #endif
     return ret;
 }
 
 
-RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &_query,
-        bool strictCase, const QList<TextEntity*>::ConstIterator &start,
-        const QList<TextEntity*>::ConstIterator &end)
+RegularAreaRect* TextPage::findTextInternalForward( int searchID, const QString &_query,
+                                                    Qt::CaseSensitivity caseSensitivity,
+                                                    const QList<TextEntity*>::ConstIterator &start,
+                                                    const QList<TextEntity*>::ConstIterator &end )
 {
 
     RegularAreaRect* ret=new RegularAreaRect;
-    QString query = strictCase ? _query : _query.toLower();
+    QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -280,7 +281,7 @@ RegularAreaRect* TextPage::findTextInternalForward(int searchID, const QString &
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
 
-            if ((strictCase)
+            if ((caseSensitivity == Qt::CaseSensitive)
                 ? (str.mid(offset,min) != query.mid(j,min))
                 : (str.mid(offset,min).toLower() != query.mid(j,min))
                 )

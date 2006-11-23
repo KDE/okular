@@ -911,8 +911,9 @@ void PageView::keyPressEvent( QKeyEvent * e )
             if( d->typeAheadString.length() > 1 )
             {
                 d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
-                bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, true, false,
-                        Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
+                bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString,
+                                                      true, Qt::CaseInsensitive,
+                                                      Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
                 KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
                 d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
                                            found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
@@ -2286,7 +2287,8 @@ void PageView::center(int cx, int cy)
 
 void PageView::doTypeAheadSearch()
 {
-    bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString, false, false,
+    bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString,
+                                          false, Qt::CaseInsensitive,
                                           Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
     KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
     d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),

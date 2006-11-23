@@ -108,7 +108,7 @@ struct RunningSearch
     // fields related to previous searches (used for 'continueSearch')
     QString cachedString;
     Document::SearchType cachedType;
-    bool cachedCaseSensitive;
+    Qt::CaseSensitivity cachedCaseSensitivity;
     bool cachedViewportMove;
     bool cachedNoDialogs;
     QColor cachedColor;
@@ -964,7 +964,7 @@ void Document::setNextDocumentViewport( const DocumentViewport & viewport )
     d->nextDocumentViewport = viewport;
 }
 
-bool Document::searchText( int searchID, const QString & text, bool fromStart, bool caseSensitive,
+bool Document::searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
     // safety checks: don't perform searches on empty or unsearchable docs
@@ -989,7 +989,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
     bool newText = text != s->cachedString;
     s->cachedString = text;
     s->cachedType = type;
-    s->cachedCaseSensitive = caseSensitive;
+    s->cachedCaseSensitivity = caseSensitivity;
     s->cachedViewportMove = moveViewport;
     s->cachedNoDialogs = noDialogs;
     s->cachedColor = color;
@@ -1029,9 +1029,9 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
             while ( 1 )
             {
                 if ( lastMatch )
-                    lastMatch = page->findText( searchID, text, NextRes, caseSensitive, lastMatch );
+                    lastMatch = page->findText( searchID, text, NextResult, caseSensitivity, lastMatch );
                 else
-                    lastMatch = page->findText( searchID, text, FromTop, caseSensitive );
+                    lastMatch = page->findText( searchID, text, FromTop, caseSensitivity );
 
                 if ( !lastMatch )
                     break;
@@ -1071,9 +1071,9 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                match = lastPage->findText( searchID, text, FromTop, caseSensitive );
+                match = lastPage->findText( searchID, text, FromTop, caseSensitivity );
             else
-                match = lastPage->findText( searchID, text, NextRes, caseSensitive, &s->continueOnMatch );
+                match = lastPage->findText( searchID, text, NextResult, caseSensitivity, &s->continueOnMatch );
             if ( !match )
                 currentPage++;
         }
@@ -1097,7 +1097,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
                 if ( !page->hasTextPage() )
                     requestTextPage( page->number() );
                 // if found a match on the current page, end the loop
-                if ( ( match = page->findText( searchID, text, FromTop, caseSensitive ) ) )
+                if ( ( match = page->findText( searchID, text, FromTop, caseSensitivity ) ) )
                     break;
                 currentPage++;
             }
@@ -1175,9 +1175,9 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, b
                 while ( 1 )
                 {
                     if ( lastMatch )
-                        lastMatch = page->findText( searchID, word, NextRes, caseSensitive, lastMatch );
+                        lastMatch = page->findText( searchID, word, NextResult, caseSensitivity, lastMatch );
                     else
-                        lastMatch = page->findText( searchID, word, FromTop, caseSensitive);
+                        lastMatch = page->findText( searchID, word, FromTop, caseSensitivity);
 
                     if ( !lastMatch )
                         break;
@@ -1228,7 +1228,7 @@ bool Document::continueSearch( int searchID )
 
     // start search with cached parameters from last search by searchID
     RunningSearch * p = d->searches[ searchID ];
-    return searchText( searchID, p->cachedString, false, p->cachedCaseSensitive,
+    return searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
                        p->cachedType, p->cachedViewportMove, p->cachedColor,
                        p->cachedNoDialogs );
 }

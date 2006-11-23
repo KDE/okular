@@ -137,33 +137,27 @@ bool Page::hasTransition() const
 }
 
 
-RegularAreaRect * Page::findText( int searchID, const QString & text, SearchDir dir, bool strictCase,
-	const RegularAreaRect * lastRect/*, const Generator &generator */) const
+RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection direction,
+                                  Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect ) const
 {
-	RegularAreaRect* ret=0;
-	if ( text.isEmpty() )
-		return ret;
-/*
-    if (generator->preferInternalSearch())
-	return generator->;*/
+    RegularAreaRect* rect = 0;
+    if ( text.isEmpty() )
+        return rect;
 
-	ret=m_text->findText(searchID, text, dir, strictCase,lastRect);
-	return ret;
-/*
-
-    */
+    rect = m_text->findText( id, text, direction, caseSensitivity, lastRect );
+    return rect;
 }
 
 QString Page::getText( const RegularAreaRect * area ) const
 {
-	QString ret;
+    QString ret;
 
-	if ( !m_text )
-		return ret;
+    if ( !m_text )
+        return ret;
 
-	ret = m_text->getText( area );
+    ret = m_text->getText( area );
 
-	return ret;
+    return ret;
 }
 
 void Page::rotateAt( int orientation )

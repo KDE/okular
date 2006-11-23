@@ -92,13 +92,44 @@ class OKULAR_EXPORT Page : public QObject
          * Returns whether the page provides a text page (@see TextPage).
          */
         bool hasTextPage() const;
+
+        /**
+         * Returns whether the page provides bookmarks.
+         */
         bool hasBookmark() const;
+
+        /**
+         * Returns whether the page has an object rect which includes the point (@p x, @p y)
+         * at scale (@p xScale, @p yScale).
+         */
         bool hasObjectRect( double x, double y, double xScale, double yScale ) const;
-        bool hasHighlights( int s_id = -1 ) const;
-        //bool hasAnnotation( double x, double y ) const;
+
+        /**
+         * Returns whether the page provides highlighting for the observer with the
+         * given @p id.
+         */
+        bool hasHighlights( int id = -1 ) const;
+
+        /**
+         * Returns whether the page provides a transition effect.
+         */
         bool hasTransition() const;
 
-        RegularAreaRect * findText( int searchID, const QString & text, SearchDir dir, bool strictCase, const RegularAreaRect * lastRect=0) const;
+        /**
+         * Returns the bounding rect of the text which matches the following criteria
+         * or 0 if the search is not successful.
+         *
+         * @param id An unique id for this search.
+         * @param text The search text.
+         * @param direction The direction of the search (@see SearchDirection)
+         * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
+         *                        the search is case insensitive.
+         * @param lastRect If 0 (default) the search starts at the beginning of the page, otherwise
+         *                 right/below the coordinates of the the given rect.
+         */
+        RegularAreaRect* findText( int id, const QString & text, SearchDirection direction,
+                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=0) const;
+
         QString getText( const RegularAreaRect * rect ) const;
         RegularAreaRect * getTextArea ( TextSelection * ) const;
         //const ObjectRect * getObjectRect( double x, double y ) const;

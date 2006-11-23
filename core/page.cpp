@@ -97,10 +97,11 @@ bool Page::hasBookmark() const
     return m_bookmarked;
 }
 
-RegularAreaRect * Page::getTextArea ( TextSelection * sel ) const
+RegularAreaRect * Page::textArea ( TextSelection * selection ) const
 {
-    if (m_text)
-	return m_text->getTextArea (sel);
+    if ( m_text )
+        return m_text->textArea( selection );
+
     return 0;
 }
 
@@ -148,14 +149,14 @@ RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection 
     return rect;
 }
 
-QString Page::getText( const RegularAreaRect * area ) const
+QString Page::text( const RegularAreaRect * area ) const
 {
     QString ret;
 
     if ( !m_text )
         return ret;
 
-    ret = m_text->getText( area );
+    ret = m_text->text( area );
 
     return ret;
 }
@@ -229,7 +230,7 @@ void Page::imageRotationDone()
     job->deleteLater();
 }
 
-const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
+const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
 {
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
@@ -238,12 +239,12 @@ const ObjectRect * Page::getObjectRect( ObjectRect::ObjectType type, double x, d
     return 0;
 }
 
-const PageTransition * Page::getTransition() const
+const PageTransition * Page::transition() const
 {
     return m_transition;
 }
 
-const Link * Page::getPageAction( PageAction act ) const
+const Link * Page::pageAction( PageAction act ) const
 {
     switch ( act )
     {

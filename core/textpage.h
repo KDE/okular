@@ -72,13 +72,17 @@ class TextPage
   public:
     RegularAreaRect* findText( int id, const QString &query, SearchDirection & direct,
                                Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area);
-    QString getText(const RegularAreaRect *rect) const;
-    RegularAreaRect * getTextArea ( TextSelection* ) const;
-    TextPage(QList<TextEntity*> words) : m_words(words) {};
+
+    QString text( const RegularAreaRect *rect ) const;
+    RegularAreaRect * textArea( TextSelection* ) const;
+
+    TextPage( QList<TextEntity*> words) : m_words(words) {};
     TextPage() : m_words() {};
+
     void append(QString txt, NormalizedRect*  area) 
         { m_words.append(new TextEntity(txt,area) ); };
     ~TextPage();
+
   private:
     RegularAreaRect * findTextInternalForward(int searchID, const QString &query,
         Qt::CaseSensitivity caseSensitivity, const QList<TextEntity*>::ConstIterator &start,

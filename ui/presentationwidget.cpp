@@ -514,7 +514,7 @@ const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry
 
     // check if 1) there is an object and 2) it's a link
     QRect d = KGlobalSettings::desktopGeometry( const_cast< PresentationWidget * >( this ) );
-    const Okular::ObjectRect * object = page->getObjectRect( Okular::ObjectRect::Link, nx, ny, d.width(), d.height() );
+    const Okular::ObjectRect * object = page->objectRect( Okular::ObjectRect::Link, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
 
@@ -629,7 +629,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     if ( !disableTransition )
     {
         const Okular::PageTransition * transition = m_frameIndex != -1 ?
-            m_frames[ m_frameIndex ]->page->getTransition() : 0;
+            m_frames[ m_frameIndex ]->page->transition() : 0;
         if ( transition )
             initTransition( transition );
         else {

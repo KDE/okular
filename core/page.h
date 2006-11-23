@@ -130,13 +130,32 @@ class OKULAR_EXPORT Page : public QObject
         RegularAreaRect* findText( int id, const QString & text, SearchDirection direction,
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=0) const;
 
-        QString getText( const RegularAreaRect * rect ) const;
-        RegularAreaRect * getTextArea ( TextSelection * ) const;
-        //const ObjectRect * getObjectRect( double x, double y ) const;
-        const ObjectRect * getObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
-        //const Annotation * getAnnotation( double x, double y ) const;
-        const PageTransition * getTransition() const;
-        const Link * getPageAction( PageAction act ) const;
+        /**
+         * Returns the text which is included by rectangular area @p rect or an empty string.
+         */
+        QString text( const RegularAreaRect * rect ) const;
+
+        /**
+         * Returns the rectangular area of the given @p selection.
+         */
+        RegularAreaRect * textArea( TextSelection *selection ) const;
+
+        /**
+         * Returns the object rect of the given @p type which is at point (@p x, @p y) at scale (@p xScale, @p yScale).
+         */
+        const ObjectRect * objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
+
+        /**
+         * Returns the transition effect of the page or 0 if no transition effect is set (@see hasTransition).
+         */
+        const PageTransition * transition() const;
+
+        /**
+         * Returns the @see Link object which is associated with the given page @p action
+         * or 0 if no page action is set.
+         */
+        const Link * pageAction( PageAction action ) const;
+
         //FIXME TEMP:
         bool hasAnnotations() const { return !m_annotations.isEmpty(); }
         const QLinkedList< Annotation * > getAnnotations() const { return m_annotations; }

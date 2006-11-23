@@ -171,12 +171,12 @@ protected:
             {
                 double nX = (double)( he->x() - pageItem->geometry().left() ) / (double)pageItem->width();
                 double nY = (double)( he->y() - pageItem->geometry().top() ) / (double)pageItem->height();
-                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+                rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
                     ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
                 else
                 {
-                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                         link = static_cast< const Okular::Link * >( rect->pointer() );
                 }
@@ -1298,7 +1298,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                     double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
                     double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
                     Okular::Annotation * ann = 0;
-                    const Okular::ObjectRect * orect = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+                    const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
                     if ( orect )
                         ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     if ( ann )
@@ -1427,7 +1427,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
                 const Okular::ObjectRect * rect;
-                rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
                 {
                     // handle click over a link
@@ -1438,7 +1438,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     // TODO: find a better way to activate the source reference "links"
                     // for the moment they are activated with Shift + left click
-                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->getObjectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->width(), pageItem->height() ) : 0;
+                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->width(), pageItem->height() ) : 0;
                     if ( rect )
                     {
                         const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->pointer() );
@@ -1447,7 +1447,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
 #if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
-                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle click over a image
@@ -1469,7 +1469,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                            nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
                     const Okular::ObjectRect * rect;
-                    rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle right click over a link
@@ -1501,7 +1501,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         // a link can move us to another page or even to another document, there's no point in trying to
                         //  process the click on the image once we have processes the click on the link
-                        rect = pageItem->page()->getObjectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
+                        rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
                         if ( rect )
                         {
                             // handle right click over a image
@@ -1609,7 +1609,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     }
                 }
                 if (okularPage)
-                  selectedText = okularPage->getText( rects );
+                  selectedText = okularPage->text( rects );
             }
 
             // popup that ask to copy:text and copy/save:image
@@ -2093,7 +2093,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
     if ( !okularPage->hasTextPage() )
         d->document->requestTextPage( okularPage->number() );
 
-    Okular::RegularAreaRect * selectionArea = okularPage->getTextArea( &mouseTextSelectionInfo );
+    Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
     kDebug() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" ) << endl;
     return selectionArea;
 }
@@ -2241,8 +2241,8 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::IBeamCursor );
         else
         {
-            const Okular::ObjectRect * linkobj = pageItem->page()->getObjectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
-            const Okular::ObjectRect * annotobj = pageItem->page()->getObjectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+            const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
             if ( linkobj && !annotobj )
             {
                 d->mouseOnRect = true;

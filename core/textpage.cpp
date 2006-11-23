@@ -30,7 +30,7 @@ TextPage::~TextPage()
     qDeleteAll(m_searchPoints);
 }
 
-RegularAreaRect * TextPage::getTextArea ( TextSelection * sel) const
+RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 {
 /**
   It works like this:
@@ -344,7 +344,7 @@ RegularAreaRect* TextPage::findTextInternalForward( int searchID, const QString 
     return 0;
 }
 
-QString TextPage::getText(const RegularAreaRect *area) const
+QString TextPage::text(const RegularAreaRect *area) const
 {
     if (!area || area->isNull())
         return QString();

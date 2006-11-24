@@ -175,13 +175,14 @@ double Page::ratio() const
 
 bool Page::hasPixmap( int id, int width, int height ) const
 {
-    if ( !m_pixmaps.contains( id ) )
+    QMap< int, PixmapObject >::const_iterator it = m_pixmaps.find( id );
+    if ( it == m_pixmaps.end() )
         return false;
 
     if ( width == -1 || height == -1 )
         return true;
 
-    const QPixmap *pixmap = m_pixmaps[ id ].m_pixmap;
+    const QPixmap *pixmap = it.value().m_pixmap;
 
     return (pixmap->width() == width && pixmap->height() == height);
 }

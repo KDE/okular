@@ -710,11 +710,22 @@ void PageView::notifyContentsCleared( int changedFlags )
 
 bool PageView::canUnloadPixmap( int pageNumber ) const
 {
-    // if the item is visible, forbid unloading
-    QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
-    for ( ; vIt != vEnd; ++vIt )
-        if ( (*vIt)->pageNumber() == pageNumber )
-            return false;
+    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Aggressive )
+    {
+        // if the item is visible, forbid unloading
+        QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
+        for ( ; vIt != vEnd; ++vIt )
+            if ( (*vIt)->pageNumber() == pageNumber )
+                return false;
+    }
+    else
+    {
+        // forbid unloading of the visible items, and of the previous and next
+        QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.begin(), vEnd = d->visibleItems.end();
+        for ( ; vIt != vEnd; ++vIt )
+            if ( abs( (*vIt)->pageNumber() - pageNumber ) <= 1 )
+                return false;
+    }
     // if hidden premit unloading
     return true;
 }

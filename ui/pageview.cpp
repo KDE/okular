@@ -2677,8 +2677,8 @@ void PageView::slotRequestVisiblePixmaps()
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
-#endif
         kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasTextPage() << "\n";
+#endif
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {

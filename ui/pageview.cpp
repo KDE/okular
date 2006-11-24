@@ -518,6 +518,43 @@ void PageView::reparseConfig()
     }
 }
 
+void PageView::copyTextSelection() const
+{
+    if ( d->pagesWithTextSelection.isEmpty() )
+        return;
+
+    QString text;
+    QList< int > selpages = d->pagesWithTextSelection.toList();
+    qSort( selpages );
+    const Okular::Page * pg = 0;
+    if ( selpages.count() == 1 )
+    {
+        pg = d->document->page( selpages.first() );
+        text.append( pg->text( pg->textSelection() ) );
+    }
+    else
+    {
+        pg = d->document->page( selpages.first() );
+        text.append( pg->text( pg->textSelection() ) );
+        int end = selpages.count() - 1;
+        for( int i = 1; i < end; ++i )
+        {
+            pg = d->document->page( selpages.at( i ) );
+            text.append( pg->text() );
+        }
+        pg = d->document->page( selpages.last() );
+        text.append( pg->text( pg->textSelection() ) );
+    }
+    if ( !text.isEmpty() )
+    {
+        QClipboard *cb = QApplication::clipboard();
+        cb->setText( text, QClipboard::Clipboard );
+        if ( cb->supportsSelection() )
+            cb->setText( text, QClipboard::Selection );
+    }
+}
+
+
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
 {
@@ -1742,12 +1779,23 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     d->mouseTextSelecting = false;
 //                    textSelectionClear();
                 }
-                else if ( !d->mousePressPos.isNull() )
+                else if ( !d->mousePressPos.isNull() && rightButton )
                 {
                     PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
                     const Okular::Page * page = pageItem ? pageItem->page() : 0;
-                    if ( page )
+                    KMenu menu( this );
+                    QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy" ) );
+                    if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )
                     {
+                        textToClipboard->setEnabled( false );
+                        textToClipboard->setText( i18n("Copy forbidden by DRM") );
+                    }
+                    QAction *choice = menu.exec( e->globalPos() );
+                    // check if the user really selected an action
+                    if ( choice )
+                    {
+                        if ( choice == textToClipboard )
+                            copyTextSelection();
                     }
                 }
             break;

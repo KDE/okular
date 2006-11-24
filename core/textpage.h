@@ -144,9 +144,12 @@ class TextPage
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
 
         /**
-         * Returns the text which is included by rectangular area @p rect or an empty string.
+         * Returns:
+         * - a null string if @p rect is a valid pointer to a null area
+         * - the whole page text if @p rect is a null pointer
+         * - the text which is included by rectangular area @p rect otherwise
          */
-        QString text( const RegularAreaRect *rect ) const;
+        QString text( const RegularAreaRect *rect = 0 ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

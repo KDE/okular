@@ -187,6 +187,7 @@ private:
 	KAction *m_historyNext;
 	KAction *m_prevBookmark;
 	KAction *m_nextBookmark;
+	KAction *m_copy;
 	KAction *m_find;
 	KAction *m_findNext;
 	KAction *m_saveAs;

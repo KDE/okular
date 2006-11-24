@@ -421,21 +421,25 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
 
 QString TextPage::text(const RegularAreaRect *area) const
 {
-    if (!area || area->isNull())
+    if ( area && area->isNull() )
         return QString();
 
-    QString ret = "";
-    TextEntity::List::ConstIterator it,end = d->m_words.end();
-    TextEntity * last=0;
-    for ( it = d->m_words.begin(); it != end; ++it )
+    TextEntity::List::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    QString ret;
+    if ( area )
     {
-        // provide the string FIXME?: newline handling
-        if (area->intersects((*it)->transformedArea()))
+        for ( ; it != itEnd; ++it )
         {
-//           kDebug()<< "[" << (*it)->area->left << "," << (*it)->area->top << "]x["<< (*it)->area->right << "," << (*it)->area->bottom << "]\n";
-            ret += (*it)->text();
-            last=*it;
+            if ( area->intersects( (*it)->transformedArea() ) )
+            {
+                ret += (*it)->text();
+            }
         }
+    }
+    else
+    {
+        for ( ; it != itEnd; ++it )
+            ret += (*it)->text();
     }
     return ret;
 }

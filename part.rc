@@ -12,6 +12,8 @@
     <Action name="file_export_as" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
+    <Action name="edit_copy"/>
+    <Separator/>
     <Action name="find"/>
     <Action name="find_next"/>
   </Menu>

@@ -431,6 +431,11 @@ void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRe
         m_rects << rect;
 }
 
+const RegularAreaRect * Page::textSelection() const
+{
+    return m_textSelections;
+}
+
 void Page::addAnnotation( Annotation * annotation )
 {
     //uniqueName: okular-PAGENUM-ID

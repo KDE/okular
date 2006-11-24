@@ -260,6 +260,8 @@ Part::Part(QWidget *parentWidget,
 	m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
 	connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
+	m_copy = KStdAction::create( KStdAction::Copy, "edit_copy", m_pageView, SLOT( copyTextSelection() ), ac );
+
 	// Find and other actions
 	m_find = KStdAction::find( this, SLOT( slotFind() ), ac, "find" );
 	m_find->setEnabled( false );

@@ -159,9 +159,10 @@ class OKULAR_EXPORT Page : public QObject
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=0) const;
 
         /**
-         * Returns the text which is included by rectangular area @p rect or an empty string.
+         * Returns the page text (or part of it).
+         * @see TextPage::text()
          */
-        QString text( const RegularAreaRect * rect ) const;
+        QString text( const RegularAreaRect * rect = 0 ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.
@@ -229,6 +230,11 @@ class OKULAR_EXPORT Page : public QObject
          * Sets the list of source reference objects @p rects.
          */
         void setSourceReferences( const QLinkedList< SourceRefObjectRect * > rects );
+
+        /**
+         * Returns the current text selection.
+         */
+        const RegularAreaRect * textSelection() const;
 
         /**
          * Adds a new @p annotation to the page.

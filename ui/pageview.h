@@ -97,6 +97,8 @@ Q_OBJECT
             displayMessage( message, PageViewMessage::Warning, duration );
         }
 
+        void copyTextSelection() const;
+
     signals:
         void urlDropped( const KUrl& );
         void rightClick( const Okular::Page *, const QPoint & );

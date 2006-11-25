@@ -564,7 +564,7 @@ void PageViewToolBar::buildToolBar()
     // 6. reposition buttons (in rows/col grid)
     int gridX = 0,
         gridY = 0;
-    QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = *it;
@@ -589,7 +589,7 @@ void PageViewToolBar::reposition()
     move( d->currentPosition );
 
     // repaint all buttons (to update background)
-    QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
     for ( ; it != end; ++it )
         (*it)->update();
 }
@@ -646,7 +646,7 @@ void PageViewToolBar::slotButtonClicked()
     if ( button )
     {
         // deselect other buttons
-        QLinkedList< ToolBarButton * >::iterator it = d->buttons.begin(), end = d->buttons.end();
+        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
         for ( ; it != end; ++it )
             if ( *it != button )
                 (*it)->setChecked( false );

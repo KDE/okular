@@ -210,7 +210,7 @@ QStringList* Shell::fileFormats()
     supportedPattern = new QStringList;
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();
-    QStringList::Iterator mimeType;
+    QStringList::ConstIterator mimeType;
     QString tmp;
     QStringList mimeTypes,pattern,extensions;
     QString allExt,comment;

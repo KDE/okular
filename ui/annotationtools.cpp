@@ -101,7 +101,7 @@ void SmoothPathEngine::paint( QPainter * painter, double xScale, double yScale, 
         // use engine's color for painting
         painter->setPen( QPen( m_engineColor, 1 ) );
 
-        QLinkedList<Okular::NormalizedPoint>::iterator pIt = points.begin(), pEnd = points.end();
+        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
         Okular::NormalizedPoint pA = *pIt;
         ++pIt;
         for ( ; pIt != pEnd; ++pIt )

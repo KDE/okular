@@ -251,7 +251,7 @@ void Reviews::slotUpdateListView()
     else
     {
         // grab all annotations from pages
-        QVector< Okular::Page * >::iterator it = m_pages.begin(), end = m_pages.end();
+        QVector< Okular::Page * >::const_iterator it = m_pages.begin(), end = m_pages.end();
         for ( ; it != end; ++it )
         {
             const Okular::Page * page = *it;

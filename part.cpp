@@ -387,7 +387,7 @@ void Part::supportedMimetypes()
     KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();
-    QStringList::Iterator mimeType;
+    QStringList::ConstIterator mimeType;
 
     for (; iterator != end; ++iterator)
     {

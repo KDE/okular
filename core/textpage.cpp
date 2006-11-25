@@ -107,6 +107,9 @@ void TextPage::append( const QString &text, NormalizedRect *area )
 
 RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 {
+    if ( d->m_words.isEmpty() )
+        return new RegularAreaRect();
+
 /**
   It works like this:
   There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)

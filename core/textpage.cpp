@@ -71,8 +71,8 @@ class TextPage::Private
 
         ~Private()
         {
-            qDeleteAll( m_words );
             qDeleteAll( m_searchPoints );
+            qDeleteAll( m_words );
         }
 
         RegularAreaRect * findTextInternalForward( int searchID, const QString &query,

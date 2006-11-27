@@ -71,10 +71,27 @@ bool Converter::convert()
   mCursor = new QTextCursor( mTextDocument );
 
   /**
+   * Create the dom of the content
+   */
+  QXmlSimpleReader reader;
+
+  QXmlInputSource source;
+  source.setData( mDocument->content() );
+
+  QString errorMsg;
+  int errorLine, errorCol;
+
+  QDomDocument document;
+  if ( !document.setContent( &source, &reader, &errorMsg, &errorLine, &errorCol ) ) {
+    qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol );
+    return false;
+  }
+
+  /**
    * Read the style properties, so the are available when
    * parsing the content.
    */
-  StyleParser styleParser( mDocument, mStyleInformation );
+  StyleParser styleParser( mDocument, document, mStyleInformation );
   if ( !styleParser.parse() )
     return false;
 
@@ -105,20 +122,6 @@ bool Converter::convert()
   /**
    * Parse the content of the document
    */
-  QXmlSimpleReader reader;
-
-  QXmlInputSource source;
-  source.setData( mDocument->content() );
-
-  QString errorMsg;
-  int errorLine, errorCol;
-
-  QDomDocument document;
-  if ( !document.setContent( &source, &reader, &errorMsg, &errorLine, &errorCol ) ) {
-    qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol );
-    return false;
-  }
-
   const QDomElement documentElement = document.documentElement();
 
   QDomElement element = documentElement.firstChildElement();

@@ -20,7 +20,7 @@ class StyleInformation;
 class StyleParser
 {
   public:
-    StyleParser( const Document *document, StyleInformation *styleInformation );
+    StyleParser( const Document *document, const QDomDocument &domDocument, StyleInformation *styleInformation );
 
     bool parse();
 
@@ -46,6 +46,7 @@ class StyleParser
     ListFormatProperty parseListProperty( QDomElement& );
 
     const Document *mDocument;
+    const QDomDocument &mDomDocument;
     StyleInformation *mStyleInformation;
 };
 

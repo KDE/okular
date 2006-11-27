@@ -22,8 +22,8 @@
 
 using namespace OOO;
 
-StyleParser::StyleParser( const Document *document, StyleInformation *styleInformation )
-  : mDocument( document ), mStyleInformation( styleInformation )
+StyleParser::StyleParser( const Document *document, const QDomDocument &domDocument, StyleInformation *styleInformation )
+  : mDocument( document ), mDomDocument( domDocument ), mStyleInformation( styleInformation )
 {
 }
 
@@ -43,21 +43,7 @@ bool StyleParser::parse()
 
 bool StyleParser::parseContentFile()
 {
-  QXmlSimpleReader reader;
-
-  QXmlInputSource source;
-  source.setData( mDocument->content() );
-
-  QString errorMsg;
-  int errorLine, errorCol;
-
-  QDomDocument document;
-  if ( !document.setContent( &source, &reader, &errorMsg, &errorLine, &errorCol ) ) {
-    qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol );
-    return false;
-  }
-
-  const QDomElement documentElement = document.documentElement();
+  const QDomElement documentElement = mDomDocument.documentElement();
   QDomElement element = documentElement.firstChildElement();
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "document-common-attrs" ) ) {

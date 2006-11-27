@@ -52,13 +52,17 @@ QRect Utils::rotateRect( const QRect & source, int width, int height, int orient
 }
 
 #if defined(Q_WS_X11)
-double Utils::getDpiX() {
+
+double Utils::dpiX()
+{
     return QX11Info::appDpiX();
 }
 
-double Utils::getDpiY() {
+double Utils::dpiY()
+{
     return QX11Info::appDpiY();
 }
+
 #elif defined(Q_WS_MAC)
     /*
      * Code copied from http://developer.apple.com/qa/qa2001/qa1217.html
@@ -74,10 +78,8 @@ double Utils::getDpiY() {
         return num;
     }
 
-    CGDisplayErr GetDisplayDPI(
-        CFDictionaryRef displayModeDict,
-        CGDirectDisplayID displayID,
-        double *horizontalDPI, double *verticalDPI )
+    static CGDisplayErr GetDisplayDPI( CFDictionaryRef displayModeDict, CGDirectDisplayID displayID,
+                                       double *horizontalDPI, double *verticalDPI )
     {
         CGDisplayErr err = kCGErrorFailure;
         io_connect_t displayPort;
@@ -115,7 +117,8 @@ double Utils::getDpiY() {
         return err;
     }
 
-double Utils::getDpiX() {
+double Utils::dpiX()
+{
     double x,y;
     CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
                                       kCGDirectMainDisplay,
@@ -124,7 +127,8 @@ double Utils::getDpiX() {
     return err == CGDisplayNoErr ? x : 72.0;
 }
 
-double Utils::getDpiY() {
+double Utils::dpiY()
+{
     double x,y;
     CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
                                       kCGDirectMainDisplay,
@@ -135,5 +139,3 @@ double Utils::getDpiY() {
 #else
 #error "Not yet contributed"
 #endif
-
-

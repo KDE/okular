@@ -34,12 +34,12 @@ class OKULAR_EXPORT Utils
     /**
      * Return the horizontal DPI of the main display
      */
-    static double getDpiX();
+    static double dpiX();
 
     /**
      * Return the vertical DPI of the main display
      */
-    static double getDpiY();
+    static double dpiY();
 };
 
 }

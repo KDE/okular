@@ -14,8 +14,8 @@
 
 namespace DPIMod
 {
-        const float X = Okular::Utils::getDpiX() / 72.0;
-        const float Y = Okular::Utils::getDpiY() / 72.0;
+        const float X = Okular::Utils::dpiX() / 72.0;
+        const float Y = Okular::Utils::dpiY() / 72.0;
 }
 
 #endif

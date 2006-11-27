@@ -603,7 +603,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 QImage shape( annotBoundary.size(), QImage::Format_ARGB32 );
                 shape.fill( qRgba( 0, 0, 0, 0 ) );
                 // width is already divided by two
-                double width = geom->geomWidthPt * Okular::Utils::getDpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                double width = geom->geomWidthPt * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                 QPainter p( &shape );
                 p.setPen( QPen( QBrush( QColor( a->style.color.red(), a->style.color.green(), a->style.color.blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
                 QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );

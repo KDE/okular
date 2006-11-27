@@ -10,10 +10,6 @@
 #ifndef _OKULAR_TETXTPAGE_H_
 #define _OKULAR_TETXTPAGE_H_
 
-
-#include <QtCore/QMap>
-#include <QtCore/QStringList>
-
 #include "area.h"
 
 namespace Okular {

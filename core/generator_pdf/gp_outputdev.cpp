@@ -325,13 +325,17 @@ DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest *
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
     DocumentViewport vp( -1 );
+    bool deleteDest = false;
 
     if ( namedDest && !dest )
+    {
+        deleteDest = true;
         dest = m_doc->findDest( namedDest );
+    }
 
     if ( !dest || !dest->isOk() )
     {
-        delete dest;
+        if (deleteDest) delete dest;
         return vp;
     }
 
@@ -386,7 +390,7 @@ DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest *
             break;
     }
 
-    delete dest;
+    if (deleteDest) delete dest;
     return vp;
 }
 //END - private helpers

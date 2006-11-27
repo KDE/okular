@@ -79,6 +79,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         // transition related
         QTimer * m_transitionTimer;
         QTimer * m_overlayHideTimer;
+        QTimer * m_nextPageTimer;
         int m_transitionDelay;
         int m_transitionMul;
         QValueList< QRect > m_transitionRects;

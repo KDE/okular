@@ -67,6 +67,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
     connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
     m_overlayHideTimer = new QTimer( this );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
+    m_nextPageTimer = new QTimer( this );
+    connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) );
 
     // handle cursor appearance as specified in configuration
     if ( KpdfSettings::slidesCursor() == KpdfSettings::EnumSlidesCursor::HiddenDelay )
@@ -149,7 +151,7 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 
     // auto advance to the next page if set
     if ( KpdfSettings::slidesAdvance() )
-        QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+        m_nextPageTimer->start( KpdfSettings::slidesAdvanceTime() * 1000 );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -707,7 +709,7 @@ void PresentationWidget::slotNextPage()
     
         // auto advance to the next page if set
         if ( KpdfSettings::slidesAdvance() )
-            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+            m_nextPageTimer->start( KpdfSettings::slidesAdvanceTime() * 1000 );
     }
     else
     {
@@ -719,7 +721,7 @@ void PresentationWidget::slotNextPage()
         {
             m_transitionTimer->stop();
             update();
-	}
+        }
     }
 
     // we need the setFocus() call here to let KCursor::autoHide() work correctly
@@ -732,10 +734,10 @@ void PresentationWidget::slotPrevPage()
     {
         // go to previous page
         changePage( m_frameIndex - 1 );
-    
+
         // auto advance to the next page if set
         if ( KpdfSettings::slidesAdvance() )
-            QTimer::singleShot( KpdfSettings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+            m_nextPageTimer->start( KpdfSettings::slidesAdvanceTime() * 1000 );
     }
     else
     {

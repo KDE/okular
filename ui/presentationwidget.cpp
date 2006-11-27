@@ -109,6 +109,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_overlayHideTimer = new QTimer( this );
     m_overlayHideTimer->setSingleShot( true );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
+    m_nextPageTimer = new QTimer( this ); 
+    connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) ); 
 
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
@@ -196,7 +198,7 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 
     // auto advance to the next page if set
     if ( Okular::Settings::slidesAdvance() )
-        QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+        m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -893,7 +895,7 @@ void PresentationWidget::slotNextPage()
         changePage( m_frameIndex + 1 );
         // auto advance to the next page if set
         if ( Okular::Settings::slidesAdvance() )
-            QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+            m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
     }
     else
     {
@@ -920,7 +922,7 @@ void PresentationWidget::slotPrevPage()
 
         // auto advance to the next page if set
         if ( Okular::Settings::slidesAdvance() )
-            QTimer::singleShot( Okular::Settings::slidesAdvanceTime() * 1000, this, SLOT( slotNextPage() ) );
+            m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
     }
     else
     {

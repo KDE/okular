@@ -260,9 +260,11 @@ void GSGenerator::setPaperSize( QVector<Okular::Page*> & pagesVector, int newsiz
 {
     internalDoc->setMedia(paperSizes().at(newsize));
     loadPages(pagesVector);
-// FIXME: is it needed to notify the observers? doesn't the document do that already?
+/**
+    FIXME: is it needed to notify the observers? doesn't the document do that already?
     Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
     document()->notifyObservers( &r );
+ */
 }
 
 void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )

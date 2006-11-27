@@ -29,6 +29,7 @@ namespace Okular {
 
 // the biggest id, useful for ignoring wrong id request
 #define MAX_OBSERVER_ID 10
+
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1
 #define PAGEVIEW_PRELOAD_PRIO 3
@@ -37,7 +38,6 @@ namespace Okular {
 #define PRESENTATION_PRIO 0
 
 class Page;
-class VisiblePageRect;
 
 /**
  * @short Base class for objects being notified when something changes.
@@ -48,15 +48,41 @@ class VisiblePageRect;
 class DocumentObserver
 {
     public:
+        /**
+         * Destroys the document observer.
+         */
         virtual ~DocumentObserver() {};
 
-        // you must give each observer a unique ID (used for notifications)
+        /**
+         * Must return an unique ID for each observer (used for notifications).
+         */
         virtual uint observerId() const = 0;
 
-        // commands from the Document to all observers
-        enum ChangedFlags { Pixmap = 1, Bookmark = 2, Highlights = 4, TextSelection = 8, Annotations = 16 };
-        enum NotifyType { Setup = 1, Viewport = 2, Page = 4, Contents = 8, VisibleAreas = 16 };
-        virtual void notifySetup( const QVector< Okular::Page * > & /*pages*/, bool /*documentChanged*/ ) {};
+        /**
+         * Flags that can be sent from the document to all observers to
+         * inform them about the type of object that has been changed.
+         */
+        enum ChangedFlags {
+            Pixmap = 1,           ///< Pixmaps has been changed
+            Bookmark = 2,         ///< Bookmarks has been changed
+            Highlights = 4,       ///< Highlighting information has been changed
+            TextSelection = 8,    ///< Text selection has been changed
+            Annotations = 16      ///< Annotations has been changed
+        };
+
+        /**
+         * Flags that can be sent from the document to all observers to
+         * inform them about area that has been changed.
+         */
+        enum NotifyType {
+            Setup = 1,            ///< The page is setup the first time
+            Viewport = 2,         ///< The viewport has changed
+            Page = 4,             ///< The page format (properties) has been changed
+            Contents = 8,         ///< The page content has been changed
+            VisibleAreas = 16     ///< The visible are changed
+        };
+
+        virtual void notifySetup( const QVector< Okular::Page * > &/*pages*/, bool /*documentChanged*/ ) {};
         virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
         virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
         virtual void notifyContentsCleared( int /*changedFlags*/ ) {};
@@ -64,21 +90,6 @@ class DocumentObserver
 
         // queries to observers
         virtual bool canUnloadPixmap( int /*pageNum*/ ) const { return true; }
-};
-
-struct NotifyRequest
-{
-    DocumentObserver::NotifyType type;
-    bool toggle;
-    int page;
-    int flags;
-    QVector<VisiblePageRect*> rects;
-    NotifyRequest (DocumentObserver::NotifyType t, bool to=false)
-        : type(t), toggle(to), page(-1), flags(0) { ; };
-    NotifyRequest (DocumentObserver::NotifyType t, int p, int f)
-        : type(t), toggle(false), page(p), flags (f) { ; };
-    NotifyRequest (DocumentObserver::NotifyType t, int p)
-        : type(t), toggle(false), page(p), flags(0) { ; };
 };
 
 }

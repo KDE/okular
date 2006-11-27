@@ -403,30 +403,6 @@ void Document::addObserver( DocumentObserver * pObserver )
     }
 }
 
-void Document::notifyObservers (NotifyRequest * request)
-{
-    switch (request->type)
-    {
-        case DocumentObserver::Setup:
-            foreachObserver( notifySetup( pages_vector, request->toggle ) );
-            break;
-        case DocumentObserver::Viewport:
-            foreachObserver( notifyViewportChanged( request->toggle ) );
-            break;
-        case DocumentObserver::Page:
-            foreachObserver( notifyPageChanged( request->page, request->flags ) );
-            break;
-        case DocumentObserver::Contents:
-            foreachObserver( notifyContentsCleared( request->flags ) );
-            break;
-        case DocumentObserver::VisibleAreas:
-            qDeleteAll(page_rects);
-            page_rects = request->rects;
-            foreachObserver( notifyVisibleRectsChanged() );
-            break;
-    }
-}
-
 void Document::removeObserver( DocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore

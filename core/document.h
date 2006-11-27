@@ -41,7 +41,6 @@ class EmbeddedFile;
 class ExportFormat;
 class Generator;
 class Link;
-class NotifyRequest;
 class Page;
 class PixmapRequest;
 class SourceReference;
@@ -86,7 +85,6 @@ class OKULAR_EXPORT Document : public QObject
         // observer stuff
         void addObserver( DocumentObserver * pObserver );
         void removeObserver( DocumentObserver * pObserver );
-        void notifyObservers (NotifyRequest * request);
         void reparseConfig();
 
         // enum definitions

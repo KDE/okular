@@ -28,48 +28,171 @@ class Link;
 class NormalizedShape;
 
 /**
- * @short A point in [0,1] coordinates (only used in annotations atm)
+ * NormalizedPoint is a helper class which stores the coordinates
+ * of a normalized point. Normalized means that the coordinates are
+ * between 0 and 1 so that it is page size independent.
+ *
+ * Example:
+ *    The normalized point is (0.5, 0.3)
+ *
+ *    If you want to draw it on a 800x600 page, just multiply the x coordinate (0.5) with
+ *    the page width (800) and the y coordinate (0.3) with the page height (600), so
+ *    the point will be drawn on the page at (400, 180).
+ *
+ *    That allows you to zoom the page by just multiplying the normalized points with the
+ *    zoomed page size.
  */
 class OKULAR_EXPORT NormalizedPoint
 {
     public:
-        double x, y;
-
+        /**
+         * Creates a new empty normalized point.
+         */
         NormalizedPoint();
-        NormalizedPoint( double dX, double dY );
-        NormalizedPoint( int ix, int iy, int xScale, int yScale );
-        NormalizedPoint& operator=( const NormalizedPoint & p );
 
+        /**
+         * Creates a new normalized point with the normalized coordinates (@p x, @p y ).
+         */
+        NormalizedPoint( double x, double y );
+
+        /**
+         * Creates a new normalized point with the coordinates (@p x, @p y) which are normalized
+         * by the scaling factors @p xScale and @p yScale.
+         */
+        NormalizedPoint( int x, int y, int xScale, int yScale );
+
+        NormalizedPoint& operator=( const NormalizedPoint& );
+
+        /**
+         * Transforms the normalized point with the operations defined by @p matrix.
+         */
         void transform( const QMatrix &matrix );
+
+        /**
+         * The normalized x coordinate.
+         */
+        double x;
+
+        /**
+         * The normalized y coordinate.
+         */
+        double y;
 };
 
 /**
- * @short A rect in normalized [0,1] coordinates.
+ * NormalizedRect is a helper class which stores the coordinates
+ * of a normalized rect, which is a rectangle of @see NormalizedPoints.
  */
 class OKULAR_EXPORT NormalizedRect
 {
     public:
-        double left, top, right, bottom;
-
+        /**
+         * Creates a null normalized rectangle.
+         * @see isNull()
+         */
         NormalizedRect();
-        NormalizedRect( double l, double t, double r, double b );
-        NormalizedRect( const QRect &r, double xScale, double yScale );
-        NormalizedRect( const NormalizedRect & rect );
+
+        /**
+         * Creates a normalized rectangle with the normalized coordinates
+         * @p left, @p top, @p right, @p bottom.
+         *
+         * If you need the x, y, width and height coordinates use the
+         * following formulas:
+         *
+         * @li x = left
+         * @li y = top
+         * @li width = right - left
+         * @li height = bottom - top
+         */
+        NormalizedRect( double left, double top, double right, double bottom );
+
+        /**
+         * Creates a normalized rectangle of the given @p rectangle which is normalized
+         * by the scaling factors @p xScale and @p yScale.
+         */
+        NormalizedRect( const QRect &rectangle, double xScale, double yScale );
+
+        NormalizedRect( const NormalizedRect& );
+        NormalizedRect& operator=( const NormalizedRect &other );
+
+        /**
+         * Returns whether this normalized rectangle is a null normalized rect.
+         */
         bool isNull() const;
+
+        /**
+         * Returns whether the normalized rectangle contains the normalized coordinates
+         * @p x and @p y.
+         */
         bool contains( double x, double y ) const;
-        bool intersects( const NormalizedRect & normRect ) const;
-        bool intersects( double l, double t, double r, double b ) const;
-        bool intersects( const NormalizedRect * r ) const;
+
+        /**
+         * Returns whether the normalized rectangle intersects the @p other normalized
+         * rectangle.
+         */
+        bool intersects( const NormalizedRect &other ) const;
+
+        /**
+         * This is an overloaded member function, provided for convenience. It behaves essentially
+         * like the above function.
+         */
+        bool intersects( const NormalizedRect *other ) const;
+
+        /**
+         * Returns whether the normalized rectangle intersects an other normalized
+         * rectangle, which is defined by @p left, @p top, @p right and @p bottom.
+         */
+        bool intersects( double left, double top, double right, double bottom ) const;
+
+        /**
+         * Returns the rectangle that accrues when the normalized rectangle is multiplyed
+         * with the scaling @p xScale and @p yScale.
+         */
         QRect geometry( int xScale, int yScale ) const;
-        NormalizedRect operator| (const NormalizedRect & r) const;
-        NormalizedRect& operator|= (const NormalizedRect & r);
-        NormalizedRect& operator=( const NormalizedRect & r );
-        bool operator==( const NormalizedRect & r ) const;
 
+        /**
+         * Returns the normalized bounding rectangle of the normalized rectangle
+         * combined with the @p other normalized rectangle.
+         */
+        NormalizedRect operator|( const NormalizedRect &other ) const;
+
+        /**
+         * Sets the normalized rectangle to the normalized bounding rectangle
+         * of itself combined with the @p other normalized rectangle.
+         */
+        NormalizedRect& operator|=( const NormalizedRect &other );
+
+        /**
+         * Returns whether the normalized rectangle is equal to the @p other
+         * normalized rectangle.
+         */
+        bool operator==( const NormalizedRect &other ) const;
+
+        /**
+         * Transforms the normalized rectangle with the operations defined by @p matrix.
+         */
         void transform( const QMatrix &matrix );
-};
 
-// kdbgstream& operator << (kdbgstream &, const NormalizedRect &);
+        /**
+         * The normalized left coordinate.
+         */
+        double left;
+
+        /**
+         * The normalized top coordinate.
+         */
+        double top;
+
+        /**
+         * The normalized right coordinate.
+         */
+        double right;
+
+        /**
+         * The normalized bottom coordinate.
+         */
+        double bottom;
+};
 
 /**
  * @short NormalizedRect that contains a reference to an object.
@@ -160,18 +283,17 @@ struct HighlightRect : public NormalizedRect
  * operator | and |= which unite two NormalizedShapes
  */
 
-template <class NormalizedShape, class Shape> class RegularArea : 
-public  QList<NormalizedShape>
+template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
-	public:
-		bool contains( double x, double y ) const;
-                bool contains( const NormalizedShape& shape ) const;
-		bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
-		bool intersects (const NormalizedShape& shape) const;
-		void appendArea (const RegularArea<NormalizedShape,Shape> *area);
-		void simplify ();
-		bool isNull() const;
-		QList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
+    public:
+        bool contains( double x, double y ) const;
+        bool contains( const NormalizedShape& shape ) const;
+        bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
+        bool intersects (const NormalizedShape& shape) const;
+        void appendArea (const RegularArea<NormalizedShape,Shape> *area);
+        void simplify ();
+        bool isNull() const;
+        QList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
 };
 
 template <class NormalizedShape, class Shape>
@@ -203,129 +325,128 @@ void RegularArea<NormalizedShape, Shape>::simplify()
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::isNull() const
 {
-	if (!this)
-		return false;
+    if ( !this )
+        return false;
 
-	if (this->isEmpty())
-		return false;
+    if ( this->isEmpty() )
+        return false;
 
-	foreach(const NormalizedShape& ns, *this)
-		if (!(ns->isNull()))
-			return false;
-	return true;
+    foreach ( const NormalizedShape& ns, *this )
+        if ( !(ns->isNull()) )
+            return false;
 
+    return true;
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::intersects (const NormalizedShape& rect) const
+bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rect ) const
 {
-	if (!this)
-		return false;
+    if ( !this )
+        return false;
 
-	if (this->isEmpty())
-		return false;
+    if ( this->isEmpty() )
+        return false;
 
-	foreach(const NormalizedShape& ns, *this)
-	{
-		if(!(ns->isNull()) && ns->intersects (rect))
-			return true;
-	}
-	return false;
+    foreach ( const NormalizedShape& ns, *this )
+        if ( !( ns->isNull() ) && ns->intersects( rect ) )
+            return true;
+
+    return false;
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::intersects 
-	(const RegularArea<NormalizedShape,Shape> *area) const
+bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<NormalizedShape,Shape> *area ) const
 {
-	if (!this)
-		return false;
-	if (this->isEmpty())
-		return false;
+    if ( !this )
+        return false;
 
-	foreach(const NormalizedShape& ns, this)
-	{
-		foreach(const Shape& s, area)
-		{
-			if(!(ns->isNull) && ns->intersects (s))
-				return true;
-		}
-	}
-	return false;
+    if ( this->isEmpty() )
+        return false;
+
+    foreach ( const NormalizedShape& ns, this )
+    {
+        foreach ( const Shape& shape, area )
+        {
+            if ( !(ns->isNull) && ns->intersects( shape ) )
+                return true;
+        }
+    }
+
+    return false;
 }
 
 template <class NormalizedShape, class Shape>
-void RegularArea<NormalizedShape, Shape>::appendArea
-	(const RegularArea<NormalizedShape, Shape> *area) 
+void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<NormalizedShape, Shape> *area )
 {
-	if (!this)
-		return false;
+    if ( !this )
+        return false;
 
-	foreach(const Shape& s, area)
-	{
-		this->append(s);
-	}
+    foreach( const Shape& shape, area )
+        this->append( shape );
 }
 
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::contains (double x, double y) const
+bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
 {
-	if (!this)
-		return false;
-	if (this->isEmpty())
-		return false;
+    if ( !this )
+        return false;
 
-	foreach(const NormalizedShape& ns, this)
-	{
-		if(ns->contains (x,y))
-			return true;
-	}
-	return false;
+    if ( this->isEmpty() )
+        return false;
+
+    foreach ( const NormalizedShape& ns, this )
+        if ( ns->contains( x, y ) )
+            return true;
+
+    return false;
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::contains (const NormalizedShape& shape) const
+bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape ) const
 {
-        if (!this)
-                return false;
-        if (this->isEmpty())
-                return false;
+    if ( !this )
+        return false;
 
-        const QList<NormalizedShape*> * const lista=dynamic_cast<const QList<NormalizedShape*> * const >(this);
-        return lista->contains(shape);
+    if ( this->isEmpty() )
+        return false;
+
+    const QList<NormalizedShape*> * const list = dynamic_cast<const QList<NormalizedShape*> * const >( this );
+    return list->contains( shape );
 }
 
 template <class NormalizedShape, class Shape>
-QList<Shape> *
-RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
+QList<Shape> * RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
 {
-	if (!this)
-		return false;
-	if (this->isEmpty()) 
-		return 0;
+    if ( !this )
+        return false;
 
-	QList<Shape>* ret=new QList<Shape>;
-        Shape t;
-	foreach(const NormalizedShape& ns, *this)
-	{
-            t=ns->geometry(xScale,yScale);
-            t.translate(dx,dy);
-            ret->append(t);
-	}
+    if ( this->isEmpty() )
+        return 0;
 
-	return ret;
+    QList<Shape>* ret = new QList<Shape>;
+    Shape t;
+    foreach( const NormalizedShape& ns, *this )
+    {
+        t = ns->geometry( xScale, yScale );
+        t.translate( dx, dy );
+        ret->append( t );
+    }
+
+    return ret;
 }
 
 typedef RegularArea<NormalizedRect*,QRect> RegularAreaRect;
 
+class HighlightAreaRect : public RegularAreaRect
+{
+    public:
+        HighlightAreaRect( const RegularAreaRect *area = 0 );
 
-class HighlightAreaRect : public RegularAreaRect {
-	public:
-		HighlightAreaRect( const RegularAreaRect *area = 0 );
-		// searchID of the highlight owner
-		int s_id;
-		// color of the highlight
-		QColor color;
+        // searchID of the highlight owner
+        int s_id;
+        // color of the highlight
+        QColor color;
 };
 
 }

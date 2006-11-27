@@ -855,6 +855,8 @@ InkAnnotation::InkAnnotation( const QDomNode & node )
         // loading complete
         break;
     }
+
+    transformedInkPaths = inkPaths;
 }
 
 void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const

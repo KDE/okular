@@ -24,11 +24,38 @@ QString Link::linkTip() const
     return "";
 }
 
-// Link Tips
+// LinkGoto
+LinkGoto::LinkGoto( QString fileName, const DocumentViewport & viewport )
+    : m_extFileName( fileName ), m_vp( viewport )
+{
+}
+
+LinkGoto::LinkType LinkGoto::linkType() const
+{
+    return Goto;
+}
+
 QString LinkGoto::linkTip() const
 {
-    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) : i18n("Open external file");
+    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) :
+                                     i18n("Open external file");
 }
+
+bool LinkGoto::isExternal() const
+{
+    return !m_extFileName.isEmpty();
+}
+
+QString LinkGoto::fileName() const
+{
+    return m_extFileName;
+}
+
+DocumentViewport LinkGoto::destViewport() const
+{
+    return m_vp;
+}
+
 
 QString LinkExecute::linkTip() const
 {

@@ -31,29 +31,78 @@ class Sound;
 class OKULAR_EXPORT Link
 {
     public:
-        // get link type (inherited classes mustreturn an unique identifier)
-        enum LinkType { Goto, Execute, Browse, Action, Sound, Movie };
-        virtual LinkType linkType() const = 0;
-        virtual QString linkTip() const;
+        /**
+         * Describes the type of link.
+         */
+        enum LinkType {
+            Goto,       ///< Goto a given page or external document
+            Execute,    ///< Execute a command or external application
+            Browse,     ///< Browse a given website
+            Action,     ///< Start a custom action
+            Sound,      ///< Play a sound
+            Movie       ///< Play a movie
+        };
 
-        // virtual destructor (remove warnings)
+        /**
+         * Destroys the link.
+         */
         virtual ~Link();
+
+        /**
+         * Returns the type of the link. Every inherited class must return
+         * an unique identifier.
+         *
+         * @see LinkType
+         */
+        virtual LinkType linkType() const = 0;
+
+        /**
+         * Returns a i18n'ed tip of the link action that is presented to
+         * the user.
+         */
+        virtual QString linkTip() const;
 };
 
 
-/** Goto: a viewport and maybe a reference to an external filename **/
+/**
+ * The Goto link changes the viewport to another page
+ * or loads an external document.
+ */
 class OKULAR_EXPORT LinkGoto : public Link
 {
     public:
-        // query for goto parameters
-        bool isExternal() const { return !m_extFileName.isEmpty(); }
-        const QString & fileName() const { return m_extFileName; }
-        const DocumentViewport & destViewport() const { return m_vp; }
+        /**
+         * Creates a new goto link.
+         *
+         * @p fileName The name of an external file that shall be loaded.
+         * @p viewport The target viewport information of the current document.
+         */
+        LinkGoto( QString fileName, const DocumentViewport & viewport );
 
-        // create a Link_Goto
-        LinkGoto( QString extFileName, const DocumentViewport & vp ) { m_extFileName = extFileName; m_vp = vp; }
-        LinkType linkType() const { return Goto; }
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
+
+        /**
+         * Returns the link tip.
+         */
         QString linkTip() const;
+
+        /**
+         * Returns whether the goto link points to an external document.
+         */
+        bool isExternal() const;
+
+        /**
+         * Returns the filename of the external document.
+         */
+        QString fileName() const;
+
+        /**
+         * Returns the document viewport the goto link points to.
+         */
+        DocumentViewport destViewport() const;
 
     private:
         QString m_extFileName;

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_PAGE_TRANSITION_H_
-#define _OKULAR_PAGE_TRANSITION_H_
+#ifndef _OKULAR_PAGETRANSITION_H_
+#define _OKULAR_PAGETRANSITION_H_
 
 #include "okular_export.h"
 
@@ -16,10 +16,17 @@ namespace Okular {
 
 /**
  * @short Information object for the transition effect of a page.
+ *
+ * This class encapsulates the information about the effect of
+ * a page transition. It supports mainly the transition effects as
+ * defined in PDF specification 1.6.
  */
 class OKULAR_EXPORT PageTransition
 {
     public:
+        /**
+         * Describes the type of transition effect.
+         */
         enum Type {
             Replace,
             Split,
@@ -35,56 +42,115 @@ class OKULAR_EXPORT PageTransition
             Fade
         };
 
+        /**
+         * Describes the alignment that is applied to the @see Type
+         * of transition effect.
+         */
         enum Alignment {
             Horizontal,
             Vertical
         };
 
+        /**
+         * Describes the direction that is applied to the @see Type
+         * of transition effect.
+         */
         enum Direction {
             Inward,
             Outward
         };
 
+        /**
+         * Creates a new page transition of the given @p type.
+         *
+         * If no type is given, the normal @see Replace transition is used.
+         */
         PageTransition( Type type = Replace );
+
+        /**
+         * Creates a new page transition from an @p other.
+         */
+        PageTransition( const PageTransition &other );
+        PageTransition& operator=( const PageTransition &other );
+
+        /**
+         * Destroys the page transition.
+         */
         ~PageTransition();
 
-        // Get type of the transition.
-        inline Type type() const { return m_type; }
+        /**
+         * Returns the type of the transition.
+         */
+        Type type() const;
 
-        // Get duration of the transition in seconds.
-        inline int duration() const { return m_duration; }
+        /**
+         * Returns the duration of the transition in seconds.
+         */
+        int duration() const;
 
-        // Get dimension in which the transition effect occurs.
-        inline Alignment alignment() const { return m_alignment; }
+        /**
+         * Returns the alignment of the transition.
+         */
+        Alignment alignment() const;
 
-        // Get direction of motion of the transition effect.
-        inline Direction direction() const { return m_direction; }
+        /**
+         * Returns the direction of motion of the transition.
+         */
+        Direction direction() const;
 
-        // Get direction in which the transition effect moves.
-        inline int angle() const { return m_angle; }
+        /**
+         * Returns the angle of rotation of the transition.
+         */
+        int angle() const;
 
-        // Get starting or ending scale. (Fly only)
-        inline double scale() const { return m_scale; }
+        /**
+         * Returns the starting or ending scale (Only if type == 'Fly').
+         */
+        double scale() const;
 
-        // Returns true if the area to be flown is rectangular and opaque.  (Fly only)
-        inline bool isRectangular() const { return m_rectangular; }
+        /**
+         * Returns true if the area to be flown is rectangular and opaque (Only if type == 'Fly').
+         */
+        bool isRectangular() const;
 
-        inline void setType( Type type ) { m_type = type; }
-        inline void setDuration( int duration ) { m_duration = duration; }
-        inline void setAlignment( Alignment alignment ) { m_alignment = alignment; }
-        inline void setDirection( Direction direction ) { m_direction = direction; }
-        inline void setAngle( int angle ) { m_angle = angle; }
-        inline void setScale( double scale ) { m_scale = scale; }
-        inline void setIsRectangular( bool rectangular ) { m_rectangular = rectangular; }
+        /**
+         * Sets the @p type of the transition (@see Type).
+         */
+        void setType( Type type );
+
+        /**
+         * Sets the @p duration in seconds for the transition.
+         */
+        void setDuration( int duration );
+
+        /**
+         * Sets the @p alignment of the transition (@see Alignment).
+         */
+        void setAlignment( Alignment alignment );
+
+        /**
+         * Sets the @p direction of the transition (@see Direction).
+         */
+        void setDirection( Direction direction );
+
+        /**
+         * Sets the moving @p angle of the transition.
+         */
+        void setAngle( int angle );
+
+        /**
+         * Sets the starting or ending scale of the transition (Only if type == 'Fly').
+         */
+        void setScale( double scale );
+
+        /**
+         * Sets whether the area to be flown is rectangular and opaque (Only if type == 'Fly').
+         */
+        void setIsRectangular( bool rectangular );
 
     private:
-        Type m_type;
-        int m_duration;
-        Alignment m_alignment;
-        Direction m_direction;
-        int m_angle;
-        double m_scale;
-        bool m_rectangular;
+        class Private;
+        Private* const d;
 };
 
 }

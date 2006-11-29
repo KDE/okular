@@ -570,7 +570,6 @@ void PresentationWidget::changePage( int newPage )
     PresentationFrame * frame = m_frames[ m_frameIndex ];
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
-    int rot = frame->page->orientation();
 
     bool signalsBlocked = m_pagesEdit->signalsBlocked();
     m_pagesEdit->blockSignals( true );
@@ -585,10 +584,31 @@ void PresentationWidget::changePage( int newPage )
         QApplication::setOverrideCursor( KCursor::workingCursor() );
         // request the pixmap
         QLinkedList< Okular::PixmapRequest * > request;
-        request.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, rot, PRESENTATION_PRIO ) );
+        request.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, false ) );
         m_document->requestPixmaps( request );
         // restore cursor
         QApplication::restoreOverrideCursor();
+        // ask for next and previous page if not in low memory usage setting
+        if (Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading()) {
+            QLinkedList< Okular::PixmapRequest * > asyncRequests;
+            if (newPage + 1 < (int)m_document->pages())
+            {
+                PresentationFrame *nextFrame = m_frames[ newPage + 1 ];
+                pixW = nextFrame->geometry.width();
+                pixH = nextFrame->geometry.height();
+                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    asyncRequests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+            if (newPage - 1 >= 0)
+            {
+                PresentationFrame *prevFrame = m_frames[ newPage - 1 ];
+                pixW = prevFrame->geometry.width();
+                pixH = prevFrame->geometry.height();
+                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    asyncRequests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+            if (!asyncRequests.isEmpty()) m_document->requestPixmaps( asyncRequests );
+        }
     }
     else
     {

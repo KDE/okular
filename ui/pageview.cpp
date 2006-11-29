@@ -186,9 +186,9 @@ protected:
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                const QString contents = ( !ann->window.text.isEmpty() ? ann->window.text : ann->contents );
+                QString contents = ( !ann->window.text.isEmpty() ? ann->window.text : ann->contents );
                 QString tip = QString( "<qt><b>%1</b><hr>%2</qt>" )
-                    .arg( i18n( "Author: %1", ann->author ), contents );
+                    .arg( i18n( "Author: %1", ann->author ), contents.replace( "\n", "<br>" ) );
                 QToolTip::showText( he->globalPos(), tip, this, r );
             }
             else if ( link )

@@ -49,6 +49,7 @@ class KOOOGenerator : public Okular::Generator
     Okular::DocumentInfo mDocumentInfo;
     Okular::DocumentSynopsis mDocumentSynopsis;
     OOO::Converter::LinkInfo::List mLinks;
+    OOO::Converter::AnnotationInfo::List mAnnotations;
 };
 
 #endif

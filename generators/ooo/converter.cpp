@@ -146,6 +146,12 @@ bool Converter::convert()
   if ( !createLinksList() )
     return false;
 
+  /**
+   * Create list of annotations
+   */
+  if ( !createAnnotationsList() )
+    return false;
+
   return true;
 }
 
@@ -259,6 +265,9 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
           return false;
       } else if ( childElement.tagName() == QLatin1String( "a" ) ) {
         if ( !convertLink( cursor, childElement, textFormat ) )
+          return false;
+      } else if ( childElement.tagName() == QLatin1String( "annotation" ) ) {
+        if ( !convertAnnotation( cursor, childElement ) )
           return false;
       }
     } else if ( child.isText() ) {
@@ -478,6 +487,33 @@ bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, co
   return true;
 }
 
+bool Converter::convertAnnotation( QTextCursor *cursor, const QDomElement &element )
+{
+  InternalAnnotationInfo annotation;
+  QStringList contents;
+
+  annotation.position = cursor->position();
+
+  QDomElement child = element.firstChildElement();
+  while ( !child.isNull() ) {
+    if ( child.tagName() == QLatin1String( "creator" ) ) {
+      annotation.creator = child.text();
+    } else if ( child.tagName() == QLatin1String( "date" ) ) {
+      annotation.dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
+    } else if ( child.tagName() == QLatin1String( "p" ) ) {
+        contents.append( child.text() );
+    }
+
+    child = child.nextSiblingElement();
+  }
+
+  annotation.content = contents.join( "\n" );
+
+  mInternalAnnotationInfos.append( annotation );
+
+  return true;
+}
+
 bool Converter::createTableOfContents()
 {
   const QSizeF pageSize = mTextDocument->pageSize();
@@ -524,38 +560,70 @@ bool Converter::createTableOfContents()
   return true;
 }
 
-bool Converter::createLinksList()
+void Converter::calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page )
 {
   const QSizeF pageSize = mTextDocument->pageSize();
 
+  const QTextBlock block = mTextDocument->findBlock( startPosition );
+  const QRectF boundingRect = mTextDocument->documentLayout()->blockBoundingRect( block );
+
+  QTextLayout *layout = block.layout();
+
+  int startPos = startPosition - block.position();
+  int endPos = endPosition - block.position();
+  const QTextLine startLine = layout->lineForTextPosition( startPos );
+  const QTextLine endLine = layout->lineForTextPosition( endPos );
+
+  double x = boundingRect.x() + startLine.cursorToX( startPos );
+  double y = boundingRect.y() + startLine.y();
+  double r = boundingRect.x() + endLine.cursorToX( endPos );
+  double b = boundingRect.y() + endLine.y() + endLine.height();
+
+  int offset = qRound( y ) % qRound( pageSize.height() );
+
+  page = qRound( y ) / qRound( pageSize.height() );
+  rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
+                 (r - x) / pageSize.width(), (b - y) / pageSize.height() );
+}
+
+bool Converter::createLinksList()
+{
   for ( int i = 0; i < mInternalLinkInfos.count(); ++i ) {
     const InternalLinkInfo internalLinkInfo = mInternalLinkInfos[ i ];
 
-    const QTextBlock block = mTextDocument->findBlock( internalLinkInfo.startPosition );
-    const QRectF boundingRect = mTextDocument->documentLayout()->blockBoundingRect( block );
-
-    QTextLayout *layout = block.layout();
-
-    int startPos = internalLinkInfo.startPosition - block.position();
-    int endPos = internalLinkInfo.endPosition - block.position();
-    const QTextLine startLine = layout->lineForTextPosition( startPos );
-    const QTextLine endLine = layout->lineForTextPosition( endPos );
-
-    double x = boundingRect.x() + startLine.cursorToX( startPos );
-    double y = boundingRect.y() + startLine.y();
-    double r = boundingRect.x() + endLine.cursorToX( endPos );
-    double b = boundingRect.y() + endLine.y() + endLine.height();
-
-    int offset = qRound( y ) % qRound( pageSize.height() );
-    int page = qRound( y ) / qRound( pageSize.height() );
-
     LinkInfo linkInfo;
-    linkInfo.page = page;
-    linkInfo.boundingRect = QRectF( x / pageSize.width(), offset / pageSize.height(),
-                                    (r - x) / pageSize.width(), (b - y) / pageSize.height() );
     linkInfo.url = internalLinkInfo.url;
 
+    calculateBoundingRect( internalLinkInfo.startPosition, internalLinkInfo.endPosition,
+                           linkInfo.boundingRect, linkInfo.page );
+
     mLinkInfos.append( linkInfo );
+  }
+
+  return true;
+}
+
+bool Converter::createAnnotationsList()
+{
+  for ( int i = 0; i < mInternalAnnotationInfos.count(); ++i ) {
+    const InternalAnnotationInfo annotation = mInternalAnnotationInfos[ i ];
+
+    AnnotationInfo annotationInfo;
+    annotationInfo.creator = annotation.creator;
+    annotationInfo.dateTime = annotation.dateTime;
+    annotationInfo.content = annotation.content;
+
+    calculateBoundingRect( annotation.position, annotation.position,
+                           annotationInfo.boundingRect, annotationInfo.page );
+
+    /**
+     * Since ODT doesn't offer enough information for the width/height calculation we
+     * just calculate the x,y coordinates and add a fixed width and height here.
+     */
+    annotationInfo.boundingRect.setWidth( annotationInfo.boundingRect.x() + 0.02 );
+    annotationInfo.boundingRect.setHeight( annotationInfo.boundingRect.y() + 0.02 );
+
+    mAnnotationInfos.append( annotationInfo );
   }
 
   return true;
@@ -579,4 +647,9 @@ QDomDocument Converter::tableOfContents() const
 Converter::LinkInfo::List Converter::links() const
 {
   return mLinkInfos;
+}
+
+Converter::AnnotationInfo::List Converter::annotations() const
+{
+  return mAnnotationInfos;
 }

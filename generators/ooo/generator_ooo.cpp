@@ -14,10 +14,11 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QTextDocument>
 
-#include <kprinter.h>
 #include <klocale.h>
+#include <kprinter.h>
 
 #include "converter.h"
+#include "core/annotations.h"
 #include "core/link.h"
 #include "core/page.h"
 #include "document.h"
@@ -51,6 +52,7 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
   mDocument = converter.textDocument();
   mDocumentSynopsis = converter.tableOfContents();
   mLinks = converter.links();
+  mAnnotations = converter.annotations();
 
   OOO::MetaInformation::List metaInformation = converter.metaInformation();
   for ( int i = 0; i < metaInformation.count(); ++i ) {
@@ -118,6 +120,25 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
     }
   }
   request->page()->setObjectRects( objects );
+
+  /**
+   * Add annotations
+   */
+  for ( int i = 0; i < mAnnotations.count(); ++i ) {
+    if ( mAnnotations[ i ].page == request->pageNumber() ) {
+      Okular::TextAnnotation *annotation = new Okular::TextAnnotation;
+
+      annotation->author = mAnnotations[ i ].creator;
+      annotation->contents = mAnnotations[ i ].content;
+      annotation->creationDate = mAnnotations[ i ].dateTime;
+      annotation->style.color = QColor( "#ffff00" );
+      annotation->style.opacity = 0.5;
+      QRectF rect = mAnnotations[ i ].boundingRect;
+      annotation->boundary = Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() );
+
+      request->page()->addAnnotation( annotation );
+    }
+  }
 
   signalRequestDone( request );
 }

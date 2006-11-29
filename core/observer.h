@@ -24,10 +24,11 @@
 
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1
-#define PAGEVIEW_PRELOAD_PRIO 3
+#define PAGEVIEW_PRELOAD_PRIO 4
 #define THUMBNAILS_PRIO 2
-#define THUMBNAILS_PRELOAD_PRIO 4
+#define THUMBNAILS_PRELOAD_PRIO 5
 #define PRESENTATION_PRIO 0
+#define PRESENTATION_PRELOAD_PRIO 3
 
 class KPDFPage;
 

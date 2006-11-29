@@ -448,6 +448,27 @@ void PresentationWidget::changePage( int newPage )
         m_document->requestPixmaps( request );
         // restore cursor
         QApplication::restoreOverrideCursor();
+        // ask for next and previous page if not in low memory usage setting
+        if (KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low && KpdfSettings::enableThreading()) {
+            QValueList< PixmapRequest * > asyncRequests;
+            if (newPage + 1 < (int)m_document->pages())
+            {
+                PresentationFrame *nextFrame = m_frames[ newPage + 1 ];
+                pixW = nextFrame->geometry.width();
+                pixH = nextFrame->geometry.height();
+                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    asyncRequests.push_back( new PixmapRequest( PRESENTATION_ID, newPage + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+            if (newPage - 1 >= 0)
+            {
+                PresentationFrame *prevFrame = m_frames[ newPage - 1 ];
+                pixW = prevFrame->geometry.width();
+                pixH = prevFrame->geometry.height();
+                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    asyncRequests.push_back( new PixmapRequest( PRESENTATION_ID, newPage - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+            if (!asyncRequests.isEmpty()) m_document->requestPixmaps( asyncRequests );
+        }
     }
     else
     {

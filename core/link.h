@@ -12,7 +12,6 @@
 
 #include "okular_export.h"
 
-#include <QtCore/QRect>
 #include <QtCore/QString>
 
 #include "document.h" // for DocumentViewport
@@ -109,85 +108,182 @@ class OKULAR_EXPORT LinkGoto : public Link
         DocumentViewport m_vp;
 };
 
-/** Execute: filename and parameters to execute **/
+/**
+ * The Execute link executes an external application.
+ */
 class OKULAR_EXPORT LinkExecute : public Link
 {
     public:
-        // query for filename / parameters
-        const QString & fileName() const { return m_fileName; }
-        const QString & parameters() const { return m_parameters; }
+        /**
+         * Creates a new execute link.
+         *
+         * @param fileName The file name of the application to execute.
+         * @param parameters The parameters of the application to execute.
+         */
+        LinkExecute( const QString &fileName, const QString &parameters );
 
-        // create a Link_Execute
-        LinkExecute( const QString & file, const QString & params ) { m_fileName = file; m_parameters = params; }
-        LinkType linkType() const { return Execute; }
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
+
+        /**
+         * Returns the link tip.
+         */
         QString linkTip() const;
+
+        /**
+         * Returns the file name of the application to execute.
+         */
+        QString fileName() const;
+
+        /**
+         * Returns the parameters of the application to execute.
+         */
+        QString parameters() const;
 
     private:
         QString m_fileName;
         QString m_parameters;
 };
 
-/** Browse: an URL to open, ranging from 'http://' to 'mailto:' etc.. **/
+/**
+ * The Browse link browses an url by opening a web browser or
+ * email client, depedning on the url protocol (e.g. http, mailto, etc.).
+ */
 class OKULAR_EXPORT LinkBrowse : public Link
 {
     public:
-        // query for URL
-        const QString & url() const { return m_url; }
+        /**
+         * Creates a new browse link.
+         *
+         * @param url The url to browse.
+         */
+        LinkBrowse( const QString &url );
 
-        // create a Link_Browse
-        LinkBrowse( const QString &url ) { m_url = url; }
-        LinkType linkType() const { return Browse; }
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
+
+        /**
+         * Returns the link tip.
+         */
         QString linkTip() const;
+
+        /**
+         * Returns the url to browse.
+         */
+        QString url() const;
 
     private:
         QString m_url;
 };
 
-/** Action: contains an action to perform on document / okular **/
+/**
+ * The Action link contains an action that is performed on
+ * the current document.
+ */
 class OKULAR_EXPORT LinkAction : public Link
 {
     public:
-        // define types of actions
-        // WARNING KEEP IN SYNC WITH POPPLER
-        enum ActionType { PageFirst = 1,
-                  PagePrev = 2,
-                  PageNext = 3,
-                  PageLast = 4,
-                  HistoryBack = 5,
-                  HistoryForward = 6,
-                  Quit = 7,
-                  Presentation = 8,
-                  EndPresentation = 9,
-                  Find = 10,
-                  GoToPage = 11,
-                  Close = 12 };
+        /**
+         * Describes the possible action types.
+         *
+         * WARNING KEEP IN SYNC WITH POPPLER!
+         */
+        enum ActionType {
+            PageFirst = 1,        ///< Jump to first page
+            PagePrev = 2,         ///< Jump to previous page
+            PageNext = 3,         ///< Jump to next page
+            PageLast = 4,         ///< Jump to last page
+            HistoryBack = 5,      ///< Go back in page history
+            HistoryForward = 6,   ///< Go forward in page history
+            Quit = 7,             ///< Quit application
+            Presentation = 8,     ///< Start presentation
+            EndPresentation = 9,  ///< End presentation
+            Find = 10,            ///< Open find dialog
+            GoToPage = 11,        ///< Goto page
+            Close = 12            ///< Close document
+        };
 
-        // query for action type
-        ActionType actionType() const { return m_type; }
+        /**
+         * Creates a new link action.
+         *
+         * @param actionType The type of action.
+         */
+        LinkAction( enum ActionType actionType );
 
-        // create a Link_Action
-        LinkAction( enum ActionType actionType ) { m_type = actionType; }
-        LinkType linkType() const { return Action; }
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
+
+        /**
+         * Returns the link tip.
+         */
         QString linkTip() const;
+
+        /**
+         * Returns the type of action.
+         */
+        ActionType actionType() const;
 
     private:
         ActionType m_type;
 };
 
-/** Sound: a sound to be played **/
+/**
+ * The Sound link plays a sound on activation.
+ */
 class OKULAR_EXPORT LinkSound : public Link
 {
     public:
-        // create a Link_Sound
-        LinkSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound ) { m_volume = volume; m_sync = sync; m_repeat = repeat; m_mix = mix; m_sound = sound; }
+        /**
+         * Creates a new sound link.
+         *
+         * @param volume The volume of the sound.
+         * @param synchronous Whether the sound shall be played synchronous.
+         * @param repeat Whether the sound shall be repeated.
+         * @param mix Whether the sound shall be mixed.
+         * @param sound The sound object which contains the sound data.
+         */
+        LinkSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
 
-        LinkType linkType() const { return Sound; };
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
 
-        double volume() const { return m_volume; }
-        bool synchronous() const { return m_sync; }
-        bool repeat() const { return m_repeat; }
-        bool mix() const { return m_mix; }
-        Okular::Sound *sound() const { return m_sound; }
+        /**
+         * Returns the link tip.
+         */
+        QString linkTip() const;
+
+        /**
+         * Returns the volume of the sound.
+         */
+        double volume() const;
+
+        /**
+         * Returns whether the sound shall be played synchronous.
+         */
+        bool synchronous() const;
+
+        /**
+         * Returns whether the sound shall be repeated.
+         */
+        bool repeat() const;
+
+        /**
+         * Returns whether the sound shall be mixed.
+         */
+        bool mix() const;
+
+        /**
+         * Returns the sound object which contains the sound data.
+         */
+        Okular::Sound *sound() const;
 
     private:
         double m_volume;
@@ -197,13 +293,26 @@ class OKULAR_EXPORT LinkSound : public Link
         Okular::Sound *m_sound;
 };
 
-/** Movie: Not yet defined -> think renaming to 'Media' link **/
+/**
+ * The Movie link plays a video on activation.
+ */
 class LinkMovie : public Link
-// TODO this (Movie link)
 {
     public:
-        LinkMovie() {};
-        LinkType linkType() const { return Movie; }
+        /**
+         * Creates a new movie link.
+         */
+        LinkMovie();
+
+        /**
+         * Returns the link type.
+         */
+        LinkType linkType() const;
+
+        /**
+         * Returns the link tip.
+         */
+        QString linkTip() const;
 };
 
 }

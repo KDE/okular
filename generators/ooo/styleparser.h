@@ -48,6 +48,7 @@ class StyleParser
     const Document *mDocument;
     const QDomDocument &mDomDocument;
     StyleInformation *mStyleInformation;
+    bool mMasterPageNameSet;
 };
 
 }

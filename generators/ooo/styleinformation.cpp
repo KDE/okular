@@ -89,6 +89,16 @@ QString StyleInformation::masterLayout( const QString &name )
   return mMasterLayouts[ name ];
 }
 
+void StyleInformation::setMasterPageName( const QString &name )
+{
+  mMasterPageName = name;
+}
+
+QString StyleInformation::masterPageName() const
+{
+  return mMasterPageName.isEmpty() ? mMasterLayouts[ "Standard" ] :  mMasterLayouts[ mMasterPageName ];
+}
+
 void StyleInformation::addMetaInformation( const QString &key, const QString &value, const QString &title )
 {
   const MetaInformation meta( key, value, title );

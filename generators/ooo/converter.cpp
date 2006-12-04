@@ -109,7 +109,7 @@ bool Converter::convert()
   /**
    * Set the correct page size
    */
-  const QString masterLayout = mStyleInformation->masterLayout( "Standard" );
+  const QString masterLayout = mStyleInformation->masterPageName();
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
   mTextDocument->setPageSize( QSize( qRound( property.width() ), qRound( property.height() ) ) );
 

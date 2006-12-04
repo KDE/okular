@@ -23,7 +23,8 @@
 using namespace OOO;
 
 StyleParser::StyleParser( const Document *document, const QDomDocument &domDocument, StyleInformation *styleInformation )
-  : mDocument( document ), mDomDocument( domDocument ), mStyleInformation( styleInformation )
+  : mDocument( document ), mDomDocument( domDocument ),
+    mStyleInformation( styleInformation ), mMasterPageNameSet( false )
 {
 }
 
@@ -236,6 +237,10 @@ StyleFormatProperty StyleParser::parseStyleProperty( QDomElement &parent )
   property.setParentStyleName( parent.attribute( "parent-style-name" ) );
   property.setFamily( parent.attribute( "family" ) );
   property.setMasterPageName( parent.attribute( "master-page-name" ) );
+  if ( !mMasterPageNameSet ) {
+    mStyleInformation->setMasterPageName( parent.attribute( "master-page-name" ) );
+    mMasterPageNameSet = true;
+  }
 
   QDomElement element = parent.firstChildElement();
   while ( !element.isNull() ) {

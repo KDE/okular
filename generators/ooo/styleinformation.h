@@ -53,6 +53,8 @@ class StyleInformation
 
     void addMasterLayout( const QString &name, const QString &layoutName );
     QString masterLayout( const QString &name );
+    void setMasterPageName( const QString &name );
+    QString masterPageName() const;
 
     void addMetaInformation( const QString &key, const QString &value, const QString &title );
     MetaInformation::List metaInformation() const;
@@ -66,6 +68,7 @@ class StyleInformation
     QMap<QString, ListFormatProperty> mListProperties;
     QMap<QString, QString> mMasterLayouts;
     MetaInformation::List mMetaInformation;
+    QString mMasterPageName;
 };
 
 }

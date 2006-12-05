@@ -52,7 +52,7 @@ class DocumentObserver
         /**
          * Destroys the document observer.
          */
-        virtual ~DocumentObserver() {};
+        virtual ~DocumentObserver();
 
         /**
          * Must return an unique ID for each observer (used for notifications).
@@ -83,14 +83,49 @@ class DocumentObserver
             VisibleAreas = 16     ///< The visible are changed
         };
 
-        virtual void notifySetup( const QVector< Okular::Page * > &/*pages*/, bool /*documentChanged*/ ) {};
-        virtual void notifyViewportChanged( bool /*smoothMove*/ ) {};
-        virtual void notifyPageChanged( int /*pageNumber*/, int /*changedFlags*/ ) {};
-        virtual void notifyContentsCleared( int /*changedFlags*/ ) {};
-        virtual void notifyVisibleRectsChanged() {};
+        /**
+         * This method is called whenever the document is initialized or reconstructed.
+         *
+         * @param pages The vector of pages of the document.
+         * @param documentChanged If true, the document is reconstructed.
+         */
+        virtual void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
 
-        // queries to observers
-        virtual bool canUnloadPixmap( int /*pageNum*/ ) const { return true; }
+        /**
+         * This method is called whenever the viewport has been changed.
+         *
+         * @param smoothMove If true, the move shall be animated.
+         */
+        virtual void notifyViewportChanged( bool smoothMove );
+
+        /**
+         * This method is called whenever the content on @p page described by the
+         * passed @p flags has been changed.
+         */
+        virtual void notifyPageChanged( int page, int flags );
+
+        /**
+         * This method is called whenever the content described by the passed @p flags
+         * has been cleared.
+         */
+        virtual void notifyContentsCleared( int flags );
+
+        /**
+         * This method is called whenever the visible rects have been changed.
+         */
+        virtual void notifyVisibleRectsChanged();
+
+        /**
+         * Returns whether the observer agrees that all pixmaps for the given
+         * @p page can be unloaded to improve memory usage.
+         *
+         * Returns true per default.
+         */
+        virtual bool canUnloadPixmap( int page ) const;
+
+    private:
+        class Private;
+        Private* d;
 };
 
 }

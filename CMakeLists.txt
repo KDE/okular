@@ -36,6 +36,7 @@ set(okularcore_SRCS
    core/document.cpp
    core/generator.cpp
    core/link.cpp
+   core/observer.cpp
    core/page.cpp
    core/pagetransition.cpp
    core/rotationjob.cpp

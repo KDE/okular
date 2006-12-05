@@ -93,7 +93,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QString caption = doc->getMetaData( "DocumentTitle" ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
-    setWindowTitle( KInstance::makeStdCaption( caption ) );
+    setWindowTitle( KInstance::makeStandardCaption( caption ) );
 
     m_width = -1;
 
@@ -248,13 +248,16 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-    if ( e->key() == m_ac->action( "previous_page" )->shortcut().keyQt() || e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
+#ifdef __GUNC__
+#warning FIX the usage of KActionCollection actions
+#endif
+    if ( /*e->key() == m_ac->action( "previous_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
         slotPrevPage();
-    else if ( e->key() == m_ac->action( "next_page" )->shortcut().keyQt() || e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
+    else if ( /*e->key() == m_ac->action( "next_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
         slotNextPage();
-    else if ( e->key() == m_ac->action( "first_page" )->shortcut().keyQt() || e->key() == Qt::Key_Home )
+    else if ( /*e->key() == m_ac->action( "first_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Home )
         slotFirstPage();
-    else if ( e->key() == m_ac->action( "last_page" )->shortcut().keyQt() || e->key() == Qt::Key_End )
+    else if ( /*e->key() == m_ac->action( "last_page" )->shortcut().keyQt() || */e->key() == Qt::Key_End )
         slotLastPage();
     else if ( e->key() == Qt::Key_Escape )
     {

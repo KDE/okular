@@ -200,11 +200,11 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
 
-    textEdit=new QTextEdit(m_annot->window.text, this);
+    textEdit=new QTextEdit(m_annot->window().text(), this);
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     
-    QColor col = m_annot->style.color.isValid() ? m_annot->style.color : Qt::yellow;
+    QColor col = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
     setPalette( QPalette( col ) );
     QPalette pl=textEdit->palette();
     pl.setColor( QPalette::Base, col );
@@ -222,9 +222,9 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     ResizeBox * sb = new ResizeBox( this );
     lowerlay->addWidget( sb );
 
-    m_title->setTitle( m_annot->window.summary );
-    m_title->setDate( m_annot->modifyDate );
-    m_title->setAuthor( m_annot->author );
+    m_title->setTitle( m_annot->window().summary() );
+    m_title->setDate( m_annot->modificationDate() );
+    m_title->setAuthor( m_annot->author() );
     m_title->connectOptionButton( this, SLOT( slotOptionBtn() ) );
 
     setGeometry(10,10,300,300 );
@@ -238,7 +238,7 @@ void AnnotWindow::slotOptionBtn()
 
  void AnnotWindow::slotsaveWindowText()
 {
-    m_annot->window.text=textEdit->toPlainText();
+    m_annot->window().setText( textEdit->toPlainText() );
 }
 
 #include "annotwindow.moc"

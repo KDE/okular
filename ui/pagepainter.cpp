@@ -158,19 +158,19 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             for ( ; aIt != aEnd; ++aIt )
             {
                 Okular::Annotation * ann = *aIt;
-                if ( ann->flags & Okular::Annotation::Hidden )
+                if ( ann->flags() & Okular::Annotation::Hidden )
                     continue;
 
-                bool intersects = ann->transformedBoundary.intersects( nXMin, nYMin, nXMax, nYMax );
+                bool intersects = ann->transformedBoundingRectangle().intersects( nXMin, nYMin, nXMax, nYMax );
                 if ( ann->subType() == Okular::Annotation::AText )
                 {
                     Okular::TextAnnotation * ta = static_cast< Okular::TextAnnotation * >( ann );
                     if ( ta->textType == Okular::TextAnnotation::Linked )
                     {
-                        Okular::NormalizedRect iconrect( ann->transformedBoundary.left,
-                                                         ann->transformedBoundary.top,
-                                                         ann->transformedBoundary.left + TEXTANNOTATION_ICONSIZE / page->width(),
-                                                         ann->transformedBoundary.top + TEXTANNOTATION_ICONSIZE / page->height() );
+                        Okular::NormalizedRect iconrect( ann->transformedBoundingRectangle().left,
+                                                         ann->transformedBoundingRectangle().top,
+                                                         ann->transformedBoundingRectangle().left + TEXTANNOTATION_ICONSIZE / page->width(),
+                                                         ann->transformedBoundingRectangle().top + TEXTANNOTATION_ICONSIZE / page->height() );
                         intersects = iconrect.intersects( nXMin, nYMin, nXMax, nYMax );
                     }
                 }
@@ -178,7 +178,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 {
                     Okular::Annotation::SubType type = ann->subType();
                     if ( type == Okular::Annotation::ALine || type == Okular::Annotation::AHighlight ||
-                         type == Okular::Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style.opacity < 0.99)*/ )
+                         type == Okular::Annotation::AInk  /*|| (type == Annotation::AGeom && ann->style().opacity() < 0.99)*/ )
                     {
                         if ( !bufferedAnnotations )
                             bufferedAnnotations = new QList< Okular::Annotation * >();
@@ -340,7 +340,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     }
 
                     // draw the line as normalized path into image
-                    drawShapeOnImage( backImage, path, la->lineClosed, QPen( a->style.color,a->style.width ), QBrush(), pageScale ,Multiply);
+                    drawShapeOnImage( backImage, path, la->lineClosed,
+                                      QPen( a->style().color(), a->style().width() ),
+                                      QBrush(), pageScale ,Multiply);
 
                     if ( path.count() == 2 && fabs( la->lineLeadingFwdPt ) > 0.1 )
                     {
@@ -381,8 +383,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path3.append( path[1] );
                         }
 
-                        drawShapeOnImage( backImage, path2, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale, Multiply );
-                        drawShapeOnImage( backImage, path3, false, QPen( a->style.color, a->style.width ), QBrush(), pageScale, Multiply );
+                        drawShapeOnImage( backImage, path2, false, QPen( a->style().color(), a->style().width() ), QBrush(), pageScale, Multiply );
+                        drawShapeOnImage( backImage, path3, false, QPen( a->style().color(), a->style().width() ), QBrush(), pageScale, Multiply );
                     }
                 }
                 // draw GeomAnnotation MISSING: all
@@ -416,7 +418,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         {
                             // highlight the whole rect
                             case Okular::HighlightAnnotation::Highlight:
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style().color(), pageScale, Multiply );
                                 break;
                             // highlight the bottom part of the rect
                             case Okular::HighlightAnnotation::Squiggly:
@@ -424,7 +426,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 3 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
                                 path[ 2 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
                                 path[ 2 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style.color, pageScale, Multiply );
+                                drawShapeOnImage( backImage, path, true, QPen(), a->style().color(), pageScale, Multiply );
                                 break;
                             // make a line at 3/4 of the height
                             case Okular::HighlightAnnotation::Underline:
@@ -434,7 +436,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 1 ].y = ( 3 * path[ 1 ].y + path[ 2 ].y ) / 4.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style().color(), 2 ), QBrush(), pageScale );
                                 break;
                             // make a line at 1/2 of the height
                             case Okular::HighlightAnnotation::StrikeOut:
@@ -444,7 +446,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style.color, 2 ), QBrush(), pageScale );
+                                drawShapeOnImage( backImage, path, false, QPen( a->style().color(), 2 ), QBrush(), pageScale );
                                 break;
                         }
                     }
@@ -473,8 +475,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        QColor acolor( a->style.color.red(), a->style.color.green(), a->style.color.blue(), (int)( 255.0 * a->style.opacity ) );
-                        drawShapeOnImage( backImage, path, false, QPen( acolor, a->style.width ), QBrush(), pageScale );
+                        QColor acolor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), (int)( 255.0 * a->style().opacity() ) );
+                        drawShapeOnImage( backImage, path, false, QPen( acolor, a->style().width() ), QBrush(), pageScale );
                     }
                 }
             } // end current annotation drawing
@@ -498,14 +500,14 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             Okular::Annotation * a = *aIt;
 
             // honor opacity settings on supported types
-            unsigned int opacity = (unsigned int)( 255.0 * a->style.opacity );
+            unsigned int opacity = (unsigned int)( 255.0 * a->style().opacity() );
             // skip the annotation drawing if all the annotation is fully
             // transparent, but not with text annotations
             if ( opacity <= 0 && a->subType() != Okular::Annotation::AText )
                 continue;
 
             // get annotation boundary and drawn rect
-            QRect annotBoundary = a->transformedBoundary.geometry( scaledWidth, scaledHeight );
+            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight );
             QRect annotRect = annotBoundary.intersect( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
@@ -518,7 +520,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 Okular::TextAnnotation * text = (Okular::TextAnnotation *)a;
                 if ( text->textType == Okular::TextAnnotation::InPlace )
                 {
-                    QRect bigRect = a->transformedBoundary.geometry( (int)page->width(), (int)page->height() );
+                    QRect bigRect = a->transformedBoundingRectangle().geometry( (int)page->width(), (int)page->height() );
 
                     // the strategy behind 'bigger': if where are we going to
                     // draw is bigger than the Page, then draw the rect only
@@ -526,7 +528,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     // otherwise draw it right after the text
                     bool bigger = mixedPainter->device()->width() > page->width();
                     QImage image( bigRect.size(), QImage::Format_ARGB32 );
-                    image.fill( qRgba( a->style.color.red(), a->style.color.green(), a->style.color.blue(), opacity ) );
+                    image.fill( qRgba( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) );
                     QPainter painter( &image );
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont );
@@ -567,8 +569,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     // if the annotation color is valid (ie it was set), then
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
-                    if ( a->style.color.isValid() )
-                        colorizeImage( scaledImage, a->style.color, opacity );
+                    if ( a->style().color().isValid() )
+                        colorizeImage( scaledImage, a->style().color(), opacity );
                     pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the mangled image to painter
@@ -605,7 +607,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 // width is already divided by two
                 double width = geom->geomWidthPt * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                 QPainter p( &shape );
-                p.setPen( QPen( QBrush( QColor( a->style.color.red(), a->style.color.green(), a->style.color.blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+                p.setPen( QPen( QBrush( QColor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
                 QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                 r.adjust( width, width, -width, -width );
                 if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
@@ -644,7 +646,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             // draw extents rectangle
             if ( Okular::Settings::debugDrawAnnotationRect() )
             {
-                mixedPainter->setPen( a->style.color );
+                mixedPainter->setPen( a->style().color() );
                 mixedPainter->drawRect( annotBoundary );
             }
         }

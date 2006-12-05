@@ -189,7 +189,7 @@ class AnnotationItem : public QTreeWidgetItem
             setText( 0, Okular::AnnotationUtils::captionForAnnotation( m_ann ) );
             setIcon( 0, KIcon( "okular" ) );
             setToolTip( 0, QString( "<qt><b>%1</b><hr>%2</qt>" )
-                .arg( i18n( "Author: %1", m_ann->author ), m_ann->contents ) );
+                .arg( i18n( "Author: %1", m_ann->author() ), m_ann->contents() ) );
         }
 
         Okular::Annotation * annotation()
@@ -298,7 +298,7 @@ void Reviews::addContents( const Okular::Page * page )
         if ( Okular::Settings::groupByAuthor() )
         {
             // get author's name
-            QString author = annotation->author;
+            QString author = annotation->author();
             if ( author.isEmpty() )
                 author = i18n( "Unknown" );
 

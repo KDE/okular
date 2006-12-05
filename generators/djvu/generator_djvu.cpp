@@ -321,10 +321,10 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                         Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
                         // boundary
                         QRect rect( QPoint( txtann->point().x(), h - txtann->point().y() - txtann->size().height() ), txtann->size() );
-                        newtxtann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h );
+                        newtxtann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
                         // type
                         newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
-                        newtxtann->style.opacity = txtann->color().alphaF();
+                        newtxtann->style().setOpacity( txtann->color().alphaF() );
                         // FIXME remove once the annotation text handling is fixed
                         newtxtann->inplaceText = ann->comment();
                         newann = newtxtann;
@@ -338,7 +338,7 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                         QPoint a( lineann->point().x(), h - lineann->point().y() );
                         QPoint b( lineann->point2().x(), h - lineann->point2().y() );
                         QRect rect = QRect( a, b ).normalized();
-                        newlineann->boundary = Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h );
+                        newlineann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
                         // line points
                         newlineann->linePoints.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
                         newlineann->linePoints.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
@@ -346,7 +346,7 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                         if ( lineann->isArrow() )
                             newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
                         // width
-                        newlineann->style.width = lineann->width();
+                        newlineann->style().setWidth( lineann->width() );
                         newann = newlineann;
                         break;
                     }
@@ -354,14 +354,14 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                 if ( newann )
                 {
                     // setting the common parameters
-                    newann->style.color = ann->color();
-                    newann->contents = ann->comment();
+                    newann->style().setColor( ann->color() );
+                    newann->setContents( ann->comment() );
                     // creating an id as name for the annotation
                     QString uid = QUuid::createUuid().toString();
                     uid.remove( 0, 1 );
                     uid.chop( 1 );
                     uid.remove( QLatin1Char( '-' ) );
-                    newann->uniqueName = uid;
+                    newann->setUniqueName( uid );
 
                     // adding the newly converted annotation to the page
                     page->addAnnotation( newann );

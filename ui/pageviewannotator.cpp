@@ -158,8 +158,8 @@ class PickPointEngine : public AnnotatorEngine
                                                   Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
-                    ta->boundary=this->rect;
-                    ta->window.summary="TextBox";
+                    ta->setBoundingRectangle( this->rect );
+                    ta->window().setSummary( "TextBox" );
                 }
             }
             else if ( typeString == "Text")
@@ -167,15 +167,15 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
                 ta->textType = Okular::TextAnnotation::Linked;
-                ta->window.text="";
+                ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 double iconhei=0.03;
                 rect.left = point.x;
                 rect.top = point.y;
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
-                ta->boundary=this->rect;
-                ta->window.summary="Note";
+                ta->setBoundingRectangle( this->rect );
+                ta->window().setSummary( "Note" );
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )
@@ -197,7 +197,7 @@ class PickPointEngine : public AnnotatorEngine
                 }
                 rect.right = rect.left + stampxscale;
                 rect.bottom = rect.top + stampyscale;
-                sa->boundary = rect;
+                sa->setBoundingRectangle( rect );
             }
             // create GeomAnnotation
             else if ( typeString == "GeomSquare" || typeString == "GeomCircle" )
@@ -215,7 +215,7 @@ class PickPointEngine : public AnnotatorEngine
                 rect.top = qMin( startpoint.y, point.y );
                 rect.right = qMax( startpoint.x, point.x );
                 rect.bottom = qMax( startpoint.y, point.y );
-                ga->boundary = rect;
+                ga->setBoundingRectangle( rect );
             }
 
             // safety check
@@ -223,10 +223,10 @@ class PickPointEngine : public AnnotatorEngine
                 return QList< Okular::Annotation* >();
 
             // set common attributes
-            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
-                    m_annotElement.attribute( "color" ) : m_engineColor;
+            ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
+                    m_annotElement.attribute( "color" ) : m_engineColor );
             if ( m_annotElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
+                ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
 
             // return annotation
             return QList< Okular::Annotation* >() << ann;
@@ -368,7 +368,7 @@ class PolyLineEngine : public AnnotatorEngine
                     la->linePoints.append( points[i] );
                 if ( numofpoints == -1 )
                     la->lineClosed = true;
-                la->boundary = normRect;
+                la->setBoundingRectangle( normRect );
 
             }
 
@@ -377,10 +377,10 @@ class PolyLineEngine : public AnnotatorEngine
                 return QList< Okular::Annotation* >();
 
             // set common attributes
-            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
-                    m_annotElement.attribute( "color" ) : m_engineColor;
+            ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
+                    m_annotElement.attribute( "color" ) : m_engineColor );
             if ( m_annotElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
+                ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
             // return annotation
 
             return QList< Okular::Annotation* >() << ann;
@@ -508,7 +508,7 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->highlightType = type;
-                ha->boundary = Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() );
+                ha->setBoundingRectangle( Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() ) );
                 foreach ( Okular::NormalizedRect * rect, *selection )
                 {
                     Okular::HighlightAnnotation::Quad q;
@@ -529,10 +529,10 @@ class TextSelectorEngine : public AnnotatorEngine
                 return QList< Okular::Annotation* >();
 
             // set common attributes
-            ann->style.color = m_annotElement.hasAttribute( "color" ) ?
-                m_annotElement.attribute( "color" ) : m_engineColor;
+            ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
+                m_annotElement.attribute( "color" ) : m_engineColor );
             if ( m_annotElement.hasAttribute( "opacity" ) )
-                ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
+                ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
 
             // return annotations
             return QList< Okular::Annotation* >() << ann;
@@ -712,8 +712,9 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
         {
             if ( !annotation ) continue;
 
-            annotation->creationDate = annotation->modifyDate = QDateTime::currentDateTime();
-            annotation->author = Okular::Settings::identityAuthor();
+            annotation->setCreationDate( QDateTime::currentDateTime() );
+            annotation->setModificationDate( QDateTime::currentDateTime() );
+            annotation->setAuthor( Okular::Settings::identityAuthor() );
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
         }
 

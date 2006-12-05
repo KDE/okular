@@ -51,7 +51,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     tmplabel = new QLabel( i18n( "&Color:" ), page );
     hlay->addWidget( tmplabel );
     colorBn = new KColorButton( page );
-    colorBn->setColor( ann->style.color );
+    colorBn->setColor( ann->style().color() );
     tmplabel->setBuddy( colorBn );
     hlay->addWidget( colorBn );
 
@@ -61,7 +61,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     hlay->addWidget( tmplabel );
     m_opacity = new KIntNumInput( page );
     m_opacity->setRange( 0, 100, 1, true );
-    m_opacity->setValue( (int)( ann->style.opacity * 100 ) );
+    m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
 
@@ -77,19 +77,19 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 //    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
     QGridLayout * gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
-    AuthorEdit = new QLineEdit( ann->author, page );
+    AuthorEdit = new QLineEdit( ann->author(), page );
     tmplabel->setBuddy( AuthorEdit );
     gridlayout->addWidget( tmplabel, 0, 0 );
     gridlayout->addWidget( AuthorEdit, 0, 1 );
     
     tmplabel = new QLabel( i18n( "Created:" ), page );
     gridlayout->addWidget( tmplabel, 1, 0 );
-    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate, false, true ), page );//time
+    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate(), false, true ), page );//time
     gridlayout->addWidget( tmplabel, 1, 1 );
     
     m_modifyDateLabel = new QLabel( i18n( "Modified:" ), page );
     gridlayout->addWidget( m_modifyDateLabel, 2, 0 );
-    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modifyDate, false, true ), page );//time
+    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), false, true ), page );//time
     gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 3, 0 );
@@ -101,20 +101,23 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     
     tmplabel = new QLabel( i18n( "uniqueName:" ), page );
     gridlayout->addWidget( tmplabel, 0, 0 );
-    uniqueNameEdit = new QLineEdit( ann->uniqueName, page );
+    uniqueNameEdit = new QLineEdit( ann->uniqueName(), page );
     gridlayout->addWidget( uniqueNameEdit, 0, 1 );
     
     tmplabel = new QLabel( i18n( "contents:" ), page );
     gridlayout->addWidget( tmplabel, 1, 0 );
-    contentsEdit = new QLineEdit( ann->contents, page );
+    contentsEdit = new QLineEdit( ann->contents(), page );
     gridlayout->addWidget( contentsEdit, 1, 1 );
 
     tmplabel = new QLabel( i18n( "flags:" ), page );
     gridlayout->addWidget( tmplabel, 2, 0 );
-    flagsEdit = new QLineEdit( QString::number( m_annot->flags ), page );
+    flagsEdit = new QLineEdit( QString::number( m_annot->flags() ), page );
     gridlayout->addWidget( flagsEdit, 2, 1 );
 
-    QString tmpstr = QString( "%1,%2,%3,%4" ).arg( m_annot->boundary.left ).arg( m_annot->boundary.top ).arg( m_annot->boundary.right ).arg( m_annot->boundary.bottom );
+    QString tmpstr = QString( "%1,%2,%3,%4" ).arg( m_annot->boundingRectangle().left )
+                                             .arg( m_annot->boundingRectangle().top )
+                                             .arg( m_annot->boundingRectangle().right )
+                                             .arg( m_annot->boundingRectangle().bottom );
     tmplabel = new QLabel( i18n( "boundary:" ), page );
     gridlayout->addWidget( tmplabel, 3, 0 );
     boundaryEdit = new QLineEdit( tmpstr, page );
@@ -190,23 +193,23 @@ void AnnotsPropertiesDialog::slotapply()
     if ( !modified )
         return;
 
-    m_annot->author=AuthorEdit->text();
-    m_annot->contents=contentsEdit->text();
-    m_annot->style.color = colorBn->color();
-    m_annot->modifyDate=QDateTime::currentDateTime();
-    m_annot->flags=flagsEdit->text().toInt();
-    m_annot->style.opacity = (double)m_opacity->value() / 100.0;
+    m_annot->setAuthor( AuthorEdit->text() );
+    m_annot->setContents( contentsEdit->text() );
+    m_annot->setModificationDate( QDateTime::currentDateTime() );
+    m_annot->setFlags( flagsEdit->text().toInt() );
+    m_annot->style().setColor( colorBn->color() );
+    m_annot->style().setOpacity( (double)m_opacity->value() / 100.0 );
 
     if ( m_annotWidget )
         m_annotWidget->applyChanges();
 
     m_document->modifyPageAnnotation( m_page, m_annot );
 
-    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modifyDate, false, true ) );
+    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modificationDate(), false, true ) );
 
     modified = false;
     enableButton( Apply, false );
 }
-    
+
 #include "annotationpropertiesdialog.moc"
     

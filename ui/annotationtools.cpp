@@ -132,11 +132,11 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
         Okular::InkAnnotation * ia = new Okular::InkAnnotation();
         ann = ia;
         if ( m_annotElement.hasAttribute( "width" ) )
-            ann->style.width = m_annotElement.attribute( "width" ).toDouble();
+            ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
         // fill points
         ia->inkPaths.append( points );
         // set boundaries
-        ia->boundary = totalRect;
+        ia->setBoundingRectangle( totalRect );
     }
 
     // safety check
@@ -144,10 +144,10 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
         return QList< Okular::Annotation* >();
 
     // set common attributes
-    ann->style.color = m_annotElement.hasAttribute( "color" ) ?
-        m_annotElement.attribute( "color" ) : m_engineColor;
+    ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
+        m_annotElement.attribute( "color" ) : m_engineColor );
     if ( m_annotElement.hasAttribute( "opacity" ) )
-        ann->style.opacity = m_annotElement.attribute( "opacity", "1.0" ).toDouble();
+        ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
 
     // return annotation
     return QList< Okular::Annotation* >() << ann;

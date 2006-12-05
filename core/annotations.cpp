@@ -121,41 +121,258 @@ QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
 {
     if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType == TextAnnotation::Linked ) )
     {
-        return QRect( (int)( ann->transformedBoundary.left * scaledWidth ), (int)( ann->transformedBoundary.top * scaledHeight ), 24, 24 );
+        return QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
+                      (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
     }
 
-    return ann->transformedBoundary.geometry( (int)scaledWidth, (int)scaledHeight );
+    return ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
 }
 //END AnnotationUtils implementation
 
 
 //BEGIN Annotation implementation
 Annotation::Style::Style()
-    : opacity( 1.0 ), width( 1.0 ), style( Solid ), xCorners( 0.0 ),
-    yCorners( 0.0 ), marks( 3 ), spaces( 0 ), effect( NoEffect ),
-    effectIntensity( 1.0 ) {}
+    : m_opacity( 1.0 ), m_width( 1.0 ), m_style( Solid ), m_xCorners( 0.0 ),
+      m_yCorners( 0.0 ), m_marks( 3 ), m_spaces( 0 ), m_effect( NoEffect ),
+      m_effectIntensity( 1.0 )
+{
+}
+
+void Annotation::Style::setColor( const QColor &color )
+{
+    m_color = color;
+}
+
+QColor Annotation::Style::color() const
+{
+    return m_color;
+}
+
+void Annotation::Style::setOpacity( double opacity )
+{
+    m_opacity = opacity;
+}
+
+double Annotation::Style::opacity() const
+{
+    return m_opacity;
+}
+
+void Annotation::Style::setWidth( double width )
+{
+    m_width = width;
+}
+
+double Annotation::Style::width() const
+{
+    return m_width;
+}
+
+void Annotation::Style::setLineStyle( LineStyle style )
+{
+    m_style = style;
+}
+
+Annotation::LineStyle Annotation::Style::lineStyle() const
+{
+    return m_style;
+}
+
+void Annotation::Style::setXCorners( double xCorners )
+{
+    m_xCorners = xCorners;
+}
+
+double Annotation::Style::xCorners() const
+{
+    return m_xCorners;
+}
+
+void Annotation::Style::setYCorners( double yCorners )
+{
+    m_yCorners = yCorners;
+}
+
+double Annotation::Style::yCorners() const
+{
+    return m_yCorners;
+}
+
+void Annotation::Style::setMarks( int marks )
+{
+    m_marks = marks;
+}
+
+int Annotation::Style::marks() const
+{
+    return m_marks;
+}
+
+void Annotation::Style::setSpaces( int spaces )
+{
+    m_spaces = spaces;
+}
+
+int Annotation::Style::spaces() const
+{
+    return m_spaces;
+}
+
+void Annotation::Style::setLineEffect( LineEffect effect )
+{
+    m_effect = effect;
+}
+
+Annotation::LineEffect Annotation::Style::lineEffect() const
+{
+    return m_effect;
+}
+
+void Annotation::Style::setEffectIntensity( double intensity )
+{
+    m_effectIntensity = intensity;
+}
+
+double Annotation::Style::effectIntensity() const
+{
+    return m_effectIntensity;
+}
+
+
+
 
 Annotation::Window::Window()
-    : flags( -1 ), width( 0 ), height( 0 ) {}
+    : m_flags( -1 ), m_width( 0 ), m_height( 0 )
+{
+}
+
+void Annotation::Window::setFlags( int flags )
+{
+    m_flags = flags;
+}
+
+int Annotation::Window::flags() const
+{
+    return m_flags;
+}
+
+void Annotation::Window::setTopLeft( const NormalizedPoint &point )
+{
+    m_topLeft = point;
+}
+
+NormalizedPoint Annotation::Window::topLeft() const
+{
+    return m_topLeft;
+}
+
+void Annotation::Window::setWidth( int width )
+{
+    m_width = width;
+}
+
+int Annotation::Window::width() const
+{
+    return m_width;
+}
+
+void Annotation::Window::setHeight( int height )
+{
+    m_height = height;
+}
+
+int Annotation::Window::height() const
+{
+    return m_height;
+}
+
+void Annotation::Window::setTitle( const QString &title )
+{
+    m_title = title;
+}
+
+QString Annotation::Window::title() const
+{
+    return m_title;
+}
+
+void Annotation::Window::setSummary( const QString &summary )
+{
+    m_summary = summary;
+}
+
+QString Annotation::Window::summary() const
+{
+    return m_summary;
+}
+
+void Annotation::Window::setText( const QString &text )
+{
+    m_text = text;
+}
+
+QString Annotation::Window::text() const
+{
+    return m_text;
+}
+
+
 
 Annotation::Revision::Revision()
-    : annotation( 0 ), scope( Reply ), type( None ) {}
+    : m_annotation( 0 ), m_scope( Reply ), m_type( None )
+{
+}
+
+void Annotation::Revision::setAnnotation( Annotation *annotation )
+{
+    m_annotation = annotation;
+}
+
+Annotation *Annotation::Revision::annotation() const
+{
+    return m_annotation;
+}
+
+void Annotation::Revision::setScope( RevisionScope scope )
+{
+    m_scope = scope;
+}
+
+Annotation::RevisionScope Annotation::Revision::scope() const
+{
+    return m_scope;
+}
+
+void Annotation::Revision::setType( RevisionType type )
+{
+    m_type = type;
+}
+
+Annotation::RevisionType Annotation::Revision::type() const
+{
+    return m_type;
+}
+
+
 
 Annotation::Annotation()
-    : flags( 0 ) {}
+    : m_flags( 0 )
+{
+}
 
 Annotation::~Annotation()
 {
     // delete all children revisions
-    if ( revisions.isEmpty() )
+    if ( m_revisions.isEmpty() )
         return;
-    QLinkedList< Revision >::iterator it = revisions.begin(), end = revisions.end();
+
+    QLinkedList< Revision >::iterator it = m_revisions.begin(), end = m_revisions.end();
     for ( ; it != end; ++it )
-        delete (*it).annotation;
+        delete (*it).annotation();
 }
 
 Annotation::Annotation( const QDomNode & annNode )
-    : flags( 0 )
+    : m_flags( 0 )
 {
     // get the [base] element of the annotation node
     QDomElement e = AnnotationUtils::findChildElement( annNode, "base" );
@@ -164,23 +381,23 @@ Annotation::Annotation( const QDomNode & annNode )
 
     // parse -contents- attributes
     if ( e.hasAttribute( "author" ) )
-        author = e.attribute( "author" );
+        m_author = e.attribute( "author" );
     if ( e.hasAttribute( "contents" ) )
-        contents = e.attribute( "contents" );
+        m_contents = e.attribute( "contents" );
     if ( e.hasAttribute( "uniqueName" ) )
-        uniqueName = e.attribute( "uniqueName" );
+        m_uniqueName = e.attribute( "uniqueName" );
     if ( e.hasAttribute( "modifyDate" ) )
-        modifyDate = QDateTime::fromString( e.attribute("modifyDate"), Qt::ISODate );
+        m_modifyDate = QDateTime::fromString( e.attribute("modifyDate"), Qt::ISODate );
     if ( e.hasAttribute( "creationDate" ) )
-        creationDate = QDateTime::fromString( e.attribute("creationDate"), Qt::ISODate );
+        m_creationDate = QDateTime::fromString( e.attribute("creationDate"), Qt::ISODate );
 
     // parse -other- attributes
     if ( e.hasAttribute( "flags" ) )
-        flags = e.attribute( "flags" ).toInt();
+        m_flags = e.attribute( "flags" ).toInt();
     if ( e.hasAttribute( "color" ) )
-        style.color = QColor( e.attribute( "color" ) );
+        m_style.setColor( QColor( e.attribute( "color" ) ) );
     if ( e.hasAttribute( "opacity" ) )
-        style.opacity = e.attribute( "opacity" ).toDouble();
+        m_style.setOpacity( e.attribute( "opacity" ).toDouble() );
 
     // parse -the-subnodes- (describing Style, Window, Revision(s) structures)
     // Note: all subnodes if present must be 'attributes complete'
@@ -193,7 +410,7 @@ Annotation::Annotation( const QDomNode & annNode )
         // parse boundary
         if ( ee.tagName() == "boundary" )
         {
-            boundary=NormalizedRect(ee.attribute( "l" ).toDouble(),
+            m_boundary=NormalizedRect(ee.attribute( "l" ).toDouble(),
                 ee.attribute( "t" ).toDouble(),
                 ee.attribute( "r" ).toDouble(),
                 ee.attribute( "b" ).toDouble());
@@ -201,36 +418,36 @@ Annotation::Annotation( const QDomNode & annNode )
         // parse penStyle if not default
         else if ( ee.tagName() == "penStyle" )
         {
-            style.width = ee.attribute( "width" ).toDouble();
-            style.style = (LineStyle)ee.attribute( "style" ).toInt();
-            style.xCorners = ee.attribute( "xcr" ).toDouble();
-            style.yCorners = ee.attribute( "ycr" ).toDouble();
-            style.marks = ee.attribute( "marks" ).toInt();
-            style.spaces = ee.attribute( "spaces" ).toInt();
+            m_style.setWidth( ee.attribute( "width" ).toDouble() );
+            m_style.setLineStyle( (LineStyle)ee.attribute( "style" ).toInt() );
+            m_style.setXCorners( ee.attribute( "xcr" ).toDouble() );
+            m_style.setYCorners( ee.attribute( "ycr" ).toDouble() );
+            m_style.setMarks( ee.attribute( "marks" ).toInt() );
+            m_style.setSpaces( ee.attribute( "spaces" ).toInt() );
         }
         // parse effectStyle if not default
         else if ( ee.tagName() == "penEffect" )
         {
-            style.effect = (LineEffect)ee.attribute( "effect" ).toInt();
-            style.effectIntensity = ee.attribute( "intensity" ).toDouble();
+            m_style.setLineEffect( (LineEffect)ee.attribute( "effect" ).toInt() );
+            m_style.setEffectIntensity( ee.attribute( "intensity" ).toDouble() );
         }
         // parse window if present
         else if ( ee.tagName() == "window" )
         {
-            window.flags = ee.attribute( "flags" ).toInt();
-            window.topLeft.x = ee.attribute( "top" ).toDouble();
-            window.topLeft.y = ee.attribute( "left" ).toDouble();
-            window.width = ee.attribute( "width" ).toInt();
-            window.height = ee.attribute( "height" ).toInt();
-            window.title = ee.attribute( "title" );
-            window.summary = ee.attribute( "summary" );
+            m_window.setFlags( ee.attribute( "flags" ).toInt() );
+            m_window.setTopLeft( NormalizedPoint( ee.attribute( "top" ).toDouble(),
+                                                  ee.attribute( "left" ).toDouble() ) );
+            m_window.setWidth( ee.attribute( "width" ).toInt() );
+            m_window.setHeight( ee.attribute( "height" ).toInt() );
+            m_window.setTitle( ee.attribute( "title" ) );
+            m_window.setSummary( ee.attribute( "summary" ) );
             // parse window subnodes
             QDomNode winNode = ee.firstChild();
             for ( ; winNode.isElement(); winNode = winNode.nextSibling() )
             {
                 QDomElement winElement = winNode.toElement();
                 if ( winElement.tagName() == "text" )
-                    window.text = winElement.firstChild().toCDATASection().data();
+                    m_window.setText( winElement.firstChild().toCDATASection().data() );
             }
         }
     }
@@ -244,17 +461,127 @@ Annotation::Annotation( const QDomNode & annNode )
             continue;
 
         // compile the Revision structure crating annotation
-        Revision rev;
-        rev.scope = (RevScope)revElement.attribute( "revScope" ).toInt();
-        rev.type = (RevType)revElement.attribute( "revType" ).toInt();
-        rev.annotation = AnnotationUtils::createAnnotation( revElement );
+        Revision revision;
+        revision.setScope( (RevisionScope)revElement.attribute( "revScope" ).toInt() );
+        revision.setType( (RevisionType)revElement.attribute( "revType" ).toInt() );
+        revision.setAnnotation( AnnotationUtils::createAnnotation( revElement ) );
 
         // if annotation is valid, add revision to internal list
-        if ( rev.annotation );
-            revisions.append( rev );
+        if ( revision.annotation() );
+            m_revisions.append( revision );
     }
 
-    transformedBoundary = boundary;
+    m_transformedBoundary = m_boundary;
+}
+
+void Annotation::setAuthor( const QString &author )
+{
+    m_author = author;
+}
+
+QString Annotation::author() const
+{
+    return m_author;
+}
+
+void Annotation::setContents( const QString &contents )
+{
+    m_contents = contents;
+}
+
+QString Annotation::contents() const
+{
+    return m_contents;
+}
+
+void Annotation::setUniqueName( const QString &name )
+{
+    m_uniqueName = name;
+}
+
+QString Annotation::uniqueName() const
+{
+    return m_uniqueName;
+}
+
+void Annotation::setModificationDate( const QDateTime &date )
+{
+    m_modifyDate = date;
+}
+
+QDateTime Annotation::modificationDate() const
+{
+    return m_modifyDate;
+}
+
+void Annotation::setCreationDate( const QDateTime &date )
+{
+    m_creationDate = date;
+}
+
+QDateTime Annotation::creationDate() const
+{
+    return m_creationDate;
+}
+
+void Annotation::setFlags( int flags )
+{
+    m_flags = flags;
+}
+
+int Annotation::flags() const
+{
+    return m_flags;
+}
+
+void Annotation::setBoundingRectangle( const NormalizedRect &rectangle )
+{
+    m_boundary = rectangle;
+}
+
+NormalizedRect Annotation::boundingRectangle() const
+{
+    return m_boundary;
+}
+
+NormalizedRect Annotation::transformedBoundingRectangle() const
+{
+    return m_transformedBoundary;
+}
+
+Annotation::SubType Annotation::subType() const
+{
+    return A_BASE;
+}
+
+Annotation::Style & Annotation::style()
+{
+    return m_style;
+}
+
+const Annotation::Style & Annotation::style() const
+{
+    return m_style;
+}
+
+Annotation::Window & Annotation::window()
+{
+    return m_window;
+}
+
+const Annotation::Window & Annotation::window() const
+{
+    return m_window;
+}
+
+QLinkedList< Annotation::Revision > & Annotation::revisions()
+{
+    return m_revisions;
+}
+
+const QLinkedList< Annotation::Revision > & Annotation::revisions() const
+{
+    return m_revisions;
 }
 
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
@@ -264,85 +591,85 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     annNode.appendChild( e );
 
     // store -contents- attributes
-    if ( !author.isEmpty() )
-        e.setAttribute( "author", author );
-    if ( !contents.isEmpty() )
-        e.setAttribute( "contents", contents );
-    if ( !uniqueName.isEmpty() )
-        e.setAttribute( "uniqueName", uniqueName );
-    if ( modifyDate.isValid() )
-        e.setAttribute( "modifyDate", modifyDate.toString(Qt::ISODate) );
-    if ( creationDate.isValid() )
-        e.setAttribute( "creationDate", creationDate.toString(Qt::ISODate) );
+    if ( !m_author.isEmpty() )
+        e.setAttribute( "author", m_author );
+    if ( !m_contents.isEmpty() )
+        e.setAttribute( "contents", m_contents );
+    if ( !m_uniqueName.isEmpty() )
+        e.setAttribute( "uniqueName", m_uniqueName );
+    if ( m_modifyDate.isValid() )
+        e.setAttribute( "modifyDate", m_modifyDate.toString(Qt::ISODate) );
+    if ( m_creationDate.isValid() )
+        e.setAttribute( "creationDate", m_creationDate.toString(Qt::ISODate) );
 
     // store -other- attributes
-    if ( flags )
-        e.setAttribute( "flags", flags );
-    if ( style.color.isValid() )
-        e.setAttribute( "color", style.color.name() );
-    if ( style.opacity != 1.0 )
-        e.setAttribute( "opacity", style.opacity );
+    if ( m_flags )
+        e.setAttribute( "flags", m_flags );
+    if ( m_style.color().isValid() )
+        e.setAttribute( "color", m_style.color().name() );
+    if ( m_style.opacity() != 1.0 )
+        e.setAttribute( "opacity", m_style.opacity() );
 
     // Sub-Node-1 - boundary
     QDomElement bE = document.createElement( "boundary" );
     e.appendChild( bE );
-    bE.setAttribute( "l", (double)boundary.left );
-    bE.setAttribute( "t", (double)boundary.top );
-    bE.setAttribute( "r", (double)boundary.right );
-    bE.setAttribute( "b", (double)boundary.bottom );
+    bE.setAttribute( "l", (double)m_boundary.left );
+    bE.setAttribute( "t", (double)m_boundary.top );
+    bE.setAttribute( "r", (double)m_boundary.right );
+    bE.setAttribute( "b", (double)m_boundary.bottom );
 
     // Sub-Node-2 - penStyle
-    if ( style.width != 1 || style.style != Solid || style.xCorners != 0 ||
-         style.yCorners != 0.0 || style.marks != 3 || style.spaces != 0 )
+    if ( m_style.width() != 1 || m_style.lineStyle() != Solid || m_style.xCorners() != 0 ||
+         m_style.yCorners() != 0.0 || m_style.marks() != 3 || m_style.spaces() != 0 )
     {
         QDomElement psE = document.createElement( "penStyle" );
         e.appendChild( psE );
-        psE.setAttribute( "width", style.width );
-        psE.setAttribute( "style", (int)style.style );
-        psE.setAttribute( "xcr", style.xCorners );
-        psE.setAttribute( "ycr", style.yCorners );
-        psE.setAttribute( "marks", style.marks );
-        psE.setAttribute( "spaces", style.spaces );
+        psE.setAttribute( "width", m_style.width() );
+        psE.setAttribute( "style", (int)m_style.lineStyle() );
+        psE.setAttribute( "xcr", m_style.xCorners() );
+        psE.setAttribute( "ycr", m_style.yCorners() );
+        psE.setAttribute( "marks", m_style.marks() );
+        psE.setAttribute( "spaces", m_style.spaces() );
     }
 
     // Sub-Node-3 - penEffect
-    if ( style.effect != NoEffect || style.effectIntensity != 1.0 )
+    if ( m_style.lineEffect() != NoEffect || m_style.effectIntensity() != 1.0 )
     {
         QDomElement peE = document.createElement( "penEffect" );
         e.appendChild( peE );
-        peE.setAttribute( "effect", (int)style.effect );
-        peE.setAttribute( "intensity", style.effectIntensity );
+        peE.setAttribute( "effect", (int)m_style.lineEffect() );
+        peE.setAttribute( "intensity", m_style.effectIntensity() );
     }
 
     // Sub-Node-4 - window
-    if ( window.flags != -1 || !window.title.isEmpty() ||
-         !window.summary.isEmpty() || !window.text.isEmpty() )
+    if ( m_window.flags() != -1 || !m_window.title().isEmpty() ||
+         !m_window.summary().isEmpty() || !m_window.text().isEmpty() )
     {
         QDomElement wE = document.createElement( "window" );
         e.appendChild( wE );
-        wE.setAttribute( "flags", window.flags );
-        wE.setAttribute( "top", window.topLeft.x );
-        wE.setAttribute( "left", window.topLeft.y );
-        wE.setAttribute( "width", window.width );
-        wE.setAttribute( "height", window.height );
-        wE.setAttribute( "title", window.title );
-        wE.setAttribute( "summary", window.summary );
+        wE.setAttribute( "flags", m_window.flags() );
+        wE.setAttribute( "top", m_window.topLeft().x );
+        wE.setAttribute( "left", m_window.topLeft().y );
+        wE.setAttribute( "width", m_window.width() );
+        wE.setAttribute( "height", m_window.height() );
+        wE.setAttribute( "title", m_window.title() );
+        wE.setAttribute( "summary", m_window.summary() );
         // store window.text as a subnode, because we need escaped data
-        if ( !window.text.isEmpty() )
+        if ( !m_window.text().isEmpty() )
         {
             QDomElement escapedText = document.createElement( "text" );
             wE.appendChild( escapedText );
-            QDomCDATASection textCData = document.createCDATASection( window.text );
+            QDomCDATASection textCData = document.createCDATASection( m_window.text() );
             escapedText.appendChild( textCData );
         }
     }
 
     // create [revision] element of the annotation node (if any)
-    if ( revisions.isEmpty() )
+    if ( m_revisions.isEmpty() )
         return;
 
     // add all revisions as children of revisions element
-    QLinkedList< Revision >::const_iterator it = revisions.begin(), end = revisions.end();
+    QLinkedList< Revision >::const_iterator it = m_revisions.begin(), end = m_revisions.end();
     for ( ; it != end; ++it )
     {
         // create revision element
@@ -350,17 +677,17 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         QDomElement r = document.createElement( "revision" );
         annNode.appendChild( r );
         // set element attributes
-        r.setAttribute( "revScope", (int)revision.scope );
-        r.setAttribute( "revType", (int)revision.type );
+        r.setAttribute( "revScope", (int)revision.scope() );
+        r.setAttribute( "revType", (int)revision.type() );
         // use revision as the annotation element, so fill it up
-        AnnotationUtils::storeAnnotation( revision.annotation, r, document );
+        AnnotationUtils::storeAnnotation( revision.annotation(), r, document );
     }
 }
 
 void Annotation::transform( const QMatrix &matrix )
 {
-    transformedBoundary = boundary;
-    transformedBoundary.transform( matrix );
+    m_transformedBoundary = m_boundary;
+    m_transformedBoundary.transform( matrix );
 }
 
 //END Annotation implementation

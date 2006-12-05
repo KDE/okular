@@ -186,9 +186,9 @@ protected:
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                QString contents = ( !ann->window.text.isEmpty() ? ann->window.text : ann->contents );
+                QString contents = ( !ann->window().text().isEmpty() ? ann->window().text() : ann->contents() );
                 QString tip = QString( "<qt><b>%1</b><hr>%2</qt>" )
-                    .arg( i18n( "Author: %1", ann->author ), contents.replace( "\n", "<br>" ) );
+                    .arg( i18n( "Author: %1", ann->author() ), contents.replace( "\n", "<br>" ) );
                 QToolTip::showText( he->globalPos(), tip, this, r );
             }
             else if ( link )
@@ -1359,7 +1359,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                         menu.addTitle( i18n( "Annotation" ) );
                         popoutWindow = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
                         deleteNote = menu.addAction( KIcon( "remove" ), i18n( "&Delete" ) );
-                        if ( ann->flags & Okular::Annotation::DenyDelete )
+                        if ( ann->flags() & Okular::Annotation::DenyDelete )
                             deleteNote->setEnabled( false );
                         showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties..." ) );
 

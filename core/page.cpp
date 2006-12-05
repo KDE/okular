@@ -440,12 +440,14 @@ const RegularAreaRect * Page::textSelection() const
 void Page::addAnnotation( Annotation * annotation )
 {
     //uniqueName: okular-PAGENUM-ID
-    if(annotation->uniqueName.isEmpty())
+    if(annotation->uniqueName().isEmpty())
     {
-        annotation->uniqueName = "okular-";
-        annotation->uniqueName += ( QString::number(d->m_number) + '-' +
-                QString::number(++(d->m_maxuniqueNum)) );
+        QString uniqueName = "okular-";
+        uniqueName += ( QString::number(d->m_number) + '-' + QString::number(++(d->m_maxuniqueNum)) );
+
         kDebug()<<"astario:     inc m_maxuniqueNum="<<d->m_maxuniqueNum<<endl;
+
+        annotation->setUniqueName( uniqueName );
     }
     m_annotations.append( annotation );
 
@@ -470,7 +472,7 @@ void Page::modifyAnnotation(Annotation * newannotation )
     {
         if((*aIt)==newannotation)
             return; //modified already
-        if((*aIt) && (*aIt)->uniqueName==newannotation->uniqueName)
+        if((*aIt) && (*aIt)->uniqueName()==newannotation->uniqueName())
         {
             int rectfound = false;
             QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
@@ -490,13 +492,13 @@ void Page::modifyAnnotation(Annotation * newannotation )
 
 bool Page::removeAnnotation( Annotation * annotation )
 {
-    if ( !annotation || ( annotation->flags & Annotation::DenyDelete ) )
+    if ( !annotation || ( annotation->flags() & Annotation::DenyDelete ) )
         return false;
 
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
     {
-        if((*aIt) && (*aIt)->uniqueName==annotation->uniqueName)
+        if((*aIt) && (*aIt)->uniqueName()==annotation->uniqueName())
         {
             int rectfound = false;
             QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
@@ -507,7 +509,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     m_rects.erase( it );
                     rectfound = true;
                 }
-            kDebug() << "removed annotation: " << annotation->uniqueName << endl;
+            kDebug() << "removed annotation: " << annotation->uniqueName() << endl;
             delete *aIt;
             m_annotations.erase( aIt );
             break;
@@ -635,15 +637,15 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                 {
                     m_annotations.append( annotation );
                     m_rects.append( new AnnotationObjectRect( annotation ) );
-                    int pos = annotation->uniqueName.lastIndexOf("-");
+                    int pos = annotation->uniqueName().lastIndexOf("-");
                     if(pos != -1)
                     {
-                        int uniqID=annotation->uniqueName.right(annotation->uniqueName.length()-pos-1).toInt();
+                        int uniqID=annotation->uniqueName().right(annotation->uniqueName().length()-pos-1).toInt();
                         if(d->m_maxuniqueNum<uniqID)
                             d->m_maxuniqueNum=uniqID;
                     }
 
-                    kDebug()<<"astario:  restored annot:"<<annotation->uniqueName<<endl;
+                    kDebug()<<"astario:  restored annot:"<<annotation->uniqueName()<<endl;
                 }
                 else
                     kWarning() << "page (" << d->m_number << "): can't restore an annotation from XML." << endl;
@@ -691,13 +693,13 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
             // get annotation
             const Annotation * a = *aIt;
             // only save okular annotations (not the embedded in file ones)
-            if ( !(a->flags & Annotation::External) )
+            if ( !(a->flags() & Annotation::External) )
             {
                 // append an filled-up element called 'annotation' to the list
                 QDomElement annElement = document.createElement( "annotation" );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
-                kDebug()<<"astario:  save annot:"<<a->uniqueName<<endl;
+                kDebug()<<"astario:  save annot:"<<a->uniqueName()<<endl;
             }
         }
 

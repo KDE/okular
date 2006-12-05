@@ -1031,7 +1031,9 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
         if (newann)
         {
             // the Contents field has lines separated by \r
-            newann->contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
+            QString contents = newann->contents();
+            contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
+            newann->setContents( contents );
             page->addAnnotation(newann);
         }
     }

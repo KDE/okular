@@ -128,13 +128,13 @@ void KOOOGenerator::generatePixmap( Okular::PixmapRequest * request )
     if ( mAnnotations[ i ].page == request->pageNumber() ) {
       Okular::TextAnnotation *annotation = new Okular::TextAnnotation;
 
-      annotation->author = mAnnotations[ i ].creator;
-      annotation->contents = mAnnotations[ i ].content;
-      annotation->creationDate = mAnnotations[ i ].dateTime;
-      annotation->style.color = QColor( "#ffff00" );
-      annotation->style.opacity = 0.5;
+      annotation->setAuthor( mAnnotations[ i ].creator );
+      annotation->setContents( mAnnotations[ i ].content );
+      annotation->setCreationDate( mAnnotations[ i ].dateTime );
+      annotation->style().setColor( QColor( "#ffff00" ) );
+      annotation->style().setOpacity( 0.5 );
       QRectF rect = mAnnotations[ i ].boundingRect;
-      annotation->boundary = Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() );
+      annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
 
       request->page()->addAnnotation( annotation );
     }

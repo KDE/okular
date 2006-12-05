@@ -177,7 +177,7 @@ class OKULAR_EXPORT Annotation
         QString contents() const;
 
         /**
-         * Sets the unique @name of the annotation.
+         * Sets the unique @p name of the annotation.
          *
          * The unique name should have the form 'okular-#NUMBER#'
          */

@@ -1074,7 +1074,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 	{
 		// the quest for options_show_menubar
 		KActionCollection *ac;
-		KAction *act;
+		QAction *act;
 		
 		if (factory())
 		{

@@ -975,7 +975,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
             }
         }
         // go to next occurrency
-        else if( e->key() == d->actionCollection->action( "find_next" )->shortcut().keyQt() )
+#ifdef __GNUC__
+#warning FIX the find next shortcut
+#endif
+        else if( e->key() == Qt::Key_F3 /*d->actionCollection->action( "find_next" )->shortcut().keyQt()*/ )
         {
             // part doesn't get this key event because of the keyboard grab
             d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed

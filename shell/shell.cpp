@@ -277,7 +277,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
     {
         KMessageBox::error( this, 
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
-                "<nobr><strong>%1</strong></nobr>.</qt>").arg(
+                "<nobr><strong>%1</strong></nobr>.</qt>",
                 strerror(m_tempfile->status())));
                 delete m_tempfile;
                 return false;

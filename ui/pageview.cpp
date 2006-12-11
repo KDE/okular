@@ -1785,8 +1785,6 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 }
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
-                    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
-                    const Okular::Page * page = pageItem ? pageItem->page() : 0;
                     KMenu menu( this );
                     QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy" ) );
                     if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )

@@ -25,35 +25,44 @@ namespace Okular {
 class Annotation;
 
 /**
- * @short Helper class for (recoursive) annotation retrieval/storage.
- *
+ * @short Helper class for (recursive) annotation retrieval/storage.
  */
 class AnnotationUtils
 {
     public:
-        // restore an annotation (with revisions if needed) from a dom
-        // element. returns a pointer to the complete annotation or 0 if
-        // element is invalid.
-        static Annotation * createAnnotation( const QDomElement & annElement );
+        /**
+         * Restore an annotation (with revisions if needed) from the dom @p element.
+         *
+         * Returns a pointer to the complete annotation or 0 if element is invalid.
+         */
+        static Annotation * createAnnotation( const QDomElement & element );
 
-        // save the 'ann' annotations as a child of parentElement taking
-        // care of saving all revisions if 'ann' has any.
-        static void storeAnnotation( const Annotation * ann,
-            QDomElement & annElement, QDomDocument & document );
+        /**
+         * Saves the @p annotation as a child of @p element taking
+         * care of saving all revisions if it has any.
+         */
+        static void storeAnnotation( const Annotation * annotation,
+                                     QDomElement & element, QDomDocument & document );
 
-        // return an element called 'name' from the direct children of
-        // parentNode or a null element if not found
+        /**
+         * Returns the child element with the given @p name from the direct
+         * children of @p parentNode or a null element if not found.
+         */
         static QDomElement findChildElement( const QDomNode & parentNode,
-            const QString & name );
+                                             const QString & name );
 
-        // return the translated string with the type of the annotation
-        // specified
-        static QString captionForAnnotation( Annotation * ann );
+        /**
+         * Returns the translated string with the type of the given @p annotation.
+         */
+        static QString captionForAnnotation( Annotation * annotation );
 
-        static QRect annotationGeometry( const Annotation * ann,
-            double scaledWidth, double scaledHeight );
+        /**
+         * Returns the geometry of the given @p annotation scaled by
+         * @p scaleX and @p scaleY.
+         */
+        static QRect annotationGeometry( const Annotation * annotation,
+                                         double scaleX, double scaleY );
 };
-
 
 /**
  * @short Annotation struct holds properties shared by all annotations.
@@ -78,7 +87,7 @@ class OKULAR_EXPORT Annotation
             AHighlight = 4, ///< A highlight annotation
             AStamp = 5,     ///< A stamp annotation
             AInk = 6,       ///< An ink annotation
-            A_BASE = 0      ///< No annotation
+            A_BASE = 0      ///< The annotation base class
         };
 
         /**
@@ -249,52 +258,122 @@ class OKULAR_EXPORT Annotation
         class Style
         {
             public:
+                /**
+                 * Creates a new style.
+                 */
                 Style();
 
+                /**
+                 * Sets the @p color of the style.
+                 */
                 void setColor( const QColor &color );
+
+                /**
+                 * Returns the color of the style.
+                 */
                 QColor color() const;
 
+                /**
+                 * Sets the @p opacity of the style.
+                 */
                 void setOpacity( double opacity );
+
+                /**
+                 * Returns the opacity of the style.
+                 */
                 double opacity() const;
 
+                /**
+                 * Sets the @p width of the style.
+                 */
                 void setWidth( double width );
+
+                /**
+                 * Returns the width of the style.
+                 */
                 double width() const;
 
+                /**
+                 * Sets the line @p style of the style.
+                 */
                 void setLineStyle( LineStyle style );
+
+                /**
+                 * Returns the line style of the style.
+                 */
                 LineStyle lineStyle() const;
 
+                /**
+                 * Sets the x-corners of the style.
+                 */
                 void setXCorners( double xCorners );
+
+                /**
+                 * Returns the x-corners of the style.
+                 */
                 double xCorners() const;
 
+                /**
+                 * Sets the y-corners of the style.
+                 */
                 void setYCorners( double yCorners );
+
+                /**
+                 * Returns the y-corners of the style.
+                 */
                 double yCorners() const;
 
+                /**
+                 * Sets the @p marks of the style.
+                 */
                 void setMarks( int marks );
+
+                /**
+                 * Returns the marks of the style.
+                 */
                 int marks() const;
 
+                /**
+                 * Sets the @p spaces of the style.
+                 */
                 void setSpaces( int spaces );
+
+                /**
+                 * Returns the spaces of the style.
+                 */
                 int spaces() const;
 
+                /**
+                 * Sets the line @effect of the style.
+                 */
                 void setLineEffect( LineEffect effect );
+
+                /**
+                 * Returns the line effect of the style.
+                 */
                 LineEffect lineEffect() const;
 
+                /**
+                 * Sets the effect @p intensity of the style.
+                 */
                 void setEffectIntensity( double intensity );
+
+                /**
+                 * Returns the effect intensity of the style.
+                 */
                 double effectIntensity() const;
 
             private:
-                // appearance properties
-                QColor          m_color;              // black
-                double          m_opacity;            // 1.0
-                // pen properties
-                double          m_width;              // 1.0
-                LineStyle       m_style;              // LineStyle::Solid
-                double          m_xCorners;           // 0.0
-                double          m_yCorners;           // 0.0
-                int             m_marks;              // 3
-                int             m_spaces;             // 0
-                // pen effects
-                LineEffect      m_effect;             // LineEffect::NoEffect
-                double          m_effectIntensity;    // 1.0
+                QColor m_color;
+                double m_opacity;
+                double m_width;
+                LineStyle m_style;
+                double m_xCorners;
+                double m_yCorners;
+                int m_marks;
+                int m_spaces;
+                LineEffect m_effect;
+                double m_effectIntensity;
         };
 
         /**
@@ -314,40 +393,89 @@ class OKULAR_EXPORT Annotation
         class Window
         {
             public:
+                /**
+                 * Creates a new window.
+                 */
                 Window();
 
+                /**
+                 * Sets the @p flags of the window.
+                 */
                 void setFlags( int flags );
+
+                /**
+                 * Returns the flags of the window.
+                 */
                 int flags() const;
 
+                /**
+                 * Sets the top-left @p point of the window.
+                 */
                 void setTopLeft( const NormalizedPoint &point );
+
+                /**
+                 * Returns the top-left point of the window.
+                 */
                 NormalizedPoint topLeft() const;
 
+                /**
+                 * Sets the @p width of the window.
+                 */
                 void setWidth( int width );
+
+                /**
+                 * Returns the width of the window.
+                 */
                 int width() const;
 
+                /**
+                 * Sets the @p height of the window.
+                 */
                 void setHeight( int height );
+
+                /**
+                 * Returns the height of the window.
+                 */
                 int height() const;
 
+                /**
+                 * Sets the @p title of the window.
+                 */
                 void setTitle( const QString &title );
+
+                /**
+                 * Returns the title of the window.
+                 */
                 QString title() const;
 
+                /**
+                 * Sets the @p summary of the window.
+                 */
                 void setSummary( const QString &summary );
+
+                /**
+                 * Returns the summary of the window.
+                 */
                 QString summary() const;
 
+                /**
+                 * Sets the @p text of the window.
+                 */
                 void setText( const QString &text );
+
+                /**
+                 * Returns the text of the window.
+                 */
                 QString text() const;
 
             private:
-                // window state (Hidden, FixedRotation, Deny* flags allowed)
-                int             m_flags;              // -1 (never initialized) -> 0 (if inited and shown)
-                // geometric properties
-                NormalizedPoint m_topLeft;            // no default, inited to boundary.topLeft
-                int             m_width;              // no default, fixed width inited to 200
-                int             m_height;             // no default, fixed height inited to 150
-                // window contens/override properties
-                QString         m_title;              // '' text in the titlebar (overrides author)
-                QString         m_summary;            // '' short description (displayed if not empty)
-                QString         m_text;               // '' text for the window (overrides annot->contents)
+                int m_flags;
+                NormalizedPoint m_topLeft;
+                int m_width;
+                int m_height;
+                QString m_title;
+                QString m_summary;
+                QString m_text;
         };
 
         /**
@@ -367,23 +495,47 @@ class OKULAR_EXPORT Annotation
         class Revision
         {
             public:
+                /**
+                 * Creates a new revision.
+                 */
                 Revision();
 
+                /**
+                 * Sets the @p annotation the revision belongs to.
+                 */
                 void setAnnotation( Annotation *annotation );
+
+                /**
+                 * Returns the annotation the revision belongs to.
+                 */
                 Annotation *annotation() const;
 
+                /**
+                 * Sets the @p scope of the revision.
+                 * @see RevisionScope
+                 */
                 void setScope( RevisionScope scope );
+
+                /**
+                 * Returns the scope of the revision.
+                 */
                 RevisionScope scope() const;
 
+                /**
+                 * Sets the @p type of the revision.
+                 * @see RevisionType
+                 */
                 void setType( RevisionType type );
+
+                /**
+                 * Returns the type of the revision.
+                 */
                 RevisionType type() const;
 
             private:
-                // child revision
-                Annotation *    m_annotation;         // not null
-                // scope and type of revision
-                RevisionScope       m_scope;              // Reply
-                RevisionType        m_type;
+                Annotation *m_annotation;
+                RevisionScope m_scope;
+                RevisionType m_type;
         };
 
         /**
@@ -413,133 +565,668 @@ class OKULAR_EXPORT Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        /** properties: contents related */
-        QString         m_author;                 // ''
-        QString         m_contents;               // ''
-        QString         m_uniqueName;             // 'okular-#NUMBER#'
-        QDateTime       m_modifyDate;             // before or equal to currentDateTime()
-        QDateTime       m_creationDate;           // before or equal to modifyDate
+        QString m_author;
+        QString m_contents;
+        QString m_uniqueName;
+        QDateTime m_modifyDate;
+        QDateTime m_creationDate;
 
-        int             m_flags;                  // 0
-        NormalizedRect  m_boundary;               // valid or isNull()
-        NormalizedRect  m_transformedBoundary;
+        int m_flags;
+        NormalizedRect m_boundary;
+        NormalizedRect m_transformedBoundary;
 
-        Style           m_style;
-        Window          m_window;
+        Style m_style;
+        Window m_window;
         QLinkedList< Revision > m_revisions;
 };
 
-
-// a helper used to shorten the code presented below
-#define AN_COMMONDECL( className, rttiType )\
-    className();\
-    className( const class QDomNode & node );\
-    void store( QDomNode & parentNode, QDomDocument & document ) const;\
-    SubType subType() const { return rttiType; }
-
-struct OKULAR_EXPORT TextAnnotation : public Annotation
+class OKULAR_EXPORT TextAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( TextAnnotation, AText );
+    public:
+        /**
+         * Describes the type of the text.
+         */
+        enum TextType
+        {
+            Linked,  ///< The annotation is linked to a text
+            InPlace  ///< The annotation is located next to the text
+        };
 
-    // local enums
-    enum TextType { Linked, InPlace };
-    enum InplaceIntent { Unknown, Callout, TypeWriter };
+        /**
+         * Describes the style of the text.
+         */
+        enum InplaceIntent
+        {
+            Unknown,    ///< Unknown style
+            Callout,    ///< Callout style
+            TypeWriter  ///< Type writer style
+        };
 
-    // data fields
-    TextType        textType;               // Linked
-    QString         textIcon;               // 'Comment'
-    QFont           textFont;               // app def font
-    int             inplaceAlign;           // 0:left, 1:center, 2:right
-    QString         inplaceText;            // '' overrides contents
-    NormalizedPoint inplaceCallout[3];      //
-    NormalizedPoint transformedInplaceCallout[3];
-    InplaceIntent   inplaceIntent;          // Unknown
+        /**
+         * Creates a new text annotation.
+         */
+        TextAnnotation();
 
-    virtual void transform( const QMatrix &matrix );
+        /**
+         * Creates a new text annotation from the xml @p description
+         */
+        TextAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the text annotation.
+         */
+        ~TextAnnotation();
+
+        /**
+         * Sets the text @p type of the text annotation.
+         * @see TextType
+         */
+        void setTextType( TextType type );
+
+        /**
+         * Returns the text type of the text annotation.
+         */
+        TextType textType() const;
+
+        /**
+         * Sets the @p icon of the text annotation.
+         */
+        void setTextIcon( const QString &icon );
+
+        /**
+         * Returns the icon of the text annotation.
+         */
+        QString textIcon() const;
+
+        /**
+         * Sets the @p font of the text annotation.
+         */
+        void setTextFont( const QFont &font );
+
+        /**
+         * Returns the font of the text annotation.
+         */
+        QFont textFont() const;
+
+        /**
+         * Sets the inplace @p alignment of the text annotation.
+         */
+        void setInplaceAlignment( int alignment );
+
+        /**
+         * Returns the inplace alignment of the text annotation.
+         */
+        int inplaceAlignment() const;
+
+        /**
+         * Sets the inplace @p text of the text annotation.
+         */
+        void setInplaceText( const QString &text );
+
+        /**
+         * Returns the inplace text of the text annotation.
+         */
+        QString inplaceText() const;
+
+        /**
+         * Sets the inplace callout @p point at @p index.
+         *
+         * @p index must be between 0 and 2.
+         */
+        void setInplaceCallout( const NormalizedPoint &point, int index );
+
+        /**
+         * Returns the inplace callout point for @p index.
+         *
+         * @p index must be between 0 and 2.
+         */
+        NormalizedPoint inplaceCallout( int index ) const;
+
+        /**
+         * Returns the transformed (e.g. rotated) inplace callout point for @p index.
+         *
+         * @p index must be between 0 and 2.
+         */
+        NormalizedPoint transformedInplaceCallout( int index ) const;
+
+        /**
+         * Returns the inplace @p intent of the text annotation.
+         * @see InplaceIntent
+         */
+        void setInplaceIntent( InplaceIntent intent );
+
+        /**
+         * Returns the inplace intent of the text annotation.
+         */
+        InplaceIntent inplaceIntent() const;
+
+        /**
+         * Returns the sub type of the text annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the text annotation as xml in @p document under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the text annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        TextType m_textType;
+        QString m_textIcon;
+        QFont m_textFont;
+        int m_inplaceAlign;
+        QString m_inplaceText;
+        NormalizedPoint m_inplaceCallout[3];
+        NormalizedPoint m_transformedInplaceCallout[3];
+        InplaceIntent m_inplaceIntent;
 };
 
-struct OKULAR_EXPORT LineAnnotation : public Annotation
+class OKULAR_EXPORT LineAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( LineAnnotation, ALine )
+    public:
+        /**
+         * Describes the line ending style.
+         */
+        enum TermStyle
+        {
+            Square,         ///< Using a square
+            Circle,         ///< Using a circle
+            Diamond,        ///< Using a diamond
+            OpenArrow,      ///< Using an open arrow
+            ClosedArrow,    ///< Using a closed arrow
+            None,           ///< No special ending style
+            Butt,           ///< Using a butt ending
+            ROpenArrow,     ///< Using an arrow opened at the right side
+            RClosedArrow,   ///< Using an arrow closed at the right side
+            Slash           ///< Using a slash
+        };
 
-    // local enums
-    enum TermStyle { Square, Circle, Diamond, OpenArrow, ClosedArrow, None,
-                     Butt, ROpenArrow, RClosedArrow, Slash };
-    enum LineIntent { Unknown, Arrow, Dimension, PolygonCloud };
+        /**
+         * Describes the line intent.
+         */
+        enum LineIntent
+        {
+            Unknown,        ///< Unknown intent
+            Arrow,          ///< Arrow intent
+            Dimension,      ///< Dimension intent
+            PolygonCloud    ///< Polygon cloud intent
+        };
 
-    // data fields (note uses border for rendering style)
-    QLinkedList<NormalizedPoint> linePoints;
-    QLinkedList<NormalizedPoint> transformedLinePoints;
-    TermStyle       lineStartStyle;         // None
-    TermStyle       lineEndStyle;           // None
-    bool            lineClosed;             // false (if true draw close shape)
-    QColor          lineInnerColor;         //
-    double          lineLeadingFwdPt;       // 0.0
-    double          lineLeadingBackPt;      // 0.0
-    bool            lineShowCaption;        // false
-    LineIntent      lineIntent;             // Unknown
+        /**
+         * Creates a new line annotation.
+         */
+        LineAnnotation();
 
-    virtual void transform( const QMatrix &matrix );
+        /**
+         * Creates a new line annotation from the xml @p description
+         */
+        LineAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the line annotation.
+         */
+        ~LineAnnotation();
+
+        /**
+         * Sets the normalized line @p points of the line annotation.
+         */
+        void setLinePoints( const QLinkedList<NormalizedPoint> &points );
+
+        /**
+         * Returns the normalized line points of the line annotation.
+         */
+        QLinkedList<NormalizedPoint> linePoints() const;
+
+        /**
+         * Returns the transformed (e.g. rotated) normalized line points
+         * of the line annotation.
+         */
+        QLinkedList<NormalizedPoint> transformedLinePoints() const;
+
+        /**
+         * Sets the line starting @p style of the line annotation.
+         * @see TermStyle
+         */
+        void setLineStartStyle( TermStyle style );
+
+        /**
+         * Returns the line starting style of the line annotation.
+         */
+        TermStyle lineStartStyle() const;
+
+        /**
+         * Sets the line ending @p style of the line annotation.
+         * @see TermStyle
+         */
+        void setLineEndStyle( TermStyle style );
+
+        /**
+         * Returns the line ending style of the line annotation.
+         */
+        TermStyle lineEndStyle() const;
+
+        /**
+         * Sets whether the line shall be @p closed.
+         */
+        void setLineClosed( bool closed );
+
+        /**
+         * Returns whether the line shall be closed.
+         */
+        bool lineClosed() const;
+
+        /**
+         * Sets the inner line @p color of the line annotation.
+         */
+        void setLineInnerColor( const QColor &color );
+
+        /**
+         * Returns the inner line color of the line annotation.
+         */
+        QColor lineInnerColor() const;
+
+        /**
+         * Sets the leading forward @p point of the line annotation.
+         */
+        void setLineLeadingForwardPoint( double point );
+
+        /**
+         * Returns the leading forward point of the line annotation.
+         */
+        double lineLeadingForwardPoint() const;
+
+        /**
+         * Sets the leading backward @p point of the line annotation.
+         */
+        void setLineLeadingBackwardPoint( double point );
+
+        /**
+         * Returns the leading backward point of the line annotation.
+         */
+        double lineLeadingBackwardPoint() const;
+
+        /**
+         * Sets whether the caption shall be @p shown.
+         */
+        void setShowCaption( bool shown );
+
+        /**
+         * Returns whether the caption shall be shown.
+         */
+        bool showCaption() const;
+
+        /**
+         * Sets the line @p intent of the line annotation.
+         * @see LineIntent
+         */
+        void setLineIntent( LineIntent intent );
+
+        /**
+         * Returns the line intent of the line annotation.
+         */
+        LineIntent lineIntent() const;
+
+        /**
+         * Returns the sub type of the line annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the line annotation as xml in @p document under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the line annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        QLinkedList<NormalizedPoint> m_linePoints;
+        QLinkedList<NormalizedPoint> m_transformedLinePoints;
+        TermStyle m_lineStartStyle;
+        TermStyle m_lineEndStyle;
+        bool m_lineClosed;
+        QColor m_lineInnerColor;
+        double m_lineLeadingFwdPt;
+        double m_lineLeadingBackPt;
+        bool m_lineShowCaption;
+        LineIntent m_lineIntent;
 };
 
-struct OKULAR_EXPORT GeomAnnotation : public Annotation
+class OKULAR_EXPORT GeomAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( GeomAnnotation, AGeom )
+    public:
+        // common enums
+        enum GeomType
+        {
+            InscribedSquare,  ///< Draw a square
+            InscribedCircle   ///< Draw a circle
+        };
 
-    // common enums
-    enum GeomType { InscribedSquare, InscribedCircle };
+        /**
+         * Creates a new geometrical annotation.
+         */
+        GeomAnnotation();
 
-    // data fields (note uses border for rendering style)
-    GeomType        geomType;               // InscribedSquare
-    QColor          geomInnerColor;         //
-    int             geomWidthPt;            // 18
+        /**
+         * Creates a new geometrical annotation from the xml @p description
+         */
+        GeomAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the geometrical annotation.
+         */
+        ~GeomAnnotation();
+
+        /**
+         * Sets the geometrical @p type of the geometrical annotation.
+         * @see GeomType
+         */
+        void setGeometricalType( GeomType type );
+
+        /**
+         * Returns the geometrical type of the geometrical annotation.
+         */
+        GeomType geometricalType() const;
+
+        /**
+         * Sets the inner @p color of the geometrical annotation.
+         */
+        void setGeometricalInnerColor( const QColor &color );
+
+        /**
+         * Returns the inner color of the geometrical annotation.
+         */
+        QColor geometricalInnerColor() const;
+
+        /**
+         * Sets the point @p width of the geometrical annotation.
+         */
+        void setGeometricalPointWidth( int width );
+
+        /**
+         * Returns the point width of the geometrical annotation.
+         */
+        int geometricalPointWidth() const;
+
+        /**
+         * Returns the sub type of the geometrical annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the geometrical annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the geometrical annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        GeomType m_geomType;
+        QColor m_geomInnerColor;
+        int m_geomWidthPt;
 };
 
-struct OKULAR_EXPORT HighlightAnnotation : public Annotation
+class OKULAR_EXPORT HighlightAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( HighlightAnnotation, AHighlight )
+    public:
+        /**
+         * Describes the highlighting style of the annotation.
+         */
+        enum HighlightType
+        {
+            Highlight,  ///< Highlights the text
+            Squiggly,   ///< Squiggles the text
+            Underline,  ///< Underlines the text
+            StrikeOut   ///< Strikes out the text
+        };
 
-    // local enums
-    enum HighlightType { Highlight, Squiggly, Underline, StrikeOut };
+        /**
+         * Creates a new highlight annotation.
+         */
+        HighlightAnnotation();
 
-    // data fields
-    HighlightType   highlightType;          // Highlight
-    struct Quad
-    {
-        NormalizedPoint points[4];          // 8 valid coords
-        NormalizedPoint transformedPoints[4];
-        bool            capStart;           // false (vtx 1-4) [K]
-        bool            capEnd;             // false (vtx 2-3) [K]
-        double          feather;            // 0.1 (in range 0..1) [K]
-    };
-    QList< Quad >  highlightQuads;     // not empty
+        /**
+         * Creates a new highlight annotation from the xml @p description
+         */
+        HighlightAnnotation( const QDomNode &description );
 
-    virtual void transform( const QMatrix &matrix );
+        /**
+         * Destroys the highlight annotation.
+         */
+        ~HighlightAnnotation();
+
+        /**
+         * Sets the @p type of the highlight annotation.
+         * @see HighlightType
+         */
+        void setHighlightType( HighlightType type );
+
+        /**
+         * Returns the type of the highlight annotation.
+         */
+        HighlightType highlightType() const;
+
+        /**
+         * The Quad class contains 8 coordinates and style definitions
+         * which describe a line part of the whole highlight annotation.
+         */
+        class Quad
+        {
+            public:
+                /**
+                 * Creates a new quad.
+                 */
+                Quad();
+
+                /**
+                 * Sets the normalized @p point at @p index.
+                 *
+                 * @p index must be between 0 and 3.
+                 */
+                void setPoint( const NormalizedPoint &point, int index );
+
+                /**
+                 * Returns the normalized point at @p index.
+                 *
+                 * @p index must be between 0 and 3.
+                 */
+                NormalizedPoint point( int index ) const;
+
+                /**
+                 * Returns the transformed (e.g. rotated) normalized point at @p index.
+                 *
+                 * @p index must be between 0 and 3.
+                 */
+                NormalizedPoint transformedPoint( int index ) const;
+
+                /**
+                 * Sets whether a cap should be used at the start.
+                 */
+                void setCapStart( bool value );
+
+                /**
+                 * Returns whether a cap should be used at the start.
+                 */
+                bool capStart() const;
+
+                /**
+                 * Sets whether a cap should be used at the end.
+                 */
+                void setCapEnd( bool value );
+
+                /**
+                 * Returns whether a cap should be used at the end.
+                 */
+                bool capEnd() const;
+
+                /**
+                 * Sets the @p width of the drawing feather.
+                 */
+                void setFeather( double width );
+
+                /**
+                 * Returns the width of the drawing feather.
+                 */
+                double feather() const;
+
+                /**
+                 * Transforms the quad coordinates with the transformation defined
+                 * by @p matrix.
+                 */
+                void transform( const QMatrix &matrix );
+
+            private:
+                NormalizedPoint m_points[4];
+                NormalizedPoint m_transformedPoints[4];
+                bool m_capStart;
+                bool m_capEnd;
+                double m_feather;
+        };
+
+        /**
+         * Returns a reference to the quad list of the highlight annotation.
+         */
+        QList< Quad > & highlightQuads();
+
+        /**
+         * Returns the sub type of the highlight annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the highlight annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the highlight annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        HighlightType m_highlightType;
+        QList< Quad > m_highlightQuads;
 };
 
-struct OKULAR_EXPORT StampAnnotation : public Annotation
+class OKULAR_EXPORT StampAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( StampAnnotation, AStamp )
+    public:
+        /**
+         * Creates a new stamp annotation.
+         */
+        StampAnnotation();
 
-    // data fields
-    QString         stampIconName;          // 'Draft'
+        /**
+         * Creates a new stamp annotation from the xml @p description
+         */
+        StampAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the stamp annotation.
+         */
+        ~StampAnnotation();
+
+        /**
+         * Sets the @p name of the icon for the stamp annotation.
+         */
+        void setStampIconName( const QString &name );
+
+        /**
+         * Returns the name of the icon.
+         */
+        QString stampIconName() const;
+
+        /**
+         * Returns the sub type of the stamp annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the stamp annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the stamp annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        QString m_stampIconName;
 };
 
-struct OKULAR_EXPORT InkAnnotation : public Annotation
+class OKULAR_EXPORT InkAnnotation : public Annotation
 {
-    // common stuff for Annotation derived classes
-    AN_COMMONDECL( InkAnnotation, AInk )
+    public:
+        /**
+         * Creates a new ink annotation.
+         */
+        InkAnnotation();
 
-    // data fields
-    QList< QLinkedList<NormalizedPoint> > inkPaths;
-    QList< QLinkedList<NormalizedPoint> > transformedInkPaths;
+        /**
+         * Creates a new ink annotation from the xml @p description
+         */
+        InkAnnotation( const QDomNode &description );
 
-    virtual void transform( const QMatrix &matrix );
+        /**
+         * Destroys the ink annotation.
+         */
+        ~InkAnnotation();
+
+        /**
+         * Sets the @p paths of points for the ink annotation.
+         */
+        void setInkPaths( const QList< QLinkedList<NormalizedPoint> > &paths );
+
+        /**
+         * Returns the paths of points of the ink annotation.
+         */
+        QList< QLinkedList<NormalizedPoint> > inkPaths() const;
+
+        /**
+         * Returns the paths of transformed (e.g. rotated) points of
+         * the ink annotation.
+         */
+        QList< QLinkedList<NormalizedPoint> > transformedInkPaths() const;
+
+        /**
+         * Returns the sub type of the ink annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the ink annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+        /**
+         * Transforms the ink annotation coordinates with the transformation defined
+         * by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
+
+    private:
+        QList< QLinkedList<NormalizedPoint> > m_inkPaths;
+        QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
 };
 
 }

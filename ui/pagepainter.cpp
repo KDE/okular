@@ -165,7 +165,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 if ( ann->subType() == Okular::Annotation::AText )
                 {
                     Okular::TextAnnotation * ta = static_cast< Okular::TextAnnotation * >( ann );
-                    if ( ta->textType == Okular::TextAnnotation::Linked )
+                    if ( ta->textType() == Okular::TextAnnotation::Linked )
                     {
                         Okular::NormalizedRect iconrect( ann->transformedBoundingRectangle().left,
                                                          ann->transformedBoundingRectangle().top,
@@ -329,8 +329,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                     NormalizedPath path;
                     // normalize page point to image
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = la->transformedLinePoints.begin();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = la->transformedLinePoints.end();
+                    const QLinkedList<Okular::NormalizedPoint> points = la->transformedLinePoints();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = points.begin();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = points.end();
                     for ( ; it != itEnd; ++it )
                     {
                         Okular::NormalizedPoint point;
@@ -340,41 +341,41 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     }
 
                     // draw the line as normalized path into image
-                    drawShapeOnImage( backImage, path, la->lineClosed,
+                    drawShapeOnImage( backImage, path, la->lineClosed(),
                                       QPen( a->style().color(), a->style().width() ),
                                       QBrush(), pageScale ,Multiply);
 
-                    if ( path.count() == 2 && fabs( la->lineLeadingFwdPt ) > 0.1 )
+                    if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
                     {
-                        Okular::NormalizedPoint delta( la->transformedLinePoints.last().x - la->transformedLinePoints.first().x, la->transformedLinePoints.first().y - la->transformedLinePoints.last().y );
+                        Okular::NormalizedPoint delta( la->transformedLinePoints().last().x - la->transformedLinePoints().first().x, la->transformedLinePoints().first().y - la->transformedLinePoints().last().y );
                         double angle = atan2( delta.y, delta.x );
                         if ( delta.y < 0 )
                             angle += 2 * M_PI;
 
-                        int sign = la->lineLeadingFwdPt > 0.0 ? 1 : -1;
-                        double LLx = fabs( la->lineLeadingFwdPt ) * cos( angle + sign * M_PI_2 + 2 * M_PI ) / page->width();
-                        double LLy = fabs( la->lineLeadingFwdPt ) * sin( angle + sign * M_PI_2 + 2 * M_PI ) / page->height();
+                        int sign = la->lineLeadingForwardPoint() > 0.0 ? 1 : -1;
+                        double LLx = fabs( la->lineLeadingForwardPoint() ) * cos( angle + sign * M_PI_2 + 2 * M_PI ) / page->width();
+                        double LLy = fabs( la->lineLeadingForwardPoint() ) * sin( angle + sign * M_PI_2 + 2 * M_PI ) / page->height();
 
                         NormalizedPath path2;
                         NormalizedPath path3;
 
                         Okular::NormalizedPoint point;
-                        point.x = ( la->transformedLinePoints.first().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->transformedLinePoints.first().y - LLy - yOffset ) * yScale;
+                        point.x = ( la->transformedLinePoints().first().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->transformedLinePoints().first().y - LLy - yOffset ) * yScale;
                         path2.append( point );
-                        point.x = ( la->transformedLinePoints.last().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->transformedLinePoints.last().y - LLy - yOffset ) * yScale;
+                        point.x = ( la->transformedLinePoints().last().x + LLx - xOffset ) * xScale;
+                        point.y = ( la->transformedLinePoints().last().y - LLy - yOffset ) * yScale;
                         path3.append( point );
                         // do we have the extension on the "back"?
-                        if ( fabs( la->lineLeadingBackPt ) > 0.1 )
+                        if ( fabs( la->lineLeadingBackwardPoint() ) > 0.1 )
                         {
-                            double LLEx = la->lineLeadingBackPt * cos( angle - sign * M_PI_2 + 2 * M_PI ) / page->width();
-                            double LLEy = la->lineLeadingBackPt * sin( angle - sign * M_PI_2 + 2 * M_PI ) / page->height();
-                            point.x = ( la->transformedLinePoints.first().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->transformedLinePoints.first().y - LLEy - yOffset ) * yScale;
+                            double LLEx = la->lineLeadingBackwardPoint() * cos( angle - sign * M_PI_2 + 2 * M_PI ) / page->width();
+                            double LLEy = la->lineLeadingBackwardPoint() * sin( angle - sign * M_PI_2 + 2 * M_PI ) / page->height();
+                            point.x = ( la->transformedLinePoints().first().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->transformedLinePoints().first().y - LLEy - yOffset ) * yScale;
                             path2.append( point );
-                            point.x = ( la->transformedLinePoints.last().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->transformedLinePoints.last().y - LLEy - yOffset ) * yScale;
+                            point.x = ( la->transformedLinePoints().last().x + LLEx - xOffset ) * xScale;
+                            point.y = ( la->transformedLinePoints().last().y - LLEy - yOffset ) * yScale;
                             path3.append( point );
                         }
                         else
@@ -397,20 +398,20 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 {
                     // get the annotation
                     Okular::HighlightAnnotation * ha = (Okular::HighlightAnnotation *) a;
-                    Okular::HighlightAnnotation::HighlightType type = ha->highlightType;
+                    Okular::HighlightAnnotation::HighlightType type = ha->highlightType();
 
                     // draw each quad of the annotation
-                    int quads = ha->highlightQuads.size();
+                    int quads = ha->highlightQuads().size();
                     for ( int q = 0; q < quads; q++ )
                     {
                         NormalizedPath path;
-                        const Okular::HighlightAnnotation::Quad & quad = ha->highlightQuads[ q ];
+                        const Okular::HighlightAnnotation::Quad & quad = ha->highlightQuads()[ q ];
                         // normalize page point to image
                         for ( int i = 0; i < 4; i++ )
                         {
                             Okular::NormalizedPoint point;
-                            point.x = (quad.transformedPoints[ i ].x - xOffset) * xScale;
-                            point.y = (quad.transformedPoints[ i ].y - yOffset) * yScale;
+                            point.x = (quad.transformedPoint( i ).x - xOffset) * xScale;
+                            point.y = (quad.transformedPoint( i ).y - yOffset) * yScale;
                             path.append( point );
                         }
                         // draw the normalized path into image
@@ -458,11 +459,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     Okular::InkAnnotation * ia = (Okular::InkAnnotation *) a;
 
                     // draw each ink path
-                    int paths = ia->transformedInkPaths.size();
+                    const QList< QLinkedList<Okular::NormalizedPoint> > transformedInkPaths = ia->transformedInkPaths();
+
+                    int paths = transformedInkPaths.size();
                     for ( int p = 0; p < paths; p++ )
                     {
                         NormalizedPath path;
-                        const QLinkedList<Okular::NormalizedPoint> & inkPath = ia->transformedInkPaths[ p ];
+                        const QLinkedList<Okular::NormalizedPoint> & inkPath = transformedInkPaths[ p ];
 
                         // normalize page point to image
                         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
@@ -518,7 +521,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             if ( type == Okular::Annotation::AText )
             {
                 Okular::TextAnnotation * text = (Okular::TextAnnotation *)a;
-                if ( text->textType == Okular::TextAnnotation::InPlace )
+                if ( text->textType() == Okular::TextAnnotation::InPlace )
                 {
                     QRect bigRect = a->transformedBoundingRectangle().geometry( (int)page->width(), (int)page->height() );
 
@@ -531,11 +534,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     image.fill( qRgba( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) );
                     QPainter painter( &image );
                     painter.setPen( Qt::black );
-                    painter.setFont( text->textFont );
-                    Qt::AlignmentFlag halign = ( text->inplaceAlign == 1 ? Qt::AlignHCenter : ( text->inplaceAlign == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
+                    painter.setFont( text->textFont() );
+                    Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
                     painter.drawText( 2, 2, image.width() - 2, image.height() - 2,
                                       Qt::AlignTop | halign | Qt::TextWordWrap,
-                                      text->inplaceText );
+                                      text->inplaceText() );
                     if ( !bigger )
                         painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
                     painter.end();
@@ -551,13 +554,13 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 //                    mixedPainter->drawImage( annotBoundary.topLeft(), image.scaled( annotBoundary.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );
                 }
-                else if ( text->textType == Okular::TextAnnotation::Linked )
+                else if ( text->textType() == Okular::TextAnnotation::Linked )
                 {
                 // get pixmap, colorize and alpha-blend it
                     QString path;
-                    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
+                    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
                     if ( path.isEmpty() )
-                        pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon.toLower(), K3Icon::NoGroup, 32 );
+                        pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::NoGroup, 32 );
                     QImage scaledImage;
                     QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
                     QRect annotRect2 = annotBoundary2.intersect( limits );
@@ -585,9 +588,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                 // get pixmap and alpha blend it if needed
                 QString path;
-                QPixmap pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
+                QPixmap pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
                 if ( path.isEmpty() )
-                    pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName.toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                    pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect, QImage::Format_ARGB32 );
@@ -605,21 +608,22 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 QImage shape( annotBoundary.size(), QImage::Format_ARGB32 );
                 shape.fill( qRgba( 0, 0, 0, 0 ) );
                 // width is already divided by two
-                double width = geom->geomWidthPt * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                double width = geom->geometricalPointWidth() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                 QPainter p( &shape );
                 p.setPen( QPen( QBrush( QColor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
                 QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                 r.adjust( width, width, -width, -width );
-                if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
+                if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
                     p.drawRect( r );
                 else
                     p.drawEllipse( r );
-                if ( geom->geomInnerColor.isValid() )
+                if ( geom->geometricalInnerColor().isValid() )
                 {
                     p.setPen( Qt::NoPen );
-                    p.setBrush( QColor( geom->geomInnerColor.red(), geom->geomInnerColor.green(), geom->geomInnerColor.blue(), opacity ) );
+                    const QColor color = geom->geometricalInnerColor();
+                    p.setBrush( QColor( color.red(), color.green(), color.blue(), opacity ) );
                     r.adjust( width, width, -width, -width );
-                    if ( geom->geomType == Okular::GeomAnnotation::InscribedSquare )
+                    if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
                         p.drawRect( r );
                     else
                         p.drawEllipse( r );

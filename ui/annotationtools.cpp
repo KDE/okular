@@ -134,7 +134,9 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
         if ( m_annotElement.hasAttribute( "width" ) )
             ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
         // fill points
-        ia->inkPaths.append( points );
+        QList< QLinkedList<Okular::NormalizedPoint> > list = ia->inkPaths();
+        list.append( points );
+        ia->setInkPaths( list );
         // set boundaries
         ia->setBoundingRectangle( totalRect );
     }

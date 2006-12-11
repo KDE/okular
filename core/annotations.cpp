@@ -90,7 +90,7 @@ QString AnnotationUtils::captionForAnnotation( Annotation * ann )
     switch( ann->subType() )
     {
         case Okular::Annotation::AText:
-            if( ( (Okular::TextAnnotation*)ann )->textType == Okular::TextAnnotation::Linked )
+            if( ( (Okular::TextAnnotation*)ann )->textType() == Okular::TextAnnotation::Linked )
                 ret = i18n( "Note" );
             else
                 ret = i18n( "FreeText" );
@@ -119,7 +119,7 @@ QString AnnotationUtils::captionForAnnotation( Annotation * ann )
 QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
     double scaledWidth, double scaledHeight )
 {
-    if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType == TextAnnotation::Linked ) )
+    if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType() == TextAnnotation::Linked ) )
     {
         return QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
                       (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
@@ -698,13 +698,16 @@ void Annotation::transform( const QMatrix &matrix )
   The default textIcon for text annotation is Note as the PDF Reference says
 */
 TextAnnotation::TextAnnotation()
-    : Annotation(), textType( Linked ), textIcon( "Note" ),
-    inplaceAlign( 0 ), inplaceIntent( Unknown )
-{}
+    : Annotation(),
+      m_textType( Linked ), m_textIcon( "Note" ),
+      m_inplaceAlign( 0 ), m_inplaceIntent( Unknown )
+{
+}
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( node ), textType( Linked ), textIcon( "Note" ),
-    inplaceAlign( 0 ), inplaceIntent( Unknown )
+    : Annotation( node ),
+      m_textType( Linked ), m_textIcon( "Note" ),
+      m_inplaceAlign( 0 ), m_inplaceIntent( Unknown )
 {
     // loop through the whole children looking for a 'text' element
     QDomNode subNode = node.firstChild();
@@ -717,15 +720,15 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            textType = (TextAnnotation::TextType)e.attribute( "type" ).toInt();
+            m_textType = (TextAnnotation::TextType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "icon" ) )
-            textIcon = e.attribute( "icon" );
+            m_textIcon = e.attribute( "icon" );
         if ( e.hasAttribute( "font" ) )
-            textFont.fromString( e.attribute( "font" ) );
+            m_textFont.fromString( e.attribute( "font" ) );
         if ( e.hasAttribute( "align" ) )
-            inplaceAlign = e.attribute( "align" ).toInt();
+            m_inplaceAlign = e.attribute( "align" ).toInt();
         if ( e.hasAttribute( "intent" ) )
-            inplaceIntent = (TextAnnotation::InplaceIntent)e.attribute( "intent" ).toInt();
+            m_inplaceIntent = (TextAnnotation::InplaceIntent)e.attribute( "intent" ).toInt();
 
         // parse the subnodes
         QDomNode eSubNode = e.firstChild();
@@ -736,16 +739,16 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 
             if ( ee.tagName() == "escapedText" )
             {
-                inplaceText = ee.firstChild().toCDATASection().data();
+                m_inplaceText = ee.firstChild().toCDATASection().data();
             }
             else if ( ee.tagName() == "callout" )
             {
-                inplaceCallout[0].x = ee.attribute( "ax" ).toDouble();
-                inplaceCallout[0].y = ee.attribute( "ay" ).toDouble();
-                inplaceCallout[1].x = ee.attribute( "bx" ).toDouble();
-                inplaceCallout[1].y = ee.attribute( "by" ).toDouble();
-                inplaceCallout[2].x = ee.attribute( "cx" ).toDouble();
-                inplaceCallout[2].y = ee.attribute( "cy" ).toDouble();
+                m_inplaceCallout[0].x = ee.attribute( "ax" ).toDouble();
+                m_inplaceCallout[0].y = ee.attribute( "ay" ).toDouble();
+                m_inplaceCallout[1].x = ee.attribute( "bx" ).toDouble();
+                m_inplaceCallout[1].y = ee.attribute( "by" ).toDouble();
+                m_inplaceCallout[2].x = ee.attribute( "cx" ).toDouble();
+                m_inplaceCallout[2].y = ee.attribute( "cy" ).toDouble();
             }
         }
 
@@ -754,7 +757,100 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
     }
 
     for ( int i = 0; i < 3; ++i )
-        transformedInplaceCallout[i] = inplaceCallout[i];
+        m_transformedInplaceCallout[i] = m_inplaceCallout[i];
+}
+
+TextAnnotation::~TextAnnotation()
+{
+}
+
+void TextAnnotation::setTextType( TextType textType )
+{
+    m_textType = textType;
+}
+
+TextAnnotation::TextType TextAnnotation::textType() const
+{
+    return m_textType;
+}
+
+void TextAnnotation::setTextIcon( const QString &icon )
+{
+    m_textIcon = icon;
+}
+
+QString TextAnnotation::textIcon() const
+{
+    return m_textIcon;
+}
+
+void TextAnnotation::setTextFont( const QFont &font )
+{
+    m_textFont = font;
+}
+
+QFont TextAnnotation::textFont() const
+{
+    return m_textFont;
+}
+
+void TextAnnotation::setInplaceAlignment( int alignment )
+{
+    m_inplaceAlign = alignment;
+}
+
+int TextAnnotation::inplaceAlignment() const
+{
+    return m_inplaceAlign;
+}
+
+void TextAnnotation::setInplaceText( const QString &text )
+{
+    m_inplaceText = text;
+}
+
+QString TextAnnotation::inplaceText() const
+{
+    return m_inplaceText;
+}
+
+void TextAnnotation::setInplaceCallout( const NormalizedPoint &point, int index )
+{
+    if ( index < 0 || index > 2 )
+        return;
+
+    m_inplaceCallout[ index ] = point;
+}
+
+NormalizedPoint TextAnnotation::inplaceCallout( int index ) const
+{
+    if ( index < 0 || index > 2 )
+        return NormalizedPoint();
+
+    return m_inplaceCallout[ index ];
+}
+
+NormalizedPoint TextAnnotation::transformedInplaceCallout( int index ) const
+{
+    if ( index < 0 || index > 2 )
+        return NormalizedPoint();
+
+    return m_transformedInplaceCallout[ index ];
+}
+
+void TextAnnotation::setInplaceIntent( InplaceIntent intent )
+{
+    m_inplaceIntent = intent;
+}
+
+TextAnnotation::InplaceIntent TextAnnotation::inplaceIntent() const
+{
+    return m_inplaceIntent;
+}
+
+Annotation::SubType TextAnnotation::subType() const
+{
+    return AText;
 }
 
 void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -767,37 +863,37 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( textElement );
 
     // store the optional attributes
-    if ( textType != Linked )
-        textElement.setAttribute( "type", (int)textType );
-    if ( textIcon != "Comment" )
-        textElement.setAttribute( "icon", textIcon );
-    if ( textFont != QApplication::font() )
-        textElement.setAttribute( "font", textFont.toString() );
-    if ( inplaceAlign )
-        textElement.setAttribute( "align", inplaceAlign );
-    if ( inplaceIntent != Unknown )
-        textElement.setAttribute( "intent", (int)inplaceIntent );
+    if ( m_textType != Linked )
+        textElement.setAttribute( "type", (int)m_textType );
+    if ( m_textIcon != "Comment" )
+        textElement.setAttribute( "icon", m_textIcon );
+    if ( m_textFont != QApplication::font() )
+        textElement.setAttribute( "font", m_textFont.toString() );
+    if ( m_inplaceAlign )
+        textElement.setAttribute( "align", m_inplaceAlign );
+    if ( m_inplaceIntent != Unknown )
+        textElement.setAttribute( "intent", (int)m_inplaceIntent );
 
     // Sub-Node-1 - escapedText
-    if ( !inplaceText.isEmpty() )
+    if ( !m_inplaceText.isEmpty() )
     {
         QDomElement escapedText = document.createElement( "escapedText" );
         textElement.appendChild( escapedText );
-        QDomCDATASection textCData = document.createCDATASection( inplaceText );
+        QDomCDATASection textCData = document.createCDATASection( m_inplaceText );
         escapedText.appendChild( textCData );
     }
 
     // Sub-Node-2 - callout
-    if ( inplaceCallout[0].x != 0.0 )
+    if ( m_inplaceCallout[0].x != 0.0 )
     {
         QDomElement calloutElement = document.createElement( "callout" );
         textElement.appendChild( calloutElement );
-        calloutElement.setAttribute( "ax", inplaceCallout[0].x );
-        calloutElement.setAttribute( "ay", inplaceCallout[0].y );
-        calloutElement.setAttribute( "bx", inplaceCallout[1].x );
-        calloutElement.setAttribute( "by", inplaceCallout[1].y );
-        calloutElement.setAttribute( "cx", inplaceCallout[2].x );
-        calloutElement.setAttribute( "cy", inplaceCallout[2].y );
+        calloutElement.setAttribute( "ax", m_inplaceCallout[0].x );
+        calloutElement.setAttribute( "ay", m_inplaceCallout[0].y );
+        calloutElement.setAttribute( "bx", m_inplaceCallout[1].x );
+        calloutElement.setAttribute( "by", m_inplaceCallout[1].y );
+        calloutElement.setAttribute( "cx", m_inplaceCallout[2].x );
+        calloutElement.setAttribute( "cy", m_inplaceCallout[2].y );
     }
 }
 
@@ -806,23 +902,26 @@ void TextAnnotation::transform( const QMatrix &matrix )
     Annotation::transform( matrix );
 
     for ( int i = 0; i < 3; ++i ) {
-        transformedInplaceCallout[i] = inplaceCallout[i];
-        transformedInplaceCallout[i].transform( matrix );
+        m_transformedInplaceCallout[i] = m_inplaceCallout[i];
+        m_transformedInplaceCallout[i].transform( matrix );
     }
 }
 
 /** LineAnnotation [Annotation] */
 
 LineAnnotation::LineAnnotation()
-    : Annotation(), lineStartStyle( None ), lineEndStyle( None ),
-    lineClosed( false ), lineLeadingFwdPt( 0 ), lineLeadingBackPt( 0 ),
-    lineShowCaption( false ), lineIntent( Unknown )
-{}
+    : Annotation(),
+      m_lineStartStyle( None ), m_lineEndStyle( None ),
+      m_lineClosed( false ), m_lineLeadingFwdPt( 0 ), m_lineLeadingBackPt( 0 ),
+      m_lineShowCaption( false ), m_lineIntent( Unknown )
+{
+}
 
 LineAnnotation::LineAnnotation( const QDomNode & node )
-    : Annotation( node ), lineStartStyle( None ), lineEndStyle( None ),
-    lineClosed( false ), lineLeadingFwdPt( 0 ), lineLeadingBackPt( 0 ),
-    lineShowCaption( false ), lineIntent( Unknown )
+    : Annotation( node ),
+      m_lineStartStyle( None ), m_lineEndStyle( None ),
+      m_lineClosed( false ), m_lineLeadingFwdPt( 0 ), m_lineLeadingBackPt( 0 ),
+      m_lineShowCaption( false ), m_lineIntent( Unknown )
 {
     // loop through the whole children looking for a 'line' element
     QDomNode subNode = node.firstChild();
@@ -835,21 +934,21 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "startStyle" ) )
-            lineStartStyle = (LineAnnotation::TermStyle)e.attribute( "startStyle" ).toInt();
+            m_lineStartStyle = (LineAnnotation::TermStyle)e.attribute( "startStyle" ).toInt();
         if ( e.hasAttribute( "endStyle" ) )
-            lineEndStyle = (LineAnnotation::TermStyle)e.attribute( "endStyle" ).toInt();
+            m_lineEndStyle = (LineAnnotation::TermStyle)e.attribute( "endStyle" ).toInt();
         if ( e.hasAttribute( "closed" ) )
-            lineClosed = e.attribute( "closed" ).toInt();
+            m_lineClosed = e.attribute( "closed" ).toInt();
         if ( e.hasAttribute( "innerColor" ) )
-            lineInnerColor = QColor( e.attribute( "innerColor" ) );
+            m_lineInnerColor = QColor( e.attribute( "innerColor" ) );
         if ( e.hasAttribute( "leadFwd" ) )
-            lineLeadingFwdPt = e.attribute( "leadFwd" ).toDouble();
+            m_lineLeadingFwdPt = e.attribute( "leadFwd" ).toDouble();
         if ( e.hasAttribute( "leadBack" ) )
-            lineLeadingBackPt = e.attribute( "leadBack" ).toDouble();
+            m_lineLeadingBackPt = e.attribute( "leadBack" ).toDouble();
         if ( e.hasAttribute( "showCaption" ) )
-            lineShowCaption = e.attribute( "showCaption" ).toInt();
+            m_lineShowCaption = e.attribute( "showCaption" ).toInt();
         if ( e.hasAttribute( "intent" ) )
-            lineIntent = (LineAnnotation::LineIntent)e.attribute( "intent" ).toInt();
+            m_lineIntent = (LineAnnotation::LineIntent)e.attribute( "intent" ).toInt();
 
         // parse all 'point' subnodes
         QDomNode pointNode = e.firstChild();
@@ -864,14 +963,118 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
             NormalizedPoint p;
             p.x = pe.attribute( "x", "0.0" ).toDouble();
             p.y = pe.attribute( "y", "0.0" ).toDouble();
-            linePoints.append( p );
+            m_linePoints.append( p );
         }
 
         // loading complete
         break;
     }
 
-    transformedLinePoints = linePoints;
+    m_transformedLinePoints = m_linePoints;
+}
+
+LineAnnotation::~LineAnnotation()
+{
+}
+
+void LineAnnotation::setLinePoints( const QLinkedList<NormalizedPoint> &points )
+{
+    m_linePoints = points;
+}
+
+QLinkedList<NormalizedPoint> LineAnnotation::linePoints() const
+{
+    return m_linePoints;
+}
+
+QLinkedList<NormalizedPoint> LineAnnotation::transformedLinePoints() const
+{
+    return m_transformedLinePoints;
+}
+
+void LineAnnotation::setLineStartStyle( TermStyle style )
+{
+    m_lineStartStyle = style;
+}
+
+LineAnnotation::TermStyle LineAnnotation::lineStartStyle() const
+{
+    return m_lineStartStyle;
+}
+
+void LineAnnotation::setLineEndStyle( TermStyle style )
+{
+    m_lineEndStyle = style;
+}
+
+LineAnnotation::TermStyle LineAnnotation::lineEndStyle() const
+{
+    return m_lineEndStyle;
+}
+
+void LineAnnotation::setLineClosed( bool closed )
+{
+    m_lineClosed = closed;
+}
+
+bool LineAnnotation::lineClosed() const
+{
+    return m_lineClosed;
+}
+
+void LineAnnotation::setLineInnerColor( const QColor &color )
+{
+    m_lineInnerColor = color;
+}
+
+QColor LineAnnotation::lineInnerColor() const
+{
+    return m_lineInnerColor;
+}
+
+void LineAnnotation::setLineLeadingForwardPoint( double point )
+{
+    m_lineLeadingFwdPt = point;
+}
+
+double LineAnnotation::lineLeadingForwardPoint() const
+{
+    return m_lineLeadingFwdPt;
+}
+
+void LineAnnotation::setLineLeadingBackwardPoint( double point )
+{
+    m_lineLeadingBackPt = point;
+}
+
+double LineAnnotation::lineLeadingBackwardPoint() const
+{
+    return m_lineLeadingBackPt;
+}
+
+void LineAnnotation::setShowCaption( bool show )
+{
+    m_lineShowCaption = show;
+}
+
+bool LineAnnotation::showCaption() const
+{
+    return m_lineShowCaption;
+}
+
+void LineAnnotation::setLineIntent( LineIntent intent )
+{
+    m_lineIntent = intent;
+}
+
+LineAnnotation::LineIntent LineAnnotation::lineIntent() const
+{
+    return m_lineIntent;
+}
+
+Annotation::SubType LineAnnotation::subType() const
+{
+    return ALine;
 }
 
 void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -884,28 +1087,28 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( lineElement );
 
     // store the attributes
-    if ( lineStartStyle != None )
-        lineElement.setAttribute( "startStyle", (int)lineStartStyle );
-    if ( lineEndStyle != None )
-        lineElement.setAttribute( "endStyle", (int)lineEndStyle );
-    if ( lineClosed )
-        lineElement.setAttribute( "closed", lineClosed );
-    if ( lineInnerColor.isValid() )
-        lineElement.setAttribute( "innerColor", lineInnerColor.name() );
-    if ( lineLeadingFwdPt != 0.0 )
-        lineElement.setAttribute( "leadFwd", lineLeadingFwdPt );
-    if ( lineLeadingBackPt != 0.0 )
-        lineElement.setAttribute( "leadBack", lineLeadingBackPt );
-    if ( lineShowCaption )
-        lineElement.setAttribute( "showCaption", lineShowCaption );
-    if ( lineIntent != Unknown )
-        lineElement.setAttribute( "intent", lineIntent );
+    if ( m_lineStartStyle != None )
+        lineElement.setAttribute( "startStyle", (int)m_lineStartStyle );
+    if ( m_lineEndStyle != None )
+        lineElement.setAttribute( "endStyle", (int)m_lineEndStyle );
+    if ( m_lineClosed )
+        lineElement.setAttribute( "closed", m_lineClosed );
+    if ( m_lineInnerColor.isValid() )
+        lineElement.setAttribute( "innerColor", m_lineInnerColor.name() );
+    if ( m_lineLeadingFwdPt != 0.0 )
+        lineElement.setAttribute( "leadFwd", m_lineLeadingFwdPt );
+    if ( m_lineLeadingBackPt != 0.0 )
+        lineElement.setAttribute( "leadBack", m_lineLeadingBackPt );
+    if ( m_lineShowCaption )
+        lineElement.setAttribute( "showCaption", m_lineShowCaption );
+    if ( m_lineIntent != Unknown )
+        lineElement.setAttribute( "intent", m_lineIntent );
 
     // append the list of points
-    int points = linePoints.count();
+    int points = m_linePoints.count();
     if ( points > 1 )
     {
-        QLinkedList<NormalizedPoint>::const_iterator it = linePoints.begin(), end = linePoints.end();
+        QLinkedList<NormalizedPoint>::const_iterator it = m_linePoints.begin(), end = m_linePoints.end();
         while ( it != end )
         {
             const NormalizedPoint & p = *it;
@@ -913,7 +1116,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
             lineElement.appendChild( pElement );
             pElement.setAttribute( "x", p.x );
             pElement.setAttribute( "y", p.y );
-			it++; //to avoid loop
+            it++; //to avoid loop
         }
     }
 }
@@ -922,9 +1125,9 @@ void LineAnnotation::transform( const QMatrix &matrix )
 {
     Annotation::transform( matrix );
 
-    transformedLinePoints = linePoints;
+    m_transformedLinePoints = m_linePoints;
 
-    QMutableLinkedListIterator<NormalizedPoint> it( transformedLinePoints );
+    QMutableLinkedListIterator<NormalizedPoint> it( m_transformedLinePoints );
     while ( it.hasNext() )
         it.next().transform( matrix );
 }
@@ -932,11 +1135,13 @@ void LineAnnotation::transform( const QMatrix &matrix )
 /** GeomAnnotation [Annotation] */
 
 GeomAnnotation::GeomAnnotation()
-    : Annotation(), geomType( InscribedSquare ), geomWidthPt( 18 )
+    : Annotation(),
+      m_geomType( InscribedSquare ), m_geomWidthPt( 18 )
 {}
 
 GeomAnnotation::GeomAnnotation( const QDomNode & node )
-    : Annotation( node ), geomType( InscribedSquare ), geomWidthPt( 18 )
+    : Annotation( node ),
+      m_geomType( InscribedSquare ), m_geomWidthPt( 18 )
 {
     // loop through the whole children looking for a 'geom' element
     QDomNode subNode = node.firstChild();
@@ -949,15 +1154,54 @@ GeomAnnotation::GeomAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            geomType = (GeomAnnotation::GeomType)e.attribute( "type" ).toInt();
+            m_geomType = (GeomAnnotation::GeomType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "color" ) )
-            geomInnerColor = QColor( e.attribute( "color" ) );
+            m_geomInnerColor = QColor( e.attribute( "color" ) );
         if ( e.hasAttribute( "width" ) )
-            geomWidthPt = e.attribute( "width" ).toInt();
+            m_geomWidthPt = e.attribute( "width" ).toInt();
 
         // loading complete
         break;
     }
+}
+
+GeomAnnotation::~GeomAnnotation()
+{
+}
+
+void GeomAnnotation::setGeometricalType( GeomType type )
+{
+    m_geomType = type;
+}
+
+GeomAnnotation::GeomType GeomAnnotation::geometricalType() const
+{
+    return m_geomType;
+}
+
+void GeomAnnotation::setGeometricalInnerColor( const QColor &color )
+{
+    m_geomInnerColor = color;
+}
+
+QColor GeomAnnotation::geometricalInnerColor() const
+{
+    return m_geomInnerColor;
+}
+
+void GeomAnnotation::setGeometricalPointWidth( int width )
+{
+    m_geomWidthPt = width;
+}
+
+int GeomAnnotation::geometricalPointWidth() const
+{
+    return m_geomWidthPt;
+}
+
+Annotation::SubType GeomAnnotation::subType() const
+{
+    return AGeom;
 }
 
 void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -970,23 +1214,96 @@ void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( geomElement );
 
     // append the optional attributes
-    if ( geomType != InscribedSquare )
-        geomElement.setAttribute( "type", (int)geomType );
-    if ( geomInnerColor.isValid() )
-        geomElement.setAttribute( "color", geomInnerColor.name() );
-    if ( geomWidthPt != 18 )
-        geomElement.setAttribute( "width", geomWidthPt );
+    if ( m_geomType != InscribedSquare )
+        geomElement.setAttribute( "type", (int)m_geomType );
+    if ( m_geomInnerColor.isValid() )
+        geomElement.setAttribute( "color", m_geomInnerColor.name() );
+    if ( m_geomWidthPt != 18 )
+        geomElement.setAttribute( "width", m_geomWidthPt );
 }
 
+void GeomAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+}
 
 /** HighlightAnnotation [Annotation] */
 
+HighlightAnnotation::Quad::Quad()
+{
+}
+
+void HighlightAnnotation::Quad::setPoint( const NormalizedPoint &point, int index )
+{
+    if ( index < 0 || index > 3 )
+        return;
+
+    m_points[ index ] = point;
+}
+
+NormalizedPoint HighlightAnnotation::Quad::point( int index ) const
+{
+    if ( index < 0 || index > 3 )
+        return NormalizedPoint();
+
+    return m_points[ index ];
+}
+
+NormalizedPoint HighlightAnnotation::Quad::transformedPoint( int index ) const
+{
+    if ( index < 0 || index > 3 )
+        return NormalizedPoint();
+
+    return m_transformedPoints[ index ];
+}
+
+void HighlightAnnotation::Quad::setCapStart( bool value )
+{
+    m_capStart = value;
+}
+
+bool HighlightAnnotation::Quad::capStart() const
+{
+    return m_capStart;
+}
+
+void HighlightAnnotation::Quad::setCapEnd( bool value )
+{
+    m_capEnd = value;
+}
+
+bool HighlightAnnotation::Quad::capEnd() const
+{
+    return m_capEnd;
+}
+
+void HighlightAnnotation::Quad::setFeather( double width )
+{
+    m_feather = width;
+}
+
+double HighlightAnnotation::Quad::feather() const
+{
+    return m_feather;
+}
+
+void HighlightAnnotation::Quad::transform( const QMatrix &matrix )
+{
+    for ( int i = 0; i < 4; ++i ) {
+        m_transformedPoints[ i ] = m_points[ i ];
+        m_transformedPoints[ i ].transform( matrix );
+    }
+}
+
 HighlightAnnotation::HighlightAnnotation()
-    : Annotation(), highlightType( Highlight )
-{}
+    : Annotation(),
+      m_highlightType( Highlight )
+{
+}
 
 HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
-    : Annotation( node ), highlightType( Highlight )
+    : Annotation( node ),
+      m_highlightType( Highlight )
 {
     // loop through the whole children looking for a 'hl' element
     QDomNode subNode = node.firstChild();
@@ -999,7 +1316,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "type" ) )
-            highlightType = (HighlightAnnotation::HighlightType)e.attribute( "type" ).toInt();
+            m_highlightType = (HighlightAnnotation::HighlightType)e.attribute( "type" ).toInt();
 
         // parse all 'quad' subnodes
         QDomNode quadNode = e.firstChild();
@@ -1010,29 +1327,41 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
                 continue;
 
             Quad q;
-            q.points[0].x = qe.attribute( "ax", "0.0" ).toDouble();
-            q.points[0].y = qe.attribute( "ay", "0.0" ).toDouble();
-            q.points[1].x = qe.attribute( "bx", "0.0" ).toDouble();
-            q.points[1].y = qe.attribute( "by", "0.0" ).toDouble();
-            q.points[2].x = qe.attribute( "cx", "0.0" ).toDouble();
-            q.points[2].y = qe.attribute( "cy", "0.0" ).toDouble();
-            q.points[3].x = qe.attribute( "dx", "0.0" ).toDouble();
-            q.points[3].y = qe.attribute( "dy", "0.0" ).toDouble();
-            q.capStart = qe.hasAttribute( "start" );
-            q.capEnd = qe.hasAttribute( "end" );
-            q.feather = qe.attribute( "feather", "0.1" ).toDouble();
+            q.setPoint( NormalizedPoint( qe.attribute( "ax", "0.0" ).toDouble(), qe.attribute( "ay", "0.0" ).toDouble() ), 0 );
+            q.setPoint( NormalizedPoint( qe.attribute( "bx", "0.0" ).toDouble(), qe.attribute( "by", "0.0" ).toDouble() ), 1 );
+            q.setPoint( NormalizedPoint( qe.attribute( "cx", "0.0" ).toDouble(), qe.attribute( "cy", "0.0" ).toDouble() ), 2 );
+            q.setPoint( NormalizedPoint( qe.attribute( "dx", "0.0" ).toDouble(), qe.attribute( "dy", "0.0" ).toDouble() ), 3 );
+            q.setCapStart( qe.hasAttribute( "start" ) );
+            q.setCapEnd( qe.hasAttribute( "end" ) );
+            q.setFeather( qe.attribute( "feather", "0.1" ).toDouble() );
 
-            q.transformedPoints[0] = q.points[0];
-            q.transformedPoints[1] = q.points[1];
-            q.transformedPoints[2] = q.points[2];
-            q.transformedPoints[3] = q.points[3];
+            q.transform( QMatrix() );
 
-            highlightQuads.append( q );
+            m_highlightQuads.append( q );
         }
 
         // loading complete
         break;
     }
+}
+
+HighlightAnnotation::~HighlightAnnotation()
+{
+}
+
+void HighlightAnnotation::setHighlightType( HighlightType type )
+{
+    m_highlightType = type;
+}
+
+HighlightAnnotation::HighlightType HighlightAnnotation::highlightType() const
+{
+    return m_highlightType;
+}
+
+QList< HighlightAnnotation::Quad > & HighlightAnnotation::highlightQuads()
+{
+    return m_highlightQuads;
 }
 
 void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -1045,56 +1374,58 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
     node.appendChild( hlElement );
 
     // append the optional attributes
-    if ( highlightType != Highlight )
-        hlElement.setAttribute( "type", (int)highlightType );
-    if ( highlightQuads.count() < 1 )
+    if ( m_highlightType != Highlight )
+        hlElement.setAttribute( "type", (int)m_highlightType );
+    if ( m_highlightQuads.count() < 1 )
         return;
     // append highlight quads, all children describe quads
-    QList< Quad >::const_iterator it = highlightQuads.begin(), end = highlightQuads.end();
+    QList< Quad >::const_iterator it = m_highlightQuads.begin(), end = m_highlightQuads.end();
     for ( ; it != end; ++it )
     {
         QDomElement quadElement = document.createElement( "quad" );
         hlElement.appendChild( quadElement );
         const Quad & q = *it;
-        quadElement.setAttribute( "ax", q.points[0].x );
-        quadElement.setAttribute( "ay", q.points[0].y );
-        quadElement.setAttribute( "bx", q.points[1].x );
-        quadElement.setAttribute( "by", q.points[1].y );
-        quadElement.setAttribute( "cx", q.points[2].x );
-        quadElement.setAttribute( "cy", q.points[2].y );
-        quadElement.setAttribute( "dx", q.points[3].x );
-        quadElement.setAttribute( "dy", q.points[3].y );
-        if ( q.capStart )
+        quadElement.setAttribute( "ax", q.point( 0 ).x );
+        quadElement.setAttribute( "ay", q.point( 0 ).y );
+        quadElement.setAttribute( "bx", q.point( 1 ).x );
+        quadElement.setAttribute( "by", q.point( 1 ).y );
+        quadElement.setAttribute( "cx", q.point( 2 ).x );
+        quadElement.setAttribute( "cy", q.point( 2 ).y );
+        quadElement.setAttribute( "dx", q.point( 3 ).x );
+        quadElement.setAttribute( "dy", q.point( 3 ).y );
+        if ( q.capStart() )
             quadElement.setAttribute( "start", 1 );
-        if ( q.capEnd )
+        if ( q.capEnd() )
             quadElement.setAttribute( "end", 1 );
-        quadElement.setAttribute( "feather", q.feather );
+        quadElement.setAttribute( "feather", q.feather() );
     }
+}
+
+Annotation::SubType HighlightAnnotation::subType() const
+{
+    return AHighlight;
 }
 
 void HighlightAnnotation::transform( const QMatrix &matrix )
 {
     Annotation::transform( matrix );
 
-    QMutableListIterator<Quad> it( highlightQuads );
-    while ( it.hasNext() ) {
-        Quad &quad = it.next();
-
-        for ( int i = 0; i < 4; ++i ) {
-            quad.transformedPoints[i] = quad.points[i];
-            quad.transformedPoints[i].transform( matrix );
-        }
-    }
+    QMutableListIterator<Quad> it( m_highlightQuads );
+    while ( it.hasNext() )
+        it.next().transform( matrix );
 }
 
 /** StampAnnotation [Annotation] */
 
 StampAnnotation::StampAnnotation()
-    : Annotation(), stampIconName( "Draft" )
-{}
+    : Annotation(),
+      m_stampIconName( "Draft" )
+{
+}
 
 StampAnnotation::StampAnnotation( const QDomNode & node )
-    : Annotation( node ), stampIconName( "Draft" )
+    : Annotation( node ),
+      m_stampIconName( "Draft" )
 {
     // loop through the whole children looking for a 'stamp' element
     QDomNode subNode = node.firstChild();
@@ -1107,11 +1438,30 @@ StampAnnotation::StampAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "icon" ) )
-            stampIconName = e.attribute( "icon" );
+            m_stampIconName = e.attribute( "icon" );
 
         // loading complete
         break;
     }
+}
+
+StampAnnotation::~StampAnnotation()
+{
+}
+
+void StampAnnotation::setStampIconName( const QString &name )
+{
+    m_stampIconName = name;
+}
+
+QString StampAnnotation::stampIconName() const
+{
+    return m_stampIconName;
+}
+
+Annotation::SubType StampAnnotation::subType() const
+{
+    return AStamp;
 }
 
 void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -1124,16 +1474,21 @@ void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( stampElement );
 
     // append the optional attributes
-    if ( stampIconName != "Draft" )
-        stampElement.setAttribute( "icon", stampIconName );
+    if ( m_stampIconName != "Draft" )
+        stampElement.setAttribute( "icon", m_stampIconName );
 }
 
+void StampAnnotation::transform( const QMatrix &matrix )
+{
+    Annotation::transform( matrix );
+}
 
 /** InkAnnotation [Annotation] */
 
 InkAnnotation::InkAnnotation()
     : Annotation()
-{}
+{
+}
 
 InkAnnotation::InkAnnotation( const QDomNode & node )
     : Annotation( node )
@@ -1176,14 +1531,38 @@ InkAnnotation::InkAnnotation( const QDomNode & node )
 
             // add the path to the path list if it contains at least 2 nodes
             if ( path.count() >= 2 )
-                inkPaths.append( path );
+                m_inkPaths.append( path );
         }
 
         // loading complete
         break;
     }
 
-    transformedInkPaths = inkPaths;
+    m_transformedInkPaths = m_inkPaths;
+}
+
+InkAnnotation::~InkAnnotation()
+{
+}
+
+void InkAnnotation::setInkPaths( const QList< QLinkedList<NormalizedPoint> > &paths )
+{
+    m_inkPaths = paths;
+}
+
+QList< QLinkedList<NormalizedPoint> > InkAnnotation::inkPaths() const
+{
+    return m_inkPaths;
+}
+
+QList< QLinkedList<NormalizedPoint> > InkAnnotation::transformedInkPaths() const
+{
+    return m_transformedInkPaths;
+}
+
+Annotation::SubType InkAnnotation::subType() const
+{
+    return AInk;
 }
 
 void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
@@ -1196,9 +1575,10 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( inkElement );
 
     // append the optional attributes
-    if ( inkPaths.count() < 1 )
+    if ( m_inkPaths.count() < 1 )
         return;
-    QList< QLinkedList<NormalizedPoint> >::const_iterator pIt = inkPaths.begin(), pEnd = inkPaths.end();
+
+    QList< QLinkedList<NormalizedPoint> >::const_iterator pIt = m_inkPaths.begin(), pEnd = m_inkPaths.end();
     for ( ; pIt != pEnd; ++pIt )
     {
         QDomElement pathElement = document.createElement( "path" );
@@ -1220,10 +1600,10 @@ void InkAnnotation::transform( const QMatrix &matrix )
 {
     Annotation::transform( matrix );
 
-    transformedInkPaths = inkPaths;
+    m_transformedInkPaths = m_inkPaths;
 
-    for ( int i = 0; i < transformedInkPaths.count(); ++i ) {
-        QMutableLinkedListIterator<NormalizedPoint> it( transformedInkPaths[ i ] );
+    for ( int i = 0; i < m_transformedInkPaths.count(); ++i ) {
+        QMutableLinkedListIterator<NormalizedPoint> it( m_transformedInkPaths[ i ] );
         while ( it.hasNext() )
             it.next().transform( matrix );
     }

@@ -128,7 +128,7 @@ class PickPointEngine : public AnnotatorEngine
             // find out annotation's description node
             if ( m_annotElement.isNull() )
                 return QList< Okular::Annotation* >();
-            
+
             // find out annotation's type
             Okular::Annotation * ann = 0;
             QString typeString = m_annotElement.attribute( "type" );
@@ -144,8 +144,8 @@ class PickPointEngine : public AnnotatorEngine
                     //add note
                     Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                     ann = ta;
-                    ta->inplaceText=note;
-                    ta->textType = Okular::TextAnnotation::InPlace;
+                    ta->setInplaceText( note );
+                    ta->setTextType( Okular::TextAnnotation::InPlace );
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);
@@ -153,9 +153,9 @@ class PickPointEngine : public AnnotatorEngine
                     rect.bottom = qMax(startpoint.y,point.y);
                     kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
                     static int padding = 2;
-                    QFontMetricsF mf(ta->textFont);
+                    QFontMetricsF mf(ta->textFont());
                     QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
-                                                  Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText );
+                                                  Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText() );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
                     ta->setBoundingRectangle( this->rect );
@@ -166,7 +166,7 @@ class PickPointEngine : public AnnotatorEngine
             {
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
-                ta->textType = Okular::TextAnnotation::Linked;
+                ta->setTextType( Okular::TextAnnotation::Linked );
                 ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 double iconhei=0.03;
@@ -182,7 +182,7 @@ class PickPointEngine : public AnnotatorEngine
             {
                 Okular::StampAnnotation * sa = new Okular::StampAnnotation();
                 ann = sa;
-                sa->stampIconName = pixmapName;
+                sa->setStampIconName( pixmapName );
                 double stampxscale = size / xscale;
                 double stampyscale = size / yscale;
                 if ( center )
@@ -206,10 +206,10 @@ class PickPointEngine : public AnnotatorEngine
                 ann = ga;
                 // set the type
                 if ( typeString == "GeomSquare" )
-                    ga->geomType = Okular::GeomAnnotation::InscribedSquare;
+                    ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
                 else
-                    ga->geomType = Okular::GeomAnnotation::InscribedCircle;
-                ga->geomWidthPt = 18;
+                    ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
+                ga->setGeometricalPointWidth( 18 );
                 //set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
@@ -348,7 +348,7 @@ class PolyLineEngine : public AnnotatorEngine
         {
             m_creationCompleted = false;
 
-			// find out annotation's description node
+            // find out annotation's description node
             if ( m_annotElement.isNull() )
                 return QList< Okular::Annotation* >();
 
@@ -361,13 +361,19 @@ class PolyLineEngine : public AnnotatorEngine
             {
                 if ( points.count() < 2 )
                     return QList< Okular::Annotation* >();
+
                 //add note
                 Okular::LineAnnotation * la = new Okular::LineAnnotation();
                 ann = la;
+                QLinkedList<Okular::NormalizedPoint> list;
                 for ( int i = 0; i < points.count(); ++i )
-                    la->linePoints.append( points[i] );
+                    list.append( points[ i ] );
+
+                la->setLinePoints( list );
+
                 if ( numofpoints == -1 )
-                    la->lineClosed = true;
+                    la->setLineClosed( true );
+
                 la->setBoundingRectangle( normRect );
 
             }
@@ -507,19 +513,19 @@ class TextSelectorEngine : public AnnotatorEngine
             if ( typevalid )
             {
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
-                ha->highlightType = type;
+                ha->setHighlightType( type );
                 ha->setBoundingRectangle( Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() ) );
                 foreach ( Okular::NormalizedRect * rect, *selection )
                 {
                     Okular::HighlightAnnotation::Quad q;
-                    q.capStart = false;
-                    q.capEnd = false;
-                    q.feather = 1.0;
-                    q.points[0] = Okular::NormalizedPoint( rect->left, rect->bottom );
-                    q.points[1] = Okular::NormalizedPoint( rect->right, rect->bottom );
-                    q.points[2] = Okular::NormalizedPoint( rect->right, rect->top );
-                    q.points[3] = Okular::NormalizedPoint( rect->left, rect->top );
-                    ha->highlightQuads.append( q );
+                    q.setCapStart( false );
+                    q.setCapEnd( false );
+                    q.setFeather( 1.0 );
+                    q.setPoint( Okular::NormalizedPoint( rect->left, rect->bottom ), 0 );
+                    q.setPoint( Okular::NormalizedPoint( rect->right, rect->bottom ), 1 );
+                    q.setPoint( Okular::NormalizedPoint( rect->right, rect->top ), 2 );
+                    q.setPoint( Okular::NormalizedPoint( rect->left, rect->top ), 3 );
+                    ha->highlightQuads().append( q );
                 }
                 ann = ha;
             }

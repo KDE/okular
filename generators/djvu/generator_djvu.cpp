@@ -323,10 +323,10 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                         QRect rect( QPoint( txtann->point().x(), h - txtann->point().y() - txtann->size().height() ), txtann->size() );
                         newtxtann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
                         // type
-                        newtxtann->textType = txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked;
+                        newtxtann->setTextType( txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked );
                         newtxtann->style().setOpacity( txtann->color().alphaF() );
                         // FIXME remove once the annotation text handling is fixed
-                        newtxtann->inplaceText = ann->comment();
+                        newtxtann->setInplaceText( ann->comment() );
                         newann = newtxtann;
                         break;
                     }
@@ -340,11 +340,13 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
                         QRect rect = QRect( a, b ).normalized();
                         newlineann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
                         // line points
-                        newlineann->linePoints.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
-                        newlineann->linePoints.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
+                        QLinkedList<Okular::NormalizedPoint> points;
+                        points.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
+                        points.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
+                        newlineann->setLinePoints( points );
                         // arrow?
                         if ( lineann->isArrow() )
-                            newlineann->lineEndStyle = Okular::LineAnnotation::OpenArrow;
+                            newlineann->setLineEndStyle( Okular::LineAnnotation::OpenArrow );
                         // width
                         newlineann->style().setWidth( lineann->width() );
                         newann = newlineann;

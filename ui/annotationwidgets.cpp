@@ -146,7 +146,7 @@ TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
 QWidget * TextAnnotationWidget::widget()
 {
     // only Linked TextAnnotations are supported for now
-    if ( m_textAnn->textType != Okular::TextAnnotation::Linked )
+    if ( m_textAnn->textType() != Okular::TextAnnotation::Linked )
         return 0;
 
     if ( m_widget )
@@ -169,7 +169,7 @@ QWidget * TextAnnotationWidget::widget()
     m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
     m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
     m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
-    m_pixmapSelector->setIcon( m_textAnn->textIcon );
+    m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
 
@@ -178,9 +178,9 @@ QWidget * TextAnnotationWidget::widget()
 
 void TextAnnotationWidget::applyChanges()
 {
-    if ( m_textAnn->textType == Okular::TextAnnotation::Linked )
+    if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
-        m_textAnn->textIcon = m_pixmapSelector->icon();
+        m_textAnn->setTextIcon( m_pixmapSelector->icon() );
     }
 }
 
@@ -227,7 +227,7 @@ QWidget * StampAnnotationWidget::widget()
     m_pixmapSelector->addItem( i18n( "Sold" ), "Sold" );
     m_pixmapSelector->addItem( i18n( "Top Secret" ), "TopSecret" );
 #endif
-    m_pixmapSelector->setIcon( m_stampAnn->stampIconName );
+    m_pixmapSelector->setIcon( m_stampAnn->stampIconName() );
     m_pixmapSelector->setPreviewSize( 64 );
 
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
@@ -237,7 +237,7 @@ QWidget * StampAnnotationWidget::widget()
 
 void StampAnnotationWidget::applyChanges()
 {
-    m_stampAnn->stampIconName = m_pixmapSelector->icon();
+    m_stampAnn->setStampIconName( m_pixmapSelector->icon() );
 }
 
 
@@ -246,9 +246,9 @@ LineAnnotationWidget::LineAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_widget( 0 )
 {
     m_lineAnn = static_cast< Okular::LineAnnotation * >( ann );
-    if ( m_lineAnn->linePoints.count() == 2 )
+    if ( m_lineAnn->linePoints().count() == 2 )
         m_lineType = 0; // line
-    else if ( m_lineAnn->lineClosed )
+    else if ( m_lineAnn->lineClosed() )
         m_lineType = 1; // polygon
     else
         m_lineType = 2; // polyline
@@ -282,9 +282,9 @@ QWidget * LineAnnotationWidget::widget()
     tmplabel->setBuddy( m_spinLLE );
 
     m_spinLL->setRange( -500, 500 );
-    m_spinLL->setValue( m_lineAnn->lineLeadingFwdPt );
+    m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
     m_spinLLE->setRange( 0, 500 );
-    m_spinLLE->setValue( m_lineAnn->lineLeadingBackPt );
+    m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
 
     connect( m_spinLL, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
     connect( m_spinLLE, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
@@ -296,8 +296,8 @@ void LineAnnotationWidget::applyChanges()
 {
     if ( m_lineType == 0 )
     {
-        m_lineAnn->lineLeadingFwdPt = m_spinLL->value();
-        m_lineAnn->lineLeadingBackPt = m_spinLLE->value();
+        m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
+        m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
     }
 }
 
@@ -329,7 +329,7 @@ QWidget * HighlightAnnotationWidget::widget()
     m_typeCombo->addItem( i18n( "Squiggly" ) );
     m_typeCombo->addItem( i18n( "Underline" ) );
     m_typeCombo->addItem( i18n( "Striked out" ) );
-    m_typeCombo->setCurrentIndex( m_hlAnn->highlightType );
+    m_typeCombo->setCurrentIndex( m_hlAnn->highlightType() );
 
     connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
 
@@ -338,7 +338,7 @@ QWidget * HighlightAnnotationWidget::widget()
 
 void HighlightAnnotationWidget::applyChanges()
 {
-    m_hlAnn->highlightType = (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex();
+    m_hlAnn->setHighlightType( (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex() );
 }
 
 
@@ -369,9 +369,9 @@ QWidget * GeomAnnotationWidget::widget()
 
     m_typeCombo->addItem( i18n( "Rectangle" ) );
     m_typeCombo->addItem( i18n( "Ellipse" ) );
-    m_typeCombo->setCurrentIndex( m_geomAnn->geomType );
-    m_innerColor->setColor( m_geomAnn->geomInnerColor );
-    if ( m_geomAnn->geomInnerColor.isValid() )
+    m_typeCombo->setCurrentIndex( m_geomAnn->geometricalType() );
+    m_innerColor->setColor( m_geomAnn->geometricalInnerColor() );
+    if ( m_geomAnn->geometricalInnerColor().isValid() )
     {
         m_useColor->setChecked( true );
     }
@@ -390,14 +390,14 @@ QWidget * GeomAnnotationWidget::widget()
 
 void GeomAnnotationWidget::applyChanges()
 {
-    m_geomAnn->geomType = (Okular::GeomAnnotation::GeomType)m_typeCombo->currentIndex();
+    m_geomAnn->setGeometricalType( (Okular::GeomAnnotation::GeomType)m_typeCombo->currentIndex() );
     if ( !m_useColor->isChecked() )
     {
-        m_geomAnn->geomInnerColor = QColor();
+        m_geomAnn->setGeometricalInnerColor( QColor() );
     }
     else
     {
-        m_geomAnn->geomInnerColor = m_innerColor->color();
+        m_geomAnn->setGeometricalInnerColor( m_innerColor->color() );
     }
 }
 

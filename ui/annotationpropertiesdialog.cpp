@@ -155,7 +155,7 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
     switch(type)
     {
         case Okular::Annotation::AText:
-            if(((Okular::TextAnnotation*)m_annot)->textType==Okular::TextAnnotation::Linked)
+            if(((Okular::TextAnnotation*)m_annot)->textType()==Okular::TextAnnotation::Linked)
                 captiontext = i18n( "Note Properties" );
             else
                 captiontext = i18n( "FreeText Properties" );

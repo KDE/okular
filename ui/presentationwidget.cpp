@@ -29,6 +29,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kshortcut.h>
+#include <kdialog.h>
 
 // system includes
 #include <stdlib.h>
@@ -93,7 +94,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QString caption = doc->getMetaData( "DocumentTitle" ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
-    setWindowTitle( KInstance::makeStandardCaption( caption ) );
+    setWindowTitle( KDialog::makeStandardCaption( caption ) );
 
     m_width = -1;
 

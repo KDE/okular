@@ -264,6 +264,14 @@ class OKULAR_EXPORT Annotation
                 Style();
 
                 /**
+                 * Destroys the style.
+                 */
+                ~Style();
+
+                Style( const Style &other );
+                Style& operator=( const Style &other );
+
+                /**
                  * Sets the @p color of the style.
                  */
                 void setColor( const QColor &color );
@@ -364,16 +372,8 @@ class OKULAR_EXPORT Annotation
                 double effectIntensity() const;
 
             private:
-                QColor m_color;
-                double m_opacity;
-                double m_width;
-                LineStyle m_style;
-                double m_xCorners;
-                double m_yCorners;
-                int m_marks;
-                int m_spaces;
-                LineEffect m_effect;
-                double m_effectIntensity;
+                class Private;
+                Private* const d;
         };
 
         /**
@@ -397,6 +397,14 @@ class OKULAR_EXPORT Annotation
                  * Creates a new window.
                  */
                 Window();
+
+                /**
+                 * Destroys the window.
+                 */
+                ~Window();
+
+                Window( const Window &other );
+                Window& operator=( const Window &other );
 
                 /**
                  * Sets the @p flags of the window.
@@ -469,13 +477,8 @@ class OKULAR_EXPORT Annotation
                 QString text() const;
 
             private:
-                int m_flags;
-                NormalizedPoint m_topLeft;
-                int m_width;
-                int m_height;
-                QString m_title;
-                QString m_summary;
-                QString m_text;
+                class Private;
+                Private* const d;
         };
 
         /**
@@ -499,6 +502,14 @@ class OKULAR_EXPORT Annotation
                  * Creates a new revision.
                  */
                 Revision();
+
+                /**
+                 * Destroys the revision.
+                 */
+                ~Revision();
+
+                Revision( const Revision &other );
+                Revision& operator=( const Revision &other );
 
                 /**
                  * Sets the @p annotation the revision belongs to.
@@ -533,9 +544,8 @@ class OKULAR_EXPORT Annotation
                 RevisionType type() const;
 
             private:
-                Annotation *m_annotation;
-                RevisionScope m_scope;
-                RevisionType m_type;
+                class Private;
+                Private* const d;
         };
 
         /**
@@ -565,19 +575,10 @@ class OKULAR_EXPORT Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        QString m_author;
-        QString m_contents;
-        QString m_uniqueName;
-        QDateTime m_modifyDate;
-        QDateTime m_creationDate;
+        class Private;
+        Private* const d;
 
-        int m_flags;
-        NormalizedRect m_boundary;
-        NormalizedRect m_transformedBoundary;
-
-        Style m_style;
-        Window m_window;
-        QLinkedList< Revision > m_revisions;
+        Q_DISABLE_COPY( Annotation );
 };
 
 class OKULAR_EXPORT TextAnnotation : public Annotation
@@ -717,14 +718,10 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        TextType m_textType;
-        QString m_textIcon;
-        QFont m_textFont;
-        int m_inplaceAlign;
-        QString m_inplaceText;
-        NormalizedPoint m_inplaceCallout[3];
-        NormalizedPoint m_transformedInplaceCallout[3];
-        InplaceIntent m_inplaceIntent;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( TextAnnotation );
 };
 
 class OKULAR_EXPORT LineAnnotation : public Annotation
@@ -889,16 +886,10 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        QLinkedList<NormalizedPoint> m_linePoints;
-        QLinkedList<NormalizedPoint> m_transformedLinePoints;
-        TermStyle m_lineStartStyle;
-        TermStyle m_lineEndStyle;
-        bool m_lineClosed;
-        QColor m_lineInnerColor;
-        double m_lineLeadingFwdPt;
-        double m_lineLeadingBackPt;
-        bool m_lineShowCaption;
-        LineIntent m_lineIntent;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LineAnnotation );
 };
 
 class OKULAR_EXPORT GeomAnnotation : public Annotation
@@ -975,9 +966,10 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        GeomType m_geomType;
-        QColor m_geomInnerColor;
-        int m_geomWidthPt;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( GeomAnnotation );
 };
 
 class OKULAR_EXPORT HighlightAnnotation : public Annotation
@@ -1031,6 +1023,14 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
                  * Creates a new quad.
                  */
                 Quad();
+
+                /**
+                 * Destroys the quad.
+                 */
+                ~Quad();
+
+                Quad( const Quad &other );
+                Quad& operator=( const Quad &other );
 
                 /**
                  * Sets the normalized @p point at @p index.
@@ -1090,11 +1090,8 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
                 void transform( const QMatrix &matrix );
 
             private:
-                NormalizedPoint m_points[4];
-                NormalizedPoint m_transformedPoints[4];
-                bool m_capStart;
-                bool m_capEnd;
-                double m_feather;
+                class Private;
+                Private* const d;
         };
 
         /**
@@ -1120,8 +1117,10 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        HighlightType m_highlightType;
-        QList< Quad > m_highlightQuads;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( HighlightAnnotation );
 };
 
 class OKULAR_EXPORT StampAnnotation : public Annotation
@@ -1170,7 +1169,10 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        QString m_stampIconName;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( StampAnnotation );
 };
 
 class OKULAR_EXPORT InkAnnotation : public Annotation
@@ -1225,8 +1227,10 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        QList< QLinkedList<NormalizedPoint> > m_inkPaths;
-        QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( InkAnnotation );
 };
 
 }

@@ -578,7 +578,7 @@ class OKULAR_EXPORT Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( Annotation );
+        Q_DISABLE_COPY( Annotation )
 };
 
 class OKULAR_EXPORT TextAnnotation : public Annotation
@@ -721,7 +721,7 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( TextAnnotation );
+        Q_DISABLE_COPY( TextAnnotation )
 };
 
 class OKULAR_EXPORT LineAnnotation : public Annotation
@@ -889,7 +889,7 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LineAnnotation );
+        Q_DISABLE_COPY( LineAnnotation )
 };
 
 class OKULAR_EXPORT GeomAnnotation : public Annotation
@@ -969,7 +969,7 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( GeomAnnotation );
+        Q_DISABLE_COPY( GeomAnnotation )
 };
 
 class OKULAR_EXPORT HighlightAnnotation : public Annotation
@@ -1120,7 +1120,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( HighlightAnnotation );
+        Q_DISABLE_COPY( HighlightAnnotation )
 };
 
 class OKULAR_EXPORT StampAnnotation : public Annotation
@@ -1172,7 +1172,7 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( StampAnnotation );
+        Q_DISABLE_COPY( StampAnnotation )
 };
 
 class OKULAR_EXPORT InkAnnotation : public Annotation
@@ -1230,7 +1230,7 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( InkAnnotation );
+        Q_DISABLE_COPY( InkAnnotation )
 };
 
 }

@@ -2545,7 +2545,7 @@ void SplashOutputDev::setFillColor(int r, int g, int b) {
   rgb.r = byteToCol(r);
   rgb.g = byteToCol(g);
   rgb.b = byteToCol(b);
-  gray = (GfxColorComp)(0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.g + 0.5);
+  gray = (GfxColorComp)(0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b + 0.5);
   if (gray > gfxColorComp1) {
     gray = gfxColorComp1;
   }

@@ -32,7 +32,7 @@
 #include <kdirwatch.h>
 #include <kinstance.h>
 #include <kprinter.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kparts/genericfactory.h>
 #include <kfiledialog.h>
 #include <kfind.h>
@@ -221,35 +221,35 @@ Part::Part(QWidget *parentWidget,
 	KActionCollection * ac = actionCollection();
 
 	// Page Traversal actions
-	m_gotoPage = KStdAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
+	m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
 	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
 	// dirty way to activate gotopage when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
-	m_prevPage = KStdAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
+	m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 	m_prevPage->setShortcut( 0 );
 	// dirty way to activate prev page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 	connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
-	m_nextPage = KStdAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
+	m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( 0 );
 	// dirty way to activate next page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 	connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
-	m_firstPage = KStdAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
+	m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage = KStdAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
+	m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
-	m_historyBack = KStdAction::back( this, SLOT( slotHistoryBack() ), ac, "history_back" );
+	m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac, "history_back" );
 	m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
 
-	m_historyNext = KStdAction::forward( this, SLOT( slotHistoryNext() ), ac, "history_forward" );
+	m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac, "history_forward" );
 	m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
 	m_prevBookmark = new KAction( KIcon( "previous" ), i18n( "Previous Bookmark" ), ac, "previous_bookmark" );
@@ -260,18 +260,18 @@ Part::Part(QWidget *parentWidget,
 	m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
 	connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
-	m_copy = KStdAction::create( KStdAction::Copy, "edit_copy", m_pageView, SLOT( copyTextSelection() ), ac );
+	m_copy = KStandardAction::create( KStandardAction::Copy, "edit_copy", m_pageView, SLOT( copyTextSelection() ), ac );
 
 	// Find and other actions
-	m_find = KStdAction::find( this, SLOT( slotFind() ), ac, "find" );
+	m_find = KStandardAction::find( this, SLOT( slotFind() ), ac, "find" );
 	m_find->setEnabled( false );
 
-	m_findNext = KStdAction::findNext( this, SLOT( slotFindNext() ), ac, "find_next" );
+	m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac, "find_next" );
 	m_findNext->setEnabled( false );
 
-	m_saveAs = KStdAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
+	m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
 	m_saveAs->setEnabled( false );
-	KAction * prefs = KStdAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
+	KAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
 	if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
 	{
 		prefs->setText( i18n( "Configure okular..." ) );
@@ -281,7 +281,7 @@ Part::Part(QWidget *parentWidget,
 		prefs->setText( i18n( "Configure Viewer..." ) ); // TODO: improve this message
 	}
 	
-	KAction * genPrefs = KStdAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
+	KAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
 	genPrefs->setText( i18n( "Configure Backends..." ) );
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
 	KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
@@ -290,7 +290,7 @@ Part::Part(QWidget *parentWidget,
 		genPrefs->setEnabled( false );
 	}
 
-	m_printPreview = KStdAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+	m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
 	m_showLeftPanel = new KToggleAction( KIcon( "show_side_panel" ), i18n( "Show &Navigation Panel"), ac, "show_leftpanel" );

@@ -21,7 +21,7 @@
 #include <kprinter.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
-
+#include <kglobal.h>
 // local includes
 #include "generator_pdf.h"
 #include "core/observer.h" //for PAGEVIEW_ID

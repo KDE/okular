@@ -17,6 +17,7 @@
 #include <kicon.h>
 #include <klocale.h>
 #include <knuminput.h>
+#include <kglobal.h>
 
 // local includes
 #include "core/document.h"

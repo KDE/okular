@@ -26,7 +26,7 @@
 #include <kfiledialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <ktoolbar.h>
 #include <kurl.h>
 #include <kdebug.h>
@@ -154,20 +154,20 @@ void Shell::writeSettings()
 
 void Shell::setupActions()
 {
-  KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStdAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
+  KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
+  m_recent = KStandardAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
-  m_printAction = KStdAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
+  m_printAction = KStandardAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
   m_printAction->setEnabled( false );
-  KStdAction::quit(this, SLOT(slotQuit()), actionCollection());
+  KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
 
   setStandardToolBarMenuEnabled(true);
 
-  m_showMenuBarAction = KStdAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
-  KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-  m_fullScreenAction = KStdAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
+  m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
+  KStandardAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
+  m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
 }
 
 void Shell::saveProperties(KConfig* config)

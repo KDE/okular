@@ -35,7 +35,7 @@
 #include <kiconloader.h>
 #include <kaction.h>
 #include <kstdaccel.h>
-#include <kstdaction.h>
+#include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kmenu.h>
 #include <klocale.h>
@@ -349,9 +349,9 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
-    KStdAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
+    KStandardAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
 
-    KStdAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
+    KStandardAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
 
     d->aZoomFitWidth = new KToggleAction( KIcon( "view_fit_width" ), i18n("Fit &Width"), ac, "zoom_fit_width" );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );

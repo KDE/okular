@@ -15,6 +15,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
+#include <kglobal.h>
 
 #include "core/document.h"
 #include "embeddedfilesdialog.h"

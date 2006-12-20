@@ -30,7 +30,7 @@
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
 #include <kdebug.h>
-#include <kiconloader.h>
+#include <kicon.h>
 #include <khtml_part.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
@@ -513,9 +513,9 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->sortCombo->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
         d->sortCombo->setMinimumWidth( 100 );
         d->sortCombo->setEnabled( false );
-        d->sortCombo->addItem( SmallIconSet( "fonts" ), i18n("Name") );
-        d->sortCombo->addItem( SmallIconSet( "knewstuff" ), i18n("Rating") );
-        d->sortCombo->addItem( SmallIconSet( "favorites" ), i18n("Downloads") );
+        d->sortCombo->addItem( KIcon( "fonts" ), i18n("Name") );
+        d->sortCombo->addItem( KIcon( "knewstuff" ), i18n("Rating") );
+        d->sortCombo->addItem( KIcon( "favorites" ), i18n("Downloads") );
         connect( d->sortCombo, SIGNAL( activated(int) ),
                  this, SLOT( slotSortingSelected(int) ) );
 
@@ -766,7 +766,7 @@ void NewStuffDialog::slotProvidersListResult( KJob * job )
     {
         const Provider * provider =  *it;
         // provider icon: using local KIconLoader, not loading from remote url
-        QIcon icon = DesktopIconSet( provider->icon().url(), 16 );
+        KIcon icon = KIcon( provider->icon().url() );
         QString name = provider->name();
         // insert provider in combo
         d->typeCombo->addItem( icon, name );

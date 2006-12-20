@@ -32,7 +32,6 @@
 #include <QX11Info>
 #endif
 
-#include <kiconloader.h>
 #include <kaction.h>
 #include <kstdaccel.h>
 #include <kstandardaction.h>
@@ -40,6 +39,7 @@
 #include <kmenu.h>
 #include <klocale.h>
 #include <kfiledialog.h>
+#include <kglobal.h>
 #include <kimageeffect.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
@@ -1670,18 +1670,18 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
                 menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
-                textToClipboard = menu.addAction( SmallIconSet("editcopy"), i18n( "Copy to Clipboard" ) );
+                textToClipboard = menu.addAction( KIcon("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )
                 {
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
                 if ( Okular::Settings::useKTTSD() )
-                    speakText = menu.addAction( SmallIconSet("kttsd"), i18n( "Speak Text" ) );
+                    speakText = menu.addAction( KIcon("kttsd"), i18n( "Speak Text" ) );
             }
             menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
-            imageToClipboard = menu.addAction( QIcon(SmallIcon("image")), i18n( "Copy to Clipboard" ) );
-            imageToFile = menu.addAction( QIcon(SmallIcon("filesave")), i18n( "Save to File..." ) );
+            imageToClipboard = menu.addAction( KIcon("image"), i18n( "Copy to Clipboard" ) );
+            imageToFile = menu.addAction( KIcon("filesave"), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
             // check if the user really selected an action
             if ( choice )

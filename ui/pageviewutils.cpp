@@ -19,6 +19,7 @@
 #include <qtimer.h>
 #include <qtoolbutton.h>
 #include <kacceleratormanager.h>
+#include <kicon.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <klocale.h>
@@ -290,7 +291,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item )
     setAutoRaise( true );
     resize( buttonSize, buttonSize );
     setIconSize( QSize( iconSize, iconSize ) );
-    setIcon( DesktopIconSet( item.pixmap, iconSize ) );
+    setIcon( KIcon( item.pixmap ) );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setShortcut( QKeySequence( item.shortcut ) );

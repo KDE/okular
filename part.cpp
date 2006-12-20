@@ -40,7 +40,6 @@
 #include <kmimetypetrader.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
-#include <kiconloader.h>
 #include <kio/netaccess.h>
 #include <kmenu.h>
 #include <kxmlguiclient.h>
@@ -139,7 +138,7 @@ Part::Part(QWidget *parentWidget,
 	// [left toolbox: Table of Contents] | []
 	m_toc = new TOC( m_toolBox, m_document );
 	connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-	tbIndex = m_toolBox->addItem( m_toc, SmallIconSet("text_left"), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( m_toc, KIcon("text_left"), i18n("Contents") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 
@@ -151,13 +150,13 @@ Part::Part(QWidget *parentWidget,
 //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
 	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
 	connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-	tbIndex = m_toolBox->addItem( thumbsBox, SmallIconSet("thumbnail"), i18n("Thumbnails") );
+	tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail"), i18n("Thumbnails") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
 	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
 	// [left toolbox: Reviews] | []
 	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-	m_toolBox->addItem( reviewsWidget, SmallIconSet("pencil"), i18n("Reviews") );
+	m_toolBox->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );

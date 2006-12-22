@@ -12,19 +12,22 @@
 
 #include "dlgdebug.h"
 
+#define DEBUG_SIMPLE_BOOL( cfgname, layout ) \
+{ \
+    QCheckBox * foo = new QCheckBox( cfgname, this ); \
+    foo->setObjectName( "kcfg_" cfgname ); \
+    layout->addWidget( foo ); \
+}
+
 DlgDebug::DlgDebug( QWidget * parent )
     : QWidget( parent )
 {
     QVBoxLayout * lay = new QVBoxLayout( this );
     lay->setMargin( 0 );
 
-    QCheckBox * drawBoundaries = new QCheckBox( "DebugDrawBoundaries", this );
-    drawBoundaries->setObjectName( "kcfg_DebugDrawBoundaries" );
-    lay->addWidget( drawBoundaries );
-
-    QCheckBox * drawAnnRect = new QCheckBox( "DebugDrawAnnotationRect", this );
-    drawAnnRect->setObjectName( "kcfg_DebugDrawAnnotationRect" );
-    lay->addWidget( drawAnnRect );
+    DEBUG_SIMPLE_BOOL( "DebugDrawBoundaries", lay );
+    DEBUG_SIMPLE_BOOL( "DebugDrawAnnotationRect", lay );
+    DEBUG_SIMPLE_BOOL( "TocPageColumn", lay );
 
     lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ) );
 }

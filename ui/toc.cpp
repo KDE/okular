@@ -8,7 +8,10 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qdom.h>
+#include <qfontmetrics.h>
 #include <qheaderview.h>
+#include <QItemDelegate>
 #include <qlayout.h>
 #include <qstringlist.h>
 #include <qtoolbutton.h>
@@ -24,33 +27,87 @@
 #include "settings.h"
 #include "core/link.h"
 
-// uncomment following to enable a 2nd column showing the page referred
-// by each tree entry note: PDF uses often references to viewports and
-// they're slow when converted to page number. drop the 2nd column idea.
-// to enable set TocPageColumn=true in [Nav Panel]
+#define TOC_SEPARATOR "@@@@@@@@@@"
+#define TOC_DELEGATE_INTERNALMARGIN 3
+
+class TOCDelegate : public QItemDelegate
+{
+    public:
+        TOCDelegate( QObject * parent = 0 )
+            : QItemDelegate( parent )
+        {
+        }
+
+    protected:
+        virtual void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const
+        {
+            if ( text.indexOf( TOC_SEPARATOR ) == -1 )
+            {
+                QItemDelegate::drawDisplay( painter, option, rect, text );
+                return;
+            }
+            QString page = text.section( TOC_SEPARATOR, 0, 0 );
+            QString realText = text.section( TOC_SEPARATOR, 1 );
+            QFontMetrics fm( option.font );
+            int pageRectWidth = QFontMetrics( option.font ).boundingRect( page ).width();
+            QRect newRect( rect );
+            newRect.setWidth( newRect.width() - pageRectWidth - TOC_DELEGATE_INTERNALMARGIN );
+            if ( option.direction == Qt::RightToLeft )
+                newRect.translate( pageRectWidth + TOC_DELEGATE_INTERNALMARGIN, 0 );
+            QItemDelegate::drawDisplay( painter, option, newRect, realText );
+            QStyleOptionViewItem newoption( option );
+            newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;
+            QItemDelegate::drawDisplay( painter, newoption, rect, page );
+        }
+
+};
 
 class TOCItem : public QTreeWidgetItem
 {
     public:
-        TOCItem( QTreeWidget *parent, TOCItem *after, const QDomElement & e )
+        TOCItem( QTreeWidget *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
             : QTreeWidgetItem( parent, after ), m_element( e )
         {
-            setText( 0, e.tagName() );
-            if ( Okular::Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
-                setText( 1, e.attribute( "Page" ) );
+            init( document, e );
         }
 
-        TOCItem( QTreeWidgetItem *parent, TOCItem *after, const QDomElement & e )
+        TOCItem( QTreeWidgetItem *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
             : QTreeWidgetItem( parent, after ), m_element( e )
         {
-            setText( 0, e.tagName() );
-            if ( Okular::Settings::tocPageColumn() && e.hasAttribute( "Page" ) )
-                setText( 1, e.attribute( "Page" ) );
+            init( document, e );
+        }
+
+        void init( Okular::Document *document, const QDomElement & e )
+        {
+            // viewport loading
+            if ( e.hasAttribute( "Viewport" ) )
+            {
+                // if the node has a viewport, set it
+                m_viewport = Okular::DocumentViewport( e.attribute( "Viewport" ) );
+            }
+            else if ( e.hasAttribute( "ViewportName" ) )
+            {
+                // if the node references a viewport, get the reference and set it
+                const QString & page = e.attribute( "ViewportName" );
+                QString viewport = document->getMetaData( "NamedViewport", page ).toString();
+                if ( !viewport.isNull() )
+                    m_viewport = Okular::DocumentViewport( viewport );
+            }
+
+            QString text = e.tagName();
+            if ( Okular::Settings::tocPageColumn() && m_viewport.pageNumber != -1 )
+                text.prepend( QString::number( m_viewport.pageNumber + 1 ) + TOC_SEPARATOR );
+            setText( 0, text );
         }
 
         const QDomElement & element() const
         {
             return m_element;
+        }
+
+        const Okular::DocumentViewport& viewport() const
+        {
+            return m_viewport;
         }
 
         void setCurrent( bool selected )
@@ -60,6 +117,7 @@ class TOCItem : public QTreeWidgetItem
 
     private:
         QDomElement m_element;
+        Okular::DocumentViewport m_viewport;
 };
 
 TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
@@ -78,14 +136,12 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     m_treeView = new QTreeWidget( this );
     mainlay->addWidget( m_treeView );
     QStringList cols;
-    cols.append( i18n("Topic") );
-    if (Okular::Settings::tocPageColumn())
-        cols.append( i18n("Page") );
+    cols.append( "Topics" );
     m_treeView->setHeaderLabels( cols );
     m_treeView->setSortingEnabled( false );
     m_treeView->setRootIsDecorated( true );
     m_treeView->setAlternatingRowColors( true );
-    m_treeView->header()->setResizeMode( QHeaderView::Stretch );
+    m_treeView->setItemDelegate( new TOCDelegate( m_treeView ) );
     m_treeView->header()->hide();
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
     connect( m_treeView, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
@@ -147,7 +203,7 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
     while ( (*it) && !m_current )
     {
         TOCItem *tmp = dynamic_cast<TOCItem*>( *it );
-        int p = tmp ? getViewport( tmp->element() ).pageNumber : -1;
+        int p = tmp ? tmp->viewport().pageNumber : -1;
         if ( p == newpage )
         {
             m_current = tmp;
@@ -171,9 +227,9 @@ void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem
 
         // insert the entry as top level (listview parented) or 2nd+ level
         if ( !parentItem )
-            currentItem = new TOCItem( m_treeView, currentItem, e );
+            currentItem = new TOCItem( m_treeView, currentItem, m_document, e );
         else
-            currentItem = new TOCItem( parentItem, currentItem, e );
+            currentItem = new TOCItem( parentItem, currentItem, m_document, e );
 
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() )
@@ -193,31 +249,13 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     QString externalFileName = e.attribute( "ExternalFileName" );
     if ( !externalFileName.isEmpty() )
     {
-        Okular::LinkGoto link( externalFileName, getViewport( e ) );
+        Okular::LinkGoto link( externalFileName, tocItem->viewport() );
         m_document->processLink( &link );
     }
     else
     {
-        m_document->setViewport( getViewport( e ) );
+        m_document->setViewport( tocItem->viewport() );
     }
-}
-
-Okular::DocumentViewport TOC::getViewport( const QDomElement &e ) const
-{
-    if ( e.hasAttribute( "Viewport" ) )
-    {
-        // if the node has a viewport, set it
-        return Okular::DocumentViewport( e.attribute( "Viewport" ) );
-    }
-    else if ( e.hasAttribute( "ViewportName" ) )
-    {
-        // if the node references a viewport, get the reference and set it
-        const QString & page = e.attribute( "ViewportName" );
-        QString viewport = m_document->getMetaData( "NamedViewport", page ).toString();
-        if ( !viewport.isNull() )
-            return Okular::DocumentViewport( viewport );
-    }
-    return Okular::DocumentViewport();
 }
 
 #include "toc.moc"

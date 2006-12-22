@@ -10,11 +10,10 @@
 #ifndef _OKULAR_TOC_H_
 #define _OKULAR_TOC_H_
 
-#include <qdom.h>
 #include <qwidget.h>
-#include "core/document.h"
 #include "core/observer.h"
 
+class QDomNode;
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
@@ -44,7 +43,6 @@ Q_OBJECT
 
     private:
         void addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem = 0 );
-        Okular::DocumentViewport getViewport( const QDomElement &e ) const;
         Okular::Document *m_document;
         QTreeWidget *m_treeView;
         KTreeWidgetSearchLine *m_searchLine;

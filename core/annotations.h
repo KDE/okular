@@ -255,7 +255,7 @@ class OKULAR_EXPORT Annotation
          * The Style class contains all information about style of the
          * annotation.
          */
-        class Style
+        class OKULAR_EXPORT Style
         {
             public:
                 /**

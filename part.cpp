@@ -1027,6 +1027,10 @@ void Part::slotNewConfig()
     // update document settings
     m_document->reparseConfig();
 
+    // update TOC settings
+    if ( m_toolBox->isItemEnabled(0) )
+        m_toc->reparseConfig();
+
     // update ThumbnailList contents
     if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();

@@ -14,7 +14,6 @@
 #include <QItemDelegate>
 #include <qlayout.h>
 #include <qstringlist.h>
-#include <qtoolbutton.h>
 #include <qtreewidget.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -46,8 +45,13 @@ class TOCDelegate : public QItemDelegate
                 QItemDelegate::drawDisplay( painter, option, rect, text );
                 return;
             }
-            QString page = text.section( TOC_SEPARATOR, 0, 0 );
             QString realText = text.section( TOC_SEPARATOR, 1 );
+            if ( !Okular::Settings::tocPageColumn() )
+            {
+                QItemDelegate::drawDisplay( painter, option, rect, realText );
+                return;
+            }
+            QString page = text.section( TOC_SEPARATOR, 0, 0 );
             QFontMetrics fm( option.font );
             int pageRectWidth = QFontMetrics( option.font ).boundingRect( page ).width();
             QRect newRect( rect );
@@ -95,7 +99,7 @@ class TOCItem : public QTreeWidgetItem
             }
 
             QString text = e.tagName();
-            if ( Okular::Settings::tocPageColumn() && m_viewport.pageNumber != -1 )
+            if ( m_viewport.pageNumber != -1 )
                 text.prepend( QString::number( m_viewport.pageNumber + 1 ) + TOC_SEPARATOR );
             setText( 0, text );
         }
@@ -212,6 +216,12 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
         }
         ++it;
     }
+}
+
+
+void TOC::reparseConfig()
+{
+    m_treeView->update();
 }
 
 

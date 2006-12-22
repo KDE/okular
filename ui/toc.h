@@ -35,6 +35,8 @@ Q_OBJECT
         void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
 
+        void reparseConfig();
+
     signals:
         void hasTOC(bool has);
 

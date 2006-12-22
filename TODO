@@ -16,6 +16,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 117805: Wish: Select pages like kghostview
 -> WISH 118938: No way to find out the page size(s)
 -> WISH 119455: use poppler library for kpdf
+-> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> WISH 131045: Add context menu for URLs
 -> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince
 

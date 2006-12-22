@@ -179,7 +179,7 @@
    <default>true</default>
   </entry>
   <entry key="TocPageColumn" type="Bool" >
-   <default>false</default>
+   <default>true</default>
   </entry>
  </group>
  <group name="PageView" >

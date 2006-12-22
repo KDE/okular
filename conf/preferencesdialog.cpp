@@ -15,6 +15,7 @@
 #include "dlgaccessibility.h"
 #include "dlgpresentation.h"
 #include "dlgidentity.h"
+#include "dlgdebug.h"
 
 // reimplementing this
 #include "preferencesdialog.h"
@@ -27,6 +28,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_accessibility = new DlgAccessibility(0);
     m_presentation = new DlgPresentation(0);
     m_identity = new DlgIdentity(0);
+    m_debug = new DlgDebug(0);
 
     addPage( m_general, i18n("General"), "okular", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "access", i18n("Reading Aids") );
@@ -35,4 +37,5 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
              i18n("Options for Presentation Mode") );
     addPage( m_identity, i18n("Identity"), "identity",
              i18n("Identity Settings") );
+    addPage( m_debug, "Debug", "gear", "Debug options" );
 }

@@ -70,6 +70,7 @@ set(okularpart_SRCS
    part.cpp
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
+   conf/dlgdebug.cpp
    conf/dlggeneral.cpp
    conf/dlgidentity.cpp
    conf/dlgperformance.cpp

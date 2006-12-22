@@ -1,7 +1,4 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>DlgGeneralBase</class>
  <widget class="QWidget" name="DlgGeneralBase" >
   <property name="geometry" >
@@ -9,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>282</width>
-    <height>455</height>
+    <height>415</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -299,35 +296,6 @@
          </widget>
         </item>
        </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_4" >
-     <property name="title" >
-      <string>Temporary DEBUG Options</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="kcfg_DebugDrawBoundaries" >
-        <property name="text" >
-         <string>DebugDrawBoundaries</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="kcfg_DebugDrawAnnotationRect" >
-        <property name="text" >
-         <string>DebugDrawAnnotationRect</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </widget>

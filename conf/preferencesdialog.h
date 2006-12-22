@@ -10,8 +10,6 @@
 #ifndef _PREFERENCESDIALOG_H
 #define _PREFERENCESDIALOG_H
 
-#include "okular_export.h"
-
 #include <kconfigdialog.h>
 #include "settings.h"
 
@@ -25,7 +23,7 @@ class DlgPresentation;
 class DlgIdentity;
 class DlgDebug;
 
-class OKULAR_EXPORT PreferencesDialog : public KConfigDialog
+class PreferencesDialog : public KConfigDialog
 {
 
     public:

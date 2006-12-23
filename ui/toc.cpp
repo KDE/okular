@@ -8,12 +8,13 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qapplication.h>
 #include <qdom.h>
-#include <qfontmetrics.h>
 #include <qheaderview.h>
 #include <QItemDelegate>
 #include <qlayout.h>
 #include <qstringlist.h>
+#include <QTextDocument>
 #include <qtreewidget.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -52,16 +53,23 @@ class TOCDelegate : public QItemDelegate
                 return;
             }
             QString page = text.section( TOC_SEPARATOR, 0, 0 );
-            QFontMetrics fm( option.font );
-            int pageRectWidth = QFontMetrics( option.font ).boundingRect( page ).width();
+            QTextDocument document;
+            document.setPlainText( page );
+            document.setDefaultFont( option.font );
+            int margindelta = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+            int pageRectWidth = (int)document.size().width();
             QRect newRect( rect );
+            QRect pageRect( rect );
+            pageRect.setWidth( pageRectWidth + 2 * margindelta );
             newRect.setWidth( newRect.width() - pageRectWidth - TOC_DELEGATE_INTERNALMARGIN );
             if ( option.direction == Qt::RightToLeft )
                 newRect.translate( pageRectWidth + TOC_DELEGATE_INTERNALMARGIN, 0 );
+            else
+                pageRect.translate( newRect.width() + TOC_DELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
             QItemDelegate::drawDisplay( painter, option, newRect, realText );
-            QStyleOptionViewItem newoption( option );
+            QStyleOptionViewItemV2 newoption( option );
             newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;
-            QItemDelegate::drawDisplay( painter, newoption, rect, page );
+            QItemDelegate::drawDisplay( painter, newoption, pageRect, page );
         }
 
 };

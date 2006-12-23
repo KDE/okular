@@ -582,12 +582,8 @@ void Page::deleteHighlights( int s_id )
 
 void Page::deleteTextSelections()
 {
-    if (m_textSelections)
-    {
-        qDeleteAll(*m_textSelections);
-        delete m_textSelections;
-        m_textSelections = 0;
-    }
+    delete m_textSelections;
+    m_textSelections = 0;
 }
 
 void Page::deleteSourceReferences()

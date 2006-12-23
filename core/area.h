@@ -272,6 +272,29 @@ struct HighlightRect : public NormalizedRect
     QColor color;
 };
 
+
+/** @internal */
+template <typename T>
+class okularDeleter
+{
+public:
+    static void doDelete( T& t )
+    {
+        (void)t;
+    }
+};
+
+/** @internal */
+template <typename T>
+class okularDeleter<T*>
+{
+public:
+    static void doDelete( T* t )
+    {
+        delete t;
+    }
+};
+
 /**
  * @short A regular area of NormalizedShape which normalizes a Shape
  * 
@@ -286,6 +309,7 @@ struct HighlightRect : public NormalizedRect
 template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:
+        ~RegularArea();
         bool contains( double x, double y ) const;
         bool contains( const NormalizedShape& shape ) const;
         bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
@@ -295,6 +319,14 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         bool isNull() const;
         QList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
 };
+
+template <class NormalizedShape, class Shape>
+RegularArea<NormalizedShape, Shape>::~RegularArea<NormalizedShape, Shape>()
+{
+    int size = this->count();
+    for ( int i = 0; i < size; ++i )
+        okularDeleter<NormalizedShape>::doDelete( (*this)[i] );
+}
 
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::simplify()
@@ -308,7 +340,9 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                     if ( (*this)[x]->intersects( (*this)[i+1] ) )
                     {
                         *((*this)[x]) |= *((*this)[i+1]);
+                        NormalizedShape tobedeleted = (*this)[i+1];
                         this->removeAt( i + 1 );
+                        okularDeleter<NormalizedShape>::doDelete( tobedeleted );
                         --end;
                         --i;
                     }

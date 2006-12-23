@@ -215,7 +215,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
               {
                 tmp=d->m_words[it]->area();
                 if (tmp->intersects(&first))
-                  ret->append(tmp);
+                  ret->appendShape(tmp);
               }
           }
           else*/
@@ -234,13 +234,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
             {
                 tmp=d->m_words[it]->transformedArea();
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
-                  ret->append(new NormalizedRect(*tmp));
+                  ret->appendShape(new NormalizedRect(*tmp));
             }
 
 //           }
         }
 
-        ret->simplify();
 	return ret;
 }
 

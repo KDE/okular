@@ -307,15 +307,14 @@ public:
 
 /**
  * @short A regular area of NormalizedShape which normalizes a Shape
- * 
- * Class NormalizedShape must have the following functions defined: 
- * contains (double, double)
- * intersects(NormalizedShape)
- * isNull()
- * geometry(int,int)
- * operator | and |= which unite two NormalizedShapes
+ *
+ * Class NormalizedShape \b must have the following functions/operators defined:
+ * - bool contains( double, double )
+ * - bool intersects( NormalizedShape )
+ * - bool isNull()
+ * - Shape geometry( int, int )
+ * - operator|=( NormalizedShape ) which unite two NormalizedShape's
  */
-
 template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:

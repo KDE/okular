@@ -506,7 +506,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                 if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->pointer() == (*aIt) ) )
                 {
                     delete *it;
-                    m_rects.erase( it );
+                    it = m_rects.erase( it );
                     rectfound = true;
                 }
             kDebug() << "removed annotation: " << annotation->uniqueName() << endl;

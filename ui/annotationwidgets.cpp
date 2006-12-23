@@ -16,6 +16,7 @@
 #include <qspinbox.h>
 #include <qvariant.h>
 #include <kcolorbutton.h>
+#include <kfontrequester.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -145,16 +146,15 @@ TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
 
 QWidget * TextAnnotationWidget::widget()
 {
-    // only Linked TextAnnotations are supported for now
-    if ( m_textAnn->textType() != Okular::TextAnnotation::Linked )
-        return 0;
-
     if ( m_widget )
         return m_widget;
 
     m_widget = new QWidget();
     QVBoxLayout * lay = new QVBoxLayout( m_widget );
     lay->setMargin( 0 );
+
+    if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
+    {
     QGroupBox * gb = new QGroupBox( m_widget );
     lay->addWidget( gb );
     gb->setTitle( i18n( "Icon" ) );
@@ -172,6 +172,18 @@ QWidget * TextAnnotationWidget::widget()
     m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+    }
+
+    QHBoxLayout * fontlay = new QHBoxLayout( m_widget );
+    QLabel * tmplabel = new QLabel( i18n( "Font:" ), m_widget );
+    fontlay->addWidget( tmplabel );
+    m_fontReq = new KFontRequester( m_widget );
+    fontlay->addWidget( m_fontReq );
+    lay->addLayout( fontlay );
+
+    m_fontReq->setFont( m_textAnn->textFont() );
+
+    connect( m_fontReq, SIGNAL( fontSelected( const QFont& ) ), this, SIGNAL( dataChanged() ) );
 
     return m_widget;
 }
@@ -182,6 +194,7 @@ void TextAnnotationWidget::applyChanges()
     {
         m_textAnn->setTextIcon( m_pixmapSelector->icon() );
     }
+    m_textAnn->setTextFont( m_fontReq->font() );
 }
 
 

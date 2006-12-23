@@ -20,6 +20,7 @@ class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class KColorButton;
+class KFontRequester;
 class AnnotationWidget;
 
 class PixmapPreviewSelector
@@ -101,6 +102,7 @@ private:
     Okular::TextAnnotation * m_textAnn;
     QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
+    KFontRequester * m_fontReq;
 };
 
 class StampAnnotationWidget

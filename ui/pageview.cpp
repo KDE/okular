@@ -642,7 +642,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kDebug() << "viewport has no matching item!" << endl;
+        kWarning() << "viewport for page " << vp.pageNumber << " has no matching item!" << endl;
         d->blockViewport = false;
         return;
     }
@@ -1893,7 +1893,9 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         if ( selectionRect.intersects( item->geometry() ) )
             affectedItemsSet.insert( item->pageNumber() );
     }
+#ifdef PAGEVIEW_DEBUG
     kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
+#endif
 
     if ( !affectedItemsSet.isEmpty() )
     {
@@ -1916,7 +1918,9 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         QList< int > affectedItemsIds;
         for ( int i = min; i <= max; ++i )
             affectedItemsIds.append( i );
+#ifdef PAGEVIEW_DEBUG
         kDebug() << ">>>> pages: " << affectedItemsIds << endl;
+#endif
         firstpage = affectedItemsIds.first();
 
         if ( affectedItemsIds.count() == 1 )
@@ -2155,7 +2159,9 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
         d->document->requestTextPage( okularPage->number() );
 
     Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
+#ifdef PAGEVIEW_DEBUG
     kDebug() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" ) << endl;
+#endif
     return selectionArea;
 }
 

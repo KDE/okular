@@ -287,6 +287,21 @@ public:
     {
         return &t;
     }
+
+    static const T* givePtr( const T& t )
+    {
+        return &t;
+    }
+
+    static T& deref( T& t )
+    {
+        return t;
+    }
+
+    static const T& deref( const T& t )
+    {
+        return t;
+    }
 };
 
 /** @internal */
@@ -302,6 +317,21 @@ public:
     static T* givePtr( T* t )
     {
         return t;
+    }
+
+    static const T* givePtr( const T* t )
+    {
+        return t;
+    }
+
+    static T& deref( T* t )
+    {
+        return *t;
+    }
+
+    static const T& deref( const T* t )
+    {
+        return *t;
     }
 };
 
@@ -347,10 +377,10 @@ void RegularArea<NormalizedShape, Shape>::simplify()
             int end = this->count() - 1, x = 0;
             for ( int i = 0; i < end; ++i )
             {
-                    if ( (*this)[x]->intersects( (*this)[i+1] ) )
+                    if ( okularPtrUtils<NormalizedShape>::givePtr( (*this)[x] )->intersects( okularPtrUtils<NormalizedShape>::deref( (*this)[i+1] ) ) )
                     {
-                        *((*this)[x]) |= *((*this)[i+1]);
-                        NormalizedShape tobedeleted = (*this)[i+1];
+                        okularPtrUtils<NormalizedShape>::deref((*this)[x]) |= okularPtrUtils<NormalizedShape>::deref((*this)[i+1]);
+                        NormalizedShape& tobedeleted = (*this)[i+1];
                         this->removeAt( i + 1 );
                         okularPtrUtils<NormalizedShape>::doDelete( tobedeleted );
                         --end;
@@ -376,7 +406,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
         return false;
 
     foreach ( const NormalizedShape& ns, *this )
-        if ( !(ns->isNull()) )
+        if ( !(okularPtrUtils<NormalizedShape>::givePtr(ns)->isNull()) )
             return false;
 
     return true;
@@ -392,7 +422,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
         return false;
 
     foreach ( const NormalizedShape& ns, *this )
-        if ( !( ns->isNull() ) && ns->intersects( rect ) )
+        if ( !okularPtrUtils<NormalizedShape>::givePtr(ns)->isNull() && okularPtrUtils<NormalizedShape>::givePtr(ns)->intersects( rect ) )
             return true;
 
     return false;
@@ -411,7 +441,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
     {
         foreach ( const Shape& shape, area )
         {
-            if ( !(ns->isNull) && ns->intersects( shape ) )
+            if ( !ns->isNull() && ns->intersects( shape ) )
                 return true;
         }
     }
@@ -446,10 +476,10 @@ void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& sh
     {
         // if the new shape intersects with the last shape in the list, then
         // merge it with that and delete the shape
-        if ( (*this)[size - 1]->intersects( shape ) )
+        if ( okularPtrUtils<NormalizedShape>::givePtr((*this)[size - 1])->intersects( shape ) )
         {
-            *((*this)[size - 1]) |= *okularPtrUtils<NormalizedShape>::givePtr( shape );
-            okularPtrUtils<NormalizedShape>::doDelete( shape );
+            okularPtrUtils<NormalizedShape>::deref((*this)[size - 1]) |= okularPtrUtils<NormalizedShape>::deref( shape );
+            okularPtrUtils<NormalizedShape>::doDelete( const_cast<NormalizedShape&>( shape ) );
         }
         else
             this->append( shape );
@@ -498,7 +528,7 @@ QList<Shape> * RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yS
     Shape t;
     foreach( const NormalizedShape& ns, *this )
     {
-        t = ns->geometry( xScale, yScale );
+        t = okularPtrUtils<NormalizedShape>::givePtr(ns)->geometry( xScale, yScale );
         t.translate( dx, dy );
         ret->append( t );
     }
@@ -506,7 +536,7 @@ QList<Shape> * RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yS
     return ret;
 }
 
-typedef RegularArea<NormalizedRect*,QRect> RegularAreaRect;
+typedef RegularArea<NormalizedRect,QRect> RegularAreaRect;
 
 class HighlightAreaRect : public RegularAreaRect
 {

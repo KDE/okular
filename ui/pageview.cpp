@@ -1640,7 +1640,6 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             if (d->document->supportsSearching())
             {
                 // grab text in selection by extracting it from all intersected pages
-                Okular::RegularAreaRect * rects=new Okular::RegularAreaRect;
                 const Okular::Page * okularPage=0;
                 QVector< PageViewItem * >::const_iterator iIt = d->items.begin(), iEnd = d->items.end();
                 for ( ; iIt != iEnd; ++iIt )
@@ -1657,11 +1656,11 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         // grab text in the rect that intersects itemRect
                         QRect relativeRect = selectionRect.intersect( itemRect );
                         relativeRect.translate( -itemRect.left(), -itemRect.top() );
-                        rects->append(new Okular::NormalizedRect( relativeRect, item->width(), item->height() ));
+                        Okular::RegularAreaRect rects;
+                        rects.append( Okular::NormalizedRect( relativeRect, item->width(), item->height() ) );
+                        selectedText += okularPage->text( &rects );
                     }
                 }
-                if (okularPage)
-                  selectedText = okularPage->text( rects );
             }
 
             // popup that ask to copy:text and copy/save:image

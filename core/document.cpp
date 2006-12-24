@@ -1102,8 +1102,8 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             {
                 DocumentViewport searchViewport( currentPage );
                 searchViewport.rePos.enabled = true;
-                searchViewport.rePos.normalizedX = (match->first()->left + match->first()->right) / 2.0;
-                searchViewport.rePos.normalizedY = (match->first()->top + match->first()->bottom) / 2.0;
+                searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
+                searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
                 setViewport( searchViewport, -1, true );
             }
         }

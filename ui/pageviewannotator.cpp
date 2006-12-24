@@ -468,9 +468,9 @@ class TextSelectorEngine : public AnnotatorEngine
                 QColor col = m_engineColor;
                 col.setAlphaF( 0.5 );
                 painter->setBrush( col );
-                foreach( Okular::NormalizedRect * r, *selection )
+                foreach( const Okular::NormalizedRect & r, *selection )
                 {
-                    painter->drawRect( r->geometry( (int)xScale, (int)yScale ) );
+                    painter->drawRect( r.geometry( (int)xScale, (int)yScale ) );
                 }
             }
         }
@@ -515,16 +515,16 @@ class TextSelectorEngine : public AnnotatorEngine
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->setHighlightType( type );
                 ha->setBoundingRectangle( Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() ) );
-                foreach ( Okular::NormalizedRect * rect, *selection )
+                foreach ( const Okular::NormalizedRect & rect, *selection )
                 {
                     Okular::HighlightAnnotation::Quad q;
                     q.setCapStart( false );
                     q.setCapEnd( false );
                     q.setFeather( 1.0 );
-                    q.setPoint( Okular::NormalizedPoint( rect->left, rect->bottom ), 0 );
-                    q.setPoint( Okular::NormalizedPoint( rect->right, rect->bottom ), 1 );
-                    q.setPoint( Okular::NormalizedPoint( rect->right, rect->top ), 2 );
-                    q.setPoint( Okular::NormalizedPoint( rect->left, rect->top ), 3 );
+                    q.setPoint( Okular::NormalizedPoint( rect.left, rect.bottom ), 0 );
+                    q.setPoint( Okular::NormalizedPoint( rect.right, rect.bottom ), 1 );
+                    q.setPoint( Okular::NormalizedPoint( rect.right, rect.top ), 2 );
+                    q.setPoint( Okular::NormalizedPoint( rect.left, rect.top ), 3 );
                     ha->highlightQuads().append( q );
                 }
                 ann = ha;

@@ -234,7 +234,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
             {
                 tmp=d->m_words[it]->transformedArea();
                 if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
-                  ret->appendShape(new NormalizedRect(*tmp));
+                  ret->appendShape(*tmp);
             }
 
 //           }
@@ -390,7 +390,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
             kDebug(1223) << "\tmatched" << endl;
 #endif
                     haveMatch=true;
-                    ret->append( curEntity->transformedArea() );
+                    ret->append( *curEntity->transformedArea() );
                     j+=min;
                     queryLeft-=min;
             }
@@ -434,7 +434,7 @@ QString TextPage::text(const RegularAreaRect *area) const
     {
         for ( ; it != itEnd; ++it )
         {
-            if ( area->intersects( (*it)->transformedArea() ) )
+            if ( area->intersects( *(*it)->transformedArea() ) )
             {
                 ret += (*it)->text();
             }

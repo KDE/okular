@@ -104,7 +104,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
-    QList< QPair<QColor, Okular::NormalizedRect *> > * bufferedHighlights = 0;
+    QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = 0;
     QList< Okular::Annotation * > * bufferedAnnotations = 0;
     QList< Okular::Annotation * > * unbufferedAnnotations = 0;
     // fill up lists with visible annotation/highlight objects/text selections
@@ -119,17 +119,17 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         if ( canDrawHighlights )
         {
             if ( !bufferedHighlights )
-                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect *>  >();
+                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect> >();
 /*            else
             {*/
                 
                 Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
                 QLinkedList< Okular::HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
-                QList< Okular::NormalizedRect * >::const_iterator hIt;
+                Okular::HighlightAreaRect::const_iterator hIt;
                 for ( ; h2It != hEnd; ++h2It )
                     for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
                     {
-                        if ((*hIt)->intersects(limitRect))
+                        if ((*hIt).intersects(limitRect))
                             bufferedHighlights->append( qMakePair((*h2It)->color,*hIt) );
                     }
                 delete limitRect;
@@ -138,14 +138,14 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         if ( canDrawTextSelection )
         {
             if ( !bufferedHighlights )
-                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect *>  >();
+                 bufferedHighlights = new QList< QPair<QColor, Okular::NormalizedRect>  >();
 /*            else
             {*/
                 Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                QList< Okular::NormalizedRect * >::const_iterator hIt = page->m_textSelections->begin(), hEnd = page->m_textSelections->end();
+                Okular::HighlightAreaRect::const_iterator hIt = page->m_textSelections->begin(), hEnd = page->m_textSelections->end();
                 for ( ; hIt != hEnd; ++hIt )
                 {
-                    if ( (*hIt)->intersects( limitRect ) )
+                    if ( (*hIt).intersects( limitRect ) )
                         bufferedHighlights->append( qMakePair( page->m_textSelections->color, *hIt ) );
                 }
                 delete limitRect;
@@ -275,12 +275,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, Okular::NormalizedRect *> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
+            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
             for ( ; hIt != hEnd; ++hIt )
             {
-                Okular::NormalizedRect * r = (*hIt).second;
+                const Okular::NormalizedRect & r = (*hIt).second;
                 // find out the rect to highlight on pixmap
-                QRect highlightRect = r->geometry( scaledWidth, scaledHeight ).intersect( limits );
+                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).intersect( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
                 // highlight composition (product: highlight color * destcolor)

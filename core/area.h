@@ -482,8 +482,7 @@ bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape
     if ( this->isEmpty() )
         return false;
 
-    const QList<NormalizedShape*> * const list = dynamic_cast<const QList<NormalizedShape*> * const >( this );
-    return list->contains( shape );
+    return QList<NormalizedShape>::contains( shape );
 }
 
 template <class NormalizedShape, class Shape>

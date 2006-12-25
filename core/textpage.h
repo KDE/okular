@@ -48,7 +48,7 @@ typedef enum SearchDirection{ FromTop, FromBottom, NextResult, PreviousResult };
  * Also some document types have glyphes - sets of characters rendered as one, so in search they should
  * appear as a text but are only one character when drawn on screen. We need to allow this.
  */
-class TextEntity
+class OKULAR_EXPORT TextEntity
 {
     public:
         typedef QList<TextEntity*> List;
@@ -100,7 +100,7 @@ class TextEntity
  * providing @see TextEntity items for every word/character of
  * the page.
  */
-class TextPage
+class OKULAR_EXPORT TextPage
 {
     public:
         /**

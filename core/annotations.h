@@ -27,7 +27,7 @@ class Annotation;
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
  */
-class AnnotationUtils
+class OKULAR_EXPORT AnnotationUtils
 {
     public:
         /**
@@ -390,7 +390,7 @@ class OKULAR_EXPORT Annotation
          * The Window class contains all information about the popup window
          * of the annotation that is used to edit the content and properties.
          */
-        class Window
+        class OKULAR_EXPORT Window
         {
             public:
                 /**
@@ -1016,7 +1016,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
          * The Quad class contains 8 coordinates and style definitions
          * which describe a line part of the whole highlight annotation.
          */
-        class Quad
+        class OKULAR_EXPORT Quad
         {
             public:
                 /**

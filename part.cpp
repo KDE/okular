@@ -583,7 +583,7 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     if ( hasEmbeddedFiles )
-        m_topMessage->display( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ) );
+        m_topMessage->display( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "attach" ) );
     else
         m_topMessage->hide();
     m_showPresentation->setEnabled( ok );

@@ -245,6 +245,9 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     setPalette( pal );
     QHBoxLayout * lay = new QHBoxLayout( this );
     lay->setMargin( 4 );
+    m_icon = new QLabel( this );
+    lay->addWidget( m_icon );
+    m_icon->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     m_label = new QLabel( this );
     lay->addWidget( m_label );
     m_label->setWordWrap( true );
@@ -256,14 +259,28 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     closeButton->setIconSize( QSize( 32, 32 ) );
     closeButton->setToolTip( i18n( "Close this message" ) );
     connect( closeButton, SIGNAL( clicked() ), this, SLOT( hide() ) );
+    setIconSize( 32 );
     hide();
 }
 
-void PageViewTopMessage::display( const QString & message )
+void PageViewTopMessage::display( const QString & message, const KIcon& icon )
 {
     m_label->setText( message );
     resize( minimumSizeHint() );
+    if ( icon.isNull() )
+    {
+        m_icon->setPixmap( QPixmap() );
+    }
+    else
+    {
+        m_icon->setPixmap( icon.pixmap( m_icon->size() ) );
+    }
     show();
+}
+
+void PageViewTopMessage::setIconSize( int size )
+{
+    m_icon->resize( size, size );
 }
 
 

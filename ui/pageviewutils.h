@@ -16,6 +16,7 @@
 
 class QLabel;
 class QTimer;
+class KIcon;
 
 namespace Okular {
 class Page;
@@ -87,13 +88,15 @@ class PageViewTopMessage : public QWidget
     public:
         PageViewTopMessage( QWidget * parent );
 
-        void display( const QString & message );
+        void display( const QString & message, const KIcon& icon = KIcon() );
+        void setIconSize( int size );
 
     signals:
         void action();
 
     private:
         QLabel * m_label;
+        QLabel * m_icon;
 };
 
 

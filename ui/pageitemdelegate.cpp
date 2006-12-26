@@ -10,7 +10,9 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <QItemDelegate>
+#include <QModelIndex>
 #include <QTextDocument>
+#include <qvariant.h>
 
 // local includes
 #include "pageitemdelegate.h"
@@ -18,25 +20,40 @@
 
 #define PAGEITEMDELEGATE_INTERNALMARGIN 3
 
-PageItemDelegate::PageItemDelegate( QObject * parent )
-    : QItemDelegate( parent )
+class PageItemDelegate::Private
 {
+    public:
+        Private()
+        {}
+
+        QModelIndex index;
+};
+
+PageItemDelegate::PageItemDelegate( QObject * parent )
+    : QItemDelegate( parent ), d( new Private )
+{
+}
+
+PageItemDelegate::~PageItemDelegate()
+{
+    delete d;
+}
+
+void PageItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+{
+    d->index = index;
+    QItemDelegate::paint( painter, option, index );
 }
 
 void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const
 {
-    if ( text.indexOf( PAGEITEMDELEGATE_SEPARATOR ) == -1 )
+    QVariant pageVariant = d->index.data( PageRole );
+    if ( !pageVariant.canConvert( QVariant::String ) || !Okular::Settings::tocPageColumn() )
     {
         QItemDelegate::drawDisplay( painter, option, rect, text );
         return;
     }
-    QString realText = text.section( PAGEITEMDELEGATE_SEPARATOR, 1 );
-    if ( !Okular::Settings::tocPageColumn() )
-    {
-                QItemDelegate::drawDisplay( painter, option, rect, realText );
-                return;
-    }
-    QString page = text.section( PAGEITEMDELEGATE_SEPARATOR, 0, 0 );
+    QString page = pageVariant.toString();
     QTextDocument document;
     document.setPlainText( page );
     document.setDefaultFont( option.font );
@@ -50,7 +67,7 @@ void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewIte
                 newRect.translate( pageRectWidth + PAGEITEMDELEGATE_INTERNALMARGIN, 0 );
             else
                 pageRect.translate( newRect.width() + PAGEITEMDELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
-    QItemDelegate::drawDisplay( painter, option, newRect, realText );
+    QItemDelegate::drawDisplay( painter, option, newRect, text );
     QStyleOptionViewItemV2 newoption( option );
     newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;
     QItemDelegate::drawDisplay( painter, newoption, pageRect, page );

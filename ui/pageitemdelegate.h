@@ -12,17 +12,24 @@
 
 #include <QItemDelegate>
 
-#define PAGEITEMDELEGATE_SEPARATOR "@@@@@@@@@@"
-
 class PageItemDelegate : public QItemDelegate
 {
     Q_OBJECT
 
     public:
         PageItemDelegate( QObject * parent = 0 );
+        virtual ~PageItemDelegate();
+
+        static const int PageRole = 0x000f0001;
+
+        virtual void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
 
     protected:
         virtual void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const;
+
+    private:
+        class Private;
+        Private * const d;
 };
 
 #endif

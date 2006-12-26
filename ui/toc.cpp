@@ -56,10 +56,9 @@ class TOCItem : public QTreeWidgetItem
                     m_viewport = Okular::DocumentViewport( viewport );
             }
 
-            QString text = e.tagName();
             if ( m_viewport.isValid() )
-                text.prepend( QString::number( m_viewport.pageNumber + 1 ) + PAGEITEMDELEGATE_SEPARATOR );
-            setText( 0, text );
+                setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
+            setText( 0, e.tagName() );
         }
 
         const QDomElement & element() const

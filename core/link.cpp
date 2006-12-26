@@ -37,7 +37,7 @@ Link::LinkType LinkGoto::linkType() const
 
 QString LinkGoto::linkTip() const
 {
-    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) :
+    return m_extFileName.isEmpty() ? ( m_vp.isValid() ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) :
                                      i18n("Open external file");
 }
 

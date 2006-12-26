@@ -269,7 +269,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     // 4. set initial page (restoring the page saved in xml if loaded)
     DocumentViewport loadedViewport = (*d->viewportIterator);
-    if ( loadedViewport.pageNumber != -1 )
+    if ( loadedViewport.isValid() )
     {
         (*d->viewportIterator) = DocumentViewport();
         if ( loadedViewport.pageNumber >= (int)pages_vector.size() )
@@ -295,7 +295,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
     d->memCheckTimer->start( 2000 );
 
-    if (d->nextDocumentViewport.pageNumber != -1)
+    if (d->nextDocumentViewport.isValid())
     {
         setViewport(d->nextDocumentViewport);
         d->nextDocumentViewport = DocumentViewport();
@@ -865,7 +865,7 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     //    kDebug() << "setViewport with the same viewport." << endl;
 
     // set internal viewport taking care of history
-    if ( oldViewport.pageNumber == viewport.pageNumber || oldViewport.pageNumber == -1 )
+    if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
     {
         // if page is unchanged save the viewport at current position in queue
         oldViewport = viewport;
@@ -1279,7 +1279,7 @@ void Document::processLink( const Link * link )
             else
             {
                 // skip local links that point to nowhere (broken ones)
-                if (d->nextDocumentViewport.pageNumber == -1)
+                if (!d->nextDocumentViewport.isValid())
                     return;
 
                 setViewport( d->nextDocumentViewport, -1, true );
@@ -2052,6 +2052,11 @@ QString DocumentViewport::toString() const
         s += QString( ";AF1:" ) + (autoFit.width ? "T" : "F") +
              ':' + (autoFit.height ? "T" : "F");
     return s;
+}
+
+bool DocumentViewport::isValid() const
+{
+    return pageNumber != -1;
 }
 
 bool DocumentViewport::operator==( const DocumentViewport & vp ) const

@@ -57,7 +57,7 @@ class TOCItem : public QTreeWidgetItem
             }
 
             QString text = e.tagName();
-            if ( m_viewport.pageNumber != -1 )
+            if ( m_viewport.isValid() )
                 text.prepend( QString::number( m_viewport.pageNumber + 1 ) + PAGEITEMDELEGATE_SEPARATOR );
             setText( 0, text );
         }

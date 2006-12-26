@@ -235,6 +235,7 @@ class OKULAR_EXPORT DocumentViewport
         DocumentViewport( int pageNumber = -1 );
         DocumentViewport( const QString & xmlDesc );
         QString toString() const;
+        bool isValid() const;
         bool operator==( const DocumentViewport & vp ) const;
 };
 

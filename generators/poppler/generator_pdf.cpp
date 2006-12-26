@@ -74,7 +74,7 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
 {
     viewport.pageNumber = destination.pageNumber() - 1;
 
-    if (viewport.pageNumber == -1) return;
+    if (!viewport.isValid()) return;
 
     // get destination position
     // TODO add other attributes to the viewport (taken from link)

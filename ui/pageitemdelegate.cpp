@@ -64,9 +64,9 @@ void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewIte
     pageRect.setWidth( pageRectWidth + 2 * margindelta );
     newRect.setWidth( newRect.width() - pageRectWidth - PAGEITEMDELEGATE_INTERNALMARGIN );
     if ( option.direction == Qt::RightToLeft )
-                newRect.translate( pageRectWidth + PAGEITEMDELEGATE_INTERNALMARGIN, 0 );
-            else
-                pageRect.translate( newRect.width() + PAGEITEMDELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
+        newRect.translate( pageRectWidth + PAGEITEMDELEGATE_INTERNALMARGIN, 0 );
+    else
+        pageRect.translate( newRect.width() + PAGEITEMDELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
     QItemDelegate::drawDisplay( painter, option, newRect, text );
     QStyleOptionViewItemV2 newoption( option );
     newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;

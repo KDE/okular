@@ -8,71 +8,21 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qapplication.h>
 #include <qdom.h>
 #include <qheaderview.h>
-#include <QItemDelegate>
 #include <qlayout.h>
 #include <qstringlist.h>
-#include <QTextDocument>
 #include <qtreewidget.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <ktreewidgetsearchline.h>
 
 // local includes
+#include "pageitemdelegate.h"
 #include "toc.h"
 #include "core/document.h"
 #include "core/page.h"
-#include "settings.h"
 #include "core/link.h"
-
-#define TOC_SEPARATOR "@@@@@@@@@@"
-#define TOC_DELEGATE_INTERNALMARGIN 3
-
-class TOCDelegate : public QItemDelegate
-{
-    public:
-        TOCDelegate( QObject * parent = 0 )
-            : QItemDelegate( parent )
-        {
-        }
-
-    protected:
-        virtual void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const
-        {
-            if ( text.indexOf( TOC_SEPARATOR ) == -1 )
-            {
-                QItemDelegate::drawDisplay( painter, option, rect, text );
-                return;
-            }
-            QString realText = text.section( TOC_SEPARATOR, 1 );
-            if ( !Okular::Settings::tocPageColumn() )
-            {
-                QItemDelegate::drawDisplay( painter, option, rect, realText );
-                return;
-            }
-            QString page = text.section( TOC_SEPARATOR, 0, 0 );
-            QTextDocument document;
-            document.setPlainText( page );
-            document.setDefaultFont( option.font );
-            int margindelta = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
-            int pageRectWidth = (int)document.size().width();
-            QRect newRect( rect );
-            QRect pageRect( rect );
-            pageRect.setWidth( pageRectWidth + 2 * margindelta );
-            newRect.setWidth( newRect.width() - pageRectWidth - TOC_DELEGATE_INTERNALMARGIN );
-            if ( option.direction == Qt::RightToLeft )
-                newRect.translate( pageRectWidth + TOC_DELEGATE_INTERNALMARGIN, 0 );
-            else
-                pageRect.translate( newRect.width() + TOC_DELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
-            QItemDelegate::drawDisplay( painter, option, newRect, realText );
-            QStyleOptionViewItemV2 newoption( option );
-            newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;
-            QItemDelegate::drawDisplay( painter, newoption, pageRect, page );
-        }
-
-};
 
 class TOCItem : public QTreeWidgetItem
 {
@@ -108,7 +58,7 @@ class TOCItem : public QTreeWidgetItem
 
             QString text = e.tagName();
             if ( m_viewport.pageNumber != -1 )
-                text.prepend( QString::number( m_viewport.pageNumber + 1 ) + TOC_SEPARATOR );
+                text.prepend( QString::number( m_viewport.pageNumber + 1 ) + PAGEITEMDELEGATE_SEPARATOR );
             setText( 0, text );
         }
 
@@ -153,7 +103,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     m_treeView->setSortingEnabled( false );
     m_treeView->setRootIsDecorated( true );
     m_treeView->setAlternatingRowColors( true );
-    m_treeView->setItemDelegate( new TOCDelegate( m_treeView ) );
+    m_treeView->setItemDelegate( new PageItemDelegate( m_treeView ) );
     m_treeView->header()->hide();
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
     connect( m_treeView, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );

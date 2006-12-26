@@ -82,6 +82,7 @@ set(okularpart_SRCS
    ui/annotationwidgets.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
+   ui/pageitemdelegate.cpp
    ui/pagepainter.cpp
    ui/pagesizelabel.cpp
    ui/pageviewannotator.cpp

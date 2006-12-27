@@ -34,8 +34,8 @@ class BookmarkItem : public QTreeWidgetItem
         {
             setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
             m_url = m_bookmark.url();
-            m_viewport = Okular::DocumentViewport( m_url.ref() );
-            m_url.setRef( QString() );
+            m_viewport = Okular::DocumentViewport( m_url.htmlRef() );
+            m_url.setHTMLRef( QString() );
             setText( 0, m_bookmark.fullText() );
             if ( m_viewport.isValid() )
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );

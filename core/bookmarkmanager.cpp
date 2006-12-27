@@ -187,7 +187,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
     else
         newtitle = title;
     KUrl newurl = referurl;
-    newurl.setRef( vp.toString() );
+    newurl.setHTMLRef( vp.toString() );
     it.value().addBookmark( d->manager, newtitle, newurl, QString(), false );
     return true;
 }
@@ -197,7 +197,7 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
     if ( !referurl.isValid() || bm.isNull() || bm.isGroup() || bm.isSeparator() )
         return -1;
 
-    DocumentViewport vp( bm.url().ref() );
+    DocumentViewport vp( bm.url().htmlRef() );
     if ( !vp.isValid() )
         return -1;
 
@@ -221,7 +221,7 @@ void BookmarkManager::setUrl( const KUrl& url )
             if ( bm.isSeparator() || bm.isGroup() )
                 continue;
 
-            DocumentViewport vp( bm.url().ref() );
+            DocumentViewport vp( bm.url().htmlRef() );
             if ( !vp.isValid() )
                 continue;
 
@@ -244,7 +244,7 @@ bool BookmarkManager::setPageBookmark( int page )
             continue;
 
         ++count;
-        DocumentViewport vp( bm.url().ref() );
+        DocumentViewport vp( bm.url().htmlRef() );
         if ( vp.isValid() && vp.pageNumber == page )
             found = true;
 
@@ -258,7 +258,7 @@ bool BookmarkManager::setPageBookmark( int page )
         vp.rePos.normalizedX = 0;
         vp.rePos.normalizedY = 0;
         KUrl newurl = d->url;
-        newurl.setRef( vp.toString() );
+        newurl.setHTMLRef( vp.toString() );
         it.value().addBookmark( d->manager, QString( "#%1" ).arg( count + 1 ), newurl, QString(), false );
         added = true;
     }

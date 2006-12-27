@@ -46,7 +46,7 @@ class Page::Private
         Private( Page *page, uint n, double w, double h, int o )
             : m_page( page ), m_number( n ), m_orientation( o ),
               m_width( w ), m_height( h ),
-              m_rotation( 0 ), m_bookmarked( false ), m_maxuniqueNum( 0 ),
+              m_rotation( 0 ), m_maxuniqueNum( 0 ),
               m_text( 0 ), m_transition( 0 ),
               m_openingAction( 0 ), m_closingAction( 0 )
         {
@@ -72,7 +72,6 @@ class Page::Private
         int m_orientation;
         double m_width, m_height;
         int m_rotation;
-        bool m_bookmarked;
         int m_maxuniqueNum;
 
         TextPage * m_text;
@@ -190,11 +189,6 @@ bool Page::hasPixmap( int id, int width, int height ) const
 bool Page::hasTextPage() const
 {
     return d->m_text != 0;
-}
-
-bool Page::isBookmarked() const
-{
-    return d->m_bookmarked;
 }
 
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
@@ -383,11 +377,6 @@ void Page::setTextPage( TextPage * textPage )
     textPage->transform( d->rotationMatrix() );
 
     d->m_text = textPage;
-}
-
-void Page::setBookmarked( bool state )
-{
-    d->m_bookmarked = state;
 }
 
 void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
@@ -604,7 +593,7 @@ void Page::deleteAnnotations()
 
 void Page::restoreLocalContents( const QDomNode & pageNode )
 {
-    // iterate over all chilren (bookmark, annotationList, ...)
+    // iterate over all chilren (annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
     while ( childNode.isElement() )
     {
@@ -648,23 +637,20 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
             }
             kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
         }
-
-        // parse bookmark child element
-        else if ( childElement.tagName() == "bookmark" )
-            d->m_bookmarked = true;
     }
 }
 
 void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
 {
     // only add a node if there is some stuff to write into
-    if ( !d->m_bookmarked && m_annotations.isEmpty() )
+    if ( m_annotations.isEmpty() )
         return;
 
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
     pageElement.setAttribute( "number", d->m_number );
 
+#if 0
     // add bookmark info if is bookmarked
     if ( d->m_bookmarked )
     {
@@ -675,6 +661,7 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
         // add attributes to the element
         //bookmarkElement.setAttribute( "name", bookmark name );
     }
+#endif
 
     // add annotations info if has got any
     if ( !m_annotations.isEmpty() )

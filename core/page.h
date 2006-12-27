@@ -139,11 +139,6 @@ class OKULAR_EXPORT Page : public QObject
         bool hasAnnotations() const;
 
         /**
-         * Returns whether the page is bookmarked.
-         */
-        bool isBookmarked() const;
-
-        /**
          * Returns the bounding rect of the text which matches the following criteria
          * or 0 if the search is not successful.
          *
@@ -204,11 +199,6 @@ class OKULAR_EXPORT Page : public QObject
          * Sets the @p text page.
          */
         void setTextPage( TextPage * text );
-
-        /**
-         * Sets whether this page is bookmarked.
-         */
-        void setBookmarked( bool state );
 
         /**
          * Sets the list of object @p rects of the page.

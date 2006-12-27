@@ -1,0 +1,273 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Pino Toscano <pino@kde.org>                     *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
+
+// qt/kde includes
+#include <qhash.h>
+#include <qset.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <kinstance.h>
+#include <kstandarddirs.h>
+
+// local includes
+#include "bookmarkmanager.h"
+#include "document.h"
+
+using namespace Okular;
+
+class BookmarkManager::Private
+{
+    public:
+        Private()
+            : document( 0 ), manager( 0 )
+        {
+        }
+
+        KUrl url;
+        QSet<int> urlBookmarks;
+        Document * document;
+        QString file;
+        KBookmarkManager * manager;
+        QHash<KUrl, KBookmarkGroup> knownFiles;
+};
+
+BookmarkManager::BookmarkManager( Document * document )
+    : QObject( document ), KBookmarkOwner(), d( new Private )
+{
+    setObjectName( "Okular::BookmarkManager" );
+
+    d->document = document;
+
+    d->file = KStandardDirs::locateLocal( "data", "okular/bookmarks.xml" );
+
+    d->manager = KBookmarkManager::managerForFile( d->file, "okular", false );
+    d->manager->setEditorOptions( KGlobal::instance()->caption(), false );
+    d->manager->setUpdate( true );
+}
+
+BookmarkManager::~BookmarkManager()
+{
+    save();
+    d->knownFiles.clear();
+    delete d->manager;
+    delete d;
+}
+
+//BEGIN Reimplementations from KBookmarkOwner
+QString BookmarkManager::currentUrl() const
+{
+    return d->url.prettyUrl();
+}
+
+QString BookmarkManager::currentTitle() const
+{
+    return d->url.isLocalFile() ? d->url.path() : d->url.prettyUrl();
+}
+
+bool BookmarkManager::addBookmarkEntry() const
+{
+    return true;
+}
+
+bool BookmarkManager::editBookmarkEntry() const
+{
+    return true;
+}
+
+void BookmarkManager::openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers )
+{
+    emit openUrl( bm.url() );
+}
+//END Reimplementations from KBookmarkOwner
+
+KUrl::List BookmarkManager::files() const
+{
+    KUrl::List ret;
+    KBookmarkGroup group = d->manager->root();
+    for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
+    {
+        if ( bm.isSeparator() || !bm.isGroup() )
+            continue;
+
+        ret.append( KUrl( bm.fullText() ) );
+    }
+    return ret;
+}
+
+KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
+{
+    KBookmark::List ret;
+    KBookmarkGroup group = d->manager->root();
+    for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
+    {
+        if ( !bm.isGroup() || KUrl( bm.fullText() ) != url )
+            continue;
+
+        KBookmarkGroup group = bm.toGroup();
+        for ( KBookmark b = group.first(); !b.isNull(); b = group.next( b ) )
+        {
+            if ( b.isSeparator() || b.isGroup() )
+                continue;
+
+            ret.append( b );
+        }
+        break;
+    }
+    return ret;
+}
+
+void BookmarkManager::save() const
+{
+    d->manager->save( false );
+}
+
+static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& files, const KUrl& url, KBookmarkManager * manager, bool doCreate )
+{
+    QHash<KUrl, KBookmarkGroup>::iterator it = files.find( url );
+    if ( it == files.end() )
+    {
+        // if the url we want to add a new entry for is not in the hash of the
+        // known files, then first try to find the file among the top-level
+        // "folder" names
+        bool found = false;
+        KBookmarkGroup root = manager->root();
+        for ( KBookmark bm = root.first(); !found && !bm.isNull(); bm = root.next( bm ) )
+        {
+            if ( bm.isSeparator() || !bm.isGroup() )
+                continue;
+
+            KUrl tmpurl( bm.fullText() );
+            if ( tmpurl == url )
+            {
+                // got it! place it the hash of known files
+                it = files.insert( url, bm.toGroup() );
+                found = true;
+                break;
+            }
+        }
+        if ( !found && doCreate )
+        {
+            // folder not found :(
+            // then, in a single step create a new folder and add it in our cache :)
+            QString purl = url.isLocalFile() ? url.path() : url.prettyUrl();
+            it = files.insert( url, root.createNewFolder( manager, purl ) );
+        }
+    }
+    return it;
+}
+
+bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
+{
+    if ( !referurl.isValid() || !vp.isValid() )
+        return false;
+
+    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, referurl, d->manager, true );
+    Q_ASSERT( it != d->knownFiles.end() );
+
+    QString newtitle;
+    if ( title.isEmpty() )
+    {
+        // if we have no title specified for the new bookmark, then give it the
+        // name '#n' where n is the index of this bookmark among the ones of
+        // its file
+        int count = 0;
+        for ( KBookmark bm = it.value().first(); !bm.isNull(); bm = it.value().next( bm ) )
+        {
+            if ( !bm.isSeparator() && !bm.isGroup() )
+                ++count;
+        }
+        newtitle = QString( "#%1" ).arg( count + 1 );
+    }
+    else
+        newtitle = title;
+    KUrl newurl = referurl;
+    newurl.setRef( vp.toString() );
+    it.value().addBookmark( d->manager, newtitle, newurl, QString(), false );
+    return true;
+}
+
+int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
+{
+    if ( !referurl.isValid() || bm.isNull() || bm.isGroup() || bm.isSeparator() )
+        return -1;
+
+    DocumentViewport vp( bm.url().ref() );
+    if ( !vp.isValid() )
+        return -1;
+
+    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, referurl, d->manager, false );
+    if ( it == d->knownFiles.end() )
+        return -1;
+
+    it.value().deleteBookmark( bm );
+    return vp.pageNumber;
+}
+
+void BookmarkManager::setUrl( const KUrl& url )
+{
+    d->url = url;
+    d->urlBookmarks.clear();
+    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, url, d->manager, false );
+    if ( it != d->knownFiles.end() )
+    {
+        for ( KBookmark bm = it.value().first(); !bm.isNull(); bm = it.value().next( bm ) )
+        {
+            if ( bm.isSeparator() || bm.isGroup() )
+                continue;
+
+            DocumentViewport vp( bm.url().ref() );
+            if ( !vp.isValid() )
+                continue;
+
+            d->urlBookmarks.insert( vp.pageNumber );
+        }
+    }
+}
+
+bool BookmarkManager::setPageBookmark( int page )
+{
+    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, d->url, d->manager, true );
+    Q_ASSERT( it != d->knownFiles.end() );
+
+    bool found = false;
+    bool added = false;
+    int count = 0;
+    for ( KBookmark bm = it.value().first(); !found && !bm.isNull(); bm = it.value().next( bm ) )
+    {
+        if ( bm.isSeparator() || bm.isGroup() )
+            continue;
+
+        ++count;
+        DocumentViewport vp( bm.url().ref() );
+        if ( vp.isValid() && vp.pageNumber == page )
+            found = true;
+
+    }
+    if ( !found )
+    {
+        d->urlBookmarks.insert( page );
+        DocumentViewport vp;
+        vp.pageNumber = page;
+        vp.rePos.enabled = true;
+        vp.rePos.normalizedX = 0;
+        vp.rePos.normalizedY = 0;
+        KUrl newurl = d->url;
+        newurl.setRef( vp.toString() );
+        it.value().addBookmark( d->manager, QString( "#%1" ).arg( count + 1 ), newurl, QString(), false );
+        added = true;
+    }
+    return added;
+}
+
+bool BookmarkManager::isPageBookmarked( int page ) const
+{
+    return d->urlBookmarks.contains( page );
+}
+
+#include "bookmarkmanager.moc"

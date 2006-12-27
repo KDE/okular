@@ -65,8 +65,10 @@
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
 #include "ui/pagesizelabel.h"
+#include "ui/bookmarklist.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
+#include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -102,6 +104,7 @@ Part::Part(QWidget *parentWidget,
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
 	connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
+	connect( m_document->bookmarkManager(), SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
 	
 	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
 		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
@@ -157,6 +160,11 @@ Part::Part(QWidget *parentWidget,
 	// [left toolbox: Reviews] | []
 	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
 	m_toolBox->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
+
+	// [left toolbox: Bookmarks] | []
+	BookmarkList * bookmarkList = new BookmarkList( m_document, m_toolBox );
+	connect( bookmarkList, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
+	m_toolBox->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
 
 	// widgets: [../miniBarContainer] | []
 	QWidget * miniBarContainer = new QWidget( m_leftPanel );
@@ -215,6 +223,7 @@ Part::Part(QWidget *parentWidget,
 	m_document->addObserver( m_progressWidget );
 	m_document->addObserver( reviewsWidget );
 	m_document->addObserver( m_pageSizeLabel );
+	m_document->addObserver( bookmarkList );
 
 	// ACTIONS
 	KActionCollection * ac = actionCollection();
@@ -910,7 +919,7 @@ void Part::slotPreviousBookmark()
 
     for ( int i = current - 1; i >= 0; --i )
     {
-        if ( m_document->page( i )->isBookmarked() )
+        if ( m_document->isBookmarked( i ) )
         {
             m_document->setViewportPage( i );
             break;
@@ -928,7 +937,7 @@ void Part::slotNextBookmark()
 
     for ( uint i = current + 1; i < pages; ++i )
     {
-        if ( m_document->page( i )->isBookmarked() )
+        if ( m_document->isBookmarked( i ) )
         {
             m_document->setViewportPage( i );
             break;
@@ -1105,9 +1114,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 	if (page)
 	{
 		popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-		if ( page->isBookmarked() )
-			toggleBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
-		else
+		if ( !m_document->isBookmarked( page->number() ) )
 			toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
 		if ( m_pageView->canFitPageWidth() )
 			fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
@@ -1139,7 +1146,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 		QAction *res = popup->exec(point);
 		if (res)
 		{
-		if (res == toggleBookmark) m_document->toggleBookmark( page->number() );
+		if (res == toggleBookmark) m_document->addBookmark( page->number() );
 		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
 		}
 	}
@@ -1228,7 +1235,7 @@ void Part::slotPrint()
 
     for ( uint i = 0; i < pages; ++i )
     {
-        if ( m_document->page( i )->isBookmarked() )
+        if ( m_document->isBookmarked( i ) )
         {
             if ( startId < 0 )
                 startId = i;

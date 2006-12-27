@@ -28,9 +28,10 @@ namespace Okular {
 #define REVIEWS_ID 7
 #define PROGRESSWIDGET_ID 8
 #define PAGESIZELABEL_ID 9
+#define BOOKMARKLIST_ID 10
 
 // the biggest id, useful for ignoring wrong id request
-#define MAX_OBSERVER_ID 10
+#define MAX_OBSERVER_ID 11
 
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1

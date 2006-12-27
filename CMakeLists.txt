@@ -32,6 +32,7 @@ include_directories(
 set(okularcore_SRCS
    core/annotations.cpp
    core/area.cpp
+   core/bookmarkmanager.cpp
    core/chooseenginedialog.cpp
    core/document.cpp
    core/generator.cpp
@@ -80,6 +81,7 @@ set(okularpart_SRCS
    ui/annotationpropertiesdialog.cpp
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
+   ui/bookmarklist.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
    ui/pageitemdelegate.cpp

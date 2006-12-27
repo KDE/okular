@@ -24,6 +24,7 @@
 
 #include "area.h"
 
+class KBookmark;
 class KPrinter;
 class KUrl;
 class KActionCollection;
@@ -32,6 +33,7 @@ class QToolBox;
 namespace Okular {
 
 class Annotation;
+class BookmarkManager;
 class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
@@ -145,7 +147,12 @@ class OKULAR_EXPORT Document : public QObject
         void resetSearch( int searchID );
         bool continueLastSearch();
 
-        void toggleBookmark( int page );
+        void addBookmark( int page );
+        void addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title = QString() );
+        bool isBookmarked( int page ) const;
+        void removeBookmark( const KUrl& referurl, const KBookmark& bm );
+        const BookmarkManager * bookmarkManager() const;
+
         void processLink( const Link * link );
         void processSourceReference( const SourceReference * ref );
         bool canConfigurePrinter() const;

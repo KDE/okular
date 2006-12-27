@@ -30,6 +30,7 @@
 #include <ktoolinvocation.h>
 
 // local includes
+#include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
 #include "document.h"
 #include "generator.h"
@@ -52,6 +53,7 @@ class Okular::DocumentPrivate
             allocatedPixmapsTotalMemory( 0 ),
             warnedOutOfMemory( false ),
             rotation( 0 ),
+            bookmarkManager( 0 ),
             memCheckTimer( 0 ),
             saveBookmarksTimer( 0 )
         {}
@@ -82,6 +84,9 @@ class Okular::DocumentPrivate
 
         // the rotation applied to the document, 0,1,2,3 * 90 degrees
         int rotation;
+
+        // our bookmark manager
+        BookmarkManager * bookmarkManager;
 
         // timers (memory checking / info saver)
         QTimer * memCheckTimer;
@@ -124,6 +129,7 @@ struct RunningSearch
 Document::Document( QHash<QString, Generator*> * genList )
     : m_loadedGenerators ( genList ), generator( 0 ),  d( new DocumentPrivate )
 {
+    d->bookmarkManager = new BookmarkManager( this );
     m_usingCachedGenerator = false;
 }
 
@@ -263,6 +269,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     loadDocumentInfo();
+    d->bookmarkManager->setUrl( d->url );
 
     // 3. setup observers inernal lists and data
     foreachObserver( notifySetup( pages_vector, true ) );
@@ -1241,14 +1248,39 @@ bool Document::continueLastSearch()
 }
 
 
-void Document::toggleBookmark( int n )
+void Document::addBookmark( int n )
 {
-    Page * page = ( n < (int)pages_vector.count() ) ? pages_vector[ n ] : 0;
-    if ( page )
+    if ( n >= 0 && n < (int)pages_vector.count() )
     {
-        page->setBookmarked( !page->isBookmarked() );
-        foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+        if ( d->bookmarkManager->setPageBookmark( n ) )
+            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
     }
+}
+
+void Document::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
+{
+    if ( !vp.isValid() )
+        return;
+
+    if ( d->bookmarkManager->addBookmark( referurl, vp, title ) )
+        foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+}
+
+bool Document::isBookmarked( int page ) const
+{
+    return d->bookmarkManager->isPageBookmarked( page );
+}
+
+void Document::removeBookmark( const KUrl& referurl, const KBookmark& bm )
+{
+    int changedpage = d->bookmarkManager->removeBookmark( referurl, bm );
+    if ( changedpage != -1 )
+        foreachObserver( notifyPageChanged( changedpage, DocumentObserver::Bookmark ) );
+}
+
+const BookmarkManager * Document::bookmarkManager() const
+{
+    return d->bookmarkManager;
 }
 
 void Document::processLink( const Link * link )

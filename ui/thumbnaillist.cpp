@@ -37,7 +37,7 @@
 class ThumbnailWidget : public QWidget
 {
     public:
-        ThumbnailWidget( QWidget * parent, const Okular::Page * page, ThumbnailList * tl );
+        ThumbnailWidget( QWidget * parent, const Okular::Document * document, const Okular::Page * page, ThumbnailList * tl );
 
         // set internal parameters to fit the page in the given width
         void resizeFitWidth( int width );
@@ -65,6 +65,7 @@ class ThumbnailWidget : public QWidget
 
         // used to access 'forwardClick( .. )' and 'getBookmarkOverlay()'
         ThumbnailList * m_tl;
+        const Okular::Document * m_document;
         const Okular::Page * m_page;
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
@@ -157,7 +158,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool d
         //if ( skipCheck || (*pIt)->attributes() & flags )
         if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
         {
-            ThumbnailWidget * t = new ThumbnailWidget( widget(), *pIt, this );
+            ThumbnailWidget * t = new ThumbnailWidget( widget(), m_document, *pIt, this );
             t->setFocusProxy( this );
             t->move(0, height);
             // add to the internal queue
@@ -495,8 +496,8 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 
 /** ThumbnailWidget implementation **/
 
-ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Page * kp, ThumbnailList * tl )
-    : QWidget( parent ), m_tl( tl ), m_page( kp ),
+ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Document * document, const Okular::Page * kp, ThumbnailList * tl )
+    : QWidget( parent ), m_tl( tl ), m_document( document ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;
@@ -565,7 +566,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( clipRect.top() < m_pixmapHeight + m_margin )
     {
         // if page is bookmarked draw a colored border
-        bool isBookmarked = m_page->isBookmarked();
+        bool isBookmarked = m_document->isBookmarked( pageNumber() );
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );

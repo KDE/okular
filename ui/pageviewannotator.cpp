@@ -585,6 +585,8 @@ void PageViewAnnotator::setEnabled( bool on )
         if ( m_toolBar )
             m_toolBar->hideAndDestroy();
         m_toolBar = 0;
+        // deactivate the active tool, if any
+        slotToolSelected( -1 );
         return;
     }
 

@@ -25,6 +25,7 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "settings.h"
+#include "annotationguiutils.h"
 #include "side_reviews.h"
 
 
@@ -186,7 +187,7 @@ class AnnotationItem : public QTreeWidgetItem
 
         void init()
         {
-            setText( 0, Okular::AnnotationUtils::captionForAnnotation( m_ann ) );
+            setText( 0, AnnotationGuiUtils::captionForAnnotation( m_ann ) );
             setIcon( 0, KIcon( "okular" ) );
             setToolTip( 0, QString( "<qt><b>%1</b><hr>%2</qt>" )
                 .arg( i18n( "Author: %1", m_ann->author() ), m_ann->contents() ) );

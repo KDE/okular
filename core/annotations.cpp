@@ -11,9 +11,6 @@
 #include <QtGui/QApplication>
 #include <QtGui/QColor>
 
-#include <kdebug.h>
-#include <klocale.h>
-
 // local includes
 #include "annotations.h"
 
@@ -79,41 +76,6 @@ QDomElement AnnotationUtils::findChildElement( const QDomNode & parentNode,
     }
     // if the name can't be found, return a dummy null element
     return QDomElement();
-}
-
-QString AnnotationUtils::captionForAnnotation( Annotation * ann )
-{
-    if ( !ann )
-        return QString();
-
-    QString ret;
-    switch( ann->subType() )
-    {
-        case Okular::Annotation::AText:
-            if( ( (Okular::TextAnnotation*)ann )->textType() == Okular::TextAnnotation::Linked )
-                ret = i18n( "Note" );
-            else
-                ret = i18n( "FreeText" );
-            break;
-        case Okular::Annotation::ALine:
-            ret = i18n( "Line" );
-            break;
-        case Okular::Annotation::AGeom:
-            ret = i18n( "Geom" );
-            break;
-        case Okular::Annotation::AHighlight:
-            ret = i18n( "Highlight" );
-            break;
-        case Okular::Annotation::AStamp:
-            ret = i18n( "Stamp" );
-            break;
-        case Okular::Annotation::AInk:
-            ret = i18n( "Ink" );
-            break;
-        case Okular::Annotation::A_BASE:
-            break;
-    }
-    return ret;
 }
 
 QRect AnnotationUtils::annotationGeometry( const Annotation * ann,

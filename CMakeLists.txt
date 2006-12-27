@@ -78,6 +78,7 @@ set(okularpart_SRCS
    conf/dlgpresentation.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
+   ui/annotationguiutils.cpp
    ui/annotationpropertiesdialog.cpp
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp

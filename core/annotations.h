@@ -53,11 +53,6 @@ class OKULAR_EXPORT AnnotationUtils
                                              const QString & name );
 
         /**
-         * Returns the translated string with the type of the given @p annotation.
-         */
-        static QString captionForAnnotation( Annotation * annotation );
-
-        /**
          * Returns the geometry of the given @p annotation scaled by
          * @p scaleX and @p scaleY.
          */

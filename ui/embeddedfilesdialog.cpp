@@ -25,7 +25,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	setCaption(i18n("Embedded Files"));
 	setButtons(Close | User1);
 	setDefaultButton(Close);
-	setButtonGuiItem(User1, KStdGuiItem::save());
+	setButtonGuiItem(User1, KStandardGuiItem::save());
 
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);

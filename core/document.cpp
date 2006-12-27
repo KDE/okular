@@ -1062,7 +1062,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStdGuiItem::cont(), KStdGuiItem::cancel()) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;

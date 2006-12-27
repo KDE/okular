@@ -28,7 +28,7 @@
 #include <kconfig.h>
 #include <kpushbutton.h>
 #include <kstandarddirs.h>
-#include <kstdguiitem.h>
+#include <kstandardguiitem.h>
 #include <kdebug.h>
 #include <kicon.h>
 #include <khtml_part.h>
@@ -537,7 +537,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->messageLabel->setAutoFillBackground( true );
         // close button
         KPushButton * closeButton = new KPushButton( bottomLine );
-        closeButton->setGuiItem( KStdGuiItem::close() );
+        closeButton->setGuiItem( KStandardGuiItem::close() );
         //closeButton->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum )
         connect( closeButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
 

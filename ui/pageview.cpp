@@ -33,7 +33,6 @@
 #endif
 
 #include <kaction.h>
-#include <kstdaccel.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kmenu.h>

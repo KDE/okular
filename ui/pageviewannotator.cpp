@@ -512,16 +512,16 @@ class TextSelectorEngine : public AnnotatorEngine
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->setHighlightType( type );
                 ha->setBoundingRectangle( Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() ) );
-                foreach ( const Okular::NormalizedRect & rect, *selection )
+                foreach ( const Okular::NormalizedRect & r, *selection )
                 {
                     Okular::HighlightAnnotation::Quad q;
                     q.setCapStart( false );
                     q.setCapEnd( false );
                     q.setFeather( 1.0 );
-                    q.setPoint( Okular::NormalizedPoint( rect.left, rect.bottom ), 0 );
-                    q.setPoint( Okular::NormalizedPoint( rect.right, rect.bottom ), 1 );
-                    q.setPoint( Okular::NormalizedPoint( rect.right, rect.top ), 2 );
-                    q.setPoint( Okular::NormalizedPoint( rect.left, rect.top ), 3 );
+                    q.setPoint( Okular::NormalizedPoint( r.left, r.bottom ), 0 );
+                    q.setPoint( Okular::NormalizedPoint( r.right, r.bottom ), 1 );
+                    q.setPoint( Okular::NormalizedPoint( r.right, r.top ), 2 );
+                    q.setPoint( Okular::NormalizedPoint( r.left, r.top ), 3 );
                     ha->highlightQuads().append( q );
                 }
                 ann = ha;

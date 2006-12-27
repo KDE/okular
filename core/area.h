@@ -275,65 +275,45 @@ struct HighlightRect : public NormalizedRect
 
 /** @internal */
 template <typename T>
-class okularPtrUtils
+void doDelete( T& t )
 {
-public:
-    static void doDelete( T& t )
-    {
-        (void)t;
-    }
-
-    static T* givePtr( T& t )
-    {
-        return &t;
-    }
-
-    static const T* givePtr( const T& t )
-    {
-        return &t;
-    }
-
-    static T& deref( T& t )
-    {
-        return t;
-    }
-
-    static const T& deref( const T& t )
-    {
-        return t;
-    }
-};
+    (void)t;
+}
 
 /** @internal */
 template <typename T>
-class okularPtrUtils<T*>
+T* givePtr( T& t )
 {
-public:
-    static void doDelete( T* t )
-    {
-        delete t;
-    }
+    return &t;
+}
 
-    static T* givePtr( T* t )
-    {
-        return t;
-    }
+/** @internal */
+template <typename T>
+T& deref( T& t )
+{
+    return t;
+}
 
-    static const T* givePtr( const T* t )
-    {
-        return t;
-    }
+/** @internal */
+template <typename T>
+static void doDelete( T* t )
+{
+    delete t;
+}
 
-    static T& deref( T* t )
-    {
-        return *t;
-    }
+/** @internal */
+template <typename T>
+static T* givePtr( T* t )
+{
+    return t;
+}
 
-    static const T& deref( const T* t )
-    {
-        return *t;
-    }
-};
+/** @internal */
+template <typename T>
+static T& deref( T* t )
+{
+    return *t;
+}
 
 /**
  * @short A regular area of NormalizedShape which normalizes a Shape
@@ -357,7 +337,7 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         void appendShape( const NormalizedShape& shape );
         void simplify ();
         bool isNull() const;
-        QList<Shape>* geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
+        QList<Shape> geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
 };
 
 template <class NormalizedShape, class Shape>
@@ -365,7 +345,7 @@ RegularArea<NormalizedShape, Shape>::~RegularArea<NormalizedShape, Shape>()
 {
     int size = this->count();
     for ( int i = 0; i < size; ++i )
-        okularPtrUtils<NormalizedShape>::doDelete( (*this)[i] );
+        doDelete( (*this)[i] );
 }
 
 template <class NormalizedShape, class Shape>
@@ -377,12 +357,12 @@ void RegularArea<NormalizedShape, Shape>::simplify()
             int end = this->count() - 1, x = 0;
             for ( int i = 0; i < end; ++i )
             {
-                    if ( okularPtrUtils<NormalizedShape>::givePtr( (*this)[x] )->intersects( okularPtrUtils<NormalizedShape>::deref( (*this)[i+1] ) ) )
+                    if ( givePtr( (*this)[x] )->intersects( deref( (*this)[i+1] ) ) )
                     {
-                        okularPtrUtils<NormalizedShape>::deref((*this)[x]) |= okularPtrUtils<NormalizedShape>::deref((*this)[i+1]);
+                        deref((*this)[x]) |= deref((*this)[i+1]);
                         NormalizedShape& tobedeleted = (*this)[i+1];
                         this->removeAt( i + 1 );
-                        okularPtrUtils<NormalizedShape>::doDelete( tobedeleted );
+                        doDelete( tobedeleted );
                         --end;
                         --i;
                     }
@@ -406,7 +386,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
         return false;
 
     foreach ( const NormalizedShape& ns, *this )
-        if ( !(okularPtrUtils<NormalizedShape>::givePtr(ns)->isNull()) )
+        if ( !givePtr(ns)->isNull() )
             return false;
 
     return true;
@@ -422,7 +402,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
         return false;
 
     foreach ( const NormalizedShape& ns, *this )
-        if ( !okularPtrUtils<NormalizedShape>::givePtr(ns)->isNull() && okularPtrUtils<NormalizedShape>::givePtr(ns)->intersects( rect ) )
+        if ( !givePtr(ns)->isNull() && givePtr(ns)->intersects( rect ) )
             return true;
 
     return false;
@@ -476,10 +456,10 @@ void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& sh
     {
         // if the new shape intersects with the last shape in the list, then
         // merge it with that and delete the shape
-        if ( okularPtrUtils<NormalizedShape>::givePtr((*this)[size - 1])->intersects( shape ) )
+        if ( givePtr((*this)[size - 1])->intersects( shape ) )
         {
-            okularPtrUtils<NormalizedShape>::deref((*this)[size - 1]) |= okularPtrUtils<NormalizedShape>::deref( shape );
-            okularPtrUtils<NormalizedShape>::doDelete( const_cast<NormalizedShape&>( shape ) );
+            deref((*this)[size - 1]) |= deref( shape );
+            doDelete( const_cast<NormalizedShape&>( shape ) );
         }
         else
             this->append( shape );
@@ -516,21 +496,18 @@ bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape
 }
 
 template <class NormalizedShape, class Shape>
-QList<Shape> * RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
+QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
 {
-    if ( !this )
-        return false;
+    if ( !this || this->isEmpty() )
+        return QList<Shape>();
 
-    if ( this->isEmpty() )
-        return 0;
-
-    QList<Shape>* ret = new QList<Shape>;
+    QList<Shape> ret;
     Shape t;
     foreach( const NormalizedShape& ns, *this )
     {
-        t = okularPtrUtils<NormalizedShape>::givePtr(ns)->geometry( xScale, yScale );
+        t = givePtr(ns)->geometry( xScale, yScale );
         t.translate( dx, dy );
-        ret->append( t );
+        ret.append( t );
     }
 
     return ret;

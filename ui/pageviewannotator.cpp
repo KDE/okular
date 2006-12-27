@@ -436,17 +436,14 @@ class TextSelectorEngine : public AnnotatorEngine
                     QPoint start( (int)( lastPoint.x * item()->width() ), (int)( lastPoint.y * item()->height() ) );
                     QPoint end( (int)( nX * item()->width() ), (int)( nY * item()->height() ) );
                     Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
-                    QList<QRect> * geom = newselection->geometry( (int)xScale, (int)yScale );
+                    QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
                     QRect newrect;
-                    if ( geom )
+                    foreach( const QRect& r, geom )
                     {
-                        foreach( QRect r, *geom )
-                        {
-                            if ( newrect.isNull() )
-                                newrect = r;
-                            else
-                                newrect |= r;
-                        }
+                        if ( newrect.isNull() )
+                            newrect = r;
+                        else
+                            newrect |= r;
                     }
                     rect |= newrect;
                     delete selection;

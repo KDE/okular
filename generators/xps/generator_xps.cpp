@@ -276,7 +276,7 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 {
     kDebug() << "page file name: " << fileName << endl;
 
-    KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
     QIODevice* pageDevice = pageFile->device();
 
@@ -328,7 +328,7 @@ int XpsPage::loadFontByName( const QString &fileName )
 {
     // kDebug() << "font file name: " << fileName << endl;
 
-    KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
+    const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
 
     QByteArray fontData = fontFile->data(); // once per file, according to the docs
 
@@ -346,7 +346,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
     kDebug() << "image file name: " << fileName << endl;
 
-    KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
+    const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
 
     QByteArray imageData = imageFile->data(); // once per file, according to the docs
 
@@ -360,7 +360,7 @@ XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
 {
     kDebug() << "document file name: " << fileName << endl;
 
-    KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
+    const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
     QIODevice* documentDevice = documentFile->device();
 
@@ -429,7 +429,7 @@ bool XpsFile::loadDocument(const QString &filename)
     }
 
     // The only fixed entry in XPS is _rels/.rels
-    KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry("_rels/.rels"));
+    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry("_rels/.rels"));
 
     if ( !relFile ) {
         // this might occur if we can't read the zip directory, or it doesn't have the relationships entry
@@ -474,7 +474,7 @@ bool XpsFile::loadDocument(const QString &filename)
     delete relDevice;
 
 
-    KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry( fixedRepresentationFileName ));
+    const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry( fixedRepresentationFileName ));
 
     QIODevice* fixedRepDevice = fixedRepFile->device();
 
@@ -519,7 +519,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
     m_docInfo->set( "mimeType", "application/vnd.ms-xpsdocument" );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
-        KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry(m_corePropertiesFileName));
+        const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry(m_corePropertiesFileName));
 
         QDomDocument corePropertiesDocumentDom;
         QString errMsg;

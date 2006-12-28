@@ -308,21 +308,43 @@ class OKULAR_EXPORT DocumentFonts : public QDomDocument
 };
 
 /**
- * @short An embedded file into the document, has name, description, dates and the data
+ * @short An embedded file into the document.
+ *
+ * This class represents a sort of interface of an embedded file in a document.
+ *
+ * Generators \b must re-implement its members to give the all the information
+ * about an embedded file, like its name, its description, the date of creation
+ * and modification, and the real data of the file.
  */
-
 class OKULAR_EXPORT EmbeddedFile
 {
     public:
         EmbeddedFile();
         virtual ~EmbeddedFile();
-        
-        virtual QString name() const = 0;
-        virtual QString description() const = 0;
-        virtual QByteArray data() const = 0;
-        virtual QDateTime modificationDate() const = 0;
-        virtual QDateTime creationDate() const = 0;
 
+        /**
+         * Returns the name of the file
+         */
+        virtual QString name() const = 0;
+        /**
+         * Returns the description of the file, or an empty string if not
+         * available
+         */
+        virtual QString description() const = 0;
+        /**
+         * Returns the real data representing the file contents
+         */
+        virtual QByteArray data() const = 0;
+        /**
+         * Returns the modification date of the file, or an invalid date
+         * if not available
+         */
+        virtual QDateTime modificationDate() const = 0;
+        /**
+         * Returns the creation date of the file, or an invalid date
+         * if not available
+         */
+        virtual QDateTime creationDate() const = 0;
 };
 
 /**

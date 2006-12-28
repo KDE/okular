@@ -20,6 +20,13 @@
 #include "core/document.h"
 #include "embeddedfilesdialog.h"
 
+static QString dateToString( const QDateTime & date )
+{
+	return date.isValid()
+		? KGlobal::locale()->formatDateTime( date, false, true )
+		: i18nc( "Unknown date", "Unknown" );
+}
+
 EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : KDialog(parent)
 {
 	setCaption(i18n("Embedded Files"));
@@ -48,22 +55,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 			twi->setIcon(0, KIcon(mime->iconName()));
 		}
 		twi->setText(1, ef->description());
-		if (ef->creationDate().isValid())
-		{
-			twi->setText(2, KGlobal::locale()->formatDateTime( ef->creationDate(), false, true ));
-		}
-		else
-		{
-			twi->setText(2, i18n("Unknown"));
-		}
-		if (ef->modificationDate().isValid())
-		{
-			twi->setText(3, KGlobal::locale()->formatDateTime( ef->modificationDate(), false, true ));
-		}
-		else
-		{
-			twi->setText(3, i18n("Unknown"));
-		}
+		twi->setText(2, dateToString( ef->creationDate() ) );
+		twi->setText(3, dateToString( ef->modificationDate() ) );
 		m_tw->addTopLevelItem(twi);
 		m_files.insert(twi, ef);
 	}

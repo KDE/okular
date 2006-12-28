@@ -247,10 +247,10 @@ class OKULAR_EXPORT DocumentViewport
 };
 
 /**
- * @short A DOM tree containing informations about the document.
+ * @short A DOM tree containing information about the document.
  *
- * The Info structure can be filled in by generators to display metadata
- * about the currently opened file.
+ * The DocumentInfo structure can be filled in by generators to display
+ * metadata about the currently opened file.
  */
 class OKULAR_EXPORT DocumentInfo : public QDomDocument
 {

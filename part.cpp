@@ -784,7 +784,7 @@ void Part::slotDoFileDirty()
     // close and (try to) reopen the document
     if ( KParts::ReadOnlyPart::openUrl(m_file) )
     {
-        // on successfull opening, restore the previous viewport
+        // on successful opening, restore the previous viewport
         if ( m_viewportDirty.pageNumber >= (int) m_document->pages() ) 
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );

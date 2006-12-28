@@ -317,7 +317,7 @@ class OKULAR_EXPORT Generator : public QObject
 
     Q_SIGNALS:
         /**
-         * This signal should be emitted whenever an error occured in the generator.
+         * This signal should be emitted whenever an error occurred in the generator.
          *
          * @param message The message which should be shown to the user.
          * @param duration The time that the message should be shown to the user.

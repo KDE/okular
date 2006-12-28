@@ -14,6 +14,7 @@
 #include <qstringlist.h>
 #include <qtimer.h>
 #include <qtoolbar.h>
+#include <qtooltip.h>
 #include <qtreewidget.h>
 #include <kaction.h>
 #include <klocale.h>
@@ -86,7 +87,9 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_listView->header()->setResizeMode( QHeaderView::Stretch );
     m_listView->header()->hide();
     m_listView->setIndentation( 16 );
+    m_listView->setMouseTracking( true );
     connect( m_listView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( itemActivated( QTreeWidgetItem *, int ) ) );
+    connect( m_listView, SIGNAL( itemEntered( QTreeWidgetItem *, int ) ), this, SLOT( itemEntered( QTreeWidgetItem *, int ) ) );
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
@@ -189,8 +192,6 @@ class AnnotationItem : public QTreeWidgetItem
         {
             setText( 0, AnnotationGuiUtils::captionForAnnotation( m_ann ) );
             setIcon( 0, KIcon( "okular" ) );
-            setToolTip( 0, QString( "<qt><b>%1</b><hr>%2</qt>" )
-                .arg( i18n( "Author: %1", m_ann->author() ), m_ann->contents() ) );
         }
 
         Okular::Annotation * annotation()
@@ -348,6 +349,22 @@ void Reviews::requestListViewUpdate( int delayms )
     // start timer if not already running
     if ( !m_delayTimer->isActive() )
         m_delayTimer->start( delayms );
+}
+
+void Reviews::itemEntered( QTreeWidgetItem * item, int /*column*/ )
+{
+    AnnotationItem * annItem = dynamic_cast< AnnotationItem * >( item );
+    if ( !annItem )
+        return;
+
+    QString contents = AnnotationGuiUtils::contentsHtml( annItem->annotation() );
+    if ( contents.isEmpty() )
+        return;
+
+    QString tooltip = QString( "<qt><b>%1</b><hr>%2</qt>" )
+                .arg( i18n( "Author: %1", annItem->annotation()->author() ), contents );
+
+    QToolTip::showText( QCursor::pos(), tooltip, m_listView, m_listView->visualItemRect( annItem ) );
 }
 
 #include "side_reviews.moc"

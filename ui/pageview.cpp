@@ -58,6 +58,7 @@
 #include "pagepainter.h"
 #include "core/annotations.h"
 #include "annotwindow.h"    //"embeddedannotationdialog.h"
+#include "annotationguiutils.h"
 #include "annotationpropertiesdialog.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
@@ -185,9 +186,9 @@ protected:
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                QString contents = ( !ann->window().text().isEmpty() ? ann->window().text() : ann->contents() );
+                QString contents = AnnotationGuiUtils::contentsHtml( ann );
                 QString tip = QString( "<qt><b>%1</b><hr>%2</qt>" )
-                    .arg( i18n( "Author: %1", ann->author() ), contents.replace( "\n", "<br>" ) );
+                    .arg( i18n( "Author: %1", ann->author() ), contents );
                 QToolTip::showText( he->globalPos(), tip, this, r );
             }
             else if ( link )

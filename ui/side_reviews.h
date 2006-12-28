@@ -47,6 +47,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
 
     private slots:
         void itemActivated( QTreeWidgetItem *, int );
+        void itemEntered( QTreeWidgetItem *, int );
 
     private:
         // add all annotations of a page to the listView taking care of grouping

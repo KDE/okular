@@ -49,3 +49,35 @@ QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )
     return ret;
 }
 
+QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
+{
+    if ( !ann )
+        return QString();
+
+    // 1. window text
+    QString ret = ann->window().text();
+    if ( !ret.isEmpty() )
+        return ret;
+    // 2. if Text and InPlace, the inplace text
+    if ( ann->subType() == Okular::Annotation::AText )
+    {
+        const Okular::TextAnnotation * txtann = dynamic_cast< const Okular::TextAnnotation * >( ann );
+        if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+        {
+            ret = txtann->inplaceText();
+            if ( !ret.isEmpty() )
+                return ret;
+        }
+    }
+
+    // 3. contents
+    ret = ann->contents();
+
+    return ret;
+}
+
+QString AnnotationGuiUtils::contentsHtml( const Okular::Annotation * ann )
+{
+    return contents( ann ).replace( "\n", "<br>" );
+}
+

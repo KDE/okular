@@ -21,6 +21,9 @@ class AnnotationGuiUtils
          * Returns the translated string with the type of the given @p annotation.
          */
         static QString captionForAnnotation( Okular::Annotation * annotation );
+
+        static QString contents( const Okular::Annotation * annotation );
+        static QString contentsHtml( const Okular::Annotation * annotation );
 };
 
 

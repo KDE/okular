@@ -25,7 +25,7 @@ QString Link::linkTip() const
 }
 
 // LinkGoto
-LinkGoto::LinkGoto( QString fileName, const DocumentViewport & viewport )
+LinkGoto::LinkGoto( const QString& fileName, const DocumentViewport & viewport )
     : m_extFileName( fileName ), m_vp( viewport )
 {
 }

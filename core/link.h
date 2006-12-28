@@ -76,7 +76,7 @@ class OKULAR_EXPORT LinkGoto : public Link
          * @p fileName The name of an external file that shall be loaded.
          * @p viewport The target viewport information of the current document.
          */
-        LinkGoto( QString fileName, const DocumentViewport & viewport );
+        LinkGoto( const QString& fileName, const DocumentViewport & viewport );
 
         /**
          * Returns the link type.

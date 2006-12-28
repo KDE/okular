@@ -27,8 +27,8 @@
 
 #include <kmimetype.h>
 
-#include "document.h"
-
+class QToolBox;
+class KActionCollection;
 class KConfigDialog;
 class KIcon;
 class KPrinter;
@@ -36,6 +36,11 @@ class kdbgstream;
 
 namespace Okular {
 
+class Document;
+class DocumentFonts;
+class DocumentInfo;
+class DocumentSynopsis;
+class EmbeddedFile;
 class Link;
 class Page;
 class PixmapRequest;

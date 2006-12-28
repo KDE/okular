@@ -29,6 +29,7 @@
 #include <kimageeffect.h>
 #include <klocale.h>
 
+#include "core/document.h"
 #include "core/page.h"
 #include "generator_xps.h"
 

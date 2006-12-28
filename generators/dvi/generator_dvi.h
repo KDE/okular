@@ -18,6 +18,7 @@ class Anchor;
 
 namespace Okular {
 class DocumentViewport;
+class ObjectRect;
 }
 
 class DviGenerator : public Okular::Generator

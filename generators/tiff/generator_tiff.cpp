@@ -17,6 +17,7 @@
 #include <klocale.h>
 #include <kprinter.h>
 
+#include "core/document.h"
 #include "core/page.h"
 #include "generator_tiff.h"
 

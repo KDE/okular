@@ -10,6 +10,7 @@
 #include <kdebug.h>
 #include <kicon.h>
 
+#include "document.h"
 #include "generator.h"
 
 using namespace Okular;

@@ -380,7 +380,9 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
+#ifdef PDFGENERATOR_DEBUG
 	kDebug() << "load page " << i << " with rotation " << rotation << " and orientation " << orientation << endl;
+#endif
 	delete p;
 
         if (clear && pagesVector[i])

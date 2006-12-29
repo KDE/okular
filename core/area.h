@@ -331,13 +331,14 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         ~RegularArea();
         bool contains( double x, double y ) const;
         bool contains( const NormalizedShape& shape ) const;
-        bool intersects (const RegularArea<NormalizedShape,Shape> * area) const;
-        bool intersects (const NormalizedShape& shape) const;
-        void appendArea (const RegularArea<NormalizedShape,Shape> *area);
+        bool intersects( const RegularArea<NormalizedShape,Shape> *area ) const;
+        bool intersects( const NormalizedShape& shape ) const;
+        void appendArea( const RegularArea<NormalizedShape,Shape> *area );
         void appendShape( const NormalizedShape& shape );
-        void simplify ();
+        void simplify();
         bool isNull() const;
         QList<Shape> geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
+        void transform( const QMatrix &matrix );
 };
 
 template <class NormalizedShape, class Shape>
@@ -511,6 +512,19 @@ QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int ySca
     }
 
     return ret;
+}
+
+template <class NormalizedShape, class Shape>
+void RegularArea<NormalizedShape, Shape>::transform( const QMatrix &matrix )
+{
+    if ( !this )
+        return;
+
+    if ( this->isEmpty() )
+        return;
+
+    for ( int i = 0; i < this->count(); ++i )
+        givePtr( (*this)[i] )->transform( matrix );
 }
 
 typedef RegularArea<NormalizedRect,QRect> RegularAreaRect;

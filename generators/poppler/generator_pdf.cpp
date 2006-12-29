@@ -623,8 +623,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     docLock.unlock();
     if ( genTextPage )
     {
-        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->rotation());
-        page->setTextPage( abstractTextPage(textList, page->height(), page->width(), request->page()->totalOrientation()) );
+        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->orientation());
+        page->setTextPage( abstractTextPage(textList, page->height(), page->width(), request->page()->orientation()) );
         qDeleteAll(textList);
     }
     delete p;
@@ -647,11 +647,15 @@ void PDFGenerator::generateSyncTextPage( Okular::Page * page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
-    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->rotation());
+    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->orientation());
     docLock.unlock();
     delete pp;
     // ..and attach it to the page
-    page->setTextPage( abstractTextPage(textList, page->height(), page->width(), page->totalOrientation()) );
+
+    const double pageWidth = ( page->rotation() % 2 ? page->height() : page->width() );
+    const double pageHeight = ( page->rotation() % 2 ? page->width() : page->height() );
+
+    page->setTextPage( abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation()));
     qDeleteAll(textList);
 }
 
@@ -1291,7 +1295,7 @@ void PDFGenerator::threadFinished()
     if ( !outText.isEmpty() )
     {
         request->page()->setTextPage( abstractTextPage( outText , 
-            request->page()->height(), request->page()->width(),request->page()->totalOrientation()));
+            request->page()->height(), request->page()->width(),request->page()->orientation()));
         qDeleteAll(outText);
     }
     bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -1471,7 +1475,7 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
-        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page()->rotation());
+        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page()->orientation());
     }
     delete pp;
     

@@ -256,7 +256,10 @@ QString Page::text( const RegularAreaRect * area ) const
     if ( !d->m_text )
         return ret;
 
-    ret = d->m_text->text( area );
+    RegularAreaRect rotatedArea = *area;
+    rotatedArea.transform( d->rotationMatrix().inverted() );
+
+    ret = d->m_text->text( &rotatedArea );
 
     return ret;
 }
@@ -269,9 +272,6 @@ void Page::rotateAt( int orientation )
 
     deleteHighlights();
     deleteTextSelections();
-
-    if ( d->m_text )
-        d->m_text->transform( d->rotationMatrix() );
 
     if ( ( d->m_orientation + d->m_rotation ) % 2 != ( d->m_orientation + neworientation ) % 2 )
         qSwap( d->m_width, d->m_height );
@@ -373,8 +373,6 @@ void Page::setPixmap( int id, QPixmap *pixmap )
 void Page::setTextPage( TextPage * textPage )
 {
     delete d->m_text;
-
-    textPage->transform( d->rotationMatrix() );
 
     d->m_text = textPage;
 }

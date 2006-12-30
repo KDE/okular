@@ -214,6 +214,11 @@ Part::Part(QWidget *parentWidget,
 	bottomBarLayout->addWidget( m_pageSizeLabel );
 	rightLayout->addWidget( bottomBar );
 
+    connect( reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
+             m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
+    connect( reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
+             m_pageView, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
+
 	// add document observers
 	m_document->addObserver( this );
 	m_document->addObserver( m_thumbnailList );

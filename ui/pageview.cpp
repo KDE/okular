@@ -59,7 +59,7 @@
 #include "core/annotations.h"
 #include "annotwindow.h"    //"embeddedannotationdialog.h"
 #include "annotationguiutils.h"
-#include "annotationpropertiesdialog.h"
+#include "annotationpopup.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -440,42 +440,49 @@ void PageView::fitPageWidth( int page )
     setFocus();
 }
 
-void PageView::setAnnotsWindow(Okular::Annotation * annot)
+void PageView::setAnnotationWindow( Okular::Annotation * annotation )
 {
-    if(!annot)
+    if ( !annotation )
         return;
-    //find the annot window
-    AnnotWindow* existWindow=0;
-    foreach(AnnotWindow* tempwnd, d->m_annowindows)
+
+    // find the annot window
+    AnnotWindow* existWindow = 0;
+    foreach ( AnnotWindow* tempwnd, d->m_annowindows )
     {
-        if(tempwnd)
+        if ( tempwnd )
         {
-            if(tempwnd->m_annot==annot)
+            if ( tempwnd->m_annot == annotation )
             {
-                existWindow=tempwnd;
+                existWindow = tempwnd;
                 break;
             }
         }
     }
-    
-   /* if(annot->window.flags & Annotation::Hidden)
+
+    if ( existWindow == 0 )
     {
-        if(existWindow)
+        existWindow = new AnnotWindow( this, annotation );
+
+        d->m_annowindows << existWindow;
+    }
+
+    existWindow->show();
+}
+
+void PageView::removeAnnotationWindow( Okular::Annotation *annotation )
+{
+    QList<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
+    QList<AnnotWindow *>::Iterator itEnd = d->m_annowindows.end();
+    for ( ; it != itEnd; ++it )
+    {
+        if ( annotation == (*it)->m_annot )
         {
-            existWindow->hide();
+            delete *it;
+            d->m_annowindows.erase( it );
+
+            return;
         }
     }
-    else
-    {*/
-        if(existWindow==0)
-        {
-            existWindow=new AnnotWindow(this,annot);
-            
-            d->m_annowindows<<existWindow;
-        }
-        existWindow->show();
-    //}
-    return;
 }
 
 void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )
@@ -554,7 +561,6 @@ void PageView::copyTextSelection() const
             cb->setText( text, QClipboard::Selection );
     }
 }
-
 
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
@@ -1355,48 +1361,15 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                         ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     if ( ann )
                     {
-                        KMenu menu( this );
-                        QAction *popoutWindow = 0;
-                        QAction *deleteNote = 0;
-                        QAction *showProperties = 0;
-                        menu.addTitle( i18n( "Annotation" ) );
-                        popoutWindow = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
-                        deleteNote = menu.addAction( KIcon( "remove" ), i18n( "&Delete" ) );
-                        if ( ann->flags() & Okular::Annotation::DenyDelete )
-                            deleteNote->setEnabled( false );
-                        showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties..." ) );
+                        AnnotationPopup popup( ann, d->document, this );
+                        popup.setPageNumber( pageItem->pageNumber() );
 
-                        QAction *choice = menu.exec( e->globalPos() );
-                        // check if the user really selected an action
-                        if ( choice )
-                        {
-                            if ( choice == popoutWindow )
-                            {
-                                //ann->window.flags ^= Annotation::Hidden;
-                                setAnnotsWindow( ann );
-                            }
-                            else if( choice == deleteNote )
-                            {
-                               // find and close the annotwindow
-                               QList<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
-                               QList<AnnotWindow *>::Iterator itEnd = d->m_annowindows.end();
-                               for ( ; it != itEnd; ++it )
-                               {
-                                   if ( ann == (*it)->m_annot )
-                                   {
-                                       delete *it;
-                                       it = d->m_annowindows.erase( it );
-                                       break;
-                                   }
-                               }
-                               d->document->removePageAnnotation( pageItem->page()->number(), ann );
-                            }
-                            else if( choice == showProperties )
-                            {
-                                AnnotsPropertiesDialog propdialog( this, d->document, pageItem->pageNumber(), ann );
-                                propdialog.exec();
-                            }
-                        }
+                        connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
+                                 this, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
+                        connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
+                                 this, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
+
+                        popup.exec( e->globalPos() );
                     }
                 }
             }

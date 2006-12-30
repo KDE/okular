@@ -27,6 +27,7 @@
 #include "core/page.h"
 #include "settings.h"
 #include "annotationguiutils.h"
+#include "annotationpopup.h"
 #include "side_reviews.h"
 
 
@@ -88,8 +89,15 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_listView->header()->hide();
     m_listView->setIndentation( 16 );
     m_listView->setMouseTracking( true );
-    connect( m_listView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( itemActivated( QTreeWidgetItem *, int ) ) );
-    connect( m_listView, SIGNAL( itemEntered( QTreeWidgetItem *, int ) ), this, SLOT( itemEntered( QTreeWidgetItem *, int ) ) );
+
+    connect( m_listView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ),
+             this, SLOT( itemActivated( QTreeWidgetItem *, int ) ) );
+    connect( m_listView, SIGNAL( itemEntered( QTreeWidgetItem *, int ) ),
+             this, SLOT( itemEntered( QTreeWidgetItem *, int ) ) );
+
+    m_listView->setContextMenuPolicy( Qt::CustomContextMenu );
+    connect( m_listView, SIGNAL( customContextMenuRequested( const QPoint& ) ),
+             this, SLOT( contextMenuRequested( const QPoint& ) ) );
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
@@ -365,6 +373,25 @@ void Reviews::itemEntered( QTreeWidgetItem * item, int /*column*/ )
                 .arg( i18n( "Author: %1", annItem->annotation()->author() ), contents );
 
     QToolTip::showText( QCursor::pos(), tooltip, m_listView, m_listView->visualItemRect( annItem ) );
+}
+
+void Reviews::contextMenuRequested( const QPoint &pos )
+{
+    AnnotationItem *item = dynamic_cast< AnnotationItem* >( m_listView->itemAt( pos ) );
+    if ( item ) {
+        Okular::Annotation *annotation = item->annotation();
+        int pageNumber = item->page();
+
+        AnnotationPopup popup( annotation, m_document, this );
+        popup.setPageNumber( pageNumber );
+
+        connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
+                 this, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ) );
+        connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
+                 this, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ) );
+
+        popup.exec( m_listView->viewport()->mapToGlobal( pos ) );
+    }
 }
 
 #include "side_reviews.moc"

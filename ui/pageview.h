@@ -51,9 +51,6 @@ Q_OBJECT
         PageView( QWidget *parent, Okular::Document *document );
         ~PageView();
 
-        //set pop-up annotation window states,such as hide/open ,position...
-        void setAnnotsWindow(Okular::Annotation * annot);
-
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
@@ -98,6 +95,10 @@ Q_OBJECT
         }
 
         void copyTextSelection() const;
+
+        void setAnnotationWindow( Okular::Annotation *annotation );
+
+        void removeAnnotationWindow( Okular::Annotation *annotation );
 
     signals:
         void urlDropped( const KUrl& );

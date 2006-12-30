@@ -39,15 +39,20 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
 
-    public slots:
+    public Q_SLOTS:
         void slotPageEnabled( bool );
         void slotAuthorEnabled( bool );
         void slotCurrentPageOnly( bool );
         void slotUpdateListView();
 
-    private slots:
+    Q_SIGNALS:
+        void setAnnotationWindow( Okular::Annotation *annotation );
+        void removeAnnotationWindow( Okular::Annotation *annotation );
+
+    private Q_SLOTS:
         void itemActivated( QTreeWidgetItem *, int );
         void itemEntered( QTreeWidgetItem *, int );
+        void contextMenuRequested( const QPoint &pos );
 
     private:
         // add all annotations of a page to the listView taking care of grouping

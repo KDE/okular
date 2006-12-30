@@ -24,7 +24,7 @@
 #include <kmimetype.h>
 
 class KRecentFilesAction;
-class K3TempFile;
+class KTemporaryFile;
 class KToggleAction;
 
 class Part;
@@ -100,7 +100,7 @@ private:
 
 private:
   KParts::ReadOnlyPart* m_part;
-  K3TempFile* m_tempfile;
+  KTemporaryFile* m_tempfile;
   KRecentFilesAction* m_recent;
   QStringList* m_fileformats;
   KAction* m_printAction;

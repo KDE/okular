@@ -38,7 +38,7 @@
 #include <kservicetypetrader.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
-#include <k3tempfile.h>
+#include <ktemporaryfile.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
 
@@ -261,7 +261,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    m_tempfile = new K3TempFile;
+    m_tempfile = new KTemporaryFile;
     if ( !m_tempfile )
     {
         KMessageBox::error(this, 
@@ -270,15 +270,15 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
         return false;
     }
 
-    m_tempfile->setAutoDelete(true);
+    m_tempfile->setAutoRemove(true);
 
     // something failed while creating the tempfile
-    if ( m_tempfile->status() != 0 )
+    if ( ! m_tempfile->open() )
     {
         KMessageBox::error( this, 
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
                 "<nobr><strong>%1</strong></nobr>.</qt>",
-                strerror(m_tempfile->status())));
+                strerror(m_tempfile->error())));
                 delete m_tempfile;
                 return false;
     }
@@ -319,12 +319,12 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
 
     while ((read = filterDev->read(buf.data(), buf.size())) > 0)
     {
-        wrtn = m_tempfile->file()->write(buf.data(), read);
+        wrtn = m_tempfile->write(buf.data(), read);
         if ( read != wrtn )
             break;
     }
     delete filterDev;
-    if ((read != 0) || (m_tempfile->file()->size() == 0))
+    if ((read != 0) || (m_tempfile->size() == 0))
     {
         KMessageBox::detailedError(this, 
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
@@ -336,8 +336,7 @@ bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::P
         delete m_tempfile;
         return false;
     }
-    m_tempfile->close();
-    url=m_tempfile->name();
+    url=m_tempfile->fileName();
     return true;
 }
 

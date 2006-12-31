@@ -222,6 +222,20 @@ class OKULAR_EXPORT Page : public QObject
         void setSourceReferences( const QLinkedList< SourceRefObjectRect * > rects );
 
         /**
+         * Sets the duration of the page to @p seconds when displayed in presentation mode.
+         *
+         * Setting to -1 disables the duration.
+         */
+        void setDuration( int seconds );
+
+        /**
+         * Returns the duration in seconds of the page when displayed in presentation mode.
+         *
+         * -1 means no time set for its visualization.
+         */
+        int duration() const;
+
+        /**
          * Returns the current text selection.
          */
         const RegularAreaRect * textSelection() const;

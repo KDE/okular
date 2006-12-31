@@ -48,7 +48,7 @@ class Page::Private
               m_width( w ), m_height( h ),
               m_rotation( 0 ), m_maxuniqueNum( 0 ),
               m_text( 0 ), m_transition( 0 ),
-              m_openingAction( 0 ), m_closingAction( 0 )
+              m_openingAction( 0 ), m_closingAction( 0 ), duration( -1 )
         {
             // avoid Division-By-Zero problems in the program
             if ( m_width <= 0 )
@@ -78,6 +78,7 @@ class Page::Private
         PageTransition * m_transition;
         Link * m_openingAction;
         Link * m_closingAction;
+        int duration;
 };
 
 void Page::Private::imageRotationDone()
@@ -417,6 +418,16 @@ void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRe
     deleteSourceReferences();
     foreach( SourceRefObjectRect * rect, refRects )
         m_rects << rect;
+}
+
+void Page::setDuration( int seconds )
+{
+    d->duration = seconds;
+}
+
+int Page::duration() const
+{
+    return d->duration;
 }
 
 const RegularAreaRect * Page::textSelection() const

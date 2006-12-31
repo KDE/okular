@@ -111,6 +111,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_overlayHideTimer->setSingleShot( true );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
     m_nextPageTimer = new QTimer( this ); 
+//    m_nextPageTimer->setSingleShot( true );
     connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) ); 
 
     // handle cursor appearance as specified in configuration
@@ -198,8 +199,7 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
     changePage( m_document->viewport().pageNumber );
 
     // auto advance to the next page if set
-    if ( Okular::Settings::slidesAdvance() )
-        m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
+    startAutoChangeTimer();
 }
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
@@ -905,6 +905,18 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
     return ret;
 }
 
+void PresentationWidget::startAutoChangeTimer()
+{
+    int pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
+    if ( Okular::Settings::slidesAdvance() || pageDuration > -1 )
+    {
+        int secs = pageDuration == -1
+                   ? Okular::Settings::slidesAdvanceTime()
+                   : qMin<int>( pageDuration, Okular::Settings::slidesAdvanceTime() );
+        m_nextPageTimer->start( secs * 1000 );
+    }
+}
+
 
 
 void PresentationWidget::slotNextPage()
@@ -918,8 +930,7 @@ void PresentationWidget::slotNextPage()
         // go to next page
         changePage( m_frameIndex + 1 );
         // auto advance to the next page if set
-        if ( Okular::Settings::slidesAdvance() )
-            m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
+        startAutoChangeTimer();
     }
     else
     {
@@ -945,8 +956,7 @@ void PresentationWidget::slotPrevPage()
         changePage( m_frameIndex - 1 );
 
         // auto advance to the next page if set
-        if ( Okular::Settings::slidesAdvance() )
-            m_nextPageTimer->start( Okular::Settings::slidesAdvanceTime() * 1000 );
+        startAutoChangeTimer();
     }
     else
     {

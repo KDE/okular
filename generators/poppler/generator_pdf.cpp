@@ -377,6 +377,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         tmplink = p->action( Poppler::Page::Closing );
         if ( tmplink )
             page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink, pdfdoc ) );
+        page->setDuration( p->duration() );
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 

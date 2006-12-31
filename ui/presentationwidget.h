@@ -76,6 +76,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         const Okular::PageTransition defaultTransition() const;
         const Okular::PageTransition defaultTransition( int ) const;
         QRect routeMouseDrawingEvent( QMouseEvent * );
+        void startAutoChangeTimer();
 
         // cache stuff
         int m_width;

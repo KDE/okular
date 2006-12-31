@@ -181,6 +181,8 @@ bool XpsHandler::startElement( const QString &nameSpace,
                                const QString &qname,
                                const QXmlAttributes & atts )
 {
+    Q_UNUSED(nameSpace);
+    Q_UNUSED(qname);
     if (localName == "Glyphs") {
         m_painter->save();
         int fontId = m_page->loadFontByName( atts.value("FontUri") );
@@ -251,6 +253,8 @@ bool XpsHandler::endElement( const QString &nameSpace,
                              const QString &localName,
                              const QString &qname)
 {
+    Q_UNUSED(nameSpace);
+    Q_UNUSED(qname);
     if ( localName == "Path" ) {
         m_painter->save();
         m_painter->setBrush( m_currentBrush );

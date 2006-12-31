@@ -78,7 +78,7 @@ class Page::Private
         PageTransition * m_transition;
         Link * m_openingAction;
         Link * m_closingAction;
-        int duration;
+        double duration;
 };
 
 void Page::Private::imageRotationDone()
@@ -420,12 +420,12 @@ void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRe
         m_rects << rect;
 }
 
-void Page::setDuration( int seconds )
+void Page::setDuration( double seconds )
 {
     d->duration = seconds;
 }
 
-int Page::duration() const
+double Page::duration() const
 {
     return d->duration;
 }

@@ -224,16 +224,16 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Sets the duration of the page to @p seconds when displayed in presentation mode.
          *
-         * Setting to -1 disables the duration.
+         * Setting a negative number disables the duration.
          */
-        void setDuration( int seconds );
+        void setDuration( double seconds );
 
         /**
          * Returns the duration in seconds of the page when displayed in presentation mode.
          *
-         * -1 means no time set for its visualization.
+         * A negative number means that no time is set.
          */
-        int duration() const;
+        double duration() const;
 
         /**
          * Returns the current text selection.

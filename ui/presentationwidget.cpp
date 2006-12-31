@@ -907,13 +907,13 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 
 void PresentationWidget::startAutoChangeTimer()
 {
-    int pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
-    if ( Okular::Settings::slidesAdvance() || pageDuration > -1 )
+    double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
+    if ( Okular::Settings::slidesAdvance() || pageDuration > 0.0 )
     {
-        int secs = pageDuration == -1
+        double secs = pageDuration <= 0.0
                    ? Okular::Settings::slidesAdvanceTime()
-                   : qMin<int>( pageDuration, Okular::Settings::slidesAdvanceTime() );
-        m_nextPageTimer->start( secs * 1000 );
+                   : qMin<double>( pageDuration, Okular::Settings::slidesAdvanceTime() );
+        m_nextPageTimer->start( (int)( secs * 1000 ) );
     }
 }
 

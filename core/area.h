@@ -542,4 +542,7 @@ class HighlightAreaRect : public RegularAreaRect
 
 }
 
+OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint& p );
+OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect& r );
+
 #endif

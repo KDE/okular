@@ -41,6 +41,12 @@ void NormalizedPoint::transform( const QMatrix &matrix )
     matrix.map( x, y, &x, &y );
 }
 
+kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint& p )
+{
+    str << "NormPt(" << p.x << "," << p.y << ")";
+    return str;
+}
+
 /** class NormalizedRect **/
 
 NormalizedRect::NormalizedRect()
@@ -146,6 +152,12 @@ void NormalizedRect::transform( const QMatrix &matrix )
     top = rect.top();
     right = rect.right();
     bottom = rect.bottom();
+}
+
+kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect& r )
+{
+    str << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
+    return str;
 }
 
 HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )

@@ -26,11 +26,14 @@
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 
+static const int BookmarkItemType = QTreeWidgetItem::UserType + 1;
+static const int FileItemType = QTreeWidgetItem::UserType + 2;
+
 class BookmarkItem : public QTreeWidgetItem
 {
     public:
         BookmarkItem( const KBookmark& bm )
-            : QTreeWidgetItem(), m_bookmark( bm )
+            : QTreeWidgetItem( BookmarkItemType ), m_bookmark( bm )
         {
             setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
             m_url = m_bookmark.url();
@@ -244,7 +247,7 @@ void BookmarkList::rebuildTree( bool filter )
         QTreeWidgetItem * currenturlitem = 0;
         foreach ( const KUrl& url, urls )
         {
-            QTreeWidgetItem * item = new QTreeWidgetItem( m_tree );
+            QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
             item->setText( 0, url.isLocalFile() ? url.path() : url.prettyUrl() );
             item->addChildren( createItems( url, m_document->bookmarkManager()->bookmarks( url ) ) );
             if ( !currenturlitem && url == m_document->currentDocument() )

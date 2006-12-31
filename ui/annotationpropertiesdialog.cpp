@@ -115,16 +115,6 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     flagsEdit = new QLineEdit( QString::number( m_annot->flags() ), page );
     gridlayout->addWidget( flagsEdit, 2, 1 );
 
-    QString tmpstr = QString( "%1,%2,%3,%4" ).arg( m_annot->boundingRectangle().left )
-                                             .arg( m_annot->boundingRectangle().top )
-                                             .arg( m_annot->boundingRectangle().right )
-                                             .arg( m_annot->boundingRectangle().bottom );
-    tmplabel = new QLabel( i18n( "boundary:" ), page );
-    gridlayout->addWidget( tmplabel, 3, 0 );
-    boundaryEdit = new QLineEdit( tmpstr, page );
-    boundaryEdit->setReadOnly( true );
-    gridlayout->addWidget( boundaryEdit, 3, 1 );
-
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance
 

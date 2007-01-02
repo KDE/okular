@@ -179,31 +179,16 @@ class OKULAR_EXPORT Document : public QObject
         void warning(const QString & string, int duration);
         void notice(const QString & string, int duration);
 
-    private Q_SLOTS:
-        void rotationFinished( int page );
-
     private:
-        QString pagesSizeString() const;
-        QString localizedSize(const QSizeF &size) const;
-        // memory management related functions
-        void cleanupPixmapMemory( int bytesOffset = 0 );
-        int getTotalMemory();
-        int getFreeMemory();
-        // more private functions
-        void loadDocumentInfo();
-        QString giveAbsolutePath( const QString & fileName );
-        bool openRelativeFile( const QString & fileName );
-        QHash<QString, Generator*>* m_loadedGenerators ;
-        Generator * generator;
-        bool m_usingCachedGenerator;
-        QVector< Page * > pages_vector;
-        QVector< VisiblePageRect * > page_rects;
-        class DocumentPrivate * d;
+        class Private;
+        Private* const d;
 
-    private slots:
-        void saveDocumentInfo() const;
-        void slotTimedMemoryCheck();
-        void sendGeneratorRequest();
+        Q_DISABLE_COPY( Document )
+
+        Q_PRIVATE_SLOT( d, void saveDocumentInfo() const )
+        Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
+        Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
+        Q_PRIVATE_SLOT( d, void rotationFinished( int page ) )
 };
 
 
@@ -217,14 +202,49 @@ class OKULAR_EXPORT Document : public QObject
 class OKULAR_EXPORT DocumentViewport
 {
     public:
-        /** data fields **/
-        // the page nearest the center of the viewport
+        /**
+         * Creates a new viewport for the given page @p number.
+         */
+        DocumentViewport( int number = -1 );
+
+        /**
+         * Creates a new viewport from the given xml @p description.
+         */
+        DocumentViewport( const QString &description );
+
+        /**
+         * Returns the viewport as xml description.
+         */
+        QString toString() const;
+
+        /**
+         * Returns whether the viewport is valid.
+         */
+        bool isValid() const;
+
+        /**
+         * @internal
+         */
+        bool operator==( const DocumentViewport &other ) const;
+
+        /**
+         * The number of the page nearest the center of the viewport.
+         */
         int pageNumber;
 
-        // enum definitions
-        enum Position { Center = 1, TopLeft = 2};
+        /**
+         * Describes the relative position of the viewport.
+         */
+        enum Position
+        {
+            Center = 1,  ///< Relative to the center of the page.
+            TopLeft = 2  ///< Relative to the top left corner of the page.
+        };
 
-        // if reCenter.enabled, this contains the viewport center
+        /**
+         * If 'rePos.enabled == true' then this structure contains the
+         * viewport center.
+         */
         struct {
             bool enabled;
             double normalizedX;
@@ -232,20 +252,14 @@ class OKULAR_EXPORT DocumentViewport
             Position pos;
         } rePos;
 
-        // if autoFit.enabled, page must be autofitted in the viewport
+        /**
+         * If 'autoFit.enabled == true' then the page must be autofitted in the viewport.
+         */
         struct {
             bool enabled;
             bool width;
             bool height;
         } autoFit;
-
-        /** class methods **/
-        // allowed constructors, don't use others
-        DocumentViewport( int pageNumber = -1 );
-        DocumentViewport( const QString & xmlDesc );
-        QString toString() const;
-        bool isValid() const;
-        bool operator==( const DocumentViewport & vp ) const;
 };
 
 /**
@@ -257,6 +271,9 @@ class OKULAR_EXPORT DocumentViewport
 class OKULAR_EXPORT DocumentInfo : public QDomDocument
 {
     public:
+        /**
+         * Creates a new document info.
+         */
         DocumentInfo();
 
         /**
@@ -290,7 +307,15 @@ class OKULAR_EXPORT DocumentInfo : public QDomDocument
 class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
 {
     public:
+        /**
+         * Creates a new document synopsis object.
+         */
         DocumentSynopsis();
+
+        /**
+         * Creates a new document synopsis object with the given
+         * @p document as parent node.
+         */
         DocumentSynopsis( const QDomDocument &document );
 };
 
@@ -306,6 +331,9 @@ class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
 class OKULAR_EXPORT DocumentFonts : public QDomDocument
 {
     public:
+        /**
+         * Creates a new document fonts object.
+         */
         DocumentFonts();
 };
 
@@ -321,27 +349,38 @@ class OKULAR_EXPORT DocumentFonts : public QDomDocument
 class OKULAR_EXPORT EmbeddedFile
 {
     public:
+        /**
+         * Creates a new embedded file.
+         */
         EmbeddedFile();
+
+        /**
+         * Destroys the embedded file.
+         */
         virtual ~EmbeddedFile();
 
         /**
          * Returns the name of the file
          */
         virtual QString name() const = 0;
+
         /**
          * Returns the description of the file, or an empty string if not
          * available
          */
         virtual QString description() const = 0;
+
         /**
          * Returns the real data representing the file contents
          */
         virtual QByteArray data() const = 0;
+
         /**
          * Returns the modification date of the file, or an invalid date
          * if not available
          */
         virtual QDateTime modificationDate() const = 0;
+
         /**
          * Returns the creation date of the file, or an invalid date
          * if not available
@@ -352,13 +391,25 @@ class OKULAR_EXPORT EmbeddedFile
 /**
  * @short An area of a specified page
  */
-class VisiblePageRect
+class OKULAR_EXPORT VisiblePageRect
 {
     public:
-        VisiblePageRect( int _pageNumber = -1, const NormalizedRect & r = NormalizedRect() )
-          : pageNumber( _pageNumber ), rect( r )  {};
+        /**
+         * Creates a new visible page rectangle.
+         *
+         * @param pageNumber The page number where the rectangle is located.
+         * @param rectangle The rectangle in normalized coordinates.
+         */
+        VisiblePageRect( int pageNumber = -1, const NormalizedRect &rectangle = NormalizedRect() );
 
+        /**
+         * The page number where the rectangle is located.
+         */
         int pageNumber;
+
+        /**
+         * The rectangle in normalized coordinates.
+         */
         NormalizedRect rect;
 };
 

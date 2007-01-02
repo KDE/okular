@@ -57,7 +57,7 @@ class TextPage;
  * @short Defines an entry for the export menu
  *
  * This class encapsulates information about an export format.
- * Every Generator can support 0 ore more export formats which can be
+ * Every Generator can support 0 or more export formats which can be
  * queried with @see Generator::exportFormats().
  */
 class OKULAR_EXPORT ExportFormat
@@ -92,7 +92,14 @@ class OKULAR_EXPORT ExportFormat
          */
         ~ExportFormat();
 
+        /**
+         * @internal
+         */
         ExportFormat( const ExportFormat &other );
+
+        /**
+         * @internal
+         */
         ExportFormat& operator=( const ExportFormat &other );
 
         /**

@@ -79,15 +79,24 @@ class OKULAR_EXPORT Page : public QObject
         int number() const;
 
         /**
-         * Returns the orientation of the page.
+         * Returns the orientation of the page as defined by the document.
          *
-         *    0 = 0°
-         *    1 = 90°
-         *    2 = 180°
-         *    3 = 270°
+         *    0 = 0°    = portrait
+         *    1 = 90°   = landscape
+         *    2 = 180°  = upside down
+         *    3 = 270°  = seascape
          */
         int orientation() const;
+
+        /**
+         * Returns the rotation of the page as defined by the user.
+         */
         int rotation() const;
+
+        /**
+         * Returns the total orientation which is the original orientation plus
+         * the user defined rotation.
+         */
         int totalOrientation() const;
 
         /**

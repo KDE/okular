@@ -532,7 +532,7 @@ const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry
     }
 
     // return the link pointer
-    return (Okular::Link *)object->pointer();
+    return (Okular::Link *)object->object();
 }
 
 void PresentationWidget::testCursorOnLink( int x, int y )

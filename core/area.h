@@ -61,6 +61,9 @@ class OKULAR_EXPORT NormalizedPoint
          */
         NormalizedPoint( int x, int y, int xScale, int yScale );
 
+        /**
+         * @internal
+         */
         NormalizedPoint& operator=( const NormalizedPoint& );
 
         /**
@@ -112,7 +115,14 @@ class OKULAR_EXPORT NormalizedRect
          */
         NormalizedRect( const QRect &rectangle, double xScale, double yScale );
 
+        /**
+         * @internal
+         */
         NormalizedRect( const NormalizedRect& );
+
+        /**
+         * @internal
+         */
         NormalizedRect& operator=( const NormalizedRect &other );
 
         /**
@@ -210,68 +220,157 @@ class OKULAR_EXPORT NormalizedRect
 class OKULAR_EXPORT ObjectRect
 {
     public:
-        // definition of the types of storable objects
-        enum ObjectType { Link, Image, OAnnotation, SourceRef };
+        /**
+         * Describes the type of storable object.
+         */
+        enum ObjectType
+        {
+            Link,        ///< A link
+            Image,       ///< An image
+            OAnnotation, ///< An annotation
+            SourceRef    ///< A source reference
+        };
 
-        // default constructor: initialize all parameters
-        ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType typ, void * obj );
-        ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt ) ;
-        ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt ) ;
+        /**
+         * Creates a new object rectangle.
+         *
+         * @param left The left coordinate of the rectangle.
+         * @param top The top coordinate of the rectangle.
+         * @param right The right coordinate of the rectangle.
+         * @param bottom The bottom coordinate of the rectangle.
+         * @param ellipse If true the rectangle describes an ellipse.
+         * @param type The type of the storable object @see ObjectType.
+         * @param object The pointer to the storable object.
+         */
+        ObjectRect( double left, double top, double right, double bottom, bool ellipse, ObjectType type, void *object );
+
+        /**
+         * This is an overloaded member function, provided for convenience.
+         */
+        ObjectRect( const NormalizedRect &rect, bool ellipse, ObjectType type, void *object );
+
+        /**
+         * This is an overloaded member function, provided for convenience.
+         */
+        ObjectRect( const QPolygonF &poly, ObjectType type, void *object );
+
+        /**
+         * Destroys the object rectangle.
+         */
         virtual ~ObjectRect();
 
-        // query type and get a const pointer to the stored object
-        inline ObjectType objectType() const { return m_objectType; }
-        inline const void * pointer() const { return m_pointer; }
+        /**
+         * Returns the object type of the object rectangle.
+         * @see ObjectType
+         */
+        ObjectType objectType() const;
+
+        /**
+         * Returns the storable object of the object rectangle.
+         */
+        const void *object() const;
+
+        /**
+         * Returns the region that is covered by the object rectangle.
+         */
         const QPainterPath &region() const;
+
+        /**
+         * Returns the bounding rect of the object rectangle for the
+         * scaling factor @p xScale and @p yScale.
+         */
         virtual QRect boundingRect( double xScale, double yScale ) const;
-        virtual bool contains( double x, double y, double /*xScale*/, double /*yScale*/ ) const;
+
+        /**
+         * Returns whether the object rectangle contains the point @p x, @p y for the
+         * scaling factor @p xScale and @p yScale.
+         */
+        virtual bool contains( double x, double y, double xScale, double yScale ) const;
+
+        /**
+         * Transforms the object rectangle with the operations defined by @p matrix.
+         */
         virtual void transform( const QMatrix &matrix );
 
     protected:
         ObjectType m_objectType;
-        void * m_pointer;
+        void * m_object;
         QPainterPath m_path;
-        QPainterPath m_transformed_path;
+        QPainterPath m_transformedPath;
 };
 
+/**
+ * This class describes the object rectangle for an annotation.
+ */
 class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
 {
     public:
-        AnnotationObjectRect( Annotation * ann );
+        /**
+         * Creates a new annotation object rectangle with the
+         * given @p annotation.
+         */
+        AnnotationObjectRect( Annotation *annotation );
+
+        /**
+         * Destroys the annotation object rectangle.
+         */
         virtual ~AnnotationObjectRect();
 
+        /**
+         * Returns the annotation object of the annotation object rectangle.
+         */
+        Annotation *annotation() const;
+
+        /**
+         * Returns the bounding rect of the annotation object rectangle for the
+         * scaling factor @p xScale and @p yScale.
+         */
         virtual QRect boundingRect( double xScale, double yScale ) const;
+
+        /**
+         * Returns whether the annotation object rectangle contains the point @p x, @p y for the
+         * scaling factor @p xScale and @p yScale.
+         */
         virtual bool contains( double x, double y, double xScale, double yScale ) const;
-        inline Annotation * annotation() const { return m_ann; }
+
+        /**
+         * Transforms the annotation object rectangle with the operations defined by @p matrix.
+         */
         virtual void transform( const QMatrix &matrix );
 
     private:
-        Annotation * m_ann;
+        Annotation * m_annotation;
 };
 
+/**
+ * This class describes the object rectangle for a source reference.
+ */
 class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
 {
     public:
-        SourceRefObjectRect( const NormalizedPoint& point, void * scrRef );
+        /**
+         * Creates a new source reference object rectangle.
+         *
+         * @param point The point of the source reference.
+         * @param reference The storable source reference object.
+         */
+        SourceRefObjectRect( const NormalizedPoint& point, void *reference );
 
+        /**
+         * Returns the bounding rect of the source reference object rectangle for the
+         * scaling factor @p xScale and @p yScale.
+         */
         virtual QRect boundingRect( double xScale, double yScale ) const;
+
+        /**
+         * Returns whether the source reference object rectangle contains the point @p x, @p y for the
+         * scaling factor @p xScale and @p yScale.
+         */
         virtual bool contains( double x, double y, double xScale, double yScale ) const;
 
     private:
         NormalizedPoint m_point;
 };
-
-/**
- * Internal Storage: normalized colored highlight owned by id
- */
-struct HighlightRect : public NormalizedRect
-{
-    // searchID of the highlight owner
-    int s_id;
-    // color of the highlight
-    QColor color;
-};
-
 
 /** @internal */
 template <typename T>
@@ -328,16 +427,62 @@ static T& deref( T* t )
 template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:
+        /**
+         * Destroys a regular area.
+         */
         ~RegularArea();
+
+        /**
+         * Returns whether the regular area contains the
+         * normalized point @p x, @p y.
+         */
         bool contains( double x, double y ) const;
+
+        /**
+         * Returns whether the regular area contains the
+         * given @p shape.
+         */
         bool contains( const NormalizedShape& shape ) const;
+
+        /**
+         * Returns whether the regular area intersects with the given @p area.
+         */
         bool intersects( const RegularArea<NormalizedShape,Shape> *area ) const;
+
+        /**
+         * Returns whether the regular area intersects with the given @p shape.
+         */
         bool intersects( const NormalizedShape& shape ) const;
+
+        /**
+         * Appends the given @p area to the regular area.
+         */
         void appendArea( const RegularArea<NormalizedShape,Shape> *area );
+
+        /**
+         * Appends the given @p shape to the regular area.
+         */
         void appendShape( const NormalizedShape& shape );
+
+        /**
+         * Simplifies the regular area by merging its intersecting subareas.
+         */
         void simplify();
+
+        /**
+         * Returns whether the regular area is a null area.
+         */
         bool isNull() const;
-        QList<Shape> geometry( int xScale, int yScale, int dx=0,int dy=0 ) const;
+
+        /**
+         * Returns the subareas of the regular areas as shapes for the given scaling factor
+         * @p xScale and @p yScale, translated by @p dx and @p dy.
+         */
+        QList<Shape> geometry( int xScale, int yScale, int dx = 0, int dy = 0 ) const;
+
+        /**
+         * Transforms the regular area with the operations defined by @p matrix.
+         */
         void transform( const QMatrix &matrix );
 };
 
@@ -529,20 +674,40 @@ void RegularArea<NormalizedShape, Shape>::transform( const QMatrix &matrix )
 
 typedef RegularArea<NormalizedRect,QRect> RegularAreaRect;
 
+/**
+ * This class stores the coordinates of a highlighting area
+ * together with the id of the highlight owner and the color.
+ */
 class HighlightAreaRect : public RegularAreaRect
 {
     public:
+        /**
+         * Creates a new highlight area rect with the coordinates of
+         * the given @p area.
+         */
         HighlightAreaRect( const RegularAreaRect *area = 0 );
 
-        // searchID of the highlight owner
+        /**
+         * The search ID of the highlight owner.
+         */
         int s_id;
-        // color of the highlight
+
+        /**
+         * The color of the highlight.
+         */
         QColor color;
 };
 
 }
 
-OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint& p );
-OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect& r );
+/**
+ * Debug operator for normalized @p point.
+ */
+OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint &point );
+
+/**
+ * Debug operator for normalized @p rect.
+ */
+OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect &rect );
 
 #endif

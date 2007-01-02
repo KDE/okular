@@ -177,7 +177,7 @@ HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
 /** class ObjectRect **/
 
 ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType type, void * pnt )
-    : m_objectType( type ), m_pointer( pnt )
+    : m_objectType( type ), m_object( pnt )
 {
     // assign coordinates swapping them if negative width or height
     QRectF rect( r > l ? l : r, b > t ? t : b, fabs( r - l ), fabs( b - t ) );
@@ -186,11 +186,11 @@ ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, Ob
     else
         m_path.addRect( rect );
 
-    m_transformed_path = m_path;
+    m_transformedPath = m_path;
 }
 
 ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt )
-    : m_objectType( type ), m_pointer( pnt )
+    : m_objectType( type ), m_object( pnt )
 {
     QRectF rect( x.left, x.top, fabs( x.right - x.left ), fabs( x.bottom - x.top ) );
     if ( ellipse )
@@ -198,25 +198,35 @@ ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, 
     else
         m_path.addRect( rect );
 
-    m_transformed_path = m_path;
+    m_transformedPath = m_path;
 }
 
 ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt )
-    : m_objectType( type ), m_pointer( pnt )
+    : m_objectType( type ), m_object( pnt )
 {
     m_path.addPolygon( poly );
 
-    m_transformed_path = m_path;
+    m_transformedPath = m_path;
+}
+
+ObjectRect::ObjectType ObjectRect::objectType() const
+{
+    return m_objectType;
+}
+
+const void * ObjectRect::object() const
+{
+    return m_object;
 }
 
 const QPainterPath &ObjectRect::region() const
 {
-    return m_transformed_path;
+    return m_transformedPath;
 }
 
 QRect ObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    const QRectF &br = m_transformed_path.boundingRect();
+    const QRectF &br = m_transformedPath.boundingRect();
 
     return QRect( (int)( br.left() * xScale ), (int)( br.top() * yScale ),
                   (int)( br.width() * xScale ), (int)( br.height() * yScale ) );
@@ -224,37 +234,42 @@ QRect ObjectRect::boundingRect( double xScale, double yScale ) const
 
 bool ObjectRect::contains( double x, double y, double, double ) const
 {
-    return m_transformed_path.contains( QPointF( x, y ) );
+    return m_transformedPath.contains( QPointF( x, y ) );
 }
 
 void ObjectRect::transform( const QMatrix &matrix )
 {
-    m_transformed_path = matrix.map( m_path );
+    m_transformedPath = matrix.map( m_path );
 }
 
 ObjectRect::~ObjectRect()
 {
-    if ( !m_pointer )
+    if ( !m_object )
         return;
 
     if ( m_objectType == Link )
-        delete static_cast<Okular::Link*>( m_pointer );
+        delete static_cast<Okular::Link*>( m_object );
     else if ( m_objectType == SourceRef )
-        delete static_cast<Okular::SourceReference*>( m_pointer );
+        delete static_cast<Okular::SourceReference*>( m_object );
     else
         kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
 }
 
 /** class AnnotationObjectRect **/
 
-AnnotationObjectRect::AnnotationObjectRect( Annotation * ann )
-    : ObjectRect( QPolygonF(), OAnnotation, ann ), m_ann( ann )
+AnnotationObjectRect::AnnotationObjectRect( Annotation * annotation )
+    : ObjectRect( QPolygonF(), OAnnotation, annotation ), m_annotation( annotation )
 {
+}
+
+Annotation *AnnotationObjectRect::annotation() const
+{
+    return m_annotation;
 }
 
 QRect AnnotationObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    return AnnotationUtils::annotationGeometry( m_ann, xScale, yScale );
+    return AnnotationUtils::annotationGeometry( m_annotation, xScale, yScale );
 }
 
 bool AnnotationObjectRect::contains( double x, double y, double xScale, double yScale ) const
@@ -266,12 +281,12 @@ AnnotationObjectRect::~AnnotationObjectRect()
 {
     // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
-    m_pointer = 0;
+    m_object = 0;
 }
 
 void AnnotationObjectRect::transform( const QMatrix &matrix )
 {
-    m_ann->transform( matrix );
+    m_annotation->transform( matrix );
 }
 
 /** class SourceRefObjectRect **/

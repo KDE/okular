@@ -48,7 +48,7 @@ class Page::Private
               m_width( w ), m_height( h ),
               m_rotation( 0 ), m_maxuniqueNum( 0 ),
               m_text( 0 ), m_transition( 0 ),
-              m_openingAction( 0 ), m_closingAction( 0 ), duration( -1 )
+              m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 )
         {
             // avoid Division-By-Zero problems in the program
             if ( m_width <= 0 )
@@ -78,7 +78,7 @@ class Page::Private
         PageTransition * m_transition;
         Link * m_openingAction;
         Link * m_closingAction;
-        double duration;
+        double m_duration;
 };
 
 void Page::Private::imageRotationDone()
@@ -422,12 +422,12 @@ void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRe
 
 void Page::setDuration( double seconds )
 {
-    d->duration = seconds;
+    d->m_duration = seconds;
 }
 
 double Page::duration() const
 {
-    return d->duration;
+    return d->m_duration;
 }
 
 const RegularAreaRect * Page::textSelection() const
@@ -475,7 +475,7 @@ void Page::modifyAnnotation(Annotation * newannotation )
             int rectfound = false;
             QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
             for ( ; it != end && !rectfound; ++it )
-                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->pointer() == (*aIt) ) )
+                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->object() == (*aIt) ) )
                 {
                     delete *it;
                     *it = new AnnotationObjectRect( newannotation );
@@ -501,7 +501,7 @@ bool Page::removeAnnotation( Annotation * annotation )
             int rectfound = false;
             QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
             for ( ; it != end && !rectfound; ++it )
-                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->pointer() == (*aIt) ) )
+                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->object() == (*aIt) ) )
                 {
                     delete *it;
                     it = m_rects.erase( it );

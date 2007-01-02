@@ -178,7 +178,7 @@ protected:
                 {
                     rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
-                        link = static_cast< const Okular::Link * >( rect->pointer() );
+                        link = static_cast< const Okular::Link * >( rect->object() );
                 }
             }
 
@@ -1456,7 +1456,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 if ( rect )
                 {
                     // handle click over a link
-                    const Okular::Link * link = static_cast< const Okular::Link * >( rect->pointer() );
+                    const Okular::Link * link = static_cast< const Okular::Link * >( rect->object() );
                     d->document->processLink( link );
                 }
                 else
@@ -1466,7 +1466,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->width(), pageItem->height() ) : 0;
                     if ( rect )
                     {
-                        const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->pointer() );
+                        const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->object() );
                         d->document->processSourceReference( ref );
                     }
 #if 0
@@ -1498,7 +1498,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     if ( rect )
                     {
                         // handle right click over a link
-                        const Okular::Link * link = static_cast< const Okular::Link * >( rect->pointer() );
+                        const Okular::Link * link = static_cast< const Okular::Link * >( rect->object() );
                         // creating the menu and its actions
                         KMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );

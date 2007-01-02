@@ -24,18 +24,22 @@ namespace Okular {
  *
  * How to use it in a custom Generator:
  * @code
-class MyGenerator : public Okular::Generator, public Okular::PrintInterface
-{
-    Q_OBJECT
-    Q_INTERFACES( Okular::PrintInterface )
+    class MyGenerator : public Okular::Generator, public Okular::PrintInterface
+    {
+        Q_OBJECT
+        Q_INTERFACES( Okular::PrintInterface )
 
-    ...
+        ...
+    };
  * @endcode
  * and - of course - implementing its methods.
  */
 class OKULAR_EXPORT PrintInterface
 {
     public:
+        /**
+         * Destroys the printer interface.
+         */
         virtual ~PrintInterface() {}
 
         /**

@@ -27,7 +27,6 @@
 
 #include <kmimetype.h>
 
-class KConfigDialog;
 class KIcon;
 class KPrinter;
 class kdbgstream;

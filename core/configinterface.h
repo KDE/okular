@@ -20,10 +20,25 @@ namespace Okular {
  * @short Abstract interface for configuration control
  *
  * This interface defines a way to configure the Generator itself.
+ *
+ * How to use it in a custom Generator:
+ * @code
+    class MyGenerator : public Okular::Generator, public Okular::ConfigInterface
+    {
+        Q_OBJECT
+        Q_INTERFACES( Okular::ConfigInterface )
+
+        ...
+    };
+ * @endcode
+ * and - of course - implementing its methods.
  */
 class OKULAR_EXPORT ConfigInterface
 {
     public:
+        /**
+         * Destroys the config interface.
+         */
         virtual ~ConfigInterface() {}
 
         /**

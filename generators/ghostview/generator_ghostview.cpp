@@ -62,6 +62,11 @@ GSGenerator::~GSGenerator()
     delete pixGenerator;
 }
 
+bool GSGenerator::reparseConfig()
+{
+    return false;
+}
+
 void GSGenerator::addPages( KConfigDialog *dlg )
 {
     Ui_GSSettingsWidget gsw;

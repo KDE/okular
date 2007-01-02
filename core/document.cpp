@@ -40,6 +40,7 @@
 #include "settings.h"
 #include "printinterface.h"
 #include "guiinterface.h"
+#include "configinterface.h"
 
 using namespace Okular;
 
@@ -457,7 +458,14 @@ void Document::removeObserver( DocumentObserver * pObserver )
 void Document::reparseConfig()
 {
     // reparse generator config and if something changed clear Pages
-    if ( generator && generator->reparseConfig() )
+    bool configchanged = false;
+    if ( generator )
+    {
+        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( generator );
+        if ( iface )
+            configchanged = iface->reparseConfig();
+    }
+    if ( configchanged )
     {
         // invalidate pixmaps
         QVector<Page*>::const_iterator it = pages_vector.begin(), end = pages_vector.end();

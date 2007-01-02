@@ -23,6 +23,7 @@
 #include "core/document.h"
 #include "core/link.h"
 #include "core/textpage.h"
+#include "core/configinterface.h"
 
 namespace Okular {
 class ObjectRect;
@@ -44,9 +45,11 @@ class PDFPixmapGeneratorThread;
  * Background asynchronous contents providing is done via a QThread inherited
  * class defined at the bottom of the file.
  */
-class PDFGenerator : public Okular::Generator
+class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::ConfigInterface )
+
     public:
         PDFGenerator();
         virtual ~PDFGenerator();
@@ -82,6 +85,7 @@ class PDFGenerator : public Okular::Generator
 
         // [INHERITED] reparse configuration
         bool reparseConfig();
+        void addPages( KConfigDialog * );
 
         // [INHERITED] text exporting
         Okular::ExportFormat::List exportFormats() const;

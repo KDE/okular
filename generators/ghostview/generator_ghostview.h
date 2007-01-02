@@ -12,6 +12,7 @@
 
 #include "core/generator.h"
 #include "core/guiinterface.h"
+#include "core/configinterface.h"
 
 class GSInterpreterCMD;
 class GSLogWindow;
@@ -20,9 +21,10 @@ class GSInternalDocument;
 class KTempFile;
 class KActionCollection;
 
-class GSGenerator : public Okular::Generator, public Okular::GuiInterface
+class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::GuiInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::ConfigInterface )
     Q_INTERFACES( Okular::GuiInterface )
 
     public:
@@ -55,7 +57,9 @@ class GSGenerator : public Okular::Generator, public Okular::GuiInterface
         bool print( KPrinter& /*printer*/ );
         QString fileName() const;
 
+        bool reparseConfig();
         void addPages( KConfigDialog* dlg );
+
         /** constructor **/
         GSGenerator();
         ~GSGenerator();

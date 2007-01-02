@@ -791,6 +791,10 @@ bool PDFGenerator::reparseConfig()
     return false;
 }
 
+void PDFGenerator::addPages( KConfigDialog * )
+{
+}
+
 Okular::ExportFormat::List PDFGenerator::exportFormats() const
 {
     static Okular::ExportFormat::List formats;

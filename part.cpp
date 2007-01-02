@@ -72,6 +72,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "core/configinterface.h"
 
 typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
@@ -482,7 +483,9 @@ void Part::slotGeneratorPreferences( )
     while(it.hasNext())
     {
         it.next();
-        it.value()->addPages(dialog);
+        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value() );
+        if ( iface )
+            iface->addPages( dialog );
     }
 
     // (for now don't FIXME) keep us informed when the user changes settings

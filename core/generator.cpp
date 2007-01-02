@@ -113,15 +113,6 @@ QVariant Generator::metaData( const QString&, const QVariant& ) const
     return QVariant();
 }
 
-bool Generator::reparseConfig()
-{
-    return false;
-}
-
-void Generator::addPages( KConfigDialog* )
-{
-}
-
 ExportFormat::List Generator::exportFormats() const
 {
     return ExportFormat::List();

@@ -280,19 +280,6 @@ class OKULAR_EXPORT Generator : public QObject
         virtual QVariant metaData( const QString &key, const QVariant &option ) const;
 
         /**
-         * This method is called to tell the generator to re-parse its configuration.
-         *
-         * Returns true if something has changed.
-         */
-        virtual bool reparseConfig();
-
-        /**
-         * This method allows the generator to add custom configuration pages to the
-         * config @p dialog of okular.
-         */
-        virtual void addPages( KConfigDialog *dialog );
-
-        /**
          * Returns the list of additional supported export formats.
          */
         virtual ExportFormat::List exportFormats() const;

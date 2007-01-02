@@ -37,6 +37,6 @@ enum SearchDirection
     PreviousResult  ///< Searching for the previous result on the page, earlier result should be located so we search from the last result not from the beginning of the page.
 };
 
-};
+}
 
 #endif

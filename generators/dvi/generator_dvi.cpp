@@ -10,6 +10,7 @@
 #include "generator_dvi.h"
 #include "core/page.h"
 #include "core/link.h"
+#include "core/sourcereference.h"
 #include "core/utils.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"

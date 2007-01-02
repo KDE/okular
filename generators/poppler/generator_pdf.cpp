@@ -29,6 +29,7 @@
 #include "core/annotations.h"
 #include "core/pagetransition.h"
 #include "core/sound.h"
+#include "core/sourcereference.h"
 #include "settings.h"
 
 #include <config.h>

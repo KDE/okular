@@ -42,6 +42,7 @@ set(okularcore_SRCS
    core/pagetransition.cpp
    core/rotationjob.cpp
    core/sound.cpp
+   core/sourcereference.cpp
    core/textpage.cpp
    core/utils.cpp
 )

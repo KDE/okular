@@ -215,14 +215,11 @@ class OKULAR_EXPORT Generator : public QObject
 
         /**
          * This enum identifies the metric of the page size.
-         *
-         * @li None - page size is not defined in a physical metric
-         * @li Points - page size is given in 1/72 inches
          */
         enum PageSizeMetric
         {
-          None,
-          Points
+          None,   ///< The page size is not defined in a physical metric.
+          Points  ///< The page size is given in 1/72 inches.
         };
 
         /**
@@ -420,43 +417,6 @@ class OKULAR_EXPORT PixmapRequest
     private:
         Q_DISABLE_COPY( PixmapRequest )
 
-        class Private;
-        Private* const d;
-};
-
-/**
- * @short Defines a source reference
- *
- * A source reference is a reference to one of the source(s) of the loaded
- * document.
- */
-class OKULAR_EXPORT SourceReference
-{
-    public:
-        /**
-         * Creates a reference to the row @p row and column @p column of the
-         * source @p fileName
-         */
-        SourceReference( const QString &fileName, int row, int column = 0 );
-
-        ~SourceReference();
-
-        /**
-         * Returns the filename of the source.
-         */
-        QString fileName() const;
-
-        /**
-         * Returns the row of the position in the source file.
-         */
-        int row() const;
-
-        /**
-         * Returns the column of the position in the source file.
-         */
-        int column() const;
-
-    private:
         class Private;
         Private* const d;
 };

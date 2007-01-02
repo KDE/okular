@@ -32,15 +32,16 @@
 // local includes
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
+#include "configinterface.h"
 #include "document.h"
 #include "generator.h"
+#include "guiinterface.h"
 #include "link.h"
 #include "observer.h"
 #include "page.h"
-#include "settings.h"
 #include "printinterface.h"
-#include "guiinterface.h"
-#include "configinterface.h"
+#include "settings.h"
+#include "sourcereference.h"
 
 using namespace Okular;
 

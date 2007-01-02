@@ -214,8 +214,6 @@ class XpsGenerator : public Okular::Generator
 
         const Okular::DocumentInfo * generateDocumentInfo();
 
-        bool supportsRotation() const { return true; };
-
     private slots:
 
     private:

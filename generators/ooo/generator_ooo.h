@@ -31,9 +31,6 @@ class KOOOGenerator : public Okular::Generator
     bool canGeneratePixmap( bool async ) const;
     void generatePixmap( Okular::PixmapRequest * request );
 
-    // [INHERITED] rotation capability
-    bool supportsRotation() const { return true; };
-
     // [INHERITED] print document using already configured kprinter
     bool print( KPrinter& printer );
 

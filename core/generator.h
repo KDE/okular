@@ -13,6 +13,8 @@
 
 #include "okular_export.h"
 
+#include "core/global.h"
+
 #define OKULAR_EXPORT_PLUGIN( classname ) \
     extern "C" { \
          OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
@@ -235,20 +237,15 @@ class OKULAR_EXPORT Generator : public QObject
         virtual PageSizeMetric pagesSizeMetric() const;
 
         /**
-         * This method returns whether given action (@see Document::Permission) is
+         * This method returns whether given action (@see Permission) is
          * allowed in this document.
          */
-        virtual bool isAllowed( int action ) const;
+        virtual bool isAllowed( Permissions action ) const;
 
         /**
          * This method returns whether the generator supports searching. Default is false.
          */
         virtual bool supportsSearching() const;
-
-        /**
-         * Returns whether the generator supports rotation of the pages. Default is false.
-         */
-        virtual bool supportsRotation() const;
 
         /**
          * This method is called when the orientation has been changed by the user.

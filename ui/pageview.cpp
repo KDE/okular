@@ -336,7 +336,6 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aPaperSizes , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotPaperSizes( int ) ) );
 
-    d->aOrientation->setEnabled(d->document->supportsRotation());
     bool paperSizes=d->document->supportsPaperSizes();
     d->aPaperSizes->setEnabled(paperSizes);
     if (paperSizes)
@@ -617,7 +616,6 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 
-    d->aOrientation->setEnabled(d->document->supportsRotation());
     bool paperSizes=d->document->supportsPaperSizes();
     d->aPaperSizes->setEnabled(paperSizes);
     // set the new paper sizes:
@@ -1643,7 +1641,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( KIcon("editcopy"), i18n( "Copy to Clipboard" ) );
-                if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )
+                if ( !d->document->isAllowed( Okular::AllowCopy ) )
                 {
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
@@ -1759,7 +1757,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     KMenu menu( this );
                     QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy" ) );
-                    if ( !d->document->isAllowed( Okular::Document::AllowCopy ) )
+                    if ( !d->document->isAllowed( Okular::AllowCopy ) )
                     {
                         textToClipboard->setEnabled( false );
                         textToClipboard->setText( i18n("Copy forbidden by DRM") );

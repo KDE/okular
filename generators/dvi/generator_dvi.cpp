@@ -11,6 +11,7 @@
 #include "core/page.h"
 #include "core/link.h"
 #include "core/sourcereference.h"
+#include "core/textpage.h"
 #include "core/utils.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"

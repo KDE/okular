@@ -131,7 +131,7 @@ void SearchWidget::startSearch()
     {
         Qt::CaseSensitivity caseSensitivity = m_caseSensitiveAction->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-        Okular::Document::SearchType type = !m_searchType ? Okular::Document::AllDoc :
+        Okular::Document::SearchType type = !m_searchType ? Okular::Document::AllDocument :
                                         ( (m_searchType > 1) ? Okular::Document::GoogleAny :
                                         Okular::Document::GoogleAll );
 

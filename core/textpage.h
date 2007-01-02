@@ -11,29 +11,11 @@
 #define _OKULAR_TETXTPAGE_H_
 
 #include "area.h"
+#include "global.h"
 
 namespace Okular {
 
 class TextSelection;
-
-/*! @enum SearchDirection
- *  The enum holding the direction of searching.
- *! @enum SearchDirection FromTop
- *  Searching from top of the page, next result is to be found,
- *  there was no earlier search result.
- *! @enum SearchDirection FromBottom
- *  Searching from bottom of the page, next result is to be found,
- *  there was no earlier search result.
- *! @enum SearchDirection NextResult
- *  Searching for the next result on the page, earlier result should be 
- *  located so we search from the last result not from the beginning of the 
- *  page.
- *! @enum SearchDirection PreviousResult
- *  Searching for the previous result on the page, earlier result should be 
- *  located so we search from the last result not from the beginning of the 
- *  page.
- */
-typedef enum SearchDirection{ FromTop, FromBottom, NextResult, PreviousResult };
 
 /*! @class TextEntity
  * @short Abstract textentity of Okular

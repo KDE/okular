@@ -641,12 +641,12 @@ bool Part::openFile()
         m_watcher->addFile(m_file);
 
     // if the 'OpenTOC' flag is set, start presentation
-    if ( m_document->getMetaData( "OpenTOC" ).toBool() && m_toolBox->isItemEnabled( 0 ) )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_toolBox->isItemEnabled( 0 ) )
     {
         m_toolBox->setCurrentIndex( 0 );
     }
     // if the 'StartFullScreen' flag is set, start presentation
-    if ( m_document->getMetaData( "StartFullScreen" ).toBool() )
+    if ( m_document->metaData( "StartFullScreen" ).toBool() )
     {
         KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning" );
         slotShowPresentation();
@@ -671,7 +671,7 @@ bool Part::openUrl(const KUrl &url)
         m_viewportDirty.pageNumber = -1;
 
         // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
-        QString title = m_document->getMetaData( "DocumentTitle" ).toString();
+        QString title = m_document->metaData( "DocumentTitle" ).toString();
         if ( !title.isEmpty() && !title.trimmed().isEmpty() )
         {
             emit setWindowCaption( title );
@@ -1291,7 +1291,7 @@ void Part::slotPrint()
 
 void Part::doPrint(KPrinter &printer)
 {
-    if (!m_document->isAllowed(Okular::Document::AllowPrint))
+    if (!m_document->isAllowed(Okular::AllowPrint))
     {
         KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
         return;

@@ -66,7 +66,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         PageSizeMetric pagesSizeMetric() const { return Points; }
 
         // [INHERITED] document information
-        bool isAllowed( int permissions ) const;
+        bool isAllowed( Okular::Permissions permissions ) const;
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async ) const;
@@ -75,7 +75,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         void generateSyncTextPage( Okular::Page * page );
 
         bool supportsSearching() const { return true; };
-        bool supportsRotation() const { return true; };
 
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );

@@ -51,7 +51,7 @@ class TOCItem : public QTreeWidgetItem
             {
                 // if the node references a viewport, get the reference and set it
                 const QString & page = e.attribute( "ViewportName" );
-                QString viewport = document->getMetaData( "NamedViewport", page ).toString();
+                QString viewport = document->metaData( "NamedViewport", page ).toString();
                 if ( !viewport.isNull() )
                     m_viewport = Okular::DocumentViewport( viewport );
             }

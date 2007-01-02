@@ -597,8 +597,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     d->m_xmlFileName = KStandardDirs::locateLocal( "data", fn );
 
     if (mime.count()<=0)
-	return false;
-    
+        return false;
+
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
@@ -606,7 +606,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if (offers.isEmpty())
     {
         kWarning() << "No plugin for mimetype '" << mime->name() << "'." << endl;
-	   return false;
+        return false;
     }
     int hRank=0;
     // order the offers: the offers with an higher priority come before
@@ -1012,7 +1012,7 @@ KUrl Document::currentDocument() const
     return d->m_url;
 }
 
-bool Document::isAllowed( int flags ) const
+bool Document::isAllowed( Permissions flags ) const
 {
     return d->m_generator ? d->m_generator->isAllowed( flags ) : false;
 }
@@ -1020,11 +1020,6 @@ bool Document::isAllowed( int flags ) const
 bool Document::supportsSearching() const
 {
     return d->m_generator ? d->m_generator->supportsSearching() : false;
-}
-
-bool Document::supportsRotation() const
-{
-    return d->m_generator ? d->m_generator->supportsRotation() : false;
 }
 
 bool Document::supportsPaperSizes() const
@@ -1085,7 +1080,7 @@ bool Document::historyAtEnd() const
     return d->m_viewportIterator == --(d->m_viewportHistory.end());
 }
 
-QVariant Document::getMetaData( const QString & key, const QVariant & option ) const
+QVariant Document::metaData( const QString & key, const QVariant & option ) const
 {
     return d->m_generator ? d->m_generator->metaData( key, option ) : QVariant();
 }
@@ -1448,7 +1443,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
     // 1. ALLDOC - proces all document marking pages
-    if ( type == AllDoc )
+    if ( type == AllDocument )
     {
         // search and highlight 'text' (as a solid phrase) on all pages
         QVector< Page * >::const_iterator it = d->m_pagesVector.begin(), end = d->m_pagesVector.end();
@@ -1574,7 +1569,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             KMessageBox::information( 0, i18n( "No matches found for '%1'.", text ) );
     }
     // 3. PREVMATCH //TODO
-    else if ( type == PrevMatch )
+    else if ( type == PreviousMatch )
     {
     }
     // 4. GOOGLE* - process all document marking pages

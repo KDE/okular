@@ -70,17 +70,12 @@ Generator::PageSizeMetric Generator::pagesSizeMetric() const
     return None;
 }
 
-bool Generator::isAllowed( int ) const
+bool Generator::isAllowed( Permissions ) const
 {
     return true;
 }
 
 bool Generator::supportsSearching() const
-{
-    return false;
-}
-
-bool Generator::supportsRotation() const
 {
     return false;
 }

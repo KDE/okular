@@ -539,17 +539,17 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     return &docEmbeddedFiles;
 }
 
-bool PDFGenerator::isAllowed( int permissions ) const
+bool PDFGenerator::isAllowed( Okular::Permissions permissions ) const
 {
 #if !OKULAR_FORCE_DRM
     if (KAuthorized::authorize("skip_drm") && !Okular::Settings::obeyDRM()) return true;
 #endif
 
     bool b = true;
-    if (permissions & Okular::Document::AllowModify) b = b && pdfdoc->okToChange();
-    if (permissions & Okular::Document::AllowCopy) b = b && pdfdoc->okToCopy();
-    if (permissions & Okular::Document::AllowPrint) b = b && pdfdoc->okToPrint();
-    if (permissions & Okular::Document::AllowNotes) b = b && pdfdoc->okToAddNotes();
+    if (permissions & Okular::AllowModify) b = b && pdfdoc->okToChange();
+    if (permissions & Okular::AllowCopy) b = b && pdfdoc->okToCopy();
+    if (permissions & Okular::AllowPrint) b = b && pdfdoc->okToPrint();
+    if (permissions & Okular::AllowNotes) b = b && pdfdoc->okToAddNotes();
     return b;
 }
 

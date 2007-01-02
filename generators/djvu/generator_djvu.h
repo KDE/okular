@@ -31,9 +31,6 @@ class DjVuGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
-        // rotation handling
-        bool supportsRotation() const { return true; };
-
         // printing
         bool print( KPrinter& printer );
 

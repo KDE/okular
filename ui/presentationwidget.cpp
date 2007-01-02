@@ -91,7 +91,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setAttribute( Qt::WA_DeleteOnClose );
     setAttribute( Qt::WA_OpaquePaintEvent );
     setObjectName( "presentationWidget" );
-    QString caption = doc->getMetaData( "DocumentTitle" ).toString();
+    QString caption = doc->metaData( "DocumentTitle" ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
     setWindowTitle( KDialog::makeStandardCaption( caption ) );

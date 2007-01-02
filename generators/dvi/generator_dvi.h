@@ -41,9 +41,6 @@ class DviGenerator : public Okular::Generator
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
-        // rotation
-        bool supportsRotation() const { return true; };
-
         // searching
         bool supportsSearching() const { return true; };
 

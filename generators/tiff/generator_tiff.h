@@ -29,8 +29,6 @@ class TIFFGenerator : public Okular::Generator
 
         const Okular::DocumentInfo * generateDocumentInfo();
 
-        bool supportsRotation() const { return true; };
-
         bool print( KPrinter& printer );
 
     private slots:

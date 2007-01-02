@@ -14,8 +14,8 @@
 #include <QtCore/QMap>
 
 #include "area.h"
+#include "global.h"
 #include "okular_export.h"
-#include "textpage.h"
 
 class QDomDocument;
 class QDomNode;

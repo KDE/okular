@@ -42,8 +42,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
-        bool supportsRotation() const { return true; } ;
-
         // paper size management
         bool supportsPaperSizes() const;
         QStringList paperSizes() const;

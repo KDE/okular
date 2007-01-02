@@ -17,7 +17,7 @@ class KPrintDialogPage;
 namespace Okular {
 
 /**
- * @short Abstract interface to for advanced printing control
+ * @short Abstract interface for advanced printing control
  *
  * This interface defines an advanced way of interfacing with the print
  * process.

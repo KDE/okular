@@ -27,8 +27,6 @@
 
 #include <kmimetype.h>
 
-class QToolBox;
-class KActionCollection;
 class KConfigDialog;
 class KIcon;
 class KPrinter;
@@ -238,11 +236,6 @@ class OKULAR_EXPORT Generator : public QObject
          * allowed in this document.
          */
         virtual bool isAllowed( int action ) const;
-
-        // gui stuff
-        virtual QString getXMLFile() const;
-        virtual void setupGUI( KActionCollection*, QToolBox* );
-        virtual void freeGUI();
 
         /**
          * This method returns whether the generator supports searching. Default is false.

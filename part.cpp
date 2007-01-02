@@ -650,7 +650,7 @@ bool Part::openFile()
     }
 /*    if (m_document->getXMLFile() != QString::null)
         setXMLFile(m_document->getXMLFile(),true);*/
-    m_document->setupGUI(actionCollection(),m_toolBox);
+    m_document->setupGui( actionCollection(), m_toolBox );
     return true;
 }
 

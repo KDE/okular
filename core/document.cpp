@@ -39,6 +39,7 @@
 #include "page.h"
 #include "settings.h"
 #include "printinterface.h"
+#include "guiinterface.h"
 
 using namespace Okular;
 
@@ -313,18 +314,25 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 }
 
 
-QString Document::getXMLFile()
+QString Document::xmlFile()
 {
-    if (generator)
-        return generator->getXMLFile();
-   
-    return QString();
+    if ( generator )
+    {
+        Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( generator );
+        return iface ? iface->xmlFile() : QString();
+    }
+    else
+        return QString();
 }
 
-void Document::setupGUI(KActionCollection* ac, QToolBox* tBox )
+void Document::setupGui( KActionCollection *ac, QToolBox *tBox )
 {
-    if (generator)
-        generator->setupGUI(ac,tBox);
+    if ( generator && ac && tBox )
+    {
+        Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( generator );
+        if ( iface )
+            iface->setupGui( ac, tBox );
+    }
 }
 
 void Document::closeDocument()
@@ -342,8 +350,12 @@ void Document::closeDocument()
     if ( d->saveBookmarksTimer )
         d->saveBookmarksTimer->stop();
 
-    if (generator)
-        generator->freeGUI();
+    if ( generator )
+    {
+        Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( generator );
+        if ( iface )
+            iface->freeGui();
+    }
     if (!m_usingCachedGenerator)
     {
         // delete contents generator

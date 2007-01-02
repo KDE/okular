@@ -123,8 +123,8 @@ class OKULAR_EXPORT Document : public QObject
         QString pageSizeString(int page) const;
 
         // gui altering stuff
-        QString getXMLFile();
-        void setupGUI(KActionCollection  * ac , QToolBox * tBox );
+        QString xmlFile();
+        void setupGui( KActionCollection *ac, QToolBox *tBox );
 
         // perform actions on document / pages
         void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );

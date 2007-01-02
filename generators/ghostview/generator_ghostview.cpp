@@ -267,7 +267,12 @@ void GSGenerator::setPaperSize( QVector<Okular::Page*> & pagesVector, int newsiz
  */
 }
 
-void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
+QString GSGenerator::xmlFile() const
+{
+    return QString();
+}
+
+void GSGenerator::setupGui( KActionCollection *ac, QToolBox *tBox )
 {
     if ( GSSettings::messages() )
     {
@@ -277,7 +282,7 @@ void GSGenerator::setupGUI(KActionCollection  * ac , QToolBox * tBox )
     m_actionCollection = ac;
 }
 
-void GSGenerator::freeGUI()
+void GSGenerator::freeGui()
 {
     if ( GSSettings::messages() )
     {

@@ -11,6 +11,7 @@
 #define _OKULAR_GENERATOR_GHOSTVIEW_H_
 
 #include "core/generator.h"
+#include "core/guiinterface.h"
 
 class GSInterpreterCMD;
 class GSLogWindow;
@@ -19,9 +20,11 @@ class GSInternalDocument;
 class KTempFile;
 class KActionCollection;
 
-class GSGenerator : public Okular::Generator
+class GSGenerator : public Okular::Generator, public Okular::GuiInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::GuiInterface )
+
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
@@ -44,8 +47,9 @@ class GSGenerator : public Okular::Generator
         QStringList paperSizes() const;
         void setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize );
 
-        void setupGUI(KActionCollection  * /*ac*/ , QToolBox * /* tBox */);
-        void freeGUI();
+        QString xmlFile() const;
+        void setupGui( KActionCollection *, QToolBox * );
+        void freeGui();
 
         // print document using already configured kprinter
         bool print( KPrinter& /*printer*/ );

@@ -75,19 +75,6 @@ bool Generator::isAllowed( int ) const
     return true;
 }
 
-QString Generator::getXMLFile() const
-{
-    return QString();
-}
-
-void Generator::setupGUI( KActionCollection*, QToolBox* )
-{
-}
-
-void Generator::freeGUI()
-{
-}
-
 bool Generator::supportsSearching() const
 {
     return false;

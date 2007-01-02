@@ -14,8 +14,8 @@
 
 #include "annotations.h"
 #include "area.h"
-#include "generator.h"
 #include "link.h"
+#include "sourcereference.h"
 
 using namespace Okular;
 

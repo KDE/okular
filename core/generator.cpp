@@ -116,11 +116,6 @@ void Generator::setPaperSize( QVector<Page*>&, int )
 {
 }
 
-bool Generator::canConfigurePrinter() const
-{
-    return false;
-}
-
 bool Generator::print( KPrinter& )
 {
     return false;

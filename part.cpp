@@ -1275,8 +1275,15 @@ void Part::slotPrint()
     printer.setOption( "kde-range", range );
 
     if ( m_document->canConfigurePrinter() )
+    {
+        KPrintDialogPage * w = m_document->configurationWidget();
+        if ( w )
+        {
+            printer.addDialogPage( w );
+        }
+    }
+    if ( printer.setup( widget() ) )
         doPrint( printer );
-    else if (printer.setup(widget())) doPrint( printer );
 }
 
 void Part::doPrint(KPrinter &printer)

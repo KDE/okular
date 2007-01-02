@@ -26,6 +26,7 @@
 
 class KBookmark;
 class KPrinter;
+class KPrintDialogPage;
 class KUrl;
 class KActionCollection;
 class QToolBox;
@@ -157,6 +158,7 @@ class OKULAR_EXPORT Document : public QObject
         void processSourceReference( const SourceReference * ref );
         bool canConfigurePrinter() const;
         bool print( KPrinter &printer );
+        KPrintDialogPage* configurationWidget() const;
         // notifications sent by generator
         void requestDone( PixmapRequest * request );
 //         inline pagesVector() { return pages_vector; };

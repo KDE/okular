@@ -38,6 +38,7 @@
 #include "observer.h"
 #include "page.h"
 #include "settings.h"
+#include "printinterface.h"
 
 using namespace Okular;
 
@@ -479,7 +480,13 @@ bool Document::isOpened() const
 
 bool Document::canConfigurePrinter( ) const
 {
-    return generator ? generator->canConfigurePrinter() : false;
+    if ( generator )
+    {
+        Okular::PrintInterface * iface = qobject_cast< Okular::PrintInterface * >( generator );
+        return iface ? true : false;
+    }
+    else
+        return 0;
 }
 
 const DocumentInfo * Document::documentInfo() const
@@ -1495,6 +1502,17 @@ void Document::processSourceReference( const SourceReference * ref )
 bool Document::print( KPrinter &printer )
 {
     return generator ? generator->print( printer ) : false;
+}
+
+KPrintDialogPage* Document::configurationWidget() const
+{
+    if ( generator )
+    {
+        PrintInterface * iface = qobject_cast< Okular::PrintInterface * >( generator );
+        return iface ? iface->configurationWidget() : 0;
+    }
+    else
+        return 0;
 }
 
 void Document::requestDone( PixmapRequest * req )

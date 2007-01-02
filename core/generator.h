@@ -276,11 +276,6 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void setPaperSize( QVector<Page*> &pages, int paperSize );
 
         /**
-         * Returns true if the generator configures the printer itself, false otherwise.
-         */
-        virtual bool canConfigurePrinter() const;
-
-        /**
          * This method is called to print the document to the given @p printer.
          */
         virtual bool print( KPrinter &printer );

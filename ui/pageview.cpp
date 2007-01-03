@@ -39,6 +39,7 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
+#include <kglobalsettings.h>
 #include <kimageeffect.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>

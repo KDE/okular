@@ -15,6 +15,7 @@
 #include <qlayout.h>
 #include <qspinbox.h>
 #include <qvariant.h>
+#include <kapplication.h>
 #include <kcolorbutton.h>
 #include <kfontrequester.h>
 #include <kiconloader.h>
@@ -88,9 +89,9 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 
     m_icon = m_comboItems->itemData( id ).toString();
     QString path;
-    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path, true );
+    QPixmap pixmap = kapp->iconLoader()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path, true );
     if ( path.isEmpty() )
-        pixmap = KGlobal::iconLoader()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
+        pixmap = kapp->iconLoader()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );
 }
 

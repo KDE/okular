@@ -18,7 +18,7 @@ kde4_automoc(${okulargsasyncgenerator_SRCS})
 
 kde4_add_executable(okulargsasyncgenerator ${okulargsasyncgenerator_SRCS})
 
-target_link_libraries(okulargsasyncgenerator  ${KDE4_KDECORE_LIBS} qgs )
+target_link_libraries(okulargsasyncgenerator  ${KDE4_KDEUI_LIBS} qgs )
 
 install(TARGETS okulargsasyncgenerator DESTINATION ${BIN_INSTALL_DIR})
 

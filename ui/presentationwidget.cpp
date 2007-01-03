@@ -24,6 +24,7 @@
 #include <qtoolbar.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kglobalsettings.h>
 #include <kinstance.h>
 #include <klocale.h>
 #include <kiconloader.h>

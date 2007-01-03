@@ -10,11 +10,11 @@
 // qt / kde includes
 #include <qrect.h>
 #include <qpainter.h>
+#include <qpalette.h>
 #include <qpixmap.h>
 #include <qimage.h>
 #include <qvarlengtharray.h>
-#include <qapplication.h>
-#include <kglobal.h>
+#include <kapplication.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
 #include <kstaticdeleter.h>
@@ -79,7 +79,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         if ( !busyPixmap )
         {
             sd.setObject(busyPixmap, new QPixmap());
-            *busyPixmap = KGlobal::iconLoader()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, 0, true);
+            *busyPixmap = kapp->iconLoader()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, 0, true);
         }
         // draw something on the blank page: the okular icon or a cross (as a fallback)
         if ( busyPixmap && !busyPixmap->isNull() )
@@ -558,9 +558,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 {
                 // get pixmap, colorize and alpha-blend it
                     QString path;
-                    QPixmap pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
+                    QPixmap pixmap = kapp->iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::User, 32, K3Icon::DefaultState, &path, true );
                     if ( path.isEmpty() )
-                        pixmap = KGlobal::iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::NoGroup, 32 );
+                        pixmap = kapp->iconLoader()->loadIcon( text->textIcon().toLower(), K3Icon::NoGroup, 32 );
                     QImage scaledImage;
                     QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
                     QRect annotRect2 = annotBoundary2.intersect( limits );
@@ -588,9 +588,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                 // get pixmap and alpha blend it if needed
                 QString path;
-                QPixmap pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
+                QPixmap pixmap = kapp->iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, &path, true );
                 if ( path.isEmpty() )
-                    pixmap = KGlobal::iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                    pixmap = kapp->iconLoader()->loadIcon( stamp->stampIconName().toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect, QImage::Format_ARGB32 );

@@ -95,7 +95,7 @@ Link::LinkType LinkBrowse::linkType() const
 
 QString LinkBrowse::linkTip() const
 {
-    return i18n( "Browse '%1'...", m_url );
+    return m_url;
 }
 
 QString LinkBrowse::url() const

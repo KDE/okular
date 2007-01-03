@@ -120,6 +120,7 @@ Shell::~Shell()
     if ( m_part ) writeSettings();
     if ( m_fileformats ) delete m_fileformats;
     if ( m_tempfile ) delete m_tempfile; 
+    delete m_part;
 }
 
 void Shell::openUrl( const KUrl & url )

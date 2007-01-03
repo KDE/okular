@@ -385,6 +385,9 @@ Part::~Part()
     delete m_pageSizeLabel;
 
     delete m_document;
+    QHash<QString, Okular::Generator*>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
+    for ( ; it != itEnd; ++it )
+        delete *it;
 }
 
 void Part::openUrlFromDocument(const KUrl &url)

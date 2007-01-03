@@ -72,7 +72,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
-#include "core/configinterface.h"
+#include "interfaces/configinterface.h"
 
 typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)

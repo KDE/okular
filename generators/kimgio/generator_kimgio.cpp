@@ -11,7 +11,8 @@
 #include <qimage.h>
 #include <kprinter.h>
 
-#include "core/page.h"
+#include <okular/core/page.h>
+
 #include "generator_kimgio.h"
 
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)

@@ -11,7 +11,9 @@
 #ifndef _OKULAR_DOCUMENT_H_
 #define _OKULAR_DOCUMENT_H_
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
+#include <okular/core/global.h>
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -21,9 +23,6 @@
 #include <QtXml/QDomElement>
 
 #include <kmimetype.h>
-
-#include "area.h"
-#include "global.h"
 
 class KBookmark;
 class KPrinter;

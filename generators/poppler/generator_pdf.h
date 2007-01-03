@@ -19,11 +19,12 @@
 #include <qcolor.h>
 #include <qstring.h>
 #include <qthread.h>
-#include "core/generator.h"
-#include "core/document.h"
-#include "core/link.h"
-#include "core/textpage.h"
-#include "core/configinterface.h"
+
+#include <okular/core/generator.h>
+#include <okular/core/document.h>
+#include <okular/core/link.h>
+#include <okular/core/textpage.h>
+#include <okular/interfaces/configinterface.h>
 
 namespace Okular {
 class ObjectRect;

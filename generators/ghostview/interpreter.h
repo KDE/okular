@@ -10,7 +10,7 @@
 #ifndef _OKULAR_INTERPETER_H_
 #define _OKULAR_INTERPETER_H_
 
-#include "core/utils.h"
+#include <okular/core/utils.h>
 
 namespace DPIMod
 {

@@ -18,8 +18,8 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include "okular_export.h"
-#include "area.h"
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
 
 namespace Okular {
 

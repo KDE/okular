@@ -20,7 +20,8 @@
 #ifndef _OKULAR_GENERATOR_XPS_H_
 #define _OKULAR_GENERATOR_XPS_H_
 
-#include "core/generator.h"
+#include <okular/core/generator.h>
+
 #include <QDomDocument>
 #include <QXmlDefaultHandler>
 

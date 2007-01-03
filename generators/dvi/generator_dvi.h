@@ -10,7 +10,7 @@
 #ifndef _DVI_GENERATOR_H_
 #define _DVI_GENERATOR_H_
 
-#include "core/generator.h"
+#include <okular/core/generator.h>
 
 class dviRenderer;
 class dviPageInfo;

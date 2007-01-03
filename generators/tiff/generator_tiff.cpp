@@ -17,8 +17,9 @@
 #include <klocale.h>
 #include <kprinter.h>
 
-#include "core/document.h"
-#include "core/page.h"
+#include <okular/core/document.h>
+#include <okular/core/page.h>
+
 #include "generator_tiff.h"
 
 #include <tiff.h>

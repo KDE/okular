@@ -10,10 +10,10 @@
 #include "generator_chm.h"
 #include "lib/xchmfile.h"
 #include "settings.h"
-#include "core/page.h"
-#include "core/link.h"
-#include "core/observer.h" //for PAGEVIEW_ID
-#include "core/textpage.h"
+#include <okular/core/page.h>
+#include <okular/core/link.h>
+#include <okular/core/observer.h> //for PAGEVIEW_ID
+#include <okular/core/textpage.h>
 #include "dom/html_misc.h"
 
 #include <kurl.h>

@@ -10,7 +10,9 @@
 #ifndef _OKULAR_GENERATOR_OOO_H_
 #define _OKULAR_GENERATOR_OOO_H_
 
-#include "core/generator.h"
+#include <okular/core/document.h>
+#include <okular/core/generator.h>
+
 #include "converter.h"
 
 class QTextDocument;

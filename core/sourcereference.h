@@ -10,7 +10,7 @@
 #ifndef OKULAR_SOURCEREFERENCE_H
 #define OKULAR_SOURCEREFERENCE_H
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 class QString;
 

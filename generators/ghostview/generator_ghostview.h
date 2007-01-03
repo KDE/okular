@@ -10,9 +10,9 @@
 #ifndef _OKULAR_GENERATOR_GHOSTVIEW_H_
 #define _OKULAR_GENERATOR_GHOSTVIEW_H_
 
-#include "core/generator.h"
-#include "core/guiinterface.h"
-#include "core/configinterface.h"
+#include <okular/core/generator.h>
+#include <okular/interfaces/guiinterface.h>
+#include <okular/interfaces/configinterface.h>
 
 class GSInterpreterCMD;
 class GSLogWindow;

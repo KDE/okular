@@ -10,7 +10,8 @@
 #ifndef _OKULAR_MISC_H_
 #define _OKULAR_MISC_H_
 
-#include "area.h"
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
 
 namespace Okular {
 
@@ -20,49 +21,60 @@ namespace Okular {
   1. the start never changes, one instance of this class is used for one selection,
      therefore the start of the selection will not change, only end and direction of 
      the selection will change.
-     
      By direction we mean the direction in which the end moves in relation to the start, 
      forward selection is when end is after the start, backward when its before.
+
   2. The following changes might appear during selection:
     a. the end moves without changing the direction (it can move up and down but not past the start): 
        only itE will be updated
     b. the end moves with changing the direction then itB becomes itE if the previous direction was forward
        or itE becomes itB 
+
   3. Internally it that is related to the start cursor is always at it[0] while it related to end is it[1],
      transition between meanings (itB/itE) is done with dir modifier;
 */
-class TextSelection
+class OKULAR_EXPORT TextSelection
 {
     public:
-    TextSelection( const NormalizedPoint & a, const NormalizedPoint & b )
-    { 
-          if (b.y-a.y<0 || (b.y-a.y==0 && b.x-a.x <0))
-            direction=1;
-          else
-            direction=0;
-          cur[0]=a,cur[1]=b;
-          it[direction%2]=-1,it[(direction+1)%2]=-1;
-    };
-    void end( const NormalizedPoint & p )
-    {
-      // changing direction as in 2b , assuming the bool->int conversion is correct
-      int dir1=direction;
-      direction = (p.y-cur[0].y<0 || (p.y-cur[0].y==0 && p.x-cur[0].x <0));
-      if (direction!=dir1)
-        kDebug() << "changing direction in selection\n";
-      cur[1]=p;
-    }
-    void itE (int p) { it[(direction+1)%2]=p; }
-    void itB (int p) { it[(direction)%2]=p; }
-    int dir () { return direction; }
-    NormalizedPoint start() const { return cur[direction%2]; }
-    NormalizedPoint end() const { return cur[(direction+1)%2]; }
-    int itB() {return it[direction%2];}
-    int itE() {return it[(direction+1)%2];}
+        /**
+         * Creates a new text selection with the given @p start and @p end point.
+         */
+        TextSelection( const NormalizedPoint &start, const NormalizedPoint &end );
+
+        /**
+         * Destroys the text selection.
+         */
+        ~TextSelection();
+
+        /**
+         * Changes the end point of the selection to the given @p point.
+         */
+        void end( const NormalizedPoint &point );
+
+        void itE( int pos );
+        void itB( int pos );
+
+        /**
+         * Returns the direction of the selection.
+         */
+        int direction() const;
+
+        /**
+         * Returns the start point of the selection.
+         */
+        NormalizedPoint start() const;
+
+        /**
+         * Returns the end point of the selection.
+         */
+        NormalizedPoint end() const;
+
+        int itB() const;
+        int itE() const;
+
     private:
-    int direction;
-    int it[2];
-    NormalizedPoint cur[2];
+        class Private;
+        Private* const d;
 };
 
 }

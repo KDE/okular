@@ -20,12 +20,12 @@
 #include <QtXml/QDomText>
 #include <QtXml/QXmlSimpleReader>
 
+#include <okular/core/document.h>
+
 #include "converter.h"
 #include "document.h"
 #include "styleinformation.h"
 #include "styleparser.h"
-
-#include "core/document.h"
 
 using namespace OOO;
 

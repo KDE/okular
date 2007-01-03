@@ -13,9 +13,9 @@
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
 
-#include "area.h"
-#include "global.h"
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
+#include <okular/core/global.h>
 
 class QDomDocument;
 class QDomNode;

@@ -24,8 +24,9 @@
 #include <kprinter.h>
 #include <ktemporaryfile.h>
 
-#include "core/page.h"
-#include "core/observer.h"
+#include <okular/core/page.h>
+#include <okular/core/observer.h>
+
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"
 

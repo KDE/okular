@@ -9,6 +9,7 @@
 // qt/kde includes
 #include <QtCore/QSet>
 #include <QtCore/QString>
+#include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 

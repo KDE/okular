@@ -11,15 +11,8 @@
 #ifndef _OKULAR_GENERATOR_H_
 #define _OKULAR_GENERATOR_H_
 
-#include "okular_export.h"
-
-#include "core/global.h"
-
-#define OKULAR_EXPORT_PLUGIN( classname ) \
-    extern "C" { \
-         OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
-    }
-
+#include <okular/core/okular_export.h>
+#include <okular/core/global.h>
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
@@ -28,6 +21,11 @@
 #include <QtCore/QVector>
 
 #include <kmimetype.h>
+
+#define OKULAR_EXPORT_PLUGIN( classname ) \
+    extern "C" { \
+         OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
+    }
 
 class KIcon;
 class KPrinter;

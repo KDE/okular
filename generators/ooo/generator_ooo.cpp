@@ -17,12 +17,12 @@
 #include <klocale.h>
 #include <kprinter.h>
 
-#include "converter.h"
-#include "core/annotations.h"
-#include "core/link.h"
-#include "core/page.h"
-#include "document.h"
+#include <okular/core/annotations.h>
+#include <okular/core/link.h>
+#include <okular/core/page.h>
 
+#include "converter.h"
+#include "document.h"
 #include "generator_ooo.h"
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)

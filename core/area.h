@@ -16,7 +16,7 @@
 
 #include <kdebug.h>
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 class QPolygonF;
 class QRect;

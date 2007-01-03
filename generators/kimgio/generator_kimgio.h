@@ -10,7 +10,7 @@
 #ifndef _OKULAR_GENERATOR_KIMGIO_H_
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
-#include "core/generator.h"
+#include <okular/core/generator.h>
 
 class KIMGIOGenerator : public Okular::Generator
 {

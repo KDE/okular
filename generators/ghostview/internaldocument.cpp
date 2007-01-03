@@ -22,7 +22,8 @@ extern "C" {
 
 #include <errno.h>
 
-#include "core/document.h"
+#include <okular/core/document.h>
+
 #include "internaldocument.h"
 
 QStringList GSInternalDocument::paperSizes()

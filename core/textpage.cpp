@@ -136,7 +136,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         double startCx=startC.x,startCy=startC.y;
         NormalizedPoint endC=sel->end();
         double endCx=endC.x,endCy=endC.y;
-        if (sel->dir() == 1 || (sel->itB()==-1 && sel->dir()==0))
+        if (sel->direction() == 1 || (sel->itB()==-1 && sel->direction()==0))
         {
 #ifdef DEBUG_TEXTPAGE
           kWarning() << "running first loop\n";
@@ -161,10 +161,10 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
         itB=sel->itB();
 #ifdef DEBUG_TEXTPAGE
-        kWarning() << "direction is " << sel->dir() << endl;
+        kWarning() << "direction is " << sel->direction() << endl;
         kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
 #endif
-        if (sel->dir() == 0 || (sel->itE() == -1 && sel->dir()==1))
+        if (sel->direction() == 0 || (sel->itE() == -1 && sel->direction()==1))
         {
 #ifdef DEBUG_TEXTPAGE
           kWarning() << "running second loop\n";

@@ -22,14 +22,16 @@
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <kglobal.h>
+
+#include <okular/core/observer.h> //for PAGEVIEW_ID
+#include <okular/core/page.h>
+#include <okular/core/annotations.h>
+#include <okular/core/pagetransition.h>
+#include <okular/core/sound.h>
+#include <okular/core/sourcereference.h>
+
 // local includes
 #include "generator_pdf.h"
-#include "core/observer.h" //for PAGEVIEW_ID
-#include "core/page.h"
-#include "core/annotations.h"
-#include "core/pagetransition.h"
-#include "core/sound.h"
-#include "core/sourcereference.h"
 #include "settings.h"
 
 #include <config.h>

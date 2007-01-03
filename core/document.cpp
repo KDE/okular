@@ -32,14 +32,14 @@
 // local includes
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
-#include "configinterface.h"
 #include "document.h"
 #include "generator.h"
-#include "guiinterface.h"
+#include "interfaces/configinterface.h"
+#include "interfaces/guiinterface.h"
+#include "interfaces/printinterface.h"
 #include "link.h"
 #include "observer.h"
 #include "page.h"
-#include "printinterface.h"
 #include "settings.h"
 #include "sourcereference.h"
 

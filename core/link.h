@@ -10,15 +10,14 @@
 #ifndef _OKULAR_LINK_H_
 #define _OKULAR_LINK_H_
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 #include <QtCore/QString>
-
-#include "document.h" // for DocumentViewport
 
 namespace Okular {
 
 class Sound;
+class DocumentViewport;
 
 /**
  * @short Encapsulates data that describes a link.
@@ -43,6 +42,11 @@ class OKULAR_EXPORT Link
         };
 
         /**
+         * Creates a new link.
+         */
+        Link();
+
+        /**
          * Destroys the link.
          */
         virtual ~Link();
@@ -60,6 +64,12 @@ class OKULAR_EXPORT Link
          * the user.
          */
         virtual QString linkTip() const;
+
+    private:
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( Link )
 };
 
 
@@ -77,6 +87,11 @@ class OKULAR_EXPORT LinkGoto : public Link
          * @p viewport The target viewport information of the current document.
          */
         LinkGoto( const QString& fileName, const DocumentViewport & viewport );
+
+        /**
+         * Destroys the goto link.
+         */
+        virtual ~LinkGoto();
 
         /**
          * Returns the link type.
@@ -104,8 +119,10 @@ class OKULAR_EXPORT LinkGoto : public Link
         DocumentViewport destViewport() const;
 
     private:
-        QString m_extFileName;
-        DocumentViewport m_vp;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkGoto )
 };
 
 /**
@@ -121,6 +138,11 @@ class OKULAR_EXPORT LinkExecute : public Link
          * @param parameters The parameters of the application to execute.
          */
         LinkExecute( const QString &fileName, const QString &parameters );
+
+        /**
+         * Destroys the execute link.
+         */
+        virtual ~LinkExecute();
 
         /**
          * Returns the link type.
@@ -143,8 +165,10 @@ class OKULAR_EXPORT LinkExecute : public Link
         QString parameters() const;
 
     private:
-        QString m_fileName;
-        QString m_parameters;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkExecute )
 };
 
 /**
@@ -162,6 +186,11 @@ class OKULAR_EXPORT LinkBrowse : public Link
         LinkBrowse( const QString &url );
 
         /**
+         * Destroys the browse link.
+         */
+        virtual ~LinkBrowse();
+
+        /**
          * Returns the link type.
          */
         LinkType linkType() const;
@@ -177,7 +206,10 @@ class OKULAR_EXPORT LinkBrowse : public Link
         QString url() const;
 
     private:
-        QString m_url;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkBrowse )
 };
 
 /**
@@ -215,6 +247,11 @@ class OKULAR_EXPORT LinkAction : public Link
         LinkAction( enum ActionType actionType );
 
         /**
+         * Destroys the action link.
+         */
+        virtual ~LinkAction();
+
+        /**
          * Returns the link type.
          */
         LinkType linkType() const;
@@ -230,7 +267,10 @@ class OKULAR_EXPORT LinkAction : public Link
         ActionType actionType() const;
 
     private:
-        ActionType m_type;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkAction )
 };
 
 /**
@@ -249,6 +289,11 @@ class OKULAR_EXPORT LinkSound : public Link
          * @param sound The sound object which contains the sound data.
          */
         LinkSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
+
+        /**
+         * Destroys the sound link.
+         */
+        virtual ~LinkSound();
 
         /**
          * Returns the link type.
@@ -286,11 +331,10 @@ class OKULAR_EXPORT LinkSound : public Link
         Okular::Sound *sound() const;
 
     private:
-        double m_volume;
-        bool m_sync;
-        bool m_repeat;
-        bool m_mix;
-        Okular::Sound *m_sound;
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkSound )
 };
 
 /**
@@ -305,6 +349,11 @@ class LinkMovie : public Link
         LinkMovie();
 
         /**
+         * Destroys the movie link.
+         */
+        virtual ~LinkMovie();
+
+        /**
          * Returns the link type.
          */
         LinkType linkType() const;
@@ -313,6 +362,12 @@ class LinkMovie : public Link
          * Returns the link tip.
          */
         QString linkTip() const;
+
+    private:
+        class Private;
+        Private* const d;
+
+        Q_DISABLE_COPY( LinkMovie )
 };
 
 }

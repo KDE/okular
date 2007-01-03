@@ -11,12 +11,23 @@
 #include <klocale.h>
 
 // local includes
+#include "document.h"
 #include "link.h"
 
 using namespace Okular;
 
+class Link::Private
+{
+};
+
+Link::Link()
+    : d( 0 )
+{
+}
+
 Link::~Link()
 {
+    delete d;
 }
 
 QString Link::linkTip() const
@@ -25,9 +36,27 @@ QString Link::linkTip() const
 }
 
 // LinkGoto
-LinkGoto::LinkGoto( const QString& fileName, const DocumentViewport & viewport )
-    : m_extFileName( fileName ), m_vp( viewport )
+
+class LinkGoto::Private
 {
+    public:
+        Private( const QString &fileName, const DocumentViewport &viewport )
+            : m_extFileName( fileName ), m_vp( viewport )
+        {
+        }
+
+        QString m_extFileName;
+        DocumentViewport m_vp;
+};
+
+LinkGoto::LinkGoto( const QString& fileName, const DocumentViewport & viewport )
+    : d( new Private( fileName, viewport ) )
+{
+}
+
+LinkGoto::~LinkGoto()
+{
+    delete d;
 }
 
 Link::LinkType LinkGoto::linkType() const
@@ -37,29 +66,47 @@ Link::LinkType LinkGoto::linkType() const
 
 QString LinkGoto::linkTip() const
 {
-    return m_extFileName.isEmpty() ? ( m_vp.isValid() ? i18n( "Go to page %1", m_vp.pageNumber + 1 ) : "" ) :
+    return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
                                      i18n("Open external file");
 }
 
 bool LinkGoto::isExternal() const
 {
-    return !m_extFileName.isEmpty();
+    return !d->m_extFileName.isEmpty();
 }
 
 QString LinkGoto::fileName() const
 {
-    return m_extFileName;
+    return d->m_extFileName;
 }
 
 DocumentViewport LinkGoto::destViewport() const
 {
-    return m_vp;
+    return d->m_vp;
 }
 
 // LinkExecute
-LinkExecute::LinkExecute( const QString &file, const QString & parameters )
-    : m_fileName( file ), m_parameters( parameters )
+
+class LinkExecute::Private
 {
+    public:
+        Private( const QString &file, const QString & parameters )
+            : m_fileName( file ), m_parameters( parameters )
+        {
+        }
+
+        QString m_fileName;
+        QString m_parameters;
+};
+
+LinkExecute::LinkExecute( const QString &file, const QString & parameters )
+    : d( new Private( file, parameters ) )
+{
+}
+
+LinkExecute::~LinkExecute()
+{
+    delete d;
 }
 
 Link::LinkType LinkExecute::linkType() const
@@ -69,23 +116,40 @@ Link::LinkType LinkExecute::linkType() const
 
 QString LinkExecute::linkTip() const
 {
-    return i18n( "Execute '%1'...", m_fileName );
+    return i18n( "Execute '%1'...", d->m_fileName );
 }
 
 QString LinkExecute::fileName() const
 {
-    return m_fileName;
+    return d->m_fileName;
 }
 
 QString LinkExecute::parameters() const
 {
-    return m_parameters;
+    return d->m_parameters;
 }
 
 // BrowseLink
-LinkBrowse::LinkBrowse( const QString &url )
-    : m_url( url )
+
+class LinkBrowse::Private
 {
+    public:
+        Private( const QString &url )
+            : m_url( url )
+        {
+        }
+
+        QString m_url;
+};
+
+LinkBrowse::LinkBrowse( const QString &url )
+    : d( new Private( url ) )
+{
+}
+
+LinkBrowse::~LinkBrowse()
+{
+    delete d;
 }
 
 Link::LinkType LinkBrowse::linkType() const
@@ -95,23 +159,40 @@ Link::LinkType LinkBrowse::linkType() const
 
 QString LinkBrowse::linkTip() const
 {
-    return m_url;
+    return d->m_url;
 }
 
 QString LinkBrowse::url() const
 {
-    return m_url;
+    return d->m_url;
 }
 
 // LinkAction
-LinkAction::LinkAction( enum ActionType actionType )
-    : m_type( actionType )
+
+class LinkAction::Private
 {
+    public:
+        Private( enum ActionType actionType )
+            : m_type( actionType )
+        {
+        }
+
+        ActionType m_type;
+};
+
+LinkAction::LinkAction( enum ActionType actionType )
+    : d( new Private( actionType ) )
+{
+}
+
+LinkAction::~LinkAction()
+{
+    delete d;
 }
 
 LinkAction::ActionType LinkAction::actionType() const
 {
-    return m_type;
+    return d->m_type;
 }
 
 Link::LinkType LinkAction::linkType() const
@@ -121,7 +202,7 @@ Link::LinkType LinkAction::linkType() const
 
 QString LinkAction::linkTip() const
 {
-    switch ( m_type )
+    switch ( d->m_type )
     {
         case PageFirst:
             return i18n( "First Page" );
@@ -153,10 +234,31 @@ QString LinkAction::linkTip() const
 }
 
 // LinkSound
-LinkSound::LinkSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
-    : m_volume( volume ), m_sync( sync ), m_repeat( repeat ),
-      m_mix( mix ), m_sound( sound )
+
+class LinkSound::Private
 {
+    public:
+        Private( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+            : m_volume( volume ), m_sync( sync ), m_repeat( repeat ),
+              m_mix( mix ), m_sound( sound )
+        {
+        }
+
+        double m_volume;
+        bool m_sync;
+        bool m_repeat;
+        bool m_mix;
+        Okular::Sound *m_sound;
+};
+
+LinkSound::LinkSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+    : d( new Private( volume, sync, repeat, mix, sound ) )
+{
+}
+
+LinkSound::~LinkSound()
+{
+    delete d;
 }
 
 Link::LinkType LinkSound::linkType() const
@@ -171,32 +273,42 @@ QString LinkSound::linkTip() const
 
 double LinkSound::volume() const
 {
-    return m_volume;
+    return d->m_volume;
 }
 
 bool LinkSound::synchronous() const
 {
-    return m_sync;
+    return d->m_sync;
 }
 
 bool LinkSound::repeat() const
 {
-    return m_repeat;
+    return d->m_repeat;
 }
 
 bool LinkSound::mix() const
 {
-    return m_mix;
+    return d->m_mix;
 }
 
 Okular::Sound *LinkSound::sound() const
 {
-    return m_sound;
+    return d->m_sound;
 }
 
 // LinkMovie
-LinkMovie::LinkMovie()
+class LinkMovie::Private
 {
+};
+
+LinkMovie::LinkMovie()
+    : d( 0 )
+{
+}
+
+LinkMovie::~LinkMovie()
+{
+    delete d;
 }
 
 Link::LinkType LinkMovie::linkType() const

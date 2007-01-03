@@ -14,7 +14,7 @@
 #include <QtCore/QRect>
 #include <QtCore/QVector>
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 namespace Okular {
 

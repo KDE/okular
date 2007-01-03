@@ -29,8 +29,8 @@
 #include <kimageeffect.h>
 #include <klocale.h>
 
-#include "core/document.h"
-#include "core/page.h"
+#include <okular/core/document.h>
+#include <okular/core/page.h>
 #include "generator_xps.h"
 
 OKULAR_EXPORT_PLUGIN(XpsGenerator)

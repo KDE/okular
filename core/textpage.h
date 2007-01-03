@@ -10,8 +10,9 @@
 #ifndef _OKULAR_TETXTPAGE_H_
 #define _OKULAR_TETXTPAGE_H_
 
-#include "area.h"
-#include "global.h"
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
+#include <okular/core/global.h>
 
 namespace Okular {
 

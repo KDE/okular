@@ -10,7 +10,7 @@
 #ifndef _OKULAR_SOUND_H_
 #define _OKULAR_SOUND_H_
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 #include <QtCore/QByteArray>
 #include <QtCore/QString>

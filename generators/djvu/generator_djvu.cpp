@@ -9,12 +9,12 @@
 
 #include "generator_djvu.h"
 #include "kdjvu.h"
-#include "core/annotations.h"
-#include "core/area.h"
-#include "core/document.h"
-#include "core/link.h"
-#include "core/page.h"
-#include "core/utils.h"
+#include <okular/core/annotations.h>
+#include <okular/core/area.h>
+#include <okular/core/document.h>
+#include <okular/core/link.h>
+#include <okular/core/page.h>
+#include <okular/core/utils.h>
 
 #include <qdom.h>
 #include <qstring.h>

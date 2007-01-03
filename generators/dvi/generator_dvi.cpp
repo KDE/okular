@@ -7,12 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <okular/core/document.h>
+#include <okular/core/link.h>
+#include <okular/core/page.h>
+#include <okular/core/sourcereference.h>
+#include <okular/core/textpage.h>
+#include <okular/core/utils.h>
+
 #include "generator_dvi.h"
-#include "core/page.h"
-#include "core/link.h"
-#include "core/sourcereference.h"
-#include "core/textpage.h"
-#include "core/utils.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"
 #include "dviRenderer.h"

@@ -10,7 +10,7 @@
 #ifndef _OKULAR_PRINTINTERFACE_H_
 #define _OKULAR_PRINTINTERFACE_H_
 
-#include "okular_export.h"
+#include <okular/core/okular_export.h>
 
 class KPrintDialogPage;
 

@@ -23,6 +23,7 @@ add_subdirectory( shell )
 add_subdirectory( generators )
 
 include_directories(
+   ${CMAKE_SOURCE_DIR}
    ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/
 )
 
@@ -37,6 +38,7 @@ set(okularcore_SRCS
    core/document.cpp
    core/generator.cpp
    core/link.cpp
+   core/misc.cpp
    core/observer.cpp
    core/page.cpp
    core/pagetransition.cpp
@@ -46,6 +48,27 @@ set(okularcore_SRCS
    core/textpage.cpp
    core/utils.cpp
 )
+
+install( FILES
+           core/annotations.h
+           core/area.h
+           core/document.h
+           core/generator.h
+           core/link.h
+           core/observer.h
+           core/page.h
+           core/pagetransition.h
+           core/sound.h
+           core/sourcereference.h
+           core/textpage.h
+           core/utils.h
+         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
+
+install( FILES
+           interfaces/configinterface.h
+           interfaces/guiinterface.h
+           interfaces/printinterface.h
+         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces )
 
 kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui

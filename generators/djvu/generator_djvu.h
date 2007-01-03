@@ -10,7 +10,8 @@
 #ifndef _DJVU_GENERATOR_H_
 #define _DJVU_GENERATOR_H_
 
-#include "core/generator.h"
+#include <okular/core/generator.h>
+
 #include <qvector.h>
 
 class KDjVu;

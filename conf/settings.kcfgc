@@ -4,4 +4,4 @@ File=okular.kcfg
 Mutators=true
 Singleton=true
 Visibility=OKULAR_EXPORT
-IncludeFiles=okular_export.h
+IncludeFiles=core/okular_export.h

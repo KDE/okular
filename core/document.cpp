@@ -1463,7 +1463,11 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             while ( 1 )
             {
                 if ( lastMatch )
+                {
+                    RegularAreaRect * lastMatchOld = lastMatch;
                     lastMatch = page->findText( searchID, text, NextResult, caseSensitivity, lastMatch );
+                    delete lastMatchOld;
+                }
                 else
                     lastMatch = page->findText( searchID, text, FromTop, caseSensitivity );
 
@@ -1474,6 +1478,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                 page->setHighlight( searchID, lastMatch, color );
                 addedHighlights = true;
             }
+            delete lastMatch;
 
             // if added highlights, udpate internals and queue page for notify
             if ( addedHighlights )
@@ -1564,6 +1569,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                 searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
                 setViewport( searchViewport, -1, true );
             }
+            delete match;
         }
         else if ( !noDialogs )
             KMessageBox::information( 0, i18n( "No matches found for '%1'.", text ) );

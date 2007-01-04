@@ -57,7 +57,7 @@ namespace KCHMUrl
 
             // Normalize url, so it becomes absolute
             if ( newurl[0] != '/' )
-                newurl = "/" + newurl;
+                newurl = '/' + newurl;
 
             newurl = QDir::cleanPath (newurl);
         }
@@ -79,7 +79,7 @@ namespace KCHMUrl
 
             // Normalize url, so it becomes absolute
             if ( newurl[0] != '/' )
-                newurl = "/" + newurl;
+                newurl = '/' + newurl;
         }
 
     //qDebug ("KCHMViewWindow::makeURLabsolute (%s) -> (%s)", url.ascii(), newurl.ascii());

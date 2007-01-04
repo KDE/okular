@@ -244,7 +244,7 @@ class OKULAR_EXPORT LinkAction : public Link
          *
          * @param actionType The type of action.
          */
-        LinkAction( enum ActionType actionType );
+        explicit LinkAction( enum ActionType actionType );
 
         /**
          * Destroys the action link.

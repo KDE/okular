@@ -496,7 +496,7 @@ class OKULAR_EXPORT Document : public QObject
         void openUrl( const KUrl &url );
 
         /**
-         * This signal is emitted whenever an error occured.
+         * This signal is emitted whenever an error occurred.
          *
          * @param text The description of the error.
          * @param duration The time in seconds the message should be shown to the user.
@@ -536,7 +536,7 @@ class OKULAR_EXPORT Document : public QObject
  * @short A view on the document.
  *
  * The Viewport structure is the 'current view' over the document. Contained
- * data is broadcasted between observers to syncronize their viewports to get
+ * data is broadcasted between observers to synchronize their viewports to get
  * the 'I scroll one view and others scroll too' views.
  */
 class OKULAR_EXPORT DocumentViewport

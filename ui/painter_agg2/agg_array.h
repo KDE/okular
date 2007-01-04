@@ -192,7 +192,7 @@ namespace agg
     // of (1 << S), that is, power of two. The data is NOT continuous in memory, 
     // so the only valid access method is operator [] or curr(), prev(), next()
     // 
-    // There reallocs occure only when the pool of pointers to blocks needs 
+    // There reallocs occur only when the pool of pointers to blocks needs 
     // to be extended (it happens very rear). You can control the value 
     // of increment to reallocate the pointer buffer. See the second constructor.
     // By default, the incremeent value equals (1 << S), i.e., the block size.

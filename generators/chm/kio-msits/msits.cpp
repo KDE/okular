@@ -253,7 +253,7 @@ void ProtocolMSITS::listDir (const KUrl & url)
 	if ( !parseLoadAndLookup ( url, filepath ) )
 		return;	// error() has been called by parseLoadAndLookup
 
-	filepath += "/";
+	filepath += '/';
 
 	if ( !isDirectory (filepath) )
 	{

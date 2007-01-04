@@ -29,7 +29,7 @@ class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
     Q_OBJECT
 
     public:
-        BookmarkManager( Document * document );
+        explicit BookmarkManager( Document * document );
         virtual ~BookmarkManager();
 
         virtual QString currentUrl() const;

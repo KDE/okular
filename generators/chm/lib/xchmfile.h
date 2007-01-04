@@ -100,7 +100,7 @@ public:
 	 */
 	CHMFile(const QString& archiveName);
 
-	//! Destructor. If a file has been succesfully opened, it closes it.
+	//! Destructor. If a file has been successfully opened, it closes it.
 	~CHMFile();
 
 	/*!
@@ -153,9 +153,9 @@ public:
 
 	/*!
 	  \brief Checks if the last attempt to load a .chm file was
-	  succesful.
+	  successful.
 	  \return true, if the last attempt to load a .chm file was
-	  succesful, false otherwise.
+	  successful, false otherwise.
 	 */
 	bool IsOk() const { return m_chmFile != NULL; }
 
@@ -218,7 +218,7 @@ public:
 	  filesystem.
 	  \param ui A pointer to CHMLIB specific data about the file.
 	  The parameter gets filled with useful data if the lookup 
-	  was succesful.
+	  was successful.
 	  \return true if the file exists in the archive, false otherwise.
 	 */
 	bool ResolveObject(const QString& fileName, chmUnitInfo *ui);
@@ -226,7 +226,7 @@ public:
 	/*!
 	  \brief Retrieves an uncompressed chunk of a file in the .chm.
 	  \param ui Pointer to a CHMLIB specific data structure obtained
-	  from a succesful call to ResolveObject().
+	  from a successful call to ResolveObject().
 	  \param buffer The buffer to place the chunk into.
 	  \param fileOffset Where does the chunk we want begin in the file?
 	  \param bufferSize The size of the buffer.

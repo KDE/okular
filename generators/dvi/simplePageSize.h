@@ -22,7 +22,7 @@ class QString;
 class QStringList;
 
 
-/** \brief This class represents phyiscal page sizes.
+/** \brief This class represents physical page sizes.
 
 This class represents page sizes. It contains nothing but two numbers,
 the page width, and page height, and a few utility functions that

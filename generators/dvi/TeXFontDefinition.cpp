@@ -30,7 +30,7 @@ extern const int MFResolutions[];
 // #define DEBUG_FONT
 
 
-TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
+TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
            class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT
@@ -45,7 +45,7 @@ TeXFontDefinition::TeXFontDefinition(QString nfontname, double _displayResolutio
   checksum                 = chk;
   flags                    = TeXFontDefinition::FONT_IN_USE;
   file                     = 0;
-  filename                 = QString::null;
+  filename.clear();
   scaled_size_in_DVI_units = _scaled_size_in_DVI_units;
 
   macrotable               = 0;
@@ -92,8 +92,8 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   flags |= TeXFontDefinition::FONT_LOADED;
   filename = fname;
 #ifdef HAVE_FREETYPE
-  fullFontName = QString::null;
-  fullEncodingName = QString::null;
+  fullFontName.clear();
+  fullEncodingName.clear();
 #endif
 
   file = fopen(QFile::encodeName(filename), "r");
@@ -101,7 +101,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   // in the DVI file's directory. If that works, modify the filename
   // accordingly and go on.
   if (file == 0) {
-    QString filename_test(font_pool->getExtraSearchPath() + "/" + filename);
+    QString filename_test(font_pool->getExtraSearchPath() + '/' + filename);
     file = fopen( QFile::encodeName(filename_test), "r");
     if (file == 0) {
       kError(kvs::dvi) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
@@ -194,7 +194,7 @@ void TeXFontDefinition::reset()
       vf_table.clear();
   }
 
-  filename   = QString::null;
+  filename.clear();
   flags      = TeXFontDefinition::FONT_IN_USE;
   set_char_p = &dviRenderer::set_empty_char;
 }

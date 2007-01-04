@@ -29,7 +29,7 @@ The main difference to the SimplePageSize class are the following.
   page width and height. Several units (inch, millimeters,
   centimeters) are possible.
 
-- It is made sure that page width an hight are always in a resonable
+- It is made sure that page width an hight are always in a reasonable
   range, which is currently set to 5cm .. 50cm
 
 - The default constructor provides a locale-depending default.

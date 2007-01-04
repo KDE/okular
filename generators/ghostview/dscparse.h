@@ -6,11 +6,11 @@
   WITHOUT ANY WARRANTY.  No author or distributor accepts responsibility
   to anyone for the consequences of using it or for whether it serves any
   particular purpose or works at all, unless he says so in writing.  Refer
-  to the GNU General Public Licence for full details.
+  to the GNU General Public License for full details.
    
   Everyone is granted permission to copy, modify and redistribute this
   file, but only under the conditions described in the GNU General
-  Public Licence.  A copy of this license is supposed to have been given
+  Public License.  A copy of this license is supposed to have been given
   to you along with this file so you can know your rights and
   responsibilities.  It should be in a file named COPYING.  Among other
   things, the copyright notice and this notice must be preserved on all

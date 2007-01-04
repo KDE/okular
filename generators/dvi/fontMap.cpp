@@ -105,7 +105,7 @@ fontMap::fontMap()
       if (encodingName.endsWith(".enc"))
         entry.fontEncoding = encodingName;
       else
-        entry.fontEncoding = QString::null;
+        entry.fontEncoding.clear();
     }
     file.close();
   } else
@@ -131,7 +131,7 @@ const QString &fontMap::findFileName(const QString &TeXName)
   if (it != fontMapEntries.end())
     return it.value().fontFileName;
 
-  static const QString nullstring(QString::null);
+  static const QString nullstring;
   return nullstring;
 }
 
@@ -143,7 +143,7 @@ const QString &fontMap::findFontName(const QString &TeXName)
   if (it != fontMapEntries.end())
     return it.value().fullFontName;
 
-  static const QString nullstring(QString::null);
+  static const QString nullstring;
   return nullstring;
 }
 
@@ -155,7 +155,7 @@ const QString &fontMap::findEncoding(const QString &TeXName)
   if (it != fontMapEntries.end())
     return it.value().fontEncoding;
 
-  static const QString nullstring(QString::null);
+  static const QString nullstring;
   return nullstring;
 }
 

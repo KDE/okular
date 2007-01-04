@@ -164,7 +164,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     break;
 
   case 0x7b:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "-";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '-';
     break;
   case 0x7c:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "---";
@@ -173,7 +173,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "\"";
     break;
   case 0x7e:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "~";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '~';
     break;
   case 0x7f:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "@@"; // @@@ check!
@@ -183,7 +183,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     if ((ch >= 0x21) && (ch <= 0x7a))
       currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QChar(ch);
     else
-      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "?";
+      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '?';
     break;
   }
 

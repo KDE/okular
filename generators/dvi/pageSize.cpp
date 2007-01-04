@@ -263,7 +263,7 @@ QString pageSize::formatName() const
   if (currentSize >= 0)
     return staticList[currentSize].name;
   else
-    return QString::null;
+    return QString();
 }
 
 
@@ -311,7 +311,7 @@ QString pageSize::serialize() const
 QString pageSize::description() const
 {
   if (!isValid())
-    return QString::null;
+    return QString();
 
   QString size = " ";
   if (formatNumber() == -1) {
@@ -320,13 +320,13 @@ QString pageSize::description() const
     else
       size += QString("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
   } else {
-    size += formatName() + "/";
+    size += formatName() + '/';
      if (getOrientation() == 0)
       size += i18n("portrait");
     else
       size += i18n("landscape");
   }
-  return size+" ";
+  return size + ' ';
 }
 
 

@@ -30,12 +30,12 @@
 #include "iconstorage.h"
 
 
-KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListViewItem * parent, K3ListViewItem * after, QString name, QString aurl, int image) :
+KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListViewItem * parent, K3ListViewItem * after, const QString &name, const QString &aurl, int image) :
     K3ListViewItem (parent, after, name), url(aurl), image_number(image)
 {
 }
 
-KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListView * parent, K3ListViewItem * after, QString name, QString aurl, int image) :
+KCHMMainTreeViewItem::KCHMMainTreeViewItem( K3ListView * parent, K3ListViewItem * after, const QString &name, QString const &aurl, int image) :
     K3ListViewItem (parent, after, name), url(aurl), image_number(image)
 {
 }
@@ -89,7 +89,7 @@ QString KCHMMainTreeViewItem::getUrl( ) const
 	if ( dlg.exec() == QDialog::Accepted )
 		return dlg.getSelectedItemUrl();
 */
-	return QString::null;
+	return QString();
 }
 
 void KCHMMainTreeViewItem::paintBranches( QPainter * p, const QColorGroup & cg, int w, int y, int h )

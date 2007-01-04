@@ -263,7 +263,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     bool keep = true;
     while ( pdfdoc && pdfdoc->isLocked() )
     {
-        QByteArray password;
+        QString password;
 
         // 1.A. try to retrieve the first password from the kde wallet system
         if ( !triedWallet )
@@ -280,7 +280,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
                 // look for the pass in that folder
                 QString retrievedPass;
                 if ( !wallet->readPassword( filePath.section('/', -1, -1), retrievedPass ) )
-                    password = retrievedPass.toLocal8Bit();
+                    password = retrievedPass;
             }
             triedWallet = true;
         }
@@ -296,18 +296,18 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            if ( KPasswordDialog::getPassword( 0, password, i18n( "Document Password" ), prompt, wallet ? &keep : 0 ) != KPasswordDialog::Accepted )
+            password = KPasswordDialog::getPassword( prompt, i18n( "Document Password" ), wallet ? &keep : 0 );
+            if ( password.isNull() )
                 break;
         }
 
         // 2. reopen the document using the password
-        pdfdoc->unlock( password, password );
+        pdfdoc->unlock( password.toLocal8Bit(), password.toLocal8Bit() );
 
         // 3. if the password is correct and the user chose to remember it, store it to the wallet
         if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() && keep )
         {
-            QString goodPass = QString::fromLocal8Bit( password.data() );
-            wallet->writePassword( filePath.section('/', -1, -1), goodPass );
+            wallet->writePassword( filePath.section('/', -1, -1), password );
         }
     }
     if ( !pdfdoc || pdfdoc->isLocked() )

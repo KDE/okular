@@ -39,8 +39,8 @@ namespace KCHMImageType
 class KCHMMainTreeViewItem : public K3ListViewItem
 {
 public:
-    KCHMMainTreeViewItem(K3ListViewItem* parent, K3ListViewItem* after, QString name, QString aurl, int image);
-	KCHMMainTreeViewItem(K3ListView* parent, K3ListViewItem* after, QString name, QString url, int image);
+    KCHMMainTreeViewItem(K3ListViewItem* parent, K3ListViewItem* after, const QString &name, const QString &aurl, int image);
+	KCHMMainTreeViewItem(K3ListView* parent, K3ListViewItem* after, const QString &name, const QString &url, int image);
 	
 	QString		getUrl() const;
 	virtual void setOpen ( bool open );

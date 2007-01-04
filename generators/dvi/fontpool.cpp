@@ -52,7 +52,7 @@ fontPool::fontPool()
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   useFontHints             = true;
   CMperDVIunit             = 0;
-  extraSearchPath          = QString::null;
+  extraSearchPath.clear();
   fontList.setAutoDelete(true);
 
 #ifdef HAVE_FREETYPE
@@ -245,7 +245,7 @@ bool fontPool::areFontsLocated()
 
 void fontPool::locateFonts()
 {
-  kpsewhichOutput = QString::null;
+  kpsewhichOutput.clear();
 
   // First, we try and find those fonts which exist on disk
   // already. If virtual fonts are found, they will add new fonts to
@@ -334,7 +334,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // a real command line, but who cares?
   const QString kpsewhich_exe = "kpsewhich";
   kpsewhichOutput +=
-    "<p><b>" + kpsewhich_exe + " " + kpsewhich_args.join(" ") + "</b></p>";
+    "<p><b>" + kpsewhich_exe + ' ' + kpsewhich_args.join(" ") + "</b></p>";
 
   const QString importanceOfKPSEWHICH =
     i18n("<p>KDVI relies on the <b>kpsewhich</b> program to locate font files "

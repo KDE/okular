@@ -43,8 +43,8 @@ class Page;
 class PixmapRequest;
 class TextPage;
 
-/* Note: on contents generation and asyncronous queries.
- * Many observers may want to request data syncronously or asyncronously.
+/* Note: on contents generation and asynchronous queries.
+ * Many observers may want to request data syncronously or asynchronously.
  * - Sync requests. These should be done in-place.
  * - Async request must be done in real background. That usually means a
  *   thread, such as QThread derived classes.

@@ -187,7 +187,7 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 	// If we do not need to decode HTML entities, just return.
 	if ( decodeentities )
 	{
-		QString htmlentity = QString::null;
+		QString htmlentity;
 		bool fill_entity = false;
 	
 		value.reserve (qend - qbegin); // to avoid multiple memory allocations
@@ -214,7 +214,7 @@ inline int CHMFile::findStringInQuotes (const QString& tag, int offset, QString&
 					}
 	
 					value.append (it.value());
-					htmlentity = QString::null;
+					htmlentity.clear();
 					fill_entity = false;
 				}
 				else
@@ -326,7 +326,11 @@ void CHMFile::CloseCHM()
 	
 	m_chmFile = NULL;
 	m_home = "/";
-	m_filename = m_home = m_topicsFile = m_indexFile = m_font = QString::null;
+	m_filename.clear();
+    m_home.clear();
+    m_topicsFile.clear();
+    m_indexFile.clear();
+    m_font.clear();
 	
 	m_PageUrl.clear();
 	m_UrlPage.clear();
@@ -465,7 +469,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
 
-			name = QString::null;
+			name.clear();
 			urls.clear();
 			in_object = false;
 			imagenum = defaultimagenum;
@@ -497,7 +501,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, QDomDocument *tree, bool
 			else if ( pname == "local" )
 				urls.push_back (KCHMUrl::makeURLabsoluteIfNeeded(pvalue));
 			else if ( pname == "see also" && asIndex && name != pvalue )
-				urls.push_back (KCHMUrl::makeURLabsoluteIfNeeded(":" + pvalue));
+				urls.push_back (KCHMUrl::makeURLabsoluteIfNeeded(':' + pvalue));
 			else if ( pname == "imagenumber" )
 			{
 				bool bok;
@@ -642,7 +646,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
 
-			name = QString::null;
+			name.clear();
 			urls.clear();
 			in_object = false;
 			imagenum = defaultimagenum;
@@ -674,7 +678,7 @@ bool CHMFile::ParseHhcAndFillTree (const QString& file, K3ListView *tree, bool a
 			else if ( pname == "local" )
 				urls.push_back (KCHMUrl::makeURLabsoluteIfNeeded (pvalue));
 			else if ( pname == "see also" && asIndex && name != pvalue )
-				urls.push_back (":" + pvalue);
+				urls.push_back (':' + pvalue);
 			else if ( pname == "imagenumber" )
 			{
 				bool bok;
@@ -1271,7 +1275,7 @@ bool CHMFile::GetFileContentAsString(QString& str, chmUnitInfo *ui)
 	}
 	else
 	{
-		str = QString::null;
+		str.clear();
 		return false;
 	}
 }
@@ -1279,7 +1283,7 @@ bool CHMFile::GetFileContentAsString(QString& str, chmUnitInfo *ui)
 
 bool CHMFile::GetFileContentAsString( QString & str, QString filename, QString location )
 {
-	str = QString::null;
+	str.clear();
 
 	if ( m_filename == filename )
 		return GetFileContentAsString (str, location);
@@ -1379,7 +1383,7 @@ QByteArray CHMFile::convertSearchWord( const QString & src )
 QString CHMFile::getTopicByUrl( const QString & search_url )
 {
 	if ( !m_lookupTablesValid )
-		return QString::null;
+		return QString();
 
 	unsigned char buf[COMMON_BUF_LEN];
 	int pos = search_url.indexOf ('#');
@@ -1388,7 +1392,7 @@ QString CHMFile::getTopicByUrl( const QString & search_url )
 	for ( unsigned int i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )
 	{
 		if ( RetrieveObject ( &m_chmTOPICS, buf, i, TOPICS_ENTRY_LEN) == 0 )
-			return QString::null;
+			return QString();
 
 		u_int32_t off_title = *(u_int32_t *)(buf + 4);
 		FIXENDIAN32(off_title);
@@ -1399,7 +1403,7 @@ QString CHMFile::getTopicByUrl( const QString & search_url )
 		QString topic, url;
 
 		if ( RetrieveObject ( &m_chmURLTBL, buf, off_url, URLTBL_ENTRY_LEN) == 0 )
-			return QString::null;
+			return QString();
 
 		off_url = *(u_int32_t *)(buf + 8);
 		FIXENDIAN32(off_url);
@@ -1424,7 +1428,7 @@ QString CHMFile::getTopicByUrl( const QString & search_url )
 		return topic;
 	}
 
-	return QString::null;
+	return QString();
 }
 
 void CHMFile::GetSearchResults( const KCHMSearchProgressResults_t & tempres, KCHMSearchResults_t & results, unsigned int limit_results )
@@ -1560,7 +1564,7 @@ bool CHMFile::ParseChmIndexFile ( const QString& file, bool asIndex, KCHMParsedI
 					qDebug ("CHMFile::ParseAndFillTopicsTree: <object> tag is parsed, but both name and url are empty.");	
 			}
 
-			name = QString::null;
+			name.clear();
 			urls.clear();
 			in_object = false;
 			imagenum = defaultimagenum;

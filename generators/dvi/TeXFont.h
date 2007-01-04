@@ -18,7 +18,7 @@ class TeXFont {
   TeXFont(TeXFontDefinition *_parent)
     {
       parent       = _parent;
-      errorMessage = QString::null;
+      errorMessage.clear();
     };
 
   virtual ~TeXFont();

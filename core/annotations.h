@@ -759,7 +759,7 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         /**
          * Creates a new line annotation from the xml @p description
          */
-        LineAnnotation( const QDomNode &description );
+        explicit LineAnnotation( const QDomNode &description );
 
         /**
          * Destroys the line annotation.
@@ -990,7 +990,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         /**
          * Creates a new highlight annotation from the xml @p description
          */
-        HighlightAnnotation( const QDomNode &description );
+        explicit HighlightAnnotation( const QDomNode &description );
 
         /**
          * Destroys the highlight annotation.
@@ -1130,7 +1130,7 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         /**
          * Creates a new stamp annotation from the xml @p description
          */
-        StampAnnotation( const QDomNode &description );
+        explicit StampAnnotation( const QDomNode &description );
 
         /**
          * Destroys the stamp annotation.

@@ -170,7 +170,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
   foreGroundPainter = new QPainter(&img);
   if (foreGroundPainter != 0) {
-    errorMsg = QString::null;
+    errorMsg.clear();
     draw_page();
     delete foreGroundPainter;
     foreGroundPainter = 0;
@@ -231,7 +231,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
                                i18n("<qt><strong>File corruption</strong> KDVI could not interprete your DVI file. This is "
                                     "most commonly caused by a corrupted file.</qt>"),
                                errorMsg, i18n("DVI File Error"));
-    errorMsg = QString::null;
+    errorMsg.clear();
     currentlyDrawnPage = 0;
     return;
   }
@@ -331,7 +331,7 @@ void dviRenderer::embedPostScript()
     return;
 
 /*  embedPS_progress = new KProgressDialog(parentWidget,
-                                         i18n("Embedding PostScript Files"), QString::null, true); */
+                                         i18n("Embedding PostScript Files"), QString(), true); */
   if (!embedPS_progress)
     return;
   embedPS_progress->setAllowCancel(false);
@@ -342,7 +342,7 @@ void dviRenderer::embedPostScript()
   embedPS_numOfProgressedFiles = 0;
 
   quint16 currPageSav = current_page;
-  errorMsg = QString::null;
+  errorMsg.clear();
   for(current_page=0; current_page < dviFile->total_pages; current_page++) {
     if (current_page < dviFile->total_pages) {
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
@@ -362,11 +362,11 @@ void dviRenderer::embedPostScript()
   if (!errorMsg.isEmpty()) {
     errorMsg = "<qt>" + errorMsg + "</qt>";
 //    KMessageBox::detailedError(parentWidget, "<qt>" + i18n("Not all PostScript files could be embedded into your document.") + "</qt>", errorMsg);
-    errorMsg = QString::null;
+    errorMsg.clear();
   } else
 /*    KMessageBox::information(parentWidget, "<qt>" + i18n("All external PostScript files were embedded into your document. You "
                                                  "will probably want to save the DVI file now.") + "</qt>",
-                             QString::null, "embeddingDone");*/
+                             QString(), "embeddingDone");*/
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
@@ -707,7 +707,7 @@ void dviRenderer::setResolution(double resolution_in_DPI)
 
 void dviRenderer::clearStatusBar()
 {
-  //emit setStatusBarText( QString::null );
+  //emit setStatusBarText( QString() );
 }
 
 

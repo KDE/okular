@@ -51,7 +51,7 @@ class bigEndianByteReader {
 
   /** Similar to the method above, only that the method reads a big
       endian number of length size, where 1 <= size <= 4. Note that
-      the value 3 is allowed (and is acually used in DVI files)!!!  */
+      the value 3 is allowed (and is actually used in DVI files)!!!  */
   quint32       readUINT(quint8 size);
 
   /** Similar to the method above, only that the method reads a SIGNED

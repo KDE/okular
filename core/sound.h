@@ -48,12 +48,12 @@ class OKULAR_EXPORT Sound
          * Creates a new sound object with the given embedded
          * sound @p data.
          */
-        Sound( const QByteArray& data );
+        explicit Sound( const QByteArray& data );
 
         /**
          * Creates a new sound object with the given external @p filename.
          */
-        Sound( const QString& filename );
+        explicit Sound( const QString& filename );
 
         /**
          * Destroys the sound object.

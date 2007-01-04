@@ -64,7 +64,7 @@ class TeXFontDefinition {
   };
 
 
-  TeXFontDefinition(QString nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
+  TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
        class fontPool *pool, double _enlargement);
   ~TeXFontDefinition();
 

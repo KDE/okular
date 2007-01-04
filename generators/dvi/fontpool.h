@@ -27,7 +27,7 @@
  *
  * This class holds a list of fonts and is able to perform a number of
  * functions on each of the fonts. The main use of this class is that
- * it is able to control a concurrently running "kpsewhich" programm
+ * it is able to control a concurrently running "kpsewhich" program
  * which is used to locate and load the fonts.
  *
  * @author Stefan Kebekus   <kebekus@kde.org>
@@ -123,7 +123,7 @@ public:
       configuration of QT at compile and runtime or the availability
       of the XFt extension, alpha channels are either supported, or
       silently converted to 1-bit masks. The redering routines in the
-      TeXFont implementation use this flag to choose the apropriate
+      TeXFont implementation use this flag to choose the appropriated
       drawing routines for the different setups. */
   bool QPixmapSupportsAlpha;
 

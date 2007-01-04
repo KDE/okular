@@ -69,7 +69,7 @@
 
 dvifile::dvifile(const dvifile *old, fontPool *fp)
 {
-  errorMsg     = QString::null;
+  errorMsg.clear();
   errorCounter = 0;
   page_offset  = 0;
   suggestedPageSize = 0;
@@ -269,7 +269,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   kDebug(kvs::dvi) << "init_dvi_file: " << fname << endl;
 #endif
 
-  errorMsg     = QString::null;
+  errorMsg.clear();
   errorCounter = 0;
   page_offset  = 0;
   suggestedPageSize = 0;
@@ -381,7 +381,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
 
   if (!pdf2ps.waitForStarted()) {
     // Indicates that conversion failed, won't try again.
-    convertedFiles[PDFFilename] = QString::null;
+    convertedFiles[PDFFilename].clear();
     if (converrorms != 0 && !have_complainedAboutMissingPDF2PS) {
       *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
                           "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
@@ -395,7 +395,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>", PDFFilename, getenv("PATH"));
       have_complainedAboutMissingPDF2PS = true;
     }
-    return QString::null;
+    return QString();
   }
 
   // We wait here while the external program runs concurrently.
@@ -403,7 +403,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
 
   if (!QFile::exists(convertedFileName) || pdf2ps.exitCode() != 0) {
     // Indicates that conversion failed, won't try again.
-    convertedFiles[PDFFilename] = QString::null;
+    convertedFiles[PDFFilename].clear();
     if (converrorms != 0) {
       const QString output = pdf2ps.readAll();
 
@@ -413,7 +413,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "This is the output of the <strong>pdf2ps</strong> program that KDVI used:</p>"
                           "<p><strong>%2</strong></p></qt>", PDFFilename, output);
     }
-    return QString::null;
+    return QString();
   }
   // Save name of converted file to buffer, so PDF file won't be
   // converted again, and files can be deleted when *this is

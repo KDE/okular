@@ -147,7 +147,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     QTextStream stream( &file );
     while ( !stream.atEnd() ) {
       PS += stream.readLine().section( '%', 0, 0);
-      PS += "\n";
+      PS += '\n';
     }
     file.close();
   }

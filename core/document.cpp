@@ -486,7 +486,7 @@ void KPDFDocument::requestPixmaps( const QValueList< PixmapRequest * > & request
             // insert in stack sorted by priority
             sIt = d->pixmapRequestsStack.begin();
             sEnd = d->pixmapRequestsStack.end();
-            while ( sIt != sEnd && (*sIt)->priority >= request->priority )
+            while ( sIt != sEnd && (*sIt)->priority > request->priority )
                 ++sIt;
             d->pixmapRequestsStack.insert( sIt, request );
         }

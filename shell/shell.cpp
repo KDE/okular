@@ -57,6 +57,7 @@ Shell::Shell(KCmdLineArgs* args, const KUrl &url)
 void Shell::init()
 {
   setObjectName( QLatin1String( "okular::Shell" ) );
+  setContextMenuPolicy( Qt::NoContextMenu );
   // set the shell's ui resource file
   setXMLFile("shell.rc");
   m_doc=0L;

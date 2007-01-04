@@ -1842,22 +1842,25 @@ void PageView::slotRequestVisiblePixmaps( int newLeft, int newTop )
          KpdfSettings::memoryLevel() != KpdfSettings::EnumMemoryLevel::Low &&
          KpdfSettings::enableThreading() )
     {
-        // add the page before the 'visible series' in preload
-        int headRequest = d->visibleItems.first()->pageNumber() - 1;
-        if ( headRequest >= 0 )
-        {
-            PageViewItem * i = d->items[ headRequest ];
-            // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
-                requestedPixmaps.push_back( new PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
-        }
+        // as the requests are done in the order as they appear in the list,
+        // request first the next page and then the previous
 
         // add the page after the 'visible series' in preload
         int tailRequest = d->visibleItems.last()->pageNumber() + 1;
         if ( tailRequest < (int)d->items.count() )
         {
             PageViewItem * i = d->items[ tailRequest ];
+            // request the pixmap if not already present
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
+                requestedPixmaps.push_back( new PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+        }
+
+        // add the page before the 'visible series' in preload
+        int headRequest = d->visibleItems.first()->pageNumber() - 1;
+        if ( headRequest >= 0 )
+        {
+            PageViewItem * i = d->items[ headRequest ];
             // request the pixmap if not already present
             if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
                 requestedPixmaps.push_back( new PixmapRequest(

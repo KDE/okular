@@ -1615,7 +1615,11 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                 while ( 1 )
                 {
                     if ( lastMatch )
-                        lastMatch = page->findText( searchID, word, NextResult, caseSensitivity, lastMatch );
+                    {
+                        RegularAreaRect * lastMatchOld = lastMatch;
+                        lastMatch = page->findText( searchID, text, NextResult, caseSensitivity, lastMatch );
+                        delete lastMatchOld;
+                    }
                     else
                         lastMatch = page->findText( searchID, word, FromTop, caseSensitivity);
 

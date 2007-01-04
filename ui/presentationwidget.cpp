@@ -595,14 +595,6 @@ void PresentationWidget::changePage( int newPage )
         QApplication::restoreOverrideCursor();
         // ask for next and previous page if not in low memory usage setting
         if (Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading()) {
-            if (newPage - 1 >= 0)
-            {
-                PresentationFrame *prevFrame = m_frames[ newPage - 1 ];
-                pixW = prevFrame->geometry.width();
-                pixH = prevFrame->geometry.height();
-                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-            }
             if (newPage + 1 < (int)m_document->pages())
             {
                 PresentationFrame *nextFrame = m_frames[ newPage + 1 ];
@@ -610,6 +602,14 @@ void PresentationWidget::changePage( int newPage )
                 pixH = nextFrame->geometry.height();
                 if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
                     requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+            if (newPage - 1 >= 0)
+            {
+                PresentationFrame *prevFrame = m_frames[ newPage - 1 ];
+                pixW = prevFrame->geometry.width();
+                pixH = prevFrame->geometry.height();
+                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
             }
         }
         m_document->requestPixmaps( requests );

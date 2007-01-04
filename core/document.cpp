@@ -1179,7 +1179,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
             // insert in stack sorted by priority
             sIt = d->m_pixmapRequestsStack.begin();
             sEnd = d->m_pixmapRequestsStack.end();
-            while ( sIt != sEnd && (*sIt)->priority() >= request->priority() )
+            while ( sIt != sEnd && (*sIt)->priority() > request->priority() )
                 ++sIt;
             d->m_pixmapRequestsStack.insert( sIt, request );
         }

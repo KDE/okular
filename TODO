@@ -19,6 +19,8 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> WISH 131045: Add context menu for URLs
 -> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince
+-> WISH 134115: specifing to kpdf the first-opened page from command line
+-> WISH 137905: command-line option for presentation mode
 
 In progress [working on]:
 -> inverse search (BR113191)

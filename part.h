@@ -22,6 +22,7 @@
 #include <qpointer.h>
 #include "core/observer.h"
 #include "core/document.h"
+#include "kdocumentviewer.h"
 
 #include <QtDBus/QtDBus>
 
@@ -66,10 +67,11 @@ class BrowserExtension;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver
+class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer
 {
 Q_OBJECT
 Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
+Q_INTERFACES(KDocumentViewer)
 
 public:
 	// Default constructor
@@ -83,6 +85,9 @@ public:
     void notifyViewportChanged( bool smoothMove );
 
 	static KAboutData* createAboutData();
+
+	bool openDocument(const KUrl& url, uint page);
+	void startPresentation();
 
 public slots: // dbus
 	Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
@@ -212,6 +217,7 @@ private:
   QStringList m_supportedMimeTypes;
   KSelectAction * m_confGens;
 	QList<Okular::ExportFormat> m_exportFormats;
+	bool m_cliPresentation;
 
 private slots:
     void slotGeneratorPreferences();

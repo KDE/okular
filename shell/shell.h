@@ -23,10 +23,12 @@
 #include <kparts/mainwindow.h>
 #include <kmimetype.h>
 
+class KCmdLineArgs;
 class KRecentFilesAction;
 class KTemporaryFile;
 class KToggleAction;
 
+class KDocumentViewer;
 class Part;
 
 /**
@@ -43,14 +45,9 @@ class Shell : public KParts::MainWindow
 
 public:
   /**
-   * Default Constructor
+   * Constructor
    */
-  Shell();
-
-  /**
-   * Open an url
-   */
-  Shell(const KUrl &url);
+  Shell(KCmdLineArgs* args = 0, const KUrl &url = KUrl());
 
   /**
    * Default Destructor
@@ -84,7 +81,7 @@ private slots:
   void slotUpdateFullScreen();
   void slotShowMenubar();
 
-  void openUrl( const KUrl & url );
+  void openUrl( const KUrl & url, uint page = 0 );
   void delayedOpen();
 
 signals:
@@ -99,7 +96,9 @@ private:
   QStringList* fileFormats();
 
 private:
+  KCmdLineArgs* m_args;
   KParts::ReadOnlyPart* m_part;
+  KDocumentViewer* m_doc;
   KTemporaryFile* m_tempfile;
   KRecentFilesAction* m_recent;
   QStringList* m_fileformats;

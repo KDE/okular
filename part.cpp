@@ -82,7 +82,7 @@ Part::Part(QWidget *parentWidget,
            const QStringList & /*args*/ )
 	: KParts::ReadOnlyPart(parent), 
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
-	m_searchStarted(false)
+	m_searchStarted(false), m_cliPresentation(false)
 {
 	QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
@@ -390,6 +390,19 @@ Part::~Part()
         delete *it;
 }
 
+bool Part::openDocument(const KUrl& url, uint page)
+{
+    Okular::DocumentViewport vp( page - 1 );
+    if ( vp.isValid() )
+        m_document->setNextDocumentViewport( vp );
+    return openUrl( url );
+}
+
+void Part::startPresentation()
+{
+    m_cliPresentation = true;
+}
+
 void Part::openUrlFromDocument(const KUrl &url)
 {
     m_bExtension->openUrlNotify();
@@ -648,11 +661,14 @@ bool Part::openFile()
     {
         m_toolBox->setCurrentIndex( 0 );
     }
-    // if the 'StartFullScreen' flag is set, start presentation
-    if ( m_document->metaData( "StartFullScreen" ).toBool() )
+    // if the 'StartFullScreen' flag is set, or the command line flag was
+    // specified, start presentation
+    if ( m_document->metaData( "StartFullScreen" ).toBool() || m_cliPresentation )
     {
-        KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning" );
-        slotShowPresentation();
+        if ( !m_cliPresentation )
+            KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning" );
+        m_cliPresentation = false;
+        QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
     }
 /*    if (m_document->getXMLFile() != QString::null)
         setXMLFile(m_document->getXMLFile(),true);*/

@@ -25,6 +25,9 @@ static const char version[] = "0.5.81";
 
 static KCmdLineOptions options[] =
 {
+    { "p", 0, 0 },
+    { "page <number>", I18N_NOOP("Page of the document to be shown"), 0 },
+    { "presentation", I18N_NOOP("Start the document in presentation mode"), 0 },
     { "+[URL]", I18N_NOOP("Document to open"), 0 },
     KCmdLineLastOption
 };
@@ -63,18 +66,17 @@ int main(int argc, char** argv)
 
         if (args->count() == 0)
         {
-            Shell* widget = new Shell;
+            Shell* widget = new Shell(args);
             widget->show();
         }
         else
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                Shell* widget = new Shell(args->url(i));
+                Shell* widget = new Shell(args, args->url(i));
                 widget->show();
             }
         }
-        args->clear();
     }
 
     return app.exec();

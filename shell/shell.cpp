@@ -22,6 +22,7 @@
 #include <qtimer.h>
 #include <kaction.h>
 #include <kapplication.h>
+#include <kcmdlineargs.h>
 #include <kedittoolbar.h>
 #include <kfiledialog.h>
 #include <klibloader.h>
@@ -44,15 +45,10 @@
 
 // local includes
 #include "shell.h"
+#include "kdocumentviewer.h"
 
-Shell::Shell()
-  : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
-{
-  init();
-}
-
-Shell::Shell(const KUrl &url)
-  : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
+Shell::Shell(KCmdLineArgs* args, const KUrl &url)
+  : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   m_openUrl = url;
   init();
@@ -63,6 +59,7 @@ void Shell::init()
   setObjectName( QLatin1String( "okular::Shell" ) );
   // set the shell's ui resource file
   setXMLFile("shell.rc");
+  m_doc=0L;
   m_fileformats=0L;
   m_tempfile=0L;
   // this routine will find and load our Part.  it finds the Part by
@@ -84,6 +81,7 @@ void Shell::init()
       setupGUI(Keys | Save);
       createGUI(m_part);
       m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
+      m_doc = qobject_cast<KDocumentViewer*>(m_part);
     }
   }
   else
@@ -112,7 +110,13 @@ void Shell::init()
 
 void Shell::delayedOpen()
 {
-   openUrl(m_openUrl);
+   uint page = 0;
+   if (m_args && m_doc)
+   {
+       QByteArray pageopt = m_args->getOption("page");
+       page = pageopt.toUInt();
+   }
+   openUrl(m_openUrl, page);
 }
 
 Shell::~Shell()
@@ -123,11 +127,13 @@ Shell::~Shell()
     delete m_part;
 }
 
-void Shell::openUrl( const KUrl & url )
+void Shell::openUrl( const KUrl & url, uint page )
 {
     if ( m_part )
     {
-        bool openOk = m_part->openUrl( url );
+        if ( m_doc && m_args && m_args->isSet( "presentation" ) )
+            m_doc->startPresentation();
+        bool openOk = page > 0 && m_doc ? m_doc->openDocument( url, page ) : m_part->openUrl( url );
         if ( openOk ) m_recent->addUrl( url );
         else m_recent->removeUrl( url );
     }

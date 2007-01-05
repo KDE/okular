@@ -68,7 +68,6 @@
 #include "ui/bookmarklist.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
-#include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"

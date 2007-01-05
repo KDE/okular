@@ -105,7 +105,6 @@ Part::Part(QWidget *parentWidget,
 	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
 	connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
 	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
-	connect( m_document->bookmarkManager(), SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
 	
 	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
 		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );

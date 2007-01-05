@@ -54,6 +54,8 @@ class OKULAR_EXPORT SourceReference
     private:
         class Private;
         Private* const d;
+
+        Q_DISABLE_COPY( SourceReference )
 };
 
 }

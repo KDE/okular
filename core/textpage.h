@@ -119,7 +119,7 @@ class OKULAR_EXPORT TextPage
          * @param lastRect If 0 the search starts at the beginning of the page, otherwise
          *                 right/below the coordinates of the the given rect.
          */
-        RegularAreaRect* findText( int id, const QString &text, SearchDirection & direction,
+        RegularAreaRect* findText( int id, const QString &text, SearchDirection direction,
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
 
         /**

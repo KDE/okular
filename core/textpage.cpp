@@ -229,7 +229,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 }
 
 
-RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchDirection & direct,
+RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchDirection direct,
                                      Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area )
 {
     SearchDirection dir=direct;

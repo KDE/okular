@@ -403,6 +403,10 @@ void Page::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
     HighlightAreaRect * hr = new HighlightAreaRect(rect);
     hr->s_id = s_id;
     hr->color = color;
+
+    const QMatrix matrix = d->rotationMatrix();
+    hr->transform( matrix );
+
     m_highlights.append( hr );
 }
 

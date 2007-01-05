@@ -113,134 +113,119 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         return new RegularAreaRect();
 
 /**
-  It works like this:
-  There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
-  rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
-  points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
-  for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
-  of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
-  1. (rx,ry)x(1,ty)
-  2. (0,ty)x(1,uy)
-  3. (0,uy)x(vx,vy)
+    It works like this:
+    There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
+    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
+    points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
+    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
+    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
+    1. (rx,ry)x(1,ty)
+    2. (0,ty)x(1,uy)
+    3. (0,uy)x(vx,vy)
 
-  To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
-  or that has a left border >= cx and bottom border >= cy. 
+    To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
+    or that has a left border >= cx and bottom border >= cy. 
 */
-	RegularAreaRect * ret= new RegularAreaRect;
-	int it=-1,itB=-1,itE=-1;
-//         if (sel->itB==-1)
-          
-        // ending cursor is higher then start cursor, we need to find positions in reverse
-        NormalizedRect *tmp=0,*start=0,*end=0;
-        NormalizedPoint startC=sel->start();
-        double startCx=startC.x,startCy=startC.y;
-        NormalizedPoint endC=sel->end();
-        double endCx=endC.x,endCy=endC.y;
-        if (sel->direction() == 1 || (sel->itB()==-1 && sel->direction()==0))
-        {
-#ifdef DEBUG_TEXTPAGE
-          kWarning() << "running first loop\n";
-#endif
-          for (it=0;it<d->m_words.count();it++)
-          {
-              tmp=d->m_words[it]->transformedArea();
-              if (tmp->contains(startCx,startCy) 
-                  || ( tmp->top <= startCy && tmp->bottom >= startCy && tmp->left >= startCx )
-                  || ( tmp->top >= startCy))
-              {
-                  /// we have found the (rx,ry)x(tx,ty)   
-                  itB=it;
-#ifdef DEBUG_TEXTPAGE
-                  kWarning() << "start is " << itB << " count is " << d->m_words.count() << endl;
-#endif
-                  break;
-              }
-  
-          }
-          sel->itB(itB);
-        }
-        itB=sel->itB();
-#ifdef DEBUG_TEXTPAGE
-        kWarning() << "direction is " << sel->direction() << endl;
-        kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
-#endif
-        if (sel->direction() == 0 || (sel->itE() == -1 && sel->direction()==1))
-        {
-#ifdef DEBUG_TEXTPAGE
-          kWarning() << "running second loop\n";
-#endif
-          for (it=d->m_words.count()-1; it>=itB;it--)
-          {
-              tmp=d->m_words[it]->transformedArea();
-              if (tmp->contains(endCx,endCy) 
-                  || ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx )
-                  || ( tmp->bottom <= endCy))
-              {
-                  /// we have found the (ux,uy)x(vx,vy)   
-                  itE=it;
-#ifdef DEBUG_TEXTPAGE
-                  kWarning() << "ending is " << itE << " count is " << d->m_words.count() << endl;
-                  kWarning () << "conditions " << tmp->contains(endCx,endCy) << " " 
-                    << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
-                    ( tmp->top >= endCy) << endl;
-#endif
+    RegularAreaRect * ret= new RegularAreaRect;
+    int it = -1;
+    int itB = -1;
+    int itE = -1;
 
-                  break;
-              }
-          }
-          sel->itE(itE);
-        }
-#ifdef DEBUG_TEXTPAGE
-        kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
-#endif
+    // ending cursor is higher then start cursor, we need to find positions in reverse
+    NormalizedRect *tmp = 0;
+    NormalizedRect *start = 0;
+    NormalizedRect *end = 0;
 
-        if (sel->itB()!=-1 && sel->itE()!=-1)
+    NormalizedPoint startC = sel->start();
+    double startCx = startC.x;
+    double startCy = startC.y;
+
+    NormalizedPoint endC = sel->end();
+    double endCx = endC.x;
+    double endCy = endC.y;
+
+    if ( sel->direction() == 1 || ( sel->itB() == -1 && sel->direction() == 0 ) )
+    {
+#ifdef DEBUG_TEXTPAGE
+        kWarning() << "running first loop\n";
+#endif
+        const int count = d->m_words.count();
+        for ( it = 0; it < count; it++ )
         {
-          start=d->m_words[sel->itB()]->transformedArea();
-          end=d->m_words[sel->itE()]->transformedArea();
-
-          NormalizedRect first,second,third;/*
-          first.right=1;
-          /// if (rx,ry)x(1,ty) intersects the end cursor, there is only one line
-          bool sameBaseline=end->intersects(first);
-#ifdef DEBUG_TEXTPAGE
-          kWarning() << "sameBaseline : " << sameBaseline << endl;
-#endif
-          if (sameBaseline)
-          {
-              first=*start;
-              first.right=end->right;
-              first.bottom=end->bottom;
-              for (it=qMin(sel->itB(),sel->itE()); it<=qMax(sel->itB(),sel->itE());it++)
-              {
-                tmp=d->m_words[it]->area();
-                if (tmp->intersects(&first))
-                  ret->appendShape(tmp);
-              }
-          }
-          else*/
-          /// finding out if there are more then one baseline between them is a hard and discussable task
-          /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
-          /// areas, if more than one -> we have a three or over line selection
-//           {
-            first=*start;
-            second.top=start->bottom;
-            first.right=second.right=1;
-            third=*end;
-            third.left=second.left=0;
-            second.bottom=end->top;
-            int selMax = qMax( sel->itB(), sel->itE() );
-            for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
+            tmp = d->m_words[ it ]->transformedArea();
+            if ( tmp->contains( startCx, startCy )
+                 || ( tmp->top <= startCy && tmp->bottom >= startCy && tmp->left >= startCx )
+                 || ( tmp->top >= startCy))
             {
-                tmp=d->m_words[it]->transformedArea();
-                if (tmp->intersects(&first) || tmp->intersects(&second) || tmp->intersects(&third))
-                  ret->appendShape(*tmp);
+                /// we have found the (rx,ry)x(tx,ty)
+                itB = it;
+#ifdef DEBUG_TEXTPAGE
+                kWarning() << "start is " << itB << " count is " << d->m_words.count() << endl;
+#endif
+                break;
             }
-
-//           }
         }
+        sel->itB( itB );
+    }
+    itB = sel->itB();
+#ifdef DEBUG_TEXTPAGE
+    kWarning() << "direction is " << sel->direction() << endl;
+    kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+#endif
+    if ( sel->direction() == 0 || ( sel->itE() == -1 && sel->direction() == 1 ) )
+    {
+#ifdef DEBUG_TEXTPAGE
+        kWarning() << "running second loop\n";
+#endif
+        for ( it = d->m_words.count() - 1; it >= itB; it-- )
+        {
+            tmp = d->m_words[ it ]->transformedArea();
+            if ( tmp->contains( endCx, endCy )
+                 || ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx )
+                 || ( tmp->bottom <= endCy ) )
+            {
+                /// we have found the (ux,uy)x(vx,vy)
+                itE = it;
+#ifdef DEBUG_TEXTPAGE
+                kWarning() << "ending is " << itE << " count is " << d->m_words.count() << endl;
+                kWarning () << "conditions " << tmp->contains( endCx, endCy ) << " " 
+                  << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
+                  ( tmp->top >= endCy) << endl;
+#endif
+                break;
+            }
+        }
+        sel->itE( itE );
+    }
+#ifdef DEBUG_TEXTPAGE
+    kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+#endif
 
-	return ret;
+    if ( sel->itB() != -1 && sel->itE() != -1 )
+    {
+        start = d->m_words[ sel->itB() ]->transformedArea();
+        end = d->m_words[ sel->itE() ]->transformedArea();
+
+        NormalizedRect first, second, third;
+        /// finding out if there are more then one baseline between them is a hard and discussable task
+        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
+        /// areas, if more than one -> we have a three or over line selection
+        first = *start;
+        second.top = start->bottom;
+        first.right = second.right = 1;
+        third = *end;
+        third.left = second.left = 0;
+        second.bottom = end->top;
+        int selMax = qMax( sel->itB(), sel->itE() );
+        for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
+        {
+            tmp = d->m_words[ it ]->transformedArea();
+            if ( tmp->intersects( &first ) || tmp->intersects( &second ) || tmp->intersects( &third ) )
+                ret->appendShape( *tmp );
+        }
+    }
+
+    return ret;
 }
 
 

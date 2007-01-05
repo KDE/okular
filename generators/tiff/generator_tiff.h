@@ -40,7 +40,7 @@ class TIFFGenerator : public Okular::Generator
 
         TIFFGeneratorThread* thread;
 
-        void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
+        void loadPages( QVector<Okular::Page*> & pagesVector );
 
         bool ready;
         Okular::DocumentInfo * m_docInfo;

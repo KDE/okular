@@ -168,7 +168,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     if ( !d->tiff )
         return false;
 
-    loadPages( pagesVector, 0 );
+    loadPages( pagesVector );
 
     ready = true;
 
@@ -304,7 +304,7 @@ void TIFFGenerator::slotThreadFinished()
     signalRequestDone( request );
 }
 
-void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )
+void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
 {
     if ( !d->tiff )
         return;
@@ -324,11 +324,8 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
              TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             continue;
 
-        if ( rotation % 2 == 1 )
-            qSwap( width, height );
-
         delete pagesVector[i];
-        Okular::Page * page = new Okular::Page( i, width, height, (Okular::Rotation)rotation );
+        Okular::Page * page = new Okular::Page( i, width, height, Okular::Rotation0 );
         pagesVector[i] = page;
 
     }

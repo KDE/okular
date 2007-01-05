@@ -37,6 +37,17 @@ enum SearchDirection
     PreviousResult  ///< Searching for the previous result on the page, earlier result should be located so we search from the last result not from the beginning of the page.
 };
 
+/**
+ * A rotation.
+ */
+enum Rotation
+{
+    Rotation0 = 0,    ///< Not rotated.
+    Rotation90 = 1,   ///< Rotated 90 degrees clockwise.
+    Rotation180 = 2,  ///< Rotated 180 degrees clockwise.
+    Rotation270 = 3   ///< Rotated 2700 degrees clockwise.
+};
+
 }
 
 #endif

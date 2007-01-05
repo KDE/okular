@@ -636,7 +636,7 @@ bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*
         for (int pageNum = 0; pageNum < doc->numPages(); ++pageNum )
         {
             QSize pageSize = doc->page( pageNum )->size();
-            pagesVector[pagesVectorOffset] = new Okular::Page( pagesVectorOffset, pageSize.width(), pageSize.height(), 0 );
+            pagesVector[pagesVectorOffset] = new Okular::Page( pagesVectorOffset, pageSize.width(), pageSize.height(), Okular::Rotation0 );
             ++pagesVectorOffset;
         }
     }

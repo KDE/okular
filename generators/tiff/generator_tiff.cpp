@@ -328,7 +328,7 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
             qSwap( width, height );
 
         delete pagesVector[i];
-        Okular::Page * page = new Okular::Page( i, width, height, rotation );
+        Okular::Page * page = new Okular::Page( i, width, height, (Okular::Rotation)rotation );
         pagesVector[i] = page;
 
     }

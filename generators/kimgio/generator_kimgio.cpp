@@ -31,7 +31,7 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
     pagesVector.resize( 1 );
 
-    Okular::Page * page = new Okular::Page( 0, m_pix->width(), m_pix->height(), 0 );
+    Okular::Page * page = new Okular::Page( 0, m_pix->width(), m_pix->height(), Okular::Rotation0 );
     pagesVector[0] = page;
 
     return true;

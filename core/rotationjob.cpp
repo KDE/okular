@@ -23,7 +23,7 @@ QImage RotationJob::image() const
     return mRotatedImage;
 }
 
-RotationJob::Rotation RotationJob::rotation() const
+Rotation RotationJob::rotation() const
 {
     return mNewRotation;
 }

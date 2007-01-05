@@ -300,7 +300,7 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
         int h = p->height();
         if ( rotation % 2 == 1 )
             qSwap( w, h );
-        Okular::Page *page = new Okular::Page( i, w, h, p->orientation() + rotation );
+        Okular::Page *page = new Okular::Page( i, w, h, (Okular::Rotation)( p->orientation() + rotation ) );
         pagesVector[i] = page;
 
         QList<KDjVu::Annotation*> annots;

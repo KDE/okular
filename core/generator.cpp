@@ -80,7 +80,7 @@ bool Generator::supportsSearching() const
     return false;
 }
 
-void Generator::rotationChanged( int, int )
+void Generator::rotationChanged( Rotation, Rotation )
 {
 }
 

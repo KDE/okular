@@ -320,7 +320,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
             pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
             pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
             pagesVector[i]=new Okular::Page( i, pSize.width(),
-                pSize.height() , rotation (internalDoc ->  orientation(i) ) );
+                pSize.height() , (Okular::Rotation)rotation (internalDoc ->  orientation(i) ) );
             internalDoc -> insertPageData (i,qMakePair(tmpPage->begin, tmpPage->end));
             atLeastOne=true;
         }
@@ -335,7 +335,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
         internalDoc -> insertPageData (0,qMakePair((unsigned long) 0, end));
         pagesVector.resize(1);
         pagesVector[0]=new Okular::Page( 0, pSize.width(),
-            pSize.height() , rotation (internalDoc ->  orientation() ) );
+            pSize.height() , (Okular::Rotation)rotation (internalDoc ->  orientation() ) );
         atLeastOne=true;
     }
     return atLeastOne;

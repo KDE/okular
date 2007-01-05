@@ -358,13 +358,13 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         QSize pSize = p->pageSize();
         w = pSize.width();
         h = pSize.height();
-        int orientation = 0;
+        Okular::Rotation orientation = Okular::Rotation0;
         switch (p->orientation())
         {
-          case Poppler::Page::Landscape: orientation = 1; break;
-          case Poppler::Page::UpsideDown: orientation = 2; break;
-          case Poppler::Page::Seascape: orientation = 3; break;
-          case Poppler::Page::Portrait: orientation = 0; break;
+          case Poppler::Page::Landscape: orientation = Okular::Rotation90; break;
+          case Poppler::Page::UpsideDown: orientation = Okular::Rotation180; break;
+          case Poppler::Page::Seascape: orientation = Okular::Rotation270; break;
+          case Poppler::Page::Portrait: orientation = Okular::Rotation0; break;
         }
         if (rotation % 2 == 1)
           qSwap(w,h);

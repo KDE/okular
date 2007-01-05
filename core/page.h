@@ -60,13 +60,9 @@ class OKULAR_EXPORT Page : public QObject
          * @param number The number of the page in the document.
          * @param width The width of the page.
          * @param height The height of the page.
-         * @param orientation The orientation of the page with
-         *                    0 = 0°
-         *                    1 = 90°
-         *                    2 = 180°
-         *                    3 = 270°
+         * @param orientation The orientation of the page
          */
-        Page( uint number, double width, double height, int orientation );
+        Page( uint number, double width, double height, Rotation orientation );
 
         /**
          * Destroys the page.
@@ -80,24 +76,19 @@ class OKULAR_EXPORT Page : public QObject
 
         /**
          * Returns the orientation of the page as defined by the document.
-         *
-         *    0 = 0°    = portrait
-         *    1 = 90°   = landscape
-         *    2 = 180°  = upside down
-         *    3 = 270°  = seascape
          */
-        int orientation() const;
+        Rotation orientation() const;
 
         /**
          * Returns the rotation of the page as defined by the user.
          */
-        int rotation() const;
+        Rotation rotation() const;
 
         /**
          * Returns the total orientation which is the original orientation plus
          * the user defined rotation.
          */
-        int totalOrientation() const;
+        Rotation totalOrientation() const;
 
         /**
          * Returns the width of the page.
@@ -197,7 +188,7 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Rotates the image and object rects of the page to the given @p orientation.
          */
-        void rotateAt( int orientation );
+        void rotateAt( Rotation orientation );
 
         /**
          * Sets the @p pixmap for the observer with the given @p id.
@@ -338,7 +329,7 @@ class OKULAR_EXPORT Page : public QObject
         {
             public:
                 QPixmap *m_pixmap;
-                int m_rotation;
+                Rotation m_rotation;
         };
         QMap< int, PixmapObject > m_pixmaps;
 

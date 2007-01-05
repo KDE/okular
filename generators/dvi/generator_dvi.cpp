@@ -415,7 +415,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orient
         Okular::Page * page = new Okular::Page( i,
                                         pageRequiredSize.width(),
                                         pageRequiredSize.height(),
-                                        orientation );
+                                        (Okular::Rotation)orientation );
         pagesVector[i] = page;
     }
     kDebug() << "pagesVector successfully inizialized ! " << endl;

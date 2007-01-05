@@ -85,7 +85,7 @@ class Document::Private
             m_lastSearchID( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
             m_warnedOutOfMemory( false ),
-            m_rotation( 0 ),
+            m_rotation( Rotation0 ),
             m_bookmarkManager( 0 ),
             m_memCheckTimer( 0 ),
             m_saveBookmarksTimer( 0 ),
@@ -138,8 +138,8 @@ class Document::Private
         int m_allocatedPixmapsTotalMemory;
         bool m_warnedOutOfMemory;
 
-        // the rotation applied to the document, 0,1,2,3 * 90 degrees
-        int m_rotation;
+        // the rotation applied to the document
+        Rotation m_rotation;
 
         // our bookmark manager
         BookmarkManager *m_bookmarkManager;
@@ -540,7 +540,7 @@ void Document::Private::sendGeneratorRequest()
         kWarning() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
         m_pixmapRequestsStack.removeAll ( request );
 
-        if ( m_rotation % 2 )
+        if ( (int)m_rotation % 2 )
             request->swap();
 
         m_generator->generatePixmap ( request );
@@ -1086,7 +1086,7 @@ QVariant Document::metaData( const QString & key, const QVariant & option ) cons
     return d->m_generator ? d->m_generator->metaData( key, option ) : QVariant();
 }
 
-int Document::rotation() const
+Rotation Document::rotation() const
 {
     return d->m_rotation;
 }
@@ -2008,8 +2008,9 @@ void Document::requestDone( PixmapRequest * req )
         d->sendGeneratorRequest();
 }
 
-void Document::slotRotation( int rotation )
+void Document::slotRotation( int r )
 {
+    Rotation rotation = (Rotation)r;
     // tell the pages to rotate
     QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
     QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
@@ -2029,7 +2030,7 @@ void Document::slotRotation( int rotation )
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
-    kDebug() << "Rotated: " << rotation << endl;
+    kDebug() << "Rotated: " << r << endl;
 }
 
 void Document::slotPaperSizes( int newsize )

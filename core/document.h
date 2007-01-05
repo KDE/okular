@@ -242,7 +242,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Returns the current rotation of the document.
          */
-        int rotation() const;
+        Rotation rotation() const;
 
         /**
          * If all pages have the same size this method returns it, if the page sizes

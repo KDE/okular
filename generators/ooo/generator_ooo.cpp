@@ -65,7 +65,7 @@ bool KOOOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
 
   const QSize size = mDocument->pageSize().toSize();
   for ( int i = 0; i < mDocument->pageCount(); ++i ) {
-    Okular::Page * page = new Okular::Page( i, size.width(), size.height(), 0 );
+    Okular::Page * page = new Okular::Page( i, size.width(), size.height(), Okular::Rotation0 );
     pagesVector[ i ] = page;
   }
 

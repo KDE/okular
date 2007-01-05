@@ -13,19 +13,13 @@
 #include <QtCore/QThread>
 #include <QtGui/QImage>
 
+#include "core/global.h"
+
 namespace Okular {
 
 class RotationJob : public QThread
 {
     public:
-        enum Rotation
-        {
-            Rotation0,
-            Rotation90,
-            Rotation180,
-            Rotation270
-        };
-
         RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id );
 
         QImage image() const;

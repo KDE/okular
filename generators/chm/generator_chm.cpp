@@ -66,7 +66,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         preparePageForSyncOperation(100,it.key());
         int i= it.value() - 1;
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
-            m_syncGen->view()->contentsHeight(),0);
+            m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
         kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
     return true;

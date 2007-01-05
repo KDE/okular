@@ -248,7 +248,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * This method is called when the orientation has been changed by the user.
          */
-        virtual void rotationChanged( int orientation, int oldOrientation );
+        virtual void rotationChanged( Rotation orientation, Rotation oldOrientation );
 
         /**
          * Returns whether the generator supports paper sizes. Default is false.

@@ -30,7 +30,7 @@
     <Action name="view_render_mode"/>
     <Separator/>
     <Action name="view_orientation"/>
-    <Action name="view_papersizes"/>
+    <Action name="view_pagesizes"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
     <Action name="previous_page"/>

@@ -14,6 +14,7 @@
 #include <okular/core/okular_export.h>
 #include <okular/core/area.h>
 #include <okular/core/global.h>
+#include <okular/core/pagesize.h>
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -191,16 +192,16 @@ class OKULAR_EXPORT Document : public QObject
         bool supportsSearching() const;
 
         /**
-         * Returns whether the document supports the listing of paper sizes.
+         * Returns whether the document supports the listing of page sizes.
          */
-        bool supportsPaperSizes() const;
+        bool supportsPageSizes() const;
 
         /**
-         * Returns the list of supported paper sizes or an empty list if this
+         * Returns the list of supported page sizes or an empty list if this
          * feature is not available.
-         * @see supportsPaperSizes
+         * @see supportsPageSizes()
          */
-        QStringList paperSizes() const;
+        PageSize::List pageSizes() const;
 
         /**
          * Returns whether the document supports the export to ASCII text.
@@ -447,10 +448,10 @@ class OKULAR_EXPORT Document : public QObject
         void slotRotation( int rotation );
 
         /**
-         * This slot is called whenever the user changes the paper @p size
+         * This slot is called whenever the user changes the page @p size
          * of the document.
          */
-        void slotPaperSizes( int size );
+        void slotPageSizes( int size );
 
     Q_SIGNALS:
         /**

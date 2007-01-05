@@ -84,17 +84,17 @@ void Generator::rotationChanged( Rotation, Rotation )
 {
 }
 
-bool Generator::supportsPaperSizes () const
+bool Generator::supportsPageSizes() const
 {
     return false;
 }
 
-QStringList Generator::paperSizes () const
+PageSize::List Generator::pageSizes() const
 {
-    return QStringList();
+    return PageSize::List();
 }
 
-void Generator::setPaperSize( QVector<Page*>&, int )
+void Generator::pageSizeChanged( const PageSize &, const PageSize & )
 {
 }
 

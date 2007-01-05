@@ -141,6 +141,11 @@ class Document::Private
         // the rotation applied to the document
         Rotation m_rotation;
 
+        // the current size of the pages (if available), and the cache of the
+        // available page sizes
+        PageSize m_pageSize;
+        PageSize::List m_pageSizes;
+
         // our bookmark manager
         BookmarkManager *m_bookmarkManager;
 
@@ -839,6 +844,8 @@ void Document::closeDocument()
     d->m_viewportHistory.append( DocumentViewport() );
     d->m_viewportIterator = d->m_viewportHistory.begin();
     d->m_allocatedPixmapsTotalMemory = 0;
+    d->m_pageSize = PageSize();
+    d->m_pageSizes.clear();
 }
 
 void Document::addObserver( DocumentObserver * pObserver )
@@ -1023,14 +1030,20 @@ bool Document::supportsSearching() const
     return d->m_generator ? d->m_generator->supportsSearching() : false;
 }
 
-bool Document::supportsPaperSizes() const
+bool Document::supportsPageSizes() const
 {
-    return d->m_generator ? d->m_generator->supportsPaperSizes() : false;
+    return d->m_generator ? d->m_generator->supportsPageSizes() : false;
 }
 
-QStringList Document::paperSizes() const
+PageSize::List Document::pageSizes() const
 {
-    return d->m_generator ? d->m_generator->paperSizes() : QStringList();
+    if ( d->m_generator )
+    {
+        if ( d->m_pageSizes.isEmpty() )
+            d->m_pageSizes = d->m_generator->pageSizes();
+        return d->m_pageSizes;
+    }
+    return PageSize::List();
 }
 
 bool Document::canExportToText() const
@@ -2033,14 +2046,32 @@ void Document::slotRotation( int r )
     kDebug() << "Rotated: " << r << endl;
 }
 
-void Document::slotPaperSizes( int newsize )
+void Document::slotPageSizes( int newsize )
 {
-    if (d->m_generator->supportsPaperSizes())
-    {
-        d->m_generator->setPaperSize(d->m_pagesVector,newsize);
-        foreachObserver( notifySetup( d->m_pagesVector, true ) );
-        kDebug() << "PaperSize no: " << newsize << endl;
-    }
+    if ( !d->m_generator->supportsPageSizes() || newsize < 0 || newsize >= d->m_pageSizes.count() )
+        return;
+
+    const PageSize& ps = d->m_pageSizes.at( newsize );
+    // tell the pages to change size
+    QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
+    QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
+    for ( ; pIt != pEnd; ++pIt )
+        (*pIt)->changeSize( ps );
+    // clear 'memory allocation' descriptors
+    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.end();
+    for ( ; aIt != aEnd; ++aIt )
+        delete *aIt;
+    d->m_allocatedPixmapsFifo.clear();
+    d->m_allocatedPixmapsTotalMemory = 0;
+    // notify the generator that the current page size has changed
+    d->m_generator->pageSizeChanged( ps, d->m_pageSize );
+    // set the new page size
+    d->m_pageSize = ps;
+
+    foreachObserver( notifySetup( d->m_pagesVector, true ) );
+    foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
+    kDebug() << "PageSize no: " << newsize << endl;
 }
 
 /** DocumentViewport **/

@@ -41,6 +41,7 @@ set(okularcore_SRCS
    core/misc.cpp
    core/observer.cpp
    core/page.cpp
+   core/pagesize.cpp
    core/pagetransition.cpp
    core/rotationjob.cpp
    core/sound.cpp
@@ -57,6 +58,7 @@ install( FILES
            core/link.h
            core/observer.h
            core/page.h
+           core/pagesize.h
            core/pagetransition.h
            core/sound.h
            core/sourcereference.h

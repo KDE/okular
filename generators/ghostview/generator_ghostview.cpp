@@ -38,6 +38,11 @@
 
 OKULAR_EXPORT_PLUGIN(GSGenerator)
 
+static Okular::PageSize buildPageSizeFromCDSCMEDIA( const CDSCMEDIA & media )
+{
+    return Okular::PageSize( media.width, media.height, QString::fromAscii( media.name ) );
+}
+
 GSGenerator::GSGenerator() :
     Okular::Generator(),
     m_converted(false)
@@ -55,6 +60,11 @@ GSGenerator::GSGenerator() :
     }
     else
         m_logWindow = 0;
+
+    for ( int i = 0; i < CDSC_KNOWN_MEDIA; ++i )
+    {
+        m_pageSizes.append( buildPageSizeFromCDSCMEDIA( dsc_known_media[i] ) );
+    }
 }
 
 GSGenerator::~GSGenerator()
@@ -252,25 +262,27 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     docLock.unlock();
 }
 
-bool GSGenerator::supportsPaperSizes() const
+bool GSGenerator::supportsPageSizes() const
 {
     return true;
 }
 
-QStringList GSGenerator::paperSizes() const
+Okular::PageSize::List GSGenerator::pageSizes() const
 {
-    return GSInternalDocument::paperSizes();
+    return m_pageSizes;
 }
 
-void GSGenerator::setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize )
+void GSGenerator::pageSizeChanged( const Okular::PageSize &size, const Okular::PageSize &/*oldSize*/ )
 {
-    internalDoc->setMedia(paperSizes().at(newsize));
-    loadPages(pagesVector);
-/**
-    FIXME: is it needed to notify the observers? doesn't the document do that already?
-    Okular::NotifyRequest r(Okular::DocumentObserver::Setup, false);
-    document()->notifyObservers( &r );
- */
+    for ( int i = 0; i < m_pageSizes.count(); ++i )
+    {
+        if ( size == m_pageSizes.at(i) )
+        {
+            internalDoc->setMedia( size.name() );
+            kDebug() << "New Page size:" << size.name() << ":" << internalDoc->computePageSize( internalDoc->pageMedia() ) << endl;
+            break;
+        }
+    }
 }
 
 QString GSGenerator::xmlFile() const
@@ -366,6 +378,7 @@ bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Pa
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
     kDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;
+    kDebug() << "Page size: " << internalDoc->computePageSize( internalDoc->pageMedia() ) << endl;
     return loadPages (pagesVector);
 }
 

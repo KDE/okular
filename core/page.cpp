@@ -21,6 +21,7 @@
 #include "area.h"
 #include "link.h"
 #include "page.h"
+#include "pagesize.h"
 #include "pagetransition.h"
 #include "rotationjob.h"
 #include "textpage.h"
@@ -307,6 +308,21 @@ void Page::rotateAt( Rotation orientation )
     QLinkedList< ObjectRect * >::const_iterator objectIt = m_rects.begin(), end = m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
+}
+
+void Page::changeSize( const PageSize &size )
+{
+    if ( size.isNull() || ( size.width() == d->m_width && size.height() == d->m_height ) )
+        return;
+
+    deletePixmaps();
+//    deleteHighlights();
+//    deleteTextSelections();
+
+    d->m_width = size.width();
+    d->m_height = size.height();
+    if ( d->m_rotation % 2 )
+        qSwap( d->m_width, d->m_height );
 }
 
 const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const

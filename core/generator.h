@@ -13,6 +13,7 @@
 
 #include <okular/core/okular_export.h>
 #include <okular/core/global.h>
+#include <core/pagesize.h>
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
@@ -251,20 +252,19 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void rotationChanged( Rotation orientation, Rotation oldOrientation );
 
         /**
-         * Returns whether the generator supports paper sizes. Default is false.
+         * Returns whether the generator supports page sizes. Default is false.
          */
-        virtual bool supportsPaperSizes() const;
+        virtual bool supportsPageSizes() const;
 
         /**
-         * Returns the list of supported paper sizes.
+         * Returns the list of supported page sizes.
          */
-        virtual QStringList paperSizes() const;
+        virtual PageSize::List pageSizes() const;
 
         /**
-         * This method is called to set the paper size of the given @p pages
-         * to the given @p paperSize.
+         * This method is called when the page size has been changed by the user.
          */
-        virtual void setPaperSize( QVector<Page*> &pages, int paperSize );
+        virtual void pageSizeChanged( const PageSize &pageSize, const PageSize &oldPageSize );
 
         /**
          * This method is called to print the document to the given @p printer.

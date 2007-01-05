@@ -42,10 +42,10 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
-        // paper size management
-        bool supportsPaperSizes() const;
-        QStringList paperSizes() const;
-        void setPaperSize( QVector<Okular::Page*> & pagesVector, int newsize );
+        // page size management
+        bool supportsPageSizes() const;
+        Okular::PageSize::List pageSizes() const;
+        void pageSizeChanged( const Okular::PageSize &, const Okular::PageSize & );
 
         QString xmlFile() const;
         void setupGui( KActionCollection *, QToolBox * );
@@ -97,6 +97,8 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         GSLogWindow * m_logWindow ;
         KActionCollection* m_actionCollection;
         QToolBox * m_box;
+
+        Okular::PageSize::List m_pageSizes;
 };
 
 #endif

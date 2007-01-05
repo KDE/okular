@@ -135,7 +135,7 @@ public:
 
     // actions
     KSelectAction * aOrientation;
-    KSelectAction * aPaperSizes;
+    KSelectAction * aPageSizes;
     KAction * aMouseNormal;
     KAction * aMouseSelect;
     KAction * aMouseTextSelect;
@@ -272,7 +272,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->aPrevAction = 0;
-    d->aPaperSizes=0;
+    d->aPageSizes=0;
     d->setting_renderMode = Okular::Settings::renderMode();
     d->setting_renderCols = Okular::Settings::viewColumns();
 
@@ -324,7 +324,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
-    d->aPaperSizes=new KSelectAction( i18n( "&Paper Size" ), ac, "view_papersizes" );
+    d->aPageSizes=new KSelectAction( i18n( "&Page Size" ), ac, "view_pagesizes" );
     QStringList rotations;
     rotations.append( i18n( "Default" ) );
     rotations.append( i18n( "Rotated 90 Degrees" ) );
@@ -334,13 +334,18 @@ void PageView::setupActions( KActionCollection * ac )
 
     connect( d->aOrientation , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotRotation( int ) ) );
-    connect( d->aPaperSizes , SIGNAL( triggered( int ) ),
-         d->document , SLOT( slotPaperSizes( int ) ) );
+    connect( d->aPageSizes , SIGNAL( triggered( int ) ),
+         d->document , SLOT( slotPageSizes( int ) ) );
 
-    bool paperSizes=d->document->supportsPaperSizes();
-    d->aPaperSizes->setEnabled(paperSizes);
-    if (paperSizes)
-      d->aPaperSizes->setItems(d->document->paperSizes());
+    bool pageSizes = d->document->supportsPageSizes();
+    d->aPageSizes->setEnabled( pageSizes );
+    if ( pageSizes )
+    {
+        QStringList items;
+        foreach ( const Okular::PageSize &p, d->document->pageSizes() )
+            items.append( p.name() );
+        d->aPageSizes->setItems( items );
+    }
 
     // Zoom actions ( higher scales takes lots of memory! )
     d->aZoom = new KSelectAction( KIcon( "viewmag" ), i18n( "Zoom" ), ac, "zoom_to" );
@@ -617,13 +622,18 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 
-    bool paperSizes=d->document->supportsPaperSizes();
-    d->aPaperSizes->setEnabled(paperSizes);
-    // set the new paper sizes:
+    bool pageSizes = d->document->supportsPageSizes();
+    d->aPageSizes->setEnabled( pageSizes );
+    // set the new page sizes:
     // - if the generator supports them
     // - if the document changed
-    if (paperSizes && documentChanged)
-      d->aPaperSizes->setItems(d->document->paperSizes());
+    if ( pageSizes && documentChanged )
+    {
+        QStringList items;
+        foreach ( const Okular::PageSize &p, d->document->pageSizes() )
+            items.append( p.name() );
+        d->aPageSizes->setItems( items );
+    }
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

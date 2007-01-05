@@ -22,6 +22,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qapplication.h>
 #include <qsplitter.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -140,7 +141,7 @@ Part::Part(QWidget *parentWidget,
 	// [left toolbox: Table of Contents] | []
 	m_toc = new TOC( m_toolBox, m_document );
 	connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-	tbIndex = m_toolBox->addItem( m_toc, KIcon("text_left"), i18n("Contents") );
+	tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
 	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
 	enableTOC( false );
 

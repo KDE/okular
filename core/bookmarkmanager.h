@@ -29,7 +29,6 @@ class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
     Q_OBJECT
 
     public:
-        explicit BookmarkManager( Document * document );
         virtual ~BookmarkManager();
 
         virtual QString currentUrl() const;
@@ -77,6 +76,9 @@ class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
 
         // private interface used by the Document
         friend class Document;
+
+        explicit BookmarkManager( Document * document );
+
         void setUrl( const KUrl& url );
         bool setPageBookmark( int page );
         bool isPageBookmarked( int page ) const;

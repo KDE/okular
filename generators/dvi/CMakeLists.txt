@@ -6,6 +6,12 @@ include_directories(
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 #add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN)
 
+if (FREETYPE_FOUND)
+   add_definitions(${FREETYPE_INCLUDE_DIR} -DHAVE_FREETYPE)
+else (FREETYPE_FOUND)
+   remove_definitions(-DHAVE_FREETYPE)
+endif (FREETYPE_FOUND)
+
 ########### next target ###############
 
 set(okularGenerator_dvi_SRCS
@@ -44,6 +50,9 @@ kde4_automoc(${okularGenerator_dvi_SRCS})
 kde4_add_plugin(okularGenerator_dvi WITH_PREFIX ${okularGenerator_dvi_SRCS})
 
 target_link_libraries(okularGenerator_dvi okularcore m ${KDE4_KDEPRINT_LIBS} )
+if (FREETYPE_FOUND)
+   target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
+endif (FREETYPE_FOUND)
 
 install(TARGETS okularGenerator_dvi DESTINATION ${PLUGIN_INSTALL_DIR})
 

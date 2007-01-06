@@ -63,6 +63,8 @@ class Page::Private
 
         ~Private()
         {
+            delete m_openingAction;
+            delete m_closingAction;
             delete m_text;
             delete m_transition;
         }

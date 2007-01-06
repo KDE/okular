@@ -13,6 +13,7 @@
 // local includes
 #include "document.h"
 #include "link.h"
+#include "sound.h"
 
 using namespace Okular;
 
@@ -242,6 +243,11 @@ class LinkSound::Private
             : m_volume( volume ), m_sync( sync ), m_repeat( repeat ),
               m_mix( mix ), m_sound( sound )
         {
+        }
+
+        ~Private()
+        {
+            delete m_sound;
         }
 
         double m_volume;

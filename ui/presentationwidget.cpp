@@ -251,7 +251,7 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-#ifdef __GUNC__
+#ifdef __GNUC__
 #warning FIX the usage of KActionCollection actions
 #endif
     if ( /*e->key() == m_ac->action( "previous_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )

@@ -290,6 +290,7 @@ class KDjVu::Private
         ddjvu_context_t *m_djvu_cxt;
         ddjvu_document_t *m_djvu_document;
         ddjvu_format_t *m_format;
+        unsigned int* m_formatmask;
 
         QVector<KDjVu::Page*> m_pages;
         QVector<ddjvu_page_t *> m_pages_cache;
@@ -397,11 +398,11 @@ KDjVu::KDjVu() : QObject(), d( new Private )
     // creating the djvu context
     d->m_djvu_cxt = ddjvu_context_create( "KDjVu" );
     // creating the rendering format
-    unsigned int* mask = new unsigned int[3];
-    mask[0] = 0x00ff0000;
-    mask[1] = 0x0000ff00;
-    mask[2] = 0x000000ff;
-    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 3, mask );
+    d->m_formatmask = new unsigned int[3];
+    d->m_formatmask[0] = 0x00ff0000;
+    d->m_formatmask[1] = 0x0000ff00;
+    d->m_formatmask[2] = 0x000000ff;
+    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 3, d->m_formatmask );
     ddjvu_format_set_row_order( d->m_format, 1 );
     ddjvu_format_set_y_direction( d->m_format, 1 );
 }
@@ -412,6 +413,7 @@ KDjVu::~KDjVu()
     closeFile();
 
     ddjvu_format_release( d->m_format );
+    delete [] d->m_formatmask;
     ddjvu_context_release( d->m_djvu_cxt );
 
     delete d;
@@ -497,6 +499,7 @@ void KDjVu::closeFile()
     d->m_docBookmarks = 0;
     // deleting the pages
     qDeleteAll( d->m_pages );
+    d->m_pages.clear();
     // releasing the djvu pages
     QVector<ddjvu_page_t *>::Iterator it = d->m_pages_cache.begin(), itEnd = d->m_pages_cache.end();
     for ( ; it != itEnd; ++it )
@@ -504,6 +507,7 @@ void KDjVu::closeFile()
     d->m_pages_cache.clear();
     // clearing the image cache
     qDeleteAll( d->mImgCache );
+    d->mImgCache.clear();
     // clearing the old metadata
     d->m_metaData.clear();
     // releasing the old document

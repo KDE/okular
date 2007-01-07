@@ -63,6 +63,11 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
     connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
 }
 
+DjVuGenerator::~DjVuGenerator()
+{
+    delete m_djvu;
+}
+
 bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     if ( !m_djvu->openFile( fileName ) )

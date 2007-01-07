@@ -75,18 +75,6 @@ class OKULAR_EXPORT DocumentObserver
         };
 
         /**
-         * Flags that can be sent from the document to all observers to
-         * inform them about area that has been changed.
-         */
-        enum NotifyType {
-            Setup = 1,            ///< The page is setup the first time
-            Viewport = 2,         ///< The viewport has changed
-            Page = 4,             ///< The page format (properties) has been changed
-            Contents = 8,         ///< The page content has been changed
-            VisibleAreas = 16     ///< The visible are changed
-        };
-
-        /**
          * This method is called whenever the document is initialized or reconstructed.
          *
          * @param pages The vector of pages of the document.

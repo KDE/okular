@@ -333,7 +333,7 @@ Part::Part(QWidget *parentWidget,
 	m_showPresentation->setEnabled( false );
 
 	m_exportAs = new KAction(i18n("E&xport As"), ac, "file_export_as");
-	QMenu *menu = new QMenu();
+	QMenu *menu = new QMenu(widget());
         connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
 	m_exportAs->setMenu( menu );
 	m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );

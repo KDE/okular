@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=FictionBook document
+Comment=FictionBook backend for okular
+ServiceTypes=okular/Generator
+MimeType=application/x-fb
+X-KDE-Library=libokularGenerator_fb
+X-KDE-Priority=1
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

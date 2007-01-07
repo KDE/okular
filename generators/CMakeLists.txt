@@ -28,3 +28,4 @@ add_subdirectory(xps)
 
 add_subdirectory(ooo)
 
+add_subdirectory(fictionbook)

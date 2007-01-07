@@ -1,0 +1,826 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Tobias Koenig <tokoe@kde.org>                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
+
+#include <QtCore/QStack>
+#include <QtCore/QUrl>
+#include <QtGui/QAbstractTextDocumentLayout>
+#include <QtGui/QTextCursor>
+#include <QtGui/QTextDocument>
+#include <QtGui/QTextFrame>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomText>
+
+#include <kglobal.h>
+#include <klocale.h>
+
+#include <okular/core/document.h>
+
+#include "converter.h"
+#include "document.h"
+
+using namespace FictionBook;
+
+class Converter::TitleInfo
+{
+    public:
+        QStringList mGenres;
+        QString mAuthor;
+        QString mTitle;
+        QStringList mKeywords;
+        QDate mDate;
+        QDomElement mCoverPage;
+        QString mLanguage;
+};
+
+class Converter::DocumentInfo
+{
+    public:
+        QString mAuthor;
+        QString mProducer;
+        QDate mDate;
+        QString mId;
+        QString mVersion;
+};
+
+Converter::Converter( const Document *document )
+    : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
+      mTitleInfo( 0 ), mDocumentInfo( 0 )
+{
+}
+
+Converter::~Converter()
+{
+    delete mTitleInfo;
+    delete mDocumentInfo;
+}
+
+bool Converter::convert()
+{
+    delete mTextDocument;
+    delete mCursor;
+
+    mTextDocument = new QTextDocument;
+    mCursor = new QTextCursor( mTextDocument );
+    mSectionCounter = 0;
+    mLinkInfosGenerated = false;
+
+    const QDomDocument document = mDocument->content();
+
+    /**
+     * Set the correct page size
+     */
+    mTextDocument->setPageSize( QSizeF( 600, 800 ) );
+
+    QTextFrameFormat frameFormat;
+    frameFormat.setMargin( 20 );
+
+    QTextFrame *rootFrame = mTextDocument->rootFrame();
+    rootFrame->setFrameFormat( frameFormat );
+
+    /**
+     * Parse the content of the document
+     */
+    const QDomElement documentElement = document.documentElement();
+
+    if ( documentElement.tagName() != QLatin1String( "FictionBook" ) ) {
+        qDebug( "Not a valid FictionBook!" );
+        return false;
+    }
+
+    /**
+     * First we read all images, so we can calculate the size later.
+     */
+    QDomElement element = documentElement.firstChildElement();
+    while ( !element.isNull() ) {
+        if ( element.tagName() == QLatin1String( "binary" ) ) {
+            if ( !convertBinary( element ) )
+                return false;
+        }
+
+        element = element.nextSiblingElement();
+    }
+
+    /**
+     * Read the rest...
+     */
+    element = documentElement.firstChildElement();
+    while ( !element.isNull() ) {
+        if ( element.tagName() == QLatin1String( "description" ) ) {
+            if ( !convertDescription( element ) )
+                return false;
+        } else if ( element.tagName() == QLatin1String( "body" ) ) {
+            if ( !mTitleInfo->mCoverPage.isNull() ) {
+                convertCover( mTitleInfo->mCoverPage );
+                mCursor->insertBlock();
+            }
+
+            QTextFrame *topFrame = mCursor->currentFrame();
+
+            QTextFrameFormat frameFormat;
+            frameFormat.setBorder( 2 );
+            frameFormat.setPadding( 8 );
+            frameFormat.setBackground( Qt::lightGray );
+
+            if ( !mTitleInfo->mTitle.isEmpty() ) {
+                mCursor->insertFrame( frameFormat );
+
+                QTextCharFormat charFormat;
+                charFormat.setFontPointSize( 22 );
+                charFormat.setFontWeight( QFont::Bold );
+                mCursor->insertText( mTitleInfo->mTitle, charFormat );
+
+                mCursor->setPosition( topFrame->lastPosition() );
+            }
+
+            if ( !mTitleInfo->mAuthor.isEmpty() ) {
+                frameFormat.setBorder( 1 );
+                mCursor->insertFrame( frameFormat );
+
+                QTextCharFormat charFormat;
+                charFormat.setFontPointSize( 10 );
+                mCursor->insertText( mTitleInfo->mAuthor, charFormat );
+
+                mCursor->setPosition( topFrame->lastPosition() );
+                mCursor->insertBlock();
+            }
+
+            mCursor->insertBlock();
+
+            if ( !convertBody( element ) )
+                return false;
+        }
+
+        element = element.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertBody( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "section" ) ) {
+            mCursor->insertBlock();
+            if ( !convertSection( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "image" ) ) {
+            if ( !convertImage( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "title" ) ) {
+            if ( !convertTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "epigraph" ) ) {
+            if ( !convertEpigraph( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertDescription( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "title-info" ) ) {
+            if ( !convertTitleInfo( child ) )
+                return false;
+        } if ( child.tagName() == QLatin1String( "document-info" ) ) {
+            if ( !convertDocumentInfo( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertTitleInfo( const QDomElement &element )
+{
+    delete mTitleInfo;
+    mTitleInfo = new TitleInfo;
+
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "genre" ) ) {
+            QString genre;
+            if ( !convertTextNode( child, genre ) )
+                return false;
+
+            if ( !genre.isEmpty() )
+                mTitleInfo->mGenres.append( genre );
+        } else if ( child.tagName() == QLatin1String( "author" ) ) {
+            QString firstName, middleName, lastName, dummy;
+
+            if ( !convertAuthor( child, firstName, middleName, lastName, dummy, dummy ) )
+                return false;
+
+            mTitleInfo->mAuthor = QString( "%1 %2 %3" ).arg( firstName, middleName, lastName );
+        } else if ( child.tagName() == QLatin1String( "book-title" ) ) {
+            if ( !convertTextNode( child, mTitleInfo->mTitle ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "keywords" ) ) {
+            QString keywords;
+            if ( !convertTextNode( child, keywords ) )
+                return false;
+
+            mTitleInfo->mKeywords = keywords.split( ' ', QString::SkipEmptyParts );
+        } else if ( child.tagName() == QLatin1String( "date" ) ) {
+            if ( !convertDate( child, mTitleInfo->mDate ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "coverpage" ) ) {
+            mTitleInfo->mCoverPage = child;
+        } else if ( child.tagName() == QLatin1String( "lang" ) ) {
+            if ( !convertTextNode( child, mTitleInfo->mLanguage ) )
+                return false;
+        }
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertDocumentInfo( const QDomElement &element )
+{
+    delete mDocumentInfo;
+    mDocumentInfo = new DocumentInfo;
+
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "author" ) ) {
+            QString firstName, middleName, lastName, email, nickname;
+
+            if ( !convertAuthor( child, firstName, middleName, lastName, email, nickname ) )
+                return false;
+
+            mDocumentInfo->mAuthor = QString( "%1 %2 %3 <%4> (%5)" )
+                                      .arg( firstName ).arg( middleName ).arg( lastName )
+                                      .arg( email ).arg( nickname );
+        } else if ( child.tagName() == QLatin1String( "program-used" ) ) {
+            if ( !convertTextNode( child, mDocumentInfo->mProducer ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "date" ) ) {
+            if ( !convertDate( child, mDocumentInfo->mDate ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "id" ) ) {
+            if ( !convertTextNode( child, mDocumentInfo->mId ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "version" ) ) {
+            if ( !convertTextNode( child, mDocumentInfo->mVersion ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+bool Converter::convertAuthor( const QDomElement &element, QString &firstName, QString &middleName, QString &lastName,
+                               QString &email, QString &nickname )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "first-name" ) ) {
+            if ( !convertTextNode( child, firstName ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "middle-name" ) ) {
+            if ( !convertTextNode( child, middleName ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "last-name" ) ) {
+            if ( !convertTextNode( child, lastName ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "email" ) ) {
+            if ( !convertTextNode( child, email ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "nickname" ) ) {
+            if ( !convertTextNode( child, nickname ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertTextNode( const QDomElement &element, QString &data )
+{
+    QDomNode child = element.firstChild();
+    while ( !child.isNull() ) {
+        QDomText text = child.toText();
+        if ( !text.isNull() )
+            data = text.data();
+
+        child = child.nextSibling();
+    }
+
+    return true;
+}
+
+bool Converter::convertDate( const QDomElement &element, QDate &date )
+{
+    if ( element.hasAttribute( "value" ) )
+        date = QDate::fromString( element.attribute( "value" ), Qt::ISODate );
+
+    return true;
+}
+
+bool Converter::convertSection( const QDomElement &element )
+{
+    mSectionCounter++;
+
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "title" ) ) {
+            if ( !convertTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "epigraph" ) ) {
+            if ( !convertEpigraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "image" ) ) {
+            if ( !convertImage( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "section" ) ) {
+            if ( !convertSection( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "p" ) ) {
+            QTextBlockFormat format;
+            format.setTextIndent( 10 );
+            mCursor->insertBlock( format );
+            if ( !convertParagraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "poem" ) ) {
+            if ( !convertPoem( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "subtitle" ) ) {
+            if ( !convertSubTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "cite" ) ) {
+            if ( !convertCite( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
+            if ( !convertEmptyLine( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    mSectionCounter--;
+
+    return true;
+}
+
+bool Converter::convertTitle( const QDomElement &element )
+{
+    QTextFrame *topFrame = mCursor->currentFrame();
+
+    QTextFrameFormat frameFormat;
+    frameFormat.setBorder( 1 );
+    frameFormat.setPadding( 8 );
+    frameFormat.setBackground( Qt::lightGray );
+
+    mCursor->insertFrame( frameFormat );
+
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "p" ) ) {
+            QTextCharFormat origFormat = mCursor->charFormat();
+
+            QTextCharFormat titleFormat( origFormat );
+            titleFormat.setFontPointSize( 22 - ( mSectionCounter*2 ) );
+            titleFormat.setFontWeight( QFont::Bold );
+            mCursor->setCharFormat( titleFormat );
+
+            if ( !convertParagraph( child ) )
+                return false;
+
+            mCursor->setCharFormat( origFormat );
+
+            HeaderInfo headerInfo;
+            headerInfo.block = mCursor->block();
+            headerInfo.text = child.text();
+            headerInfo.level = mSectionCounter;
+            mHeaderInfos.append( headerInfo );
+
+        } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
+            if ( !convertEmptyLine( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    mCursor->setPosition( topFrame->lastPosition() );
+
+    return true;
+}
+
+
+bool Converter::convertParagraph( const QDomElement &element )
+{
+    QDomNode child = element.firstChild();
+    while ( !child.isNull() ) {
+        if ( child.isElement() ) {
+            const QDomElement childElement = child.toElement();
+            if ( childElement.tagName() == QLatin1String( "emphasis" ) ) {
+                if ( !convertEmphasis( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "strong" ) ) {
+                if ( !convertStrong( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "style" ) ) {
+                if ( !convertStyle( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "a" ) ) {
+                if ( !convertLink( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "image" ) ) {
+                if ( !convertImage( childElement ) )
+                    return false;
+            }
+        } else if ( child.isText() ) {
+            const QDomText childText = child.toText();
+            mCursor->insertText( childText.data() );
+        }
+
+        child = child.nextSibling();
+    }
+
+    return true;
+}
+
+bool Converter::convertEmphasis( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat italicFormat( origFormat );
+    italicFormat.setFontItalic( true );
+    mCursor->setCharFormat( italicFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
+
+    return true;
+}
+
+bool Converter::convertStrong( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat boldFormat( origFormat );
+    boldFormat.setFontWeight( QFont::Bold );
+    mCursor->setCharFormat( boldFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
+
+    return true;
+}
+
+bool Converter::convertStyle( const QDomElement &element )
+{
+    if ( !convertParagraph( element ) )
+        return false;
+
+    return true;
+}
+
+bool Converter::convertBinary( const QDomElement &element )
+{
+    const QString id = element.attribute( "id" );
+
+    const QDomText textNode = element.firstChild().toText();
+    QByteArray data = textNode.data().toLatin1();
+    data = QByteArray::fromBase64( data );
+
+    mTextDocument->addResource( QTextDocument::ImageResource, QUrl( id ), QImage::fromData( data ) );
+
+    return true;
+}
+
+bool Converter::convertCover( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "image" ) ) {
+            if ( !convertImage( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertImage( const QDomElement &element )
+{
+    QString href = element.attributeNS( "http://www.w3.org/1999/xlink", "href" );
+
+    if ( href.startsWith( '#' ) )
+        href = href.mid( 1 );
+
+    const QImage img = qVariantValue<QImage>( mTextDocument->resource( QTextDocument::ImageResource, QUrl( href ) ) );
+
+    QTextImageFormat format;
+    format.setName( href );
+
+    if ( img.width() > 560 )
+        format.setWidth( 560 );
+
+    format.setHeight( img.height() );
+
+    mCursor->insertImage( format );
+
+    return true;
+}
+
+bool Converter::convertEpigraph( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "p" ) ) {
+            QTextBlockFormat format;
+            format.setTextIndent( 10 );
+            mCursor->insertBlock( format );
+            if ( !convertParagraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "poem" ) ) {
+            if ( !convertPoem( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "cite" ) ) {
+            if ( !convertCite( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
+            if ( !convertEmptyLine( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertPoem( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "title" ) ) {
+            if ( !convertTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "epigraph" ) ) {
+            if ( !convertEpigraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
+            if ( !convertEmptyLine( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertSubTitle( const QDomElement &element )
+{
+    return true;
+}
+
+bool Converter::convertCite( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "p" ) ) {
+            QTextBlockFormat format;
+            format.setTextIndent( 10 );
+            mCursor->insertBlock( format );
+            if ( !convertParagraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "poem" ) ) {
+            if ( !convertParagraph( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
+            if ( !convertEmptyLine( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertEmptyLine( const QDomElement &element )
+{
+    mCursor->insertText( "\n\n" );
+    return true;
+}
+
+bool Converter::convertLink( const QDomElement &element )
+{
+    QString href = element.attributeNS( "http://www.w3.org/1999/xlink", "href" );
+    QString type = element.attributeNS( "http://www.w3.org/1999/xlink", "type" );
+
+    if ( type == "note" )
+        mCursor->insertText( "[" );
+
+    LinkPosition pos;
+    pos.startPosition = mCursor->position();
+
+    QTextCharFormat origFormat( mCursor->charFormat() );
+
+    QTextCharFormat format( mCursor->charFormat() );
+    format.setForeground( Qt::blue );
+    format.setFontUnderline( true );
+    mCursor->setCharFormat( format );
+
+    QDomNode child = element.firstChild();
+    while ( !child.isNull() ) {
+        if ( child.isElement() ) {
+            const QDomElement childElement = child.toElement();
+            if ( childElement.tagName() == QLatin1String( "emphasis" ) ) {
+                if ( !convertEmphasis( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "strong" ) ) {
+                if ( !convertStrong( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "style" ) ) {
+                if ( !convertStyle( childElement ) )
+                    return false;
+            }
+        } else if ( child.isText() ) {
+            const QDomText text = child.toText();
+            if ( !text.isNull() ) {
+                mCursor->insertText( text.data() );
+            }
+        }
+
+        child = child.nextSibling();
+    }
+    mCursor->setCharFormat( origFormat );
+
+    pos.endPosition = mCursor->position();
+    pos.url = href;
+
+    if ( type == "note" )
+        mCursor->insertText( "]" );
+
+    mLinkPositions.append( pos );
+
+    return true;
+}
+
+QTextDocument *Converter::textDocument() const
+{
+    return mTextDocument;
+}
+
+Okular::DocumentInfo Converter::documentInfo() const
+{
+    Okular::DocumentInfo info;
+
+    if ( mTitleInfo ) {
+        if ( !mTitleInfo->mTitle.isEmpty() )
+            info.set( "title", mTitleInfo->mTitle, i18n( "Title" ) );
+
+        if ( !mTitleInfo->mAuthor.isEmpty() )
+            info.set( "author", mTitleInfo->mAuthor, i18n( "Author" ) );
+    }
+
+    if ( mDocumentInfo ) {
+        if ( !mDocumentInfo->mProducer.isEmpty() )
+            info.set( "producer", mDocumentInfo->mProducer, i18n( "Producer" ) );
+
+        if ( !mDocumentInfo->mProducer.isEmpty() )
+            info.set( "creator", mDocumentInfo->mAuthor, i18n( "Creator" ) );
+
+        if ( mDocumentInfo->mDate.isValid() )
+            info.set( "creationDate",
+                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, true ),
+                      i18n( "Created" ) );
+    }
+
+    return info;
+}
+
+Okular::DocumentSynopsis Converter::tableOfContents() const
+{
+    const QSizeF pageSize = mTextDocument->pageSize();
+
+    QStack<QDomNode> parentNodeStack;
+
+    Okular::DocumentSynopsis tableOfContents;
+    QDomNode parentNode = tableOfContents;
+
+    int level = 1000;
+    for ( int i = 0; i < mHeaderInfos.count(); ++i )
+        level = qMin( level, mHeaderInfos[ i ].level );
+
+    for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
+        const HeaderInfo headerInfo = mHeaderInfos[ i ];
+
+        const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( headerInfo.block );
+
+        int page = qRound( rect.y() ) / qRound( pageSize.height() );
+        int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+
+        Okular::DocumentViewport viewport( page );
+        viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
+        viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
+        viewport.rePos.enabled = true;
+        viewport.rePos.pos = Okular::DocumentViewport::Center;
+
+        QDomElement item = tableOfContents.createElement( headerInfo.text );
+        item.setAttribute( "Viewport", viewport.toString() );
+
+        int newLevel = headerInfo.level;
+        if ( newLevel == level ) {
+            parentNode.appendChild( item );
+        } else if ( newLevel > level ) {
+            parentNodeStack.push( parentNode );
+            parentNode = parentNode.lastChildElement();
+            parentNode.appendChild( item );
+            level = newLevel;
+        } else {
+            for ( int i = level; i > newLevel; i-- ) {
+                level--;
+                parentNode = parentNodeStack.pop();
+            }
+
+            parentNode.appendChild( item );
+        }
+    }
+
+    return tableOfContents;
+}
+
+void Converter::calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page )
+{
+    const QSizeF pageSize = mTextDocument->pageSize();
+
+    const QTextBlock startBlock = mTextDocument->findBlock( startPosition );
+    const QRectF startBoundingRect = mTextDocument->documentLayout()->blockBoundingRect( startBlock );
+
+    const QTextBlock endBlock = mTextDocument->findBlock( endPosition );
+    const QRectF endBoundingRect = mTextDocument->documentLayout()->blockBoundingRect( endBlock );
+
+    QTextLayout *startLayout = startBlock.layout();
+    QTextLayout *endLayout = endBlock.layout();
+
+    int startPos = startPosition - startBlock.position();
+    int endPos = endPosition - endBlock.position();
+    const QTextLine startLine = startLayout->lineForTextPosition( startPos );
+    const QTextLine endLine = endLayout->lineForTextPosition( endPos );
+
+    double x = startBoundingRect.x() + startLine.cursorToX( startPos );
+    double y = startBoundingRect.y() + startLine.y();
+    double r = endBoundingRect.x() + endLine.cursorToX( endPos );
+    double b = endBoundingRect.y() + endLine.y() + endLine.height();
+
+    int offset = qRound( y ) % qRound( pageSize.height() );
+
+    page = qRound( y ) / qRound( pageSize.height() );
+    rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
+                   (r - x) / pageSize.width(), (b - y) / pageSize.height() );
+}
+
+Converter::LinkInfo::List Converter::links()
+{
+    if ( !mLinkInfosGenerated )
+        createLinkInfos();
+
+    return mLinkInfos;
+}
+
+void Converter::createLinkInfos()
+{
+    for ( int i = 0; i < mLinkPositions.count(); ++i ) {
+        const LinkPosition linkPosition = mLinkPositions[ i ];
+
+    LinkInfo info;
+    info.url = linkPosition.url;
+
+    calculateBoundingRect( linkPosition.startPosition, linkPosition.endPosition,
+                           info.boundingRect, info.page );
+
+    mLinkInfos.append( info );
+  }
+}
+

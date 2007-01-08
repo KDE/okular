@@ -14,6 +14,7 @@
 #endif
 
 #include <stdlib.h>
+#include <limits.h>
 #include "GList.h"
 #include "Error.h"
 #include "JArithmeticDecoder.h"
@@ -683,7 +684,7 @@ JBIG2Bitmap::JBIG2Bitmap(Guint segNumA, int wA, int hA):
   h = hA;
   line = (wA + 7) >> 3;
 
-  if (h < 0 || line <= 0 || h >= (INT_MAX - 1) / line ) {
+  if (w <= 0 || h <= 0 || line <= 0 || h >= (INT_MAX - 1) / line ) {
     data = NULL;
     return;
   }
@@ -700,7 +701,7 @@ JBIG2Bitmap::JBIG2Bitmap(Guint segNumA, JBIG2Bitmap *bitmap):
   h = bitmap->h;
   line = bitmap->line;
 
-  if (h < 0 || line <= 0 || h >= (INT_MAX - 1) / line) {
+  if (w <= 0 || h <= 0 || line <= 0 || h >= (INT_MAX - 1) / line) {
     data = NULL;
     return;
   }

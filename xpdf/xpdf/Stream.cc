@@ -418,11 +418,11 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
     return;
 
   nVals = width * nComps;
-  if (nVals * nBits + 7 <= 0)
+  if (nVals * nBits + 7 < 0)
     return;
   pixBytes = (nComps * nBits + 7) >> 3;
   rowBytes = ((nVals * nBits + 7) >> 3) + pixBytes;
-  if (rowBytes < 0)
+  if (rowBytes <= 0)
     return;
 
   predLine = (Guchar *)gmalloc(rowBytes);
@@ -1277,9 +1277,11 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   endOfLine = endOfLineA;
   byteAlign = byteAlignA;
   columns = columnsA;
-  if (columns < 1 || columns >= INT_MAX / sizeof(short)) {
-     error(getPos(), "Bad number of columns in CCITTFaxStream");
-     exit(1);
+  if (columns < 1) {
+     columns = 1;
+  }
+  if (columns + 4 <= 0) {
+     columns = INT_MAX - 4;
   }
   rows = rowsA;
   endOfBlock = endOfBlockA;
@@ -3080,6 +3082,7 @@ GBool DCTStream::readHuffmanTables() {
 	numACHuffTables = index+1;
       tbl = &acHuffTables[index];
     } else {
+      index &= 0x0f;
       if (index >= numDCHuffTables)
 	numDCHuffTables = index+1;
       tbl = &dcHuffTables[index];

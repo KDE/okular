@@ -364,12 +364,17 @@ const Link * Page::pageAction( PageAction action ) const
 void Page::setPixmap( int id, QPixmap *pixmap )
 {
     if ( d->m_rotation == Rotation0 ) {
-        PixmapObject object;
-
-        object.m_pixmap = pixmap;
-        object.m_rotation = d->m_rotation;
-
-        m_pixmaps[ id ] = object;
+        QMap< int, PixmapObject >::iterator it = m_pixmaps.find( id );
+        if ( it != m_pixmaps.end() )
+        {
+            delete it.value().m_pixmap;
+        }
+        else
+        {
+            it = m_pixmaps.insert( id, PixmapObject() );
+        }
+        it.value().m_pixmap = pixmap;
+        it.value().m_rotation = d->m_rotation;
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );
         connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );

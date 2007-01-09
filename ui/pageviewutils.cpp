@@ -172,6 +172,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     mask.fill( Qt::white );
     maskPainter.setBrush( Qt::black );
     maskPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
+    maskPainter.end();
     setMask( mask );
 
     // draw background

@@ -42,7 +42,7 @@
 #include <ktemporaryfile.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
-
+#include <kactioncollection.h>
 // local includes
 #include "shell.h"
 #include "kdocumentviewer.h"
@@ -175,7 +175,7 @@ void Shell::setupActions()
 
   m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
   KStandardAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-  m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), actionCollection(), this );
+  m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), this,actionCollection() );
 }
 
 void Shell::saveProperties(KConfig* config)

@@ -234,57 +234,74 @@ Part::Part(QWidget *parentWidget,
 	KActionCollection * ac = actionCollection();
 
 	// Page Traversal actions
-	m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac, "goto_page" );
+	m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac );
+	ac->addAction("goto_page", m_gotoPage);
 	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
 	// dirty way to activate gotopage when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
-	m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac, "previous_page");
+	m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
+	ac->addAction("previous_page", m_prevPage);
 	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
 	m_prevPage->setShortcut( 0 );
 	// dirty way to activate prev page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 	connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
-	m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac, "next_page" );
+	m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
+	ac->addAction("next_page", m_nextPage);
 	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
 	m_nextPage->setShortcut( 0 );
 	// dirty way to activate next page when pressing miniBar's button
 	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 	connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
-	m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac, "first_page" );
+	m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
+	ac->addAction("first_page", m_firstPage);
 	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac, "last_page" );
+	m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
+	ac->addAction("last_page",m_lastPage);
 	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
-	m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac, "history_back" );
+	m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac );
+	ac->addAction("history_back",m_historyBack);
 	m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
 
-	m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac, "history_forward" );
+	m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac);
+	ac->addAction("history_forward",m_historyNext);
 	m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
-	m_prevBookmark = new KAction( KIcon( "previous" ), i18n( "Previous Bookmark" ), ac, "previous_bookmark" );
+	m_prevBookmark = ac->addAction("previous_bookmark");
+	m_prevBookmark->setText(i18n( "Previous Bookmark" ));
+	m_prevBookmark->setIcon(KIcon( "previous" ));
+	
 	m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
 	connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
-	m_nextBookmark = new KAction( KIcon( "next" ), i18n( "Next Bookmark" ), ac, "next_bookmark" );
+	m_nextBookmark = ac->addAction("next_bookmark");
+	m_nextBookmark->setText(i18n( "Next Bookmark" ));
+	m_nextBookmark->setIcon(KIcon( "next" ));
 	m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
 	connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
-	m_copy = KStandardAction::create( KStandardAction::Copy, "edit_copy", m_pageView, SLOT( copyTextSelection() ), ac );
+	m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
+	ac->addAction("edit_copy",m_copy);
 
 	// Find and other actions
-	m_find = KStandardAction::find( this, SLOT( slotFind() ), ac, "find" );
+	m_find = KStandardAction::find( this, SLOT( slotFind() ), ac );
+	ac->addAction("find", m_find);
 	m_find->setEnabled( false );
 
-	m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac, "find_next" );
+	m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
+	ac->addAction("find_next",m_findNext);
 	m_findNext->setEnabled( false );
 
-	m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac, "save" );
+	m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
+	ac->addAction("save",m_saveAs);
 	m_saveAs->setEnabled( false );
-	KAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac, "preferences" );
+	QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
+	ac->addAction("preferences", prefs);
 	if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
 	{
 		prefs->setText( i18n( "Configure okular..." ) );
@@ -294,7 +311,8 @@ Part::Part(QWidget *parentWidget,
 		prefs->setText( i18n( "Configure Viewer..." ) ); // TODO: improve this message
 	}
 	
-	KAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac, "generator_prefs" );
+	QAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac );
+	ac->addAction("generator_prefs", genPrefs);
 	genPrefs->setText( i18n( "Configure Backends..." ) );
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
 	KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
@@ -306,33 +324,45 @@ Part::Part(QWidget *parentWidget,
 	m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
 	m_printPreview->setEnabled( false );
 
-	m_showLeftPanel = new KToggleAction( KIcon( "show_side_panel" ), i18n( "Show &Navigation Panel"), ac, "show_leftpanel" );
+	m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
+	m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
+	m_showLeftPanel->setIcon(KIcon( "show_side_panel" ));
 	connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
 	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
 	m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
 	m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
 	slotShowLeftPanel();
 
-	KAction * importPS= new KAction(KIcon("psimport"), i18n("&Import Postscript as PDF..."), ac, "import_ps");
+	QAction * importPS = ac->addAction("import_ps");
+	importPS->setText(i18n("&Import Postscript as PDF..."));
+	importPS->setIcon(KIcon("psimport"));
 	connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
-	KAction * ghns = new KAction(KIcon("knewstuff"), i18n("&Get Books From Internet..."), ac, "get_new_stuff");
+	QAction * ghns = ac->addAction("get_new_stuff");
+	ghns->setText(i18n("&Get Books From Internet..."));
+	ghns->setIcon(KIcon("knewstuff"));
 	connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
 	ghns->setShortcut( Qt::Key_G );  // TEMP, REMOVE ME!
 
-	m_showProperties = new KAction(KIcon("info"), i18n("&Properties"), ac, "properties");
+	m_showProperties = ac->addAction("properties");
+	m_showProperties->setText(i18n("&Properties"));
+	m_showProperties->setIcon(KIcon("info"));
 	connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
 	m_showProperties->setEnabled( false );
 	
-	m_showEmbeddedFiles = new KAction(i18n("&Embedded Files"), ac, "embedded_files");
+	m_showEmbeddedFiles = ac->addAction("embedded_files");
+	m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
 	connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
 	m_showEmbeddedFiles->setEnabled( false );
 
-	m_showPresentation = new KAction( KIcon( "kpresenter_kpr" ), i18n("P&resentation"), ac, "presentation");
+	m_showPresentation = ac->addAction("presentation");
+	m_showPresentation->setText(i18n("P&resentation"));
+	m_showPresentation->setIcon(KIcon( "kpresenter_kpr" ));
 	connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
 	m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
 	m_showPresentation->setEnabled( false );
 
-	m_exportAs = new KAction(i18n("E&xport As"), ac, "file_export_as");
+	m_exportAs = ac->addAction("file_export_as");
+	m_exportAs->setText(i18n("E&xport As"));
 	QMenu *menu = new QMenu(widget());
         connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
 	m_exportAs->setMenu( menu );

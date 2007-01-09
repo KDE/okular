@@ -136,9 +136,9 @@ public:
     // actions
     KSelectAction * aOrientation;
     KSelectAction * aPageSizes;
-    KAction * aMouseNormal;
-    KAction * aMouseSelect;
-    KAction * aMouseTextSelect;
+    QAction * aMouseNormal;
+    QAction * aMouseSelect;
+    QAction * aMouseTextSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KToggleAction * aZoomFitWidth;
@@ -146,7 +146,7 @@ public:
     KToggleAction * aZoomFitText;
     KSelectAction * aRenderMode;
     KToggleAction * aViewContinuous;
-    KAction * aPrevAction;
+    QAction * aPrevAction;
     KActionCollection * actionCollection;
 
     int setting_renderMode;
@@ -323,8 +323,10 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aOrientation=new KSelectAction( i18n( "&Orientation" ), ac, "view_orientation" );
-    d->aPageSizes=new KSelectAction( i18n( "&Page Size" ), ac, "view_pagesizes" );
+    d->aOrientation = new KSelectAction(i18n("&Orientation"), this);
+    ac->addAction("view_orientation", d->aOrientation);
+    d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
+    ac->addAction("view_pagesizes", d->aPageSizes);
     QStringList rotations;
     rotations.append( i18n( "Default" ) );
     rotations.append( i18n( "Rotated 90 Degrees" ) );
@@ -348,23 +350,27 @@ void PageView::setupActions( KActionCollection * ac )
     }
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom = new KSelectAction( KIcon( "viewmag" ), i18n( "Zoom" ), ac, "zoom_to" );
+    d->aZoom  = new KSelectAction(KIcon( "viewmag" ), i18n("Zoom"), this);
+    ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 13 );
     connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
-    KStandardAction::zoomIn( this, SLOT( slotZoomIn() ), ac, "zoom_in" );
+    ac->addAction(KStandardAction::ZoomIn,  "zoom_in", this, SLOT( slotZoomIn() ));
 
-    KStandardAction::zoomOut( this, SLOT( slotZoomOut() ), ac, "zoom_out" );
+    ac->addAction(KStandardAction::ZoomOut,  "zoom_out", this, SLOT( slotZoomOut() ));
 
-    d->aZoomFitWidth = new KToggleAction( KIcon( "view_fit_width" ), i18n("Fit &Width"), ac, "zoom_fit_width" );
+    d->aZoomFitWidth  = new KToggleAction(KIcon( "view_fit_width" ), i18n("Fit &Width"), this);
+    ac->addAction("zoom_fit_width", d->aZoomFitWidth );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-    d->aZoomFitPage = new KToggleAction( KIcon( "view_fit_window" ), i18n("Fit &Page"), ac, "zoom_fit_page" );
+    d->aZoomFitPage  = new KToggleAction(KIcon( "view_fit_window" ), i18n("Fit &Page"), this);
+    ac->addAction("zoom_fit_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
-    d->aZoomFitText = new KToggleAction( KIcon( "viewmagfit" ), i18n("Fit &Text"), ac, "zoom_fit_text" );
+    d->aZoomFitText  = new KToggleAction(KIcon( "viewmagfit" ), i18n("Fit &Text"), this);
+    ac->addAction("zoom_fit_text", d->aZoomFitText );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
@@ -373,51 +379,60 @@ void PageView::setupActions( KActionCollection * ac )
     renderModes.append( i18n( "Facing" ) );
     renderModes.append( i18n( "Overview" ) );
 
-    d->aRenderMode = new KSelectAction( KIcon( "view_left_right" ), i18n("&View Mode"), ac, "view_render_mode" );
+    d->aRenderMode  = new KSelectAction(KIcon( "view_left_right" ), i18n("&View Mode"), this);
+    ac->addAction("view_render_mode", d->aRenderMode );
     connect( d->aRenderMode, SIGNAL( triggered( int ) ), SLOT( slotRenderMode( int ) ) );
     d->aRenderMode->setItems( renderModes );
     d->aRenderMode->setCurrentItem( Okular::Settings::renderMode() );
 
-    d->aViewContinuous = new KToggleAction( KIcon( "view_text" ), i18n("&Continuous"), ac, "view_continuous" );
+    d->aViewContinuous  = new KToggleAction(KIcon( "view_text" ), i18n("&Continuous"), this);
+    ac->addAction("view_continuous", d->aViewContinuous );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
     // Mouse-Mode actions
     QActionGroup * actGroup = new QActionGroup( this );
     actGroup->setExclusive( true );
-    d->aMouseNormal = new KAction( KIcon( "mouse" ), i18n("&Browse Tool"), ac, "mouse_drag" );
+    d->aMouseNormal  = new KAction(KIcon( "mouse" ), i18n("&Browse Tool"), this);
+    ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL( triggered() ), this, SLOT( slotSetMouseNormal() ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
-    KAction * mz = new KAction( KIcon( "viewmag" ), i18n("&Zoom Tool"), ac, "mouse_zoom" );
+    KAction * mz  = new KAction(KIcon( "viewmag" ), i18n("&Zoom Tool"), this);
+    ac->addAction("mouse_zoom", mz );
     connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
     mz->setCheckable( true );
     mz->setActionGroup( actGroup );
 
-    d->aMouseSelect = new KAction( KIcon( "frame_edit" ), i18n("&Select Tool"), ac, "mouse_select" );
+    d->aMouseSelect  = new KAction(KIcon( "frame_edit" ), i18n("&Select Tool"), this);
+    ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setActionGroup( actGroup );
 
-    d->aMouseTextSelect = new KAction( KIcon( "text" ), i18n("&Text Selection Tool"), ac, "mouse_textselect" );
+    d->aMouseTextSelect  = new KAction(KIcon( "text" ), i18n("&Text Selection Tool"), this);
+    ac->addAction("mouse_textselect", d->aMouseTextSelect );
     connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setActionGroup( actGroup );
 
-    d->aToggleAnnotator = new KToggleAction( KIcon( "pencil" ), i18n("&Review"), ac, "mouse_toggle_annotate" );
+    d->aToggleAnnotator  = new KToggleAction(KIcon( "pencil" ), i18n("&Review"), this);
+    ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
     d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
 
     // Other actions
-    KAction * su = new KAction( i18n("Scroll Up"), ac, "view_scroll_up" );
+    KAction * su  = new KAction(i18n("Scroll Up"), this);
+    ac->addAction("view_scroll_up", su );
     connect( su, SIGNAL( triggered() ), this, SLOT( slotScrollUp() ) );
     su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
     addAction(su);
 
-    KAction * sd = new KAction( i18n("Scroll Down"), ac, "view_scroll_down" );
+    KAction * sd  = new KAction(i18n("Scroll Down"), this);
+    ac->addAction("view_scroll_down", sd );
     connect( sd, SIGNAL( triggered() ), this, SLOT( slotScrollDown() ) );
     sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
     addAction(sd);
@@ -2165,7 +2180,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     }
 
     float newFactor = d->zoomFactor;
-    KAction * checkedZoomAction = 0;
+    QAction * checkedZoomAction = 0;
     switch ( newZoomMode )
     {
         case ZoomFixed:{ //ZoomFixed case

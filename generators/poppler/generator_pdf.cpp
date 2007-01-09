@@ -296,11 +296,13 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            KPasswordDialog dlg( 0 , KPasswordDialog::ShowUsernameLine );
-            dlg.setPrompt( prompt);
+            KPasswordDialog dlg( 0, wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
+            dlg.setCaption( i18n( "Document Password" ) );
+            dlg.setPrompt( prompt );
             if( !dlg.exec() )
                 break;
             password = dlg.password();
+            keep = dlg.keepPassword();
         }
 
         // 2. reopen the document using the password

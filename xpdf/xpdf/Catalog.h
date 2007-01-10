@@ -11,6 +11,8 @@
 
 #include <aconf.h>
 
+#include <set>
+
 #ifdef USE_GCC_PRAGMAS
 #pragma interface
 #endif
@@ -128,7 +130,7 @@ private:
   Object acroForm;		// AcroForm dictionary
   GBool ok;			// true if catalog is valid
 
-  int readPageTree(Dict *pages, PageAttrs *attrs, int start);
+  int readPageTree(Dict *pages, PageAttrs *attrs, int start, std::set< std::pair<int, int> > &readNodes);
   Object *findDestInTree(Object *tree, GString *name, Object *obj);
 };
 

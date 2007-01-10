@@ -35,6 +35,7 @@ Catalog::Catalog(XRef *xrefA) {
   Object obj, obj2;
   int numPages0;
   int i;
+  std::set< std::pair<int, int> > readNodes;
 
   ok = gTrue;
   xref = xrefA;
@@ -51,7 +52,9 @@ Catalog::Catalog(XRef *xrefA) {
   }
 
   // read page tree
-  catDict.dictLookup("Pages", &pagesDict);
+  catDict.dictLookupNF("Pages", &pagesDict);
+  readNodes.insert( std::pair<int, int>(pagesDict.getRef().num, pagesDict.getRef().gen) );
+  pagesDict.fetch(xref, &pagesDict);
   // This should really be isDict("Pages"), but I've seen at least one
   // PDF file where the /Type entry is missing.
   if (!pagesDict.isDict()) {
@@ -76,7 +79,7 @@ Catalog::Catalog(XRef *xrefA) {
     pageRefs[i].num = -1;
     pageRefs[i].gen = -1;
   }
-  numPages = readPageTree(pagesDict.getDict(), NULL, 0);
+  numPages = readPageTree(pagesDict.getDict(), NULL, 0, readNodes);
   if (numPages != numPages0) {
     error(-1, "Page count in top-level pages object is incorrect");
   }
@@ -191,7 +194,7 @@ GString *Catalog::readMetadata() {
   return s;
 }
 
-int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
+int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, std::set< std::pair<int, int> > &readNodes) {
   Object kids;
   Object kid;
   Object kidRef;
@@ -207,7 +210,9 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
     goto err1;
   }
   for (i = 0; i < kids.arrayGetLength(); ++i) {
-    kids.arrayGet(i, &kid);
+    kids.arrayGetNF(i, &kid);
+    const Ref &ref = kid.getRef();
+    kid.fetch(kids.getArray()->getXRef(), &kid);
     if (kid.isDict("Page")) {
       attrs2 = new PageAttrs(attrs1, kid.getDict());
       page = new Page(xref, start+1, kid.getDict(), attrs2);
@@ -236,9 +241,15 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start) {
     // This should really be isDict("Pages"), but I've seen at least one
     // PDF file where the /Type entry is missing.
     } else if (kid.isDict()) {
-      if ((start = readPageTree(kid.getDict(), attrs1, start))
-	  < 0)
-	goto err2;
+      std::pair<int, int> node(ref.num, ref.gen);
+      std::pair< std::set< std::pair<int, int> >::iterator, bool> insertResult = readNodes.insert(node);
+      if (insertResult.second) {
+        if ((start = readPageTree(kid.getDict(), attrs1, start, readNodes))
+	    < 0)
+	  goto err2;
+      } else {
+       error(-1, "Kid object was already processed. The pdf is faulty.");
+      }
     } else {
       error(-1, "Kid object (page %d) is wrong type (%s)",
 	    start+1, kid.getTypeName());

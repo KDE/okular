@@ -47,8 +47,6 @@ public:
   Object *getNF(int i, Object *obj);
   GBool getString(int i, GString *string);
 
-  XRef *getXRef() { return xref; }
-
 private:
 
   XRef *xref;			// the xref table for this PDF file

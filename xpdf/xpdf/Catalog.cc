@@ -26,6 +26,12 @@
 #include "UGString.h"
 #include "Catalog.h"
 
+// This define is used to limit the depth of recursive readPageTree calls
+// This is needed because the page tree nodes can reference their parents
+// leaving us in an infinite loop
+// Most sane pdf documents don't have a call depth higher than 10
+#define MAX_CALL_DEPTH 1000
+
 //------------------------------------------------------------------------
 // Catalog
 //------------------------------------------------------------------------
@@ -35,7 +41,6 @@ Catalog::Catalog(XRef *xrefA) {
   Object obj, obj2;
   int numPages0;
   int i;
-  std::set< std::pair<int, int> > readNodes;
 
   ok = gTrue;
   xref = xrefA;
@@ -52,9 +57,7 @@ Catalog::Catalog(XRef *xrefA) {
   }
 
   // read page tree
-  catDict.dictLookupNF("Pages", &pagesDict);
-  readNodes.insert( std::pair<int, int>(pagesDict.getRef().num, pagesDict.getRef().gen) );
-  pagesDict.fetch(xref, &pagesDict);
+  catDict.dictLookup("Pages", &pagesDict);
   // This should really be isDict("Pages"), but I've seen at least one
   // PDF file where the /Type entry is missing.
   if (!pagesDict.isDict()) {
@@ -79,7 +82,7 @@ Catalog::Catalog(XRef *xrefA) {
     pageRefs[i].num = -1;
     pageRefs[i].gen = -1;
   }
-  numPages = readPageTree(pagesDict.getDict(), NULL, 0, readNodes);
+  numPages = readPageTree(pagesDict.getDict(), NULL, 0, 0);
   if (numPages != numPages0) {
     error(-1, "Page count in top-level pages object is incorrect");
   }
@@ -194,7 +197,7 @@ GString *Catalog::readMetadata() {
   return s;
 }
 
-int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, std::set< std::pair<int, int> > &readNodes) {
+int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, int callDepth) {
   Object kids;
   Object kid;
   Object kidRef;
@@ -210,9 +213,7 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, std::set
     goto err1;
   }
   for (i = 0; i < kids.arrayGetLength(); ++i) {
-    kids.arrayGetNF(i, &kid);
-    const Ref &ref = kid.getRef();
-    kid.fetch(kids.getArray()->getXRef(), &kid);
+    kids.arrayGet(i, &kid);
     if (kid.isDict("Page")) {
       attrs2 = new PageAttrs(attrs1, kid.getDict());
       page = new Page(xref, start+1, kid.getDict(), attrs2);
@@ -241,14 +242,12 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, std::set
     // This should really be isDict("Pages"), but I've seen at least one
     // PDF file where the /Type entry is missing.
     } else if (kid.isDict()) {
-      std::pair<int, int> node(ref.num, ref.gen);
-      std::pair< std::set< std::pair<int, int> >::iterator, bool> insertResult = readNodes.insert(node);
-      if (insertResult.second) {
-        if ((start = readPageTree(kid.getDict(), attrs1, start, readNodes))
+      if (callDepth > MAX_CALL_DEPTH) {
+        error(-1, "Limit of %d recursive calls reached while reading the page tree. If your document is correct and not a test to try to force a crash, please report a bug.", MAX_CALL_DEPTH);
+      } else {
+        if ((start = readPageTree(kid.getDict(), attrs1, start, callDepth + 1))
 	    < 0)
 	  goto err2;
-      } else {
-       error(-1, "Kid object was already processed. The pdf is faulty.");
       }
     } else {
       error(-1, "Kid object (page %d) is wrong type (%s)",

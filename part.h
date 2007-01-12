@@ -154,7 +154,8 @@ public slots:
 private:
 	void doPrint( KPrinter& printer );
     void fillGenerators();
-
+        bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
+	
 	// the document
 	Okular::Document * m_document;
 	QString m_temporaryLocalFile;
@@ -204,7 +205,7 @@ private:
 	QAction *m_showPresentation;
 	KToggleAction* m_showMenuBarAction;
 	KToggleAction* m_showLeftPanel;
-	KToggleFullScreenAction* m_showFullScreenAction;
+	KToggleFullScreenAction* m_showFullScreenAction;	
 
 	bool m_actionsSearched;
 	bool m_searchStarted;

@@ -53,6 +53,8 @@
 #include <ktogglefullscreenaction.h>
 #include <kio/job.h>
 #include <kicon.h>
+#include <kfilterdev.h>
+
 // local includes
 #include "part.h"
 #include "ui/pageview.h"
@@ -711,8 +713,24 @@ bool Part::openUrl(const KUrl &url)
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
+   const QString path = url.path();
+   const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
+   bool isCompressedFile = false;
+   KUrl tempUrl;
+   if (( mimetype->name() == "application/x-gzip" ) 
+                  || ( mimetype->name() == "application/x-bzip2" ) 
+                  || ( mimetype->parentMimeType() == "application/x-gzip" ) 
+                  || ( mimetype->parentMimeType() == "application/x-bzip2" )
+               )
+            {
+                 isCompressedFile=handleCompressed(tempUrl,path,mimetype);
+            }
+
     // this calls in sequence the 'closeUrl' and 'openFile' methods
-    bool openOk = KParts::ReadOnlyPart::openUrl(url);
+    bool openOk;
+    if ( !isCompressedFile )
+         openOk = KParts::ReadOnlyPart::openUrl(url);
+    else openOk = KParts::ReadOnlyPart::openUrl(tempUrl);
 
     if ( openOk )
     {
@@ -1373,6 +1391,90 @@ void Part::psTransformEnded()
        m_file = m_temporaryLocalFile;
        openFile();
 }
+
+bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype)
+{
+
+    // we are working with a compressed file, decompressing
+    // temporary file for decompressing
+    KTemporaryFile *m_tempfile = new KTemporaryFile;
+    if ( !m_tempfile )
+    {
+        KMessageBox::error( 0, 
+            i18n("<qt><strong>File Error!</strong> Could not create "
+            "temporary file.</qt>"));
+        return false;
+    }
+
+    m_tempfile->setAutoRemove(true);
+
+    if ( ! m_tempfile->open() )
+    {
+        KMessageBox::error( 0, 
+            i18n("<qt><strong>File Error!</strong> Could not create temporary file "
+                "<nobr><strong>%1</strong></nobr>.</qt>",
+                strerror(m_tempfile->error())));
+                delete m_tempfile;
+                return false;
+    }
+
+    // decompression filer
+    QIODevice* filterDev;
+    if (( mimetype->parentMimeType() == "application/x-gzip" ) ||
+        ( mimetype->parentMimeType() == "application/x-bzip2" ))
+            filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
+    else
+            filterDev = KFilterDev::deviceForFile(path);
+
+    if (!filterDev)
+    {
+        delete m_tempfile;
+        return false;
+    }
+
+    if ( !filterDev->open(QIODevice::ReadOnly) )
+    {
+        KMessageBox::detailedError( 0, 
+            i18n("<qt><strong>File Error!</strong> Could not open the file "
+            "<nobr><strong>%1</strong></nobr> for uncompression. "
+            "The file will not be loaded.</qt>", path),
+            i18n("<qt>This error typically occurs if you do "
+            "not have enough permissions to read the file. " 
+            "You can check ownership and permissions if you "
+            "right-click on the file in the Konqueror "
+            "file manager and then choose the 'Properties' menu.</qt>"));
+
+            delete filterDev;
+            delete m_tempfile;
+            return false;
+    }
+
+    QByteArray buf(1024, '\0');
+    int read = 0, wrtn = 0;
+
+    while ((read = filterDev->read(buf.data(), buf.size())) > 0)
+    {
+        wrtn = m_tempfile->write(buf.data(), read);
+        if ( read != wrtn )
+            break;
+    }
+    delete filterDev;
+    if ((read != 0) || (m_tempfile->size() == 0))
+    {
+        KMessageBox::detailedError(0, 
+            i18n("<qt><strong>File Error!</strong> Could not uncompress "
+            "the file <nobr><strong>%1</strong></nobr>. "
+            "The file will not be loaded.</qt>", path ),
+            i18n("<qt>This error typically occurs if the file is corrupt. "
+            "If you want to be sure, try to decompress the file manually "
+            "using command-line tools.</qt>"));
+        delete m_tempfile;
+        return false;
+    }
+    url=m_tempfile->fileName();
+    return true;
+}
+
 
 /*
 * BrowserExtension class

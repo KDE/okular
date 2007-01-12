@@ -25,7 +25,6 @@
 
 class KCmdLineArgs;
 class KRecentFilesAction;
-class KTemporaryFile;
 class KToggleAction;
 
 class KDocumentViewer;
@@ -92,14 +91,12 @@ private:
   void setupAccel();
   void setupActions();
   void init();
-  bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
   QStringList* fileFormats();
 
 private:
   KCmdLineArgs* m_args;
   KParts::ReadOnlyPart* m_part;
   KDocumentViewer* m_doc;
-  KTemporaryFile* m_tempfile;
   KRecentFilesAction* m_recent;
   QStringList* m_fileformats;
   KAction* m_printAction;

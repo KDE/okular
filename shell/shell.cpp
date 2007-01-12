@@ -39,9 +39,7 @@
 #include <kservicetypetrader.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
-#include <ktemporaryfile.h>
 #include <kfilterbase.h>
-#include <kfilterdev.h>
 #include <kactioncollection.h>
 // local includes
 #include "shell.h"
@@ -62,7 +60,6 @@ void Shell::init()
   setXMLFile("shell.rc");
   m_doc=0L;
   m_fileformats=0L;
-  m_tempfile=0L;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -124,7 +121,6 @@ Shell::~Shell()
 {
     if ( m_part ) writeSettings();
     if ( m_fileformats ) delete m_fileformats;
-    if ( m_tempfile ) delete m_tempfile; 
     delete m_part;
 }
 
@@ -264,89 +260,6 @@ QStringList* Shell::fileFormats()
 	
 
 }
-bool Shell::handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype)
-{
-
-    // we are working with a compressed file, decompressing
-    // temporary file for decompressing
-    m_tempfile = new KTemporaryFile;
-    if ( !m_tempfile )
-    {
-        KMessageBox::error(this, 
-            i18n("<qt><strong>File Error!</strong> Could not create "
-            "temporary file.</qt>"));
-        return false;
-    }
-
-    m_tempfile->setAutoRemove(true);
-
-    // something failed while creating the tempfile
-    if ( ! m_tempfile->open() )
-    {
-        KMessageBox::error( this, 
-            i18n("<qt><strong>File Error!</strong> Could not create temporary file "
-                "<nobr><strong>%1</strong></nobr>.</qt>",
-                strerror(m_tempfile->error())));
-                delete m_tempfile;
-                return false;
-    }
-
-    // decompression filer
-    QIODevice* filterDev;
-    if (( mimetype->parentMimeType() == "application/x-gzip" ) ||
-        ( mimetype->parentMimeType() == "application/x-bzip2" ))
-            filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
-    else
-            filterDev = KFilterDev::deviceForFile(path);
-
-    if (!filterDev)
-    {
-        delete m_tempfile;
-        return false;
-    }
-
-    if ( !filterDev->open(QIODevice::ReadOnly) )
-    {
-        KMessageBox::detailedError( this, 
-            i18n("<qt><strong>File Error!</strong> Could not open the file "
-            "<nobr><strong>%1</strong></nobr> for uncompression. "
-            "The file will not be loaded.</qt>", path),
-            i18n("<qt>This error typically occurs if you do "
-            "not have enough permissions to read the file. " 
-            "You can check ownership and permissions if you "
-            "right-click on the file in the Konqueror "
-            "file manager and then choose the 'Properties' menu.</qt>"));
-
-            delete filterDev;
-            delete m_tempfile;
-            return false;
-    }
-
-    QByteArray buf(1024, '\0');
-    int read = 0, wrtn = 0;
-
-    while ((read = filterDev->read(buf.data(), buf.size())) > 0)
-    {
-        wrtn = m_tempfile->write(buf.data(), read);
-        if ( read != wrtn )
-            break;
-    }
-    delete filterDev;
-    if ((read != 0) || (m_tempfile->size() == 0))
-    {
-        KMessageBox::detailedError(this, 
-            i18n("<qt><strong>File Error!</strong> Could not uncompress "
-            "the file <nobr><strong>%1</strong></nobr>. "
-            "The file will not be loaded.</qt>", path ),
-            i18n("<qt>This error typically occurs if the file is corrupt. "
-            "If you want to be sure, try to decompress the file manually "
-            "using command-line tools.</qt>"));
-        delete m_tempfile;
-        return false;
-    }
-    url=m_tempfile->fileName();
-    return true;
-}
 
 void Shell::fileOpen()
 {
@@ -363,19 +276,7 @@ void Shell::fileOpen()
             startDir = m_openUrl.path();
         KUrl url = KFileDialog::getOpenUrl( startDir, m_fileformats->join("\n") );//getOpenFileName();
         bool reallyOpen=!url.isEmpty();
-        if (reallyOpen)
-        {
-            QString path = url.path();
-            KMimeType::Ptr mimetype = KMimeType::findByPath( path );
-            if (( mimetype->name() == "application/x-gzip" ) 
-                  || ( mimetype->name() == "application/x-bzip2" ) 
-                  || ( mimetype->parentMimeType() == "application/x-gzip" ) 
-                  || ( mimetype->parentMimeType() == "application/x-bzip2" )
-               )
-            {
-                reallyOpen=handleCompressed(url,path,mimetype);
-            }
-        }
+        
         if (reallyOpen)
             openUrl(url);
     }

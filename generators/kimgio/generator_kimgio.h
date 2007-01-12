@@ -12,6 +12,8 @@
 
 #include <okular/core/generator.h>
 
+#include <qimage.h>
+
 class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
@@ -21,6 +23,7 @@ class KIMGIOGenerator : public Okular::Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
         // [INHERITED] perform actions on document / pages
@@ -30,8 +33,10 @@ class KIMGIOGenerator : public Okular::Generator
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
+        bool hasFeature( GeneratorFeature feature ) const;
+
     private:
-        QPixmap *m_pix;
+        QImage m_img;
 };
 
 #endif

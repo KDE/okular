@@ -2025,12 +2025,12 @@ bool Document::print( KPrinter &printer )
     return d->m_generator ? d->m_generator->print( printer ) : false;
 }
 
-KPrintDialogPage* Document::configurationWidget() const
+KPrintDialogPage* Document::printConfigurationWidget() const
 {
     if ( d->m_generator )
     {
         PrintInterface * iface = qobject_cast< Okular::PrintInterface * >( d->m_generator );
-        return iface ? iface->configurationWidget() : 0;
+        return iface ? iface->printConfigurationWidget() : 0;
     }
     else
         return 0;

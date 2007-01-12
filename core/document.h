@@ -432,7 +432,7 @@ class OKULAR_EXPORT Document : public QObject
          * Returns a custom printer configuration page or 0 if no
          * custom printer configuration page is available.
          */
-        KPrintDialogPage* configurationWidget() const;
+        KPrintDialogPage* printConfigurationWidget() const;
 
         /**
          * This method is used by the generators to signal the finish of

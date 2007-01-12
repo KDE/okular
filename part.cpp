@@ -1327,7 +1327,7 @@ void Part::slotPrint()
 
     if ( m_document->canConfigurePrinter() )
     {
-        KPrintDialogPage * w = m_document->configurationWidget();
+        KPrintDialogPage * w = m_document->printConfigurationWidget();
         if ( w )
         {
             printer.addDialogPage( w );

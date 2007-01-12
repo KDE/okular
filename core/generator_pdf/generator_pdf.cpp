@@ -440,7 +440,13 @@ bool PDFGenerator::print( KPrinter& printer )
     KTempFile tf( QString::null, ".ps" );
     globalParams->setPSPaperWidth(paperWidth);
     globalParams->setPSPaperHeight(paperHeight);
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
+    QString pstitle = getDocumentInfo("Title", true);
+    if ( pstitle.isEmpty() )
+    {
+        pstitle = m_document->currentDocument().fileName( false );
+    }
+    const char* pstitlechar = !pstitle.isEmpty() ? pstitle.local8Bit() : 0;
+    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pstitlechar, pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
 
     if (psOut->isOk())
     {
@@ -686,17 +692,17 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
     (*fonts)[fontsLen++] = *font->getID();
 }
 
-QString PDFGenerator::getDocumentInfo( const QString & data ) const
+QString PDFGenerator::getDocumentInfo( const QString & data, bool canReturnNull ) const
 // note: MUTEX is LOCKED while calling this
 {
     // [Albert] Code adapted from pdfinfo.cc on xpdf
     Object info;
     if ( !pdfdoc )
-        return i18n( "Unknown" );
+        return canReturnNull ? QString::null : i18n( "Unknown" );
 
     pdfdoc->getDocInfo( &info );
     if ( !info.isDict() )
-        return i18n( "Unknown" );
+        return canReturnNull ? QString::null : i18n( "Unknown" );
 
     QString result;
     Object obj;
@@ -739,7 +745,7 @@ QString PDFGenerator::getDocumentInfo( const QString & data ) const
     }
     obj.free();
     info.free();
-    return i18n( "Unknown" );
+    return canReturnNull ? QString::null : i18n( "Unknown" );
 }
 
 QString PDFGenerator::getDocumentDate( const QString & data ) const

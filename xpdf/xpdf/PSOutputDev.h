@@ -53,7 +53,7 @@ class PSOutputDev: public OutputDev {
 public:
 
   // Open a PostScript output file, and write the prolog.
-  PSOutputDev(const char *fileName, XRef *xrefA, Catalog *catalog,
+  PSOutputDev(const char *fileName, const char *title, XRef *xrefA, Catalog *catalog,
 	      int firstPage, int lastPage, PSOutMode modeA,
 	      int imgLLXA = 0, int imgLLYA = 0,
 	      int imgURXA = 0, int imgURYA = 0,
@@ -102,7 +102,7 @@ public:
   // Write the document-level header.
   void writeHeader(int firstPage, int lastPage,
 		   PDFRectangle *mediaBox, PDFRectangle *cropBox,
-		   int pageRotate);
+		   int pageRotate, const char *title);
 
   // Write the Xpdf procset.
   void writeXpdfProcset();
@@ -222,7 +222,7 @@ public:
 
 private:
 
-  void init(PSOutputFunc outputFuncA, void *outputStreamA,
+  void init(PSOutputFunc outputFuncA, void *outputStreamA, const char *title,
 	    PSFileType fileTypeA, XRef *xrefA, Catalog *catalog,
 	    int firstPage, int lastPage, PSOutMode modeA,
 	    int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,

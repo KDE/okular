@@ -887,7 +887,7 @@ static void outputToFile(void *stream, const char *data, int len) {
   fwrite(data, 1, len, (FILE *)stream);
 }
 
-PSOutputDev::PSOutputDev(const char *fileName, XRef *xrefA, Catalog *catalog,
+PSOutputDev::PSOutputDev(const char *fileName, const char *title, XRef *xrefA, Catalog *catalog,
 			 int firstPage, int lastPage, PSOutMode modeA,
 			 int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,
 			 GBool manualCtrlA) {
@@ -938,7 +938,7 @@ PSOutputDev::PSOutputDev(const char *fileName, XRef *xrefA, Catalog *catalog,
     }
   }
 
-  init(outputToFile, f, fileTypeA,
+  init(outputToFile, f, title, fileTypeA,
        xrefA, catalog, firstPage, lastPage, modeA,
        imgLLXA, imgLLYA, imgURXA, imgURYA, manualCtrlA);
 }
@@ -963,12 +963,12 @@ PSOutputDev::PSOutputDev(PSOutputFunc outputFuncA, void *outputStreamA,
   haveTextClip = gFalse;
   t3String = NULL;
 
-  init(outputFuncA, outputStreamA, psGeneric,
+  init(outputFuncA, outputStreamA, 0, psGeneric,
        xrefA, catalog, firstPage, lastPage, modeA,
        imgLLXA, imgLLYA, imgURXA, imgURYA, manualCtrlA);
 }
 
-void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
+void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA, const char *title,
 		       PSFileType fileTypeA, XRef *xrefA, Catalog *catalog,
 		       int firstPage, int lastPage, PSOutMode modeA,
 		       int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,
@@ -1056,10 +1056,10 @@ void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
       writeHeader(firstPage, lastPage,
 		  catalog->getPage(firstPage)->getMediaBox(),
 		  catalog->getPage(firstPage)->getCropBox(),
-		  catalog->getPage(firstPage)->getRotate());
+		  catalog->getPage(firstPage)->getRotate(), title);
     } else {
       box = new PDFRectangle(0, 0, 1, 1);
-      writeHeader(firstPage, lastPage, box, box, 0);
+      writeHeader(firstPage, lastPage, box, box, 0, title);
       delete box;
     }
     if (mode != psModeForm) {
@@ -1147,13 +1147,15 @@ PSOutputDev::~PSOutputDev() {
 
 void PSOutputDev::writeHeader(int firstPage, int lastPage,
 			      PDFRectangle *mediaBox, PDFRectangle *cropBox,
-			      int pageRotate) {
+			      int pageRotate, const char *title) {
   double x1, y1, x2, y2;
 
   switch (mode) {
   case psModePS:
     writePS("%!PS-Adobe-3.0\n");
     writePSFmt("%%%%Creator: xpdf/pdftops %s\n", xpdfVersion);
+    if(title)
+      writePSFmt("%%%%Title: %s\n", title);
     writePSFmt("%%%%LanguageLevel: %d\n",
 	       (level == psLevel1 || level == psLevel1Sep) ? 1 :
 	       (level == psLevel2 || level == psLevel2Sep) ? 2 : 3);
@@ -1174,6 +1176,8 @@ void PSOutputDev::writeHeader(int firstPage, int lastPage,
   case psModeEPS:
     writePS("%!PS-Adobe-3.0 EPSF-3.0\n");
     writePSFmt("%%%%Creator: xpdf/pdftops %s\n", xpdfVersion);
+    if(title)
+      writePSFmt("%%%%Title: %s\n", title);
     writePSFmt("%%%%LanguageLevel: %d\n",
 	       (level == psLevel1 || level == psLevel1Sep) ? 1 :
 	       (level == psLevel2 || level == psLevel2Sep) ? 2 : 3);
@@ -1208,6 +1212,8 @@ void PSOutputDev::writeHeader(int firstPage, int lastPage,
   case psModeForm:
     writePS("%!PS-Adobe-3.0 Resource-Form\n");
     writePSFmt("%%%%Creator: xpdf/pdftops %s\n", xpdfVersion);
+    if(title)
+      writePSFmt("%%%%Title: %s\n", title);
     writePSFmt("%%%%LanguageLevel: %d\n",
 	       (level == psLevel1 || level == psLevel1Sep) ? 1 :
 	       (level == psLevel2 || level == psLevel2Sep) ? 2 : 3);

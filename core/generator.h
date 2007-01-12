@@ -80,9 +80,11 @@ class Generator : public QObject
         /** constructor: takes the Document as a parameter **/
         Generator( KPDFDocument * doc ) : m_document( doc ) {};
 
+    protected:
+        KPDFDocument * m_document;
+
     private:
         Generator();
-        KPDFDocument * m_document;
 };
 
 /**

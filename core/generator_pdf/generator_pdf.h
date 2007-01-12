@@ -92,7 +92,7 @@ class PDFGenerator : public Generator
         void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );
 
         // private functions for accessing document informations via PDFDoc
-        QString getDocumentInfo( const QString & data ) const;
+        QString getDocumentInfo( const QString & data, bool canReturnNull = false ) const;
         QString getDocumentDate( const QString & data ) const;
         // private function for creating the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parent, GList * items );

@@ -36,6 +36,11 @@ Generator::~Generator()
     delete d;
 }
 
+bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
+{
+    return false;
+}
+
 bool Generator::canGenerateTextPage() const
 {
     return false;
@@ -122,6 +127,12 @@ void Generator::setDocument( Document *document )
 {
     d->m_document = document;
 }
+
+bool Generator::hasFeature( GeneratorFeature ) const
+{
+    return false;
+}
+
 
 void Generator::signalRequestDone( PixmapRequest * request )
 {

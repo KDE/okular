@@ -24,9 +24,11 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kmimetype.h>
 #include <kmimetypetrader.h>
 #include <krun.h>
 #include <kstandarddirs.h>
+#include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
 
 // local includes
@@ -83,6 +85,7 @@ class Document::Private
         Private( Document *parent, QHash<QString, Generator*> * generators )
           : m_parent( parent ),
             m_lastSearchID( -1 ),
+            m_tempFile( 0 ),
             m_allocatedPixmapsTotalMemory( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
@@ -125,6 +128,7 @@ class Document::Private
         // cached stuff
         QString m_docFileName;
         QString m_xmlFileName;
+        KTemporaryFile *m_tempFile;
 
         // viewport stuff
         QLinkedList< DocumentViewport > m_viewportHistory;
@@ -322,6 +326,9 @@ void Document::Private::loadDocumentInfo()
 // are still uninitialized at this point so don't access them
 {
     //kDebug() << "Using '" << d->m_xmlFileName << "' as document info file." << endl;
+    if ( m_xmlFileName.isEmpty() )
+        return;
+
     QFile infoFile( m_xmlFileName );
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
@@ -585,25 +592,40 @@ static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
     return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
 }
 
-bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &mime )
+bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
 {
-    // docFile is always local so we can use QFile on it
-    QFile fileReadTest( docFile );
-    if ( !fileReadTest.open( QIODevice::ReadOnly ) )
+    KMimeType::Ptr mime = _mime;
+    QByteArray filedata;
+    bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+    if ( !isstdin )
     {
-        d->m_docFileName.clear();
-        return false;
-    }
-    // determine the related "xml document-info" filename
-    d->m_url = url;
-    d->m_docFileName = docFile;
-    QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-    fn = "kpdf/" + QString::number(fileReadTest.size()) + '.' + fn + ".xml";
-    fileReadTest.close();
-    d->m_xmlFileName = KStandardDirs::locateLocal( "data", fn );
+        if ( mime.count() <= 0 )
+            return false;
 
-    if (mime.count()<=0)
-        return false;
+        // docFile is always local so we can use QFile on it
+        QFile fileReadTest( docFile );
+        if ( !fileReadTest.open( QIODevice::ReadOnly ) )
+        {
+            d->m_docFileName.clear();
+            return false;
+        }
+        // determine the related "xml document-info" filename
+        d->m_url = url;
+        d->m_docFileName = docFile;
+        QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
+        fn = "kpdf/" + QString::number(fileReadTest.size()) + '.' + fn + ".xml";
+        fileReadTest.close();
+        d->m_xmlFileName = KStandardDirs::locateLocal( "data", fn );
+    }
+    else
+    {
+        QFile qstdin;
+        qstdin.open( stdin, QIODevice::ReadOnly );
+        filedata = qstdin.readAll();
+        mime = KMimeType::findByContent( filedata );
+        if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
+            return false;
+    }
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
@@ -688,7 +710,34 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     // 1. load Document (and set busy cursor while loading)
     QApplication::setOverrideCursor( Qt::WaitCursor );
-    bool openOk = d->m_generator->loadDocument( docFile, d->m_pagesVector );
+    bool openOk = false;
+    if ( !isstdin )
+    {
+        openOk = d->m_generator->loadDocument( docFile, d->m_pagesVector );
+    }
+    else if ( !filedata.isEmpty() )
+    {
+        if ( d->m_generator->hasFeature( Generator::ReadRawData ) )
+        {
+            openOk = d->m_generator->loadDocumentFromData( filedata, d->m_pagesVector );
+        }
+        else
+        {
+            d->m_tempFile = new KTemporaryFile();
+            if ( !d->m_tempFile->open() )
+            {
+                delete d->m_tempFile;
+                d->m_tempFile = 0;
+            }
+            else
+            {
+                d->m_tempFile->write( filedata );
+                QString tmpFileName = d->m_tempFile->fileName();
+                d->m_tempFile->close();
+                openOk = d->m_generator->loadDocument( tmpFileName, d->m_pagesVector );
+            }
+        }
+    }
 
     for ( int i = 0; i < d->m_pagesVector.count(); ++i )
         connect( d->m_pagesVector[ i ], SIGNAL( rotationFinished( int ) ),
@@ -799,6 +848,10 @@ void Document::closeDocument()
     }
     d->m_generator = 0;
     d->m_url = KUrl();
+    d->m_docFileName = QString();
+    d->m_xmlFileName = QString();
+    delete d->m_tempFile;
+    d->m_tempFile = 0;
     // remove requests left in queue
     QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.begin();
     QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.end();

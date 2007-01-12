@@ -138,6 +138,11 @@ class OKULAR_EXPORT Generator : public QObject
     Q_OBJECT
 
     public:
+        enum GeneratorFeature
+        {
+            ReadRawData        ///< Whether the Generator can read a document directly from its raw data.
+        };
+
         /**
          * Creates a new generator.
          */
@@ -160,6 +165,16 @@ class OKULAR_EXPORT Generator : public QObject
          * @returns true on success, false otherwise.
          */
         virtual bool loadDocument( const QString & fileName, QVector< Page * > & pagesVector ) = 0;
+
+        /**
+         * Loads the document from the raw data @p fileData and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @note the Generator has to have the feature @ref ReadRawData enabled
+         *
+         * @returns true on success, false otherwise.
+         */
+        virtual bool loadDocumentFromData( const QByteArray & fileData, QVector< Page * > & pagesVector );
 
         /**
          * This method is called when the document is closed and not used
@@ -287,6 +302,11 @@ class OKULAR_EXPORT Generator : public QObject
          * under the given @p fileName. The format must be one of the supported export formats.
          */
         virtual bool exportTo( const QString &fileName, const ExportFormat &format );
+
+        /**
+         * Query for the specified @p feature.
+         */
+        virtual bool hasFeature( GeneratorFeature feature ) const;
 
     Q_SIGNALS:
         /**

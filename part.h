@@ -85,7 +85,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         // inherited from DocumentObserver
         uint observerId() const { return PART_ID; }
+        void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
         void notifyViewportChanged( bool smoothMove );
+        void notifyPageChanged( int page, int flags );
 
         static KAboutData* createAboutData();
 
@@ -119,6 +121,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     protected slots:
         // connected to actions
         void openUrlFromDocument(const KUrl &url);
+        void openUrlFromBookmarks(const KUrl &url);
         void slotGoToPage();
         void slotHistoryBack();
         void slotHistoryNext();
@@ -158,6 +161,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void doPrint( KPrinter& printer );
         void fillGenerators();
         bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
+        void rebuildBookmarkMenu( bool unplugActions = true );
         KTemporaryFile *m_tempfile;
 
         // the document
@@ -222,6 +226,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QStringList m_supportedMimeTypes;
         KSelectAction * m_confGens;
         QList<Okular::ExportFormat> m_exportFormats;
+        QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
 
     private slots:

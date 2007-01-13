@@ -222,6 +222,28 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
     return vp.pageNumber;
 }
 
+QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
+{
+    QList< QAction * > ret;
+    KBookmarkGroup group = d->manager->root();
+    for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
+    {
+        if ( !bm.isGroup() || KUrl( bm.fullText() ) != url )
+            continue;
+
+        KBookmarkGroup group = bm.toGroup();
+        for ( KBookmark b = group.first(); !b.isNull(); b = group.next( b ) )
+        {
+            if ( b.isSeparator() || b.isGroup() )
+                continue;
+
+            ret.append( new KBookmarkAction( b, d, 0 ) );
+        }
+        break;
+    }
+    return ret;
+}
+
 void BookmarkManager::setUrl( const KUrl& url )
 {
     d->url = url;

@@ -14,6 +14,7 @@
 
 #include "okular_export.h"
 
+class QAction;
 class KUrl;
 
 namespace Okular {
@@ -54,6 +55,14 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * Removes the bookmark @p bm for the @p referurl specified.
          */
         int removeBookmark( const KUrl& referurl, const KBookmark& bm );
+
+        /**
+         * Returns a list of actions for the bookmarks of the specified @p url.
+         *
+         * @note the actions will have no parents, so you have to delete them
+         * yourself
+         */
+        QList< QAction* > actionsForUrl( const KUrl& url ) const;
 
     Q_SIGNALS:
         /**

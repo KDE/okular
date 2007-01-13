@@ -575,7 +575,6 @@ Document::Document( QHash<QString, Generator*> * generators )
     : d( new Private( this, generators ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
-    connect( d->m_bookmarkManager, SIGNAL( openUrl( const KUrl & ) ), this, SIGNAL( openUrl( const KUrl & ) ) );
 }
 
 Document::~Document()

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="20">
+<kpartgui name="okular_part" version="21">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -46,6 +46,9 @@
     <Action name="next_bookmark" />
     <Separator/>
     <Action name="goto_page"/>
+  </Menu>
+  <Menu name="okular_bookmarks"><text>&amp;Bookmarks</text>
+    <ActionList name="bookmarks_currentdocument" />
   </Menu>
   <Menu name="mouseMode"><text>&amp;Tools</text>
     <Action name="mouse_drag"/>

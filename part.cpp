@@ -71,6 +71,7 @@
 #include "ui/bookmarklist.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
+#include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -108,6 +109,7 @@ m_searchStarted(false), m_cliPresentation(false)
     connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
     connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
     connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
+    connect( m_document->bookmarkManager(), SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromBookmarks(const KUrl &) ) );
     connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 
     if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
@@ -403,6 +405,8 @@ m_searchStarted(false), m_cliPresentation(false)
     Okular::Settings::setUseKTTSD( !offers.isEmpty() );
     Okular::Settings::writeConfig();
 
+    rebuildBookmarkMenu( false );
+
     // set our XML-UI resource file
     setXMLFile("part.rc");
     //
@@ -426,6 +430,8 @@ Part::~Part()
 
     if (m_tempfile)
         delete m_tempfile;
+
+    qDeleteAll( m_bookmarkActions );
 }
 
 
@@ -449,6 +455,22 @@ void Part::openUrlFromDocument(const KUrl &url)
     m_bExtension->openUrlNotify();
     m_bExtension->setLocationBarUrl(url.prettyUrl());
     openUrl(url);
+}
+
+void Part::openUrlFromBookmarks(const KUrl &_url)
+{
+    KUrl url = _url;
+    Okular::DocumentViewport vp( _url.htmlRef() );
+    if ( vp.isValid() )
+        m_document->setNextDocumentViewport( vp );
+    url.setHTMLRef( QString() );
+    if ( m_document->currentDocument() == url )
+    {
+        if ( vp.isValid() )
+            m_document->setViewport( vp );
+    }
+    else
+        openUrl( url );
 }
 
 
@@ -555,6 +577,14 @@ void Part::slotGeneratorPreferences( )
 }
 
 
+void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool documentChanged )
+{
+    if ( !documentChanged )
+        return;
+
+    rebuildBookmarkMenu();
+}
+
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // update actions if the page is changed
@@ -565,6 +595,14 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
         updateViewActions();
         lastPage = viewportPage;
     }
+}
+
+void Part::notifyPageChanged( int /*page*/, int flags )
+{
+    if ( !(flags & Okular::DocumentObserver::Bookmark ) )
+        return;
+
+    rebuildBookmarkMenu();
 }
 
 
@@ -1541,6 +1579,33 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     }
     url=m_tempfile->fileName();
     return true;
+}
+
+void Part::rebuildBookmarkMenu( bool unplugActions )
+{
+    if ( unplugActions )
+    {
+        unplugActionList( "bookmarks_currentdocument" );
+        qDeleteAll( m_bookmarkActions );
+        m_bookmarkActions.clear();
+    }
+    KUrl u = m_document->currentDocument();
+    if ( u.isValid() )
+    {
+        m_bookmarkActions = m_document->bookmarkManager()->actionsForUrl( u );
+    }
+    if ( m_bookmarkActions.isEmpty() )
+    {
+        QAction * a = new QAction( 0 );
+        a->setText( i18n( "No Bookmarks" ) );
+        a->setEnabled( false );
+        m_bookmarkActions.append( a );
+    }
+    for ( int i = 0; i < m_bookmarkActions.count(); ++i )
+    {
+        actionCollection()->addAction( QString( "bookmark_action_%1" ).arg( i ), m_bookmarkActions.at(i) );
+    }
+    plugActionList( "bookmarks_currentdocument", m_bookmarkActions );
 }
 
 

@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QStack>
+#include <QtCore/QDate>
 #include <QtCore/QUrl>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextCursor>
@@ -20,6 +20,7 @@
 #include <klocale.h>
 
 #include <okular/core/document.h>
+#include <okular/core/link.h>
 
 #include "converter.h"
 #include "document.h"
@@ -48,8 +49,8 @@ class Converter::DocumentInfo
         QString mVersion;
 };
 
-Converter::Converter( const Document *document )
-    : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
+Converter::Converter()
+    : mTextDocument( 0 ), mCursor( 0 ),
       mTitleInfo( 0 ), mDocumentInfo( 0 )
 {
 }
@@ -60,17 +61,20 @@ Converter::~Converter()
     delete mDocumentInfo;
 }
 
-bool Converter::convert()
+QTextDocument* Converter::convert( const QString &fileName )
 {
+    Document fbDocument( fileName );
+    if ( !fbDocument.open() )
+        return false;
+
     delete mTextDocument;
     delete mCursor;
 
     mTextDocument = new QTextDocument;
     mCursor = new QTextCursor( mTextDocument );
     mSectionCounter = 0;
-    mLinkInfosGenerated = false;
 
-    const QDomDocument document = mDocument->content();
+    const QDomDocument document = fbDocument.content();
 
     /**
      * Set the correct page size
@@ -159,7 +163,31 @@ bool Converter::convert()
         element = element.nextSiblingElement();
     }
 
-    return true;
+    /**
+     * Add document infos.
+     */
+    if ( mTitleInfo ) {
+        if ( !mTitleInfo->mTitle.isEmpty() )
+            emit addMetaData( "title", mTitleInfo->mTitle, i18n( "Title" ) );
+
+        if ( !mTitleInfo->mAuthor.isEmpty() )
+            emit addMetaData( "author", mTitleInfo->mAuthor, i18n( "Author" ) );
+    }
+
+    if ( mDocumentInfo ) {
+        if ( !mDocumentInfo->mProducer.isEmpty() )
+            emit addMetaData( "producer", mDocumentInfo->mProducer, i18n( "Producer" ) );
+
+        if ( !mDocumentInfo->mProducer.isEmpty() )
+            emit addMetaData( "creator", mDocumentInfo->mAuthor, i18n( "Creator" ) );
+
+        if ( mDocumentInfo->mDate.isValid() )
+            emit addMetaData( "creationDate",
+                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, true ),
+                      i18n( "Created" ) );
+    }
+
+    return mTextDocument;
 }
 
 bool Converter::convertBody( const QDomElement &element )
@@ -393,8 +421,15 @@ bool Converter::convertTitle( const QDomElement &element )
     mCursor->insertFrame( frameFormat );
 
     QDomElement child = element.firstChildElement();
+
+    bool firstParagraph = true;
     while ( !child.isNull() ) {
         if ( child.tagName() == QLatin1String( "p" ) ) {
+            if ( firstParagraph )
+                firstParagraph = false;
+            else
+                mCursor->insertBlock();
+
             QTextCharFormat origFormat = mCursor->charFormat();
 
             QTextCharFormat titleFormat( origFormat );
@@ -407,11 +442,7 @@ bool Converter::convertTitle( const QDomElement &element )
 
             mCursor->setCharFormat( origFormat );
 
-            HeaderInfo headerInfo;
-            headerInfo.block = mCursor->block();
-            headerInfo.text = child.text();
-            headerInfo.level = mSectionCounter;
-            mHeaderInfos.append( headerInfo );
+            emit addTitle( mSectionCounter, child.text(), mCursor->block() );
 
         } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
             if ( !convertEmptyLine( child ) )
@@ -641,8 +672,7 @@ bool Converter::convertLink( const QDomElement &element )
     if ( type == "note" )
         mCursor->insertText( "[" );
 
-    LinkPosition pos;
-    pos.startPosition = mCursor->position();
+    int startPosition = mCursor->position();
 
     QTextCharFormat origFormat( mCursor->charFormat() );
 
@@ -676,151 +706,13 @@ bool Converter::convertLink( const QDomElement &element )
     }
     mCursor->setCharFormat( origFormat );
 
-    pos.endPosition = mCursor->position();
-    pos.url = href;
+    int endPosition = mCursor->position();
 
     if ( type == "note" )
         mCursor->insertText( "]" );
 
-    mLinkPositions.append( pos );
+    Okular::LinkBrowse *link = new Okular::LinkBrowse( href );
+    emit addLink( link, startPosition, endPosition );
 
     return true;
 }
-
-QTextDocument *Converter::textDocument() const
-{
-    return mTextDocument;
-}
-
-Okular::DocumentInfo Converter::documentInfo() const
-{
-    Okular::DocumentInfo info;
-
-    if ( mTitleInfo ) {
-        if ( !mTitleInfo->mTitle.isEmpty() )
-            info.set( "title", mTitleInfo->mTitle, i18n( "Title" ) );
-
-        if ( !mTitleInfo->mAuthor.isEmpty() )
-            info.set( "author", mTitleInfo->mAuthor, i18n( "Author" ) );
-    }
-
-    if ( mDocumentInfo ) {
-        if ( !mDocumentInfo->mProducer.isEmpty() )
-            info.set( "producer", mDocumentInfo->mProducer, i18n( "Producer" ) );
-
-        if ( !mDocumentInfo->mProducer.isEmpty() )
-            info.set( "creator", mDocumentInfo->mAuthor, i18n( "Creator" ) );
-
-        if ( mDocumentInfo->mDate.isValid() )
-            info.set( "creationDate",
-                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, true ),
-                      i18n( "Created" ) );
-    }
-
-    return info;
-}
-
-Okular::DocumentSynopsis Converter::tableOfContents() const
-{
-    const QSizeF pageSize = mTextDocument->pageSize();
-
-    QStack<QDomNode> parentNodeStack;
-
-    Okular::DocumentSynopsis tableOfContents;
-    QDomNode parentNode = tableOfContents;
-
-    int level = 1000;
-    for ( int i = 0; i < mHeaderInfos.count(); ++i )
-        level = qMin( level, mHeaderInfos[ i ].level );
-
-    for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
-        const HeaderInfo headerInfo = mHeaderInfos[ i ];
-
-        const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( headerInfo.block );
-
-        int page = qRound( rect.y() ) / qRound( pageSize.height() );
-        int offset = qRound( rect.y() ) % qRound( pageSize.height() );
-
-        Okular::DocumentViewport viewport( page );
-        viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
-        viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
-        viewport.rePos.enabled = true;
-        viewport.rePos.pos = Okular::DocumentViewport::Center;
-
-        QDomElement item = tableOfContents.createElement( headerInfo.text );
-        item.setAttribute( "Viewport", viewport.toString() );
-
-        int newLevel = headerInfo.level;
-        if ( newLevel == level ) {
-            parentNode.appendChild( item );
-        } else if ( newLevel > level ) {
-            parentNodeStack.push( parentNode );
-            parentNode = parentNode.lastChildElement();
-            parentNode.appendChild( item );
-            level = newLevel;
-        } else {
-            for ( int i = level; i > newLevel; i-- ) {
-                level--;
-                parentNode = parentNodeStack.pop();
-            }
-
-            parentNode.appendChild( item );
-        }
-    }
-
-    return tableOfContents;
-}
-
-void Converter::calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page )
-{
-    const QSizeF pageSize = mTextDocument->pageSize();
-
-    const QTextBlock startBlock = mTextDocument->findBlock( startPosition );
-    const QRectF startBoundingRect = mTextDocument->documentLayout()->blockBoundingRect( startBlock );
-
-    const QTextBlock endBlock = mTextDocument->findBlock( endPosition );
-    const QRectF endBoundingRect = mTextDocument->documentLayout()->blockBoundingRect( endBlock );
-
-    QTextLayout *startLayout = startBlock.layout();
-    QTextLayout *endLayout = endBlock.layout();
-
-    int startPos = startPosition - startBlock.position();
-    int endPos = endPosition - endBlock.position();
-    const QTextLine startLine = startLayout->lineForTextPosition( startPos );
-    const QTextLine endLine = endLayout->lineForTextPosition( endPos );
-
-    double x = startBoundingRect.x() + startLine.cursorToX( startPos );
-    double y = startBoundingRect.y() + startLine.y();
-    double r = endBoundingRect.x() + endLine.cursorToX( endPos );
-    double b = endBoundingRect.y() + endLine.y() + endLine.height();
-
-    int offset = qRound( y ) % qRound( pageSize.height() );
-
-    page = qRound( y ) / qRound( pageSize.height() );
-    rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
-                   (r - x) / pageSize.width(), (b - y) / pageSize.height() );
-}
-
-Converter::LinkInfo::List Converter::links()
-{
-    if ( !mLinkInfosGenerated )
-        createLinkInfos();
-
-    return mLinkInfos;
-}
-
-void Converter::createLinkInfos()
-{
-    for ( int i = 0; i < mLinkPositions.count(); ++i ) {
-        const LinkPosition linkPosition = mLinkPositions[ i ];
-
-    LinkInfo info;
-    info.url = linkPosition.url;
-
-    calculateBoundingRect( linkPosition.startPosition, linkPosition.endPosition,
-                           info.boundingRect, info.page );
-
-    mLinkInfos.append( info );
-  }
-}
-

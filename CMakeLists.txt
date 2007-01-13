@@ -46,6 +46,7 @@ set(okularcore_SRCS
    core/rotationjob.cpp
    core/sound.cpp
    core/sourcereference.cpp
+   core/textdocumentgenerator.cpp
    core/textpage.cpp
    core/utils.cpp
 )
@@ -62,6 +63,7 @@ install( FILES
            core/pagetransition.h
            core/sound.h
            core/sourcereference.h
+           core/textdocumentgenerator.h
            core/textpage.h
            core/utils.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
@@ -87,7 +89,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} m )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

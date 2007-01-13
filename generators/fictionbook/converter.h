@@ -10,44 +10,21 @@
 #ifndef FICTIONBOOK_CONVERTER_H
 #define FICTIONBOOK_CONVERTER_H
 
-#include <QtCore/QDateTime>
-#include <QtGui/QTextBlock>
-#include <QtGui/QTextCharFormat>
-#include <QtXml/QDomDocument>
-
-#include <okular/core/document.h>
+#include <okular/core/textdocumentgenerator.h>
 
 class QDomElement;
 class QDomText;
+class QTextCursor;
 
 namespace FictionBook {
 
-class Document;
-
-class Converter
+class Converter : public Okular::TextDocumentConverter
 {
     public:
-        Converter( const Document *document );
+        Converter();
         ~Converter();
 
-        bool convert();
-
-        QTextDocument *textDocument() const;
-
-        Okular::DocumentInfo documentInfo() const;
-        Okular::DocumentSynopsis tableOfContents() const;
-
-        class LinkInfo
-        {
-            public:
-                typedef QList<LinkInfo> List;
-
-                int page;
-                QRectF boundingRect;
-                QString url;
-        };
-
-        LinkInfo::List links();
+        virtual QTextDocument *convert( const QString &fileName );
 
     private:
         bool convertBody( const QDomElement &element );
@@ -77,10 +54,6 @@ class Converter
         bool convertDate( const QDomElement &element, QDate &date );
         bool convertTextNode( const QDomElement &element, QString &data );
 
-        void calculateBoundingRect( int, int, QRectF&, int& );
-        void createLinkInfos();
-
-        const Document *mDocument;
         QTextDocument *mTextDocument;
         QTextCursor *mCursor;
 
@@ -89,26 +62,6 @@ class Converter
 
         class DocumentInfo;
         DocumentInfo *mDocumentInfo;
-
-        struct HeaderInfo
-        {
-            QTextBlock block;
-            QString text;
-            int level;
-        };
-        QList<HeaderInfo> mHeaderInfos;
-
-        struct LinkPosition
-        {
-            int startPosition;
-            int endPosition;
-            QString url;
-        };
-
-        QList<LinkPosition> mLinkPositions;
-        LinkInfo::List mLinkInfos;
-
-        bool mLinkInfosGenerated;
 
         int mSectionCounter;
 };

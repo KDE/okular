@@ -182,7 +182,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Returns whether the given @p actions are allowed
          * in the document.
-         * @see Permissions
+         * @see @ref Permissions
          */
         bool isAllowed( Permissions actions ) const;
 
@@ -358,7 +358,7 @@ class OKULAR_EXPORT Document : public QObject
          * @param searchID The unique id for this search request.
          * @param fromStart Whether the search should be started at begin of the document.
          * @param caseSensitivity Whether the search is case sensitive.
-         * @param type The type of the search. @see SearchType
+         * @param type The type of the search. @ref SearchType
          * @param moveViewport Whether the viewport shall be moved to the position of the matches.
          * @param color The highlighting color of the matches.
          * @param noDialogs Whether a search dialog shall be shown.

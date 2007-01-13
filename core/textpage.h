@@ -103,7 +103,7 @@ class OKULAR_EXPORT TextPage
 
         /**
          * Appends the given @p text with the given @p area as new
-         * @see TextItem to the page.
+         * @ref TextEntity to the page.
          */
         void append( const QString &text, NormalizedRect *area );
 
@@ -113,7 +113,7 @@ class OKULAR_EXPORT TextPage
          *
          * @param id An unique id for this search.
          * @param text The search text.
-         * @param direction The direction of the search (@see SearchDirection)
+         * @param direction The direction of the search (@ref SearchDirection)
          * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
          *                        the search is case insensitive.
          * @param lastRect If 0 the search starts at the beginning of the page, otherwise
@@ -123,6 +123,8 @@ class OKULAR_EXPORT TextPage
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
 
         /**
+         * Text extraction function.
+         *
          * Returns:
          * - a null string if @p rect is a valid pointer to a null area
          * - the whole page text if @p rect is a null pointer

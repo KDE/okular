@@ -113,7 +113,7 @@ class OKULAR_EXPORT Page : public QObject
         bool hasPixmap( int id, int width = -1, int height = -1 ) const;
 
         /**
-         * Returns whether the page provides a text page (@see TextPage).
+         * Returns whether the page provides a text page (@ref TextPage).
          */
         bool hasTextPage() const;
 
@@ -145,7 +145,7 @@ class OKULAR_EXPORT Page : public QObject
          *
          * @param id An unique id for this search.
          * @param text The search text.
-         * @param direction The direction of the search (@see SearchDirection)
+         * @param direction The direction of the search (@ref SearchDirection)
          * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
          *                        the search is case insensitive.
          * @param lastRect If 0 (default) the search starts at the beginning of the page, otherwise
@@ -171,7 +171,8 @@ class OKULAR_EXPORT Page : public QObject
         const ObjectRect * objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
 
         /**
-         * Returns the transition effect of the page or 0 if no transition effect is set (@see hasTransition).
+         * Returns the transition effect of the page or 0 if no transition
+         * effect is set (see hasTransition()).
          */
         const PageTransition * transition() const;
 
@@ -181,7 +182,7 @@ class OKULAR_EXPORT Page : public QObject
         const QLinkedList< Annotation* > annotations() const;
 
         /**
-         * Returns the @see Link object which is associated with the given page @p action
+         * Returns the @ref Link object which is associated with the given page @p action
          * or 0 if no page action is set.
          */
         const Link * pageAction( PageAction action ) const;

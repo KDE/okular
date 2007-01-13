@@ -59,7 +59,7 @@ class TextPage;
  *
  * This class encapsulates information about an export format.
  * Every Generator can support 0 or more export formats which can be
- * queried with @see Generator::exportFormats().
+ * queried with @ref Generator::exportFormats().
  */
 class OKULAR_EXPORT ExportFormat
 {
@@ -246,12 +246,12 @@ class OKULAR_EXPORT Generator : public QObject
         };
 
         /**
-         * This method returns the metric of the page size. Default is @see None.
+         * This method returns the metric of the page size. Default is @ref None.
          */
         virtual PageSizeMetric pagesSizeMetric() const;
 
         /**
-         * This method returns whether given action (@see Permission) is
+         * This method returns whether given action (@ref Permission) is
          * allowed in this document.
          */
         virtual bool isAllowed( Permissions action ) const;
@@ -335,7 +335,7 @@ class OKULAR_EXPORT Generator : public QObject
 
     protected:
         /**
-         * This method must be called when the pixmap request triggered by @see generatePixmap()
+         * This method must be called when the pixmap request triggered by generatePixmap()
          * has been finished.
          */
         void signalRequestDone( PixmapRequest * request );

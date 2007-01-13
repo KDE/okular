@@ -219,13 +219,13 @@ class OKULAR_EXPORT Annotation
 
         /**
          * Sets the @p flags of the annotation.
-         * @see Flags
+         * @see @ref Flags
          */
         void setFlags( int flags );
 
         /**
          * Returns the flags of the annotation.
-         * @see Flags
+         * @see @ref Flags
          */
         int flags() const;
 

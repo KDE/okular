@@ -43,7 +43,7 @@ class OKULAR_EXPORT PageTransition
         };
 
         /**
-         * Describes the alignment that is applied to the @see Type
+         * Describes the alignment that is applied to the @ref Type
          * of transition effect.
          */
         enum Alignment {
@@ -52,7 +52,7 @@ class OKULAR_EXPORT PageTransition
         };
 
         /**
-         * Describes the direction that is applied to the @see Type
+         * Describes the direction that is applied to the @ref Type
          * of transition effect.
          */
         enum Direction {
@@ -63,7 +63,7 @@ class OKULAR_EXPORT PageTransition
         /**
          * Creates a new page transition of the given @p type.
          *
-         * If no type is given, the normal @see Replace transition is used.
+         * If no type is given, the normal @ref Replace transition is used.
          */
         PageTransition( Type type = Replace );
 
@@ -114,7 +114,7 @@ class OKULAR_EXPORT PageTransition
         bool isRectangular() const;
 
         /**
-         * Sets the @p type of the transition (@see Type).
+         * Sets the @p type of the transition (@ref Type).
          */
         void setType( Type type );
 
@@ -124,7 +124,7 @@ class OKULAR_EXPORT PageTransition
         void setDuration( int duration );
 
         /**
-         * Sets the @p alignment of the transition (@see Alignment).
+         * Sets the @p alignment of the transition (@ref Alignment).
          */
         void setAlignment( Alignment alignment );
 

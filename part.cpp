@@ -428,8 +428,8 @@ Part::~Part()
     for ( ; it != itEnd; ++it )
         delete *it;
 
-    if (m_tempfile)
-        delete m_tempfile;
+
+    delete m_tempfile;
 
     qDeleteAll( m_bookmarkActions );
 }

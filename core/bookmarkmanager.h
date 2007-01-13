@@ -81,6 +81,7 @@ class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
 
         void setUrl( const KUrl& url );
         bool setPageBookmark( int page );
+        bool removePageBookmark( int page );
         bool isPageBookmarked( int page ) const;
 
         Q_DISABLE_COPY( BookmarkManager )

@@ -265,6 +265,29 @@ bool BookmarkManager::setPageBookmark( int page )
     return added;
 }
 
+bool BookmarkManager::removePageBookmark( int page )
+{
+    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, d->url, d->manager, false );
+    if ( it == d->knownFiles.end() )
+        return false;
+
+    bool found = false;
+    for ( KBookmark bm = it.value().first(); !found && !bm.isNull(); bm = it.value().next( bm ) )
+    {
+        if ( bm.isSeparator() || bm.isGroup() )
+            continue;
+
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( vp.isValid() && vp.pageNumber == page )
+        {
+            found = true;
+            it.value().deleteBookmark( bm );
+            d->urlBookmarks.remove( page );
+        }
+    }
+    return found;
+}
+
 bool BookmarkManager::isPageBookmarked( int page ) const
 {
     return d->urlBookmarks.contains( page );

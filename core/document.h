@@ -399,6 +399,11 @@ class OKULAR_EXPORT Document : public QObject
         bool isBookmarked( int page ) const;
 
         /**
+         * Remove a bookmark for the given @p page.
+         */
+        void removeBookmark( int page );
+
+        /**
          * Removes the given @p bookmark with the given @p referUrl.
          */
         void removeBookmark( const KUrl& referUrl, const KBookmark& bookmark );

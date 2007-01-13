@@ -1799,6 +1799,15 @@ bool Document::isBookmarked( int page ) const
     return d->m_bookmarkManager->isPageBookmarked( page );
 }
 
+void Document::removeBookmark( int n )
+{
+    if ( n >= 0 && n < (int)d->m_pagesVector.count() )
+    {
+        if ( d->m_bookmarkManager->removePageBookmark( n ) )
+            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+    }
+}
+
 void Document::removeBookmark( const KUrl& referurl, const KBookmark& bm )
 {
     int changedpage = d->m_bookmarkManager->removeBookmark( referurl, bm );

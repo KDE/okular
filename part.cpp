@@ -1236,14 +1236,16 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     }
 
     KMenu *popup = new KMenu( widget() );
-    QAction *toggleBookmark, *fitPageWidth;
-    toggleBookmark = 0;
-    fitPageWidth = 0;
+    QAction *addBookmark = 0;
+    QAction *removeBookmark = 0;
+    QAction *fitPageWidth = 0;
     if (page)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-        if ( !m_document->isBookmarked( page->number() ) )
-            toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
+        if ( m_document->isBookmarked( page->number() ) )
+            removeBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
+        else
+            addBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )
             fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
         //popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
@@ -1274,7 +1276,8 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         QAction *res = popup->exec(point);
         if (res)
         {
-            if (res == toggleBookmark) m_document->addBookmark( page->number() );
+            if (res == addBookmark) m_document->addBookmark( page->number() );
+            else if (res == removeBookmark) m_document->removeBookmark( page->number() );
             else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
         }
     }

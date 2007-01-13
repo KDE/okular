@@ -40,6 +40,7 @@ class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
 class KPrinter;
+class KTemporaryFile;
 
 class ThumbnailList;
 class ThumbnailController;
@@ -155,6 +156,7 @@ private:
 	void doPrint( KPrinter& printer );
     void fillGenerators();
         bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
+ 	KTemporaryFile *m_tempfile;
 	
 	// the document
 	Okular::Document * m_document;

@@ -82,7 +82,7 @@ K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
 Part::Part(QWidget *parentWidget,
            QObject *parent,
            const QStringList & /*args*/ )
-	: KParts::ReadOnlyPart(parent), 
+	: KParts::ReadOnlyPart(parent),
 	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 	m_searchStarted(false), m_cliPresentation(false)
 {
@@ -92,7 +92,9 @@ Part::Part(QWidget *parentWidget,
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	// load catalog for translation
 	KGlobal::locale()->insertCatalog("okular");
-
+	
+	m_tempfile= 0L;
+	
 	// create browser extension (for printing when embedded into browser)
 	m_bExtension = new BrowserExtension(this);
 
@@ -419,6 +421,9 @@ Part::~Part()
     QHash<QString, Okular::Generator*>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
         delete *it;
+
+    if (m_tempfile)
+        delete m_tempfile;
 }
 
 bool Part::openDocument(const KUrl& url, uint page)
@@ -1397,7 +1402,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    KTemporaryFile *m_tempfile = new KTemporaryFile;
+    m_tempfile = new KTemporaryFile;
     if ( !m_tempfile )
     {
         KMessageBox::error( 0, 

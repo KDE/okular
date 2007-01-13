@@ -10,8 +10,6 @@
 #ifndef _OKULAR_BOOKMARK_MANAGER_H_
 #define _OKULAR_BOOKMARK_MANAGER_H_
 
-#include <QtCore/QStringList>
-
 #include <kbookmark.h>
 #include <kbookmarkmanager.h>
 

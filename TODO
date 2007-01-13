@@ -13,6 +13,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
 -> WISH 102788: Current page number visible
 -> WISH 107998: kpdf horizontal scroll bar
+-> WISH 117449: kpdf should read files from stdin with the - option
 -> WISH 117805: Wish: Select pages like kghostview
 -> WISH 118938: No way to find out the page size(s)
 -> WISH 119455: use poppler library for kpdf

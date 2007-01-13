@@ -80,333 +80,335 @@ typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
 
 Part::Part(QWidget *parentWidget,
-           QObject *parent,
-           const QStringList & /*args*/ )
-	: KParts::ReadOnlyPart(parent),
-	m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
-	m_searchStarted(false), m_cliPresentation(false)
+QObject *parent,
+const QStringList & /*args*/ )
+: KParts::ReadOnlyPart(parent),
+m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
+m_searchStarted(false), m_cliPresentation(false)
 {
-	QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
+    QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
-	// connect the started signal to tell the job the mimetypes we like
-	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
-	// load catalog for translation
-	KGlobal::locale()->insertCatalog("okular");
-	
-	m_tempfile= 0L;
-	
-	// create browser extension (for printing when embedded into browser)
-	m_bExtension = new BrowserExtension(this);
+    // connect the started signal to tell the job the mimetypes we like
+    connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
+    // load catalog for translation
+    KGlobal::locale()->insertCatalog("okular");
 
-	// we need an instance
-	setInstance(okularPartFactory::instance());
+    m_tempfile= 0L;
 
-	// build the document
-	m_document = new Okular::Document(&m_loadedGenerators);
-	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
-	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
-	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
-	connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-	connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
-	connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
-	
-	if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
-		connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
-	else
-		connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
-        // widgets: ^searchbar (toolbar containing label and SearchWidget)
-//      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
-//      m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
-//      QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
-//      m_searchWidget = new SearchWidget( m_searchToolBar, m_document );
-//      sLabel->setBuddy( m_searchWidget );
-//      m_searchToolBar->setStretchableWidget( m_searchWidget );
+    // create browser extension (for printing when embedded into browser)
+    m_bExtension = new BrowserExtension(this);
 
+    // we need an instance
+    setInstance(okularPartFactory::instance());
 
-	// widgets: [] splitter []
-	m_splitter = new QSplitter( parentWidget );
-	m_splitter->setOpaqueResize( true );
-	m_splitter->setChildrenCollapsible( false );
-	setWidget( m_splitter );
+    // build the document
+    m_document = new Okular::Document(&m_loadedGenerators);
+    connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
+    connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
+    connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
+    connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
+    connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
+    connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 
-	// widgets: [left panel] | []
-	m_leftPanel = new QWidget( m_splitter );
-	m_leftPanel->setMinimumWidth( 90 );
-	m_leftPanel->setMaximumWidth( 300 );
-	QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
-	leftPanelLayout->setMargin( 0 );
-	m_splitter->setCollapsible( 0, true );
+    if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
+        connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
+    else
+        connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
+    // widgets: ^searchbar (toolbar containing label and SearchWidget)
+    //      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
+    //      m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
+    //      QLabel * sLabel = new QLabel( i18n( "&Search:" ), m_searchToolBar, "kde toolbar widget" );
+    //      m_searchWidget = new SearchWidget( m_searchToolBar, m_document );
+    //      sLabel->setBuddy( m_searchWidget );
+    //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
-	// widgets: [left toolbox/..] | []
-	m_toolBox = new QToolBox( m_leftPanel );
-	leftPanelLayout->addWidget( m_toolBox );
+    // widgets: [] splitter []
+    m_splitter = new QSplitter( parentWidget );
+    m_splitter->setOpaqueResize( true );
+    m_splitter->setChildrenCollapsible( false );
+    setWidget( m_splitter );
 
-	int tbIndex;
-	// [left toolbox: Table of Contents] | []
-	m_toc = new TOC( m_toolBox, m_document );
-	connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-	tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
-	m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
-	enableTOC( false );
+    // widgets: [left panel] | []
+    m_leftPanel = new QWidget( m_splitter );
+    m_leftPanel->setMinimumWidth( 90 );
+    m_leftPanel->setMaximumWidth( 300 );
+    QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
+    leftPanelLayout->setMargin( 0 );
+    m_splitter->setCollapsible( 0, true );
 
-	// [left toolbox: Thumbnails and Bookmarks] | []
-	KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
-	thumbsBox->setSpacing( 4 );
-	m_searchWidget = new SearchWidget( thumbsBox, m_document );
-	m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
-//	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-	connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
-	connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-	tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail"), i18n("Thumbnails") );
-	m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
-	m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
+    // widgets: [left toolbox/..] | []
+    m_toolBox = new QToolBox( m_leftPanel );
+    leftPanelLayout->addWidget( m_toolBox );
 
-	// [left toolbox: Reviews] | []
-	Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-	m_toolBox->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
+    int tbIndex;
+    // [left toolbox: Table of Contents] | []
+    m_toc = new TOC( m_toolBox, m_document );
+    connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
+    tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
+    m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
+    enableTOC( false );
 
-	// [left toolbox: Bookmarks] | []
-	BookmarkList * bookmarkList = new BookmarkList( m_document, m_toolBox );
-	connect( bookmarkList, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
-	m_toolBox->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
+    // [left toolbox: Thumbnails and Bookmarks] | []
+    KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+    thumbsBox->setSpacing( 4 );
+    m_searchWidget = new SearchWidget( thumbsBox, m_document );
+    m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
+    //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
+    connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
+    connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
+    tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail"), i18n("Thumbnails") );
+    m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
+    m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
-	// widgets: [../miniBarContainer] | []
-	QWidget * miniBarContainer = new QWidget( m_leftPanel );
-	leftPanelLayout->addWidget( miniBarContainer );
-	QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
-	miniBarLayout->setMargin( 0 );
-	// widgets: [../[spacer/..]] | []
-	miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-	// widgets: [../[../MiniBar]] | []
-	QFrame * bevelContainer = new QFrame( miniBarContainer );
-	bevelContainer->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
-	QVBoxLayout * bevelContainerLayout = new QVBoxLayout( bevelContainer );
-	bevelContainerLayout->setMargin( 4 );
-	m_progressWidget = new ProgressWidget( bevelContainer, m_document );
-	bevelContainerLayout->addWidget( m_progressWidget );
-	miniBarLayout->addWidget( bevelContainer );
-	miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+    // [left toolbox: Reviews] | []
+    Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
+    m_toolBox->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
 
-	// widgets: [] | [right 'pageView']
-	QWidget * rightContainer = new QWidget( m_splitter );
-	QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
-	rightLayout->setMargin( 0 );
-	rightLayout->setSpacing( 0 );
-//	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
-//	rightLayout->addWidget( rtb );
-	m_topMessage = new PageViewTopMessage( rightContainer );
-	connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
-	rightLayout->addWidget( m_topMessage );
-	m_pageView = new PageView( rightContainer, m_document );
-	m_pageView->setFocus(); //usability setting
-	connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
-	connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-	connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
-	connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
-	connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
-	rightLayout->addWidget( m_pageView );
-	QWidget * bottomBar = new QWidget( rightContainer );
-	QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
-	m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
-	bottomBarLayout->setMargin( 0 );
-	bottomBarLayout->setSpacing( 0 );
-	bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
-	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-	m_miniBar = new MiniBar( bottomBar, m_document );
-	bottomBarLayout->addWidget( m_miniBar );
-	bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-	bottomBarLayout->addWidget( m_pageSizeLabel );
-	rightLayout->addWidget( bottomBar );
+    // [left toolbox: Bookmarks] | []
+    BookmarkList * bookmarkList = new BookmarkList( m_document, m_toolBox );
+    connect( bookmarkList, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
+    m_toolBox->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
+
+    // widgets: [../miniBarContainer] | []
+    QWidget * miniBarContainer = new QWidget( m_leftPanel );
+    leftPanelLayout->addWidget( miniBarContainer );
+    QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
+    miniBarLayout->setMargin( 0 );
+    // widgets: [../[spacer/..]] | []
+    miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+    // widgets: [../[../MiniBar]] | []
+    QFrame * bevelContainer = new QFrame( miniBarContainer );
+    bevelContainer->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    QVBoxLayout * bevelContainerLayout = new QVBoxLayout( bevelContainer );
+    bevelContainerLayout->setMargin( 4 );
+    m_progressWidget = new ProgressWidget( bevelContainer, m_document );
+    bevelContainerLayout->addWidget( m_progressWidget );
+    miniBarLayout->addWidget( bevelContainer );
+    miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+
+    // widgets: [] | [right 'pageView']
+    QWidget * rightContainer = new QWidget( m_splitter );
+    QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
+    rightLayout->setMargin( 0 );
+    rightLayout->setSpacing( 0 );
+    //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
+    //	rightLayout->addWidget( rtb );
+    m_topMessage = new PageViewTopMessage( rightContainer );
+    connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
+    rightLayout->addWidget( m_topMessage );
+    m_pageView = new PageView( rightContainer, m_document );
+    m_pageView->setFocus();      //usability setting
+    connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
+    connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
+    connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
+    connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
+    connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
+    rightLayout->addWidget( m_pageView );
+    QWidget * bottomBar = new QWidget( rightContainer );
+    QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
+    m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
+    bottomBarLayout->setMargin( 0 );
+    bottomBarLayout->setSpacing( 0 );
+    bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
+    bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+    m_miniBar = new MiniBar( bottomBar, m_document );
+    bottomBarLayout->addWidget( m_miniBar );
+    bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+    bottomBarLayout->addWidget( m_pageSizeLabel );
+    rightLayout->addWidget( bottomBar );
 
     connect( reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
-             m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
+        m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
     connect( reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
-             m_pageView, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
+        m_pageView, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
 
-	// add document observers
-	m_document->addObserver( this );
-	m_document->addObserver( m_thumbnailList );
-	m_document->addObserver( m_pageView );
-	m_document->addObserver( m_toc );
-	m_document->addObserver( m_miniBar );
-	m_document->addObserver( m_progressWidget );
-	m_document->addObserver( reviewsWidget );
-	m_document->addObserver( m_pageSizeLabel );
-	m_document->addObserver( bookmarkList );
+    // add document observers
+    m_document->addObserver( this );
+    m_document->addObserver( m_thumbnailList );
+    m_document->addObserver( m_pageView );
+    m_document->addObserver( m_toc );
+    m_document->addObserver( m_miniBar );
+    m_document->addObserver( m_progressWidget );
+    m_document->addObserver( reviewsWidget );
+    m_document->addObserver( m_pageSizeLabel );
+    m_document->addObserver( bookmarkList );
 
-	// ACTIONS
-	KActionCollection * ac = actionCollection();
+    // ACTIONS
+    KActionCollection * ac = actionCollection();
 
-	// Page Traversal actions
-	m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac );
-	ac->addAction("goto_page", m_gotoPage);
-	m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
-	// dirty way to activate gotopage when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
+    // Page Traversal actions
+    m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac );
+    ac->addAction("goto_page", m_gotoPage);
+    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
+    // dirty way to activate gotopage when pressing miniBar's button
+    connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
-	m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
-	ac->addAction("previous_page", m_prevPage);
-	m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
-	m_prevPage->setShortcut( 0 );
-	// dirty way to activate prev page when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
-	connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+    m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
+    ac->addAction("previous_page", m_prevPage);
+    m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
+    m_prevPage->setShortcut( 0 );
+    // dirty way to activate prev page when pressing miniBar's button
+    connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+    connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
 
-	m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
-	ac->addAction("next_page", m_nextPage);
-	m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
-	m_nextPage->setShortcut( 0 );
-	// dirty way to activate next page when pressing miniBar's button
-	connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
-	connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+    m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
+    ac->addAction("next_page", m_nextPage);
+    m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
+    m_nextPage->setShortcut( 0 );
+    // dirty way to activate next page when pressing miniBar's button
+    connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+    connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 
-	m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
-	ac->addAction("first_page", m_firstPage);
-	m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
+    m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
+    ac->addAction("first_page", m_firstPage);
+    m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
 
-	m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
-	ac->addAction("last_page",m_lastPage);
-	m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
+    m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
+    ac->addAction("last_page",m_lastPage);
+    m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
-	m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac );
-	ac->addAction("history_back",m_historyBack);
-	m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
+    m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac );
+    ac->addAction("history_back",m_historyBack);
+    m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
 
-	m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac);
-	ac->addAction("history_forward",m_historyNext);
-	m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+    m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac);
+    ac->addAction("history_forward",m_historyNext);
+    m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
-	m_prevBookmark = ac->addAction("previous_bookmark");
-	m_prevBookmark->setText(i18n( "Previous Bookmark" ));
-	m_prevBookmark->setIcon(KIcon( "previous" ));
-	
-	m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
-	connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
+    m_prevBookmark = ac->addAction("previous_bookmark");
+    m_prevBookmark->setText(i18n( "Previous Bookmark" ));
+    m_prevBookmark->setIcon(KIcon( "previous" ));
 
-	m_nextBookmark = ac->addAction("next_bookmark");
-	m_nextBookmark->setText(i18n( "Next Bookmark" ));
-	m_nextBookmark->setIcon(KIcon( "next" ));
-	m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
-	connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
+    m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
+    connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
-	m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
-	ac->addAction("edit_copy",m_copy);
+    m_nextBookmark = ac->addAction("next_bookmark");
+    m_nextBookmark->setText(i18n( "Next Bookmark" ));
+    m_nextBookmark->setIcon(KIcon( "next" ));
+    m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
+    connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
-	// Find and other actions
-	m_find = KStandardAction::find( this, SLOT( slotFind() ), ac );
-	ac->addAction("find", m_find);
-	m_find->setEnabled( false );
+    m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
+    ac->addAction("edit_copy",m_copy);
 
-	m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
-	ac->addAction("find_next",m_findNext);
-	m_findNext->setEnabled( false );
+    // Find and other actions
+    m_find = KStandardAction::find( this, SLOT( slotFind() ), ac );
+    ac->addAction("find", m_find);
+    m_find->setEnabled( false );
 
-	m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
-	ac->addAction("save",m_saveAs);
-	m_saveAs->setEnabled( false );
-	QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
-	ac->addAction("preferences", prefs);
-	if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
-	{
-		prefs->setText( i18n( "Configure okular..." ) );
-	}
-	else
-	{
-		prefs->setText( i18n( "Configure Viewer..." ) ); // TODO: improve this message
-	}
-	
-	QAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac );
-	ac->addAction("generator_prefs", genPrefs);
-	genPrefs->setText( i18n( "Configure Backends..." ) );
-	QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
-	KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
-	if (gens.count() <= 0)
-	{
-		genPrefs->setEnabled( false );
-	}
+    m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
+    ac->addAction("find_next",m_findNext);
+    m_findNext->setEnabled( false );
 
-	m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
-	m_printPreview->setEnabled( false );
+    m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
+    ac->addAction("save",m_saveAs);
+    m_saveAs->setEnabled( false );
+    QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
+    ac->addAction("preferences", prefs);
+    if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
+    {
+        prefs->setText( i18n( "Configure okular..." ) );
+    }
+    else
+    {
+                                 // TODO: improve this message
+        prefs->setText( i18n( "Configure Viewer..." ) );
+    }
 
-	m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
-	m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
-	m_showLeftPanel->setIcon(KIcon( "show_side_panel" ));
-	connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
-	m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
-	m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
-	m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
-	slotShowLeftPanel();
+    QAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac );
+    ac->addAction("generator_prefs", genPrefs);
+    genPrefs->setText( i18n( "Configure Backends..." ) );
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
+    KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
+    if (gens.count() <= 0)
+    {
+        genPrefs->setEnabled( false );
+    }
 
-	QAction * importPS = ac->addAction("import_ps");
-	importPS->setText(i18n("&Import Postscript as PDF..."));
-	importPS->setIcon(KIcon("psimport"));
-	connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
-	QAction * ghns = ac->addAction("get_new_stuff");
-	ghns->setText(i18n("&Get Books From Internet..."));
-	ghns->setIcon(KIcon("knewstuff"));
-	connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
-	ghns->setShortcut( Qt::Key_G );  // TEMP, REMOVE ME!
+    m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+    m_printPreview->setEnabled( false );
 
-	m_showProperties = ac->addAction("properties");
-	m_showProperties->setText(i18n("&Properties"));
-	m_showProperties->setIcon(KIcon("info"));
-	connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
-	m_showProperties->setEnabled( false );
-	
-	m_showEmbeddedFiles = ac->addAction("embedded_files");
-	m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
-	connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
-	m_showEmbeddedFiles->setEnabled( false );
+    m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
+    m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
+    m_showLeftPanel->setIcon(KIcon( "show_side_panel" ));
+    connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
+    m_showLeftPanel->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_L) );
+    m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
+    m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
+    slotShowLeftPanel();
 
-	m_showPresentation = ac->addAction("presentation");
-	m_showPresentation->setText(i18n("P&resentation"));
-	m_showPresentation->setIcon(KIcon( "kpresenter_kpr" ));
-	connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
-	m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
-	m_showPresentation->setEnabled( false );
+    QAction * importPS = ac->addAction("import_ps");
+    importPS->setText(i18n("&Import Postscript as PDF..."));
+    importPS->setIcon(KIcon("psimport"));
+    connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
+    QAction * ghns = ac->addAction("get_new_stuff");
+    ghns->setText(i18n("&Get Books From Internet..."));
+    ghns->setIcon(KIcon("knewstuff"));
+    connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
+                                 // TEMP, REMOVE ME!
+    ghns->setShortcut( Qt::Key_G );
 
-	m_exportAs = ac->addAction("file_export_as");
-	m_exportAs->setText(i18n("E&xport As"));
-	QMenu *menu = new QMenu(widget());
-        connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
-	m_exportAs->setMenu( menu );
-	m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );
-	m_exportAsText->setEnabled( false );
-	
-	// attach the actions of the children widgets too
-	m_pageView->setupActions( ac );
+    m_showProperties = ac->addAction("properties");
+    m_showProperties->setText(i18n("&Properties"));
+    m_showProperties->setIcon(KIcon("info"));
+    connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
+    m_showProperties->setEnabled( false );
 
-	// apply configuration (both internal settings and GUI configured items)
-	QList<int> splitterSizes = Okular::Settings::splitterSizes();
-	if ( !splitterSizes.count() )
-	{
-		// the first time use 1/10 for the panel and 9/10 for the pageView
-		splitterSizes.push_back( 50 );
-		splitterSizes.push_back( 500 );
-	}
-	m_splitter->setSizes( splitterSizes );
-	// get notified about splitter size changes
-	connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
+    m_showEmbeddedFiles = ac->addAction("embedded_files");
+    m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
+    connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
+    m_showEmbeddedFiles->setEnabled( false );
 
-	// document watcher and reloader
-	m_watcher = new KDirWatch( this );
-	connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
-	m_dirtyHandler = new QTimer( this );
-	m_dirtyHandler->setSingleShot( true );
-	connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+    m_showPresentation = ac->addAction("presentation");
+    m_showPresentation->setText(i18n("P&resentation"));
+    m_showPresentation->setIcon(KIcon( "kpresenter_kpr" ));
+    connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
+    m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
+    m_showPresentation->setEnabled( false );
 
-	slotNewConfig();
+    m_exportAs = ac->addAction("file_export_as");
+    m_exportAs->setText(i18n("E&xport As"));
+    QMenu *menu = new QMenu(widget());
+    connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
+    m_exportAs->setMenu( menu );
+    m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );
+    m_exportAsText->setEnabled( false );
 
-	// [SPEECH] check for KTTSD presence and usability
-	KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'KTTSD'");
-	Okular::Settings::setUseKTTSD( !offers.isEmpty() );
-	Okular::Settings::writeConfig();
+    // attach the actions of the children widgets too
+    m_pageView->setupActions( ac );
 
-	// set our XML-UI resource file
-	setXMLFile("part.rc");
-    // 
-	updateViewActions();
+    // apply configuration (both internal settings and GUI configured items)
+    QList<int> splitterSizes = Okular::Settings::splitterSizes();
+    if ( !splitterSizes.count() )
+    {
+        // the first time use 1/10 for the panel and 9/10 for the pageView
+        splitterSizes.push_back( 50 );
+        splitterSizes.push_back( 500 );
+    }
+    m_splitter->setSizes( splitterSizes );
+    // get notified about splitter size changes
+    connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
+
+    // document watcher and reloader
+    m_watcher = new KDirWatch( this );
+    connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
+    m_dirtyHandler = new QTimer( this );
+    m_dirtyHandler->setSingleShot( true );
+    connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+
+    slotNewConfig();
+
+    // [SPEECH] check for KTTSD presence and usability
+    KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'KTTSD'");
+    Okular::Settings::setUseKTTSD( !offers.isEmpty() );
+    Okular::Settings::writeConfig();
+
+    // set our XML-UI resource file
+    setXMLFile("part.rc");
+    //
+    updateViewActions();
 }
+
 
 Part::~Part()
 {
@@ -426,6 +428,7 @@ Part::~Part()
         delete m_tempfile;
 }
 
+
 bool Part::openDocument(const KUrl& url, uint page)
 {
     Okular::DocumentViewport vp( page - 1 );
@@ -434,10 +437,12 @@ bool Part::openDocument(const KUrl& url, uint page)
     return openUrl( url );
 }
 
+
 void Part::startPresentation()
 {
     m_cliPresentation = true;
 }
+
 
 void Part::openUrlFromDocument(const KUrl &url)
 {
@@ -445,6 +450,7 @@ void Part::openUrlFromDocument(const KUrl &url)
     m_bExtension->setLocationBarUrl(url.prettyUrl());
     openUrl(url);
 }
+
 
 void Part::supportedMimetypes()
 {
@@ -465,6 +471,7 @@ void Part::supportedMimetypes()
     }
 }
 
+
 void Part::setMimeTypes(KIO::Job *job)
 {
     if (job)
@@ -474,6 +481,7 @@ void Part::setMimeTypes(KIO::Job *job)
         job->addMetaData("accept", m_supportedMimeTypes.join(", ") + ", */*;q=0.5");
     }
 }
+
 
 void Part::fillGenerators()
 {
@@ -491,31 +499,32 @@ void Part::fillGenerators()
         }
         for (int i=0;i<count;i++)
         {
-          propName=offers[i]->property("Name").toString();
-          // don't load already loaded generators
-          if (! m_loadedGenerators.take( propName ) )
-          {
-            KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
-            if (!lib) 
+            propName=offers[i]->property("Name").toString();
+            // don't load already loaded generators
+            if (! m_loadedGenerators.take( propName ) )
             {
-                kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
-		continue;
-            }
+                KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
+                if (!lib)
+                {
+                    kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
+                    continue;
+                }
 
-            Okular::Generator* (*create_plugin)() = ( Okular::Generator* (*)() ) lib->symbol( "create_plugin" );
-            if ( !create_plugin )
-            {
-                kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
-                continue;
-            }
+                Okular::Generator* (*create_plugin)() = ( Okular::Generator* (*)() ) lib->symbol( "create_plugin" );
+                if ( !create_plugin )
+                {
+                    kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
+                    continue;
+                }
 
-            // the generator should do anything with the document if we are only configuring
-            m_loadedGenerators.insert(propName,create_plugin());
-            m_generatorsWithSettings << propName;
-          }
+                // the generator should do anything with the document if we are only configuring
+                m_loadedGenerators.insert(propName,create_plugin());
+                m_generatorsWithSettings << propName;
+            }
         }
     }
 }
+
 
 void Part::slotGeneratorPreferences( )
 {
@@ -545,6 +554,7 @@ void Part::slotGeneratorPreferences( )
     dialog->show();
 }
 
+
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // update actions if the page is changed
@@ -557,52 +567,59 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
     }
 }
 
+
 void Part::goToPage(uint i)
 {
     if ( i <= m_document->pages() )
         m_document->setViewportPage( i - 1 );
 }
 
+
 void Part::openDocument(KUrl doc)
 {
     openUrl(doc);
 }
+
 
 uint Part::pages()
 {
     return m_document->pages();
 }
 
+
 uint Part::currentPage()
 {
     return m_document->pages() ? m_document->currentPage() + 1 : 0;
 }
+
 
 KUrl Part::currentDocument()
 {
     return m_document->currentDocument();
 }
 
+
 //this don't go anywhere but is required by genericfactory.h
 KAboutData* Part::createAboutData()
 {
-	// the non-i18n name here must be the same as the directory in
-	// which the part's rc file is installed ('partrcdir' in the
-	// Makefile)
-	KAboutData* aboutData = new KAboutData("okularpart", I18N_NOOP("okular::Part"), "0.1");
-	aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
-	return aboutData;
+    // the non-i18n name here must be the same as the directory in
+    // which the part's rc file is installed ('partrcdir' in the
+    // Makefile)
+    KAboutData* aboutData = new KAboutData("okularpart", I18N_NOOP("okular::Part"), "0.1");
+    aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
+    return aboutData;
 }
+
 
 bool Part::slotImportPSFile()
 {
-	QString app = KStandardDirs::findExe( "ps2pdf" );
-	if ( app.isEmpty() )
-	{
-		// TODO point the user to their distro packages?
-		KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so okular can not import PS files using it." ), i18n("ps2pdf not found") );
-		return false;
-	}
+    QString app = KStandardDirs::findExe( "ps2pdf" );
+    if ( app.isEmpty() )
+    {
+        // TODO point the user to their distro packages?
+        KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so okular can not import PS files using it." ), i18n("ps2pdf not found") );
+        return false;
+    }
 
     KUrl url = KFileDialog::getOpenUrl( KUrl(), "application/postscript", this->widget() );
     if ( url.isLocalFile() )
@@ -628,6 +645,7 @@ bool Part::slotImportPSFile()
     m_temporaryLocalFile.clear();
     return false;
 }
+
 
 bool Part::openFile()
 {
@@ -706,11 +724,12 @@ bool Part::openFile()
         m_cliPresentation = false;
         QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
     }
-/*    if (m_document->getXMLFile() != QString::null)
-        setXMLFile(m_document->getXMLFile(),true);*/
+    /*    if (m_document->getXMLFile() != QString::null)
+            setXMLFile(m_document->getXMLFile(),true);*/
     m_document->setupGui( actionCollection(), m_toolBox );
     return true;
 }
+
 
 bool Part::openUrl(const KUrl &url)
 {
@@ -718,23 +737,23 @@ bool Part::openUrl(const KUrl &url)
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
-   const QString path = url.path();
-   const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
-   bool isCompressedFile = false;
-   KUrl tempUrl;
-   if (( mimetype->name() == "application/x-gzip" ) 
-                  || ( mimetype->name() == "application/x-bzip2" ) 
-                  || ( mimetype->parentMimeType() == "application/x-gzip" ) 
-                  || ( mimetype->parentMimeType() == "application/x-bzip2" )
-               )
-            {
-                 isCompressedFile=handleCompressed(tempUrl,path,mimetype);
-            }
+    const QString path = url.path();
+    const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
+    bool isCompressedFile = false;
+    KUrl tempUrl;
+    if (( mimetype->name() == "application/x-gzip" )
+        || ( mimetype->name() == "application/x-bzip2" )
+        || ( mimetype->parentMimeType() == "application/x-gzip" )
+        || ( mimetype->parentMimeType() == "application/x-bzip2" )
+        )
+    {
+        isCompressedFile=handleCompressed(tempUrl,path,mimetype);
+    }
 
     // this calls in sequence the 'closeUrl' and 'openFile' methods
     bool openOk;
     if ( !isCompressedFile )
-         openOk = KParts::ReadOnlyPart::openUrl(url);
+        openOk = KParts::ReadOnlyPart::openUrl(url);
     else openOk = KParts::ReadOnlyPart::openUrl(tempUrl);
 
     if ( openOk )
@@ -757,6 +776,7 @@ bool Part::openUrl(const KUrl &url)
     emit enablePrintAction(openOk);
     return openOk;
 }
+
 
 bool Part::closeUrl()
 {
@@ -794,19 +814,22 @@ bool Part::closeUrl()
     return KParts::ReadOnlyPart::closeUrl();
 }
 
+
 void Part::close()
 {
-  if (parent() && (parent()->objectName() == QLatin1String("okular::Shell")))
-  {
-    closeUrl();
-  }
-  else KMessageBox::information( widget(), i18n( "This link points to a close document action that does not work when using the embedded viewer." ), QString::null, "warnNoCloseIfNotInOkular" );
+    if (parent() && (parent()->objectName() == QLatin1String("okular::Shell")))
+    {
+        closeUrl();
+    }
+    else KMessageBox::information( widget(), i18n( "This link points to a close document action that does not work when using the embedded viewer." ), QString::null, "warnNoCloseIfNotInOkular" );
 }
+
 
 void Part::cannotQuit()
 {
     KMessageBox::information( widget(), i18n( "This link points to a quit application action that does not work when using the embedded viewer." ), QString::null, "warnNoQuitIfNotInOkular" );
 }
+
 
 void Part::splitterMoved( int /*pos*/, int index )
 {
@@ -814,6 +837,7 @@ void Part::splitterMoved( int /*pos*/, int index )
     if ( index == 1 )
         saveSplitterSize();
 }
+
 
 void Part::slotShowLeftPanel()
 {
@@ -826,24 +850,27 @@ void Part::slotShowLeftPanel()
     m_thumbnailList->setVisible( showLeft );
 }
 
+
 void Part::saveSplitterSize()
 {
     Okular::Settings::setSplitterSizes( m_splitter->sizes() );
     Okular::Settings::writeConfig();
 }
 
+
 void Part::slotFileDirty( const QString& fileName )
 {
-  // The beauty of this is that each start cancels the previous one.
-  // This means that timeout() is only fired when there have
-  // no changes to the file for the last 750 milisecs.
-  // This ensures that we don't update on every other byte that gets
-  // written to the file.
-  if ( fileName == m_file )
-  {
-    m_dirtyHandler->start( 750 );
-  }
+    // The beauty of this is that each start cancels the previous one.
+    // This means that timeout() is only fired when there have
+    // no changes to the file for the last 750 milisecs.
+    // This ensures that we don't update on every other byte that gets
+    // written to the file.
+    if ( fileName == m_file )
+    {
+        m_dirtyHandler->start( 750 );
+    }
 }
+
 
 void Part::slotDoFileDirty()
 {
@@ -864,7 +891,7 @@ void Part::slotDoFileDirty()
     if ( KParts::ReadOnlyPart::openUrl(m_file) )
     {
         // on successful opening, restore the previous viewport
-        if ( m_viewportDirty.pageNumber >= (int) m_document->pages() ) 
+        if ( m_viewportDirty.pageNumber >= (int) m_document->pages() )
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
@@ -878,6 +905,7 @@ void Part::slotDoFileDirty()
         m_dirtyHandler->start( 750 );
     }
 }
+
 
 void Part::updateViewActions()
 {
@@ -906,45 +934,50 @@ void Part::updateViewActions()
     }
 }
 
+
 void Part::enableTOC(bool enable)
 {
-	m_toolBox->setItemEnabled(0, enable);
+    m_toolBox->setItemEnabled(0, enable);
 }
+
 
 //BEGIN go to page dialog
 class GotoPageDialog : public KDialog
 {
-public:
-	  GotoPageDialog(QWidget *p, int current, int max) : KDialog(p) {
-		setCaption(i18n("Go to Page"));
-		setButtons(Ok | Cancel);
-		setDefaultButton(Ok);
+    public:
+        GotoPageDialog(QWidget *p, int current, int max) : KDialog(p)
+        {
+            setCaption(i18n("Go to Page"));
+            setButtons(Ok | Cancel);
+            setDefaultButton(Ok);
 
-		QWidget *w = new QWidget(this);
-		setMainWidget(w);
+            QWidget *w = new QWidget(this);
+            setMainWidget(w);
 
-		QVBoxLayout *topLayout = new QVBoxLayout(w);
-		topLayout->setMargin(0);
-		topLayout->setSpacing(spacingHint());
-		e1 = new KIntNumInput(current, w);
-		e1->setRange(1, max);
-		e1->setEditFocus(true);
+            QVBoxLayout *topLayout = new QVBoxLayout(w);
+            topLayout->setMargin(0);
+            topLayout->setSpacing(spacingHint());
+            e1 = new KIntNumInput(current, w);
+            e1->setRange(1, max);
+            e1->setEditFocus(true);
 
-		QLabel *label = new QLabel(i18n("&Page:"), w);
-		label->setBuddy(e1);
-		topLayout->addWidget(label);
-		topLayout->addWidget(e1);
-		topLayout->addSpacing(spacingHint()); // A little bit extra space
-		topLayout->addStretch(10);
-		e1->setFocus();
-	}
+            QLabel *label = new QLabel(i18n("&Page:"), w);
+            label->setBuddy(e1);
+            topLayout->addWidget(label);
+            topLayout->addWidget(e1);
+                                 // A little bit extra space
+            topLayout->addSpacing(spacingHint());
+            topLayout->addStretch(10);
+            e1->setFocus();
+        }
 
-	int getPage() const {
-		return e1->value();
-	}
+        int getPage() const
+        {
+            return e1->value();
+        }
 
-  protected:
-    KIntNumInput *e1;
+    protected:
+        KIntNumInput *e1;
 };
 //END go to page dialog
 
@@ -955,11 +988,13 @@ void Part::slotGoToPage()
         m_document->setViewportPage( pageDialog.getPage() - 1 );
 }
 
+
 void Part::slotPreviousPage()
 {
     if ( m_document->isOpened() && !(m_document->currentPage() < 1) )
         m_document->setViewportPage( m_document->currentPage() - 1 );
 }
+
 
 void Part::slotNextPage()
 {
@@ -967,11 +1002,13 @@ void Part::slotNextPage()
         m_document->setViewportPage( m_document->currentPage() + 1 );
 }
 
+
 void Part::slotGotoFirst()
 {
     if ( m_document->isOpened() )
         m_document->setViewportPage( 0 );
 }
+
 
 void Part::slotGotoLast()
 {
@@ -979,15 +1016,18 @@ void Part::slotGotoLast()
         m_document->setViewportPage( m_document->pages() - 1 );
 }
 
+
 void Part::slotHistoryBack()
 {
     m_document->setPrevViewport();
 }
 
+
 void Part::slotHistoryNext()
 {
     m_document->setNextViewport();
 }
+
 
 void Part::slotPreviousBookmark()
 {
@@ -1005,6 +1045,7 @@ void Part::slotPreviousBookmark()
         }
     }
 }
+
 
 void Part::slotNextBookmark()
 {
@@ -1024,6 +1065,7 @@ void Part::slotNextBookmark()
     }
 }
 
+
 void Part::slotFind()
 {
     KFindDialog dlg( widget() );
@@ -1039,16 +1081,18 @@ void Part::slotFind()
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
         m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false,
-                                dlg.options() & KFind::CaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
-                                Okular::Document::NextMatch, true, qRgb( 255, 255, 64 ) );
+            dlg.options() & KFind::CaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
+            Okular::Document::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }
+
 
 void Part::slotFindNext()
 {
     if (!m_document->continueLastSearch())
         slotFind();
 }
+
 
 void Part::slotSaveFileAs()
 {
@@ -1066,6 +1110,7 @@ void Part::slotSaveFileAs()
     }
 }
 
+
 void Part::slotGetNewStuff()
 {
     // show the modal dialog over pageview and execute it
@@ -1074,6 +1119,7 @@ void Part::slotGetNewStuff()
     dialog->exec();
     delete dialog;
 }
+
 
 void Part::slotPreferences()
 {
@@ -1089,6 +1135,7 @@ void Part::slotPreferences()
 
     dialog->show();
 }
+
 
 void Part::slotNewConfig()
 {
@@ -1124,6 +1171,7 @@ void Part::slotNewConfig()
         m_thumbnailList->updateWidgets();
 }
 
+
 void Part::slotPrintPreview()
 {
     if (m_document->pages() == 0) return;
@@ -1151,100 +1199,104 @@ void Part::slotPrintPreview()
     }
     if (landscape > portrait)
     {
-    //  printer.setOption("orientation-requested", "4");
+        //  printer.setOption("orientation-requested", "4");
         printer.setOrientation(KPrinter::Landscape);
     }
 
     doPrint(printer);
 }
 
+
 void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 {
-	bool reallyShow = false;
-	if (!m_actionsSearched)
-	{
-		// the quest for options_show_menubar
-		KActionCollection *ac;
-		QAction *act;
-		
-		if (factory())
-		{
-			QList<KXMLGUIClient*> clients(factory()->clients());
-			for(int i = 0 ; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i)
-			{
-				ac = clients.at(i)->actionCollection();
-				// show_menubar
-				act = ac->action("options_show_menubar");
-				if (act && qobject_cast<KToggleAction*>(act))
-					m_showMenuBarAction = qobject_cast<KToggleAction*>(act);
-				// fullscreen
-				act = ac->action("fullscreen");
-				if (act && qobject_cast<KToggleFullScreenAction*>(act))
-					m_showFullScreenAction = qobject_cast<KToggleFullScreenAction*>(act);
-			}
-		}
-		m_actionsSearched = true;
-	}
-	
-	KMenu *popup = new KMenu( widget() );
-	QAction *toggleBookmark, *fitPageWidth;
-	toggleBookmark = 0;
-	fitPageWidth = 0;
-	if (page)
-	{
-		popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-		if ( !m_document->isBookmarked( page->number() ) )
-			toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
-		if ( m_pageView->canFitPageWidth() )
-			fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
-		//popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-		//popup->setItemEnabled( 3, false );
-		popup->addAction( m_prevBookmark );
-		popup->addAction( m_nextBookmark );
-		reallyShow = true;
+    bool reallyShow = false;
+    if (!m_actionsSearched)
+    {
+        // the quest for options_show_menubar
+        KActionCollection *ac;
+        QAction *act;
+
+        if (factory())
+        {
+            QList<KXMLGUIClient*> clients(factory()->clients());
+            for(int i = 0 ; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i)
+            {
+                ac = clients.at(i)->actionCollection();
+                // show_menubar
+                act = ac->action("options_show_menubar");
+                if (act && qobject_cast<KToggleAction*>(act))
+                    m_showMenuBarAction = qobject_cast<KToggleAction*>(act);
+                // fullscreen
+                act = ac->action("fullscreen");
+                if (act && qobject_cast<KToggleFullScreenAction*>(act))
+                    m_showFullScreenAction = qobject_cast<KToggleFullScreenAction*>(act);
+            }
         }
-/*
-	//Albert says: I have not ported this as i don't see it does anything
-    if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
-	{
-		m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image..."), 4 );
-		m_popup->setItemEnabled( 4, false );
-}*/
-	
-	if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
-	{
-		popup->addTitle( i18n( "Tools" ) );
-		if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) popup->addAction(m_showMenuBarAction);
-		if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) popup->addAction(m_showFullScreenAction);
-		reallyShow = true;
-		
-	}
-	
-	if (reallyShow)
-	{
-		QAction *res = popup->exec(point);
-		if (res)
-		{
-		if (res == toggleBookmark) m_document->addBookmark( page->number() );
-		else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
-		}
-	}
-	delete popup;
+        m_actionsSearched = true;
+    }
+
+    KMenu *popup = new KMenu( widget() );
+    QAction *toggleBookmark, *fitPageWidth;
+    toggleBookmark = 0;
+    fitPageWidth = 0;
+    if (page)
+    {
+        popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
+        if ( !m_document->isBookmarked( page->number() ) )
+            toggleBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
+        if ( m_pageView->canFitPageWidth() )
+            fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
+        //popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
+        //popup->setItemEnabled( 3, false );
+        popup->addAction( m_prevBookmark );
+        popup->addAction( m_nextBookmark );
+        reallyShow = true;
+    }
+    /*
+        //Albert says: I have not ported this as i don't see it does anything
+        if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
+        {
+            m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image..."), 4 );
+            m_popup->setItemEnabled( 4, false );
+    }*/
+
+    if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
+    {
+        popup->addTitle( i18n( "Tools" ) );
+        if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) popup->addAction(m_showMenuBarAction);
+        if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) popup->addAction(m_showFullScreenAction);
+        reallyShow = true;
+
+    }
+
+    if (reallyShow)
+    {
+        QAction *res = popup->exec(point);
+        if (res)
+        {
+            if (res == toggleBookmark) m_document->addBookmark( page->number() );
+            else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
+        }
+    }
+    delete popup;
 }
+
 
 void Part::slotShowProperties()
 {
-	PropertiesDialog *d = new PropertiesDialog(widget(), m_document);
-	d->exec();
-	delete d;
+    PropertiesDialog *d = new PropertiesDialog(widget(), m_document);
+    d->exec();
+    delete d;
 }
+
 
 void Part::slotShowEmbeddedFiles()
 {
-	EmbeddedFilesDialog *d = new EmbeddedFilesDialog(widget(), m_document);
-	d->exec();
-	delete d;
+    EmbeddedFilesDialog *d = new EmbeddedFilesDialog(widget(), m_document);
+    d->exec();
+    delete d;
 }
+
 
 void Part::slotShowPresentation()
 {
@@ -1255,11 +1307,13 @@ void Part::slotShowPresentation()
     }
 }
 
+
 void Part::slotHidePresentation()
 {
     if ( m_presentationWidget )
         delete (PresentationWidget*) m_presentationWidget;
 }
+
 
 void Part::slotExportAs(QAction * act)
 {
@@ -1277,6 +1331,7 @@ void Part::slotExportAs(QAction * act)
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
     }
 }
+
 
 void Part::slotPrint()
 {
@@ -1360,6 +1415,7 @@ void Part::slotPrint()
         doPrint( printer );
 }
 
+
 void Part::doPrint(KPrinter &printer)
 {
     if (!m_document->isAllowed(Okular::AllowPrint))
@@ -1370,32 +1426,36 @@ void Part::doPrint(KPrinter &printer)
 
     if (!m_document->print(printer))
     {
-        KMessageBox::error(widget(), i18n("Could not print the document. Please report to bugs.kde.org"));	
+        KMessageBox::error(widget(), i18n("Could not print the document. Please report to bugs.kde.org"));
     }
 }
 
+
 void Part::restoreDocument(KConfig* config)
 {
-  KUrl url ( config->readPathEntry( "URL" ) );
-  if ( url.isValid() )
-  {
-    QString viewport = config->readEntry( "Viewport" );
-    if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
-    openUrl( url );
-  }
+    KUrl url ( config->readPathEntry( "URL" ) );
+    if ( url.isValid() )
+    {
+        QString viewport = config->readEntry( "Viewport" );
+        if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
+        openUrl( url );
+    }
 }
+
 
 void Part::saveDocumentRestoreInfo(KConfig* config)
 {
-  config->writePathEntry( "URL", url().url() );
-  config->writeEntry( "Viewport", m_document->viewport().toString() );
+    config->writePathEntry( "URL", url().url() );
+    config->writeEntry( "Viewport", m_document->viewport().toString() );
 }
+
 
 void Part::psTransformEnded()
 {
-       m_file = m_temporaryLocalFile;
-       openFile();
+    m_file = m_temporaryLocalFile;
+    openFile();
 }
+
 
 bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype)
 {
@@ -1405,7 +1465,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     m_tempfile = new KTemporaryFile;
     if ( !m_tempfile )
     {
-        KMessageBox::error( 0, 
+        KMessageBox::error( 0,
             i18n("<qt><strong>File Error!</strong> Could not create "
             "temporary file.</qt>"));
         return false;
@@ -1415,21 +1475,21 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
     if ( ! m_tempfile->open() )
     {
-        KMessageBox::error( 0, 
+        KMessageBox::error( 0,
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
-                "<nobr><strong>%1</strong></nobr>.</qt>",
-                strerror(m_tempfile->error())));
-                delete m_tempfile;
-                return false;
+            "<nobr><strong>%1</strong></nobr>.</qt>",
+            strerror(m_tempfile->error())));
+        delete m_tempfile;
+        return false;
     }
 
     // decompression filer
     QIODevice* filterDev;
     if (( mimetype->parentMimeType() == "application/x-gzip" ) ||
         ( mimetype->parentMimeType() == "application/x-bzip2" ))
-            filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
+        filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
     else
-            filterDev = KFilterDev::deviceForFile(path);
+        filterDev = KFilterDev::deviceForFile(path);
 
     if (!filterDev)
     {
@@ -1439,19 +1499,19 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
     if ( !filterDev->open(QIODevice::ReadOnly) )
     {
-        KMessageBox::detailedError( 0, 
+        KMessageBox::detailedError( 0,
             i18n("<qt><strong>File Error!</strong> Could not open the file "
             "<nobr><strong>%1</strong></nobr> for uncompression. "
             "The file will not be loaded.</qt>", path),
             i18n("<qt>This error typically occurs if you do "
-            "not have enough permissions to read the file. " 
+            "not have enough permissions to read the file. "
             "You can check ownership and permissions if you "
             "right-click on the file in the Konqueror "
             "file manager and then choose the 'Properties' menu.</qt>"));
 
-            delete filterDev;
-            delete m_tempfile;
-            return false;
+        delete filterDev;
+        delete m_tempfile;
+        return false;
     }
 
     QByteArray buf(1024, '\0');
@@ -1466,7 +1526,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     delete filterDev;
     if ((read != 0) || (m_tempfile->size() == 0))
     {
-        KMessageBox::detailedError(0, 
+        KMessageBox::detailedError(0,
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
             "the file <nobr><strong>%1</strong></nobr>. "
             "The file will not be loaded.</qt>", path ),
@@ -1482,18 +1542,20 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
 
 /*
-* BrowserExtension class
-*/
+ * BrowserExtension class
+ */
 BrowserExtension::BrowserExtension(Part* parent)
-  : KParts::BrowserExtension( parent )
+: KParts::BrowserExtension( parent )
 {
-	emit enableAction("print", true);
-	setURLDropHandlingEnabled(true);
+    emit enableAction("print", true);
+    setURLDropHandlingEnabled(true);
 }
+
 
 void BrowserExtension::print()
 {
-	static_cast<Part*>(parent())->slotPrint();
+    static_cast<Part*>(parent())->slotPrint();
 }
+
 
 #include "part.moc"

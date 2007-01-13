@@ -87,7 +87,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KPARTS_LIBS} ${QT_QTCORE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} m )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

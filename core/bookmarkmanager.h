@@ -11,7 +11,6 @@
 #define _OKULAR_BOOKMARK_MANAGER_H_
 
 #include <kbookmark.h>
-#include <kbookmarkmanager.h>
 
 #include "okular_export.h"
 
@@ -22,18 +21,12 @@ namespace Okular {
 class Document;
 class DocumentViewport;
 
-class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
+class OKULAR_EXPORT BookmarkManager : public QObject
 {
     Q_OBJECT
 
     public:
         virtual ~BookmarkManager();
-
-        virtual QString currentUrl() const;
-        virtual QString currentTitle() const;
-        virtual bool addBookmarkEntry() const;
-        virtual bool editBookmarkEntry() const;
-        virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
 
         /**
          * Returns the list of documents with bookmarks.
@@ -71,6 +64,7 @@ class OKULAR_EXPORT BookmarkManager : public QObject, public KBookmarkOwner
     private:
         class Private;
         Private * const d;
+        friend class Private;
 
         // private interface used by the Document
         friend class Document;

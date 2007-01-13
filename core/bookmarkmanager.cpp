@@ -10,6 +10,8 @@
 // qt/kde includes
 #include <qhash.h>
 #include <qset.h>
+#include <kbookmarkmanager.h>
+#include <kbookmarkmenu.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kinstance.h>
@@ -21,14 +23,27 @@
 
 using namespace Okular;
 
-class BookmarkManager::Private
+class BookmarkManager::Private : public KBookmarkOwner
 {
     public:
-        Private()
-            : document( 0 ), manager( 0 )
+        Private( BookmarkManager * qq )
+            : KBookmarkOwner(), q( qq ), document( 0 ), manager( 0 )
         {
         }
 
+        ~Private()
+        {
+            knownFiles.clear();
+            delete manager;
+        }
+
+        virtual QString currentUrl() const;
+        virtual QString currentTitle() const;
+        virtual bool addBookmarkEntry() const;
+        virtual bool editBookmarkEntry() const;
+        virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
+
+        BookmarkManager * q;
         KUrl url;
         QSet<int> urlBookmarks;
         Document * document;
@@ -38,7 +53,7 @@ class BookmarkManager::Private
 };
 
 BookmarkManager::BookmarkManager( Document * document )
-    : QObject( document ), KBookmarkOwner(), d( new Private )
+    : QObject( document ), d( new Private( this ) )
 {
     setObjectName( "Okular::BookmarkManager" );
 
@@ -54,35 +69,33 @@ BookmarkManager::BookmarkManager( Document * document )
 BookmarkManager::~BookmarkManager()
 {
     save();
-    d->knownFiles.clear();
-    delete d->manager;
     delete d;
 }
 
 //BEGIN Reimplementations from KBookmarkOwner
-QString BookmarkManager::currentUrl() const
+QString BookmarkManager::Private::currentUrl() const
 {
-    return d->url.prettyUrl();
+    return url.prettyUrl();
 }
 
-QString BookmarkManager::currentTitle() const
+QString BookmarkManager::Private::currentTitle() const
 {
-    return d->url.isLocalFile() ? d->url.path() : d->url.prettyUrl();
+    return url.isLocalFile() ? url.path() : url.prettyUrl();
 }
 
-bool BookmarkManager::addBookmarkEntry() const
+bool BookmarkManager::Private::addBookmarkEntry() const
 {
-    return true;
+    return false;
 }
 
-bool BookmarkManager::editBookmarkEntry() const
+bool BookmarkManager::Private::editBookmarkEntry() const
 {
-    return true;
+    return false;
 }
 
-void BookmarkManager::openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers )
+void BookmarkManager::Private::openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers )
 {
-    emit openUrl( bm.url() );
+    emit q->openUrl( bm.url() );
 }
 //END Reimplementations from KBookmarkOwner
 

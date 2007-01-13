@@ -329,7 +329,8 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
             if( !dlg.exec() )
                 break;
             password = dlg.password();
-            keep = dlg.keepPassword();
+            if ( wallet )
+                keep = dlg.keepPassword();
         }
 
         // 2. reopen the document using the password

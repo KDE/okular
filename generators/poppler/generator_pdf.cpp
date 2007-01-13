@@ -255,7 +255,34 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
+    bool success = init(pagesVector, filePath.section('/', -1, -1));
+    if (success && QFile::exists(filePath + QLatin1String( "sync" )))
+    {
+        loadPdfSync(filePath, pagesVector);
+    }
+    return success;
+}
 
+bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
+{
+#ifdef HAVE_POPPLER_HEAD
+#ifndef NDEBUG
+    if ( pdfdoc )
+    {
+        kDebug() << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        return false;
+    }
+#endif
+    // create PDFDoc for the given file
+    pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
+    return init(pagesVector, QString());
+#else
+    return false;
+#endif
+}
+
+bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &walletKey)
+{
     // if the file didn't open correctly it might be encrypted, so ask for a pass
     bool firstInput = true;
     bool triedWallet = false;
@@ -266,7 +293,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
         QString password;
 
         // 1.A. try to retrieve the first password from the kde wallet system
-        if ( !triedWallet )
+        if ( !triedWallet && !walletKey.isNull() )
         {
             QString walletName = KWallet::Wallet::NetworkWallet();
             wallet = KWallet::Wallet::openWallet( walletName );
@@ -279,7 +306,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
 
                 // look for the pass in that folder
                 QString retrievedPass;
-                if ( !wallet->readPassword( filePath.section('/', -1, -1), retrievedPass ) )
+                if ( !wallet->readPassword( walletKey, retrievedPass ) )
                     password = retrievedPass;
             }
             triedWallet = true;
@@ -311,7 +338,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
         // 3. if the password is correct and the user chose to remember it, store it to the wallet
         if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() && keep )
         {
-            wallet->writePassword( filePath.section('/', -1, -1), password );
+            wallet->writePassword( walletKey, password );
         }
     }
     if ( !pdfdoc || pdfdoc->isLocked() )
@@ -326,9 +353,6 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     pagesVector.resize(pageCount);
 
     loadPages(pagesVector, 0, false);
-
-    if (QFile::exists(filePath + QLatin1String( "sync" )))
-        loadPdfSync(filePath, pagesVector);
 
     // the file has been loaded correctly
     return true;
@@ -745,6 +769,15 @@ bool PDFGenerator::print( KPrinter& printer )
         return false;
     }
 	return false;
+}
+
+bool PDFGenerator::hasFeature( GeneratorFeature feature ) const
+{
+#ifdef HAVE_POPPLER_HEAD
+    return feature == Okular::Generator::ReadRawData;
+#else
+    return false;
+#endif
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const

@@ -57,6 +57,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
@@ -80,6 +81,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
+        bool hasFeature( GeneratorFeature feature ) const;
+
         // [INHERITED] reply to some metadata requests
         QVariant metaData( const QString & key, const QVariant & option ) const;
 
@@ -96,6 +99,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         void threadFinished();
 
     private:
+        bool init(QVector<Okular::Page*> & pagesVector, const QString &walletKey);
+
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
 

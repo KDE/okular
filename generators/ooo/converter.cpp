@@ -7,10 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QDebug>
-
 #include <QtCore/QUrl>
-#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
@@ -20,6 +17,8 @@
 #include <QtXml/QDomText>
 #include <QtXml/QXmlSimpleReader>
 
+#include <okular/core/annotations.h>
+#include <okular/core/link.h>
 #include <okular/core/document.h>
 
 #include "converter.h"
@@ -28,6 +27,20 @@
 #include "styleparser.h"
 
 using namespace OOO;
+
+class Style
+{
+  public:
+    Style( const QTextBlockFormat &blockFormat, const QTextCharFormat &textFormat );
+
+    QTextBlockFormat blockFormat() const;
+    QTextCharFormat textFormat() const;
+
+  private:
+    QTextBlockFormat mBlockFormat;
+    QTextCharFormat mTextFormat;
+};
+
 
 Style::Style( const QTextBlockFormat &blockFormat, const QTextCharFormat &textFormat )
   : mBlockFormat( blockFormat ), mTextFormat( textFormat )
@@ -44,11 +57,10 @@ QTextCharFormat Style::textFormat() const
   return mTextFormat;
 }
 
-Converter::Converter( const Document *document )
-  : mDocument( document ), mTextDocument( 0 ), mCursor( 0 ),
+Converter::Converter()
+  : mTextDocument( 0 ), mCursor( 0 ),
     mStyleInformation( new StyleInformation )
 {
-  mTableOfContents = QDomDocument( "DocumentSynopsis" );
 }
 
 Converter::~Converter()
@@ -57,15 +69,14 @@ Converter::~Converter()
   mStyleInformation = 0;
 }
 
-bool Converter::convert()
+QTextDocument* Converter::convert( const QString &fileName )
 {
+  Document oooDocument( fileName );
+  if ( !oooDocument.open() )
+    return 0;
+
   delete mTextDocument;
   delete mCursor;
-
-  mTableOfContents = QDomDocument( "DocumentSynopsis" );
-  mHeaderInfos.clear();
-  mInternalLinkInfos.clear();
-  mLinkInfos.clear();
 
   mTextDocument = new QTextDocument;
   mCursor = new QTextCursor( mTextDocument );
@@ -76,7 +87,7 @@ bool Converter::convert()
   QXmlSimpleReader reader;
 
   QXmlInputSource source;
-  source.setData( mDocument->content() );
+  source.setData( oooDocument.content() );
 
   QString errorMsg;
   int errorLine, errorCol;
@@ -91,14 +102,14 @@ bool Converter::convert()
    * Read the style properties, so the are available when
    * parsing the content.
    */
-  StyleParser styleParser( mDocument, document, mStyleInformation );
+  StyleParser styleParser( &oooDocument, document, mStyleInformation );
   if ( !styleParser.parse() )
     return false;
 
   /**
    * Add all images of the document to resource framework
    */
-  const QMap<QString, QByteArray> images = mDocument->images();
+  const QMap<QString, QByteArray> images = oooDocument.images();
   QMapIterator<QString, QByteArray> it( images );
   while ( it.hasNext() ) {
     it.next();
@@ -134,25 +145,14 @@ bool Converter::convert()
     element = element.nextSiblingElement();
   }
 
-  /**
-   * Create table of contents
-   */
-  if ( !createTableOfContents() )
-    return false;
+  MetaInformation::List metaInformation = mStyleInformation->metaInformation();
+  for ( int i = 0; i < metaInformation.count(); ++i ) {
+    emit addMetaData( metaInformation[ i ].key(),
+                      metaInformation[ i ].value(),
+                      metaInformation[ i ].title() );
+  }
 
-  /**
-   * Create list of links
-   */
-  if ( !createLinksList() )
-    return false;
-
-  /**
-   * Create list of annotations
-   */
-  if ( !createAnnotationsList() )
-    return false;
-
-  return true;
+  return mTextDocument;
 }
 
 bool Converter::convertBody( const QDomElement &element )
@@ -225,12 +225,7 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
     child = child.nextSibling();
   }
 
-  HeaderInfo headerInfo;
-  headerInfo.block = cursor->block();
-  headerInfo.text = element.text();
-  headerInfo.level = element.attribute( "outline-level" ).toInt();
-
-  mHeaderInfos.append( headerInfo );
+  emit addTitle( element.attribute( "outline-level", 0 ).toInt(), element.text(), cursor->block() );
 
   return true;
 }
@@ -459,8 +454,7 @@ bool Converter::convertFrame( const QDomElement &element )
 
 bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format )
 {
-  InternalLinkInfo linkInfo;
-  linkInfo.startPosition = cursor->position();
+  int startPosition = cursor->position();
 
   QDomNode child = element.firstChild();
   while ( !child.isNull() ) {
@@ -479,27 +473,28 @@ bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, co
     child = child.nextSibling();
   }
 
-  linkInfo.endPosition = cursor->position();
-  linkInfo.url = element.attribute( "href" );
+  int endPosition = cursor->position();
 
-  mInternalLinkInfos.append( linkInfo );
+  Okular::Link *link = new Okular::LinkBrowse( element.attribute( "href" ) );
+  emit addLink( link, startPosition, endPosition );
 
   return true;
 }
 
 bool Converter::convertAnnotation( QTextCursor *cursor, const QDomElement &element )
 {
-  InternalAnnotationInfo annotation;
   QStringList contents;
+  QString creator;
+  QDateTime dateTime;
 
-  annotation.position = cursor->position();
+  int position = cursor->position();
 
   QDomElement child = element.firstChildElement();
   while ( !child.isNull() ) {
     if ( child.tagName() == QLatin1String( "creator" ) ) {
-      annotation.creator = child.text();
+      creator = child.text();
     } else if ( child.tagName() == QLatin1String( "date" ) ) {
-      annotation.dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
+      dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
     } else if ( child.tagName() == QLatin1String( "p" ) ) {
         contents.append( child.text() );
     }
@@ -507,149 +502,14 @@ bool Converter::convertAnnotation( QTextCursor *cursor, const QDomElement &eleme
     child = child.nextSiblingElement();
   }
 
-  annotation.content = contents.join( "\n" );
+  Okular::TextAnnotation *annotation = new Okular::TextAnnotation;
+  annotation->setAuthor( creator );
+  annotation->setContents( contents.join( "\n" ) );
+  annotation->setCreationDate( dateTime );
+  annotation->style().setColor( QColor( "#ffff00" ) );
+  annotation->style().setOpacity( 0.5 );
 
-  mInternalAnnotationInfos.append( annotation );
-
-  return true;
-}
-
-bool Converter::createTableOfContents()
-{
-  const QSizeF pageSize = mTextDocument->pageSize();
-
-  QStack<QDomNode> parentNodeStack;
-  QDomNode parentNode = mTableOfContents;
-  int level = 2;
-
-  for ( int i = 0; i < mHeaderInfos.count(); ++i ) {
-    const HeaderInfo headerInfo = mHeaderInfos[ i ];
-
-    const QRectF rect = mTextDocument->documentLayout()->blockBoundingRect( headerInfo.block );
-
-    int page = qRound( rect.y() ) / qRound( pageSize.height() );
-    int offset = qRound( rect.y() ) % qRound( pageSize.height() );
-
-    Okular::DocumentViewport viewport( page );
-    viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
-    viewport.rePos.normalizedY = (double)offset / (double)pageSize.height();
-    viewport.rePos.enabled = true;
-    viewport.rePos.pos = Okular::DocumentViewport::Center;
-
-    QDomElement item = mTableOfContents.createElement( headerInfo.text );
-    item.setAttribute( "Viewport", viewport.toString() );
-
-    int newLevel = headerInfo.level;
-    if ( newLevel == level ) {
-      parentNode.appendChild( item );
-    } else if ( newLevel > level ) {
-      parentNodeStack.push( parentNode );
-      parentNode = parentNode.lastChildElement();
-      parentNode.appendChild( item );
-      level = newLevel;
-    } else {
-      for ( int i = level; i > newLevel; i-- ) {
-        level--;
-        parentNode = parentNodeStack.pop();
-      }
-
-      parentNode.appendChild( item );
-    }
-  }
+  emit addAnnotation( annotation, position, position + 3 );
 
   return true;
-}
-
-void Converter::calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page )
-{
-  const QSizeF pageSize = mTextDocument->pageSize();
-
-  const QTextBlock block = mTextDocument->findBlock( startPosition );
-  const QRectF boundingRect = mTextDocument->documentLayout()->blockBoundingRect( block );
-
-  QTextLayout *layout = block.layout();
-
-  int startPos = startPosition - block.position();
-  int endPos = endPosition - block.position();
-  const QTextLine startLine = layout->lineForTextPosition( startPos );
-  const QTextLine endLine = layout->lineForTextPosition( endPos );
-
-  double x = boundingRect.x() + startLine.cursorToX( startPos );
-  double y = boundingRect.y() + startLine.y();
-  double r = boundingRect.x() + endLine.cursorToX( endPos );
-  double b = boundingRect.y() + endLine.y() + endLine.height();
-
-  int offset = qRound( y ) % qRound( pageSize.height() );
-
-  page = qRound( y ) / qRound( pageSize.height() );
-  rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
-                 (r - x) / pageSize.width(), (b - y) / pageSize.height() );
-}
-
-bool Converter::createLinksList()
-{
-  for ( int i = 0; i < mInternalLinkInfos.count(); ++i ) {
-    const InternalLinkInfo internalLinkInfo = mInternalLinkInfos[ i ];
-
-    LinkInfo linkInfo;
-    linkInfo.url = internalLinkInfo.url;
-
-    calculateBoundingRect( internalLinkInfo.startPosition, internalLinkInfo.endPosition,
-                           linkInfo.boundingRect, linkInfo.page );
-
-    mLinkInfos.append( linkInfo );
-  }
-
-  return true;
-}
-
-bool Converter::createAnnotationsList()
-{
-  for ( int i = 0; i < mInternalAnnotationInfos.count(); ++i ) {
-    const InternalAnnotationInfo annotation = mInternalAnnotationInfos[ i ];
-
-    AnnotationInfo annotationInfo;
-    annotationInfo.creator = annotation.creator;
-    annotationInfo.dateTime = annotation.dateTime;
-    annotationInfo.content = annotation.content;
-
-    calculateBoundingRect( annotation.position, annotation.position,
-                           annotationInfo.boundingRect, annotationInfo.page );
-
-    /**
-     * Since ODT doesn't offer enough information for the width/height calculation we
-     * just calculate the x,y coordinates and add a fixed width and height here.
-     */
-    annotationInfo.boundingRect.setWidth( annotationInfo.boundingRect.x() + 0.02 );
-    annotationInfo.boundingRect.setHeight( annotationInfo.boundingRect.y() + 0.02 );
-
-    mAnnotationInfos.append( annotationInfo );
-  }
-
-  return true;
-}
-
-QTextDocument *Converter::textDocument() const
-{
-  return mTextDocument;
-}
-
-MetaInformation::List Converter::metaInformation() const
-{
-  return mStyleInformation->metaInformation();
-}
-
-QDomDocument Converter::tableOfContents() const
-{
-  return mTableOfContents;
-}
-
-Converter::LinkInfo::List Converter::links() const
-{
-  return mLinkInfos;
-}
-
-Converter::AnnotationInfo::List Converter::annotations() const
-{
-  return mAnnotationInfos;
 }

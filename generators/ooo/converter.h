@@ -10,11 +10,10 @@
 #ifndef OOO_CONVERTER_H
 #define OOO_CONVERTER_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QStack>
-#include <QtGui/QTextBlock>
 #include <QtGui/QTextCharFormat>
 #include <QtXml/QDomDocument>
+
+#include <okular/core/textdocumentgenerator.h>
 
 #include "styleinformation.h"
 
@@ -25,54 +24,13 @@ namespace OOO {
 
 class Document;
 
-class Style
+class Converter : public Okular::TextDocumentConverter
 {
   public:
-    Style( const QTextBlockFormat &blockFormat, const QTextCharFormat &textFormat );
-
-    QTextBlockFormat blockFormat() const;
-    QTextCharFormat textFormat() const;
-
-  private:
-    QTextBlockFormat mBlockFormat;
-    QTextCharFormat mTextFormat;
-};
-
-class Converter
-{
-  public:
-    class LinkInfo
-    {
-      public:
-        typedef QList<LinkInfo> List;
-
-        int page;
-        QRectF boundingRect;
-        QString url;
-    };
-
-    class AnnotationInfo
-    {
-      public:
-        typedef QList<AnnotationInfo> List;
-
-        int page;
-        QRectF boundingRect;
-        QString creator;
-        QDateTime dateTime;
-        QString content;
-    };
-
-    Converter( const Document *document );
+    Converter();
     ~Converter();
 
-    bool convert();
-
-    QTextDocument *textDocument() const;
-    MetaInformation::List metaInformation() const;
-    QDomDocument tableOfContents() const;
-    LinkInfo::List links() const;
-    AnnotationInfo::List annotations() const;
+    virtual QTextDocument *convert( const QString &fileName );
 
   private:
     bool convertBody( const QDomElement &element );
@@ -87,48 +45,10 @@ class Converter
     bool convertFrame( const QDomElement &element );
     bool convertAnnotation( QTextCursor *cursor, const QDomElement &element );
 
-    bool createTableOfContents();
-    bool createLinksList();
-    bool createAnnotationsList();
-
-    void calculateBoundingRect( int, int, QRectF&, int& );
-
-    const Document *mDocument;
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;
 
     StyleInformation *mStyleInformation;
-    QDomDocument mTableOfContents;
-    LinkInfo::List mLinkInfos;
-    AnnotationInfo::List mAnnotationInfos;
-
-    struct HeaderInfo
-    {
-      QTextBlock block;
-      QString text;
-      int level;
-    };
-
-    QList<HeaderInfo> mHeaderInfos;
-
-    struct InternalLinkInfo
-    {
-      int startPosition;
-      int endPosition;
-      QString url;
-    };
-
-    QList<InternalLinkInfo> mInternalLinkInfos;
-
-    struct InternalAnnotationInfo
-    {
-      int position;
-      QString creator;
-      QDateTime dateTime;
-      QString content;
-    };
-
-    QList<InternalAnnotationInfo> mInternalAnnotationInfos;
 };
 
 }

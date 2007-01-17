@@ -191,6 +191,7 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 
     ready = true;
     signalRequestDone( m_request );
+    m_request = 0;
 }
 
 void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )

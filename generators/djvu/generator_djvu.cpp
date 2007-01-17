@@ -186,105 +186,8 @@ bool DjVuGenerator::print( KPrinter& printer )
 
 void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
 {
+    (void)page;
     m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
-
-    QList<KDjVu::Link*> links;
-    m_djvu->linksAndAnnotationsForPage( page, &links, 0 );
-    if ( links.count() > 0 )
-    {
-        QLinkedList<Okular::ObjectRect *> rects;
-        QList<KDjVu::Link*>::ConstIterator it = links.constBegin();
-        QList<KDjVu::Link*>::ConstIterator itEnd = links.constEnd();
-        for ( ; it != itEnd; ++it )
-        {
-            KDjVu::Link *curlink = (*it);
-            Okular::Link *newlink = 0;
-            int newpage = -1;
-            switch ( curlink->type() )
-            {
-                case KDjVu::Link::PageLink:
-                {
-                    KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( curlink );
-                    bool ok = true;
-                    QString target = l->page();
-                    if ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) )
-                        target.remove( 0, 1 );
-                    int tmppage = target.toInt( &ok );
-                    if ( ok || target.isEmpty() )
-                    {
-                        Okular::DocumentViewport vp;
-                        if ( !target.isEmpty() )
-                        {
-                            vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
-                            newpage = vp.pageNumber;
-                        }
-                        newlink = new Okular::LinkGoto( QString::null, vp );
-                    }
-                    break;
-                }
-                case KDjVu::Link::UrlLink:
-                {
-                    KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( curlink );
-                    QString url = l->url();
-                    newlink = new Okular::LinkBrowse( url );
-                    break;
-                }
-            }
-            if ( newlink )
-            {
-                const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
-                int width = p->width();
-                int height = p->height();
-                bool scape_orientation = false; // hack by tokoe, should always create default page
-                if ( scape_orientation )
-                    qSwap( width, height );
-                Okular::ObjectRect *newrect = 0;
-                switch ( curlink->areaType() )
-                {
-                    case KDjVu::Link::RectArea:
-                    case KDjVu::Link::EllipseArea:
-                    {
-                        QRect r( QPoint( curlink->point().x(), p->height() - curlink->point().y() - curlink->size().height() ), curlink->size() );
-                        bool ellipse = ( curlink->areaType() == KDjVu::Link::EllipseArea );
-                        newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, 0 ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
-                        break;
-                    }
-                    case KDjVu::Link::PolygonArea:
-                    {
-                        QPolygon poly = curlink->polygon();
-                        QPolygonF newpoly;
-                        for ( int i = 0; i < poly.count(); ++i )
-                        {
-                            int x = poly.at(i).x();
-                            int y = poly.at(i).y();
-                            if ( scape_orientation )
-                                qSwap( x, y );
-                            else
-                            {
-                                y = height - y;
-                            }
-                            newpoly << QPointF( (double)(x)/width, (double)(y)/height );
-                        }
-                        if ( !newpoly.isEmpty() )
-                        {
-                            newpoly << newpoly.first();
-                            newrect = new Okular::ObjectRect( newpoly, Okular::ObjectRect::Link, newlink );
-                        }
-                        break;
-                    }
-                    default: ;
-                }
-                if ( newrect )
-                    rects.append( newrect );
-                else
-                    delete newlink;
-            }
-            // delete the links as soon as we process them
-            delete curlink;
-        }
-        if ( rects.count() > 0 )
-            m_request->page()->setObjectRects( rects );
-    }
 
     ready = true;
     signalRequestDone( m_request );
@@ -309,75 +212,184 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
         pagesVector[i] = page;
 
         QList<KDjVu::Annotation*> annots;
-        m_djvu->linksAndAnnotationsForPage( i, 0, &annots );
-        if ( annots.count() > 0 )
+        QList<KDjVu::Link*> links;
+        m_djvu->linksAndAnnotationsForPage( i, &links, &annots );
+        if ( !links.isEmpty() )
+        {
+            QLinkedList<Okular::ObjectRect *> rects;
+            QList<KDjVu::Link*>::ConstIterator it = links.constBegin();
+            QList<KDjVu::Link*>::ConstIterator itEnd = links.constEnd();
+            for ( ; it != itEnd; ++it )
+            {
+                KDjVu::Link *curlink = (*it);
+                Okular::ObjectRect *newrect = convertKDjVuLink( i, curlink );
+                if ( newrect )
+                    rects.append( newrect );
+                // delete the links as soon as we process them
+                delete curlink;
+            }
+            if ( rects.count() > 0 )
+                page->setObjectRects( rects );
+        }
+        if ( !annots.isEmpty() )
         {
             QList<KDjVu::Annotation*>::ConstIterator it = annots.constBegin();
             QList<KDjVu::Annotation*>::ConstIterator itEnd = annots.constEnd();
             for ( ; it != itEnd; ++it )
             {
                 KDjVu::Annotation *ann = (*it);
-                Okular::Annotation *newann = 0;
-                switch ( ann->type() )
-                {
-                    case KDjVu::Annotation::TextAnnotation:
-                    {
-                        KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
-                        Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
-                        // boundary
-                        QRect rect( QPoint( txtann->point().x(), h - txtann->point().y() - txtann->size().height() ), txtann->size() );
-                        newtxtann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
-                        // type
-                        newtxtann->setTextType( txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked );
-                        newtxtann->style().setOpacity( txtann->color().alphaF() );
-                        // FIXME remove once the annotation text handling is fixed
-                        newtxtann->setInplaceText( ann->comment() );
-                        newann = newtxtann;
-                        break;
-                    }
-                    case KDjVu::Annotation::LineAnnotation:
-                    {
-                        KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
-                        Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
-                        // boundary
-                        QPoint a( lineann->point().x(), h - lineann->point().y() );
-                        QPoint b( lineann->point2().x(), h - lineann->point2().y() );
-                        QRect rect = QRect( a, b ).normalized();
-                        newlineann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
-                        // line points
-                        QLinkedList<Okular::NormalizedPoint> points;
-                        points.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
-                        points.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
-                        newlineann->setLinePoints( points );
-                        // arrow?
-                        if ( lineann->isArrow() )
-                            newlineann->setLineEndStyle( Okular::LineAnnotation::OpenArrow );
-                        // width
-                        newlineann->style().setWidth( lineann->width() );
-                        newann = newlineann;
-                        break;
-                    }
-                }
+                Okular::Annotation *newann = convertKDjVuAnnotation( w, h, ann );
                 if ( newann )
-                {
-                    // setting the common parameters
-                    newann->style().setColor( ann->color() );
-                    newann->setContents( ann->comment() );
-                    // creating an id as name for the annotation
-                    QString uid = QUuid::createUuid().toString();
-                    uid.remove( 0, 1 );
-                    uid.chop( 1 );
-                    uid.remove( QLatin1Char( '-' ) );
-                    newann->setUniqueName( uid );
-
-                    // adding the newly converted annotation to the page
                     page->addAnnotation( newann );
-                }
                 // delete the annotations as soon as we process them
                 delete ann;
             }
         }
     }
+}
+
+Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * link ) const
+{
+    int newpage = -1;
+    Okular::Link *newlink = 0;
+    Okular::ObjectRect *newrect = 0;
+    switch ( link->type() )
+    {
+        case KDjVu::Link::PageLink:
+        {
+            KDjVu::PageLink* l = static_cast<KDjVu::PageLink*>( link );
+            bool ok = true;
+            QString target = l->page();
+            if ( ( target.length() > 0 ) && target.at(0) == QLatin1Char( '#' ) )
+                target.remove( 0, 1 );
+            int tmppage = target.toInt( &ok );
+            if ( ok || target.isEmpty() )
+            {
+                Okular::DocumentViewport vp;
+                if ( !target.isEmpty() )
+                {
+                    vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
+                    newpage = vp.pageNumber;
+                }
+                newlink = new Okular::LinkGoto( QString::null, vp );
+            }
+            break;
+        }
+        case KDjVu::Link::UrlLink:
+        {
+            KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( link );
+            QString url = l->url();
+            newlink = new Okular::LinkBrowse( url );
+            break;
+        }
+    }
+    if ( newlink )
+    {
+        const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
+        int width = p->width();
+        int height = p->height();
+        bool scape_orientation = false; // hack by tokoe, should always create default page
+        if ( scape_orientation )
+            qSwap( width, height );
+        switch ( link->areaType() )
+        {
+            case KDjVu::Link::RectArea:
+            case KDjVu::Link::EllipseArea:
+            {
+                QRect r( QPoint( link->point().x(), p->height() - link->point().y() - link->size().height() ), link->size() );
+                bool ellipse = ( link->areaType() == KDjVu::Link::EllipseArea );
+                newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, 0 ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
+                break;
+            }
+            case KDjVu::Link::PolygonArea:
+            {
+                QPolygon poly = link->polygon();
+                QPolygonF newpoly;
+                for ( int i = 0; i < poly.count(); ++i )
+                {
+                    int x = poly.at(i).x();
+                    int y = poly.at(i).y();
+                    if ( scape_orientation )
+                        qSwap( x, y );
+                    else
+                    {
+                        y = height - y;
+                    }
+                    newpoly << QPointF( (double)(x)/width, (double)(y)/height );
+                }
+                if ( !newpoly.isEmpty() )
+                {
+                    newpoly << newpoly.first();
+                    newrect = new Okular::ObjectRect( newpoly, Okular::ObjectRect::Link, newlink );
+                }
+                break;
+            }
+            default: ;
+        }
+        if ( !newrect )
+        {
+            delete newlink;
+        }
+    }
+    return newrect;
+}
+
+Okular::Annotation* DjVuGenerator::convertKDjVuAnnotation( int w, int h, KDjVu::Annotation * ann ) const
+{
+    Okular::Annotation *newann = 0;
+    switch ( ann->type() )
+    {
+        case KDjVu::Annotation::TextAnnotation:
+        {
+            KDjVu::TextAnnotation* txtann = static_cast<KDjVu::TextAnnotation*>( ann );
+            Okular::TextAnnotation * newtxtann = new Okular::TextAnnotation();
+            // boundary
+            QRect rect( QPoint( txtann->point().x(), h - txtann->point().y() - txtann->size().height() ), txtann->size() );
+            newtxtann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
+            // type
+            newtxtann->setTextType( txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked );
+            newtxtann->style().setOpacity( txtann->color().alphaF() );
+            // FIXME remove once the annotation text handling is fixed
+            newtxtann->setInplaceText( ann->comment() );
+            newann = newtxtann;
+            break;
+        }
+        case KDjVu::Annotation::LineAnnotation:
+        {
+            KDjVu::LineAnnotation* lineann = static_cast<KDjVu::LineAnnotation*>( ann );
+            Okular::LineAnnotation * newlineann = new Okular::LineAnnotation();
+            // boundary
+            QPoint a( lineann->point().x(), h - lineann->point().y() );
+            QPoint b( lineann->point2().x(), h - lineann->point2().y() );
+            QRect rect = QRect( a, b ).normalized();
+            newlineann->setBoundingRectangle( Okular::NormalizedRect( Okular::Utils::rotateRect( rect, w, h, 0 ), w, h ) );
+            // line points
+            QLinkedList<Okular::NormalizedPoint> points;
+            points.append( Okular::NormalizedPoint( a.x(), a.y(), w, h ) );
+            points.append( Okular::NormalizedPoint( b.x(), b.y(), w, h ) );
+            newlineann->setLinePoints( points );
+            // arrow?
+            if ( lineann->isArrow() )
+                newlineann->setLineEndStyle( Okular::LineAnnotation::OpenArrow );
+            // width
+            newlineann->style().setWidth( lineann->width() );
+            newann = newlineann;
+            break;
+        }
+    }
+    if ( newann )
+    {
+        // setting the common parameters
+        newann->style().setColor( ann->color() );
+        newann->setContents( ann->comment() );
+        // creating an id as name for the annotation
+        QString uid = QUuid::createUuid().toString();
+        uid.remove( 0, 1 );
+        uid.chop( 1 );
+        uid.remove( QLatin1Char( '-' ) );
+        newann->setUniqueName( uid );
+    }
+    return newann;
 }
 
 

@@ -14,7 +14,12 @@
 
 #include <qvector.h>
 
-class KDjVu;
+#include "kdjvu.h"
+
+namespace Okular {
+class Annotation;
+class ObjectRect;
+};
 
 class DjVuGenerator : public Okular::Generator
 {
@@ -41,6 +46,8 @@ class DjVuGenerator : public Okular::Generator
 
     private:
         void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
+        Okular::ObjectRect* convertKDjVuLink( int page, KDjVu::Link * link ) const;
+        Okular::Annotation* convertKDjVuAnnotation( int w, int h, KDjVu::Annotation * ann ) const;
 
         KDjVu *m_djvu;
 

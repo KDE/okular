@@ -142,7 +142,7 @@ class OKULAR_EXPORT Generator : public QObject
         {
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
             ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
-            PageSizes,         ///< Whether the Generator can change the size of the document pages.
+            PageSizes          ///< Whether the Generator can change the size of the document pages.
         };
 
         /**

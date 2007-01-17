@@ -369,6 +369,17 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     return m_docSynopsis;
 }
 
+bool DviGenerator::hasFeature( GeneratorFeature feature ) const
+{
+    switch ( feature )
+    {
+        case TextExtraction:
+            return true;
+        default: ;
+    }
+    return false;
+}
+
 void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orientation )
 {
     QSize pageRequiredSize;

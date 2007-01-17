@@ -140,6 +140,7 @@ class OKULAR_EXPORT Generator : public QObject
     public:
         enum GeneratorFeature
         {
+            TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
             ReadRawData        ///< Whether the Generator can read a document directly from its raw data.
         };
 
@@ -247,11 +248,6 @@ class OKULAR_EXPORT Generator : public QObject
          * allowed in this document.
          */
         virtual bool isAllowed( Permissions action ) const;
-
-        /**
-         * This method returns whether the generator supports searching. Default is false.
-         */
-        virtual bool supportsSearching() const;
 
         /**
          * This method is called when the orientation has been changed by the user.

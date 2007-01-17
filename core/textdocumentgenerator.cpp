@@ -308,9 +308,15 @@ void TextDocumentGenerator::generateSyncTextPage( Okular::Page * page )
     page->setTextPage( d->createTextPage( page->number() ) );
 }
 
-bool TextDocumentGenerator::supportsSearching() const
+bool TextDocumentGenerator::hasFeature( GeneratorFeature feature ) const
 {
-    return true;
+    switch ( feature )
+    {
+        case TextExtraction:
+            return true;
+        default: ;
+    }
+    return false;
 }
 
 bool TextDocumentGenerator::print( KPrinter& printer )

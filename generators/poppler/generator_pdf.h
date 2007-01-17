@@ -75,8 +75,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         void generatePixmap( Okular::PixmapRequest * request );
         void generateSyncTextPage( Okular::Page * page );
 
-        bool supportsSearching() const { return true; };
-
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 

@@ -43,7 +43,7 @@ class CHMGenerator : public Okular::Generator
 
         void generateSyncTextPage( Okular::Page * page );
 
-        bool supportsSearching() const;
+        bool hasFeature( GeneratorFeature feature ) const;
 
         QVariant metaData( const QString & key, const QVariant & option ) const;
 

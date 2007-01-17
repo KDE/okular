@@ -98,7 +98,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         void generatePixmap( Okular::PixmapRequest * request );
         void generateSyncTextPage( Okular::Page * page );
 
-        bool supportsSearching() const;
+        bool hasFeature( GeneratorFeature feature ) const;
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );

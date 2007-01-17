@@ -1079,7 +1079,7 @@ bool Document::isAllowed( Permissions flags ) const
 
 bool Document::supportsSearching() const
 {
-    return d->m_generator ? d->m_generator->supportsSearching() : false;
+    return d->m_generator ? d->m_generator->hasFeature( Generator::TextExtraction ) : false;
 }
 
 bool Document::supportsPageSizes() const
@@ -1468,7 +1468,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
     // safety checks: don't perform searches on empty or unsearchable docs
-    if ( !d->m_generator || !d->m_generator->supportsSearching() || d->m_pagesVector.isEmpty() )
+    if ( !d->m_generator || !d->m_generator->hasFeature( Generator::TextExtraction ) || d->m_pagesVector.isEmpty() )
         return false;
 
     // if searchID search not recorded, create new descriptor and init params

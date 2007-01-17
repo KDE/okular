@@ -769,11 +769,16 @@ bool PDFGenerator::print( KPrinter& printer )
 
 bool PDFGenerator::hasFeature( GeneratorFeature feature ) const
 {
+    switch ( feature )
+    {
+        case TextExtraction:
 #ifdef HAVE_POPPLER_HEAD
-    return feature == Okular::Generator::ReadRawData;
-#else
-    return false;
+        case ReadRawData:
 #endif
+            return true;
+        default: ;
+    }
+    return false;
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const

@@ -364,9 +364,15 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
     syncLock.unlock();
 }
 
-bool CHMGenerator::supportsSearching() const
+bool CHMGenerator::hasFeature( GeneratorFeature feature ) const
 {
-    return true;
+    switch ( feature )
+    {
+        case TextExtraction:
+            return true;
+        default: ;
+    }
+    return false;
 }
 
 QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) const

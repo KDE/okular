@@ -75,11 +75,6 @@ bool Generator::isAllowed( Permissions ) const
     return true;
 }
 
-bool Generator::supportsSearching() const
-{
-    return false;
-}
-
 void Generator::rotationChanged( Rotation, Rotation )
 {
 }

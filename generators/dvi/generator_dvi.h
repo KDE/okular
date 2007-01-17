@@ -40,8 +40,7 @@ class DviGenerator : public Okular::Generator
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
-        // searching
-        bool supportsSearching() const { return true; };
+        bool hasFeature( GeneratorFeature feature ) const;
 
    private:
         double m_resolution;

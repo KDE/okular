@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=MimeType
+Encoding=UTF-8
+MimeType=application/x-cbz
+Icon=package_toys
+Patterns=*.cbz;*.CBZ;
+Comment=Comic Book
+Comment[x-test]=xxComic Bookxx

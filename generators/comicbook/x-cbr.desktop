@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=MimeType
+Encoding=UTF-8
+MimeType=application/x-cbr
+Icon=package_toys
+Patterns=*.cbr;*.CBR;
+Comment=Comic Book
+Comment[x-test]=xxComic Bookxx

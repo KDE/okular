@@ -238,11 +238,6 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     signalRequestDone( request );
 }
 
-bool DviGenerator::canGenerateTextPage() const
-{
-    return true;
-}
-
 void DviGenerator::generateSyncTextPage( Okular::Page* page )
 {
     kDebug() << "DviGenerator::generateSyncTextPage( Okular::Page * page )" << endl;

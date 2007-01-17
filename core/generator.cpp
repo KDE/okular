@@ -41,11 +41,6 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
     return false;
 }
 
-bool Generator::canGenerateTextPage() const
-{
-    return false;
-}
-
 void Generator::generateSyncTextPage( Page* )
 {
 }

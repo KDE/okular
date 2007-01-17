@@ -73,7 +73,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
-        bool canGenerateTextPage() const;
         void generateSyncTextPage( Okular::Page * page );
 
         bool supportsSearching() const { return true; };

@@ -41,7 +41,6 @@ class CHMGenerator : public Okular::Generator
         bool canGeneratePixmap( bool async ) const;
         void generatePixmap( Okular::PixmapRequest * request );
 
-        bool canGenerateTextPage() const;
         void generateSyncTextPage( Okular::Page * page );
 
         bool supportsSearching() const;

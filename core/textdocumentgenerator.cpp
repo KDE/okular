@@ -303,11 +303,6 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalRequestDone( request );
 }
 
-bool TextDocumentGenerator::canGenerateTextPage() const
-{
-    return true;
-}
-
 void TextDocumentGenerator::generateSyncTextPage( Okular::Page * page )
 {
     page->setTextPage( d->createTextPage( page->number() ) );

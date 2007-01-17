@@ -351,11 +351,6 @@ void CHMGenerator::additionalRequestData()
     }
 }
 
-bool CHMGenerator::canGenerateTextPage() const
-{
-    return true;
-}
-
 void CHMGenerator::generateSyncTextPage( Okular::Page * page )
 {
     syncLock.lock();

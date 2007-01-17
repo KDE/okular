@@ -197,14 +197,6 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void generatePixmap( PixmapRequest * request ) = 0;
 
         /**
-         * This method returns whether the generator can create text pages,
-         * which are used for search and text extraction.
-         *
-         * @returns false as default.
-         */
-        virtual bool canGenerateTextPage() const;
-
-        /**
          * This method is called to create a so called 'text page' for the given @p page.
          *
          * A text page is an abstract description of the readable text of the page.

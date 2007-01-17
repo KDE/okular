@@ -675,11 +675,6 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalRequestDone( request );
 }
 
-bool PDFGenerator::canGenerateTextPage() const
-{
-    return true;
-}
-
 void PDFGenerator::generateSyncTextPage( Okular::Page * page )
 {
     kDebug() << "calling generateSyncTextPage( Okular::Page * page )" << endl;

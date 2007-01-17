@@ -19,7 +19,7 @@
 namespace Okular {
 class Annotation;
 class ObjectRect;
-};
+}
 
 class DjVuGenerator : public Okular::Generator
 {

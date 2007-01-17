@@ -22,7 +22,7 @@
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kurl.h>
-#include <kmimemagic.h>
+#include <kmimetype.h>
 
 #include <qfile.h>
 #include <qbitarray.h>
@@ -112,10 +112,10 @@ void ProtocolMSITS::get( const KUrl& url )
 	}
 
     totalSize( ui.length );
-    KMimeMagicResult * result = KMimeMagic::self()->findBufferFileType( buf, fileName );
-    kDebug() << "Emitting mimetype " << result->mimeType() << endl;
+    KMimeType::Ptr result = KMimeType::findByNameAndContent( fileName, buf );
+    kDebug() << "Emitting mimetype " << result->name() << endl;
 
-	mimeType( result->mimeType() );
+	mimeType( result->name() );
     data( buf );
 	processedSize( ui.length );
 

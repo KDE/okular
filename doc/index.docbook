@@ -87,31 +87,79 @@
 				</guimenuitem></menuchoice>.
 			</para>
 			<para>
-				The navigation panel on the left side of the screen enables two more ways of navigating
-				through a document:
+				The navigation panel on the left side of the screen
+				provides you with four more ways of navigating through a
+				document. To hide or show the panel press
+				<keycombo>
+					<keycap>Ctrl</keycap>
+					<keycap>L</keycap>
+				</keycombo>
+				or goto
+				<menuchoice>
+					<guimenu>Settings</guimenu>
+					<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
+				</menuchoice>
+				. The following are the four extra navigational features
+				provided by the navigation panel:
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						If you click on a page thumbnail the viewing area will be brought to
-						that page.
+						The thumbnails tab shows a preview of each page in
+						the PDF file. As the sidebar`s width increases the
+						size of the thumbnail increases. If you click on
+						a page thumbnail the viewing area will be brought
+						to that page.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						If the document has a table of contents, clicking on a table
-						of contents item will bring the document to to the page linked to that
-						item.
+						The contents tab, within the navigation panel, is
+						similar to the contents of a book. It will display
+						the index of the PDF file only if one is included.
+						This provides you with another form of navigation
+						allowing you to forward to a chapter or page of
+						your choice.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						The search text box can be used to search for text
+						within the PDF file. When you enter the search
+						string and press enter the matching words are
+						highlighted. There are two buttons on either side
+						of the text box, to the leftis the "clear
+						filter" button to clear the text box, and the
+						other one is the "Filter options" button used to	
+						choose search options like <guilabel>Case
+						Sensative</guilabel>, <guilabel>Match
+						Phrase</guilabel>, <guilabel>Match any
+						word</guilabel>, <guilabel>Match all
+						words</guilabel>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						At the foot of the navigation panel is a small
+						panel with a <guibutton>left arrow</guibutton>
+						button, a text box, and a <guibutton>right
+						arrow</guibutton> button. To the immediate right
+						of the text box is the total number of pages in
+						the PDF file. You can enter a page number within
+						the text box and press <keycap>Enter</keycap> to
+						go to that page or use either one of the
+						navigational arrows to go back or forward a page.
+						The <guibutton>left arrow</guibutton>  to will
+						back a page while the <guibutton>right
+						arrow</guibutton> will go forward a page. If the
+						navigation panel is too small the arrows
+						disappear.
+					</para>
+				</listitem>						
 			</itemizedlist>
 			<para>
-				Some documents have links. In this case you can click on them and the view will
-				change to the page it links to. If the link is to a web page the default
-				browser will be invoked.
-			</para>
-			<para>
-				Additionally, you may use the following functionality to quickly move to specific places
+				Additionally, you may use the following functionality to
+quickly move to specific places
 				in the document:
 			</para>
 			<itemizedlist>

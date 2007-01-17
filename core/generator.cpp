@@ -79,11 +79,6 @@ void Generator::rotationChanged( Rotation, Rotation )
 {
 }
 
-bool Generator::supportsPageSizes() const
-{
-    return false;
-}
-
 PageSize::List Generator::pageSizes() const
 {
     return PageSize::List();

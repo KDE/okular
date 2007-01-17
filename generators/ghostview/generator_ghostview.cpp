@@ -262,11 +262,6 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
     docLock.unlock();
 }
 
-bool GSGenerator::supportsPageSizes() const
-{
-    return true;
-}
-
 Okular::PageSize::List GSGenerator::pageSizes() const
 {
     return m_pageSizes;
@@ -480,6 +475,17 @@ bool GSGenerator::canGeneratePixmap( bool async ) const
 const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()
 {
     return internalDoc->generateDocumentInfo();
+}
+
+bool GSGenerator::hasFeature( GeneratorFeature feature ) const
+{
+    switch ( feature )
+    {
+        case PageSizes:
+            return true;
+        default: ;
+    }
+    return false;
 }
 
 #include "generator_ghostview.moc"

@@ -1084,7 +1084,7 @@ bool Document::supportsSearching() const
 
 bool Document::supportsPageSizes() const
 {
-    return d->m_generator ? d->m_generator->supportsPageSizes() : false;
+    return d->m_generator ? d->m_generator->hasFeature( Generator::PageSizes ) : false;
 }
 
 PageSize::List Document::pageSizes() const
@@ -2109,7 +2109,7 @@ void Document::slotRotation( int r )
 
 void Document::slotPageSizes( int newsize )
 {
-    if ( !d->m_generator->supportsPageSizes() || newsize < 0 || newsize >= d->m_pageSizes.count() )
+    if ( !d->m_generator->hasFeature( Generator::PageSizes ) || newsize < 0 || newsize >= d->m_pageSizes.count() )
         return;
 
     const PageSize& ps = d->m_pageSizes.at( newsize );

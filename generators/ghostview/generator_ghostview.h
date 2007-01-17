@@ -43,7 +43,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         void generatePixmap( Okular::PixmapRequest * request ) ;
 
         // page size management
-        bool supportsPageSizes() const;
         Okular::PageSize::List pageSizes() const;
         void pageSizeChanged( const Okular::PageSize &, const Okular::PageSize & );
 
@@ -54,6 +53,8 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         // print document using already configured kprinter
         bool print( KPrinter& /*printer*/ );
         QString fileName() const;
+
+        bool hasFeature( GeneratorFeature feature ) const;
 
         bool reparseConfig();
         void addPages( KConfigDialog* dlg );

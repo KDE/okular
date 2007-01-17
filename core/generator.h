@@ -141,7 +141,8 @@ class OKULAR_EXPORT Generator : public QObject
         enum GeneratorFeature
         {
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
-            ReadRawData        ///< Whether the Generator can read a document directly from its raw data.
+            ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
+            PageSizes,         ///< Whether the Generator can change the size of the document pages.
         };
 
         /**
@@ -253,11 +254,6 @@ class OKULAR_EXPORT Generator : public QObject
          * This method is called when the orientation has been changed by the user.
          */
         virtual void rotationChanged( Rotation orientation, Rotation oldOrientation );
-
-        /**
-         * Returns whether the generator supports page sizes. Default is false.
-         */
-        virtual bool supportsPageSizes() const;
 
         /**
          * Returns the list of supported page sizes.

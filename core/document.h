@@ -528,6 +528,7 @@ class OKULAR_EXPORT Document : public QObject
     private:
         class Private;
         Private* const d;
+        friend class Private;
 
         Q_DISABLE_COPY( Document )
 
@@ -535,6 +536,8 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
         Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page ) )
+
+        void doSwap( PixmapRequest * );
 };
 
 

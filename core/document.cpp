@@ -553,7 +553,7 @@ void Document::Private::sendGeneratorRequest()
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( (int)m_rotation % 2 )
-            m_parent->doSwap( request );
+            request->swap();
 
         m_generator->generatePixmap ( request );
     }
@@ -2135,13 +2135,6 @@ void Document::slotPageSizes( int newsize )
     kDebug() << "PageSize no: " << newsize << endl;
 }
 
-void Document::doSwap( PixmapRequest * pm )
-{
-    if ( !pm )
-        return;
-
-    pm->swap();
-}
 
 /** DocumentViewport **/
 

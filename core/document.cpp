@@ -2090,13 +2090,6 @@ void Document::slotRotation( int r )
     QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->rotateAt( rotation );
-    // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.end();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
-    d->m_allocatedPixmapsTotalMemory = 0;
     // notify the generator that the current rotation has changed
     d->m_generator->rotationChanged( rotation, d->m_rotation );
     // set the new rotation
@@ -2131,7 +2124,7 @@ void Document::slotPageSizes( int newsize )
     d->m_pageSize = ps;
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
-    foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
+    foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
     kDebug() << "PageSize no: " << newsize << endl;
 }
 

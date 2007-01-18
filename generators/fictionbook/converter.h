@@ -64,6 +64,9 @@ class Converter : public Okular::TextDocumentConverter
         DocumentInfo *mDocumentInfo;
 
         int mSectionCounter;
+
+        QMap<QString, QTextBlock> mSectionMap;
+        QMap<QString, QPair<int, int> > mLocalLinks;
 };
 
 }

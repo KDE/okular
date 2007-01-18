@@ -73,6 +73,8 @@ QTextDocument* Converter::convert( const QString &fileName )
     mTextDocument = new QTextDocument;
     mCursor = new QTextCursor( mTextDocument );
     mSectionCounter = 0;
+    mLocalLinks.clear();
+    mSectionMap.clear();
 
     const QDomDocument document = fbDocument.content();
 
@@ -185,6 +187,18 @@ QTextDocument* Converter::convert( const QString &fileName )
             emit addMetaData( "creationDate",
                       KGlobal::locale()->formatDate( mDocumentInfo->mDate, true ),
                       i18n( "Created" ) );
+    }
+
+    QMapIterator<QString, QPair<int, int> > it( mLocalLinks );
+    while ( it.hasNext() ) {
+        it.next();
+
+        const QTextBlock block = mSectionMap[ it.key() ];
+        Okular::DocumentViewport viewport = calculateViewport( mTextDocument, block );
+
+        Okular::LinkGoto *link = new Okular::LinkGoto( QString(), viewport );
+
+        emit addLink( link, it.value().first, it.value().second );
     }
 
     return mTextDocument;
@@ -365,6 +379,9 @@ bool Converter::convertDate( const QDomElement &element, QDate &date )
 
 bool Converter::convertSection( const QDomElement &element )
 {
+    if ( element.hasAttribute( "id" ) )
+        mSectionMap.insert( element.attribute( "id" ), mCursor->block() );
+
     mSectionCounter++;
 
     QDomElement child = element.firstChildElement();
@@ -711,8 +728,13 @@ bool Converter::convertLink( const QDomElement &element )
     if ( type == "note" )
         mCursor->insertText( "]" );
 
-    Okular::LinkBrowse *link = new Okular::LinkBrowse( href );
-    emit addLink( link, startPosition, endPosition );
+    if ( href.startsWith( "#" ) ) { // local link
+        mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );
+    } else {
+        // external link
+        Okular::LinkBrowse *link = new Okular::LinkBrowse( href );
+        emit addLink( link, startPosition, endPosition );
+    }
 
     return true;
 }

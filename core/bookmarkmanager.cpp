@@ -23,6 +23,17 @@
 
 using namespace Okular;
 
+class OkularBookmarkAction : public KBookmarkAction
+{
+    public:
+        OkularBookmarkAction( const Okular::DocumentViewport& vp, const KBookmark& bk, KBookmarkOwner* owner, QObject *parent )
+            : KBookmarkAction( bk, owner, parent )
+        {
+            if ( vp.isValid() )
+                setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
+        }
+};
+
 class BookmarkManager::Private : public KBookmarkOwner
 {
     public:
@@ -237,7 +248,7 @@ QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
             if ( b.isSeparator() || b.isGroup() )
                 continue;
 
-            ret.append( new KBookmarkAction( b, d, 0 ) );
+            ret.append( new OkularBookmarkAction( DocumentViewport( b.url().htmlRef() ), b, d, 0 ) );
         }
         break;
     }

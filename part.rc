@@ -30,8 +30,8 @@
     <Action name="view_render_mode"/>
     <Separator/>
     <Menu name="view_orientation"><text>&amp;Orientation</text>
-      <Action name="view_orientation_rotate_cw"/>
       <Action name="view_orientation_rotate_ccw"/>
+      <Action name="view_orientation_rotate_cw"/>
       <Action name="view_orientation_original"/>
     </Menu>
     <Action name="view_pagesizes"/>

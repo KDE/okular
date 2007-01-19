@@ -275,9 +275,7 @@ void Shell::fileOpen()
         if ( m_openUrl.isLocalFile() )
             startDir = m_openUrl.path();
         KUrl url = KFileDialog::getOpenUrl( startDir, m_fileformats->join("\n") );//getOpenFileName();
-        bool reallyOpen=!url.isEmpty();
-        
-        if (reallyOpen)
+        if (!url.isEmpty())
             openUrl(url);
     }
     else

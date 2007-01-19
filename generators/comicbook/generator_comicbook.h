@@ -14,6 +14,8 @@
 
 #include "document.h"
 
+class GeneratorThread;
+
 class ComicBookGenerator : public Okular::Generator
 {
     Q_OBJECT
@@ -35,8 +37,13 @@ class ComicBookGenerator : public Okular::Generator
 
         bool hasFeature( GeneratorFeature feature ) const;
 
+    private Q_SLOTS:
+        void threadFinished();
+
     private:
       ComicBook::Document mDocument;
+      GeneratorThread *mThread;
+      bool mReady;
 };
 
 #endif

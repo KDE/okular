@@ -69,7 +69,15 @@ bool ComicBookGenerator::print( KPrinter& printer )
     QPainter p( &printer );
 
     for ( int i = 0; i < mDocument.pages(); ++i ) {
-        const QImage image = mDocument.pageImage( i );
+        QImage image = mDocument.pageImage( i );
+        uint left, top, right, bottom;
+        printer.margins( &left, &top, &right, &bottom );
+
+        int pageWidth = printer.width() - right;
+        int pageHeight = printer.height() - bottom;
+
+        if ( (image.width() > pageWidth) || (image.height() > pageHeight) )
+            image = image.scaled( pageWidth, pageHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
         if ( i != 0 )
             printer.newPage();

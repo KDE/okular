@@ -21,6 +21,7 @@ class PageItemDelegate : public QItemDelegate
         virtual ~PageItemDelegate();
 
         static const int PageRole = 0x000f0001;
+        static const int PageLabelRole = 0x000f0002;
 
         virtual void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
 

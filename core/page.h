@@ -245,6 +245,16 @@ class OKULAR_EXPORT Page : public QObject
         double duration() const;
 
         /**
+         * Sets the labels for the page to @p label .
+         */
+        void setLabel( const QString& label );
+
+        /**
+         * Returns the label of the page, or a null string if not set.
+         */
+        QString label() const;
+
+        /**
          * Returns the current text selection.
          */
         const RegularAreaRect * textSelection() const;

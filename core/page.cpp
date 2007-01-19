@@ -84,6 +84,7 @@ class Page::Private
         Link * m_openingAction;
         Link * m_closingAction;
         double m_duration;
+        QString m_label;
 };
 
 void Page::Private::imageRotationDone()
@@ -448,6 +449,16 @@ void Page::setDuration( double seconds )
 double Page::duration() const
 {
     return d->m_duration;
+}
+
+void Page::setLabel( const QString& label )
+{
+    d->m_label = label;
+}
+
+QString Page::label() const
+{
+    return d->m_label;
 }
 
 const RegularAreaRect * Page::textSelection() const

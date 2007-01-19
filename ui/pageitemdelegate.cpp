@@ -48,12 +48,14 @@ void PageItemDelegate::paint( QPainter *painter, const QStyleOptionViewItem & op
 void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const
 {
     QVariant pageVariant = d->index.data( PageRole );
-    if ( !pageVariant.canConvert( QVariant::String ) || !Okular::Settings::tocPageColumn() )
+    QVariant labelVariant = d->index.data( PageLabelRole );
+    if ( ( labelVariant.type() != QVariant::String && !pageVariant.canConvert( QVariant::String ) ) || !Okular::Settings::tocPageColumn() )
     {
         QItemDelegate::drawDisplay( painter, option, rect, text );
         return;
     }
-    QString page = pageVariant.toString();
+    QString label = labelVariant.toString();
+    QString page = label.isEmpty() ? pageVariant.toString() : label;
     QTextDocument document;
     document.setPlainText( page );
     document.setDefaultFont( option.font );

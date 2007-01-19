@@ -57,7 +57,12 @@ class TOCItem : public QTreeWidgetItem
             }
 
             if ( m_viewport.isValid() )
+            {
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
+                QString label = document->page( m_viewport.pageNumber )->label();
+                if ( !label.isEmpty() )
+                    setData( 0, PageItemDelegate::PageLabelRole, label );
+            }
             setText( 0, e.tagName() );
         }
 

@@ -42,6 +42,11 @@ TextDocumentConverter::~TextDocumentConverter()
     delete d;
 }
 
+DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *document, const QTextBlock &block )
+{
+    return Utils::calculateViewport( document, block );
+}
+
 /**
  * Generic Generator Implementation
  */

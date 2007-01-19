@@ -72,7 +72,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
          * Note: This method should be called at the end of the convertion, because it
          *       triggers QTextDocument to do the layout calculation.
          */
-        DocumentViewport calculateViewport( const QTextBlock &block );
+        DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block );
 
     private:
         class Private;

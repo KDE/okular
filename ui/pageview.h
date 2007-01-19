@@ -183,6 +183,9 @@ Q_OBJECT
         void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();
+        void slotRotateClockwise();
+        void slotRotateCounterClockwise();
+        void slotRotateOriginal();
 };
 
 #endif

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="21">
+<kpartgui name="okular_part" version="22">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -29,7 +29,11 @@
     <Action name="view_continuous"/>
     <Action name="view_render_mode"/>
     <Separator/>
-    <Action name="view_orientation"/>
+    <Menu name="view_orientation"><text>&amp;Orientation</text>
+      <Action name="view_orientation_rotate_cw"/>
+      <Action name="view_orientation_rotate_ccw"/>
+      <Action name="view_orientation_original"/>
+    </Menu>
     <Action name="view_pagesizes"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>

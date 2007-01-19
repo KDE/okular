@@ -134,7 +134,9 @@ public:
     QTimer dragScrollTimer;
 
     // actions
-    KSelectAction * aOrientation;
+    KAction * aRotateClockwise;
+    KAction * aRotateCounterClockwise;
+    KAction * aRotateOriginal;
     KSelectAction * aPageSizes;
     QAction * aMouseNormal;
     QAction * aMouseSelect;
@@ -250,7 +252,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // create and initialize private storage structure
     d = new PageViewPrivate();
     d->document = document;
-    d->aOrientation = 0;
+    d->aRotateClockwise = 0;
+    d->aRotateCounterClockwise = 0;
+    d->aRotateOriginal = 0;
     d->aRenderMode = 0;
     d->zoomMode = (PageView::ZoomMode) Okular::Settings::zoomMode();
     d->zoomFactor = Okular::Settings::zoomFactor();
@@ -323,19 +327,20 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aOrientation = new KSelectAction(i18n("&Orientation"), this);
-    ac->addAction("view_orientation", d->aOrientation);
+    // orientation menu actions
+    d->aRotateClockwise = new KAction( KIcon( "rotate_cw" ), i18n( "Rotate Right" ), this );
+    ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
+    connect( d->aRotateClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateClockwise() ) );
+    d->aRotateCounterClockwise = new KAction( KIcon( "rotate_ccw" ), i18n( "Rotate Left" ), this );
+    ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
+    connect( d->aRotateCounterClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateCounterClockwise() ) );
+    d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
+    ac->addAction( "view_orientation_original", d->aRotateOriginal );
+    connect( d->aRotateOriginal, SIGNAL( triggered() ), this, SLOT( slotRotateOriginal() ) );
+
     d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
     ac->addAction("view_pagesizes", d->aPageSizes);
-    QStringList rotations;
-    rotations.append( i18n( "Default" ) );
-    rotations.append( i18n( "Rotated 90 Degrees" ) );
-    rotations.append( i18n( "Rotated 180 Degrees" ) );
-    rotations.append( i18n( "Rotated 270 Degrees" ) );
-    d->aOrientation->setItems( rotations );
 
-    connect( d->aOrientation , SIGNAL( triggered( int ) ),
-         d->document , SLOT( slotRotation( int ) ) );
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          d->document , SLOT( slotPageSizes( int ) ) );
 
@@ -2979,6 +2984,23 @@ void PageView::slotScrollDown()
     d->scrollIncrement++;
     slotAutoScoll();
     setFocus();
+}
+
+void PageView::slotRotateClockwise()
+{
+    int id = ( (int)d->document->rotation() + 1 ) % 4;
+    d->document->slotRotation( id );
+}
+
+void PageView::slotRotateCounterClockwise()
+{
+    int id = ( (int)d->document->rotation() + 3 ) % 4;
+    d->document->slotRotation( id );
+}
+
+void PageView::slotRotateOriginal()
+{
+    d->document->slotRotation( 0 );
 }
 //END private SLOTS
 

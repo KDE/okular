@@ -215,7 +215,7 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Sets the list of object @p rects of the page.
          */
-        void setObjectRects( const QLinkedList< ObjectRect * > rects );
+        void setObjectRects( const QLinkedList< ObjectRect * > & rects );
 
         /**
          * Sets the @p color and @p area of the highlight for the observer with
@@ -231,7 +231,7 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Sets the list of source reference objects @p rects.
          */
-        void setSourceReferences( const QLinkedList< SourceRefObjectRect * > rects );
+        void setSourceReferences( const QLinkedList< SourceRefObjectRect * > & rects );
 
         /**
          * Sets the duration of the page to @p seconds when displayed in presentation mode.

@@ -392,7 +392,7 @@ void Page::setTextPage( TextPage * textPage )
     d->m_text = textPage;
 }
 
-void Page::setObjectRects( const QLinkedList< ObjectRect * > rects )
+void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
 {
     QSet<ObjectRect::ObjectType> which;
     which << ObjectRect::Link << ObjectRect::Image;
@@ -434,7 +434,7 @@ void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
     }
 }
 
-void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > refRects )
+void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > & refRects )
 {
     deleteSourceReferences();
     foreach( SourceRefObjectRect * rect, refRects )

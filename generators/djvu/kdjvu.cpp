@@ -829,8 +829,16 @@ void KDjVu::requestImage( int page, int width, int height, int rotation )
 
 bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const
 {
-    if ( !d->m_djvu_document || pageList.isEmpty() )
+    if ( !d->m_djvu_document || fileName.trimmed().isEmpty() || pageList.isEmpty() )
         return false;
+
+    QByteArray fn = QFile::encodeName( fileName );
+    FILE* f = fopen( fn.constData(), "w+" );
+    if ( !f )
+    {
+        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file" << endl;
+        return false;
+    }
 
     QString pl;
     foreach ( int p, pageList )
@@ -840,14 +848,6 @@ bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& page
         pl += QString::number( p );
     }
     pl.prepend( "-page=" );
-
-    QByteArray fn = QFile::encodeName( fileName );
-    FILE* f = fopen( fn.constData(), "w+" );
-    if ( !f )
-    {
-        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file" << endl;
-        return false;
-    }
 
     // setting the options
     static const int optc = 1;

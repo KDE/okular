@@ -1787,7 +1787,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
                     KMenu menu( this );
-                    QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy" ) );
+                    QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy Text" ) );
                     if ( !d->document->isAllowed( Okular::AllowCopy ) )
                     {
                         textToClipboard->setEnabled( false );

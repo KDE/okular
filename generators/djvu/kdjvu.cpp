@@ -483,7 +483,11 @@ bool KDjVu::openFile( const QString & fileName )
         p->m_width = info.width;
         p->m_height = info.height;
         p->m_dpi = info.dpi;
+#if DDJVUAPI_VERSION >= 18
         p->m_orientation = flipRotation( info.rotation );
+#else
+        p->m_orientation = 0;
+#endif
         d->m_pages[i] = p;
     }
 

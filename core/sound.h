@@ -40,7 +40,7 @@ class OKULAR_EXPORT Sound
         enum SoundEncoding {
             Raw,         ///< Is not encoded
             Signed,      ///< Is encoded with twos-complement values
-            muLaw,       ///< Is µ-law encoded
+            muLaw,       ///< Is Âµ-law encoded
             ALaw         ///< Is A-law encoded
         };
 

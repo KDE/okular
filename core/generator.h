@@ -126,18 +126,28 @@ class OKULAR_EXPORT ExportFormat
 /**
  * @short [Abstract Class] The information generator.
  *
- * Most of class members are pure virtuals and they must be implemented to
- * provide a class that builds contents (graphics and text).
+ * Most of class members are virtuals and some of them pure virtual. The pure
+ * virtuals provide the minimal functionalities for a Generator, that is being
+ * able to generate QPixmap for the Page 's of the Document.
  *
- * Generation/query is requested by the 'Document' class only, and that
- * class stores the resulting data into 'Page's. The data will then be
- * displayed by the GUI components (pageView, thumbnailList, etc..).
+ * Implementing the other functions will make the Generator able to provide
+ * more contents and/or functionalities (like text extraction).
+ *
+ * Generation/query is requested by the Document class only, and that
+ * class stores the resulting data into Page s. The data will then be
+ * displayed by the GUI components (PageView, ThumbnailList, etc..).
+ *
+ * @see PrintInterface, ConfigInterface, GuiInterface
  */
 class OKULAR_EXPORT Generator : public QObject
 {
     Q_OBJECT
 
     public:
+        /**
+         * Describe the possible optional features that a Generator can
+         * provide.
+         */
         enum GeneratorFeature
         {
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's

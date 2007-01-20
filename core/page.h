@@ -49,10 +49,13 @@ class OKULAR_EXPORT Page : public QObject
     Q_OBJECT
 
     public:
+        /**
+         * An action to be executed when particular events happen.
+         */
         enum PageAction
         {
-            Opening,
-            Closing
+            Opening,       ///< An action to be executed when the page is "opened".
+            Closing        ///< An action to be executed when the page is "closed".
         };
 
         /**

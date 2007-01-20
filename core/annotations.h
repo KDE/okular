@@ -183,8 +183,6 @@ class OKULAR_EXPORT Annotation
 
         /**
          * Sets the unique @p name of the annotation.
-         *
-         * The unique name should have the form 'okular-#NUMBER#'
          */
         void setUniqueName( const QString &name );
 

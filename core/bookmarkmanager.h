@@ -22,6 +22,12 @@ namespace Okular {
 class Document;
 class DocumentViewport;
 
+/**
+ * @brief Bookmarks manager utility.
+ *
+ * This class is responsible for loading and saving the bookmarks using the
+ * proper format, and for working with them (eg querying, adding, removing).
+ */
 class OKULAR_EXPORT BookmarkManager : public QObject
 {
     Q_OBJECT

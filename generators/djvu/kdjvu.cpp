@@ -469,23 +469,21 @@ bool KDjVu::openFile( const QString & fileName )
     // read the pages
     for ( int i = 0; i < numofpages; ++i )
     {
-        // wait for the new page to be loaded
-        ddjvu_page_t *newpage = ddjvu_page_create_by_pageno( d->m_djvu_document, i );
         ddjvu_status_t sts;
-        while ( ( sts = ddjvu_page_decoding_status( newpage ) ) < DDJVU_JOB_OK )
+        ddjvu_pageinfo_t info;
+        while ( ( sts = ddjvu_document_get_pageinfo( d->m_djvu_document, i, &info ) ) < DDJVU_JOB_OK )
             handle_ddjvu_messages( d->m_djvu_cxt, true );
         if ( sts >= DDJVU_JOB_FAILED )
         {
             kDebug() << "\t>>> page " << i << " failed: " << sts << endl;
-            break;
+            return false;
         }
-        d->m_pages_cache[i] = newpage;
 
         KDjVu::Page *p = new KDjVu::Page();
-        p->m_width = ddjvu_page_get_width( newpage );
-        p->m_height = ddjvu_page_get_height( newpage );
-        p->m_dpi = ddjvu_page_get_resolution( newpage );
-        p->m_orientation = flipRotation( ddjvu_page_get_initial_rotation( newpage ) );
+        p->m_width = info.width;
+        p->m_height = info.height;
+        p->m_dpi = info.dpi;
+        p->m_orientation = flipRotation( info.rotation );
         d->m_pages[i] = p;
     }
 

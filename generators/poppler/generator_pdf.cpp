@@ -416,6 +416,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             delete tmplink;
         }
         page->setDuration( p->duration() );
+        page->setLabel( p->label() );
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 

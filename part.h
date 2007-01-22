@@ -32,7 +32,6 @@ class QSplitter;
 class QToolBox;
 
 class KUrl;
-class KAction;
 class KConfig;
 class KDirWatch;
 class KToggleAction;
@@ -55,10 +54,8 @@ class MiniBar;
 
 namespace Okular
 {
-    class Document;
-    class ExportFormat;
+class ExportFormat;
 }
-
 
 class BrowserExtension;
 
@@ -73,10 +70,10 @@ class BrowserExtension;
 class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer
 {
     Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
-        Q_INTERFACES(KDocumentViewer)
+    Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
+    Q_INTERFACES(KDocumentViewer)
 
-        public:
+    public:
         // Default constructor
         Part(QWidget* parentWidget, QObject* parent, const QStringList& args);
 
@@ -108,7 +105,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         Q_SCRIPTABLE void slotGotoFirst();
         Q_SCRIPTABLE void slotGotoLast();
 
-        signals:
+    signals:
         void enablePrintAction(bool enable);
 
     protected:
@@ -237,7 +234,7 @@ class BrowserExtension : public KParts::BrowserExtension
 {
     Q_OBJECT
 
-        public:
+    public:
         BrowserExtension(Part*);
 
     public slots:

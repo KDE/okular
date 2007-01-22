@@ -277,6 +277,8 @@ bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Ok
     pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
     return init(pagesVector, QString());
 #else
+    Q_UNUSED(fileData)
+    Q_UNUSED(pagesVector)
     return false;
 #endif
 }

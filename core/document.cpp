@@ -151,7 +151,7 @@ bool KPDFDocument::openDocument( const QString & docFile, const KURL & url, cons
     d->xmlFileName = locateLocal( "data", fn );
 
     // create the generator based on the file's mimetype
-    if ( (*mime).is( "application/pdf" ) )
+    if ( (*mime).is( "application/pdf" ) || (*mime).is( "application/octet-stream" ) )
         generator = new PDFGenerator( this );
 //    else if ( mimeName == "application/postscript" )
 //        kdError() << "PS generator not available" << endl;

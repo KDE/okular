@@ -53,7 +53,8 @@ bool Document::open()
             return false;
 
         const KArchiveFile *entry = static_cast<const KArchiveFile*>( directory->entry( documentFile ) );
-        device = entry->device();
+        // FIXME delete 'deviceì somewhen
+        device = entry->createDevice();
     }
 
     QString errorMsg;

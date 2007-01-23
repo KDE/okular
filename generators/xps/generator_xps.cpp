@@ -283,7 +283,7 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
-    QIODevice* pageDevice = pageFile->device();
+    QIODevice* pageDevice = pageFile->createDevice();
 
     QString errMsg;
     int errLine, errCol;
@@ -367,7 +367,7 @@ XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
 
     const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
-    QIODevice* documentDevice = documentFile->device();
+    QIODevice* documentDevice = documentFile->createDevice();
 
     QDomDocument documentDom;
     QString errMsg;
@@ -441,7 +441,7 @@ bool XpsFile::loadDocument(const QString &filename)
         return false;
     }
 
-    QIODevice* relDevice = relFile->device();
+    QIODevice* relDevice = relFile->createDevice();
     QDomDocument relDom;
     QString errMsg;
     int errLine, errCol;
@@ -481,7 +481,7 @@ bool XpsFile::loadDocument(const QString &filename)
 
     const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry( fixedRepresentationFileName ));
 
-    QIODevice* fixedRepDevice = fixedRepFile->device();
+    QIODevice* fixedRepDevice = fixedRepFile->createDevice();
 
     QDomDocument fixedRepDom;
     if ( fixedRepDom.setContent( fixedRepDevice, true, &errMsg, &errLine, &errCol ) == false ) {
@@ -530,7 +530,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
         QString errMsg;
         int errLine, errCol;
 
-        QIODevice *corepropsDevice = corepropsFile->device();
+        QIODevice *corepropsDevice = corepropsFile->createDevice();
 
         if ( corePropertiesDocumentDom.setContent( corepropsDevice, true, &errMsg, &errLine, &errCol ) == false ) {
             // parse error

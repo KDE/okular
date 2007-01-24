@@ -209,6 +209,12 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void requestPixmap( PixmapRequest * request );
 
         /**
+         * This method returns whether the generator is ready to
+         * handle a new text page request.
+         */
+        virtual bool canRequestTextPage() const;
+
+        /**
          * This method can be called to trigger the generation of
          * a text page for the given @p page.
          * @see TextPage
@@ -344,6 +350,12 @@ class OKULAR_EXPORT Generator : public QObject
          * width and height is encapsulated in the page @p request.
          */
         virtual void generatePixmap( PixmapRequest * request ) = 0;
+
+        /**
+         * This method is called to check whether the generator is ready
+         * to handle a new request for text page generation.
+         */
+        virtual bool canGenerateTextPage() const;
 
         /**
          * This method is called to create a so called 'text page' for the given @p page.

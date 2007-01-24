@@ -52,6 +52,12 @@ class OKULAR_EXPORT ThreadedGenerator : public Generator
         void requestPixmap( PixmapRequest * request );
 
         /**
+         * Returns whether the generator is ready to
+         * handle a new text page generation request.
+         */
+        bool canRequestTextPage() const;
+
+        /**
          * This method can be called to trigger the generation of
          * a text page for the given @p page.
          * @see TextPage
@@ -83,6 +89,11 @@ class OKULAR_EXPORT ThreadedGenerator : public Generator
          * @internal
          */
         void generatePixmap( PixmapRequest* );
+
+        /**
+         * @internal
+         */
+        bool canGenerateTextPage() const;
 
         /**
          * @internal

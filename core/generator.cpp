@@ -51,9 +51,19 @@ void Generator::requestPixmap( PixmapRequest *request )
     generatePixmap( request );
 }
 
+bool Generator::canRequestTextPage() const
+{
+    return canGenerateTextPage();
+}
+
 void Generator::requestTextPage( Page *page )
 {
     generateSyncTextPage( page );
+}
+
+bool Generator::canGenerateTextPage() const
+{
+    return true;
 }
 
 void Generator::generateSyncTextPage( Page* )

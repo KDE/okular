@@ -60,6 +60,51 @@ class PixmapGenerationThread : public QThread
 };
 
 
+class TextPageGenerationThread : public QThread
+{
+    public:
+        TextPageGenerationThread( ThreadedGenerator *generator )
+            : mGenerator( generator ), mPage( 0 )
+        {
+        }
+
+        void startGeneration( Page *page )
+        {
+            mPage = page;
+
+            start( QThread::InheritPriority );
+        }
+
+        void endGeneration()
+        {
+            mPage = 0;
+        }
+
+        Page *page() const
+        {
+            return mPage;
+        }
+
+        TextPage* textPage() const
+        {
+            return mTextPage;
+        }
+
+    protected:
+        virtual void run()
+        {
+            mTextPage = 0;
+
+            if ( mPage )
+                mTextPage = mGenerator->textPage( mPage );
+        }
+
+    private:
+        ThreadedGenerator *mGenerator;
+        Page *mPage;
+        TextPage *mTextPage;
+};
+
 }
 
 #endif

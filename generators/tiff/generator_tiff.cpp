@@ -12,7 +12,6 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <qthread.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kprinter.h>
@@ -34,100 +33,6 @@ class TIFFGenerator::Private
         TIFF* tiff;
 };
 
-
-class TIFFGeneratorThread : public QThread
-{
-    public:
-        TIFFGeneratorThread();
-
-        void startGeneration( Okular::PixmapRequest* request, TIFF* tiff );
-        void endGeneration();
-
-        Okular::PixmapRequest *request() const;
-        QImage takeImage();
-
-    private:
-        void run();
-
-        Okular::PixmapRequest* m_request;
-        QImage m_img;
-        TIFF* m_tiff;
-};
-
-TIFFGeneratorThread::TIFFGeneratorThread()
-  : QThread(), m_request( 0 ), m_tiff( 0 )
-{
-}
-
-void TIFFGeneratorThread::startGeneration( Okular::PixmapRequest* request, TIFF* tiff )
-{
-    m_request = request;
-    m_tiff = tiff;
-    start( QThread::InheritPriority );
-}
-
-void TIFFGeneratorThread::endGeneration()
-{
-    m_request = 0;
-    m_tiff = 0;
-}
-
-Okular::PixmapRequest* TIFFGeneratorThread::request() const
-{
-    return m_request;
-}
-
-QImage TIFFGeneratorThread::takeImage()
-{
-    QImage p = m_img;
-    m_img = QImage();
-    return p;
-}
-
-void TIFFGeneratorThread::run()
-{
-    bool generated = false;
-
-    if ( TIFFSetDirectory( m_tiff, m_request->page()->number() ) )
-    {
-        int rotation = m_request->page()->rotation();
-        uint32 width = (uint32)m_request->page()->width();
-        uint32 height = (uint32)m_request->page()->height();
-        if ( rotation % 2 == 1 )
-            qSwap( width, height );
-
-        QImage image( width, height, QImage::Format_RGB32 );
-        uint32 * data = (uint32 *)image.bits();
-
-        // read data
-        if ( TIFFReadRGBAImageOriented( m_tiff, width, height, data, ORIENTATION_TOPLEFT ) != 0 )
-        {
-            // an image read by ReadRGBAImage is ABGR, we need ARGB, so swap red and blue
-            uint32 size = width * height;
-            for ( uint32 i = 0; i < size; ++i )
-            {
-                uint32 red = ( data[i] & 0x00FF0000 ) >> 16;
-                uint32 blue = ( data[i] & 0x000000FF ) << 16;
-                data[i] = ( data[i] & 0xFF00FF00 ) + red + blue;
-            }
-
-            int reqwidth = m_request->width();
-            int reqheight = m_request->height();
-            if ( rotation % 2 == 1 )
-                qSwap( reqwidth, reqheight );
-            m_img = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-
-            generated = true;
-        }
-    }
-
-    if ( !generated )
-    {
-        m_img = QImage( m_request->width(), m_request->height(), QImage::Format_RGB32 );
-        m_img.fill( qRgb( 255, 255, 255 ) );
-    }
-}
-
 static QDateTime convertTIFFDateTime( const char* tiffdate )
 {
     if ( !tiffdate )
@@ -138,11 +43,10 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
 
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
-TIFFGenerator::TIFFGenerator() : Okular::Generator(),
-  d( new Private ), ready( false ), m_docInfo( 0 )
+TIFFGenerator::TIFFGenerator()
+    : Okular::ThreadedGenerator(),
+      d( new Private ), m_docInfo( 0 )
 {
-    thread = new TIFFGeneratorThread();
-    connect( thread, SIGNAL( finished() ), this, SLOT( slotThreadFinished() ), Qt::QueuedConnection );
 }
 
 TIFFGenerator::~TIFFGenerator()
@@ -152,13 +56,8 @@ TIFFGenerator::~TIFFGenerator()
         TIFFClose( d->tiff );
         d->tiff = 0;
     }
-    if ( thread )
-    {
-        thread->wait();
-    }
-    delete thread;
-    delete m_docInfo;
 
+    delete m_docInfo;
     delete d;
 }
 
@@ -169,8 +68,6 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
         return false;
 
     loadPages( pagesVector );
-
-    ready = true;
 
     return true;
 }
@@ -186,26 +83,11 @@ bool TIFFGenerator::closeDocument()
         m_docInfo = 0;
     }
 
-    ready = false;
-
     return true;
 }
 
-bool TIFFGenerator::canGeneratePixmap( bool /*async*/ ) const
+QImage TIFFGenerator::image( Okular::PixmapRequest * request )
 {
-    return ready;
-}
-
-void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
-{
-    ready = false;
-
-    if ( request->asynchronous() )
-    {
-        thread->startGeneration( request, d->tiff );
-        return;
-    }
-
     bool generated = false;
     QImage img;
 
@@ -248,12 +130,7 @@ void TIFFGenerator::generatePixmap( Okular::PixmapRequest * request )
         img.fill( qRgb( 255, 255, 255 ) );
     }
 
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
-
-    ready = true;
-
-    // signal that the request has been accomplished
-    signalRequestDone( request );
+    return img;
 }
 
 const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
@@ -290,18 +167,6 @@ const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
     m_docInfo->set( "dateTime", date.isValid() ? KGlobal::locale()->formatDateTime( date, false, true  ) : i18n( "Unknown" ), i18n( "Creation date" ) );
 
     return m_docInfo;
-}
-
-void TIFFGenerator::slotThreadFinished()
-{
-    Okular::PixmapRequest * request = thread->request();
-    thread->endGeneration();
-
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( thread->takeImage() ) ) );
-
-    ready = true;
-
-    signalRequestDone( request );
 }
 
 void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )

@@ -16,7 +16,8 @@
 
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 
-KIMGIOGenerator::KIMGIOGenerator() : Generator()
+KIMGIOGenerator::KIMGIOGenerator()
+    : ThreadedGenerator()
 {
 }
 
@@ -57,23 +58,15 @@ bool KIMGIOGenerator::closeDocument()
     return true;
 }
 
-bool KIMGIOGenerator::canGeneratePixmap( bool /* async */ ) const
-{
-    return true;
-}
-
-void KIMGIOGenerator::generatePixmap( Okular::PixmapRequest * request )
+QImage KIMGIOGenerator::image( Okular::PixmapRequest * request )
 {
     // perform a smooth scaled generation
     int width = request->width();
     int height = request->height();
     if ( request->page()->rotation() % 2 == 1 )
         qSwap( width, height );
-    QImage image = m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
 
-    // signal that the request has been accomplished
-    signalRequestDone(request);
+    return m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 }
 
 bool KIMGIOGenerator::print( KPrinter& printer )

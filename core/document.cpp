@@ -547,7 +547,7 @@ void Document::Private::sendGeneratorRequest()
         cleanupPixmapMemory( pixmapBytes );
 
     // submit the request to the generator
-    if ( m_generator->canGeneratePixmap( request->asynchronous() ) )
+    if ( m_generator->canRequestPixmap() )
     {
         kWarning() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
         m_pixmapRequestsStack.removeAll ( request );
@@ -555,7 +555,7 @@ void Document::Private::sendGeneratorRequest()
         if ( (int)m_rotation % 2 )
             request->swap();
 
-        m_generator->generatePixmap ( request );
+        m_generator->requestPixmap( request );
     }
     else
         // pino (7/4/2006): set the polling interval from 10 to 30
@@ -1255,7 +1255,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
     // or else (if gen is running) it will be started when the new contents will
     //come from generator (in requestDone())</NO>
     // all handling of requests put into sendGeneratorRequest
-    //    if ( generator->canGeneratePixmap() )
+    //    if ( generator->canRequestPixmap() )
         d->sendGeneratorRequest();
 }
 
@@ -1267,7 +1267,7 @@ void Document::requestTextPage( uint page )
 
     // Memory management for TextPages
 
-    d->m_generator->generateSyncTextPage( kp );
+    d->m_generator->requestTextPage( kp );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -2047,7 +2047,7 @@ KPrintDialogPage* Document::printConfigurationWidget() const
 void Document::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
-    if ( !d->m_generator->canGeneratePixmap( req->asynchronous() ) )
+    if ( !d->m_generator->canRequestPixmap() )
         kDebug() << "requestDone with generator not in READY state." << endl;
 #endif
 

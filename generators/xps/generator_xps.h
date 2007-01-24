@@ -210,12 +210,11 @@ class XpsGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
         const Okular::DocumentInfo * generateDocumentInfo();
 
-    private slots:
+    protected:
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
 
     private:
         XpsFile *m_xpsFile;

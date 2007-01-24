@@ -70,11 +70,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         // [INHERITED] document information
         bool isAllowed( Okular::Permissions permissions ) const;
 
-        // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-        void generateSyncTextPage( Okular::Page * page );
-
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
@@ -94,6 +89,11 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
     private slots:
         // (async related) receive data from the generator thread
         void threadFinished();
+
+    protected:
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+        void generateSyncTextPage( Okular::Page * page );
 
     private:
         bool init(QVector<Okular::Page*> & pagesVector, const QString &walletKey);

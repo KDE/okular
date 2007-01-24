@@ -651,7 +651,7 @@ bool XpsGenerator::closeDocument()
     return true;
 }
 
-bool XpsGenerator::canGeneratePixmap( bool /*async*/ ) const
+bool XpsGenerator::canGeneratePixmap() const
 {
     return true;
 }

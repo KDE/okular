@@ -451,9 +451,11 @@ kWarning() << "generator running : " << pixGenerator->running() << endl;
 }
 
 
-bool GSGenerator::canGeneratePixmap( bool async ) const
+bool GSGenerator::canGeneratePixmap() const
 {
 //     kWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
+    bool async = true;
+
     bool isLocked = true;
     if (async)
     {

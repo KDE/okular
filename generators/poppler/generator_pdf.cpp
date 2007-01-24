@@ -593,7 +593,7 @@ bool PDFGenerator::isAllowed( Okular::Permissions permissions ) const
     return b;
 }
 
-bool PDFGenerator::canGeneratePixmap( bool /* async */) const
+bool PDFGenerator::canGeneratePixmap() const
 {
     return ready;
 }

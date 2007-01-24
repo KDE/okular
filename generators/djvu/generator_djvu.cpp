@@ -93,7 +93,7 @@ bool DjVuGenerator::closeDocument()
     return true;
 }
 
-bool DjVuGenerator::canGeneratePixmap( bool /*async*/ ) const
+bool DjVuGenerator::canGeneratePixmap() const
 {
     return ready;
 }

@@ -197,24 +197,23 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool closeDocument() = 0;
 
         /**
-         * This method returns whether the generator can create pixmaps for
-         * each page in a synchronous or asynchronous way, depending on @p async.
+         * This method returns whether the generator is ready to
+         * handle a new pixmap request.
          */
-        virtual bool canGeneratePixmap( bool async ) const = 0;
+        virtual bool canRequestPixmap() const;
 
         /**
-         * This method is called to create a pixmap for a page. The page number,
-         * width and height is encapsulated in the page @p request.
+         * This method can be called to trigger the generation of
+         * a new pixmap as described by @p request.
          */
-        virtual void generatePixmap( PixmapRequest * request ) = 0;
+        virtual void requestPixmap( PixmapRequest * request );
 
         /**
-         * This method is called to create a so called 'text page' for the given @p page.
-         *
-         * A text page is an abstract description of the readable text of the page.
-         * It's used for search and text extraction.
+         * This method can be called to trigger the generation of
+         * a text page for the given @p page.
+         * @see TextPage
          */
-        virtual void generateSyncTextPage( Page *page );
+        virtual void requestTextPage( Page * page );
 
         /**
          * Returns the general information object of the document or 0 if
@@ -333,6 +332,26 @@ class OKULAR_EXPORT Generator : public QObject
          * has been finished.
          */
         void signalRequestDone( PixmapRequest * request );
+
+        /**
+         * This method is called to check whether the generator is ready
+         * to handle a new request for pixmap generation.
+         */
+        virtual bool canGeneratePixmap() const = 0;
+
+        /**
+         * This method is called to create a pixmap for a page. The page number,
+         * width and height is encapsulated in the page @p request.
+         */
+        virtual void generatePixmap( PixmapRequest * request ) = 0;
+
+        /**
+         * This method is called to create a so called 'text page' for the given @p page.
+         *
+         * A text page is an abstract description of the readable text of the page.
+         * It's used for search and text extraction.
+         */
+        virtual void generateSyncTextPage( Page *page );
 
         /**
          * Returns a pointer to the document.

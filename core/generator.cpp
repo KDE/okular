@@ -41,6 +41,21 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
     return false;
 }
 
+bool Generator::canRequestPixmap() const
+{
+    return canGeneratePixmap();
+}
+
+void Generator::requestPixmap( PixmapRequest *request )
+{
+    generatePixmap( request );
+}
+
+void Generator::requestTextPage( Page *page )
+{
+    generateSyncTextPage( page );
+}
+
 void Generator::generateSyncTextPage( Page* )
 {
 }

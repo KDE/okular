@@ -7,7 +7,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QThread>
 #include <QtGui/QPainter>
 
 #include <kprinter.h>
@@ -18,78 +17,13 @@
 
 OKULAR_EXPORT_PLUGIN(ComicBookGenerator)
 
-class GeneratorThread : public QThread
-{
-    public:
-        GeneratorThread();
-
-        void startGeneration( Okular::PixmapRequest* request, ComicBook::Document *document );
-        void endGeneration();
-
-        Okular::PixmapRequest *request() const;
-        QImage image();
-
-    private:
-        void run();
-
-        Okular::PixmapRequest* mRequest;
-        QImage mImage;
-        ComicBook::Document* mDocument;
-};
-
-GeneratorThread::GeneratorThread()
-  : QThread(), mRequest( 0 ), mDocument( 0 )
-{
-}
-
-void GeneratorThread::startGeneration( Okular::PixmapRequest* request, ComicBook::Document *document )
-{
-    mRequest = request;
-    mDocument = document;
-    start( QThread::InheritPriority );
-}
-
-void GeneratorThread::endGeneration()
-{
-    mRequest = 0;
-    mDocument = 0;
-}
-
-Okular::PixmapRequest* GeneratorThread::request() const
-{
-    return mRequest;
-}
-
-QImage GeneratorThread::image()
-{
-    const QImage image = mImage;
-    mImage = QImage();
-
-    return image;
-}
-
-void GeneratorThread::run()
-{
-    int width = mRequest->width();
-    int height = mRequest->height();
-
-    mImage = mDocument->pageImage( mRequest->pageNumber() );
-    mImage = mImage.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-}
-
 ComicBookGenerator::ComicBookGenerator()
-    : Generator(), mReady( false )
+    : ThreadedGenerator()
 {
-    mThread = new GeneratorThread();
-    connect( mThread, SIGNAL( finished() ), this, SLOT( threadFinished() ), Qt::QueuedConnection );
 }
 
 ComicBookGenerator::~ComicBookGenerator()
 {
-    if ( mThread )
-        mThread->wait();
-
-    delete mThread;
 }
 
 bool ComicBookGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
@@ -105,55 +39,22 @@ bool ComicBookGenerator::loadDocument( const QString & fileName, QVector<Okular:
         pagesVector[i] = page;
     }
 
-    mReady = true;
-
     return true;
 }
 
 bool ComicBookGenerator::closeDocument()
 {
-    mReady = false;
-
     return true;
 }
 
-bool ComicBookGenerator::canGeneratePixmap( bool ) const
+QImage ComicBookGenerator::image( Okular::PixmapRequest * request )
 {
-    return mReady;
-}
-
-void ComicBookGenerator::generatePixmap( Okular::PixmapRequest * request )
-{
-    mReady = false;
-
-    if ( request->asynchronous() ) {
-        mThread->startGeneration( request, &mDocument );
-        return;
-    }
-
     int width = request->width();
     int height = request->height();
 
     QImage image = mDocument.pageImage( request->pageNumber() );
-    image = image.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
 
-    mReady = true;
-
-    // signal that the request has been accomplished
-    signalRequestDone( request );
-}
-
-void ComicBookGenerator::threadFinished()
-{
-    Okular::PixmapRequest *request = mThread->request();
-    mThread->endGeneration();
-
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( mThread->image() ) ) );
-
-    mReady = true;
-
-    signalRequestDone( request );
+    return image.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 }
 
 bool ComicBookGenerator::print( KPrinter& printer )

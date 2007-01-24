@@ -10,13 +10,11 @@
 #ifndef GENERATOR_COMICBOOK_H
 #define GENERATOR_COMICBOOK_H
 
-#include <okular/core/generator.h>
+#include <okular/core/threadedgenerator.h>
 
 #include "document.h"
 
-class GeneratorThread;
-
-class ComicBookGenerator : public Okular::Generator
+class ComicBookGenerator : public Okular::ThreadedGenerator
 {
     Q_OBJECT
 
@@ -28,22 +26,16 @@ class ComicBookGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
         bool hasFeature( GeneratorFeature feature ) const;
 
-    private Q_SLOTS:
-        void threadFinished();
+    protected:
+        QImage image( Okular::PixmapRequest * request );
 
     private:
       ComicBook::Document mDocument;
-      GeneratorThread *mThread;
-      bool mReady;
 };
 
 #endif

@@ -69,7 +69,7 @@ bool DviGenerator::closeDocument()
     return true;
 }
 
-bool DviGenerator::canGeneratePixmap ( bool /*async*/ ) const
+bool DviGenerator::canGeneratePixmap () const
 {
     return ready;
 }

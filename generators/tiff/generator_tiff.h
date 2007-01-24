@@ -10,11 +10,9 @@
 #ifndef _OKULAR_GENERATOR_TIFF_H_
 #define _OKULAR_GENERATOR_TIFF_H_
 
-#include <okular/core/generator.h>
+#include <okular/core/threadedgenerator.h>
 
-class TIFFGeneratorThread;
-
-class TIFFGenerator : public Okular::Generator
+class TIFFGenerator : public Okular::ThreadedGenerator
 {
     Q_OBJECT
     public:
@@ -24,25 +22,19 @@ class TIFFGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
         const Okular::DocumentInfo * generateDocumentInfo();
 
         bool print( KPrinter& printer );
 
-    private slots:
-        void slotThreadFinished();
+    protected:
+        QImage image( Okular::PixmapRequest * request );
 
     private:
         class Private;
         Private * const d;
 
-        TIFFGeneratorThread* thread;
-
         void loadPages( QVector<Okular::Page*> & pagesVector );
 
-        bool ready;
         Okular::DocumentInfo * m_docInfo;
 };
 

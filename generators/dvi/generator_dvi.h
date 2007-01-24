@@ -29,11 +29,6 @@ class DviGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
-        void generateSyncTextPage( Okular::Page * page );
-
         // document information
         const Okular::DocumentInfo *generateDocumentInfo();
 
@@ -41,6 +36,12 @@ class DviGenerator : public Okular::Generator
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
         bool hasFeature( GeneratorFeature feature ) const;
+
+   protected:
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
+        void generateSyncTextPage( Okular::Page * page );
 
    private:
         double m_resolution;

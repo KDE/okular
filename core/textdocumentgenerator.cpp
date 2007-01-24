@@ -238,7 +238,7 @@ bool TextDocumentGenerator::closeDocument()
     return true;
 }
 
-bool TextDocumentGenerator::canGeneratePixmap( bool ) const
+bool TextDocumentGenerator::canGeneratePixmap() const
 {
     return true;
 }

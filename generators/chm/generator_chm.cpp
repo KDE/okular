@@ -148,7 +148,7 @@ const Okular::DocumentFonts * CHMGenerator::generateDocumentFonts()
     return 0L;
 }
 
-bool CHMGenerator::canGeneratePixmap ( bool /*async*/ ) const
+bool CHMGenerator::canGeneratePixmap () const
 {
     bool isLocked = true;
     if ( syncLock.tryLock() ) {

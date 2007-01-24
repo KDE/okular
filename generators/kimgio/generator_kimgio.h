@@ -10,11 +10,11 @@
 #ifndef _OKULAR_GENERATOR_KIMGIO_H_
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
-#include <okular/core/generator.h>
+#include <okular/core/threadedgenerator.h>
 
-#include <qimage.h>
+#include <QtGui/QImage>
 
-class KIMGIOGenerator : public Okular::Generator
+class KIMGIOGenerator : public Okular::ThreadedGenerator
 {
     Q_OBJECT
     public:
@@ -26,14 +26,13 @@ class KIMGIOGenerator : public Okular::Generator
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap( bool async ) const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
         bool hasFeature( GeneratorFeature feature ) const;
+
+    protected:
+        QImage image( Okular::PixmapRequest * request );
 
     private:
         QImage m_img;

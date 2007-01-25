@@ -28,13 +28,13 @@ class TOCItem : public QTreeWidgetItem
 {
     public:
         TOCItem( QTreeWidget *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
-            : QTreeWidgetItem( parent, after ), m_element( e )
+            : QTreeWidgetItem( parent, after )
         {
             init( document, e );
         }
 
         TOCItem( QTreeWidgetItem *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
-            : QTreeWidgetItem( parent, after ), m_element( e )
+            : QTreeWidgetItem( parent, after )
         {
             init( document, e );
         }
@@ -63,12 +63,13 @@ class TOCItem : public QTreeWidgetItem
                 if ( !label.isEmpty() )
                     setData( 0, PageItemDelegate::PageLabelRole, label );
             }
+            m_extFileName = e.attribute( "ExternalFileName" );
             setText( 0, e.tagName() );
         }
 
-        const QDomElement & element() const
+        QString externalFileName() const
         {
-            return m_element;
+            return m_extFileName;
         }
 
         const Okular::DocumentViewport& viewport() const
@@ -82,8 +83,8 @@ class TOCItem : public QTreeWidgetItem
         }
 
     private:
-        QDomElement m_element;
         Okular::DocumentViewport m_viewport;
+        QString m_extFileName;
 };
 
 TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
@@ -216,9 +217,8 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*
     if (tocItem == NULL)
         return;
-    const QDomElement & e = tocItem->element();
 
-    QString externalFileName = e.attribute( "ExternalFileName" );
+    QString externalFileName = tocItem->externalFileName();
     if ( !externalFileName.isEmpty() )
     {
         Okular::LinkGoto link( externalFileName, tocItem->viewport() );

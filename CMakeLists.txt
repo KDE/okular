@@ -16,8 +16,6 @@ configure_file(
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular.h
 )
 
-add_subdirectory( conf )
-add_subdirectory( core )
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
@@ -94,6 +92,9 @@ ENDIF(APPLE)
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
+
+install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # okularpart
 

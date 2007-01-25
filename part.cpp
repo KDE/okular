@@ -356,7 +356,18 @@ bool Part::openFile()
     KMimeType::Ptr mime;
     if ( m_bExtension->urlArgs().serviceType.isEmpty() )
     {
-        mime = KMimeType::findByPath( m_file );
+        if (!m_jobMime.isEmpty())
+        {
+            mime = KMimeType::mimeType(m_jobMime);
+            if ( mime->is( "application/octet-stream" ) )
+            {
+                mime = KMimeType::findByPath( m_file );
+            }
+        }
+        else
+        {
+            mime = KMimeType::findByPath( m_file );
+        }
     }
     else
     {
@@ -444,6 +455,8 @@ bool Part::openURL(const KURL &url)
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
+    m_jobMime = QString::null;
+
     // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
     if ( !b )
@@ -459,7 +472,13 @@ void Part::setMimeTypes(KIO::Job *job)
     if (job)
     {
         job->addMetaData("accept", "application/pdf, */*;q=0.5");
+        connect(job, SIGNAL(mimetype(KIO::Job*,const QString&)), this, SLOT(readMimeType(KIO::Job*,const QString&)));
     }
+}
+
+void Part::readMimeType(KIO::Job *, const QString &mime)
+{
+	m_jobMime = mime;
 }
 
 bool Part::closeURL()

@@ -118,8 +118,9 @@ protected slots:
 	void enableTOC(bool enable);
 	void psTransformEnded();
 	void cannotQuit();
-  void saveSplitterSize();
+	void saveSplitterSize();
 	void setMimeTypes(KIO::Job *job);
+	void readMimeType(KIO::Job *job, const QString &mime);
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one
@@ -162,6 +163,9 @@ private:
 	
 	// Remember the search history
 	QStringList m_searchHistory;
+	
+	// mimetype got from the job
+	QString m_jobMime;
 
 	// actions
 	KAction *m_gotoPage;

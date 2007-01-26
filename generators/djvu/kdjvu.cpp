@@ -897,9 +897,7 @@ bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& page
 
     free( optv );
 
-    // no need to close 'f' with fclose(), as it's already done by djvulibre
-
-    return true;
+    return fclose( f ) == 0;
 }
 
 

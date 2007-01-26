@@ -128,6 +128,18 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
     if ( m_djvu )
     {
         // compile internal structure reading properties from KDjVu
+        QString title = m_djvu->metaData( "title" ).toString();
+        m_docInfo->set( "title", title.isEmpty() ? i18n( "Unknown" ) : title, i18n( "Title" ) );
+        QString author = m_djvu->metaData( "author" ).toString();
+        m_docInfo->set( "author", author.isEmpty() ? i18n( "Unknown" ) : author, i18n( "Author" ) );
+        QString editor = m_djvu->metaData( "editor" ).toString();
+        m_docInfo->set( "editor", editor.isEmpty() ? i18n( "Unknown" ) : editor, i18n( "Editor" ) );
+        QString publisher = m_djvu->metaData( "publisher" ).toString();
+        m_docInfo->set( "publisher", publisher.isEmpty() ? i18n( "Unknown" ) : publisher, i18n( "Publisher" ) );
+        QString year = m_djvu->metaData( "year" ).toString();
+        m_docInfo->set( "year", year.isEmpty() ? i18n( "Unknown" ) : year, i18n( "Year" ) );
+        QString volume = m_djvu->metaData( "volume" ).toString();
+        m_docInfo->set( "volume", volume.isEmpty() ? i18n( "Unknown" ) : volume, i18n( "Volume" ) );
         QString doctype = m_djvu->metaData( "documentType" ).toString();
         m_docInfo->set( "documentType", doctype.isEmpty() ? i18n( "Unknown" ) : doctype, i18n( "Type of document" ) );
         QVariant numcomponents = m_djvu->metaData( "componentFile" );
@@ -135,6 +147,12 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
     }
     else
     {
+        m_docInfo->set( "title", i18n( "Unknown" ), i18n( "Title" ) );
+        m_docInfo->set( "author", i18n( "Unknown" ), i18n( "Author" ) );
+        m_docInfo->set( "editor", i18n( "Unknown" ), i18n( "Editor" ) );
+        m_docInfo->set( "publisher", i18n( "Unknown" ), i18n( "Publisher" ) );
+        m_docInfo->set( "year", i18n( "Unknown" ), i18n( "Year" ) );
+        m_docInfo->set( "volume", i18n( "Unknown" ), i18n( "Volume" ) );
         m_docInfo->set( "documentType", i18n( "Unknown" ), i18n( "Type of document" ) );
         m_docInfo->set( "componentFile", i18n( "Unknown" ), i18n( "Component Files" ) );
     }

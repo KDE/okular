@@ -287,6 +287,8 @@ class KDjVu::Private
         void fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curnode,
             miniexp_t exp, int offset = -1 );
 
+        void readMetaData( int page );
+
         ddjvu_context_t *m_djvu_cxt;
         ddjvu_document_t *m_djvu_document;
         ddjvu_format_t *m_format;
@@ -392,6 +394,36 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
     }
 }
 
+void KDjVu::Private::readMetaData( int page )
+{
+    if ( !m_djvu_document )
+        return;
+
+    miniexp_t annots;
+    while ( ( annots = ddjvu_document_get_pageanno( m_djvu_document, page ) ) == miniexp_dummy )
+        handle_ddjvu_messages( m_djvu_cxt, true );
+
+    if ( !miniexp_listp( annots ) || miniexp_length( annots ) == 0 )
+        return;
+
+    miniexp_t exp = miniexp_nth( 0, annots );
+    int size = miniexp_length( exp );
+    if ( size <= 1 ||
+         qstrncmp( miniexp_to_name( miniexp_nth( 0, exp ) ), "metadata", 8 ) )
+        return;
+
+    for ( int i = 1; i < size; ++i )
+    {
+        miniexp_t cur = miniexp_nth( i, exp );
+        if ( miniexp_length( cur ) != 2 )
+            continue;
+
+        QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, cur ) ) );
+        QString value = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
+        m_metaData[ id.toLower() ] = value;
+    }
+}
+
 
 KDjVu::KDjVu() : QObject(), d( new Private )
 {
@@ -490,6 +522,10 @@ bool KDjVu::openFile( const QString & fileName )
 #endif
         d->m_pages[i] = p;
     }
+
+    // reading the metadata from the first page only should be enough
+    if ( numofpages > 0 )
+        d->readMetaData( 0 );
 
     return true;
 }

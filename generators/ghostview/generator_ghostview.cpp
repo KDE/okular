@@ -47,6 +47,7 @@ GSGenerator::GSGenerator() :
     Okular::Generator(),
     m_converted(false)
 {
+    setFeature( PageSizes );
     pixGenerator = 0;
     asyncGenerator = 0;
     internalDoc = 0;
@@ -477,17 +478,6 @@ bool GSGenerator::canGeneratePixmap() const
 const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()
 {
     return internalDoc->generateDocumentInfo();
-}
-
-bool GSGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    switch ( feature )
-    {
-        case PageSizes:
-            return true;
-        default: ;
-    }
-    return false;
 }
 
 #include "generator_ghostview.moc"

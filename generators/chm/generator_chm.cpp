@@ -32,6 +32,8 @@ OKULAR_EXPORT_PLUGIN(CHMGenerator)
 CHMGenerator::CHMGenerator()
     : Okular::Generator()
 {
+    setFeature( TextExtraction );
+
     m_syncGen=0;
     m_file=0;
     m_state=-1;
@@ -362,17 +364,6 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
     page->setTextPage(tp);
     syncLock.unlock();
-}
-
-bool CHMGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    switch ( feature )
-    {
-        case TextExtraction:
-            return true;
-        default: ;
-    }
-    return false;
 }
 
 QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) const

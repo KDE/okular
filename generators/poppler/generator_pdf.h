@@ -73,8 +73,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         // [INHERITED] print page using an already configured kprinter
         bool print( KPrinter& printer );
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
         // [INHERITED] reply to some metadata requests
         QVariant metaData( const QString & key, const QVariant & option ) const;
 

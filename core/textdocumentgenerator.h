@@ -93,8 +93,6 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 

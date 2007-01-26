@@ -35,8 +35,6 @@ class DviGenerator : public Okular::Generator
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
    protected:
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest * request );

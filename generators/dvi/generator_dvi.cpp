@@ -35,6 +35,7 @@ OKULAR_EXPORT_PLUGIN(DviGenerator)
 DviGenerator::DviGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
+    setFeature( TextExtraction );
 }
 
 bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
@@ -367,17 +368,6 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     }
 
     return m_docSynopsis;
-}
-
-bool DviGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    switch ( feature )
-    {
-        case TextExtraction:
-            return true;
-        default: ;
-    }
-    return false;
 }
 
 void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector, int orientation )

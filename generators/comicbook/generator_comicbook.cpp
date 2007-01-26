@@ -81,10 +81,5 @@ bool ComicBookGenerator::print( KPrinter& printer )
     return true;
 }
 
-bool ComicBookGenerator::hasFeature( GeneratorFeature ) const
-{
-    return false;
-}
-
 #include "generator_comicbook.moc"
 

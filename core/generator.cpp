@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <qset.h>
+
 #include <kdebug.h>
 #include <kicon.h>
 
@@ -24,6 +26,7 @@ class Generator::Private
         }
 
         Document * m_document;
+        QSet< GeneratorFeature > m_features;
 };
 
 Generator::Generator()
@@ -138,9 +141,9 @@ void Generator::setDocument( Document *document )
     d->m_document = document;
 }
 
-bool Generator::hasFeature( GeneratorFeature ) const
+bool Generator::hasFeature( GeneratorFeature feature ) const
 {
-    return false;
+    return d->m_features.contains( feature );
 }
 
 
@@ -156,6 +159,15 @@ Document * Generator::document() const
 {
     return d->m_document;
 }
+
+void Generator::setFeature( GeneratorFeature feature, bool on )
+{
+    if ( on )
+        d->m_features.insert( feature );
+    else
+        d->m_features.remove( feature );
+}
+
 
 class PixmapRequest::Private
 {

@@ -38,8 +38,6 @@ class CHMGenerator : public Okular::Generator
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         const Okular::DocumentFonts * generateDocumentFonts();
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
         QVariant metaData( const QString & key, const QVariant & option ) const;
 
     public slots:

@@ -50,8 +50,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool print( KPrinter& /*printer*/ );
         QString fileName() const;
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
         bool reparseConfig();
         void addPages( KConfigDialog* dlg );
 

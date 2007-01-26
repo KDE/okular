@@ -19,6 +19,7 @@ OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 KIMGIOGenerator::KIMGIOGenerator()
     : ThreadedGenerator()
 {
+    setFeature( ReadRawData );
 }
 
 KIMGIOGenerator::~KIMGIOGenerator()
@@ -74,11 +75,6 @@ bool KIMGIOGenerator::print( KPrinter& printer )
     QPainter p( &printer );
     p.drawImage( 0, 0, m_img );
     return true;
-}
-
-bool KIMGIOGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    return feature == Okular::Generator::ReadRawData;
 }
 
 #include "generator_kimgio.moc"

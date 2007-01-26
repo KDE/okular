@@ -226,6 +226,10 @@ PDFGenerator::PDFGenerator()
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docFontsDirty( true ), docEmbeddedFilesDirty( true )
 {
+    setFeature( TextExtraction );
+#ifdef HAVE_POPPLER_HEAD
+    setFeature( ReadRawData );
+#endif
     // update the configuration
     reparseConfig();
     // generate the pixmapGeneratorThread
@@ -768,20 +772,6 @@ bool PDFGenerator::print( KPrinter& printer )
         return false;
     }
 	return false;
-}
-
-bool PDFGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    switch ( feature )
-    {
-        case TextExtraction:
-#ifdef HAVE_POPPLER_HEAD
-        case ReadRawData:
-#endif
-            return true;
-        default: ;
-    }
-    return false;
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const

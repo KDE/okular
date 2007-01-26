@@ -29,8 +29,6 @@ class ComicBookGenerator : public Okular::ThreadedGenerator
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
-        bool hasFeature( GeneratorFeature feature ) const;
-
     protected:
         QImage image( Okular::PixmapRequest * request );
 

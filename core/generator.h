@@ -305,7 +305,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Query for the specified @p feature.
          */
-        virtual bool hasFeature( GeneratorFeature feature ) const;
+        bool hasFeature( GeneratorFeature feature ) const;
 
     Q_SIGNALS:
         /**
@@ -369,6 +369,11 @@ class OKULAR_EXPORT Generator : public QObject
          * Returns a pointer to the document.
          */
         Document * document() const;
+
+        /**
+         * Toggle the @p feature .
+         */
+        void setFeature( GeneratorFeature feature, bool on = true );
 
     private:
         class Private;

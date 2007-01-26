@@ -186,6 +186,8 @@ void TextDocumentGenerator::Private::generateTitleInfos()
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
     : Okular::Generator(), d( new Private( this, converter ) )
 {
+    setFeature( TextExtraction );
+
     connect( converter, SIGNAL( addLink( Link*, int, int ) ),
              this, SLOT( addLink( Link*, int, int ) ) );
     connect( converter, SIGNAL( addAnnotation( Annotation*, int, int ) ),
@@ -311,17 +313,6 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
 void TextDocumentGenerator::generateSyncTextPage( Okular::Page * page )
 {
     page->setTextPage( d->createTextPage( page->number() ) );
-}
-
-bool TextDocumentGenerator::hasFeature( GeneratorFeature feature ) const
-{
-    switch ( feature )
-    {
-        case TextExtraction:
-            return true;
-        default: ;
-    }
-    return false;
 }
 
 bool TextDocumentGenerator::print( KPrinter& printer )

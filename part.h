@@ -5,7 +5,7 @@
  *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -140,6 +140,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void cannotQuit();
         void splitterMoved( int pos, int index );
         void setMimeTypes(KIO::Job *job);
+        void readMimeType(KIO::Job *job, const QString &mime);
         void saveSplitterSize();
         // can be connected to widget elements
         void updateViewActions();
@@ -187,6 +188,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         // Remember the search history
         QStringList m_searchHistory;
+
+        // mimetype got from the job
+        QString m_jobMime;
 
         // actions
         QAction *m_gotoPage;

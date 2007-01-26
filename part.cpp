@@ -12,7 +12,7 @@
  *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
  *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -501,9 +501,14 @@ void Part::setMimeTypes(KIO::Job *job)
         if (m_supportedMimeTypes.count() <= 0)
             supportedMimetypes();
         job->addMetaData("accept", m_supportedMimeTypes.join(", ") + ", */*;q=0.5");
+        connect(job, SIGNAL(mimetype(KIO::Job*,const QString&)), this, SLOT(readMimeType(KIO::Job*,const QString&)));
     }
 }
 
+void Part::readMimeType(KIO::Job *, const QString &mime)
+{
+    m_jobMime = mime;
+}
 
 void Part::fillGenerators()
 {
@@ -690,7 +695,18 @@ bool Part::openFile()
     KMimeType::Ptr mime;
     if ( m_bExtension->urlArgs().serviceType.isEmpty() )
     {
-        mime = KMimeType::findByPath( m_file );
+        if (!m_jobMime.isEmpty())
+        {
+            mime = KMimeType::mimeType(m_jobMime);
+            if ( !mime )
+            {
+                mime = KMimeType::findByPath( m_file );
+            }
+        }
+        else
+        {
+            mime = KMimeType::findByPath( m_file );
+        }
     }
     else
     {
@@ -775,6 +791,7 @@ bool Part::openUrl(const KUrl &url)
     // if it matches then: download it (if not local) extract to a temp file using
     // KTar and proceed with the URL of the temporary file
 
+    m_jobMime.clear();
     const QString path = url.path();
     const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
     bool isCompressedFile = false;

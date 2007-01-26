@@ -809,8 +809,7 @@ bool Part::openUrl(const KUrl &url)
             emit setWindowCaption( url.fileName() );
         }
     }
-    else
-        KMessageBox::error( widget(), i18n( "Could not open %1", url.prettyUrl() ) );
+
     emit enablePrintAction(openOk);
     return openOk;
 }

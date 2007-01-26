@@ -632,6 +632,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
     if (offers.isEmpty())
     {
+        emit error( i18n( "Can not find a plugin which is able to handle the passed document." ), -1 );
         kWarning() << "No plugin for mimetype '" << mime->name() << "'." << endl;
         return false;
     }

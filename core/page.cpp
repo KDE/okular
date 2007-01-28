@@ -89,8 +89,10 @@ void Page::Private::imageRotationDone()
 {
     RotationJob *job = static_cast<RotationJob*>( m_page->sender() );
 
-    if ( m_page->m_pixmaps.contains( job->id() ) ) {
-        PixmapObject &object = m_page->m_pixmaps[ job->id() ];
+    QMap< int, PixmapObject >::iterator it = m_page->m_pixmaps.find( job->id() );
+    if ( it != m_page->m_pixmaps.end() )
+    {
+        PixmapObject &object = it.value();
         (*object.m_pixmap) = QPixmap::fromImage( job->image() );
         object.m_rotation = job->rotation();
     } else {

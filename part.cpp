@@ -1530,8 +1530,10 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
     {
         m_bookmarkActions = m_document->bookmarkManager()->actionsForUrl( u );
     }
+    bool havebookmarks = true;
     if ( m_bookmarkActions.isEmpty() )
     {
+        havebookmarks = false;
         QAction * a = new QAction( 0 );
         a->setText( i18n( "No Bookmarks" ) );
         a->setEnabled( false );
@@ -1542,6 +1544,9 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         actionCollection()->addAction( QString( "bookmark_action_%1" ).arg( i ), m_bookmarkActions.at(i) );
     }
     plugActionList( "bookmarks_currentdocument", m_bookmarkActions );
+
+    m_prevBookmark->setEnabled( havebookmarks );
+    m_nextBookmark->setEnabled( havebookmarks );
 }
 
 

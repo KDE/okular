@@ -46,12 +46,12 @@
     <Action name="history_back"/>
     <Action name="history_forward" />
     <Separator/>
-    <Action name="previous_bookmark"/>
-    <Action name="next_bookmark" />
-    <Separator/>
     <Action name="goto_page"/>
   </Menu>
   <Menu name="okular_bookmarks"><text>&amp;Bookmarks</text>
+    <Action name="previous_bookmark"/>
+    <Action name="next_bookmark" />
+    <Separator/>
     <ActionList name="bookmarks_currentdocument" />
   </Menu>
   <Menu name="mouseMode"><text>&amp;Tools</text>

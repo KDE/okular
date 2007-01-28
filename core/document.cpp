@@ -21,11 +21,9 @@
 
 #include <kconfigdialog.h>
 #include <kdebug.h>
-#include <kfinddialog.h>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
 #include <kmimetypetrader.h>
 #include <krun.h>
 #include <kservicetypetrader.h>

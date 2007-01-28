@@ -9,12 +9,12 @@
 // qt/kde includes
 #include <QtCore/QSet>
 #include <QtCore/QString>
+#include <QtCore/QTime>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
 #include <kdebug.h>
-#include <QTime>
 
 // local includes
 #include "annotations.h"
@@ -27,8 +27,6 @@
 #include "textpage.h"
 
 using namespace Okular;
-
-class TextSelection;
 
 static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<ObjectRect::ObjectType>& which )
 {

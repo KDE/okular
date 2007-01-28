@@ -143,6 +143,8 @@ public:
     QAction * aMouseTextSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
+    QAction * aZoomIn;
+    QAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;
@@ -362,9 +364,9 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
-    ac->addAction(KStandardAction::ZoomIn,  "zoom_in", this, SLOT( slotZoomIn() ));
+    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "zoom_in", this, SLOT( slotZoomIn() ) );
 
-    ac->addAction(KStandardAction::ZoomOut,  "zoom_out", this, SLOT( slotZoomOut() ));
+    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "zoom_out", this, SLOT( slotZoomOut() ) );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "view_fit_width" ), i18n("Fit &Width"), this);
     ac->addAction("zoom_fit_width", d->aZoomFitWidth );
@@ -2245,6 +2247,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         Okular::Settings::setZoomFactor( newFactor );
         Okular::Settings::writeConfig();
     }
+
+    d->aZoomIn->setEnabled( d->zoomFactor < 3.9 );
+    d->aZoomOut->setEnabled( d->zoomFactor > 0.2 );
 }
 
 void PageView::updateZoomText()

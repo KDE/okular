@@ -119,6 +119,7 @@ class Document::Private
         bool openRelativeFile( const QString & fileName );
         Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
         void loadAllGeneratorLibraries();
+        void loadServiceList( const KService::List& offers );
 
         // private slots
         void saveDocumentInfo() const;
@@ -485,6 +486,11 @@ void Document::Private::loadAllGeneratorLibraries()
 
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
     KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    loadServiceList( offers );
+}
+
+void Document::Private::loadServiceList( const KService::List& offers )
+{
     int count = offers.count();
     if ( count <= 0 )
         return;
@@ -2088,8 +2094,10 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     if ( !dialog )
         return;
 
-    // ensure that we have all the generators loaded
-    d->loadAllGeneratorLibraries();
+    // ensure that we have all the generators with settings loaded
+    QString constraint( "([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])" );
+    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    d->loadServiceList( offers );
 
     QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin();
     QHash< QString, GeneratorInfo >::iterator itEnd = d->m_loadedGenerators.end();

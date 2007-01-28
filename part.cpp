@@ -38,7 +38,6 @@
 #include <kfiledialog.h>
 #include <kfind.h>
 #include <kmessagebox.h>
-#include <kmimetypetrader.h>
 #include <kfinddialog.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
@@ -103,7 +102,7 @@ m_searchStarted(false), m_cliPresentation(false)
     setInstance(okularPartFactory::instance());
 
     // build the document
-    m_document = new Okular::Document(&m_loadedGenerators);
+    m_document = new Okular::Document();
     connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
     connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
     connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
@@ -424,10 +423,6 @@ Part::~Part()
     delete m_pageSizeLabel;
 
     delete m_document;
-    QHash<QString, Okular::Generator*>::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
-    for ( ; it != itEnd; ++it )
-        delete *it;
-
 
     delete m_tempfile;
 
@@ -473,34 +468,12 @@ void Part::openUrlFromBookmarks(const KUrl &_url)
         openUrl( url );
 }
 
-
-void Part::supportedMimetypes()
-{
-    m_supportedMimeTypes.clear();
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
-    KService::List::ConstIterator iterator = offers.begin();
-    KService::List::ConstIterator end = offers.end();
-    QStringList::ConstIterator mimeType;
-
-    for (; iterator != end; ++iterator)
-    {
-        KService::Ptr service = *iterator;
-        QStringList mimeTypes = service->serviceTypes();
-        for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
-            if (! (*mimeType).contains("okular"))
-                m_supportedMimeTypes << *mimeType;
-    }
-}
-
-
 void Part::setMimeTypes(KIO::Job *job)
 {
     if (job)
     {
-        if (m_supportedMimeTypes.count() <= 0)
-            supportedMimetypes();
-        job->addMetaData("accept", m_supportedMimeTypes.join(", ") + ", */*;q=0.5");
+        QStringList supportedMimeTypes = m_document->supportedMimeTypes();
+        job->addMetaData("accept", supportedMimeTypes.join(", ") + ", */*;q=0.5");
         connect(job, SIGNAL(mimetype(KIO::Job*,const QString&)), this, SLOT(readMimeType(KIO::Job*,const QString&)));
     }
 }
@@ -510,54 +483,8 @@ void Part::readMimeType(KIO::Job *, const QString &mime)
     m_jobMime = mime;
 }
 
-void Part::fillGenerators()
-{
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
-    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator", constraint);
-    QString propName;
-    int count=offers.count();
-    if (count > 0)
-    {
-        KLibLoader *loader = KLibLoader::self();
-        if (!loader)
-        {
-            kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
-            return;
-        }
-        for (int i=0;i<count;i++)
-        {
-            propName=offers[i]->property("Name").toString();
-            // don't load already loaded generators
-            if (! m_loadedGenerators.take( propName ) )
-            {
-                KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers[i]->library() ) );
-                if (!lib)
-                {
-                    kWarning() << "Could not load '" << offers[i]->library() << "' library." << endl;
-                    continue;
-                }
-
-                Okular::Generator* (*create_plugin)() = ( Okular::Generator* (*)() ) lib->symbol( "create_plugin" );
-                if ( !create_plugin )
-                {
-                    kWarning() << "Library '" << offers.at(i)->library() << "' has no symbol 'create_plugin'." << endl;
-                    continue;
-                }
-
-                // the generator should do anything with the document if we are only configuring
-                m_loadedGenerators.insert(propName,create_plugin());
-                m_generatorsWithSettings << propName;
-            }
-        }
-    }
-}
-
-
 void Part::slotGeneratorPreferences( )
 {
-    fillGenerators();
-    //Generator* gen= m_loadedGenerators[m_generatorsWithSettings[number]];
-
     // an instance the dialog could be already created and could be cached,
     // in which case you want to display the cached dialog
     if ( KConfigDialog::showDialog( "generator_prefs" ) )
@@ -567,14 +494,7 @@ void Part::slotGeneratorPreferences( )
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
     dialog->setCaption( i18n( "Configure Backends" ) );
 
-    QHashIterator<QString, Okular::Generator*> it(m_loadedGenerators);
-    while(it.hasNext())
-    {
-        it.next();
-        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value() );
-        if ( iface )
-            iface->addPages( dialog );
-    }
+    m_document->fillConfigDialog( dialog );
 
     // (for now don't FIXME) keep us informed when the user changes settings
     // connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );

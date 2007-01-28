@@ -113,7 +113,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool openFile();
         bool openUrl(const KUrl &url);
         bool closeUrl();
-        void supportedMimetypes();
 
     protected slots:
         // connected to actions
@@ -157,7 +156,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private:
         void doPrint( KPrinter& printer );
-        void fillGenerators();
         bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
         void rebuildBookmarkMenu( bool unplugActions = true );
         KTemporaryFile *m_tempfile;
@@ -220,11 +218,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool m_searchStarted;
         BrowserExtension *m_bExtension;
 
-        // QHash: key is the name of the generator
-        QHash<QString, Okular::Generator*> m_loadedGenerators;
-        // list of names of the generators that have settings
-        QStringList m_generatorsWithSettings;
-        QStringList m_supportedMimeTypes;
         KSelectAction * m_confGens;
         QList<Okular::ExportFormat> m_exportFormats;
         QList<QAction*> m_bookmarkActions;

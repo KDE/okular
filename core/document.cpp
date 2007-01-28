@@ -12,6 +12,7 @@
 #include <QtCore/QtAlgorithms>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
+#include <QtCore/QHash>
 #include <QtCore/QMap>
 #include <QtCore/QProcess>
 #include <QtCore/QTextStream>
@@ -27,6 +28,7 @@
 #include <kmimetype.h>
 #include <kmimetypetrader.h>
 #include <krun.h>
+#include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
@@ -73,6 +75,15 @@ struct RunningSearch
     QColor cachedColor;
 };
 
+struct GeneratorInfo
+{
+    GeneratorInfo()
+        : generator( 0 )
+    {}
+
+    Generator * generator;
+};
+
 #define foreachObserver( cmd ) {\
     QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.begin(), end=d->m_observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
@@ -82,7 +93,7 @@ struct RunningSearch
 class Document::Private
 {
     public:
-        Private( Document *parent, QHash<QString, Generator*> * generators )
+        Private( Document *parent )
           : m_parent( parent ),
             m_lastSearchID( -1 ),
             m_tempFile( 0 ),
@@ -92,9 +103,8 @@ class Document::Private
             m_bookmarkManager( 0 ),
             m_memCheckTimer( 0 ),
             m_saveBookmarksTimer( 0 ),
-            m_loadedGenerators ( generators ),
             m_generator( 0 ),
-            m_usingCachedGenerator( false )
+            m_generatorsLoaded( false )
         {
         }
 
@@ -107,6 +117,8 @@ class Document::Private
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName );
         bool openRelativeFile( const QString & fileName );
+        Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
+        void loadAllGeneratorLibraries();
 
         // private slots
         void saveDocumentInfo() const;
@@ -157,11 +169,14 @@ class Document::Private
         QTimer *m_memCheckTimer;
         QTimer *m_saveBookmarksTimer;
 
-        QHash<QString, Generator*>* m_loadedGenerators ;
+        QHash<QString, GeneratorInfo> m_loadedGenerators;
         Generator * m_generator;
-        bool m_usingCachedGenerator;
+        bool m_generatorsLoaded;
         QVector< Page * > m_pagesVector;
         QVector< VisiblePageRect * > m_pageRects;
+
+        // cache of the mimetype we support
+        QStringList m_supportedMimeTypes;
 };
 
 QString Document::Private::pagesSizeString() const
@@ -439,6 +454,54 @@ bool Document::Private::openRelativeFile( const QString & fileName )
     return true;
 }
 
+Generator * Document::Private::loadGeneratorLibrary( const QString& name, const QString& libname )
+{
+    KLibrary *lib = KLibLoader::self()->globalLibrary( QFile::encodeName( libname ) );
+    if ( !lib )
+    {
+        kWarning() << "Could not load '" << libname << "' library." << endl;
+        return 0;
+    }
+
+    Generator* (*create_plugin)() = ( Generator* (*)() ) lib->symbol( "create_plugin" );
+    Generator * generator = create_plugin();
+    if ( !generator )
+    {
+        kWarning() << "Broken generator " << libname << "!" << endl;
+        return 0;
+    }
+    GeneratorInfo info;
+    info.generator = generator;
+    m_loadedGenerators[ name ] = info;
+    return generator;
+}
+
+void Document::Private::loadAllGeneratorLibraries()
+{
+    if ( m_generatorsLoaded )
+        return;
+
+    m_generatorsLoaded = true;
+
+    QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
+    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    int count = offers.count();
+    if ( count <= 0 )
+        return;
+
+    for ( int i = 0; i < count; ++i )
+    {
+        QString propName = offers.at(i)->name();
+        // don't load already loaded generators
+        QHash< QString, GeneratorInfo >::iterator genIt = m_loadedGenerators.find( propName );
+        if ( genIt != m_loadedGenerators.end() )
+            continue;
+
+        Generator * g = loadGeneratorLibrary( propName, offers.at(i)->library() );
+        (void)g;
+    }
+}
+
 void Document::Private::saveDocumentInfo() const
 {
     if ( m_docFileName.isEmpty() )
@@ -571,8 +634,8 @@ void Document::Private::rotationFinished( int page )
 }
 
 
-Document::Document( QHash<QString, Generator*> * generators )
-    : d( new Private( this, generators ) )
+Document::Document()
+    : d( new Private( this ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
 }
@@ -581,6 +644,12 @@ Document::~Document()
 {
     // delete generator, pages, and related stuff
     closeDocument();
+
+    // delete the loaded generators
+    QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin(), itEnd = d->m_loadedGenerators.end();
+    for ( ; it != itEnd; ++it )
+        delete it.value().generator;
+    d->m_loadedGenerators.clear();
 
     // delete the private structure
     delete d;
@@ -637,70 +706,44 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         return false;
     }
     int hRank=0;
-    // order the offers: the offers with an higher priority come before
-    qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
-
     // best ranked offer search
-    if (offers.count() > 1 && Settings::chooseGenerators() )
+    int offercount = offers.count();
+    if ( offercount > 1 )
     {
-        QStringList list;
-        int count=offers.count();
-        for (int i=0;i<count;++i)
-        {
-            list << offers.at(i)->name();
-        }
-        ChooseEngineDialog choose( list, mime, 0 );
+        // sort the offers: the offers with an higher priority come before
+        qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
 
-        int retval = choose.exec();
-        int index = choose.selectedGenerator();
-        switch( retval )
+        if ( Settings::chooseGenerators() )
         {
-            case QDialog::Accepted:
-                hRank=index;
-                break;
-            case QDialog::Rejected:
+            QStringList list;
+            for ( int i = 0; i < offercount; ++i )
+            {
+                list << offers.at(i)->name();
+            }
+
+            ChooseEngineDialog choose( list, mime, 0 );
+
+            if ( choose.exec() == QDialog::Rejected )
                 return false;
-                break;
+
+            hRank = choose.selectedGenerator();
         }
     }
 
     QString propName = offers.at(hRank)->name();
-    d->m_usingCachedGenerator=false;
-    d->m_generator = d->m_loadedGenerators->take(propName);
-    if (!d->m_generator)
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( propName );
+    if ( genIt != d->m_loadedGenerators.end() )
     {
-        KLibLoader *loader = KLibLoader::self();
-        if (!loader)
-        {
-            kWarning() << "Could not start library loader: '" << loader->lastErrorMessage() << "'." << endl;
-            return false;
-        }
-        KLibrary *lib = loader->globalLibrary( QFile::encodeName( offers.at(hRank)->library() ) );
-        if (!lib) 
-        {
-            kWarning() << "Could not load '" << offers.at(hRank)->library() << "' library." << endl;
-            return false;
-        }
-
-        Generator* (*create_plugin)() = ( Generator* (*)() ) lib->symbol( "create_plugin" );
-        d->m_generator = create_plugin();
-
-        if ( !d->m_generator )
-        {
-            kWarning() << "Sth broke." << endl;
-            return false;
-        }
-        if ( offers.at(hRank)->property( "X-KDE-okularHasInternalSettings" ).toBool() )
-        {
-            d->m_loadedGenerators->insert(propName, d->m_generator);
-            d->m_usingCachedGenerator=true;
-        }
-        // end 
+        d->m_generator = genIt.value().generator;
     }
     else
     {
-        d->m_usingCachedGenerator=true;
+        d->m_generator = d->loadGeneratorLibrary( propName, offers.at(hRank)->library() );
+        if ( !d->m_generator )
+            return false;
     }
+    Q_ASSERT_X( d->m_generator, "Document::load()", "null generator?!" );
+
     d->m_generator->setDocument( this );
 
     // connect error reporting signals
@@ -746,10 +789,6 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QApplication::restoreOverrideCursor();
     if ( !openOk || d->m_pagesVector.size() <= 0 )
     {
-        if (!d->m_usingCachedGenerator)
-        {
-            delete d->m_generator;
-        }
         d->m_generator = 0;
         return openOk;
     }
@@ -840,11 +879,10 @@ void Document::closeDocument()
         Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( d->m_generator );
         if ( iface )
             iface->freeGui();
-    }
-    if (!d->m_usingCachedGenerator)
-    {
-        // delete contents generator
-        delete d->m_generator;
+        // disconnect the generator from this document ...
+        d->m_generator->setDocument( 0 );
+        // .. and this document from the generator signals
+        disconnect( d->m_generator, 0, this, 0 );
     }
     d->m_generator = 0;
     d->m_url = KUrl();
@@ -2043,6 +2081,44 @@ KPrintDialogPage* Document::printConfigurationWidget() const
     }
     else
         return 0;
+}
+
+void Document::fillConfigDialog( KConfigDialog * dialog )
+{
+    if ( !dialog )
+        return;
+
+    // ensure that we have all the generators loaded
+    d->loadAllGeneratorLibraries();
+
+    QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin();
+    QHash< QString, GeneratorInfo >::iterator itEnd = d->m_loadedGenerators.end();
+    for ( ; it != itEnd; ++it )
+    {
+        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value().generator );
+        if ( iface )
+            iface->addPages( dialog );
+    }
+}
+
+QStringList Document::supportedMimeTypes() const
+{
+    if ( !d->m_supportedMimeTypes.isEmpty() )
+        return d->m_supportedMimeTypes;
+
+    QString constraint( "([X-KDE-Priority] > 0) and (exist Library)" );
+    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    KService::List::ConstIterator it = offers.begin(), itEnd = offers.end();
+    for ( ; it != itEnd; ++it )
+    {
+        KService::Ptr service = *it;
+        QStringList mimeTypes = service->serviceTypes();
+        foreach ( const QString& mimeType, mimeTypes )
+            if ( !mimeType.contains( "okular" ) )
+                d->m_supportedMimeTypes.append( mimeType );
+    }
+
+    return d->m_supportedMimeTypes;
 }
 
 void Document::requestDone( PixmapRequest * req )

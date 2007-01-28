@@ -16,7 +16,6 @@
 #include <okular/core/global.h>
 #include <okular/core/pagesize.h>
 
-#include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
@@ -26,6 +25,7 @@
 #include <kmimetype.h>
 
 class KBookmark;
+class KConfigDialog;
 class KPrinter;
 class KPrintDialogPage;
 class KUrl;
@@ -81,7 +81,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Creates a new document with the given list of @p generators.
          */
-        Document( QHash<QString, Generator*> *generators );
+        Document();
 
         /**
          * Destroys the document.
@@ -438,6 +438,17 @@ class OKULAR_EXPORT Document : public QObject
          * custom printer configuration page is available.
          */
         KPrintDialogPage* printConfigurationWidget() const;
+
+        /**
+         * Fill the KConfigDialog @p dialog with the setting pages of the
+         * generators.
+         */
+        void fillConfigDialog( KConfigDialog * dialog );
+
+        /**
+         * Returns the list wih the supported MIME types.
+         */
+        QStringList supportedMimeTypes() const;
 
         /**
          * This method is used by the generators to signal the finish of

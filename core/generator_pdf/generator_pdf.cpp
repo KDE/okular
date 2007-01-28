@@ -445,7 +445,7 @@ bool PDFGenerator::print( KPrinter& printer )
     {
         pstitle = m_document->currentDocument().fileName( false );
     }
-    const char* pstitlechar = !pstitle.isEmpty() ? pstitle.local8Bit() : 0;
+    const char* pstitlechar = !pstitle.isEmpty() ? (const char *)pstitle.local8Bit() : 0;
     PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pstitlechar, pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
 
     if (psOut->isOk())

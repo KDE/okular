@@ -140,7 +140,7 @@ void Shell::openUrl( const KUrl & url, uint page )
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries( KGlobal::config() );
+    m_recent->loadEntries( KGlobal::config().data() );
     m_recent->setEnabled( true ); // force enabling
     m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
 
@@ -151,7 +151,7 @@ void Shell::readSettings()
 
 void Shell::writeSettings()
 {
-    m_recent->saveEntries( KGlobal::config() );
+    m_recent->saveEntries( KGlobal::config().data() );
     KGlobal::config()->setDesktopGroup();
     KGlobal::config()->writeEntry( "FullScreen", m_fullScreenAction->isChecked());
     KGlobal::config()->sync();
@@ -298,7 +298,7 @@ Shell::optionsConfigureToolbars()
   void
 Shell::applyNewToolbarConfig()
 {
-  applyMainWindowSettings(KGlobal::config(), "MainWindow");
+  applyMainWindowSettings(KGlobal::config().data(), "MainWindow");
 }
 
 void Shell::slotQuit()

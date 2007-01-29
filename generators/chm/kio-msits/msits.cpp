@@ -19,8 +19,8 @@
 #include <sys/stat.h>
 
 #include <kapplication.h>
+#include <kcomponentdata.h>
 #include <kdebug.h>
-#include <kinstance.h>
 #include <kurl.h>
 #include <kmimetype.h>
 
@@ -39,7 +39,7 @@ extern "C"
     {
 		kDebug() << "*** kio_msits Init" << endl;
 
-        KInstance instance( "kio_msits" );
+        KComponentData instance( "kio_msits" );
 
         if ( argc != 4 )
 		{

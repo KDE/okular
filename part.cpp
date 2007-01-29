@@ -31,7 +31,6 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
-#include <kinstance.h>
 #include <kprinter.h>
 #include <kstandardaction.h>
 #include <kparts/genericfactory.h>
@@ -99,7 +98,7 @@ m_searchStarted(false), m_cliPresentation(false)
     m_bExtension = new BrowserExtension(this);
 
     // we need an instance
-    setInstance(okularPartFactory::instance());
+    setComponentData(okularPartFactory::componentData());
 
     // build the document
     m_document = new Okular::Document();

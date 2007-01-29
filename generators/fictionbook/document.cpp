@@ -9,6 +9,7 @@
 
 #include <QtCore/QFile>
 
+#include <klocale.h>
 #include <kzip.h>
 
 #include "document.h"
@@ -27,17 +28,23 @@ bool Document::open()
     QFile file( mFileName );
     KZip zip( mFileName );
     if ( mFileName.endsWith( ".fb" ) || mFileName.endsWith( ".fb2" ) ) {
-        if ( !file.open( QIODevice::ReadOnly ) )
+        if ( !file.open( QIODevice::ReadOnly ) ) {
+            setError( i18n( "Unable to open document: %1" ).arg( file.errorString() ) );
             return false;
+        }
 
         device = &file;
     } else {
-        if ( !zip.open( QIODevice::ReadOnly ) )
+        if ( !zip.open( QIODevice::ReadOnly ) ) {
+            setError( i18n( "Document is not a valid ZIP archive" ) );
             return false;
+        }
 
         const KArchiveDirectory *directory = zip.directory();
-        if ( !directory )
+        if ( !directory ) {
+            setError( i18n( "Invalid document structure (main directory is missing)" ) );
             return false;
+        }
 
         const QStringList entries = directory->entries();
 
@@ -49,8 +56,10 @@ bool Document::open()
             }
         }
 
-        if ( documentFile.isEmpty() )
+        if ( documentFile.isEmpty() ) {
+            setError( i18n( "No content found in the document" ) );
             return false;
+        }
 
         const KArchiveFile *entry = static_cast<const KArchiveFile*>( directory->entry( documentFile ) );
         // FIXME delete 'deviceì somewhen
@@ -58,10 +67,8 @@ bool Document::open()
     }
 
     QString errorMsg;
-    int errorRow, errorColumn;
-
-    if ( !mDocument.setContent( device, true, &errorMsg, &errorRow, &errorColumn ) ) {
-        qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorRow, errorColumn );
+    if ( !mDocument.setContent( device, true, &errorMsg ) ) {
+        setError( i18n( "Invalid XML document: %1" ).arg( errorMsg ) );
         return false;
     }
 
@@ -71,4 +78,14 @@ bool Document::open()
 QDomDocument Document::content() const
 {
     return mDocument;
+}
+
+QString Document::lastErrorString() const
+{
+    return mErrorString;
+}
+
+void Document::setError( const QString &error )
+{
+    mErrorString = error;
 }

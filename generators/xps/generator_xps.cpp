@@ -665,7 +665,7 @@ void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
 
     // signal that the request has been accomplished
-    signalRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()

@@ -679,7 +679,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     ready = true;
 
     // notify the new generation
-    signalRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 void PDFGenerator::generateSyncTextPage( Okular::Page * page )
@@ -1352,7 +1352,7 @@ void PDFGenerator::threadFinished()
     // update ready state
     ready = true;
     // notify the new generation
-    signalRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 

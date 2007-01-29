@@ -21,6 +21,8 @@
 #include <okular/core/link.h>
 #include <okular/core/document.h>
 
+#include <klocale.h>
+
 #include "converter.h"
 #include "document.h"
 #include "styleinformation.h"
@@ -72,8 +74,10 @@ Converter::~Converter()
 QTextDocument* Converter::convert( const QString &fileName )
 {
   Document oooDocument( fileName );
-  if ( !oooDocument.open() )
+  if ( !oooDocument.open() ) {
+    emit error( oooDocument.lastErrorString(), -1 );
     return 0;
+  }
 
   delete mTextDocument;
   delete mCursor;
@@ -90,11 +94,9 @@ QTextDocument* Converter::convert( const QString &fileName )
   source.setData( oooDocument.content() );
 
   QString errorMsg;
-  int errorLine, errorCol;
-
   QDomDocument document;
-  if ( !document.setContent( &source, &reader, &errorMsg, &errorLine, &errorCol ) ) {
-    qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol );
+  if ( !document.setContent( &source, &reader, &errorMsg ) ) {
+    emit error( i18n( "Invalid XML document: %1", errorMsg ), -1 );
     return false;
   }
 
@@ -103,8 +105,10 @@ QTextDocument* Converter::convert( const QString &fileName )
    * parsing the content.
    */
   StyleParser styleParser( &oooDocument, document, mStyleInformation );
-  if ( !styleParser.parse() )
+  if ( !styleParser.parse() ) {
+    emit error( i18n( "Unable to read style information" ), -1 );
     return false;
+  }
 
   /**
    * Add all images of the document to resource framework
@@ -138,8 +142,10 @@ QTextDocument* Converter::convert( const QString &fileName )
   QDomElement element = documentElement.firstChildElement();
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "body" ) ) {
-      if ( !convertBody( element ) )
+      if ( !convertBody( element ) ) {
+        emit error( i18n( "Unable to convert document content" ), -1 );
         return false;
+      }
     }
 
     element = element.nextSiblingElement();

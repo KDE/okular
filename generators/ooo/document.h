@@ -23,17 +23,22 @@ class Document
 
     bool open();
 
+    QString lastErrorString() const;
+
     QByteArray content() const;
     QByteArray meta() const;
     QByteArray styles() const;
     QMap<QString, QByteArray> images() const;
 
   private:
+    void setError( const QString& );
+
     QString mFileName;
     QByteArray mContent;
     QByteArray mMeta;
     QByteArray mStyles;
     QMap<QString, QByteArray> mImages;
+    QString mErrorString;
 };
 
 }

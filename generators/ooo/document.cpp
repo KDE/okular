@@ -7,6 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <klocale.h>
 #include <kzip.h>
 
 #include "document.h"
@@ -25,16 +26,19 @@ bool Document::open()
 
   KZip zip( mFileName );
   if ( !zip.open( QIODevice::ReadOnly ) ) {
+    setError( i18n( "Document is not a valid ZIP archive" ) );
     return false;
   }
 
   const KArchiveDirectory *directory = zip.directory();
   if ( !directory ) {
+    setError( i18n( "Invalid document structure (main directory is missing)" ) );
     return false;
   }
 
   const QStringList entries = directory->entries();
   if ( !entries.contains( "content.xml" ) ) {
+    setError( i18n( "Invalid document structure (content.xml is missing)" ) );
     return false;
   }
 
@@ -42,6 +46,7 @@ bool Document::open()
   mContent = file->data();
 
   if ( !entries.contains( "styles.xml" ) ) {
+    setError( i18n( "Invalid document structure (styles.xml is missing)" ) );
     return false;
   }
 
@@ -49,6 +54,7 @@ bool Document::open()
   mStyles = file->data();
 
   if ( !entries.contains( "meta.xml" ) ) {
+    setError( i18n( "Invalid document structure (meta.xml is missing)" ) );
     return false;
   }
 
@@ -70,6 +76,11 @@ bool Document::open()
   return true;
 }
 
+QString Document::lastErrorString() const
+{
+  return mErrorString;
+}
+
 QByteArray Document::content() const
 {
   return mContent;
@@ -88,4 +99,9 @@ QByteArray Document::styles() const
 QMap<QString, QByteArray> Document::images() const
 {
   return mImages;
+}
+
+void Document::setError( const QString &error )
+{
+  mErrorString = error;
 }

@@ -208,7 +208,7 @@ void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
     m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     ready = true;
-    signalRequestDone( m_request );
+    signalPixmapRequestDone( m_request );
     m_request = 0;
 }
 

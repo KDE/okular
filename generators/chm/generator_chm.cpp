@@ -24,7 +24,6 @@
 #include <qevent.h>
 #include <qapplication.h>
 #include <qpainter.h>
-#include <qprinter.h>
 #include <qstring.h>
 
 OKULAR_EXPORT_PLUGIN(CHMGenerator)
@@ -38,8 +37,6 @@ CHMGenerator::CHMGenerator()
     m_file=0;
     m_state=-1;
     m_docInfo=0;
-//     m_asyncGen=0;
-//     px=0;
     m_pixmapRequestZoom=1;
 }
 
@@ -48,10 +45,6 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
     m_file->ParseAndFillTopicsTree (&m_docSyn);
-
-    QPrinter p; 
-    p.setPageSize(static_cast< QPrinter::PageSize >( KGlobal::locale()->pageSize() ));
-    p.setFullPage(true);
 
     kDebug () << "UrlPage count " << m_file->m_UrlPage.count() << endl;
     pagesVector.resize(m_file->m_UrlPage.count());
@@ -123,7 +116,7 @@ void CHMGenerator::slotCompleted()
         additionalRequestData();
         syncLock.unlock();
         m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
-        signalRequestDone( m_request );
+        signalPixmapRequestDone( m_request );
     }
 }
 
@@ -381,27 +374,5 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
     }
     return QVariant();
 }
-
-/*
-void PixmapThreader::run()
-{
-    kDebug() << "starting thread\n";
-    m_pix = m_gen->renderPixmap(m_req);
-    QCustomEvent * readyEvent = new QCustomEvent( CHM_DATAREADY_ID );
-    readyEvent->setData(m_req);
-    QApplication::postEvent( m_gen , readyEvent );
-}
-
-void CHMGenerator::customEvent( QCustomEvent * e )
-{
-    if (e->type() == CHM_DATAREADY_ID )
-    {
-        PixmapRequest* request=(PixmapRequest*) e->data();
-        asyncLock.unlock();
-        kDebug() << "got pixmap\n";
-        request->page->setPixmap( request->id, px->takePixmap() );
-        signalRequestDone( request );
-    }
-}*/
 
 #include "generator_chm.moc"

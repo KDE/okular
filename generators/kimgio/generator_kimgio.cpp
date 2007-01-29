@@ -7,7 +7,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qpainter.h>
+#include <QtCore/QBuffer>
+#include <QtGui/QImageReader>
+#include <QtGui/QPainter>
+
+#include <klocale.h>
 #include <kprinter.h>
 
 #include <okular/core/page.h>
@@ -28,8 +32,11 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    if ( !m_img.load( fileName ) )
+    QImageReader reader( fileName );
+    if ( !reader.read( &m_img ) ) {
+        emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
+    }
 
     pagesVector.resize( 1 );
 
@@ -41,8 +48,13 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-    if ( !m_img.loadFromData( fileData ) )
+    QBuffer buffer( const_cast<QByteArray*>( &fileData ) );
+
+    QImageReader reader( &buffer );
+    if ( !reader.read( &m_img ) ) {
+        emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
+    }
 
     pagesVector.resize( 1 );
 
@@ -73,7 +85,19 @@ QImage KIMGIOGenerator::image( Okular::PixmapRequest * request )
 bool KIMGIOGenerator::print( KPrinter& printer )
 {
     QPainter p( &printer );
-    p.drawImage( 0, 0, m_img );
+
+    uint left, top, right, bottom;
+    printer.margins( &left, &top, &right, &bottom );
+
+    int pageWidth = printer.width() - right;
+    int pageHeight = printer.height() - bottom;
+
+    QImage image( m_img );
+    if ( (image.width() > pageWidth) || (image.height() > pageHeight) )
+        image = image.scaled( pageWidth, pageHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation );
+
+    p.drawImage( 0, 0, image );
+
     return true;
 }
 

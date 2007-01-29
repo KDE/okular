@@ -196,6 +196,13 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
              this, SLOT( addTitle( int, const QString&, const QTextBlock& ) ) );
     connect( converter, SIGNAL( addMetaData( const QString&, const QString&, const QString& ) ),
              this, SLOT( addMetaData( const QString&, const QString&, const QString& ) ) );
+
+    connect( converter, SIGNAL( error( const QString&, int ) ),
+             this, SIGNAL( error( const QString&, int ) ) );
+    connect( converter, SIGNAL( warning( const QString&, int ) ),
+             this, SIGNAL( warning( const QString&, int ) ) );
+    connect( converter, SIGNAL( notice( const QString&, int ) ),
+             this, SIGNAL( notice( const QString&, int ) ) );
 }
 
 TextDocumentGenerator::~TextDocumentGenerator()
@@ -307,7 +314,7 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
         d->mAnnotationAddedList.insert( request->pageNumber() );
     }
 
-    signalRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 void TextDocumentGenerator::generateSyncTextPage( Okular::Page * page )

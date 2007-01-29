@@ -337,7 +337,7 @@ class OKULAR_EXPORT Generator : public QObject
          * This method must be called when the pixmap request triggered by generatePixmap()
          * has been finished.
          */
-        void signalRequestDone( PixmapRequest * request );
+        void signalPixmapRequestDone( PixmapRequest * request );
 
         /**
          * This method is called to check whether the generator is ready

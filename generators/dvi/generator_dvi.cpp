@@ -236,7 +236,7 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
 
     delete pageInfo;
 
-    signalRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 void DviGenerator::generateSyncTextPage( Okular::Page* page )

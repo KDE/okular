@@ -147,12 +147,12 @@ bool Generator::hasFeature( GeneratorFeature feature ) const
 }
 
 
-void Generator::signalRequestDone( PixmapRequest * request )
+void Generator::signalPixmapRequestDone( PixmapRequest * request )
 {
     if ( d->m_document )
         d->m_document->requestDone( request );
     else
-        Q_ASSERT( !"No document set for generator in signalRequestDone!" );
+        Q_ASSERT( !"No document set for generator in signalPixmapRequestDone!" );
 }
 
 Document * Generator::document() const

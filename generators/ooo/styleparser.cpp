@@ -450,6 +450,7 @@ double StyleParser::convertUnit( const QString &data )
     double value = data.left( data.length() - 4 ).toDouble();
     points = CC_TO_POINT( value );
   } else {
+    points = 12;
     qDebug( "unknown unit %s", qPrintable( data ) );
   }
 

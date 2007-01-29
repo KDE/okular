@@ -250,7 +250,7 @@ void GSGenerator::slotPixmapGenerated(const QImage* img)
     kWarning() << "unlocking \n";
     syncLock.unlock();
     m_sRequest->page()->setPixmap( m_sRequest->id(), new QPixmap( QPixmap::fromImage( *img ) ) );
-    signalRequestDone( m_sRequest );
+    signalPixmapRequestDone( m_sRequest );
     m_asRequest=0;
 }
 
@@ -258,7 +258,7 @@ void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
 {
     kWarning() << "SlotASyncGenerated!\n";
     m_asRequest->page()->setPixmap( m_asRequest->id(), pix );
-    signalRequestDone( m_asRequest );
+    signalPixmapRequestDone( m_asRequest );
     m_asRequest=0;
     docLock.unlock();
 }

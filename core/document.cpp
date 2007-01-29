@@ -459,6 +459,7 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
     if ( !lib )
     {
         kWarning() << "Could not load '" << libname << "' library." << endl;
+        emit m_parent->error( i18n( "Could not load the necessary plugin to view the document" ), -1 );
         return 0;
     }
 

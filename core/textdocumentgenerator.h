@@ -65,6 +65,30 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
          */
         void addMetaData( const QString &key, const QString &value, const QString &title );
 
+        /**
+         * This signal should be emitted whenever an error occurred in the converter.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void error( const QString &message, int duration );
+
+        /**
+         * This signal should be emitted whenever the user should be warned.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void warning( const QString &message, int duration );
+
+        /**
+         * This signal should be emitted whenever the user should be noticed.
+         *
+         * @param message The message which should be shown to the user.
+         * @param duration The time that the message should be shown to the user.
+         */
+        void notice( const QString &message, int duration );
+
     protected:
         /**
          * This method can be used to calculate the viewport for a given text block.

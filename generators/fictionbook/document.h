@@ -26,9 +26,14 @@ class Document
 
         QDomDocument content() const;
 
+        QString lastErrorString() const;
+
     private:
+        void setError( const QString& );
+
         QString mFileName;
         QDomDocument mDocument;
+        QString mErrorString;
 };
 
 }

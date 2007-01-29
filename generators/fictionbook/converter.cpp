@@ -64,8 +64,10 @@ Converter::~Converter()
 QTextDocument* Converter::convert( const QString &fileName )
 {
     Document fbDocument( fileName );
-    if ( !fbDocument.open() )
+    if ( !fbDocument.open() ) {
+        emit error( fbDocument.lastErrorString(), -1 );
         return false;
+    }
 
     delete mTextDocument;
     delete mCursor;
@@ -95,7 +97,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     const QDomElement documentElement = document.documentElement();
 
     if ( documentElement.tagName() != QLatin1String( "FictionBook" ) ) {
-        qDebug( "Not a valid FictionBook!" );
+        emit error( i18n( "Document is not a valid FictionBook" ), -1 );
         return false;
     }
 
@@ -675,7 +677,7 @@ bool Converter::convertCite( const QDomElement &element )
     return true;
 }
 
-bool Converter::convertEmptyLine( const QDomElement &element )
+bool Converter::convertEmptyLine( const QDomElement& )
 {
     mCursor->insertText( "\n\n" );
     return true;

@@ -66,7 +66,7 @@ void ThreadedGenerator::Private::pixmapGenerationFinished()
 
     mPixmapReady = true;
 
-    mParent->signalRequestDone( request );
+    mParent->signalPixmapRequestDone( request );
 }
 
 void ThreadedGenerator::Private::textpageGenerationFinished()

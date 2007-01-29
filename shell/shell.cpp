@@ -27,6 +27,7 @@
 #include <kfiledialog.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
+#include <kmimetype.h>
 #include <kstandardaction.h>
 #include <ktoolbar.h>
 #include <kurl.h>
@@ -161,6 +162,7 @@ void Shell::setupActions()
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStandardAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
+  m_recent->setToolButtonPopupMode( QToolButton::DelayedPopup );
   connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( m_part, SLOT( slotPrint() ), actionCollection() );

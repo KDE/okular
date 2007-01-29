@@ -17,7 +17,6 @@
 #define _OKULAR_SHELL_H_
 
 #include <kparts/mainwindow.h>
-#include <kmimetype.h>
 
 class KCmdLineArgs;
 class KRecentFilesAction;

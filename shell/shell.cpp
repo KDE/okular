@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 // qt/kde includes
-#include <qcursor.h>
 #include <qtimer.h>
 #include <kaction.h>
 #include <kapplication.h>
@@ -42,6 +41,7 @@
 #include <ktogglefullscreenaction.h>
 #include <kfilterbase.h>
 #include <kactioncollection.h>
+
 // local includes
 #include "shell.h"
 #include "kdocumentviewer.h"

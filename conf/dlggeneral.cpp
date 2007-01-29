@@ -9,7 +9,6 @@
 
 #include <kauthorized.h>
 
-#include <config.h>
 #include <config-okular.h>
 
 #include "ui_dlggeneralbase.h"

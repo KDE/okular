@@ -33,7 +33,6 @@
 #include "generator_pdf.h"
 #include "settings.h"
 
-#include <config.h>
 #include <config-okular.h>
 
 class PDFEmbeddedFile : public Okular::EmbeddedFile

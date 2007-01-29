@@ -19,6 +19,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 
+#include <kauthorized.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <klibloader.h>
@@ -44,6 +45,8 @@
 #include "page.h"
 #include "settings.h"
 #include "sourcereference.h"
+
+#include <config-okular.h>
 
 using namespace Okular;
 
@@ -1118,6 +1121,11 @@ KUrl Document::currentDocument() const
 
 bool Document::isAllowed( Permissions flags ) const
 {
+#if !OKULAR_FORCE_DRM
+    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
+        return true;
+#endif
+
     return d->m_generator ? d->m_generator->isAllowed( flags ) : false;
 }
 

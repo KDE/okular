@@ -13,7 +13,6 @@
 #include <qimage.h>
 #include <qregexp.h>
 #include <qtextstream.h>
-#include <kauthorized.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
@@ -585,10 +584,6 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
 
 bool PDFGenerator::isAllowed( Okular::Permissions permissions ) const
 {
-#if !OKULAR_FORCE_DRM
-    if (KAuthorized::authorize("skip_drm") && !Okular::Settings::obeyDRM()) return true;
-#endif
-
     bool b = true;
     if (permissions & Okular::AllowModify) b = b && pdfdoc->okToChange();
     if (permissions & Okular::AllowCopy) b = b && pdfdoc->okToCopy();

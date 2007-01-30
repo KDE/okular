@@ -1338,7 +1338,10 @@ void PDFGenerator::threadFinished()
         qDeleteAll(outText);
     }
     bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
-    if (genObjectRects) request->page()->setObjectRects( outRects );
+    if (genObjectRects)
+        request->page()->setObjectRects( outRects );
+    else
+        qDeleteAll( outRects );
 
     // 3. tell generator that data has been taken
     generatorThread->endGeneration();
@@ -1458,7 +1461,9 @@ QList<Poppler::TextBox*> PDFPixmapGeneratorThread::takeText()
 QLinkedList< Okular::ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
 {
     d->m_rectsTaken = true;
-    return d->m_rects;
+    QLinkedList< Okular::ObjectRect * > newrects = d->m_rects;
+    d->m_rects.clear();
+    return newrects;
 }
 
 void PDFPixmapGeneratorThread::run()

@@ -356,6 +356,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     // build Pages (currentPage was set -1 by deletePages)
     uint pageCount = pdfdoc->numPages();
     pagesVector.resize(pageCount);
+    rectsGenerated.fill(false, pageCount);
 
     loadPages(pagesVector, 0, false);
 
@@ -634,8 +635,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     // since we can pre-generate the TextPage at the right res.. why not?
     bool genTextPage = !page->hasTextPage() && (request->width() == page->width()) &&
                        (request->height() == page->height());
-    // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
+    // generate links rects only the first time
+    bool genObjectRects = !rectsGenerated.at( page->number() );
 
     // 0. LOCK [waits for the thread end]
     docLock.lock();
@@ -657,6 +658,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
         page->setObjectRects( generateLinks(p->links(), request->width(), request->height(), pdfdoc) );
+        rectsGenerated[ request->page()->number() ] = true;
     }
 
     // 3. UNLOCK [re-enables shared access]
@@ -1337,9 +1339,12 @@ void PDFGenerator::threadFinished()
             request->page()->height(), request->page()->width(),request->page()->orientation()));
         qDeleteAll(outText);
     }
-    bool genObjectRects = request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
+    bool genObjectRects = !rectsGenerated.at( request->page()->number() );
     if (genObjectRects)
+    {
         request->page()->setObjectRects( outRects );
+        rectsGenerated[ request->page()->number() ] = true;
+    }
     else
         qDeleteAll( outRects );
 
@@ -1489,8 +1494,8 @@ void PDFPixmapGeneratorThread::run()
                        ( width == page->width() ) &&
                        ( height == page->height() );
 
-    // generate links and image rects if rendering pages on pageview
-    bool genObjectRects = d->currentRequest->id() & (PAGEVIEW_ID | PRESENTATION_ID);
+    // generate links rects only the first time
+    bool genObjectRects = !d->generator->rectsGenerated.at( page->number() );
 
     // 0. LOCK s[tart locking XPDF thread unsafe classes]
     d->generator->docLock.lock();

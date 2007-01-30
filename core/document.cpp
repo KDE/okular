@@ -79,10 +79,11 @@ struct RunningSearch
 struct GeneratorInfo
 {
     GeneratorInfo()
-        : generator( 0 )
+        : generator( 0 ), library( 0 )
     {}
 
     Generator * generator;
+    KLibrary * library;
 };
 
 #define foreachObserver( cmd ) {\
@@ -121,6 +122,7 @@ class Document::Private
         Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
         void loadAllGeneratorLibraries();
         void loadServiceList( const KService::List& offers );
+        void unloadGenerator( GeneratorInfo& info );
 
         // private slots
         void saveDocumentInfo() const;
@@ -475,6 +477,7 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
     }
     GeneratorInfo info;
     info.generator = generator;
+    info.library = lib;
     m_loadedGenerators[ name ] = info;
     return generator;
 }
@@ -508,6 +511,12 @@ void Document::Private::loadServiceList( const KService::List& offers )
         Generator * g = loadGeneratorLibrary( propName, offers.at(i)->library() );
         (void)g;
     }
+}
+
+void Document::Private::unloadGenerator( GeneratorInfo& info )
+{
+    delete info.generator;
+    info.library->unload();
 }
 
 void Document::Private::saveDocumentInfo() const
@@ -656,7 +665,7 @@ Document::~Document()
     // delete the loaded generators
     QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin(), itEnd = d->m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
-        delete it.value().generator;
+        d->unloadGenerator( it.value() );
     d->m_loadedGenerators.clear();
 
     // delete the private structure

@@ -14,23 +14,82 @@
 
 #include "document.h"
 #include "generator.h"
+#include "page.h"
+#include "threadedgenerator_p.h"
 
 using namespace Okular;
 
 class Generator::Private
 {
     public:
-        Private()
-            : m_document( 0 )
+        Private( Generator *parent )
+            : m_document( 0 ),
+              m_generator( parent ),
+              mPixmapReady( true ),
+              mTextPageReady( true )
         {
+            mPixmapGenerationThread = new PixmapGenerationThread( m_generator );
+            QObject::connect( mPixmapGenerationThread, SIGNAL( finished() ),
+                              m_generator, SLOT( pixmapGenerationFinished() ),
+                              Qt::QueuedConnection );
+
+            mTextPageGenerationThread = new TextPageGenerationThread( m_generator );
+            QObject::connect( mTextPageGenerationThread, SIGNAL( finished() ),
+                              m_generator, SLOT( textpageGenerationFinished() ),
+                              Qt::QueuedConnection );
         }
+
+        ~Private()
+        {
+            if ( mPixmapGenerationThread )
+                mPixmapGenerationThread->wait();
+
+            delete mPixmapGenerationThread;
+
+            if ( mTextPageGenerationThread )
+                mTextPageGenerationThread->wait();
+
+            delete mTextPageGenerationThread;
+        }
+
+        void pixmapGenerationFinished();
+        void textpageGenerationFinished();
 
         Document * m_document;
         QSet< GeneratorFeature > m_features;
+        Generator *m_generator;
+        PixmapGenerationThread *mPixmapGenerationThread;
+        TextPageGenerationThread *mTextPageGenerationThread;
+        bool mPixmapReady;
+        bool mTextPageReady;
 };
 
+void Generator::Private::pixmapGenerationFinished()
+{
+    PixmapRequest *request = mPixmapGenerationThread->request();
+    mPixmapGenerationThread->endGeneration();
+
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( mPixmapGenerationThread->image() ) ) );
+
+    mPixmapReady = true;
+
+    m_generator->signalPixmapRequestDone( request );
+}
+
+void Generator::Private::textpageGenerationFinished()
+{
+    Page *page = mTextPageGenerationThread->page();
+    mTextPageGenerationThread->endGeneration();
+
+    mTextPageReady = true;
+
+    if ( mTextPageGenerationThread->textPage() )
+        page->setTextPage( mTextPageGenerationThread->textPage() );
+}
+
+
 Generator::Generator()
-    : d( new Private )
+    : d( new Private( this ) )
 {
 }
 
@@ -44,33 +103,56 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
     return false;
 }
 
-bool Generator::canRequestPixmap() const
+bool Generator::canGeneratePixmap() const
 {
-    return canGeneratePixmap();
+    return d->mPixmapReady;
 }
 
-void Generator::requestPixmap( PixmapRequest *request )
+void Generator::generatePixmap( PixmapRequest *request )
 {
-    generatePixmap( request );
-}
+    d->mPixmapReady = false;
 
-bool Generator::canRequestTextPage() const
-{
-    return canGenerateTextPage();
-}
+    if ( hasFeature( Threaded ) )
+    {
+        d->mPixmapGenerationThread->startGeneration( request );
+        return;
+    }
 
-void Generator::requestTextPage( Page *page )
-{
-    generateSyncTextPage( page );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image( request ) ) ) );
+
+    d->mPixmapReady = true;
+
+    d->m_generator->signalPixmapRequestDone( request );
 }
 
 bool Generator::canGenerateTextPage() const
 {
-    return true;
+    return d->mTextPageReady;
 }
 
-void Generator::generateSyncTextPage( Page* )
+void Generator::generateTextPage( Page *page )
 {
+    d->mTextPageReady = false;
+
+    if ( hasFeature( Threaded ) )
+    {
+        d->mTextPageGenerationThread->startGeneration( page );
+        return;
+    }
+
+    page->setTextPage( textPage( page ) );
+
+    d->mTextPageReady = true;
+}
+
+QImage Generator::image( PixmapRequest * )
+{
+    return QImage();
+}
+
+TextPage* Generator::textPage( Page* )
+{
+    return 0;
 }
 
 const DocumentInfo * Generator::generateDocumentInfo()

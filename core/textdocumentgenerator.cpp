@@ -317,9 +317,9 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalPixmapRequestDone( request );
 }
 
-void TextDocumentGenerator::generateSyncTextPage( Okular::Page * page )
+Okular::TextPage* TextDocumentGenerator::textPage( Okular::Page * page )
 {
-    page->setTextPage( d->createTextPage( page->number() ) );
+    return d->createTextPage( page->number() );
 }
 
 bool TextDocumentGenerator::print( KPrinter& printer )

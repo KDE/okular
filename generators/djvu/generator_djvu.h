@@ -30,6 +30,10 @@ class DjVuGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
+        // pixmap generation
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
         // document information
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
@@ -39,11 +43,6 @@ class DjVuGenerator : public Okular::Generator
 
     private slots:
         void djvuImageGenerated( int page, const QImage & img );
-
-    protected:
-        // pixmap generation
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
 
     private:
         void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );

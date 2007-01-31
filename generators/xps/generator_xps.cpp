@@ -651,21 +651,13 @@ bool XpsGenerator::closeDocument()
     return true;
 }
 
-bool XpsGenerator::canGeneratePixmap() const
-{
-    return true;
-}
-
-void XpsGenerator::generatePixmap( Okular::PixmapRequest * request )
+QImage XpsGenerator::image( Okular::PixmapRequest * request )
 {
     QSize size( (int)request->page()->width(), (int)request->page()->height() );
     QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page()->number() );
     pageToRender->renderToImage( &image );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
-
-    // signal that the request has been accomplished
-    signalPixmapRequestDone( request );
+    return image;
 }
 
 const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()

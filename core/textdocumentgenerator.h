@@ -117,6 +117,10 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool closeDocument();
 
+        // [INHERITED] perform actions on document / pages
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
@@ -128,10 +132,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         const Okular::DocumentSynopsis* generateDocumentSynopsis();
 
     protected:
-        // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
-        void generateSyncTextPage( Okular::Page * page );
+        Okular::TextPage* textPage( Okular::Page *page );
 
     private:
         class Private;

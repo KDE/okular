@@ -213,8 +213,7 @@ class XpsGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
 
     protected:
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
+        QImage image( Okular::PixmapRequest *page );
 
     private:
         XpsFile *m_xpsFile;

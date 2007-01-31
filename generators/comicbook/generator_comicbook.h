@@ -10,11 +10,11 @@
 #ifndef GENERATOR_COMICBOOK_H
 #define GENERATOR_COMICBOOK_H
 
-#include <okular/core/threadedgenerator.h>
+#include <core/generator.h>
 
 #include "document.h"
 
-class ComicBookGenerator : public Okular::ThreadedGenerator
+class ComicBookGenerator : public Okular::Generator
 {
     Q_OBJECT
 

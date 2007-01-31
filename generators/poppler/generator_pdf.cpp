@@ -678,22 +678,22 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     signalPixmapRequestDone( request );
 }
 
-void PDFGenerator::generateSyncTextPage( Okular::Page * page )
+Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
-    kDebug() << "calling generateSyncTextPage( Okular::Page * page )" << endl;
+    kDebug() << "calling textPage( Okular::Page * page )" << endl;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
     QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->orientation());
     docLock.unlock();
     delete pp;
-    // ..and attach it to the page
 
     const double pageWidth = ( page->rotation() % 2 ? page->height() : page->width() );
     const double pageHeight = ( page->rotation() % 2 ? page->width() : page->height() );
 
-    page->setTextPage( abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation()));
+    Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
+    return tp;
 }
 
 bool PDFGenerator::print( KPrinter& printer )

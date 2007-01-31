@@ -44,9 +44,10 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
 OKULAR_EXPORT_PLUGIN(TIFFGenerator)
 
 TIFFGenerator::TIFFGenerator()
-    : Okular::ThreadedGenerator(),
+    : Okular::Generator(),
       d( new Private ), m_docInfo( 0 )
 {
+    setFeature( Threaded );
 }
 
 TIFFGenerator::~TIFFGenerator()

@@ -239,9 +239,9 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     signalPixmapRequestDone( request );
 }
 
-void DviGenerator::generateSyncTextPage( Okular::Page* page )
+Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
 {
-    kDebug() << "DviGenerator::generateSyncTextPage( Okular::Page * page )" << endl;
+    kDebug() << "DviGenerator::textPage( Okular::Page * page )" << endl;
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
 
@@ -255,14 +255,15 @@ void DviGenerator::generateSyncTextPage( Okular::Page* page )
     pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
 
     // get page text from m_dviRenderer
+    Okular::TextPage *ktp = 0;
     if ( m_dviRenderer )
     {
         m_dviRenderer->getText( pageInfo );
 
-        Okular::TextPage *ktp = extractTextFromPage( pageInfo, page->totalOrientation() );
-        page->setTextPage( ktp );
+        ktp = extractTextFromPage( pageInfo, page->totalOrientation() );
     }
     delete pageInfo;
+    return ktp;
 }
 
 Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo, int orientation )

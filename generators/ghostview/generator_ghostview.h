@@ -38,6 +38,10 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         const Okular::DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
         const Okular::DocumentFonts * generateDocumentFonts() { return 0L; }
 
+        // page contents generation
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
         // page size management
         Okular::PageSize::List pageSizes() const;
         void pageSizeChanged( const Okular::PageSize &, const Okular::PageSize & );
@@ -60,11 +64,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
     public slots:
         void slotPixmapGenerated(const QImage* img);
         void slotAsyncPixmapGenerated(QPixmap * img);
-
-    protected:
-        // page contents generation
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request ) ;
 
     private:
         // conversion handling

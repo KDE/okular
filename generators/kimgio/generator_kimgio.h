@@ -10,11 +10,11 @@
 #ifndef _OKULAR_GENERATOR_KIMGIO_H_
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
-#include <okular/core/threadedgenerator.h>
+#include <core/generator.h>
 
 #include <QtGui/QImage>
 
-class KIMGIOGenerator : public Okular::ThreadedGenerator
+class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:

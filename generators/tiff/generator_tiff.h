@@ -10,9 +10,9 @@
 #ifndef _OKULAR_GENERATOR_TIFF_H_
 #define _OKULAR_GENERATOR_TIFF_H_
 
-#include <okular/core/threadedgenerator.h>
+#include <core/generator.h>
 
-class TIFFGenerator : public Okular::ThreadedGenerator
+class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:

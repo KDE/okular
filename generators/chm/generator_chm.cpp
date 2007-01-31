@@ -346,7 +346,7 @@ void CHMGenerator::additionalRequestData()
     }
 }
 
-void CHMGenerator::generateSyncTextPage( Okular::Page * page )
+Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
 {
     syncLock.lock();
     double zoomP=Okular::Settings::zoomFactor();
@@ -355,8 +355,8 @@ void CHMGenerator::generateSyncTextPage( Okular::Page * page )
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
-    page->setTextPage(tp);
     syncLock.unlock();
+    return tp;
 }
 
 QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) const

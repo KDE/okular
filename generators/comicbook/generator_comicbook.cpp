@@ -18,8 +18,9 @@
 OKULAR_EXPORT_PLUGIN(ComicBookGenerator)
 
 ComicBookGenerator::ComicBookGenerator()
-    : ThreadedGenerator()
+    : Generator()
 {
+    setFeature( Threaded );
 }
 
 ComicBookGenerator::~ComicBookGenerator()

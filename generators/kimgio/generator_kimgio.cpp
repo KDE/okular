@@ -21,9 +21,10 @@
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 
 KIMGIOGenerator::KIMGIOGenerator()
-    : ThreadedGenerator()
+    : Generator()
 {
     setFeature( ReadRawData );
+    setFeature( Threaded );
 }
 
 KIMGIOGenerator::~KIMGIOGenerator()

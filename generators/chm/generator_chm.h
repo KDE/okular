@@ -38,15 +38,16 @@ class CHMGenerator : public Okular::Generator
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         const Okular::DocumentFonts * generateDocumentFonts();
 
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
         QVariant metaData( const QString & key, const QVariant & option ) const;
 
     public slots:
         void slotCompleted();
 
     protected:
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
-        void generateSyncTextPage( Okular::Page * page );
+        Okular::TextPage* textPage( Okular::Page *page );
 
     private:
         void additionalRequestData ();

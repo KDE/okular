@@ -29,17 +29,17 @@ class DviGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest * request );
+
         // document information
         const Okular::DocumentInfo *generateDocumentInfo();
 
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
-   protected:
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
-        void generateSyncTextPage( Okular::Page * page );
+    protected:
+        Okular::TextPage* textPage( Okular::Page *page );
 
    private:
         double m_resolution;

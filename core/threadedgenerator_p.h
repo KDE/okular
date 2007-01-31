@@ -17,7 +17,7 @@ namespace Okular {
 class PixmapGenerationThread : public QThread
 {
     public:
-        PixmapGenerationThread( ThreadedGenerator *generator )
+        PixmapGenerationThread( Generator *generator )
             : mGenerator( generator ), mRequest( 0 )
         {
         }
@@ -54,7 +54,7 @@ class PixmapGenerationThread : public QThread
         }
 
     private:
-        ThreadedGenerator *mGenerator;
+        Generator *mGenerator;
         PixmapRequest *mRequest;
         QImage mImage;
 };
@@ -63,7 +63,7 @@ class PixmapGenerationThread : public QThread
 class TextPageGenerationThread : public QThread
 {
     public:
-        TextPageGenerationThread( ThreadedGenerator *generator )
+        TextPageGenerationThread( Generator *generator )
             : mGenerator( generator ), mPage( 0 )
         {
         }
@@ -100,7 +100,7 @@ class TextPageGenerationThread : public QThread
         }
 
     private:
-        ThreadedGenerator *mGenerator;
+        Generator *mGenerator;
         Page *mPage;
         TextPage *mTextPage;
 };

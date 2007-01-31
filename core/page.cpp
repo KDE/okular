@@ -269,10 +269,15 @@ QString Page::text( const RegularAreaRect * area ) const
     if ( !d->m_text )
         return ret;
 
-    RegularAreaRect rotatedArea = *area;
-    rotatedArea.transform( d->rotationMatrix().inverted() );
+    if ( area )
+    {
+        RegularAreaRect rotatedArea = *area;
+        rotatedArea.transform( d->rotationMatrix().inverted() );
 
-    ret = d->m_text->text( &rotatedArea );
+        ret = d->m_text->text( &rotatedArea );
+    }
+    else
+        ret = d->m_text->text();
 
     return ret;
 }

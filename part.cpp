@@ -198,6 +198,7 @@ m_searchStarted(false), m_cliPresentation(false)
     rightLayout->addWidget( m_topMessage );
     m_pageView = new PageView( rightContainer, m_document );
     m_pageView->setFocus();      //usability setting
+    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
     connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
     connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );

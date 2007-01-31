@@ -192,6 +192,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// widgets: [] | [right 'pageView']
 	m_pageView = new PageView( m_splitter, m_document );
 	m_pageView->setFocus(); //usability setting
+	m_splitter->setFocusProxy(m_pageView);
 	connect( m_pageView, SIGNAL( urlDropped( const KURL& ) ), SLOT( openURLFromDocument( const KURL & )));
 	connect( m_pageView, SIGNAL( rightClick(const KPDFPage *, const QPoint &) ), this, SLOT( slotShowMenu(const KPDFPage *, const QPoint &) ) );
 

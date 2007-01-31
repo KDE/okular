@@ -25,18 +25,11 @@ class Generator::Private
         Private( Generator *parent )
             : m_document( 0 ),
               m_generator( parent ),
+              mPixmapGenerationThread( 0 ),
+              mTextPageGenerationThread( 0 ),
               mPixmapReady( true ),
               mTextPageReady( true )
         {
-            mPixmapGenerationThread = new PixmapGenerationThread( m_generator );
-            QObject::connect( mPixmapGenerationThread, SIGNAL( finished() ),
-                              m_generator, SLOT( pixmapGenerationFinished() ),
-                              Qt::QueuedConnection );
-
-            mTextPageGenerationThread = new TextPageGenerationThread( m_generator );
-            QObject::connect( mTextPageGenerationThread, SIGNAL( finished() ),
-                              m_generator, SLOT( textpageGenerationFinished() ),
-                              Qt::QueuedConnection );
         }
 
         ~Private()
@@ -52,6 +45,9 @@ class Generator::Private
             delete mTextPageGenerationThread;
         }
 
+        void createPixmapGenerationThread();
+        void createTextPageGenerationThread();
+
         void pixmapGenerationFinished();
         void textpageGenerationFinished();
 
@@ -63,6 +59,28 @@ class Generator::Private
         bool mPixmapReady;
         bool mTextPageReady;
 };
+
+void Generator::Private::createPixmapGenerationThread()
+{
+    if ( mPixmapGenerationThread )
+        return;
+
+    mPixmapGenerationThread = new PixmapGenerationThread( m_generator );
+    QObject::connect( mPixmapGenerationThread, SIGNAL( finished() ),
+                      m_generator, SLOT( pixmapGenerationFinished() ),
+                      Qt::QueuedConnection );
+}
+
+void Generator::Private::createTextPageGenerationThread()
+{
+    if ( mTextPageGenerationThread )
+        return;
+
+    mTextPageGenerationThread = new TextPageGenerationThread( m_generator );
+    QObject::connect( mTextPageGenerationThread, SIGNAL( finished() ),
+                      m_generator, SLOT( textpageGenerationFinished() ),
+                      Qt::QueuedConnection );
+}
 
 void Generator::Private::pixmapGenerationFinished()
 {
@@ -114,6 +132,7 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     if ( hasFeature( Threaded ) )
     {
+        d->createPixmapGenerationThread();
         d->mPixmapGenerationThread->startGeneration( request );
         return;
     }
@@ -136,6 +155,7 @@ void Generator::generateTextPage( Page *page )
 
     if ( hasFeature( Threaded ) )
     {
+        d->createTextPageGenerationThread();
         d->mTextPageGenerationThread->startGeneration( page );
         return;
     }

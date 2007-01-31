@@ -48,7 +48,9 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-    QBuffer buffer( const_cast<QByteArray*>( &fileData ) );
+    QBuffer buffer;
+    buffer.setData( fileData );
+    buffer.open( QIODevice::ReadOnly );
 
     QImageReader reader( &buffer );
     if ( !reader.read( &m_img ) ) {

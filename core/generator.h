@@ -221,9 +221,14 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * This method can be called to trigger the generation of
          * a text page for the given @p page.
+         *
+         * The generation is done synchronous or asynchronous, depending
+         * on the @p type parameter and the capabilities of the
+         * generator (e.g. multithreading).
+         *
          * @see TextPage
          */
-        virtual void generateTextPage( Page * page );
+        virtual void generateTextPage( Page * page, enum GenerationType type = Synchronous );
 
         /**
          * Returns the general information object of the document or 0 if

@@ -309,7 +309,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Sends a request for text page generation for the given page @p number.
          */
-        void requestTextPage( uint number );
+        void requestTextPage( uint number, enum GenerationType type = Synchronous );
 
         /**
          * Adds a new @p annotation to the given @p page.

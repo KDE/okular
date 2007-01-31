@@ -1320,7 +1320,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
         d->sendGeneratorRequest();
 }
 
-void Document::requestTextPage( uint page )
+void Document::requestTextPage( uint page, enum GenerationType type )
 {
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
@@ -1328,7 +1328,7 @@ void Document::requestTextPage( uint page )
 
     // Memory management for TextPages
 
-    d->m_generator->generateTextPage( kp );
+    d->m_generator->generateTextPage( kp, type );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

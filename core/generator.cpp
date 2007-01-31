@@ -134,6 +134,17 @@ void Generator::generatePixmap( PixmapRequest *request )
     {
         d->createPixmapGenerationThread();
         d->mPixmapGenerationThread->startGeneration( request );
+
+        /**
+         * We create the text page for every page that is visible to the
+         * user, so he can use the text extraction tools without a delay.
+         */
+        if ( !request->page()->hasTextPage() && canGenerateTextPage() ) {
+            d->mTextPageReady = false;
+            d->createTextPageGenerationThread();
+            d->mTextPageGenerationThread->startGeneration( request->page() );
+        }
+
         return;
     }
 
@@ -149,15 +160,17 @@ bool Generator::canGenerateTextPage() const
     return d->mTextPageReady;
 }
 
-void Generator::generateTextPage( Page *page )
+void Generator::generateTextPage( Page *page, enum GenerationType type )
 {
     d->mTextPageReady = false;
 
-    if ( hasFeature( Threaded ) )
-    {
-        d->createTextPageGenerationThread();
-        d->mTextPageGenerationThread->startGeneration( page );
-        return;
+    if ( type == Asynchronous ) {
+        if ( hasFeature( Threaded ) )
+        {
+            d->createTextPageGenerationThread();
+            d->mTextPageGenerationThread->startGeneration( page );
+            return;
+        }
     }
 
     page->setTextPage( textPage( page ) );

@@ -48,6 +48,15 @@ enum Rotation
     Rotation270 = 3   ///< Rotated 2700 degrees clockwise.
 };
 
+/**
+ * Describes the type of generation of objects
+ */
+enum GenerationType
+{
+    Synchronous,      ///< Will create the object in a synchronous way
+    Asynchronous      ///< Will create the object in an asynchronous way
+};
+
 }
 
 #endif

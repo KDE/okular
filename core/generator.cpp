@@ -14,8 +14,8 @@
 
 #include "document.h"
 #include "generator.h"
+#include "generator_p.h"
 #include "page.h"
-#include "threadedgenerator_p.h"
 
 using namespace Okular;
 

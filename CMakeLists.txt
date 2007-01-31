@@ -46,7 +46,6 @@ set(okularcore_SRCS
    core/sourcereference.cpp
    core/textdocumentgenerator.cpp
    core/textpage.cpp
-   core/threadedgenerator.cpp
    core/utils.cpp
 )
 
@@ -64,7 +63,6 @@ install( FILES
            core/sourcereference.h
            core/textdocumentgenerator.h
            core/textpage.h
-           core/threadedgenerator.h
            core/utils.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
 

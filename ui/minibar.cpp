@@ -55,6 +55,9 @@ class HoverButton : public QPushButton
         HoverButton( QWidget * parent );
 
     protected:
+        QSize sizeHint() const;
+        QSize minimumSizeHint() const;
+
         void paintEvent( QPaintEvent * e );
         void enterEvent( QEvent * e );
         void leaveEvent( QEvent * e );
@@ -402,6 +405,20 @@ HoverButton::HoverButton( QWidget * parent )
     setMouseTracking( true );
     KAcceleratorManager::setNoAccel( this );
     setFocusPolicy(Qt::NoFocus);
+}
+
+QSize HoverButton::sizeHint() const
+{
+	QSize base = QPushButton::sizeHint();
+	base.setWidth( base.width() * 2 );
+	return base;
+}
+
+QSize HoverButton::minimumSizeHint() const
+{
+	QSize base = QPushButton::minimumSizeHint();
+	base.setWidth( base.width() * 2 );
+	return base;
 }
 
 void HoverButton::enterEvent( QEvent * e )

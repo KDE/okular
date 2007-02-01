@@ -63,6 +63,16 @@ NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
 NormalizedRect::NormalizedRect( const NormalizedRect & rect )
     : left( rect.left ), top( rect.top ), right( rect.right ), bottom( rect.bottom ) {}
 
+NormalizedRect NormalizedRect::fromQRectF( const QRectF &rect )
+{
+    NormalizedRect ret;
+    ret.left = rect.left();
+    ret.top = rect.top();
+    ret.right = rect.right();
+    ret.bottom = rect.bottom();
+    return ret;
+}
+
 bool NormalizedRect::isNull() const
 {
     return left == 0 && top== 0 && right == 0 && bottom == 0;

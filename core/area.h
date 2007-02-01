@@ -126,6 +126,11 @@ class OKULAR_EXPORT NormalizedRect
         NormalizedRect& operator=( const NormalizedRect &other );
 
         /**
+         * Build a normalized rect from a QRectF.
+         */
+        static NormalizedRect fromQRectF( const QRectF &rect );
+
+        /**
          * Returns whether this normalized rectangle is a null normalized rect.
          */
         bool isNull() const;

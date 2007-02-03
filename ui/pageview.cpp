@@ -836,7 +836,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                             d->mouseSelectionColor : Qt::red;
 
         // subdivide region into rects
-        QVector<QRect> allRects = pe->region().rects();
+        const QVector<QRect> &allRects = pe->region().rects();
         uint numRects = allRects.count();
 
         // preprocess rects area to see if it worths or not using subdivision
@@ -2031,7 +2031,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     }
 
     // fill with background color the unpainted area
-    QVector<QRect> backRects = remainingArea.rects();
+    const QVector<QRect> &backRects = remainingArea.rects();
     int backRectsNumber = backRects.count();
     QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
     for ( int jr = 0; jr < backRectsNumber; jr++ )
@@ -2074,7 +2074,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 PageViewItem * PageView::pickItemOnPoint( int x, int y )
 {
     PageViewItem * item = 0;
-    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
+    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;

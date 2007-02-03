@@ -242,7 +242,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
 {
     bool found = false;
     const QVector<Okular::VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for ( ; tIt != tEnd; ++tIt )
     {

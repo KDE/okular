@@ -122,7 +122,7 @@ class Document::Private
         Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
         void loadAllGeneratorLibraries();
         void loadServiceList( const KService::List& offers );
-        void unloadGenerator( GeneratorInfo& info );
+        void unloadGenerator( const GeneratorInfo& info );
 
         // private slots
         void saveDocumentInfo() const;
@@ -504,7 +504,7 @@ void Document::Private::loadServiceList( const KService::List& offers )
     {
         QString propName = offers.at(i)->name();
         // don't load already loaded generators
-        QHash< QString, GeneratorInfo >::iterator genIt = m_loadedGenerators.find( propName );
+        QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
         if ( genIt != m_loadedGenerators.end() )
             continue;
 
@@ -513,7 +513,7 @@ void Document::Private::loadServiceList( const KService::List& offers )
     }
 }
 
-void Document::Private::unloadGenerator( GeneratorInfo& info )
+void Document::Private::unloadGenerator( const GeneratorInfo& info )
 {
     delete info.generator;
     info.library->unload();
@@ -663,7 +663,7 @@ Document::~Document()
     closeDocument();
 
     // delete the loaded generators
-    QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin(), itEnd = d->m_loadedGenerators.end();
+    QHash< QString, GeneratorInfo >::const_iterator it = d->m_loadedGenerators.constBegin(), itEnd = d->m_loadedGenerators.constEnd();
     for ( ; it != itEnd; ++it )
         d->unloadGenerator( it.value() );
     d->m_loadedGenerators.clear();
@@ -748,8 +748,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     QString propName = offers.at(hRank)->name();
-    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( propName );
-    if ( genIt != d->m_loadedGenerators.end() )
+    QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( propName );
+    if ( genIt != d->m_loadedGenerators.constEnd() )
     {
         d->m_generator = genIt.value().generator;
     }
@@ -800,7 +800,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     for ( int i = 0; i < d->m_pagesVector.count(); ++i )
-        connect( d->m_pagesVector[ i ], SIGNAL( rotationFinished( int ) ),
+        connect( d->m_pagesVector.at(i), SIGNAL( rotationFinished( int ) ),
                  this, SLOT( rotationFinished( int ) ) );
 
     QApplication::restoreOverrideCursor();
@@ -1086,7 +1086,7 @@ const QList<EmbeddedFile*> *Document::embeddedFiles() const
 
 const Page * Document::page( int n ) const
 {
-    return ( n < d->m_pagesVector.count() ) ? d->m_pagesVector[n] : 0;
+    return ( n < d->m_pagesVector.count() ) ? d->m_pagesVector.at(n) : 0;
 }
 
 const DocumentViewport & Document::viewport() const
@@ -1223,7 +1223,7 @@ QSizeF Document::allPagesSize() const
     QSizeF size;
     for (int i = 0; allPagesSameSize && i < d->m_pagesVector.count(); ++i)
     {
-        Page *p = d->m_pagesVector[i];
+        Page *p = d->m_pagesVector.at(i);
         if (i == 0) size = QSizeF(p->width(), p->height());
         else
         {
@@ -2064,7 +2064,7 @@ void Document::processSourceReference( const SourceReference * ref )
             QLatin1String( "scite %f \"-goto:%l,%c\"" );
     }
 
-    QHash< int, QString >::const_iterator it = editors.find( Settings::externalEditor() );
+    QHash< int, QString >::const_iterator it = editors.constFind( Settings::externalEditor() );
     QString p;
     if ( it != editors.end() )
         p = *it;
@@ -2172,8 +2172,9 @@ void Document::requestDone( PixmapRequest * req )
     d->m_allocatedPixmapsTotalMemory += memoryBytes;
 
     // 2. notify an observer that its pixmap changed
-    if ( d->m_observers.contains( req->id() ) )
-        d->m_observers[ req->id() ]->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
+    QMap< int, DocumentObserver * >::const_iterator itObserver = d->m_observers.constFind( req->id() );
+    if ( itObserver != d->m_observers.constEnd() )
+        itObserver.value()->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
 
     // 3. delete request
     delete req;

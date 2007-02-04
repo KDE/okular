@@ -25,7 +25,6 @@
 #include <ktemporaryfile.h>
 
 #include <okular/core/page.h>
-#include <okular/core/observer.h>
 
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"

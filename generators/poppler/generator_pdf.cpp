@@ -22,7 +22,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <okular/core/observer.h> //for PAGEVIEW_ID
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
 #include <okular/core/pagetransition.h>

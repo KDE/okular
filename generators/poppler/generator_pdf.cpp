@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qcolor.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qregexp.h>
@@ -22,11 +23,14 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
+#include <okular/core/document.h>
+#include <okular/core/link.h>
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
 #include <okular/core/pagetransition.h>
 #include <okular/core/sound.h>
 #include <okular/core/sourcereference.h>
+#include <okular/core/textpage.h>
 
 // local includes
 #include "generator_pdf.h"

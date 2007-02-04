@@ -16,14 +16,9 @@
 #include <poppler-qt4.h>
 
 #include <qmutex.h>
-#include <qcolor.h>
-#include <qstring.h>
 #include <qthread.h>
 
 #include <okular/core/generator.h>
-#include <okular/core/document.h>
-#include <okular/core/link.h>
-#include <okular/core/textpage.h>
 #include <okular/interfaces/configinterface.h>
 
 namespace Okular {

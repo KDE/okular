@@ -139,8 +139,6 @@ int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation ) const
     return angle;
 }
 
-inline QString GSGenerator::fileName() const { return internalDoc->fileName(); };
-
 bool GSGenerator::print( KPrinter& printer ) 
 {
     KTemporaryFile tf;
@@ -297,7 +295,7 @@ void GSGenerator::setupGui( KActionCollection *ac, QToolBox *tBox )
 
 void GSGenerator::freeGui()
 {
-    if ( GSSettings::messages() )
+    if ( m_logWindow )
     {
         m_box->removeItem(m_box->indexOf(m_logWindow));
     }

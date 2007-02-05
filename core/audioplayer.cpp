@@ -57,6 +57,18 @@ public:
     {
     }
 
+    void play()
+    {
+        if ( m_mediaobject )
+        {
+            m_mediaobject->play();
+        }
+        else if ( m_bytestream )
+        {
+            m_bytestream->play();
+        }
+    }
+
     ~PlayData()
     {
         if ( m_bytestream )
@@ -149,7 +161,6 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
                     data->m_mediaobject->setUrl( url );
                     m_playing.insert( newid, data );
                     valid = true;
-                    data->m_mediaobject->play();
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;
                 }
             }
@@ -176,7 +187,6 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
                     data->m_bytestream->setStreamSeekable( true );
                     data->m_bytestream->endOfData();
                     valid = true;
-                    data->m_bytestream->play();
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data" << endl;
                 }
             }
@@ -188,6 +198,10 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     {
         delete data;
         data = 0;
+    }
+    if ( data )
+    {
+        data->play();
     }
     return valid;
 }
@@ -204,8 +218,18 @@ void AudioPlayer::Private::finished( int id )
     if ( it == m_playing.end() )
         return;
 
-    delete it.value();
-    m_playing.erase( it );
+    SoundInfo si = it.value()->m_info;
+    // if the sound must be repeated indefinitely, then start the playback
+    // again, otherwise destroy the PlayData as it's no more useful
+    if ( si.repeat )
+    {
+        it.value()->play();
+    }
+    else
+    {
+        delete it.value();
+        m_playing.erase( it );
+    }
     kDebug() << k_funcinfo << "finished, " << m_playing.count() << endl;
 }
 
@@ -241,6 +265,11 @@ void AudioPlayer::playSound( const Sound * sound, const LinkSound * linksound )
         d->stopPlayings();
 
     d->play( si );
+}
+
+void AudioPlayer::stopPlaybacks()
+{
+    d->stopPlayings();
 }
 
 #include "audioplayer.moc"

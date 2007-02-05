@@ -43,6 +43,11 @@ class OKULAR_EXPORT AudioPlayer : public QObject
          */
         void playSound( const Sound * sound, const LinkSound * linksound = 0 );
 
+        /**
+         * Tell the AudioPlayer to stop all the playbacks.
+         */
+        void stopPlaybacks();
+
     private:
         AudioPlayer();
 

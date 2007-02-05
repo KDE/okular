@@ -49,15 +49,15 @@ public:
 };
 
 
-class PlayInfo
+class PlayData
 {
 public:
-    PlayInfo()
+    PlayData()
         : m_mediaobject( 0 ), m_bytestream( 0 ), m_path( 0 ), m_output( 0 )
     {
     }
 
-    ~PlayInfo()
+    ~PlayData()
     {
         if ( m_bytestream )
         {
@@ -104,15 +104,15 @@ public:
 
     AudioPlayer * q;
 
-    QHash< int, PlayInfo * > m_playing;
+    QHash< int, PlayData * > m_playing;
     QSignalMapper m_mapper;
 };
 
 int AudioPlayer::Private::newId() const
 {
     int newid = 0;
-    QHash< int, PlayInfo * >::const_iterator it;
-    QHash< int, PlayInfo * >::const_iterator itEnd = m_playing.constEnd();
+    QHash< int, PlayData * >::const_iterator it;
+    QHash< int, PlayData * >::const_iterator itEnd = m_playing.constEnd();
     do
     {
         newid = KRandom::random();
@@ -124,12 +124,12 @@ int AudioPlayer::Private::newId() const
 bool AudioPlayer::Private::play( const SoundInfo& si )
 {
     kDebug() << k_funcinfo << endl;
-    PlayInfo * info = new PlayInfo();
-    info->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
-    info->m_output->setVolume( si.volume );
-    info->m_path = new Phonon::AudioPath();
-    info->m_path->addOutput( info->m_output );
-    info->m_info = si;
+    PlayData * data = new PlayData();
+    data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
+    data->m_output->setVolume( si.volume );
+    data->m_path = new Phonon::AudioPath();
+    data->m_path->addOutput( data->m_output );
+    data->m_info = si;
     bool valid = false;
 
     switch ( si.sound->soundType() )
@@ -140,16 +140,16 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
             kDebug() << "[AudioPlayer::Playinfo::play()] External, " << url << endl;
             if ( !url.isEmpty() )
             {
-                info->m_mediaobject = new Phonon::MediaObject();
-                if ( info->m_mediaobject->addAudioPath( info->m_path ) )
+                data->m_mediaobject = new Phonon::MediaObject();
+                if ( data->m_mediaobject->addAudioPath( data->m_path ) )
                 {
-                    QObject::connect( info->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
+                    QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
-                    m_mapper.setMapping( info->m_mediaobject, newid );
-                    info->m_mediaobject->setUrl( url );
-                    m_playing.insert( newid, info );
+                    m_mapper.setMapping( data->m_mediaobject, newid );
+                    data->m_mediaobject->setUrl( url );
+                    m_playing.insert( newid, data );
                     valid = true;
-                    info->m_mediaobject->play();
+                    data->m_mediaobject->play();
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;
                 }
             }
@@ -158,25 +158,25 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
         case Sound::Embedded:
         {
 #if 0 // disable because of broken bytestream in xine :(
-            QByteArray data = si.sound->data();
+            QByteArray filedata = si.sound->data();
             kDebug() << "[AudioPlayer::Playinfo::play()] Embedded, " << data.length() << endl;
-            if ( !data.isEmpty() )
+            if ( !filedata.isEmpty() )
             {
-                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << info->m_bytestream << endl;
-                info->m_bytestream = new Phonon::ByteStream();
-                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << info->m_bytestream << endl;
-                if ( info->m_bytestream->addAudioPath( info->m_path ) )
+                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << data->m_bytestream << endl;
+                data->m_bytestream = new Phonon::ByteStream();
+                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << data->m_bytestream << endl;
+                if ( data->m_bytestream->addAudioPath( data->m_path ) )
                 {
-                    QObject::connect( info->m_bytestream, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
+                    QObject::connect( data->m_bytestream, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
-                    m_mapper.setMapping( info->m_mediaobject, newid );
-                    m_playing.insert( newid, info );
-                    info->m_bytestream->writeData( data );
-                    info->m_bytestream->setStreamSize( data.length() );
-                    info->m_bytestream->setStreamSeekable( true );
-                    info->m_bytestream->endOfData();
+                    m_mapper.setMapping( data->m_mediaobject, newid );
+                    m_playing.insert( newid, data );
+                    data->m_bytestream->writeData( filedata );
+                    data->m_bytestream->setStreamSize( filedata.length() );
+                    data->m_bytestream->setStreamSeekable( true );
+                    data->m_bytestream->endOfData();
                     valid = true;
-                    info->m_bytestream->play();
+                    data->m_bytestream->play();
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data" << endl;
                 }
             }
@@ -186,8 +186,8 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     }
     if ( !valid )
     {
-        delete info;
-        info = 0;
+        delete data;
+        data = 0;
     }
     return valid;
 }
@@ -200,7 +200,7 @@ void AudioPlayer::Private::stopPlayings()
 
 void AudioPlayer::Private::finished( int id )
 {
-    QHash< int, PlayInfo * >::iterator it = m_playing.find( id );
+    QHash< int, PlayData * >::iterator it = m_playing.find( id );
     if ( it == m_playing.end() )
         return;
 

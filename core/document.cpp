@@ -660,8 +660,14 @@ Document::Document()
 
 Document::~Document()
 {
+    // stop any audio playback
+    AudioPlayer::instance()->stopPlaybacks();
+
     // delete generator, pages, and related stuff
     closeDocument();
+
+    // delete the bookmark manager
+    delete d->m_bookmarkManager;
 
     // delete the loaded generators
     QHash< QString, GeneratorInfo >::const_iterator it = d->m_loadedGenerators.constBegin(), itEnd = d->m_loadedGenerators.constEnd();

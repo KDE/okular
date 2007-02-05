@@ -445,7 +445,7 @@ class OKULAR_EXPORT Document : public QObject
         void fillConfigDialog( KConfigDialog * dialog );
 
         /**
-         * Returns the list wih the supported MIME types.
+         * Returns the list with the supported MIME types.
          */
         QStringList supportedMimeTypes() const;
 

@@ -92,11 +92,12 @@ public:
 
     ~Private()
     {
-        qDeleteAll( m_playing );
+        stopPlayings();
     }
 
     int newId() const;
     bool play( const SoundInfo& si );
+    void stopPlayings();
 
     // private slots
     void finished( int );
@@ -191,6 +192,11 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     return valid;
 }
 
+void AudioPlayer::Private::stopPlayings()
+{
+    qDeleteAll( m_playing );
+    m_playing.clear();
+}
 
 void AudioPlayer::Private::finished( int id )
 {
@@ -228,6 +234,11 @@ void AudioPlayer::playSound( const Sound * sound, const LinkSound * linksound )
 
     kDebug() << k_funcinfo << endl;
     SoundInfo si( sound, linksound );
+
+    // if the mix flag of the new sound is false, then the currently playing
+    // sounds must be stopped.
+    if ( !si.mix )
+        d->stopPlayings();
 
     d->play( si );
 }

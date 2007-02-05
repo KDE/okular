@@ -31,6 +31,7 @@ include_directories(
 set(okularcore_SRCS
    core/annotations.cpp
    core/area.cpp
+   core/audioplayer.cpp
    core/bookmarkmanager.cpp
    core/chooseenginedialog.cpp
    core/document.cpp
@@ -87,7 +88,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} m )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_PHONONCORE_LIBRARY} m )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

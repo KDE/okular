@@ -622,9 +622,16 @@ void PresentationWidget::changePage( int newPage )
     // set a new viewport in document if page number differs
     if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
     {
+        if ( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) )
+            m_document->processLink( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
+
         // remove the drawing on the old page before switching
         clearDrawings();
         m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+
+        if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
+            m_document->processLink( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
     }
 }
 

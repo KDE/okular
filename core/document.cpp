@@ -33,6 +33,7 @@
 #include <ktoolinvocation.h>
 
 // local includes
+#include "audioplayer.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
 #include "document.h"
@@ -2033,12 +2034,14 @@ void Document::processLink( const Link * link )
             }
             } break;
 
+        case Link::Sound: {
+            const LinkSound * linksound = static_cast< const LinkSound * >( link );
+            AudioPlayer::instance()->playSound( linksound->sound(), linksound );
+            } break;
+
         case Link::Movie:
             //const LinkMovie * browse = static_cast< const LinkMovie * >( link );
             // TODO this (Movie link)
-            break;
-        case Link::Sound:
-            // TODO this (Sound link)
             break;
     }
 }

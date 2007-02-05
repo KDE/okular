@@ -39,6 +39,7 @@
 #include "presentationwidget.h"
 #include "annotationtools.h"
 #include "pagepainter.h"
+#include "core/audioplayer.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -131,6 +132,9 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
 PresentationWidget::~PresentationWidget()
 {
+    // stop the audio playbacks
+    Okular::AudioPlayer::instance()->stopPlaybacks();
+
     // remove this widget from document observer
     m_document->removeObserver( this );
 
@@ -622,6 +626,9 @@ void PresentationWidget::changePage( int newPage )
     // set a new viewport in document if page number differs
     if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
     {
+        // stop the audio playback, if any
+        Okular::AudioPlayer::instance()->stopPlaybacks();
+        // perform the page closing action, if any
         if ( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) )
             m_document->processLink( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
 
@@ -629,6 +636,7 @@ void PresentationWidget::changePage( int newPage )
         clearDrawings();
         m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
 
+        // perform the page opening action, if any
         if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
             m_document->processLink( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 

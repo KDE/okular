@@ -28,6 +28,7 @@
 #include <kglobal.h>
 #include <kimageeffect.h>
 #include <klocale.h>
+#include <QFileInfo>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
@@ -105,6 +106,36 @@ static QPointF getPointFromString( const QString &data, int *curPos )
     return QPointF( firstVal, secondVal );
 }
 
+
+
+static bool parseGUID( const QString guidString, unsigned short guid[16]) {
+
+    if (guidString.length() <= 35) {
+        return false;
+    }
+
+    // Maps bytes to positions in guidString
+    const static int indexes[] = {6, 4, 2, 0, 11, 9, 16, 14, 19, 21, 24, 26, 28, 30, 32, 34};
+
+    for (int i = 0; i < 16; i++) {
+        int hex1 = hex2int(guidString[indexes[i]].cell());
+    	int hex2 = hex2int(guidString[indexes[i]+1].cell());
+
+	    if ((hex1 < 0) || (hex2 < 0))
+	    {
+	        return false;
+	    }
+
+        guid[i] = hex1 * 16 + hex2;
+    }
+
+    return true;
+
+}
+
+
+
+
 void XpsHandler::parseAbbreviatedPathData( const QString &data)
 {
     // kDebug() << data << endl;
@@ -154,7 +185,7 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
     QStringList values = csv.split( ',' );
     if ( values.count() != 6 ) {
         return QMatrix(); // that is an identity matrix - no effect
-    } 
+    }
     return QMatrix( values.at(0).toDouble(), values.at(1).toDouble(),
                     values.at(2).toDouble(), values.at(3).toDouble(),
                     values.at(4).toDouble(), values.at(5).toDouble() );
@@ -170,7 +201,7 @@ XpsHandler::~XpsHandler()
 bool XpsHandler::startDocument()
 {
     // kDebug() << "start document" << endl;
-    m_page->m_pageImage->fill( QColor("White").rgba() ); 
+    m_page->m_pageImage->fill( QColor("White").rgba() );
     m_painter = new QPainter(m_page->m_pageImage);
     return true;
 }
@@ -185,7 +216,7 @@ bool XpsHandler::startElement( const QString &nameSpace,
     Q_UNUSED(qname);
     if (localName == "Glyphs") {
         m_painter->save();
-        int fontId = m_page->loadFontByName( atts.value("FontUri") );
+        int fontId = m_page->getFontByName( atts.value("FontUri") );
         // kDebug() << "Font families: (" << fontId << ") " << QFontDatabase::applicationFontFamilies( fontId ).at(0) << endl;
         QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
         // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
@@ -329,6 +360,18 @@ QSize XpsPage::size() const
     return m_pageSize;
 }
 
+int XpsPage::getFontByName( const QString &fileName )
+{
+    int defaultValue = -1;
+    int index = m_fontCache.value(fileName, -1);
+    if (index == -1)
+    {
+        index = loadFontByName(fileName);
+        m_fontCache[fileName] = index;
+    }
+    return index;
+}
+
 int XpsPage::loadFontByName( const QString &fileName )
 {
     // kDebug() << "font file name: " << fileName << endl;
@@ -339,11 +382,39 @@ int XpsPage::loadFontByName( const QString &fileName )
 
     int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {
-        kDebug() << "Failed to load application font from data" << endl;
+        // Try to deobfuscate font
+	    // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
+
+    	QFileInfo* fileInfo = new QFileInfo(fileName);
+	    QString baseName = fileInfo->baseName();
+    	delete fileInfo;
+
+        unsigned short guid[16];
+        if (!parseGUID(baseName, guid))
+        {
+    		kDebug() << "File to load font - file name isn't a GUID" << endl;
+        }
+        else
+        {
+    		if (fontData.length() < 32)
+            {
+    			kDebug() << "Font file is too small" << endl;
+            } else {
+                // Obfuscation - xor bytes in font binary with bytes from guid (font's filename)
+                const static int mapping[] = {15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 4, 5, 0, 1, 2, 3};
+                for (int i = 0; i < 16; i++) {
+                    fontData[i] = fontData[i] ^ guid[mapping[i]];
+                    fontData[i+16] = fontData[i+16] ^ guid[mapping[i]];
+                }
+                result = m_fontDatabase.addApplicationFontFromData( fontData );
+            }
+        }
+
     }
-    
+
+
     // kDebug() << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result ) << endl;
-    
+
     return result; // a font ID
 }
 
@@ -625,6 +696,9 @@ XpsGenerator::~XpsGenerator()
 
 bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
+    delete m_xpsFile;
+    m_xpsFile = new XpsFile();
+
     m_xpsFile->loadDocument( fileName );
     pagesVector.resize( m_xpsFile->numPages() );
 

@@ -88,6 +88,7 @@ public:
     
     QImage loadImageFromFile( const QString &filename );
     int loadFontByName( const QString &fontName );
+    int getFontByName( const QString &fontName );
     
 private:
     KZip *m_archive;
@@ -105,6 +106,8 @@ private:
 
     QImage *m_pageImage;
     bool m_pageIsRendered;
+
+    QMap<QString, int> m_fontCache;
     
     friend class XpsHandler;
 };
@@ -197,6 +200,7 @@ private:
     Okular::DocumentInfo * m_docInfo;
 
     KZip *xpsArchive;
+
 };
 
 

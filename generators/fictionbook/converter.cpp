@@ -650,6 +650,7 @@ bool Converter::convertPoem( const QDomElement &element )
 
 bool Converter::convertSubTitle( const QDomElement &element )
 {
+    Q_UNUSED( element )
     return true;
 }
 

@@ -12,6 +12,7 @@
 #include <qsignalmapper.h>
 #include <kdebug.h>
 #include <krandom.h>
+#include <kurl.h>
 #include <phonon/audiopath.h>
 #include <phonon/audiooutput.h>
 #include <phonon/bytestream.h>
@@ -158,7 +159,7 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
                     QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
-                    data->m_mediaobject->setUrl( url );
+                    data->m_mediaobject->setUrl( KUrl( url ) );
                     m_playing.insert( newid, data );
                     valid = true;
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;

@@ -86,14 +86,14 @@ private:
   void setupAccel();
   void setupActions();
   void init();
-  QStringList* fileFormats();
+  QStringList fileFormats() const;
 
 private:
   KCmdLineArgs* m_args;
   KParts::ReadOnlyPart* m_part;
   KDocumentViewer* m_doc;
   KRecentFilesAction* m_recent;
-  QStringList* m_fileformats;
+  QStringList m_fileformats;
   KAction* m_printAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;

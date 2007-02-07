@@ -60,7 +60,6 @@ void Shell::init()
   // set the shell's ui resource file
   setXMLFile("shell.rc");
   m_doc=0L;
-  m_fileformats=0L;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -121,7 +120,6 @@ void Shell::delayedOpen()
 Shell::~Shell()
 {
     if ( m_part ) writeSettings();
-    if ( m_fileformats ) delete m_fileformats;
     delete m_part;
 }
 
@@ -198,22 +196,21 @@ void Shell::readProperties(KConfig* config)
 
 // this comes from kviewpart/kviewpart.cpp, fileformats function	
 
-QStringList* Shell::fileFormats()
+QStringList Shell::fileFormats() const
 {
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
     KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
     QStringList supportedMimeTypes;
-    QStringList * supportedPattern;
+    QStringList supportedPatterns;
 
     if (offers.isEmpty())
-	{
-        return 0;
-	}
+    {
+        return supportedPatterns;
+    }
 
     KFilterBase* filter = KFilterBase::findFilterByMimeType( "application/x-bzip2" );
     bool bzip2Available = (filter != 0L);
     delete filter;
-    supportedPattern = new QStringList;
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();
     QStringList::ConstIterator mimeType;
@@ -248,19 +245,16 @@ QStringList* Shell::fileFormats()
                 }
 	       	comment=mimePtr->comment();
 		if (! comment.contains("Unknown"))
-	                supportedPattern->append(extensions.join(" ") + '|' + comment);
+                        supportedPatterns.append( extensions.join( " " ) + '|' + comment );
                 allExt+=extensions.join(" ");
                 }
             }
         }
     }
 
-	supportedPattern->prepend(allExt + "|All Files");
-	
-	
-	return supportedPattern;
-	
+    supportedPatterns.prepend( allExt + "|" + i18n( "All Files" ) );
 
+    return supportedPatterns;
 }
 
 void Shell::fileOpen()
@@ -268,15 +262,15 @@ void Shell::fileOpen()
 	// this slot is called whenever the File->Open menu is selected,
 	// the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
 	// button is clicked
-    if (!m_fileformats)
-	   m_fileformats = fileFormats();
+    if (m_fileformats.isEmpty())
+        m_fileformats = fileFormats();
 
-	if (m_fileformats)
+    if (!m_fileformats.isEmpty())
     {
         QString startDir;
         if ( m_openUrl.isLocalFile() )
             startDir = m_openUrl.path();
-        KUrl url = KFileDialog::getOpenUrl( startDir, m_fileformats->join("\n") );//getOpenFileName();
+        KUrl url = KFileDialog::getOpenUrl( startDir, m_fileformats.join( "\n" ) );
         if (!url.isEmpty())
             openUrl(url);
     }

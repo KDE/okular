@@ -35,8 +35,8 @@ typedef struct {
     int curPos;
 
     AbbPathTokenType type;
-	char command;
-	double number;
+    char command;
+    double number;
 } AbbPathToken;
 
 
@@ -68,7 +68,7 @@ private:
     */
     void parseAbbreviatedPathData( const QString &data);
     /**
-    	Read point (two reals delimited by comma) from abbreviated path data
+        Read point (two reals delimited by comma) from abbreviated path data
     */
     QPointF getPointFromString(AbbPathToken *token, bool relative);
 

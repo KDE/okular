@@ -98,12 +98,12 @@ static bool parseGUID( const QString guidString, unsigned short guid[16]) {
 
     for (int i = 0; i < 16; i++) {
         int hex1 = hex2int(guidString[indexes[i]].cell());
-    	int hex2 = hex2int(guidString[indexes[i]+1].cell());
+        int hex2 = hex2int(guidString[indexes[i]+1].cell());
 
-	    if ((hex1 < 0) || (hex2 < 0))
-	    {
-	        return false;
-	    }
+        if ((hex1 < 0) || (hex2 < 0))
+        {
+            return false;
+        }
 
         guid[i] = hex1 * 16 + hex2;
     }
@@ -136,21 +136,21 @@ static bool nextAbbPathToken(AbbPathToken *token)
     {
         int start = *curPos;
         while ((*curPos < data.length()) && (!data.at(*curPos).isSpace()) && (data.at(*curPos) != ',') && !data.at(*curPos).isLetter())
-	{
-	    (*curPos)++;
-	}
-	token->number = data.mid(start, *curPos - start).toDouble();
-	token->type = abtNumber;
+    {
+        (*curPos)++;
+    }
+    token->number = data.mid(start, *curPos - start).toDouble();
+    token->type = abtNumber;
 
     } else if (ch == ',')
     {
         token->type = abtComma;
-	    (*curPos)++;
+        (*curPos)++;
     } else if (ch.isLetter())  
     {
         token->type = abtCommand;
-	token->command = data.at(*curPos).cell();
-	    (*curPos)++;
+        token->command = data.at(*curPos).cell();
+        (*curPos)++;
     } else 
     {
         return false;
@@ -188,10 +188,10 @@ void XpsHandler::parseAbbreviatedPathData( const QString &data)
     token.curPos = 0;
 
     nextAbbPathToken(&token);
-	
-	// Used by Smooth cubic curve (command s)
+    
+    // Used by Smooth cubic curve (command s)
     char lastCommand = ' '; 
-	QPointF lastSecondControlPoint;
+    QPointF lastSecondControlPoint;
 
     while (true)
     {
@@ -259,9 +259,9 @@ void XpsHandler::parseAbbreviatedPathData( const QString &data)
                     QPointF firstControl = getPointFromString(&token, isRelative);
                     QPointF secondControl = getPointFromString(&token, isRelative);
                     QPointF endPoint = getPointFromString(&token, isRelative);
-		    		m_currentPath.cubicTo(firstControl, secondControl, endPoint);
+                    m_currentPath.cubicTo(firstControl, secondControl, endPoint);
 
-					lastSecondControlPoint = secondControl;
+                    lastSecondControlPoint = secondControl;
                 }
                 break;
             case 'q': // Quadratic bezier curve
@@ -269,24 +269,24 @@ void XpsHandler::parseAbbreviatedPathData( const QString &data)
                 {
                     QPointF point1 = getPointFromString(&token, isRelative);
                     QPointF point2 = getPointFromString(&token, isRelative);
-		    		m_currentPath.quadTo(point2, point2);
+                    m_currentPath.quadTo(point2, point2);
                 }
                 break;
             case 's': // Smooth cubic bezier curve
                 while (token.type == abtNumber)
                 {
-					QPointF firstControl;
-		    		if ((lastCommand == 's') || (lastCommand == 'c'))
-					{
-						firstControl = lastSecondControlPoint + (lastSecondControlPoint + m_currentPath.currentPosition());
-					} 
-					else
-					{
-						firstControl = m_currentPath.currentPosition();
-					}
+                    QPointF firstControl;
+                    if ((lastCommand == 's') || (lastCommand == 'c'))
+                    {
+                        firstControl = lastSecondControlPoint + (lastSecondControlPoint + m_currentPath.currentPosition());
+                    } 
+                    else
+                    {
+                        firstControl = m_currentPath.currentPosition();
+                    }
                     QPointF secondControl = getPointFromString(&token, isRelative);
                     QPointF endPoint = getPointFromString(&token, isRelative);
-					m_currentPath.cubicTo(firstControl, secondControl, endPoint);
+                    m_currentPath.cubicTo(firstControl, secondControl, endPoint);
                 }
                 break;
             case 'a': // Arc
@@ -308,7 +308,7 @@ void XpsHandler::parseAbbreviatedPathData( const QString &data)
                 break;
         }
 
-	    lastCommand = command;
+        lastCommand = command;
     }
 }
 
@@ -354,7 +354,7 @@ bool XpsHandler::startElement( const QString &nameSpace,
         // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
         QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
         // TODO: We may not be picking the best font size here
- 		QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(atts.value("FontRenderingEmSize").toFloat()) );
+        QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(atts.value("FontRenderingEmSize").toFloat()) );
         m_painter->setFont(font);
         QPointF origin( atts.value("OriginX").toDouble(), atts.value("OriginY").toDouble() );
         QColor fillColor = hexToRgba( atts.value("Fill").toLatin1() );
@@ -442,19 +442,19 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
 bool XpsPageSizeHandler::startElement ( const QString &nameSpace, const QString &localName, const QString &qname, const QXmlAttributes &atts)
 {
-	Q_UNUSED(nameSpace);
-	Q_UNUSED(qname);
-	if (localName == "FixedPage")
-	{
-		m_width = atts.value("Width").toInt();
-		m_height = atts.value("Height").toInt();
-		m_parsed_successfully = true;
-	} else {
-		m_parsed_successfully = false;
-	}
+    Q_UNUSED(nameSpace);
+    Q_UNUSED(qname);
+    if (localName == "FixedPage")
+    {
+        m_width = atts.value("Width").toInt();
+        m_height = atts.value("Height").toInt();
+        m_parsed_successfully = true;
+    } else {
+        m_parsed_successfully = false;
+    }
 
-	// No need to parse any more
-	return false;
+    // No need to parse any more
+    return false;
 }
 
 XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
@@ -466,39 +466,39 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 
     QIODevice* pageDevice  = pageFile->createDevice();
 
-	XpsPageSizeHandler *handler = new XpsPageSizeHandler();
-	QXmlSimpleReader *parser = new QXmlSimpleReader();
-	parser->setContentHandler( handler );
-	parser->setErrorHandler( handler );
-	QXmlInputSource *source = new QXmlInputSource(pageDevice);
-	parser->parse ( source );
+    XpsPageSizeHandler *handler = new XpsPageSizeHandler();
+    QXmlSimpleReader *parser = new QXmlSimpleReader();
+    parser->setContentHandler( handler );
+    parser->setErrorHandler( handler );
+    QXmlInputSource *source = new QXmlInputSource(pageDevice);
+    parser->parse ( source );
 
-	if (handler->m_parsed_successfully)
-	{
-    	m_pageSize.setWidth( handler->m_width );
-	    m_pageSize.setHeight( handler->m_height );
-   		m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
-	}
-	else
-	{
-		kDebug() << "Could not parse XPS page" << endl;
-	}
+    if (handler->m_parsed_successfully)
+    {
+        m_pageSize.setWidth( handler->m_width );
+        m_pageSize.setHeight( handler->m_height );
+        m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
+    }
+    else
+    {
+        kDebug() << "Could not parse XPS page" << endl;
+    }
 
-	delete parser;
-	delete handler;
-	delete source;
+    delete parser;
+    delete handler;
+    delete source;
 }
 
 bool XpsPage::renderToImage( QImage *p )
 {
     if (! m_pageIsRendered) {
         XpsHandler *handler = new XpsHandler( this );
-		//handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
+        //handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
-    	const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
-    	QIODevice* pageDevice  = pageFile->createDevice();
+        const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
+        QIODevice* pageDevice  = pageFile->createDevice();
         QXmlInputSource *source = new QXmlInputSource(pageDevice);
         bool ok = parser->parse( source );
         kDebug() << "Parse result: " << ok << endl;
@@ -542,22 +542,22 @@ int XpsPage::loadFontByName( const QString &fileName )
     int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {
         // Try to deobfuscate font 
-	    // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
-	
-    	QFileInfo* fileInfo = new QFileInfo(fileName);
-	    QString baseName = fileInfo->baseName();
-    	delete fileInfo;
+       // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
+    
+        QFileInfo* fileInfo = new QFileInfo(fileName);
+        QString baseName = fileInfo->baseName();
+        delete fileInfo;
 
         unsigned short guid[16];
         if (!parseGUID(baseName, guid))
         {
-    		kDebug() << "File to load font - file name isn't a GUID" << endl;
+            kDebug() << "File to load font - file name isn't a GUID" << endl;
         }
         else
         {
-    		if (fontData.length() < 32)
+        if (fontData.length() < 32)
             {
-    			kDebug() << "Font file is too small" << endl;
+                kDebug() << "Font file is too small" << endl;
             } else {
                 // Obfuscation - xor bytes in font binary with bytes from guid (font's filename)
                 const static int mapping[] = {15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 4, 5, 0, 1, 2, 3};

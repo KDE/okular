@@ -296,7 +296,7 @@ void XpsHandler::parseAbbreviatedPathData( const QString &data)
                     /*QPointF rp =*/ getPointFromString(&token, isRelative);
                     /*double r = token.number;*/
                     nextAbbPathToken(&token);
-                    /*double fArc =*/ token.number;
+                    /*double fArc = token.number; */
                     nextAbbPathToken(&token);
                     /*double fSweep = token.number; */
                     nextAbbPathToken(&token);
@@ -440,6 +440,23 @@ bool XpsHandler::endElement( const QString &nameSpace,
     return true;
 }
 
+bool XpsPageSizeHandler::startElement ( const QString &nameSpace, const QString &localName, const QString &qname, const QXmlAttributes &atts)
+{
+	Q_UNUSED(nameSpace);
+	Q_UNUSED(qname);
+	if (localName == "FixedPage")
+	{
+		m_width = atts.value("Width").toInt();
+		m_height = atts.value("Height").toInt();
+		m_parsed_successfully = true;
+	} else {
+		m_parsed_successfully = false;
+	}
+
+	// No need to parse any more
+	return false;
+}
+
 XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
     m_fileName( fileName ), m_pageIsRendered(false)
 {
@@ -447,21 +464,29 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
 
-    QIODevice* pageDevice = pageFile->createDevice();
+    QIODevice* pageDevice  = pageFile->createDevice();
 
-    QString errMsg;
-    int errLine, errCol;
-    if ( m_dom.setContent( pageDevice, true, &errMsg, &errLine, &errCol ) == false ) {
-        // parse error
-        kDebug() << "Could not parse XPS page: " << errMsg << " : "
-                 << errLine << " : " << errCol << endl;
-    }
+	XpsPageSizeHandler *handler = new XpsPageSizeHandler();
+	QXmlSimpleReader *parser = new QXmlSimpleReader();
+	parser->setContentHandler( handler );
+	parser->setErrorHandler( handler );
+	QXmlInputSource *source = new QXmlInputSource(pageDevice);
+	parser->parse ( source );
 
-    QDomElement element = m_dom.documentElement().toElement();
-    m_pageSize.setWidth( element.attribute("Width").toInt() );
-    m_pageSize.setHeight( element.attribute("Height").toInt() );
-    m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
-    delete pageDevice;
+	if (handler->m_parsed_successfully)
+	{
+    	m_pageSize.setWidth( handler->m_width );
+	    m_pageSize.setHeight( handler->m_height );
+   		m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
+	}
+	else
+	{
+		kDebug() << "Could not parse XPS page" << endl;
+	}
+
+	delete parser;
+	delete handler;
+	delete source;
 }
 
 bool XpsPage::renderToImage( QImage *p )
@@ -472,8 +497,9 @@ bool XpsPage::renderToImage( QImage *p )
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
-        QXmlInputSource *source = new QXmlInputSource();
-        source->setData( m_dom.toString() );
+    	const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
+    	QIODevice* pageDevice  = pageFile->createDevice();
+        QXmlInputSource *source = new QXmlInputSource(pageDevice);
         bool ok = parser->parse( source );
         kDebug() << "Parse result: " << ok << endl;
         delete source;
@@ -496,7 +522,6 @@ QSize XpsPage::size() const
 
 int XpsPage::getFontByName( const QString &fileName )
 {
-    int defaultValue = -1;
     int index = m_fontCache.value(fileName, -1);
     if (index == -1) 
     {

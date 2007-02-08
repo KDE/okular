@@ -97,6 +97,25 @@ private:
     friend class XpsPage;
 };
 
+/**
+    Simple SAX handler which get size of page and stops. I don't use DOM because size of pages is 
+    counted when document is loaded and for big documents is DOM too slow.
+ */
+class XpsPageSizeHandler: public QXmlDefaultHandler
+{
+public:
+    bool startElement ( const QString &nameSpace,
+                        const QString &localName,
+                        const QString &qname,
+                        const QXmlAttributes &atts );
+private:
+    int m_width;
+    int m_height;
+    bool m_parsed_successfully;
+
+    friend class XpsPage;
+};
+
 class XpsPage
 {
 public:
@@ -113,7 +132,6 @@ public:
 private:
     KZip *m_archive;
     const QString m_fileName;
-    QDomDocument m_dom;
 
     QSize m_pageSize;
     

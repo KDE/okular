@@ -460,6 +460,8 @@ bool XpsPageSizeHandler::startElement ( const QString &nameSpace, const QString 
 XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
     m_fileName( fileName ), m_pageIsRendered(false)
 {
+    m_pageImage = NULL;
+
     kDebug() << "page file name: " << fileName << endl;
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
@@ -477,7 +479,6 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
     {
         m_pageSize.setWidth( handler->m_width );
         m_pageSize.setHeight( handler->m_height );
-        m_pageImage = new QImage( m_pageSize, QImage::Format_ARGB32 );
     }
     else
     {
@@ -491,9 +492,15 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 
 bool XpsPage::renderToImage( QImage *p )
 {
+    
+    if ((m_pageImage == NULL) || (m_pageImage->size() != p->size())) {
+        delete m_pageImage;
+        m_pageImage = new QImage( p->size(), QImage::Format_RGB32 );
+        m_pageIsRendered = false;
+    }
     if (! m_pageIsRendered) {
         XpsHandler *handler = new XpsHandler( this );
-        //handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
+        handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
@@ -508,10 +515,7 @@ bool XpsPage::renderToImage( QImage *p )
         m_pageIsRendered = true;
     }
 
-    if ( size() == p->size() )
-        *p = *m_pageImage;
-    else
-        *p = m_pageImage->scaled( p->size(), Qt::KeepAspectRatio );
+    *p = *m_pageImage;
 
     return true;
 }
@@ -885,7 +889,7 @@ bool XpsGenerator::closeDocument()
 
 QImage XpsGenerator::image( Okular::PixmapRequest * request )
 {
-    QSize size( (int)request->page()->width(), (int)request->page()->height() );
+    QSize size( (int)request->width(), (int)request->height() );
     QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page()->number() );
     pageToRender->renderToImage( &image );

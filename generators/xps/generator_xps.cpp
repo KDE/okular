@@ -87,27 +87,6 @@ static QRectF stringToRectF( const QString &data )
     return QRectF( origin, size );
 }
 
-static QPointF getPointFromString( const QString &data, int *curPos )
-{
-    // find the first ',' after the current position
-    int endOfNumberPos = data.indexOf(',', *curPos);
-    QString numberPart = data.mid(*curPos, endOfNumberPos - *curPos);
-    // kDebug() << "Number part 1: " << numberPart << endl;
-    double firstVal = numberPart.toDouble();
-    *curPos = endOfNumberPos + 1; //eat the number and the following comma
-
-    endOfNumberPos = data.indexOf(' ', *curPos);
-    numberPart = data.mid (*curPos, endOfNumberPos - *curPos);
-    // kDebug() << "Number part 2: " << numberPart << endl;
-    double secondVal = numberPart.toDouble();
-    *curPos = endOfNumberPos;
-    // kDebug() << "firstVal: " << firstVal << endl;
-    // kDebug() << "secondVal: " << secondVal << endl;
-    return QPointF( firstVal, secondVal );
-}
-
-
-
 static bool parseGUID( const QString guidString, unsigned short guid[16]) {
 
     if (guidString.length() <= 35) {
@@ -134,52 +113,205 @@ static bool parseGUID( const QString guidString, unsigned short guid[16]) {
 }
 
 
+// Read next token of abbreviated path data
+static bool nextAbbPathToken(AbbPathToken *token)
+{
+    int *curPos = &token->curPos;
+    QString data = token->data;
+
+    while ((*curPos < data.length()) && (data.at(*curPos).isSpace())) 
+    { 
+        (*curPos)++;
+    }
+
+    if (*curPos == data.length())
+    {
+        token->type = abtEOF;
+        return true;
+    }
+
+    QChar ch = data.at(*curPos);
+
+    if (ch.isNumber() || (ch == '+') || (ch == '-'))
+    {
+        int start = *curPos;
+        while ((*curPos < data.length()) && (!data.at(*curPos).isSpace()) && (data.at(*curPos) != ',') && !data.at(*curPos).isLetter())
+	{
+	    (*curPos)++;
+	}
+	token->number = data.mid(start, *curPos - start).toDouble();
+	token->type = abtNumber;
+
+    } else if (ch == ',')
+    {
+        token->type = abtComma;
+	    (*curPos)++;
+    } else if (ch.isLetter())  
+    {
+        token->type = abtCommand;
+	token->command = data.at(*curPos).cell();
+	    (*curPos)++;
+    } else 
+    {
+        return false;
+    }
+
+    return true;
+}
+
+QPointF XpsHandler::getPointFromString(AbbPathToken *token, bool relative) {
+    //TODO Check grammar
+    
+    QPointF result;
+    result.rx() = token->number;
+    nextAbbPathToken(token);
+    nextAbbPathToken(token); // ,
+    result.ry() = token->number;
+    nextAbbPathToken(token);
+
+    if (relative)
+    {
+        result += m_currentPath.currentPosition();
+    }    
+
+    return result;
+}
 
 
 void XpsHandler::parseAbbreviatedPathData( const QString &data)
 {
-    // kDebug() << data << endl;
+    AbbPathToken token;
 
-    enum OperationType { moveTo, relMoveTo, lineTo, relLineTo, cubicTo, relCubicTo };
-    OperationType operation = moveTo;
-    // TODO: Implement a proper parser here.
-    for (int curPos = 0; curPos < data.length(); ++curPos) {
-        // kDebug() << "curPos: " << curPos << endl;
-        if (data.at(curPos) == 'M') {
-            // kDebug() << "operation moveTo" << endl;
-            operation = moveTo;
-        } else if (data.at(curPos) == 'L') {
-            // kDebug() << "operation lineTo" << endl;
-            operation = lineTo;
-        } else if (data.at(curPos) == 'C') {
-            operation = cubicTo;
-        } else if ( (data.at(curPos) == 'z') || (data.at(curPos) == 'Z') ){
-            // kDebug() << "operation close" << endl;
-            m_currentPath.closeSubpath();
-        } else if (data.at(curPos).isNumber()) {
-            if ( operation == moveTo ) {
-                QPointF point = getPointFromString( data, &curPos );
-                m_currentPath.moveTo( point );
-            } else if ( operation == lineTo ) {
-                QPointF point = getPointFromString( data, &curPos );
-                m_currentPath.lineTo( point );
-            } else if (operation == cubicTo ) {
-                QPointF point1 = getPointFromString( data, &curPos );
-                while ((data.at(curPos).isSpace())) { ++curPos; }
-                QPointF point2 = getPointFromString( data, &curPos );
-                while (data.at(curPos).isSpace()) { curPos++; }
-                QPointF point3 = getPointFromString( data, &curPos );
-                // kDebug() << "cubic" << point1 << " : " << point2 << " : " << point3 << endl;
-                m_currentPath.cubicTo( point1, point2, point3 );
+    kDebug() << data << endl;
+
+    token.data = data;
+    token.curPos = 0;
+
+    nextAbbPathToken(&token);
+	
+	// Used by Smooth cubic curve (command s)
+    char lastCommand = ' '; 
+	QPointF lastSecondControlPoint;
+
+    while (true)
+    {
+        if (token.type != abtCommand)
+        {
+            if (token.type != abtEOF)
+            {
+                kDebug() << "Error in parsing abbreviated path data" << endl;
             }
-        } else if (data.at(curPos) == ' ') {
-            // Do nothing
-            // kDebug() << "eating a space" << endl;
-        } else {
-            kDebug() << "Unexpected data: " << data.at(curPos) << endl;
+            return;
         }
+
+        char command = QChar(token.command).toLower().cell();
+        bool isRelative = QChar(token.command).isLower();
+        nextAbbPathToken(&token);
+
+        switch (command) {
+            case 'f':
+                int rule;
+                rule = (int)token.number;
+                if (rule == 0)
+                {
+                    m_currentPath.setFillRule(Qt::OddEvenFill);
+                }
+                else if (rule == 1)
+                {
+                    // In xps specs rule 1 means NonZero fill. I think it's equivalent to WindingFill but I'm not sure
+                    m_currentPath.setFillRule(Qt::WindingFill);
+                }
+                nextAbbPathToken(&token); 
+                break;
+            case 'm': // Move
+                while (token.type == abtNumber)
+                {
+                    QPointF point = getPointFromString(&token, isRelative);
+                    m_currentPath.moveTo(point);
+                }
+                break;
+            case 'l': // Line
+                while (token.type == abtNumber)
+                {
+                    QPointF point = getPointFromString(&token, isRelative);
+                    m_currentPath.lineTo(point);
+                }
+                break;
+            case 'h': // Horizontal line
+                while (token.type == abtNumber)
+                {
+                    double x = token.number + isRelative?m_currentPath.currentPosition().x():0;
+                    m_currentPath.lineTo(x, m_currentPath.currentPosition().y());
+                    nextAbbPathToken(&token);
+                }
+                break;
+            case 'v': // Vertical line
+                while (token.type == abtNumber)
+                {
+                    double y = token.number + isRelative?m_currentPath.currentPosition().y():0;
+                    m_currentPath.lineTo(m_currentPath.currentPosition().x(), y);
+                    nextAbbPathToken(&token);
+                }
+                break;
+            case 'c': // Cubic bezier curve
+                while (token.type == abtNumber)
+                {
+                    QPointF firstControl = getPointFromString(&token, isRelative);
+                    QPointF secondControl = getPointFromString(&token, isRelative);
+                    QPointF endPoint = getPointFromString(&token, isRelative);
+		    		m_currentPath.cubicTo(firstControl, secondControl, endPoint);
+
+					lastSecondControlPoint = secondControl;
+                }
+                break;
+            case 'q': // Quadratic bezier curve
+                while (token.type == abtNumber)
+                {
+                    QPointF point1 = getPointFromString(&token, isRelative);
+                    QPointF point2 = getPointFromString(&token, isRelative);
+		    		m_currentPath.quadTo(point2, point2);
+                }
+                break;
+            case 's': // Smooth cubic bezier curve
+                while (token.type == abtNumber)
+                {
+					QPointF firstControl;
+		    		if ((lastCommand == 's') || (lastCommand == 'c'))
+					{
+						firstControl = lastSecondControlPoint + (lastSecondControlPoint + m_currentPath.currentPosition());
+					} 
+					else
+					{
+						firstControl = m_currentPath.currentPosition();
+					}
+                    QPointF secondControl = getPointFromString(&token, isRelative);
+                    QPointF endPoint = getPointFromString(&token, isRelative);
+					m_currentPath.cubicTo(firstControl, secondControl, endPoint);
+                }
+                break;
+            case 'a': // Arc
+                //TODO Implement Arc drawing
+                while (token.type == abtNumber)
+                {
+                    /*QPointF rp =*/ getPointFromString(&token, isRelative);
+                    /*double r = token.number;*/
+                    nextAbbPathToken(&token);
+                    /*double fArc =*/ token.number;
+                    nextAbbPathToken(&token);
+                    /*double fSweep = token.number; */
+                    nextAbbPathToken(&token);
+                    /*QPointF point = */getPointFromString(&token, isRelative);
+                }
+                break;
+            case 'z': // Close path
+                m_currentPath.closeSubpath();
+                break;
+        }
+
+	    lastCommand = command;
     }
 }
+
 QMatrix XpsHandler::attsToMatrix( const QString &csv )
 {
     QStringList values = csv.split( ',' );
@@ -193,6 +325,7 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
 
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
+    m_painter = new QPainter(m_page->m_pageImage);
 }
 
 XpsHandler::~XpsHandler()
@@ -202,7 +335,6 @@ bool XpsHandler::startDocument()
 {
     // kDebug() << "start document" << endl;
     m_page->m_pageImage->fill( QColor("White").rgba() );
-    m_painter = new QPainter(m_page->m_pageImage);
     return true;
 }
 
@@ -222,7 +354,7 @@ bool XpsHandler::startElement( const QString &nameSpace,
         // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
         QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
         // TODO: We may not be picking the best font size here
-        QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(atts.value("FontRenderingEmSize").toFloat()) );
+ 		QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(atts.value("FontRenderingEmSize").toFloat()) );
         m_painter->setFont(font);
         QPointF origin( atts.value("OriginX").toDouble(), atts.value("OriginY").toDouble() );
         QColor fillColor = hexToRgba( atts.value("Fill").toLatin1() );
@@ -243,11 +375,12 @@ bool XpsHandler::startElement( const QString &nameSpace,
             QColor fillColor;
             if ( atts.value("Fill").startsWith('#') ) {
                 fillColor = hexToRgba( atts.value("Fill").toLatin1() );
+                m_currentBrush = QBrush( fillColor );
+                m_currentPen = QPen ( fillColor );
             } else {
+                m_currentBrush = QBrush();
                 kDebug() << "Unknown / unhandled fill color representation:" << atts.value("Fill") << ":ende" << endl;
             }
-            m_currentBrush = QBrush( fillColor );
-            m_currentPen = QPen ( fillColor );
         }
     } else if ( localName == "SolidColorBrush" ) {
         if (! atts.value("Color").isEmpty() ) {
@@ -335,6 +468,7 @@ bool XpsPage::renderToImage( QImage *p )
 {
     if (! m_pageIsRendered) {
         XpsHandler *handler = new XpsHandler( this );
+		//handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
@@ -364,7 +498,7 @@ int XpsPage::getFontByName( const QString &fileName )
 {
     int defaultValue = -1;
     int index = m_fontCache.value(fileName, -1);
-    if (index == -1)
+    if (index == -1) 
     {
         index = loadFontByName(fileName);
         m_fontCache[fileName] = index;
@@ -382,9 +516,9 @@ int XpsPage::loadFontByName( const QString &fileName )
 
     int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {
-        // Try to deobfuscate font
+        // Try to deobfuscate font 
 	    // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
-
+	
     	QFileInfo* fileInfo = new QFileInfo(fileName);
 	    QString baseName = fileInfo->baseName();
     	delete fileInfo;
@@ -409,7 +543,6 @@ int XpsPage::loadFontByName( const QString &fileName )
                 result = m_fontDatabase.addApplicationFontFromData( fontData );
             }
         }
-
     }
 
 

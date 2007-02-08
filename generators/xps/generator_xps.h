@@ -27,6 +27,19 @@
 
 #include <kzip.h>
 
+//TODO Make this type private
+typedef enum {abtCommand, abtNumber, abtComma, abtEOF} AbbPathTokenType;
+
+typedef struct {
+    QString data;
+    int curPos;
+
+    AbbPathTokenType type;
+	char command;
+	double number;
+} AbbPathToken;
+
+
 class XpsPage;
 
 class XpsHandler: public QXmlDefaultHandler
@@ -54,6 +67,11 @@ private:
         \see XPS specification 4.2.3 and Appendix G
     */
     void parseAbbreviatedPathData( const QString &data);
+    /**
+    	Read point (two reals delimited by comma) from abbreviated path data
+    */
+    QPointF getPointFromString(AbbPathToken *token, bool relative);
+
     
     /**
         Parse a "Matrix" attribute string
@@ -75,6 +93,8 @@ private:
     QImage m_image;
     QRectF m_viewbox;
     QRectF m_viewport;
+
+    friend class XpsPage;
 };
 
 class XpsPage

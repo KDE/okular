@@ -364,11 +364,11 @@ bool XpsHandler::startElement( const QString &nameSpace,
         m_painter->setBrush(fillColor);
         m_painter->setPen(fillColor);
         m_painter->drawText( origin, atts.value("UnicodeString") );
-        m_painter->restore();
         // kDebug() << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
         // kDebug() << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
         // kDebug() << "    Unicode: " << atts.value("UnicodeString") << endl;
     } else if (localName == "Path") {
+        m_painter->save();
         // kDebug() << "Path: " << atts.value("Data") << ", " << atts.value("Fill") << endl;
         if (! atts.value("Data").isEmpty() ) {
             parseAbbreviatedPathData( atts.value("Data") );
@@ -436,7 +436,10 @@ bool XpsHandler::endElement( const QString &nameSpace,
         m_currentBrush = QBrush();
         m_currentPen = QPen();
         m_image = QImage();
+        m_painter->restore();
     } else if ( localName == "Canvas" ) {
+        m_painter->restore();
+    } else if ( localName == "Glyphs" ) {
         m_painter->restore();
     }
     return true;

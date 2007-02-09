@@ -320,7 +320,7 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
     }
     return QMatrix( values.at(0).toDouble(), values.at(1).toDouble(),
                     values.at(2).toDouble(), values.at(3).toDouble(),
-                    values.at(4).toDouble(), values.at(5).toDouble() );
+                    values.at(4).toDouble(), values.at(5).toDouble() ); 
 }
 
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
@@ -329,7 +329,9 @@ XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 }
 
 XpsHandler::~XpsHandler()
-{}
+{
+    delete m_painter;
+}
 
 bool XpsHandler::startDocument()
 {
@@ -392,12 +394,12 @@ bool XpsHandler::startElement( const QString &nameSpace,
                 kDebug() << "Unknown / unhandled fill color representation:" << atts.value("Color") << ":ende" << endl;
             }
             m_currentBrush = QBrush( fillColor );
-        }
+        } 
     } else if ( localName == "ImageBrush" ) {
         kDebug() << "ImageBrush Attributes: " << atts.count() << ", " << atts.value("Transform") << ", " << atts.value("TileMode") << endl;
         m_image = m_page->loadImageFromFile( atts.value("ImageSource" ) );
         m_viewbox = stringToRectF( atts.value("Viewbox") );
-        m_viewport = stringToRectF( atts.value("Viewport") );
+        m_viewport = stringToRectF( atts.value("Viewport") ); 
     } else if ( localName == "Canvas" ) {
         // TODO
         m_painter->save();
@@ -488,6 +490,13 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
     delete parser;
     delete handler;
     delete source;
+    delete pageDevice;
+}
+
+XpsPage::~XpsPage()
+{
+    m_fontCache.clear();
+    delete m_pageImage;
 }
 
 bool XpsPage::renderToImage( QImage *p )
@@ -512,6 +521,7 @@ bool XpsPage::renderToImage( QImage *p )
         delete source;
         delete parser;
         delete handler;
+        delete pageDevice;
         m_pageIsRendered = true;
     }
 
@@ -633,6 +643,14 @@ XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
     }
 
     delete documentDevice;
+}
+
+XpsDocument::~XpsDocument()
+{
+    for (int i = 0; i < m_pages.size(); i++) {
+        delete m_pages.at( i );
+    }
+    m_pages.clear();
 }
 
 int XpsDocument::numPages() const
@@ -817,6 +835,10 @@ bool XpsFile::closeDocument()
         delete m_docInfo;
 
     m_docInfo = 0;
+
+    for (int i = 0; i < m_documents.size(); i++) {
+        delete m_documents.at( i );
+    }
 
     m_documents.clear();
 

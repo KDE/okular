@@ -556,7 +556,7 @@ Annotation::Annotation( const QDomNode & annNode )
         revision.setAnnotation( AnnotationUtils::createAnnotation( revElement ) );
 
         // if annotation is valid, add revision to internal list
-        if ( revision.annotation() );
+        if ( revision.annotation() )
             d->m_revisions.append( revision );
     }
 

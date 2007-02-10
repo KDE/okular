@@ -1015,19 +1015,16 @@ XpsPage* XpsFile::page(int pageNum) const
 }
 
 XpsGenerator::XpsGenerator()
-  : Okular::Generator()
+  : Okular::Generator(), m_xpsFile( 0 )
 {
-    m_xpsFile = new XpsFile;
 }
 
 XpsGenerator::~XpsGenerator()
 {
-    delete m_xpsFile;
 }
 
 bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    delete m_xpsFile;
     m_xpsFile = new XpsFile();
 
     m_xpsFile->loadDocument( fileName );
@@ -1052,6 +1049,8 @@ bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*
 bool XpsGenerator::closeDocument()
 {
     m_xpsFile->closeDocument();
+    delete m_xpsFile;
+    m_xpsFile = 0;
 
     return true;
 }

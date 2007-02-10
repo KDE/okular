@@ -431,7 +431,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
     // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
     QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
-    // TODO: We may not be picking the best font size here
+    // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
     QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(node.attributes.value("FontRenderingEmSize").toFloat()) );
     m_painter->setFont(font);
 
@@ -648,6 +648,10 @@ bool XpsPage::renderToImage( QImage *p )
     if ((m_pageImage == NULL) || (m_pageImage->size() != p->size())) {
         delete m_pageImage;
         m_pageImage = new QImage( p->size(), QImage::Format_ARGB32 );
+        // Set one point = one drawing unit. Useful for fonts, because xps specify font size using drawing units, not points as usuall
+        m_pageImage->setDotsPerMeterX( 2835 );
+        m_pageImage->setDotsPerMeterY( 2835 );
+
         m_pageIsRendered = false;
     }
     if (! m_pageIsRendered) {

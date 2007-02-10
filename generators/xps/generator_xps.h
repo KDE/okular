@@ -24,21 +24,44 @@
 
 #include <QDomDocument>
 #include <QXmlDefaultHandler>
+#include <QStack>
 
 #include <kzip.h>
 
-//TODO Make this type private
 typedef enum {abtCommand, abtNumber, abtComma, abtEOF} AbbPathTokenType;
 
-typedef struct {
+class AbbPathToken {
+public:
     QString data;
     int curPos;
 
     AbbPathTokenType type;
     char command;
     double number;
-} AbbPathToken;
+};
 
+/**
+    Holds information about xml element during SAX parsing of page
+*/
+class XpsRenderNode
+{
+public:
+    QString name;
+    QVector<XpsRenderNode> children;
+    QXmlAttributes attributes;
+    void * data;
+
+    XpsRenderNode * findChild( const QString &name );
+};
+
+/**
+    Types of data in XpsRenderNode::data. Name of each type consist of Xps and
+    name of xml element which data it holds
+*/
+typedef QMatrix XpsMatrixTransform;
+typedef QMatrix XpsRenderTransform;
+typedef QBrush XpsFill;
+typedef QBrush XpsImageBrush;
 
 class XpsPage;
 
@@ -58,20 +81,6 @@ public:
     bool startDocument();
 
 private:
-    /**
-        Parse an abbreviated path "Data" description
-        \param data the string containing the whitespace separated values
-        
-        \note sets the m_currentPath and possibly other private variables
-    
-        \see XPS specification 4.2.3 and Appendix G
-    */
-    void parseAbbreviatedPathData( const QString &data);
-    /**
-        Read point (two reals delimited by comma) from abbreviated path data
-    */
-    QPointF getPointFromString(AbbPathToken *token, bool relative);
-
     
     /**
         Parse a "Matrix" attribute string
@@ -83,16 +92,31 @@ private:
     */
     QMatrix attsToMatrix( const QString &csv );
     
+    void processStartElement( XpsRenderNode &node );
+    void processEndElement( XpsRenderNode &node );
+
+    // Methods for processing of diferent xml elements
+    void processGlyph( XpsRenderNode &node );
+    void processPath( XpsRenderNode &node );
+    void processFill( XpsRenderNode &node );
+    void processImageBrush (XpsRenderNode &node );
+
+    /**
+        \return Brush with given color or brush specified by reference to resource
+    */
+    QBrush parseRscRefColor( const QString &data );
+
+    /**
+        \return Matrix specified by given data or by referenced dictionary
+    */
+    QMatrix parseRscRefMatrix( const QString &data );
+    
     XpsPage *m_page;
     QPainter *m_painter;
     
-    QBrush m_currentBrush;
-    QPen m_currentPen;
-    QPainterPath m_currentPath;
-    
     QImage m_image;
-    QRectF m_viewbox;
-    QRectF m_viewport;
+
+    QStack<XpsRenderNode> m_nodes;
 
     friend class XpsPage;
 };
@@ -125,7 +149,7 @@ public:
     QSize size() const;
     bool renderToImage( QImage *p );
     
-    QImage loadImageFromFile( const QString &filename );
+    QPixmap loadImageFromFile( const QString &filename );
     int loadFontByName( const QString &fontName );
     int getFontByName( const QString &fontName );
     

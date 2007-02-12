@@ -1752,7 +1752,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                     if ( lastMatch )
                     {
                         RegularAreaRect * lastMatchOld = lastMatch;
-                        lastMatch = page->findText( searchID, text, NextResult, caseSensitivity, lastMatch );
+                        lastMatch = page->findText( searchID, word, NextResult, caseSensitivity, lastMatch );
                         delete lastMatchOld;
                     }
                     else

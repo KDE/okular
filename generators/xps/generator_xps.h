@@ -52,6 +52,8 @@ public:
     void * data;
 
     XpsRenderNode * findChild( const QString &name );
+    void * getRequiredChildData( const QString &name );
+    void * getChildData( const QString &name );
 };
 
 /**
@@ -61,7 +63,7 @@ public:
 typedef QMatrix XpsMatrixTransform;
 typedef QMatrix XpsRenderTransform;
 typedef QBrush XpsFill;
-typedef QBrush XpsImageBrush;
+typedef XpsFill XpsImageBrush;
 
 class XpsPage;
 
@@ -149,7 +151,7 @@ public:
     QSize size() const;
     bool renderToImage( QImage *p );
     
-    QPixmap loadImageFromFile( const QString &filename );
+    QImage loadImageFromFile( const QString &filename );
     int loadFontByName( const QString &fontName );
     int getFontByName( const QString &fontName );
     

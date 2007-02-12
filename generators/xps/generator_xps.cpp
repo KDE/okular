@@ -389,6 +389,7 @@ bool XpsHandler::startElement( const QString &nameSpace,
     XpsRenderNode node;
     node.name = localName;
     node.attributes = atts;
+    node.data = NULL;
     processStartElement( node );
     m_nodes.push(node);
 
@@ -442,9 +443,9 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     QBrush brush;
     att = node.attributes.value("Fill");
     if (att.isEmpty()) {
-        XpsRenderNode * child = node.findChild("Glyphs.Fill");
-        if (child != NULL) {
-            brush = *(XpsFill *)child->data;
+        void * data = node.getChildData( "Glyphs.Fill" );
+        if (data != NULL) {
+            brush = *(XpsFill *)data;
         } else {
             brush = QBrush();
         }
@@ -470,36 +471,61 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
 void XpsHandler::processFill( XpsRenderNode &node )
 {
-    //TODO Ignored child elements: ImageBrush, LinearGradientBrush, RadialGradientBrush, VirtualBrush
+    //TODO Ignored child elements: LinearGradientBrush, RadialGradientBrush, VirtualBrush
 
-    QBrush brush;
+    XpsFill * brush;
     XpsRenderNode * child;
-
+    
     child = node.findChild("SolidColorBrush");
     if (child != NULL) {
-        brush = QBrush( *(QColor *) child->data );
+        brush = new QBrush( *(QColor *) child->data );
     }
 
     child = node.findChild("ImageBrush");
     if (child != NULL) {
-        brush = *(XpsImageBrush *) child->data;
+        brush = (XpsImageBrush *) child->data;
     }
 
-    node.data = new QBrush( brush );
+    node.data = brush;
 }
 
 void XpsHandler::processImageBrush( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Opacity, x:key, Transform, Viewbox, Viewport, TileMode, ViewBoxUnits, ViewPortUnits
-    //TODO Ignored child elements: ImageBrush.Transform
+    //TODO Ignored attributes: Opacity, x:key, TileMode, ViewBoxUnits, ViewPortUnits
+    //TODO Check whether transformation works for non standard situations (viewbox different that whole image, Transform different that simple move & scale, Viewport different than [0, 0, 1, 1]
+    
+    QString att;
+    QBrush brush;
+    
+    QRectF viewport = stringToRectF( node.attributes.value( "Viewport" ) );
+    QRectF viewbox = stringToRectF( node.attributes.value( "Viewbox" ) );
+    QImage image = m_page->loadImageFromFile( node.attributes.value( "ImageSource" ) );
+    
+    // Matrix which can transform [0, 0, 1, 1] rectangle to given viewbox
+    QMatrix viewboxMatrix = QMatrix( viewbox.width() * image.physicalDpiX() / 96, 0, 0, viewbox.height() * image.physicalDpiY() / 96, viewbox.x(), viewbox.y() );
 
-    QPixmap image = m_page->loadImageFromFile( node.attributes.value( "ImageSource" ) );
-    // image = image.convertToFormat( QImage::Format_ARGB32 );
-    kDebug() << image.size() << endl;
-    QBrush brush = QBrush( image );
-    kDebug() << brush << endl;
-    kDebug() << brush.isOpaque() << endl;
-    node.data = new XpsImageBrush ( brush );
+    // Matrix which can transform [0, 0, 1, 1] rectangle to given viewport
+    //TODO Take ViewPort into account
+    QMatrix viewportMatrix;
+    att = node.attributes.value( "Transform" );
+    if ( att.isEmpty() ) {
+        void * data = node.getChildData( "ImageBrush.Transform" );
+        if (data != NULL) {
+            viewportMatrix = *(XpsMatrixTransform *)data;
+        } else {
+            viewportMatrix = QMatrix();
+        }
+    } else {
+        viewportMatrix = parseRscRefMatrix( att );
+    }
+    viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewbox.y() );
+
+    
+    // TODO Brush should work also for QImage, not only QPixmap. But for some images it doesn't work
+    brush = QBrush( QPixmap::fromImage( image) );
+    brush.setMatrix( viewboxMatrix.inverted() * viewportMatrix );
+
+    node.data = new QBrush( brush );
 }
 
 void XpsHandler::processPath( XpsRenderNode &node )
@@ -526,15 +552,15 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if (! att.isEmpty() ) {
         brush = parseRscRefColor( att );   
     } else {
-        XpsRenderNode * child = node.findChild("Path.Fill");
-        if (child != NULL) {
-            brush = *(XpsFill *)child->data;
+        void * data = node.getChildData( "Path.Fill" );
+        if (data != NULL) {
+            brush = *(XpsFill *)data;
         } else {
             brush = QBrush();
         }
     }
     m_painter->setBrush( brush );
-    m_painter->setPen( QPen( brush, 0 ) );
+    m_painter->setPen( QPen( Qt::NoPen ) );
 
     // RenderTransform
     att = node.attributes.value( "RenderTransform" );
@@ -564,13 +590,10 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         //TODO Ignoring x:key
         node.data = new QMatrix ( attsToMatrix( node.attributes.value( "Matrix" ) ) ); 
     } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
-        XpsRenderNode * child = node.findChild( "MatrixTransform" );
-        if (child == NULL) {
-            kDebug() << "Required element MatrixTransform is missing" << endl;
-        } else {
-            m_painter->setWorldMatrix( *(XpsMatrixTransform *)child->data, true );
+        void * data = node.getRequiredChildData( "MatrixTransform" );
+        if (data != NULL) {
+            m_painter->setWorldMatrix( *(XpsMatrixTransform *)data, true );
         }
-        node.data = NULL;
     } else if (node.name == "Canvas") {
         m_painter->restore();
     } else if ((node.name == "Path.Fill") || (node.name == "Glyphs.Fill")) {
@@ -580,6 +603,8 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         node.data = new QColor (hexToRgba( node.attributes.value( "Color" ).toLatin1() ));
     } else if (node.name == "ImageBrush") {
         processImageBrush( node );
+    } else if (node.name == "ImageBrush.Transform") {
+        node.data = node.getRequiredChildData( "MatrixTransform" );
     } else {
         //kDebug() << "Unknown element: " << node->name << endl;
     }
@@ -737,7 +762,7 @@ int XpsPage::loadFontByName( const QString &fileName )
     return result; // a font ID
 }
 
-QPixmap XpsPage::loadImageFromFile( const QString &fileName )
+QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
     //kDebug() << "image file name: " << fileName << endl;
 
@@ -745,7 +770,7 @@ QPixmap XpsPage::loadImageFromFile( const QString &fileName )
 
     QByteArray imageData = imageFile->data(); // once per file, according to the docs
 
-    QPixmap image;
+    QImage image;
     image.loadFromData( imageData);
     //kDebug() << "Image load result: " << result << ", " << image.size() << endl;
     return image;
@@ -1080,6 +1105,27 @@ XpsRenderNode * XpsRenderNode::findChild( const QString &name )
     }
 
     return NULL;
+}
+
+void * XpsRenderNode::getRequiredChildData( const QString &name )
+{
+    XpsRenderNode * child = findChild( name );
+    if (child == NULL) {
+        kDebug() << "Required element " << name << " is missing in " << this->name << endl;
+        return NULL;
+    }
+
+    return child->data;
+}
+
+void * XpsRenderNode::getChildData( const QString &name )
+{
+    XpsRenderNode * child = findChild( name );
+    if (child == NULL) {
+        return NULL;
+    } else {
+        return child->data;
+    }
 }
 
 

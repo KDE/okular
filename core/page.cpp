@@ -302,7 +302,7 @@ void Page::rotateAt( Rotation orientation )
     while ( it.hasNext() ) {
         it.next();
 
-        const PixmapObject &object = m_pixmaps[ it.key() ];
+        const PixmapObject &object = it.value();
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, d->m_rotation, it.key() );
         connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );

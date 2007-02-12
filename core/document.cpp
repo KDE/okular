@@ -479,7 +479,7 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
     GeneratorInfo info;
     info.generator = generator;
     info.library = lib;
-    m_loadedGenerators[ name ] = info;
+    m_loadedGenerators.insert( name, info );
     return generator;
 }
 
@@ -966,7 +966,7 @@ void Document::closeDocument()
 void Document::addObserver( DocumentObserver * pObserver )
 {
     // keep the pointer to the observer in a map
-    d->m_observers[ pObserver->observerId() ] = pObserver;
+    d->m_observers.insert( pObserver->observerId(), pObserver );
 
     // if the observer is added while a document is already opened, tell it
     if ( !d->m_pagesVector.isEmpty() )
@@ -1173,7 +1173,7 @@ bool Document::canExportToText() const
 
     const ExportFormat::List formats = d->m_generator->exportFormats();
     for ( int i = 0; i < formats.count(); ++i ) {
-        if ( formats[ i ].mimeType()->name() == QLatin1String( "text/plain" ) )
+        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
             return true;
     }
 
@@ -1187,7 +1187,7 @@ bool Document::exportToText( const QString& fileName ) const
 
     const ExportFormat::List formats = d->m_generator->exportFormats();
     for ( int i = 0; i < formats.count(); ++i ) {
-        if ( formats[ i ].mimeType()->name() == QLatin1String( "text/plain" ) )
+        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
             return d->m_generator->exportTo( fileName, formats[ i ] );
     }
 
@@ -1230,7 +1230,7 @@ QSizeF Document::allPagesSize() const
     QSizeF size;
     for (int i = 0; allPagesSameSize && i < d->m_pagesVector.count(); ++i)
     {
-        Page *p = d->m_pagesVector.at(i);
+        const Page *p = d->m_pagesVector.at(i);
         if (i == 0) size = QSizeF(p->width(), p->height());
         else
         {
@@ -1247,7 +1247,7 @@ QString Document::pageSizeString(int page) const
     {
         if (d->m_generator->pagesSizeMetric() != Generator::None)
         {
-            Page *p = d->m_pagesVector[page];
+            const Page *p = d->m_pagesVector.at( page );
             return d->localizedSize(QSizeF(p->width(), p->height()));
         }
     }
@@ -1540,18 +1540,19 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
         return false;
 
     // if searchID search not recorded, create new descriptor and init params
-    if ( !d->m_searches.contains( searchID ) )
+    QMap< int, RunningSearch * >::iterator searchIt = d->m_searches.find( searchID );
+    if ( searchIt == d->m_searches.end() )
     {
         RunningSearch * search = new RunningSearch();
         search->continueOnPage = -1;
-        d->m_searches[ searchID ] = search;
+        searchIt = d->m_searches.insert( searchID, search );
     }
     if (d->m_lastSearchID != searchID)
     {
         resetSearch(d->m_lastSearchID);
     }
     d->m_lastSearchID = searchID;
-    RunningSearch * s = d->m_searches[ searchID ];
+    RunningSearch * s = *searchIt;
 
     // update search stucture
     bool newText = text != s->cachedString;
@@ -1801,11 +1802,12 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
 bool Document::continueSearch( int searchID )
 {
     // check if searchID is present in runningSearches
-    if ( !d->m_searches.contains( searchID ) )
+    QMap< int, RunningSearch * >::const_iterator it = d->m_searches.constFind( searchID );
+    if ( it == d->m_searches.constEnd() )
         return false;
 
     // start search with cached parameters from last search by searchID
-    RunningSearch * p = d->m_searches[ searchID ];
+    RunningSearch * p = *it;
     return searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
                        p->cachedType, p->cachedViewportMove, p->cachedColor,
                        p->cachedNoDialogs );
@@ -1814,11 +1816,12 @@ bool Document::continueSearch( int searchID )
 void Document::resetSearch( int searchID )
 {
     // check if searchID is present in runningSearches
-    if ( !d->m_searches.contains( searchID ) )
+    QMap< int, RunningSearch * >::iterator searchIt = d->m_searches.find( searchID );
+    if ( searchIt == d->m_searches.end() )
         return;
 
     // get previous parameters for search
-    RunningSearch * s = d->m_searches[ searchID ];
+    RunningSearch * s = *searchIt;
 
     // unhighlight pages and inform observers about that
     QLinkedList< int >::const_iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
@@ -1833,7 +1836,7 @@ void Document::resetSearch( int searchID )
     foreachObserver( notifySetup( d->m_pagesVector, false ) );
 
     // remove serch from the runningSearches list and delete it
-    d->m_searches.remove( searchID );
+    d->m_searches.erase( searchIt );
     delete s;
 }
 

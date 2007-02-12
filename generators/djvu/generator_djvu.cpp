@@ -17,6 +17,7 @@
 #include <okular/core/utils.h>
 
 #include <qdom.h>
+#include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
 #include <kdebug.h>

@@ -640,7 +640,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
     if ( documentChanged && pageSet.count() > 0 && Okular::Settings::showOSD() )
         d->messageWindow->display(
             i18np(" Loaded a one-page document.",
-                 " Loaded a %n-page document.",
+                 " Loaded a %1-page document.",
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 
@@ -1672,7 +1672,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
-                menu.addTitle( i18np( "Text (1 character)", "Text (%n characters)", selectedText.length() ) );
+                menu.addTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( KIcon("editcopy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( Okular::AllowCopy ) )
                 {

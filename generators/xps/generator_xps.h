@@ -67,6 +67,7 @@ typedef QBrush XpsFill;
 typedef XpsFill XpsImageBrush;
 
 class XpsPage;
+class XpsFile;
 
 class XpsHandler: public QXmlDefaultHandler
 {
@@ -167,7 +168,7 @@ private:
 class XpsPage
 {
 public:
-    XpsPage(KZip *archive, const QString &fileName);
+    XpsPage(XpsFile *file, const QString &fileName);
     ~XpsPage();
 
     QSize size() const;
@@ -175,16 +176,13 @@ public:
     Okular::TextPage* textPage();
     
     QImage loadImageFromFile( const QString &filename );
-    int loadFontByName( const QString &fontName );
-    int getFontByName( const QString &fontName );
     
 private:
-    KZip *m_archive;
+    XpsFile *m_file;
     const QString m_fileName;
 
     QSize m_pageSize;
     
-    QFontDatabase m_fontDatabase;
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
@@ -194,7 +192,6 @@ private:
     QImage *m_pageImage;
     bool m_pageIsRendered;
 
-    QMap<QString, int> m_fontCache;
     
     friend class XpsHandler;
     friend class XpsTextExtractionHandler;
@@ -206,7 +203,7 @@ private:
 class XpsDocument
 {
 public:
-    XpsDocument(KZip *archive, const QString &fileName);
+    XpsDocument(XpsFile *file, const QString &fileName);
     ~XpsDocument();
 
     /**
@@ -226,6 +223,7 @@ public:
 
 private:
     QList<XpsPage*> m_pages;
+    XpsFile * m_file;
 };
 
 /**
@@ -275,7 +273,15 @@ public:
        numDocuments() - 1
     */
     XpsDocument* document(int documentNum) const;
+    
+    QFont getFontByName( const QString &fontName, float size );
+
+    KZip* xpsArchive();
+
+    
 private:
+    int loadFontByName( const QString &fontName );
+
     QList<XpsDocument*> m_documents;
     QList<XpsPage*> m_pages;
 
@@ -287,8 +293,10 @@ private:
     QString m_corePropertiesFileName;
     Okular::DocumentInfo * m_docInfo;
 
-    KZip *xpsArchive;
+    KZip * m_xpsArchive;
 
+    QMap<QString, int> m_fontCache;
+    QFontDatabase m_fontDatabase;
 };
 
 

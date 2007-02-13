@@ -428,13 +428,8 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     m_painter->save();
 
     // Get font (doesn't work well because qt doesn't allow to load font from file)
-    int fontId = m_page->getFontByName( node.attributes.value("FontUri") );
-    // kDebug() << "Font families: (" << fontId << ") " << QFontDatabase::applicationFontFamilies( fontId ).at(0) << endl;
-    QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
-    // kDebug() << "Styles: " << m_page->m_fontDatabase.styles( fontFamily ) << endl;
-    QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
-    QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(node.attributes.value("FontRenderingEmSize").toFloat()) );
+    QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"),  node.attributes.value("FontRenderingEmSize").toFloat());
     m_painter->setFont(font);
 
     //Origin
@@ -628,14 +623,14 @@ bool XpsPageSizeHandler::startElement ( const QString &nameSpace, const QString 
     return false;
 }
 
-XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
+XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
     m_fileName( fileName ), m_pageIsRendered(false)
 {
     m_pageImage = NULL;
 
     kDebug() << "page file name: " << fileName << endl;
 
-    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
     QIODevice* pageDevice  = pageFile->createDevice();
 
@@ -664,7 +659,6 @@ XpsPage::XpsPage(KZip *archive, const QString &fileName): m_archive( archive ),
 
 XpsPage::~XpsPage()
 {
-    m_fontCache.clear();
     delete m_pageImage;
 }
 
@@ -687,7 +681,7 @@ bool XpsPage::renderToImage( QImage *p )
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
-        const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
+        const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
         QIODevice* pageDevice  = pageFile->createDevice();
         QXmlInputSource *source = new QXmlInputSource(pageDevice);
         bool ok = parser->parse( source );
@@ -712,7 +706,7 @@ Okular::TextPage* XpsPage::textPage()
     QXmlSimpleReader* parser = new QXmlSimpleReader();
     parser->setContentHandler( &handler );
     parser->setErrorHandler( &handler );
-    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
     QIODevice* pageDevice  = pageFile->createDevice();
     QXmlInputSource source = QXmlInputSource(pageDevice);
     
@@ -731,7 +725,7 @@ QSize XpsPage::size() const
     return m_pageSize;
 }
 
-int XpsPage::getFontByName( const QString &fileName )
+QFont XpsFile::getFontByName( const QString &fileName, float size )
 {
     int index = m_fontCache.value(fileName, -1);
     if (index == -1) 
@@ -739,14 +733,20 @@ int XpsPage::getFontByName( const QString &fileName )
         index = loadFontByName(fileName);
         m_fontCache[fileName] = index;
     }
-    return index;
+
+    QString fontFamily = m_fontDatabase.applicationFontFamilies( index ).at(0);
+    QString fontStyle =  m_fontDatabase.styles( fontFamily ).at(0);
+    QFont font = m_fontDatabase.font(fontFamily, fontStyle, qRound(size) );
+
+
+    return font;
 }
 
-int XpsPage::loadFontByName( const QString &fileName )
+int XpsFile::loadFontByName( const QString &fileName )
 {
     // kDebug() << "font file name: " << fileName << endl;
 
-    const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
+    const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fileName ));
 
     QByteArray fontData = fontFile->data(); // once per file, according to the docs
 
@@ -787,11 +787,15 @@ int XpsPage::loadFontByName( const QString &fileName )
     return result; // a font ID
 }
 
+KZip * XpsFile::xpsArchive() {
+    return m_xpsArchive;
+}
+
 QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
     //kDebug() << "image file name: " << fileName << endl;
 
-    const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( fileName ));
+    const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
     QByteArray imageData = imageFile->data(); // once per file, according to the docs
 
@@ -801,11 +805,11 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
     return image;
 }
 
-XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
+XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file)
 {
     kDebug() << "document file name: " << fileName << endl;
 
-    const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(archive->directory()->entry( fileName ));
+    const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry( fileName ));
 
     QIODevice* documentDevice = documentFile->createDevice();
 
@@ -830,7 +834,7 @@ XpsDocument::XpsDocument(KZip *archive, const QString &fileName)
                     QString thisDir = fileName.mid(0,  offset) + '/';
                     pagePath.prepend(thisDir);
                 }
-                XpsPage *page = new XpsPage( archive, pagePath );
+                XpsPage *page = new XpsPage( file, pagePath );
                 m_pages.append(page);
             } else {
                 kDebug() << "Unhandled entry in FixedDocument" << element.tagName() << endl;
@@ -867,22 +871,23 @@ XpsFile::XpsFile() : m_docInfo( 0 )
 
 XpsFile::~XpsFile()
 {
+    m_fontCache.clear();
 }
 
 
 bool XpsFile::loadDocument(const QString &filename)
 {
-    xpsArchive = new KZip( filename );
-    if ( xpsArchive->open( QIODevice::ReadOnly ) == true ) {
-        kDebug() << "Successful open of " << xpsArchive->fileName() << endl;
+    m_xpsArchive = new KZip( filename );
+    if ( m_xpsArchive->open( QIODevice::ReadOnly ) == true ) {
+        kDebug() << "Successful open of " << m_xpsArchive->fileName() << endl;
     } else {
-        kDebug() << "Could not open XPS archive: " << xpsArchive->fileName() << endl;
-        delete xpsArchive;
+        kDebug() << "Could not open XPS archive: " << m_xpsArchive->fileName() << endl;
+        delete m_xpsArchive;
         return false;
     }
 
     // The only fixed entry in XPS is _rels/.rels
-    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry("_rels/.rels"));
+    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry("_rels/.rels"));
 
     if ( !relFile ) {
         // this might occur if we can't read the zip directory, or it doesn't have the relationships entry
@@ -927,7 +932,7 @@ bool XpsFile::loadDocument(const QString &filename)
     delete relDevice;
 
 
-    const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry( fixedRepresentationFileName ));
+    const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fixedRepresentationFileName ));
 
     QIODevice* fixedRepDevice = fixedRepFile->createDevice();
 
@@ -944,7 +949,7 @@ bool XpsFile::loadDocument(const QString &filename)
         QDomElement e = n.toElement();
         if( !e.isNull() ) {
             if (e.tagName() == "DocumentReference") {
-                XpsDocument *doc = new XpsDocument( xpsArchive, e.attribute("Source") );
+                XpsDocument *doc = new XpsDocument( this, e.attribute("Source") );
                 for (int lv = 0; lv < doc->numPages(); ++lv) {
                     // our own copy of the pages list
                     m_pages.append( doc->page( lv ) );
@@ -972,7 +977,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
     m_docInfo->set( "mimeType", "application/vnd.ms-xpsdocument" );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
-        const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(xpsArchive->directory()->entry(m_corePropertiesFileName));
+        const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));
 
         QDomDocument corePropertiesDocumentDom;
         QString errMsg;
@@ -1039,7 +1044,7 @@ bool XpsFile::closeDocument()
 
     m_documents.clear();
 
-    delete xpsArchive;
+    delete m_xpsArchive;
 
     return true;
 }
@@ -1222,10 +1227,7 @@ bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
         QString text =  m_glyphsAtts.value( "UnicodeString" );
 
         // Get font (doesn't work well because qt doesn't allow to load font from file)
-        int fontId = m_page->getFontByName( m_glyphsAtts.value( "FontUri" ) );
-        QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
-        QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
-        QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(m_glyphsAtts.value("FontRenderingEmSize").toFloat() * 72 / 96) );
+        QFont font = m_page->m_file->getFontByName( m_glyphsAtts.value( "FontUri" ),  m_glyphsAtts.value("FontRenderingEmSize").toFloat() * 72 / 96 );
         QFontMetrics metrics = QFontMetrics( font );
         // Origin
         QPointF origin( m_glyphsAtts.value("OriginX").toDouble(), m_glyphsAtts.value("OriginY").toDouble() );

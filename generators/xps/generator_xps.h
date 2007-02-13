@@ -21,6 +21,7 @@
 #define _OKULAR_GENERATOR_XPS_H_
 
 #include <okular/core/generator.h>
+#include <okular/core/textpage.h>
 
 #include <QDomDocument>
 #include <QXmlDefaultHandler>
@@ -82,8 +83,9 @@ public:
                      const QString & qname );
     bool startDocument();
 
-private:
-    
+protected:
+    XpsPage *m_page;
+
     /**
         Parse a "Matrix" attribute string
         \param csv the comma separated list of values
@@ -113,7 +115,6 @@ private:
     */
     QMatrix parseRscRefMatrix( const QString &data );
     
-    XpsPage *m_page;
     QPainter *m_painter;
     
     QImage m_image;
@@ -121,6 +122,27 @@ private:
     QStack<XpsRenderNode> m_nodes;
 
     friend class XpsPage;
+};
+
+class XpsTextExtractionHandler: public XpsHandler
+{
+public:
+    XpsTextExtractionHandler( XpsPage * page, Okular::TextPage * textPage );
+    bool startElement( const QString & nameSpace,
+                       const QString & localName,
+                       const QString & qname,
+                       const QXmlAttributes & atts );
+    bool endElement( const QString & nameSpace,
+                     const QString & localName,
+                     const QString & qname );
+    bool startDocument();
+private:
+    QMatrix m_matrix;
+    QStack<QMatrix> m_matrixes;
+    bool m_useMatrix;
+    QXmlAttributes m_glyphsAtts;
+    Okular::TextPage * m_textPage;
+
 };
 
 /**
@@ -150,6 +172,7 @@ public:
 
     QSize size() const;
     bool renderToImage( QImage *p );
+    Okular::TextPage* textPage();
     
     QImage loadImageFromFile( const QString &filename );
     int loadFontByName( const QString &fontName );
@@ -174,6 +197,7 @@ private:
     QMap<QString, int> m_fontCache;
     
     friend class XpsHandler;
+    friend class XpsTextExtractionHandler;
 };
 
 /**
@@ -282,6 +306,7 @@ class XpsGenerator : public Okular::Generator
 
     protected:
         QImage image( Okular::PixmapRequest *page );
+        Okular::TextPage* textPage( Okular::Page * page );
 
     private:
         XpsFile *m_xpsFile;

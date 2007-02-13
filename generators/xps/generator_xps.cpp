@@ -32,6 +32,7 @@
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
+#include <okular/core/area.h>
 #include "generator_xps.h"
 
 OKULAR_EXPORT_PLUGIN(XpsGenerator)
@@ -358,7 +359,7 @@ QMatrix XpsHandler::parseRscRefMatrix( const QString &data )
 
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
-    m_painter = new QPainter(m_page->m_pageImage);
+    m_painter = NULL;
 }
 
 XpsHandler::~XpsHandler()
@@ -681,6 +682,7 @@ bool XpsPage::renderToImage( QImage *p )
     }
     if (! m_pageIsRendered) {
         XpsHandler *handler = new XpsHandler( this );
+        handler->m_painter = new QPainter( m_pageImage );
         handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
         QXmlSimpleReader *parser = new QXmlSimpleReader();
         parser->setContentHandler( handler );
@@ -701,6 +703,29 @@ bool XpsPage::renderToImage( QImage *p )
 
     return true;
 }
+
+Okular::TextPage* XpsPage::textPage()
+{
+    Okular::TextPage* tp = new Okular::TextPage();
+
+    XpsTextExtractionHandler handler(this, tp);
+    QXmlSimpleReader* parser = new QXmlSimpleReader();
+    parser->setContentHandler( &handler );
+    parser->setErrorHandler( &handler );
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_archive->directory()->entry( m_fileName ));
+    QIODevice* pageDevice  = pageFile->createDevice();
+    QXmlInputSource source = QXmlInputSource(pageDevice);
+    
+    if (!parser->parse( source )) {
+        delete tp;
+        tp = NULL;
+    }
+
+    delete pageDevice;
+
+    return tp;
+}
+
 QSize XpsPage::size() const
 {
     return m_pageSize;
@@ -1042,6 +1067,7 @@ XpsPage* XpsFile::page(int pageNum) const
 XpsGenerator::XpsGenerator()
   : Okular::Generator(), m_xpsFile( 0 )
 {
+    setFeature( TextExtraction );
 }
 
 XpsGenerator::~XpsGenerator()
@@ -1089,6 +1115,12 @@ QImage XpsGenerator::image( Okular::PixmapRequest * request )
     return image;
 }
 
+Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
+{
+    XpsPage * xpsPage = m_xpsFile->page( page->number() );
+    return xpsPage->textPage();
+}
+
 const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
 {
     kDebug() << "generating document metadata" << endl;
@@ -1126,6 +1158,108 @@ void * XpsRenderNode::getChildData( const QString &name )
     } else {
         return child->data;
     }
+}
+
+XpsTextExtractionHandler::XpsTextExtractionHandler( XpsPage * page, Okular::TextPage * textPage): XpsHandler( page ),  m_textPage( textPage ) {}
+
+bool XpsTextExtractionHandler::startDocument()
+{
+    m_matrixes.push(QMatrix());
+    m_matrix = QMatrix();
+    m_useMatrix = false;
+
+    return true;
+}
+
+bool XpsTextExtractionHandler::startElement( const QString & nameSpace,
+                                             const QString & localName,
+                                             const QString & qname,
+                                             const QXmlAttributes & atts )
+{
+    Q_UNUSED( nameSpace );
+    Q_UNUSED( qname );
+
+    if (localName == "Canvas") {
+        m_matrixes.push(m_matrix);
+        
+        QString att = atts.value( "RenderTransform" );
+        if (!att.isEmpty()) {
+            m_matrix = parseRscRefMatrix( att ) * m_matrix;
+        }
+    } else if ((localName == "Canvas.RenderTransform") || (localName == "Glyphs.RenderTransform")) {
+        m_useMatrix = true;
+    } else if (m_useMatrix && (localName == "MatrixTransform")) {
+        m_matrix = attsToMatrix( atts.value("Matrix") ) * m_matrix;
+    } else if (localName == "Glyphs") {
+        m_matrixes.push( m_matrix );
+        m_glyphsAtts = atts;
+    }
+
+    return true;
+}
+
+bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
+                                           const QString & localName,
+                                           const QString & qname )
+{
+    Q_UNUSED( nameSpace );
+    Q_UNUSED( qname );
+
+
+    if (localName == "Canvas") {
+        m_matrix = m_matrixes.pop();
+    } else if ((localName == "Canvas.RenderTransform") || (localName == "Glyphs.RenderTransform")) {
+        m_useMatrix = false;
+    } else if (localName == "Glyphs") {
+        
+        QString att;
+
+        att = m_glyphsAtts.value( "RenderTransform" );
+        if (!att.isEmpty()) {
+            m_matrix = parseRscRefMatrix( att ) * m_matrix;
+        }
+
+        QString text =  m_glyphsAtts.value( "UnicodeString" );
+
+        // Get font (doesn't work well because qt doesn't allow to load font from file)
+        int fontId = m_page->getFontByName( m_glyphsAtts.value( "FontUri" ) );
+        QString fontFamily = m_page->m_fontDatabase.applicationFontFamilies( fontId ).at(0);
+        QString fontStyle =  m_page->m_fontDatabase.styles( fontFamily ).at(0);
+        QFont font = m_page->m_fontDatabase.font(fontFamily, fontStyle, qRound(m_glyphsAtts.value("FontRenderingEmSize").toFloat() * 72 / 96) );
+        QFontMetrics metrics = QFontMetrics( font );
+        // Origin
+        QPointF origin( m_glyphsAtts.value("OriginX").toDouble(), m_glyphsAtts.value("OriginY").toDouble() );
+
+
+        QSize s = m_page->m_pageSize;
+
+        int lastWidth = 0;
+        for (int i = 0; i < text.length(); i++) {
+            int width = metrics.width( text, i + 1 );
+            int charWidth = width - lastWidth;
+
+            Okular::NormalizedRect * rect = new Okular::NormalizedRect( (origin.x() + lastWidth) / s.width(), (origin.y() - metrics.height()) / s.height(),
+                (origin.x() + width) / s.width(), origin.y() / s.height() );
+            rect->transform( m_matrix );
+            m_textPage->append( text.mid(i, 1), rect );
+
+            lastWidth = width;
+        }
+
+//        QRectF textRect = metrics.boundingRect( text );
+//        textRect.moveTo( origin.x(), origin.y() - textRect.height() );
+
+//       textRect = m_matrix.mapRect( textRect );
+
+//        Okular::NormalizedRect * rect = new Okular::NormalizedRect( textRect.x() / s.width(), textRect.y() / s.height(), (textRect.x() + textRect.width()) / s.width(), (textRect.y() + textRect.height()) / s.height() );
+
+//        kDebug() << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl; 
+
+        m_matrix = m_matrixes.pop();
+        
+    }
+
+    return true;
 }
 
 

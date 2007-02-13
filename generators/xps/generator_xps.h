@@ -64,7 +64,6 @@ public:
 typedef QMatrix XpsMatrixTransform;
 typedef QMatrix XpsRenderTransform;
 typedef QBrush XpsFill;
-typedef XpsFill XpsImageBrush;
 
 class XpsPage;
 class XpsFile;

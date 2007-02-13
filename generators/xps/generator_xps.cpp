@@ -439,9 +439,10 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     QBrush brush;
     att = node.attributes.value("Fill");
     if (att.isEmpty()) {
-        void * data = node.getChildData( "Glyphs.Fill" );
+        XpsFill * data = (XpsFill *)node.getChildData( "Glyphs.Fill" );
         if (data != NULL) {
-            brush = *(XpsFill *)data;
+            brush = * data;
+        delete data;
         } else {
             brush = QBrush();
         }
@@ -468,21 +469,12 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 void XpsHandler::processFill( XpsRenderNode &node )
 {
     //TODO Ignored child elements: LinearGradientBrush, RadialGradientBrush, VirtualBrush
-
-    XpsFill * brush;
-    XpsRenderNode * child;
     
-    child = node.findChild("SolidColorBrush");
-    if (child != NULL) {
-        brush = new QBrush( *(QColor *) child->data );
+    if (node.children.size() != 1) {
+        kDebug() << "Fill element should have exactly one child" << endl;
+    } else {
+        node.data = node.children[0].data;
     }
-
-    child = node.findChild("ImageBrush");
-    if (child != NULL) {
-        brush = (XpsImageBrush *) child->data;
-    }
-
-    node.data = brush;
 }
 
 void XpsHandler::processImageBrush( XpsRenderNode &node )
@@ -505,9 +497,10 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     QMatrix viewportMatrix;
     att = node.attributes.value( "Transform" );
     if ( att.isEmpty() ) {
-        void * data = node.getChildData( "ImageBrush.Transform" );
+        XpsMatrixTransform * data = (XpsMatrixTransform *)node.getChildData( "ImageBrush.Transform" );
         if (data != NULL) {
-            viewportMatrix = *(XpsMatrixTransform *)data;
+            viewportMatrix = *data;
+            delete data;
         } else {
             viewportMatrix = QMatrix();
         }
@@ -548,9 +541,10 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if (! att.isEmpty() ) {
         brush = parseRscRefColor( att );   
     } else {
-        void * data = node.getChildData( "Path.Fill" );
+        XpsFill * data = (XpsFill *)node.getChildData( "Path.Fill" );
         if (data != NULL) {
-            brush = *(XpsFill *)data;
+            brush = *data;
+        delete data;
         } else {
             brush = QBrush();
         }
@@ -564,7 +558,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
     }
 
-    m_painter->drawPath( path );
+    m_painter->drawPath( path ); //TODO Valgrind sometimes say that path drawing depends on unitialized value in blend_texture
 
     m_painter->restore();
 }
@@ -586,9 +580,10 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         //TODO Ignoring x:key
         node.data = new QMatrix ( attsToMatrix( node.attributes.value( "Matrix" ) ) ); 
     } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
-        void * data = node.getRequiredChildData( "MatrixTransform" );
+        XpsMatrixTransform * data = (XpsMatrixTransform *)node.getRequiredChildData( "MatrixTransform" );
         if (data != NULL) {
-            m_painter->setWorldMatrix( *(XpsMatrixTransform *)data, true );
+            m_painter->setWorldMatrix( *data, true );
+        delete data;
         }
     } else if (node.name == "Canvas") {
         m_painter->restore();
@@ -596,7 +591,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processFill( node );
     } else if (node.name == "SolidColorBrush") {
         //TODO Ignoring opacity, x:key
-        node.data = new QColor (hexToRgba( node.attributes.value( "Color" ).toLatin1() ));
+        node.data = new QBrush( QColor (hexToRgba( node.attributes.value( "Color" ).toLatin1() ) ) );
     } else if (node.name == "ImageBrush") {
         processImageBrush( node );
     } else if (node.name == "ImageBrush.Transform") {
@@ -872,6 +867,7 @@ XpsFile::XpsFile() : m_docInfo( 0 )
 XpsFile::~XpsFile()
 {
     m_fontCache.clear();
+    m_fontDatabase.removeAllApplicationFonts();
 }
 
 

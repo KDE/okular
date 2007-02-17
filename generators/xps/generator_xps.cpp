@@ -120,8 +120,8 @@ static bool nextAbbPathToken(AbbPathToken *token)
     int *curPos = &token->curPos;
     QString data = token->data;
 
-    while ((*curPos < data.length()) && (data.at(*curPos).isSpace())) 
-    { 
+    while ((*curPos < data.length()) && (data.at(*curPos).isSpace()))
+    {
         (*curPos)++;
     }
 
@@ -147,12 +147,12 @@ static bool nextAbbPathToken(AbbPathToken *token)
     {
         token->type = abtComma;
         (*curPos)++;
-    } else if (ch.isLetter())  
+    } else if (ch.isLetter())
     {
         token->type = abtCommand;
         token->command = data.at(*curPos).cell();
         (*curPos)++;
-    } else 
+    } else
     {
         return false;
     }
@@ -165,7 +165,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
 */
 static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPointF currentPosition) {
     //TODO Check grammar
-    
+
     QPointF result;
     result.rx() = token->number;
     nextAbbPathToken(token);
@@ -176,7 +176,7 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
     if (relative)
     {
         result += currentPosition;
-    }    
+    }
 
     return result;
 }
@@ -184,7 +184,7 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
 /**
     Parse an abbreviated path "Data" description
     \param data the string containing the whitespace separated values
-        
+
     \see XPS specification 4.2.3 and Appendix G
 */
 static QPainterPath parseAbbreviatedPathData( const QString &data)
@@ -197,9 +197,9 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
     token.curPos = 0;
 
     nextAbbPathToken(&token);
-    
+
     // Used by Smooth cubic curve (command s)
-    char lastCommand = ' '; 
+    char lastCommand = ' ';
     QPointF lastSecondControlPoint;
 
     while (true)
@@ -231,7 +231,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
                     // In xps specs rule 1 means NonZero fill. I think it's equivalent to WindingFill but I'm not sure
                     path.setFillRule(Qt::WindingFill);
                 }
-                nextAbbPathToken(&token); 
+                nextAbbPathToken(&token);
                 break;
             case 'm': // Move
                 while (token.type == abtNumber)
@@ -289,7 +289,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
                     if ((lastCommand == 's') || (lastCommand == 'c'))
                     {
                         firstControl = lastSecondControlPoint + (lastSecondControlPoint + path.currentPosition());
-                    } 
+                    }
                     else
                     {
                         firstControl = path.currentPosition();
@@ -332,7 +332,7 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
     }
     return QMatrix( values.at(0).toDouble(), values.at(1).toDouble(),
                     values.at(2).toDouble(), values.at(3).toDouble(),
-                    values.at(4).toDouble(), values.at(5).toDouble() ); 
+                    values.at(4).toDouble(), values.at(5).toDouble() );
 }
 
 QBrush XpsHandler::parseRscRefColor( const QString &data )
@@ -419,10 +419,10 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
 void XpsHandler::processGlyph( XpsRenderNode &node )
 {
-    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, StyleSimulation, Clip, Opacity, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
+    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, StyleSimulation, Clip, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
     //TODO Currently ignored child elements: Clip, OpacityMask
     //Handled separately: RenderTransform
-    
+
     QString att;
 
     m_painter->save();
@@ -452,6 +452,12 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     m_painter->setBrush( brush );
     m_painter->setPen( QPen( brush, 0 ) );
 
+    // Opacity
+    att = node.attributes.value("Opacity");
+    if (! att.isEmpty()) {
+        m_painter->setOpacity(att.toDouble());
+    }
+
     //RenderTransform
     att = node.attributes.value("RenderTransform");
     if (!att.isEmpty()) {
@@ -462,14 +468,14 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     // kDebug() << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
     // kDebug() << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
     // kDebug() << "    Unicode: " << atts.value("UnicodeString") << endl;
-    
+
     m_painter->restore();
 }
 
 void XpsHandler::processFill( XpsRenderNode &node )
 {
     //TODO Ignored child elements: LinearGradientBrush, RadialGradientBrush, VirtualBrush
-    
+
     if (node.children.size() != 1) {
         kDebug() << "Fill element should have exactly one child" << endl;
     } else {
@@ -481,14 +487,14 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 {
     //TODO Ignored attributes: Opacity, x:key, TileMode, ViewBoxUnits, ViewPortUnits
     //TODO Check whether transformation works for non standard situations (viewbox different that whole image, Transform different that simple move & scale, Viewport different than [0, 0, 1, 1]
-    
+
     QString att;
     QBrush brush;
-    
+
     QRectF viewport = stringToRectF( node.attributes.value( "Viewport" ) );
     QRectF viewbox = stringToRectF( node.attributes.value( "Viewbox" ) );
     QImage image = m_page->loadImageFromFile( node.attributes.value( "ImageSource" ) );
-    
+
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewbox
     QMatrix viewboxMatrix = QMatrix( viewbox.width() * image.physicalDpiX() / 96, 0, 0, viewbox.height() * image.physicalDpiY() / 96, viewbox.x(), viewbox.y() );
 
@@ -509,7 +515,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     }
     viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewbox.y() );
 
-    
+
     // TODO Brush should work also for QImage, not only QPixmap. But for some images it doesn't work
     brush = QBrush( QPixmap::fromImage( image) );
     brush.setMatrix( viewboxMatrix.inverted() * viewportMatrix );
@@ -519,7 +525,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 
 void XpsHandler::processPath( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Clip, Opacity, OpacityMask, Stroke, StrokeDashArray, StrokeDashCap, StrokeDashOffset, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMitterLimit, StrokeThickness, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
+    //TODO Ignored attributes: Clip, OpacityMask, Stroke, StrokeDashArray, StrokeDashCap, StrokeDashOffset, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMitterLimit, StrokeThickness, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
     //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Stroke, Data
     // Handled separately: RenderTransform
     m_painter->save();
@@ -532,14 +538,14 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if (! att.isEmpty() ) {
         path = parseAbbreviatedPathData( att );
     } else {
-        path = QPainterPath(); //TODO 
+        path = QPainterPath(); //TODO
     }
-    
+
     // Set Fill
     att = node.attributes.value( "Fill" );
     QBrush brush;
     if (! att.isEmpty() ) {
-        brush = parseRscRefColor( att );   
+        brush = parseRscRefColor( att );
     } else {
         XpsFill * data = (XpsFill *)node.getChildData( "Path.Fill" );
         if (data != NULL) {
@@ -551,6 +557,12 @@ void XpsHandler::processPath( XpsRenderNode &node )
     }
     m_painter->setBrush( brush );
     m_painter->setPen( QPen( Qt::NoPen ) );
+
+    // Opacity
+    att = node.attributes.value("Opacity");
+    if (! att.isEmpty()) {
+        m_painter->setOpacity(att.toDouble());
+    }
 
     // RenderTransform
     att = node.attributes.value( "RenderTransform" );
@@ -578,7 +590,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processPath( node );
     } else if (node.name == "MatrixTransform") {
         //TODO Ignoring x:key
-        node.data = new QMatrix ( attsToMatrix( node.attributes.value( "Matrix" ) ) ); 
+        node.data = new QMatrix ( attsToMatrix( node.attributes.value( "Matrix" ) ) );
     } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
         XpsMatrixTransform * data = (XpsMatrixTransform *)node.getRequiredChildData( "MatrixTransform" );
         if (data != NULL) {
@@ -659,7 +671,7 @@ XpsPage::~XpsPage()
 
 bool XpsPage::renderToImage( QImage *p )
 {
-    
+
     if ((m_pageImage == NULL) || (m_pageImage->size() != p->size())) {
         delete m_pageImage;
         m_pageImage = new QImage( p->size(), QImage::Format_ARGB32 );
@@ -704,7 +716,7 @@ Okular::TextPage* XpsPage::textPage()
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
     QIODevice* pageDevice  = pageFile->createDevice();
     QXmlInputSource source = QXmlInputSource(pageDevice);
-    
+
     if (!parser->parse( source )) {
         delete tp;
         tp = NULL;
@@ -723,7 +735,7 @@ QSize XpsPage::size() const
 QFont XpsFile::getFontByName( const QString &fileName, float size )
 {
     int index = m_fontCache.value(fileName, -1);
-    if (index == -1) 
+    if (index == -1)
     {
         index = loadFontByName(fileName);
         m_fontCache[fileName] = index;
@@ -747,9 +759,9 @@ int XpsFile::loadFontByName( const QString &fileName )
 
     int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {
-        // Try to deobfuscate font 
+        // Try to deobfuscate font
        // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
-    
+
         QFileInfo* fileInfo = new QFileInfo(fileName);
         QString baseName = fileInfo->baseName();
         delete fileInfo;
@@ -1182,7 +1194,7 @@ bool XpsTextExtractionHandler::startElement( const QString & nameSpace,
 
     if (localName == "Canvas") {
         m_matrixes.push(m_matrix);
-        
+
         QString att = atts.value( "RenderTransform" );
         if (!att.isEmpty()) {
             m_matrix = parseRscRefMatrix( att ) * m_matrix;
@@ -1212,7 +1224,7 @@ bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
     } else if ((localName == "Canvas.RenderTransform") || (localName == "Glyphs.RenderTransform")) {
         m_useMatrix = false;
     } else if (localName == "Glyphs") {
-        
+
         QString att;
 
         att = m_glyphsAtts.value( "RenderTransform" );
@@ -1251,10 +1263,10 @@ bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
 
 //        Okular::NormalizedRect * rect = new Okular::NormalizedRect( textRect.x() / s.width(), textRect.y() / s.height(), (textRect.x() + textRect.width()) / s.width(), (textRect.y() + textRect.height()) / s.height() );
 
-//        kDebug() << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl; 
+//        kDebug() << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl;
 
         m_matrix = m_matrixes.pop();
-        
+
     }
 
     return true;

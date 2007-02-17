@@ -191,7 +191,6 @@ private:
     QImage *m_pageImage;
     bool m_pageIsRendered;
 
-    
     friend class XpsHandler;
     friend class XpsTextExtractionHandler;
 };
@@ -291,6 +290,8 @@ private:
 
     QString m_corePropertiesFileName;
     Okular::DocumentInfo * m_docInfo;
+
+    QString m_signatureOrigin;    
 
     KZip * m_xpsArchive;
 

@@ -925,6 +925,8 @@ bool XpsFile::loadDocument(const QString &filename)
                 fixedRepresentationFileName = e.attribute("Target");
             } else if ("http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" == e.attribute("Type") ) {
                 m_corePropertiesFileName = e.attribute("Target");
+            } else if ("http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin" == e.attribute("Type") ) {
+                m_signatureOrigin = e.attribute("Target");
             } else {
                 kDebug() << "Unknown relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
             }

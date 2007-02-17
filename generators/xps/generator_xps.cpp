@@ -335,14 +335,25 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
                     values.at(4).toDouble(), values.at(5).toDouble() );
 }
 
-QColor XpsHandler::parseRscRefColor( const QString &data )
+QBrush XpsHandler::parseRscRefColorForBrush( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
         kDebug() << "Reference" << data << endl;
-        return Qt::black;
+        return QBrush();
     } else {
-        return hexToRgba( data.toLatin1() );
+        return QBrush( hexToRgba( data.toLatin1() ) );
+    }
+}
+
+QPen XpsHandler::parseRscRefColorForPen( const QString &data )
+{
+    if (data[0] == '{') {
+        //TODO
+        kDebug() << "Reference" << data << endl;
+        return QPen();
+    } else {
+        return QPen( hexToRgba( data.toLatin1() ) );
     }
 }
 
@@ -447,7 +458,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
             brush = QBrush();
         }
     } else {
-        brush = QBrush( parseRscRefColor( att ) );
+        brush = parseRscRefColorForBrush( att );
     }
     m_painter->setBrush( brush );
     m_painter->setPen( QPen( brush, 0 ) );
@@ -545,7 +556,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
     att = node.attributes.value( "Fill" );
     QBrush brush;
     if (! att.isEmpty() ) {
-        brush = QBrush ( parseRscRefColor( att ) );
+        brush = parseRscRefColorForBrush( att );
     } else {
         XpsFill * data = (XpsFill *)node.getChildData( "Path.Fill" );
         if (data != NULL) {
@@ -562,7 +573,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
     att = node.attributes.value( "Stroke" );
     QPen pen( Qt::transparent );
     if  (! att.isEmpty() ) {
-        pen = QPen( parseRscRefColor( att ) );
+        pen = parseRscRefColorForPen( att );
     }
     att = node.attributes.value( "StrokeThickness" );
     if  (! att.isEmpty() ) {

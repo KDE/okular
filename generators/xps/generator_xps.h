@@ -106,9 +106,14 @@ protected:
     void processImageBrush (XpsRenderNode &node );
 
     /**
-        \return QColor corresponding to given color description / reference
+       \return Brush with given color or brush specified by reference to resource
     */
-    QColor parseRscRefColor( const QString &data );
+    QBrush parseRscRefColorForBrush( const QString &data );
+
+    /**
+       \return Pen with given color or Pen specified by reference to resource
+    */
+    QPen parseRscRefColorForPen( const QString &data );
 
     /**
         \return Matrix specified by given data or by referenced dictionary

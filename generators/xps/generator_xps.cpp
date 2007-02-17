@@ -335,14 +335,14 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
                     values.at(4).toDouble(), values.at(5).toDouble() );
 }
 
-QBrush XpsHandler::parseRscRefColor( const QString &data )
+QColor XpsHandler::parseRscRefColor( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
         kDebug() << "Reference" << data << endl;
-        return QBrush();
+        return Qt::black;
     } else {
-        return QBrush( hexToRgba( data.toLatin1() ) );
+        return hexToRgba( data.toLatin1() );
     }
 }
 
@@ -447,7 +447,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
             brush = QBrush();
         }
     } else {
-        brush = parseRscRefColor( att );
+        brush = QBrush( parseRscRefColor( att ) );
     }
     m_painter->setBrush( brush );
     m_painter->setPen( QPen( brush, 0 ) );
@@ -525,7 +525,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 
 void XpsHandler::processPath( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Clip, OpacityMask, Stroke, StrokeDashArray, StrokeDashCap, StrokeDashOffset, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMitterLimit, StrokeThickness, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
+    //TODO Ignored attributes: Clip, OpacityMask, StrokeDashArray, StrokeDashCap, StrokeDashOffset, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMiterLimit, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
     //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Stroke, Data
     // Handled separately: RenderTransform
     m_painter->save();
@@ -545,7 +545,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
     att = node.attributes.value( "Fill" );
     QBrush brush;
     if (! att.isEmpty() ) {
-        brush = parseRscRefColor( att );
+        brush = QBrush ( parseRscRefColor( att ) );
     } else {
         XpsFill * data = (XpsFill *)node.getChildData( "Path.Fill" );
         if (data != NULL) {
@@ -556,7 +556,22 @@ void XpsHandler::processPath( XpsRenderNode &node )
         }
     }
     m_painter->setBrush( brush );
-    m_painter->setPen( QPen( Qt::NoPen ) );
+
+    // Stroke (pen)
+    // We don't handle the child elements (Path.Stroke) yet.
+    att = node.attributes.value( "Stroke" );
+    QPen pen( Qt::transparent );
+    if  (! att.isEmpty() ) {
+        pen = QPen( parseRscRefColor( att ) );
+    }
+    att = node.attributes.value( "StrokeThickness" );
+    if  (! att.isEmpty() ) {
+        bool ok = false;
+        int thickness = att.toInt( &ok );
+        if (ok)
+            pen.setWidth( thickness );
+    }
+    m_painter->setPen( pen );
 
     // Opacity
     att = node.attributes.value("Opacity");

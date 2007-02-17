@@ -5,12 +5,12 @@
   modify it under the terms of the GNU General Public License
   as published by the Free Software Foundation; either version 2
   of the License, or (at your option) any later version
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-  
+
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
@@ -91,11 +91,11 @@ protected:
         \param csv the comma separated list of values
         \return the QMatrix corresponding to the affine transform
         given in the attribute
-    
+
         \see XPS specification 7.4.1
     */
     QMatrix attsToMatrix( const QString &csv );
-    
+
     void processStartElement( XpsRenderNode &node );
     void processEndElement( XpsRenderNode &node );
 
@@ -106,17 +106,17 @@ protected:
     void processImageBrush (XpsRenderNode &node );
 
     /**
-        \return Brush with given color or brush specified by reference to resource
+        \return QColor corresponding to given color description / reference
     */
-    QBrush parseRscRefColor( const QString &data );
+    QColor parseRscRefColor( const QString &data );
 
     /**
         \return Matrix specified by given data or by referenced dictionary
     */
     QMatrix parseRscRefMatrix( const QString &data );
-    
+
     QPainter *m_painter;
-    
+
     QImage m_image;
 
     QStack<XpsRenderNode> m_nodes;
@@ -146,7 +146,7 @@ private:
 };
 
 /**
-    Simple SAX handler which get size of page and stops. I don't use DOM because size of pages is 
+    Simple SAX handler which get size of page and stops. I don't use DOM because size of pages is
     counted when document is loaded and for big documents is DOM too slow.
  */
 class XpsPageSizeHandler: public QXmlDefaultHandler
@@ -173,15 +173,15 @@ public:
     QSize size() const;
     bool renderToImage( QImage *p );
     Okular::TextPage* textPage();
-    
+
     QImage loadImageFromFile( const QString &filename );
-    
+
 private:
     XpsFile *m_file;
     const QString m_fileName;
 
     QSize m_pageSize;
-    
+
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
@@ -214,7 +214,7 @@ public:
 
        \param pageNum the number of the page to return
 
-       \note page numbers are zero based - they run from 0 to 
+       \note page numbers are zero based - they run from 0 to
        numPages() - 1
     */
     XpsPage* page(int pageNum) const;
@@ -233,7 +233,7 @@ class XpsFile
 public:
     XpsFile();
     ~XpsFile();
-    
+
     bool loadDocument( const QString & fileName );
     bool closeDocument();
 
@@ -257,7 +257,7 @@ public:
 
         \param pageNum the page number of the page to return
 
-        \note page numbers are zero based - they run from 0 to 
+        \note page numbers are zero based - they run from 0 to
         numPages() - 1
     */
     XpsPage* page(int pageNum) const;
@@ -267,16 +267,16 @@ public:
 
        \param documentNum the number of the document to return
 
-       \note document numbers are zero based - they run from 0 to 
+       \note document numbers are zero based - they run from 0 to
        numDocuments() - 1
     */
     XpsDocument* document(int documentNum) const;
-    
+
     QFont getFontByName( const QString &fontName, float size );
 
     KZip* xpsArchive();
 
-    
+
 private:
     int loadFontByName( const QString &fontName );
 
@@ -291,7 +291,7 @@ private:
     QString m_corePropertiesFileName;
     Okular::DocumentInfo * m_docInfo;
 
-    QString m_signatureOrigin;    
+    QString m_signatureOrigin;
 
     KZip * m_xpsArchive;
 

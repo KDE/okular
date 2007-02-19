@@ -7,24 +7,24 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QtCore/QEventLoop>
+#include <QtGui/QPainter>
+
+#include <khtml_part.h>
+#include <khtmlview.h>
+#include <klocale.h>
+#include <kurl.h>
+#include <dom/html_misc.h>
+#include <dom/dom_node.h>
+
+#include <okular/core/link.h>
+#include <okular/core/observer.h> //for PAGEVIEW_ID
+#include <okular/core/page.h>
+#include <okular/core/textpage.h>
+
 #include "generator_chm.h"
 #include "lib/xchmfile.h"
 #include "settings.h"
-#include <okular/core/page.h>
-#include <okular/core/link.h>
-#include <okular/core/observer.h> //for PAGEVIEW_ID
-#include <okular/core/textpage.h>
-#include "dom/html_misc.h"
-
-#include <kurl.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <khtml_part.h>
-#include <khtmlview.h>
-#include <qevent.h>
-#include <qapplication.h>
-#include <qpainter.h>
-#include <qstring.h>
 
 OKULAR_EXPORT_PLUGIN(CHMGenerator)
 
@@ -37,15 +37,17 @@ CHMGenerator::CHMGenerator()
     m_file=0;
     m_docInfo=0;
     m_pixmapRequestZoom=1;
+    m_request = 0;
 }
 
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
+    m_textpageAddedList.clear();
+
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
     m_file->ParseAndFillTopicsTree (&m_docSyn);
 
-    kDebug () << "UrlPage count " << m_file->m_UrlPage.count() << endl;
     pagesVector.resize(m_file->m_UrlPage.count());
 
     if (!m_syncGen)
@@ -58,7 +60,6 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         int i= it.value() - 1;
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
-        kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
 
     connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
@@ -80,8 +81,6 @@ bool CHMGenerator::closeDocument()
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
-    kDebug() << "Url: " << pAddress  << endl;
-    qDebug( "tokoe: generating %s", qPrintable( pAddress.url() ) );
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->openUrl(pAddress);
     m_syncGen->view()->layout();
@@ -93,24 +92,35 @@ void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 
 void CHMGenerator::slotCompleted()
 {
-//  kDebug() << "completed(1) " << m_request->id << endl;
+    if ( !m_request )
+        return;
+
     QImage image( m_request->width(), m_request->height(), QImage::Format_ARGB32 );
     image.fill( qRgb( 255, 255, 255 ) );
+
     QPainter p( &image );
     QRect r( 0, 0, m_request->width(), m_request->height() );
+
     bool moreToPaint;
-//  m_syncGen->view()->layout();
     m_syncGen->paint( &p, r, 0, &moreToPaint );
+
     p.end();
+
     if ( m_pixmapRequestZoom > 1 )
-    {
-        image = image.scaled( m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom );
         m_pixmapRequestZoom = 1;
+
+    if ( !m_textpageAddedList.contains( m_request->pageNumber() ) ) {
+        additionalRequestData();
+        m_textpageAddedList.insert( m_request->pageNumber() );
     }
-    additionalRequestData();
+
     syncLock.unlock();
-    m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
-    signalPixmapRequestDone( m_request );
+
+    Okular::PixmapRequest *req = m_request;
+    m_request = 0;
+
+    req->page()->setPixmap( req->id(), new QPixmap( QPixmap::fromImage( image ) ) );
+    signalPixmapRequestDone( req );
 }
 
 const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo() 
@@ -149,14 +159,6 @@ bool CHMGenerator::canGeneratePixmap () const
 
 void CHMGenerator::generatePixmap( Okular::PixmapRequest * request ) 
 {
-    QString a="S";
-    if (request->asynchronous()) a="As";
-
-    kDebug() << a << "ync PixmapRequest of " << request->width() << "x" 
-    << request->height() << " size, pageNo " << request->pageNumber()
-    << ", priority: " << request->priority() << " id: " << request->id()
-    <<  endl;
-
     int requestWidth = request->width();
     int requestHeight = request->height();
     if (requestWidth<300)
@@ -173,7 +175,6 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         ) ) * 100;
 
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
-    kDebug() << "Page asked is: " << pAddress << " zoom is " << zoom << endl;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);
     m_request=request;
@@ -200,9 +201,6 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
         {
             nodeNormRect=new Okular::NormalizedRect (r,vWidth,vHeight);
             tp->append(nodeText,nodeNormRect,nodeNormRect->bottom,0,(nodeText=="\n"));
-            kDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
-                << "] [" << nodeNormRect->right << "x" << nodeNormRect->bottom << "]" << endl;
-            kDebug() << "Node Dom text(" << nodeText.length() << "): " << nodeText << endl;
         }
         else
         {
@@ -214,28 +212,18 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
                 {
 //                     if (nodeType[i+1]
                     node.getCursor(i+1,x_next,y_next,height_next);
-                    kDebug() << "DL/L/R " << r.left() << "/" << x << "/" << x_next << endl;
                     nodeNormRect=new Okular::NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else if ( i <nodeTextLength -1 )
                 // i is between zero and the last element
                 {
                     node.getCursor(i+1,x_next,y_next,height_next);
-                    kDebug() << "L/R" << x << "/" << x_next << endl;
                     nodeNormRect=new Okular::NormalizedRect (QRect(x,y,x_next-x-1,height),vWidth,vHeight);
                 }
                 else
                 // the last element use right rect boundary
                 {
                     node.getCursor(i-1,x_next,y_next,height_next);
-                    kDebug() << "L/R" << x_next << "/" << r.right() << endl;
-                    nodeNormRect=new Okular::NormalizedRect (QRect(x,y,r.right()-x-1,height),vWidth,vHeight);
-                }
-                tp->append(QString(nodeText[i]),nodeNormRect,nodeNormRect->bottom,0,(nodeText[i]=='\n'));
-                kDebug () << "Working with offset : " << i << endl;
-                kDebug() << "Norm Rect is [" << nodeNormRect->left << "x" << nodeNormRect->top
-                    << "] [" << nodeNormRect->right << "x" << nodeNormRect->bottom << "]" << endl;
-                kDebug() << "Node Dom text(1): " << nodeText[i] << endl;
             }
         }
 #else
@@ -249,7 +237,6 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
         recursiveExploreNodes(child,tp);
         child = child.nextSibling();
     }
-
 }
 
 void CHMGenerator::additionalRequestData() 
@@ -261,80 +248,77 @@ void CHMGenerator::additionalRequestData()
     if (genObjectRects || genTextPage )
     {
         DOM::HTMLDocument domDoc=m_syncGen->htmlDocument();
-    // only generate object info when generating a full page not a thumbnail
-    if ( genObjectRects )
-    {
-        kDebug() << "Generating ObjRects - start" << endl;
-        QLinkedList< Okular::ObjectRect * > objRects;
-        int xScale=m_request->width();
-        int yScale=m_request->height();
-        // getting links
-        DOM::HTMLCollection coll=domDoc.links();
-        DOM::Node n;
-        QRect r;
-        if (! coll.isNull() )
+        // only generate object info when generating a full page not a thumbnail
+        if ( genObjectRects )
         {
-            int size=coll.length();
-            for(int i=0;i<size;i++)
+            QLinkedList< Okular::ObjectRect * > objRects;
+            int xScale=m_request->width();
+            int yScale=m_request->height();
+            // getting links
+            DOM::HTMLCollection coll=domDoc.links();
+            DOM::Node n;
+            QRect r;
+            if (! coll.isNull() )
             {
-                n=coll.item(i);
-                if ( !n.isNull() )
+                int size=coll.length();
+                for(int i=0;i<size;i++)
                 {
-                    QString url = n.attributes().getNamedItem("href").nodeValue().string();
-                    r=n.getRect();
-                    kDebug() << "Adding rect: " << url << " "  << r << endl;
-                    // there is no way for us to support javascript properly
-                    if (url.startsWith("JavaScript:"), Qt::CaseInsensitive)
-                        continue;
-                    else if (url.contains (":"))
+                    n=coll.item(i);
+                    if ( !n.isNull() )
                     {
-                        objRects.push_back(
-                            new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
-                            false,
-                            Okular::ObjectRect::Link,
-                            new Okular::LinkBrowse ( url )));
-                    }
-                    else
-                    {
-                        Okular::DocumentViewport viewport( metaData( "NamedViewport", '/' + url ).toString() );
-                        objRects.push_back(
-                            new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
-                            false,
-                            Okular::ObjectRect::Link,
-                            new Okular::LinkGoto ( QString::null, viewport)));
+                        QString url = n.attributes().getNamedItem("href").nodeValue().string();
+                        r=n.getRect();
+                        // there is no way for us to support javascript properly
+                        if (url.startsWith("JavaScript:"), Qt::CaseInsensitive)
+                            continue;
+                        else if (url.contains (":"))
+                        {
+                            objRects.push_back(
+                                new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
+                                false,
+                                Okular::ObjectRect::Link,
+                                new Okular::LinkBrowse ( url )));
+                        }
+                        else
+                        {
+                            Okular::DocumentViewport viewport( metaData( "NamedViewport", '/' + url ).toString() );
+                            objRects.push_back(
+                                new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
+                                false,
+                                Okular::ObjectRect::Link,
+                                new Okular::LinkGoto ( QString::null, viewport)));
+                        }
                     }
                 }
             }
-        }
 
-        // getting images
-        coll=domDoc.images();
-        if (! coll.isNull() )
-        {
-            int size=coll.length();
-            for(int i=0;i<size;i++)
+            // getting images
+            coll=domDoc.images();
+            if (! coll.isNull() )
             {
-                n=coll.item(i);
-                if ( !n.isNull() )
+                int size=coll.length();
+                for(int i=0;i<size;i++)
                 {
-                    objRects.push_back(
-                            new Okular::ObjectRect ( Okular::NormalizedRect(n.getRect(),xScale,yScale),
-                            false,
-                            Okular::ObjectRect::Image,
-                            0));
+                    n=coll.item(i);
+                    if ( !n.isNull() )
+                    {
+                        objRects.push_back(
+                                new Okular::ObjectRect ( Okular::NormalizedRect(n.getRect(),xScale,yScale),
+                                false,
+                                Okular::ObjectRect::Image,
+                                0));
+                    }
                 }
             }
+            m_request->page()->setObjectRects( objRects );
         }
-        m_request->page()->setObjectRects( objRects );
-    }
 
-    if ( genTextPage )
-    {
-        kDebug() << "Generating text page - start" << endl;
-        Okular::TextPage *tp=new Okular::TextPage();
-        recursiveExploreNodes(domDoc,tp);
-        page->setTextPage (tp);
-    }
+        if ( genTextPage )
+        {
+            Okular::TextPage *tp=new Okular::TextPage();
+            recursiveExploreNodes(domDoc,tp);
+            page->setTextPage (tp);
+        }
     }
 }
 

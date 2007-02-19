@@ -12,18 +12,20 @@
 
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
-#include <qsize.h>
-#include <qmutex.h>
-#include "dom/dom_node.h"
-#define CHM_DATAREADY_ID 6990
+
+#include <QtCore/QMutex>
+#include <QtCore/QSet>
+#include <QtCore/QSize>
 
 class CHMFile;
 class KHTMLPart;
-class PixmapThreader;
-class QCustomEvent;
 
 namespace Okular {
 class TextPage;
+}
+
+namespace DOM {
+class Node;
 }
 
 class CHMGenerator : public Okular::Generator
@@ -50,45 +52,18 @@ class CHMGenerator : public Okular::Generator
         Okular::TextPage* textPage( Okular::Page *page );
 
     private:
-        void additionalRequestData ();
-        void recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp);
-        void preparePageForSyncOperation( int zoom , const QString & url);
-//         void customEvent( QCustomEvent * e );
+        void additionalRequestData();
+        void recursiveExploreNodes( DOM::Node node, Okular::TextPage *tp );
+        void preparePageForSyncOperation( int zoom , const QString &url );
         Okular::DocumentSynopsis m_docSyn;
         CHMFile* m_file;
         KHTMLPart *m_syncGen;
-//         KHTMLPart *m_asyncGen;
-//         QSize m_size;
         mutable QMutex syncLock;
         QString m_fileName;
-//         QMutex asyncLock;
-        QMutex pageLock;
-//         friend class PixmapThreader;
-//         PixmapThreader * px;
-        // 0 is loading document
-        // 1 is requesting pixmaps
-        // -1 is internal error :)
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
         Okular::DocumentInfo* m_docInfo;
+        QSet<int> m_textpageAddedList;
 };
-
-// for now impossible to use KHTMLPart outside the main app, maybe in KDE4
-// no async therefore
-/*
-class PixmapThreader : public QObject, public QThread
-{
-    Q_OBJECT
-    public:
-        PixmapThreader (CHMGenerator* gen) : m_gen(gen) {;} ;
-        QPixmap * takePixmap() { return m_pix; };
-        void startGeneration(PixmapRequest * req) { m_req=req; start(); };
-    private:
-        void run();
-        PixmapRequest* m_req;
-        QString page;
-        QPixmap * m_pix;
-        CHMGenerator * m_gen;
-};*/
 
 #endif

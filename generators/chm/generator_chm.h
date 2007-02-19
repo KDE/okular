@@ -68,10 +68,8 @@ class CHMGenerator : public Okular::Generator
         // 0 is loading document
         // 1 is requesting pixmaps
         // -1 is internal error :)
-        int m_state;
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
-        volatile bool m_doneFlagSet;
         Okular::DocumentInfo* m_docInfo;
 };
 

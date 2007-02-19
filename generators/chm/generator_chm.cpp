@@ -35,7 +35,6 @@ CHMGenerator::CHMGenerator()
 
     m_syncGen=0;
     m_file=0;
-    m_state=-1;
     m_docInfo=0;
     m_pixmapRequestZoom=1;
 }
@@ -50,12 +49,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     pagesVector.resize(m_file->m_UrlPage.count());
 
     if (!m_syncGen)
-    {
         m_syncGen = new KHTMLPart();
-        connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
-    }
+
     QMap <QString, int>::ConstIterator it=m_file->m_UrlPage.begin(), end=m_file->m_UrlPage.end();
-    m_state=0;
     for (;it!=end;++it)
     {
         preparePageForSyncOperation(100,it.key());
@@ -64,6 +60,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
         kDebug() << "W/H: " << m_syncGen->view()->contentsWidth() << "/" << m_syncGen->view()->contentsHeight() << endl;
     }
+
+    connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
+
     return true;
 }
 
@@ -81,43 +80,37 @@ bool CHMGenerator::closeDocument()
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
-    m_state=0;
     kDebug() << "Url: " << pAddress  << endl;
+    qDebug( "tokoe: generating %s", qPrintable( pAddress.url() ) );
     m_syncGen->setZoomFactor(zoom);
-    m_doneFlagSet=false;
     m_syncGen->openUrl(pAddress);
     m_syncGen->view()->layout();
-    while (!m_doneFlagSet) { qApp->processEvents(QEventLoop::AllEvents, 50); }
+
+    QEventLoop loop;
+    connect( m_syncGen, SIGNAL( completed() ), &loop, SLOT( quit() ) );
+    loop.exec();
 }
 
 void CHMGenerator::slotCompleted()
 {
-    kDebug() << "completed() " << m_state << endl;
-    if (m_state==0)
+//  kDebug() << "completed(1) " << m_request->id << endl;
+    QImage image( m_request->width(), m_request->height(), QImage::Format_ARGB32 );
+    image.fill( qRgb( 255, 255, 255 ) );
+    QPainter p( &image );
+    QRect r( 0, 0, m_request->width(), m_request->height() );
+    bool moreToPaint;
+//  m_syncGen->view()->layout();
+    m_syncGen->paint( &p, r, 0, &moreToPaint );
+    p.end();
+    if ( m_pixmapRequestZoom > 1 )
     {
-        m_doneFlagSet=true;
+        image = image.scaled( m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom );
+        m_pixmapRequestZoom = 1;
     }
-    else if (m_state==1)
-    {
-//         kDebug() << "completed(1) " << m_request->id << endl;
-        QImage image( m_request->width(), m_request->height(), QImage::Format_ARGB32 );
-        image.fill( qRgb( 255, 255, 255 ) );
-        QPainter p( &image );
-        QRect r( 0, 0, m_request->width(), m_request->height() );
-        bool moreToPaint;
-//                 m_syncGen->view()->layout();
-        m_syncGen->paint( &p, r, 0, &moreToPaint );
-        p.end();
-        if ( m_pixmapRequestZoom > 1 )
-        {
-            image = image.scaled( m_request->width()/m_pixmapRequestZoom, m_request->height()/m_pixmapRequestZoom );
-            m_pixmapRequestZoom = 1;
-        }
-        additionalRequestData();
-        syncLock.unlock();
-        m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
-        signalPixmapRequestDone( m_request );
-    }
+    additionalRequestData();
+    syncLock.unlock();
+    m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
+    signalPixmapRequestDone( m_request );
 }
 
 const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo() 
@@ -184,7 +177,6 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);
     m_request=request;
-    m_state=1;
     // will emit openURL without problems
     m_syncGen->openUrl ( pAddress );
 }

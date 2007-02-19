@@ -224,9 +224,25 @@ public:
     */
     XpsPage* page(int pageNum) const;
 
+    /**
+      whether this document has a Document Structure
+    */
+    bool hasDocumentStructure();
+
+    /**
+      the document structure for this document, if available
+    */
+    const Okular::DocumentSynopsis * documentStructure();
+
 private:
+    void parseDocumentStructure( const QString &documentStructureFileName );
+    const QDomNode findElementByLinkTargetName( const QString &targetName );
+
     QList<XpsPage*> m_pages;
     XpsFile * m_file;
+    bool m_haveDocumentStructure;
+    Okular::DocumentSynopsis *m_docStructure;
+    QMap<QString,int> m_docStructurePageMap;
 };
 
 /**
@@ -316,6 +332,7 @@ class XpsGenerator : public Okular::Generator
         bool closeDocument();
 
         const Okular::DocumentInfo * generateDocumentInfo();
+        const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
     protected:
         QImage image( Okular::PixmapRequest *page );

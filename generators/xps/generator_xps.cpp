@@ -838,7 +838,117 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
     return image;
 }
 
-XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file)
+void XpsDocument::parseDocumentStructure( const QString &documentStructureFileName )
+{
+    kDebug() << "document structure file name: " << documentStructureFileName << endl;
+    m_haveDocumentStructure = true;
+
+    const KZipFileEntry* documentStructureFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( documentStructureFileName ));
+
+    QIODevice* documentStructureDevice = documentStructureFile->createDevice();
+
+    QDomDocument documentStructureDom;
+    QString errMsg;
+    int errLine, errCol;
+    if ( documentStructureDom.setContent( documentStructureDevice, true, &errMsg, &errLine, &errCol ) == false ) {
+        // parse error
+        kDebug() << "Could not parse XPS structure document: " << errMsg << " : "
+                 << errLine << " : " << errCol << endl;
+        m_haveDocumentStructure = false;
+        return;
+    }
+
+    QDomNode node = documentStructureDom.documentElement().firstChild();
+
+    while( !node.isNull() ) {
+        QDomElement element = node.toElement();
+        if( !element.isNull() ) {
+            if (element.tagName() == "DocumentStructure.Outline") {
+                kDebug() << "found DocumentStructure.Outline" << endl;
+
+                // there now has to be one DocumentOutline element
+                QDomNode documentOutlineNode = node.firstChild();
+                if ( node.isNull() )
+                {
+                    m_haveDocumentStructure = false;
+                    return;
+                }
+                QDomElement documentOutlineElement = documentOutlineNode.toElement();
+                if ( ( documentOutlineElement.isNull() ) || ( documentOutlineElement.tagName() != "DocumentOutline" ) )
+                {
+                    m_haveDocumentStructure = false;
+                    return;
+                }
+                kDebug() << "found DocumentOutline" << endl;
+
+                m_docStructure = new Okular::DocumentSynopsis;
+
+                // now we get a series of OutlineEntry nodes
+                QDomNode outlineEntryNode = documentOutlineNode.firstChild();
+                while ( !outlineEntryNode.isNull() )
+                {
+                    QDomElement outlineEntryElement = outlineEntryNode.toElement();
+                    if ( ( outlineEntryElement.isNull() ) || ( outlineEntryElement.tagName() != "OutlineEntry" ) )
+                    {
+                        m_haveDocumentStructure = false;
+                        return;
+                    }
+                    int outlineLevel = outlineEntryElement.attribute( "OutlineLevel").toInt();
+                    QDomElement synopsisElement = m_docStructure->createElement( outlineEntryElement.attribute( "Description" ) );
+                    synopsisElement.setAttribute( "OutlineLevel",  outlineLevel );
+                    QString target = outlineEntryElement.attribute( "OutlineTarget" );
+                    int hashPosition = target.lastIndexOf( '#' );
+                    target = target.mid( hashPosition + 1 );
+                    // kDebug() << "target: " << target << endl;
+                    Okular::DocumentViewport viewport;
+                    viewport.pageNumber = m_docStructurePageMap.value( target );
+                    synopsisElement.setAttribute( "Viewport",  viewport.toString() );
+                    if ( outlineLevel == 1 )
+                    {
+                        // kDebug() << "Description: " << outlineEntryElement.attribute( "Description" ) << endl;
+                        m_docStructure->appendChild( synopsisElement );
+                    } else {
+                        // find the last next highest element (so it this is level 3, we need to find the most recent level 2 node)
+                        // kDebug() << "Description: (" << outlineEntryElement.attribute( "OutlineLevel" ) << ") "
+                        // << outlineEntryElement.attribute( "Description" ) << endl;
+                        QDomNode maybeParentNode = m_docStructure->lastChild();
+                        while ( !maybeParentNode.isNull() )
+                        {
+                            if ( maybeParentNode.toElement().attribute( "OutlineLevel" ).toInt() == ( outlineLevel - 1 ) )
+                            {
+                                // we have the right parent
+                                maybeParentNode.appendChild( synopsisElement );
+                                break;
+                            }
+                            maybeParentNode = maybeParentNode.lastChild();
+                        }
+                    }
+                    outlineEntryNode = outlineEntryNode.nextSibling();
+                }
+            } else {
+                // we need to handle Story here, but I have no examples to test, and no idea what
+                // to do with it anyway.
+                kDebug() << "Unhandled entry in DocumentStructure: " << element.tagName() << endl;
+            }
+        }
+        node = node.nextSibling();
+    }
+
+    delete documentStructureDevice;
+
+}
+
+const Okular::DocumentSynopsis * XpsDocument::documentStructure()
+{
+    return m_docStructure;
+}
+
+bool XpsDocument::hasDocumentStructure()
+{
+    return m_haveDocumentStructure;
+}
+
+XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false )
 {
     kDebug() << "document file name: " << fileName << endl;
 
@@ -869,6 +979,34 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file)
                 }
                 XpsPage *page = new XpsPage( file, pagePath );
                 m_pages.append(page);
+                // There can be a single LinkTarget child node here
+                QDomNode maybeLinkTargetsNode = node.firstChild();
+                if ( ( ! maybeLinkTargetsNode.isNull() ) || ( maybeLinkTargetsNode.toElement().tagName() == "PageContent.LinkTargets") )
+                {
+                    // kDebug() << "Found link target nodes" << endl;
+                    QDomNode linkTargetNode = maybeLinkTargetsNode.firstChild();
+                    while ( !linkTargetNode.isNull() ) {
+                        // kDebug() << "looking for a LinkTarget" << endl;
+                        QDomElement linkTargetElement = linkTargetNode.toElement();
+                        if ( ! linkTargetElement.isNull() ) {
+                            if (linkTargetElement.tagName() == "LinkTarget" )
+                            {
+                                // kDebug() << "Found linktarget" << endl;
+                                // we have a valid LinkTarget element node
+                                QString targetName = linkTargetElement.attribute( "Name" );
+                                if ( ! targetName.isEmpty() )
+                                {
+                                    m_docStructurePageMap[ targetName ] = m_pages.count() - 1;
+                                }
+                            } else {
+                                kDebug() << "Unexpected tagname. Expected LinkTarget, got " << element.tagName() << endl;
+                            }
+                        } else {
+                            kDebug() << "Null LinkTarget" << endl;
+                        }
+                        linkTargetNode = linkTargetNode.nextSibling();
+                    }
+                }
             } else {
                 kDebug() << "Unhandled entry in FixedDocument" << element.tagName() << endl;
             }
@@ -877,6 +1015,71 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file)
     }
 
     delete documentDevice;
+
+    // There might be a relationships entry for this document - typically used to tell us where to find the
+    // content structure description
+
+    // We should be able to find this using a reference from some other part of the document, but I can't see it.
+    QString maybeDocumentRelationshipPath = fileName;
+    // trim off the old filename
+    int slashPosition = maybeDocumentRelationshipPath.lastIndexOf( '/' );
+    maybeDocumentRelationshipPath.truncate( slashPosition );
+    // add in the path to the document relationships
+    maybeDocumentRelationshipPath.append( "/_rels/FixedDoc.fdoc.rels" );
+
+    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry(maybeDocumentRelationshipPath));
+
+    QString documentStructureFile;
+    if ( relFile ) {
+        QIODevice* relDevice = relFile->createDevice();
+        QDomDocument relDom;
+        QString errMsg;
+        int errLine, errCol;
+        if ( relDom.setContent( relDevice, true, &errMsg, &errLine, &errCol ) == false ) {
+            // parse error
+            kDebug() << "Could not parse relationship document: " << errMsg << " : "
+                     << errLine << " : " << errCol << endl;
+            // try to continue.
+        } else {
+            // We work through the relationships document and pull out each element.
+            QDomNode n = relDom.documentElement().firstChild();
+            while( !n.isNull() ) {
+                QDomElement e = n.toElement();
+                if( !e.isNull() ) {
+                    if ("http://schemas.microsoft.com/xps/2005/06/documentstructure" == e.attribute("Type") ) {
+                        documentStructureFile  = e.attribute("Target");
+                    } else {
+                        kDebug() << "Unknown document relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
+                    }
+                }
+                n = n.nextSibling();
+            }
+        }
+
+        delete relDevice;
+
+    } else {
+        // this isn't fatal
+        kDebug() << "Could not open Document relationship file from " << maybeDocumentRelationshipPath << endl;
+    }
+
+    if ( ! documentStructureFile.isEmpty() )
+    {
+        // kDebug() << "Document structure filename: " << documentStructureFile << endl;
+        // make the document path absolute
+        if ( documentStructureFile.startsWith( '/' ) )
+        {
+            // it is already absolute, don't do anything
+        } else
+        {
+            // we reuse the relationship string
+            maybeDocumentRelationshipPath.truncate( slashPosition );
+            documentStructureFile.prepend( maybeDocumentRelationshipPath + '/' );
+        }
+        // kDebug() << "Document structure absolute path: " << documentStructureFile << endl;
+        parseDocumentStructure( documentStructureFile );
+    }
+
 }
 
 XpsDocument::~XpsDocument()
@@ -885,6 +1088,9 @@ XpsDocument::~XpsDocument()
         delete m_pages.at( i );
     }
     m_pages.clear();
+
+    if ( hasDocumentStructure() )
+        delete m_docStructure;
 }
 
 int XpsDocument::numPages() const
@@ -920,7 +1126,7 @@ bool XpsFile::loadDocument(const QString &filename)
         return false;
     }
 
-    // The only fixed entry in XPS is _rels/.rels
+    // The only fixed entry in XPS is /_rels/.rels
     const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry("_rels/.rels"));
 
     if ( !relFile ) {
@@ -1167,6 +1373,21 @@ const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
     kDebug() << "generating document metadata" << endl;
 
     return m_xpsFile->generateDocumentInfo();
+}
+
+const Okular::DocumentSynopsis * XpsGenerator::generateDocumentSynopsis()
+{
+    kDebug() << "generating document synopsis" << endl;
+
+    // we only generate the synopsis for the first file.
+    if ( !m_xpsFile || !m_xpsFile->document( 0 ) )
+        return NULL;
+
+    if ( m_xpsFile->document( 0 )->hasDocumentStructure() )
+        return m_xpsFile->document( 0 )->documentStructure();
+
+
+    return NULL;
 }
 
 XpsRenderNode * XpsRenderNode::findChild( const QString &name )

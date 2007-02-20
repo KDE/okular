@@ -138,20 +138,20 @@ void Shell::openUrl( const KUrl & url, uint page )
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries( KGlobal::config().data() );
+    m_recent->loadEntries( KGlobal::config()->group( "Recent Files" ) );
     m_recent->setEnabled( true ); // force enabling
     m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
 
-    KGlobal::config()->setDesktopGroup();
-    bool fullScreen = KGlobal::config()->readEntry( "FullScreen", false );
+    const KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    bool fullScreen = group.readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
 }
 
 void Shell::writeSettings()
 {
-    m_recent->saveEntries( KGlobal::config().data() );
-    KGlobal::config()->setDesktopGroup();
-    KGlobal::config()->writeEntry( "FullScreen", m_fullScreenAction->isChecked());
+    m_recent->saveEntries( KGlobal::config()->group( "Recent Files" ) );
+    KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    group.writeEntry( "FullScreen", m_fullScreenAction->isChecked() );
     KGlobal::config()->sync();
 }
 
@@ -292,7 +292,7 @@ Shell::optionsConfigureToolbars()
   void
 Shell::applyNewToolbarConfig()
 {
-  applyMainWindowSettings(KGlobal::config().data(), "MainWindow");
+  applyMainWindowSettings(KGlobal::config()->group("MainWindow"));
 }
 
 void Shell::slotQuit()

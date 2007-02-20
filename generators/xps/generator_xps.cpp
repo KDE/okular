@@ -841,7 +841,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 void XpsDocument::parseDocumentStructure( const QString &documentStructureFileName )
 {
     kDebug() << "document structure file name: " << documentStructureFileName << endl;
-    m_haveDocumentStructure = true;
+    m_haveDocumentStructure = false;
 
     const KZipFileEntry* documentStructureFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( documentStructureFileName ));
 
@@ -893,6 +893,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
                         m_haveDocumentStructure = false;
                         return;
                     }
+                    m_haveDocumentStructure = true;
                     int outlineLevel = outlineEntryElement.attribute( "OutlineLevel").toInt();
                     QDomElement synopsisElement = m_docStructure->createElement( outlineEntryElement.attribute( "Description" ) );
                     synopsisElement.setAttribute( "OutlineLevel",  outlineLevel );
@@ -1089,7 +1090,7 @@ XpsDocument::~XpsDocument()
     }
     m_pages.clear();
 
-    if ( hasDocumentStructure() )
+    if ( m_docStructure )
         delete m_docStructure;
 }
 
@@ -1247,6 +1248,8 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
                     m_docInfo->set( "description", e.text(), i18n("Description") );
                 } else if (e.tagName() == "creator") {
                     m_docInfo->set( "creator", e.text(), i18n("Author") );
+                } else if (e.tagName() == "category") {
+                    m_docInfo->set( "category", e.text(), i18n("Category") );
                 } else if (e.tagName() == "created") {
                     QDateTime createdDate = QDateTime::fromString( e.text(), "yyyy-MM-ddThh:mm:ssZ" );
                     m_docInfo->set( "creationDate", KGlobal::locale()->formatDateTime( createdDate, false, true ), i18n("Created" ) );
@@ -1279,10 +1282,6 @@ bool XpsFile::closeDocument()
         delete m_docInfo;
 
     m_docInfo = 0;
-
-    for (int i = 0; i < m_documents.size(); i++) {
-        delete m_documents.at( i );
-    }
 
     m_documents.clear();
 

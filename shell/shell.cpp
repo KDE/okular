@@ -90,8 +90,8 @@ void Shell::init()
     m_part = 0;
     return;
   }
-  connect( this, SIGNAL( restoreDocument(KConfig*) ),m_part, SLOT( restoreDocument(KConfig*)));
-  connect( this, SIGNAL( saveDocumentRestoreInfo(KConfig*) ), m_part, SLOT( saveDocumentRestoreInfo(KConfig*)));
+  connect( this, SIGNAL( restoreDocument(KConfigGroup&) ),m_part, SLOT( restoreDocument(KConfigGroup&)));
+  connect( this, SIGNAL( saveDocumentRestoreInfo(KConfigGroup&) ), m_part, SLOT( saveDocumentRestoreInfo(KConfigGroup&)));
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
 
   readSettings();
@@ -174,15 +174,15 @@ void Shell::setupActions()
   m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), this,actionCollection() );
 }
 
-void Shell::saveProperties(KConfig* config)
+void Shell::saveProperties(KConfigGroup &group)
 {
   // the 'config' object points to the session managed
   // config file.  anything you write here will be available
   // later when this app is restored
-    emit saveDocumentRestoreInfo(config);
+    emit saveDocumentRestoreInfo(group);
 }
 
-void Shell::readProperties(KConfig* config)
+void Shell::readProperties(KConfigGroup &group)
 {
   // the 'config' object points to the session managed
   // config file.  this function is automatically called whenever
@@ -190,7 +190,7 @@ void Shell::readProperties(KConfig* config)
   // in 'saveProperties'
   if(m_part)
   {
-    emit restoreDocument(config);
+    emit restoreDocument(group);
   }
 }
 

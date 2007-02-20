@@ -1408,22 +1408,22 @@ void Part::doPrint(KPrinter &printer)
 }
 
 
-void Part::restoreDocument(KConfig* config)
+void Part::restoreDocument(KConfigGroup &group)
 {
-    KUrl url ( config->readPathEntry( "URL" ) );
+    KUrl url ( group.readPathEntry( "URL" ) );
     if ( url.isValid() )
     {
-        QString viewport = config->readEntry( "Viewport" );
+        QString viewport = group.readEntry( "Viewport" );
         if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
         openUrl( url );
     }
 }
 
 
-void Part::saveDocumentRestoreInfo(KConfig* config)
+void Part::saveDocumentRestoreInfo(KConfigGroup &group)
 {
-    config->writePathEntry( "URL", url().url() );
-    config->writeEntry( "Viewport", m_document->viewport().toString() );
+    group.writePathEntry( "URL", url().url() );
+    group.writeEntry( "Viewport", m_document->viewport().toString() );
 }
 
 

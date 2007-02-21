@@ -1408,7 +1408,7 @@ void Part::doPrint(KPrinter &printer)
 }
 
 
-void Part::restoreDocument(KConfigGroup &group)
+void Part::restoreDocument(const KConfigGroup &group)
 {
     KUrl url ( group.readPathEntry( "URL" ) );
     if ( url.isValid() )

@@ -62,7 +62,7 @@ protected:
    * object points to the session management config file that was saved
    * with @ref saveProperties
    */
-  void readProperties(KConfigGroup&);
+  void readProperties(const KConfigGroup&);
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
@@ -79,7 +79,7 @@ private slots:
   void delayedOpen();
 
 signals:
-  void restoreDocument(KConfigGroup &group);
+  void restoreDocument(const KConfigGroup &group);
   void saveDocumentRestoreInfo(KConfigGroup &group);
 
 private:

@@ -148,7 +148,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     public slots:
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
-        void restoreDocument(KConfigGroup &group);
+        void restoreDocument(const KConfigGroup &group);
         void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
         void slotDoFileDirty();

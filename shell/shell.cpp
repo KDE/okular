@@ -90,7 +90,7 @@ void Shell::init()
     m_part = 0;
     return;
   }
-  connect( this, SIGNAL( restoreDocument(KConfigGroup&) ),m_part, SLOT( restoreDocument(KConfigGroup&)));
+  connect( this, SIGNAL( restoreDocument(const KConfigGroup&) ),m_part, SLOT( restoreDocument(const KConfigGroup&)));
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfigGroup&) ), m_part, SLOT( saveDocumentRestoreInfo(KConfigGroup&)));
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
 
@@ -182,7 +182,7 @@ void Shell::saveProperties(KConfigGroup &group)
     emit saveDocumentRestoreInfo(group);
 }
 
-void Shell::readProperties(KConfigGroup &group)
+void Shell::readProperties(const KConfigGroup &group)
 {
   // the 'config' object points to the session managed
   // config file.  this function is automatically called whenever

@@ -14,8 +14,10 @@
 #include <qpixmap.h>
 #include <qrect.h>
 
+class QAction;
 class QLabel;
 class QTimer;
+class QToolButton;
 class KIcon;
 
 namespace Okular {
@@ -88,8 +90,9 @@ class PageViewTopMessage : public QWidget
     public:
         PageViewTopMessage( QWidget * parent );
 
-        void display( const QString & message, const KIcon& icon = KIcon() );
+        void setup( const QString & message, const KIcon& icon = KIcon() );
         void setIconSize( int size );
+        void setActionButton( QAction * action );
 
     signals:
         void action();
@@ -97,6 +100,7 @@ class PageViewTopMessage : public QWidget
     private:
         QLabel * m_label;
         QLabel * m_icon;
+        QToolButton * m_button;
 };
 
 

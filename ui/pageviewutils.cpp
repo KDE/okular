@@ -236,7 +236,7 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
 /************************/
 
 PageViewTopMessage::PageViewTopMessage( QWidget * parent )
-    : QWidget( parent )
+    : QWidget( parent ), m_button( 0 )
 {
     setAutoFillBackground( true );
     QPalette pal = palette();
@@ -264,7 +264,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     hide();
 }
 
-void PageViewTopMessage::display( const QString & message, const KIcon& icon )
+void PageViewTopMessage::setup( const QString & message, const KIcon& icon )
 {
     m_label->setText( message );
     resize( minimumSizeHint() );
@@ -276,7 +276,6 @@ void PageViewTopMessage::display( const QString & message, const KIcon& icon )
     {
         m_icon->setPixmap( icon.pixmap( m_icon->size() ) );
     }
-    show();
 }
 
 void PageViewTopMessage::setIconSize( int size )
@@ -284,6 +283,21 @@ void PageViewTopMessage::setIconSize( int size )
     m_icon->resize( size, size );
 }
 
+void PageViewTopMessage::setActionButton( QAction * action )
+{
+    if ( !action )
+    {
+        delete m_button;
+        return;
+    }
+
+    if ( !m_button )
+    {
+        m_button = new QToolButton( this );
+        layout()->addWidget( m_button );
+    }
+    m_button->setDefaultAction( action );
+}
 
 /*********************/
 /** PageViewToolBar  */

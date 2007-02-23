@@ -194,6 +194,7 @@ m_searchStarted(false), m_cliPresentation(false)
     //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
     //	rightLayout->addWidget( rtb );
     m_topMessage = new PageViewTopMessage( rightContainer );
+    m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "attach" ) );
     connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
     rightLayout->addWidget( m_topMessage );
     m_pageView = new PageView( rightContainer, m_document );
@@ -643,10 +644,7 @@ bool Part::openFile()
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
-    if ( hasEmbeddedFiles )
-        m_topMessage->display( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "attach" ) );
-    else
-        m_topMessage->hide();
+    m_topMessage->setVisible( hasEmbeddedFiles );
     m_showPresentation->setEnabled( ok );
     if ( ok )
     {

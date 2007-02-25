@@ -119,11 +119,13 @@ void PageViewItem::invalidate()
     m_geometry.setRect( 0, 0, 0, 0 );
 }
 
-void PageViewItem::setFormWidgetsVisible( bool visible )
+bool PageViewItem::setFormWidgetsVisible( bool visible )
 {
+    bool somehadfocus = false;
     QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
-        (*it)->setVisibility( visible );
+        somehadfocus = somehadfocus || (*it)->setVisibility( visible );
+    return somehadfocus;
 }
 
 /*********************/

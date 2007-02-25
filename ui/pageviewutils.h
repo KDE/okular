@@ -50,7 +50,7 @@ class PageViewItem
         void setWHZ( int w, int h, double zoom );
         void moveTo( int x, int y );
         void invalidate();
-        void setFormWidgetsVisible( bool visible );
+        bool setFormWidgetsVisible( bool visible );
 
     private:
         const Okular::Page * m_page;

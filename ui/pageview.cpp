@@ -2392,11 +2392,14 @@ void PageView::center(int cx, int cy)
 
 void PageView::toggleFormWidgets( bool on )
 {
+    bool somehadfocus = false;
     QVector< PageViewItem * >::const_iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
     {
-        (*dIt)->setFormWidgetsVisible( on );
+        somehadfocus = somehadfocus || (*dIt)->setFormWidgetsVisible( on );
     }
+    if ( somehadfocus )
+        setFocus();
     d->m_formsVisible = on;
     if ( d->m_formsVisible )
     {

@@ -80,12 +80,16 @@ void FormWidgetIface::moveTo( int x, int y )
     m_widget->move( x, y );
 }
 
-void FormWidgetIface::setVisibility( bool visible )
+bool FormWidgetIface::setVisibility( bool visible )
 {
     if ( !m_ff->isVisible() )
-        return;
+        return false;
 
+    bool hadfocus = m_widget->hasFocus();
+    if ( hadfocus )
+        m_widget->clearFocus();
     m_widget->setVisible( visible );
+    return hadfocus;
 }
 
 

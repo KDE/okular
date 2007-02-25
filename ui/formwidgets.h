@@ -44,7 +44,7 @@ class FormWidgetIface
         Okular::NormalizedRect rect() const;
         void setWidthHeight( int w, int h );
         void moveTo( int x, int y );
-        void setVisibility( bool visible );
+        bool setVisibility( bool visible );
 
     private:
         QWidget * m_widget;

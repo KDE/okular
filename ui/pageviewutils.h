@@ -13,12 +13,14 @@
 #include <qwidget.h>
 #include <qpixmap.h>
 #include <qrect.h>
+#include <qhash.h>
 
 class QAction;
 class QLabel;
 class QTimer;
 class QToolButton;
 class KIcon;
+class FormWidgetIface;
 
 namespace Okular {
 class Page;
@@ -34,6 +36,7 @@ class PageViewItem
 {
     public:
         PageViewItem( const Okular::Page * page );
+        ~PageViewItem();
 
         const Okular::Page * page() const;
         int pageNumber() const;
@@ -41,16 +44,19 @@ class PageViewItem
         int width() const;
         int height() const;
         double zoomFactor() const;
+        QHash<QString, FormWidgetIface*>& formWidgets();
 
         void setGeometry( int x, int y, int width, int height );
         void setWHZ( int w, int h, double zoom );
         void moveTo( int x, int y );
         void invalidate();
+        void setFormWidgetsVisible( bool visible );
 
     private:
         const Okular::Page * m_page;
         double m_zoomFactor;
         QRect m_geometry;
+        QHash<QString, FormWidgetIface*> m_formWidgets;
 };
 
 

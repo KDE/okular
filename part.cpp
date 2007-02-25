@@ -197,6 +197,9 @@ m_searchStarted(false), m_cliPresentation(false)
     m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "attach" ) );
     connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
     rightLayout->addWidget( m_topMessage );
+    m_formsMessage = new PageViewTopMessage( rightContainer );
+    m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+    rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
     m_pageView->setFocus();      //usability setting
     m_splitter->setFocusProxy(m_pageView);
@@ -378,6 +381,7 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // attach the actions of the children widgets too
     m_pageView->setupActions( ac );
+    m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
 
     // apply configuration (both internal settings and GUI configured items)
     QList<int> splitterSizes = Okular::Settings::splitterSizes();
@@ -645,6 +649,7 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles );
+    m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction()->isEnabled() );
     m_showPresentation->setEnabled( ok );
     if ( ok )
     {

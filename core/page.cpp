@@ -19,6 +19,7 @@
 // local includes
 #include "annotations.h"
 #include "area.h"
+#include "form.h"
 #include "link.h"
 #include "page.h"
 #include "pagesize.h"
@@ -61,6 +62,7 @@ class Page::Private
 
         ~Private()
         {
+            qDeleteAll( formfields );
             delete m_openingAction;
             delete m_closingAction;
             delete m_text;
@@ -79,6 +81,7 @@ class Page::Private
 
         TextPage * m_text;
         PageTransition * m_transition;
+        QLinkedList< FormField * > formfields;
         Link * m_openingAction;
         Link * m_closingAction;
         double m_duration;
@@ -367,6 +370,11 @@ const Link * Page::pageAction( PageAction action ) const
     return 0;
 }
 
+const QLinkedList< FormField * > Page::formFields() const
+{
+    return d->formfields;
+}
+
 void Page::setPixmap( int id, QPixmap *pixmap )
 {
     if ( d->m_rotation == Rotation0 ) {
@@ -570,6 +578,12 @@ void Page::setPageAction( PageAction action, Link * link )
             d->m_closingAction = link;
             break;
     }
+}
+
+void Page::setFormFields( const QLinkedList< FormField * >& fields )
+{
+    qDeleteAll( d->formfields );
+    d->formfields = fields;
 }
 
 void Page::deletePixmap( int id )

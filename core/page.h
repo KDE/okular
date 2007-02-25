@@ -26,6 +26,7 @@ class PagePainter;
 namespace Okular {
 
 class Annotation;
+class FormField;
 class PageSize;
 class PageTransition;
 class SourceReference;
@@ -191,6 +192,11 @@ class OKULAR_EXPORT Page : public QObject
         const Link * pageAction( PageAction action ) const;
 
         /**
+         * Returns the list of FormField of the page.
+         */
+        const QLinkedList< FormField * > formFields() const;
+
+        /**
          * Rotates the image and object rects of the page to the given @p orientation.
          */
         void rotateAt( Rotation orientation );
@@ -288,6 +294,11 @@ class OKULAR_EXPORT Page : public QObject
          * Sets the @p link object for the given page @p action.
          */
         void setPageAction( PageAction action, Link * link );
+
+        /**
+         * Sets @p fields as list of FormField of the page.
+         */
+        void setFormFields( const QLinkedList< FormField * >& fields );
 
         /**
          * Deletes the pixmap for the observer with the given @p id.

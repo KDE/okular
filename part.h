@@ -170,6 +170,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QToolBox *m_toolBox;
         SearchWidget *m_searchWidget;
         PageViewTopMessage * m_topMessage;
+        PageViewTopMessage * m_formsMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;

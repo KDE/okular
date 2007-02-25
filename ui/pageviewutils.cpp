@@ -28,6 +28,7 @@
 #include <math.h>
 
 // local includes
+#include "formwidgets.h"
 #include "pageviewutils.h"
 #include "core/page.h"
 #include "settings.h"
@@ -39,6 +40,13 @@
 PageViewItem::PageViewItem( const Okular::Page * page )
     : m_page( page ), m_zoomFactor( 1.0 )
 {
+}
+
+PageViewItem::~PageViewItem()
+{
+    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    for ( ; it != itEnd; ++it )
+        delete *it;
 }
 
 const Okular::Page * PageViewItem::page() const
@@ -71,6 +79,11 @@ double PageViewItem::zoomFactor() const
     return m_zoomFactor;
 }
 
+QHash<QString, FormWidgetIface*>& PageViewItem::formWidgets()
+{
+    return m_formWidgets;
+}
+
 void PageViewItem::setGeometry( int x, int y, int width, int height )
 {
     m_geometry.setRect( x, y, width, height );
@@ -81,17 +94,36 @@ void PageViewItem::setWHZ( int w, int h, double z )
     m_geometry.setWidth( w );
     m_geometry.setHeight( h );
     m_zoomFactor = z;
+    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    for ( ; it != itEnd; ++it )
+    {
+        Okular::NormalizedRect r = (*it)->rect();
+        (*it)->setWidthHeight( (int)( fabs( r.right - r.left ) * w ), (int)( fabs( r.bottom - r.top ) * h ) );
+    }
 }
 
 void PageViewItem::moveTo( int x, int y )
 {
     m_geometry.moveLeft( x );
     m_geometry.moveTop( y );
+    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    for ( ; it != itEnd; ++it )
+    {
+        Okular::NormalizedRect r = (*it)->rect();
+        (*it)->moveTo( (int)( x + m_geometry.width() * r.left ), (int)( y + m_geometry.height() * r.top ) );
+    }
 }
 
 void PageViewItem::invalidate()
 {
     m_geometry.setRect( 0, 0, 0, 0 );
+}
+
+void PageViewItem::setFormWidgetsVisible( bool visible )
+{
+    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    for ( ; it != itEnd; ++it )
+        (*it)->setVisibility( visible );
 }
 
 /*********************/
@@ -236,7 +268,7 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
 /************************/
 
 PageViewTopMessage::PageViewTopMessage( QWidget * parent )
-    : QWidget( parent ), m_button( 0 )
+    : QWidget( parent )
 {
     setAutoFillBackground( true );
     QPalette pal = palette();
@@ -253,6 +285,8 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     lay->addWidget( m_label );
     m_label->setWordWrap( true );
     connect( m_label, SIGNAL( linkActivated( const QString& ) ), this, SIGNAL( action() ) );
+    m_button = new QToolButton( this );
+    lay->addWidget( m_button );
     QToolButton * closeButton = new QToolButton( this );
     lay->addWidget( closeButton );
     closeButton->setAutoRaise( true );
@@ -285,18 +319,8 @@ void PageViewTopMessage::setIconSize( int size )
 
 void PageViewTopMessage::setActionButton( QAction * action )
 {
-    if ( !action )
-    {
-        delete m_button;
-        return;
-    }
-
-    if ( !m_button )
-    {
-        m_button = new QToolButton( this );
-        layout()->addWidget( m_button );
-    }
     m_button->setDefaultAction( action );
+    m_button->setVisible( action != 0 );
 }
 
 /*********************/

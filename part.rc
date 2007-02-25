@@ -35,6 +35,8 @@
       <Action name="view_orientation_original"/>
     </Menu>
     <Action name="view_pagesizes"/>
+    <Separator/>
+    <Action name="view_toggle_forms"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
     <Action name="previous_page"/>

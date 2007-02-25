@@ -35,6 +35,7 @@ set(okularcore_SRCS
    core/bookmarkmanager.cpp
    core/chooseenginedialog.cpp
    core/document.cpp
+   core/form.cpp
    core/generator.cpp
    core/link.cpp
    core/misc.cpp
@@ -114,6 +115,7 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/formwidgets.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
    ui/pageitemdelegate.cpp

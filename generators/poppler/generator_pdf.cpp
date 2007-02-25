@@ -34,6 +34,7 @@
 
 // local includes
 #include "generator_pdf.h"
+#include "formfields.h"
 #include "settings.h"
 
 #include <config-okular.h>
@@ -425,6 +426,8 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         }
         page->setDuration( p->duration() );
         page->setLabel( p->label() );
+
+        addFormFields( p, page );
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
@@ -1162,6 +1165,34 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
     transition->setIsRectangular( pdfTransition->isRectangular() );
 
     page->setTransition( transition );
+}
+
+void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * page )
+{
+    QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
+    QLinkedList<Okular::FormField*> okularFormFields;
+    foreach( Poppler::FormField *f, popplerFormFields )
+    {
+        Okular::FormField * of = 0;
+        switch ( f->type() )
+        {
+            case Poppler::FormField::FormText:
+                of = new PopplerFormFieldText( static_cast<Poppler::FormFieldText*>( f ) );
+                break;
+            case Poppler::FormField::FormChoice:
+                of = new PopplerFormFieldChoice( static_cast<Poppler::FormFieldChoice*>( f ) );
+                break;
+            default: ;
+        }
+        if ( of )
+            // form field created, good - it will take care of the Poppler::FormField
+            okularFormFields.append( of );
+        else
+            // no form field available - delete the Poppler::FormField
+            delete f;
+    }
+    if ( !okularFormFields.isEmpty() )
+        page->setFormFields( okularFormFields );
 }
 
 struct pdfsyncpoint

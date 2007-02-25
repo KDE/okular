@@ -26,6 +26,7 @@
 #include "core/area.h"
 #include "core/observer.h"
 
+class KAction;
 class KActionCollection;
 
 namespace Okular {
@@ -77,6 +78,8 @@ Q_OBJECT
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
 
         void reparseConfig();
+
+        KAction *toggleFormsAction() const;
 
     public slots:
         void errorMessage( const QString & message, int duration )
@@ -148,6 +151,8 @@ Q_OBJECT
 
         void center(int cx, int cy);
 
+        void toggleFormWidgets( bool on );
+
         // don't want to expose classes in here
         class PageViewPrivate * d;
 
@@ -186,6 +191,7 @@ Q_OBJECT
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();
+        void slotToggleForms();
 };
 
 #endif

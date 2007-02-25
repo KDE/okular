@@ -54,6 +54,7 @@
 #include <stdlib.h>
 
 // local includes
+#include "formwidgets.h"
 #include "pageview.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
@@ -63,6 +64,7 @@
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
 #include "core/document.h"
+#include "core/form.h"
 #include "core/page.h"
 #include "core/misc.h"
 #include "core/link.h"
@@ -128,6 +130,7 @@ public:
     bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
+    bool m_formsVisible;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -151,6 +154,7 @@ public:
     KSelectAction * aRenderMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
+    KAction * aToggleForms;
     KActionCollection * actionCollection;
 
     int setting_renderMode;
@@ -277,6 +281,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
+    d->m_formsVisible = false;
     d->aPrevAction = 0;
     d->aPageSizes=0;
     d->setting_renderMode = Okular::Settings::renderMode();
@@ -443,6 +448,11 @@ void PageView::setupActions( KActionCollection * ac )
     connect( sd, SIGNAL( triggered() ), this, SLOT( slotScrollDown() ) );
     sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
     addAction(sd);
+
+    d->aToggleForms = new KAction( this );
+    ac->addAction( "view_toggle_forms", d->aToggleForms );
+    connect( d->aToggleForms, SIGNAL( triggered() ), this, SLOT( slotToggleForms() ) );
+    toggleFormWidgets( false );
 }
 
 bool PageView::canFitPageWidth() const
@@ -553,6 +563,11 @@ void PageView::reparseConfig()
     }
 }
 
+KAction *PageView::toggleFormsAction() const
+{
+    return d->aToggleForms;
+}
+
 void PageView::copyTextSelection() const
 {
     if ( d->pagesWithTextSelection.isEmpty() )
@@ -609,15 +624,31 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         delete *dIt;
     d->items.clear();
     d->visibleItems.clear();
+    toggleFormWidgets( false );
 
+    bool hasformwidgets = false;
     // create children widgets
     QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     for ( ; setIt != setEnd; ++setIt )
     {
-        d->items.push_back( new PageViewItem( *setIt ) );
+        PageViewItem * item = new PageViewItem( *setIt );
+        d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
         kDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
 #endif
+        const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
+        QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.begin(), ffEnd = pageFields.end();
+        for ( ; ffIt != ffEnd; ++ffIt )
+        {
+            Okular::FormField * ff = *ffIt;
+            FormWidgetIface * w = FormWidgetFactory::createWidget( ff, widget() );
+            if ( w )
+            {
+                w->setVisibility( d->m_formsVisible );
+                item->formWidgets().insert( ff->name(), w );
+                hasformwidgets = true;
+            }
+        }
     }
 
     // invalidate layout so relayout/repaint will happen on next viewport change
@@ -656,6 +687,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
             items.append( p.name() );
         d->aPageSizes->setItems( items );
     }
+    d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -2358,6 +2390,24 @@ void PageView::center(int cx, int cy)
     verticalScrollBar()->setValue(cy - viewport()->height() / 2);
 }
 
+void PageView::toggleFormWidgets( bool on )
+{
+    QVector< PageViewItem * >::const_iterator dIt = d->items.begin(), dEnd = d->items.end();
+    for ( ; dIt != dEnd; ++dIt )
+    {
+        (*dIt)->setFormWidgetsVisible( on );
+    }
+    d->m_formsVisible = on;
+    if ( d->m_formsVisible )
+    {
+        d->aToggleForms->setText( i18n( "Hide Forms" ) );
+    }
+    else
+    {
+        d->aToggleForms->setText( i18n( "Show Forms" ) );
+    }
+}
+
 void PageView::doTypeAheadSearch()
 {
     bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString,
@@ -3006,6 +3056,11 @@ void PageView::slotRotateCounterClockwise()
 void PageView::slotRotateOriginal()
 {
     d->document->slotRotation( 0 );
+}
+
+void PageView::slotToggleForms()
+{
+    toggleFormWidgets( !d->m_formsVisible );
 }
 //END private SLOTS
 

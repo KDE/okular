@@ -7,7 +7,16 @@ include_directories(
 
 ########### next target ###############
 
-set(okularGenerator_poppler_PART_SRCS generator_pdf.cpp formfields.cpp )
+set(okularGenerator_poppler_PART_SRCS
+   generator_pdf.cpp
+)
+
+if (HAVE_POPPLER_HEAD)
+   set(okularGenerator_poppler_PART_SRCS
+      ${okularGenerator_poppler_PART_SRCS}
+      formfields.cpp
+   )
+endif (HAVE_POPPLER_HEAD)
 
 kde4_automoc(${okularGenerator_poppler_PART_SRCS})
 

@@ -34,10 +34,13 @@
 
 // local includes
 #include "generator_pdf.h"
-#include "formfields.h"
 #include "settings.h"
 
 #include <config-okular.h>
+
+#ifdef HAVE_POPPLER_HEAD
+#include "formfields.h"
+#endif
 
 class PDFEmbeddedFile : public Okular::EmbeddedFile
 {
@@ -1169,6 +1172,7 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
 
 void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * page )
 {
+#ifdef HAVE_POPPLER_HEAD
     QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
     QLinkedList<Okular::FormField*> okularFormFields;
     foreach( Poppler::FormField *f, popplerFormFields )
@@ -1193,6 +1197,10 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
     }
     if ( !okularFormFields.isEmpty() )
         page->setFormFields( okularFormFields );
+#else
+    Q_UNUSED( popplerPage )
+    Q_UNUSED( page )
+#endif
 }
 
 struct pdfsyncpoint

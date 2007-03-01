@@ -98,7 +98,7 @@ void PageViewItem::setWHZ( int w, int h, double z )
     for ( ; it != itEnd; ++it )
     {
         Okular::NormalizedRect r = (*it)->rect();
-        (*it)->setWidthHeight( (int)( fabs( r.right - r.left ) * w ), (int)( fabs( r.bottom - r.top ) * h ) );
+        (*it)->setWidthHeight( qRound( fabs( r.right - r.left ) * w ), qRound( fabs( r.bottom - r.top ) * h ) );
     }
 }
 
@@ -110,7 +110,7 @@ void PageViewItem::moveTo( int x, int y )
     for ( ; it != itEnd; ++it )
     {
         Okular::NormalizedRect r = (*it)->rect();
-        (*it)->moveTo( (int)( x + m_geometry.width() * r.left ), (int)( y + m_geometry.height() * r.top ) );
+        (*it)->moveTo( qRound( x + m_geometry.width() * r.left ) + 1, qRound( y + m_geometry.height() * r.top ) + 1 );
     }
 }
 

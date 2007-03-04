@@ -1383,6 +1383,17 @@ void Part::slotPrint()
     }
     printer.setOption( "kde-range", range );
 
+    // title
+    QString title = m_document->metaData( "DocumentTitle" ).toString();
+    if ( title.isEmpty() )
+    {
+        title = m_document->currentDocument().fileName();
+    }
+    if ( !title.isEmpty() )
+    {
+        printer.setDocName( title );
+    }
+
     if ( m_document->canConfigurePrinter() )
     {
         KPrintDialogPage * w = m_document->printConfigurationWidget();

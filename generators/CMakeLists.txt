@@ -24,7 +24,13 @@ if(TIFF_FOUND)
   add_subdirectory(tiff)
 endif(TIFF_FOUND)
 
-add_subdirectory(xps)
+
+# this is a crude hack to prevent breakage while I modify the XPS code
+# to use Qt4.3 streaming parsers - bradh.
+find_path( QT_XMLSTREAMREADER QXmlStreamReader ${QT_QTXML_INCLUDE_DIR} )
+if (${QT_XMLSTREAMREADER} STREQUAL ${QT_QTXML_INCLUDE_DIR})
+   add_subdirectory(xps)
+endif(${QT_XMLSTREAMREADER} STREQUAL ${QT_QTXML_INCLUDE_DIR})
 
 add_subdirectory(ooo)
 

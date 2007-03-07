@@ -28,6 +28,7 @@
 #include <qlabel.h>
 #include <kvbox.h>
 #include <qtoolbox.h>
+#include <kaboutapplicationdialog.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
@@ -379,6 +380,10 @@ m_searchStarted(false), m_cliPresentation(false)
     m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );
     m_exportAsText->setEnabled( false );
 
+    m_aboutBackend = ac->addAction("help_about_backend");
+    m_aboutBackend->setText(i18n("About backend..."));
+    connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
+
     // attach the actions of the children widgets too
     m_pageView->setupActions( ac );
     m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
@@ -513,6 +518,7 @@ void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool docume
         return;
 
     rebuildBookmarkMenu();
+    updateAboutBackendAction();
 }
 
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
@@ -1295,6 +1301,17 @@ void Part::slotHidePresentation()
 }
 
 
+void Part::slotAboutBackend()
+{
+    const KComponentData *data = m_document->componentData();
+    if ( !data )
+        return;
+
+    KAboutApplicationDialog dlg( data->aboutData(), widget() );
+    dlg.exec();
+}
+
+
 void Part::slotExportAs(QAction * act)
 {
     QList<QAction*> acts = m_exportAs->menu() ? m_exportAs->menu()->actions() : QList<QAction*>();
@@ -1561,6 +1578,19 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
 
     m_prevBookmark->setEnabled( havebookmarks );
     m_nextBookmark->setEnabled( havebookmarks );
+}
+
+void Part::updateAboutBackendAction()
+{
+    const KComponentData *data = m_document->componentData();
+    if ( data )
+    {
+        m_aboutBackend->setEnabled( true );
+    }
+    else
+    {
+        m_aboutBackend->setEnabled( false );
+    }
 }
 
 

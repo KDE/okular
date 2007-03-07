@@ -69,6 +69,9 @@
     <Action name="preferences"/>
     <Action name="generator_prefs"/>
   </Menu>
+  <Menu name="help"><text>&amp;Help</text>
+    <Action name="help_about_backend" group="about_merge"/>
+  </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
   <Separator/>

@@ -28,6 +28,8 @@
          OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
     }
 
+class KAboutData;
+class KComponentData;
 class KIcon;
 class KPrinter;
 class kdbgstream;
@@ -316,6 +318,11 @@ class OKULAR_EXPORT Generator : public QObject
          */
         bool hasFeature( GeneratorFeature feature ) const;
 
+        /**
+         * Returns the component data associated with the generator. May be null.
+         */
+        const KComponentData* componentData() const;
+
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occurred in the generator.
@@ -374,6 +381,25 @@ class OKULAR_EXPORT Generator : public QObject
          * Toggle the @p feature .
          */
         void setFeature( GeneratorFeature feature, bool on = true );
+
+        /**
+         * Sets a new about @p data for the generator. The base generator
+         * class will take ownership of the data.
+         *
+         * Create it on the heap (\b never on the stack!), and fill it with
+         * data like:
+         * @code
+KAboutData *about = new KAboutData(
+         "generator_foo",  // we reccomend to use okular_xxx for the component name
+         I18N_NOOP( "Foo Backend" ), "0.1",
+         I18N_NOOP( "A foo backend" ),
+         KAboutData::License_GPL,
+         I18N_NOOP( "Copyright (c) 2007 Developer" ) );
+about->addAuthor( "Joe Developer", I18N_NOOP( "Developer" ), " joe@host.com" );
+setAboutData( about );
+         * @endcode
+         */
+        void setAboutData( KAboutData* data );
 
     private:
         class Private;

@@ -2158,6 +2158,11 @@ QStringList Document::supportedMimeTypes() const
     return d->m_supportedMimeTypes;
 }
 
+const KComponentData* Document::componentData() const
+{
+    return d->m_generator ? d->m_generator->componentData() : 0;
+}
+
 void Document::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG

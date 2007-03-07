@@ -23,6 +23,7 @@
 
 #include <kmimetype.h>
 
+class KComponentData;
 class KBookmark;
 class KConfigDialog;
 class KPrinter;
@@ -448,6 +449,11 @@ class OKULAR_EXPORT Document : public QObject
          * Returns the list with the supported MIME types.
          */
         QStringList supportedMimeTypes() const;
+
+        /**
+         * Returns the component data associated with the generator. May be null.
+         */
+        const KComponentData* componentData() const;
 
         /**
          * This method is used by the generators to signal the finish of

@@ -135,6 +135,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotHidePresentation();
         void slotExportAs(QAction *);
         bool slotImportPSFile();
+        void slotAboutBackend();
         void close();
         void cannotQuit();
         void splitterMoved( int pos, int index );
@@ -158,6 +159,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void doPrint( KPrinter& printer );
         bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
         void rebuildBookmarkMenu( bool unplugActions = true );
+        void updateAboutBackendAction();
         KTemporaryFile *m_tempfile;
 
         // the document
@@ -214,6 +216,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
         KToggleFullScreenAction* m_showFullScreenAction;
+        QAction *m_aboutBackend;
 
         bool m_actionsSearched;
         bool m_searchStarted;

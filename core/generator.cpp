@@ -9,6 +9,8 @@
 
 #include <qset.h>
 
+#include <kaboutdata.h>
+#include <kcomponentdata.h>
 #include <kdebug.h>
 #include <kicon.h>
 
@@ -24,6 +26,7 @@ class Generator::Private
     public:
         Private( Generator *parent )
             : m_document( 0 ),
+              m_about( 0 ), m_componentData( 0 ),
               m_generator( parent ),
               mPixmapGenerationThread( 0 ),
               mTextPageGenerationThread( 0 ),
@@ -43,6 +46,10 @@ class Generator::Private
                 mTextPageGenerationThread->wait();
 
             delete mTextPageGenerationThread;
+
+            // first delete the component data, then the about
+            delete m_componentData;
+            delete m_about;
         }
 
         void createPixmapGenerationThread();
@@ -53,6 +60,8 @@ class Generator::Private
 
         Document * m_document;
         QSet< GeneratorFeature > m_features;
+        KAboutData* m_about;
+        KComponentData* m_componentData;
         Generator *m_generator;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
@@ -261,6 +270,10 @@ bool Generator::hasFeature( GeneratorFeature feature ) const
     return d->m_features.contains( feature );
 }
 
+const KComponentData* Generator::componentData() const
+{
+    return d->m_componentData;
+}
 
 void Generator::signalPixmapRequestDone( PixmapRequest * request )
 {
@@ -281,6 +294,14 @@ void Generator::setFeature( GeneratorFeature feature, bool on )
         d->m_features.insert( feature );
     else
         d->m_features.remove( feature );
+}
+
+void Generator::setAboutData( KAboutData* data )
+{
+    delete d->m_componentData;
+    delete d->m_about;
+    d->m_about = data;
+    d->m_componentData = d->m_about ? new KComponentData( d->m_about ) : 0;
 }
 
 

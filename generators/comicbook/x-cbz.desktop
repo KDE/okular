@@ -5,4 +5,3 @@ MimeType=application/x-cbz
 Icon=package_toys
 Patterns=*.cbz;*.CBZ;
 Comment=Comic Book
-Comment[x-test]=xxComic Bookxx

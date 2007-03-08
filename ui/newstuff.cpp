@@ -514,7 +514,7 @@ NewStuffDialog::NewStuffDialog( QWidget * parentWidget )
         d->sortCombo->setMinimumWidth( 100 );
         d->sortCombo->setEnabled( false );
         d->sortCombo->addItem( KIcon( "fonts" ), i18n("Name") );
-        d->sortCombo->addItem( KIcon( "knewstuff" ), i18n("Rating") );
+        d->sortCombo->addItem( KIcon( "get-hot-new-stuff" ), i18n("Rating") );
         d->sortCombo->addItem( KIcon( "favorites" ), i18n("Downloads") );
         connect( d->sortCombo, SIGNAL( activated(int) ),
                  this, SLOT( slotSortingSelected(int) ) );

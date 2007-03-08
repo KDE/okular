@@ -79,7 +79,7 @@ class TOCItem : public QTreeWidgetItem
 
         void setCurrent( bool selected )
         {
-            setIcon( 0, selected ? KIcon( treeWidget()->layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) : QIcon() );
+            setIcon( 0, selected ? KIcon( treeWidget()->layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) : QIcon() );
         }
 
     private:

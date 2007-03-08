@@ -76,7 +76,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add separator
     m_toolBar2->addSeparator();
     // - add Current Page Only button
-    QAction * curPageOnlyAction = m_toolBar2->addAction( KIcon( "1downarrow" ), i18n( "Show reviews for current page only" ) );
+    QAction * curPageOnlyAction = m_toolBar2->addAction( KIcon( "arrow-down" ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
     connect( curPageOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotCurrentPageOnly( bool ) ) );
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );

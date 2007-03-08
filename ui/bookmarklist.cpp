@@ -200,7 +200,7 @@ void BookmarkList::slotContextMenu( const QPoint& p )
     KMenu menu( this );
     QAction * gotobm = menu.addAction( i18n( "Go to This Bookmark" ) );
     QAction * editbm = menu.addAction( KIcon( "edit" ), i18n( "Rename Bookmark" ) );
-    QAction * removebm = menu.addAction( KIcon( "remove" ), i18n( "Remove Bookmark" ) );
+    QAction * removebm = menu.addAction( KIcon( "list-remove" ), i18n( "Remove Bookmark" ) );
     QAction * res = menu.exec( QCursor::pos() );
     if ( !res )
         return;

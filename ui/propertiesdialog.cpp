@@ -32,7 +32,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   // PROPERTIES
   QFrame *page = new QFrame();
   KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
-  item->setIcon( KIcon( "info" ) );
+  item->setIcon( KIcon( "document-properties" ) );
   QGridLayout *layout = new QGridLayout( page );
   layout->setMargin( marginHint() );
   layout->setSpacing( spacingHint() );

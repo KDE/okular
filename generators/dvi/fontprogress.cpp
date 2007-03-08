@@ -36,7 +36,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   setDefaultButton( Cancel );
   setCursor(QCursor(Qt::WaitCursor));
 
-  setButtonGuiItem(Cancel, KGuiItem(i18n("Abort"), "stop", abortTip));
+  setButtonGuiItem(Cancel, KGuiItem(i18n("Abort"), "process-stop", abortTip));
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "kdvi");

@@ -145,7 +145,7 @@ m_searchStarted(false), m_cliPresentation(false)
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( m_toolBox, m_document );
     connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-    tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
+    tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "format-justify-right"), i18n("Contents") );
     m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
     enableTOC( false );
 
@@ -157,7 +157,7 @@ m_searchStarted(false), m_cliPresentation(false)
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
     connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-    tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail"), i18n("Thumbnails") );
+    tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail-show"), i18n("Thumbnails") );
     m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
     m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
 
@@ -283,14 +283,14 @@ m_searchStarted(false), m_cliPresentation(false)
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
-    m_prevBookmark->setIcon(KIcon( "previous" ));
+    m_prevBookmark->setIcon(KIcon( "find-previous" ));
 
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
     connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
-    m_nextBookmark->setIcon(KIcon( "next" ));
+    m_nextBookmark->setIcon(KIcon( "find-next" ));
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
     connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
@@ -349,14 +349,14 @@ m_searchStarted(false), m_cliPresentation(false)
     connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
     QAction * ghns = ac->addAction("get_new_stuff");
     ghns->setText(i18n("&Get Books From Internet..."));
-    ghns->setIcon(KIcon("knewstuff"));
+    ghns->setIcon(KIcon("get-hot-new-stuff"));
     connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
                                  // TEMP, REMOVE ME!
     ghns->setShortcut( Qt::Key_G );
 
     m_showProperties = ac->addAction("properties");
     m_showProperties->setText(i18n("&Properties"));
-    m_showProperties->setIcon(KIcon("info"));
+    m_showProperties->setIcon(KIcon("document-properties"));
     connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
     m_showProperties->setEnabled( false );
 
@@ -1228,9 +1228,9 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         if ( m_document->isBookmarked( page->number() ) )
             removeBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
         else
-            addBookmark = popup->addAction( KIcon("bookmark_add"), i18n("Add Bookmark") );
+            addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )
-            fitPageWidth = popup->addAction( KIcon("viewmagfit"), i18n("Fit Width") );
+            fitPageWidth = popup->addAction( KIcon("zoom-best-fit"), i18n("Fit Width") );
         //popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
         //popup->setItemEnabled( 3, false );
         popup->addAction( m_prevBookmark );
@@ -1241,7 +1241,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         //Albert says: I have not ported this as i don't see it does anything
         if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
         {
-            m_popup->insertItem( SmallIcon("filesave"), i18n("Save Image..."), 4 );
+            m_popup->insertItem( SmallIcon("document-save"), i18n("Save Image..."), 4 );
             m_popup->setItemEnabled( 4, false );
     }*/
 

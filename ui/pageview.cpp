@@ -335,10 +335,10 @@ void PageView::setupActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     // orientation menu actions
-    d->aRotateClockwise = new KAction( KIcon( "rotate_cw" ), i18n( "Rotate Right" ), this );
+    d->aRotateClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate Right" ), this );
     ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
     connect( d->aRotateClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateClockwise() ) );
-    d->aRotateCounterClockwise = new KAction( KIcon( "rotate_ccw" ), i18n( "Rotate Left" ), this );
+    d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate Left" ), this );
     ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
     connect( d->aRotateCounterClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateCounterClockwise() ) );
     d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
@@ -362,7 +362,7 @@ void PageView::setupActions( KActionCollection * ac )
     }
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom  = new KSelectAction(KIcon( "viewmag" ), i18n("Zoom"), this);
+    d->aZoom  = new KSelectAction(KIcon( "zoom-original" ), i18n("Zoom"), this);
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 13 );
@@ -381,7 +381,7 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction("zoom_fit_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
-    d->aZoomFitText  = new KToggleAction(KIcon( "viewmagfit" ), i18n("Fit &Text"), this);
+    d->aZoomFitText  = new KToggleAction(KIcon( "zoom-best-fit" ), i18n("Fit &Text"), this);
     ac->addAction("zoom_fit_text", d->aZoomFitText );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
@@ -397,7 +397,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aRenderMode->setItems( renderModes );
     d->aRenderMode->setCurrentItem( Okular::Settings::renderMode() );
 
-    d->aViewContinuous  = new KToggleAction(KIcon( "view_text" ), i18n("&Continuous"), this);
+    d->aViewContinuous  = new KToggleAction(KIcon( "fileview-text" ), i18n("&Continuous"), this);
     ac->addAction("view_continuous", d->aViewContinuous );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
@@ -412,13 +412,13 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
-    KAction * mz  = new KAction(KIcon( "viewmag" ), i18n("&Zoom Tool"), this);
+    KAction * mz  = new KAction(KIcon( "zoom-original" ), i18n("&Zoom Tool"), this);
     ac->addAction("mouse_zoom", mz );
     connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
     mz->setCheckable( true );
     mz->setActionGroup( actGroup );
 
-    d->aMouseSelect  = new KAction(KIcon( "frame_edit" ), i18n("&Select Tool"), this);
+    d->aMouseSelect  = new KAction(KIcon( "frame-edit" ), i18n("&Select Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
     d->aMouseSelect->setCheckable( true );
@@ -1567,7 +1567,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::LinkBrowse * >( link ) )
-                            actCopyLinkLocation = menu.addAction( KIcon( "editcopy" ), i18n( "Copy Link Location" ) );
+                            actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Location" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
                         {
@@ -1705,7 +1705,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
                 menu.addTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
-                textToClipboard = menu.addAction( KIcon("editcopy"), i18n( "Copy to Clipboard" ) );
+                textToClipboard = menu.addAction( KIcon("edit-copy"), i18n( "Copy to Clipboard" ) );
                 if ( !d->document->isAllowed( Okular::AllowCopy ) )
                 {
                     textToClipboard->setEnabled( false );
@@ -1716,7 +1716,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
             menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( KIcon("image"), i18n( "Copy to Clipboard" ) );
-            imageToFile = menu.addAction( KIcon("filesave"), i18n( "Save to File..." ) );
+            imageToFile = menu.addAction( KIcon("document-save"), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
             // check if the user really selected an action
             if ( choice )
@@ -1821,7 +1821,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
                     KMenu menu( this );
-                    QAction *textToClipboard = menu.addAction( KIcon( "editcopy" ), i18n( "Copy Text" ) );
+                    QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
                     if ( !d->document->isAllowed( Okular::AllowCopy ) )
                     {
                         textToClipboard->setEnabled( false );

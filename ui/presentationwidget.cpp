@@ -413,7 +413,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar = new PresentationToolBar( this );
         m_topBar->setObjectName( "presentationBar" );
         m_topBar->setIconSize( QSize( 32, 32 ) );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
         m_pagesEdit = new QLineEdit( m_topBar );
         QSizePolicy sp = m_pagesEdit->sizePolicy();
         sp.setHorizontalPolicy( QSizePolicy::Minimum );
@@ -424,7 +424,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_pagesEdit->setValidator( validator );
         m_topBar->addWidget( m_pagesEdit );
         connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         m_topBar->addSeparator();
         QAction * drawingAct = m_topBar->addAction( KIcon( "pencil" ), i18n( "Toggle Drawing Mode" ) );
         drawingAct->setCheckable( true );
@@ -434,7 +434,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         QWidget *spacer = new QWidget(m_topBar);
         spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
         m_topBar->addWidget( spacer );
-        m_topBar->addAction( KIcon("exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
+        m_topBar->addAction( KIcon("application-exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
         m_topBar->hide();
         // change topbar background color

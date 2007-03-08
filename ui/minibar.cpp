@@ -84,7 +84,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->addWidget( frame );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
-    m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1rightarrow" : "1leftarrow" ) );
+    m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
     m_pagesEdit = new PagesEdit( this );
@@ -96,7 +96,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->addWidget( m_pagesButton );
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
-    m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "1leftarrow" : "1rightarrow" ) );
+    m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
     horLayout->addWidget( m_nextButton );
     // right line
     frame = new QFrame( this );

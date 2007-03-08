@@ -89,17 +89,17 @@ void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
         case GSInterpreterLib::Error:
             tmp = new QTreeWidgetItem( m_msgList );
             tmp->setText( 0, *it );
-            tmp->setIcon( 0, KIcon( "messagebox_critical" ) );
+            tmp->setIcon( 0, KIcon( "dialog-error" ) );
             break;
         case GSInterpreterLib::Input:
             tmp = new QTreeWidgetItem( m_msgList );
             tmp->setText( 0, *it );
-            tmp->setIcon( 0, KIcon( "1leftarrow" ) );
+            tmp->setIcon( 0, KIcon( "arrow-left" ) );
             break;
         case GSInterpreterLib::Output:
             tmp = new QTreeWidgetItem( m_msgList );
             tmp->setText( 0, *it );
-            tmp->setIcon( 0, KIcon( "1rightarrow" ) );
+            tmp->setIcon( 0, KIcon( "arrow-right" ) );
             break;
     }
     ++it;

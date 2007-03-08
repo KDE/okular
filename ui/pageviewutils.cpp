@@ -177,16 +177,16 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
                 symbol = SmallIcon( "pencil" );
                 break;
             case Find:
-                symbol = SmallIcon( "viewmag" );
+                symbol = SmallIcon( "zoom-original" );
                 break;
             case Error:
-                symbol = SmallIcon( "messagebox_critical" );
+                symbol = SmallIcon( "dialog-error" );
                 break;
             case Warning:
-                symbol = SmallIcon( "messagebox_warning" );
+                symbol = SmallIcon( "dialog-warning" );
                 break;
             default:
-                symbol = SmallIcon( "messagebox_info" );
+                symbol = SmallIcon( "dialog-information" );
                 break;
         }
         textXOffset = 2 + symbol.width();

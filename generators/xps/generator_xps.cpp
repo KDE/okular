@@ -35,6 +35,8 @@
 #include <okular/core/area.h>
 #include "generator_xps.h"
 
+const int XpsDebug = 4658;
+
 OKULAR_EXPORT_PLUGIN(XpsGenerator)
 
 // From Qt4
@@ -208,7 +210,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
         {
             if (token.type != abtEOF)
             {
-                kDebug() << "Error in parsing abbreviated path data" << endl;
+                kDebug(XpsDebug) << "Error in parsing abbreviated path data" << endl;
             }
             return path;
         }
@@ -339,7 +341,7 @@ QBrush XpsHandler::parseRscRefColorForBrush( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug() << "Reference" << data << endl;
+        kDebug(XpsDebug) << "Reference" << data << endl;
         return QBrush();
     } else {
         return QBrush( hexToRgba( data.toLatin1() ) );
@@ -350,7 +352,7 @@ QPen XpsHandler::parseRscRefColorForPen( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug() << "Reference" << data << endl;
+        kDebug(XpsDebug) << "Reference" << data << endl;
         return QPen();
     } else {
         return QPen( hexToRgba( data.toLatin1() ) );
@@ -361,7 +363,7 @@ QMatrix XpsHandler::parseRscRefMatrix( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug() << "Reference" << data << endl;
+        kDebug(XpsDebug) << "Reference" << data << endl;
         return QMatrix();
     } else {
         return attsToMatrix( data );
@@ -380,7 +382,7 @@ XpsHandler::~XpsHandler()
 
 bool XpsHandler::startDocument()
 {
-    kDebug() << "start document" << m_page->m_fileName  << endl;
+    kDebug(XpsDebug) << "start document" << m_page->m_fileName  << endl;
     m_page->m_pageImage->fill( QColor("White").rgba() );
 
     XpsRenderNode node;
@@ -419,7 +421,7 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
     XpsRenderNode node = m_nodes.pop();
     if (node.name != localName) {
-        kDebug() << "Name doesn't match" << endl;
+        kDebug(XpsDebug) << "Name doesn't match" << endl;
     }
     processEndElement( node );
     node.children.clear();
@@ -440,6 +442,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
     // Get font (doesn't work well because qt doesn't allow to load font from file)
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
+    kDebug(XpsDebug) << "Font Rendering EmSize: " << node.attributes.value("FontRenderingEmSize").toFloat() << endl;
     QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"),  node.attributes.value("FontRenderingEmSize").toFloat());
     m_painter->setFont(font);
 
@@ -476,9 +479,9 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     }
 
     m_painter->drawText( origin, node.attributes.value("UnicodeString") );
-    // kDebug() << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
-    // kDebug() << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
-    // kDebug() << "    Unicode: " << atts.value("UnicodeString") << endl;
+    // kDebug(XpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri") << endl;
+    // kDebug(XpsDebug) << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY") << endl;
+    // kDebug(XpsDebug) << "    Unicode: " << atts.value("UnicodeString") << endl;
 
     m_painter->restore();
 }
@@ -488,7 +491,7 @@ void XpsHandler::processFill( XpsRenderNode &node )
     //TODO Ignored child elements: LinearGradientBrush, RadialGradientBrush, VirtualBrush
 
     if (node.children.size() != 1) {
-        kDebug() << "Fill element should have exactly one child" << endl;
+        kDebug(XpsDebug) << "Fill element should have exactly one child" << endl;
     } else {
         node.data = node.children[0].data;
     }
@@ -635,25 +638,8 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
     } else if (node.name == "ImageBrush.Transform") {
         node.data = node.getRequiredChildData( "MatrixTransform" );
     } else {
-        //kDebug() << "Unknown element: " << node->name << endl;
+        //kDebug(XpsDebug) << "Unknown element: " << node->name << endl;
     }
-}
-
-bool XpsPageSizeHandler::startElement ( const QString &nameSpace, const QString &localName, const QString &qname, const QXmlAttributes &atts)
-{
-    Q_UNUSED(nameSpace);
-    Q_UNUSED(qname);
-    if (localName == "FixedPage")
-    {
-        m_width = atts.value("Width").toInt();
-        m_height = atts.value("Height").toInt();
-        m_parsed_successfully = true;
-    } else {
-        m_parsed_successfully = false;
-    }
-
-    // No need to parse any more
-    return false;
 }
 
 XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
@@ -661,32 +647,30 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
 {
     m_pageImage = NULL;
 
-    kDebug() << "page file name: " << fileName << endl;
+    kDebug(XpsDebug) << "page file name: " << fileName << endl;
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
     QIODevice* pageDevice  = pageFile->createDevice();
 
-    XpsPageSizeHandler *handler = new XpsPageSizeHandler();
-    QXmlSimpleReader *parser = new QXmlSimpleReader();
-    parser->setContentHandler( handler );
-    parser->setErrorHandler( handler );
-    QXmlInputSource *source = new QXmlInputSource(pageDevice);
-    parser->parse ( source );
-
-    if (handler->m_parsed_successfully)
+    QXmlStreamReader xml;
+    xml.setDevice( pageDevice );
+    while ( !xml.atEnd() )
     {
-        m_pageSize.setWidth( handler->m_width );
-        m_pageSize.setHeight( handler->m_height );
+        xml.readNext();
+        if ( xml.isStartElement() && ( xml.name() == "FixedPage" ) )
+        {
+            QXmlStreamAttributes attributes = xml.attributes();
+            m_pageSize.setWidth( attributes.value( "Width" ).toString().toInt() );
+            m_pageSize.setHeight( attributes.value( "Height" ).toString().toInt() );
+            break;
+        }
     }
-    else
+    if ( xml.error() )
     {
-        kDebug() << "Could not parse XPS page" << endl;
+        kDebug(XpsDebug) << "Could not parse XPS page:" << xml.errorString() << endl;
     }
 
-    delete parser;
-    delete handler;
-    delete source;
     delete pageDevice;
 }
 
@@ -701,7 +685,7 @@ bool XpsPage::renderToImage( QImage *p )
     if ((m_pageImage == NULL) || (m_pageImage->size() != p->size())) {
         delete m_pageImage;
         m_pageImage = new QImage( p->size(), QImage::Format_ARGB32 );
-        // Set one point = one drawing unit. Useful for fonts, because xps specify font size using drawing units, not points as usuall
+        // Set one point = one drawing unit. Useful for fonts, because xps specifies font size using drawing units, not points as usual
         m_pageImage->setDotsPerMeterX( 2835 );
         m_pageImage->setDotsPerMeterY( 2835 );
 
@@ -718,7 +702,7 @@ bool XpsPage::renderToImage( QImage *p )
         QIODevice* pageDevice  = pageFile->createDevice();
         QXmlInputSource *source = new QXmlInputSource(pageDevice);
         bool ok = parser->parse( source );
-        kDebug() << "Parse result: " << ok << endl;
+        kDebug(XpsDebug) << "Parse result: " << ok << endl;
         delete source;
         delete parser;
         delete handler;
@@ -777,7 +761,7 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
 
 int XpsFile::loadFontByName( const QString &fileName )
 {
-    // kDebug() << "font file name: " << fileName << endl;
+    // kDebug(XpsDebug) << "font file name: " << fileName << endl;
 
     const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fileName ));
 
@@ -795,13 +779,13 @@ int XpsFile::loadFontByName( const QString &fileName )
         unsigned short guid[16];
         if (!parseGUID(baseName, guid))
         {
-            kDebug() << "File to load font - file name isn't a GUID" << endl;
+            kDebug(XpsDebug) << "File to load font - file name isn't a GUID" << endl;
         }
         else
         {
         if (fontData.length() < 32)
             {
-                kDebug() << "Font file is too small" << endl;
+                kDebug(XpsDebug) << "Font file is too small" << endl;
             } else {
                 // Obfuscation - xor bytes in font binary with bytes from guid (font's filename)
                 const static int mapping[] = {15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 4, 5, 0, 1, 2, 3};
@@ -815,7 +799,7 @@ int XpsFile::loadFontByName( const QString &fileName )
     }
 
 
-    // kDebug() << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result ) << endl;
+    // kDebug(XpsDebug) << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result ) << endl;
 
     return result; // a font ID
 }
@@ -826,7 +810,7 @@ KZip * XpsFile::xpsArchive() {
 
 QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
-    //kDebug() << "image file name: " << fileName << endl;
+    //kDebug(XpsDebug) << "image file name: " << fileName << endl;
 
     const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
@@ -834,13 +818,13 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 
     QImage image;
     image.loadFromData( imageData);
-    //kDebug() << "Image load result: " << result << ", " << image.size() << endl;
+    //kDebug(XpsDebug) << "Image load result: " << result << ", " << image.size() << endl;
     return image;
 }
 
 void XpsDocument::parseDocumentStructure( const QString &documentStructureFileName )
 {
-    kDebug() << "document structure file name: " << documentStructureFileName << endl;
+    kDebug(XpsDebug) << "document structure file name: " << documentStructureFileName << endl;
     m_haveDocumentStructure = false;
 
     const KZipFileEntry* documentStructureFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( documentStructureFileName ));
@@ -852,7 +836,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
     int errLine, errCol;
     if ( documentStructureDom.setContent( documentStructureDevice, true, &errMsg, &errLine, &errCol ) == false ) {
         // parse error
-        kDebug() << "Could not parse XPS structure document: " << errMsg << " : "
+        kDebug(XpsDebug) << "Could not parse XPS structure document: " << errMsg << " : "
                  << errLine << " : " << errCol << endl;
         m_haveDocumentStructure = false;
         return;
@@ -864,7 +848,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
         QDomElement element = node.toElement();
         if( !element.isNull() ) {
             if (element.tagName() == "DocumentStructure.Outline") {
-                kDebug() << "found DocumentStructure.Outline" << endl;
+                kDebug(XpsDebug) << "found DocumentStructure.Outline" << endl;
 
                 // there now has to be one DocumentOutline element
                 QDomNode documentOutlineNode = node.firstChild();
@@ -879,7 +863,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
                     m_haveDocumentStructure = false;
                     return;
                 }
-                kDebug() << "found DocumentOutline" << endl;
+                kDebug(XpsDebug) << "found DocumentOutline" << endl;
 
                 m_docStructure = new Okular::DocumentSynopsis;
 
@@ -900,17 +884,17 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
                     QString target = outlineEntryElement.attribute( "OutlineTarget" );
                     int hashPosition = target.lastIndexOf( '#' );
                     target = target.mid( hashPosition + 1 );
-                    // kDebug() << "target: " << target << endl;
+                    // kDebug(XpsDebug) << "target: " << target << endl;
                     Okular::DocumentViewport viewport;
                     viewport.pageNumber = m_docStructurePageMap.value( target );
                     synopsisElement.setAttribute( "Viewport",  viewport.toString() );
                     if ( outlineLevel == 1 )
                     {
-                        // kDebug() << "Description: " << outlineEntryElement.attribute( "Description" ) << endl;
+                        // kDebug(XpsDebug) << "Description: " << outlineEntryElement.attribute( "Description" ) << endl;
                         m_docStructure->appendChild( synopsisElement );
                     } else {
                         // find the last next highest element (so it this is level 3, we need to find the most recent level 2 node)
-                        // kDebug() << "Description: (" << outlineEntryElement.attribute( "OutlineLevel" ) << ") "
+                        // kDebug(XpsDebug) << "Description: (" << outlineEntryElement.attribute( "OutlineLevel" ) << ") "
                         // << outlineEntryElement.attribute( "Description" ) << endl;
                         QDomNode maybeParentNode = m_docStructure->lastChild();
                         while ( !maybeParentNode.isNull() )
@@ -929,7 +913,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
             } else {
                 // we need to handle Story here, but I have no examples to test, and no idea what
                 // to do with it anyway.
-                kDebug() << "Unhandled entry in DocumentStructure: " << element.tagName() << endl;
+                kDebug(XpsDebug) << "Unhandled entry in DocumentStructure: " << element.tagName() << endl;
             }
         }
         node = node.nextSibling();
@@ -951,7 +935,7 @@ bool XpsDocument::hasDocumentStructure()
 
 XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false )
 {
-    kDebug() << "document file name: " << fileName << endl;
+    kDebug(XpsDebug) << "document file name: " << fileName << endl;
 
     const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry( fileName ));
 
@@ -962,7 +946,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
     int errLine, errCol;
     if ( documentDom.setContent( documentDevice, true, &errMsg, &errLine, &errCol ) == false ) {
         // parse error
-        kDebug() << "Could not parse XPS document: " << errMsg << " : "
+        kDebug(XpsDebug) << "Could not parse XPS document: " << errMsg << " : "
                  << errLine << " : " << errCol << endl;
     }
 
@@ -984,15 +968,15 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
                 QDomNode maybeLinkTargetsNode = node.firstChild();
                 if ( ( ! maybeLinkTargetsNode.isNull() ) || ( maybeLinkTargetsNode.toElement().tagName() == "PageContent.LinkTargets") )
                 {
-                    // kDebug() << "Found link target nodes" << endl;
+                    // kDebug(XpsDebug) << "Found link target nodes" << endl;
                     QDomNode linkTargetNode = maybeLinkTargetsNode.firstChild();
                     while ( !linkTargetNode.isNull() ) {
-                        // kDebug() << "looking for a LinkTarget" << endl;
+                        // kDebug(XpsDebug) << "looking for a LinkTarget" << endl;
                         QDomElement linkTargetElement = linkTargetNode.toElement();
                         if ( ! linkTargetElement.isNull() ) {
                             if (linkTargetElement.tagName() == "LinkTarget" )
                             {
-                                // kDebug() << "Found linktarget" << endl;
+                                // kDebug(XpsDebug) << "Found linktarget" << endl;
                                 // we have a valid LinkTarget element node
                                 QString targetName = linkTargetElement.attribute( "Name" );
                                 if ( ! targetName.isEmpty() )
@@ -1000,16 +984,16 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
                                     m_docStructurePageMap[ targetName ] = m_pages.count() - 1;
                                 }
                             } else {
-                                kDebug() << "Unexpected tagname. Expected LinkTarget, got " << element.tagName() << endl;
+                                kDebug(XpsDebug) << "Unexpected tagname. Expected LinkTarget, got " << element.tagName() << endl;
                             }
                         } else {
-                            kDebug() << "Null LinkTarget" << endl;
+                            kDebug(XpsDebug) << "Null LinkTarget" << endl;
                         }
                         linkTargetNode = linkTargetNode.nextSibling();
                     }
                 }
             } else {
-                kDebug() << "Unhandled entry in FixedDocument" << element.tagName() << endl;
+                kDebug(XpsDebug) << "Unhandled entry in FixedDocument" << element.tagName() << endl;
             }
         }
         node = node.nextSibling();
@@ -1038,7 +1022,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
         int errLine, errCol;
         if ( relDom.setContent( relDevice, true, &errMsg, &errLine, &errCol ) == false ) {
             // parse error
-            kDebug() << "Could not parse relationship document: " << errMsg << " : "
+            kDebug(XpsDebug) << "Could not parse relationship document: " << errMsg << " : "
                      << errLine << " : " << errCol << endl;
             // try to continue.
         } else {
@@ -1050,7 +1034,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
                     if ("http://schemas.microsoft.com/xps/2005/06/documentstructure" == e.attribute("Type") ) {
                         documentStructureFile  = e.attribute("Target");
                     } else {
-                        kDebug() << "Unknown document relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
+                        kDebug(XpsDebug) << "Unknown document relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
                     }
                 }
                 n = n.nextSibling();
@@ -1061,12 +1045,12 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
 
     } else {
         // this isn't fatal
-        kDebug() << "Could not open Document relationship file from " << maybeDocumentRelationshipPath << endl;
+        kDebug(XpsDebug) << "Could not open Document relationship file from " << maybeDocumentRelationshipPath << endl;
     }
 
     if ( ! documentStructureFile.isEmpty() )
     {
-        // kDebug() << "Document structure filename: " << documentStructureFile << endl;
+        // kDebug(XpsDebug) << "Document structure filename: " << documentStructureFile << endl;
         // make the document path absolute
         if ( documentStructureFile.startsWith( '/' ) )
         {
@@ -1077,7 +1061,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
             maybeDocumentRelationshipPath.truncate( slashPosition );
             documentStructureFile.prepend( maybeDocumentRelationshipPath + '/' );
         }
-        // kDebug() << "Document structure absolute path: " << documentStructureFile << endl;
+        // kDebug(XpsDebug) << "Document structure absolute path: " << documentStructureFile << endl;
         parseDocumentStructure( documentStructureFile );
     }
 
@@ -1120,9 +1104,9 @@ bool XpsFile::loadDocument(const QString &filename)
 {
     m_xpsArchive = new KZip( filename );
     if ( m_xpsArchive->open( QIODevice::ReadOnly ) == true ) {
-        kDebug() << "Successful open of " << m_xpsArchive->fileName() << endl;
+        kDebug(XpsDebug) << "Successful open of " << m_xpsArchive->fileName() << endl;
     } else {
-        kDebug() << "Could not open XPS archive: " << m_xpsArchive->fileName() << endl;
+        kDebug(XpsDebug) << "Could not open XPS archive: " << m_xpsArchive->fileName() << endl;
         delete m_xpsArchive;
         return false;
     }
@@ -1141,7 +1125,7 @@ bool XpsFile::loadDocument(const QString &filename)
     int errLine, errCol;
     if ( relDom.setContent( relDevice, true, &errMsg, &errLine, &errCol ) == false ) {
         // parse error
-        kDebug() << "Could not parse relationship document: " << errMsg << " : "
+        kDebug(XpsDebug) << "Could not parse relationship document: " << errMsg << " : "
                      << errLine << " : " << errCol << endl;
         return false;
     }
@@ -1161,7 +1145,7 @@ bool XpsFile::loadDocument(const QString &filename)
             } else if ("http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin" == e.attribute("Type") ) {
                 m_signatureOrigin = e.attribute("Target");
             } else {
-                kDebug() << "Unknown relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
+                kDebug(XpsDebug) << "Unknown relationships element: " << e.attribute("Type") << " : " << e.attribute("Target") << endl;
             }
         }
         n = n.nextSibling();
@@ -1182,7 +1166,7 @@ bool XpsFile::loadDocument(const QString &filename)
     QDomDocument fixedRepDom;
     if ( fixedRepDom.setContent( fixedRepDevice, true, &errMsg, &errLine, &errCol ) == false ) {
         // parse error
-        kDebug() << "Could not parse Fixed Representation document: " << errMsg << " : "
+        kDebug(XpsDebug) << "Could not parse Fixed Representation document: " << errMsg << " : "
                      << errLine << " : " << errCol << endl;
         return false;
     }
@@ -1199,7 +1183,7 @@ bool XpsFile::loadDocument(const QString &filename)
                 }
                 m_documents.append(doc);
             } else {
-                kDebug() << "Unhandled entry in FixedDocumentSequence" << e.tagName() << endl;
+                kDebug(XpsDebug) << "Unhandled entry in FixedDocumentSequence" << e.tagName() << endl;
             }
         }
         n = n.nextSibling();
@@ -1222,52 +1206,46 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
     if ( ! m_corePropertiesFileName.isEmpty() ) {
         const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));
 
-        QDomDocument corePropertiesDocumentDom;
-        QString errMsg;
-        int errLine, errCol;
-
         QIODevice *corepropsDevice = corepropsFile->createDevice();
 
-        if ( corePropertiesDocumentDom.setContent( corepropsDevice, true, &errMsg, &errLine, &errCol ) == false ) {
-            // parse error
-            kDebug() << "Could not parse core properties (metadata) document: " << errMsg << " : "
-                     << errLine << " : " << errCol << endl;
-            // return whatever we have
-            return m_docInfo;
-        }
-
-        QDomNode n = corePropertiesDocumentDom.documentElement().firstChild(); // the <coreProperties> level
-        while( !n.isNull() ) {
-            QDomElement e = n.toElement();
-            if( !e.isNull() ) {
-                if (e.tagName() == "title") {
-                    m_docInfo->set( "title", e.text(), i18n("Title") );
-                } else if (e.tagName() == "subject") {
-                    m_docInfo->set( "subject", e.text(), i18n("Subject") );
-                } else if (e.tagName() == "description") {
-                    m_docInfo->set( "description", e.text(), i18n("Description") );
-                } else if (e.tagName() == "creator") {
-                    m_docInfo->set( "creator", e.text(), i18n("Author") );
-                } else if (e.tagName() == "category") {
-                    m_docInfo->set( "category", e.text(), i18n("Category") );
-                } else if (e.tagName() == "created") {
-                    QDateTime createdDate = QDateTime::fromString( e.text(), "yyyy-MM-ddThh:mm:ssZ" );
+        QXmlStreamReader xml;
+        xml.setDevice( corepropsDevice );
+        while ( !xml.atEnd() )
+        {
+            xml.readNext();
+            if ( xml.isEndElement() )
+                break;
+            if ( xml.isStartElement() )
+            {
+                if (xml.name() == "title") {
+                    m_docInfo->set( "title", xml.readElementText(), i18n("Title") );
+                } else if (xml.name() == "subject") {
+                    m_docInfo->set( "subject", xml.readElementText(), i18n("Subject") );
+                } else if (xml.name() == "description") {
+                    m_docInfo->set( "description", xml.readElementText(), i18n("Description") );
+                } else if (xml.name() == "creator") {
+                    m_docInfo->set( "creator", xml.readElementText(), i18n("Author") );
+                } else if (xml.name() == "category") {
+                    m_docInfo->set( "category", xml.readElementText(), i18n("Category") );
+                } else if (xml.name() == "created") {
+                    QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
                     m_docInfo->set( "creationDate", KGlobal::locale()->formatDateTime( createdDate, false, true ), i18n("Created" ) );
-                } else if (e.tagName() == "modified") {
-                    QDateTime modifiedDate = QDateTime::fromString( e.text(), "yyyy-MM-ddThh:mm:ssZ" );
+                } else if (xml.name() == "modified") {
+                    QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
                     m_docInfo->set( "modifiedDate", KGlobal::locale()->formatDateTime( modifiedDate, false, true ), i18n("Modified" ) );
-                } else if (e.tagName() == "keywords") {
-                    m_docInfo->set( "keywords", e.text(), i18n("Keywords") );
-                } else {
-                    kDebug() << "unhandled metadata tag: " << e.tagName() << " : " << e.text() << endl;
+                } else if (xml.name() == "keywords") {
+                    m_docInfo->set( "keywords", xml.readElementText(), i18n("Keywords") );
                 }
             }
-            n = n.nextSibling();
+        }
+        if ( xml.error() )
+        {
+            kDebug(XpsDebug) << "Could not parse XPS core properties:" << xml.errorString() << endl;
         }
 
         delete corepropsDevice;
     } else {
-        kDebug() << "No core properties filename" << endl;
+        kDebug(XpsDebug) << "No core properties filename" << endl;
     }
 
     m_docInfo->set( "pages", QString::number(numPages()), i18n("Pages") );
@@ -1369,14 +1347,14 @@ Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
 
 const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
 {
-    kDebug() << "generating document metadata" << endl;
+    kDebug(XpsDebug) << "generating document metadata" << endl;
 
     return m_xpsFile->generateDocumentInfo();
 }
 
 const Okular::DocumentSynopsis * XpsGenerator::generateDocumentSynopsis()
 {
-    kDebug() << "generating document synopsis" << endl;
+    kDebug(XpsDebug) << "generating document synopsis" << endl;
 
     // we only generate the synopsis for the first file.
     if ( !m_xpsFile || !m_xpsFile->document( 0 ) )
@@ -1404,7 +1382,7 @@ void * XpsRenderNode::getRequiredChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
     if (child == NULL) {
-        kDebug() << "Required element " << name << " is missing in " << this->name << endl;
+        kDebug(XpsDebug) << "Required element " << name << " is missing in " << this->name << endl;
         return NULL;
     }
 
@@ -1511,7 +1489,7 @@ bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
 
 //        Okular::NormalizedRect * rect = new Okular::NormalizedRect( textRect.x() / s.width(), textRect.y() / s.height(), (textRect.x() + textRect.width()) / s.width(), (textRect.y() + textRect.height()) / s.height() );
 
-//        kDebug() << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl;
+//        kDebug(XpsDebug) << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl;
 
         m_matrix = m_matrixes.pop();
 

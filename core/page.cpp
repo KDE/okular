@@ -699,7 +699,7 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
     }
 }
 
-void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document )
+void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const
 {
     // only add a node if there is some stuff to write into
     if ( m_annotations.isEmpty() )

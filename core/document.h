@@ -261,7 +261,7 @@ class OKULAR_EXPORT Document : public QObject
          * Returns the gui description file of the document that shall be merged with
          * Okulars menu/tool bar.
          */
-        QString xmlFile();
+        QString xmlFile() const;
 
         /**
          * Calling this method allows the document to add custom actions to the gui

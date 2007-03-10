@@ -343,7 +343,7 @@ class OKULAR_EXPORT Page : public QObject
         /**
          * Saves the local contents (e.g. annotations) of the page.
          */
-        void saveLocalContents( QDomNode & parentNode, QDomDocument & document );
+        void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
 
     Q_SIGNALS:
         void rotationFinished( int page );

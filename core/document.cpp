@@ -865,7 +865,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 }
 
 
-QString Document::xmlFile()
+QString Document::xmlFile() const
 {
     if ( d->m_generator )
     {

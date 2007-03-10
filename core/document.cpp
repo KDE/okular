@@ -291,7 +291,7 @@ int Document::Private::getTotalMemory()
      while ( true )
     {
         QString entry = readStream.readLine();
-        if ( entry.isNull() ) break;  
+        if ( entry.isNull() ) break;
         if ( entry.startsWith( "MemTotal:" ) )
             return (cachedValue = (1024 * entry.section( ' ', -2, -2 ).toInt()));
     }
@@ -321,7 +321,7 @@ int Document::Private::getFreeMemory()
     while ( true )
     {
         entry = readStream.readLine();
-        if ( entry.isNull() ) break;  
+        if ( entry.isNull() ) break;
         if ( entry.startsWith( "MemFree:" ) ||
                 entry.startsWith( "Buffers:" ) ||
                 entry.startsWith( "Cached:" ) ||
@@ -345,7 +345,7 @@ void Document::Private::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    //kDebug() << "Using '" << d->m_xmlFileName << "' as document info file." << endl;
+    //kDebug(OkularDebug) << "Using '" << d->m_xmlFileName << "' as document info file." << endl;
     if ( m_xmlFileName.isEmpty() )
         return;
 
@@ -357,7 +357,7 @@ void Document::Private::loadDocumentInfo()
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kDebug() << "Can't load XML pair! Check for broken xml." << endl;
+        kDebug(OkularDebug) << "Can't load XML pair! Check for broken xml." << endl;
         infoFile.close();
         return;
     }
@@ -453,7 +453,7 @@ bool Document::Private::openRelativeFile( const QString & fileName )
     if ( absFileName.isEmpty() )
         return false;
 
-    kDebug() << "openDocument: '" << absFileName << "'" << endl;
+    kDebug(OkularDebug) << "openDocument: '" << absFileName << "'" << endl;
 
     emit m_parent->openUrl( absFileName );
     return true;
@@ -631,7 +631,7 @@ void Document::Private::sendGeneratorRequest()
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
     {
-        kWarning() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
+        kDebug(OkularDebug) << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( (int)m_rotation % 2 )
@@ -1289,7 +1289,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kWarning() << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << endl;
+        kDebug(OkularDebug) << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << endl;
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -1356,12 +1356,12 @@ void Document::addPageAnnotation( int page, Annotation * annotation )
 void Document::modifyPageAnnotation( int page, Annotation * newannotation )
 {
     //TODO: modify annotations
-    
+
     // find out the page
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
-    
+
     kp->modifyAnnotation( newannotation );
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
@@ -1455,7 +1455,7 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     DocumentViewport & oldViewport = *d->m_viewportIterator;
     // disabled by enrico on 2005-03-18 (less debug output)
     //if ( viewport == oldViewport )
-    //    kDebug() << "setViewport with the same viewport." << endl;
+    //    kDebug(OkularDebug) << "setViewport with the same viewport." << endl;
 
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
@@ -1904,7 +1904,7 @@ void Document::processLink( const Link * link )
 
             // Explanation of why d->m_nextDocumentViewport is needed:
             // all openRelativeFile does is launch a signal telling we
-            // want to open another URL, the problem is that when the file is 
+            // want to open another URL, the problem is that when the file is
             // non local, the loading is done assynchronously so you can't
             // do a setViewport after the if as it was because you are doing the setViewport
             // on the old file and when the new arrives there is no setViewport for it and
@@ -2038,9 +2038,9 @@ void Document::processLink( const Link * link )
                     return;
                 }
 
-                // Albert: this is not a leak! 
+                // Albert: this is not a leak!
                 // TODO: find a widget to pass as second parameter
-                new KRun( KUrl(url), 0 ); 
+                new KRun( KUrl(url), 0 );
             }
             } break;
 
@@ -2063,7 +2063,7 @@ void Document::processSourceReference( const SourceReference * ref )
 
     if ( !QFile::exists( ref->fileName() ) )
     {
-        kDebug() << "No such file: '" << ref->fileName() << "'" << endl;
+        kDebug(OkularDebug) << "No such file: '" << ref->fileName() << "'" << endl;
         return;
     }
 
@@ -2167,7 +2167,7 @@ void Document::requestDone( PixmapRequest * req )
 {
 #ifndef NDEBUG
     if ( !d->m_generator->canGeneratePixmap() )
-        kDebug() << "requestDone with generator not in READY state." << endl;
+        kDebug(OkularDebug) << "requestDone with generator not in READY state." << endl;
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
@@ -2217,7 +2217,7 @@ void Document::slotRotation( int r )
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
-    kDebug() << "Rotated: " << r << endl;
+    kDebug(OkularDebug) << "Rotated: " << r << endl;
 }
 
 void Document::slotPageSizes( int newsize )
@@ -2245,7 +2245,7 @@ void Document::slotPageSizes( int newsize )
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
-    kDebug() << "PageSize no: " << newsize << endl;
+    kDebug(OkularDebug) << "PageSize no: " << newsize << endl;
 }
 
 

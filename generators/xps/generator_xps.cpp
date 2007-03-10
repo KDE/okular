@@ -326,7 +326,15 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
     return path;
 }
 
-QMatrix XpsHandler::attsToMatrix( const QString &csv )
+/**
+   Parse a "Matrix" attribute string
+   \param csv the comma separated list of values
+   \return the QMatrix corresponding to the affine transform
+   given in the attribute
+
+   \see XPS specification 7.4.1
+*/
+static QMatrix attsToMatrix( const QString &csv )
 {
     QStringList values = csv.split( ',' );
     if ( values.count() != 6 ) {
@@ -337,7 +345,10 @@ QMatrix XpsHandler::attsToMatrix( const QString &csv )
                     values.at(4).toDouble(), values.at(5).toDouble() );
 }
 
-QBrush XpsHandler::parseRscRefColorForBrush( const QString &data )
+/**
+   \return Brush with given color or brush specified by reference to resource
+*/
+static QBrush parseRscRefColorForBrush( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
@@ -348,7 +359,10 @@ QBrush XpsHandler::parseRscRefColorForBrush( const QString &data )
     }
 }
 
-QPen XpsHandler::parseRscRefColorForPen( const QString &data )
+/**
+   \return Pen with given color or Pen specified by reference to resource
+*/
+static QPen parseRscRefColorForPen( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
@@ -359,7 +373,10 @@ QPen XpsHandler::parseRscRefColorForPen( const QString &data )
     }
 }
 
-QMatrix XpsHandler::parseRscRefMatrix( const QString &data )
+/**
+   \return Matrix specified by given data or by referenced dictionary
+*/
+static QMatrix parseRscRefMatrix( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
@@ -711,28 +728,6 @@ bool XpsPage::renderToImage( QImage *p )
     return true;
 }
 
-Okular::TextPage* XpsPage::textPage()
-{
-    Okular::TextPage* tp = new Okular::TextPage();
-
-    XpsTextExtractionHandler handler(this, tp);
-    QXmlSimpleReader* parser = new QXmlSimpleReader();
-    parser->setContentHandler( &handler );
-    parser->setErrorHandler( &handler );
-    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
-    QIODevice* pageDevice  = pageFile->createDevice();
-    QXmlInputSource source = QXmlInputSource(pageDevice);
-
-    if (!parser->parse( source )) {
-        delete tp;
-        tp = NULL;
-    }
-
-    delete pageDevice;
-
-    return tp;
-}
-
 QSize XpsPage::size() const
 {
     return m_pageSize;
@@ -740,6 +735,8 @@ QSize XpsPage::size() const
 
 QFont XpsFile::getFontByName( const QString &fileName, float size )
 {
+    // kDebug(XpsDebug) << "trying to get font: " << fileName << ", size: " << size << endl;
+
     int index = m_fontCache.value(fileName, -1);
     if (index == -1)
     {
@@ -750,7 +747,6 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
     QString fontFamily = m_fontDatabase.applicationFontFamilies( index ).at(0);
     QString fontStyle =  m_fontDatabase.styles( fontFamily ).at(0);
     QFont font = m_fontDatabase.font(fontFamily, fontStyle, qRound(size) );
-
 
     return font;
 }
@@ -817,6 +813,103 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
     image.loadFromData( imageData);
 
     return image;
+}
+
+Okular::TextPage* XpsPage::textPage()
+{
+    kDebug(XpsDebug) << "Parsing XpsPage, text extraction" << endl;
+
+    Okular::TextPage* textPage = new Okular::TextPage();
+
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
+    QXmlStreamReader xml;
+    xml.addData( pageFile->data() );
+
+    QMatrix matrix = QMatrix();
+    QStack<QMatrix> matrices;
+    matrices.push( QMatrix() );
+    bool useMatrix = false;
+    QXmlStreamAttributes glyphsAtts;
+
+    while ( ! xml.atEnd() ) {
+        xml.readNext();
+        if ( xml.isStartElement() ) {
+            if ( xml.name() == "Canvas") {
+                matrices.push(matrix);
+
+                QString att = xml.attributes().value( "RenderTransform" ).toString();
+                if (!att.isEmpty()) {
+                    matrix = parseRscRefMatrix( att ) * matrix;
+                }
+            } else if ((xml.name() == "Canvas.RenderTransform") || (xml.name() == "Glyphs.RenderTransform")) {
+                useMatrix = true;
+            } else if (useMatrix && (xml.name() == "MatrixTransform")) {
+                matrix = attsToMatrix( xml.attributes().value("Matrix").toString() ) * matrix;
+            } else if (xml.name() == "Glyphs") {
+                matrices.push( matrix );
+                glyphsAtts = xml.attributes();
+            } else if ( (xml.name() == "Path") || (xml.name() == "Path.Fill") || (xml.name() == "SolidColorBrush")
+                        || (xml.name() == "ImageBrush") ||  (xml.name() == "ImageBrush.Transform")
+                        || (xml.name() == "Path.OpacityMask") ){
+                // those are only graphical - no use in text handling
+            } else if (xml.name() == "FixedPage")  {
+                // not useful for text extraction
+            } else {
+                kDebug(XpsDebug) << "Unhandled element in Text Extraction: " << xml.name().toString() << endl;
+            }
+        } else if (xml.isEndElement() ) {
+            if (xml.name() == "Canvas") {
+                matrix = matrices.pop();
+            } else if ((xml.name() == "Canvas.RenderTransform") || (xml.name() == "Glyphs.RenderTransform")) {
+                useMatrix = false;
+            } else if (xml.name() == "MatrixTransform") {
+                // not clear if we need to do anything here yet.
+            } else if (xml.name() == "Glyphs") {
+                QString att = glyphsAtts.value( "RenderTransform" ).toString();
+                if (!att.isEmpty()) {
+                    matrix = parseRscRefMatrix( att ) * matrix;
+                }
+                QString text =  glyphsAtts.value( "UnicodeString" ).toString();
+
+                // Get font (doesn't work well because qt doesn't allow to load font from file)
+                QFont font = m_file->getFontByName( glyphsAtts.value( "FontUri" ).toString(),
+                                                    glyphsAtts.value("FontRenderingEmSize").toString().toFloat() * 72 / 96 );
+                QFontMetrics metrics = QFontMetrics( font );
+                // Origin
+                QPointF origin( glyphsAtts.value("OriginX").toString().toDouble(),
+                                glyphsAtts.value("OriginY").toString().toDouble() );
+
+
+                int lastWidth = 0;
+                for (int i = 0; i < text.length(); i++) {
+                    int width = metrics.width( text, i + 1 );
+
+                    Okular::NormalizedRect * rect = new Okular::NormalizedRect( (origin.x() + lastWidth) / m_pageSize.width(),
+                                                                                (origin.y() - metrics.height()) / m_pageSize.height(),
+                                                                                (origin.x() + width) / m_pageSize.width(),
+                                                                                origin.y() / m_pageSize.height() );
+                    rect->transform( matrix );
+                    textPage->append( text.mid(i, 1), rect );
+
+                    lastWidth = width;
+                }
+
+                matrix = matrices.pop();
+            } else if ( (xml.name() == "Path") || (xml.name() == "Path.Fill") || (xml.name() == "SolidColorBrush")
+                        || (xml.name() == "ImageBrush") ||  (xml.name() == "ImageBrush.Transform")
+                        || (xml.name() == "Path.OpacityMask") ){
+                // those are only graphical - no use in text handling
+            } else if (xml.name() == "FixedPage")  {
+                // not useful for text extraction
+            } else {
+                kDebug(XpsDebug) << "Unhandled element in Text Extraction: " << xml.name().toString() << endl;
+            }
+        }
+    }
+    if ( xml.error() ) {
+        kDebug(XpsDebug) << "Error parsing XpsPage text: " << xml.errorString() << endl;
+    }
+    return textPage;
 }
 
 void XpsDocument::parseDocumentStructure( const QString &documentStructureFileName )
@@ -1288,6 +1381,37 @@ const Okular::DocumentSynopsis * XpsGenerator::generateDocumentSynopsis()
     return NULL;
 }
 
+Okular::ExportFormat::List XpsGenerator::exportFormats() const
+{
+    static Okular::ExportFormat::List formats;
+    if ( formats.isEmpty() ) {
+      formats.append( Okular::ExportFormat( i18n( "Plain Text" ), KMimeType::mimeType( "text/plain" ) ) );
+    }
+    return formats;
+}
+
+bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
+{
+    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+        QFile f( fileName );
+        if ( !f.open( QIODevice::WriteOnly ) )
+            return false;
+
+        QTextStream ts( &f );
+        for ( int i = 0; i < m_xpsFile->numPages(); ++i )
+        {
+            XpsPage *thisPage = m_xpsFile->page(i);
+            QString text = thisPage->textPage()->text();
+            ts << text;
+        }
+        f.close();
+
+        return true;
+    }
+
+    return false;
+}
+
 XpsRenderNode * XpsRenderNode::findChild( const QString &name )
 {
     for (int i = 0; i < children.size(); i++) {
@@ -1319,106 +1443,6 @@ void * XpsRenderNode::getChildData( const QString &name )
         return child->data;
     }
 }
-
-XpsTextExtractionHandler::XpsTextExtractionHandler( XpsPage * page, Okular::TextPage * textPage): XpsHandler( page ),  m_textPage( textPage ) {}
-
-bool XpsTextExtractionHandler::startDocument()
-{
-    m_matrixes.push(QMatrix());
-    m_matrix = QMatrix();
-    m_useMatrix = false;
-
-    return true;
-}
-
-bool XpsTextExtractionHandler::startElement( const QString & nameSpace,
-                                             const QString & localName,
-                                             const QString & qname,
-                                             const QXmlAttributes & atts )
-{
-    Q_UNUSED( nameSpace );
-    Q_UNUSED( qname );
-
-    if (localName == "Canvas") {
-        m_matrixes.push(m_matrix);
-
-        QString att = atts.value( "RenderTransform" );
-        if (!att.isEmpty()) {
-            m_matrix = parseRscRefMatrix( att ) * m_matrix;
-        }
-    } else if ((localName == "Canvas.RenderTransform") || (localName == "Glyphs.RenderTransform")) {
-        m_useMatrix = true;
-    } else if (m_useMatrix && (localName == "MatrixTransform")) {
-        m_matrix = attsToMatrix( atts.value("Matrix") ) * m_matrix;
-    } else if (localName == "Glyphs") {
-        m_matrixes.push( m_matrix );
-        m_glyphsAtts = atts;
-    }
-
-    return true;
-}
-
-bool XpsTextExtractionHandler::endElement( const QString & nameSpace,
-                                           const QString & localName,
-                                           const QString & qname )
-{
-    Q_UNUSED( nameSpace );
-    Q_UNUSED( qname );
-
-
-    if (localName == "Canvas") {
-        m_matrix = m_matrixes.pop();
-    } else if ((localName == "Canvas.RenderTransform") || (localName == "Glyphs.RenderTransform")) {
-        m_useMatrix = false;
-    } else if (localName == "Glyphs") {
-
-        QString att;
-
-        att = m_glyphsAtts.value( "RenderTransform" );
-        if (!att.isEmpty()) {
-            m_matrix = parseRscRefMatrix( att ) * m_matrix;
-        }
-
-        QString text =  m_glyphsAtts.value( "UnicodeString" );
-
-        // Get font (doesn't work well because qt doesn't allow to load font from file)
-        QFont font = m_page->m_file->getFontByName( m_glyphsAtts.value( "FontUri" ),  m_glyphsAtts.value("FontRenderingEmSize").toFloat() * 72 / 96 );
-        QFontMetrics metrics = QFontMetrics( font );
-        // Origin
-        QPointF origin( m_glyphsAtts.value("OriginX").toDouble(), m_glyphsAtts.value("OriginY").toDouble() );
-
-
-        QSize s = m_page->m_pageSize;
-
-        int lastWidth = 0;
-        for (int i = 0; i < text.length(); i++) {
-            int width = metrics.width( text, i + 1 );
-            int charWidth = width - lastWidth;
-
-            Okular::NormalizedRect * rect = new Okular::NormalizedRect( (origin.x() + lastWidth) / s.width(), (origin.y() - metrics.height()) / s.height(),
-                (origin.x() + width) / s.width(), origin.y() / s.height() );
-            rect->transform( m_matrix );
-            m_textPage->append( text.mid(i, 1), rect );
-
-            lastWidth = width;
-        }
-
-//        QRectF textRect = metrics.boundingRect( text );
-//        textRect.moveTo( origin.x(), origin.y() - textRect.height() );
-
-//       textRect = m_matrix.mapRect( textRect );
-
-//        Okular::NormalizedRect * rect = new Okular::NormalizedRect( textRect.x() / s.width(), textRect.y() / s.height(), (textRect.x() + textRect.width()) / s.width(), (textRect.y() + textRect.height()) / s.height() );
-
-//        kDebug(XpsDebug) << rect->left << " " << rect->top << " " << rect->right << " " << rect->bottom << "  " << text << endl;
-
-        m_matrix = m_matrixes.pop();
-
-    }
-
-    return true;
-}
-
 
 #include "generator_xps.moc"
 

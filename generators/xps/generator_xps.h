@@ -87,16 +87,6 @@ public:
 protected:
     XpsPage *m_page;
 
-    /**
-        Parse a "Matrix" attribute string
-        \param csv the comma separated list of values
-        \return the QMatrix corresponding to the affine transform
-        given in the attribute
-
-        \see XPS specification 7.4.1
-    */
-    QMatrix attsToMatrix( const QString &csv );
-
     void processStartElement( XpsRenderNode &node );
     void processEndElement( XpsRenderNode &node );
 
@@ -106,21 +96,6 @@ protected:
     void processFill( XpsRenderNode &node );
     void processImageBrush (XpsRenderNode &node );
 
-    /**
-       \return Brush with given color or brush specified by reference to resource
-    */
-    QBrush parseRscRefColorForBrush( const QString &data );
-
-    /**
-       \return Pen with given color or Pen specified by reference to resource
-    */
-    QPen parseRscRefColorForPen( const QString &data );
-
-    /**
-        \return Matrix specified by given data or by referenced dictionary
-    */
-    QMatrix parseRscRefMatrix( const QString &data );
-
     QPainter *m_painter;
 
     QImage m_image;
@@ -128,27 +103,6 @@ protected:
     QStack<XpsRenderNode> m_nodes;
 
     friend class XpsPage;
-};
-
-class XpsTextExtractionHandler: public XpsHandler
-{
-public:
-    XpsTextExtractionHandler( XpsPage * page, Okular::TextPage * textPage );
-    bool startElement( const QString & nameSpace,
-                       const QString & localName,
-                       const QString & qname,
-                       const QXmlAttributes & atts );
-    bool endElement( const QString & nameSpace,
-                     const QString & localName,
-                     const QString & qname );
-    bool startDocument();
-private:
-    QMatrix m_matrix;
-    QStack<QMatrix> m_matrixes;
-    bool m_useMatrix;
-    QXmlAttributes m_glyphsAtts;
-    Okular::TextPage * m_textPage;
-
 };
 
 class XpsPage
@@ -315,6 +269,8 @@ class XpsGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
+        Okular::ExportFormat::List exportFormats() const;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
     protected:
         QImage image( Okular::PixmapRequest *page );
         Okular::TextPage* textPage( Okular::Page * page );

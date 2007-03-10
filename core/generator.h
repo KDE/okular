@@ -130,6 +130,11 @@ class OKULAR_EXPORT ExportFormat
          */
         bool isNull() const;
 
+        /**
+         * Builds a standard format for exporting to plain text.
+         */
+        static ExportFormat plainText();
+
     private:
         class Private;
         Private* const d;

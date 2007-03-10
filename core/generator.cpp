@@ -13,6 +13,7 @@
 #include <kcomponentdata.h>
 #include <kdebug.h>
 #include <kicon.h>
+#include <klocale.h>
 
 #include "document.h"
 #include "generator.h"
@@ -456,6 +457,11 @@ KIcon ExportFormat::icon() const
 bool ExportFormat::isNull() const
 {
     return d->mMimeType.isNull() || d->mDescription.isNull();
+}
+
+ExportFormat ExportFormat::plainText()
+{
+    return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
 }
 
 kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )

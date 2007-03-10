@@ -79,6 +79,16 @@
 typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
 
+static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
+{
+    QAction *act = new QAction( format.description(), parent );
+    if ( !format.icon().isNull() )
+    {
+        act->setIcon( format.icon() );
+    }
+    return act;
+}
+
 Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QStringList & /*args*/ )
@@ -377,7 +387,8 @@ m_searchStarted(false), m_cliPresentation(false)
     QMenu *menu = new QMenu(widget());
     connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
     m_exportAs->setMenu( menu );
-    m_exportAsText = menu->addAction( KIcon( "text" ), i18n( "Text..." ) );
+    m_exportAsText = actionForExportFormat( Okular::ExportFormat::plainText(), menu );
+    menu->addAction( m_exportAsText );
     m_exportAsText->setEnabled( false );
 
     m_aboutBackend = ac->addAction("help_about_backend");
@@ -665,15 +676,7 @@ bool Part::openFile()
         QMenu *menu = m_exportAs->menu();
         for ( ; it != itEnd; ++it )
         {
-            const Okular::ExportFormat &format = *it;
-            if ( !format.icon().isNull() )
-            {
-                menu->addAction( format.icon(), format.description() );
-            }
-            else
-            {
-                menu->addAction( format.description() );
-            }
+            menu->addAction( actionForExportFormat( *it ) );
         }
     }
     m_exportAsText->setEnabled( ok && m_document->canExportToText() );

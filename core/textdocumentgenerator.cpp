@@ -359,8 +359,8 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
 {
     static Okular::ExportFormat::List formats;
     if ( formats.isEmpty() ) {
+        formats.append( Okular::ExportFormat::plainText() );
         formats.append( Okular::ExportFormat( i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) ) );
-        formats.append( Okular::ExportFormat( i18n( "Plain Text" ), KMimeType::mimeType( "text/plain" ) ) );
     }
 
     return formats;

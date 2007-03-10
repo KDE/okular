@@ -453,6 +453,11 @@ KIcon ExportFormat::icon() const
     return d->mIcon;
 }
 
+bool ExportFormat::isNull() const
+{
+    return d->mMimeType.isNull() || d->mDescription.isNull();
+}
+
 kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )
 {
     QString s = QString( "%1 PixmapRequest (id: %2) (%3x%4), prio %5, pageNo %6" )

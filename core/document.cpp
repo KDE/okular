@@ -105,6 +105,7 @@ class Document::Private
             m_allocatedPixmapsTotalMemory( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
+            m_exportCached( false ),
             m_bookmarkManager( 0 ),
             m_memCheckTimer( 0 ),
             m_saveBookmarksTimer( 0 ),
@@ -126,6 +127,7 @@ class Document::Private
         void loadAllGeneratorLibraries();
         void loadServiceList( const KService::List& offers );
         void unloadGenerator( const GeneratorInfo& info );
+        void cacheExportFormats();
 
         // private slots
         void saveDocumentInfo() const;
@@ -168,6 +170,11 @@ class Document::Private
         // available page sizes
         PageSize m_pageSize;
         PageSize::List m_pageSizes;
+
+        // cache of the export formats
+        bool m_exportCached;
+        ExportFormat::List m_exportFormats;
+        ExportFormat m_exportToText;
 
         // our bookmark manager
         BookmarkManager *m_bookmarkManager;
@@ -521,6 +528,23 @@ void Document::Private::unloadGenerator( const GeneratorInfo& info )
 {
     delete info.generator;
     info.library->unload();
+}
+
+void Document::Private::cacheExportFormats()
+{
+    if ( m_exportCached )
+        return;
+
+    const ExportFormat::List formats = m_generator->exportFormats();
+    for ( int i = 0; i < formats.count(); ++i )
+    {
+        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
+            m_exportToText = formats.at( i );
+        else
+            m_exportFormats.append( formats.at( i ) );
+    }
+
+    m_exportCached = true;
 }
 
 void Document::Private::saveDocumentInfo() const
@@ -917,6 +941,9 @@ void Document::closeDocument()
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
     d->m_tempFile = 0;
+    d->m_exportCached = false;
+    d->m_exportFormats.clear();
+    d->m_exportToText = ExportFormat();
     // remove requests left in queue
     QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.begin();
     QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.end();
@@ -1174,13 +1201,8 @@ bool Document::canExportToText() const
     if ( !d->m_generator )
         return false;
 
-    const ExportFormat::List formats = d->m_generator->exportFormats();
-    for ( int i = 0; i < formats.count(); ++i ) {
-        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
-            return true;
-    }
-
-    return false;
+    d->cacheExportFormats();
+    return !d->m_exportToText.isNull();
 }
 
 bool Document::exportToText( const QString& fileName ) const
@@ -1188,18 +1210,20 @@ bool Document::exportToText( const QString& fileName ) const
     if ( !d->m_generator )
         return false;
 
-    const ExportFormat::List formats = d->m_generator->exportFormats();
-    for ( int i = 0; i < formats.count(); ++i ) {
-        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
-            return d->m_generator->exportTo( fileName, formats[ i ] );
-    }
+    d->cacheExportFormats();
+    if ( d->m_exportToText.isNull() )
+        return false;
 
-    return false;
+    return d->m_generator->exportTo( fileName, d->m_exportToText );
 }
 
 ExportFormat::List Document::exportFormats() const
 {
-    return d->m_generator ? d->m_generator->exportFormats() : ExportFormat::List();
+    if ( !d->m_generator )
+        return ExportFormat::List();
+
+    d->cacheExportFormats();
+    return d->m_exportFormats;
 }
 
 bool Document::exportTo( const QString& fileName, const ExportFormat& format ) const

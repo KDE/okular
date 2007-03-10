@@ -70,6 +70,8 @@ class OKULAR_EXPORT ExportFormat
 
         /**
          * Creates an empty export format.
+         *
+         * @see isNull()
          */
         ExportFormat();
 
@@ -119,6 +121,14 @@ class OKULAR_EXPORT ExportFormat
          * Returns the icon for GUI representations of the format.
          */
         KIcon icon() const;
+
+        /**
+         * Returns whether the export format is null/valid.
+         *
+         * An ExportFormat is null if the mimetype is not valid or the
+         * description is empty, or both.
+         */
+        bool isNull() const;
 
     private:
         class Private;

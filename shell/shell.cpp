@@ -252,7 +252,7 @@ QStringList Shell::fileFormats() const
         }
     }
 
-    supportedPatterns.prepend( allExt + "|" + i18n( "All Files" ) );
+    supportedPatterns.prepend( allExt + '|' + i18n( "All Supported Files" ) );
 
     return supportedPatterns;
 }

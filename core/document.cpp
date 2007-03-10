@@ -51,6 +51,8 @@
 
 using namespace Okular;
 
+static int OkularDebug = 4650;
+
 struct AllocatedPixmap
 {
     // owner of the page

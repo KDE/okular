@@ -14,14 +14,9 @@
 
 #include "shell.h"
 #include <kapplication.h>
-#include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
-
-static const char description[] =
-I18N_NOOP("okular, a Universal document viewer");
-
-static const char version[] = "0.5.82";
+#include "aboutdata.h"
 
 static KCmdLineOptions options[] =
 {
@@ -34,26 +29,9 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char** argv)
 {
-    KAboutData about(
-        "okular",
-        I18N_NOOP("okular"),
-        version,
-        description,
-        KAboutData::License_GPL,
-        "(C) 2002 Wilco Greven, Christophe Devriese\n(C) 2004-2005 Albert Astals Cid, Enrico Ros\n(C) 2005 Piotr Szymanski");
+    KAboutData * about = okularAboutData( "okular", I18N_NOOP( "okular" ) );
 
-    about.addAuthor("Pino Toscano", I18N_NOOP("Current mantainer"), "pino@kde.org");
-    about.addAuthor("Tobias Koenig", I18N_NOOP("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
-    about.addAuthor("Albert Astals Cid", I18N_NOOP("Former mantainer"), "aacid@kde.org");
-    about.addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
-    about.addAuthor("Enrico Ros", 0, "eros.kde@email.it");
-    about.addAuthor("Wilco Greven", 0, "greven@kde.org");
-    about.addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
-    about.addAuthor("Laurent Montel", 0, "montel@kde.org");
-
-    about.addCredit("Marco Martin", I18N_NOOP("Icon"), 0, "m4rt@libero.it");
-
-    KCmdLineArgs::init(argc, argv, &about);
+    KCmdLineArgs::init(argc, argv, about);
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
 
@@ -80,7 +58,9 @@ int main(int argc, char** argv)
         }
     }
 
-    return app.exec();
+    int ret = app.exec();
+    delete about;
+    return ret;
 }
 
 // vim:ts=2:sw=2:tw=78:et

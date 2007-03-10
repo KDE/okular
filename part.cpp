@@ -55,6 +55,7 @@
 #include <kfilterdev.h>
 
 // local includes
+#include "aboutdata.h"
 #include "part.h"
 #include "ui/pageview.h"
 #include "ui/toc.h"
@@ -590,7 +591,7 @@ KAboutData* Part::createAboutData()
     // the non-i18n name here must be the same as the directory in
     // which the part's rc file is installed ('partrcdir' in the
     // Makefile)
-    KAboutData* aboutData = new KAboutData("okularpart", I18N_NOOP("okular::Part"), "0.1");
+    KAboutData* aboutData = okularAboutData( "okularpart", I18N_NOOP( "okularpart" ) );
     aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
     return aboutData;
 }

@@ -180,11 +180,10 @@ class OKULAR_EXPORT Document : public QObject
         KUrl currentDocument() const;
 
         /**
-         * Returns whether the given @p actions are allowed
-         * in the document.
-         * @see @ref Permissions
+         * Returns whether the given @p action is allowed in the document.
+         * @see @ref Permission
          */
-        bool isAllowed( Permissions actions ) const;
+        bool isAllowed( Permission action ) const;
 
         /**
          * Returns whether the document supports searching.

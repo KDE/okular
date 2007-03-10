@@ -63,7 +63,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         PageSizeMetric pagesSizeMetric() const { return Points; }
 
         // [INHERITED] document information
-        bool isAllowed( Okular::Permissions permissions ) const;
+        bool isAllowed( Okular::Permission permission ) const;
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap() const;

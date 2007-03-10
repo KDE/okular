@@ -1165,14 +1165,14 @@ KUrl Document::currentDocument() const
     return d->m_url;
 }
 
-bool Document::isAllowed( Permissions flags ) const
+bool Document::isAllowed( Permission action ) const
 {
 #if !OKULAR_FORCE_DRM
     if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
         return true;
 #endif
 
-    return d->m_generator ? d->m_generator->isAllowed( flags ) : false;
+    return d->m_generator ? d->m_generator->isAllowed( action ) : false;
 }
 
 bool Document::supportsSearching() const

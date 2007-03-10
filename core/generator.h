@@ -286,10 +286,10 @@ class OKULAR_EXPORT Generator : public QObject
         virtual PageSizeMetric pagesSizeMetric() const;
 
         /**
-         * This method returns whether given action (@ref Permission) is
+         * This method returns whether given @p action (@ref Permission) is
          * allowed in this document.
          */
-        virtual bool isAllowed( Permissions action ) const;
+        virtual bool isAllowed( Permission action ) const;
 
         /**
          * This method is called when the orientation has been changed by the user.

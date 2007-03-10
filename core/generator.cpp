@@ -223,7 +223,7 @@ Generator::PageSizeMetric Generator::pagesSizeMetric() const
     return None;
 }
 
-bool Generator::isAllowed( Permissions ) const
+bool Generator::isAllowed( Permission ) const
 {
     return true;
 }

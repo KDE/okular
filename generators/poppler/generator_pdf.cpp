@@ -591,13 +591,25 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     return &docEmbeddedFiles;
 }
 
-bool PDFGenerator::isAllowed( Okular::Permissions permissions ) const
+bool PDFGenerator::isAllowed( Okular::Permission permission ) const
 {
     bool b = true;
-    if (permissions & Okular::AllowModify) b = b && pdfdoc->okToChange();
-    if (permissions & Okular::AllowCopy) b = b && pdfdoc->okToCopy();
-    if (permissions & Okular::AllowPrint) b = b && pdfdoc->okToPrint();
-    if (permissions & Okular::AllowNotes) b = b && pdfdoc->okToAddNotes();
+    switch ( permission )
+    {
+        case Okular::AllowModify:
+            b = pdfdoc->okToChange();
+            break;
+        case Okular::AllowCopy:
+            b = pdfdoc->okToCopy();
+            break;
+        case Okular::AllowPrint:
+            b = pdfdoc->okToPrint();
+            break;
+        case Okular::AllowNotes:
+            b = pdfdoc->okToAddNotes();
+            break;
+        default: ;
+    }
     return b;
 }
 

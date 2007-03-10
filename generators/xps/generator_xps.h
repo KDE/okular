@@ -218,7 +218,6 @@ public:
 
 private:
     void parseDocumentStructure( const QString &documentStructureFileName );
-    const QDomNode findElementByLinkTargetName( const QString &targetName );
 
     QList<XpsPage*> m_pages;
     XpsFile * m_file;

@@ -241,6 +241,9 @@ class BrowserExtension : public KParts::BrowserExtension
     public slots:
         // Automatically detected by the host.
         void print();
+
+    private:
+        Part *m_part;
 };
 #endif
 

@@ -1601,7 +1601,7 @@ void Part::updateAboutBackendAction()
  * BrowserExtension class
  */
 BrowserExtension::BrowserExtension(Part* parent)
-: KParts::BrowserExtension( parent )
+    : KParts::BrowserExtension( parent ), m_part( parent )
 {
     emit enableAction("print", true);
     setURLDropHandlingEnabled(true);
@@ -1610,7 +1610,7 @@ BrowserExtension::BrowserExtension(Part* parent)
 
 void BrowserExtension::print()
 {
-    static_cast<Part*>(parent())->slotPrint();
+    m_part->slotPrint();
 }
 
 

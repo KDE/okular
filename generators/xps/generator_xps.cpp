@@ -616,7 +616,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
     }
 
-    m_painter->drawPath( path ); //TODO Valgrind sometimes say that path drawing depends on unitialized value in blend_texture
+    m_painter->drawPath( path ); //TODO Valgrind sometimes say that path drawing depends on uninitialized value in blend_texture
 
     m_painter->restore();
 }
@@ -817,7 +817,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 
 Okular::TextPage* XpsPage::textPage()
 {
-    kDebug(XpsDebug) << "Parsing XpsPage, text extraction" << endl;
+    // kDebug(XpsDebug) << "Parsing XpsPage, text extraction" << endl;
 
     Okular::TextPage* textPage = new Okular::TextPage();
 
@@ -843,8 +843,10 @@ Okular::TextPage* XpsPage::textPage()
                 }
             } else if ((xml.name() == "Canvas.RenderTransform") || (xml.name() == "Glyphs.RenderTransform")) {
                 useMatrix = true;
-            } else if (useMatrix && (xml.name() == "MatrixTransform")) {
-                matrix = attsToMatrix( xml.attributes().value("Matrix").toString() ) * matrix;
+            } else if (xml.name() == "MatrixTransform") {
+                if (useMatrix) {
+                    matrix = attsToMatrix( xml.attributes().value("Matrix").toString() ) * matrix;
+                }
             } else if (xml.name() == "Glyphs") {
                 matrices.push( matrix );
                 glyphsAtts = xml.attributes();
@@ -855,7 +857,7 @@ Okular::TextPage* XpsPage::textPage()
             } else if (xml.name() == "FixedPage")  {
                 // not useful for text extraction
             } else {
-                kDebug(XpsDebug) << "Unhandled element in Text Extraction: " << xml.name().toString() << endl;
+                kDebug(XpsDebug) << "Unhandled element in Text Extraction start: " << xml.name().toString() << endl;
             }
         } else if (xml.isEndElement() ) {
             if (xml.name() == "Canvas") {
@@ -902,7 +904,7 @@ Okular::TextPage* XpsPage::textPage()
             } else if (xml.name() == "FixedPage")  {
                 // not useful for text extraction
             } else {
-                kDebug(XpsDebug) << "Unhandled element in Text Extraction: " << xml.name().toString() << endl;
+                kDebug(XpsDebug) << "Unhandled element in Text Extraction end: " << xml.name().toString() << endl;
             }
         }
     }
@@ -1403,6 +1405,7 @@ bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
             XpsPage *thisPage = m_xpsFile->page(i);
             QString text = thisPage->textPage()->text();
             ts << text;
+            ts << QChar('\n');
         }
         f.close();
 

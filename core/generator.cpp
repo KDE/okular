@@ -149,7 +149,7 @@ void Generator::generatePixmap( PixmapRequest *request )
          * We create the text page for every page that is visible to the
          * user, so he can use the text extraction tools without a delay.
          */
-        if ( !request->page()->hasTextPage() && canGenerateTextPage() ) {
+        if ( hasFeature( TextExtraction ) && !request->page()->hasTextPage() && canGenerateTextPage() ) {
             d->mTextPageReady = false;
             d->createTextPageGenerationThread();
             d->mTextPageGenerationThread->startGeneration( request->page() );

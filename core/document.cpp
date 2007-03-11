@@ -19,7 +19,9 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 
+#include <kaboutdata.h>
 #include <kauthorized.h>
+#include <kcomponentdata.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <klibloader.h>
@@ -87,6 +89,7 @@ struct GeneratorInfo
 
     Generator * generator;
     KLibrary * library;
+    QString appName;
 };
 
 #define foreachObserver( cmd ) {\
@@ -185,6 +188,7 @@ class Document::Private
 
         QHash<QString, GeneratorInfo> m_loadedGenerators;
         Generator * m_generator;
+        QString m_generatorName;
         bool m_generatorsLoaded;
         QVector< Page * > m_pagesVector;
         QVector< VisiblePageRect * > m_pageRects;
@@ -489,6 +493,8 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
     GeneratorInfo info;
     info.generator = generator;
     info.library = lib;
+    if ( generator->componentData() && generator->componentData()->aboutData() )
+        info.appName = QLatin1String( generator->componentData()->aboutData()->appName() );
     m_loadedGenerators.insert( name, info );
     return generator;
 }
@@ -783,17 +789,25 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     QString propName = offers.at(hRank)->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( propName );
+    QString appName;
     if ( genIt != d->m_loadedGenerators.constEnd() )
     {
         d->m_generator = genIt.value().generator;
+        appName = genIt.value().appName;
     }
     else
     {
         d->m_generator = d->loadGeneratorLibrary( propName, offers.at(hRank)->library() );
         if ( !d->m_generator )
             return false;
+        genIt = d->m_loadedGenerators.constFind( propName );
+        Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
+        appName = genIt.value().appName;
     }
     Q_ASSERT_X( d->m_generator, "Document::load()", "null generator?!" );
+
+    if ( !appName.isEmpty() )
+        KGlobal::locale()->insertCatalog( appName );
 
     d->m_generator->setDocument( this );
 
@@ -840,9 +854,14 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QApplication::restoreOverrideCursor();
     if ( !openOk || d->m_pagesVector.size() <= 0 )
     {
+        if ( !appName.isEmpty() )
+            KGlobal::locale()->removeCatalog( appName );
+
         d->m_generator = 0;
         return openOk;
     }
+
+    d->m_generatorName = propName;
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     d->loadDocumentInfo();
@@ -934,8 +953,14 @@ void Document::closeDocument()
         d->m_generator->setDocument( 0 );
         // .. and this document from the generator signals
         disconnect( d->m_generator, 0, this, 0 );
+
+        QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
+        Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
+        if ( !genIt.value().appName.isEmpty() )
+            KGlobal::locale()->removeCatalog( genIt.value().appName );
     }
     d->m_generator = 0;
+    d->m_generatorName = QString();
     d->m_url = KUrl();
     d->m_docFileName = QString();
     d->m_xmlFileName = QString();

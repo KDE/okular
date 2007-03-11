@@ -18,14 +18,66 @@
 #include <stddef.h>
 #include <string.h>
 #include <ctype.h>
-#include "gtypes.h"
+#include <math.h>
+#include "gmem.h"
 #include "GString.h"
+
+//------------------------------------------------------------------------
+
+union GStringFormatArg {
+  int i;
+  Guint ui;
+  long l;
+  Gulong ul;
+  double f;
+  char c;
+  char *s;
+  GString *gs;
+};
+
+enum GStringFormatType {
+  fmtIntDecimal,
+  fmtIntHex,
+  fmtIntOctal,
+  fmtIntBinary,
+  fmtUIntDecimal,
+  fmtUIntHex,
+  fmtUIntOctal,
+  fmtUIntBinary,
+  fmtLongDecimal,
+  fmtLongHex,
+  fmtLongOctal,
+  fmtLongBinary,
+  fmtULongDecimal,
+  fmtULongHex,
+  fmtULongOctal,
+  fmtULongBinary,
+  fmtDouble,
+  fmtDoubleTrim,
+  fmtChar,
+  fmtString,
+  fmtGString,
+  fmtSpace
+};
+
+static char *formatStrings[] = {
+  "d", "x", "o", "b", "ud", "ux", "uo", "ub",
+  "ld", "lx", "lo", "lb", "uld", "ulx", "ulo", "ulb",
+  "f", "g",
+  "c",
+  "s",
+  "t",
+  "w",
+  NULL
+};
+
+//------------------------------------------------------------------------
 
 static inline int size(int len) {
   int delta;
-
-  delta = len < 256 ? 7 : 255;
-  return ((len + 1) + delta) & ~delta;
+  for (delta = 8; delta < len && delta < 0x100000; delta <<= 1) ;
+  // this is ((len + 1) + (delta - 1)) & ~(delta - 1)
+  return (len + delta) & ~(delta - 1);
 }
 
 inline void GString::resize(int length1) {
@@ -92,28 +144,30 @@ GString::GString(GString *str1, GString *str2) {
 
 GString *GString::fromInt(int x) {
   char buf[24]; // enough space for 64-bit ints plus a little extra
-  GBool neg;
-  Guint y;
-  int i;
+  char *p;
+  int len;
 
-  i = 24;
-  if (x == 0) {
-    buf[--i] = '0';
-  } else {
-    if ((neg = x < 0)) {
-      y = (Guint)-x;
-    } else {
-      y = (Guint)x;
-    }
-    while (i > 0 && y > 0) {
-      buf[--i] = '0' + y % 10;
-      y /= 10;
-    }
-    if (neg && i > 0) {
-      buf[--i] = '-';
-    }
-  }
-  return new GString(buf + i, 24 - i);
+  formatInt(x, buf, sizeof(buf), gFalse, 0, 10, &p, &len);
+  return new GString(p, len);
+}
+
+GString *GString::format(char *fmt, ...) {
+  va_list argList;
+  GString *s;
+
+  s = new GString();
+  va_start(argList, fmt);
+  s->appendfv(fmt, argList);
+  va_end(argList);
+  return s;
+}
+
+GString *GString::formatv(char *fmt, va_list argList) {
+  GString *s;
+
+  s = new GString();
+  s->appendfv(fmt, argList);
+  return s;
 }
 
 GString::~GString() {
@@ -157,6 +211,351 @@ GString *GString::append(const char *str, int lengthA) {
   length += lengthA;
   s[length] = '\0';
   return this;
+}
+
+GString *GString::appendf(char *fmt, ...) {
+  va_list argList;
+
+  va_start(argList, fmt);
+  appendfv(fmt, argList);
+  va_end(argList);
+  return this;
+}
+
+GString *GString::appendfv(char *fmt, va_list argList) {
+  GStringFormatArg *args;
+  int argsLen, argsSize;
+  GStringFormatArg arg;
+  int idx, width, prec;
+  GBool reverseAlign, zeroFill;
+  GStringFormatType ft;
+  char buf[65];
+  int len, i;
+  char *p0, *p1, *str;
+
+  argsLen = 0;
+  argsSize = 8;
+  args = (GStringFormatArg *)gmallocn(argsSize, sizeof(GStringFormatArg));
+
+  p0 = fmt;
+  while (*p0) {
+    if (*p0 == '{') {
+      ++p0;
+      if (*p0 == '{') {
+	++p0;
+	append('{');
+      } else {
+
+	// parse the format string
+	if (!(*p0 >= '0' && *p0 <= '9')) {
+	  break;
+	}
+	idx = *p0 - '0';
+	for (++p0; *p0 >= '0' && *p0 <= '9'; ++p0) {
+	  idx = 10 * idx + (*p0 - '0');
+	}
+	if (*p0 != ':') {
+	  break;
+	}
+	++p0;
+	if (*p0 == '-') {
+	  reverseAlign = gTrue;
+	  ++p0;
+	} else {
+	  reverseAlign = gFalse;
+	}
+	width = 0;
+	zeroFill = *p0 == '0';
+	for (; *p0 >= '0' && *p0 <= '9'; ++p0) {
+	  width = 10 * width + (*p0 - '0');
+	}
+	if (*p0 == '.') {
+	  ++p0;
+	  prec = 0;
+	  for (; *p0 >= '0' && *p0 <= '9'; ++p0) {
+	    prec = 10 * prec + (*p0 - '0');
+	  }
+	} else {
+	  prec = 0;
+	}
+	for (ft = (GStringFormatType)0;
+	     formatStrings[ft];
+	     ft = (GStringFormatType)(ft + 1)) {
+	  if (!strncmp(p0, formatStrings[ft], strlen(formatStrings[ft]))) {
+	    break;
+	  }
+	}
+	if (!formatStrings[ft]) {
+	  break;
+	}
+	p0 += strlen(formatStrings[ft]);
+	if (*p0 != '}') {
+	  break;
+	}
+	++p0;
+
+	// fetch the argument
+	if (idx > argsLen) {
+	  break;
+	}
+	if (idx == argsLen) {
+	  if (argsLen == argsSize) {
+	    argsSize *= 2;
+	    args = (GStringFormatArg *)greallocn(args, argsSize,
+						 sizeof(GStringFormatArg));
+	  }
+	  switch (ft) {
+	  case fmtIntDecimal:
+	  case fmtIntHex:
+	  case fmtIntOctal:
+	  case fmtIntBinary:
+	  case fmtSpace:
+	    args[argsLen].i = va_arg(argList, int);
+	    break;
+	  case fmtUIntDecimal:
+	  case fmtUIntHex:
+	  case fmtUIntOctal:
+	  case fmtUIntBinary:
+	    args[argsLen].ui = va_arg(argList, Guint);
+	    break;
+	  case fmtLongDecimal:
+	  case fmtLongHex:
+	  case fmtLongOctal:
+	  case fmtLongBinary:
+	    args[argsLen].l = va_arg(argList, long);
+	    break;
+	  case fmtULongDecimal:
+	  case fmtULongHex:
+	  case fmtULongOctal:
+	  case fmtULongBinary:
+	    args[argsLen].ul = va_arg(argList, Gulong);
+	    break;
+	  case fmtDouble:
+	  case fmtDoubleTrim:
+	    args[argsLen].f = va_arg(argList, double);
+	    break;
+	  case fmtChar:
+	    args[argsLen].c = (char)va_arg(argList, int);
+	    break;
+	  case fmtString:
+	    args[argsLen].s = va_arg(argList, char *);
+	    break;
+	  case fmtGString:
+	    args[argsLen].gs = va_arg(argList, GString *);
+	    break;
+	  }
+	  ++argsLen;
+	}
+
+	// format the argument
+	arg = args[idx];
+	switch (ft) {
+	case fmtIntDecimal:
+	  formatInt(arg.i, buf, sizeof(buf), zeroFill, width, 10, &str, &len);
+	  break;
+	case fmtIntHex:
+	  formatInt(arg.i, buf, sizeof(buf), zeroFill, width, 16, &str, &len);
+	  break;
+	case fmtIntOctal:
+	  formatInt(arg.i, buf, sizeof(buf), zeroFill, width, 8, &str, &len);
+	  break;
+	case fmtIntBinary:
+	  formatInt(arg.i, buf, sizeof(buf), zeroFill, width, 2, &str, &len);
+	  break;
+	case fmtUIntDecimal:
+	  formatUInt(arg.ui, buf, sizeof(buf), zeroFill, width, 10,
+		     &str, &len);
+	  break;
+	case fmtUIntHex:
+	  formatUInt(arg.ui, buf, sizeof(buf), zeroFill, width, 16,
+		     &str, &len);
+	  break;
+	case fmtUIntOctal:
+	  formatUInt(arg.ui, buf, sizeof(buf), zeroFill, width, 8, &str, &len);
+	  break;
+	case fmtUIntBinary:
+	  formatUInt(arg.ui, buf, sizeof(buf), zeroFill, width, 2, &str, &len);
+	  break;
+	case fmtLongDecimal:
+	  formatInt(arg.l, buf, sizeof(buf), zeroFill, width, 10, &str, &len);
+	  break;
+	case fmtLongHex:
+	  formatInt(arg.l, buf, sizeof(buf), zeroFill, width, 16, &str, &len);
+	  break;
+	case fmtLongOctal:
+	  formatInt(arg.l, buf, sizeof(buf), zeroFill, width, 8, &str, &len);
+	  break;
+	case fmtLongBinary:
+	  formatInt(arg.l, buf, sizeof(buf), zeroFill, width, 2, &str, &len);
+	  break;
+	case fmtULongDecimal:
+	  formatUInt(arg.ul, buf, sizeof(buf), zeroFill, width, 10,
+		     &str, &len);
+	  break;
+	case fmtULongHex:
+	  formatUInt(arg.ul, buf, sizeof(buf), zeroFill, width, 16,
+		     &str, &len);
+	  break;
+	case fmtULongOctal:
+	  formatUInt(arg.ul, buf, sizeof(buf), zeroFill, width, 8, &str, &len);
+	  break;
+	case fmtULongBinary:
+	  formatUInt(arg.ul, buf, sizeof(buf), zeroFill, width, 2, &str, &len);
+	  break;
+	case fmtDouble:
+	  formatDouble(arg.f, buf, sizeof(buf), prec, gFalse, &str, &len);
+	  break;
+	case fmtDoubleTrim:
+	  formatDouble(arg.f, buf, sizeof(buf), prec, gTrue, &str, &len);
+	  break;
+	case fmtChar:
+	  buf[0] = arg.c;
+	  str = buf;
+	  len = 1;
+	  reverseAlign = !reverseAlign;
+	  break;
+	case fmtString:
+	  str = arg.s;
+	  len = strlen(str);
+	  reverseAlign = !reverseAlign;
+	  break;
+	case fmtGString:
+	  str = arg.gs->getCString();
+	  len = arg.gs->getLength();
+	  reverseAlign = !reverseAlign;
+	  break;
+	case fmtSpace:
+	  str = buf;
+	  len = 0;
+	  width = arg.i;
+	  break;
+	}
+
+	// append the formatted arg, handling width and alignment
+	if (!reverseAlign && len < width) {
+	  for (i = len; i < width; ++i) {
+	    append(' ');
+	  }
+	}
+	append(str, len);
+	if (reverseAlign && len < width) {
+	  for (i = len; i < width; ++i) {
+	    append(' ');
+	  }
+	}
+      }
+
+    } else if (*p0 == '}') {
+      ++p0;
+      if (*p0 == '}') {
+	++p0;
+      }
+      append('}');
+      
+    } else {
+      for (p1 = p0 + 1; *p1 && *p1 != '{' && *p1 != '}'; ++p1) ;
+      append(p0, p1 - p0);
+      p0 = p1;
+    }
+  }
+
+  gfree(args);
+  return this;
+}
+
+void GString::formatInt(long x, char *buf, int bufSize,
+			GBool zeroFill, int width, int base,
+			char **p, int *len) {
+  static char vals[17] = "0123456789abcdef";
+  GBool neg;
+  int start, i, j;
+
+  i = bufSize;
+  if ((neg = x < 0)) {
+    x = -x;
+  }
+  start = neg ? 1 : 0;
+  if (x == 0) {
+    buf[--i] = '0';
+  } else {
+    while (i > start && x) {
+      buf[--i] = vals[x % base];
+      x /= base;
+    }
+  }
+  if (zeroFill) {
+    for (j = bufSize - i; i > start && j < width - start; ++j) {
+      buf[--i] = '0';
+    }
+  }
+  if (neg) {
+    buf[--i] = '-';
+  }
+  *p = buf + i;
+  *len = bufSize - i;
+}
+
+void GString::formatUInt(Gulong x, char *buf, int bufSize,
+			 GBool zeroFill, int width, int base,
+			 char **p, int *len) {
+  static char vals[17] = "0123456789abcdef";
+  int i, j;
+
+  i = bufSize;
+  if (x == 0) {
+    buf[--i] = '0';
+  } else {
+    while (i > 0 && x) {
+      buf[--i] = vals[x % base];
+      x /= base;
+    }
+  }
+  if (zeroFill) {
+    for (j = bufSize - i; i > 0 && j < width; ++j) {
+      buf[--i] = '0';
+    }
+  }
+  *p = buf + i;
+  *len = bufSize - i;
+}
+
+void GString::formatDouble(double x, char *buf, int bufSize, int prec,
+			   GBool trim, char **p, int *len) {
+  GBool neg, started;
+  double x2;
+  int d, i, j;
+
+  if ((neg = x < 0)) {
+    x = -x;
+  }
+  x = floor(x * pow(10, prec) + 0.5);
+  i = bufSize;
+  started = !trim;
+  for (j = 0; j < prec && i > 1; ++j) {
+    x2 = floor(0.1 * (x + 0.5));
+    d = (int)floor(x - 10 * x2 + 0.5);
+    if (started || d != 0) {
+      buf[--i] = '0' + d;
+      started = gTrue;
+    }
+    x = x2;
+  }
+  if (i > 1 && started) {
+    buf[--i] = '.';
+  }
+  if (i > 1) {
+    do {
+      x2 = floor(0.1 * (x + 0.5));
+      d = (int)floor(x - 10 * x2 + 0.5);
+      buf[--i] = '0' + d;
+      x = x2;
+    } while (i > 1 && x);
+  }
+  if (neg) {
+    buf[--i] = '-';
+  }
+  *p = buf + i;
+  *len = bufSize - i;
 }
 
 GString *GString::insert(int i, char c) {

@@ -62,29 +62,4 @@ private:
   SplashColor color;
 };
 
-//------------------------------------------------------------------------
-// SplashHalftone
-//------------------------------------------------------------------------
-
-class SplashHalftone: public SplashPattern {
-public:
-
-  SplashHalftone(SplashColorPtr color0A, SplashColorPtr color1A,
-		 SplashScreen *screenA, SplashCoord valueA);
-
-  virtual SplashPattern *copy();
-
-  virtual ~SplashHalftone();
-
-  virtual void getColor(int x, int y, SplashColorPtr c);
-
-  virtual GBool isStatic();
-
-private:
-
-  SplashColor color0, color1;
-  SplashScreen *screen;
-  SplashCoord value;
-};
-
 #endif

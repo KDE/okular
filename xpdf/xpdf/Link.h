@@ -18,7 +18,6 @@
 #include "Object.h"
 
 class GString;
-class UGString;
 class Array;
 class Dict;
 
@@ -137,13 +136,13 @@ public:
   // Accessors.
   virtual LinkActionKind getKind() { return actionGoTo; }
   LinkDest *getDest() { return dest; }
-  UGString *getNamedDest() { return namedDest; }
+  GString *getNamedDest() { return namedDest; }
 
 private:
 
   LinkDest *dest;		// regular destination (NULL for remote
 				//   link with bad destination)
-  UGString *namedDest;		// named destination (only one of dest and
+  GString *namedDest;		// named destination (only one of dest and
 				//   and namedDest may be non-NULL)
 };
 
@@ -168,14 +167,14 @@ public:
   virtual LinkActionKind getKind() { return actionGoToR; }
   GString *getFileName() { return fileName; }
   LinkDest *getDest() { return dest; }
-  UGString *getNamedDest() { return namedDest; }
+  GString *getNamedDest() { return namedDest; }
 
 private:
 
   GString *fileName;		// file name
   LinkDest *dest;		// regular destination (NULL for remote
 				//   link with bad destination)
-  UGString *namedDest;		// named destination (only one of dest and
+  GString *namedDest;		// named destination (only one of dest and
 				//   and namedDest may be non-NULL)
 };
 
@@ -285,7 +284,7 @@ class LinkUnknown: public LinkAction {
 public:
 
   // Build a LinkUnknown with the specified action type.
-  LinkUnknown(const char *actionA);
+  LinkUnknown(char *actionA);
 
   // Destructor.
   virtual ~LinkUnknown();
@@ -300,42 +299,6 @@ public:
 private:
 
   GString *action;		// action subtype
-};
-
-//------------------------------------------------------------------------
-// LinkBorderStyle
-//------------------------------------------------------------------------
-
-enum LinkBorderType {
-  linkBorderSolid,
-  linkBorderDashed,
-  linkBorderEmbossed,
-  linkBorderEngraved,
-  linkBorderUnderlined
-};
-
-class LinkBorderStyle {
-public:
-
-  LinkBorderStyle(LinkBorderType typeA, double widthA,
-		  double *dashA, int dashLengthA,
-		  double rA, double gA, double bA);
-  ~LinkBorderStyle();
-
-  LinkBorderType getType() { return type; }
-  double getWidth() { return width; }
-  void getDash(double **dashA, int *dashLengthA)
-    { *dashA = dash; *dashLengthA = dashLength; }
-  void getColor(double *rA, double *gA, double *bA)
-    { *rA = r; *gA = g; *bA = b; }
-
-private:
-
-  LinkBorderType type;
-  double width;
-  double *dash;
-  int dashLength;
-  double r, g, b;
 };
 
 //------------------------------------------------------------------------
@@ -365,14 +328,10 @@ public:
   void getRect(double *xa1, double *ya1, double *xa2, double *ya2)
     { *xa1 = x1; *ya1 = y1; *xa2 = x2; *ya2 = y2; }
 
-  // Get the border style info.
-  LinkBorderStyle *getBorderStyle() { return borderStyle; }
-
 private:
 
   double x1, y1;		// lower left corner
   double x2, y2;		// upper right corner
-  LinkBorderStyle *borderStyle;	// border style
   LinkAction *action;		// action
   GBool ok;			// is link valid?
 };

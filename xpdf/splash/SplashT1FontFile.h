@@ -28,25 +28,26 @@ public:
 
   static SplashFontFile *loadType1Font(SplashT1FontEngine *engineA,
 				       SplashFontFileID *idA,
-				       SplashFontSrc *src,
-				       const char **encA);
+				       char *fileNameA,
+				       char **encA);
 
   virtual ~SplashT1FontFile();
 
   // Create a new SplashT1Font, i.e., a scaled instance of this font
   // file.
-  virtual SplashFont *makeFont(SplashCoord *mat);
+  virtual SplashFont *makeFont(SplashCoord *mat,
+			       SplashCoord *textMat);
 
 private:
 
   SplashT1FontFile(SplashT1FontEngine *engineA,
 		   SplashFontFileID *idA,
-		   SplashFontSrc *src,
-		   int t1libIDA, const char **encA, char *encStrA);
+		   char *fileNameA,
+		   int t1libIDA, char **encA, char *encStrA);
 
   SplashT1FontEngine *engine;
   int t1libID;			// t1lib font ID
-  const char **enc;
+  char **enc;
   char *encStr;
 
   friend class SplashT1Font;

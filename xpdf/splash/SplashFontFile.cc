@@ -14,10 +14,10 @@
 #ifndef WIN32
 #  include <unistd.h>
 #endif
+#include "gmem.h"
 #include "GString.h"
 #include "SplashFontFile.h"
 #include "SplashFontFileID.h"
-#include "gmem.h"
 
 #ifdef VMS
 #if (__VMS_VER < 70000000)
@@ -106,4 +106,3 @@ void SplashFontSrc::setBuf(char *bufA, int bufLenA, GBool del)
   bufLen = bufLenA;
   deleteSrc = del;
 }
-

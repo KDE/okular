@@ -25,7 +25,6 @@ class XRef;
 class Array;
 class Dict;
 class Stream;
-class UGString;
 
 //------------------------------------------------------------------------
 // Ref
@@ -90,7 +89,7 @@ public:
     { initObj(objReal); real = realA; return this; }
   Object *initString(GString *stringA)
     { initObj(objString); string = stringA; return this; }
-  Object *initName(const char *nameA)
+  Object *initName(char *nameA)
     { initObj(objName); name = copyString(nameA); return this; }
   Object *initNull()
     { initObj(objNull); return this; }
@@ -100,7 +99,7 @@ public:
   Object *initStream(Stream *streamA);
   Object *initRef(int numA, int genA)
     { initObj(objRef); ref.num = numA; ref.gen = genA; return this; }
-  Object *initCmd(const char *cmdA)
+  Object *initCmd(char *cmdA)
     { initObj(objCmd); cmd = copyString(cmdA); return this; }
   Object *initError()
     { initObj(objError); return this; }
@@ -136,11 +135,11 @@ public:
   GBool isNone() { return type == objNone; }
 
   // Special type checking.
-  GBool isName(const char *nameA)
+  GBool isName(char *nameA)
     { return type == objName && !strcmp(name, nameA); }
-  GBool isDict(const char *dictType);
+  GBool isDict(char *dictType);
   GBool isStream(char *dictType);
-  GBool isCmd(const char *cmdA)
+  GBool isCmd(char *cmdA)
     { return type == objCmd && !strcmp(cmd, cmdA); }
 
   // Accessors.  NB: these assume object is of correct type.
@@ -149,14 +148,14 @@ public:
   double getReal() { return real; }
   double getNum() { return type == objInt ? (double)intg : real; }
   GString *getString() { return string; }
-  const char *getName() { return name; }
+  char *getName() { return name; }
   Array *getArray() { return array; }
   Dict *getDict() { return dict; }
   Stream *getStream() { return stream; }
   Ref getRef() { return ref; }
   int getRefNum() { return ref.num; }
   int getRefGen() { return ref.gen; }
-  const char *getCmd() { return cmd; }
+  char *getCmd() { return cmd; }
 
   // Array accessors.
   int arrayGetLength();
@@ -166,11 +165,11 @@ public:
 
   // Dict accessors.
   int dictGetLength();
-  void dictAdd(const UGString &key, Object *val);
-  GBool dictIs(const char *dictType);
-  Object *dictLookup(const UGString &key, Object *obj);
-  Object *dictLookupNF(const UGString &key, Object *obj);
-  UGString *dictGetKey(int i);
+  void dictAdd(char *key, Object *val);
+  GBool dictIs(char *dictType);
+  Object *dictLookup(char *key, Object *obj);
+  Object *dictLookupNF(char *key, Object *obj);
+  char *dictGetKey(int i);
   Object *dictGetVal(int i, Object *obj);
   Object *dictGetValNF(int i, Object *obj);
 
@@ -186,7 +185,7 @@ public:
   Dict *streamGetDict();
 
   // Output.
-  const char *getTypeName();
+  char *getTypeName();
   void print(FILE *f = stdout);
 
   // Memory testing.
@@ -200,12 +199,12 @@ private:
     int intg;			//   integer
     double real;		//   real
     GString *string;		//   string
-    const char *name;		//   name
+    char *name;			//   name
     Array *array;		//   array
     Dict *dict;			//   dictionary
     Stream *stream;		//   stream
     Ref ref;			//   indirect reference
-    const char *cmd;		//   command
+    char *cmd;			//   command
   };
 
 #ifdef DEBUG_MEM
@@ -241,22 +240,22 @@ inline Object *Object::arrayGetNF(int i, Object *obj)
 inline int Object::dictGetLength()
   { return dict->getLength(); }
 
-inline void Object::dictAdd(const UGString &key, Object *val)
+inline void Object::dictAdd(char *key, Object *val)
   { dict->add(key, val); }
 
-inline GBool Object::dictIs(const char *dictType)
+inline GBool Object::dictIs(char *dictType)
   { return dict->is(dictType); }
 
-inline GBool Object::isDict(const char *dictType)
+inline GBool Object::isDict(char *dictType)
   { return type == objDict && dictIs(dictType); }
 
-inline Object *Object::dictLookup(const UGString &key, Object *obj)
+inline Object *Object::dictLookup(char *key, Object *obj)
   { return dict->lookup(key, obj); }
 
-inline Object *Object::dictLookupNF(const UGString &key, Object *obj)
+inline Object *Object::dictLookupNF(char *key, Object *obj)
   { return dict->lookupNF(key, obj); }
 
-inline UGString *Object::dictGetKey(int i)
+inline char *Object::dictGetKey(int i)
   { return dict->getKey(i); }
 
 inline Object *Object::dictGetVal(int i, Object *obj)

@@ -97,8 +97,8 @@ inline Guint JArithmeticDecoder::readByte() {
   if (limitStream) {
     --dataLen;
     if (dataLen < 0) {
-    return 0xff;
-  }
+      return 0xff;
+    }
   }
   return (Guint)str->getChar() & 0xff;
 }

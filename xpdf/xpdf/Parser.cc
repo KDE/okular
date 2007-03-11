@@ -16,16 +16,16 @@
 #include "Object.h"
 #include "Array.h"
 #include "Dict.h"
+#include "Decrypt.h"
 #include "Parser.h"
 #include "XRef.h"
 #include "Error.h"
-#include "Decrypt.h"
-#include "UGString.h"
 
-Parser::Parser(XRef *xrefA, Lexer *lexerA) {
+Parser::Parser(XRef *xrefA, Lexer *lexerA, GBool allowStreamsA) {
   xref = xrefA;
   lexer = lexerA;
   inlineImg = 0;
+  allowStreams = allowStreamsA;
   lexer->getObj(&buf1);
   lexer->getObj(&buf2);
 }
@@ -36,17 +36,16 @@ Parser::~Parser() {
   delete lexer;
 }
 
-Object *Parser::getObj(Object *obj,
-		       Guchar *fileKey, int keyLength,
+Object *Parser::getObj(Object *obj, Guchar *fileKey,
+		       CryptAlgorithm encAlgorithm, int keyLength,
 		       int objNum, int objGen) {
-  const char *key;
+  char *key;
   Stream *str;
   Object obj2;
   int num;
-  Decrypt *decrypt;
-  GString *s;
-  char *p;
-  int i;
+  DecryptStream *decrypt;
+  GString *s, *s2;
+  int c;
 
   // refill buffer after inline image data
   if (inlineImg == 2) {
@@ -62,7 +61,8 @@ Object *Parser::getObj(Object *obj,
     shift();
     obj->initArray(xref);
     while (!buf1.isCmd("]") && !buf1.isEOF())
-      obj->arrayAdd(getObj(&obj2, fileKey, keyLength, objNum, objGen));
+      obj->arrayAdd(getObj(&obj2, fileKey, encAlgorithm, keyLength,
+			   objNum, objGen));
     if (buf1.isEOF())
       error(getPos(), "End of file inside array");
     shift();
@@ -76,26 +76,24 @@ Object *Parser::getObj(Object *obj,
 	error(getPos(), "Dictionary key must be a name object");
 	shift();
       } else {
-	// this copyString is necessary if not the shift changes the value of key
 	key = copyString(buf1.getName());
 	shift();
 	if (buf1.isEOF() || buf1.isError()) {
-	  gfree((void*)key);
+	  gfree(key);
 	  break;
 	}
-	obj->dictAdd(key, getObj(&obj2, fileKey, keyLength, objNum, objGen));
-	gfree((void*)key);
+	obj->dictAdd(key, getObj(&obj2, fileKey, encAlgorithm, keyLength,
+				 objNum, objGen));
       }
     }
     if (buf1.isEOF())
       error(getPos(), "End of file inside dictionary");
-    if (buf2.isCmd("stream")) {
-      if ((str = makeStream(obj))) {
+    // stream objects are not allowed inside content streams or
+    // object streams
+    if (allowStreams && buf2.isCmd("stream")) {
+      if ((str = makeStream(obj, fileKey, encAlgorithm, keyLength,
+			    objNum, objGen))) {
 	obj->initStream(str);
-	if (fileKey) {
-	  str->getBaseStream()->doDecryption(fileKey, keyLength,
-					     objNum, objGen);
-	}
       } else {
 	obj->free();
 	obj->initError();
@@ -118,15 +116,19 @@ Object *Parser::getObj(Object *obj,
 
   // string
   } else if (buf1.isString() && fileKey) {
-    buf1.copy(obj);
-    s = obj->getString();
-    decrypt = new Decrypt(fileKey, keyLength, objNum, objGen);
-    for (i = 0, p = obj->getString()->getCString();
-	 i < s->getLength();
-	 ++i, ++p) {
-      *p = decrypt->decryptByte(*p);
+    s = buf1.getString();
+    s2 = new GString();
+    obj2.initNull();
+    decrypt = new DecryptStream(new MemStream(s->getCString(), 0,
+					      s->getLength(), &obj2),
+				fileKey, encAlgorithm, keyLength,
+				objNum, objGen);
+    decrypt->reset();
+    while ((c = decrypt->getChar()) != EOF) {
+      s2->append((char)c);
     }
     delete decrypt;
+    obj->initString(s2);
     shift();
 
   // simple object
@@ -138,7 +140,9 @@ Object *Parser::getObj(Object *obj,
   return obj;
 }
 
-Stream *Parser::makeStream(Object *dict) {
+Stream *Parser::makeStream(Object *dict, Guchar *fileKey,
+			   CryptAlgorithm encAlgorithm, int keyLength,
+			   int objNum, int objGen) {
   Object obj;
   BaseStream *baseStr;
   Stream *str;
@@ -188,6 +192,12 @@ Stream *Parser::makeStream(Object *dict) {
 
   // make base stream
   str = baseStr->makeSubStream(pos, gTrue, length, dict);
+
+  // handle decryption
+  if (fileKey) {
+    str = new DecryptStream(str, fileKey, encAlgorithm, keyLength,
+			    objNum, objGen);
+  }
 
   // get filters
   str = str->addFilters(dict);

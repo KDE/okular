@@ -35,12 +35,16 @@ enum GfxFontType {
   fontUnknownType,
   fontType1,
   fontType1C,
+  fontType1COT,
   fontType3,
   fontTrueType,
+  fontTrueTypeOT,
   //----- GfxCIDFont
   fontCIDType0,
   fontCIDType0C,
-  fontCIDType2
+  fontCIDType0COT,
+  fontCIDType2,
+  fontCIDType2OT
 };
 
 //------------------------------------------------------------------------
@@ -85,9 +89,9 @@ class GfxFont {
 public:
 
   // Build a GfxFont object.
-  static GfxFont *makeFont(XRef *xref, const char *tagA, Ref idA, Dict *fontDict);
+  static GfxFont *makeFont(XRef *xref, char *tagA, Ref idA, Dict *fontDict);
 
-  GfxFont(const char *tagA, Ref idA, GString *nameA);
+  GfxFont(char *tagA, Ref idA, GString *nameA);
 
   virtual ~GfxFont();
 
@@ -100,7 +104,7 @@ public:
   Ref *getID() { return &id; }
 
   // Does this font match the tag?
-  GBool matches(const char *tagA) { return !tag->cmp(tagA); }
+  GBool matches(char *tagA) { return !tag->cmp(tagA); }
 
   // Get base font name.
   GString *getName() { return name; }
@@ -127,6 +131,7 @@ public:
   GString *getExtFontFile() { return extFontFile; }
 
   // Get font descriptor flags.
+  int getFlags() { return flags; }
   GBool isFixedWidth() { return flags & fontFixedWidth; }
   GBool isSerif() { return flags & fontSerif; }
   GBool isSymbolic() { return flags & fontSymbolic; }
@@ -191,7 +196,7 @@ protected:
 class Gfx8BitFont: public GfxFont {
 public:
 
-  Gfx8BitFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
+  Gfx8BitFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	      GfxFontType typeA, Dict *fontDict);
 
   virtual ~Gfx8BitFont();
@@ -201,13 +206,13 @@ public:
 			  double *dx, double *dy, double *ox, double *oy);
 
   // Return the encoding.
-  const char **getEncoding() { return enc; }
+  char **getEncoding() { return enc; }
 
   // Return the Unicode map.
   CharCodeToUnicode *getToUnicode();
 
   // Return the character name associated with <code>.
-  const char *getCharName(int code) { return enc[code]; }
+  char *getCharName(int code) { return enc[code]; }
 
   // Returns true if the PDF font specified an encoding.
   GBool getHasEncoding() { return hasEncoding; }
@@ -233,7 +238,7 @@ public:
 
 private:
 
-  const char *enc[256];		// char code --> char name
+  char *enc[256];		// char code --> char name
   char encFree[256];		// boolean for each char name: if set,
 				//   the string is malloc'ed
   CharCodeToUnicode *ctu;	// char code --> Unicode
@@ -251,7 +256,7 @@ private:
 class GfxCIDFont: public GfxFont {
 public:
 
-  GfxCIDFont(XRef *xref, const char *tagA, Ref idA, GString *nameA,
+  GfxCIDFont(XRef *xref, char *tagA, Ref idA, GString *nameA,
 	     Dict *fontDict);
 
   virtual ~GfxCIDFont();
@@ -302,7 +307,7 @@ public:
   ~GfxFontDict();
 
   // Get the specified font.
-  GfxFont *lookup(const char *tag);
+  GfxFont *lookup(char *tag);
 
   // Iterative access.
   int getNumFonts() { return numFonts; }

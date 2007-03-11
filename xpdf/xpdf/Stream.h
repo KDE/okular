@@ -19,7 +19,6 @@
 #include "gtypes.h"
 #include "Object.h"
 
-class Decrypt;
 class BaseStream;
 
 //------------------------------------------------------------------------
@@ -43,6 +42,15 @@ enum StreamColorSpaceMode {
   streamCSDeviceGray,
   streamCSDeviceRGB,
   streamCSDeviceCMYK
+};
+
+//------------------------------------------------------------------------
+
+// This is in Stream.h instead of Decrypt.h to avoid really annoying
+// include file dependency loops.
+enum CryptAlgorithm {
+  cryptRC4,
+  cryptAES
 };
 
 //------------------------------------------------------------------------
@@ -93,13 +101,17 @@ public:
   virtual void setPos(Guint pos, int dir = 0) = 0;
 
   // Get PostScript command for the filter(s).
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
 
   // Does this stream type potentially contain non-printable chars?
   virtual GBool isBinary(GBool last = gTrue) = 0;
 
   // Get the BaseStream of this stream.
   virtual BaseStream *getBaseStream() = 0;
+
+  // Get the stream after the last decoder (this may be a BaseStream
+  // or a DecryptStream).
+  virtual Stream *getUndecodedStream() = 0;
 
   // Get the dictionary associated with this stream.
   virtual Dict *getDict() = 0;
@@ -108,8 +120,11 @@ public:
   virtual GBool isEncoder() { return gFalse; }
 
   // Get image parameters which are defined by the stream contents.
-  virtual void getImageParams(int */*bitsPerComponent*/,
-			      StreamColorSpaceMode */*csMode*/) {}
+  virtual void getImageParams(int * /*bitsPerComponent*/,
+			      StreamColorSpaceMode * /*csMode*/) {}
+
+  // Return the next stream in the "stack".
+  virtual Stream *getNextStream() { return NULL; }
 
   // Add filters to this stream according to the parameters in <dict>.
   // Returns the new stream.
@@ -117,7 +132,7 @@ public:
 
 private:
 
-  Stream *makeFilter(const char *name, Stream *str, Object *params);
+  Stream *makeFilter(char *name, Stream *str, Object *params);
 
   int ref;			// reference count
 };
@@ -138,19 +153,13 @@ public:
   virtual void setPos(Guint pos, int dir = 0) = 0;
   virtual GBool isBinary(GBool last = gTrue) { return last; }
   virtual BaseStream *getBaseStream() { return this; }
+  virtual Stream *getUndecodedStream() { return this; }
   virtual Dict *getDict() { return dict.getDict(); }
+  virtual GString *getFileName() { return NULL; }
 
   // Get/set position of first byte of stream within the file.
   virtual Guint getStart() = 0;
   virtual void moveStart(int delta) = 0;
-
-  // Set decryption for this stream.
-  virtual void doDecryption(Guchar *fileKey, int keyLength,
-			    int objNum, int objGen);
-
-protected:
-
-  Decrypt *decrypt;
 
 private:
 
@@ -172,7 +181,9 @@ public:
   virtual int getPos() { return str->getPos(); }
   virtual void setPos(Guint pos, int dir = 0);
   virtual BaseStream *getBaseStream() { return str->getBaseStream(); }
+  virtual Stream *getUndecodedStream() { return str->getUndecodedStream(); }
   virtual Dict *getDict() { return str->getDict(); }
+  virtual Stream *getNextStream() { return str; }
 
 protected:
 
@@ -318,8 +329,6 @@ public:
   virtual void setPos(Guint pos, int dir = 0);
   virtual Guint getStart() { return start; }
   virtual void moveStart(int delta);
-  virtual void doDecryption(Guchar *fileKey, int keyLength,
-			    int objNum, int objGen);
 
 private:
 
@@ -378,7 +387,7 @@ public:
   virtual int getChar()
     { int c = lookChar(); buf = EOF; return c; }
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -401,7 +410,7 @@ public:
   virtual int getChar()
     { int ch = lookChar(); ++index; return ch; }
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -427,7 +436,7 @@ public:
   virtual int getChar();
   virtual int lookChar();
   virtual int getRawChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -471,7 +480,7 @@ public:
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr++ & 0xff); }
   virtual int lookChar()
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr & 0xff); }
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -502,7 +511,7 @@ public:
   virtual int getChar()
     { int c = lookChar(); buf = EOF; return c; }
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -532,9 +541,6 @@ private:
   short lookBits(int n);
   void eatBits(int n) { if ((inputBits -= n) < 0) inputBits = 0; }
 };
-
-
-#if 0
 
 //------------------------------------------------------------------------
 // DCTStream
@@ -569,13 +575,14 @@ struct DCTHuffTable {
 class DCTStream: public FilterStream {
 public:
 
-  DCTStream(Stream *strA);
+  DCTStream(Stream *strA, int colorXformA);
   virtual ~DCTStream();
   virtual StreamKind getKind() { return strDCT; }
   virtual void reset();
+  virtual void close();
   virtual int getChar();
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
   Stream *getRawStream() { return str; }
 
@@ -589,7 +596,9 @@ private:
   DCTCompInfo compInfo[4];	// info for each component
   DCTScanInfo scanInfo;		// info for the current scan
   int numComps;			// number of components in image
-  int colorXform;		// need YCbCr-to-RGB transform?
+  int colorXform;		// color transform: -1 = unspecified
+				//                   0 = none
+				//                   1 = YUV/YUVK -> RGB/CMYK
   GBool gotJFIFMarker;		// set if APP0 JFIF marker was present
   GBool gotAdobeMarker;		// set if APP14 Adobe marker was present
   int restartInterval;		// restart interval, in MCUs
@@ -636,7 +645,6 @@ private:
   int readMarker();
   int read16();
 };
-#endif
 
 //------------------------------------------------------------------------
 // FlateStream
@@ -677,7 +685,7 @@ public:
   virtual int getChar();
   virtual int lookChar();
   virtual int getRawChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
@@ -730,8 +738,8 @@ public:
   virtual void reset() {}
   virtual int getChar() { return EOF; }
   virtual int lookChar() { return EOF; }
-  virtual GString *getPSFilter(int /*psLevel*/, const char */*indent*/)  { return NULL; }
-  virtual GBool isBinary(GBool /*last = gTrue*/) { return gFalse; }
+  virtual GString *getPSFilter(int /*psLevel*/, char * /*indent*/)  { return NULL; }
+  virtual GBool isBinary(GBool /*last*/ = gTrue) { return gFalse; }
 };
 
 //------------------------------------------------------------------------
@@ -747,7 +755,7 @@ public:
   virtual void reset();
   virtual int getChar();
   virtual int lookChar();
-  virtual GString *getPSFilter(int /*psLevel*/, const char */*indent*/) { return NULL; }
+  virtual GString *getPSFilter(int /*psLevel*/, char * /*indent*/) { return NULL; }
   virtual GBool isBinary(GBool last = gTrue);
   virtual GBool isEncoder() { return gTrue; }
 
@@ -772,8 +780,8 @@ public:
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr++ & 0xff); }
   virtual int lookChar()
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr & 0xff); }
-  virtual GString *getPSFilter(int /*psLevel*/, const char */*indent*/) { return NULL; }
-  virtual GBool isBinary(GBool /*last = gTrue*/) { return gFalse; }
+  virtual GString *getPSFilter(int /*psLevel*/, char * /*indent*/) { return NULL; }
+  virtual GBool isBinary(GBool /*last*/ = gTrue) { return gFalse; }
   virtual GBool isEncoder() { return gTrue; }
 
 private:
@@ -802,8 +810,8 @@ public:
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr++ & 0xff); }
   virtual int lookChar()
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr & 0xff); }
-  virtual GString *getPSFilter(int /*psLevel*/, const char */*indent*/) { return NULL; }
-  virtual GBool isBinary(GBool /*last = gTrue*/) { return gFalse; }
+  virtual GString *getPSFilter(int /*psLevel*/, char * /*indent*/) { return NULL; }
+  virtual GBool isBinary(GBool /*last*/ = gTrue) { return gFalse; }
   virtual GBool isEncoder() { return gTrue; }
 
 private:
@@ -832,8 +840,8 @@ public:
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr++ & 0xff); }
   virtual int lookChar()
     { return (bufPtr >= bufEnd && !fillBuf()) ? EOF : (*bufPtr & 0xff); }
-  virtual GString *getPSFilter(int /*psLevel*/, const char */*indent*/) { return NULL; }
-  virtual GBool isBinary(GBool /*last = gTrue*/) { return gTrue; }
+  virtual GString *getPSFilter(int /*psLevel*/, char * /*indent*/) { return NULL; }
+  virtual GBool isBinary(GBool /*last*/ = gTrue) { return gTrue; }
   virtual GBool isEncoder() { return gTrue; }
 
 private:

@@ -9,6 +9,9 @@
 #define OPI_SUPPORT 0
 #define TEXTOUT_WORD_LIST 0
 #define HAVE_MKSTEMPS 1 //libkdefakes provides it
-#define SPLASH_CMYK 0
+#define HAVE_SPLASH 1
+#define SPLASH_CMYK 1
 #define HAVE_XPDFCORE 0
 #define HAVE_WINPDFCORE 0
+#define USE_EXCEPTIONS 0
+#define USE_FIXEDPOINT 0

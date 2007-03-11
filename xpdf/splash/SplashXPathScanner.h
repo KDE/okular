@@ -16,6 +16,7 @@
 #include "SplashTypes.h"
 
 class SplashXPath;
+class SplashBitmap;
 struct SplashIntersect;
 
 //------------------------------------------------------------------------
@@ -34,6 +35,9 @@ public:
   void getBBox(int *xMinA, int *yMinA, int *xMaxA, int *yMaxA)
     { *xMinA = xMin; *yMinA = yMin; *xMaxA = xMax; *yMaxA = yMax; }
 
+  // Return the path's bounding box.
+  void getBBoxAA(int *xMinA, int *yMinA, int *xMaxA, int *yMaxA);
+
   // Return the min/max x values for the span at <y>.
   void getSpanBounds(int y, int *spanXMin, int *spanXMax);
 
@@ -50,6 +54,15 @@ public:
   // to the previous call to getNextSpan).  Returns false if there are
   // no more spans at <y>.
   GBool getNextSpan(int y, int *x0, int *x1);
+
+  // Renders one anti-aliased line into <aaBuf>.  Returns the min and
+  // max x coordinates with non-zero pixels in <x0> and <x1>.
+  void renderAALine(SplashBitmap *aaBuf, int *x0, int *x1, int y);
+
+  // Clips an anti-aliased line by setting pixels to zero.  On entry,
+  // all non-zero pixels are between <x0> and <x1>.  This function
+  // will update <x0> and <x1>.
+  void clipAALine(SplashBitmap *aaBuf, int *x0, int *x1, int y);
 
 private:
 

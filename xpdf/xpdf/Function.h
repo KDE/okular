@@ -27,8 +27,9 @@ class PSStack;
 // Function
 //------------------------------------------------------------------------
 
-#define funcMaxInputs   8
-#define funcMaxOutputs 32
+#define funcMaxInputs        32
+#define funcMaxOutputs       32
+#define sampledFuncMaxInputs 16
 
 class Function {
 public:
@@ -131,6 +132,7 @@ private:
   int idxMul[funcMaxInputs];	// sample array index multipliers
   double *samples;		// the samples
   int nSamples;			// size of the samples array
+  double *sBuf;			// buffer for the transform function
   GBool ok;
 };
 
@@ -180,6 +182,7 @@ public:
   Function *getFunc(int i) { return funcs[i]; }
   double *getBounds() { return bounds; }
   double *getEncode() { return encode; }
+  double *getScale() { return scale; }
 
 private:
 
@@ -189,6 +192,7 @@ private:
   Function **funcs;
   double *bounds;
   double *encode;
+  double *scale;
   GBool ok;
 };
 

@@ -31,6 +31,7 @@ class SplashFont;
 class T3FontCache;
 struct T3FontCacheTag;
 struct T3GlyphStack;
+struct SplashTransparencyGroup;
 
 //------------------------------------------------------------------------
 
@@ -74,9 +75,6 @@ public:
   // End a page.
   virtual void endPage();
 
-  //----- link borders
-  virtual void drawLink(Link *link, Catalog *catalog);
-
   //----- save/restore graphics state
   virtual void saveState(GfxState *state);
   virtual void restoreState(GfxState *state);
@@ -91,6 +89,7 @@ public:
   virtual void updateLineCap(GfxState *state);
   virtual void updateMiterLimit(GfxState *state);
   virtual void updateLineWidth(GfxState *state);
+  virtual void updateStrokeAdjust(GfxState *state);
   virtual void updateFillColor(GfxState *state);
   virtual void updateStrokeColor(GfxState *state);
   virtual void updateBlendMode(GfxState *state);
@@ -108,6 +107,7 @@ public:
   //----- path clipping
   virtual void clip(GfxState *state);
   virtual void eoClip(GfxState *state);
+  virtual void clipToStrokePath(GfxState *state);
 
   //----- text drawing
   virtual void drawChar(GfxState *state, double x, double y,
@@ -144,6 +144,17 @@ public:
   virtual void type3D1(GfxState *state, double wx, double wy,
 		       double llx, double lly, double urx, double ury);
 
+  //----- transparency groups and soft masks
+  virtual void beginTransparencyGroup(GfxState *state, double *bbox,
+				      GfxColorSpace *blendingColorSpace,
+				      GBool isolated, GBool knockout,
+				      GBool forSoftMask);
+  virtual void endTransparencyGroup(GfxState *state);
+  virtual void paintTransparencyGroup(GfxState *state, double *bbox);
+  virtual void setSoftMask(GfxState *state, double *bbox, GBool alpha,
+			   Function *transferFunc, GfxColor *backdropColor);
+  virtual void clearSoftMask(GfxState *state);
+
   //----- special access
 
   // Called to indicate that a new PDF document has been loaded.
@@ -176,32 +187,43 @@ public:
   void setFillColor(int r, int g, int b);
 
   // Get a font object for a Base-14 font, using the Latin-1 encoding.
-  SplashFont *getFont(GString *name, double *mat);
+  SplashFont *getFont(GString *name, double *textMatA);
 
   SplashFont *getCurrentFont() { return font; }
 
+#if 1 //~tmp: turn off anti-aliasing temporarily
+  virtual GBool getVectorAntialias();
+  virtual void setVectorAntialias(GBool vaa);
+#endif
+
 private:
 
+  void setupScreenParams(double hDPI, double vDPI);
 #if SPLASH_CMYK
   SplashPattern *getColor(GfxGray gray, GfxRGB *rgb, GfxCMYK *cmyk);
 #else
   SplashPattern *getColor(GfxGray gray, GfxRGB *rgb);
 #endif
   SplashPath *convertPath(GfxState *state, GfxPath *path);
+  void doUpdateFont(GfxState *state);
   void drawType3Glyph(T3FontCache *t3Font,
-		      T3FontCacheTag *tag, Guchar *data,
-		      double x, double y);
+		      T3FontCacheTag *tag, Guchar *data);
   static GBool imageMaskSrc(void *data, SplashColorPtr line);
-  static GBool imageSrc(void *data, SplashColorPtr line);
-  static GBool alphaImageSrc(void *data, SplashColorPtr line);
-  static GBool maskedImageSrc(void *data, SplashColorPtr line);
+  static GBool imageSrc(void *data, SplashColorPtr colorLine,
+			Guchar *alphaLine);
+  static GBool alphaImageSrc(void *data, SplashColorPtr line,
+			     Guchar *alphaLine);
+  static GBool maskedImageSrc(void *data, SplashColorPtr line,
+			      Guchar *alphaLine);
 
   SplashColorMode colorMode;
   int bitmapRowPad;
   GBool bitmapTopDown;
   GBool allowAntialias;
+  GBool vectorAntialias;
   GBool reverseVideo;		// reverse video mode
   SplashColor paperColor;	// paper color
+  SplashScreenParams screenParams;
 
   XRef *xref;			// xref table for current document
 
@@ -217,6 +239,9 @@ private:
   SplashFont *font;		// current font
   GBool needFontUpdate;		// set when the font needs to be updated
   SplashPath *textClipPath;	// clipping path built with text object
+
+  SplashTransparencyGroup *	// transparency group stack
+    transpGroupStack;
 };
 
 #endif

@@ -16,7 +16,6 @@
 #include <string.h>
 #include "gmem.h"
 #include "GString.h"
-#include "UGString.h"
 #include "Error.h"
 #include "Object.h"
 #include "Array.h"
@@ -289,7 +288,7 @@ LinkDest::LinkDest(Array *a) {
     kind = destFitH;
     if (!a->get(2, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     top = obj2.getNum();
     obj2.free();
@@ -303,7 +302,7 @@ LinkDest::LinkDest(Array *a) {
     kind = destFitV;
     if (!a->get(2, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     left = obj2.getNum();
     obj2.free();
@@ -317,25 +316,25 @@ LinkDest::LinkDest(Array *a) {
     kind = destFitR;
     if (!a->get(2, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     left = obj2.getNum();
     obj2.free();
     if (!a->get(3, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     bottom = obj2.getNum();
     obj2.free();
     if (!a->get(4, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     right = obj2.getNum();
     obj2.free();
     if (!a->get(5, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     top = obj2.getNum();
     obj2.free();
@@ -357,7 +356,7 @@ LinkDest::LinkDest(Array *a) {
     kind = destFitBH;
     if (!a->get(2, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     top = obj2.getNum();
     obj2.free();
@@ -371,7 +370,7 @@ LinkDest::LinkDest(Array *a) {
     kind = destFitBV;
     if (!a->get(2, &obj2)->isNum()) {
       error(-1, "Bad annotation destination position");
-      goto err1;
+      kind = destFit;
     }
     left = obj2.getNum();
     obj2.free();
@@ -420,9 +419,9 @@ LinkGoTo::LinkGoTo(Object *destObj) {
 
   // named destination
   if (destObj->isName()) {
-    namedDest = new UGString(destObj->getName());
+    namedDest = new GString(destObj->getName());
   } else if (destObj->isString()) {
-    namedDest = new UGString(*destObj->getString());
+    namedDest = destObj->getString()->copy();
 
   // destination dictionary
   } else if (destObj->isArray()) {
@@ -458,9 +457,9 @@ LinkGoToR::LinkGoToR(Object *fileSpecObj, Object *destObj) {
 
   // named destination
   if (destObj->isName()) {
-    namedDest = new UGString(destObj->getName());
+    namedDest = new GString(destObj->getName());
   } else if (destObj->isString()) {
-    namedDest = new UGString(*destObj->getString());
+    namedDest = destObj->getString()->copy();
 
   // destination dictionary
   } else if (destObj->isArray()) {
@@ -627,7 +626,7 @@ LinkMovie::~LinkMovie() {
 // LinkUnknown
 //------------------------------------------------------------------------
 
-LinkUnknown::LinkUnknown(const char *actionA) {
+LinkUnknown::LinkUnknown(char *actionA) {
   action = new GString(actionA);
 }
 
@@ -636,42 +635,13 @@ LinkUnknown::~LinkUnknown() {
 }
 
 //------------------------------------------------------------------------
-// LinkBorderStyle
-//------------------------------------------------------------------------
-
-LinkBorderStyle::LinkBorderStyle(LinkBorderType typeA, double widthA,
-				 double *dashA, int dashLengthA,
-				 double rA, double gA, double bA) {
-  type = typeA;
-  width = widthA;
-  dash = dashA;
-  dashLength = dashLengthA;
-  r = rA;
-  g = gA;
-  b = bA;
-}
-
-LinkBorderStyle::~LinkBorderStyle() {
-  if (dash) {
-    gfree(dash);
-  }
-}
-
-//------------------------------------------------------------------------
 // Link
 //------------------------------------------------------------------------
 
 Link::Link(Dict *dict, GString *baseURI) {
-  Object obj1, obj2, obj3;
-  LinkBorderType borderType;
-  double borderWidth;
-  double *borderDash;
-  int borderDashLength;
-  double borderR, borderG, borderB;
+  Object obj1, obj2;
   double t;
-  int i;
 
-  borderStyle = NULL;
   action = NULL;
   ok = gFalse;
 
@@ -716,97 +686,6 @@ Link::Link(Dict *dict, GString *baseURI) {
     y2 = t;
   }
 
-  // get the border style info
-  borderType = linkBorderSolid;
-  borderWidth = 1;
-  borderDash = NULL;
-  borderDashLength = 0;
-  borderR = 0;
-  borderG = 0;
-  borderB = 1;
-  if (dict->lookup("BS", &obj1)->isDict()) {
-    if (obj1.dictLookup("S", &obj2)->isName()) {
-      if (obj2.isName("S")) {
-	borderType = linkBorderSolid;
-      } else if (obj2.isName("D")) {
-	borderType = linkBorderDashed;
-      } else if (obj2.isName("B")) {
-	borderType = linkBorderEmbossed;
-      } else if (obj2.isName("I")) {
-	borderType = linkBorderEngraved;
-      } else if (obj2.isName("U")) {
-	borderType = linkBorderUnderlined;
-      }
-    }
-    obj2.free();
-    if (obj1.dictLookup("W", &obj2)->isNum()) {
-      borderWidth = obj2.getNum();
-    }
-    obj2.free();
-    if (obj1.dictLookup("D", &obj2)->isArray()) {
-      borderDashLength = obj2.arrayGetLength();
-      borderDash = (double *)gmallocn(borderDashLength, sizeof(double));
-      for (i = 0; i < borderDashLength; ++i) {
-	if (obj2.arrayGet(i, &obj3)->isNum()) {
-	  borderDash[i] = obj3.getNum();
-	} else {
-	  borderDash[i] = 1;
-	}
-	obj3.free();
-      }
-    }
-    obj2.free();
-  } else {
-    obj1.free();
-    if (dict->lookup("Border", &obj1)->isArray()) {
-      if (obj1.arrayGetLength() >= 3) {
-	if (obj1.arrayGet(2, &obj2)->isNum()) {
-	  borderWidth = obj2.getNum();
-	}
-	obj2.free();
-	if (obj1.arrayGetLength() >= 4) {
-	  if (obj1.arrayGet(3, &obj2)->isArray()) {
-	    borderType = linkBorderDashed;
-	    borderDashLength = obj2.arrayGetLength();
-	    borderDash = (double *)gmallocn(borderDashLength, sizeof(double));
-	    for (i = 0; i < borderDashLength; ++i) {
-	      if (obj2.arrayGet(i, &obj3)->isNum()) {
-		borderDash[i] = obj3.getNum();
-	      } else {
-		borderDash[i] = 1;
-	      }
-	      obj3.free();
-	    }
-	  } else {
-	    // Adobe draws no border at all if the last element is of
-	    // the wrong type.
-	    borderWidth = 0;
-	  }
-	  obj2.free();
-	}
-      }
-    }
-  }
-  obj1.free();
-  if (dict->lookup("C", &obj1)->isArray() && obj1.arrayGetLength() == 3) {
-    if (obj1.arrayGet(0, &obj2)->isNum()) {
-      borderR = obj2.getNum();
-    }
-    obj1.free();
-    if (obj1.arrayGet(1, &obj2)->isNum()) {
-      borderG = obj2.getNum();
-    }
-    obj1.free();
-    if (obj1.arrayGet(2, &obj2)->isNum()) {
-      borderB = obj2.getNum();
-    }
-    obj1.free();
-  }
-  obj1.free();
-  borderStyle = new LinkBorderStyle(borderType, borderWidth,
-				    borderDash, borderDashLength,
-				    borderR, borderG, borderB);
-
   // look for destination
   if (!dict->lookup("Dest", &obj1)->isNull()) {
     action = LinkAction::parseDest(&obj1);
@@ -834,9 +713,6 @@ Link::Link(Dict *dict, GString *baseURI) {
 }
 
 Link::~Link() {
-  if (borderStyle) {
-    delete borderStyle;
-  }
   if (action) {
     delete action;
   }

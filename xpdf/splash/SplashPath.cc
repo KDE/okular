@@ -35,6 +35,8 @@ SplashPath::SplashPath() {
   flags = NULL;
   length = size = 0;
   curSubpath = 0;
+  hints = NULL;
+  hintsLength = hintsSize = 0;
 }
 
 SplashPath::SplashPath(SplashPath *path) {
@@ -45,11 +47,19 @@ SplashPath::SplashPath(SplashPath *path) {
   memcpy(pts, path->pts, length * sizeof(SplashPathPoint));
   memcpy(flags, path->flags, length * sizeof(Guchar));
   curSubpath = path->curSubpath;
+  if (path->hints) {
+    hintsLength = hintsSize = path->hintsLength;
+    hints = (SplashPathHint *)gmallocn(hintsSize, sizeof(SplashPathHint));
+    memcpy(hints, path->hints, hintsLength * sizeof(SplashPathHint));
+  } else {
+    hints = NULL;
+  }
 }
 
 SplashPath::~SplashPath() {
   gfree(pts);
   gfree(flags);
+  gfree(hints);
 }
 
 // Add space for <nPts> more points.
@@ -126,24 +136,6 @@ SplashError SplashPath::curveTo(SplashCoord x1, SplashCoord y1,
   return splashOk;
 }
 
-SplashError SplashPath::arcCWTo(SplashCoord x1, SplashCoord y1,
-				SplashCoord xc, SplashCoord yc) {
-  if (noCurrentPoint()) {
-    return splashErrNoCurPt;
-  }
-  flags[length-1] &= ~splashPathLast;
-  grow(2);
-  pts[length].x = xc;
-  pts[length].y = yc;
-  flags[length] = splashPathArcCW;
-  ++length;
-  pts[length].x = x1;
-  pts[length].y = y1;
-  flags[length] = splashPathLast;
-  ++length;
-  return splashOk;
-}
-
 SplashError SplashPath::close() {
   if (noCurrentPoint()) {
     return splashErrNoCurPt;
@@ -157,6 +149,20 @@ SplashError SplashPath::close() {
   flags[length - 1] |= splashPathClosed;
   curSubpath = length;
   return splashOk;
+}
+
+void SplashPath::addStrokeAdjustHint(int ctrl0, int ctrl1,
+				     int firstPt, int lastPt) {
+  if (hintsLength == hintsSize) {
+    hintsSize = hintsLength ? 2 * hintsLength : 8;
+    hints = (SplashPathHint *)greallocn(hints, hintsSize,
+					sizeof(SplashPathHint));
+  }
+  hints[hintsLength].ctrl0 = ctrl0;
+  hints[hintsLength].ctrl1 = ctrl1;
+  hints[hintsLength].firstPt = firstPt;
+  hints[hintsLength].lastPt = lastPt;
+  ++hintsLength;
 }
 
 void SplashPath::offset(SplashCoord dx, SplashCoord dy) {

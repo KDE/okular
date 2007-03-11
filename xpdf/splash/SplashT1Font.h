@@ -26,7 +26,8 @@ class SplashT1FontFile;
 class SplashT1Font: public SplashFont {
 public:
 
-  SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA);
+  SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA,
+	       SplashCoord *textMatA);
 
   virtual ~SplashT1Font();
 
@@ -45,7 +46,10 @@ public:
 private:
 
   int t1libID;			// t1lib font ID
+  int outlineID;		// t1lib font ID for glyph outlines
   float size;
+  float outlineSize;		// size for glyph outlines
+  float outlineMul;
 };
 
 #endif // HAVE_T1LIB_H

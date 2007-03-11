@@ -18,6 +18,7 @@
 class SplashT1FontEngine;
 class SplashFTFontEngine;
 class SplashDTFontEngine;
+class SplashDT4FontEngine;
 class SplashFontFile;
 class SplashFontFileID;
 class SplashFont;
@@ -51,22 +52,24 @@ public:
   SplashFontFile *getFontFile(SplashFontFileID *id);
 
   // Load fonts - these create new SplashFontFile objects.
-  SplashFontFile *loadType1Font(SplashFontFileID *idA, SplashFontSrc *src, const char **enc);
-  SplashFontFile *loadType1CFont(SplashFontFileID *idA, SplashFontSrc *src, const char **enc);
+  SplashFontFile *loadType1Font(SplashFontFileID *idA, SplashFontSrc *src, char **enc);
+  SplashFontFile *loadType1CFont(SplashFontFileID *idA, SplashFontSrc *src, char **enc);
+  SplashFontFile *loadOpenTypeT1CFont(SplashFontFileID *idA, SplashFontSrc *src, char **enc);
   SplashFontFile *loadCIDFont(SplashFontFileID *idA, SplashFontSrc *src);
+  SplashFontFile *loadOpenTypeCFFFont(SplashFontFileID *idA, SplashFontSrc *src);
   SplashFontFile *loadTrueTypeFont(SplashFontFileID *idA, SplashFontSrc *src,
-				   Gushort *codeToGID, int codeToGIDLen,
-				   int faceIndex=0);
+				   Gushort *codeToGID, int codeToGIDLen);
 
   // Get a font - this does a cache lookup first, and if not found,
   // creates a new SplashFont object and adds it to the cache.  The
-  // matrix:
+  // matrix, mat = textMat * ctm:
   //    [ mat[0] mat[1] ]
   //    [ mat[2] mat[3] ]
   // specifies the font transform in PostScript style:
   //    [x' y'] = [x y] * mat
   // Note that the Splash y axis points downward.
-  SplashFont *getFont(SplashFontFile *fontFile, SplashCoord *mat);
+  SplashFont *getFont(SplashFontFile *fontFile,
+		      SplashCoord *textMat, SplashCoord *ctm);
 
 private:
 

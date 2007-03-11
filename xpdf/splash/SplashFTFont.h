@@ -28,7 +28,8 @@ class SplashFTFontFile;
 class SplashFTFont: public SplashFont {
 public:
 
-  SplashFTFont(SplashFTFontFile *fontFileA, SplashCoord *matA);
+  SplashFTFont(SplashFTFontFile *fontFileA, SplashCoord *matA,
+	       SplashCoord *textMatA);
 
   virtual ~SplashFTFont();
 
@@ -48,6 +49,8 @@ private:
 
   FT_Size sizeObj;
   FT_Matrix matrix;
+  FT_Matrix textMatrix;
+  SplashCoord textScale;
 };
 
 #endif // HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H

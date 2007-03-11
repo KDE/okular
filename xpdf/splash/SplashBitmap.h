@@ -27,19 +27,23 @@ public:
   // <rowPad> bytes.  If <topDown> is false, the bitmap will be stored
   // upside-down, i.e., with the last row first in memory.
   SplashBitmap(int widthA, int heightA, int rowPad,
-	       SplashColorMode modeA, GBool topDown = gTrue);
+	       SplashColorMode modeA, GBool alphaA,
+	       GBool topDown = gTrue);
 
   ~SplashBitmap();
 
   int getWidth() { return width; }
   int getHeight() { return height; }
   int getRowSize() { return rowSize; }
+  int getAlphaRowSize() { return width; }
   SplashColorMode getMode() { return mode; }
   SplashColorPtr getDataPtr() { return data; }
+  Guchar *getAlphaPtr() { return alpha; }
 
   SplashError writePNMFile(char *fileName);
 
   void getPixel(int x, int y, SplashColorPtr pixel);
+  Guchar getAlpha(int x, int y);
 
 private:
 
@@ -47,7 +51,9 @@ private:
   int rowSize;			// size of one row of data, in bytes
 				//   - negative for bottom-up bitmaps
   SplashColorMode mode;		// color mode
-  SplashColorPtr data;		// pointer to row zero of the bitmap data
+  SplashColorPtr data;		// pointer to row zero of the color data
+  Guchar *alpha;		// pointer to row zero of the alpha data
+				//   (always top-down)
 
   friend class Splash;
 };

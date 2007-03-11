@@ -36,7 +36,7 @@ int SplashT1FontEngine::t1libInitCount = 0;
 
 //------------------------------------------------------------------------
 
-static void T1_fileWrite(void *stream, const char *data, int len) {
+static void fileWrite(void *stream, char *data, int len) {
   fwrite(data, 1, len, (FILE *)stream);
 }
 
@@ -83,13 +83,13 @@ SplashT1FontEngine::~SplashT1FontEngine() {
 
 SplashFontFile *SplashT1FontEngine::loadType1Font(SplashFontFileID *idA,
 						  SplashFontSrc *src,
-						  const char **enc) {
-  return SplashT1FontFile::loadType1Font(this, idA, src, enc);
+						  char **enc) {
+  return SplashT1FontFile::loadType1Font(this, idA, fileName, deleteFile, enc);
 }
 
 SplashFontFile *SplashT1FontEngine::loadType1CFont(SplashFontFileID *idA,
 						   SplashFontSrc *src,
-						   const char **enc) {
+						   char **enc) {
   FoFiType1C *ff;
   GString *tmpFileName;
   FILE *tmpFile;
@@ -108,7 +108,7 @@ SplashFontFile *SplashT1FontEngine::loadType1CFont(SplashFontFileID *idA,
     delete ff;
     return NULL;
   }
-  ff->convertToType1(NULL, gTrue, &T1_fileWrite, tmpFile);
+  ff->convertToType1(NULL, NULL, gTrue, &fileWrite, tmpFile);
   delete ff;
   fclose(tmpFile);
   newsrc = new SplashFontSrc;

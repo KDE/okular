@@ -28,20 +28,26 @@ struct SplashPathPoint {
 //------------------------------------------------------------------------
 
 // first point on each subpath sets this flag
-#define splashPathFirst  0x01
+#define splashPathFirst         0x01
 
 // last point on each subpath sets this flag
-#define splashPathLast   0x02
+#define splashPathLast          0x02
 
 // if the subpath is closed, its first and last points must be
 // identical, and must set this flag
-#define splashPathClosed 0x04
+#define splashPathClosed        0x04
 
 // curve control points set this flag
-#define splashPathCurve  0x08
+#define splashPathCurve         0x08
 
-// clockwise arc center points set this flag
-#define splashPathArcCW  0x10
+//------------------------------------------------------------------------
+// SplashPathHint
+//------------------------------------------------------------------------
+
+struct SplashPathHint {
+  int ctrl0, ctrl1;
+  int firstPt, lastPt;
+};
 
 //------------------------------------------------------------------------
 // SplashPath
@@ -73,13 +79,13 @@ public:
 		      SplashCoord x2, SplashCoord y2,
 		      SplashCoord x3, SplashCoord y3);
 
-  // Add a clockwise circular arc with center (xc, yc) and endpoint
-  // (x1, y1).
-  SplashError arcCWTo(SplashCoord x1, SplashCoord y1,
-		      SplashCoord xc, SplashCoord yc);
-
   // Close the last subpath, adding a line segment if necessary.
   SplashError close();
+
+  // Add a stroke adjustment hint.  The controlling segments are
+  // <ctrl0> and <ctrl1> (where segments are identified by their first
+  // point), and the points to be adjusted are <firstPt> .. <lastPt>.
+  void addStrokeAdjustHint(int ctrl0, int ctrl1, int firstPt, int lastPt);
 
   // Add (<dx>, <dy>) to every point on this path.
   void offset(SplashCoord dx, SplashCoord dy);
@@ -104,6 +110,9 @@ private:
   Guchar *flags;		// array of flags
   int length, size;		// length/size of the pts and flags arrays
   int curSubpath;		// index of first point in last subpath
+
+  SplashPathHint *hints;	// list of hints
+  int hintsLength, hintsSize;
 
   friend class SplashXPath;
   friend class Splash;

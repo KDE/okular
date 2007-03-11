@@ -30,11 +30,10 @@ class SplashFTFontFile: public SplashFontFile {
 public:
 
   static SplashFontFile *loadType1Font(SplashFTFontEngine *engineA,
-				       SplashFontFileID *idA,
-				       SplashFontSrc *src, const char **encA);
+				       SplashFontFileID *idA, SplashFontSrc *src,
+				       char **encA);
   static SplashFontFile *loadCIDFont(SplashFTFontEngine *engineA,
-				     SplashFontFileID *idA,
-				     SplashFontSrc *src,
+				     SplashFontFileID *idA, SplashFontSrc *src,
 				     Gushort *codeToCIDA, int codeToGIDLenA);
   static SplashFontFile *loadTrueTypeFont(SplashFTFontEngine *engineA,
 					  SplashFontFileID *idA,
@@ -47,20 +46,23 @@ public:
 
   // Create a new SplashFTFont, i.e., a scaled instance of this font
   // file.
-  virtual SplashFont *makeFont(SplashCoord *mat);
+  virtual SplashFont *makeFont(SplashCoord *mat,
+			       SplashCoord *textMat);
 
 private:
 
   SplashFTFontFile(SplashFTFontEngine *engineA,
 		   SplashFontFileID *idA,
-		   SplashFontSrc *srcA,
+		   SplashFontSrc *src,
 		   FT_Face faceA,
-		   Gushort *codeToGIDA, int codeToGIDLenA);
+		   Gushort *codeToGIDA, int codeToGIDLenA,
+		   GBool trueTypeA);
 
   SplashFTFontEngine *engine;
   FT_Face face;
   Gushort *codeToGID;
   int codeToGIDLen;
+  GBool trueType;
 
   friend class SplashFTFont;
 };

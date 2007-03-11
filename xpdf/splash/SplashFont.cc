@@ -31,13 +31,17 @@ struct SplashFontCacheTag {
 //------------------------------------------------------------------------
 
 SplashFont::SplashFont(SplashFontFile *fontFileA, SplashCoord *matA,
-		       GBool aaA) {
+		       SplashCoord *textMatA, GBool aaA) {
   fontFile = fontFileA;
   fontFile->incRefCnt();
   mat[0] = matA[0];
   mat[1] = matA[1];
   mat[2] = matA[2];
   mat[3] = matA[3];
+  textMat[0] = textMatA[0];
+  textMat[1] = textMatA[1];
+  textMat[2] = textMatA[2];
+  textMat[3] = textMatA[3];
   aa = aaA;
 
   cache = NULL;
@@ -70,9 +74,9 @@ void SplashFont::initCache() {
   } else {
     cacheSets = 1;
   }
-  cache = (Guchar *)gmallocn(cacheSets* cacheAssoc, glyphSize);
+  cache = (Guchar *)gmallocn(cacheSets * cacheAssoc, glyphSize);
   cacheTags = (SplashFontCacheTag *)gmallocn(cacheSets * cacheAssoc,
-					      sizeof(SplashFontCacheTag));
+					     sizeof(SplashFontCacheTag));
   for (i = 0; i < cacheSets * cacheAssoc; ++i) {
     cacheTags[i].mru = i & (cacheAssoc - 1);
   }

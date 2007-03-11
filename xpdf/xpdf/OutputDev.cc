@@ -55,6 +55,7 @@ void OutputDev::updateAll(GfxState *state) {
   updateLineCap(state);
   updateMiterLimit(state);
   updateLineWidth(state);
+  updateStrokeAdjust(state);
   updateFillColorSpace(state);
   updateFillColor(state);
   updateStrokeColorSpace(state);
@@ -64,16 +65,17 @@ void OutputDev::updateAll(GfxState *state) {
   updateStrokeOpacity(state);
   updateFillOverprint(state);
   updateStrokeOverprint(state);
+  updateTransfer(state);
   updateFont(state);
 }
 
-GBool OutputDev::beginType3Char(GfxState */*state*/, double /*x*/, double /*y*/,
+GBool OutputDev::beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
 				double /*dx*/, double /*dy*/,
-				CharCode /*code*/, Unicode */*u*/, int /*uLen*/) {
+				CharCode /*code*/, Unicode * /*u*/, int /*uLen*/) {
   return gFalse;
 }
 
-void OutputDev::drawImageMask(GfxState */*state*/, Object */*ref*/, Stream *str,
+void OutputDev::drawImageMask(GfxState * /*state*/, Object * /*ref*/, Stream *str,
 			      int width, int height, GBool /*invert*/,
 			      GBool inlineImg) {
   int i, j;
@@ -87,9 +89,9 @@ void OutputDev::drawImageMask(GfxState */*state*/, Object */*ref*/, Stream *str,
   }
 }
 
-void OutputDev::drawImage(GfxState */*state*/, Object */*ref*/, Stream *str,
+void OutputDev::drawImage(GfxState * /*state*/, Object * /*ref*/, Stream *str,
 			  int width, int height, GfxImageColorMap *colorMap,
-			  int */*maskColors*/, GBool inlineImg) {
+			  int * /*maskColors*/, GBool inlineImg) {
   int i, j;
 
   if (inlineImg) {
@@ -105,7 +107,7 @@ void OutputDev::drawImage(GfxState */*state*/, Object */*ref*/, Stream *str,
 void OutputDev::drawMaskedImage(GfxState *state, Object *ref, Stream *str,
 				int width, int height,
 				GfxImageColorMap *colorMap,
-				Stream */*maskStr*/,
+				Stream * /*maskStr*/,
 				int /*maskWidth*/, int /*maskHeight*/,
 				GBool /*maskInvert*/) {
   drawImage(state, ref, str, width, height, colorMap, NULL, gFalse);
@@ -114,9 +116,9 @@ void OutputDev::drawMaskedImage(GfxState *state, Object *ref, Stream *str,
 void OutputDev::drawSoftMaskedImage(GfxState *state, Object *ref, Stream *str,
 				    int width, int height,
 				    GfxImageColorMap *colorMap,
-				    Stream */*maskStr*/,
+				    Stream * /*maskStr*/,
 				    int /*maskWidth*/, int /*maskHeight*/,
-				    GfxImageColorMap */*maskColorMap*/) {
+				    GfxImageColorMap * /*maskColorMap*/) {
   drawImage(state, ref, str, width, height, colorMap, NULL, gFalse);
 }
 

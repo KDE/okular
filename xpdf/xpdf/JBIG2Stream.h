@@ -33,20 +33,21 @@ class JBIG2MMRDecoder;
 class JBIG2Stream: public FilterStream {
 public:
 
-  JBIG2Stream(Stream *strA, Object *globalsStream);
+  JBIG2Stream(Stream *strA, Object *globalsStreamA);
   virtual ~JBIG2Stream();
   virtual StreamKind getKind() { return strJBIG2; }
   virtual void reset();
+  virtual void close();
   virtual int getChar();
   virtual int lookChar();
-  virtual GString *getPSFilter(int psLevel, const char *indent);
+  virtual GString *getPSFilter(int psLevel, char *indent);
   virtual GBool isBinary(GBool last = gTrue);
 
 private:
 
   void readSegments();
   GBool readSymbolDictSeg(Guint segNum, Guint length,
-			 Guint *refSegs, Guint nRefSegs);
+			  Guint *refSegs, Guint nRefSegs);
   void readTextRegionSeg(Guint segNum, GBool imm,
 			 GBool lossless, Guint length,
 			 Guint *refSegs, Guint nRefSegs);
@@ -109,6 +110,7 @@ private:
   GBool readULong(Guint *x);
   GBool readLong(int *x);
 
+  Object globalsStream;
   Guint pageW, pageH, curPageH;
   Guint pageDefPixel;
   JBIG2Bitmap *pageBitmap;

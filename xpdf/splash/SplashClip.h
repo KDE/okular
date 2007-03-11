@@ -14,10 +14,12 @@
 #endif
 
 #include "SplashTypes.h"
+#include "SplashMath.h"
 
 class SplashPath;
 class SplashXPath;
 class SplashXPathScanner;
+class SplashBitmap;
 
 //------------------------------------------------------------------------
 
@@ -36,7 +38,8 @@ public:
 
   // Create a clip, for the given rectangle.
   SplashClip(SplashCoord x0, SplashCoord y0,
-	     SplashCoord x1, SplashCoord y1);
+	     SplashCoord x1, SplashCoord y1,
+	     GBool antialiasA);
 
   // Copy a clip.
   SplashClip *copy() { return new SplashClip(this); }
@@ -52,8 +55,8 @@ public:
 			 SplashCoord x1, SplashCoord y1);
 
   // Interesect the clip with <path>.
-  SplashError clipToPath(SplashPath *path, SplashCoord flatness,
-			 GBool eo);
+  SplashError clipToPath(SplashPath *path, SplashCoord *matrix,
+			 SplashCoord flatness, GBool eo);
 
   // Returns true if (<x>,<y>) is inside the clip.
   GBool test(int x, int y);
@@ -73,11 +76,16 @@ public:
   // Similar to testRect, but tests a horizontal span.
   SplashClipResult testSpan(int spanXMin, int spanXMax, int spanY);
 
-  // Get the rectangle part of the clip region.
-  int getXMin() { return xMin; }
-  int getXMax() { return xMax; }
-  int getYMin() { return yMin; }
-  int getYMax() { return yMax; }
+  // Clips an anti-aliased line by setting pixels to zero.  On entry,
+  // all non-zero pixels are between <x0> and <x1>.  This function
+  // will update <x0> and <x1>.
+  void clipAALine(SplashBitmap *aaBuf, int *x0, int *x1, int y);
+
+  // Get the rectangle part of the clip region, in integer coordinates.
+  int getXMinI() { return xMinI; }
+  int getXMaxI() { return xMaxI; }
+  int getYMinI() { return yMinI; }
+  int getYMaxI() { return yMaxI; }
 
   // Get the number of arbitrary paths used by the clip region.
   int getNumPaths() { return length; }
@@ -87,7 +95,9 @@ private:
   SplashClip(SplashClip *clip);
   void grow(int nPaths);
 
-  int xMin, yMin, xMax, yMax;
+  GBool antialias;
+  SplashCoord xMin, yMin, xMax, yMax;
+  int xMinI, yMinI, xMaxI, yMaxI;
   SplashXPath **paths;
   Guchar *flags;
   SplashXPathScanner **scanners;

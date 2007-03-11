@@ -7,6 +7,7 @@
 #include <aconf.h>
 
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
+
 #ifdef USE_GCC_PRAGMAS
 #pragma implementation
 #endif
@@ -30,12 +31,11 @@ extern "C" int unlink(char *filename);
 #endif
 
 //------------------------------------------------------------------------
-
-#if 0
-static void FT_fileWrite(void *stream, const char *data, int len) {
+/*
+static void fileWrite(void *stream, char *data, int len) {
   fwrite(data, 1, len, (FILE *)stream);
 }
-#endif
+*/
 
 //------------------------------------------------------------------------
 // SplashFTFontEngine
@@ -68,30 +68,38 @@ SplashFTFontEngine::~SplashFTFontEngine() {
 
 SplashFontFile *SplashFTFontEngine::loadType1Font(SplashFontFileID *idA,
 						  SplashFontSrc *src,
-						  const char **enc) {
+						  char **enc) {
   return SplashFTFontFile::loadType1Font(this, idA, src, enc);
 }
 
 SplashFontFile *SplashFTFontEngine::loadType1CFont(SplashFontFileID *idA,
 						   SplashFontSrc *src,
-						   const char **enc) {
+						   char **enc) {
+  return SplashFTFontFile::loadType1Font(this, idA, src, enc);
+}
+
+SplashFontFile *SplashFTFontEngine::loadOpenTypeT1CFont(SplashFontFileID *idA,
+							SplashFontSrc *src,
+							char **enc) {
   return SplashFTFontFile::loadType1Font(this, idA, src, enc);
 }
 
 SplashFontFile *SplashFTFontEngine::loadCIDFont(SplashFontFileID *idA,
 						SplashFontSrc *src) {
+  FoFiType1C *ff;
   Gushort *cidToGIDMap;
   int nCIDs;
   SplashFontFile *ret;
 
   // check for a CFF font
-  if (!useCIDs)
-  {
-    FoFiType1C *ff;
+  if (useCIDs) {
+    cidToGIDMap = NULL;
+    nCIDs = 0;
+  } else {
     if (src->isFile) {
       ff = FoFiType1C::load(src->fileName->getCString());
     } else {
-      ff = new FoFiType1C(src->buf, src->bufLen, gFalse);
+      ff = FoFiType1C::make(src->buf, src->bufLen);
     }
     if (ff) {
       cidToGIDMap = ff->getCIDToGIDMap(&nCIDs);
@@ -101,13 +109,39 @@ SplashFontFile *SplashFTFontEngine::loadCIDFont(SplashFontFileID *idA,
       nCIDs = 0;
     }
   }
-  else
-  {
-    // Freetype 2.1.8 and up treats all CID fonts the same way
-    cidToGIDMap = NULL;
-    nCIDs = 0;
-  }
   ret = SplashFTFontFile::loadCIDFont(this, idA, src, cidToGIDMap, nCIDs);
+  if (!ret) {
+    gfree(cidToGIDMap);
+  }
+  return ret;
+}
+
+SplashFontFile *SplashFTFontEngine::loadOpenTypeCFFFont(SplashFontFileID *idA,
+							SplashFontSrc *src) {
+  FoFiTrueType *ff;
+  GBool isCID;
+  Gushort *cidToGIDMap;
+  int nCIDs;
+  SplashFontFile *ret;
+
+  cidToGIDMap = NULL;
+  nCIDs = 0;
+  isCID = gFalse;
+  if (!useCIDs) {
+    if (src->isFile) {
+      ff = FoFiTrueType::load(src->fileName->getCString());
+    } else {
+      ff = FoFiTrueType::make(src->buf, src->bufLen);
+    }
+    if (ff) {
+      if (ff->isOpenTypeCFF()) {
+	cidToGIDMap = ff->getCIDToGIDMap(&nCIDs);
+      }
+      delete ff;
+    }
+  }
+  ret = SplashFTFontFile::loadCIDFont(this, idA, src,
+				      cidToGIDMap, nCIDs);
   if (!ret) {
     gfree(cidToGIDMap);
   }
@@ -125,7 +159,7 @@ SplashFontFile *SplashFTFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
   FILE *tmpFile;
   SplashFontFile *ret;
 
-  if (!(ff = FoFiTrueType::load(fileName, faceIndex))) {
+  if (!(ff = FoFiTrueType::load(fileName))) {
     return NULL;
   }
   tmpFileName = NULL;
@@ -133,13 +167,12 @@ SplashFontFile *SplashFTFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
     delete ff;
     return NULL;
   }
-  ff->writeTTF(&FT_fileWrite, tmpFile);
+  ff->writeTTF(&fileWrite, tmpFile);
   delete ff;
   fclose(tmpFile);
   ret = SplashFTFontFile::loadTrueTypeFont(this, idA,
 					   tmpFileName->getCString(),
-					   gTrue, codeToGID, codeToGIDLen,
-					   faceIndex);
+					   gTrue, codeToGID, codeToGIDLen);
   if (ret) {
     if (deleteFile) {
       unlink(fileName);

@@ -51,7 +51,7 @@ public:
 
   // Create a new SplashFont, i.e., a scaled instance of this font
   // file.
-  virtual SplashFont *makeFont(SplashCoord *mat) = 0;
+  virtual SplashFont *makeFont(SplashCoord *mat, SplashCoord *textMat) = 0;
 
   // Get the font file ID.
   SplashFontFileID *getID() { return id; }

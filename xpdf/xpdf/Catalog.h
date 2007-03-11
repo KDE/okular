@@ -2,7 +2,7 @@
 //
 // Catalog.h
 //
-// Copyright 1996-2003 Glyph & Cog, LLC
+// Copyright 1996-2007 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -21,7 +21,6 @@ class Page;
 class PageAttrs;
 struct Ref;
 class LinkDest;
-class UGString;
 
 //------------------------------------------------------------------------
 // NameTree
@@ -32,14 +31,14 @@ public:
   NameTree();
   void init(XRef *xref, Object *tree);
   void parse(Object *tree);
-  GBool lookup(UGString *name, Object *obj);
+  GBool lookup(GString *name, Object *obj);
   void free();
 
 private:
   struct Entry {
     Entry(Array *array, int index);
     ~Entry();
-    UGString *name;
+    GString name;
     Object value;
     void free();
     static int cmp(const void *key, const void *entry);
@@ -105,7 +104,9 @@ public:
 
   // Find a named destination.  Returns the link destination, or
   // NULL if <name> is not a destination.
-  LinkDest *findDest(UGString *name);
+  LinkDest *findDest(GString *name);
+
+  Object *getDests() { return &dests; }
 
   Object *getOutline() { return &outline; }
 
@@ -121,14 +122,15 @@ private:
   Object dests;			// named destination dictionary
   NameTree destNameTree;	// name tree
   GString *baseURI;		// base URI for URI-type links
-  PageMode pageMode;  // page mode
+  PageMode pageMode;		// page mode
   Object metadata;		// metadata stream
   Object structTreeRoot;	// structure tree root dictionary
   Object outline;		// outline dictionary
   Object acroForm;		// AcroForm dictionary
   GBool ok;			// true if catalog is valid
 
-  int readPageTree(Dict *pages, PageAttrs *attrs, int start, int callDepth);
+  int readPageTree(Dict *pages, PageAttrs *attrs, int start,
+		   char *alreadyRead);
   Object *findDestInTree(Object *tree, GString *name, Object *obj);
 };
 

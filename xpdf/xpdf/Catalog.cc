@@ -2,7 +2,7 @@
 //
 // Catalog.cc
 //
-// Copyright 1996-2003 Glyph & Cog, LLC
+// Copyright 1996-2007 Glyph & Cog, LLC
 //
 //========================================================================
 
@@ -12,7 +12,6 @@
 #pragma implementation
 #endif
 
-#include <limits.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "gmem.h"
@@ -23,22 +22,16 @@
 #include "Page.h"
 #include "Error.h"
 #include "Link.h"
-#include "UGString.h"
 #include "Catalog.h"
-
-// This define is used to limit the depth of recursive readPageTree calls
-// This is needed because the page tree nodes can reference their parents
-// leaving us in an infinite loop
-// Most sane pdf documents don't have a call depth higher than 10
-#define MAX_CALL_DEPTH 1000
 
 //------------------------------------------------------------------------
 // Catalog
 //------------------------------------------------------------------------
 
 Catalog::Catalog(XRef *xrefA) {
-  Object catDict, pagesDict;
+  Object catDict, pagesDict, pagesDictRef;
   Object obj, obj2;
+  char *alreadyRead;
   int numPages0;
   int i;
 
@@ -48,7 +41,6 @@ Catalog::Catalog(XRef *xrefA) {
   pageRefs = NULL;
   numPages = pagesSize = 0;
   baseURI = NULL;
-  pageMode = UseNone;
 
   xref->getCatalog(&catDict);
   if (!catDict.isDict()) {
@@ -74,7 +66,6 @@ Catalog::Catalog(XRef *xrefA) {
   }
   pagesSize = numPages0 = (int)obj.getNum();
   obj.free();
-
   pages = (Page **)gmallocn(pagesSize, sizeof(Page *));
   pageRefs = (Ref *)gmallocn(pagesSize, sizeof(Ref));
   for (i = 0; i < pagesSize; ++i) {
@@ -82,7 +73,16 @@ Catalog::Catalog(XRef *xrefA) {
     pageRefs[i].num = -1;
     pageRefs[i].gen = -1;
   }
-  numPages = readPageTree(pagesDict.getDict(), NULL, 0, 0);
+  alreadyRead = (char *)gmalloc(xref->getNumObjects());
+  memset(alreadyRead, 0, xref->getNumObjects());
+  if (catDict.dictLookupNF("Pages", &pagesDictRef)->isRef() &&
+      pagesDictRef.getRefNum() >= 0 &&
+      pagesDictRef.getRefNum() < xref->getNumObjects()) {
+    alreadyRead[pagesDictRef.getRefNum()] = 1;
+  }
+  pagesDictRef.free();
+  numPages = readPageTree(pagesDict.getDict(), NULL, 0, alreadyRead);
+  gfree(alreadyRead);
   if (numPages != numPages0) {
     error(-1, "Page count in top-level pages object is incorrect");
   }
@@ -120,6 +120,8 @@ Catalog::Catalog(XRef *xrefA) {
       pageMode = FullScreen;
     else if (strcmp(obj.getName(), "UseOC") == 0)
       pageMode = UseOC;
+    else
+      pageMode = UseNone;
   } else {
     pageMode = UseNone;
   }
@@ -197,7 +199,8 @@ GString *Catalog::readMetadata() {
   return s;
 }
 
-int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, int callDepth) {
+int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start,
+			  char *alreadyRead) {
   Object kids;
   Object kid;
   Object kidRef;
@@ -213,6 +216,17 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, int call
     goto err1;
   }
   for (i = 0; i < kids.arrayGetLength(); ++i) {
+    kids.arrayGetNF(i, &kidRef);
+    if (kidRef.isRef() &&
+	kidRef.getRefNum() >= 0 &&
+	kidRef.getRefNum() < xref->getNumObjects()) {
+      if (alreadyRead[kidRef.getRefNum()]) {
+	error(-1, "Loop in Pages tree");
+	kidRef.free();
+	continue;
+      }
+      alreadyRead[kidRef.getRefNum()] = 1;
+    }
     kids.arrayGet(i, &kid);
     if (kid.isDict("Page")) {
       attrs2 = new PageAttrs(attrs1, kid.getDict());
@@ -232,28 +246,23 @@ int Catalog::readPageTree(Dict *pagesDict, PageAttrs *attrs, int start, int call
 	}
       }
       pages[start] = page;
-      kids.arrayGetNF(i, &kidRef);
       if (kidRef.isRef()) {
 	pageRefs[start].num = kidRef.getRefNum();
 	pageRefs[start].gen = kidRef.getRefGen();
       }
-      kidRef.free();
       ++start;
     // This should really be isDict("Pages"), but I've seen at least one
     // PDF file where the /Type entry is missing.
     } else if (kid.isDict()) {
-      if (callDepth > MAX_CALL_DEPTH) {
-        error(-1, "Limit of %d recursive calls reached while reading the page tree. If your document is correct and not a test to try to force a crash, please report a bug.", MAX_CALL_DEPTH);
-      } else {
-        if ((start = readPageTree(kid.getDict(), attrs1, start, callDepth + 1))
-	    < 0)
-	  goto err2;
-      }
+      if ((start = readPageTree(kid.getDict(), attrs1, start, alreadyRead))
+	  < 0)
+	goto err2;
     } else {
       error(-1, "Kid object (page %d) is wrong type (%s)",
 	    start+1, kid.getTypeName());
     }
     kid.free();
+    kidRef.free();
   }
   delete attrs1;
   kids.free();
@@ -280,7 +289,7 @@ int Catalog::findPage(int num, int gen) {
   return 0;
 }
 
-LinkDest *Catalog::findDest(UGString *name) {
+LinkDest *Catalog::findDest(GString *name) {
   LinkDest *dest;
   Object obj1, obj2;
   GBool found;
@@ -288,7 +297,7 @@ LinkDest *Catalog::findDest(UGString *name) {
   // try named destination dictionary then name tree
   found = gFalse;
   if (dests.isDict()) {
-    if (!dests.dictLookup(*name, &obj1)->isNull())
+    if (!dests.dictLookup(name->getCString(), &obj1)->isNull())
       found = gTrue;
     else
       obj1.free();
@@ -324,7 +333,7 @@ LinkDest *Catalog::findDest(UGString *name) {
   return dest;
 }
 
-NameTree::NameTree(void)
+NameTree::NameTree()
 {
   size = 0;
   length = 0;
@@ -332,15 +341,12 @@ NameTree::NameTree(void)
 }
 
 NameTree::Entry::Entry(Array *array, int index) {
-  GString n;
-  if (!array->getString(index, &n) || !array->getNF(index + 1, &value))
+  if (!array->getString(index, &name) || !array->getNF(index + 1, &value))
     error(-1, "Invalid page tree");
-  name = new UGString(n);
 }
 
 NameTree::Entry::~Entry() {
   value.free();
-  delete name;
 }
 
 void NameTree::addEntry(Entry *entry)
@@ -395,13 +401,13 @@ void NameTree::parse(Object *tree) {
 
 int NameTree::Entry::cmp(const void *voidKey, const void *voidEntry)
 {
-  UGString *key = (UGString *) voidKey;
+  GString *key = (GString *) voidKey;
   Entry *entry = *(NameTree::Entry **) voidEntry;
 
-  return key->cmp(entry->name);
+  return key->cmp(&entry->name);
 }
 
-GBool NameTree::lookup(UGString *name, Object *obj)
+GBool NameTree::lookup(GString *name, Object *obj)
 {
   Entry *entry;
 

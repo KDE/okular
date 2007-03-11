@@ -35,7 +35,6 @@
 #include "xpdf/ErrorCodes.h"
 #include "xpdf/UnicodeMap.h"
 #include "xpdf/Outline.h"
-#include "xpdf/UGString.h"
 #include "goo/GList.h"
 
 // local includes
@@ -45,6 +44,8 @@
 #include "core/page.h"
 #include "core/pagetransition.h"
 #include "conf/settings.h"
+
+#include <stdlib.h>
 
 #include <config.h>
 
@@ -315,7 +316,8 @@ void PDFGenerator::generatePixmap( PixmapRequest * request )
     // note: thread safety is set on 'false' for the GUI (this) thread
     kpdfOutputDev->setParams( request->width, request->height, genObjectRects, genObjectRects, false );
     pdfdoc->displayPage( kpdfOutputDev, page->number() + 1, fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
-    delete pdfdoc->takeLinks(); // we have already created the KPDFLinks so free the xpdf memory
+    if ( genObjectRects )
+        pdfdoc->processLinks( kpdfOutputDev, page->number() + 1 );
 
     // 2. Take data from outputdev and attach it to the Page
     page->setPixmap( request->id, kpdfOutputDev->takePixmap() );
@@ -456,12 +458,10 @@ bool PDFGenerator::print( KPrinter& printer )
     {
       pstitlechar = 0;
     }
-    PSOutputDev *psOut = new PSOutputDev(tf.name().latin1(), pstitlechar, pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
+    PSOutputDev *psOut = new PSOutputDev(const_cast<char*>(tf.name().latin1()), const_cast<char*>(pstitlechar), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
 
     if (psOut->isOk())
     {
-        std::list<int> pages;
-
         double xScale = ((double)paperWidth - (double)marginLeft - (double)marginRight) / (double)paperWidth;
         double yScale = ((double)paperHeight - (double)marginBottom - (double)marginTop) / (double)paperHeight;
 
@@ -475,20 +475,23 @@ bool PDFGenerator::print( KPrinter& printer )
             if (result == KMessageBox::Yes) psOut->setScale(xScale, yScale);
         }
 
+        QValueList<int> pageList;
+
         if (!printer.previewOnly())
         {
-            QValueList<int> pageList = printer.pageList();
-            QValueList<int>::const_iterator it;
-
-            for(it = pageList.begin(); it != pageList.end(); ++it) pages.push_back(*it);
+            pageList = printer.pageList();
         }
         else
         {
-            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pages.push_back(i);
+            for(int i = 1; i <= pdfdoc->getNumPages(); i++) pageList.append(i);
         }
 
+        QValueList<int>::const_iterator pIt = pageList.begin(), pEnd = pageList.end();
         docLock.lock();
-        pdfdoc->displayPages(psOut, pages, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
+        for ( ; pIt != pEnd; ++pIt )
+        {
+            pdfdoc->displayPage(psOut, *pIt, 72, 72, 0, false, globalParams->getPSCrop(), gFalse);
+        }
         docLock.unlock();
 
         // needs to be here so that the file is flushed, do not merge with the one
@@ -504,12 +507,53 @@ bool PDFGenerator::print( KPrinter& printer )
     }
 }
 
-static UGString *QStringToUGString(const QString &s) {
+static GString *QStringToGString(const QString &s) {
     int len = s.length();
-    Unicode *u = (Unicode *)gmallocn(s.length(), sizeof(Unicode));
+    char *cstring = (char *)gmallocn(s.length(), sizeof(char));
     for (int i = 0; i < len; ++i)
-      u[i] = s.at(i).unicode();
-    return new UGString(u, len);
+      cstring[i] = s.at(i).unicode();
+    return new GString(cstring, len);
+}
+
+static QString unicodeToQString(Unicode* u, int len) {
+    QString ret;
+    ret.setLength(len);
+    QChar* qch = (QChar*) ret.unicode();
+    for (;len;--len)
+      *qch++ = (QChar) *u++;
+    return ret;
+}
+
+static QString UnicodeParsedString(GString *s1) {
+    GBool isUnicode;
+    int i;
+    Unicode u;
+    QString result;
+    if ( ( s1->getChar(0) & 0xff ) == 0xfe && ( s1->getChar(1) & 0xff ) == 0xff )
+    {
+        isUnicode = gTrue;
+        i = 2;
+    }
+    else
+    {
+        isUnicode = gFalse;
+        i = 0;
+    }
+    while ( i < s1->getLength() )
+    {
+        if ( isUnicode )
+        {
+            u = ( ( s1->getChar(i) & 0xff ) << 8 ) | ( s1->getChar(i+1) & 0xff );
+            i += 2;
+        }
+        else
+        {
+            u = s1->getChar(i) & 0xff;
+            ++i;
+        }
+        result += unicodeToQString( &u, 1 );
+    }
+    return result;
 }
 
 QString PDFGenerator::getMetaData( const QString & key, const QString & option )
@@ -525,7 +569,7 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         DocumentViewport viewport;
-        UGString * namedDest = QStringToUGString( option );
+        GString * namedDest = QStringToGString(option);
         docLock.lock();
         LinkDest * destination = pdfdoc->findDest( namedDest );
         if ( destination )
@@ -567,15 +611,6 @@ bool PDFGenerator::reparseConfig()
     return false;
 }
 //END Generator inherited functions
-
-static QString unicodeToQString(Unicode* u, int len) {
-    QString ret;
-    ret.setLength(len);
-    QChar* qch = (QChar*) ret.unicode();
-    for (;len;--len)
-      *qch++ = (QChar) *u++;
-    return ret;
-}
 
 void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
 {
@@ -714,41 +749,12 @@ QString PDFGenerator::getDocumentInfo( const QString & data, bool canReturnNull 
     if ( !info.isDict() )
         return canReturnNull ? QString::null : i18n( "Unknown" );
 
-    QString result;
     Object obj;
-    GString *s1;
-    GBool isUnicode;
-    Unicode u;
-    int i;
     Dict *infoDict = info.getDict();
 
-    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
+    if ( infoDict->lookup( (char*)data.latin1(), &obj )->isString() )
     {
-        s1 = obj.getString();
-        if ( ( s1->getChar(0) & 0xff ) == 0xfe && ( s1->getChar(1) & 0xff ) == 0xff )
-        {
-            isUnicode = gTrue;
-            i = 2;
-        }
-        else
-        {
-            isUnicode = gFalse;
-            i = 0;
-        }
-        while ( i < obj.getString()->getLength() )
-        {
-            if ( isUnicode )
-            {
-                u = ( ( s1->getChar(i) & 0xff ) << 8 ) | ( s1->getChar(i+1) & 0xff );
-                i += 2;
-            }
-            else
-            {
-                u = s1->getChar(i) & 0xff;
-                ++i;
-            }
-            result += unicodeToQString( &u, 1 );
-        }
+        QString result = UnicodeParsedString(obj.getString());
         obj.free();
         info.free();
         return result;
@@ -771,7 +777,6 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         return i18n( "Unknown Date" );
 
     Object obj;
-    const char *s, *origS;
     int year, mon, day, hour, min, sec;
     Dict *infoDict = info.getDict();
     UnicodeMap *uMap = globalParams->getTextEncoding();
@@ -780,14 +785,13 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
     if ( !uMap )
         return i18n( "Unknown Date" );
 
-    if ( infoDict->lookup( data.latin1(), &obj )->isString() )
+    if ( infoDict->lookup( (char*)data.latin1(), &obj )->isString() )
     {
-        s = UGString(*obj.getString()).getCString();
-        origS = s;
+        QString s = UnicodeParsedString(obj.getString());
         if ( s[0] == 'D' && s[1] == ':' )
-            s += 2;
+            s = s.mid(2);
 
-        if ( sscanf( s, "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
+        if ( sscanf( s.latin1(), "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
         {
             QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
             QTime t( hour, min, sec );
@@ -798,7 +802,6 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         }
         else
             result = s;
-        delete[] origS;
     }
     else
         result = i18n( "Unknown Date" );
@@ -838,9 +841,12 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 // get the destination for the page now, but it's VERY time consuming,
                 // so better storing the reference and provide the viewport as metadata
                 // on demand
-                UGString *s = g->getNamedDest();
-                QString aux = unicodeToQString( s->unicode(), s->getLength() );
-                item.setAttribute( "ViewportName", aux );
+                GString *s = g->getNamedDest();
+                QChar *charArray = new QChar[s->getLength()];
+                for (int i = 0; i < s->getLength(); ++i) charArray[i] = QChar(s->getCString()[i]);
+                QString option(charArray, s->getLength());
+                item.setAttribute( "ViewportName", option );
+                delete[] charArray;
             }
             else if ( destination && destination->isOk() )
             {
@@ -886,7 +892,7 @@ void PDFGenerator::fillViewportFromLink( DocumentViewport &viewport, LinkDest *d
                 double CTM[6];
                 Page *page = pdfdoc->getCatalog()->getPage( viewport.pageNumber + 1 );
                 // TODO remember to change this if we implement DPI and/or rotation
-                page->getDefaultCTM(CTM, 72.0, 72.0, 0, gTrue);
+                page->getDefaultCTM(CTM, 72.0, 72.0, 0, gFalse, gTrue);
 
                 int left, top;
                 // this is OutputDev::cvtUserToDev
@@ -1173,7 +1179,8 @@ void PDFPixmapGeneratorThread::run()
                                             genObjectRects, genObjectRects, TRUE /*thread safety*/ );
     d->generator->pdfdoc->displayPage( d->generator->kpdfOutputDev, page->number() + 1,
                                        fakeDpiX, fakeDpiY, 0, false, true, genObjectRects );
-    delete d->generator->pdfdoc->takeLinks(); // we have already created the KPDFLinks so free the xpdf memory
+    if ( genObjectRects )
+        d->generator->pdfdoc->processLinks( d->generator->kpdfOutputDev, page->number() + 1 );
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG

@@ -24,7 +24,7 @@
 // Object
 //------------------------------------------------------------------------
 
-const char *objTypeNames[numObjTypes] = {
+char *objTypeNames[numObjTypes] = {
   "boolean",
   "integer",
   "real",
@@ -112,7 +112,7 @@ void Object::free() {
     delete string;
     break;
   case objName:
-    gfree((void*)name);
+    gfree(name);
     break;
   case objArray:
     if (!array->decRef()) {
@@ -130,7 +130,7 @@ void Object::free() {
     }
     break;
   case objCmd:
-    gfree((void*)cmd);
+    gfree(cmd);
     break;
   default:
     break;
@@ -141,7 +141,7 @@ void Object::free() {
   type = objNone;
 }
 
-const char *Object::getTypeName() {
+char *Object::getTypeName() {
   return objTypeNames[type];
 }
 
@@ -212,11 +212,7 @@ void Object::print(FILE *f) {
   }
 }
 
-void Object::memCheck(FILE *
-#ifdef DEBUG_MEM
- f
-#endif
-) {
+void Object::memCheck(FILE *f) {
 #ifdef DEBUG_MEM
   int i;
   int t;
@@ -231,5 +227,7 @@ void Object::memCheck(FILE *
 	fprintf(f, "  %-20s: %6d\n", objTypeNames[i], numAlloc[i]);
     }
   }
+#else
+  (void)f;
 #endif
 }

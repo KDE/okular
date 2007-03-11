@@ -10,6 +10,23 @@
 #define GMEM_H
 
 #include <stdio.h>
+#include <aconf.h>
+
+#if USE_EXCEPTIONS
+
+class GMemException {
+public:
+  GMemException() {}
+  ~GMemException() {}
+};
+
+#define GMEM_EXCEP throw(GMemException)
+
+#else // USE_EXCEPTIONS
+
+#define GMEM_EXCEP
+
+#endif // USE_EXCEPTIONS
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,13 +36,13 @@ extern "C" {
  * Same as malloc, but prints error message and exits if malloc()
  * returns NULL.
  */
-extern void *gmalloc(size_t size);
+extern void *gmalloc(int size) GMEM_EXCEP;
 
 /*
  * Same as realloc, but prints error message and exits if realloc()
  * returns NULL.  If <p> is NULL, calls malloc instead of realloc().
  */
-extern void *grealloc(void *p, size_t size);
+extern void *grealloc(void *p, int size) GMEM_EXCEP;
 
 /*
  * These are similar to gmalloc and grealloc, but take an object count
@@ -33,8 +50,8 @@ extern void *grealloc(void *p, size_t size);
  * bytes, but there is an additional error check that the total size
  * doesn't overflow an int.
  */
-extern void *gmallocn(int nObjs, int objSize);
-extern void *greallocn(void *p, int nObjs, int objSize);
+extern void *gmallocn(int nObjs, int objSize) GMEM_EXCEP;
+extern void *greallocn(void *p, int nObjs, int objSize) GMEM_EXCEP;
 
 /*
  * Same as free, but checks for and ignores NULL pointers.
@@ -53,7 +70,7 @@ extern void gMemReport(FILE *f);
 /*
  * Allocate memory and copy a string into it.
  */
-extern const char *copyString(const char *s);
+extern char *copyString(char *s);
 
 #ifdef __cplusplus
 }

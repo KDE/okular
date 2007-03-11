@@ -60,7 +60,7 @@ class KPDFOutputDev : public SplashOutputDev
         // End a page.
         virtual void endPage();
         //----- link borders
-        virtual void drawLink(Link *link, Catalog *catalog);
+        virtual void processLink(Link *link, Catalog *catalog);
         //----- image drawing
         virtual void drawImage(GfxState *state, Object *ref, Stream *str, int width, int height,
                              GfxImageColorMap *colorMap, int *maskColors, GBool inlineImg);
@@ -71,7 +71,7 @@ class KPDFOutputDev : public SplashOutputDev
         // generate a valid KPDFLink subclass (or null) from a xpdf's LinkAction
         KPDFLink * generateLink( LinkAction * a );
         // fills up a Viewport structure out of a given LinkGoto link
-        DocumentViewport decodeViewport( UGString *, class LinkDest * );
+        DocumentViewport decodeViewport( GString *, class LinkDest * );
 
         // generator switches and parameters
         bool m_qtThreadSafety;

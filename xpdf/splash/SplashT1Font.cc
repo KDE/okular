@@ -63,8 +63,9 @@ static Guchar bitReverse[256] = {
 // SplashT1Font
 //------------------------------------------------------------------------
 
-SplashT1Font::SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA):
-  SplashFont(fontFileA, matA, ((SplashT1FontFile *)fontFileA)->engine->aa)
+SplashT1Font::SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA,
+			   SplashCoord *textMatA):
+  SplashFont(fontFileA, matA, textMatA, fontFileA->engine->aa)
 {
   T1_TMATRIX matrix;
   BBox bbox;
@@ -72,6 +73,7 @@ SplashT1Font::SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA):
   int x, y;
 
   t1libID = T1_CopyFont(fontFileA->t1libID);
+  outlineID = -1;
 
   // compute font size
   size = (float)splashSqrt(mat[2]*mat[2] + mat[3]*mat[3]);
@@ -168,14 +170,17 @@ SplashT1Font::SplashT1Font(SplashT1FontFile *fontFileA, SplashCoord *matA):
 
 SplashT1Font::~SplashT1Font() {
   T1_DeleteFont(t1libID);
+  if (outlineID >= 0) {
+    T1_DeleteFont(outlineID);
+  }
 }
 
-GBool SplashT1Font::getGlyph(int c, int /*xFrac*/, int /*yFrac*/,
+GBool SplashT1Font::getGlyph(int c, int xFrac, int yFrac,
 			     SplashGlyphBitmap *bitmap) {
   return SplashFont::getGlyph(c, 0, 0, bitmap);
 }
 
-GBool SplashT1Font::makeGlyph(int c, int /*xFrac*/, int /*yFrac*/,
+GBool SplashT1Font::makeGlyph(int c, int xFrac, int yFrac,
 			      SplashGlyphBitmap *bitmap) {
   GLYPH *glyph;
   int n, i;
@@ -210,6 +215,7 @@ GBool SplashT1Font::makeGlyph(int c, int /*xFrac*/, int /*yFrac*/,
 }
 
 SplashPath *SplashT1Font::getGlyphPath(int c) {
+  T1_TMATRIX matrix;
   SplashPath *path;
   T1_OUTLINE *outline;
   T1_PATHSEGMENT *seg;
@@ -217,47 +223,64 @@ SplashPath *SplashT1Font::getGlyphPath(int c) {
   SplashCoord x, y, x1, y1;
   GBool needClose;
 
+  if (outlineID < 0) {
+    outlineID = T1_CopyFont(((SplashT1FontFile *)fontFile)->t1libID);
+    outlineSize = (float)splashSqrt(textMat[2]*textMat[2] +
+				    textMat[3]*textMat[3]);
+    matrix.cxx = (double)textMat[0] / outlineSize;
+    matrix.cxy = (double)textMat[1] / outlineSize;
+    matrix.cyx = (double)textMat[2] / outlineSize;
+    matrix.cyy = (double)textMat[3] / outlineSize;
+    // t1lib doesn't seem to handle small sizes correctly here, so set
+    // the size to 1000, and scale the resulting coordinates later
+    outlineMul = (float)(outlineSize / 65536000.0);
+    outlineSize = 1000;
+    T1_TransformFont(outlineID, &matrix);
+  }
+
   path = new SplashPath();
-  if (!(outline = T1_GetCharOutline(t1libID, c, size, NULL))) {
-    return path;
-  }
-  x = 0;
-  y = 0;
-  needClose = gFalse;
-  for (seg = outline; seg; seg = seg->link) {
-    switch (seg->type) {
-    case T1_PATHTYPE_MOVE:
-      if (needClose) {
-	path->close();
-	needClose = gFalse;
+  if ((outline = T1_GetCharOutline(outlineID, c, outlineSize, NULL))) {
+    x = 0;
+    y = 0;
+    needClose = gFalse;
+    for (seg = outline; seg; seg = seg->link) {
+      switch (seg->type) {
+      case T1_PATHTYPE_MOVE:
+	if (needClose) {
+	  path->close();
+	  needClose = gFalse;
+	}
+	x += seg->dest.x * outlineMul;
+	y += seg->dest.y * outlineMul;
+	path->moveTo(x, -y);
+	break;
+      case T1_PATHTYPE_LINE:
+	x += seg->dest.x * outlineMul;
+	y += seg->dest.y * outlineMul;
+	path->lineTo(x, -y);
+	needClose = gTrue;
+	break;
+      case T1_PATHTYPE_BEZIER:
+	bez = (T1_BEZIERSEGMENT *)seg;
+	x1 = x + (SplashCoord)(bez->dest.x * outlineMul);
+	y1 = y + (SplashCoord)(bez->dest.y * outlineMul);
+	path->curveTo(x + (SplashCoord)(bez->B.x * outlineMul),
+		      -(y + (SplashCoord)(bez->B.y * outlineMul)),
+		      x + (SplashCoord)(bez->C.x * outlineMul),
+		      -(y + (SplashCoord)(bez->C.y * outlineMul)),
+		      x1, -y1);
+	x = x1;
+	y = y1;
+	needClose = gTrue;
+	break;
       }
-      x += seg->dest.x / 65536.0;
-      y += seg->dest.y / 65536.0;
-      path->moveTo(x, y);
-      break;
-    case T1_PATHTYPE_LINE:
-      x += seg->dest.x / 65536.0;
-      y += seg->dest.y / 65536.0;
-      path->lineTo(x, y);
-      needClose = gTrue;
-      break;
-    case T1_PATHTYPE_BEZIER:
-      bez = (T1_BEZIERSEGMENT *)seg;
-      x1 = x + bez->dest.x / 65536.0;
-      y1 = y + bez->dest.y / 65536.0;
-      path->curveTo(x + bez->B.x / 65536.0, y + bez->B.y / 65536.0,
-		    x + bez->C.x / 65536.0, y + bez->C.y / 65536.0,
-		    x1, y1);
-      x = x1;
-      y = y1;
-      needClose = gTrue;
-      break;
     }
+    if (needClose) {
+      path->close();
+    }
+    T1_FreeOutline(outline);
   }
-  if (needClose) {
-    path->close();
-  }
-  T1_FreeOutline(outline);
+
   return path;
 }
 

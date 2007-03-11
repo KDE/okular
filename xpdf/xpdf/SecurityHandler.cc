@@ -25,7 +25,6 @@
 #ifdef ENABLE_PLUGINS
 #  include "XpdfPluginAPI.h"
 #endif
-#include "UGString.h"
 #include "SecurityHandler.h"
 
 //------------------------------------------------------------------------
@@ -35,7 +34,9 @@
 SecurityHandler *SecurityHandler::make(PDFDoc *docA, Object *encryptDictA) {
   Object filterObj;
   SecurityHandler *secHdlr;
+#ifdef ENABLE_PLUGINS
   XpdfSecurityHandler *xsh;
+#endif
 
   encryptDictA->dictLookup("Filter", &filterObj);
   if (filterObj.isName("Standard")) {
@@ -152,6 +153,7 @@ StandardSecurityHandler::StandardSecurityHandler(PDFDoc *docA,
       permObj.isInt()) {
     encVersion = versionObj.getInt();
     encRevision = revisionObj.getInt();
+    encAlgorithm = cryptRC4;
     // revision 2 forces a 40-bit key - some buggy PDF generators
     // set the Length value incorrectly
     if (encRevision == 2 || !lengthObj.isInt()) {
@@ -171,9 +173,19 @@ StandardSecurityHandler::StandardSecurityHandler(PDFDoc *docA,
 	  !strcmp(streamFilterObj.getName(), stringFilterObj.getName())) {
 	if (cryptFiltersObj.dictLookup(streamFilterObj.getName(),
 				       &cryptFilterObj)->isDict()) {
-	  if (cryptFilterObj.dictLookup("CFM", &cfmObj)->isName("V2")) {
+	  cryptFilterObj.dictLookup("CFM", &cfmObj);
+	  if (cfmObj.isName("V2")) {
 	    encVersion = 2;
 	    encRevision = 3;
+	    if (cryptFilterObj.dictLookup("Length", &cfLengthObj)->isInt()) {
+	      //~ according to the spec, this should be cfLengthObj / 8
+	      fileKeyLength = cfLengthObj.getInt();
+	    }
+	    cfLengthObj.free();
+	  } else if (cfmObj.isName("AESV2")) {
+	    encVersion = 2;
+	    encRevision = 3;
+	    encAlgorithm = cryptAES;
 	    if (cryptFilterObj.dictLookup("Length", &cfLengthObj)->isInt()) {
 	      //~ according to the spec, this should be cfLengthObj / 8
 	      fileKeyLength = cfLengthObj.getInt();
@@ -311,6 +323,7 @@ ExternalSecurityHandler::ExternalSecurityHandler(PDFDoc *docA,
 {
   encryptDictA->copy(&encryptDict);
   xsh = xshA;
+  encAlgorithm = cryptRC4; //~ this should be obtained via getKey
   ok = gFalse;
 
   if (!(*xsh->newDoc)(xsh->handlerData, (XpdfDoc)docA,

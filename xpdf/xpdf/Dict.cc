@@ -18,7 +18,6 @@
 #include "Object.h"
 #include "XRef.h"
 #include "Dict.h"
-#include "UGString.h"
 
 //------------------------------------------------------------------------
 // Dict
@@ -35,13 +34,13 @@ Dict::~Dict() {
   int i;
 
   for (i = 0; i < length; ++i) {
-    delete entries[i].key;
+    gfree(entries[i].key);
     entries[i].val.free();
   }
   gfree(entries);
 }
 
-void Dict::add(const UGString &key, Object *val) {
+void Dict::add(char *key, Object *val) {
   if (length == size) {
     if (length == 0) {
       size = 8;
@@ -50,40 +49,40 @@ void Dict::add(const UGString &key, Object *val) {
     }
     entries = (DictEntry *)greallocn(entries, size, sizeof(DictEntry));
   }
-  entries[length].key = new UGString(key);
+  entries[length].key = key;
   entries[length].val = *val;
   ++length;
 }
 
-inline DictEntry *Dict::find(const UGString &key) {
+inline DictEntry *Dict::find(char *key) {
   int i;
 
   for (i = 0; i < length; ++i) {
-    if (!key.cmp(entries[i].key))
+    if (!strcmp(key, entries[i].key))
       return &entries[i];
   }
   return NULL;
 }
 
-GBool Dict::is(const char *type) {
+GBool Dict::is(char *type) {
   DictEntry *e;
 
   return (e = find("Type")) && e->val.isName(type);
 }
 
-Object *Dict::lookup(const UGString &key, Object *obj) {
+Object *Dict::lookup(char *key, Object *obj) {
   DictEntry *e;
 
   return (e = find(key)) ? e->val.fetch(xref, obj) : obj->initNull();
 }
 
-Object *Dict::lookupNF(const UGString &key, Object *obj) {
+Object *Dict::lookupNF(char *key, Object *obj) {
   DictEntry *e;
 
   return (e = find(key)) ? e->val.copy(obj) : obj->initNull();
 }
 
-UGString *Dict::getKey(int i) {
+char *Dict::getKey(int i) {
   return entries[i].key;
 }
 

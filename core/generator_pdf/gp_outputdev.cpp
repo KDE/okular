@@ -141,7 +141,7 @@ void KPDFOutputDev::endPage()
     SplashOutputDev::startPage( 0, NULL );
 }
 
-void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
+void KPDFOutputDev::processLink( Link * link, Catalog * catalog )
 {
     if ( !link->isOk() )
         return;
@@ -168,7 +168,7 @@ void KPDFOutputDev::drawLink( Link * link, Catalog * catalog )
             m_rects.push_front( rect );
         }
     }
-    SplashOutputDev::drawLink( link, catalog );
+    SplashOutputDev::processLink( link, catalog );
 }
 
 void KPDFOutputDev::drawImage( GfxState *state, Object *ref, Stream *str,
@@ -321,7 +321,7 @@ KPDFLink * KPDFOutputDev::generateLink( LinkAction * a )
     return link;
 }
 
-DocumentViewport KPDFOutputDev::decodeViewport( UGString * namedDest, LinkDest * dest )
+DocumentViewport KPDFOutputDev::decodeViewport( GString * namedDest, LinkDest * dest )
 // note: this function is called when processing a page, when the MUTEX is already LOCKED
 {
     DocumentViewport vp( -1 );

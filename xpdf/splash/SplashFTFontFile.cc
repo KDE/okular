@@ -25,10 +25,10 @@
 SplashFontFile *SplashFTFontFile::loadType1Font(SplashFTFontEngine *engineA,
 						SplashFontFileID *idA,
 						SplashFontSrc *src,
-						const char **encA) {
+						char **encA) {
   FT_Face faceA;
   Gushort *codeToGIDA;
-  const char *name;
+  char *name;
   int i;
 
   if (src->isFile) {
@@ -42,12 +42,12 @@ SplashFontFile *SplashFTFontFile::loadType1Font(SplashFTFontEngine *engineA,
   for (i = 0; i < 256; ++i) {
     codeToGIDA[i] = 0;
     if ((name = encA[i])) {
-      codeToGIDA[i] = (Gushort)FT_Get_Name_Index(faceA, (char*)name);
+      codeToGIDA[i] = (Gushort)FT_Get_Name_Index(faceA, name);
     }
   }
 
   return new SplashFTFontFile(engineA, idA, src,
-			      faceA, codeToGIDA, 256);
+			      faceA, codeToGIDA, 256, gFalse);
 }
 
 SplashFontFile *SplashFTFontFile::loadCIDFont(SplashFTFontEngine *engineA,
@@ -66,7 +66,7 @@ SplashFontFile *SplashFTFontFile::loadCIDFont(SplashFTFontEngine *engineA,
   }
 
   return new SplashFTFontFile(engineA, idA, src,
-			      faceA, codeToGIDA, codeToGIDLenA);
+			      faceA, codeToGIDA, codeToGIDLenA, gFalse);
 }
 
 SplashFontFile *SplashFTFontFile::loadTrueTypeFont(SplashFTFontEngine *engineA,
@@ -86,20 +86,22 @@ SplashFontFile *SplashFTFontFile::loadTrueTypeFont(SplashFTFontEngine *engineA,
   }
 
   return new SplashFTFontFile(engineA, idA, src,
-			      faceA, codeToGIDA, codeToGIDLenA);
+			      faceA, codeToGIDA, codeToGIDLenA, gTrue);
 }
 
 SplashFTFontFile::SplashFTFontFile(SplashFTFontEngine *engineA,
 				   SplashFontFileID *idA,
-				   SplashFontSrc *srcA,
+				   SplashFontSrc *src,
 				   FT_Face faceA,
-				   Gushort *codeToGIDA, int codeToGIDLenA):
-  SplashFontFile(idA, srcA)
+				   Gushort *codeToGIDA, int codeToGIDLenA,
+				   GBool trueTypeA):
+  SplashFontFile(idA, src)
 {
   engine = engineA;
   face = faceA;
   codeToGID = codeToGIDA;
   codeToGIDLen = codeToGIDLenA;
+  trueType = trueTypeA;
 }
 
 SplashFTFontFile::~SplashFTFontFile() {
@@ -111,10 +113,11 @@ SplashFTFontFile::~SplashFTFontFile() {
   }
 }
 
-SplashFont *SplashFTFontFile::makeFont(SplashCoord *mat) {
+SplashFont *SplashFTFontFile::makeFont(SplashCoord *mat,
+				       SplashCoord *textMat) {
   SplashFont *font;
 
-  font = new SplashFTFont(this, mat);
+  font = new SplashFTFont(this, mat, textMat);
   font->initCache();
   return font;
 }

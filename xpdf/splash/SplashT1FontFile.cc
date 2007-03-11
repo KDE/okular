@@ -26,13 +26,14 @@
 SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
 						SplashFontFileID *idA,
 						SplashFontSrc *src,
-						const char **encA) {
+						char **encA) {
   int t1libIDA;
-  const char **encTmp;
+  char **encTmp;
   char *encStrTmp;
   int encStrSize;
   char *encPtr;
   int i;
+
   GString *fileNameA;
   SplashFontSrc *newsrc = NULL;
   SplashFontFile *ff;
@@ -52,8 +53,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
   fileNameA = src->fileName;
   // load the font file
   if ((t1libIDA = T1_AddFont(fileNameA)) < 0) {
-    if (newsrc)
-      delete newsrc;
+    delete newsrc;
     return NULL;
   }
   T1_LoadFont(t1libIDA);
@@ -65,7 +65,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
       encStrSize += strlen(encA[i]) + 1;
     }
   }
-  encTmp = (const char **)gmallocn(257, sizeof(char *));
+  encTmp = (char **)gmallocn(257, sizeof(char *));
   encStrTmp = (char *)gmallocn(encStrSize, sizeof(char));
   encPtr = encStrTmp;
   for (i = 0; i < 256; ++i) {
@@ -78,10 +78,10 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
     }
   }
   encTmp[256] = "custom";
-  T1_ReencodeFont(t1libIDA, (char**)encTmp);
+  T1_ReencodeFont(t1libIDA, encTmp);
 
   ff = new SplashT1FontFile(engineA, idA, src,
-			      t1libIDA, encTmp, encStrTmp);
+ 			      t1libIDA, encTmp, encStrTmp);
   if (newsrc)
     newsrc->unref();
   return ff;
@@ -90,7 +90,7 @@ SplashFontFile *SplashT1FontFile::loadType1Font(SplashT1FontEngine *engineA,
 SplashT1FontFile::SplashT1FontFile(SplashT1FontEngine *engineA,
 				   SplashFontFileID *idA,
 				   SplashFontSrc *srcA,
-				   int t1libIDA, const char **encA, char *encStrA):
+				   int t1libIDA, char **encA, char *encStrA):
   SplashFontFile(idA, srcA)
 {
   engine = engineA;
@@ -105,10 +105,11 @@ SplashT1FontFile::~SplashT1FontFile() {
   T1_DeleteFont(t1libID);
 }
 
-SplashFont *SplashT1FontFile::makeFont(SplashCoord *mat) {
+SplashFont *SplashT1FontFile::makeFont(SplashCoord *mat,
+				       SplashCoord *textMat) {
   SplashFont *font;
 
-  font = new SplashT1Font(this, mat);
+  font = new SplashT1Font(this, mat, textMat);
   font->initCache();
   return font;
 }

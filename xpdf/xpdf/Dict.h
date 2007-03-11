@@ -17,14 +17,12 @@
 
 #include "Object.h"
 
-class UGString;
-
 //------------------------------------------------------------------------
 // Dict
 //------------------------------------------------------------------------
 
 struct DictEntry {
-  UGString *key;
+  char *key;
   Object val;
 };
 
@@ -44,19 +42,19 @@ public:
   // Get number of entries.
   int getLength() { return length; }
 
-  // Add an entry.
-  void add(const UGString &key, Object *val);
+  // Add an entry.  NB: does not copy key.
+  void add(char *key, Object *val);
 
   // Check if dictionary is of specified type.
-  GBool is(const char *type);
+  GBool is(char *type);
 
   // Look up an entry and return the value.  Returns a null object
   // if <key> is not in the dictionary.
-  Object *lookup(const UGString &key, Object *obj);
-  Object *lookupNF(const UGString &key, Object *obj);
+  Object *lookup(char *key, Object *obj);
+  Object *lookupNF(char *key, Object *obj);
 
   // Iterative accessors.
-  UGString *getKey(int i);
+  char *getKey(int i);
   Object *getVal(int i, Object *obj);
   Object *getValNF(int i, Object *obj);
 
@@ -73,7 +71,7 @@ private:
   int length;			// number of entries in dictionary
   int ref;			// reference count
 
-  DictEntry *find(const UGString &key);
+  DictEntry *find(char *key);
 };
 
 #endif

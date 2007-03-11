@@ -24,7 +24,7 @@
 
 // A '1' in this array means the character is white space.  A '1' or
 // '2' means the character ends a name or command.
-static char Lexer_specialChars[256] = {
+static char specialChars[256] = {
   1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0,   // 0x
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   // 1x
   1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 2,   // 2x
@@ -134,7 +134,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	comment = gFalse;
     } else if (c == '%') {
       comment = gTrue;
-    } else if (Lexer_specialChars[c] != 1) {
+    } else if (specialChars[c] != 1) {
       break;
     }
   }
@@ -300,11 +300,13 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	  // we are growing see if the document is not malformed and we are growing too much
 	  if (objNum != -1)
 	  {
-	    int newObjNum = xref->getNumEntry(getPos());
+	    int newObjNum = xref->getNumEntry(curStr.streamGetPos());
 	    if (newObjNum != objNum)
 	    {
 	      error(getPos(), "Unterminated string");
 	      done = gTrue;
+	      delete s;
+	      n = -1;
 	    }
 	  }
 	}
@@ -312,18 +314,22 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	++n;
       }
     } while (!done);
-    if (!s)
-      s = new GString(tokBuf, n);
-    else
-      s->append(tokBuf, n);
-    obj->initString(s);
+    if (n > 0) {
+      if (!s)
+        s = new GString(tokBuf, n);
+      else
+        s->append(tokBuf, n);
+      obj->initString(s);
+    } else {
+      obj->initEOF();
+    }
     break;
 
   // name
   case '/':
     p = tokBuf;
     n = 0;
-    while ((c = lookChar()) != EOF && !Lexer_specialChars[c]) {
+    while ((c = lookChar()) != EOF && !specialChars[c]) {
       getChar();
       if (c == '#') {
 	c2 = lookChar();
@@ -392,7 +398,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	} else if (c == EOF) {
 	  error(getPos(), "Unterminated hex string");
 	  break;
-	} else if (Lexer_specialChars[c] != 1) {
+	} else if (specialChars[c] != 1) {
 	  c2 = c2 << 4;
 	  if (c >= '0' && c <= '9')
 	    c2 += c - '0';
@@ -455,7 +461,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
     p = tokBuf;
     *p++ = c;
     n = 1;
-    while ((c = lookChar()) != EOF && !Lexer_specialChars[c]) {
+    while ((c = lookChar()) != EOF && !specialChars[c]) {
       getChar();
       if (++n == tokBufSize) {
 	error(getPos(), "Command token too long");
@@ -497,5 +503,5 @@ void Lexer::skipToNextLine() {
 }
 
 GBool Lexer::isSpace(int c) {
-  return c >= 0 && c <= 0xff && Lexer_specialChars[c] == 1;
+  return c >= 0 && c <= 0xff && specialChars[c] == 1;
 }

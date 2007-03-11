@@ -23,8 +23,8 @@ class BuiltinFontWidths;
 //------------------------------------------------------------------------
 
 struct BuiltinFont {
-  const char *name;
-  const char **defaultBaseEnc;
+  char *name;
+  char **defaultBaseEnc;
   short ascent;
   short descent;
   short bbox[4];
@@ -34,7 +34,7 @@ struct BuiltinFont {
 //------------------------------------------------------------------------
 
 struct BuiltinFontWidth {
-  const char *name;
+  char *name;
   Gushort width;
   BuiltinFontWidth *next;
 };
@@ -44,11 +44,11 @@ public:
 
   BuiltinFontWidths(BuiltinFontWidth *widths, int sizeA);
   ~BuiltinFontWidths();
-  GBool getWidth(const char *name, Gushort *width);
+  GBool getWidth(char *name, Gushort *width);
 
 private:
 
-  int hash(const char *name);
+  int hash(char *name);
 
   BuiltinFontWidth **tab;
   int size;

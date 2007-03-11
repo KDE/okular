@@ -15,6 +15,7 @@
 #include "SplashPattern.h"
 #include "SplashScreen.h"
 #include "SplashClip.h"
+#include "SplashBitmap.h"
 #include "SplashState.h"
 
 //------------------------------------------------------------------------
@@ -23,16 +24,20 @@
 
 // number of components in each color mode
 int splashColorModeNComps[] = {
-  1, 1, 2, 3, 3, 4, 4
+  1, 1, 3, 3, 4
 };
 
-SplashState::SplashState(int width, int height) {
+SplashState::SplashState(int width, int height, GBool vectorAntialias,
+			 SplashScreenParams *screenParams) {
   SplashColor color;
 
+  matrix[0] = 1;  matrix[1] = 0;
+  matrix[2] = 0;  matrix[3] = 1;
+  matrix[4] = 0;  matrix[5] = 0;
   memset(&color, 0, sizeof(SplashColor));
   strokePattern = new SplashSolidColor(color);
   fillPattern = new SplashSolidColor(color);
-  screen = new SplashScreen(10);
+  screen = new SplashScreen(screenParams);
   blendFunc = NULL;
   strokeAlpha = 1;
   fillAlpha = 1;
@@ -44,11 +49,46 @@ SplashState::SplashState(int width, int height) {
   lineDash = NULL;
   lineDashLength = 0;
   lineDashPhase = 0;
-  clip = new SplashClip(0, 0, width - 1, height - 1);
+  strokeAdjust = gFalse;
+  clip = new SplashClip(0, 0, width - 0.001, height - 0.001, vectorAntialias);
+  softMask = NULL;
+  deleteSoftMask = gFalse;
+  inNonIsolatedGroup = gFalse;
+  next = NULL;
+}
+
+SplashState::SplashState(int width, int height, GBool vectorAntialias,
+			 SplashScreen *screenA) {
+  SplashColor color;
+
+  matrix[0] = 1;  matrix[1] = 0;
+  matrix[2] = 0;  matrix[3] = 1;
+  matrix[4] = 0;  matrix[5] = 0;
+  memset(&color, 0, sizeof(SplashColor));
+  strokePattern = new SplashSolidColor(color);
+  fillPattern = new SplashSolidColor(color);
+  screen = screenA->copy();
+  blendFunc = NULL;
+  strokeAlpha = 1;
+  fillAlpha = 1;
+  lineWidth = 0;
+  lineCap = splashLineCapButt;
+  lineJoin = splashLineJoinMiter;
+  miterLimit = 10;
+  flatness = 1;
+  lineDash = NULL;
+  lineDashLength = 0;
+  lineDashPhase = 0;
+  strokeAdjust = gFalse;
+  clip = new SplashClip(0, 0, width - 0.001, height - 0.001, vectorAntialias);
+  softMask = NULL;
+  deleteSoftMask = gFalse;
+  inNonIsolatedGroup = gFalse;
   next = NULL;
 }
 
 SplashState::SplashState(SplashState *state) {
+  memcpy(matrix, state->matrix, 6 * sizeof(SplashCoord));
   strokePattern = state->strokePattern->copy();
   fillPattern = state->fillPattern->copy();
   screen = state->screen->copy();
@@ -69,7 +109,11 @@ SplashState::SplashState(SplashState *state) {
     lineDashLength = 0;
   }
   lineDashPhase = state->lineDashPhase;
+  strokeAdjust = state->strokeAdjust;
   clip = state->clip->copy();
+  softMask = state->softMask;
+  deleteSoftMask = gFalse;
+  inNonIsolatedGroup = state->inNonIsolatedGroup;
   next = NULL;
 }
 
@@ -79,6 +123,9 @@ SplashState::~SplashState() {
   delete screen;
   gfree(lineDash);
   delete clip;
+  if (deleteSoftMask && softMask) {
+    delete softMask;
+  }
 }
 
 void SplashState::setStrokePattern(SplashPattern *strokePatternA) {
@@ -107,4 +154,12 @@ void SplashState::setLineDash(SplashCoord *lineDashA, int lineDashLengthA,
     lineDash = NULL;
   }
   lineDashPhase = lineDashPhaseA;
+}
+
+void SplashState::setSoftMask(SplashBitmap *softMaskA) {
+  if (deleteSoftMask) {
+    delete softMask;
+  }
+  softMask = softMaskA;
+  deleteSoftMask = gTrue;
 }

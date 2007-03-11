@@ -21,12 +21,19 @@
 #endif
 #include "gmem.h"
 #include "GString.h"
+#include "SplashMath.h"
 #include "SplashT1FontEngine.h"
 #include "SplashFTFontEngine.h"
 #include "SplashFontFile.h"
 #include "SplashFontFileID.h"
 #include "SplashFont.h"
 #include "SplashFontEngine.h"
+
+#ifdef VMS
+#if (__VMS_VER < 70000000)
+extern "C" int unlink(char *filename);
+#endif
+#endif
 
 //------------------------------------------------------------------------
 // SplashFontEngine
@@ -100,7 +107,7 @@ SplashFontFile *SplashFontEngine::getFontFile(SplashFontFileID *id) {
 
 SplashFontFile *SplashFontEngine::loadType1Font(SplashFontFileID *idA,
 						SplashFontSrc *src,
-						const char **enc) {
+						char **enc) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
@@ -127,18 +134,40 @@ SplashFontFile *SplashFontEngine::loadType1Font(SplashFontFileID *idA,
 
 SplashFontFile *SplashFontEngine::loadType1CFont(SplashFontFileID *idA,
 						 SplashFontSrc *src,
-						 const char **enc) {
+						 char **enc) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_T1LIB_H
   if (!fontFile && t1Engine) {
-    fontFile = t1Engine->loadType1CFont(idA, src, enc);
+    fontFile = t1Engine->loadType1CFont(idA, sec, enc);
   }
 #endif
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
     fontFile = ftEngine->loadType1CFont(idA, src, enc);
+  }
+#endif
+
+  // delete the (temporary) font file -- with Unix hard link
+  // semantics, this will remove the last link; otherwise it will
+  // return an error, leaving the file to be deleted later (if
+  // loadXYZFont failed, the file will always be deleted)
+  if (src->isFile)
+    src->unref();
+
+  return fontFile;
+}
+
+SplashFontFile *SplashFontEngine::loadOpenTypeT1CFont(SplashFontFileID *idA,
+						      SplashFontSrc *src,
+						      char **enc) {
+  SplashFontFile *fontFile;
+
+  fontFile = NULL;
+#if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
+  if (!fontFile && ftEngine) {
+    fontFile = ftEngine->loadOpenTypeT1CFont(idA, src, enc);
   }
 #endif
 
@@ -173,18 +202,38 @@ SplashFontFile *SplashFontEngine::loadCIDFont(SplashFontFileID *idA,
   return fontFile;
 }
 
+SplashFontFile *SplashFontEngine::loadOpenTypeCFFFont(SplashFontFileID *idA,
+						      SplashFontSrc *src) {
+  SplashFontFile *fontFile;
+
+  fontFile = NULL;
+#if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
+  if (!fontFile && ftEngine) {
+    fontFile = ftEngine->loadOpenTypeCFFFont(idA, src);
+  }
+#endif
+
+  // delete the (temporary) font file -- with Unix hard link
+  // semantics, this will remove the last link; otherwise it will
+  // return an error, leaving the file to be deleted later (if
+  // loadXYZFont failed, the file will always be deleted)
+  if (src->isFile)
+    src->unref();
+
+  return fontFile;
+}
+
 SplashFontFile *SplashFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
 						   SplashFontSrc *src,
 						   Gushort *codeToGID,
-						   int codeToGIDLen,
-						   int faceIndex) {
+						   int codeToGIDLen) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
     fontFile = ftEngine->loadTrueTypeFont(idA, src,
-					  codeToGID, codeToGIDLen, faceIndex);
+					  codeToGID, codeToGIDLen);
   }
 #endif
 
@@ -203,17 +252,29 @@ SplashFontFile *SplashFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
 }
 
 SplashFont *SplashFontEngine::getFont(SplashFontFile *fontFile,
-				      SplashCoord *mat) {
+				      SplashCoord *textMat,
+				      SplashCoord *ctm) {
+  SplashCoord mat[4];
   SplashFont *font;
   int i, j;
 
+  mat[0] = textMat[0] * ctm[0] + textMat[1] * ctm[2];
+  mat[1] = -(textMat[0] * ctm[1] + textMat[1] * ctm[3]);
+  mat[2] = textMat[2] * ctm[0] + textMat[3] * ctm[2];
+  mat[3] = -(textMat[2] * ctm[1] + textMat[3] * ctm[3]);
+  if (splashAbs(mat[0] * mat[3] - mat[1] * mat[2]) < 0.01) {
+    // avoid a singular (or close-to-singular) matrix
+    mat[0] = 0.01;  mat[1] = 0;
+    mat[2] = 0;     mat[3] = 0.01;
+  }
+
   font = fontCache[0];
-  if (font && font->matches(fontFile, mat)) {
+  if (font && font->matches(fontFile, mat, textMat)) {
     return font;
   }
   for (i = 1; i < splashFontCacheSize; ++i) {
     font = fontCache[i];
-    if (font && font->matches(fontFile, mat)) {
+    if (font && font->matches(fontFile, mat, textMat)) {
       for (j = i; j > 0; --j) {
 	fontCache[j] = fontCache[j-1];
       }
@@ -221,7 +282,7 @@ SplashFont *SplashFontEngine::getFont(SplashFontFile *fontFile,
       return font;
     }
   }
-  font = fontFile->makeFont(mat);
+  font = fontFile->makeFont(mat, textMat);
   if (fontCache[splashFontCacheSize - 1]) {
     delete fontCache[splashFontCacheSize - 1];
   }

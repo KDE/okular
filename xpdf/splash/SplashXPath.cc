@@ -76,6 +76,11 @@ SplashXPath::SplashXPath(SplashPath *path, SplashCoord *matrix,
 					    sizeof(SplashXPathAdjust));
     for (i = 0; i < path->hintsLength; ++i) {
       hint = &path->hints[i];
+      if (hint->ctrl0 + 1 >= path->length || hint->ctrl1 + 1 >= path->length) {
+	gfree(adjusts);
+	adjusts = NULL;
+	break;
+      }
       x0 = pts[hint->ctrl0    ].x;    y0 = pts[hint->ctrl0    ].y;
       x1 = pts[hint->ctrl0 + 1].x;    y1 = pts[hint->ctrl0 + 1].y;
       x2 = pts[hint->ctrl1    ].x;    y2 = pts[hint->ctrl1    ].y;

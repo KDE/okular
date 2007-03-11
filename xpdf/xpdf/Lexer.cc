@@ -306,7 +306,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	      error(getPos(), "Unterminated string");
 	      done = gTrue;
 	      delete s;
-	      n = -1;
+	      n = -2;
 	    }
 	  }
 	}
@@ -314,7 +314,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	++n;
       }
     } while (!done);
-    if (n > 0) {
+    if (n >= 0) {
       if (!s)
         s = new GString(tokBuf, n);
       else

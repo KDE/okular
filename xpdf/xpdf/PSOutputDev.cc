@@ -1100,6 +1100,7 @@ void PSOutputDev::init(PSOutputFunc outputFuncA, void *outputStreamA,
   fontFileNameSize = 64;
   fontFileNameLen = 0;
   fontFileNames = (GString **)gmallocn(fontFileNameSize, sizeof(GString *));
+  psFileNames = (GString **)gmallocn(fontFileNameSize, sizeof(GString *));
   nextTrueTypeNum = 0;
   font8InfoLen = 0;
   font8InfoSize = 0;

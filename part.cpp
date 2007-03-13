@@ -618,10 +618,10 @@ bool Part::slotImportPSFile()
         m_temporaryLocalFile = tf.fileName();
         tf.close();
 
-        m_file = url.path();
+        setLocalFilePath( url.path() );
         KProcess *p = new KProcess;
         *p << app;
-        *p << m_file << m_temporaryLocalFile;
+        *p << localFilePath() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
         connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
         p -> start();
@@ -643,19 +643,19 @@ bool Part::openFile()
             mime = KMimeType::mimeType(m_jobMime);
             if ( !mime )
             {
-                mime = KMimeType::findByPath( m_file );
+                mime = KMimeType::findByPath( localFilePath() );
             }
         }
         else
         {
-            mime = KMimeType::findByPath( m_file );
+            mime = KMimeType::findByPath( localFilePath() );
         }
     }
     else
     {
         mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
     }
-    bool ok = m_document->openDocument( m_file, url(), mime );
+    bool ok = m_document->openDocument( localFilePath(), url(), mime );
     bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
@@ -694,8 +694,8 @@ bool Part::openFile()
     }
 
     // set the file to the fileWatcher
-    if ( !m_watcher->contains(m_file) )
-        m_watcher->addFile(m_file);
+    if ( !m_watcher->contains(localFilePath()) )
+        m_watcher->addFile(localFilePath());
 
     // if the 'OpenTOC' flag is set, start presentation
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_toolBox->isItemEnabled( 0 ) )
@@ -794,7 +794,7 @@ bool Part::closeUrl()
     emit setWindowCaption("");
     emit enablePrintAction(false);
     m_searchStarted = false;
-    if (!m_file.isEmpty()) m_watcher->removeFile(m_file);
+    if (!localFilePath().isEmpty()) m_watcher->removeFile(localFilePath());
     m_document->closeDocument();
     updateViewActions();
     m_searchWidget->clearText();
@@ -852,7 +852,7 @@ void Part::slotFileDirty( const QString& fileName )
     // no changes to the file for the last 750 milisecs.
     // This ensures that we don't update on every other byte that gets
     // written to the file.
-    if ( fileName == m_file )
+    if ( fileName == localFilePath() )
     {
         m_dirtyHandler->start( 750 );
     }
@@ -875,7 +875,7 @@ void Part::slotDoFileDirty()
     }
 
     // close and (try to) reopen the document
-    if ( KParts::ReadOnlyPart::openUrl(m_file) )
+    if ( KParts::ReadOnlyPart::openUrl( url() ) )
     {
         // on successful opening, restore the previous viewport
         if ( m_viewportDirty.pageNumber >= (int) m_document->pages() )
@@ -888,7 +888,7 @@ void Part::slotDoFileDirty()
     else
     {
         // start watching the file again (since we dropped it on close)
-        m_watcher->addFile(m_file);
+        m_watcher->addFile(localFilePath());
         m_dirtyHandler->start( 750 );
     }
 }
@@ -1464,7 +1464,7 @@ void Part::saveDocumentRestoreInfo(KConfigGroup &group)
 
 void Part::psTransformEnded()
 {
-    m_file = m_temporaryLocalFile;
+    setLocalFilePath( m_temporaryLocalFile );
     openFile();
 }
 

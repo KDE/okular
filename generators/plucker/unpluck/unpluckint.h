@@ -55,7 +55,7 @@ typedef enum {
     PLKR_HOME_NAME = 0,
     PLKR_URLS_INDEX_NAME = 2,
     PLKR_DEFAULT_CATEGORY_NAME = 3,
-    PLKR_METADATA_NAME = 4,
+    PLKR_METADATA_NAME = 4
 } ReservedRecordName;
 
 typedef struct {
@@ -69,7 +69,7 @@ typedef enum {
     PLKR_MDTYPE_OWNERIDCRC = 3,
     PLKR_MDTYPE_AUTHOR = 4,
     PLKR_MDTYPE_TITLE = 5,
-    PLKR_MDTYPE_PUBLICATIONTIME = 6,
+    PLKR_MDTYPE_PUBLICATIONTIME = 6
 } MetadataTypecodes;
 
 typedef enum {

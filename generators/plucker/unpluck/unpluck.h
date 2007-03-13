@@ -107,7 +107,7 @@ typedef enum {
     PLKR_TFC_ESTRIKE = PLKR_FC_CODE (0x78),     /* end struck-through text */
     PLKR_TFC_UCHAR = PLKR_FC_CODE (0x83),       /* 16 or 32 bit Unicode character */
     PLKR_TFC_GLYPH = PLKR_FC_CODE (0x88),       /* glyph run */
-    PLKR_TFC_TABLE = PLKR_FC_CODE (0x90),       /* table data */
+    PLKR_TFC_TABLE = PLKR_FC_CODE (0x90)        /* table data */
 } plkr_TextFunctionCodes;
 
 typedef enum {

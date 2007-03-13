@@ -121,6 +121,7 @@ protected slots:
 	void saveSplitterSize();
 	void setMimeTypes(KIO::Job *job);
 	void readMimeType(KIO::Job *job, const QString &mime);
+	void emitWindowCaption();
 
 public slots:
 	// connected to Shell action (and browserExtension), not local one

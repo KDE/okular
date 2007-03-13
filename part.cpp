@@ -89,6 +89,10 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	// connect the started signal to tell the job the mimetypes we like
 	connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
 	
+	// connect the completed signal so we can put the window caption when loading remote files
+	connect(this, SIGNAL(completed()), this, SLOT(emitWindowCaption()));
+	connect(this, SIGNAL(canceled(const QString &)), this, SLOT(emitWindowCaption()));
+	
 	// load catalog for translation
 	KGlobal::locale()->insertCatalogue("kpdf");
 
@@ -460,10 +464,18 @@ bool Part::openURL(const KURL &url)
 
     // this calls the above 'openURL' method
     bool b = KParts::ReadOnlyPart::openURL(url);
+
+    // these setWindowCaption calls only work for local files
     if ( !b )
+    {
         KMessageBox::error( widget(), i18n("Could not open %1").arg( url.prettyURL() ) );
+        emit setWindowCaption("");
+    }
     else
+    {
         m_viewportDirty.pageNumber = -1;
+        emit setWindowCaption(url.filename());
+    }
     emit enablePrintAction(b);
     return b;
 }
@@ -480,6 +492,13 @@ void Part::setMimeTypes(KIO::Job *job)
 void Part::readMimeType(KIO::Job *, const QString &mime)
 {
 	m_jobMime = mime;
+}
+
+void Part::emitWindowCaption()
+{
+    // these setWindowCaption call only works for remote files
+    if (m_document->isOpened()) emit setWindowCaption(url().filename());
+    else emit setWindowCaption("");
 }
 
 bool Part::closeURL()

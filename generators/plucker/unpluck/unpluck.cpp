@@ -898,10 +898,10 @@ static int FpSeek
 {
     long  result;
 
-    result = lseek ((int) (handle->dbprivate), offset, SEEK_SET);
+    result = lseek (handle->dbprivate, offset, SEEK_SET);
     if (result != offset) {
         _plkr_message ("Unable to seek fp %d to offset %d -- %d instead\n",
-                       (int) (handle->dbprivate), offset, result);
+                       handle->dbprivate, offset, result);
     }
     return (result == offset);
 }
@@ -917,12 +917,12 @@ static int FpRead
     int  result;
 
     result =
-        read ((int) (handle->dbprivate), buffer,
+        read (handle->dbprivate, buffer,
               MIN (buffersize, readsize));
     if (result != readsize) {
         _plkr_message
             ("Unable to read %d bytes from fp %d -- read %d instead\n",
-             MIN (buffersize, readsize), (int) (handle->dbprivate),
+             MIN (buffersize, readsize), handle->dbprivate,
              result);
     }
     return (result);
@@ -933,7 +933,7 @@ static void FpFree
     plkr_DBHandle  handle
     )
 {
-    int  fp = (int) (handle->dbprivate);
+    int  fp = handle->dbprivate;
 
     if (fp > 0)
         close (fp);
@@ -944,7 +944,7 @@ static long FpSize
     plkr_DBHandle  handle
     )
 {
-    int  fp = (int) (handle->dbprivate);
+    int  fp = handle->dbprivate;
     
     struct stat buf;
 
@@ -974,7 +974,7 @@ plkr_Document* plkr_OpenDBFile
         return NULL;
     }
     handle = (plkr_DBHandle) malloc (sizeof (*handle));
-    handle->dbprivate = (void *) fp;
+    handle->dbprivate = fp;
     handle->seek = FpSeek;
     handle->read = FpRead;
     handle->free = FpFree;

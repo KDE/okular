@@ -28,7 +28,7 @@
    of a file pointer, so that raw memory can also be used. */
 typedef struct plkr_DBHandle_s *plkr_DBHandle;
 struct plkr_DBHandle_s {
-    void *dbprivate;
+    int dbprivate;
 
     /* Call seek to position the DB stream at the "offset" byte from the start of the DB.
        Returns non-zero if seek has been successfully done, zero otherwise. */

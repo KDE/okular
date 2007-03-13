@@ -46,6 +46,8 @@ add_subdirectory(fictionbook)
 
 add_subdirectory(comicbook)
 
+add_subdirectory(plucker)
+
 macro_log_feature(POPPLER_FOUND "Poppler-Qt4" "Support for PDF files in okular" "http://poppler.freedesktop.org" FALSE "0.5.4" "")
 macro_log_feature(CHM_FOUND "libCHM" "Support for CHM files in okular" "http://morte.jedrea.com/~jedwin/projects/chmlib" FALSE "" "")
 macro_log_feature(DJVULIBRE_FOUND "libdjvulibre" "Support for DjVu files in okular" "http://djvulibre.djvuzone.org" FALSE "3.5.17" "")

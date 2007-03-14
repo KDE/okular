@@ -2,6 +2,7 @@ include_directories(
    ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_SOURCE_DIR}/okular
    ${CMAKE_SOURCE_DIR}/okular/generators/plucker/unpluck
+   ${JPEG_INCLUDE_DIR}
 )
 
 set(qunpluck_SRCS
@@ -22,7 +23,7 @@ kde4_automoc(${okularGenerator_plucker_SRCS})
 
 kde4_add_plugin(okularGenerator_plucker WITH_PREFIX ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
 
-target_link_libraries(okularGenerator_plucker okularcore ${KDE4_KDEPRINT_LIBS} m jpeg )
+target_link_libraries(okularGenerator_plucker okularcore ${KDE4_KDEPRINT_LIBS} m ${JPEG_LIBRARIES} )
 
 install(TARGETS okularGenerator_plucker DESTINATION ${PLUGIN_INSTALL_DIR})
 

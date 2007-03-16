@@ -87,6 +87,9 @@ class RecordNode
 
 static Okular::DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block )
 {
+    if ( !block.isValid() )
+        return Okular::DocumentViewport();
+
     const QRectF rect = document->documentLayout()->blockBoundingRect( block );
     const QSizeF size = document->size();
 
@@ -135,6 +138,16 @@ bool QUnpluck::open( const QString &fileName )
     AddRecord( plkr_GetHomeRecordID( mDocument ) );
 
     int number = GetNextRecordNumber();
+    while ( number > 0 ) {
+        status = TranscribeRecord( number );
+        number = GetNextRecordNumber ();
+    }
+
+    // Iterate over all records again to add those which aren't linked directly
+    for ( int i = 1; i < plkr_GetRecordCount( mDocument ); ++i )
+        AddRecord( plkr_GetUidForIndex( mDocument, i ) );
+
+    number = GetNextRecordNumber();
     while ( number > 0 ) {
         status = TranscribeRecord( number );
         number = GetNextRecordNumber ();
@@ -1143,8 +1156,10 @@ bool QUnpluck::TranscribeRecord( int index )
     bool status = true;
 
     unsigned char *data = plkr_GetRecordBytes( mDocument, index, &data_len, &type);
-    if ( !data )
+    if ( !data ) {
+        MarkRecordDone( index );
         return false;
+    }
 
     if (type == PLKR_DRTYPE_TEXT_COMPRESSED || type == PLKR_DRTYPE_TEXT) {
         QTextDocument *document = new QTextDocument;

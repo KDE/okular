@@ -868,6 +868,14 @@ plkr_Document* plkr_OpenDoc
     return newdoc;
 }
 
+int plkr_GetUidForIndex (
+    plkr_Document *doc,
+    int record_index
+)
+{
+    return doc->records[ record_index ].uid;
+}
+
 void plkr_CloseDoc
     (
     plkr_Document * doc

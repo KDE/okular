@@ -190,6 +190,14 @@ int plkr_CopyRecordBytes (
     plkr_DataRecordType *       /* output: type */
 );
 
+/* plkr_GetUidForIndex
+
+   Retrieve the uid of the record with the given index.
+*/
+int plkr_GetUidForIndex (
+    plkr_Document *,
+    int /* record_index */
+);
 
 /* plkr_GetRecordBytes
 

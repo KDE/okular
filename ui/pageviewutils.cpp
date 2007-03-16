@@ -358,6 +358,20 @@ static const int toolBarRBMargin = 2;
 
 struct ToolBarPrivate
 {
+    ToolBarPrivate( PageViewToolBar * qq )
+        : q( qq )
+    {
+    }
+
+    // rebuild contents and reposition then widget
+    void buildToolBar();
+    void reposition();
+    // compute the visible and hidden positions along current side
+    QPoint getInnerPoint() const;
+    QPoint getOuterPoint() const;
+
+    PageViewToolBar * q;
+
     // anchored widget and side
     QWidget * anchorWidget;
     PageViewToolBar::Side anchorSide;
@@ -374,7 +388,7 @@ struct ToolBarPrivate
 };
 
 PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
-    : QWidget( parent ), d( new ToolBarPrivate )
+    : QWidget( parent ), d( new ToolBarPrivate( this ) )
 {
     setAttribute( Qt::WA_OpaquePaintEvent, true );
     setMouseTracking( true );
@@ -423,9 +437,9 @@ void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & ite
     }
 
     // rebuild toolbar shape and contents
-    buildToolBar();
-    d->currentPosition = getOuterPoint();
-    d->endPosition = getInnerPoint();
+    d->buildToolBar();
+    d->currentPosition = d->getOuterPoint();
+    d->endPosition = d->getInnerPoint();
     move( d->currentPosition );
     show();
 
@@ -437,7 +451,7 @@ void PageViewToolBar::hideAndDestroy()
 {
     // set parameters for sliding out
     d->hiding = true;
-    d->endPosition = getOuterPoint();
+    d->endPosition = d->getOuterPoint();
 
     // start scrolling out
     d->animTimer->start( 20 );
@@ -452,7 +466,7 @@ bool PageViewToolBar::eventFilter( QObject * obj, QEvent * e )
         if ( d->hiding )
             deleteLater();
         else
-            reposition();
+            d->reposition();
     }
 
     // don't block event
@@ -493,7 +507,7 @@ void PageViewToolBar::mouseMoveEvent( QMouseEvent * e )
         return;
 
     d->anchorSide = side;
-    reposition();
+    d->reposition();
     emit orientationChanged( (int)side );
 }
 
@@ -504,17 +518,17 @@ void PageViewToolBar::mouseReleaseEvent( QMouseEvent * e )
         setCursor( Qt::ArrowCursor );
 }
 
-void PageViewToolBar::buildToolBar()
+void ToolBarPrivate::buildToolBar()
 {
-    int buttonsNumber = d->buttons.count(),
-        parentWidth = d->anchorWidget->width(),
-        parentHeight = d->anchorWidget->height(),
+    int buttonsNumber = buttons.count(),
+        parentWidth = anchorWidget->width(),
+        parentHeight = anchorWidget->height(),
         myCols = 1,
         myRows = 1;
 
     // 1. find out columns and rows we're going to use
-    bool topLeft = d->anchorSide == Left || d->anchorSide == Top;
-    bool vertical = d->anchorSide == Left || d->anchorSide == Right;
+    bool topLeft = anchorSide == PageViewToolBar::Left || anchorSide == PageViewToolBar::Top;
+    bool vertical = anchorSide == PageViewToolBar::Left || anchorSide == PageViewToolBar::Right;
     if ( vertical )
     {
         myCols = 1 + (buttonsNumber * toolBarGridSize) /
@@ -539,7 +553,7 @@ void PageViewToolBar::buildToolBar()
         myHeight += 16;
         myWidth += 4;
         yOffset += 12;
-        if ( d->anchorSide == Right )
+        if ( anchorSide == PageViewToolBar::Right )
             xOffset += 4;
     }
     else
@@ -547,18 +561,18 @@ void PageViewToolBar::buildToolBar()
         myWidth += 16;
         myHeight += 4;
         xOffset += 12;
-        if ( d->anchorSide == Bottom )
+        if ( anchorSide == PageViewToolBar::Bottom )
             yOffset += 4;
     }
 
-    bool prevUpdates = updatesEnabled();
-    setUpdatesEnabled( false );
+    bool prevUpdates = q->updatesEnabled();
+    q->setUpdatesEnabled( false );
 
     // 3. resize pixmap, mask and widget
     static QBitmap mask;
     mask = QBitmap( myWidth + 1, myHeight + 1 );
-    d->backgroundPixmap = QPixmap( myWidth + 1, myHeight + 1 );
-    resize( myWidth + 1, myHeight + 1 );
+    backgroundPixmap = QPixmap( myWidth + 1, myHeight + 1 );
+    q->resize( myWidth + 1, myHeight + 1 );
 
     // 4. create and set transparency mask
     QPainter maskPainter( &mask);
@@ -568,11 +582,11 @@ void PageViewToolBar::buildToolBar()
         maskPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else
         maskPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
-    setMask( mask );
+    q->setMask( mask );
 
     // 5. draw background
-    QPainter bufferPainter( &d->backgroundPixmap );
-    QPalette pal = palette();
+    QPainter bufferPainter( &backgroundPixmap );
+    QPalette pal = q->palette();
     // 5.1. draw horizontal/vertical gradient
     QColor fromColor = topLeft ? pal.color( QPalette::Active, QPalette::Button ) : pal.color( QPalette::Active, QPalette::Light );
     QColor toColor = topLeft ? pal.color( QPalette::Active, QPalette::Light ) : pal.color( QPalette::Active, QPalette::Button );
@@ -590,7 +604,7 @@ void PageViewToolBar::buildToolBar()
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Mid ) );
     if ( vertical )
     {
-        int dx = d->anchorSide == Left ? 2 : 4;
+        int dx = anchorSide == PageViewToolBar::Left ? 2 : 4;
         bufferPainter.drawLine( dx, 6, dx + myWidth - 8, 6 );
         bufferPainter.drawLine( dx, 9, dx + myWidth - 8, 9 );
         bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Light ) );
@@ -599,7 +613,7 @@ void PageViewToolBar::buildToolBar()
     }
     else
     {
-        int dy = d->anchorSide == Top ? 2 : 4;
+        int dy = anchorSide == PageViewToolBar::Top ? 2 : 4;
         bufferPainter.drawLine( 6, dy, 6, dy + myHeight - 8 );
         bufferPainter.drawLine( 9, dy, 9, dy + myHeight - 8 );
         bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Light ) );
@@ -610,7 +624,7 @@ void PageViewToolBar::buildToolBar()
     // 6. reposition buttons (in rows/col grid)
     int gridX = 0,
         gridY = 0;
-    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = *it;
@@ -623,45 +637,45 @@ void PageViewToolBar::buildToolBar()
         }
     }
 
-    setUpdatesEnabled( prevUpdates );
+    q->setUpdatesEnabled( prevUpdates );
 }
 
-void PageViewToolBar::reposition()
+void ToolBarPrivate::reposition()
 {
     // note: hiding widget here will gives better gfx, but ends drag operation
     // rebuild widget and move it to its final place
     buildToolBar();
-    d->currentPosition = getInnerPoint();
-    move( d->currentPosition );
+    currentPosition = getInnerPoint();
+    q->move( currentPosition );
 
     // repaint all buttons (to update background)
-    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
     for ( ; it != end; ++it )
         (*it)->update();
 }
 
-QPoint PageViewToolBar::getInnerPoint()
+QPoint ToolBarPrivate::getInnerPoint() const
 {
     // returns the final position of the widget
-    if ( d->anchorSide == Left )
-        return QPoint( 0, (d->anchorWidget->height() - height()) / 2 );
-    if ( d->anchorSide == Top )
-        return QPoint( (d->anchorWidget->width() - width()) / 2, 0 );
-    if ( d->anchorSide == Right )
-        return QPoint( d->anchorWidget->width() - width() + toolBarRBMargin, (d->anchorWidget->height() - height()) / 2 );
-    return QPoint( (d->anchorWidget->width() - width()) / 2, d->anchorWidget->height() - height() + toolBarRBMargin );
+    if ( anchorSide == PageViewToolBar::Left )
+        return QPoint( 0, ( anchorWidget->height() - q->height() ) / 2 );
+    if ( anchorSide == PageViewToolBar::Top )
+        return QPoint( ( anchorWidget->width() - q->width() ) / 2, 0 );
+    if ( anchorSide == PageViewToolBar::Right )
+        return QPoint( anchorWidget->width() - q->width() + toolBarRBMargin, ( anchorWidget->height() - q->height() ) / 2 );
+    return QPoint( ( anchorWidget->width() - q->width()) / 2, anchorWidget->height() - q->height() + toolBarRBMargin );
 }
 
-QPoint PageViewToolBar::getOuterPoint()
+QPoint ToolBarPrivate::getOuterPoint() const
 {
     // returns the point from which the transition starts
-    if ( d->anchorSide == Left )
-        return QPoint( -width(), (d->anchorWidget->height() - height()) / 2 );
-    if ( d->anchorSide == Top )
-        return QPoint( (d->anchorWidget->width() - width()) / 2, -height() );
-    if ( d->anchorSide == Right )
-        return QPoint( d->anchorWidget->width() + toolBarRBMargin, (d->anchorWidget->height() - height()) / 2 );
-    return QPoint( (d->anchorWidget->width() - width()) / 2, d->anchorWidget->height() + toolBarRBMargin );
+    if ( anchorSide == PageViewToolBar::Left )
+        return QPoint( -q->width(), ( anchorWidget->height() - q->height() ) / 2 );
+    if ( anchorSide == PageViewToolBar::Top )
+        return QPoint( ( anchorWidget->width() - q->width() ) / 2, -q->height() );
+    if ( anchorSide == PageViewToolBar::Right )
+        return QPoint( anchorWidget->width() + toolBarRBMargin, ( anchorWidget->height() - q->height() ) / 2 );
+    return QPoint( ( anchorWidget->width() - q->width() ) / 2, anchorWidget->height() + toolBarRBMargin );
 }
 
 void PageViewToolBar::slotAnimate()

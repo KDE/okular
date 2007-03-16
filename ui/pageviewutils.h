@@ -169,13 +169,6 @@ class PageViewToolBar : public QWidget
         void mouseReleaseEvent( QMouseEvent * e );
 
     private:
-        // rebuild contents and reposition then widget
-        void buildToolBar();
-        void reposition();
-        // compute the visible and hidden positions along current side
-        QPoint getInnerPoint();
-        QPoint getOuterPoint();
-
         // private variables
         class ToolBarPrivate * d;
 

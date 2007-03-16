@@ -59,6 +59,7 @@ class PageViewAnnotator : public QObject
         PageViewToolBar * m_toolBar;
         AnnotatorEngine * m_engine;
         QDomElement m_toolsDefinition;
+        QLinkedList<ToolBarItem> m_items;
 
         // creation related variables
         int m_lastToolID;

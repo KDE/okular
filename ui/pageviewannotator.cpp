@@ -563,7 +563,28 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
     {
         QDomDocument doc( "annotatingTools" );
         if ( doc.setContent( &infoFile ) )
+        {
             m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
+
+            // create the ToolBarItems from the XML dom tree
+            QDomNode toolDescription = m_toolsDefinition.firstChild();
+            while ( toolDescription.isElement() )
+            {
+                QDomElement toolElement = toolDescription.toElement();
+                if ( toolElement.tagName() == "tool" )
+                {
+                    ToolBarItem item;
+                    item.id = toolElement.attribute("id").toInt();
+                    item.text = toolElement.attribute("name");
+                    item.pixmap = toolElement.attribute("pixmap");
+                    QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
+                    if ( shortcutNode.isElement() )
+                        item.shortcut = shortcutNode.toElement().text();
+                    m_items.push_back( item );
+                }
+                toolDescription = toolDescription.nextSibling();
+            }
+        }
         else
             kWarning() << "AnnotatingTools XML file seems to be damaged" << endl;
         infoFile.close();
@@ -604,28 +625,8 @@ void PageViewAnnotator::setEnabled( bool on )
                 this, SLOT( slotSaveToolbarOrientation(int) ) );
     }
 
-    // create the ToolBarItems from the XML dom tree
-    QLinkedList<ToolBarItem> items;
-    QDomNode toolDescription = m_toolsDefinition.firstChild();
-    while ( toolDescription.isElement() )
-    {
-        QDomElement toolElement = toolDescription.toElement();
-        if ( toolElement.tagName() == "tool" )
-        {
-            ToolBarItem item;
-            item.id = toolElement.attribute("id").toInt();
-            item.text = toolElement.attribute("name");
-            item.pixmap = toolElement.attribute("pixmap");
-            QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
-            if ( shortcutNode.isElement() )
-                item.shortcut = shortcutNode.toElement().text();
-            items.push_back( item );
-        }
-        toolDescription = toolDescription.nextSibling();
-    }
-
     // show the toolBar
-    m_toolBar->showItems( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement(), items );
+    m_toolBar->showItems( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement(), m_items );
 
     // ask for Author's name if not already set
     if ( Okular::Settings::identityAuthor().isEmpty() )

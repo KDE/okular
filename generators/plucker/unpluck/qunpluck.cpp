@@ -308,30 +308,30 @@ void QUnpluck::DoStyle( Context* context, int style, bool start )
         QTextCharFormat format( context->cursor->charFormat() );
         context->stack.push( format );
 
+        int pointSize = qRound( format.fontPointSize() );
         switch (style) {
             case 1:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() + 3 );
+                pointSize += 3;
                 break;
             case 2:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() + 2 );
+                pointSize += 2;
                 break;
             case 3:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() + 1 );
+                pointSize += 1;
                 break;
             case 4:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() + 0 );
                 break;
             case 5:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() - 1 );
+                pointSize += -1;
                 break;
             case 6:
                 format.setFontWeight( QFont::Bold );
-                format.setFontPointSize( format.fontPointSize() - 2 );
+                pointSize += -2;
                 break;
             case 7:
                 format.setFontWeight( QFont::Bold );
@@ -340,6 +340,7 @@ void QUnpluck::DoStyle( Context* context, int style, bool start )
                 format.setFontFamily( QString::fromLatin1( "Courier New,courier" ) );
                 break;
         }
+        format.setFontPointSize( qMax( pointSize, 1 ) );
         context->cursor->setCharFormat( format );
     } else {
         if ( !context->stack.isEmpty() )
@@ -405,9 +406,14 @@ void QUnpluck::ParseText
                     ptr += fclen;
                     break;
                 case PLKR_TFC_NEWLINE:
+                {
+                    // TODO: remove the setCharFormat when Qt is fixed
+                    QTextCharFormat format( context->cursor->charFormat() );
                     context->cursor->insertText( "\n" );
+                    context->cursor->setCharFormat( format );
                     ptr += fclen;
                     break;
+                }
                 case PLKR_TFC_BITALIC:
                 {
                     QTextCharFormat format( context->cursor->charFormat() );
@@ -562,7 +568,9 @@ bool QUnpluck::TranscribeTableRecord
 //                                     border_color);
 */
                             if ( (record_id = READ_BIGENDIAN_SHORT (&ptr[3])) ) {
+                                QTextCharFormat format = context->cursor->charFormat();
                                 context->cursor->insertImage( QString( "%1.jpg" ).arg(record_id) );
+                                context->cursor->setCharFormat( format );
                                 context->images.append( record_id );
                                 AddRecord (record_id);
                             }
@@ -704,7 +712,12 @@ bool QUnpluck::TranscribeTextRecord
             continue;
         }
 
-        context->cursor->insertBlock();
+        QTextCharFormat format( context->cursor->charFormat() );
+        QTextBlockFormat blockFormat( context->cursor->blockFormat() );
+        blockFormat.setAlignment( Qt::AlignLeft );
+        context->cursor->insertBlock( blockFormat );
+        context->cursor->setCharFormat( format );
+
         mNamedTargets.insert( QString( "para:%1-%2" ).arg( record_index ).arg( para_index ),
                               QPair<int, QTextBlock>( GetPageID( record_index ), context->cursor->block() ) );
 
@@ -737,9 +750,10 @@ bool QUnpluck::TranscribeTextRecord
                 ptr++;
 
                 if (fctype == PLKR_TFC_NEWLINE) {
-
+                    // TODO: remove the setCharFormat when Qt is fixed
+                    QTextCharFormat format( context->cursor->charFormat() );
                     context->cursor->insertText( "\n" );
-
+                    context->cursor->setCharFormat( format );
                 }
                 else if (fctype == PLKR_TFC_LINK) {
                     int                   record_id, real_record_id,
@@ -842,29 +856,29 @@ bool QUnpluck::TranscribeTextRecord
                         QTextCharFormat format( context->cursor->charFormat() );
                         context->stack.push( format );
 
+                        int pointSize = qRound( format.fontPointSize() );
                         if (*ptr == 1) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() + 3 );
+                            pointSize += 3;
                         }
                         else if (*ptr == 2) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() + 2 );
+                            pointSize += 2;
                         }
                         else if (*ptr == 3) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() + 1 );
+                            pointSize += 1;
                         }
                         else if (*ptr == 4) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() + 0 );
                         }
                         else if (*ptr == 5) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() - 1 );
+                            pointSize += -1;
                         }
                         else if (*ptr == 6) {
                             format.setFontWeight( QFont::Bold );
-                            format.setFontPointSize( format.fontPointSize() - 2 );
+                            pointSize += -2;
                         }
                         else if (*ptr == 7) {
                             format.setFontWeight( QFont::Bold );
@@ -875,6 +889,7 @@ bool QUnpluck::TranscribeTextRecord
                         else if (*ptr == 11) {
                             format.setVerticalAlignment( QTextCharFormat::AlignSuperScript );
                         }
+                        format.setFontPointSize( qMax( pointSize, 1 ) );
 
                         context->cursor->setCharFormat( format );
 
@@ -938,12 +953,14 @@ bool QUnpluck::TranscribeTextRecord
 
                 }
                 else if (fctype == PLKR_TFC_HRULE) {
+                    QTextCharFormat charFormat = context->cursor->charFormat();
                     QTextBlockFormat oldBlockFormat = context->cursor->blockFormat();
 
                     QTextBlockFormat blockFormat;
                     blockFormat.setProperty( QTextFormat::BlockTrailingHorizontalRulerWidth, "100%");
                     context->cursor->insertBlock( blockFormat );
                     context->cursor->insertBlock( oldBlockFormat );
+                    context->cursor->setCharFormat( charFormat );
                 }
                 else if (fctype == PLKR_TFC_ALIGN) {
                     current_alignment = 0;
@@ -959,7 +976,9 @@ bool QUnpluck::TranscribeTextRecord
                         else if (*ptr == 3)
                             format.setAlignment( Qt::AlignJustify );
 
+                        QTextCharFormat charFormat( context->cursor->charFormat() );
                         context->cursor->insertBlock( format );
+                        context->cursor->setCharFormat( charFormat );
 
                         current_alignment = (*ptr) + 1;
                     }

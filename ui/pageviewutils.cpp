@@ -329,19 +329,6 @@ void PageViewTopMessage::setActionButton( QAction * action )
 /** PageViewToolBar  */
 /*********************/
 
-class ToolBarButton : public QToolButton
-{
-    public:
-        static const int iconSize = 32;
-        static const int buttonSize = 40;
-
-        ToolBarButton( QWidget * parent, const ToolBarItem & item );
-        int buttonID() const { return m_id; }
-
-    private:
-        int m_id;
-};
-
 ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item )
     : QToolButton( parent ), m_id( item.id )
 {

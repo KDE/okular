@@ -14,11 +14,11 @@
 #include <qpixmap.h>
 #include <qrect.h>
 #include <qhash.h>
+#include <qtoolbutton.h>
 
 class QAction;
 class QLabel;
 class QTimer;
-class QToolButton;
 class KIcon;
 class FormWidgetIface;
 
@@ -124,6 +124,20 @@ struct ToolBarItem // FIXME TEMP: MOVE OUT OF HERE!
     QString text;
     QString pixmap;
     QString shortcut;
+};
+
+class ToolBarButton : public QToolButton
+{
+    Q_OBJECT
+    public:
+        static const int iconSize = 32;
+        static const int buttonSize = 40;
+
+        ToolBarButton( QWidget * parent, const ToolBarItem & item );
+        int buttonID() const { return m_id; }
+
+    private:
+        int m_id;
 };
 
 class PageViewToolBar : public QWidget

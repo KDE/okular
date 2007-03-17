@@ -390,7 +390,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Returns a pointer to the document.
          */
-        Document * document() const;
+        const Document * document() const;
 
         /**
          * Toggle the @p feature .

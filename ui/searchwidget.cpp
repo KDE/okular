@@ -10,23 +10,17 @@
 // qt/kde includes
 #include <qmenu.h>
 #include <qaction.h>
-#include <qapplication.h>
 #include <qsizepolicy.h>
-#include <qtimer.h>
 #include <qtoolbutton.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kiconloader.h>
-#include <klineedit.h>
 
 // local includes
 #include "searchwidget.h"
-#include "core/document.h"
-#include "settings.h"
+#include "searchlineedit.h"
 
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
-    : QToolBar( parent ), m_document( document ),
-    m_searchType( 0 )
+    : QToolBar( parent )
 {
     setObjectName( "iSearchBar" );
     // change toolbar appearance
@@ -36,17 +30,15 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     setSizePolicy( sp );
 
-    // a timer to ensure that we don't flood the document with requests to search
-    m_inputDelayTimer = new QTimer(this);
-    m_inputDelayTimer->setSingleShot(true);
-    connect( m_inputDelayTimer, SIGNAL( timeout() ),
-             this, SLOT( startSearch() ) );
-
     // 2. text line
-    m_lineEdit = new KLineEdit(this);
+    m_lineEdit = new SearchLineEdit( this, document );
     m_lineEdit->setClearButtonShown( true );
     m_lineEdit->setToolTip(i18n( "Enter at least 3 letters to filter pages" ));
-    connect(m_lineEdit, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
+    m_lineEdit->setSearchCaseSensitivity( Qt::CaseInsensitive );
+    m_lineEdit->setSearchMinimumLength( 3 );
+    m_lineEdit->setSearchType( Okular::Document::GoogleAll );
+    m_lineEdit->setSearchId( SW_SEARCH_ID );
+    m_lineEdit->setSearchColor( qRgb( 0, 183, 255 ) );
     addWidget(m_lineEdit);
 
     // 3.1. create the popup menu for changing filtering features
@@ -83,71 +75,30 @@ void SearchWidget::clearText()
     m_lineEdit->clear();
 }
 
-void SearchWidget::slotTextChanged( const QString & text )
-{
-    QPalette qAppPalette = QApplication::palette();
-    // if 0<length<3 set 'red' text and send a blank string to document
-    QColor color = text.length() < 3 && text.length() > 0 ? Qt::darkRed : qAppPalette.color( QPalette::Text );
-    QPalette pal = m_lineEdit->palette();
-    pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
-    pal.setColor( QPalette::Text, color );
-    m_lineEdit->setPalette( pal );
-    m_inputDelayTimer->stop();
-    m_inputDelayTimer->start(333);
-}
-
 void SearchWidget::slotMenuChaged( QAction * act )
 {
     // update internal variables and checked state
     if ( act == m_caseSensitiveAction )
     {
-        // do nothing, just update the search
+        m_lineEdit->setSearchCaseSensitivity( m_caseSensitiveAction->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     }
     else if ( act == m_matchPhraseAction )
     {
-        m_searchType = 0;
+        m_lineEdit->setSearchType( Okular::Document::AllDocument );
     }
     else if ( act == m_marchAllWordsAction )
     {
-        m_searchType = 1;
+        m_lineEdit->setSearchType( Okular::Document::GoogleAll );
     }
     else if ( act == m_marchAnyWordsAction )
     {
-        m_searchType = 2;
+        m_lineEdit->setSearchType( Okular::Document::GoogleAny );
     }
     else
         return;
 
     // update search
-    slotTextChanged( m_lineEdit->text() );
-}
-
-void SearchWidget::startSearch()
-{
-    // search text if have more than 3 chars or else clear search
-    QString text = m_lineEdit->text();
-    bool ok = true;
-    if ( text.length() >= 3 )
-    {
-        Qt::CaseSensitivity caseSensitivity = m_caseSensitiveAction->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive;
-
-        Okular::Document::SearchType type = !m_searchType ? Okular::Document::AllDocument :
-                                        ( (m_searchType > 1) ? Okular::Document::GoogleAny :
-                                        Okular::Document::GoogleAll );
-
-        ok = m_document->searchText( SW_SEARCH_ID, text, true, caseSensitivity,
-                                     type, false, qRgb( 0, 183, 255 ) );
-    }
-    else
-        m_document->resetSearch( SW_SEARCH_ID );
-    // if not found, use warning colors
-    if ( !ok )
-    {
-        QPalette pal = m_lineEdit->palette();
-        pal.setColor( QPalette::Base, Qt::red );
-        pal.setColor( QPalette::Text, Qt::white );
-        m_lineEdit->setPalette( pal );
-    }
+    m_lineEdit->restartSearch();
 }
 
 #include "searchwidget.moc"

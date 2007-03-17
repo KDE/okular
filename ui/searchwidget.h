@@ -16,9 +16,8 @@ namespace Okular {
 class Document;
 }
 
-class KLineEdit;
 class QAction;
-class QTimer;
+class SearchLineEdit;
 
 /**
  * @short A widget for find-as-you-type search. Outputs to the Document.
@@ -36,17 +35,12 @@ class SearchWidget : public QToolBar
         void clearText();
 
     private:
-        Okular::Document * m_document;
         QMenu * m_menu;
-        QTimer * m_inputDelayTimer;
-        int m_searchType;
         QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
-        KLineEdit *m_lineEdit;
+        SearchLineEdit *m_lineEdit;
 
     private slots:
-        void slotTextChanged( const QString & text );
         void slotMenuChaged( QAction * );
-        void startSearch();
 };
 
 #endif

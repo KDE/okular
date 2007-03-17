@@ -33,6 +33,7 @@ class SearchLineEdit : public KLineEdit
         void setSearchType( Okular::Document::SearchType type );
         void setSearchId( int id );
         void setSearchColor( const QColor &color );
+        void setSearchMoveViewport( bool move );
 
         void restartSearch();
         void findNext();
@@ -45,6 +46,7 @@ class SearchLineEdit : public KLineEdit
         Okular::Document::SearchType m_searchType;
         int m_id;
         QColor m_color;
+        bool m_moveViewport;
         bool m_changed;
 
     private slots:

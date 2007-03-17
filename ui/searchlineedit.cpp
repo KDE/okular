@@ -19,7 +19,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
       m_caseSensitivity( Qt::CaseInsensitive ),
       m_searchType( Okular::Document::AllDocument ), m_id( -1 ),
-      m_changed( false )
+      m_moveViewport( false ), m_changed( false )
 {
     setObjectName( "SearchLineEdit" );
 
@@ -67,6 +67,11 @@ void SearchLineEdit::setSearchColor( const QColor &color )
     m_changed = true;
 }
 
+void SearchLineEdit::setSearchMoveViewport( bool move )
+{
+    m_moveViewport = move;
+}
+
 void SearchLineEdit::restartSearch()
 {
     m_inputDelayTimer->stop();
@@ -110,10 +115,10 @@ void SearchLineEdit::startSearch()
     // search text if have more than 3 chars or else clear search
     QString thistext = text();
     bool ok = true;
-    if ( thistext.length() >= m_minLength )
+    if ( thistext.length() >= qMax( m_minLength, 1 ) )
     {
         ok = m_document->searchText( m_id, thistext, true, m_caseSensitivity,
-                                     m_searchType, false, m_color );
+                                     m_searchType, m_moveViewport, m_color );
     }
     else
         m_document->resetSearch( m_id );

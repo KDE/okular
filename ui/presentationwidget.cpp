@@ -217,7 +217,7 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
     // check if it's the last requested pixmap. if so update the widget.
-    if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations ) ) && pageNumber == m_frameIndex )
+    if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations | DocumentObserver::Highlights ) ) && pageNumber == m_frameIndex )
         generatePage( changedFlags & DocumentObserver::Annotations );
 }
 
@@ -764,7 +764,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     geom.translate( -geom.left(), -geom.top() );
 
     // draw the page using the shared PagePainter class
-    int flags = PagePainter::Accessibility | PagePainter::Annotations;
+    int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     PagePainter::paintPageOnPainter( &p, frame->page, PRESENTATION_ID, flags,
                                      geom.width(), geom.height(), geom );
 

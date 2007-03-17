@@ -69,7 +69,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-    QAction * groupByAuthorAction = m_toolBar2->addAction( KIcon( "personal" ), i18n( "Group by Author" ) );
+    QAction * groupByAuthorAction = m_toolBar2->addAction( KIcon( "user" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );

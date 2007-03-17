@@ -143,8 +143,6 @@ Q_OBJECT
         void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );
-        // does the type ahead search
-        void doTypeAheadSearch();
 
         int viewColumns() const;
         int viewRows() const;
@@ -167,8 +165,6 @@ Q_OBJECT
         void slotAutoScoll();
         // activated by the dragScroll timer
         void slotDragScroll();
-        // type-ahead find timeout
-        void slotStopFindAhead();
         // show the welcome message
         void slotShowWelcome();
 

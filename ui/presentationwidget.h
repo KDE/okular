@@ -23,6 +23,7 @@ class QTimer;
 class KActionCollection;
 class AnnotatorEngine;
 class PresentationFrame;
+class PresentationSearchBar;
 
 namespace Okular {
 struct Annotation;
@@ -105,6 +106,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         QStringList m_metaStrings;
         QToolBar * m_topBar;
         QLineEdit *m_pagesEdit;
+        PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
 
     private slots:
@@ -118,6 +120,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void slotPageChanged();
         void togglePencilMode( bool );
         void clearDrawings();
+        void slotFind();
 };
 
 #endif

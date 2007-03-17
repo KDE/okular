@@ -101,6 +101,7 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/findbar.cpp
    ui/formwidgets.cpp
    ui/minibar.cpp
    ui/newstuff.cpp
@@ -110,6 +111,7 @@ set(okularpart_SRCS
    ui/pageviewannotator.cpp
    ui/pageview.cpp
    ui/pageviewutils.cpp
+   ui/presentationsearchbar.cpp
    ui/presentationwidget.cpp
    ui/propertiesdialog.cpp
    ui/searchlineedit.cpp

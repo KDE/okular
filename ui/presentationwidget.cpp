@@ -39,6 +39,7 @@
 #include "presentationwidget.h"
 #include "annotationtools.h"
 #include "pagepainter.h"
+#include "presentationsearchbar.h"
 #include "core/audioplayer.h"
 #include "core/document.h"
 #include "core/generator.h"
@@ -87,7 +88,7 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
-    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 )
+    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 )
 {
     setModal( true );
     setAttribute( Qt::WA_DeleteOnClose );
@@ -134,6 +135,12 @@ PresentationWidget::~PresentationWidget()
 {
     // stop the audio playbacks
     Okular::AudioPlayer::instance()->stopPlaybacks();
+
+    // remove our highlights
+    if ( m_searchBar )
+    {
+        m_document->resetSearch( PRESENTATION_SEARCH_ID );
+    }
 
     // remove this widget from document observer
     m_document->removeObserver( this );
@@ -443,6 +450,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
         p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
         m_topBar->setPalette( p );
+
+        connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 
         // register this observer in document. events will come immediately
         m_document->addObserver( this );
@@ -1067,6 +1076,16 @@ void PresentationWidget::clearDrawings()
 {
     m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     m_currentPageDrawings.clear();
+}
+
+void PresentationWidget::slotFind()
+{
+    if ( !m_searchBar )
+    {
+        m_searchBar = new PresentationSearchBar( m_document, this, this );
+        m_searchBar->forceSnap();
+    }
+    m_searchBar->show();
 }
 
 

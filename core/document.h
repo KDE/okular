@@ -54,6 +54,7 @@ class VisiblePageRect;
 #define PART_SEARCH_ID 1
 #define PAGEVIEW_SEARCH_ID 2
 #define SW_SEARCH_ID 3
+#define PRESENTATION_SEARCH_ID 4
 
 
 /**

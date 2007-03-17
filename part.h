@@ -41,6 +41,7 @@ class KAboutData;
 class KPrinter;
 class KTemporaryFile;
 
+class FindBar;
 class ThumbnailList;
 class ThumbnailController;
 class PageSizeLabel;
@@ -139,6 +140,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void close();
         void cannotQuit();
         void splitterMoved( int pos, int index );
+        void slotShowFindBar();
+        void slotHideFindBar();
         void setMimeTypes(KIO::Job *job);
         void readMimeType(KIO::Job *job, const QString &mime);
         void saveSplitterSize();
@@ -171,6 +174,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QWidget *m_leftPanel;
         QToolBox *m_toolBox;
         SearchWidget *m_searchWidget;
+        FindBar * m_findBar;
         PageViewTopMessage * m_topMessage;
         PageViewTopMessage * m_formsMessage;
         QPointer<ThumbnailList> m_thumbnailList;

@@ -36,9 +36,7 @@
 #include <kstandardaction.h>
 #include <kparts/genericfactory.h>
 #include <kfiledialog.h>
-#include <kfind.h>
 #include <kmessagebox.h>
-#include <kfinddialog.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
 #include <kmenu.h>
@@ -69,6 +67,7 @@
 #include "ui/presentationwidget.h"
 #include "ui/pagesizelabel.h"
 #include "ui/bookmarklist.h"
+#include "ui/findbar.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/bookmarkmanager.h"
@@ -221,6 +220,8 @@ m_searchStarted(false), m_cliPresentation(false)
     connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
     connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
     rightLayout->addWidget( m_pageView );
+    m_findBar = new FindBar( m_document, rightContainer );
+    rightLayout->addWidget( m_findBar );
     QWidget * bottomBar = new QWidget( rightContainer );
     QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
     m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
@@ -309,8 +310,11 @@ m_searchStarted(false), m_cliPresentation(false)
     ac->addAction("edit_copy",m_copy);
 
     // Find and other actions
-    m_find = KStandardAction::find( this, SLOT( slotFind() ), ac );
+    m_find = KStandardAction::find( this, SLOT( slotShowFindBar() ), ac );
     ac->addAction("find", m_find);
+    QList<QKeySequence> s = m_find->shortcuts();
+    s.append( QKeySequence( Qt::Key_Slash ) );
+    m_find->setShortcuts( s );
     m_find->setEnabled( false );
 
     m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
@@ -395,6 +399,12 @@ m_searchStarted(false), m_cliPresentation(false)
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About backend..."));
     connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
+
+    KAction *closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
+    ac->addAction("close_find_bar", closeFindBar);
+    connect(closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
+    closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
+    widget()->addAction(closeFindBar);
 
     // attach the actions of the children widgets too
     m_pageView->setupActions( ac );
@@ -928,6 +938,18 @@ void Part::enableTOC(bool enable)
 }
 
 
+void Part::slotShowFindBar()
+{
+    m_findBar->show();
+    m_findBar->focusAndSetCursor();
+}
+
+void Part::slotHideFindBar()
+{
+    m_findBar->hide();
+    m_pageView->setFocus();
+}
+
 //BEGIN go to page dialog
 class GotoPageDialog : public KDialog
 {
@@ -1055,29 +1077,21 @@ void Part::slotNextBookmark()
 
 void Part::slotFind()
 {
-    KFindDialog dlg( widget() );
-    dlg.setHasCursor( false );
-    if ( !m_searchHistory.empty() )
-        dlg.setFindHistory( m_searchHistory );
-    dlg.setSupportsBackwardsFind( false );
-    dlg.setSupportsWholeWordsFind( false );
-    dlg.setSupportsRegularExpressionFind( false );
-    if ( dlg.exec() == QDialog::Accepted )
-    {
-        m_searchHistory = dlg.findHistory();
-        m_searchStarted = true;
-        m_document->resetSearch( PART_SEARCH_ID );
-        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false,
-            dlg.options() & KFind::CaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
-            Okular::Document::NextMatch, true, qRgb( 255, 255, 64 ) );
-    }
+    // when in presentation mode, there's already a search bar, taking care of
+    // the 'find' requests
+    if ( (PresentationWidget*)m_presentationWidget != 0 )
+        return;
+
+    slotShowFindBar();
 }
 
 
 void Part::slotFindNext()
 {
-    if (!m_document->continueLastSearch())
-        slotFind();
+    if (m_findBar->isHidden())
+        slotShowFindBar();
+    else
+        m_findBar->findNext();
 }
 
 

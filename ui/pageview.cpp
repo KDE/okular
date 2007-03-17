@@ -108,10 +108,6 @@ public:
     QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
 
-    // type ahead find
-    bool typeAheadActive;
-    QString typeAheadString;
-    QTimer * findTimeoutTimer;
     // viewport move
     bool viewportMoveActive;
     QTime viewportMoveTime;
@@ -269,8 +265,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseSelecting = false;
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
-    d->typeAheadActive = false;
-    d->findTimeoutTimer = 0;
     d->viewportMoveActive = false;
     d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
@@ -1020,90 +1014,6 @@ void PageView::keyPressEvent( QKeyEvent * e )
     if ( ( d->mouseSelecting && e->key() != Qt::Key_Escape ) || d->mouseMidZooming )
         return;
 
-    // handle 'find as you type' (based on khtml/khtmlview.cpp)
-    if( d->typeAheadActive )
-    {
-        // backspace: remove a char and search or terminates search
-        if( e->key() == Qt::Key_Backspace )
-        {
-            if( d->typeAheadString.length() > 1 )
-            {
-                d->typeAheadString = d->typeAheadString.left( d->typeAheadString.length() - 1 );
-                bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString,
-                                                      true, Qt::CaseInsensitive,
-                                                      Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
-                KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
-                d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
-                                           found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
-                d->findTimeoutTimer->start( 3000 );
-            }
-            else
-            {
-                slotStopFindAhead();
-                d->document->resetSearch( PAGEVIEW_SEARCH_ID );
-            }
-        }
-        // go to next occurrency
-#ifdef __GNUC__
-#warning FIX the find next shortcut
-#endif
-        else if( e->key() == Qt::Key_F3 /*d->actionCollection->action( "find_next" )->shortcut().keyQt()*/ )
-        {
-            // part doesn't get this key event because of the keyboard grab
-            d->findTimeoutTimer->stop(); // restore normal operation during possible messagebox is displayed
-            // (1/4) it is needed to grab the keyboard becase people may have Space assigned
-            // to a accel and without grabbing the keyboard you can not vim-search for space
-            // because it activates the accel
-            releaseKeyboard();
-            if ( d->document->continueSearch( PAGEVIEW_SEARCH_ID ) )
-                d->messageWindow->display( i18n("Text found: \"%1\".", d->typeAheadString.toLower()),
-                                           PageViewMessage::Find, 3000 );
-            d->findTimeoutTimer->start( 3000 );
-            // (2/4) it is needed to grab the keyboard becase people may have Space assigned
-            // to a accel and without grabbing the keyboard you can not vim-search for space
-            // because it activates the accel
-            grabKeyboard();
-        }
-        // esc and return: end search
-        else if( e->key() == Qt::Key_Escape || e->key() == Qt::Key_Return )
-        {
-            slotStopFindAhead();
-        }
-        // other key: add to text and search
-        else if( !e->text().isEmpty() )
-        {
-            d->typeAheadString += e->text();
-            doTypeAheadSearch();
-        }
-        return;
-    }
-    else if( e->key() == '/' && d->document->isOpened() && d->document->supportsSearching() )
-    {
-        // stop scrolling the page (if doing it)
-        if ( d->autoScrollTimer )
-        {
-            d->scrollIncrement = 0;
-            d->autoScrollTimer->stop();
-        }
-        // start type-adeas search
-        d->typeAheadString = QString();
-        d->messageWindow->display( i18n("Starting -- find text as you type"), PageViewMessage::Find, 3000 );
-        d->typeAheadActive = true;
-        if ( !d->findTimeoutTimer )
-        {
-            // create the timer on demand
-            d->findTimeoutTimer = new QTimer( this );
-            d->findTimeoutTimer->setSingleShot( true );
-            connect( d->findTimeoutTimer, SIGNAL( timeout() ), this, SLOT( slotStopFindAhead() ) );
-        }
-        d->findTimeoutTimer->start( 3000 );
-        // (3/4) it is needed to grab the keyboard becase people may have Space assigned
-        // to a accel and without grabbing the keyboard you can not vim-search for space
-        // because it activates the accel
-        grabKeyboard();
-        return;
-    }
-
     // if viewport is moving, disable keys handling
     if ( d->viewportMoveActive )
         return;
@@ -1197,15 +1107,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
 
 void PageView::inputMethodEvent( QInputMethodEvent * e )
 {
-    if( d->typeAheadActive )
-    {
-        if( !e->commitString().isEmpty() )
-        {
-            d->typeAheadString += e->commitString();
-            doTypeAheadSearch();
-            e->accept();
-        }
-    }
+    Q_UNUSED(e)
 }
 
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
@@ -2411,17 +2313,6 @@ void PageView::toggleFormWidgets( bool on )
     }
 }
 
-void PageView::doTypeAheadSearch()
-{
-    bool found = d->document->searchText( PAGEVIEW_SEARCH_ID, d->typeAheadString,
-                                          false, Qt::CaseInsensitive,
-                                          Okular::Document::NextMatch, true, qRgb( 128, 255, 128 ), true );
-    KLocalizedString status = found ? ki18n("Text found: \"%1\".") : ki18n("Text not found: \"%1\".");
-    d->messageWindow->display( status.subs(d->typeAheadString.toLower()).toString(),
-                               found ? PageViewMessage::Find : PageViewMessage::Warning, 4000 );
-    d->findTimeoutTimer->start( 3000 );
-}
-
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotRenderMode, slotContinuousToggled, updateZoom
@@ -2885,17 +2776,6 @@ void PageView::slotDragScroll()
     verticalScrollBar()->setValue(verticalScrollBar()->value() + d->dragScrollVector.y());
     QPoint p = widget()->mapFromGlobal( QCursor::pos() );
     selectionEndPoint( p );
-}
-
-void PageView::slotStopFindAhead()
-{
-    d->typeAheadActive = false;
-    d->typeAheadString = "";
-    d->messageWindow->display( i18n("Find stopped."), PageViewMessage::Find, 1000 );
-    // (4/4) it is needed to grab the keyboard becase people may have Space assigned
-    // to a accel and without grabbing the keyboard you can not vim-search for space
-    // because it activates the accel
-    releaseKeyboard();
 }
 
 void PageView::slotShowWelcome()

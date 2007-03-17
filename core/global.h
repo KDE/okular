@@ -22,7 +22,8 @@ enum Permission
     AllowModify = 1,  ///< Allows to modify the document
     AllowCopy = 2,    ///< Allows to copy the document
     AllowPrint = 4,   ///< Allows to print the document
-    AllowNotes = 8    ///< Allows to add annotations to the document
+    AllowNotes = 8,   ///< Allows to add annotations to the document
+    AllowFillForms = 16     ///< Allows to fill the forms in the document
 };
 Q_DECLARE_FLAGS( Permissions, Permission )
 

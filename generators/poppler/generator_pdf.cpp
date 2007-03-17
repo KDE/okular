@@ -608,6 +608,9 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
         case Okular::AllowNotes:
             b = pdfdoc->okToAddNotes();
             break;
+        case Okular::AllowFillForms:
+            b = pdfdoc->okToFillForm();
+            break;
         default: ;
     }
     return b;

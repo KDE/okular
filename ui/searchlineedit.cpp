@@ -18,7 +18,8 @@
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
       m_caseSensitivity( Qt::CaseInsensitive ),
-      m_searchType( Okular::Document::AllDocument ), m_id( -1 )
+      m_searchType( Okular::Document::AllDocument ), m_id( -1 ),
+      m_changed( false )
 {
     setObjectName( "SearchLineEdit" );
 
@@ -39,32 +40,49 @@ void SearchLineEdit::clearText()
 void SearchLineEdit::setSearchCaseSensitivity( Qt::CaseSensitivity cs )
 {
     m_caseSensitivity = cs;
+    m_changed = true;
 }
 
 void SearchLineEdit::setSearchMinimumLength( int length )
 {
     m_minLength = length;
+    m_changed = true;
 }
 
 void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
 {
     m_searchType = type;
+    m_changed = true;
 }
 
 void SearchLineEdit::setSearchId( int id )
 {
     m_id = id;
+    m_changed = true;
 }
 
 void SearchLineEdit::setSearchColor( const QColor &color )
 {
     m_color = color;
+    m_changed = true;
 }
 
 void SearchLineEdit::restartSearch()
 {
     m_inputDelayTimer->stop();
     m_inputDelayTimer->start( 500 );
+    m_changed = true;
+}
+
+void SearchLineEdit::findNext()
+{
+    if ( m_id == -1 || m_searchType != Okular::Document::NextMatch )
+        return;
+
+    if ( !m_changed )
+        m_document->continueSearch( m_id );
+    else
+        startSearch();
 }
 
 void SearchLineEdit::slotTextChanged( const QString & text )
@@ -84,6 +102,11 @@ void SearchLineEdit::startSearch()
     if ( m_id == -1 || !m_color.isValid() )
         return;
 
+    if ( m_changed && m_searchType == Okular::Document::NextMatch )
+    {
+        m_document->resetSearch( m_id );
+    }
+    m_changed = false;
     // search text if have more than 3 chars or else clear search
     QString thistext = text();
     bool ok = true;

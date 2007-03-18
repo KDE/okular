@@ -52,6 +52,7 @@ class Page;
 class OKULAR_EXPORT DocumentObserver
 {
     public:
+        DocumentObserver();
         /**
          * Destroys the document observer.
          */

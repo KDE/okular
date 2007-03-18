@@ -25,7 +25,7 @@ set(okularGenerator_dvi_SRCS
    dviFile.cpp
    dviPageInfo.cpp
    psgs.cpp
-   psheader.cpp   
+#   psheader.cpp        # already included in psgs.cpp
    glyph.cpp
    TeXFont.cpp
    TeXFontDefinition.cpp
@@ -49,7 +49,7 @@ kde4_automoc(${okularGenerator_dvi_SRCS})
 
 kde4_add_plugin(okularGenerator_dvi WITH_PREFIX ${okularGenerator_dvi_SRCS})
 
-target_link_libraries(okularGenerator_dvi okularcore m ${KDE4_KDEPRINT_LIBS} )
+target_link_libraries(okularGenerator_dvi okularcore ${KDE4_KDEPRINT_LIBS} ${MATH_LIB} )
 if (FREETYPE_FOUND)
    target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
 endif (FREETYPE_FOUND)

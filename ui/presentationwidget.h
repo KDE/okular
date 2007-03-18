@@ -22,11 +22,11 @@ class QToolBar;
 class QTimer;
 class KActionCollection;
 class AnnotatorEngine;
-class PresentationFrame;
+struct PresentationFrame;
 class PresentationSearchBar;
 
 namespace Okular {
-struct Annotation;
+class Annotation;
 class Document;
 class Page;
 class Link;

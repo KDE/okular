@@ -19,7 +19,7 @@
 class QPainter;
 class PageViewItem;
 namespace Okular {
-struct Annotation;
+class Annotation;
 class Page;
 }
 

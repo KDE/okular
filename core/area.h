@@ -492,7 +492,7 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
 };
 
 template <class NormalizedShape, class Shape>
-RegularArea<NormalizedShape, Shape>::~RegularArea<NormalizedShape, Shape>()
+RegularArea<NormalizedShape, Shape>::~RegularArea()
 {
     int size = this->count();
     for ( int i = 0; i < size; ++i )

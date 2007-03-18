@@ -31,7 +31,7 @@ class KActionCollection;
 
 namespace Okular {
 class Document;
-struct Annotation;
+class Annotation;
 }
 
 class PageViewPrivate;

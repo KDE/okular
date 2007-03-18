@@ -137,5 +137,15 @@ double Utils::dpiY()
     return err == CGDisplayNoErr ? y : 72.0;
 }
 #else
-#error "Not yet contributed"
+#include <QDesktopWidget>
+
+double Utils::dpiX()
+{
+    return QDesktopWidget().physicalDpiX();
+}
+
+double Utils::dpiY()
+{
+    return QDesktopWidget().physicalDpiY();
+}
 #endif

@@ -507,7 +507,7 @@ ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Document * doc
 void ThumbnailWidget::resizeFitWidth( int width )
 {
     m_pixmapWidth = width - m_margin;
-    m_pixmapHeight = (int)round( m_page->ratio() * (double)m_pixmapWidth );
+    m_pixmapHeight = lround( m_page->ratio() * (double)m_pixmapWidth );
     setFixedSize( QSize( width, heightHint() ) );
 }
 

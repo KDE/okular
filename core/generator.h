@@ -23,9 +23,10 @@
 
 #include <kmimetype.h>
 
+// KDE_EXPORT is correct here - the function needs to be exported every time
 #define OKULAR_EXPORT_PLUGIN( classname ) \
     extern "C" { \
-         OKULAR_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
+         KDE_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
     }
 
 class KAboutData;

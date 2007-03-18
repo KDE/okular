@@ -131,7 +131,7 @@ glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap
   }
 
   // This is the address of the glyph that will be returned.
-  struct glyph *g = glyphtable+characterCode;
+  class glyph *g = glyphtable+characterCode;
 
   if ((generateCharacterPixmap == true) && ((g->shrunkenCharacter.isNull()) || (color != g->color)) ) {
     g->color = color;

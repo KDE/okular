@@ -6,6 +6,11 @@ add_subdirectory( generators )
 
 include(OkularConfigureChecks.cmake)
 
+if(NOT WIN32)
+ set(MATH_LIB m)
+else(NOT WIN32)
+ set(MATH_LIB)
+endif(NOT WIN32)
 include_directories(
    ${CMAKE_SOURCE_DIR}
    ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/
@@ -75,7 +80,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_PHONONCORE_LIBRARY} m )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBRARY} ${KDE4_KDEPRINT_LIBS} ${KDE4_PHONONCORE_LIBRARY} ${MATH_LIB})
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 
@@ -138,7 +143,7 @@ kde4_automoc(${okularpart_SRCS})
 
 kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 
-target_link_libraries(okularpart  okularcore  ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} m )
+target_link_libraries(okularpart  okularcore  ${KDE4_KPARTS_LIBS} ${KDE4_KDEPRINT_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} ${MATH_LIB})
 if ( X11_Xrender_FOUND )
    target_link_libraries( okularpart ${X11_Xrender_LIB} )
 endif ( X11_Xrender_FOUND )

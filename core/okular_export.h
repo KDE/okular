@@ -14,7 +14,7 @@
 #include <kdemacros.h>
 
 
-#if defined Q_OS_WIN
+#if defined _WIN32 || defined _WIN64
 #ifndef OKULAR_EXPORT
 # ifdef MAKE_OKULARCORE_LIB
 #  define OKULAR_EXPORT KDE_EXPORT

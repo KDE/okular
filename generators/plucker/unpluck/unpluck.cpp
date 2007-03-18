@@ -814,10 +814,10 @@ plkr_Document* plkr_OpenDoc
             crc = crc32 (crc, (const Bytef*)owner_id, owner_id_len);
             for (i = 0; i < 10; i++) {
                 crc = crc32 (crc, (const Bytef*)owner_id, owner_id_len);
-                newdoc->owner_id_key[(i * 4) + 0] = (crc >> 24) & 0xFF;
-                newdoc->owner_id_key[(i * 4) + 1] = (crc >> 16) & 0xFF;
-                newdoc->owner_id_key[(i * 4) + 2] = (crc >> 8) & 0xFF;
-                newdoc->owner_id_key[(i * 4) + 3] = crc & 0xFF;
+                newdoc->owner_id_key[(i * 4) + 0] = (unsigned char)((crc >> 24) & 0xFF);
+                newdoc->owner_id_key[(i * 4) + 1] = (unsigned char)((crc >> 16) & 0xFF);
+                newdoc->owner_id_key[(i * 4) + 2] = (unsigned char)((crc >> 8) & 0xFF);
+                newdoc->owner_id_key[(i * 4) + 3] = (unsigned char)(crc & 0xFF);
             }
         }
         else {

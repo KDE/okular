@@ -356,8 +356,9 @@ ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item )
 static const int toolBarGridSize = 40;
 static const int toolBarRBMargin = 2;
 
-struct ToolBarPrivate
+class ToolBarPrivate
 {
+public:
     ToolBarPrivate( PageViewToolBar * qq )
         : q( qq )
     {

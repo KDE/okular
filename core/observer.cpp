@@ -12,6 +12,10 @@
 
 using namespace Okular;
 
+DocumentObserver::DocumentObserver()
+{
+}
+
 DocumentObserver::~DocumentObserver()
 {
 }

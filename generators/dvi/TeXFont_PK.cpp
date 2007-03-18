@@ -124,7 +124,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
   }
 
   // This is the address of the glyph that will be returned.
-  struct glyph *g = glyphtable+ch;
+  class glyph *g = glyphtable+ch;
 
   // Check if the glyph is loaded. If not, load it now.
   if (characterBitmaps[ch] == 0) {
@@ -471,7 +471,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   int        row_bit_pos;
   bool       paint_switch;
   quint32*  cp;
-  register struct glyph *g;
+  register class glyph *g;
   register FILE *fp = file;
   long       fpwidth;
   quint32   word = 0;

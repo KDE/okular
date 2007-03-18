@@ -596,6 +596,7 @@ void ToolBarPrivate::buildToolBar()
     bufferPainter.drawTiledPixmap( 0, 0, myWidth + 1, myHeight + 1, QPixmap::fromImage(gradientPattern) );
     // 5.2. draw rounded border
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Dark ) );
+    bufferPainter.setRenderHints( QPainter::Antialiasing );
     if ( vertical )
         bufferPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else

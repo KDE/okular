@@ -797,6 +797,7 @@ void PresentationWidget::generateOverlay()
     QPixmap doublePixmap( side, side );
     doublePixmap.fill( Qt::black );
     QPainter pixmapPainter( &doublePixmap );
+    pixmapPainter.setRenderHints( QPainter::Antialiasing );
 
     // draw PIE SLICES in blue levels (the levels will then be the alpha component)
     int pages = m_document->pages();

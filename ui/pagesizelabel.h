@@ -23,6 +23,8 @@ class Document;
  */
 class PageSizeLabel : public QLabel, public Okular::DocumentObserver
 {
+    Q_OBJECT
+
     public:
         PageSizeLabel( QWidget *parent, Okular::Document * document );
         ~PageSizeLabel();

@@ -64,3 +64,5 @@ void PageSizeLabel::notifyViewportChanged( bool /*smoothMove*/ )
         }
    }
 }
+
+#include "pagesizelabel.moc"

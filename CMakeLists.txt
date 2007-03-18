@@ -46,9 +46,11 @@ install( FILES
            core/annotations.h
            core/area.h
            core/document.h
+           core/form.h
            core/generator.h
            core/link.h
            core/observer.h
+           core/okular_export.h
            core/page.h
            core/pagesize.h
            core/pagetransition.h

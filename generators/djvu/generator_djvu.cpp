@@ -124,7 +124,7 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
 
     m_docInfo = new Okular::DocumentInfo();
 
-    m_docInfo->set( "mimeType", "image/x-djvu" );
+    m_docInfo->set( "mimeType", "image/vnd.djvu" );
 
     if ( m_djvu )
     {

@@ -740,9 +740,9 @@ bool Part::openUrl(const KUrl &url)
     bool isCompressedFile = false;
     KUrl tempUrl;
     if (( mimetype->name() == "application/x-gzip" )
-        || ( mimetype->name() == "application/x-bzip2" )
+        || ( mimetype->name() == "application/x-bzip" )
         || ( mimetype->parentMimeType() == "application/x-gzip" )
-        || ( mimetype->parentMimeType() == "application/x-bzip2" )
+        || ( mimetype->parentMimeType() == "application/x-bzip" )
         )
     {
         isCompressedFile=handleCompressed(tempUrl,path,mimetype);
@@ -1512,7 +1512,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     // decompression filer
     QIODevice* filterDev;
     if (( mimetype->parentMimeType() == "application/x-gzip" ) ||
-        ( mimetype->parentMimeType() == "application/x-bzip2" ))
+        ( mimetype->parentMimeType() == "application/x-bzip" ))
         filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
     else
         filterDev = KFilterDev::deviceForFile(path);

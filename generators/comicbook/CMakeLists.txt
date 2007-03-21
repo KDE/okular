@@ -23,4 +23,4 @@ install(TARGETS okularGenerator_comicbook DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES x-cbz.desktop x-cbr.desktop DESTINATION ${MIME_INSTALL_DIR}/application )
+

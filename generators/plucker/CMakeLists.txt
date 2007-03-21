@@ -31,4 +31,4 @@ install(TARGETS okularGenerator_plucker DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_plucker.desktop okularPlucker.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES x-plucker.desktop DESTINATION ${MIME_INSTALL_DIR}/application )
+

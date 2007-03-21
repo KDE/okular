@@ -5,4 +5,4 @@ Name=okular
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service
-MimeType=image/x-djvu
+MimeType=image/vnd.djvu

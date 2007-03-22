@@ -3389,18 +3389,24 @@ void Gfx::doImage(Object *ref, Stream *str, GBool inlineImg) {
     obj1.free();
     dict->lookup("W", &obj1);
   }
-  if (!obj1.isInt())
+  if (obj1.isInt())
+    width = obj1.getInt();
+  else if (obj1.isReal())
+    width = (int)obj1.getReal();
+  else
     goto err2;
-  width = obj1.getInt();
   obj1.free();
   dict->lookup("Height", &obj1);
   if (obj1.isNull()) {
     obj1.free();
     dict->lookup("H", &obj1);
   }
-  if (!obj1.isInt())
+  if (obj1.isInt())
+    height = obj1.getInt();
+  else if (obj1.isReal())
+    height = (int)obj1.getReal();
+  else
     goto err2;
-  height = obj1.getInt();
   obj1.free();
 
   // image or mask?

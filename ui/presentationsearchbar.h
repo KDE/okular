@@ -30,6 +30,7 @@ class PresentationSearchBar
         void forceSnap();
 
     protected:
+        void resizeEvent( QResizeEvent * );
         bool eventFilter( QObject *, QEvent * );
 
     private:

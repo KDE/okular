@@ -76,9 +76,6 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     m_anchor->installEventFilter( this );
 
     connect( closeBtn, SIGNAL( clicked() ), this, SLOT( close() ) );
-
-    // force the initial snap
-    forceSnap();
 }
 
 PresentationSearchBar::~PresentationSearchBar()
@@ -90,6 +87,13 @@ void PresentationSearchBar::forceSnap()
     m_point = QPoint( m_anchor->width() / 2, m_anchor->height() );
     m_snapped = true;
     move( m_point.x() - width() / 2, m_point.y() - height() );
+}
+
+void PresentationSearchBar::resizeEvent( QResizeEvent * )
+{
+    // if in snap mode, then force the snap and place ourselves correctly again
+    if ( m_snapped )
+        forceSnap();
 }
 
 bool PresentationSearchBar::eventFilter( QObject *obj, QEvent *e )

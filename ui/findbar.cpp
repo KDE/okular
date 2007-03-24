@@ -47,7 +47,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
 
     QPushButton * optionsBtn = new QPushButton( this );
     optionsBtn->setText( i18n( "Options" ) );
-    QMenu * optionsMenu = new QMenu();
+    QMenu * optionsMenu = new QMenu( optionsBtn );
     m_caseSensitiveAct = optionsMenu->addAction( i18n( "Case sensitive" ) );
     m_caseSensitiveAct->setCheckable( true );
     optionsBtn->setMenu( optionsMenu );

@@ -12,7 +12,10 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 100341: first page at right, in two pages mode
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
 -> WISH 102788: Current page number visible
+-> BUG  106546: Search with "/" and ALT+TAB
 -> WISH 107998: kpdf horizontal scroll bar
+-> BUG  110440: Almost all options in Find dialog are always disabled
+-> WISH 111651: Usability: Make find-as-you-type widget more distinguishable
 -> WISH 117449: kpdf should read files from stdin with the - option
 -> WISH 117805: Wish: Select pages like kghostview
 -> WISH 118938: No way to find out the page size(s)

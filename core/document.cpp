@@ -46,6 +46,7 @@
 #include "link.h"
 #include "observer.h"
 #include "page.h"
+#include "pagecontroller_p.h"
 #include "settings.h"
 #include "sourcereference.h"
 
@@ -689,6 +690,9 @@ Document::Document()
     : d( new Private( this ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
+
+    connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
+             this, SLOT( rotationFinished( int ) ) );
 }
 
 Document::~Document()
@@ -846,10 +850,6 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             }
         }
     }
-
-    for ( int i = 0; i < d->m_pagesVector.count(); ++i )
-        connect( d->m_pagesVector.at(i), SIGNAL( rotationFinished( int ) ),
-                 this, SLOT( rotationFinished( int ) ) );
 
     QApplication::restoreOverrideCursor();
     if ( !openOk || d->m_pagesVector.size() <= 0 )

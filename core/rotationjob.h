@@ -17,14 +17,21 @@
 
 namespace Okular {
 
+class PagePrivate;
+
 class RotationJob : public QThread
 {
+    Q_OBJECT
+
     public:
         RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id );
+
+        void setPage( PagePrivate * pd );
 
         QImage image() const;
         Rotation rotation() const;
         int id() const;
+        PagePrivate * page() const;
 
     protected:
         virtual void run();
@@ -35,6 +42,7 @@ class RotationJob : public QThread
         Rotation mNewRotation;
         int mId;
         QImage mRotatedImage;
+        PagePrivate * m_pd;
 };
 
 }

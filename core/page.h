@@ -46,10 +46,8 @@ class TextSelection;
  *
  * Note: The class takes ownership of all objects.
  */
-class OKULAR_EXPORT Page : public QObject
+class OKULAR_EXPORT Page
 {
-    Q_OBJECT
-
     public:
         /**
          * An action to be executed when particular events happen.
@@ -346,9 +344,6 @@ class OKULAR_EXPORT Page : public QObject
          */
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
 
-    Q_SIGNALS:
-        void rotationFinished( int page );
-
     private:
         PagePrivate* const d;
         friend class PagePrivate;
@@ -373,8 +368,6 @@ class OKULAR_EXPORT Page : public QObject
         HighlightAreaRect *m_textSelections;
 
         Q_DISABLE_COPY( Page )
-        Q_PRIVATE_SLOT( d, void imageRotationDone() )
-
 };
 
 }

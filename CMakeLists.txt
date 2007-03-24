@@ -32,6 +32,7 @@ set(okularcore_SRCS
    core/misc.cpp
    core/observer.cpp
    core/page.cpp
+   core/pagecontroller.cpp
    core/pagesize.cpp
    core/pagetransition.cpp
    core/rotationjob.cpp

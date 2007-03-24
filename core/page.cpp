@@ -23,6 +23,7 @@
 #include "link.h"
 #include "page.h"
 #include "page_p.h"
+#include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"
 #include "rotationjob.h"
@@ -68,10 +69,8 @@ PagePrivate::~PagePrivate()
 }
 
 
-void PagePrivate::imageRotationDone()
+void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    RotationJob *job = static_cast<RotationJob*>( m_page->sender() );
-
     QMap< int, Page::PixmapObject >::iterator it = m_page->m_pixmaps.find( job->id() );
     if ( it != m_page->m_pixmaps.end() )
     {
@@ -85,10 +84,6 @@ void PagePrivate::imageRotationDone()
 
         m_page->m_pixmaps.insert( job->id(), object );
     }
-
-    emit m_page->rotationFinished( m_number );
-
-    job->deleteLater();
 }
 
 QMatrix PagePrivate::rotationMatrix() const
@@ -116,7 +111,7 @@ QMatrix PagePrivate::rotationMatrix() const
 /** class Page **/
 
 Page::Page( uint page, double w, double h, Rotation o )
-    : QObject( 0 ), d( new PagePrivate( this, page, w, h, o ) ),
+    : d( new PagePrivate( this, page, w, h, o ) ),
       m_textSelections( 0 )
 {
 }
@@ -288,7 +283,8 @@ void Page::rotateAt( Rotation orientation )
         const PixmapObject &object = it.value();
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, d->m_rotation, it.key() );
-        connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
+        job->setPage( d );
+        QObject::connect( job, SIGNAL( finished() ), PageController::self(), SLOT( imageRotationDone() ) );
         job->start();
     }
 
@@ -371,7 +367,8 @@ void Page::setPixmap( int id, QPixmap *pixmap )
         it.value().m_rotation = d->m_rotation;
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );
-        connect( job, SIGNAL( finished() ), this, SLOT( imageRotationDone() ) );
+        job->setPage( d );
+        QObject::connect( job, SIGNAL( finished() ), PageController::self(), SLOT( imageRotationDone() ) );
         job->start();
 
         delete pixmap;
@@ -734,5 +731,3 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) c
     if ( pageElement.hasChildNodes() )
         parentNode.appendChild( pageElement );
 }
-
-#include "page.moc"

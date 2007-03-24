@@ -25,6 +25,7 @@ class FormField;
 class Link;
 class Page;
 class PageTransition;
+class RotationJob;
 class TextPage;
 
 class PagePrivate
@@ -33,7 +34,7 @@ class PagePrivate
         PagePrivate( Page *page, uint n, double w, double h, Rotation o );
         ~PagePrivate();
 
-        void imageRotationDone();
+        void imageRotationDone( RotationJob * job );
         QMatrix rotationMatrix() const;
 
         Page *m_page;

@@ -22,6 +22,7 @@
 #include "form.h"
 #include "link.h"
 #include "page.h"
+#include "page_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"
 #include "rotationjob.h"
@@ -42,64 +43,43 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
             ++it;
 }
 
-class Page::Private
+PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
+    : m_page( page ), m_number( n ), m_orientation( o ),
+      m_width( w ), m_height( h ),
+      m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
+      m_text( 0 ), m_transition( 0 ),
+      m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 )
 {
-    public:
-        Private( Page *page, uint n, double w, double h, Rotation o )
-            : m_page( page ), m_number( n ), m_orientation( o ),
-              m_width( w ), m_height( h ),
-              m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
-              m_text( 0 ), m_transition( 0 ),
-              m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 )
-        {
-            // avoid Division-By-Zero problems in the program
-            if ( m_width <= 0 )
-                m_width = 1;
+    // avoid Division-By-Zero problems in the program
+    if ( m_width <= 0 )
+        m_width = 1;
 
-            if ( m_height <= 0 )
-                m_height = 1;
-        }
+    if ( m_height <= 0 )
+        m_height = 1;
+}
 
-        ~Private()
-        {
-            qDeleteAll( formfields );
-            delete m_openingAction;
-            delete m_closingAction;
-            delete m_text;
-            delete m_transition;
-        }
+PagePrivate::~PagePrivate()
+{
+    qDeleteAll( formfields );
+    delete m_openingAction;
+    delete m_closingAction;
+    delete m_text;
+    delete m_transition;
+}
 
-        void imageRotationDone();
-        QMatrix rotationMatrix() const;
 
-        Page *m_page;
-        int m_number;
-        Rotation m_orientation;
-        double m_width, m_height;
-        Rotation m_rotation;
-        int m_maxuniqueNum;
-
-        TextPage * m_text;
-        PageTransition * m_transition;
-        QLinkedList< FormField * > formfields;
-        Link * m_openingAction;
-        Link * m_closingAction;
-        double m_duration;
-        QString m_label;
-};
-
-void Page::Private::imageRotationDone()
+void PagePrivate::imageRotationDone()
 {
     RotationJob *job = static_cast<RotationJob*>( m_page->sender() );
 
-    QMap< int, PixmapObject >::iterator it = m_page->m_pixmaps.find( job->id() );
+    QMap< int, Page::PixmapObject >::iterator it = m_page->m_pixmaps.find( job->id() );
     if ( it != m_page->m_pixmaps.end() )
     {
-        PixmapObject &object = it.value();
+        Page::PixmapObject &object = it.value();
         (*object.m_pixmap) = QPixmap::fromImage( job->image() );
         object.m_rotation = job->rotation();
     } else {
-        PixmapObject object;
+        Page::PixmapObject object;
         object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
         object.m_rotation = job->rotation();
 
@@ -111,7 +91,7 @@ void Page::Private::imageRotationDone()
     job->deleteLater();
 }
 
-QMatrix Page::Private::rotationMatrix() const
+QMatrix PagePrivate::rotationMatrix() const
 {
     QMatrix matrix;
     matrix.rotate( (int)m_rotation * 90 );
@@ -136,7 +116,7 @@ QMatrix Page::Private::rotationMatrix() const
 /** class Page **/
 
 Page::Page( uint page, double w, double h, Rotation o )
-    : QObject( 0 ), d( new Private( this, page, w, h, o ) ),
+    : QObject( 0 ), d( new PagePrivate( this, page, w, h, o ) ),
       m_textSelections( 0 )
 {
 }

@@ -27,6 +27,7 @@ namespace Okular {
 
 class Annotation;
 class FormField;
+class PagePrivate;
 class PageSize;
 class PageTransition;
 class SourceReference;
@@ -349,8 +350,8 @@ class OKULAR_EXPORT Page : public QObject
         void rotationFinished( int page );
 
     private:
-        class Private;
-        Private* const d;
+        PagePrivate* const d;
+        friend class PagePrivate;
 
         /**
          * To improve performance PagePainter accesses the following

@@ -25,8 +25,8 @@ Engine/Annotation Types [specific attributes]:
         <shortcut>1</shortcut>
     </tool>
     <tool id="2" name="FreeText" pixmap="text">
-        <tooltip>Free Text Annotation</tooltip>
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note">
+        <tooltip>Free Text Annotation (drag to select a zone)</tooltip>
+        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note" block="true">
             <annotation type="FreeText" color="#FFFF00" />
         </engine>
         <shortcut>2</shortcut>

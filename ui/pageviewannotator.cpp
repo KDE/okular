@@ -55,6 +55,7 @@ class PickPointEngine : public AnnotatorEngine
             size = engineElement.attribute( "size", "32" ).toInt( &ok );
             if ( !ok )
                 size = 32;
+            m_block = QVariant( engineElement.attribute( "block" ) ).toBool();
 
             // create engine objects
             if ( !pixmapName.simplified().isEmpty() )
@@ -110,14 +111,32 @@ class PickPointEngine : public AnnotatorEngine
             }
             rect.right = rect.left + ( pixmap ? pixmap->width() / xScale : 0 );
             rect.bottom = rect.top + ( pixmap ? pixmap->height() / yScale : 0 );
-            return rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
+            QRect boundrect = rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
+            if ( m_block )
+            {
+                Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
+                boundrect |= tmprect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
+            }
+            return boundrect;
         }
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
         {
-            if ( clicked && pixmap )
+            if ( clicked )
             {
-                painter->drawPixmap( QPointF( rect.left * xScale, rect.top * yScale ), *pixmap );
+                if ( m_block )
+                {
+                    QPen origpen = painter->pen();
+                    QPen pen = painter->pen();
+                    pen.setStyle( Qt::DashLine );
+                    painter->setPen( pen );
+                    Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
+                    QRect realrect = tmprect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
+                    painter->drawRect( realrect );
+                    painter->setPen( origpen );
+                }
+                if ( pixmap )
+                    painter->drawPixmap( QPointF( rect.left * xScale, rect.top * yScale ), *pixmap );
             }
         }
 
@@ -243,6 +262,7 @@ class PickPointEngine : public AnnotatorEngine
         double xscale,yscale;
         double pagewidth, pageheight;
         bool center;
+        bool m_block;
 };
 
 /** @short PolyLineEngine */

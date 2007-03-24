@@ -841,7 +841,11 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             }
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
-                m_pageView->displayMessage( toolSubElement.text(), PageViewMessage::Annotation );
+            {
+                QString tip = toolSubElement.text();
+                if ( !tip.isEmpty() )
+                    m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), PageViewMessage::Annotation );
+            }
         }
 
         // consistancy warning

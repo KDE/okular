@@ -445,6 +445,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->addAction( KIcon("application-exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
         m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
         m_topBar->hide();
+        m_topBar->setAutoFillBackground(true);
         // change topbar background color
         QPalette p = m_topBar->palette();
         p.setColor( QPalette::Active, QPalette::Button, Qt::gray );

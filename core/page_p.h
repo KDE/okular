@@ -13,6 +13,7 @@
 
 // qt/kde includes
 #include <qlinkedlist.h>
+#include <qmap.h>
 #include <qmatrix.h>
 #include <qstring.h>
 
@@ -36,6 +37,14 @@ class PagePrivate
 
         void imageRotationDone( RotationJob * job );
         QMatrix rotationMatrix() const;
+
+        class PixmapObject
+        {
+            public:
+                QPixmap *m_pixmap;
+                Rotation m_rotation;
+        };
+        QMap< int, PixmapObject > m_pixmaps;
 
         Page *m_page;
         int m_number;

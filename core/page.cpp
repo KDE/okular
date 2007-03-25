@@ -71,18 +71,18 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    QMap< int, Page::PixmapObject >::iterator it = m_page->m_pixmaps.find( job->id() );
-    if ( it != m_page->m_pixmaps.end() )
+    QMap< int, PixmapObject >::iterator it = m_pixmaps.find( job->id() );
+    if ( it != m_pixmaps.end() )
     {
-        Page::PixmapObject &object = it.value();
+        PixmapObject &object = it.value();
         (*object.m_pixmap) = QPixmap::fromImage( job->image() );
         object.m_rotation = job->rotation();
     } else {
-        Page::PixmapObject object;
+        PixmapObject object;
         object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
         object.m_rotation = job->rotation();
 
-        m_page->m_pixmaps.insert( job->id(), object );
+        m_pixmaps.insert( job->id(), object );
     }
 }
 
@@ -165,8 +165,8 @@ double Page::ratio() const
 
 bool Page::hasPixmap( int id, int width, int height ) const
 {
-    QMap< int, PixmapObject >::const_iterator it = m_pixmaps.find( id );
-    if ( it == m_pixmaps.end() )
+    QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.find( id );
+    if ( it == d->m_pixmaps.end() )
         return false;
 
     if ( width == -1 || height == -1 )
@@ -276,11 +276,11 @@ void Page::rotateAt( Rotation orientation )
     /**
      * Rotate the images of the page.
      */
-    QMapIterator< int, PixmapObject > it( m_pixmaps );
+    QMapIterator< int, PagePrivate::PixmapObject > it( d->m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
 
-        const PixmapObject &object = it.value();
+        const PagePrivate::PixmapObject &object = it.value();
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, d->m_rotation, it.key() );
         job->setPage( d );
@@ -354,14 +354,14 @@ const QLinkedList< FormField * > Page::formFields() const
 void Page::setPixmap( int id, QPixmap *pixmap )
 {
     if ( d->m_rotation == Rotation0 ) {
-        QMap< int, PixmapObject >::iterator it = m_pixmaps.find( id );
-        if ( it != m_pixmaps.end() )
+        QMap< int, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( id );
+        if ( it != d->m_pixmaps.end() )
         {
             delete it.value().m_pixmap;
         }
         else
         {
-            it = m_pixmaps.insert( id, PixmapObject() );
+            it = d->m_pixmaps.insert( id, PagePrivate::PixmapObject() );
         }
         it.value().m_pixmap = pixmap;
         it.value().m_rotation = d->m_rotation;
@@ -565,19 +565,19 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 
 void Page::deletePixmap( int id )
 {
-    PixmapObject object = m_pixmaps.take( id );
+    PagePrivate::PixmapObject object = d->m_pixmaps.take( id );
     delete object.m_pixmap;
 }
 
 void Page::deletePixmaps()
 {
-    QMapIterator< int, PixmapObject > it( m_pixmaps );
+    QMapIterator< int, PagePrivate::PixmapObject > it( d->m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
         delete it.value().m_pixmap;
     }
 
-    m_pixmaps.clear();
+    d->m_pixmaps.clear();
 }
 
 void Page::deleteRects()
@@ -730,4 +730,34 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) c
     // append the page element only if has children
     if ( pageElement.hasChildNodes() )
         parentNode.appendChild( pageElement );
+}
+
+const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
+{
+    Q_UNUSED( h )
+
+    const QPixmap * pixmap = 0;
+
+    // if a pixmap is present for given id, use it
+    QMap< int, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.find( pixID );
+    if ( itPixmap != d->m_pixmaps.end() )
+        pixmap = itPixmap.value().m_pixmap;
+    // else find the closest match using pixmaps of other IDs (great optim!)
+    else if ( !d->m_pixmaps.isEmpty() )
+    {
+        int minDistance = -1;
+        QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.begin(), end = d->m_pixmaps.end();
+        for ( ; it != end; ++it )
+        {
+            int pixWidth = (*it).m_pixmap->width(),
+                distance = pixWidth > w ? pixWidth - w : w - pixWidth;
+            if ( minDistance == -1 || distance < minDistance )
+            {
+                pixmap = (*it).m_pixmap;
+                minDistance = distance;
+            }
+        }
+    }
+
+    return pixmap;
 }

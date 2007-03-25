@@ -11,7 +11,6 @@
 #define _OKULAR_PAGE_H_
 
 #include <QtCore/QLinkedList>
-#include <QtCore/QMap>
 
 #include <okular/core/okular_export.h>
 #include <okular/core/area.h>
@@ -19,6 +18,7 @@
 
 class QDomDocument;
 class QDomNode;
+class QPixmap;
 class QRect;
 
 class PagePainter;
@@ -354,13 +354,7 @@ class OKULAR_EXPORT Page
          */
         friend class ::PagePainter;
 
-        class PixmapObject
-        {
-            public:
-                QPixmap *m_pixmap;
-                Rotation m_rotation;
-        };
-        QMap< int, PixmapObject > m_pixmaps;
+        const QPixmap * _o_nearestPixmap( int, int, int ) const;
 
         QLinkedList< ObjectRect* > m_rects;
         QLinkedList< HighlightAreaRect* > m_highlights;

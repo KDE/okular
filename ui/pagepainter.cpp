@@ -39,29 +39,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-    const QPixmap * pixmap = 0;
-
-    // if a pixmap is present for given id, use it
-    QMap< int, Okular::Page::PixmapObject >::const_iterator itPixmap = page->m_pixmaps.find( pixID );
-    if ( itPixmap != page->m_pixmaps.end() )
-        pixmap = itPixmap.value().m_pixmap;
-
-    // else find the closest match using pixmaps of other IDs (great optim!)
-    else if ( !page->m_pixmaps.isEmpty() )
-    {
-        int minDistance = -1;
-        QMap< int, Okular::Page::PixmapObject >::const_iterator it = page->m_pixmaps.begin(), end = page->m_pixmaps.end();
-        for ( ; it != end; ++it )
-        {
-            int pixWidth = (*it).m_pixmap->width(),
-                distance = pixWidth > scaledWidth ? pixWidth - scaledWidth : scaledWidth - pixWidth;
-            if ( minDistance == -1 || distance < minDistance )
-            {
-                pixmap = (*it).m_pixmap;
-                minDistance = distance;
-            }
-        }
-    }
+    const QPixmap * pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
     double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;

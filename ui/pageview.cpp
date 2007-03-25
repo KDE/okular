@@ -329,10 +329,10 @@ void PageView::setupActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     // orientation menu actions
-    d->aRotateClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate Right" ), this );
+    d->aRotateClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate Right" ), this );
     ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
     connect( d->aRotateClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateClockwise() ) );
-    d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate Left" ), this );
+    d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate Left" ), this );
     ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
     connect( d->aRotateCounterClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateCounterClockwise() ) );
     d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );

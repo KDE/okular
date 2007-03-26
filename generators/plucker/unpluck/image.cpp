@@ -16,7 +16,9 @@
 #include <stdlib.h>
 
 /* This code requires the Independent JPEG Group libjpeg library, version 6b or later */
-#include <jpeglib.h>
+ extern "C" {
+ #include "jpeglib.h"
+ }
 
 #include "unpluck.h"
 #include "image.h"

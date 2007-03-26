@@ -547,6 +547,9 @@ class TextSelectorEngine : public AnnotatorEngine
                 ann = ha;
             }
 
+            delete selection;
+            selection = 0;
+
             // safety check
             if ( !ann )
                 return QList< Okular::Annotation* >();

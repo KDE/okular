@@ -20,6 +20,7 @@
 #include <kparts/part.h>
 #include <qlist.h>
 #include <qpointer.h>
+#include <qprocess.h>
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
@@ -156,7 +157,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
-        void psTransformEnded();
+        void psTransformEnded(int, QProcess::ExitStatus);
 
     private:
         void doPrint( KPrinter& printer );

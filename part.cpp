@@ -42,7 +42,6 @@
 #include <kmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <kprocess.h>
 #include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
@@ -628,13 +627,13 @@ bool Part::slotImportPSFile()
         m_temporaryLocalFile = tf.fileName();
         tf.close();
 
-        setLocalFilePath( url.path() );
-        KProcess *p = new KProcess;
-        *p << app;
-        *p << localFilePath() << m_temporaryLocalFile;
+//        setLocalFilePath( url.path() );
+        QStringList args;
+        QProcess *p = new QProcess();
+        args << url.toLocalFile() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
-        connect(p, SIGNAL(processExited(KProcess *)), this, SLOT(psTransformEnded()));
-        p -> start();
+        connect(p, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(psTransformEnded(int, QProcess::ExitStatus)));
+        p->start(app, args);
         return true;
     }
 
@@ -1476,10 +1475,21 @@ void Part::saveDocumentRestoreInfo(KConfigGroup &group)
 }
 
 
-void Part::psTransformEnded()
+void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
 {
-    setLocalFilePath( m_temporaryLocalFile );
-    openFile();
+    Q_UNUSED( exit )
+    if ( status != QProcess::NormalExit )
+        return;
+
+    QProcess *senderobj = sender() ? qobject_cast< QProcess * >( sender() ) : 0;
+    if ( senderobj )
+    {
+        senderobj->close();
+        senderobj->deleteLater();
+    }
+
+//    setLocalFilePath( m_temporaryLocalFile );
+    openUrl( KUrl( m_temporaryLocalFile ) );
 }
 
 

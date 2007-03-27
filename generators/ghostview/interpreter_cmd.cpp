@@ -19,7 +19,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <k3tempfile.h>
 
 #include "interpreter_cmd.h"
@@ -101,7 +101,7 @@ GSInterpreterCMD::~GSInterpreterCMD()
 //    unlock();
 }
 
-void GSInterpreterCMD::destroyInternalProcess(KProcess * stop)
+void GSInterpreterCMD::destroyInternalProcess(K3Process * stop)
 {
     pid_t pId=stop->pid();
     kDebug(4655) << "Destroy thread pid " << getpid() << " of " << pId << endl;
@@ -166,7 +166,7 @@ bool GSInterpreterCMD::stop(bool async)
     {
         if (m_stoppingPids.contains(m_process->pid()))
             return true;
-        KProcess * stop=m_process;
+        K3Process * stop=m_process;
         m_stoppingPids.insert ( stop->pid(), m_processData );
         m_process=0;
         kDebug(4655) << "Launching destroy thread" << endl;
@@ -202,7 +202,7 @@ bool GSInterpreterCMD::startInterpreter()
     }
 
     m_processData=new ProcessData();
-    m_process = new KProcess;
+    m_process = new K3Process;
 
     (*m_process) << QString("okulargsasyncgenerator");
     // Order of sending: fileName, msgQueueId, media type, magnify, orientation, expected width, height
@@ -221,20 +221,20 @@ bool GSInterpreterCMD::startInterpreter()
 
     kDebug(4655) << "Argument count: " << list.count() << endl;
     (*m_process) << list;
-    /*connect( m_process, SIGNAL( processExited( KProcess* ) ),
-             this, SLOT( slotProcessExited( KProcess* ) ) );
-    connect( m_process, SIGNAL( receivedStdout( KProcess*, char*, int ) ),
-             this, SLOT( output( KProcess*, char*, int ) ) );
-    connect( m_process, SIGNAL( receivedStderr( KProcess*, char*, int ) ),
-             this, SLOT( output( KProcess*, char*, int ) ) );
-    connect( m_process, SIGNAL( wroteStdin( KProcess*) ),
-             this, SLOT( gs_input( KProcess* ) ) );*/
+    /*connect( m_process, SIGNAL( processExited( K3Process* ) ),
+             this, SLOT( slotProcessExited( K3Process* ) ) );
+    connect( m_process, SIGNAL( receivedStdout( K3Process*, char*, int ) ),
+             this, SLOT( output( K3Process*, char*, int ) ) );
+    connect( m_process, SIGNAL( receivedStderr( K3Process*, char*, int ) ),
+             this, SLOT( output( K3Process*, char*, int ) ) );
+    connect( m_process, SIGNAL( wroteStdin( K3Process*) ),
+             this, SLOT( gs_input( K3Process* ) ) );*/
 
     // Finally fire up the interpreter.
 //    kDebug(4500) << "KPSWidget: starting interpreter" << endl;
 
-    if( m_process->start( KProcess::NotifyOnExit,
-              /*m_usePipe ?*/ KProcess::Stdin | KProcess::Stdout/*KProcess::All*/ /*: KProcess::AllOutput*/ ) )
+    if( m_process->start( K3Process::NotifyOnExit,
+              /*m_usePipe ?*/ K3Process::Stdin | K3Process::Stdout/*K3Process::All*/ /*: K3Process::AllOutput*/ ) )
     {
         kDebug(4655) << "Starting async! " << m_process->pid() << endl;
         return true;

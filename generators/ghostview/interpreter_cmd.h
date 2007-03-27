@@ -26,7 +26,7 @@
 class QPixmap;
 class QString;
 class QStringList;
-class KProcess;
+class K3Process;
 namespace Okular {
     class PixmapRequest;
 }
@@ -80,7 +80,7 @@ class GSInterpreterCMD : public QThread
 
     private:
         void run();
-        void destroyInternalProcess(KProcess * stop);
+        void destroyInternalProcess(K3Process * stop);
         // communication stuff
 
         PageInfo m_info;
@@ -94,7 +94,7 @@ class GSInterpreterCMD : public QThread
         QPixmap* m_pixmap;
         QMutex interpreterLock;
         // process stuff
-        KProcess *m_process;
+        K3Process *m_process;
         QString m_error;
         // FILE INFORMATION:
         // hold pointer to a file never delete it, it should 

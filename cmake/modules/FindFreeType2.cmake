@@ -16,6 +16,7 @@ IF(UNIX)
   FIND_PATH(FreeType2_INCLUDE_DIR 
     freetype/config/ftheader.h
     /usr/include/freetype2
+    /usr/X11R6/include/freetype
     )
 
   FIND_LIBRARY(FreeType2_LIBRARIES

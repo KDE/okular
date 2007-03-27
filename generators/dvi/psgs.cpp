@@ -17,7 +17,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprocio.h>
+#include <k3procio.h>
 #include <kurl.h>
 
 #include <QDir>
@@ -212,7 +212,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Step 2: Call GS with the File
   QFile::remove(filename.toAscii());
-  KProcIO proc;
+  K3ProcIO proc;
   QStringList argus;
   argus << "gs";
   argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
@@ -230,7 +230,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 #endif
 
   proc << argus;
-  if (proc.start(KProcess::Block) == false) {
+  if (proc.start(K3Process::Block) == false) {
     // Starting ghostscript did not work. 
     // TODO: Issue error message, switch PS support off.
     kError(kvs::dvi) << "ghostview could not be started" << endl;
@@ -336,9 +336,9 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl
 
   // Otherwise, use kpsewhich to find the eps file.
   QString EPSfilename;
-  KProcIO proc;
+  K3ProcIO proc;
   proc << "kpsewhich" << filename;
-  proc.start(KProcess::Block);
+  proc.start(K3Process::Block);
   proc.readln(EPSfilename);
   
   return EPSfilename;

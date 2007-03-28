@@ -12,8 +12,8 @@ else(NOT WIN32)
  set(MATH_LIB)
 endif(NOT WIN32)
 include_directories(
-   ${CMAKE_SOURCE_DIR}
-   ${CMAKE_SOURCE_DIR}/okular/ui/painter_agg2/
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}/ui/painter_agg2/
 )
 
 

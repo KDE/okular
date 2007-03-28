@@ -627,7 +627,7 @@ bool Part::slotImportPSFile()
         m_temporaryLocalFile = tf.fileName();
         tf.close();
 
-//        setLocalFilePath( url.path() );
+        setLocalFilePath( url.path() );
         QStringList args;
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;
@@ -776,7 +776,7 @@ bool Part::openUrl(const KUrl &url)
 
 bool Part::closeUrl()
 {
-    if (!m_temporaryLocalFile.isNull())
+    if (!m_temporaryLocalFile.isNull() && m_temporaryLocalFile != localFilePath())
     {
         QFile::remove( m_temporaryLocalFile );
         m_temporaryLocalFile.clear();
@@ -1488,8 +1488,9 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
         senderobj->deleteLater();
     }
 
-//    setLocalFilePath( m_temporaryLocalFile );
-    openUrl( KUrl( m_temporaryLocalFile ) );
+    setLocalFilePath( m_temporaryLocalFile );
+    openUrl( m_temporaryLocalFile );
+    m_temporaryLocalFile.clear();
 }
 
 

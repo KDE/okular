@@ -51,7 +51,7 @@ class KPDFDocument : public QObject
 {
     Q_OBJECT
     public:
-        KPDFDocument();
+        KPDFDocument( QWidget *widget );
         ~KPDFDocument();
 
         // document handling
@@ -65,6 +65,9 @@ class KPDFDocument : public QObject
 
         // enum definitions
         enum Permission { AllowModify = 1, AllowCopy = 2, AllowPrint = 4, AllowNotes = 8 };
+
+        // returns the widget where the document is shown
+        QWidget *widget() const;
 
         // query methods (const ones)
         bool isOpened() const;

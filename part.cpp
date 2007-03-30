@@ -110,7 +110,7 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 	setInstance(KPDFPartFactory::instance());
 
 	// build the document
-	m_document = new KPDFDocument();
+	m_document = new KPDFDocument(widget());
 	connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 	connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
 	connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );

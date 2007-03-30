@@ -106,8 +106,8 @@ struct RunningSearch
 
 /** KPDFDocument **/
 
-KPDFDocument::KPDFDocument()
-    : generator( 0 ), d( new KPDFDocumentPrivate )
+KPDFDocument::KPDFDocument(QWidget *widget)
+    : QObject(widget), generator( 0 ), d( new KPDFDocumentPrivate )
 {
     d->allocatedPixmapsTotalMemory = 0;
     d->memCheckTimer = 0;
@@ -354,6 +354,11 @@ void KPDFDocument::reparseConfig()
         cleanupPixmapMemory();
 }
 
+
+QWidget *KPDFDocument::widget() const
+{
+    return static_cast<QWidget*>(parent());
+}
 
 bool KPDFDocument::isOpened() const
 {
@@ -742,7 +747,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStdGuiItem::cont(), KStdGuiItem::cancel()) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(widget(), i18n("End of document reached.\nContinue from the beginning?"), QString::null, KStdGuiItem::cont(), KStdGuiItem::cancel()) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;
@@ -788,7 +793,7 @@ bool KPDFDocument::searchText( int searchID, const QString & text, bool fromStar
             }
         }
         else if ( !noDialogs )
-            KMessageBox::information( 0, i18n("No matches found for '%1'.").arg( text ) );
+            KMessageBox::information( widget(), i18n("No matches found for '%1'.").arg( text ) );
     }
     // 3. PREVMATCH //TODO
     else if ( type == PrevMatch )
@@ -990,7 +995,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+                        KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
                         return;
                     }
                 }
@@ -998,7 +1003,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
+                    KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety kpdf does not allow that.") );
                     return;
                 }
             }
@@ -1011,7 +1016,7 @@ void KPDFDocument::processLink( const KPDFLink * link )
                 KRun::run( *ptr, lst );
             }
             else
-                KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1." ).arg( mime->name() ) );
+                KMessageBox::information( widget(), i18n( "No application found for opening file of mimetype %1." ).arg( mime->name() ) );
             } break;
 
         case KPDFLink::Action: {

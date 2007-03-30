@@ -22,6 +22,7 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qpushbutton.h>
+#include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <dcopclient.h>
@@ -57,6 +58,53 @@
 
 // definition of searchID for this class
 #define PAGEVIEW_SEARCH_ID 2
+
+class PageViewTip : public QToolTip
+{
+    public:
+        PageViewTip( PageView * view )
+            : QToolTip( view->viewport() ), m_view( view )
+        {
+        }
+
+        ~PageViewTip()
+        {
+            remove( m_view->viewport() );
+        }
+
+
+    protected:
+        void maybeTip( const QPoint &p );
+
+    private:
+        PageView * m_view;
+};
+
+void PageViewTip::maybeTip( const QPoint &_p )
+{
+    QPoint p( _p.x() + m_view->contentsX(), _p.y() + m_view->contentsY() );
+    PageViewItem * pageItem = m_view->pickItemOnPoint( p.x(), p.y() );
+    if ( pageItem )
+    {
+        double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
+               nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
+
+        // if over a ObjectRect (of type Link) change cursor to hand
+        const ObjectRect * object = pageItem->page()->hasObject( ObjectRect::Link, nX, nY );
+        if ( object )
+        {
+            // set tooltip over link's rect
+            KPDFLink *link = (KPDFLink *)object->pointer();
+            QString strtip = link->linkTip();
+            if ( !strtip.isEmpty() )
+            {
+                QRect linkRect = object->geometry( pageItem->width(), pageItem->height() );
+                linkRect.moveBy( - m_view->contentsX() + pageItem->geometry().left(), - m_view->contentsY() + pageItem->geometry().top() );
+                tip( linkRect, strtip );
+            }
+        }
+    }
+}
 
 // structure used internally by PageView for data storage
 class PageViewPrivate
@@ -96,6 +144,7 @@ public:
     bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
+    PageViewTip * tip;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -148,6 +197,7 @@ PageView::PageView( QWidget *parent, KPDFDocument *document )
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
+    d->tip = new PageViewTip( this );
     d->aPrevAction = 0;
 
     // widget setup: setup focus, accept drops and track mouse
@@ -182,6 +232,8 @@ PageView::~PageView()
     QValueVector< PageViewItem * >::iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
+    delete d->tip;
+    d->tip = 0;
     d->document->removeObserver( this );
     delete d;
 }

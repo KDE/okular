@@ -29,6 +29,7 @@ class KActionCollection;
 class KPDFDocument;
 class PageViewItem;
 class PageViewPrivate;
+class PageViewTip;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
@@ -38,6 +39,8 @@ class PageViewPrivate;
 class PageView : public QScrollView, public DocumentObserver
 {
     Q_OBJECT
+
+        friend class PageViewTip;
 
     public:
         PageView( QWidget *parent, KPDFDocument *document );

@@ -21,6 +21,7 @@ class ChooseEngineDialog : public KDialog
 {
     public:
         ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent = 0 );
+        ~ChooseEngineDialog();
 
         int selectedGenerator() const;
 

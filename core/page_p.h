@@ -23,6 +23,7 @@
 namespace Okular {
 
 class FormField;
+class HighlightAreaRect;
 class Link;
 class Page;
 class PageTransition;
@@ -55,6 +56,7 @@ class PagePrivate
 
         TextPage * m_text;
         PageTransition * m_transition;
+        HighlightAreaRect *m_textSelections;
         QLinkedList< FormField * > formfields;
         Link * m_openingAction;
         Link * m_closingAction;

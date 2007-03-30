@@ -268,6 +268,12 @@ class OKULAR_EXPORT Page
         const RegularAreaRect * textSelection() const;
 
         /**
+         * Returns the color of the current text selection, or an invalid color
+         * if no text selection has been set.
+         */
+        QColor textSelectionColor() const;
+
+        /**
          * Adds a new @p annotation to the page.
          */
         void addAnnotation( Annotation * annotation );
@@ -359,7 +365,6 @@ class OKULAR_EXPORT Page
         QLinkedList< ObjectRect* > m_rects;
         QLinkedList< HighlightAreaRect* > m_highlights;
         QLinkedList< Annotation* > m_annotations;
-        HighlightAreaRect *m_textSelections;
 
         Q_DISABLE_COPY( Page )
 };

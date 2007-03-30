@@ -74,7 +74,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
     bool canDrawHighlights = (flags & Highlights) && !page->m_highlights.isEmpty();
-    bool canDrawTextSelection = (flags & TextSelection) && page->m_textSelections;
+    bool canDrawTextSelection = (flags & TextSelection) && page->textSelection();
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
@@ -119,11 +119,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 /*            else
             {*/
                 Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                Okular::HighlightAreaRect::const_iterator hIt = page->m_textSelections->begin(), hEnd = page->m_textSelections->end();
+                const Okular::RegularAreaRect *textSelection = page->textSelection();
+                Okular::HighlightAreaRect::const_iterator hIt = textSelection->begin(), hEnd = textSelection->end();
                 for ( ; hIt != hEnd; ++hIt )
                 {
                     if ( (*hIt).intersects( limitRect ) )
-                        bufferedHighlights->append( qMakePair( page->m_textSelections->color, *hIt ) );
+                        bufferedHighlights->append( qMakePair( page->textSelectionColor(), *hIt ) );
                 }
                 delete limitRect;
             //}

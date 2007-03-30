@@ -48,7 +48,7 @@ PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
       m_width( w ), m_height( h ),
       m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
-      m_text( 0 ), m_transition( 0 ),
+      m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
       m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 )
 {
     // avoid Division-By-Zero problems in the program
@@ -111,8 +111,7 @@ QMatrix PagePrivate::rotationMatrix() const
 /** class Page **/
 
 Page::Page( uint page, double w, double h, Rotation o )
-    : d( new PagePrivate( this, page, w, h, o ) ),
-      m_textSelections( 0 )
+    : d( new PagePrivate( this, page, w, h, o ) )
 {
 }
 
@@ -420,7 +419,7 @@ void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
         HighlightAreaRect * hr = new HighlightAreaRect( r );
         hr->s_id = -1;
         hr->color = color;
-        m_textSelections = hr;
+        d->m_textSelections = hr;
     }
 }
 
@@ -453,7 +452,12 @@ QString Page::label() const
 
 const RegularAreaRect * Page::textSelection() const
 {
-    return m_textSelections;
+    return d->m_textSelections;
+}
+
+QColor Page::textSelectionColor() const
+{
+    return d->m_textSelections ? d->m_textSelections->color : QColor();
 }
 
 void Page::addAnnotation( Annotation * annotation )
@@ -607,8 +611,8 @@ void Page::deleteHighlights( int s_id )
 
 void Page::deleteTextSelections()
 {
-    delete m_textSelections;
-    m_textSelections = 0;
+    delete d->m_textSelections;
+    d->m_textSelections = 0;
 }
 
 void Page::deleteSourceReferences()

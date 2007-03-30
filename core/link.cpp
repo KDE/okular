@@ -18,7 +18,7 @@ KPDFLink::~KPDFLink()
 
 QString KPDFLinkGoto::linkTip() const
 {
-    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1" ).arg( m_vp.pageNumber + 1 ) : "" ) : i18n("Open external file");
+    return m_extFileName.isEmpty() ? ( m_vp.pageNumber != -1 ? i18n( "Go to page %1" ).arg( m_vp.pageNumber + 1 ) : QString::null ) : i18n("Open external file");
 }
 
 QString KPDFLinkExecute::linkTip() const

@@ -409,7 +409,7 @@ void PresentationWidget::testCursorOnLink( int x, int y )
         setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor());
 
         // set tooltip over link's rect
-        QString tip = link ? link->linkTip() : "";
+        QString tip = link ? link->linkTip() : QString::null;
         if ( m_handCursor && !tip.isEmpty() )
             QToolTip::add( this, linkRect, tip );
     }

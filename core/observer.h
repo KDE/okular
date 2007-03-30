@@ -11,7 +11,6 @@
 #ifndef _OKULAR_DOCUMENTOBSERVER_H_
 #define _OKULAR_DOCUMENTOBSERVER_H_
 
-#include <QtCore/QRect>
 #include <QtCore/QVector>
 
 #include <okular/core/okular_export.h>

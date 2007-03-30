@@ -13,6 +13,7 @@
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <qtooltip.h>
 #include <kapplication.h>
 #include <kcursor.h>
 #include <ktoolbar.h>
@@ -406,6 +407,11 @@ void PresentationWidget::testCursorOnLink( int x, int y )
         // change cursor shape
         m_handCursor = link != 0;
         setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor());
+
+        // set tooltip over link's rect
+        QString tip = link ? link->linkTip() : "";
+        if ( m_handCursor && !tip.isEmpty() )
+            QToolTip::add( this, linkRect, tip );
     }
 }
 

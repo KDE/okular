@@ -21,7 +21,6 @@ add_subdirectory( kimgio )
 
 if(CHM_FOUND)
   add_subdirectory( chm )
-  #  add_subdirectory( chm2 )
 endif(CHM_FOUND)
 
 if(DJVULIBRE_FOUND)

@@ -9,7 +9,6 @@
 // qt/kde includes
 #include <QtCore/QSet>
 #include <QtCore/QString>
-#include <QtCore/QTime>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -28,6 +27,10 @@
 #include "pagetransition.h"
 #include "rotationjob.h"
 #include "textpage.h"
+
+#ifdef PAGE_PROFILE
+#include <QtCore/QTime>
+#endif
 
 using namespace Okular;
 
@@ -643,8 +646,10 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
         // parse annotationList child element
         if ( childElement.tagName() == "annotationList" )
         {
+#ifdef PAGE_PROFILE
             QTime time;
             time.start();
+#endif
 
             // iterate over all annotations
             QDomNode annotationNode = childElement.firstChild();
@@ -675,7 +680,9 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                 else
                     kWarning() << "page (" << d->m_number << "): can't restore an annotation from XML." << endl;
             }
+#ifdef PAGE_PROFILE
             kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
+#endif
         }
     }
 }

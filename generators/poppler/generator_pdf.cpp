@@ -766,7 +766,7 @@ bool PDFGenerator::print( KPrinter& printer )
     double yScale = ((double)height - (double)marginBottom - (double)marginTop) / (double)height;
     bool strictMargins = false;
     if ( abs((int)(xScale * 100) - (int)(yScale * 100)) > 5 ) {
-        int result = KMessageBox::questionYesNo(0,
+        int result = KMessageBox::questionYesNo(document()->widget(),
                                                i18n("The margins you specified are changing the page aspect ratio. Do you want to print with the aspect ratio changed or do you want the margins to be adapted so that aspect ratio is preserved?"),
                                                i18n("Aspect ratio change"),
                                                KGuiItem( i18n("Print with specified margins") ),

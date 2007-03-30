@@ -254,7 +254,8 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
     return;
 
   if (!find_exe("dvipdfm")) {
-    KMessageBox::sorry(0, i18n("KDVI could not locate the program 'dvipdfm' on your computer. That program is "
+    KMessageBox::sorry(parent_widget,
+                               i18n("KDVI could not locate the program 'dvipdfm' on your computer. That program is "
                                "essential for the export function to work. You can, however, convert "
                                "the DVI-file to PDF using the print function of KDVI, but that will often "
                                "produce documents which print ok, but are of inferior quality if viewed in the "
@@ -338,7 +339,8 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   }
 
   if (!find_exe("dvips")) {
-    KMessageBox::sorry(0, i18n("KDVI could not locate the program 'dvips' on your computer. That program is "
+    KMessageBox::sorry(parent_widget,
+                          i18n("KDVI could not locate the program 'dvips' on your computer. That program is "
                                "essential for the export function to work.\n"
                                "Hint to the perplexed system administrator: KDVI uses the PATH environment variable "
                                "when looking for programs."));

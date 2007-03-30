@@ -111,7 +111,7 @@ m_searchStarted(false), m_cliPresentation(false)
     setComponentData(okularPartFactory::componentData());
 
     // build the document
-    m_document = new Okular::Document();
+    m_document = new Okular::Document(widget());
     connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
     connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
     connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
@@ -1502,7 +1502,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     m_tempfile = new KTemporaryFile;
     if ( !m_tempfile )
     {
-        KMessageBox::error( 0,
+        KMessageBox::error( widget(),
             i18n("<qt><strong>File Error!</strong> Could not create "
             "temporary file.</qt>"));
         return false;
@@ -1512,7 +1512,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
     if ( ! m_tempfile->open() )
     {
-        KMessageBox::error( 0,
+        KMessageBox::error( widget(),
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
             "<nobr><strong>%1</strong></nobr>.</qt>",
             strerror(m_tempfile->error())));
@@ -1536,7 +1536,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
 
     if ( !filterDev->open(QIODevice::ReadOnly) )
     {
-        KMessageBox::detailedError( 0,
+        KMessageBox::detailedError( widget(),
             i18n("<qt><strong>File Error!</strong> Could not open the file "
             "<nobr><strong>%1</strong></nobr> for uncompression. "
             "The file will not be loaded.</qt>", path),
@@ -1563,7 +1563,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     delete filterDev;
     if ((read != 0) || (m_tempfile->size() == 0))
     {
-        KMessageBox::detailedError(0,
+        KMessageBox::detailedError(widget(),
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
             "the file <nobr><strong>%1</strong></nobr>. "
             "The file will not be loaded.</qt>", path ),

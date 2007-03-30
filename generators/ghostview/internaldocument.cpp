@@ -423,7 +423,7 @@ bool GSInternalDocument::psCopyDoc( const QString& inputFile,
     if( pages == 0 ) 
     {
 // FIXME ERROR HANDLING
-/*        KMessageBox::sorry( 0,
+/*        KMessageBox::sorry( document()->widget(),
             i18n( "Printing failed because the list of "
                 "pages to be printed was empty." ),
             i18n( "Error Printing" ) );*/

@@ -80,9 +80,9 @@ class OKULAR_EXPORT Document : public QObject
 
     public:
         /**
-         * Creates a new document with the given list of @p generators.
+         * Creates a new document with the given @p widget as widget to relay GUI things (messageboxes, ...).
          */
-        Document();
+        Document( QWidget *widget );
 
         /**
          * Destroys the document.
@@ -113,6 +113,11 @@ class OKULAR_EXPORT Document : public QObject
          * Reparses and applies the configuration.
          */
         void reparseConfig();
+
+        /**
+         * Returns the widget to be used for relaying GUI things (messageboxes, ...)
+         */
+        QWidget *widget() const;
 
         /**
          * Returns whether the document is currently opened.

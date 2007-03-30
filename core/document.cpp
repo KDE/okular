@@ -686,8 +686,8 @@ void Document::Private::rotationFinished( int page )
 }
 
 
-Document::Document()
-    : d( new Private( this ) )
+Document::Document( QWidget *widget )
+    : QObject( widget ), d( new Private( this ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
 
@@ -1099,6 +1099,11 @@ void Document::reparseConfig()
         d->cleanupPixmapMemory();
 }
 
+
+QWidget *Document::widget() const
+{
+    return static_cast<QWidget*>(parent());
+}
 
 bool Document::isOpened() const
 {
@@ -1712,7 +1717,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             {
                 if ( currentPage >= pageCount )
                 {
-                    if ( noDialogs || KMessageBox::questionYesNo(0, i18n("End of document reached.\nContinue from the beginning?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                    if ( noDialogs || KMessageBox::questionYesNo(widget(), i18n("End of document reached.\nContinue from the beginning?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
                         currentPage = 0;
                     else
                         break;
@@ -1759,7 +1764,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             delete match;
         }
         else if ( !noDialogs )
-            KMessageBox::information( 0, i18n( "No matches found for '%1'.", text ) );
+            KMessageBox::information( widget(), i18n( "No matches found for '%1'.", text ) );
     }
     // 3. PREVMATCH //TODO
     else if ( type == PreviousMatch )
@@ -2004,7 +2009,7 @@ void Document::processLink( const Link * link )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
+                        KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
                         return;
                     }
                 }
@@ -2012,7 +2017,7 @@ void Document::processLink( const Link * link )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( 0, i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
+                    KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
                     return;
                 }
             }
@@ -2025,7 +2030,7 @@ void Document::processLink( const Link * link )
                 KRun::run( *ptr, lst, 0 );
             }
             else
-                KMessageBox::information( 0, i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
+                KMessageBox::information( widget(), i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
             } break;
 
         case Link::Action: {

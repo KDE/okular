@@ -25,9 +25,9 @@ inline KAboutData* okularAboutData( const char* name, const char* iname )
         "(C) 2005 Piotr Szymanski"
     );
 
-    about->addAuthor("Pino Toscano", I18N_NOOP("Current mantainer"), "pino@kde.org");
+    about->addAuthor("Pino Toscano", I18N_NOOP("Current maintainer"), "pino@kde.org");
     about->addAuthor("Tobias Koenig", I18N_NOOP("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
-    about->addAuthor("Albert Astals Cid", I18N_NOOP("Former mantainer"), "aacid@kde.org");
+    about->addAuthor("Albert Astals Cid", I18N_NOOP("Former maintainer"), "aacid@kde.org");
     about->addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
     about->addAuthor("Enrico Ros", 0, "eros.kde@email.it");
     about->addAuthor("Wilco Greven", 0, "greven@kde.org");

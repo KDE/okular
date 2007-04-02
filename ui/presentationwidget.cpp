@@ -125,7 +125,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     }
     else if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden )
     {
-        setCursor( KCursor::blankCursor() );
+        setCursor( QCursor( Qt::BlankCursor ) );
     }
 
     QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
@@ -560,7 +560,7 @@ void PresentationWidget::testCursorOnLink( int x, int y )
     {
         // change cursor shape
         m_handCursor = link != 0;
-        setCursor( m_handCursor ? KCursor::handCursor() : KCursor::arrowCursor() );
+        setCursor( QCursor( m_handCursor ? Qt::PointingHandCursor : Qt::ArrowCursor ) );
     }
 }
 
@@ -601,7 +601,7 @@ void PresentationWidget::changePage( int newPage )
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
         // operation will take long: set busy cursor
-        QApplication::setOverrideCursor( KCursor::workingCursor() );
+        QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
         // request the pixmap
         QLinkedList< Okular::PixmapRequest * > requests;
         requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, false ) );

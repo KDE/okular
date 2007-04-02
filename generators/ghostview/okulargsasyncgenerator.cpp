@@ -24,8 +24,6 @@
 
 #include <QX11Info>
 
-extern GC kde_xget_temp_gc( int scrn, bool monochrome );                // get temporary GC
-
 GSInterpreterLib *interpreter;
 int mem;
 int answer;
@@ -46,12 +44,12 @@ void PixHandler::slotPixmap(const QImage* img)
 //         t.update();
 //         t.exec();
     
-              
+    GC gc = XCreateGC(QX11Info::display(), pix->handle(), 0, NULL);
     XCopyArea
         (QX11Info::display(),
         pix->handle(),
         pData.handle,
-        kde_xget_temp_gc( pix->x11Info().screen(), false ),
+        gc,
         0,
         0,
         pix->width(),
@@ -59,6 +57,7 @@ void PixHandler::slotPixmap(const QImage* img)
         0,
         0);
 
+    XFreeGC(QX11Info::display(), gc);
     XSync(QX11Info::display(), false);
     int x=3;
     write (answer,&x,sizeof(int));

@@ -112,7 +112,7 @@ set(okularpart_SRCS
    ui/findbar.cpp
    ui/formwidgets.cpp
    ui/minibar.cpp
-   ui/newstuff.cpp
+#   ui/newstuff.cpp
    ui/pageitemdelegate.cpp
    ui/pagepainter.cpp
    ui/pagesizelabel.cpp

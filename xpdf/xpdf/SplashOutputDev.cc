@@ -1202,7 +1202,7 @@ void SplashOutputDev::doUpdateFont(GfxState *state) {
       if (!(fontFile = fontEngine->loadTrueTypeFont(
 			   id,
 			   fontsrc,
-			   codeToGID, n))) {
+			   codeToGID, n, faceIndex))) {
 	error(-1, "Couldn't create a font for '%s'",
 	      gfxFont->getName() ? gfxFont->getName()->getCString()
 	                         : "(unnamed)");

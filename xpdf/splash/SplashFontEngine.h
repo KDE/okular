@@ -58,7 +58,7 @@ public:
   SplashFontFile *loadCIDFont(SplashFontFileID *idA, SplashFontSrc *src);
   SplashFontFile *loadOpenTypeCFFFont(SplashFontFileID *idA, SplashFontSrc *src);
   SplashFontFile *loadTrueTypeFont(SplashFontFileID *idA, SplashFontSrc *src,
-				   Gushort *codeToGID, int codeToGIDLen);
+				   Gushort *codeToGID, int codeToGIDLen, int faceIndex = 0);
 
   // Get a font - this does a cache lookup first, and if not found,
   // creates a new SplashFont object and adds it to the cache.  The

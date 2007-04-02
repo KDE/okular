@@ -226,14 +226,15 @@ SplashFontFile *SplashFontEngine::loadOpenTypeCFFFont(SplashFontFileID *idA,
 SplashFontFile *SplashFontEngine::loadTrueTypeFont(SplashFontFileID *idA,
 						   SplashFontSrc *src,
 						   Gushort *codeToGID,
-						   int codeToGIDLen) {
+						   int codeToGIDLen,
+						   int faceIndex) {
   SplashFontFile *fontFile;
 
   fontFile = NULL;
 #if HAVE_FREETYPE_FREETYPE_H || HAVE_FREETYPE_H
   if (!fontFile && ftEngine) {
     fontFile = ftEngine->loadTrueTypeFont(idA, src,
-					  codeToGID, codeToGIDLen);
+					  codeToGID, codeToGIDLen, faceIndex);
   }
 #endif
 

@@ -484,7 +484,7 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
         return 0;
     }
 
-    Generator* (*create_plugin)() = ( Generator* (*)() ) lib->symbol( "create_plugin" );
+    Generator* (*create_plugin)() = ( Generator* (*)() ) lib->resolveFunction( "create_plugin" );
     Generator * generator = create_plugin();
     if ( !generator )
     {

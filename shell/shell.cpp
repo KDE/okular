@@ -284,7 +284,7 @@ void Shell::fileOpen()
   void
 Shell::optionsConfigureToolbars()
 {
-  KEditToolbar dlg(factory());
+  KEditToolBar dlg(factory());
   connect(&dlg, SIGNAL(newToolBarConfig()), this, SLOT(applyNewToolbarConfig()));
   dlg.exec();
 }

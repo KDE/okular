@@ -686,7 +686,7 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
         i18n("CID Type 0"),
         i18n("CID Type 0C"),
         i18n("OT means OpenType", "CID Type 0C (OT)"),
-        i18n("CID TrueType")
+        i18n("CID TrueType"),
         i18n("OT means OpenType", "CID TrueType (OT)")
     };
 

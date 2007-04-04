@@ -675,15 +675,19 @@ void PDFGenerator::scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fo
     GBool emb;
     int i;
 
-    QString fontTypeNames[8] = {
+    QString fontTypeNames[12] = {
         i18n("unknown"),
         i18n("Type 1"),
         i18n("Type 1C"),
+        i18n("OT means OpenType", "Type 1C (OT)"),
         i18n("Type 3"),
         i18n("TrueType"),
+        i18n("OT means OpenType", "TrueType (OT)"),
         i18n("CID Type 0"),
         i18n("CID Type 0C"),
+        i18n("OT means OpenType", "CID Type 0C (OT)"),
         i18n("CID TrueType")
+        i18n("OT means OpenType", "CID TrueType (OT)")
     };
 
     fontRef = *font->getID();

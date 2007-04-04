@@ -6,6 +6,18 @@
 #  POPPLER_LIBRARY - Link this to use poppler
 #
 
+# Copyright (c) 2006-2007, Pino Toscano, <pino@kde.org>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
+if(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
+
+  # in cache already
+  set(POPPLER_FOUND)
+
+else(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
+
 # use pkg-config to get the directories and then use these values
 # in the FIND_PATH() and FIND_LIBRARY() calls
 INCLUDE(UsePkgConfig)
@@ -61,3 +73,5 @@ else (POPPLER_FOUND)
 endif (POPPLER_FOUND)
 
 MARK_AS_ADVANCED(POPPLER_INCLUDE_DIR POPPLER_LIBRARY)
+
+endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

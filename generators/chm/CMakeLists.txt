@@ -36,4 +36,5 @@ install(TARGETS okularGenerator_chmlib DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_chmlib.desktop okularChm.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( FILES okularApplication_chm.desktop  DESTINATION  ${XDG_APPS_DIR} )
 

@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Type=Service
 Name=okular XPS Plugin
+Name[pa]=ਓਕੁਲਾਰ XPS ਪਲੱਗਇਨ
 Comment=XPS backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ XPS ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=application/vnd.ms-xpsdocument;
 X-KDE-Library=libokularGenerator_xps

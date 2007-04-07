@@ -3,6 +3,7 @@ Encoding=UTF-8
 Type=Service
 Name=chmlib
 Comment=Windows HTMLHelp backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਵਿੰਡੋ HTMLHelp ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=application/x-chm
 X-KDE-Library=libokularGenerator_chmlib

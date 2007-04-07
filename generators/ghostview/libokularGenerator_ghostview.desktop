@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=Ghostscript
+Name[pa]=ਗੋਸਟ-ਸਕ੍ਰਿਪਟ
 Comment=Ghostscript PS/PDF backend for okular
 ServiceTypes=okular/Generator
 MimeType=application/postscript;image/x-eps;

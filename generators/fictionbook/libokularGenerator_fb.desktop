@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Type=Service
 Name=FictionBook document
+Name[pa]=FictionBook ਦਸਤਾਵੇਜ਼
 Comment=FictionBook backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ FictionBook ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=application/x-fb
 X-KDE-Library=libokularGenerator_fb

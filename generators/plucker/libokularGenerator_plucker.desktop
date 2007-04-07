@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Type=Service
 Name=Plucker document
+Name[pa]=ਪਲੱਕਰ ਦਸਤਾਵੇਜ਼
 Comment=Plucker backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਪਲੱਕਰ ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=application/prs.plucker
 X-KDE-Library=libokularGenerator_plucker

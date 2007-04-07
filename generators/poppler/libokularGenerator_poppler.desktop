@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=Poppler
+Name[pa]=ਪੋਪੱਲਰ
 Comment=PDF backend for okular using poppler
 ServiceTypes=okular/Generator
 MimeType=application/x-pdf;application/pdf

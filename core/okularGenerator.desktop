@@ -3,6 +3,7 @@ Encoding=UTF-8
 Type=ServiceType
 X-KDE-ServiceType=okular/Generator
 Comment=File format backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਫਾਇਲ ਫਾਰਮੈਟ ਬੈਕਐਂਡ
 # Priority of the plugin. 0 - disabled
 [PropertyDef::X-KDE-Priority]
 Type=int

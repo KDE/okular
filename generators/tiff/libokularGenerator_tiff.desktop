@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Type=Service
 Name=okular TIFF Library
+Name[pa]=ਓਕੁਲਾਰ TIFF ਲਾਇਬਰੇਰੀ
 Comment=TIFF backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ TIFF ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=image/tiff;
 X-KDE-Library=libokularGenerator_tiff

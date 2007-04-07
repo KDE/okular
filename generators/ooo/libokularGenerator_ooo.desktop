@@ -2,7 +2,9 @@
 Encoding=UTF-8
 Type=Service
 Name=OpenDocument format
+Name[pa]=OpenDocument ਫਾਰਮੈਟ
 Comment=OpenDocument backend for okular
+Comment[pa]=ਓਕੁਲਾਰ ਲਈ OpenDocument ਬੈਕਐਂਡ
 ServiceTypes=okular/Generator
 MimeType=application/vnd.oasis.opendocument.text
 X-KDE-Library=libokularGenerator_ooo

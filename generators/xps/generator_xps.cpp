@@ -1247,10 +1247,10 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
                     m_docInfo->set( "category", xml.readElementText(), i18n("Category") );
                 } else if (xml.name() == "created") {
                     QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( "creationDate", KGlobal::locale()->formatDateTime( createdDate, false, true ), i18n("Created" ) );
+                    m_docInfo->set( "creationDate", KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ), i18n("Created" ) );
                 } else if (xml.name() == "modified") {
                     QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( "modifiedDate", KGlobal::locale()->formatDateTime( modifiedDate, false, true ), i18n("Modified" ) );
+                    m_docInfo->set( "modifiedDate", KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ), i18n("Modified" ) );
                 } else if (xml.name() == "keywords") {
                     m_docInfo->set( "keywords", xml.readElementText(), i18n("Keywords") );
                 }

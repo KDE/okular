@@ -85,12 +85,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     
     tmplabel = new QLabel( i18n( "Created:" ), page );
     gridlayout->addWidget( tmplabel, 1, 0 );
-    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate(), false, true ), page );//time
+    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ), page );//time
     gridlayout->addWidget( tmplabel, 1, 1 );
     
     m_modifyDateLabel = new QLabel( i18n( "Modified:" ), page );
     gridlayout->addWidget( m_modifyDateLabel, 2, 0 );
-    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), false, true ), page );//time
+    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ), page );//time
     gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 3, 0 );
@@ -196,7 +196,7 @@ void AnnotsPropertiesDialog::slotapply()
 
     m_document->modifyPageAnnotation( m_page, m_annot );
 
-    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modificationDate(), false, true ) );
+    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) );
 
     modified = false;
     enableButton( Apply, false );

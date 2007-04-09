@@ -187,7 +187,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         if ( mDocumentInfo->mDate.isValid() )
             emit addMetaData( "creationDate",
-                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, true ),
+                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, KLocale::ShortDate ),
                       i18n( "Created" ) );
     }
 

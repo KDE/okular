@@ -23,7 +23,7 @@
 static QString dateToString( const QDateTime & date )
 {
 	return date.isValid()
-		? KGlobal::locale()->formatDateTime( date, false, true )
+		? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true )
 		: i18nc( "Unknown date", "Unknown" );
 }
 

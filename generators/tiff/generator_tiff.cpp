@@ -165,7 +165,7 @@ const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
     QDateTime date = convertTIFFDateTime( buffer );
-    m_docInfo->set( "dateTime", date.isValid() ? KGlobal::locale()->formatDateTime( date, false, true  ) : i18n( "Unknown" ), i18n( "Creation date" ) );
+    m_docInfo->set( "dateTime", date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : i18n( "Unknown" ), i18n( "Creation date" ) );
 
     return m_docInfo;
 }

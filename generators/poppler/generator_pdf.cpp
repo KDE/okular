@@ -463,8 +463,8 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
             docInfo.set( "keywords", pdfdoc->info("Keywords"), i18n("Keywords") );
             docInfo.set( "creator", pdfdoc->info("Creator"), i18n("Creator") );
             docInfo.set( "producer", pdfdoc->info("Producer"), i18n("Producer") );
-            docInfo.set( "creationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), false, true ), i18n("Created") );
-            docInfo.set( "modificationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), false, true ), i18n("Modified") );
+            docInfo.set( "creationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ), i18n("Created") );
+            docInfo.set( "modificationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ), i18n("Modified") );
 
             docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1",
                          QString::number( pdfdoc->pdfVersion() ) ), i18n( "Format" ) );

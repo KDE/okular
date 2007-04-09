@@ -946,6 +946,7 @@ static void outputToFile(void *stream, char *data, int len) {
 PSOutputDev::PSOutputDev(char *fileName, char *pstitle, XRef *xrefA, Catalog *catalog,
 			 int firstPage, int lastPage, PSOutMode modeA,
 			 int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,
+			 GBool forceRasterizeA,
 			 GBool manualCtrlA) {
   FILE *f;
   PSFileType fileTypeA;
@@ -967,6 +968,8 @@ PSOutputDev::PSOutputDev(char *fileName, char *pstitle, XRef *xrefA, Catalog *ca
   customColors = NULL;
   haveTextClip = gFalse;
   t3String = NULL;
+  
+  forceRasterize = forceRasterizeA;
 
   // open file or pipe
   if (!strcmp(fileName, "-")) {
@@ -999,34 +1002,6 @@ PSOutputDev::PSOutputDev(char *fileName, char *pstitle, XRef *xrefA, Catalog *ca
 
   init(outputToFile, f, fileTypeA, pstitle,
        xrefA, catalog, firstPage, lastPage, modeA,
-       imgLLXA, imgLLYA, imgURXA, imgURYA, manualCtrlA);
-}
-
-PSOutputDev::PSOutputDev(PSOutputFunc outputFuncA, void *outputStreamA,
-			 char *pstitle, XRef *xrefA, Catalog *catalog,
-			 int firstPage, int lastPage, PSOutMode modeA,
-			 int imgLLXA, int imgLLYA, int imgURXA, int imgURYA,
-			 GBool manualCtrlA) {
-  underlayCbk = NULL;
-  underlayCbkData = NULL;
-  overlayCbk = NULL;
-  overlayCbkData = NULL;
-
-  fontIDs = NULL;
-  fontFileIDs = NULL;
-  fontFileNames = NULL;
-  font8Info = NULL;
-  font16Enc = NULL;
-  imgIDs = NULL;
-  formIDs = NULL;
-  xobjStack = NULL;
-  embFontList = NULL;
-  customColors = NULL;
-  haveTextClip = gFalse;
-  t3String = NULL;
-
-  init(outputFuncA, outputStreamA, psGeneric,
-       pstitle, xrefA, catalog, firstPage, lastPage, modeA,
        imgLLXA, imgLLYA, imgURXA, imgURYA, manualCtrlA);
 }
 
@@ -1540,6 +1515,8 @@ void PSOutputDev::setupFonts(Dict *resDict) {
   GfxFontDict *gfxFontDict;
   GfxFont *font;
   int i;
+
+  if (forceRasterize) return;
 
   gfxFontDict = NULL;
   resDict->lookupNF("Font", &obj1);
@@ -2844,12 +2821,16 @@ GBool PSOutputDev::checkPageSlice(Page *page, double /*hDPI*/, double /*vDPI*/,
   double m0, m1, m2, m3, m4, m5;
   int c, w, h, x, y, comp, i;
 
-  scan = new PreScanOutputDev();
-  page->displaySlice(scan, 72, 72, rotateA, useMediaBox, crop,
+  if (!forceRasterize) {
+    scan = new PreScanOutputDev();
+    page->displaySlice(scan, 72, 72, rotateA, useMediaBox, crop,
 		     sliceX, sliceY, sliceW, sliceH,
 		     printing, catalog, abortCheckCbk, abortCheckCbkData);
-  rasterize = scan->usesTransparency();
-  delete scan;
+    rasterize = scan->usesTransparency();
+    delete scan;
+  } else {
+    rasterize = true;
+  }
   if (!rasterize) {
     return gTrue;
   }

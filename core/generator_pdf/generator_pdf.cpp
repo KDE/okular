@@ -417,6 +417,7 @@ bool PDFGenerator::print( KPrinter& printer )
     marginLeft = (int)printer.option("kde-margin-left").toDouble();
     marginRight = (int)printer.option("kde-margin-right").toDouble();
     marginBottom = (int)printer.option("kde-margin-bottom").toDouble();
+    bool forceRasterize = printer.option("kde-kpdf-forceRaster").toInt();
 
     if (ps.find(QRegExp("w\\d+h\\d+")) == 0)
     {
@@ -458,7 +459,7 @@ bool PDFGenerator::print( KPrinter& printer )
     {
       pstitlechar = 0;
     }
-    PSOutputDev *psOut = new PSOutputDev(const_cast<char*>(tf.name().latin1()), const_cast<char*>(pstitlechar), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop);
+    PSOutputDev *psOut = new PSOutputDev(const_cast<char*>(tf.name().latin1()), const_cast<char*>(pstitlechar), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop, forceRasterize);
 
     if (psOut->isOk())
     {

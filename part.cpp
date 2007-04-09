@@ -22,13 +22,16 @@
  ***************************************************************************/
 
 // qt/kde includes
+#include <qcheckbox.h>
 #include <qsplitter.h>
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qtoolbox.h>
+#include <qtooltip.h>
 #include <qpushbutton.h>
+#include <qwhatsthis.h>
 #include <dcopobject.h>
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -36,6 +39,7 @@
 #include <kdirwatch.h>
 #include <kinstance.h>
 #include <kprinter.h>
+#include <kdeprint/kprintdialogpage.h>
 #include <kstdaction.h>
 #include <kdeversion.h>
 #include <kparts/genericfactory.h>
@@ -69,6 +73,35 @@
 #include "conf/settings.h"
 #include "core/document.h"
 #include "core/page.h"
+
+class PDFOptionsPage : public KPrintDialogPage
+{
+   public:
+       PDFOptionsPage()
+       {
+           setTitle( i18n( "PDF Options" ) );
+           QVBoxLayout *layout = new QVBoxLayout(this);
+           m_forceRaster = new QCheckBox(i18n("Force rasterization"), this);
+           QToolTip::add(m_forceRaster, i18n("Rasterize into an image before printing"));
+           QWhatsThis::add(m_forceRaster, i18n("Forces the rasterization of each page into an image before printing it. This usually gives somewhat worse results, but is useful when printing documents that appear to print incorrectly."));
+           layout->addWidget(m_forceRaster);
+           layout->addStretch(1);
+       }
+
+       void getOptions( QMap<QString,QString>& opts, bool incldef = false )
+       {
+           Q_UNUSED(incldef);
+           opts[ "kde-kpdf-forceRaster" ] = QString::number( m_forceRaster->isChecked() );
+       }
+
+       void setOptions( const QMap<QString,QString>& opts )
+       {
+           m_forceRaster->setChecked( opts[ "kde-kpdf-forceRaster" ].toInt() );
+       }
+
+    private:
+        QCheckBox *m_forceRaster;
+};
 
 // definition of searchID for this class
 #define PART_SEARCH_ID 1
@@ -977,6 +1010,7 @@ void Part::slotPrint()
     }
     if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
 
+    KPrinter::addDialogPage(new PDFOptionsPage());
     if (printer.setup(widget())) doPrint( printer );
 }
 

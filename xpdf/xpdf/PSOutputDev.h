@@ -58,14 +58,7 @@ public:
 	      int firstPage, int lastPage, PSOutMode modeA,
 	      int imgLLXA = 0, int imgLLYA = 0,
 	      int imgURXA = 0, int imgURYA = 0,
-	      GBool manualCtrlA = gFalse);
-
-  // Open a PSOutputDev that will write to a generic stream.
-  PSOutputDev(PSOutputFunc outputFuncA, void *outputStreamA,
-	      char *pstitle, XRef *xrefA, Catalog *catalog,
-	      int firstPage, int lastPage, PSOutMode modeA,
-	      int imgLLXA = 0, int imgLLYA = 0,
-	      int imgURXA = 0, int imgURYA = 0,
+	      GBool forceRasterize = gFalse,
 	      GBool manualCtrlA = gFalse);
 
   // Destructor -- writes the trailer and closes the file.
@@ -382,6 +375,7 @@ private:
          t3LLX, t3LLY, t3URX, t3URY;
   GBool t3Cacheable;		// cleared if char is not cacheable
   GBool t3NeedsRestore;		// set if a 'q' operator was issued
+  GBool forceRasterize;		// forces the page to be rasterized
 
 #if OPI_SUPPORT
   int opi13Nest;		// nesting level of OPI 1.3 objects

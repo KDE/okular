@@ -3,6 +3,7 @@ Encoding=UTF-8
 Icon=okular
 Name=okular
 Name[pa]=ਓਕੁਲਾਰ
+Name[sv]=Okular
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service

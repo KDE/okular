@@ -4,6 +4,7 @@ Type=Service
 Name=Ghostscript
 Name[pa]=ਗੋਸਟ-ਸਕ੍ਰਿਪਟ
 Comment=Ghostscript PS/PDF backend for okular
+Comment[sv]=Ghostscript PS/PDF-gränssnitt för Okular
 ServiceTypes=okular/Generator
 MimeType=application/postscript;image/x-eps;
 X-KDE-Library=libokularGenerator_ghostview

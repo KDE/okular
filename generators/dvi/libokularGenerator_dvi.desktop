@@ -4,6 +4,7 @@ Type=Service
 Name=dvi
 Comment=DVI backend for okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DVI ਬੈਕਐਂਡ
+Comment[sv]=DVI-gränssnitt för Okular
 ServiceTypes=okular/Generator
 MimeType=application/x-dvi
 X-KDE-Library=libokularGenerator_dvi

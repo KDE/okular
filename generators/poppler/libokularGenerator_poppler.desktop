@@ -4,6 +4,7 @@ Type=Service
 Name=Poppler
 Name[pa]=ਪੋਪੱਲਰ
 Comment=PDF backend for okular using poppler
+Comment[sv]=PDF-gränssnitt för Okular som använder Poppler
 ServiceTypes=okular/Generator
 MimeType=application/x-pdf;application/pdf
 X-KDE-Library=libokularGenerator_poppler

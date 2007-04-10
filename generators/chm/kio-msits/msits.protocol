@@ -7,4 +7,5 @@ reading=true
 listing=Name,Type,Size
 defaultMimetype=text/html
 Description=A kioslave for displaying WinHelp files
+Description[sv]=En I/O-slav för att visa WinHelp-filer
 Icon=help

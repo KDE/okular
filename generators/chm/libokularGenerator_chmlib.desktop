@@ -4,6 +4,7 @@ Type=Service
 Name=chmlib
 Comment=Windows HTMLHelp backend for okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਵਿੰਡੋ HTMLHelp ਬੈਕਐਂਡ
+Comment[sv]=Windows HTMLHelp-gränssnitt för Okular
 ServiceTypes=okular/Generator
 MimeType=application/x-chm
 X-KDE-Library=libokularGenerator_chmlib

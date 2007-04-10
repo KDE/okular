@@ -5,6 +5,7 @@ Name=Comic Book
 Name[pa]=ਕਾਮਿਕਸ ਕਿਤਾਬ
 Comment=Comic book backend for okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਕਾਮਿਕਸ ਕਿਤਾਬ ਬੈਕਐਂਡ
+Comment[sv]=Comic book-gränssnitt för Okular
 ServiceTypes=okular/Generator
 MimeType=application/x-cbz;application/x-cbr;
 X-KDE-Library=libokularGenerator_comicbook

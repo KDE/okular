@@ -4,6 +4,7 @@ Type=Service
 Name=djvu
 Comment=DjVu backend for okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DjVu ਬੈਕਐਂਡ
+Comment[sv]=DjVu-gränssnitt för Okular
 ServiceTypes=okular/Generator
 MimeType=image/vnd.djvu
 X-KDE-Library=libokularGenerator_djvu

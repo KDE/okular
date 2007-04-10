@@ -4,6 +4,7 @@ MimeType=image/vnd.djvu
 Terminal=false
 Name=okular
 Name[pa]=ਓਕੁਲਾਰ
+Name[sv]=Okular
 GenericName=Document Viewer
 GenericName[el]=Προβολέας εγγράφων
 GenericName[es]=Visor de documentos

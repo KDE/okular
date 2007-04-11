@@ -27,7 +27,7 @@ namespace KCHMImageType
 	const int IMAGE_NONE = -1;
 	const int IMAGE_AUTO = -2;
 	const int IMAGE_INDEX = -3;
-};
+}
 
 #if 0
 

@@ -252,8 +252,8 @@ void CHMGenerator::additionalRequestData()
         if ( genObjectRects )
         {
             QLinkedList< Okular::ObjectRect * > objRects;
-            int xScale=m_request->width();
-            int yScale=m_request->height();
+            int xScale=qRound(page->width());
+            int yScale=qRound(page->height());
             // getting links
             DOM::HTMLCollection coll=domDoc.links();
             DOM::Node n;

@@ -390,11 +390,14 @@ void PixmapRequest::swap()
     qSwap( d->mWidth, d->mHeight );
 }
 
-class ExportFormat::Private
+class Okular::ExportFormatPrivate : public QSharedData
 {
     public:
-        Private( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
-            : mDescription( description ), mMimeType( mimeType ), mIcon( icon )
+        ExportFormatPrivate( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
+            : QSharedData(), mDescription( description ), mMimeType( mimeType ), mIcon( icon )
+        {
+        }
+        ~ExportFormatPrivate()
         {
         }
 
@@ -404,29 +407,27 @@ class ExportFormat::Private
 };
 
 ExportFormat::ExportFormat()
-    : d( new Private( QString(), KMimeType::Ptr() ) )
+    : d( new ExportFormatPrivate( QString(), KMimeType::Ptr() ) )
 {
 }
 
 ExportFormat::ExportFormat( const QString &description, const KMimeType::Ptr &mimeType )
-    : d( new Private( description, mimeType ) )
+    : d( new ExportFormatPrivate( description, mimeType ) )
 {
 }
 
 ExportFormat::ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
-    : d( new Private( description, mimeType, icon ) )
+    : d( new ExportFormatPrivate( description, mimeType, icon ) )
 {
 }
 
 ExportFormat::~ExportFormat()
 {
-    delete d;
 }
 
 ExportFormat::ExportFormat( const ExportFormat &other )
-    : d( new Private( QString(), KMimeType::Ptr() ) )
+    : d( other.d )
 {
-    *d = *other.d;
 }
 
 ExportFormat& ExportFormat::operator=( const ExportFormat &other )
@@ -434,7 +435,7 @@ ExportFormat& ExportFormat::operator=( const ExportFormat &other )
     if ( this == &other )
         return *this;
 
-    *d = *other.d;
+    d = other.d;
 
     return *this;
 }
@@ -462,6 +463,16 @@ bool ExportFormat::isNull() const
 ExportFormat ExportFormat::plainText()
 {
     return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+}
+
+bool ExportFormat::operator==( const ExportFormat &other ) const
+{
+    return d == other.d;
+}
+
+bool ExportFormat::operator!=( const ExportFormat &other ) const
+{
+    return d != other.d;
 }
 
 kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )

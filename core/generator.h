@@ -17,6 +17,7 @@
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
+#include <QtCore/QSharedDataPointer>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
@@ -42,6 +43,7 @@ class DocumentFonts;
 class DocumentInfo;
 class DocumentSynopsis;
 class EmbeddedFile;
+class ExportFormatPrivate;
 class Link;
 class Page;
 class PixmapRequest;
@@ -136,9 +138,13 @@ class OKULAR_EXPORT ExportFormat
          */
         static ExportFormat plainText();
 
+        bool operator==( const ExportFormat &other ) const;
+
+        bool operator!=( const ExportFormat &other ) const;
+
     private:
-        class Private;
-        Private* const d;
+        friend class ExportFormatPrivate;
+        QSharedDataPointer<ExportFormatPrivate> d;
 };
 
 /**

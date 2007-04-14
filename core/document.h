@@ -39,6 +39,7 @@ class BookmarkManager;
 class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
+class DocumentPrivate;
 class DocumentSynopsis;
 class DocumentViewport;
 class EmbeddedFile;
@@ -547,8 +548,8 @@ class OKULAR_EXPORT Document : public QObject
         void notice( const QString &text, int duration );
 
     private:
-        class Private;
-        Private* const d;
+        friend class DocumentPrivate;
+        DocumentPrivate *const d;
 
         Q_DISABLE_COPY( Document )
 

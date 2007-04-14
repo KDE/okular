@@ -99,10 +99,10 @@ struct GeneratorInfo
 
 /***** Document ******/
 
-class Document::Private
+class Okular::DocumentPrivate
 {
     public:
-        Private( Document *parent )
+        DocumentPrivate( Document *parent )
           : m_parent( parent ),
             m_lastSearchID( -1 ),
             m_tempFile( 0 ),
@@ -198,7 +198,7 @@ class Document::Private
         QStringList m_supportedMimeTypes;
 };
 
-QString Document::Private::pagesSizeString() const
+QString DocumentPrivate::pagesSizeString() const
 {
     if (m_generator)
     {
@@ -213,7 +213,7 @@ QString Document::Private::pagesSizeString() const
     else return QString();
 }
 
-QString Document::Private::localizedSize(const QSizeF &size) const
+QString DocumentPrivate::localizedSize(const QSizeF &size) const
 {
     double inchesWidth = 0, inchesHeight = 0;
     switch (m_generator->pagesSizeMetric())
@@ -236,7 +236,7 @@ QString Document::Private::localizedSize(const QSizeF &size) const
     }
 }
 
-void Document::Private::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
+void DocumentPrivate::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
 {
     // [MEM] choose memory parameters based on configuration profile
     int clipValue = -1;
@@ -287,7 +287,7 @@ void Document::Private::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     }
 }
 
-int Document::Private::getTotalMemory()
+int DocumentPrivate::getTotalMemory()
 {
     static int cachedValue = 0;
     if ( cachedValue )
@@ -313,7 +313,7 @@ int Document::Private::getTotalMemory()
     return (cachedValue = 134217728);
 }
 
-int Document::Private::getFreeMemory()
+int DocumentPrivate::getFreeMemory()
 {
     static QTime lastUpdate = QTime::currentTime();
     static int cachedValue = 0;
@@ -355,7 +355,7 @@ int Document::Private::getFreeMemory()
 #endif
 }
 
-void Document::Private::loadDocumentInfo()
+void DocumentPrivate::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
@@ -453,7 +453,7 @@ void Document::Private::loadDocumentInfo()
     } // </documentInfo>
 }
 
-QString Document::Private::giveAbsolutePath( const QString & fileName )
+QString DocumentPrivate::giveAbsolutePath( const QString & fileName )
 {
     if ( !m_url.isValid() )
         return QString();
@@ -461,7 +461,7 @@ QString Document::Private::giveAbsolutePath( const QString & fileName )
     return m_url.upUrl().url() + fileName;
 }
 
-bool Document::Private::openRelativeFile( const QString & fileName )
+bool DocumentPrivate::openRelativeFile( const QString & fileName )
 {
     QString absFileName = giveAbsolutePath( fileName );
     if ( absFileName.isEmpty() )
@@ -473,7 +473,7 @@ bool Document::Private::openRelativeFile( const QString & fileName )
     return true;
 }
 
-Generator * Document::Private::loadGeneratorLibrary( const QString& name, const QString& libname )
+Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QString& libname )
 {
     KLibrary *lib = KLibLoader::self()->globalLibrary( QFile::encodeName( libname ) );
     if ( !lib )
@@ -500,7 +500,7 @@ Generator * Document::Private::loadGeneratorLibrary( const QString& name, const 
     return generator;
 }
 
-void Document::Private::loadAllGeneratorLibraries()
+void DocumentPrivate::loadAllGeneratorLibraries()
 {
     if ( m_generatorsLoaded )
         return;
@@ -512,7 +512,7 @@ void Document::Private::loadAllGeneratorLibraries()
     loadServiceList( offers );
 }
 
-void Document::Private::loadServiceList( const KService::List& offers )
+void DocumentPrivate::loadServiceList( const KService::List& offers )
 {
     int count = offers.count();
     if ( count <= 0 )
@@ -531,13 +531,13 @@ void Document::Private::loadServiceList( const KService::List& offers )
     }
 }
 
-void Document::Private::unloadGenerator( const GeneratorInfo& info )
+void DocumentPrivate::unloadGenerator( const GeneratorInfo& info )
 {
     delete info.generator;
     info.library->unload();
 }
 
-void Document::Private::cacheExportFormats()
+void DocumentPrivate::cacheExportFormats()
 {
     if ( m_exportCached )
         return;
@@ -554,7 +554,7 @@ void Document::Private::cacheExportFormats()
     m_exportCached = true;
 }
 
-void Document::Private::saveDocumentInfo() const
+void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_docFileName.isEmpty() )
         return;
@@ -612,7 +612,7 @@ void Document::Private::saveDocumentInfo() const
     infoFile.close();
 }
 
-void Document::Private::slotTimedMemoryCheck()
+void DocumentPrivate::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
     if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
@@ -620,7 +620,7 @@ void Document::Private::slotTimedMemoryCheck()
         cleanupPixmapMemory();
 }
 
-void Document::Private::sendGeneratorRequest()
+void DocumentPrivate::sendGeneratorRequest()
 {
     // find a request
     PixmapRequest * request = 0;
@@ -677,7 +677,7 @@ void Document::Private::sendGeneratorRequest()
         QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorRequest()) );
 }
 
-void Document::Private::rotationFinished( int page )
+void DocumentPrivate::rotationFinished( int page )
 {
     QMap< int, DocumentObserver * >::const_iterator it = m_observers.begin(), end = m_observers.end();
     for ( ; it != end ; ++ it ) {
@@ -687,7 +687,7 @@ void Document::Private::rotationFinished( int page )
 
 
 Document::Document( QWidget *widget )
-    : QObject( widget ), d( new Private( this ) )
+    : QObject( widget ), d( new DocumentPrivate( this ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
 

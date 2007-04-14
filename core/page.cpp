@@ -634,7 +634,7 @@ void Page::deleteAnnotations()
     m_annotations.clear();
 }
 
-void Page::restoreLocalContents( const QDomNode & pageNode )
+void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 {
     // iterate over all chilren (annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
@@ -665,20 +665,20 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
                 // append annotation to the list or show warning
                 if ( annotation )
                 {
-                    m_annotations.append( annotation );
-                    m_rects.append( new AnnotationObjectRect( annotation ) );
+                    m_page->m_annotations.append( annotation );
+                    m_page->m_rects.append( new AnnotationObjectRect( annotation ) );
                     int pos = annotation->uniqueName().lastIndexOf("-");
                     if(pos != -1)
                     {
                         int uniqID=annotation->uniqueName().right(annotation->uniqueName().length()-pos-1).toInt();
-                        if(d->m_maxuniqueNum<uniqID)
-                            d->m_maxuniqueNum=uniqID;
+                        if ( m_maxuniqueNum < uniqID )
+                            m_maxuniqueNum = uniqID;
                     }
 
                     kDebug()<<"astario:  restored annot:"<<annotation->uniqueName()<<endl;
                 }
                 else
-                    kWarning() << "page (" << d->m_number << "): can't restore an annotation from XML." << endl;
+                    kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
             }
 #ifdef PAGE_PROFILE
             kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
@@ -687,15 +687,15 @@ void Page::restoreLocalContents( const QDomNode & pageNode )
     }
 }
 
-void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const
+void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const
 {
     // only add a node if there is some stuff to write into
-    if ( m_annotations.isEmpty() )
+    if ( m_page->m_annotations.isEmpty() )
         return;
 
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
-    pageElement.setAttribute( "number", d->m_number );
+    pageElement.setAttribute( "number", m_number );
 
 #if 0
     // add bookmark info if is bookmarked
@@ -711,13 +711,13 @@ void Page::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) c
 #endif
 
     // add annotations info if has got any
-    if ( !m_annotations.isEmpty() )
+    if ( !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );
 
         // add every annotation to the annotationList
-        QLinkedList< Annotation * >::const_iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+        QLinkedList< Annotation * >::const_iterator aIt = m_page->m_annotations.begin(), aEnd = m_page->m_annotations.end();
         for ( ; aIt != aEnd; ++aIt )
         {
             // get annotation

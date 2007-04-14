@@ -20,6 +20,9 @@
 // local includes
 #include "global.h"
 
+class QDomDocument;
+class QDomNode;
+
 namespace Okular {
 
 class FormField;
@@ -38,6 +41,16 @@ class PagePrivate
 
         void imageRotationDone( RotationJob * job );
         QMatrix rotationMatrix() const;
+
+        /**
+         * Loads the local contents (e.g. annotations) of the page.
+         */
+        void restoreLocalContents( const QDomNode & pageNode );
+
+        /**
+         * Saves the local contents (e.g. annotations) of the page.
+         */
+        void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
 
         class PixmapObject
         {

@@ -16,8 +16,6 @@
 #include <okular/core/area.h>
 #include <okular/core/global.h>
 
-class QDomDocument;
-class QDomNode;
 class QPixmap;
 class QRect;
 
@@ -26,6 +24,7 @@ class PagePainter;
 namespace Okular {
 
 class Annotation;
+class DocumentPrivate;
 class FormField;
 class PagePrivate;
 class PageSize;
@@ -340,19 +339,10 @@ class OKULAR_EXPORT Page
          */
         void deleteAnnotations();
 
-        /**
-         * Loads the local contents (e.g. annotations) of the page.
-         */
-        void restoreLocalContents( const QDomNode & pageNode );
-
-        /**
-         * Saves the local contents (e.g. annotations) of the page.
-         */
-        void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
-
     private:
         PagePrivate* const d;
         friend class PagePrivate;
+        friend class DocumentPrivate;
 
         /**
          * To improve performance PagePainter accesses the following

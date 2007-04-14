@@ -46,6 +46,7 @@
 #include "link.h"
 #include "observer.h"
 #include "page.h"
+#include "page_p.h"
 #include "pagecontroller_p.h"
 #include "settings.h"
 #include "sourcereference.h"
@@ -402,7 +403,7 @@ void DocumentPrivate::loadDocumentInfo()
 
                     // pass the domElement to the right page, to read config data from
                     if ( ok && pageNumber >= 0 && pageNumber < (int)m_pagesVector.count() )
-                        m_pagesVector[ pageNumber ]->restoreLocalContents( pageElement );
+                        m_pagesVector[ pageNumber ]->d->restoreLocalContents( pageElement );
                 }
                 pageNode = pageNode.nextSibling();
             }
@@ -573,7 +574,7 @@ void DocumentPrivate::saveDocumentInfo() const
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.begin(), pEnd = m_pagesVector.end();
         for ( ; pIt != pEnd; ++pIt )
-            (*pIt)->saveLocalContents( pageList, doc );
+            (*pIt)->d->saveLocalContents( pageList, doc );
 
         // 2.2. Save document info (current viewport, history, ... ) to DOM
         QDomElement generalInfo = doc.createElement( "generalInfo" );

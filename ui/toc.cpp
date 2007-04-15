@@ -13,6 +13,7 @@
 #include <qlayout.h>
 #include <qstringlist.h>
 #include <qtreewidget.h>
+#include <qvariant.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <ktreewidgetsearchline.h>
@@ -207,6 +208,13 @@ void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() )
             addChildren( n, currentItem );
+
+        // open/keep close the item
+        bool isOpen = false;
+        if ( e.hasAttribute( "Open" ) )
+            isOpen = QVariant( e.attribute( "Open" ) ).toBool();
+        currentItem->setExpanded( isOpen );
+
         n = n.nextSibling();
     }
 }

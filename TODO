@@ -22,14 +22,16 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 119455: use poppler library for kpdf
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> WISH 131045: Add context menu for URLs
--> WISH 131361: mouse hovering on an external link can produce a tooltip of the URI, as in acroread and evince
 -> WISH 134115: specifing to kpdf the first-opened page from command line
 -> WISH 137905: command-line option for presentation mode
 
 In progress [working on]:
+-> core: forms support (mainly for pdf) (BR91809)
+-> bookmarks: improved interface, with easy handling of the bookmarks of all the documents (BR99787,BR136113)
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link
    provide a configuration widget to choose the editor and configure a custom one
+-> open gzipped and bzipped documents (BR102704)
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
 -> thumbnailslist: show Viewport in(blended/contour)
@@ -39,7 +41,7 @@ In progress [working on]:
 -> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
--> text selection in wordprocessor style
+-> text selection in wordprocessor style (BR109346,BR130123)
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a Okular::Anchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
@@ -48,6 +50,8 @@ In progress [working on]:
 -> pageview: update layout when toggling the 'ebook atyle alignment'
 
 More items (first items will enter 'In progress list' first):
+-> rethink which buttons show in the toolbar (BR92620,BR139825)
+-> annotations: configurabile tools in the toolbar (BR137903)
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
 -> annotations: toolbar: display tooltip only the first time
 -> annotations: provide nice wizards. Make it easy to deliver/copy/move the xml files (by Uga)
@@ -90,21 +94,16 @@ More items (first items will enter 'In progress list' first):
 -> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> wallet: use asynchronous interface (to prevent ui-blocking)
--> open gzipped and bzipped documents (BR102704)
 -> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)
 -> kspeech TTS interface. speech {document(missing, BR118872) / page(missing) / selection(done)}
 -> automatic online dictionaries / translators (BR80338)
--> core: forms support (mainly for pdf) (BR91809)
--> evaluate wether to add find icon to the toolbar. poll/usab? (BR92620)
 -> sidebar: evaluate wether to make the left toolbox auto-hiding (kicker like) (BR94495)
 -> add OCR for building TextPages out of pure graphical (aka scanned) pages
--> presentation: add page counter and a widget to manually set pages on the top bar
 -> presentation: provide a pageX/totalPages indicator in addition to the circle one
--> presentation: implement missing transitions (6/11 done)
+-> presentation: implement missing transitions (6/11 done) (BR139284)
 -> presentation: save a flag (to the xml) to open a pdf in presentation mode
 -> presentation: wheel not visible on black. gradient appreciated on lighter backgrounds.
 -> presentation: 2 pages per view, for users reading ebooks with wide screens.
--> splash(xpdf): check lack of smoothness at low resolutions and antialiasing (BR94231)
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
@@ -122,6 +121,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: presentation: add page counter and a widget to manually set pages on the top bar
 -> ADD: basic support for Text and Line DjVu annotations
 -> FIX: regression: popup context menu when using right button in selection mode (BR99315)
 -> ADD: annotations: add config option for default name change

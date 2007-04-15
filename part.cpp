@@ -708,7 +708,7 @@ bool Part::openFile()
     if ( !m_watcher->contains(localFilePath()) )
         m_watcher->addFile(localFilePath());
 
-    // if the 'OpenTOC' flag is set, start presentation
+    // if the 'OpenTOC' flag is set, open the TOC
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_toolBox->isItemEnabled( 0 ) )
     {
         m_toolBox->setCurrentIndex( 0 );

@@ -81,7 +81,7 @@ void EmbeddedFilesDialog::saveFile()
 		if (!path.isEmpty())
 		{
 			QFile f(path);
-			if (!f.exists() || KMessageBox::warningContinueCancel( this, i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", path), QString::null, KGuiItem(i18n("Overwrite"))) == KMessageBox::Continue)
+			if (!f.exists() || KMessageBox::warningContinueCancel( this, i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", path), QString(), KGuiItem(i18n("Overwrite"))) == KMessageBox::Continue)
 			{
 				f.open(QIODevice::WriteOnly);
 				f.write(ef->data());

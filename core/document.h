@@ -83,7 +83,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Creates a new document with the given @p widget as widget to relay GUI things (messageboxes, ...).
          */
-        Document( QWidget *widget );
+        explicit Document( QWidget *widget );
 
         /**
          * Destroys the document.

@@ -73,7 +73,7 @@ class OKULAR_EXPORT TextEntity
         NormalizedRect* m_transformed_area;
 
         class Private;
-        Private *d;
+        const Private *d;
 
         Q_DISABLE_COPY( TextEntity )
 };

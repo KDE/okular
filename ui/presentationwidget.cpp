@@ -1040,7 +1040,7 @@ void PresentationWidget::slotTransitionStep()
 void PresentationWidget::slotDelayedEvents()
 {
   // inform user on how to exit from presentation mode
-  KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString::null, "presentationInfo" );
+  KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString(), "presentationInfo" );
 }
 
 void PresentationWidget::slotPageChanged()

@@ -41,7 +41,7 @@ public:
   /**
    * Constructor
    */
-  Shell(KCmdLineArgs* args = 0, const KUrl &url = KUrl());
+  explicit Shell(KCmdLineArgs* args = 0, const KUrl &url = KUrl());
 
   /**
    * Default Destructor

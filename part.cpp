@@ -718,7 +718,7 @@ bool Part::openFile()
     if ( m_document->metaData( "StartFullScreen" ).toBool() || m_cliPresentation )
     {
         if ( !m_cliPresentation )
-            KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString::null, "autoPresentationWarning" );
+            KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString(), "autoPresentationWarning" );
         m_cliPresentation = false;
         QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
     }
@@ -819,13 +819,13 @@ void Part::close()
     {
         closeUrl();
     }
-    else KMessageBox::information( widget(), i18n( "This link points to a close document action that does not work when using the embedded viewer." ), QString::null, "warnNoCloseIfNotInOkular" );
+    else KMessageBox::information( widget(), i18n( "This link points to a close document action that does not work when using the embedded viewer." ), QString(), "warnNoCloseIfNotInOkular" );
 }
 
 
 void Part::cannotQuit()
 {
-    KMessageBox::information( widget(), i18n( "This link points to a quit application action that does not work when using the embedded viewer." ), QString::null, "warnNoQuitIfNotInOkular" );
+    KMessageBox::information( widget(), i18n( "This link points to a quit application action that does not work when using the embedded viewer." ), QString(), "warnNoQuitIfNotInOkular" );
 }
 
 
@@ -1098,12 +1098,12 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
-    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString::null, widget() );
+    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
         if ( KIO::NetAccess::exists( saveUrl, false, widget() ) )
         {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString::null, KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
                 return;
         }
 
@@ -1341,7 +1341,7 @@ void Part::slotExportAs(QAction * act)
         return;
 
     QString filter = id == 0 ? "text/plain" : m_exportFormats.at( id - 1 ).mimeType()->name();
-    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().fileName() : QString::null, filter, widget() );
+    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().fileName() : QString(), filter, widget() );
     if ( !fileName.isEmpty() )
     {
         bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportFormats.at( id - 1 ) );

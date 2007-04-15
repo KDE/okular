@@ -116,7 +116,7 @@ class OKULAR_EXPORT DocumentObserver
 
     private:
         class Private;
-        Private* d;
+        const Private* d;
 };
 
 }

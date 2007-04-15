@@ -57,7 +57,7 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
     Q_OBJECT
 
     public:
-        FormLineEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
+        explicit FormLineEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
 
     private slots:
         void textEdited( const QString& );
@@ -71,7 +71,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
     Q_OBJECT
 
     public:
-        TextAreaEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
+        explicit TextAreaEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
 
     private slots:
         void slotChanged();
@@ -86,7 +86,7 @@ class FileEdit : public KUrlRequester, public FormWidgetIface
     Q_OBJECT
 
     public:
-        FileEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
+        explicit FileEdit( Okular::FormFieldText * text, QWidget * parent = 0 );
 
     private slots:
         void slotChanged( const QString& );
@@ -101,7 +101,7 @@ class ListEdit : public QListWidget, public FormWidgetIface
     Q_OBJECT
 
     public:
-        ListEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
+        explicit ListEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
 
     private slots:
         void selectionChanged();
@@ -116,7 +116,7 @@ class ComboEdit : public QComboBox, public FormWidgetIface
     Q_OBJECT
 
     public:
-        ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
+        explicit ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
 
     private slots:
         void indexChanged( int );

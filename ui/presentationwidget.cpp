@@ -13,6 +13,7 @@
 #include <kicon.h>
 #include <qtimer.h>
 #include <qimage.h>
+#include <qlabel.h>
 #include <qlineedit.h>
 #include <qpainter.h>
 #include <qtooltip.h>
@@ -431,6 +432,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         QIntValidator *validator = new QIntValidator( 1, m_document->pages(), m_pagesEdit );
         m_pagesEdit->setValidator( validator );
         m_topBar->addWidget( m_pagesEdit );
+        QLabel *pagesLabel = new QLabel( m_topBar );
+        pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
+        m_topBar->addWidget( pagesLabel );
         connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
         m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         m_topBar->addSeparator();

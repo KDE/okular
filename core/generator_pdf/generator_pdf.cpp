@@ -15,6 +15,7 @@
 #include <qapplication.h>
 #include <qpaintdevicemetrics.h>
 #include <qregexp.h>
+#include <qvariant.h>
 #include <kapplication.h>
 #include <klistview.h>
 #include <klocale.h>
@@ -582,6 +583,11 @@ QString PDFGenerator::getMetaData( const QString & key, const QString & option )
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
+    else if ( key == "OpenTOC" )
+    {
+        if ( pdfdoc->getCatalog()->getPageMode() == Catalog::UseOutlines )
+            return "yes";
+    }
     return QString();
 }
 
@@ -865,6 +871,8 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, GList * items )
                 item.setAttribute( "ExternalFileName", g2->getFileName()->getCString() );
             }
         }
+
+        item.setAttribute( "Open", QVariant( (bool)outlineItem->isOpen() ).toString() );
 
         // 3. recursively descend over children
         outlineItem->open();

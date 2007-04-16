@@ -9,6 +9,7 @@
 
 // qt/kde includes
 #include <qheader.h>
+#include <qvariant.h>
 #include <klocale.h>
 
 // local includes
@@ -121,6 +122,13 @@ void TOC::addChildren( const QDomNode & parentNode, KListViewItem * parentItem )
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() )
             addChildren( n, currentItem );
+
+        // open/keep close the item
+        bool isOpen = false;
+        if ( e.hasAttribute( "Open" ) )
+            isOpen = QVariant( e.attribute( "Open" ) ).toBool();
+        currentItem->setOpen( isOpen );
+
         n = n.nextSibling();
     }
 }

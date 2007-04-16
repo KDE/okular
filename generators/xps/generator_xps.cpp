@@ -156,6 +156,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
         (*curPos)++;
     } else
     {
+        (*curPos)++;
         return false;
     }
 

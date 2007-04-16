@@ -1047,6 +1047,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
             fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute("Destination")), pdfdoc );
             item.setAttribute( "Viewport", vp.toString() );
         }
+        if (!e.attribute("Open").isNull()) item.setAttribute("Open", e.attribute("Open"));
 
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() ) addSynopsisChildren( &n, &	item );

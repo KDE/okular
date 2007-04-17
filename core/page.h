@@ -24,6 +24,7 @@ class PagePainter;
 namespace Okular {
 
 class Annotation;
+class Document;
 class DocumentPrivate;
 class FormField;
 class PagePrivate;

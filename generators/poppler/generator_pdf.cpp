@@ -467,7 +467,7 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
             docInfo.set( "modificationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ), i18n("Modified") );
 
             docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1",
-                         QString::number( pdfdoc->pdfVersion() ) ), i18n( "Format" ) );
+                          pdfdoc->pdfVersion() ), i18n( "Format" ) );
             docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ),
                          i18n("Security") );
             docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),

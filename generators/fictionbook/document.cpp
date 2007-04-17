@@ -29,7 +29,7 @@ bool Document::open()
     KZip zip( mFileName );
     if ( mFileName.endsWith( ".fb" ) || mFileName.endsWith( ".fb2" ) ) {
         if ( !file.open( QIODevice::ReadOnly ) ) {
-            setError( i18n( "Unable to open document: %1" ).arg( file.errorString() ) );
+            setError( i18n( "Unable to open document: %1", file.errorString() ) );
             return false;
         }
 
@@ -68,7 +68,7 @@ bool Document::open()
 
     QString errorMsg;
     if ( !mDocument.setContent( device, true, &errorMsg ) ) {
-        setError( i18n( "Invalid XML document: %1" ).arg( errorMsg ) );
+        setError( i18n( "Invalid XML document: %1", errorMsg ) );
         return false;
     }
 

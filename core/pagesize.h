@@ -11,11 +11,14 @@
 #define _OKULAR_PAGESIZE_H_
 
 #include <QtCore/QList>
+#include <QtCore/QSharedDataPointer>
 #include <QtCore/QString>
 
 #include <core/okular_export.h>
 
 namespace Okular {
+
+class PageSizePrivate;
 
 /**
  * @short A small class that represents the size of a page.
@@ -66,9 +69,11 @@ class OKULAR_EXPORT PageSize
          */
         bool operator==( const PageSize &pageSize ) const;
 
+        bool operator!=( const PageSize &pageSize ) const;
+
     private:
-        class Private;
-        Private * const d;
+        friend class PageSizePrivate;
+        QSharedDataPointer<PageSizePrivate> d;
 };
 
 }

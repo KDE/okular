@@ -278,13 +278,6 @@ class OKULAR_EXPORT Page
         void addAnnotation( Annotation * annotation );
 
         /**
-         * Modifies an existing annotation by replacing it with a new @p annotation.
-         *
-         * The unique name is used to find the old annotation.
-         */
-        void modifyAnnotation( Annotation * annotation );
-
-        /**
          * Removes the @p annotation from the page.
          */
         bool removeAnnotation( Annotation * annotation );
@@ -342,6 +335,7 @@ class OKULAR_EXPORT Page
     private:
         PagePrivate* const d;
         friend class PagePrivate;
+        friend class Document;
         friend class DocumentPrivate;
 
         /**

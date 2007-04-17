@@ -25,6 +25,7 @@ class QDomNode;
 
 namespace Okular {
 
+class Annotation;
 class FormField;
 class HighlightAreaRect;
 class Link;
@@ -51,6 +52,13 @@ class PagePrivate
          * Saves the local contents (e.g. annotations) of the page.
          */
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
+
+        /**
+         * Modifies an existing annotation by replacing it with a new @p annotation.
+         *
+         * The unique name is used to find the old annotation.
+         */
+        void modifyAnnotation( Annotation * annotation );
 
         class PixmapObject
         {

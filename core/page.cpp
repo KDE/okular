@@ -488,12 +488,12 @@ void Page::addAnnotation( Annotation * annotation )
     m_rects.append( rect );
 }
 
-void Page::modifyAnnotation(Annotation * newannotation )
+void PagePrivate::modifyAnnotation(Annotation * newannotation )
 {
     if(!newannotation)
         return;
 
-    QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
+    QLinkedList< Annotation * >::iterator aIt = m_page->m_annotations.begin(), aEnd = m_page->m_annotations.end();
     for ( ; aIt != aEnd; ++aIt )
     {
         if((*aIt)==newannotation)
@@ -501,7 +501,7 @@ void Page::modifyAnnotation(Annotation * newannotation )
         if((*aIt) && (*aIt)->uniqueName()==newannotation->uniqueName())
         {
             int rectfound = false;
-            QLinkedList< ObjectRect * >::iterator it = m_rects.begin(), end = m_rects.end();
+            QLinkedList< ObjectRect * >::iterator it = m_page->m_rects.begin(), end = m_page->m_rects.end();
             for ( ; it != end && !rectfound; ++it )
                 if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->object() == (*aIt) ) )
                 {

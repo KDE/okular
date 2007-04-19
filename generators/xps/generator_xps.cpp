@@ -29,6 +29,7 @@
 #include <kimageeffect.h>
 #include <klocale.h>
 #include <QFileInfo>
+#include <QBuffer>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
@@ -713,14 +714,15 @@ bool XpsPage::renderToImage( QImage *p )
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
         const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
-        QIODevice* pageDevice  = pageFile->createDevice();
-        QXmlInputSource *source = new QXmlInputSource(pageDevice);
+        QByteArray data = pageFile->data();
+        QBuffer * buffer = new QBuffer(&data);
+        QXmlInputSource *source = new QXmlInputSource(buffer);
         bool ok = parser->parse( source );
         kDebug(XpsDebug) << "Parse result: " << ok << endl;
         delete source;
         delete parser;
         delete handler;
-        delete pageDevice;
+        delete buffer;
         m_pageIsRendered = true;
     }
 

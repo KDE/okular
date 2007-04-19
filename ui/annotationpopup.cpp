@@ -7,11 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationpopup.h"
+
 #include <klocale.h>
 #include <kmenu.h>
 
 #include "annotationpropertiesdialog.h"
-#include "annotationpopup.h"
 
 #include "core/annotations.h"
 #include "core/document.h"

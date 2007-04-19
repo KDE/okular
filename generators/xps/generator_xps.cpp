@@ -17,10 +17,10 @@
   02110-1301, USA.
 */
 
+#include "generator_xps.h"
+
 #include <qdatetime.h>
 #include <qfile.h>
-#include <qfontdatabase.h>
-#include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
 #include <qpixmap.h>
@@ -34,7 +34,6 @@
 #include <okular/core/document.h>
 #include <okular/core/page.h>
 #include <okular/core/area.h>
-#include "generator_xps.h"
 
 const int XpsDebug = 4658;
 

@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "searchwidget.h"
+
 // qt/kde includes
 #include <qmenu.h>
 #include <qaction.h>
@@ -16,7 +18,6 @@
 #include <klocale.h>
 
 // local includes
-#include "searchwidget.h"
 #include "searchlineedit.h"
 
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )

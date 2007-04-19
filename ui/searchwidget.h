@@ -17,6 +17,8 @@ class Document;
 }
 
 class QAction;
+class QMenu;
+
 class SearchLineEdit;
 
 /**

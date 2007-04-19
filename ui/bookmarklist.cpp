@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "bookmarklist.h"
+
 // qt/kde includes
 #include <qaction.h>
 #include <qcursor.h>
@@ -21,7 +23,6 @@
 #include <kmenu.h>
 #include <ktreewidgetsearchline.h>
 
-#include "bookmarklist.h"
 #include "pageitemdelegate.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"

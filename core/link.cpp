@@ -7,12 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "link.h"
+
 // kde includes
 #include <klocale.h>
 
 // local includes
 #include "document.h"
-#include "link.h"
 #include "sound.h"
 
 using namespace Okular;

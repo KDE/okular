@@ -7,8 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "core/document.h"
 #include "pagesizelabel.h"
+
+#include "core/document.h"
 
 PageSizeLabel::PageSizeLabel( QWidget * parent, Okular::Document * document )
     : QLabel( parent ), m_document( document ),

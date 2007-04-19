@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// reimplementing this
+#include "preferencesdialog.h"
+
 #include <klocale.h>
 
 // single config pages
@@ -16,9 +19,6 @@
 #include "dlgpresentation.h"
 #include "dlgidentity.h"
 #include "dlgdebug.h"
-
-// reimplementing this
-#include "preferencesdialog.h"
 
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton )
     : KConfigDialog( parent, "preferences", skeleton )

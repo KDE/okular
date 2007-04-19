@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationtools.h"
+
 // qt / kde includes
 #include <qcolor.h>
 #include <qpainter.h>
 
 // local includes
 #include "core/annotations.h"
-#include "annotationtools.h"
 
 AnnotatorEngine::AnnotatorEngine( const QDomElement & engineElement )
     : m_engineElement( engineElement ), m_creationCompleted( false )

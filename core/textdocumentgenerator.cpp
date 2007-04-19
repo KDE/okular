@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "textdocumentgenerator.h"
+#include "textdocumentgenerator_p.h"
+
 #include <QtCore/QFile>
 #include <QtCore/QStack>
 #include <QtCore/QTextStream>
-#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
-#include <QtGui/QTextDocument>
 
 #include <klocale.h>
 #include <kprinter.h>
@@ -24,8 +25,6 @@
 #include <okular/core/textpage.h>
 
 #include "document.h"
-#include "textdocumentgenerator.h"
-#include "textdocumentgenerator_p.h"
 
 using namespace Okular;
 

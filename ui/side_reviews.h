@@ -15,12 +15,14 @@
 #include "core/observer.h"
 
 namespace Okular {
+class Annotation;
 class Document;
 class Page;
 }
 
 class QToolBar;
 class QTreeWidget;
+class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
 class QTimer;
 

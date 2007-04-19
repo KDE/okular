@@ -19,6 +19,7 @@
 
 class QTimer;
 class KActionCollection;
+class KUrl;
 class ThumbnailWidget;
 
 namespace Okular {

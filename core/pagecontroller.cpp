@@ -7,12 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pagecontroller_p.h"
+
 // qt/kde includes
 #include <kglobal.h>
 
 // local includes
 #include "page_p.h"
-#include "pagecontroller_p.h"
 #include "rotationjob.h"
 
 K_GLOBAL_STATIC( Okular::PageController, page_controller_self )

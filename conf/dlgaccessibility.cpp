@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "ui_dlgaccessibilitybase.h"
-
 #include "dlgaccessibility.h"
+
+#include "ui_dlgaccessibilitybase.h"
 
 DlgAccessibility::DlgAccessibility( QWidget * parent )
     : QWidget( parent )
 {
-    m_dlg = new Ui_DlgAccessibilityBase();
-    m_dlg->setupUi( this );
+    Ui_DlgAccessibilityBase *dlg = new Ui_DlgAccessibilityBase();
+    dlg->setupUi( this );
 }

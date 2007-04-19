@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_pdf.h"
+
 // qt/kde includes
 #include <qcolor.h>
 #include <qfile.h>
@@ -23,7 +25,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <okular/core/document.h>
 #include <okular/core/link.h>
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
@@ -33,7 +34,6 @@
 #include <okular/core/textpage.h>
 
 // local includes
-#include "generator_pdf.h"
 #include "settings.h"
 
 #include <config-okular.h>

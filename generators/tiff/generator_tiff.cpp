@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_tiff.h"
+
 #include <qdatetime.h>
 #include <qfile.h>
 #include <qimage.h>
@@ -18,8 +20,6 @@
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
-
-#include "generator_tiff.h"
 
 #include <tiff.h>
 #include <tiffio.h>

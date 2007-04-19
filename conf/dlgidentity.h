@@ -18,9 +18,6 @@ class DlgIdentity : public QWidget
 {
     public:
         DlgIdentity( QWidget * parent = 0 );
-
-    protected:
-        Ui_DlgIdentityBase * m_dlg;
 };
 
 #endif

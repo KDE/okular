@@ -291,7 +291,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
                     vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
                     newpage = vp.pageNumber;
                 }
-                newlink = new Okular::LinkGoto( QString::null, vp );
+                newlink = new Okular::LinkGoto( QString(), vp );
             }
             break;
         }

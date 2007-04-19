@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "minibar.h"
+
 // qt / kde includes
 #include <qapplication.h>
 #include <qevent.h>
@@ -25,7 +27,6 @@
 
 // local includes
 #include "core/document.h"
-#include "minibar.h"
 
 // [private widget] lineEdit for entering/validating page numbers
 class PagesEdit : public QLineEdit

@@ -7,8 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "converter.h"
 #include "generator_ooo.h"
+
+#include "converter.h"
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 

@@ -16,6 +16,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pageview.h"
+
 // qt/kde includes
 #include <qcursor.h>
 #include <qevent.h>
@@ -55,7 +57,6 @@
 
 // local includes
 #include "formwidgets.h"
-#include "pageview.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
 #include "core/annotations.h"

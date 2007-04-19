@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_kimgio.h"
+
 #include <QtCore/QBuffer>
 #include <QtGui/QImageReader>
 #include <QtGui/QPainter>
@@ -15,8 +17,6 @@
 #include <kprinter.h>
 
 #include <okular/core/page.h>
-
-#include "generator_kimgio.h"
 
 OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
 

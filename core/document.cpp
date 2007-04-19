@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "document.h"
+
 // qt/kde/system includes
 #include <QtCore/QtAlgorithms>
 #include <QtCore/QFile>
@@ -38,7 +40,6 @@
 #include "audioplayer.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
-#include "document.h"
 #include "generator.h"
 #include "interfaces/configinterface.h"
 #include "interfaces/guiinterface.h"

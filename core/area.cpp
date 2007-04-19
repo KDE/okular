@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "area.h"
+
 #include <QtCore/QRect>
 #include <QtGui/QPolygonF>
 
 #include <math.h>
 
 #include "annotations.h"
-#include "area.h"
 #include "link.h"
 #include "sourcereference.h"
 

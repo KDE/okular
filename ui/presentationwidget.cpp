@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "presentationwidget.h"
+
 // qt/kde includes
 #include <qevent.h>
 #include <qfontmetrics.h>
@@ -37,7 +39,6 @@
 #include <math.h>
 
 // local includes
-#include "presentationwidget.h"
 #include "annotationtools.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"

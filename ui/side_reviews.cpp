@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "side_reviews.h"
+
 // qt/kde includes
 #include <qheaderview.h>
 #include <qlayout.h>
@@ -28,7 +30,6 @@
 #include "settings.h"
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
-#include "side_reviews.h"
 
 
 Reviews::Reviews( QWidget * parent, Okular::Document * document )

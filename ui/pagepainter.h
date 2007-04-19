@@ -10,6 +10,10 @@
 #ifndef _OKULAR_PAGEPAINTER_H_
 #define _OKULAR_PAGEPAINTER_H_
 
+#include <QtGui/QBrush>
+#include <QtGui/QImage>
+#include <QtGui/QPen>
+
 #include "core/area.h"  // for NormalizedPoint
 
 class QPainter;

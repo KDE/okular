@@ -12,15 +12,10 @@
 
 #include <qwidget.h>
 
-class Ui_DlgPresentationBase;
-
 class DlgPresentation : public QWidget
 {
     public:
         DlgPresentation( QWidget * parent = 0 );
-
-    protected:
-        Ui_DlgPresentationBase * m_dlg;
 };
 
 #endif

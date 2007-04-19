@@ -24,6 +24,8 @@
 #include <okular/core/textpage.h>
 
 #include <QDomDocument>
+#include <QFontDatabase>
+#include <QImage>
 #include <QXmlStreamReader>
 #include <QXmlDefaultHandler>
 #include <QStack>

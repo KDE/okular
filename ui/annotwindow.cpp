@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotwindow.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <qevent.h>
@@ -29,7 +31,6 @@
 #include <kdebug.h>
 
 // local includes
-#include "annotwindow.h"
 #include "core/annotations.h"
 
 

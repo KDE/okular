@@ -7,9 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtGui/QMatrix>
-
 #include "rotationjob.h"
+
+#include <QtGui/QMatrix>
 
 using namespace Okular;
 

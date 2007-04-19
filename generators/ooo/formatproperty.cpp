@@ -7,9 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "formatproperty.h"
+
 #include <QtGui/QTextFormat>
 
-#include "formatproperty.h"
 #include "styleinformation.h"
 
 using namespace OOO;

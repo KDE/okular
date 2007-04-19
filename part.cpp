@@ -21,6 +21,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "part.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <qsplitter.h>
@@ -53,7 +55,6 @@
 
 // local includes
 #include "aboutdata.h"
-#include "part.h"
 #include "ui/pageview.h"
 #include "ui/toc.h"
 #include "ui/searchwidget.h"

@@ -10,6 +10,8 @@
 #ifndef ANNOTATIONGUIUTILS_H
 #define ANNOTATIONGUIUTILS_H
 
+#include <QtCore/QString>
+
 namespace Okular {
 class Annotation;
 }

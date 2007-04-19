@@ -11,6 +11,7 @@
 #define OKULAR_THREADEDGENERATOR_P_H
 
 #include <QtCore/QThread>
+#include <QtGui/QImage>
 
 namespace Okular {
 

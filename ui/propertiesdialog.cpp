@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "propertiesdialog.h"
+
 // qt/kde includes
 #include <qlayout.h>
 #include <qlabel.h>
@@ -19,7 +21,6 @@
 #include <kglobalsettings.h>
 
 // local includes
-#include "propertiesdialog.h"
 #include "core/document.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)

@@ -768,7 +768,7 @@ class OKULAR_EXPORT VisiblePageRect
          * @param pageNumber The page number where the rectangle is located.
          * @param rectangle The rectangle in normalized coordinates.
          */
-        VisiblePageRect( int pageNumber = -1, const NormalizedRect &rectangle = NormalizedRect() );
+        explicit VisiblePageRect( int pageNumber = -1, const NormalizedRect &rectangle = NormalizedRect() );
 
         /**
          * The page number where the rectangle is located.

@@ -7,9 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QString>
-
 #include "sourcereference.h"
+
+#include <QtCore/QString>
 
 using namespace Okular;
 

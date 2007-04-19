@@ -8,12 +8,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "searchlineedit.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <qtimer.h>
-
-// local includes
-#include "searchlineedit.h"
 
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),

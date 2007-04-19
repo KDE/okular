@@ -9,10 +9,9 @@
 
 #define UNSTABLE_POPPLER_QT4
 
-#include <poppler-qt4.h>
-
-// local includes
 #include "formfields.h"
+
+#include <poppler-qt4.h>
 
 PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )

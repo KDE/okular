@@ -7,10 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "document.h"
+
 #include <klocale.h>
 #include <kzip.h>
-
-#include "document.h"
 
 using namespace OOO;
 

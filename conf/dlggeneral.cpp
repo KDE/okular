@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "dlggeneral.h"
+
 #include <kauthorized.h>
 
 #include <config-okular.h>
 
 #include "ui_dlggeneralbase.h"
-
-#include "dlggeneral.h"
 
 DlgGeneral::DlgGeneral( QWidget * parent )
     : QWidget( parent )

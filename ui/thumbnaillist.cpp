@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "thumbnaillist.h"
+
 // qt/kde includes
 #include <qevent.h>
 #include <qtimer.h>
@@ -25,7 +27,6 @@
 #include <math.h>
 
 // local includes
-#include "thumbnaillist.h"
 #include "pagepainter.h"
 #include "core/area.h"
 #include "core/document.h"

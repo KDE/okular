@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "ui_dlgpresentationbase.h"
-
 #include "dlgpresentation.h"
+
+#include "ui_dlgpresentationbase.h"
 
 DlgPresentation::DlgPresentation( QWidget * parent )
     : QWidget( parent )
 {
-    m_dlg = new Ui_DlgPresentationBase();
-    m_dlg->setupUi( this );
+    Ui_DlgPresentationBase *dlg = new Ui_DlgPresentationBase();
+    dlg->setupUi( this );
 }

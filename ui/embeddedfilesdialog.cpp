@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "embeddedfilesdialog.h"
+
 #include <QDateTime>
 #include <QTreeWidget>
 
@@ -18,7 +20,6 @@
 #include <kglobal.h>
 
 #include "core/document.h"
-#include "embeddedfilesdialog.h"
 
 static QString dateToString( const QDateTime & date )
 {

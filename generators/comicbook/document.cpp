@@ -7,11 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "document.h"
+
 #include <QtGui/QImage>
 
 #include <kzip.h>
 
-#include "document.h"
 #include "unrar.h"
 
 using namespace ComicBook;

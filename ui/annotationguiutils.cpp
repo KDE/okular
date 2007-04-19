@@ -7,11 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationguiutils.h"
+
 // qt/kde includes
 #include <klocale.h>
 
 // local includes
-#include "annotationguiutils.h"
 #include "core/annotations.h"
 
 QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )

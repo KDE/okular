@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "converter.h"
+
 #include <QtCore/QDate>
 #include <QtCore/QUrl>
 #include <QtGui/QAbstractTextDocumentLayout>
@@ -22,7 +24,6 @@
 #include <okular/core/document.h>
 #include <okular/core/link.h>
 
-#include "converter.h"
 #include "document.h"
 
 using namespace FictionBook;

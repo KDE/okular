@@ -11,6 +11,7 @@
 #define ANNOTATIONPOPUP_H
 
 #include <QtCore/QObject>
+#include <QtCore/QPoint>
 
 namespace Okular {
 class Annotation;

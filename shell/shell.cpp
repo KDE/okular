@@ -17,6 +17,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "shell.h"
+
 // qt/kde includes
 #include <qtimer.h>
 #include <kaction.h>
@@ -43,7 +45,6 @@
 #include <kactioncollection.h>
 
 // local includes
-#include "shell.h"
 #include "kdocumentviewer.h"
 
 Shell::Shell(KCmdLineArgs* args, const KUrl &url)

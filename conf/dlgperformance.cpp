@@ -7,12 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "dlgperformance.h"
+
 #include <qfont.h>
 #include <kiconloader.h>
 
 #include "ui_dlgperformancebase.h"
-
-#include "dlgperformance.h"
 
 DlgPerformance::DlgPerformance( QWidget * parent )
     : QWidget( parent )

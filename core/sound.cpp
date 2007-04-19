@@ -7,10 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QVariant>
-
-// local includes
 #include "sound.h"
+
+#include <QtCore/QVariant>
 
 using namespace Okular;
 

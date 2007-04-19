@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "converter.h"
+
 #include <QtCore/QUrl>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
@@ -23,7 +25,6 @@
 
 #include <klocale.h>
 
-#include "converter.h"
 #include "document.h"
 #include "styleinformation.h"
 #include "styleparser.h"

@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_comicbook.h"
+
 #include <QtGui/QPainter>
 
 #include <kprinter.h>
 
 #include <okular/core/page.h>
-
-#include "generator_comicbook.h"
 
 OKULAR_EXPORT_PLUGIN(ComicBookGenerator)
 

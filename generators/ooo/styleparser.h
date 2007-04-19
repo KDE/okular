@@ -10,6 +10,9 @@
 #ifndef OOO_STYLEPARSER_H
 #define OOO_STYLEPARSER_H
 
+#include "formatproperty.h"
+
+class QDomDocument;
 class QDomElement;
 
 namespace OOO {

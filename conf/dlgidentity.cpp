@@ -7,13 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "ui_dlgidentitybase.h"
-
 #include "dlgidentity.h"
+
+#include "ui_dlgidentitybase.h"
 
 DlgIdentity::DlgIdentity( QWidget * parent )
     : QWidget( parent )
 {
-    m_dlg = new Ui_DlgIdentityBase();
-    m_dlg->setupUi( this );
+    Ui_DlgIdentityBase *dlg = new Ui_DlgIdentityBase();
+    dlg->setupUi( this );
 }

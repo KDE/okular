@@ -18,6 +18,7 @@
 #include <qmutex.h>
 #include <qthread.h>
 
+#include <okular/core/document.h>
 #include <okular/core/generator.h>
 #include <okular/interfaces/configinterface.h>
 

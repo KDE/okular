@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "bookmarkmanager.h"
+
 // qt/kde includes
 #include <qhash.h>
 #include <qset.h>
@@ -17,7 +19,6 @@
 #include <kstandarddirs.h>
 
 // local includes
-#include "bookmarkmanager.h"
 #include "document.h"
 
 using namespace Okular;

@@ -6,6 +6,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "page.h"
+#include "page_p.h"
+
 // qt/kde includes
 #include <QtCore/QSet>
 #include <QtCore/QString>
@@ -20,8 +23,6 @@
 #include "area.h"
 #include "form.h"
 #include "link.h"
-#include "page.h"
-#include "page_p.h"
 #include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"

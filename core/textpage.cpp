@@ -7,13 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "textpage.h"
+
 #include <QtCore/QMap>
 
 #include <kdebug.h>
 
 #include "area.h"
 #include "misc.h"
-#include "textpage.h"
 
 using namespace Okular;
 

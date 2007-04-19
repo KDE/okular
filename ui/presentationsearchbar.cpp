@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "presentationsearchbar.h"
+
 #include <qevent.h>
 #include <qlayout.h>
 #include <qstyle.h>
@@ -18,7 +20,6 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 
-#include "presentationsearchbar.h"
 #include "searchlineedit.h"
 
 #define SNAP_DELTA 15

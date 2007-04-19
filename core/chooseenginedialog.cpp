@@ -7,14 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "chooseenginedialog.h"
+
 #include <QtGui/QComboBox>
 #include <QtGui/QLabel>
 
 #include <klocale.h>
 
 #include "ui_chooseenginewidget.h"
-
-#include "chooseenginedialog.h"
 
 ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent )
     : KDialog( parent )

@@ -7,23 +7,24 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pagepainter.h"
+
 // qt / kde includes
 #include <qrect.h>
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qpixmap.h>
-#include <qimage.h>
 #include <qvarlengtharray.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
 #include <kstaticdeleter.h>
 #include <kdebug.h>
 #include <QApplication>
+
 // system includes
 #include <math.h>
 
 // local includes
-#include "pagepainter.h"
 #include "core/area.h"
 #include "core/page.h"
 #include "core/annotations.h"

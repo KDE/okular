@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pageviewannotator.h"
+
 // qt / kde includes
 #include <qfile.h>
 #include <qcolor.h>
@@ -34,8 +36,6 @@
 #include "settings.h"
 #include "annotationtools.h"
 #include "pageview.h"
-#include "pageviewutils.h"
-#include "pageviewannotator.h"
 
 /** @short PickPointEngine */
 class PickPointEngine : public AnnotatorEngine

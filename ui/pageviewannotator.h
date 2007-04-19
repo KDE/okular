@@ -12,9 +12,21 @@
 
 #include <qobject.h>
 #include <qdom.h>
+#include <qlinkedlist.h>
+
+#include "pageviewutils.h"
+
+class QMouseEvent;
+class QPainter;
+
+namespace Okular
+{
+class Document;
+}
 
 // engines are defined and implemented in the cpp
 class AnnotatorEngine;
+class PageView;
 
 /**
  * @short PageView object devoted to annotation creation/handling.

@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "styleparser.h"
+
 #include <QtCore/QDateTime>
 #include <QtGui/QFont>
 #include <QtXml/QDomDocument>
@@ -18,7 +20,6 @@
 
 #include "document.h"
 #include "styleinformation.h"
-#include "styleparser.h"
 
 using namespace OOO;
 

@@ -7,10 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "dlgdebug.h"
+
 #include <qcheckbox.h>
 #include <qlayout.h>
-
-#include "dlgdebug.h"
 
 #define DEBUG_SIMPLE_BOOL( cfgname, layout ) \
 { \

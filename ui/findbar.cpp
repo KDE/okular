@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "findbar.h"
+
 // qt/kde includes
 #include <qlayout.h>
 #include <qmenu.h>
@@ -16,7 +18,6 @@
 #include <kpushbutton.h>
 
 // local includes
-#include "findbar.h"
 #include "searchlineedit.h"
 #include "core/document.h"
 

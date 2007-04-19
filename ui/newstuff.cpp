@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "newstuff.h"
+
 // qt/kde includes
 #include <qfile.h>
 #include <qwidget.h>
@@ -36,9 +38,6 @@
 #include <kio/netaccess.h>
 #include <knewstuff/provider.h>
 #include <knewstuff/entry.h>
-
-// local includes
-#include "newstuff.h"
 
 // define the providers.xml location
 #define PROVIDERS_URL "http://kpdf.kde.org/newstuff/providers.xml"

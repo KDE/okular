@@ -12,15 +12,10 @@
 
 #include <qwidget.h>
 
-class Ui_DlgAccessibilityBase;
-
 class DlgAccessibility : public QWidget
 {
     public:
         DlgAccessibility( QWidget * parent = 0 );
-
-    protected:
-        Ui_DlgAccessibilityBase * m_dlg;
 };
 
 #endif

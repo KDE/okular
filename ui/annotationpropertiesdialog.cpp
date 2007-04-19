@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationpropertiesdialog.h"
+
 // qt/kde includes
 #include <qframe.h>
 #include <qlayout.h>
@@ -23,7 +25,6 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "core/annotations.h"
-#include "annotationpropertiesdialog.h"
 #include "annotationwidgets.h"
 
 

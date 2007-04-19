@@ -10,7 +10,9 @@
 #ifndef _OKULAR_TEXTDOCUMENTGENERATOR_P_H_
 #define _OKULAR_TEXTDOCUMENTGENERATOR_P_H_
 
+#include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextBlock>
+#include <QtGui/QTextDocument>
 
 #include "document.h"
 #include "link.h"

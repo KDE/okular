@@ -16,10 +16,11 @@
 #include <qhash.h>
 #include <qtoolbutton.h>
 
+#include <KIcon>
+
 class QAction;
 class QLabel;
 class QTimer;
-class KIcon;
 class FormWidgetIface;
 
 namespace Okular {

@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationwidgets.h"
+
 // qt/kde includes
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -20,9 +22,6 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
-
-// local includes
-#include "annotationwidgets.h"
 
 PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
   : QWidget( parent )

@@ -7,12 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "unrar.h"
+
 #include <QtCore/QFile>
 #include <QtCore/QProcess>
 
 #include <ktempdir.h>
-
-#include "unrar.h"
 
 Unrar::Unrar()
     : QObject( 0 ), mTempDir( 0 ), mErrorOccured( false )

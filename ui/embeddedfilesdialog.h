@@ -12,6 +12,7 @@
 
 #include <kdialog.h>
 
+class QTreeWidget;
 class QTreeWidgetItem;
 
 namespace Okular {

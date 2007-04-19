@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator.h"
+#include "generator_p.h"
+
 #include <qset.h>
 
 #include <kaboutdata.h>
@@ -16,8 +19,6 @@
 #include <klocale.h>
 
 #include "document.h"
-#include "generator.h"
-#include "generator_p.h"
 #include "page.h"
 
 using namespace Okular;

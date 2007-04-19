@@ -7,12 +7,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotations.h"
+
 // qt/kde includes
 #include <QtGui/QApplication>
 #include <QtGui/QColor>
-
-// local includes
-#include "annotations.h"
 
 using namespace Okular;
 

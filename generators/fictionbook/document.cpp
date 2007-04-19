@@ -7,12 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "document.h"
+
 #include <QtCore/QFile>
 
 #include <klocale.h>
 #include <kzip.h>
-
-#include "document.h"
 
 using namespace FictionBook;
 

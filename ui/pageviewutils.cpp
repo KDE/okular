@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pageviewutils.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -19,7 +21,6 @@
 #include <qtimer.h>
 #include <qtoolbutton.h>
 #include <kacceleratormanager.h>
-#include <kicon.h>
 #include <kiconloader.h>
 #include <kimageeffect.h>
 #include <klocale.h>
@@ -29,7 +30,6 @@
 
 // local includes
 #include "formwidgets.h"
-#include "pageviewutils.h"
 #include "core/page.h"
 #include "settings.h"
 

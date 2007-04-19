@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "toc.h"
+
 // qt/kde includes
 #include <qdom.h>
 #include <qheaderview.h>
@@ -20,7 +22,6 @@
 
 // local includes
 #include "pageitemdelegate.h"
-#include "toc.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "core/link.h"

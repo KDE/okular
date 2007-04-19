@@ -7,11 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "formwidgets.h"
+
 #include <klineedit.h>
 #include <klocale.h>
 
 // local includes
-#include "formwidgets.h"
 #include "core/form.h"
 
 FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidget * parent )

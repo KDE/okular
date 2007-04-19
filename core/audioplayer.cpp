@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "audioplayer.h"
+
 // qt/kde includes
 #include <qhash.h>
 #include <qsignalmapper.h>
@@ -19,7 +21,6 @@
 #include <phonon/mediaobject.h>
 
 // local includes
-#include "audioplayer.h"
 #include "link.h"
 #include "sound.h"
 

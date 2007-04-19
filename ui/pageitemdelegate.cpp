@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "pageitemdelegate.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <QItemDelegate>
@@ -15,7 +17,6 @@
 #include <qvariant.h>
 
 // local includes
-#include "pageitemdelegate.h"
 #include "settings.h"
 
 #define PAGEITEMDELEGATE_INTERNALMARGIN 3

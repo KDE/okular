@@ -30,6 +30,7 @@
 #include <klocale.h>
 #include <QFileInfo>
 #include <QBuffer>
+#include <QImageReader>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
@@ -808,11 +809,32 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 
     const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
+    /* WORKAROUND:
+        XPS standard requires to use 96dpi for images which doesn't have dpi specified (in file). When Qt loads such an image,
+        it sets its dpi to qt_defaultDpi and doesn't allow to find out that it happend.
+
+        To workaround this I used this procedure: load image, set its dpi to 96, load image again. When dpi isn't set in file,
+        dpi set by me stays unchanged.
+
+        I've posted a bug to qt.
+
+    */
+
     QImage image;
+    QByteArray data = imageFile->data();
 
-    QByteArray imageData = imageFile->data(); // once per file, according to the docs
+    QBuffer buffer(&data);
+    buffer.open(QBuffer::ReadOnly);
 
-    image.loadFromData( imageData);
+    QImageReader reader(&buffer);
+    image = reader.read();
+
+    image.setDotsPerMeterX(qRound(96 / 0.0254));
+    image.setDotsPerMeterY(qRound(96 / 0.0254));
+  
+    buffer.seek(0);
+    reader.setDevice(&buffer);
+    reader.read(&image);
 
     return image;
 }

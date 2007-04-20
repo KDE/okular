@@ -34,8 +34,8 @@ class GeneratorPrivate
 
         ~GeneratorPrivate();
 
-        void createPixmapGenerationThread();
-        void createTextPageGenerationThread();
+        PixmapGenerationThread* pixmapGenerationThread();
+        TextPageGenerationThread* textPageGenerationThread();
 
         void pixmapGenerationFinished();
         void textpageGenerationFinished();

@@ -46,26 +46,30 @@ GeneratorPrivate::~GeneratorPrivate()
     delete m_about;
 }
 
-void GeneratorPrivate::createPixmapGenerationThread()
+PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
 {
     if ( mPixmapGenerationThread )
-        return;
+        return mPixmapGenerationThread;
 
     mPixmapGenerationThread = new PixmapGenerationThread( m_generator );
     QObject::connect( mPixmapGenerationThread, SIGNAL( finished() ),
                       m_generator, SLOT( pixmapGenerationFinished() ),
                       Qt::QueuedConnection );
+
+    return mPixmapGenerationThread;
 }
 
-void GeneratorPrivate::createTextPageGenerationThread()
+TextPageGenerationThread* GeneratorPrivate::textPageGenerationThread()
 {
     if ( mTextPageGenerationThread )
-        return;
+        return mTextPageGenerationThread;
 
     mTextPageGenerationThread = new TextPageGenerationThread( m_generator );
     QObject::connect( mTextPageGenerationThread, SIGNAL( finished() ),
                       m_generator, SLOT( textpageGenerationFinished() ),
                       Qt::QueuedConnection );
+
+    return mTextPageGenerationThread;
 }
 
 void GeneratorPrivate::pixmapGenerationFinished()
@@ -118,8 +122,7 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     if ( hasFeature( Threaded ) )
     {
-        d->createPixmapGenerationThread();
-        d->mPixmapGenerationThread->startGeneration( request );
+        d->pixmapGenerationThread()->startGeneration( request );
 
         /**
          * We create the text page for every page that is visible to the
@@ -127,8 +130,7 @@ void Generator::generatePixmap( PixmapRequest *request )
          */
         if ( hasFeature( TextExtraction ) && !request->page()->hasTextPage() && canGenerateTextPage() ) {
             d->mTextPageReady = false;
-            d->createTextPageGenerationThread();
-            d->mTextPageGenerationThread->startGeneration( request->page() );
+            d->textPageGenerationThread()->startGeneration( request->page() );
         }
 
         return;
@@ -153,8 +155,7 @@ void Generator::generateTextPage( Page *page, enum GenerationType type )
     if ( type == Asynchronous ) {
         if ( hasFeature( Threaded ) )
         {
-            d->createTextPageGenerationThread();
-            d->mTextPageGenerationThread->startGeneration( page );
+            d->textPageGenerationThread()->startGeneration( page );
             return;
         }
     }

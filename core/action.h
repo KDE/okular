@@ -20,17 +20,17 @@ class Sound;
 class DocumentViewport;
 
 /**
- * @short Encapsulates data that describes a link.
+ * @short Encapsulates data that describes an action.
  *
- * This is the base class for links. It makes mandatory for inherited
+ * This is the base class for actions. It makes mandatory for inherited
  * widgets to reimplement the 'actionType' method and return the type of
- * the link described by the reimplemented class.
+ * the action described by the reimplemented class.
  */
 class OKULAR_EXPORT Action
 {
     public:
         /**
-         * Describes the type of link.
+         * Describes the type of action.
          */
         enum ActionType {
             Goto,       ///< Goto a given page or external document
@@ -42,17 +42,17 @@ class OKULAR_EXPORT Action
         };
 
         /**
-         * Creates a new link.
+         * Creates a new action.
          */
         Action();
 
         /**
-         * Destroys the link.
+         * Destroys the action.
          */
         virtual ~Action();
 
         /**
-         * Returns the type of the link. Every inherited class must return
+         * Returns the type of the action. Every inherited class must return
          * an unique identifier.
          *
          * @see ActionType
@@ -60,7 +60,7 @@ class OKULAR_EXPORT Action
         virtual ActionType actionType() const = 0;
 
         /**
-         * Returns a i18n'ed tip of the link action that is presented to
+         * Returns a i18n'ed tip of the action that is presented to
          * the user.
          */
         virtual QString actionTip() const;
@@ -74,14 +74,14 @@ class OKULAR_EXPORT Action
 
 
 /**
- * The Goto link changes the viewport to another page
+ * The Goto action changes the viewport to another page
  * or loads an external document.
  */
 class OKULAR_EXPORT ActionGoto : public Action
 {
     public:
         /**
-         * Creates a new goto link.
+         * Creates a new goto action.
          *
          * @p fileName The name of an external file that shall be loaded.
          * @p viewport The target viewport information of the current document.
@@ -89,22 +89,22 @@ class OKULAR_EXPORT ActionGoto : public Action
         ActionGoto( const QString& fileName, const DocumentViewport & viewport );
 
         /**
-         * Destroys the goto link.
+         * Destroys the goto action.
          */
         virtual ~ActionGoto();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 
         /**
-         * Returns whether the goto link points to an external document.
+         * Returns whether the goto action points to an external document.
          */
         bool isExternal() const;
 
@@ -114,7 +114,7 @@ class OKULAR_EXPORT ActionGoto : public Action
         QString fileName() const;
 
         /**
-         * Returns the document viewport the goto link points to.
+         * Returns the document viewport the goto action points to.
          */
         DocumentViewport destViewport() const;
 
@@ -126,13 +126,13 @@ class OKULAR_EXPORT ActionGoto : public Action
 };
 
 /**
- * The Execute link executes an external application.
+ * The Execute action executes an external application.
  */
 class OKULAR_EXPORT ActionExecute : public Action
 {
     public:
         /**
-         * Creates a new execute link.
+         * Creates a new execute action.
          *
          * @param fileName The file name of the application to execute.
          * @param parameters The parameters of the application to execute.
@@ -140,17 +140,17 @@ class OKULAR_EXPORT ActionExecute : public Action
         ActionExecute( const QString &fileName, const QString &parameters );
 
         /**
-         * Destroys the execute link.
+         * Destroys the execute action.
          */
         virtual ~ActionExecute();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 
@@ -172,31 +172,31 @@ class OKULAR_EXPORT ActionExecute : public Action
 };
 
 /**
- * The Browse link browses an url by opening a web browser or
+ * The Browse action browses an url by opening a web browser or
  * email client, depedning on the url protocol (e.g. http, mailto, etc.).
  */
 class OKULAR_EXPORT ActionBrowse : public Action
 {
     public:
         /**
-         * Creates a new browse link.
+         * Creates a new browse action.
          *
          * @param url The url to browse.
          */
         ActionBrowse( const QString &url );
 
         /**
-         * Destroys the browse link.
+         * Destroys the browse action.
          */
         virtual ~ActionBrowse();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 
@@ -213,7 +213,7 @@ class OKULAR_EXPORT ActionBrowse : public Action
 };
 
 /**
- * The Action link contains an action that is performed on
+ * The DocumentAction action contains an action that is performed on
  * the current document.
  */
 class OKULAR_EXPORT ActionDocumentAction : public Action
@@ -240,24 +240,24 @@ class OKULAR_EXPORT ActionDocumentAction : public Action
         };
 
         /**
-         * Creates a new link action.
+         * Creates a new document action.
          *
-         * @param actionType The type of action.
+         * @param actionType The type of document action.
          */
         explicit ActionDocumentAction( enum DocumentActionType documentActionType );
 
         /**
-         * Destroys the action link.
+         * Destroys the document action.
          */
         virtual ~ActionDocumentAction();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 
@@ -274,13 +274,13 @@ class OKULAR_EXPORT ActionDocumentAction : public Action
 };
 
 /**
- * The Sound link plays a sound on activation.
+ * The Sound action plays a sound on activation.
  */
 class OKULAR_EXPORT ActionSound : public Action
 {
     public:
         /**
-         * Creates a new sound link.
+         * Creates a new sound action.
          *
          * @param volume The volume of the sound.
          * @param synchronous Whether the sound shall be played synchronous.
@@ -291,17 +291,17 @@ class OKULAR_EXPORT ActionSound : public Action
         ActionSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
 
         /**
-         * Destroys the sound link.
+         * Destroys the sound action.
          */
         virtual ~ActionSound();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 
@@ -338,28 +338,28 @@ class OKULAR_EXPORT ActionSound : public Action
 };
 
 /**
- * The Movie link plays a video on activation.
+ * The Movie action plays a video on activation.
  */
 class ActionMovie : public Action
 {
     public:
         /**
-         * Creates a new movie link.
+         * Creates a new movie action.
          */
         ActionMovie();
 
         /**
-         * Destroys the movie link.
+         * Destroys the movie action.
          */
         virtual ~ActionMovie();
 
         /**
-         * Returns the link type.
+         * Returns the action type.
          */
         ActionType actionType() const;
 
         /**
-         * Returns the link tip.
+         * Returns the action tip.
          */
         QString actionTip() const;
 

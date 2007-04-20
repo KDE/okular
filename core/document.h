@@ -420,7 +420,7 @@ class OKULAR_EXPORT Document : public QObject
         const BookmarkManager * bookmarkManager() const;
 
         /**
-         * Processes/Executes the given @p link.
+         * Processes the given @p action.
          */
         void processAction( const Action *action );
 
@@ -482,43 +482,43 @@ class OKULAR_EXPORT Document : public QObject
 
     Q_SIGNALS:
         /**
-         * This signal is emitted whenever a link action requests a
+         * This signal is emitted whenever an action requests a
          * document close operation.
          */
         void close();
 
         /**
-         * This signal is emitted whenever a link action requests an
+         * This signal is emitted whenever an action requests an
          * application quit operation.
          */
         void quit();
 
         /**
-         * This signal is emitted whenever a link action requests a
+         * This signal is emitted whenever an action requests a
          * find operation.
          */
         void linkFind();
 
         /**
-         * This signal is emitted whenever a link action requests a
+         * This signal is emitted whenever an action requests a
          * goto operation.
          */
         void linkGoToPage();
 
         /**
-         * This signal is emitted whenever a link action requests a
+         * This signal is emitted whenever an action requests a
          * start presentation operation.
          */
         void linkPresentation();
 
         /**
-         * This signal is emitted whenever a link action requests an
+         * This signal is emitted whenever an action requests an
          * end presentation operation.
          */
         void linkEndPresentation();
 
         /**
-         * This signal is emitted whenever a link action requests an
+         * This signal is emitted whenever an action requests an
          * open url operation for the given document @p url.
          */
         void openUrl( const KUrl &url );

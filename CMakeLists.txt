@@ -85,6 +85,8 @@ ENDIF(APPLE)
 
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_KDEPRINT_LIBRARY} ${KDE4_PHONONCORE_LIBRARY} ${MATH_LIB})
 
+set_target_properties(okularcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
+
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 
 install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})

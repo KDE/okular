@@ -74,13 +74,13 @@ Okular::TextPage* TextDocumentGenerator::Private::createTextPage( int pageNumber
     return textPage;
 }
 
-void TextDocumentGenerator::Private::addLink( Action *link, int cursorBegin, int cursorEnd )
+void TextDocumentGenerator::Private::addAction( Action *action, int cursorBegin, int cursorEnd )
 {
-    if ( !link )
+    if ( !action )
         return;
 
     LinkPosition position;
-    position.link = link;
+    position.link = action;
     position.startPosition = cursorBegin;
     position.endPosition = cursorEnd;
 
@@ -187,8 +187,8 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
 {
     setFeature( TextExtraction );
 
-    connect( converter, SIGNAL( addLink( Action*, int, int ) ),
-             this, SLOT( addLink( Action*, int, int ) ) );
+    connect( converter, SIGNAL( addAction( Action*, int, int ) ),
+             this, SLOT( addAction( Action*, int, int ) ) );
     connect( converter, SIGNAL( addAnnotation( Annotation*, int, int ) ),
              this, SLOT( addAnnotation( Annotation*, int, int ) ) );
     connect( converter, SIGNAL( addTitle( int, const QString&, const QTextBlock& ) ),

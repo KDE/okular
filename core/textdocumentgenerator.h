@@ -47,7 +47,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
          * Adds a new link object which is located between cursorBegin and
          * cursorEnd to the generator.
          */
-        void addLink( Action *link, int cursorBegin, int cursorEnd );
+        void addAction( Action *link, int cursorBegin, int cursorEnd );
 
         /**
          * Adds a new annotation object which is located between cursorBegin and
@@ -138,7 +138,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         class Private;
         Private* const d;
 
-        Q_PRIVATE_SLOT( d, void addLink( Action*, int, int ) )
+        Q_PRIVATE_SLOT( d, void addAction( Action*, int, int ) )
         Q_PRIVATE_SLOT( d, void addAnnotation( Annotation*, int, int ) )
         Q_PRIVATE_SLOT( d, void addTitle( int, const QString&, const QTextBlock& ) )
         Q_PRIVATE_SLOT( d, void addMetaData( const QString&, const QString&, const QString& ) )

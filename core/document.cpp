@@ -1949,15 +1949,15 @@ const BookmarkManager * Document::bookmarkManager() const
     return d->m_bookmarkManager;
 }
 
-void Document::processLink( const Action * link )
+void Document::processAction( const Action * action )
 {
-    if ( !link )
+    if ( !action )
         return;
 
-    switch( link->actionType() )
+    switch( action->actionType() )
     {
         case Action::Goto: {
-            const ActionGoto * go = static_cast< const ActionGoto * >( link );
+            const ActionGoto * go = static_cast< const ActionGoto * >( action );
             d->m_nextDocumentViewport = go->destViewport();
 
             // Explanation of why d->m_nextDocumentViewport is needed:
@@ -1987,7 +1987,7 @@ void Document::processLink( const Action * link )
             } break;
 
         case Action::Execute: {
-            const ActionExecute * exe  = static_cast< const ActionExecute * >( link );
+            const ActionExecute * exe  = static_cast< const ActionExecute * >( action );
             QString fileName = exe->fileName();
             if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             {
@@ -2036,7 +2036,7 @@ void Document::processLink( const Action * link )
             } break;
 
         case Action::DocumentAction: {
-            const ActionDocumentAction * action = static_cast< const ActionDocumentAction * >( link );
+            const ActionDocumentAction * action = static_cast< const ActionDocumentAction * >( action );
             switch( action->documentActionType() )
             {
                 case ActionDocumentAction::PageFirst:
@@ -2081,7 +2081,7 @@ void Document::processLink( const Action * link )
             } break;
 
         case Action::Browse: {
-            const ActionBrowse * browse = static_cast< const ActionBrowse * >( link );
+            const ActionBrowse * browse = static_cast< const ActionBrowse * >( action );
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
                 KToolInvocation::invokeMailer( browse->url() );
@@ -2103,13 +2103,13 @@ void Document::processLink( const Action * link )
             } break;
 
         case Action::Sound: {
-            const ActionSound * linksound = static_cast< const ActionSound * >( link );
+            const ActionSound * linksound = static_cast< const ActionSound * >( action );
             AudioPlayer::instance()->playSound( linksound->sound(), linksound );
             } break;
 
         case Action::Movie:
-            //const ActionMovie * browse = static_cast< const ActionMovie * >( link );
-            // TODO this (Movie link)
+            //const ActionMovie * browse = static_cast< const ActionMovie * >( action );
+            // TODO this (Movie action)
             break;
     }
 }

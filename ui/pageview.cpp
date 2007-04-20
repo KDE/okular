@@ -1423,7 +1423,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     // handle click over a link
                     const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
-                    d->document->processLink( action );
+                    d->document->processAction( action );
                 }
                 else
                 {
@@ -1476,7 +1476,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         {
                             if ( res == actProcessLink )
                             {
-                                d->document->processLink( link );
+                                d->document->processAction( link );
                             }
                             else if ( res == actCopyLinkLocation )
                             {

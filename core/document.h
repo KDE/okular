@@ -422,7 +422,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Processes/Executes the given @p link.
          */
-        void processLink( const Action *link );
+        void processAction( const Action *action );
 
         /**
          * Processes/Executes the given source @p reference.

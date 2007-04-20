@@ -109,7 +109,7 @@ class TextDocumentGenerator::Private
         void calculatePositions( int page, int &start, int &end ) const;
         Okular::TextPage* createTextPage( int ) const;
 
-        void addLink( Action *link, int cursorBegin, int cursorEnd );
+        void addAction( Action *action, int cursorBegin, int cursorEnd );
         void addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd );
         void addTitle( int level, const QString &title, const QTextBlock &position );
         void addMetaData( const QString &key, const QString &value, const QString &title );

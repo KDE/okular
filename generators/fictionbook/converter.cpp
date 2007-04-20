@@ -201,7 +201,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         Okular::ActionGoto *action = new Okular::ActionGoto( QString(), viewport );
 
-        emit addLink( action, it.value().first, it.value().second );
+        emit addAction( action, it.value().first, it.value().second );
     }
 
     return mTextDocument;
@@ -737,7 +737,7 @@ bool Converter::convertLink( const QDomElement &element )
     } else {
         // external link
         Okular::ActionBrowse *action = new Okular::ActionBrowse( href );
-        emit addLink( action, startPosition, endPosition );
+        emit addAction( action, startPosition, endPosition );
     }
 
     return true;

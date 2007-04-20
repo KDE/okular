@@ -231,7 +231,7 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     if ( !externalFileName.isEmpty() )
     {
         Okular::ActionGoto action( externalFileName, tocItem->viewport() );
-        m_document->processLink( &action );
+        m_document->processAction( &action );
     }
     else
     {

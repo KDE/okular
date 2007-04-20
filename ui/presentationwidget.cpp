@@ -364,7 +364,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
     {
         const Okular::Action * link = getLink( e->x(), e->y() );
         if ( link == m_pressedLink )
-            m_document->processLink( link );
+            m_document->processAction( link );
         m_pressedLink = 0;
     }
 }
@@ -646,7 +646,7 @@ void PresentationWidget::changePage( int newPage )
         Okular::AudioPlayer::instance()->stopPlaybacks();
         // perform the page closing action, if any
         if ( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) )
-            m_document->processLink( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
+            m_document->processAction( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
 
         // remove the drawing on the old page before switching
         clearDrawings();
@@ -654,7 +654,7 @@ void PresentationWidget::changePage( int newPage )
 
         // perform the page opening action, if any
         if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
-            m_document->processLink( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
     }
 }

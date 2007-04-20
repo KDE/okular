@@ -42,11 +42,11 @@
 #include "annotationtools.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
+#include "core/action.h"
 #include "core/audioplayer.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
-#include "core/link.h"
 #include "settings.h"
 
 

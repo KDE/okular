@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <okular/core/link.h>
+#include <okular/core/action.h>
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
 #include <okular/core/pagetransition.h>

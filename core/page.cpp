@@ -19,10 +19,10 @@
 #include <kdebug.h>
 
 // local includes
+#include "action.h"
 #include "annotations.h"
 #include "area.h"
 #include "form.h"
-#include "link.h"
 #include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"

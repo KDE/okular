@@ -64,11 +64,11 @@
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
+#include "core/action.h"
 #include "core/document.h"
 #include "core/form.h"
 #include "core/page.h"
 #include "core/misc.h"
-#include "core/link.h"
 #include "core/generator.h"
 #include "settings.h"
 

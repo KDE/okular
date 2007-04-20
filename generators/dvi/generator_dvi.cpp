@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <okular/core/action.h>
 #include <okular/core/document.h>
-#include <okular/core/link.h>
 #include <okular/core/page.h>
 #include <okular/core/sourcereference.h>
 #include <okular/core/textpage.h>

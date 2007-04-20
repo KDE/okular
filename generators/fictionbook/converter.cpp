@@ -21,8 +21,8 @@
 #include <kglobal.h>
 #include <klocale.h>
 
+#include <okular/core/action.h>
 #include <okular/core/document.h>
-#include <okular/core/link.h>
 
 #include "document.h"
 

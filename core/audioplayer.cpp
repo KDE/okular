@@ -21,7 +21,7 @@
 #include <phonon/mediaobject.h>
 
 // local includes
-#include "link.h"
+#include "action.h"
 #include "sound.h"
 
 using namespace Okular;

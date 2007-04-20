@@ -22,9 +22,9 @@
 
 // local includes
 #include "pageitemdelegate.h"
+#include "core/action.h"
 #include "core/document.h"
 #include "core/page.h"
-#include "core/link.h"
 
 class TOCItem : public QTreeWidgetItem
 {

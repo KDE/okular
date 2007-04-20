@@ -20,6 +20,7 @@ include_directories(
 # okularcore
 
 set(okularcore_SRCS
+   core/action.cpp
    core/annotations.cpp
    core/area.cpp
    core/audioplayer.cpp
@@ -28,7 +29,6 @@ set(okularcore_SRCS
    core/document.cpp
    core/form.cpp
    core/generator.cpp
-   core/link.cpp
    core/misc.cpp
    core/observer.cpp
    core/page.cpp
@@ -44,12 +44,12 @@ set(okularcore_SRCS
 )
 
 install( FILES
+           core/action.h
            core/annotations.h
            core/area.h
            core/document.h
            core/form.h
            core/generator.h
-           core/link.h
            core/observer.h
            core/okular_export.h
            core/page.h

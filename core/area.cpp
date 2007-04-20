@@ -14,8 +14,8 @@
 
 #include <math.h>
 
+#include "action.h"
 #include "annotations.h"
-#include "link.h"
 #include "sourcereference.h"
 
 using namespace Okular;

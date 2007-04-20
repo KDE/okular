@@ -19,8 +19,8 @@
 #include <QtXml/QDomText>
 #include <QtXml/QXmlSimpleReader>
 
+#include <okular/core/action.h>
 #include <okular/core/annotations.h>
-#include <okular/core/link.h>
 #include <okular/core/document.h>
 
 #include <klocale.h>

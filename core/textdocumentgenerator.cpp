@@ -19,8 +19,8 @@
 #include <klocale.h>
 #include <kprinter.h>
 
+#include <okular/core/action.h>
 #include <okular/core/annotations.h>
-#include <okular/core/link.h>
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
 

@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "link.h"
+#include "action.h"
 
 // kde includes
 #include <klocale.h>

@@ -37,6 +37,7 @@
 #include <ktoolinvocation.h>
 
 // local includes
+#include "action.h"
 #include "audioplayer.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
@@ -44,7 +45,6 @@
 #include "interfaces/configinterface.h"
 #include "interfaces/guiinterface.h"
 #include "interfaces/printinterface.h"
-#include "link.h"
 #include "observer.h"
 #include "page.h"
 #include "page_p.h"

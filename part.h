@@ -161,6 +161,7 @@ private:
 	QTimer *m_dirtyHandler;
 	DocumentViewport m_viewportDirty;
 	bool m_wasPresentationOpen;
+	int m_dirtyToolboxIndex;
 	
 	// Remember the search history
 	QStringList m_searchHistory;

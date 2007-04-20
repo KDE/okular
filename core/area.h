@@ -212,13 +212,13 @@ class OKULAR_EXPORT NormalizedRect
 /**
  * @short NormalizedRect that contains a reference to an object.
  *
- * These rects contains a pointer to a okular object (such as a link or something
+ * These rects contains a pointer to a okular object (such as an action or something
  * like that). The pointer is read and stored as 'void pointer' so cast is
  * performed by accessors based on the value returned by objectType(). Objects
  * are reparented to this class.
  *
  * Type / Class correspondency tab:
- *  - Link      : class Link  : description of a link
+ *  - Action    : class Action: description of an action
  *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation
  */
@@ -230,7 +230,7 @@ class OKULAR_EXPORT ObjectRect
          */
         enum ObjectType
         {
-            Action,        ///< A link
+            Action,      ///< An action
             Image,       ///< An image
             OAnnotation, ///< An annotation
             SourceRef    ///< A source reference

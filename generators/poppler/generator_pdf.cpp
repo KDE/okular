@@ -380,7 +380,9 @@ bool PDFGenerator::closeDocument()
     docLock.unlock();
     docInfoDirty = true;
     docSynopsisDirty = true;
+    docSyn = Okular::DocumentSynopsis();
     docFontsDirty = true;
+    docFonts = Okular::DocumentFonts();
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
@@ -516,7 +518,6 @@ const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     if ( !toc )
         return NULL;
 
-    docSyn = Okular::DocumentSynopsis();
     addSynopsisChildren(toc, &docSyn);
     delete toc;
 
@@ -530,7 +531,6 @@ const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
         return &docFonts;
 
     // initialize fonts dom
-    docFonts = Okular::DocumentFonts();
     docFonts.appendChild( docFonts.createElement( "Fonts" ) );
 
     docLock.lock();

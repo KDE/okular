@@ -280,7 +280,7 @@ QWidget * LineAnnotationWidget::widget()
     lay->setMargin( 0 );
     QGroupBox * gb = new QGroupBox( m_widget );
     lay->addWidget( gb );
-    gb->setTitle( i18n( " Line Extensions" ) );
+    gb->setTitle( i18n( "Line Extensions" ) );
     QGridLayout * gridlay = new QGridLayout( gb );
     QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
     gridlay->addWidget( tmplabel, 0, 0 );
@@ -340,7 +340,7 @@ QWidget * HighlightAnnotationWidget::widget()
     m_typeCombo->addItem( i18n( "Highlight" ) );
     m_typeCombo->addItem( i18n( "Squiggly" ) );
     m_typeCombo->addItem( i18n( "Underline" ) );
-    m_typeCombo->addItem( i18n( "Striked out" ) );
+    m_typeCombo->addItem( i18n( "Strike out" ) );
     m_typeCombo->setCurrentIndex( m_hlAnn->highlightType() );
 
     connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );

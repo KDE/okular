@@ -194,11 +194,6 @@ class OKULAR_EXPORT Generator : public QObject
         virtual ~Generator();
 
         /**
-         * Sets the current document the generator should work on.
-         */
-        void setDocument( Document * document );
-
-        /**
          * Loads the document with the given @p fileName and fills the
          * @p pagesVector with the parsed pages.
          *
@@ -426,6 +421,8 @@ setAboutData( about );
     private:
         friend class GeneratorPrivate;
         GeneratorPrivate* const d;
+
+        friend class Document;
 
         Q_PRIVATE_SLOT( d, void pixmapGenerationFinished() )
         Q_PRIVATE_SLOT( d, void textpageGenerationFinished() )

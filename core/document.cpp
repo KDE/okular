@@ -42,6 +42,7 @@
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
 #include "generator.h"
+#include "generator_p.h"
 #include "interfaces/configinterface.h"
 #include "interfaces/guiinterface.h"
 #include "interfaces/printinterface.h"
@@ -815,7 +816,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !appName.isEmpty() )
         KGlobal::locale()->insertCatalog( appName );
 
-    d->m_generator->setDocument( this );
+    d->m_generator->d->m_document = this;
 
     // connect error reporting signals
     connect( d->m_generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
@@ -952,7 +953,7 @@ void Document::closeDocument()
         if ( iface )
             iface->freeGui();
         // disconnect the generator from this document ...
-        d->m_generator->setDocument( 0 );
+        d->m_generator->d->m_document = 0;
         // .. and this document from the generator signals
         disconnect( d->m_generator, 0, this, 0 );
 

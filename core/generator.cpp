@@ -237,11 +237,6 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
     return false;
 }
 
-void Generator::setDocument( Document *document )
-{
-    d->m_document = document;
-}
-
 bool Generator::hasFeature( GeneratorFeature feature ) const
 {
     return d->m_features.contains( feature );

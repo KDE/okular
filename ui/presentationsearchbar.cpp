@@ -95,6 +95,11 @@ void PresentationSearchBar::forceSnap()
     move( m_point.x() - width() / 2, m_point.y() - height() );
 }
 
+void PresentationSearchBar::focusOnSearchEdit()
+{
+    m_search->setFocus();
+}
+
 void PresentationSearchBar::resizeEvent( QResizeEvent * )
 {
     // if in snap mode, then force the snap and place ourselves correctly again

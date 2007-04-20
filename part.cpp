@@ -1082,9 +1082,13 @@ void Part::slotFind()
     // when in presentation mode, there's already a search bar, taking care of
     // the 'find' requests
     if ( (PresentationWidget*)m_presentationWidget != 0 )
-        return;
-
-    slotShowFindBar();
+    {
+        m_presentationWidget->slotFind();
+    }
+    else
+    {
+        slotShowFindBar();
+    }
 }
 
 

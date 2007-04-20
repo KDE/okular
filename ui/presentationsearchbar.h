@@ -28,6 +28,7 @@ class PresentationSearchBar
         virtual ~PresentationSearchBar();
 
         void forceSnap();
+        void focusOnSearchEdit();
 
     protected:
         void resizeEvent( QResizeEvent * );

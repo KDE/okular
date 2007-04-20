@@ -54,6 +54,9 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
 
+    public slots:
+        void slotFind();
+
     protected:
         // widget events
         bool event( QEvent * e );
@@ -120,7 +123,6 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void slotPageChanged();
         void togglePencilMode( bool );
         void clearDrawings();
-        void slotFind();
 };
 
 #endif

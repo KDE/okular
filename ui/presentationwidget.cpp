@@ -1092,6 +1092,7 @@ void PresentationWidget::slotFind()
         m_searchBar = new PresentationSearchBar( m_document, this, this );
         m_searchBar->forceSnap();
     }
+    m_searchBar->focusOnSearchEdit();
     m_searchBar->show();
 }
 

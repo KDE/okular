@@ -10,8 +10,6 @@
 #include "generator.h"
 #include "generator_p.h"
 
-#include <qset.h>
-
 #include <kaboutdata.h>
 #include <kcomponentdata.h>
 #include <kdebug.h>
@@ -23,55 +21,32 @@
 
 using namespace Okular;
 
-class Generator::Private
+GeneratorPrivate::GeneratorPrivate( Generator *parent )
+    : m_document( 0 ), m_about( 0 ), m_componentData( 0 ),
+      m_generator( parent ),
+      mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
+      mPixmapReady( true ), mTextPageReady( true )
 {
-    public:
-        Private( Generator *parent )
-            : m_document( 0 ),
-              m_about( 0 ), m_componentData( 0 ),
-              m_generator( parent ),
-              mPixmapGenerationThread( 0 ),
-              mTextPageGenerationThread( 0 ),
-              mPixmapReady( true ),
-              mTextPageReady( true )
-        {
-        }
+}
 
-        ~Private()
-        {
-            if ( mPixmapGenerationThread )
-                mPixmapGenerationThread->wait();
+GeneratorPrivate::~GeneratorPrivate()
+{
+    if ( mPixmapGenerationThread )
+        mPixmapGenerationThread->wait();
 
-            delete mPixmapGenerationThread;
+    delete mPixmapGenerationThread;
 
-            if ( mTextPageGenerationThread )
-                mTextPageGenerationThread->wait();
+    if ( mTextPageGenerationThread )
+        mTextPageGenerationThread->wait();
 
-            delete mTextPageGenerationThread;
+    delete mTextPageGenerationThread;
 
-            // first delete the component data, then the about
-            delete m_componentData;
-            delete m_about;
-        }
+    // first delete the component data, then the about
+    delete m_componentData;
+    delete m_about;
+}
 
-        void createPixmapGenerationThread();
-        void createTextPageGenerationThread();
-
-        void pixmapGenerationFinished();
-        void textpageGenerationFinished();
-
-        Document * m_document;
-        QSet< GeneratorFeature > m_features;
-        KAboutData* m_about;
-        KComponentData* m_componentData;
-        Generator *m_generator;
-        PixmapGenerationThread *mPixmapGenerationThread;
-        TextPageGenerationThread *mTextPageGenerationThread;
-        bool mPixmapReady;
-        bool mTextPageReady;
-};
-
-void Generator::Private::createPixmapGenerationThread()
+void GeneratorPrivate::createPixmapGenerationThread()
 {
     if ( mPixmapGenerationThread )
         return;
@@ -82,7 +57,7 @@ void Generator::Private::createPixmapGenerationThread()
                       Qt::QueuedConnection );
 }
 
-void Generator::Private::createTextPageGenerationThread()
+void GeneratorPrivate::createTextPageGenerationThread()
 {
     if ( mTextPageGenerationThread )
         return;
@@ -93,7 +68,7 @@ void Generator::Private::createTextPageGenerationThread()
                       Qt::QueuedConnection );
 }
 
-void Generator::Private::pixmapGenerationFinished()
+void GeneratorPrivate::pixmapGenerationFinished()
 {
     PixmapRequest *request = mPixmapGenerationThread->request();
     mPixmapGenerationThread->endGeneration();
@@ -105,7 +80,7 @@ void Generator::Private::pixmapGenerationFinished()
     m_generator->signalPixmapRequestDone( request );
 }
 
-void Generator::Private::textpageGenerationFinished()
+void GeneratorPrivate::textpageGenerationFinished()
 {
     Page *page = mTextPageGenerationThread->page();
     mTextPageGenerationThread->endGeneration();
@@ -118,7 +93,7 @@ void Generator::Private::textpageGenerationFinished()
 
 
 Generator::Generator()
-    : d( new Private( this ) )
+    : d( new GeneratorPrivate( this ) )
 {
 }
 

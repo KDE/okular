@@ -44,6 +44,7 @@ class DocumentInfo;
 class DocumentSynopsis;
 class EmbeddedFile;
 class ExportFormatPrivate;
+class GeneratorPrivate;
 class Page;
 class PixmapRequest;
 class TextPage;
@@ -423,8 +424,8 @@ setAboutData( about );
         void setAboutData( KAboutData* data );
 
     private:
-        class Private;
-        Private* const d;
+        friend class GeneratorPrivate;
+        GeneratorPrivate* const d;
 
         Q_PRIVATE_SLOT( d, void pixmapGenerationFinished() )
         Q_PRIVATE_SLOT( d, void textpageGenerationFinished() )

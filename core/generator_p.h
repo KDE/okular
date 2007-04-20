@@ -10,49 +10,67 @@
 #ifndef OKULAR_THREADEDGENERATOR_P_H
 #define OKULAR_THREADEDGENERATOR_P_H
 
+#include <QtCore/QSet>
 #include <QtCore/QThread>
 #include <QtGui/QImage>
 
+class KAboutData;
+class KComponentData;
+
 namespace Okular {
+
+class Document;
+class Generator;
+class Page;
+class PixmapGenerationThread;
+class PixmapRequest;
+class TextPage;
+class TextPageGenerationThread;
+
+class GeneratorPrivate
+{
+    public:
+        GeneratorPrivate( Generator *parent );
+
+        ~GeneratorPrivate();
+
+        void createPixmapGenerationThread();
+        void createTextPageGenerationThread();
+
+        void pixmapGenerationFinished();
+        void textpageGenerationFinished();
+
+        Document *m_document;
+        // NOTE: the following should be a QSet< GeneratorFeature >,
+        // but it is not to avoid #include'ing generator.h
+        QSet< int > m_features;
+        KAboutData *m_about;
+        KComponentData *m_componentData;
+        Generator *m_generator;
+        PixmapGenerationThread *mPixmapGenerationThread;
+        TextPageGenerationThread *mTextPageGenerationThread;
+        bool mPixmapReady;
+        bool mTextPageReady;
+};
+
 
 class PixmapGenerationThread : public QThread
 {
+    Q_OBJECT
+
     public:
-        PixmapGenerationThread( Generator *generator )
-            : mGenerator( generator ), mRequest( 0 )
-        {
-        }
+        PixmapGenerationThread( Generator *generator );
 
-        void startGeneration( PixmapRequest *request )
-        {
-            mRequest = request;
+        void startGeneration( PixmapRequest *request );
 
-            start( QThread::InheritPriority );
-        }
+        void endGeneration();
 
-        void endGeneration()
-        {
-            mRequest = 0;
-        }
+        PixmapRequest *request() const;
 
-        PixmapRequest *request() const
-        {
-            return mRequest;
-        }
-
-        QImage image() const
-        {
-            return mImage;
-        }
+        QImage image() const;
 
     protected:
-        virtual void run()
-        {
-            mImage = QImage();
-
-            if ( mRequest )
-                mImage = mGenerator->image( mRequest );
-        }
+        virtual void run();
 
     private:
         Generator *mGenerator;
@@ -63,42 +81,21 @@ class PixmapGenerationThread : public QThread
 
 class TextPageGenerationThread : public QThread
 {
+    Q_OBJECT
+
     public:
-        TextPageGenerationThread( Generator *generator )
-            : mGenerator( generator ), mPage( 0 )
-        {
-        }
+        TextPageGenerationThread( Generator *generator );
 
-        void startGeneration( Page *page )
-        {
-            mPage = page;
+        void startGeneration( Page *page );
 
-            start( QThread::InheritPriority );
-        }
+        void endGeneration();
 
-        void endGeneration()
-        {
-            mPage = 0;
-        }
+        Page *page() const;
 
-        Page *page() const
-        {
-            return mPage;
-        }
-
-        TextPage* textPage() const
-        {
-            return mTextPage;
-        }
+        TextPage* textPage() const;
 
     protected:
-        virtual void run()
-        {
-            mTextPage = 0;
-
-            if ( mPage )
-                mTextPage = mGenerator->textPage( mPage );
-        }
+        virtual void run();
 
     private:
         Generator *mGenerator;

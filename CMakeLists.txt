@@ -29,6 +29,7 @@ set(okularcore_SRCS
    core/document.cpp
    core/form.cpp
    core/generator.cpp
+   core/generator_p.cpp
    core/misc.cpp
    core/observer.cpp
    core/page.cpp

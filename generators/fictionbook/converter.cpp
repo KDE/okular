@@ -199,9 +199,9 @@ QTextDocument* Converter::convert( const QString &fileName )
         const QTextBlock block = mSectionMap[ it.key() ];
         Okular::DocumentViewport viewport = calculateViewport( mTextDocument, block );
 
-        Okular::LinkGoto *link = new Okular::LinkGoto( QString(), viewport );
+        Okular::ActionGoto *action = new Okular::ActionGoto( QString(), viewport );
 
-        emit addLink( link, it.value().first, it.value().second );
+        emit addLink( action, it.value().first, it.value().second );
     }
 
     return mTextDocument;
@@ -736,8 +736,8 @@ bool Converter::convertLink( const QDomElement &element )
         mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );
     } else {
         // external link
-        Okular::LinkBrowse *link = new Okular::LinkBrowse( href );
-        emit addLink( link, startPosition, endPosition );
+        Okular::ActionBrowse *action = new Okular::ActionBrowse( href );
+        emit addLink( action, startPosition, endPosition );
     }
 
     return true;

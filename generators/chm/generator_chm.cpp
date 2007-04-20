@@ -276,8 +276,8 @@ void CHMGenerator::additionalRequestData()
                             objRects.push_back(
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
-                                Okular::ObjectRect::Link,
-                                new Okular::LinkBrowse ( url )));
+                                Okular::ObjectRect::Action,
+                                new Okular::ActionBrowse ( url )));
                         }
                         else
                         {
@@ -285,8 +285,8 @@ void CHMGenerator::additionalRequestData()
                             objRects.push_back(
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
-                                Okular::ObjectRect::Link,
-                                new Okular::LinkGoto ( QString::null, viewport)));
+                                Okular::ObjectRect::Action,
+                                new Okular::ActionGoto ( QString::null, viewport)));
                         }
                     }
                 }

@@ -230,8 +230,8 @@ void TOC::slotExecuted( QTreeWidgetItem *i )
     QString externalFileName = tocItem->externalFileName();
     if ( !externalFileName.isEmpty() )
     {
-        Okular::LinkGoto link( externalFileName, tocItem->viewport() );
-        m_document->processLink( &link );
+        Okular::ActionGoto action( externalFileName, tocItem->viewport() );
+        m_document->processLink( &action );
     }
     else
     {

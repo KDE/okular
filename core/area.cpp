@@ -258,8 +258,8 @@ ObjectRect::~ObjectRect()
     if ( !m_object )
         return;
 
-    if ( m_objectType == Link )
-        delete static_cast<Okular::Link*>( m_object );
+    if ( m_objectType == Action )
+        delete static_cast<Okular::Action*>( m_object );
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else

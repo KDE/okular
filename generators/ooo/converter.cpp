@@ -482,7 +482,7 @@ bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, co
 
   int endPosition = cursor->position();
 
-  Okular::Link *link = new Okular::LinkBrowse( element.attribute( "href" ) );
+  Okular::Action *link = new Okular::ActionBrowse( element.attribute( "href" ) );
   emit addLink( link, startPosition, endPosition );
 
   return true;

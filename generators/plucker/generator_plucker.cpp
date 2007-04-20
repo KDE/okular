@@ -147,7 +147,7 @@ void PluckerGenerator::generatePixmap( Okular::PixmapRequest * request )
                 calculateBoundingRect( document, mLinks[ i ].start,
                                        mLinks[ i ].end, rect );
 
-                objects.append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false, Okular::ObjectRect::Link, mLinks[ i ].link ) );
+                objects.append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false, Okular::ObjectRect::Action, mLinks[ i ].link ) );
             }
         }
 

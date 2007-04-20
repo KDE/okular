@@ -45,7 +45,7 @@ class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
 class Generator;
-class Link;
+class Action;
 class Page;
 class PixmapRequest;
 class SourceReference;
@@ -422,7 +422,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Processes/Executes the given @p link.
          */
-        void processLink( const Link *link );
+        void processLink( const Action *link );
 
         /**
          * Processes/Executes the given source @p reference.

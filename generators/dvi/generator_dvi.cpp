@@ -158,7 +158,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
 
         Anchor anch = m_dviRenderer->findAnchor(dviLink.linkText);
 
-        Okular::Link *okuLink = 0;
+        Okular::Action *okuLink = 0;
 
         /* distinguish between local (-> anchor) and remote links */
         if (anch.isValid())
@@ -167,15 +167,15 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
             Okular::DocumentViewport vp;
             fillViewportFromAnchor( vp, anch, pageWidth, pageHeight,
                                     orientation );
-            okuLink = new Okular::LinkGoto( "", vp );
+            okuLink = new Okular::ActionGoto( "", vp );
         }
         else
         {
-            okuLink = new Okular::LinkBrowse( dviLink.linkText );
+            okuLink = new Okular::ActionBrowse( dviLink.linkText );
         }
         if ( okuLink ) 
         {
-            Okular::ObjectRect *orlink = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Link, 
+            Okular::ObjectRect *orlink = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, 
                                                  okuLink );
             dviLinks.push_front( orlink );
         }

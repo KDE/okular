@@ -171,7 +171,7 @@ protected:
             QHelpEvent * he = (QHelpEvent*)e;
             PageViewItem * pageItem = m_pageView->pickItemOnPoint( he->x(), he->y() );
             const Okular::ObjectRect * rect = 0;
-            const Okular::Link * link = 0;
+            const Okular::Action * link = 0;
             const Okular::Annotation * ann = 0;
             if ( pageItem )
             {
@@ -182,9 +182,9 @@ protected:
                     ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
                 else
                 {
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
-                        link = static_cast< const Okular::Link * >( rect->object() );
+                        link = static_cast< const Okular::Action * >( rect->object() );
                 }
             }
 
@@ -201,7 +201,7 @@ protected:
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                QString tip = link->linkTip();
+                QString tip = link->actionTip();
                 if ( !tip.isEmpty() )
                     QToolTip::showText( he->globalPos(), tip, this, r );
             }
@@ -1418,12 +1418,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                        nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
                 const Okular::ObjectRect * rect;
-                rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
                 if ( rect )
                 {
                     // handle click over a link
-                    const Okular::Link * link = static_cast< const Okular::Link * >( rect->object() );
-                    d->document->processLink( link );
+                    const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
+                    d->document->processLink( action );
                 }
                 else
                 {
@@ -1460,16 +1460,16 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
                            nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
                     const Okular::ObjectRect * rect;
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
                     if ( rect )
                     {
                         // handle right click over a link
-                        const Okular::Link * link = static_cast< const Okular::Link * >( rect->object() );
+                        const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
                         // creating the menu and its actions
                         KMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actCopyLinkLocation = 0;
-                        if ( dynamic_cast< const Okular::LinkBrowse * >( link ) )
+                        if ( dynamic_cast< const Okular::ActionBrowse * >( link ) )
                             actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Location" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
@@ -1480,7 +1480,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                             }
                             else if ( res == actCopyLinkLocation )
                             {
-                                const Okular::LinkBrowse * browseLink = static_cast< const Okular::LinkBrowse * >( link );
+                                const Okular::ActionBrowse * browseLink = static_cast< const Okular::ActionBrowse * >( link );
                                 QClipboard *cb = QApplication::clipboard();
                                 cb->setText( browseLink->url(), QClipboard::Clipboard );
                                 if ( cb->supportsSelection() )
@@ -2249,7 +2249,7 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::IBeamCursor );
         else
         {
-            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Link, nX, nY, pageItem->width(), pageItem->height() );
+            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
             const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
             if ( linkobj && !annotobj )
             {

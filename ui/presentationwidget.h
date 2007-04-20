@@ -26,10 +26,10 @@ struct PresentationFrame;
 class PresentationSearchBar;
 
 namespace Okular {
+class Action;
 class Annotation;
 class Document;
 class Page;
-class Link;
 }
 
 /**
@@ -65,7 +65,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void paintEvent( QPaintEvent * e );
 
     private:
-        const Okular::Link * getLink( int x, int y, QRect * geometry = 0 ) const;
+        const Okular::Action * getLink( int x, int y, QRect * geometry = 0 ) const;
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );
@@ -85,7 +85,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         QPixmap m_lastRenderedPixmap;
         QPixmap m_lastRenderedOverlay;
         QRect m_overlayGeometry;
-        const Okular::Link * m_pressedLink;
+        const Okular::Action * m_pressedLink;
         bool m_handCursor;
         QList< Okular::Annotation * > m_currentPageDrawings;
         AnnotatorEngine * m_drawingEngine;

@@ -271,7 +271,7 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
 Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * link ) const
 {
     int newpage = -1;
-    Okular::Link *newlink = 0;
+    Okular::Action *newlink = 0;
     Okular::ObjectRect *newrect = 0;
     switch ( link->type() )
     {
@@ -291,7 +291,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
                     vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
                     newpage = vp.pageNumber;
                 }
-                newlink = new Okular::LinkGoto( QString(), vp );
+                newlink = new Okular::ActionGoto( QString(), vp );
             }
             break;
         }
@@ -299,7 +299,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
         {
             KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( link );
             QString url = l->url();
-            newlink = new Okular::LinkBrowse( url );
+            newlink = new Okular::ActionBrowse( url );
             break;
         }
     }
@@ -318,7 +318,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
             {
                 QRect r( QPoint( link->point().x(), p->height() - link->point().y() - link->size().height() ), link->size() );
                 bool ellipse = ( link->areaType() == KDjVu::Link::EllipseArea );
-                newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, 0 ), width, height ), ellipse, Okular::ObjectRect::Link, newlink );
+                newrect = new Okular::ObjectRect( Okular::NormalizedRect( Okular::Utils::rotateRect( r, width, height, 0 ), width, height ), ellipse, Okular::ObjectRect::Action, newlink );
                 break;
             }
             case KDjVu::Link::PolygonArea:
@@ -340,7 +340,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
                 if ( !newpoly.isEmpty() )
                 {
                     newpoly << newpoly.first();
-                    newrect = new Okular::ObjectRect( newpoly, Okular::ObjectRect::Link, newlink );
+                    newrect = new Okular::ObjectRect( newpoly, Okular::ObjectRect::Action, newlink );
                 }
                 break;
             }

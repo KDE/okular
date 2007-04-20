@@ -25,10 +25,10 @@ class QDomNode;
 
 namespace Okular {
 
+class Action;
 class Annotation;
 class FormField;
 class HighlightAreaRect;
-class Link;
 class Page;
 class PageTransition;
 class RotationJob;
@@ -79,8 +79,8 @@ class PagePrivate
         PageTransition * m_transition;
         HighlightAreaRect *m_textSelections;
         QLinkedList< FormField * > formfields;
-        Link * m_openingAction;
-        Link * m_closingAction;
+        Action * m_openingAction;
+        Action * m_closingAction;
         double m_duration;
         QString m_label;
 };

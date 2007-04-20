@@ -334,7 +334,7 @@ const QLinkedList< Annotation* > Page::annotations() const
     return m_annotations;
 }
 
-const Link * Page::pageAction( PageAction action ) const
+const Action * Page::pageAction( PageAction action ) const
 {
     switch ( action )
     {
@@ -388,7 +388,7 @@ void Page::setTextPage( TextPage * textPage )
 void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
 {
     QSet<ObjectRect::ObjectType> which;
-    which << ObjectRect::Link << ObjectRect::Image;
+    which << ObjectRect::Action << ObjectRect::Image;
     deleteObjectRects( m_rects, which );
 
     /**
@@ -552,7 +552,7 @@ void Page::setTransition( PageTransition * transition )
     d->m_transition = transition;
 }
 
-void Page::setPageAction( PageAction action, Link * link )
+void Page::setPageAction( PageAction action, Action * link )
 {
     switch ( action )
     {
@@ -592,7 +592,7 @@ void Page::deleteRects()
 {
     // delete ObjectRects of type Link and Image
     QSet<ObjectRect::ObjectType> which;
-    which << ObjectRect::Link << ObjectRect::Image;
+    which << ObjectRect::Action << ObjectRect::Image;
     deleteObjectRects( m_rects, which );
 }
 

@@ -23,7 +23,7 @@ class RecordNode;
 class QTextDocument;
 
 namespace Okular {
-class Link;
+class Action;
 }
 
 class Link
@@ -36,7 +36,7 @@ class Link
 
         typedef QList<Link> List;
 
-        Okular::Link *link;
+        Okular::Action *link;
         QString url;
         int page;
         int start;

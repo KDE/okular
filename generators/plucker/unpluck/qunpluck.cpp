@@ -194,7 +194,7 @@ bool QUnpluck::open( const QString &fileName )
             viewport.rePos.normalizedY = 0;
             viewport.rePos.enabled = true;
             viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
-            mLinks[ i ].link = new Okular::LinkGoto( QString(), viewport );
+            mLinks[ i ].link = new Okular::ActionGoto( QString(), viewport );
         } else if ( mLinks[ i ].url.startsWith( "para:" ) ) {
             QPair<int, QTextBlock> data = mNamedTargets[ mLinks[ i ].url ];
 
@@ -202,9 +202,9 @@ bool QUnpluck::open( const QString &fileName )
 
             Okular::DocumentViewport viewport = calculateViewport( document, data.second );
 
-            mLinks[ i ].link = new Okular::LinkGoto( QString(), viewport );
+            mLinks[ i ].link = new Okular::ActionGoto( QString(), viewport );
         } else {
-            mLinks[ i ].link = new Okular::LinkBrowse( mLinks[ i ].url );
+            mLinks[ i ].link = new Okular::ActionBrowse( mLinks[ i ].url );
         }
     }
 

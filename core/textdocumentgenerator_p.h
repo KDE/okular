@@ -14,8 +14,8 @@
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextDocument>
 
+#include "action.h"
 #include "document.h"
-#include "link.h"
 #include "textdocumentgenerator.h"
 
 namespace Okular {
@@ -109,7 +109,7 @@ class TextDocumentGenerator::Private
         void calculatePositions( int page, int &start, int &end ) const;
         Okular::TextPage* createTextPage( int ) const;
 
-        void addLink( Link *link, int cursorBegin, int cursorEnd );
+        void addLink( Action *link, int cursorBegin, int cursorEnd );
         void addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd );
         void addTitle( int level, const QString &title, const QTextBlock &position );
         void addMetaData( const QString &key, const QString &value, const QString &title );
@@ -137,7 +137,7 @@ class TextDocumentGenerator::Private
         {
           int startPosition;
           int endPosition;
-          Link *link;
+          Action *link;
         };
         QList<LinkPosition> mLinkPositions;
 
@@ -145,7 +145,7 @@ class TextDocumentGenerator::Private
         {
           int page;
           QRectF boundingRect;
-          Link *link;
+          Action *link;
         };
         QList<LinkInfo> mLinkInfos;
 

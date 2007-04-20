@@ -1949,15 +1949,15 @@ const BookmarkManager * Document::bookmarkManager() const
     return d->m_bookmarkManager;
 }
 
-void Document::processLink( const Link * link )
+void Document::processLink( const Action * link )
 {
     if ( !link )
         return;
 
-    switch( link->linkType() )
+    switch( link->actionType() )
     {
-        case Link::Goto: {
-            const LinkGoto * go = static_cast< const LinkGoto * >( link );
+        case Action::Goto: {
+            const ActionGoto * go = static_cast< const ActionGoto * >( link );
             d->m_nextDocumentViewport = go->destViewport();
 
             // Explanation of why d->m_nextDocumentViewport is needed:
@@ -1971,7 +1971,7 @@ void Document::processLink( const Link * link )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
-                kWarning() << "Link: Error opening '" << go->fileName() << "'." << endl;
+                kWarning() << "Action: Error opening '" << go->fileName() << "'." << endl;
                 return;
             }
             else
@@ -1986,8 +1986,8 @@ void Document::processLink( const Link * link )
 
             } break;
 
-        case Link::Execute: {
-            const LinkExecute * exe  = static_cast< const LinkExecute * >( link );
+        case Action::Execute: {
+            const ActionExecute * exe  = static_cast< const ActionExecute * >( link );
             QString fileName = exe->fileName();
             if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             {
@@ -2035,53 +2035,53 @@ void Document::processLink( const Link * link )
                 KMessageBox::information( widget(), i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
             } break;
 
-        case Link::Action: {
-            const LinkAction * action = static_cast< const LinkAction * >( link );
-            switch( action->actionType() )
+        case Action::DocumentAction: {
+            const ActionDocumentAction * action = static_cast< const ActionDocumentAction * >( link );
+            switch( action->documentActionType() )
             {
-                case LinkAction::PageFirst:
+                case ActionDocumentAction::PageFirst:
                     setViewportPage( 0 );
                     break;
-                case LinkAction::PagePrev:
+                case ActionDocumentAction::PagePrev:
                     if ( (*d->m_viewportIterator).pageNumber > 0 )
                         setViewportPage( (*d->m_viewportIterator).pageNumber - 1 );
                     break;
-                case LinkAction::PageNext:
+                case ActionDocumentAction::PageNext:
                     if ( (*d->m_viewportIterator).pageNumber < (int)d->m_pagesVector.count() - 1 )
                         setViewportPage( (*d->m_viewportIterator).pageNumber + 1 );
                     break;
-                case LinkAction::PageLast:
+                case ActionDocumentAction::PageLast:
                     setViewportPage( d->m_pagesVector.count() - 1 );
                     break;
-                case LinkAction::HistoryBack:
+                case ActionDocumentAction::HistoryBack:
                     setPrevViewport();
                     break;
-                case LinkAction::HistoryForward:
+                case ActionDocumentAction::HistoryForward:
                     setNextViewport();
                     break;
-                case LinkAction::Quit:
+                case ActionDocumentAction::Quit:
                     emit quit();
                     break;
-                case LinkAction::Presentation:
+                case ActionDocumentAction::Presentation:
                     emit linkPresentation();
                     break;
-                case LinkAction::EndPresentation:
+                case ActionDocumentAction::EndPresentation:
                     emit linkEndPresentation();
                     break;
-                case LinkAction::Find:
+                case ActionDocumentAction::Find:
                     emit linkFind();
                     break;
-                case LinkAction::GoToPage:
+                case ActionDocumentAction::GoToPage:
                     emit linkGoToPage();
                     break;
-                case LinkAction::Close:
+                case ActionDocumentAction::Close:
                     emit close();
                     break;
             }
             } break;
 
-        case Link::Browse: {
-            const LinkBrowse * browse = static_cast< const LinkBrowse * >( link );
+        case Action::Browse: {
+            const ActionBrowse * browse = static_cast< const ActionBrowse * >( link );
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
                 KToolInvocation::invokeMailer( browse->url() );
@@ -2102,13 +2102,13 @@ void Document::processLink( const Link * link )
             }
             } break;
 
-        case Link::Sound: {
-            const LinkSound * linksound = static_cast< const LinkSound * >( link );
+        case Action::Sound: {
+            const ActionSound * linksound = static_cast< const ActionSound * >( link );
             AudioPlayer::instance()->playSound( linksound->sound(), linksound );
             } break;
 
-        case Link::Movie:
-            //const LinkMovie * browse = static_cast< const LinkMovie * >( link );
+        case Action::Movie:
+            //const ActionMovie * browse = static_cast< const ActionMovie * >( link );
             // TODO this (Movie link)
             break;
     }

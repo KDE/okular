@@ -74,7 +74,7 @@ Okular::TextPage* TextDocumentGenerator::Private::createTextPage( int pageNumber
     return textPage;
 }
 
-void TextDocumentGenerator::Private::addLink( Link *link, int cursorBegin, int cursorEnd )
+void TextDocumentGenerator::Private::addLink( Action *link, int cursorBegin, int cursorEnd )
 {
     if ( !link )
         return;
@@ -187,8 +187,8 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
 {
     setFeature( TextExtraction );
 
-    connect( converter, SIGNAL( addLink( Link*, int, int ) ),
-             this, SLOT( addLink( Link*, int, int ) ) );
+    connect( converter, SIGNAL( addLink( Action*, int, int ) ),
+             this, SLOT( addLink( Action*, int, int ) ) );
     connect( converter, SIGNAL( addAnnotation( Annotation*, int, int ) ),
              this, SLOT( addAnnotation( Annotation*, int, int ) ) );
     connect( converter, SIGNAL( addTitle( int, const QString&, const QTextBlock& ) ),
@@ -288,7 +288,7 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
             if ( info.page == request->pageNumber() ) {
                 const QRectF rect = info.boundingRect;
                 objects.append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
-                                                        Okular::ObjectRect::Link, info.link ) );
+                                                        Okular::ObjectRect::Action, info.link ) );
             }
         }
         request->page()->setObjectRects( objects );

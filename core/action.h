@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_LINK_H_
-#define _OKULAR_LINK_H_
+#ifndef _OKULAR_ACTION_H_
+#define _OKULAR_ACTION_H_
 
 #include <okular/core/okular_export.h>
 
@@ -23,20 +23,20 @@ class DocumentViewport;
  * @short Encapsulates data that describes a link.
  *
  * This is the base class for links. It makes mandatory for inherited
- * widgets to reimplement the 'linkType' method and return the type of
+ * widgets to reimplement the 'actionType' method and return the type of
  * the link described by the reimplemented class.
  */
-class OKULAR_EXPORT Link
+class OKULAR_EXPORT Action
 {
     public:
         /**
          * Describes the type of link.
          */
-        enum LinkType {
+        enum ActionType {
             Goto,       ///< Goto a given page or external document
             Execute,    ///< Execute a command or external application
             Browse,     ///< Browse a given website
-            Action,     ///< Start a custom action
+            DocumentAction,     ///< Start a custom action
             Sound,      ///< Play a sound
             Movie       ///< Play a movie
         };
@@ -44,32 +44,32 @@ class OKULAR_EXPORT Link
         /**
          * Creates a new link.
          */
-        Link();
+        Action();
 
         /**
          * Destroys the link.
          */
-        virtual ~Link();
+        virtual ~Action();
 
         /**
          * Returns the type of the link. Every inherited class must return
          * an unique identifier.
          *
-         * @see LinkType
+         * @see ActionType
          */
-        virtual LinkType linkType() const = 0;
+        virtual ActionType actionType() const = 0;
 
         /**
          * Returns a i18n'ed tip of the link action that is presented to
          * the user.
          */
-        virtual QString linkTip() const;
+        virtual QString actionTip() const;
 
     private:
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( Link )
+        Q_DISABLE_COPY( Action )
 };
 
 
@@ -77,7 +77,7 @@ class OKULAR_EXPORT Link
  * The Goto link changes the viewport to another page
  * or loads an external document.
  */
-class OKULAR_EXPORT LinkGoto : public Link
+class OKULAR_EXPORT ActionGoto : public Action
 {
     public:
         /**
@@ -86,22 +86,22 @@ class OKULAR_EXPORT LinkGoto : public Link
          * @p fileName The name of an external file that shall be loaded.
          * @p viewport The target viewport information of the current document.
          */
-        LinkGoto( const QString& fileName, const DocumentViewport & viewport );
+        ActionGoto( const QString& fileName, const DocumentViewport & viewport );
 
         /**
          * Destroys the goto link.
          */
-        virtual ~LinkGoto();
+        virtual ~ActionGoto();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
         /**
          * Returns whether the goto link points to an external document.
@@ -122,13 +122,13 @@ class OKULAR_EXPORT LinkGoto : public Link
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkGoto )
+        Q_DISABLE_COPY( ActionGoto )
 };
 
 /**
  * The Execute link executes an external application.
  */
-class OKULAR_EXPORT LinkExecute : public Link
+class OKULAR_EXPORT ActionExecute : public Action
 {
     public:
         /**
@@ -137,22 +137,22 @@ class OKULAR_EXPORT LinkExecute : public Link
          * @param fileName The file name of the application to execute.
          * @param parameters The parameters of the application to execute.
          */
-        LinkExecute( const QString &fileName, const QString &parameters );
+        ActionExecute( const QString &fileName, const QString &parameters );
 
         /**
          * Destroys the execute link.
          */
-        virtual ~LinkExecute();
+        virtual ~ActionExecute();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
         /**
          * Returns the file name of the application to execute.
@@ -168,14 +168,14 @@ class OKULAR_EXPORT LinkExecute : public Link
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkExecute )
+        Q_DISABLE_COPY( ActionExecute )
 };
 
 /**
  * The Browse link browses an url by opening a web browser or
  * email client, depedning on the url protocol (e.g. http, mailto, etc.).
  */
-class OKULAR_EXPORT LinkBrowse : public Link
+class OKULAR_EXPORT ActionBrowse : public Action
 {
     public:
         /**
@@ -183,22 +183,22 @@ class OKULAR_EXPORT LinkBrowse : public Link
          *
          * @param url The url to browse.
          */
-        LinkBrowse( const QString &url );
+        ActionBrowse( const QString &url );
 
         /**
          * Destroys the browse link.
          */
-        virtual ~LinkBrowse();
+        virtual ~ActionBrowse();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
         /**
          * Returns the url to browse.
@@ -209,14 +209,14 @@ class OKULAR_EXPORT LinkBrowse : public Link
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkBrowse )
+        Q_DISABLE_COPY( ActionBrowse )
 };
 
 /**
  * The Action link contains an action that is performed on
  * the current document.
  */
-class OKULAR_EXPORT LinkAction : public Link
+class OKULAR_EXPORT ActionDocumentAction : public Action
 {
     public:
         /**
@@ -224,7 +224,7 @@ class OKULAR_EXPORT LinkAction : public Link
          *
          * WARNING KEEP IN SYNC WITH POPPLER!
          */
-        enum ActionType {
+        enum DocumentActionType {
             PageFirst = 1,        ///< Jump to first page
             PagePrev = 2,         ///< Jump to previous page
             PageNext = 3,         ///< Jump to next page
@@ -244,39 +244,39 @@ class OKULAR_EXPORT LinkAction : public Link
          *
          * @param actionType The type of action.
          */
-        explicit LinkAction( enum ActionType actionType );
+        explicit ActionDocumentAction( enum DocumentActionType documentActionType );
 
         /**
          * Destroys the action link.
          */
-        virtual ~LinkAction();
+        virtual ~ActionDocumentAction();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
         /**
          * Returns the type of action.
          */
-        ActionType actionType() const;
+        DocumentActionType documentActionType() const;
 
     private:
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkAction )
+        Q_DISABLE_COPY( ActionDocumentAction )
 };
 
 /**
  * The Sound link plays a sound on activation.
  */
-class OKULAR_EXPORT LinkSound : public Link
+class OKULAR_EXPORT ActionSound : public Action
 {
     public:
         /**
@@ -288,22 +288,22 @@ class OKULAR_EXPORT LinkSound : public Link
          * @param mix Whether the sound shall be mixed.
          * @param sound The sound object which contains the sound data.
          */
-        LinkSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
+        ActionSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
 
         /**
          * Destroys the sound link.
          */
-        virtual ~LinkSound();
+        virtual ~ActionSound();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
         /**
          * Returns the volume of the sound.
@@ -334,40 +334,40 @@ class OKULAR_EXPORT LinkSound : public Link
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkSound )
+        Q_DISABLE_COPY( ActionSound )
 };
 
 /**
  * The Movie link plays a video on activation.
  */
-class LinkMovie : public Link
+class ActionMovie : public Action
 {
     public:
         /**
          * Creates a new movie link.
          */
-        LinkMovie();
+        ActionMovie();
 
         /**
          * Destroys the movie link.
          */
-        virtual ~LinkMovie();
+        virtual ~ActionMovie();
 
         /**
          * Returns the link type.
          */
-        LinkType linkType() const;
+        ActionType actionType() const;
 
         /**
          * Returns the link tip.
          */
-        QString linkTip() const;
+        QString actionTip() const;
 
     private:
         class Private;
         Private* const d;
 
-        Q_DISABLE_COPY( LinkMovie )
+        Q_DISABLE_COPY( ActionMovie )
 };
 
 }

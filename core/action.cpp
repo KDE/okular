@@ -18,28 +18,28 @@
 
 using namespace Okular;
 
-class Link::Private
+class Action::Private
 {
 };
 
-Link::Link()
+Action::Action()
     : d( 0 )
 {
 }
 
-Link::~Link()
+Action::~Action()
 {
     delete d;
 }
 
-QString Link::linkTip() const
+QString Action::actionTip() const
 {
     return "";
 }
 
-// LinkGoto
+// ActionGoto
 
-class LinkGoto::Private
+class ActionGoto::Private
 {
     public:
         Private( const QString &fileName, const DocumentViewport &viewport )
@@ -51,45 +51,45 @@ class LinkGoto::Private
         DocumentViewport m_vp;
 };
 
-LinkGoto::LinkGoto( const QString& fileName, const DocumentViewport & viewport )
+ActionGoto::ActionGoto( const QString& fileName, const DocumentViewport & viewport )
     : d( new Private( fileName, viewport ) )
 {
 }
 
-LinkGoto::~LinkGoto()
+ActionGoto::~ActionGoto()
 {
     delete d;
 }
 
-Link::LinkType LinkGoto::linkType() const
+Action::ActionType ActionGoto::actionType() const
 {
     return Goto;
 }
 
-QString LinkGoto::linkTip() const
+QString ActionGoto::actionTip() const
 {
     return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
                                      i18n("Open external file");
 }
 
-bool LinkGoto::isExternal() const
+bool ActionGoto::isExternal() const
 {
     return !d->m_extFileName.isEmpty();
 }
 
-QString LinkGoto::fileName() const
+QString ActionGoto::fileName() const
 {
     return d->m_extFileName;
 }
 
-DocumentViewport LinkGoto::destViewport() const
+DocumentViewport ActionGoto::destViewport() const
 {
     return d->m_vp;
 }
 
-// LinkExecute
+// ActionExecute
 
-class LinkExecute::Private
+class ActionExecute::Private
 {
     public:
         Private( const QString &file, const QString & parameters )
@@ -101,39 +101,39 @@ class LinkExecute::Private
         QString m_parameters;
 };
 
-LinkExecute::LinkExecute( const QString &file, const QString & parameters )
+ActionExecute::ActionExecute( const QString &file, const QString & parameters )
     : d( new Private( file, parameters ) )
 {
 }
 
-LinkExecute::~LinkExecute()
+ActionExecute::~ActionExecute()
 {
     delete d;
 }
 
-Link::LinkType LinkExecute::linkType() const
+Action::ActionType ActionExecute::actionType() const
 {
     return Execute;
 }
 
-QString LinkExecute::linkTip() const
+QString ActionExecute::actionTip() const
 {
     return i18n( "Execute '%1'...", d->m_fileName );
 }
 
-QString LinkExecute::fileName() const
+QString ActionExecute::fileName() const
 {
     return d->m_fileName;
 }
 
-QString LinkExecute::parameters() const
+QString ActionExecute::parameters() const
 {
     return d->m_parameters;
 }
 
-// BrowseLink
+// BrowseAction
 
-class LinkBrowse::Private
+class ActionBrowse::Private
 {
     public:
         Private( const QString &url )
@@ -144,65 +144,65 @@ class LinkBrowse::Private
         QString m_url;
 };
 
-LinkBrowse::LinkBrowse( const QString &url )
+ActionBrowse::ActionBrowse( const QString &url )
     : d( new Private( url ) )
 {
 }
 
-LinkBrowse::~LinkBrowse()
+ActionBrowse::~ActionBrowse()
 {
     delete d;
 }
 
-Link::LinkType LinkBrowse::linkType() const
+Action::ActionType ActionBrowse::actionType() const
 {
     return Browse;
 }
 
-QString LinkBrowse::linkTip() const
+QString ActionBrowse::actionTip() const
 {
     return d->m_url;
 }
 
-QString LinkBrowse::url() const
+QString ActionBrowse::url() const
 {
     return d->m_url;
 }
 
-// LinkAction
+// ActionDocumentAction
 
-class LinkAction::Private
+class ActionDocumentAction::Private
 {
     public:
-        Private( enum ActionType actionType )
-            : m_type( actionType )
+        Private( enum DocumentActionType documentActionType )
+            : m_type( documentActionType )
         {
         }
 
-        ActionType m_type;
+        DocumentActionType m_type;
 };
 
-LinkAction::LinkAction( enum ActionType actionType )
-    : d( new Private( actionType ) )
+ActionDocumentAction::ActionDocumentAction( enum DocumentActionType documentActionType )
+    : d( new Private( documentActionType ) )
 {
 }
 
-LinkAction::~LinkAction()
+ActionDocumentAction::~ActionDocumentAction()
 {
     delete d;
 }
 
-LinkAction::ActionType LinkAction::actionType() const
+ActionDocumentAction::DocumentActionType ActionDocumentAction::documentActionType() const
 {
     return d->m_type;
 }
 
-Link::LinkType LinkAction::linkType() const
+Action::ActionType ActionDocumentAction::actionType() const
 {
-    return Action;
+    return DocumentAction;
 }
 
-QString LinkAction::linkTip() const
+QString ActionDocumentAction::actionTip() const
 {
     switch ( d->m_type )
     {
@@ -235,9 +235,9 @@ QString LinkAction::linkTip() const
     return QString();
 }
 
-// LinkSound
+// ActionSound
 
-class LinkSound::Private
+class ActionSound::Private
 {
     public:
         Private( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
@@ -258,72 +258,72 @@ class LinkSound::Private
         Okular::Sound *m_sound;
 };
 
-LinkSound::LinkSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+ActionSound::ActionSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
     : d( new Private( volume, sync, repeat, mix, sound ) )
 {
 }
 
-LinkSound::~LinkSound()
+ActionSound::~ActionSound()
 {
     delete d;
 }
 
-Link::LinkType LinkSound::linkType() const
+Action::ActionType ActionSound::actionType() const
 {
     return Sound;
 }
 
-QString LinkSound::linkTip() const
+QString ActionSound::actionTip() const
 {
     return i18n( "Play sound..." );
 }
 
-double LinkSound::volume() const
+double ActionSound::volume() const
 {
     return d->m_volume;
 }
 
-bool LinkSound::synchronous() const
+bool ActionSound::synchronous() const
 {
     return d->m_sync;
 }
 
-bool LinkSound::repeat() const
+bool ActionSound::repeat() const
 {
     return d->m_repeat;
 }
 
-bool LinkSound::mix() const
+bool ActionSound::mix() const
 {
     return d->m_mix;
 }
 
-Okular::Sound *LinkSound::sound() const
+Okular::Sound *ActionSound::sound() const
 {
     return d->m_sound;
 }
 
-// LinkMovie
-class LinkMovie::Private
+// ActionMovie
+class ActionMovie::Private
 {
 };
 
-LinkMovie::LinkMovie()
+ActionMovie::ActionMovie()
     : d( 0 )
 {
 }
 
-LinkMovie::~LinkMovie()
+ActionMovie::~ActionMovie()
 {
     delete d;
 }
 
-Link::LinkType LinkMovie::linkType() const
+Action::ActionType ActionMovie::actionType() const
 {
     return Movie;
 }
 
-QString LinkMovie::linkTip() const
+QString ActionMovie::actionTip() const
 {
     return i18n( "Play movie..." );
 }

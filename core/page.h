@@ -188,7 +188,7 @@ class OKULAR_EXPORT Page
          * Returns the @ref Link object which is associated with the given page @p action
          * or 0 if no page action is set.
          */
-        const Link * pageAction( PageAction action ) const;
+        const Action * pageAction( PageAction action ) const;
 
         /**
          * Returns the list of FormField of the page.
@@ -291,7 +291,7 @@ class OKULAR_EXPORT Page
         /**
          * Sets the @p link object for the given page @p action.
          */
-        void setPageAction( PageAction action, Link * link );
+        void setPageAction( PageAction action, Action * link );
 
         /**
          * Sets @p fields as list of FormField of the page.

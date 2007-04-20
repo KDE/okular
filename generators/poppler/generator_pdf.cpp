@@ -115,9 +115,9 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
 //     }
 }
 
-static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink, const Poppler::Document *pdfdoc)
+static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, const Poppler::Document *pdfdoc)
 {
-	Okular::Link *link = 0;
+	Okular::Action *link = 0;
 	const Poppler::LinkGoto *popplerLinkGoto;
 	const Poppler::LinkExecute *popplerLinkExecute;
 	const Poppler::LinkBrowse *popplerLinkBrowse;
@@ -135,22 +135,22 @@ static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink,
 		case Poppler::Link::Goto:
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
 			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination(), pdfdoc );
-			link = new Okular::LinkGoto(popplerLinkGoto->fileName(), viewport);
+			link = new Okular::ActionGoto(popplerLinkGoto->fileName(), viewport);
 		break;
 		
 		case Poppler::Link::Execute:
 			popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
-			link = new Okular::LinkExecute( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
+			link = new Okular::ActionExecute( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
 		break;
 		
 		case Poppler::Link::Browse:
 			popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-			link = new Okular::LinkBrowse( popplerLinkBrowse->url() );
+			link = new Okular::ActionBrowse( popplerLinkBrowse->url() );
 		break;
 		
 		case Poppler::Link::Action:
 			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-			link = new Okular::LinkAction( (Okular::LinkAction::ActionType)popplerLinkAction->actionType() );
+			link = new Okular::ActionDocumentAction( (Okular::ActionDocumentAction::DocumentActionType)popplerLinkAction->actionType() );
 		break;
 		
 #ifdef HAVE_POPPLER_HEAD
@@ -177,7 +177,7 @@ static Okular::Link* createLinkFromPopplerLink(const Poppler::Link *popplerLink,
 					sound->setSoundEncoding( Okular::Sound::ALaw );
 					break;
 			}
-			link = new Okular::LinkSound( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
+			link = new Okular::ActionSound( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
 		}
 		break;
 #endif
@@ -201,7 +201,7 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 		       nr = linkArea.right() / (double)width,
 		       nb = linkArea.bottom() / (double)height;
 		// create the rect using normalized coords and attach the Okular::Link to it
-		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Link, createLinkFromPopplerLink(popplerLink, pdfdoc) );
+		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink, pdfdoc) );
 		// add the ObjectRect to the container
 		links.push_front( rect );
 	}

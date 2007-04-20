@@ -243,11 +243,11 @@ bool PresentationWidget::event( QEvent * e )
         QHelpEvent * he = (QHelpEvent*)e;
 
         QRect r;
-        const Okular::Link * link = getLink( he->x(), he->y(), &r );
+        const Okular::Action * link = getLink( he->x(), he->y(), &r );
 
         if ( link )
         {
-            QString tip = link->linkTip();
+            QString tip = link->actionTip();
             if ( !tip.isEmpty() )
                 QToolTip::showText( he->globalPos(), tip, this, r );
         }
@@ -362,7 +362,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
     // if releasing on the same link we pressed over, execute it
     if ( m_pressedLink && e->button() == Qt::LeftButton )
     {
-        const Okular::Link * link = getLink( e->x(), e->y() );
+        const Okular::Action * link = getLink( e->x(), e->y() );
         if ( link == m_pressedLink )
             m_document->processLink( link );
         m_pressedLink = 0;
@@ -518,7 +518,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 // </widget events>
 
 
-const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
 {
     // no links on invalid pages
     if ( geometry && !geometry->isNull() )
@@ -541,7 +541,7 @@ const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry
 
     // check if 1) there is an object and 2) it's a link
     QRect d = KGlobalSettings::desktopGeometry( const_cast< PresentationWidget * >( this ) );
-    const Okular::ObjectRect * object = page->objectRect( Okular::ObjectRect::Link, nx, ny, d.width(), d.height() );
+    const Okular::ObjectRect * object = page->objectRect( Okular::ObjectRect::Action, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
 
@@ -553,12 +553,12 @@ const Okular::Link * PresentationWidget::getLink( int x, int y, QRect * geometry
     }
 
     // return the link pointer
-    return (Okular::Link *)object->object();
+    return (Okular::Action *)object->object();
 }
 
 void PresentationWidget::testCursorOnLink( int x, int y )
 {
-    const Okular::Link * link = getLink( x, y, 0 );
+    const Okular::Action * link = getLink( x, y, 0 );
 
     // only react on changes (in/out from a link)
     if ( (link && !m_handCursor) || (!link && m_handCursor) )

@@ -651,7 +651,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         for ( ; lIt != lEnd; ++lIt )
         {
             Okular::ObjectRect * rect = *lIt;
-            if ( (enhanceLinks && rect->objectType() == Okular::ObjectRect::Link) ||
+            if ( (enhanceLinks && rect->objectType() == Okular::ObjectRect::Action) ||
                  (enhanceImages && rect->objectType() == Okular::ObjectRect::Image) )
             {
                 if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ) ) )

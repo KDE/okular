@@ -24,7 +24,7 @@ class QRect;
 namespace Okular {
 
 class Annotation;
-class Link;
+class Action;
 class NormalizedShape;
 
 /**
@@ -230,7 +230,7 @@ class OKULAR_EXPORT ObjectRect
          */
         enum ObjectType
         {
-            Link,        ///< A link
+            Action,        ///< A link
             Image,       ///< An image
             OAnnotation, ///< An annotation
             SourceRef    ///< A source reference

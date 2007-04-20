@@ -879,6 +879,9 @@ void Part::slotDoFileDirty()
         // store the current viewport
         m_viewportDirty = m_document->viewport();
 
+        // store the current toolbox pane
+        m_dirtyToolboxIndex = m_toolBox->currentIndex();
+
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
 
@@ -894,6 +897,10 @@ void Part::slotDoFileDirty()
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
+        if ( m_toolBox->currentIndex() != m_dirtyToolboxIndex && m_toolBox->isItemEnabled( m_dirtyToolboxIndex ) )
+        {
+            m_toolBox->setCurrentIndex( m_dirtyToolboxIndex );
+        }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true);
     }

@@ -13,6 +13,8 @@
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
 
+#include <QtGui/QTextBlock>
+
 #include "qunpluck.h"
 
 class QTextDocument;

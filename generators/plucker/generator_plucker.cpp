@@ -7,17 +7,16 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_plucker.h"
+
 #include <QtCore/QFile>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
 #include <QtGui/QTextDocument>
-#include <QtGui/QTextBlock>
 
 #include <klocale.h>
 
 #include <okular/core/page.h>
-
-#include "generator_plucker.h"
 
 OKULAR_EXPORT_PLUGIN(PluckerGenerator)
 

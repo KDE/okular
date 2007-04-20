@@ -44,7 +44,6 @@ class DocumentInfo;
 class DocumentSynopsis;
 class EmbeddedFile;
 class ExportFormatPrivate;
-class Link;
 class Page;
 class PixmapRequest;
 class TextPage;

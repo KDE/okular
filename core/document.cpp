@@ -2037,8 +2037,8 @@ void Document::processAction( const Action * action )
             } break;
 
         case Action::DocumentAction: {
-            const ActionDocumentAction * action = static_cast< const ActionDocumentAction * >( action );
-            switch( action->documentActionType() )
+            const ActionDocumentAction * docaction = static_cast< const ActionDocumentAction * >( action );
+            switch( docaction->documentActionType() )
             {
                 case ActionDocumentAction::PageFirst:
                     setViewportPage( 0 );

@@ -16,7 +16,6 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
 
-#include <klocale.h>
 #include <kprinter.h>
 
 #include <okular/core/action.h>
@@ -358,8 +357,8 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
 {
     static Okular::ExportFormat::List formats;
     if ( formats.isEmpty() ) {
-        formats.append( Okular::ExportFormat::plainText() );
-        formats.append( Okular::ExportFormat( i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) ) );
+        formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ) );
+        formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PDF ) );
     }
 
     return formats;

@@ -394,7 +394,7 @@ m_searchStarted(false), m_cliPresentation(false)
     QMenu *menu = new QMenu(widget());
     connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
     m_exportAs->setMenu( menu );
-    m_exportAsText = actionForExportFormat( Okular::ExportFormat::plainText(), menu );
+    m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), menu );
     menu->addAction( m_exportAsText );
     m_exportAsText->setEnabled( false );
 

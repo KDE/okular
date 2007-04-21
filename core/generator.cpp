@@ -432,9 +432,18 @@ bool ExportFormat::isNull() const
     return d->mMimeType.isNull() || d->mDescription.isNull();
 }
 
-ExportFormat ExportFormat::plainText()
+ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
 {
-    return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+    switch ( type )
+    {
+        case PlainText:
+            return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+            break;
+        case PDF:
+            return ExportFormat( i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
+            break;
+    }
+    return ExportFormat();
 }
 
 bool ExportFormat::operator==( const ExportFormat &other ) const

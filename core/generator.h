@@ -134,9 +134,18 @@ class OKULAR_EXPORT ExportFormat
         bool isNull() const;
 
         /**
-         * Builds a standard format for exporting to plain text.
+         * Type of standard export format.
          */
-        static ExportFormat plainText();
+        enum StandardExportFormat
+        {
+            PlainText,         ///< Plain text
+            PDF                ///< PDF, aka Portable Document Format
+        };
+
+        /**
+         * Builds a standard format for the specified @p type .
+         */
+        static ExportFormat standardFormat( StandardExportFormat type );
 
         bool operator==( const ExportFormat &other ) const;
 

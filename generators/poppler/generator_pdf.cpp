@@ -859,7 +859,7 @@ Okular::ExportFormat::List PDFGenerator::exportFormats() const
 {
     static Okular::ExportFormat::List formats;
     if ( formats.isEmpty() ) {
-        formats.append( Okular::ExportFormat::plainText() );
+        formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ) );
     }
 
     return formats;

@@ -17,7 +17,6 @@
 #include <qvarlengtharray.h>
 #include <kimageeffect.h>
 #include <kiconloader.h>
-#include <kstaticdeleter.h>
 #include <kdebug.h>
 #include <QApplication>
 
@@ -31,8 +30,7 @@
 #include "core/utils.h"
 #include "settings.h"
 
-static KStaticDeleter<QPixmap> sd;
-QPixmap * busyPixmap = 0;
+K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 
@@ -54,13 +52,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         else
             destPainter->fillRect( limits, Qt::white );
 
-        if ( !busyPixmap )
-        {
-            sd.setObject(busyPixmap, new QPixmap());
-            *busyPixmap = KIconLoader::global()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, 0, true);
-        }
         // draw something on the blank page: the okular icon or a cross (as a fallback)
-        if ( busyPixmap && !busyPixmap->isNull() )
+        if ( !busyPixmap->isNull() )
         {
             destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
         }

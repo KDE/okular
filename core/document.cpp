@@ -745,9 +745,19 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_url = url;
         d->m_docFileName = docFile;
         QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-        fn = "kpdf/" + QString::number(fileReadTest.size()) + '.' + fn + ".xml";
+        fn = QString::number(fileReadTest.size()) + '.' + fn + ".xml";
         fileReadTest.close();
-        d->m_xmlFileName = KStandardDirs::locateLocal( "data", fn );
+        QString newokular = "okular/docdata/" + fn;
+        QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+        QString oldkpdf = "kpdf/" + fn;
+        QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+        if ( QFile::exists( oldkpdffile ) && !QFile::exists( newokularfile ) )
+        {
+            // ### copy or move?
+            if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                return false;
+        }
+        d->m_xmlFileName = newokularfile;
     }
     else
     {

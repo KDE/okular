@@ -28,6 +28,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 In progress [working on]:
 -> core: forms support (mainly for pdf) (BR91809)
 -> bookmarks: improved interface, with easy handling of the bookmarks of all the documents (BR99787,BR136113)
+-> KPDF -> okular conversion of datafiles {document data(in progress), kwallet passwords(missing)}
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link
    provide a configuration widget to choose the editor and configure a custom one

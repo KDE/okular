@@ -116,7 +116,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_overlayHideTimer->setSingleShot( true );
     connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
     m_nextPageTimer = new QTimer( this ); 
-//    m_nextPageTimer->setSingleShot( true );
+    m_nextPageTimer->setSingleShot( true );
     connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) ); 
 
     // handle cursor appearance as specified in configuration
@@ -939,9 +939,9 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 void PresentationWidget::startAutoChangeTimer()
 {
     double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
-    if ( Okular::Settings::slidesAdvance() || pageDuration > 0.0 )
+    if ( Okular::Settings::slidesAdvance() || pageDuration >= 0.0 )
     {
-        double secs = pageDuration <= 0.0
+        double secs = pageDuration < 0.0
                    ? Okular::Settings::slidesAdvanceTime()
                    : qMin<double>( pageDuration, Okular::Settings::slidesAdvanceTime() );
         m_nextPageTimer->start( (int)( secs * 1000 ) );

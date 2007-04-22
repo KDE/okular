@@ -570,7 +570,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         bool isBookmarked = m_document->isBookmarked( pageNumber() );
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
-        p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 2, m_pixmapHeight + 2 );
+        p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 1, m_pixmapHeight + 1 );
         // draw the clear rect
         p.setPen( isBookmarked ? QColor( 0x804000 ) : pal.color( QPalette::Active, QPalette::Base ) );
         // draw the bottom and right shadow edges

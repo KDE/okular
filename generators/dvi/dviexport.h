@@ -22,7 +22,7 @@
 #include <ksharedptr.h>
 
 #include <QObject>
-#include <QString>
+
 
 class dviRenderer;
 class fontProgressDialog;

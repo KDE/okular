@@ -17,7 +17,7 @@
 #include <Q3MemArray>
 #include <QIODevice>
 #include <QMap>
-#include <QString>
+
 
 class fontPool;
 class pageSize;

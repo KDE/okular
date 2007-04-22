@@ -16,7 +16,7 @@
 #define _FONT_H
 
 #include <Q3IntDict>
-#include <QString>
+
 
 #include <cstdio>
 

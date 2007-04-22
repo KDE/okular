@@ -15,7 +15,7 @@
 #include <QColor>
 #include <QCustomEvent>
 #include <QObject>
-#include <QString>
+
 #include <QThread>
 
 class KUrl;

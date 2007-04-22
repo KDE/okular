@@ -12,6 +12,8 @@
 
 #include <okular/core/okular_export.h>
 
+#include <QtCore/QObject>
+
 class QToolBox;
 class KActionCollection;
 

@@ -536,7 +536,7 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
     if ( this->isEmpty() )
         return false;
 
-    foreach ( const NormalizedShape& ns, *this )
+    Q_FOREACH ( const NormalizedShape& ns, *this )
         if ( !givePtr(ns)->isNull() )
             return false;
 
@@ -552,7 +552,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
     if ( this->isEmpty() )
         return false;
 
-    foreach ( const NormalizedShape& ns, *this )
+    Q_FOREACH ( const NormalizedShape& ns, *this )
         if ( !givePtr(ns)->isNull() && givePtr(ns)->intersects( rect ) )
             return true;
 
@@ -568,9 +568,9 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
     if ( this->isEmpty() )
         return false;
 
-    foreach ( const NormalizedShape& ns, this )
+    Q_FOREACH ( const NormalizedShape& ns, this )
     {
-        foreach ( const Shape& shape, area )
+        Q_FOREACH ( const Shape& shape, area )
         {
             if ( !ns->isNull() && ns->intersects( shape ) )
                 return true;
@@ -586,7 +586,7 @@ void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<Normaliz
     if ( !this )
         return false;
 
-    foreach( const Shape& shape, area )
+    Q_FOREACH ( const Shape& shape, area )
         this->append( shape );
 }
 
@@ -627,7 +627,7 @@ bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
     if ( this->isEmpty() )
         return false;
 
-    foreach ( const NormalizedShape& ns, this )
+    Q_FOREACH ( const NormalizedShape& ns, this )
         if ( ns->contains( x, y ) )
             return true;
 
@@ -654,7 +654,7 @@ QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int ySca
 
     QList<Shape> ret;
     Shape t;
-    foreach( const NormalizedShape& ns, *this )
+    Q_FOREACH ( const NormalizedShape& ns, *this )
     {
         t = givePtr(ns)->geometry( xScale, yScale );
         t.translate( dx, dy );

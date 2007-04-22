@@ -10,7 +10,7 @@
 #ifndef _OKULAR_AUDIOPLAYER_H_
 #define _OKULAR_AUDIOPLAYER_H_
 
-#include <core/okular_export.h>
+#include <okular/core/okular_export.h>
 
 #include <QtCore/QObject>
 

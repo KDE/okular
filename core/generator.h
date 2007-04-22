@@ -13,7 +13,7 @@
 
 #include <okular/core/okular_export.h>
 #include <okular/core/global.h>
-#include <core/pagesize.h>
+#include <okular/core/pagesize.h>
 
 #include <QtCore/QList>
 #include <QtCore/QObject>

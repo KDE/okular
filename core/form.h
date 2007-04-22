@@ -10,8 +10,8 @@
 #ifndef _OKULAR_FORM_H_
 #define _OKULAR_FORM_H_
 
-#include <core/okular_export.h>
-#include <core/area.h>
+#include <okular/core/okular_export.h>
+#include <okular/core/area.h>
 
 #include <QtCore/QStringList>
 

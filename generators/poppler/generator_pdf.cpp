@@ -367,6 +367,11 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
 
     loadPages(pagesVector, 0, false);
 
+#ifdef HAVE_POPPLER_HEAD
+    pdfdoc->setRenderHint(Poppler::Document::Antialiasing);
+    pdfdoc->setRenderHint(Poppler::Document::TextAntialiasing);
+#endif
+
     // the file has been loaded correctly
     return true;
 }

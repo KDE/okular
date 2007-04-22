@@ -110,6 +110,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
+        void initFontNames();
+
         // poppler dependant stuff
         mutable QMutex docLock;
         Poppler::Document *pdfdoc;
@@ -130,6 +132,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
 
         QVector<bool> rectsGenerated;
+        QVector<QString> fontNames;
 };
 
 

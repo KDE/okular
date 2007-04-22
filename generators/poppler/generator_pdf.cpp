@@ -538,21 +538,13 @@ const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
     // initialize fonts dom
     docFonts.appendChild( docFonts.createElement( "Fonts" ) );
 
+    // initialize the font names DB
+    initFontNames();
+
     docLock.lock();
     QList<Poppler::FontInfo> fonts = pdfdoc->fonts();
     docLock.unlock();
 
-    const QString fontTypeNames[8] = {
-        i18n("unknown"),
-        i18n("Type 1"),
-        i18n("Type 1C"),
-        i18n("Type 3"),
-        i18n("TrueType"),
-        i18n("CID Type 0"),
-        i18n("CID Type 0C"),
-        i18n("CID TrueType")
-    };
-    
     foreach (const Poppler::FontInfo &font, fonts)
     {
         // 0. add font element
@@ -564,7 +556,8 @@ const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
         fontElem.setAttribute( "Name", name.isNull() ? i18n("[none]") : name );
 
         // 2. set Type
-        fontElem.setAttribute( "Type", fontTypeNames[ font.type() ] );
+        QString typestring = font.type() >= 0 && font.type() < fontNames.count() ? fontNames.at(font.type()) : i18nc("not available", "n/a");
+        fontElem.setAttribute( "Type", typestring );
 
         // 3. set Embedded
         fontElem.setAttribute( "Embedded", font.isEmbedded() ? i18n("Yes") : i18n("No") );
@@ -1222,6 +1215,26 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
     Q_UNUSED( popplerPage )
     Q_UNUSED( page )
 #endif
+}
+
+void PDFGenerator::initFontNames()
+{
+    // fonts names DB already initialized
+    if (!fontNames.isEmpty())
+        return;
+
+    // THESE VALUES HAVE TO BE IN SYNC with the poppler font type enyum
+
+    int i = 0;
+    fontNames.resize(8);
+    fontNames[i++] = i18n("unknown");
+    fontNames[i++] = i18n("Type 1");
+    fontNames[i++] = i18n("Type 1C");
+    fontNames[i++] = i18n("Type 3");
+    fontNames[i++] = i18n("TrueType");
+    fontNames[i++] = i18n("CID Type 0");
+    fontNames[i++] = i18n("CID Type 0C");
+    fontNames[i++] = i18n("CID TrueType");
 }
 
 struct pdfsyncpoint

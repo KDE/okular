@@ -14,7 +14,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QProcess>
-#include <QToolTip>
+
 #include <QProgressBar>
 
 

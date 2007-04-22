@@ -51,6 +51,7 @@ install( FILES
            core/document.h
            core/form.h
            core/generator.h
+           core/global.h
            core/observer.h
            core/okular_export.h
            core/page.h

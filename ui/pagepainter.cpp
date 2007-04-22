@@ -279,6 +279,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         // 4B.4. paint annotations [COMPOSITED ONES]
         if ( bufferedAnnotations )
         {
+            // This is cheap
+            // TODO Enable again once we switch to Arthur instead Agg for drawShapeOnImage
+            // backImage = backImage.convertToFormat(QImage::Format_ARGB32);
+
             // precalc costants for normalizing the quads to the image
             double pageScale = (double)scaledWidth / page->width();
             double xOffset = (double)limits.left() / (double)scaledWidth,
@@ -886,3 +890,56 @@ void PagePainter::drawShapeOnImage(
 }
 
 //END of Anti-Grain dependant code
+
+// TODO Enable this and remove AGG code when
+// http://www.trolltech.com/developer/task-tracker/index_html?id=158815&method=entry
+// gets fixed
+// remember to uncomment
+// backImage = backImage.convertToFormat(QImage::Format_ARGB32);
+#if 0
+void PagePainter::drawShapeOnImage(
+    QImage & image,
+    const NormalizedPath & normPath,
+    bool closeShape,
+    const QPen & pen,
+    const QBrush & brush,
+    double penWidthMultiplier,
+    RasterOperation op
+    //float antiAliasRadius
+    )
+{
+    // safety checks
+    int pointsNumber = normPath.size();
+    if ( pointsNumber < 2 )
+        return;
+
+    int imageWidth = image.width();
+    int imageHeight = image.height();
+    double fImageWidth = (double)imageWidth;
+    double fImageHeight = (double)imageHeight;
+
+    // create a 'path'
+    QPainterPath path;
+    path.moveTo( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
+    for ( int i = 1; i < pointsNumber; i++ )
+    {
+        path.lineTo( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
+    }
+    if ( closeShape ) path.closeSubpath();
+
+    // stroke outline
+    double penWidth = (double)pen.width() * penWidthMultiplier;
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    QPen pen2 = pen;
+    pen2.setWidthF(penWidth);
+    painter.setPen(pen2);
+    painter.setBrush(brush);
+
+    if (op == Multiply) {
+        painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+    }
+
+    painter.drawPath(path);
+}
+#endif

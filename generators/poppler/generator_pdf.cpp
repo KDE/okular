@@ -11,9 +11,11 @@
 #include "generator_pdf.h"
 
 // qt/kde includes
+#include <qcheckbox.h>
 #include <qcolor.h>
 #include <qfile.h>
 #include <qimage.h>
+#include <qlayout.h>
 #include <qregexp.h>
 #include <qtextstream.h>
 #include <klocale.h>
@@ -24,6 +26,7 @@
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <kglobal.h>
+#include <kdeprint/kprintdialogpage.h>
 
 #include <okular/core/action.h>
 #include <okular/core/page.h>
@@ -77,6 +80,36 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
     private:
         Poppler::EmbeddedFile *ef;
 };
+
+class PDFOptionsPage : public KPrintDialogPage
+{
+   public:
+       PDFOptionsPage()
+       {
+           setTitle( i18n( "PDF Options" ) );
+           QVBoxLayout *layout = new QVBoxLayout(this);
+           m_forceRaster = new QCheckBox(i18n("Force rasterization"), this);
+           m_forceRaster->setToolTip(i18n("Rasterize into an image before printing"));
+           m_forceRaster->setWhatsThis(i18n("Forces the rasterization of each page into an image before printing it. This usually gives somewhat worse results, but is useful when printing documents that appear to print incorrectly."));
+           layout->addWidget(m_forceRaster);
+           layout->addStretch(1);
+       }
+
+       void getOptions( QMap<QString,QString>& opts, bool incldef = false )
+       {
+           Q_UNUSED(incldef);
+           opts[ "kde-okular-poppler-forceRaster" ] = QString::number( m_forceRaster->isChecked() );
+       }
+
+       void setOptions( const QMap<QString,QString>& opts )
+       {
+           m_forceRaster->setChecked( opts[ "kde-okular-poppler-forceRaster" ].toInt() );
+       }
+
+    private:
+        QCheckBox *m_forceRaster;
+};
+
 
 static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
@@ -772,7 +805,13 @@ bool PDFGenerator::print( KPrinter& printer )
                                                "kpdfStrictlyObeyMargins");
         if (result == KMessageBox::Yes) strictMargins = true;
     }
-    if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height, marginRight, marginBottom, marginLeft, marginTop, strictMargins))
+    QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
+    if ( pstitle.trimmed().isEmpty() )
+    {
+        pstitle = document()->currentDocument().fileName( false );
+    }
+    bool forceRasterize = printer.option("kde-okular-poppler-forceRaster").toInt();
+    if (pdfdoc->print(tempfilename, pstitle, pageList, 72, 72, 0, width, height, marginRight, marginBottom, marginLeft, marginTop, strictMargins, forceRasterize))
     {
         docLock.unlock();
         return printer.printFiles(QStringList(tempfilename), true);
@@ -1226,6 +1265,21 @@ void PDFGenerator::initFontNames()
     // THESE VALUES HAVE TO BE IN SYNC with the poppler font type enyum
 
     int i = 0;
+#ifdef HAVE_POPPLER_HEAD
+    fontNames.resize(12);
+    fontNames[i++] = i18n("unknown");
+    fontNames[i++] = i18n("Type 1");
+    fontNames[i++] = i18n("Type 1C");
+    fontNames[i++] = i18nc("OT means OpenType", "Type 1C (OT)");
+    fontNames[i++] = i18n("Type 3");
+    fontNames[i++] = i18n("TrueType");
+    fontNames[i++] = i18nc("OT means OpenType", "TrueType (OT)");
+    fontNames[i++] = i18n("CID Type 0");
+    fontNames[i++] = i18n("CID Type 0C");
+    fontNames[i++] = i18nc("OT means OpenType", "CID Type 0C (OT)");
+    fontNames[i++] = i18n("CID TrueType");
+    fontNames[i++] = i18nc("OT means OpenType", "CID TrueType (OT)");
+#else
     fontNames.resize(8);
     fontNames[i++] = i18n("unknown");
     fontNames[i++] = i18n("Type 1");
@@ -1235,6 +1289,7 @@ void PDFGenerator::initFontNames()
     fontNames[i++] = i18n("CID Type 0");
     fontNames[i++] = i18n("CID Type 0C");
     fontNames[i++] = i18n("CID TrueType");
+#endif
 }
 
 struct pdfsyncpoint
@@ -1367,6 +1422,15 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
     for ( int i = 0; i < refRects.size(); ++i )
         if ( !refRects.at(i).isEmpty() )
             pagesVector[i]->setSourceReferences( refRects.at(i) );
+}
+
+KPrintDialogPage* PDFGenerator::printConfigurationWidget() const
+{
+#ifdef HAVE_POPPLER_HEAD
+    return new PDFOptionsPage();
+#else
+    return 0;
+#endif
 }
 
 

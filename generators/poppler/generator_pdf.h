@@ -21,6 +21,7 @@
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
 #include <okular/interfaces/configinterface.h>
+#include <okular/interfaces/printinterface.h>
 
 namespace Okular {
 class ObjectRect;
@@ -42,10 +43,11 @@ class PDFPixmapGeneratorThread;
  * Background asynchronous contents providing is done via a QThread inherited
  * class defined at the bottom of the file.
  */
-class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
+class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::PrintInterface
 {
     Q_OBJECT
     Q_INTERFACES( Okular::ConfigInterface )
+    Q_INTERFACES( Okular::PrintInterface )
 
     public:
         PDFGenerator();
@@ -83,6 +85,9 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface
         // [INHERITED] text exporting
         Okular::ExportFormat::List exportFormats() const;
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
+        // [INHERITED] print interface
+        KPrintDialogPage* printConfigurationWidget() const;
 
     protected:
         Okular::TextPage* textPage( Okular::Page *page );

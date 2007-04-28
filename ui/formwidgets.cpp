@@ -93,6 +93,11 @@ bool FormWidgetIface::setVisibility( bool visible )
     return hadfocus;
 }
 
+void FormWidgetIface::setCanBeFilled( bool fill )
+{
+    m_widget->setEnabled( fill );
+}
+
 
 FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
     : QLineEdit( parent ), FormWidgetIface( this, text ), m_form( text )

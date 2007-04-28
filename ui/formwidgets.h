@@ -45,6 +45,7 @@ class FormWidgetIface
         void setWidthHeight( int w, int h );
         void moveTo( int x, int y );
         bool setVisibility( bool visible );
+        void setCanBeFilled( bool fill );
 
     private:
         QWidget * m_widget;

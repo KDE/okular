@@ -811,23 +811,39 @@ bool PDFGenerator::print( KPrinter& printer )
     QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
     if ( pstitle.trimmed().isEmpty() )
     {
-        pstitle = document()->currentDocument().fileName( false );
+        pstitle = document()->currentDocument().path();
     }
     bool forceRasterize = printer.option("kde-okular-poppler-forceRaster").toInt();
-    if (pdfdoc->print(tempfilename, pstitle, pageList, 72, 72, 0, width, height, marginRight, marginBottom, marginLeft, marginTop, strictMargins, forceRasterize))
+    Poppler::PSConverter *psConverter = pdfdoc->psConverter();
+    psConverter->setOutputFileName(tempfilename);
+    psConverter->setPageList(pageList);
+    psConverter->setPaperWidth(width);
+    psConverter->setPaperHeight(height);
+    psConverter->setRightMargin(marginRight);
+    psConverter->setBottomMargin(marginBottom);
+    psConverter->setLeftMargin(marginLeft);
+    psConverter->setTopMargin(marginTop);
+    psConverter->setStrictMargins(strictMargins);
+    psConverter->setForceRasterize(forceRasterize);
+    psConverter->setTitle(pstitle);
+    if (psConverter->convert())
     {
         docLock.unlock();
+        delete psConverter;
         return printer.printFiles(QStringList(tempfilename), true);
     }
+    else
+    {
+        delete psConverter;
 #else
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
         docLock.unlock();
         return printer.printFiles(QStringList(tempfilename), true);
     }
-#endif
     else
     {
+#endif
         docLock.unlock();
         return false;
     }

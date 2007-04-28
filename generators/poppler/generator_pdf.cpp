@@ -471,6 +471,9 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         page->setLabel( p->label() );
 
         addFormFields( p, page );
+
+        page->setObjectRects( generateLinks(p->links(), pSize.width(), pSize.height(), pdfdoc) );
+        rectsGenerated[ page->number() ] = true;
 #endif
 // 	    kWarning() << page->width() << "x" << page->height() << endl;
 
@@ -702,7 +705,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     // 2. Take data from outputdev and attach it to the Page
 #ifdef HAVE_POPPLER_HEAD
-    page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, Poppler::Page::Rotate0 ) ) ) );
+    page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) ) ) );
 #else
     page->setPixmap( request->id(), p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) );
 #endif
@@ -1651,7 +1654,7 @@ void PDFPixmapGeneratorThread::run()
         kDebug() << "PDFPixmapGeneratorThread: previous text not taken" << endl;
 #endif
 #ifdef HAVE_POPPLER_HEAD
-    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, genObjectRects, Poppler::Page::Rotate0 ) );
+    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
 #else
     d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, Poppler::Page::Rotate0 ) );
 #endif

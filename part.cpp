@@ -543,6 +543,7 @@ void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool docume
 
     rebuildBookmarkMenu();
     updateAboutBackendAction();
+    m_searchWidget->setEnabled( m_document->supportsSearching() );
 }
 
 void Part::notifyViewportChanged( bool /*smoothMove*/ )

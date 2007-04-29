@@ -2,9 +2,11 @@
 Encoding=UTF-8
 Type=Service
 Name=dvi
+Name[x-test]=xxdvixx
 Comment=DVI backend for okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DVI ਬੈਕਐਂਡ
 Comment[sv]=DVI-gränssnitt för Okular
+Comment[x-test]=xxDVI backend for okularxx
 ServiceTypes=okular/Generator
 MimeType=application/x-dvi
 X-KDE-Library=libokularGenerator_dvi

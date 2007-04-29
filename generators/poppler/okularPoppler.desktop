@@ -4,6 +4,7 @@ Icon=okular
 Name=okular
 Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
+Name[x-test]=xxokularxx
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service

@@ -54,6 +54,9 @@ class PageViewAnnotator : public QObject
         // called to show/hide the editing toolbar
         void setEnabled( bool enabled );
 
+        // called to toggle the usage of text annotating tools
+        void setTextToolsEnabled( bool enabled );
+
         // methods used when creating the annotation
         bool routeEvents() const;
         QRect routeEvent( QMouseEvent * event, PageViewItem * item );
@@ -71,7 +74,8 @@ class PageViewAnnotator : public QObject
         PageViewToolBar * m_toolBar;
         AnnotatorEngine * m_engine;
         QDomElement m_toolsDefinition;
-        QLinkedList<ToolBarItem> m_items;
+        QLinkedList<AnnotationItem> m_items;
+        bool m_textToolsEnabled;
 
         // creation related variables
         int m_lastToolID;

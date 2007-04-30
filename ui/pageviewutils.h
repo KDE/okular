@@ -111,20 +111,18 @@ class PageViewTopMessage : public QWidget
 };
 
 
-/**
- * @short A widget containing exclusive buttons, that slides in from a side.
- *
- * This is a shaped widget that slides in from a side of the 'anchor widget'
- * it's attached to. It can be dragged and docked on {left,top,right,bottom}
- * sides and contains toggable exclusive buttons.
- * When a 'tool' of this 'toolBar' is selected, a signal is emitted.
- */
-struct ToolBarItem // FIXME TEMP: MOVE OUT OF HERE!
+struct AnnotationItem
 {
+    AnnotationItem()
+        : id( -1 ), isText( false )
+    {
+    }
+
     int id;
     QString text;
     QString pixmap;
     QString shortcut;
+    bool isText;
 };
 
 class ToolBarButton : public QToolButton
@@ -134,13 +132,21 @@ class ToolBarButton : public QToolButton
         static const int iconSize = 32;
         static const int buttonSize = 40;
 
-        ToolBarButton( QWidget * parent, const ToolBarItem & item );
+        ToolBarButton( QWidget * parent, const AnnotationItem &item );
         int buttonID() const { return m_id; }
 
     private:
         int m_id;
 };
 
+/**
+ * @short A widget containing exclusive buttons, that slides in from a side.
+ *
+ * This is a shaped widget that slides in from a side of the 'anchor widget'
+ * it's attached to. It can be dragged and docked on {left,top,right,bottom}
+ * sides and contains toggable exclusive buttons.
+ * When a 'tool' of this 'toolBar' is selected, a signal is emitted.
+ */
 class PageViewToolBar : public QWidget
 {
     Q_OBJECT
@@ -150,7 +156,11 @@ class PageViewToolBar : public QWidget
 
         // animated widget controls
         enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };
-        void showItems( Side side, const QLinkedList<ToolBarItem> & items );
+
+        void setItems( const QLinkedList<AnnotationItem> &items );
+        void setSide( Side side );
+
+        void showAndAnimate();
         void hideAndDestroy();
 
         // query properties

@@ -329,7 +329,7 @@ void PageViewTopMessage::setActionButton( QAction * action )
 /** PageViewToolBar  */
 /*********************/
 
-ToolBarButton::ToolBarButton( QWidget * parent, const ToolBarItem & item )
+ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationItem &item )
     : QToolButton( parent ), m_id( item.id )
 {
     setCheckable( true );
@@ -382,6 +382,7 @@ public:
     QPoint currentPosition;
     QPoint endPosition;
     bool hiding;
+    bool visible;
 
     // background pixmap and buttons
     QPixmap backgroundPixmap;
@@ -398,6 +399,7 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
     d->anchorWidget = anchorWidget;
     d->anchorSide = Left;
     d->hiding = false;
+    d->visible = false;
 
     // create the animation timer
     d->animTimer = new QTimer( this );
@@ -413,12 +415,8 @@ PageViewToolBar::~PageViewToolBar()
     delete d;
 }
 
-void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & items )
+void PageViewToolBar::setItems( const QLinkedList<AnnotationItem> &items )
 {
-    // set parameters for sliding in
-    d->anchorSide = side;
-    d->hiding = false;
-
     // delete buttons if already present
     if ( !d->buttons.isEmpty() )
     {
@@ -429,7 +427,7 @@ void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & ite
     }
 
     // create new buttons for given items
-    QLinkedList<ToolBarItem>::const_iterator it = items.begin(), end = items.end();
+    QLinkedList<AnnotationItem>::const_iterator it = items.begin(), end = items.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
@@ -438,10 +436,21 @@ void PageViewToolBar::showItems( Side side, const QLinkedList<ToolBarItem> & ite
     }
 
     // rebuild toolbar shape and contents
-    d->buildToolBar();
-    d->currentPosition = d->getOuterPoint();
-    d->endPosition = d->getInnerPoint();
-    move( d->currentPosition );
+    d->reposition();
+}
+
+void PageViewToolBar::setSide( Side side )
+{
+    d->anchorSide = side;
+
+    d->reposition();
+}
+
+void PageViewToolBar::showAndAnimate()
+{
+    // set parameters for sliding in
+    d->hiding = false;
+
     show();
 
     // start scrolling in
@@ -632,6 +641,7 @@ void ToolBarPrivate::buildToolBar()
         ToolBarButton * button = *it;
         button->move( gridX * toolBarGridSize + xOffset,
                       gridY * toolBarGridSize + yOffset );
+        button->show();
         if ( ++gridX == myCols )
         {
             gridX = 0;
@@ -647,7 +657,16 @@ void ToolBarPrivate::reposition()
     // note: hiding widget here will gives better gfx, but ends drag operation
     // rebuild widget and move it to its final place
     buildToolBar();
-    currentPosition = getInnerPoint();
+    if ( !visible )
+    {
+        currentPosition = getOuterPoint();
+        endPosition = getInnerPoint();
+    }
+    else
+    {
+        currentPosition = getInnerPoint();
+        endPosition = getOuterPoint();
+    }
     q->move( currentPosition );
 
     // repaint all buttons (to update background)
@@ -698,7 +717,14 @@ void PageViewToolBar::slotAnimate()
     {
         d->animTimer->stop();
         if ( d->hiding )
+        {
+            d->visible = false;
             deleteLater();
+        }
+        else
+        {
+            d->visible = true;
+        }
     }
 }
 

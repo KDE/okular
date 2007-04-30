@@ -578,7 +578,8 @@ class TextSelectorEngine : public AnnotatorEngine
 
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
-    m_toolBar( 0 ), m_engine( 0 ), m_lastToolID( -1 ), m_lockedItem( 0 )
+    m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( true ), m_lastToolID( -1 ),
+    m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
@@ -589,20 +590,27 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
         {
             m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
 
-            // create the ToolBarItems from the XML dom tree
+            // create the AnnotationItems from the XML dom tree
             QDomNode toolDescription = m_toolsDefinition.firstChild();
             while ( toolDescription.isElement() )
             {
                 QDomElement toolElement = toolDescription.toElement();
                 if ( toolElement.tagName() == "tool" )
                 {
-                    ToolBarItem item;
+                    AnnotationItem item;
                     item.id = toolElement.attribute("id").toInt();
                     item.text = toolElement.attribute("name");
                     item.pixmap = toolElement.attribute("pixmap");
                     QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
                     if ( shortcutNode.isElement() )
                         item.shortcut = shortcutNode.toElement().text();
+                    QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+                    if ( engineNodeList.size() > 0 )
+                    {
+                        QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+                        if ( !engineEl.isNull() && engineEl.hasAttribute( "type" ) )
+                            item.isText = engineEl.attribute( "type" ) == QLatin1String( "TextSelector" );
+                    }
                     m_items.push_back( item );
                 }
                 toolDescription = toolDescription.nextSibling();
@@ -619,6 +627,25 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
 PageViewAnnotator::~PageViewAnnotator()
 {
     delete m_engine;
+}
+
+static QLinkedList<AnnotationItem> filteredItems( const QLinkedList<AnnotationItem> &items, bool textTools )
+{
+    if ( textTools )
+    {
+        return items;
+    }
+    else
+    {
+        QLinkedList<AnnotationItem> newitems;
+        QLinkedList<AnnotationItem>::ConstIterator it = items.begin(), itEnd = items.end();
+        for ( ; it != itEnd; ++it )
+        {
+            if ( !(*it).isText )
+                newitems.append( *it );
+        }
+        return newitems;
+    }
 }
 
 void PageViewAnnotator::setEnabled( bool on )
@@ -642,6 +669,8 @@ void PageViewAnnotator::setEnabled( bool on )
     if ( !m_toolBar )
     {
         m_toolBar = new PageViewToolBar( m_pageView, m_pageView->viewport() );
+        m_toolBar->setSide( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement() );
+        m_toolBar->setItems( filteredItems( m_items, m_textToolsEnabled ) );
         connect( m_toolBar, SIGNAL( toolSelected(int) ),
                 this, SLOT( slotToolSelected(int) ) );
         connect( m_toolBar, SIGNAL( orientationChanged(int) ),
@@ -649,7 +678,7 @@ void PageViewAnnotator::setEnabled( bool on )
     }
 
     // show the toolBar
-    m_toolBar->showItems( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement(), m_items );
+    m_toolBar->showAndAnimate();
 
     // ask for Author's name if not already set
     if ( Okular::Settings::identityAuthor().isEmpty() )
@@ -670,6 +699,16 @@ void PageViewAnnotator::setEnabled( bool on )
         Okular::Settings::setIdentityAuthor( userName );
         Okular::Settings::writeConfig();
     }
+}
+
+void PageViewAnnotator::setTextToolsEnabled( bool enabled )
+{
+    if ( m_textToolsEnabled == enabled )
+        return;
+
+    m_textToolsEnabled = enabled;
+    if ( m_toolBar )
+        m_toolBar->setItems( filteredItems( m_items, m_textToolsEnabled ) );
 }
 
 bool PageViewAnnotator::routeEvents() const

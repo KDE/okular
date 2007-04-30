@@ -684,6 +684,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         d->aPageSizes->setItems( items );
     }
     d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
+    if ( d->annotator )
+        d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -2900,7 +2902,10 @@ void PageView::slotToggleAnnotator( bool on )
 
     // create the annotator object if not present
     if ( !d->annotator )
+    {
         d->annotator = new PageViewAnnotator( this, d->document );
+        d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
+    }
 
     // initialize/reset annotator (and show/hide toolbar)
     d->annotator->setEnabled( on );

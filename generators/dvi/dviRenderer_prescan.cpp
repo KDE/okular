@@ -85,7 +85,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
   QString originalFName = EPSfilename;
 
-  embedPS_progress->setLabel(i18n("Embedding %1", EPSfilename));
+  embedPS_progress->setLabelText(i18n("Embedding %1", EPSfilename));
   qApp->processEvents();
 
   // If the EPSfilename really points to a PDF file, convert that file now.

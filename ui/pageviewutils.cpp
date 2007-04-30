@@ -12,6 +12,7 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <qbitmap.h>
+#include <qbuttongroup.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -387,6 +388,7 @@ public:
     // background pixmap and buttons
     QPixmap backgroundPixmap;
     QLinkedList< ToolBarButton * > buttons;
+    QButtonGroup group;
 };
 
 PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
@@ -400,6 +402,7 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
     d->anchorSide = Left;
     d->hiding = false;
     d->visible = false;
+    connect( &d->group, SIGNAL( buttonClicked( QAbstractButton* ) ), this, SLOT( slotButtonClicked( QAbstractButton* ) ) );
 
     // create the animation timer
     d->animTimer = new QTimer( this );
@@ -431,8 +434,8 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationItem> &items )
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
-        connect( button, SIGNAL( clicked() ), this, SLOT( slotButtonClicked() ) );
         d->buttons.append( button );
+        d->group.addButton( button );
     }
 
     // rebuild toolbar shape and contents
@@ -728,16 +731,11 @@ void PageViewToolBar::slotAnimate()
     }
 }
 
-void PageViewToolBar::slotButtonClicked()
+void PageViewToolBar::slotButtonClicked( QAbstractButton * btn )
 {
-    ToolBarButton * button = qobject_cast<ToolBarButton *>( sender() );
+    ToolBarButton * button = btn ? qobject_cast<ToolBarButton *>( btn ) : 0;
     if ( button )
     {
-        // deselect other buttons
-        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
-        for ( ; it != end; ++it )
-            if ( *it != button )
-                (*it)->setChecked( false );
         // emit signal (-1 if button has been unselected)
         emit toolSelected( button->isChecked() ? button->buttonID() : -1 );
     }

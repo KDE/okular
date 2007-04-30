@@ -340,7 +340,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
         if ( !triedWallet && !walletKey.isNull() )
         {
             QString walletName = KWallet::Wallet::NetworkWallet();
-            wallet = KWallet::Wallet::openWallet( walletName );
+            wallet = KWallet::Wallet::openWallet( walletName, 0 ); // TODO pass proper window
             if ( wallet )
             {
                 // use the KPdf folder (and create if missing)

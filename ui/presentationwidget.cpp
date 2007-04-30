@@ -232,6 +232,10 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 void PresentationWidget::setupActions( KActionCollection * collection )
 {
     m_ac = collection;
+    addAction( m_ac->action( "previous_page" ) );
+    addAction( m_ac->action( "next_page" ) );
+    addAction( m_ac->action( "first_page" ) );
+    addAction( m_ac->action( "last_page" ) );
 }
 
 
@@ -263,16 +267,13 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-#ifdef __GNUC__
-#warning FIX the usage of KActionCollection actions
-#endif
-    if ( /*e->key() == m_ac->action( "previous_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
+    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
         slotPrevPage();
-    else if ( /*e->key() == m_ac->action( "next_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
+    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
         slotNextPage();
-    else if ( /*e->key() == m_ac->action( "first_page" )->shortcut().keyQt() || */e->key() == Qt::Key_Home )
+    else if ( e->key() == Qt::Key_Home )
         slotFirstPage();
-    else if ( /*e->key() == m_ac->action( "last_page" )->shortcut().keyQt() || */e->key() == Qt::Key_End )
+    else if ( e->key() == Qt::Key_End )
         slotLastPage();
     else if ( e->key() == Qt::Key_Escape )
     {

@@ -344,7 +344,7 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction("view_pagesizes", d->aPageSizes);
 
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
-         d->document , SLOT( slotPageSizes( int ) ) );
+         this, SLOT( slotPageSizes( int ) ) );
 
     bool pageSizes = d->document->supportsPageSizes();
     d->aPageSizes->setEnabled( pageSizes );
@@ -2946,6 +2946,14 @@ void PageView::slotRotateCounterClockwise()
 void PageView::slotRotateOriginal()
 {
     d->document->setRotation( 0 );
+}
+
+void PageView::slotPageSizes( int newsize )
+{
+    if ( newsize < 0 || newsize >= d->document->pageSizes().count() )
+        return;
+
+    d->document->setPageSize( d->document->pageSizes().at( newsize ) );
 }
 
 void PageView::slotToggleForms()

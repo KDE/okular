@@ -187,6 +187,7 @@ Q_OBJECT
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();
+        void slotPageSizes( int );
         void slotToggleForms();
 };
 

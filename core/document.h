@@ -478,7 +478,7 @@ class OKULAR_EXPORT Document : public QObject
          * This slot is called whenever the user changes the page @p size
          * of the document.
          */
-        void slotPageSizes( int size );
+        void setPageSize( const PageSize &size );
 
     Q_SIGNALS:
         /**

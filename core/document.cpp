@@ -2289,17 +2289,17 @@ void Document::setRotation( int r )
     kDebug(OkularDebug) << "Rotated: " << r << endl;
 }
 
-void Document::slotPageSizes( int newsize )
+void Document::setPageSize( const PageSize &size )
 {
-    if ( !d->m_generator->hasFeature( Generator::PageSizes ) || newsize < 0 || newsize >= d->m_pageSizes.count() )
+    int sizeid = d->m_pageSizes.indexOf( size );
+    if ( !d->m_generator->hasFeature( Generator::PageSizes ) || sizeid == -1 )
         return;
 
-    const PageSize& ps = d->m_pageSizes.at( newsize );
     // tell the pages to change size
     QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
     QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
     for ( ; pIt != pEnd; ++pIt )
-        (*pIt)->changeSize( ps );
+        (*pIt)->changeSize( size );
     // clear 'memory allocation' descriptors
     QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.begin();
     QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.end();
@@ -2308,13 +2308,13 @@ void Document::slotPageSizes( int newsize )
     d->m_allocatedPixmapsFifo.clear();
     d->m_allocatedPixmapsTotalMemory = 0;
     // notify the generator that the current page size has changed
-    d->m_generator->pageSizeChanged( ps, d->m_pageSize );
+    d->m_generator->pageSizeChanged( size, d->m_pageSize );
     // set the new page size
-    d->m_pageSize = ps;
+    d->m_pageSize = size;
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
-    kDebug(OkularDebug) << "PageSize no: " << newsize << endl;
+    kDebug(OkularDebug) << "New PageSize id: " << sizeid << endl;
 }
 
 

@@ -583,8 +583,7 @@ void ToolBarPrivate::buildToolBar()
     q->setUpdatesEnabled( false );
 
     // 3. resize pixmap, mask and widget
-    static QBitmap mask;
-    mask = QBitmap( myWidth + 1, myHeight + 1 );
+    QBitmap mask( myWidth + 1, myHeight + 1 );
     backgroundPixmap = QPixmap( myWidth + 1, myHeight + 1 );
     q->resize( myWidth + 1, myHeight + 1 );
 
@@ -596,6 +595,7 @@ void ToolBarPrivate::buildToolBar()
         maskPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else
         maskPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
+    maskPainter.end();
     q->setMask( mask );
 
     // 5. draw background

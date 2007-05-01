@@ -28,7 +28,6 @@ class Document;
 class DocumentPrivate;
 class FormField;
 class PagePrivate;
-class PageSize;
 class PageTransition;
 class SourceReference;
 class TextPage;
@@ -194,18 +193,6 @@ class OKULAR_EXPORT Page
          * Returns the list of FormField of the page.
          */
         const QLinkedList< FormField * > formFields() const;
-
-        /**
-         * Rotates the image and object rects of the page to the given @p orientation.
-         */
-        void rotateAt( Rotation orientation );
-
-        /**
-         * Changes the size of the page to the given @p size.
-         *
-         * The @p size is meant to be referred to the page not rotated.
-         */
-        void changeSize( const PageSize &size );
 
         /**
          * Sets the @p pixmap for the observer with the given @p id.

@@ -2278,7 +2278,7 @@ void Document::setRotation( int r )
     QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
     QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
     for ( ; pIt != pEnd; ++pIt )
-        (*pIt)->rotateAt( rotation );
+        (*pIt)->d->rotateAt( rotation );
     // notify the generator that the current rotation has changed
     d->m_generator->rotationChanged( rotation, d->m_rotation );
     // set the new rotation
@@ -2299,7 +2299,7 @@ void Document::setPageSize( const PageSize &size )
     QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
     QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
     for ( ; pIt != pEnd; ++pIt )
-        (*pIt)->changeSize( size );
+        (*pIt)->d->changeSize( size );
     // clear 'memory allocation' descriptors
     QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.begin();
     QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.end();

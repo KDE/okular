@@ -263,30 +263,30 @@ QString Page::text( const RegularAreaRect * area ) const
     return ret;
 }
 
-void Page::rotateAt( Rotation orientation )
+void PagePrivate::rotateAt( Rotation orientation )
 {
-    if ( orientation == d->m_rotation )
+    if ( orientation == m_rotation )
         return;
 
-    deleteHighlights();
-    deleteTextSelections();
+    m_page->deleteHighlights();
+    m_page->deleteTextSelections();
 
-    if ( ( (int)d->m_orientation + (int)d->m_rotation ) % 2 != ( (int)d->m_orientation + (int)orientation ) % 2 )
-        qSwap( d->m_width, d->m_height );
+    if ( ( (int)m_orientation + (int)m_rotation ) % 2 != ( (int)m_orientation + (int)orientation ) % 2 )
+        qSwap( m_width, m_height );
 
-    d->m_rotation = orientation;
+    m_rotation = orientation;
 
     /**
      * Rotate the images of the page.
      */
-    QMapIterator< int, PagePrivate::PixmapObject > it( d->m_pixmaps );
+    QMapIterator< int, PagePrivate::PixmapObject > it( m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
 
         const PagePrivate::PixmapObject &object = it.value();
 
-        RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, d->m_rotation, it.key() );
-        job->setPage( d );
+        RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, m_rotation, it.key() );
+        job->setPage( this );
         QObject::connect( job, SIGNAL( finished() ), PageController::self(), SLOT( imageRotationDone() ) );
         job->start();
     }
@@ -294,25 +294,25 @@ void Page::rotateAt( Rotation orientation )
     /**
      * Rotate the object rects on the page.
      */
-    const QMatrix matrix = d->rotationMatrix();
-    QLinkedList< ObjectRect * >::const_iterator objectIt = m_rects.begin(), end = m_rects.end();
+    const QMatrix matrix = rotationMatrix();
+    QLinkedList< ObjectRect * >::const_iterator objectIt = m_page->m_rects.begin(), end = m_page->m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
 }
 
-void Page::changeSize( const PageSize &size )
+void PagePrivate::changeSize( const PageSize &size )
 {
-    if ( size.isNull() || ( size.width() == d->m_width && size.height() == d->m_height ) )
+    if ( size.isNull() || ( size.width() == m_width && size.height() == m_height ) )
         return;
 
-    deletePixmaps();
+    m_page->deletePixmaps();
 //    deleteHighlights();
 //    deleteTextSelections();
 
-    d->m_width = size.width();
-    d->m_height = size.height();
-    if ( d->m_rotation % 2 )
-        qSwap( d->m_width, d->m_height );
+    m_width = size.width();
+    m_height = size.height();
+    if ( m_rotation % 2 )
+        qSwap( m_width, m_height );
 }
 
 const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const

@@ -30,6 +30,7 @@ class Annotation;
 class FormField;
 class HighlightAreaRect;
 class Page;
+class PageSize;
 class PageTransition;
 class RotationJob;
 class TextPage;
@@ -59,6 +60,18 @@ class PagePrivate
          * The unique name is used to find the old annotation.
          */
         void modifyAnnotation( Annotation * annotation );
+
+        /**
+         * Rotates the image and object rects of the page to the given @p orientation.
+         */
+        void rotateAt( Rotation orientation );
+
+        /**
+         * Changes the size of the page to the given @p size.
+         *
+         * The @p size is meant to be referred to the page not rotated.
+         */
+        void changeSize( const PageSize &size );
 
         class PixmapObject
         {

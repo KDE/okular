@@ -95,7 +95,6 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     m_tree->setSelectionBehavior( QAbstractItemView::SelectRows );
     connect( m_tree, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
     connect( m_tree, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
-    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
     connect( m_tree, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( slotContextMenu( const QPoint& ) ) );
     m_searchLine->addTreeWidget( m_tree );
 
@@ -136,7 +135,11 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, bool do
     if ( pages.isEmpty() )
         return;
 
+    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+
     rebuildTree( m_showBoomarkOnlyAction->isChecked() );
+
+    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 }
 
 void BookmarkList::notifyPageChanged( int pageNumber, int changedFlags )

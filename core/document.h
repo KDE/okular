@@ -472,7 +472,7 @@ class OKULAR_EXPORT Document : public QObject
          * This slot is called whenever the user changes the @p rotation of
          * the document.
          */
-        void slotRotation( int rotation );
+        void setRotation( int rotation );
 
         /**
          * This slot is called whenever the user changes the page @p size

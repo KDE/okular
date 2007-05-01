@@ -2934,18 +2934,18 @@ void PageView::slotScrollDown()
 void PageView::slotRotateClockwise()
 {
     int id = ( (int)d->document->rotation() + 1 ) % 4;
-    d->document->slotRotation( id );
+    d->document->setRotation( id );
 }
 
 void PageView::slotRotateCounterClockwise()
 {
     int id = ( (int)d->document->rotation() + 3 ) % 4;
-    d->document->slotRotation( id );
+    d->document->setRotation( id );
 }
 
 void PageView::slotRotateOriginal()
 {
-    d->document->slotRotation( 0 );
+    d->document->setRotation( 0 );
 }
 
 void PageView::slotToggleForms()

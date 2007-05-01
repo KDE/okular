@@ -2271,7 +2271,7 @@ void Document::requestDone( PixmapRequest * req )
         d->sendGeneratorRequest();
 }
 
-void Document::slotRotation( int r )
+void Document::setRotation( int r )
 {
     Rotation rotation = (Rotation)r;
     // tell the pages to rotate

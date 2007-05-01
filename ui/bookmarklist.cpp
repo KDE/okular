@@ -135,11 +135,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, bool do
     if ( pages.isEmpty() )
         return;
 
-    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
-
     rebuildTree( m_showBoomarkOnlyAction->isChecked() );
-
-    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 }
 
 void BookmarkList::notifyPageChanged( int pageNumber, int changedFlags )
@@ -234,6 +230,10 @@ QList<QTreeWidgetItem*> createItems( const KUrl& baseurl, const KBookmark::List&
 
 void BookmarkList::rebuildTree( bool filter )
 {
+    // disconnect and reconnect later, otherwise we'll get many itemChanged()
+    // signals for all the current items
+    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+
     KUrl::List urls = m_document->bookmarkManager()->files();
     if ( filter )
     {
@@ -266,6 +266,8 @@ void BookmarkList::rebuildTree( bool filter )
             m_tree->scrollToItem( currenturlitem, QAbstractItemView::PositionAtTop );
         }
     }
+
+    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 }
 
 void BookmarkList::goTo( BookmarkItem * item )

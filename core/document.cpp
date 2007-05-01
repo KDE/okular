@@ -478,7 +478,7 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 
 Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QString& libname )
 {
-    KLibrary *lib = KLibLoader::self()->globalLibrary( QFile::encodeName( libname ) );
+    KLibrary *lib = KLibLoader::self()->library( QFile::encodeName( libname ), QLibrary::ExportExternalSymbolsHint );
     if ( !lib )
     {
         kWarning() << "Could not load '" << libname << "' library." << endl;

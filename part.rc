@@ -51,6 +51,7 @@
     <Action name="goto_page"/>
   </Menu>
   <Menu name="okular_bookmarks"><text>&amp;Bookmarks</text>
+    <Action name="bookmark_add"/>
     <Action name="previous_bookmark"/>
     <Action name="next_bookmark" />
     <Separator/>

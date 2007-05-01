@@ -295,10 +295,12 @@ m_searchStarted(false), m_cliPresentation(false)
     ac->addAction("history_forward",m_historyNext);
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
+    m_addBookmark = KStandardAction::addBookmark( this, SLOT( slotAddBookmark() ), ac );
+    m_addBookmarkText = m_addBookmark->text();
+
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
     m_prevBookmark->setIcon(KIcon( "find-previous" ));
-
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
     connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
@@ -558,12 +560,14 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
     }
 }
 
-void Part::notifyPageChanged( int /*page*/, int flags )
+void Part::notifyPageChanged( int page, int flags )
 {
     if ( !(flags & Okular::DocumentObserver::Bookmark ) )
         return;
 
     rebuildBookmarkMenu();
+    if ( page == m_document->viewport().pageNumber )
+        updateBookmarksActions();
 }
 
 
@@ -939,6 +943,30 @@ void Part::updateViewActions()
         m_historyBack->setEnabled( false );
         m_historyNext->setEnabled( false );
     }
+    updateBookmarksActions();
+}
+
+
+void Part::updateBookmarksActions()
+{
+    bool opened = m_document->pages() > 0;
+    if ( opened )
+    {
+        m_addBookmark->setEnabled( true );
+        if ( m_document->isBookmarked( m_document->currentPage() ) )
+        {
+            m_addBookmark->setText( i18n( "Remove Bookmark" ) );
+        }
+        else
+        {
+            m_addBookmark->setText( m_addBookmarkText );
+        }
+    }
+    else
+    {
+        m_addBookmark->setEnabled( false );
+        m_addBookmark->setText( m_addBookmarkText );
+    }
 }
 
 
@@ -1045,6 +1073,20 @@ void Part::slotHistoryBack()
 void Part::slotHistoryNext()
 {
     m_document->setNextViewport();
+}
+
+
+void Part::slotAddBookmark()
+{
+    uint current = m_document->currentPage();
+    if ( m_document->isBookmarked( current ) )
+    {
+        m_document->removeBookmark( current );
+    }
+    else
+    {
+        m_document->addBookmark( current );
+    }
 }
 
 

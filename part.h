@@ -123,6 +123,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotGoToPage();
         void slotHistoryBack();
         void slotHistoryNext();
+        void slotAddBookmark();
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
@@ -148,6 +149,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void saveSplitterSize();
         // can be connected to widget elements
         void updateViewActions();
+        void updateBookmarksActions();
         void enableTOC(bool enable);
 
     public slots:
@@ -207,6 +209,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QAction *m_lastPage;
         QAction *m_historyBack;
         QAction *m_historyNext;
+        QAction *m_addBookmark;
         QAction *m_prevBookmark;
         QAction *m_nextBookmark;
         QAction *m_copy;
@@ -232,6 +235,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QList<Okular::ExportFormat> m_exportFormats;
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
+        QString m_addBookmarkText;
 
     private slots:
         void slotGeneratorPreferences();

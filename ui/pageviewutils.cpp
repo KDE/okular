@@ -289,6 +289,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     m_label->setWordWrap( true );
     connect( m_label, SIGNAL( linkActivated( const QString& ) ), this, SIGNAL( action() ) );
     m_button = new QToolButton( this );
+    m_button->setVisible( false );
     lay->addWidget( m_button );
     QToolButton * closeButton = new QToolButton( this );
     lay->addWidget( closeButton );

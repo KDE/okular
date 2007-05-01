@@ -17,7 +17,7 @@
 #include <kurl.h>
 #include <phonon/audiopath.h>
 #include <phonon/audiooutput.h>
-#include <phonon/bytestream.h>
+#include <phonon/abstractmediastream.h>
 #include <phonon/mediaobject.h>
 
 // local includes
@@ -55,7 +55,7 @@ class PlayData
 {
 public:
     PlayData()
-        : m_mediaobject( 0 ), m_bytestream( 0 ), m_path( 0 ), m_output( 0 )
+        : m_mediaobject( 0 ), m_mediastream( 0 ), m_path( 0 ), m_output( 0 )
     {
     }
 
@@ -65,18 +65,20 @@ public:
         {
             m_mediaobject->play();
         }
-        else if ( m_bytestream )
+        else if ( m_mediastream )
         {
-            m_bytestream->play();
+#warning how to play stream?
+//            m_mediastream->play();
         }
     }
 
     ~PlayData()
     {
-        if ( m_bytestream )
+        if ( m_mediastream )
         {
-            m_bytestream->stop();
-            delete m_bytestream;
+#warning how to stop stream?
+//            m_mediastream->stop();
+            delete m_mediastream;
         }
         if ( m_mediaobject )
         {
@@ -88,7 +90,7 @@ public:
     }
 
     Phonon::MediaObject * m_mediaobject;
-    Phonon::ByteStream * m_bytestream;
+    Phonon::AbstractMediaStream * m_mediastream;
     Phonon::AudioPath * m_path;
     Phonon::AudioOutput * m_output;
     SoundInfo m_info;
@@ -160,7 +162,7 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
                     QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
-                    data->m_mediaobject->setUrl( KUrl( url ) );
+                    data->m_mediaobject->setCurrentSource( url );
                     m_playing.insert( newid, data );
                     valid = true;
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;

@@ -85,7 +85,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_KDEPRINT_LIBRARY} ${KDE4_PHONONCORE_LIBRARY} ${MATH_LIB})
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_KDEPRINT_LIBRARY} ${KDE4_PHONON_LIBRARY} ${MATH_LIB})
 
 set_target_properties(okularcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 

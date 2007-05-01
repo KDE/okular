@@ -297,6 +297,7 @@ m_searchStarted(false), m_cliPresentation(false)
 
     m_addBookmark = KStandardAction::addBookmark( this, SLOT( slotAddBookmark() ), ac );
     m_addBookmarkText = m_addBookmark->text();
+    m_addBookmarkIcon = m_addBookmark->icon();
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
@@ -956,16 +957,19 @@ void Part::updateBookmarksActions()
         if ( m_document->isBookmarked( m_document->currentPage() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
+            m_addBookmark->setIcon( KIcon( "bookmark" ) ); // ### 'bookmark-remove' or similar
         }
         else
         {
             m_addBookmark->setText( m_addBookmarkText );
+            m_addBookmark->setIcon( m_addBookmarkIcon );
         }
     }
     else
     {
         m_addBookmark->setEnabled( false );
         m_addBookmark->setText( m_addBookmarkText );
+        m_addBookmark->setIcon( m_addBookmarkIcon );
     }
 }
 

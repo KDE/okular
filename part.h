@@ -18,6 +18,7 @@
 
 #include <kparts/browserextension.h>
 #include <kparts/part.h>
+#include <qicon.h>
 #include <qlist.h>
 #include <qpointer.h>
 #include <qprocess.h>
@@ -236,6 +237,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
         QString m_addBookmarkText;
+        QIcon m_addBookmarkIcon;
 
     private slots:
         void slotGeneratorPreferences();

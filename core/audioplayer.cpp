@@ -10,6 +10,7 @@
 #include "audioplayer.h"
 
 // qt/kde includes
+#include <qbuffer.h>
 #include <qhash.h>
 #include <qsignalmapper.h>
 #include <kdebug.h>
@@ -55,44 +56,32 @@ class PlayData
 {
 public:
     PlayData()
-        : m_mediaobject( 0 ), m_mediastream( 0 ), m_path( 0 ), m_output( 0 )
+        : m_mediaobject( 0 ), m_path( 0 ), m_output( 0 ), m_buffer( 0 )
     {
     }
 
     void play()
     {
-        if ( m_mediaobject )
+        if ( m_buffer )
         {
-            m_mediaobject->play();
+            m_buffer->open( QIODevice::ReadOnly );
         }
-        else if ( m_mediastream )
-        {
-#warning how to play stream?
-//            m_mediastream->play();
-        }
+        m_mediaobject->play();
     }
 
     ~PlayData()
     {
-        if ( m_mediastream )
-        {
-#warning how to stop stream?
-//            m_mediastream->stop();
-            delete m_mediastream;
-        }
-        if ( m_mediaobject )
-        {
-            m_mediaobject->stop();
-            delete m_mediaobject;
-        }
+        m_mediaobject->stop();
+        delete m_mediaobject;
         delete m_path;
         delete m_output;
+        delete m_buffer;
     }
 
     Phonon::MediaObject * m_mediaobject;
-    Phonon::AbstractMediaStream * m_mediastream;
     Phonon::AudioPath * m_path;
     Phonon::AudioOutput * m_output;
+    QBuffer * m_buffer;
     SoundInfo m_info;
 };
 
@@ -145,6 +134,7 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     data->m_output->setVolume( si.volume );
     data->m_path = new Phonon::AudioPath();
     data->m_path->addOutput( data->m_output );
+    data->m_mediaobject = new Phonon::MediaObject();
     data->m_info = si;
     bool valid = false;
 
@@ -156,10 +146,8 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
             kDebug() << "[AudioPlayer::Playinfo::play()] External, " << url << endl;
             if ( !url.isEmpty() )
             {
-                data->m_mediaobject = new Phonon::MediaObject();
                 if ( data->m_mediaobject->addAudioPath( data->m_path ) )
                 {
-                    QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
                     data->m_mediaobject->setCurrentSource( url );
@@ -178,18 +166,14 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
             if ( !filedata.isEmpty() )
             {
                 kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << data->m_bytestream << endl;
-                data->m_bytestream = new Phonon::ByteStream();
-                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << data->m_bytestream << endl;
                 if ( data->m_bytestream->addAudioPath( data->m_path ) )
                 {
-                    QObject::connect( data->m_bytestream, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
+                    data->m_buffer = new QBuffer();
+                    data->m_buffer->setData( filedata );
+                    data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
                     m_playing.insert( newid, data );
-                    data->m_bytestream->writeData( filedata );
-                    data->m_bytestream->setStreamSize( filedata.length() );
-                    data->m_bytestream->setStreamSeekable( true );
-                    data->m_bytestream->endOfData();
                     valid = true;
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data" << endl;
                 }
@@ -205,6 +189,7 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     }
     if ( data )
     {
+        connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
         data->play();
     }
     return valid;

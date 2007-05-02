@@ -2022,7 +2022,7 @@ void Document::processAction( const Action * action )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
+                        KMessageBox::information( widget(), i18n("The document is trying to execute an external application and for your safety okular does not allow that.") );
                         return;
                     }
                 }
@@ -2030,7 +2030,7 @@ void Document::processAction( const Action * action )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( widget(), i18n("The pdf file is trying to execute an external application and for your safety okular does not allow that.") );
+                    KMessageBox::information( widget(), i18n("The document is trying to execute an external application and for your safety okular does not allow that.") );
                     return;
                 }
             }

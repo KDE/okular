@@ -652,7 +652,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
         // suboptimal in some cases, i'd say it is not but a recheck will not hurt
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
-        // because opening a pdf from another pdf will not trigger a viewportchange
+        // because opening a document from another document will not trigger a viewportchange
         // so pages are never relayouted
         QMetaObject::invokeMethod(this, "slotRelayoutPages", Qt::QueuedConnection);
     else

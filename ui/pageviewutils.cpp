@@ -196,8 +196,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     QRect geometry( 0, 0, width + 10, height + 8 );
 
     // resize pixmap, mask and widget
-    static QBitmap mask;
-    mask = QBitmap( geometry.size() + QSize( 1, 1 ) );
+    QBitmap mask( geometry.size() + QSize( 1, 1 ) );
     m_pixmap = QPixmap( geometry.size() + QSize( 1, 1 ) );
     resize( geometry.size() + QSize( 1, 1 ) );
 

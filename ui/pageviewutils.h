@@ -185,7 +185,7 @@ class PageViewToolBar : public QWidget
 
     private slots:
         void slotAnimate();
-        void slotButtonClicked( QAbstractButton * btn );
+        void slotButtonClicked();
 };
 
 #endif

@@ -1472,7 +1472,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         KMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actCopyLinkLocation = 0;
-                        if ( dynamic_cast< const Okular::ActionBrowse * >( link ) )
+                        if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
                             actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Location" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
@@ -1483,7 +1483,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                             }
                             else if ( res == actCopyLinkLocation )
                             {
-                                const Okular::ActionBrowse * browseLink = static_cast< const Okular::ActionBrowse * >( link );
+                                const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
                                 QClipboard *cb = QApplication::clipboard();
                                 cb->setText( browseLink->url(), QClipboard::Clipboard );
                                 if ( cb->supportsSelection() )

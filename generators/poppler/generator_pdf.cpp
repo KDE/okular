@@ -168,22 +168,22 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 		case Poppler::Link::Goto:
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
 			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination(), pdfdoc );
-			link = new Okular::ActionGoto(popplerLinkGoto->fileName(), viewport);
+			link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
 		break;
 		
 		case Poppler::Link::Execute:
 			popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
-			link = new Okular::ActionExecute( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
+			link = new Okular::ExecuteAction( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
 		break;
 		
 		case Poppler::Link::Browse:
 			popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-			link = new Okular::ActionBrowse( popplerLinkBrowse->url() );
+			link = new Okular::BrowseAction( popplerLinkBrowse->url() );
 		break;
 		
 		case Poppler::Link::Action:
 			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-			link = new Okular::ActionDocumentAction( (Okular::ActionDocumentAction::DocumentActionType)popplerLinkAction->actionType() );
+			link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
 		break;
 		
 #ifdef HAVE_POPPLER_HEAD
@@ -210,7 +210,7 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 					sound->setSoundEncoding( Okular::Sound::ALaw );
 					break;
 			}
-			link = new Okular::ActionSound( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
+			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
 		}
 		break;
 #endif

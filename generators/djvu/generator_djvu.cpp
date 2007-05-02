@@ -291,7 +291,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
                     vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
                     newpage = vp.pageNumber;
                 }
-                newlink = new Okular::ActionGoto( QString(), vp );
+                newlink = new Okular::GotoAction( QString(), vp );
             }
             break;
         }
@@ -299,7 +299,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
         {
             KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( link );
             QString url = l->url();
-            newlink = new Okular::ActionBrowse( url );
+            newlink = new Okular::BrowseAction( url );
             break;
         }
     }

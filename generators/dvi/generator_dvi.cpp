@@ -167,11 +167,11 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
             Okular::DocumentViewport vp;
             fillViewportFromAnchor( vp, anch, pageWidth, pageHeight,
                                     orientation );
-            okuLink = new Okular::ActionGoto( "", vp );
+            okuLink = new Okular::GotoAction( "", vp );
         }
         else
         {
-            okuLink = new Okular::ActionBrowse( dviLink.linkText );
+            okuLink = new Okular::BrowseAction( dviLink.linkText );
         }
         if ( okuLink ) 
         {

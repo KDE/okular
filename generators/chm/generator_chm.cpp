@@ -277,7 +277,7 @@ void CHMGenerator::additionalRequestData()
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
                                 Okular::ObjectRect::Action,
-                                new Okular::ActionBrowse ( url )));
+                                new Okular::BrowseAction ( url )));
                         }
                         else
                         {
@@ -286,7 +286,7 @@ void CHMGenerator::additionalRequestData()
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
                                 Okular::ObjectRect::Action,
-                                new Okular::ActionGoto ( QString::null, viewport)));
+                                new Okular::GotoAction ( QString::null, viewport)));
                         }
                     }
                 }

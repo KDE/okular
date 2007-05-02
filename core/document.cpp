@@ -1968,7 +1968,7 @@ void Document::processAction( const Action * action )
     switch( action->actionType() )
     {
         case Action::Goto: {
-            const ActionGoto * go = static_cast< const ActionGoto * >( action );
+            const GotoAction * go = static_cast< const GotoAction * >( action );
             d->m_nextDocumentViewport = go->destViewport();
 
             // Explanation of why d->m_nextDocumentViewport is needed:
@@ -1998,7 +1998,7 @@ void Document::processAction( const Action * action )
             } break;
 
         case Action::Execute: {
-            const ActionExecute * exe  = static_cast< const ActionExecute * >( action );
+            const ExecuteAction * exe  = static_cast< const ExecuteAction * >( action );
             QString fileName = exe->fileName();
             if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
             {
@@ -2046,53 +2046,53 @@ void Document::processAction( const Action * action )
                 KMessageBox::information( widget(), i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
             } break;
 
-        case Action::DocumentAction: {
-            const ActionDocumentAction * docaction = static_cast< const ActionDocumentAction * >( action );
+        case Action::DocAction: {
+            const DocumentAction * docaction = static_cast< const DocumentAction * >( action );
             switch( docaction->documentActionType() )
             {
-                case ActionDocumentAction::PageFirst:
+                case DocumentAction::PageFirst:
                     setViewportPage( 0 );
                     break;
-                case ActionDocumentAction::PagePrev:
+                case DocumentAction::PagePrev:
                     if ( (*d->m_viewportIterator).pageNumber > 0 )
                         setViewportPage( (*d->m_viewportIterator).pageNumber - 1 );
                     break;
-                case ActionDocumentAction::PageNext:
+                case DocumentAction::PageNext:
                     if ( (*d->m_viewportIterator).pageNumber < (int)d->m_pagesVector.count() - 1 )
                         setViewportPage( (*d->m_viewportIterator).pageNumber + 1 );
                     break;
-                case ActionDocumentAction::PageLast:
+                case DocumentAction::PageLast:
                     setViewportPage( d->m_pagesVector.count() - 1 );
                     break;
-                case ActionDocumentAction::HistoryBack:
+                case DocumentAction::HistoryBack:
                     setPrevViewport();
                     break;
-                case ActionDocumentAction::HistoryForward:
+                case DocumentAction::HistoryForward:
                     setNextViewport();
                     break;
-                case ActionDocumentAction::Quit:
+                case DocumentAction::Quit:
                     emit quit();
                     break;
-                case ActionDocumentAction::Presentation:
+                case DocumentAction::Presentation:
                     emit linkPresentation();
                     break;
-                case ActionDocumentAction::EndPresentation:
+                case DocumentAction::EndPresentation:
                     emit linkEndPresentation();
                     break;
-                case ActionDocumentAction::Find:
+                case DocumentAction::Find:
                     emit linkFind();
                     break;
-                case ActionDocumentAction::GoToPage:
+                case DocumentAction::GoToPage:
                     emit linkGoToPage();
                     break;
-                case ActionDocumentAction::Close:
+                case DocumentAction::Close:
                     emit close();
                     break;
             }
             } break;
 
         case Action::Browse: {
-            const ActionBrowse * browse = static_cast< const ActionBrowse * >( action );
+            const BrowseAction * browse = static_cast< const BrowseAction * >( action );
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
                 KToolInvocation::invokeMailer( browse->url() );
@@ -2114,12 +2114,12 @@ void Document::processAction( const Action * action )
             } break;
 
         case Action::Sound: {
-            const ActionSound * linksound = static_cast< const ActionSound * >( action );
+            const SoundAction * linksound = static_cast< const SoundAction * >( action );
             AudioPlayer::instance()->playSound( linksound->sound(), linksound );
             } break;
 
         case Action::Movie:
-            //const ActionMovie * browse = static_cast< const ActionMovie * >( action );
+            //const MovieAction * movie = static_cast< const MovieAction * >( action );
             // TODO this (Movie action)
             break;
     }

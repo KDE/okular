@@ -31,7 +31,7 @@ using namespace Okular;
 class SoundInfo
 {
 public:
-    explicit SoundInfo( const Sound * s = 0, const ActionSound * ls = 0 )
+    explicit SoundInfo( const Sound * s = 0, const SoundAction * ls = 0 )
       : sound( s ), volume( 0.5 ), synchronous( false ), repeat( false ),
         mix( false )
     {
@@ -239,7 +239,7 @@ AudioPlayer * AudioPlayer::instance()
     return &ap;
 }
 
-void AudioPlayer::playSound( const Sound * sound, const ActionSound * linksound )
+void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound )
 {
     // we can't play null pointers ;)
     if ( !sound )

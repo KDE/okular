@@ -16,8 +16,8 @@
 
 namespace Okular {
 
-class ActionSound;
 class Sound;
+class SoundAction;
 
 /**
  * @short An audio player.
@@ -41,7 +41,7 @@ class OKULAR_EXPORT AudioPlayer : public QObject
          * Enqueue the specified @p sound for playing, optionally taking more
          * information about the playing from the @p soundlink .
          */
-        void playSound( const Sound * sound, const ActionSound * linksound = 0 );
+        void playSound( const Sound * sound, const SoundAction * linksound = 0 );
 
         /**
          * Tell the AudioPlayer to stop all the playbacks.

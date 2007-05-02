@@ -17,12 +17,12 @@
 namespace Okular {
 
 class ActionPrivate;
-class ActionGotoPrivate;
-class ActionExecutePrivate;
-class ActionBrowsePrivate;
-class ActionDocumentActionPrivate;
-class ActionSoundPrivate;
-class ActionMoviePrivate;
+class GotoActionPrivate;
+class ExecuteActionPrivate;
+class BrowseActionPrivate;
+class DocumentActionPrivate;
+class SoundActionPrivate;
+class MovieActionPrivate;
 class Sound;
 class DocumentViewport;
 
@@ -43,7 +43,7 @@ class OKULAR_EXPORT Action
             Goto,       ///< Goto a given page or external document
             Execute,    ///< Execute a command or external application
             Browse,     ///< Browse a given website
-            DocumentAction,     ///< Start a custom action
+            DocAction,  ///< Start a custom action
             Sound,      ///< Play a sound
             Movie       ///< Play a movie
         };
@@ -81,7 +81,7 @@ class OKULAR_EXPORT Action
  * The Goto action changes the viewport to another page
  * or loads an external document.
  */
-class OKULAR_EXPORT ActionGoto : public Action
+class OKULAR_EXPORT GotoAction : public Action
 {
     public:
         /**
@@ -90,12 +90,12 @@ class OKULAR_EXPORT ActionGoto : public Action
          * @p fileName The name of an external file that shall be loaded.
          * @p viewport The target viewport information of the current document.
          */
-        ActionGoto( const QString& fileName, const DocumentViewport & viewport );
+        GotoAction( const QString& fileName, const DocumentViewport & viewport );
 
         /**
          * Destroys the goto action.
          */
-        virtual ~ActionGoto();
+        virtual ~GotoAction();
 
         /**
          * Returns the action type.
@@ -123,14 +123,14 @@ class OKULAR_EXPORT ActionGoto : public Action
         DocumentViewport destViewport() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionGoto )
-        Q_DISABLE_COPY( ActionGoto )
+        Q_DECLARE_PRIVATE( GotoAction )
+        Q_DISABLE_COPY( GotoAction )
 };
 
 /**
  * The Execute action executes an external application.
  */
-class OKULAR_EXPORT ActionExecute : public Action
+class OKULAR_EXPORT ExecuteAction : public Action
 {
     public:
         /**
@@ -139,12 +139,12 @@ class OKULAR_EXPORT ActionExecute : public Action
          * @param fileName The file name of the application to execute.
          * @param parameters The parameters of the application to execute.
          */
-        ActionExecute( const QString &fileName, const QString &parameters );
+        ExecuteAction( const QString &fileName, const QString &parameters );
 
         /**
          * Destroys the execute action.
          */
-        virtual ~ActionExecute();
+        virtual ~ExecuteAction();
 
         /**
          * Returns the action type.
@@ -167,15 +167,15 @@ class OKULAR_EXPORT ActionExecute : public Action
         QString parameters() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionExecute )
-        Q_DISABLE_COPY( ActionExecute )
+        Q_DECLARE_PRIVATE( ExecuteAction )
+        Q_DISABLE_COPY( ExecuteAction )
 };
 
 /**
  * The Browse action browses an url by opening a web browser or
  * email client, depedning on the url protocol (e.g. http, mailto, etc.).
  */
-class OKULAR_EXPORT ActionBrowse : public Action
+class OKULAR_EXPORT BrowseAction : public Action
 {
     public:
         /**
@@ -183,12 +183,12 @@ class OKULAR_EXPORT ActionBrowse : public Action
          *
          * @param url The url to browse.
          */
-        ActionBrowse( const QString &url );
+        BrowseAction( const QString &url );
 
         /**
          * Destroys the browse action.
          */
-        virtual ~ActionBrowse();
+        virtual ~BrowseAction();
 
         /**
          * Returns the action type.
@@ -206,15 +206,15 @@ class OKULAR_EXPORT ActionBrowse : public Action
         QString url() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionBrowse )
-        Q_DISABLE_COPY( ActionBrowse )
+        Q_DECLARE_PRIVATE( BrowseAction )
+        Q_DISABLE_COPY( BrowseAction )
 };
 
 /**
  * The DocumentAction action contains an action that is performed on
  * the current document.
  */
-class OKULAR_EXPORT ActionDocumentAction : public Action
+class OKULAR_EXPORT DocumentAction : public Action
 {
     public:
         /**
@@ -242,12 +242,12 @@ class OKULAR_EXPORT ActionDocumentAction : public Action
          *
          * @param actionType The type of document action.
          */
-        explicit ActionDocumentAction( enum DocumentActionType documentActionType );
+        explicit DocumentAction( enum DocumentActionType documentActionType );
 
         /**
          * Destroys the document action.
          */
-        virtual ~ActionDocumentAction();
+        virtual ~DocumentAction();
 
         /**
          * Returns the action type.
@@ -265,14 +265,14 @@ class OKULAR_EXPORT ActionDocumentAction : public Action
         DocumentActionType documentActionType() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionDocumentAction )
-        Q_DISABLE_COPY( ActionDocumentAction )
+        Q_DECLARE_PRIVATE( DocumentAction )
+        Q_DISABLE_COPY( DocumentAction )
 };
 
 /**
  * The Sound action plays a sound on activation.
  */
-class OKULAR_EXPORT ActionSound : public Action
+class OKULAR_EXPORT SoundAction : public Action
 {
     public:
         /**
@@ -284,12 +284,12 @@ class OKULAR_EXPORT ActionSound : public Action
          * @param mix Whether the sound shall be mixed.
          * @param sound The sound object which contains the sound data.
          */
-        ActionSound( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
+        SoundAction( double volume, bool synchronous, bool repeat, bool mix, Okular::Sound *sound );
 
         /**
          * Destroys the sound action.
          */
-        virtual ~ActionSound();
+        virtual ~SoundAction();
 
         /**
          * Returns the action type.
@@ -327,25 +327,25 @@ class OKULAR_EXPORT ActionSound : public Action
         Okular::Sound *sound() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionSound )
-        Q_DISABLE_COPY( ActionSound )
+        Q_DECLARE_PRIVATE( SoundAction )
+        Q_DISABLE_COPY( SoundAction )
 };
 
 /**
  * The Movie action plays a video on activation.
  */
-class ActionMovie : public Action
+class MovieAction : public Action
 {
     public:
         /**
          * Creates a new movie action.
          */
-        ActionMovie();
+        MovieAction();
 
         /**
          * Destroys the movie action.
          */
-        virtual ~ActionMovie();
+        virtual ~MovieAction();
 
         /**
          * Returns the action type.
@@ -358,8 +358,8 @@ class ActionMovie : public Action
         QString actionTip() const;
 
     private:
-        Q_DECLARE_PRIVATE( ActionMovie )
-        Q_DISABLE_COPY( ActionMovie )
+        Q_DECLARE_PRIVATE( MovieAction )
+        Q_DISABLE_COPY( MovieAction )
 };
 
 }

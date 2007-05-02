@@ -45,12 +45,12 @@ QString Action::actionTip() const
     return "";
 }
 
-// ActionGoto
+// GotoAction
 
-class Okular::ActionGotoPrivate : public Okular::ActionPrivate
+class Okular::GotoActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionGotoPrivate( const QString &fileName, const DocumentViewport &viewport )
+        GotoActionPrivate( const QString &fileName, const DocumentViewport &viewport )
             : ActionPrivate(), m_extFileName( fileName ), m_vp( viewport )
         {
         }
@@ -59,51 +59,51 @@ class Okular::ActionGotoPrivate : public Okular::ActionPrivate
         DocumentViewport m_vp;
 };
 
-ActionGoto::ActionGoto( const QString& fileName, const DocumentViewport & viewport )
-    : Action( *new ActionGotoPrivate( fileName, viewport ) )
+GotoAction::GotoAction( const QString& fileName, const DocumentViewport & viewport )
+    : Action( *new GotoActionPrivate( fileName, viewport ) )
 {
 }
 
-ActionGoto::~ActionGoto()
+GotoAction::~GotoAction()
 {
 }
 
-Action::ActionType ActionGoto::actionType() const
+Action::ActionType GotoAction::actionType() const
 {
     return Goto;
 }
 
-QString ActionGoto::actionTip() const
+QString GotoAction::actionTip() const
 {
-    Q_D( const ActionGoto );
+    Q_D( const GotoAction );
     return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
                                      i18n("Open external file");
 }
 
-bool ActionGoto::isExternal() const
+bool GotoAction::isExternal() const
 {
-    Q_D( const ActionGoto );
+    Q_D( const GotoAction );
     return !d->m_extFileName.isEmpty();
 }
 
-QString ActionGoto::fileName() const
+QString GotoAction::fileName() const
 {
-    Q_D( const ActionGoto );
+    Q_D( const GotoAction );
     return d->m_extFileName;
 }
 
-DocumentViewport ActionGoto::destViewport() const
+DocumentViewport GotoAction::destViewport() const
 {
-    Q_D( const ActionGoto );
+    Q_D( const GotoAction );
     return d->m_vp;
 }
 
-// ActionExecute
+// ExecuteAction
 
-class Okular::ActionExecutePrivate : public Okular::ActionPrivate
+class Okular::ExecuteActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionExecutePrivate( const QString &file, const QString & parameters )
+        ExecuteActionPrivate( const QString &file, const QString & parameters )
             : ActionPrivate(), m_fileName( file ), m_parameters( parameters )
         {
         }
@@ -112,44 +112,44 @@ class Okular::ActionExecutePrivate : public Okular::ActionPrivate
         QString m_parameters;
 };
 
-ActionExecute::ActionExecute( const QString &file, const QString & parameters )
-    : Action( *new ActionExecutePrivate( file, parameters ) )
+ExecuteAction::ExecuteAction( const QString &file, const QString & parameters )
+    : Action( *new ExecuteActionPrivate( file, parameters ) )
 {
 }
 
-ActionExecute::~ActionExecute()
+ExecuteAction::~ExecuteAction()
 {
 }
 
-Action::ActionType ActionExecute::actionType() const
+Action::ActionType ExecuteAction::actionType() const
 {
     return Execute;
 }
 
-QString ActionExecute::actionTip() const
+QString ExecuteAction::actionTip() const
 {
-    Q_D( const Okular::ActionExecute );
+    Q_D( const Okular::ExecuteAction );
     return i18n( "Execute '%1'...", d->m_fileName );
 }
 
-QString ActionExecute::fileName() const
+QString ExecuteAction::fileName() const
 {
-    Q_D( const Okular::ActionExecute );
+    Q_D( const Okular::ExecuteAction );
     return d->m_fileName;
 }
 
-QString ActionExecute::parameters() const
+QString ExecuteAction::parameters() const
 {
-    Q_D( const Okular::ActionExecute );
+    Q_D( const Okular::ExecuteAction );
     return d->m_parameters;
 }
 
 // BrowseAction
 
-class Okular::ActionBrowsePrivate : public Okular::ActionPrivate
+class Okular::BrowseActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionBrowsePrivate( const QString &url )
+        BrowseActionPrivate( const QString &url )
             : ActionPrivate(), m_url( url )
         {
         }
@@ -157,68 +157,68 @@ class Okular::ActionBrowsePrivate : public Okular::ActionPrivate
         QString m_url;
 };
 
-ActionBrowse::ActionBrowse( const QString &url )
-    : Action( *new ActionBrowsePrivate( url ) )
+BrowseAction::BrowseAction( const QString &url )
+    : Action( *new BrowseActionPrivate( url ) )
 {
 }
 
-ActionBrowse::~ActionBrowse()
+BrowseAction::~BrowseAction()
 {
 }
 
-Action::ActionType ActionBrowse::actionType() const
+Action::ActionType BrowseAction::actionType() const
 {
     return Browse;
 }
 
-QString ActionBrowse::actionTip() const
+QString BrowseAction::actionTip() const
 {
-    Q_D( const Okular::ActionBrowse );
+    Q_D( const Okular::BrowseAction );
     return d->m_url;
 }
 
-QString ActionBrowse::url() const
+QString BrowseAction::url() const
 {
-    Q_D( const Okular::ActionBrowse );
+    Q_D( const Okular::BrowseAction );
     return d->m_url;
 }
 
-// ActionDocumentAction
+// DocumentAction
 
-class Okular::ActionDocumentActionPrivate : public Okular::ActionPrivate
+class Okular::DocumentActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionDocumentActionPrivate( enum ActionDocumentAction::DocumentActionType documentActionType )
+        DocumentActionPrivate( enum DocumentAction::DocumentActionType documentActionType )
             : ActionPrivate(), m_type( documentActionType )
         {
         }
 
-        ActionDocumentAction::DocumentActionType m_type;
+        DocumentAction::DocumentActionType m_type;
 };
 
-ActionDocumentAction::ActionDocumentAction( enum DocumentActionType documentActionType )
-    : Action( *new ActionDocumentActionPrivate( documentActionType ) )
+DocumentAction::DocumentAction( enum DocumentActionType documentActionType )
+    : Action( *new DocumentActionPrivate( documentActionType ) )
 {
 }
 
-ActionDocumentAction::~ActionDocumentAction()
+DocumentAction::~DocumentAction()
 {
 }
 
-ActionDocumentAction::DocumentActionType ActionDocumentAction::documentActionType() const
+DocumentAction::DocumentActionType DocumentAction::documentActionType() const
 {
-    Q_D( const Okular::ActionDocumentAction );
+    Q_D( const Okular::DocumentAction );
     return d->m_type;
 }
 
-Action::ActionType ActionDocumentAction::actionType() const
+Action::ActionType DocumentAction::actionType() const
 {
-    return DocumentAction;
+    return DocAction;
 }
 
-QString ActionDocumentAction::actionTip() const
+QString DocumentAction::actionTip() const
 {
-    Q_D( const Okular::ActionDocumentAction );
+    Q_D( const Okular::DocumentAction );
     switch ( d->m_type )
     {
         case PageFirst:
@@ -250,18 +250,18 @@ QString ActionDocumentAction::actionTip() const
     return QString();
 }
 
-// ActionSound
+// SoundAction
 
-class Okular::ActionSoundPrivate : public Okular::ActionPrivate
+class Okular::SoundActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionSoundPrivate( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+        SoundActionPrivate( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
             : ActionPrivate(), m_volume( volume ), m_sync( sync ),
               m_repeat( repeat ), m_mix( mix ), m_sound( sound )
         {
         }
 
-        ~ActionSoundPrivate()
+        ~SoundActionPrivate()
         {
             delete m_sound;
         }
@@ -273,81 +273,81 @@ class Okular::ActionSoundPrivate : public Okular::ActionPrivate
         Okular::Sound *m_sound;
 };
 
-ActionSound::ActionSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
-    : Action( *new ActionSoundPrivate( volume, sync, repeat, mix, sound ) )
+SoundAction::SoundAction( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+    : Action( *new SoundActionPrivate( volume, sync, repeat, mix, sound ) )
 {
 }
 
-ActionSound::~ActionSound()
+SoundAction::~SoundAction()
 {
 }
 
-Action::ActionType ActionSound::actionType() const
+Action::ActionType SoundAction::actionType() const
 {
     return Sound;
 }
 
-QString ActionSound::actionTip() const
+QString SoundAction::actionTip() const
 {
     return i18n( "Play sound..." );
 }
 
-double ActionSound::volume() const
+double SoundAction::volume() const
 {
-    Q_D( const Okular::ActionSound );
+    Q_D( const Okular::SoundAction );
     return d->m_volume;
 }
 
-bool ActionSound::synchronous() const
+bool SoundAction::synchronous() const
 {
-    Q_D( const Okular::ActionSound );
+    Q_D( const Okular::SoundAction );
     return d->m_sync;
 }
 
-bool ActionSound::repeat() const
+bool SoundAction::repeat() const
 {
-    Q_D( const Okular::ActionSound );
+    Q_D( const Okular::SoundAction );
     return d->m_repeat;
 }
 
-bool ActionSound::mix() const
+bool SoundAction::mix() const
 {
-    Q_D( const Okular::ActionSound );
+    Q_D( const Okular::SoundAction );
     return d->m_mix;
 }
 
-Okular::Sound *ActionSound::sound() const
+Okular::Sound *SoundAction::sound() const
 {
-    Q_D( const Okular::ActionSound );
+    Q_D( const Okular::SoundAction );
     return d->m_sound;
 }
 
-// ActionMovie
+// MovieAction
 
-class Okular::ActionMoviePrivate : public Okular::ActionPrivate
+class Okular::MovieActionPrivate : public Okular::ActionPrivate
 {
     public:
-        ActionMoviePrivate()
+        MovieActionPrivate()
             : ActionPrivate()
         {
         }
 };
 
-ActionMovie::ActionMovie()
-    : Action( *new ActionMoviePrivate() )
+MovieAction::MovieAction()
+    : Action( *new MovieActionPrivate() )
 {
 }
 
-ActionMovie::~ActionMovie()
+MovieAction::~MovieAction()
 {
 }
 
-Action::ActionType ActionMovie::actionType() const
+Action::ActionType MovieAction::actionType() const
 {
     return Movie;
 }
 
-QString ActionMovie::actionTip() const
+QString MovieAction::actionTip() const
 {
     return i18n( "Play movie..." );
 }

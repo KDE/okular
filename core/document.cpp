@@ -2407,7 +2407,7 @@ QString DocumentViewport::toString() const
 
 bool DocumentViewport::isValid() const
 {
-    return pageNumber != -1;
+    return pageNumber >= 0;
 }
 
 bool DocumentViewport::operator==( const DocumentViewport & vp ) const

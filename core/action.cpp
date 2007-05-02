@@ -18,18 +18,26 @@
 
 using namespace Okular;
 
-class Action::Private
+class Okular::ActionPrivate
 {
+    public:
+        ActionPrivate()
+        {
+        }
+
+        virtual ~ActionPrivate()
+        {
+        }
 };
 
-Action::Action()
-    : d( 0 )
+Action::Action( ActionPrivate &dd )
+    : d_ptr( &dd )
 {
 }
 
 Action::~Action()
 {
-    delete d;
+    delete d_ptr;
 }
 
 QString Action::actionTip() const
@@ -39,11 +47,11 @@ QString Action::actionTip() const
 
 // ActionGoto
 
-class ActionGoto::Private
+class Okular::ActionGotoPrivate : public Okular::ActionPrivate
 {
     public:
-        Private( const QString &fileName, const DocumentViewport &viewport )
-            : m_extFileName( fileName ), m_vp( viewport )
+        ActionGotoPrivate( const QString &fileName, const DocumentViewport &viewport )
+            : ActionPrivate(), m_extFileName( fileName ), m_vp( viewport )
         {
         }
 
@@ -52,13 +60,12 @@ class ActionGoto::Private
 };
 
 ActionGoto::ActionGoto( const QString& fileName, const DocumentViewport & viewport )
-    : d( new Private( fileName, viewport ) )
+    : Action( *new ActionGotoPrivate( fileName, viewport ) )
 {
 }
 
 ActionGoto::~ActionGoto()
 {
-    delete d;
 }
 
 Action::ActionType ActionGoto::actionType() const
@@ -68,32 +75,36 @@ Action::ActionType ActionGoto::actionType() const
 
 QString ActionGoto::actionTip() const
 {
+    Q_D( const ActionGoto );
     return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
                                      i18n("Open external file");
 }
 
 bool ActionGoto::isExternal() const
 {
+    Q_D( const ActionGoto );
     return !d->m_extFileName.isEmpty();
 }
 
 QString ActionGoto::fileName() const
 {
+    Q_D( const ActionGoto );
     return d->m_extFileName;
 }
 
 DocumentViewport ActionGoto::destViewport() const
 {
+    Q_D( const ActionGoto );
     return d->m_vp;
 }
 
 // ActionExecute
 
-class ActionExecute::Private
+class Okular::ActionExecutePrivate : public Okular::ActionPrivate
 {
     public:
-        Private( const QString &file, const QString & parameters )
-            : m_fileName( file ), m_parameters( parameters )
+        ActionExecutePrivate( const QString &file, const QString & parameters )
+            : ActionPrivate(), m_fileName( file ), m_parameters( parameters )
         {
         }
 
@@ -102,13 +113,12 @@ class ActionExecute::Private
 };
 
 ActionExecute::ActionExecute( const QString &file, const QString & parameters )
-    : d( new Private( file, parameters ) )
+    : Action( *new ActionExecutePrivate( file, parameters ) )
 {
 }
 
 ActionExecute::~ActionExecute()
 {
-    delete d;
 }
 
 Action::ActionType ActionExecute::actionType() const
@@ -118,26 +128,29 @@ Action::ActionType ActionExecute::actionType() const
 
 QString ActionExecute::actionTip() const
 {
+    Q_D( const Okular::ActionExecute );
     return i18n( "Execute '%1'...", d->m_fileName );
 }
 
 QString ActionExecute::fileName() const
 {
+    Q_D( const Okular::ActionExecute );
     return d->m_fileName;
 }
 
 QString ActionExecute::parameters() const
 {
+    Q_D( const Okular::ActionExecute );
     return d->m_parameters;
 }
 
 // BrowseAction
 
-class ActionBrowse::Private
+class Okular::ActionBrowsePrivate : public Okular::ActionPrivate
 {
     public:
-        Private( const QString &url )
-            : m_url( url )
+        ActionBrowsePrivate( const QString &url )
+            : ActionPrivate(), m_url( url )
         {
         }
 
@@ -145,13 +158,12 @@ class ActionBrowse::Private
 };
 
 ActionBrowse::ActionBrowse( const QString &url )
-    : d( new Private( url ) )
+    : Action( *new ActionBrowsePrivate( url ) )
 {
 }
 
 ActionBrowse::~ActionBrowse()
 {
-    delete d;
 }
 
 Action::ActionType ActionBrowse::actionType() const
@@ -161,39 +173,41 @@ Action::ActionType ActionBrowse::actionType() const
 
 QString ActionBrowse::actionTip() const
 {
+    Q_D( const Okular::ActionBrowse );
     return d->m_url;
 }
 
 QString ActionBrowse::url() const
 {
+    Q_D( const Okular::ActionBrowse );
     return d->m_url;
 }
 
 // ActionDocumentAction
 
-class ActionDocumentAction::Private
+class Okular::ActionDocumentActionPrivate : public Okular::ActionPrivate
 {
     public:
-        Private( enum DocumentActionType documentActionType )
-            : m_type( documentActionType )
+        ActionDocumentActionPrivate( enum ActionDocumentAction::DocumentActionType documentActionType )
+            : ActionPrivate(), m_type( documentActionType )
         {
         }
 
-        DocumentActionType m_type;
+        ActionDocumentAction::DocumentActionType m_type;
 };
 
 ActionDocumentAction::ActionDocumentAction( enum DocumentActionType documentActionType )
-    : d( new Private( documentActionType ) )
+    : Action( *new ActionDocumentActionPrivate( documentActionType ) )
 {
 }
 
 ActionDocumentAction::~ActionDocumentAction()
 {
-    delete d;
 }
 
 ActionDocumentAction::DocumentActionType ActionDocumentAction::documentActionType() const
 {
+    Q_D( const Okular::ActionDocumentAction );
     return d->m_type;
 }
 
@@ -204,6 +218,7 @@ Action::ActionType ActionDocumentAction::actionType() const
 
 QString ActionDocumentAction::actionTip() const
 {
+    Q_D( const Okular::ActionDocumentAction );
     switch ( d->m_type )
     {
         case PageFirst:
@@ -237,16 +252,16 @@ QString ActionDocumentAction::actionTip() const
 
 // ActionSound
 
-class ActionSound::Private
+class Okular::ActionSoundPrivate : public Okular::ActionPrivate
 {
     public:
-        Private( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
-            : m_volume( volume ), m_sync( sync ), m_repeat( repeat ),
-              m_mix( mix ), m_sound( sound )
+        ActionSoundPrivate( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
+            : ActionPrivate(), m_volume( volume ), m_sync( sync ),
+              m_repeat( repeat ), m_mix( mix ), m_sound( sound )
         {
         }
 
-        ~Private()
+        ~ActionSoundPrivate()
         {
             delete m_sound;
         }
@@ -259,13 +274,12 @@ class ActionSound::Private
 };
 
 ActionSound::ActionSound( double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound )
-    : d( new Private( volume, sync, repeat, mix, sound ) )
+    : Action( *new ActionSoundPrivate( volume, sync, repeat, mix, sound ) )
 {
 }
 
 ActionSound::~ActionSound()
 {
-    delete d;
 }
 
 Action::ActionType ActionSound::actionType() const
@@ -280,42 +294,52 @@ QString ActionSound::actionTip() const
 
 double ActionSound::volume() const
 {
+    Q_D( const Okular::ActionSound );
     return d->m_volume;
 }
 
 bool ActionSound::synchronous() const
 {
+    Q_D( const Okular::ActionSound );
     return d->m_sync;
 }
 
 bool ActionSound::repeat() const
 {
+    Q_D( const Okular::ActionSound );
     return d->m_repeat;
 }
 
 bool ActionSound::mix() const
 {
+    Q_D( const Okular::ActionSound );
     return d->m_mix;
 }
 
 Okular::Sound *ActionSound::sound() const
 {
+    Q_D( const Okular::ActionSound );
     return d->m_sound;
 }
 
 // ActionMovie
-class ActionMovie::Private
+
+class Okular::ActionMoviePrivate : public Okular::ActionPrivate
 {
+    public:
+        ActionMoviePrivate()
+            : ActionPrivate()
+        {
+        }
 };
 
 ActionMovie::ActionMovie()
-    : d( 0 )
+    : Action( *new ActionMoviePrivate() )
 {
 }
 
 ActionMovie::~ActionMovie()
 {
-    delete d;
 }
 
 Action::ActionType ActionMovie::actionType() const

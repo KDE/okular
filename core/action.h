@@ -16,6 +16,13 @@
 
 namespace Okular {
 
+class ActionPrivate;
+class ActionGotoPrivate;
+class ActionExecutePrivate;
+class ActionBrowsePrivate;
+class ActionDocumentActionPrivate;
+class ActionSoundPrivate;
+class ActionMoviePrivate;
 class Sound;
 class DocumentViewport;
 
@@ -42,11 +49,6 @@ class OKULAR_EXPORT Action
         };
 
         /**
-         * Creates a new action.
-         */
-        Action();
-
-        /**
          * Destroys the action.
          */
         virtual ~Action();
@@ -65,10 +67,12 @@ class OKULAR_EXPORT Action
          */
         virtual QString actionTip() const;
 
-    private:
-        class Private;
-        Private* const d;
+    protected:
+        Action( ActionPrivate &dd );
+        Q_DECLARE_PRIVATE( Action )
+        ActionPrivate *d_ptr;
 
+    private:
         Q_DISABLE_COPY( Action )
 };
 
@@ -119,9 +123,7 @@ class OKULAR_EXPORT ActionGoto : public Action
         DocumentViewport destViewport() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionGoto )
         Q_DISABLE_COPY( ActionGoto )
 };
 
@@ -165,9 +167,7 @@ class OKULAR_EXPORT ActionExecute : public Action
         QString parameters() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionExecute )
         Q_DISABLE_COPY( ActionExecute )
 };
 
@@ -206,9 +206,7 @@ class OKULAR_EXPORT ActionBrowse : public Action
         QString url() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionBrowse )
         Q_DISABLE_COPY( ActionBrowse )
 };
 
@@ -267,9 +265,7 @@ class OKULAR_EXPORT ActionDocumentAction : public Action
         DocumentActionType documentActionType() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionDocumentAction )
         Q_DISABLE_COPY( ActionDocumentAction )
 };
 
@@ -331,9 +327,7 @@ class OKULAR_EXPORT ActionSound : public Action
         Okular::Sound *sound() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionSound )
         Q_DISABLE_COPY( ActionSound )
 };
 
@@ -364,9 +358,7 @@ class ActionMovie : public Action
         QString actionTip() const;
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( ActionMovie )
         Q_DISABLE_COPY( ActionMovie )
 };
 

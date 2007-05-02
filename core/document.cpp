@@ -1115,7 +1115,7 @@ void Document::reparseConfig()
 
 QWidget *Document::widget() const
 {
-    return static_cast<QWidget*>(parent());
+    return parent() ? static_cast< QWidget * >( parent() ) : 0;
 }
 
 bool Document::isOpened() const
@@ -2108,8 +2108,7 @@ void Document::processAction( const Action * action )
                 }
 
                 // Albert: this is not a leak!
-                // TODO: find a widget to pass as second parameter
-                new KRun( KUrl(url), 0 );
+                new KRun( KUrl( url ), widget() );
             }
             } break;
 

@@ -2661,7 +2661,7 @@ void SplashOutputDev::setSoftMask(GfxState * /*state*/, double * /*bbox*/,
 	  break;
 #if SPLASH_CMYK
 	case splashModeCMYK8:
-	  lum = (1 - color[4] / 255.0)
+	  lum = (1 - color[3] / 255.0)
 	        - (0.3 / 255.0) * color[0]
 	        - (0.59 / 255.0) * color[1]
 	        - (0.11 / 255.0) * color[2];

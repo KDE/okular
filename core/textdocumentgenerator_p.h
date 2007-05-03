@@ -164,9 +164,6 @@ class TextDocumentGenerator::Private
           Annotation *annotation;
         };
         QList<AnnotationInfo> mAnnotationInfos;
-
-        QSet<int> mLinkAddedList;
-        QSet<int> mAnnotationAddedList;
 };
 
 }

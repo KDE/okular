@@ -13,6 +13,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QStack>
 #include <QtCore/QTextStream>
+#include <QtCore/QVector>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
 
@@ -212,8 +213,6 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
 {
     d->mTitlePositions.clear();
     d->mLinkPositions.clear();
-    d->mLinkAddedList.clear();
-    d->mAnnotationAddedList.clear();
     d->mLinkInfos.clear();
     d->mAnnotationInfos.clear();
 
@@ -229,9 +228,36 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     pagesVector.resize( d->mDocument->pageCount() );
 
     const QSize size = d->mDocument->pageSize().toSize();
+
+    QVector< QLinkedList<Okular::ObjectRect*> > objects( d->mDocument->pageCount() );
+    for ( int i = 0; i < d->mLinkInfos.count(); ++i ) {
+        const Private::LinkInfo &info = d->mLinkInfos.at( i );
+
+        const QRectF rect = info.boundingRect;
+        objects[ info.page ].append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
+                                                             Okular::ObjectRect::Action, info.link ) );
+    }
+
+    QVector< QLinkedList<Okular::Annotation*> > annots( d->mDocument->pageCount() );
+    for ( int i = 0; i < d->mAnnotationInfos.count(); ++i ) {
+        const Private::AnnotationInfo &info = d->mAnnotationInfos[ i ];
+
+        QRect rect( 0, info.page * size.height(), size.width(), size.height() );
+        info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
+        annots[ info.page ].append( info.annotation );
+    }
+
     for ( int i = 0; i < d->mDocument->pageCount(); ++i ) {
         Okular::Page * page = new Okular::Page( i, size.width(), size.height(), Okular::Rotation0 );
         pagesVector[ i ] = page;
+
+        if ( !objects.at( i ).isEmpty() ) {
+            page->setObjectRects( objects.at( i ) );
+        }
+        QLinkedList<Okular::Annotation*>::ConstIterator annIt = annots.at( i ).begin(), annEnd = annots.at( i ).end();
+        for ( ; annIt != annEnd; ++annIt ) {
+            page->addAnnotation( *annIt );
+        }
     }
 
     return true;
@@ -275,42 +301,6 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
     p.end();
 
     request->page()->setPixmap( request->id(), pixmap );
-
-    /**
-     * Add link information
-     */
-    if ( !d->mLinkAddedList.contains( request->pageNumber() ) ) {
-        QLinkedList<Okular::ObjectRect*> objects;
-        for ( int i = 0; i < d->mLinkInfos.count(); ++i ) {
-            const Private::LinkInfo &info = d->mLinkInfos[ i ];
-
-            if ( info.page == request->pageNumber() ) {
-                const QRectF rect = info.boundingRect;
-                objects.append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
-                                                        Okular::ObjectRect::Action, info.link ) );
-            }
-        }
-        request->page()->setObjectRects( objects );
-
-        d->mLinkAddedList.insert( request->pageNumber() );
-    }
-
-    /**
-     * Add annotations
-     */
-    if ( !d->mAnnotationAddedList.contains( request->pageNumber() ) ) {
-        for ( int i = 0; i < d->mAnnotationInfos.count(); ++i ) {
-            const Private::AnnotationInfo &info = d->mAnnotationInfos[ i ];
-
-            if ( info.page == request->pageNumber() ) {
-                info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
-
-                request->page()->addAnnotation( info.annotation );
-            }
-        }
-
-        d->mAnnotationAddedList.insert( request->pageNumber() );
-    }
 
     signalPixmapRequestDone( request );
 }

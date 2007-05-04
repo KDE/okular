@@ -24,6 +24,7 @@
 namespace Okular {
 
 class Annotation;
+class AnnotationObjectRect;
 class AnnotationPrivate;
 class TextAnnotationPrivate;
 class LineAnnotationPrivate;
@@ -78,6 +79,8 @@ class OKULAR_EXPORT AnnotationUtils
  */
 class OKULAR_EXPORT Annotation
 {
+    friend class AnnotationObjectRect;
+
     public:
         /**
          * Describes the type of annotation as defined in PDF standard.
@@ -559,12 +562,6 @@ class OKULAR_EXPORT Annotation
          */
         virtual void store( QDomNode & node, QDomDocument & document ) const;
 
-        /**
-         * Transforms the annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
-
     protected:
         Annotation( AnnotationPrivate &dd );
         Annotation( AnnotationPrivate &dd, const QDomNode &description );
@@ -704,12 +701,6 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
          * Stores the text annotation as xml in @p document under the given parent @p node.
          */
         void store( QDomNode &node, QDomDocument &document ) const;
-
-        /**
-         * Transforms the text annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
 
     private:
         Q_DECLARE_PRIVATE( TextAnnotation )
@@ -871,12 +862,6 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
          */
         void store( QDomNode &node, QDomDocument &document ) const;
 
-        /**
-         * Transforms the line annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
-
     private:
         Q_DECLARE_PRIVATE( LineAnnotation )
         Q_DISABLE_COPY( LineAnnotation )
@@ -948,12 +933,6 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
          * under the given parent @p node.
          */
         void store( QDomNode &node, QDomDocument &document ) const;
-
-        /**
-         * Transforms the geometrical annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
 
     private:
         Q_DECLARE_PRIVATE( GeomAnnotation )
@@ -1098,12 +1077,6 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
          */
         void store( QDomNode &node, QDomDocument &document ) const;
 
-        /**
-         * Transforms the highlight annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
-
     private:
         Q_DECLARE_PRIVATE( HighlightAnnotation )
         Q_DISABLE_COPY( HighlightAnnotation )
@@ -1147,12 +1120,6 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
          * under the given parent @p node.
          */
         void store( QDomNode &node, QDomDocument &document ) const;
-
-        /**
-         * Transforms the stamp annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
 
     private:
         Q_DECLARE_PRIVATE( StampAnnotation )
@@ -1203,12 +1170,6 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
          * under the given parent @p node.
          */
         void store( QDomNode &node, QDomDocument &document ) const;
-
-        /**
-         * Transforms the ink annotation coordinates with the transformation defined
-         * by @p matrix.
-         */
-        virtual void transform( const QMatrix &matrix );
 
     private:
         Q_DECLARE_PRIVATE( InkAnnotation )

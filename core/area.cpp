@@ -16,6 +16,7 @@
 
 #include "action.h"
 #include "annotations.h"
+#include "annotations_p.h"
 #include "sourcereference.h"
 
 using namespace Okular;
@@ -297,7 +298,7 @@ AnnotationObjectRect::~AnnotationObjectRect()
 
 void AnnotationObjectRect::transform( const QMatrix &matrix )
 {
-    m_annotation->transform( matrix );
+    m_annotation->d_func()->transform( matrix );
 }
 
 /** class SourceRefObjectRect **/

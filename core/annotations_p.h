@@ -18,6 +18,8 @@
 #include <QtCore/QString>
 #include <QtGui/QColor>
 
+class QMatrix;
+
 namespace Okular {
 
 class AnnotationPrivate
@@ -26,6 +28,12 @@ class AnnotationPrivate
         AnnotationPrivate();
 
         virtual ~AnnotationPrivate();
+
+        /**
+         * Transforms the annotation coordinates with the transformation
+         * defined by @p matrix.
+         */
+        virtual void transform( const QMatrix &matrix );
 
         QString m_author;
         QString m_contents;

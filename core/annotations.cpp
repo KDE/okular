@@ -783,11 +783,10 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     }
 }
 
-void Annotation::transform( const QMatrix &matrix )
+void AnnotationPrivate::transform( const QMatrix &matrix )
 {
-    Q_D( Annotation );
-    d->m_transformedBoundary = d->m_boundary;
-    d->m_transformedBoundary.transform( matrix );
+    m_transformedBoundary = m_boundary;
+    m_transformedBoundary.transform( matrix );
 }
 
 //END Annotation implementation
@@ -804,6 +803,8 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
               m_inplaceIntent( TextAnnotation::Unknown )
         {
         }
+
+        virtual void transform( const QMatrix &matrix );
 
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
@@ -1031,14 +1032,13 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void TextAnnotation::transform( const QMatrix &matrix )
+void TextAnnotationPrivate::transform( const QMatrix &matrix )
 {
-    Q_D( TextAnnotation );
-    Annotation::transform( matrix );
+    AnnotationPrivate::transform( matrix );
 
     for ( int i = 0; i < 3; ++i ) {
-       d->m_transformedInplaceCallout[i] = d->m_inplaceCallout[i];
-       d->m_transformedInplaceCallout[i].transform( matrix );
+       m_transformedInplaceCallout[i] = m_inplaceCallout[i];
+       m_transformedInplaceCallout[i].transform( matrix );
     }
 }
 
@@ -1054,6 +1054,8 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
               m_lineShowCaption( false ), m_lineIntent( LineAnnotation::Unknown )
         {
         }
+
+        virtual void transform( const QMatrix &matrix );
 
         QLinkedList<NormalizedPoint> m_linePoints;
         QLinkedList<NormalizedPoint> m_transformedLinePoints;
@@ -1294,14 +1296,13 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void LineAnnotation::transform( const QMatrix &matrix )
+void LineAnnotationPrivate::transform( const QMatrix &matrix )
 {
-    Q_D( LineAnnotation );
-    Annotation::transform( matrix );
+    AnnotationPrivate::transform( matrix );
 
-    d->m_transformedLinePoints = d->m_linePoints;
+    m_transformedLinePoints = m_linePoints;
 
-    QMutableLinkedListIterator<NormalizedPoint> it( d->m_transformedLinePoints );
+    QMutableLinkedListIterator<NormalizedPoint> it( m_transformedLinePoints );
     while ( it.hasNext() )
         it.next().transform( matrix );
 }
@@ -1417,11 +1418,6 @@ void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
         geomElement.setAttribute( "width", d->m_geomWidthPt );
 }
 
-void GeomAnnotation::transform( const QMatrix &matrix )
-{
-    Annotation::transform( matrix );
-}
-
 /** HighlightAnnotation [Annotation] */
 
 class HighlightAnnotation::Quad::Private
@@ -1532,6 +1528,8 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), m_highlightType( HighlightAnnotation::Highlight )
         {
         }
+
+        virtual void transform( const QMatrix &matrix );
 
         HighlightAnnotation::HighlightType m_highlightType;
         QList< HighlightAnnotation::Quad > m_highlightQuads;
@@ -1651,12 +1649,11 @@ Annotation::SubType HighlightAnnotation::subType() const
     return AHighlight;
 }
 
-void HighlightAnnotation::transform( const QMatrix &matrix )
+void HighlightAnnotationPrivate::transform( const QMatrix &matrix )
 {
-    Q_D( HighlightAnnotation );
-    Annotation::transform( matrix );
+    AnnotationPrivate::transform( matrix );
 
-    QMutableListIterator<HighlightAnnotation::Quad> it( d->m_highlightQuads );
+    QMutableListIterator<HighlightAnnotation::Quad> it( m_highlightQuads );
     while ( it.hasNext() )
         it.next().transform( matrix );
 }
@@ -1737,11 +1734,6 @@ void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
         stampElement.setAttribute( "icon", d->m_stampIconName );
 }
 
-void StampAnnotation::transform( const QMatrix &matrix )
-{
-    Annotation::transform( matrix );
-}
-
 /** InkAnnotation [Annotation] */
 
 class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
@@ -1751,6 +1743,8 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate()
         {
         }
+
+        virtual void transform( const QMatrix &matrix );
 
         QList< QLinkedList<NormalizedPoint> > m_inkPaths;
         QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
@@ -1872,15 +1866,15 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void InkAnnotation::transform( const QMatrix &matrix )
+void InkAnnotationPrivate::transform( const QMatrix &matrix )
 {
-    Q_D( InkAnnotation );
-    Annotation::transform( matrix );
+    AnnotationPrivate::transform( matrix );
 
-    d->m_transformedInkPaths = d->m_inkPaths;
+    m_transformedInkPaths = m_inkPaths;
 
-    for ( int i = 0; i < d->m_transformedInkPaths.count(); ++i ) {
-        QMutableLinkedListIterator<NormalizedPoint> it( d->m_transformedInkPaths[ i ] );
+    for ( int i = 0; i < m_transformedInkPaths.count(); ++i )
+    {
+        QMutableLinkedListIterator<NormalizedPoint> it( m_transformedInkPaths[ i ] );
         while ( it.hasNext() )
             it.next().transform( matrix );
     }

@@ -24,6 +24,13 @@
 namespace Okular {
 
 class Annotation;
+class AnnotationPrivate;
+class TextAnnotationPrivate;
+class LineAnnotationPrivate;
+class GeomAnnotationPrivate;
+class HighlightAnnotationPrivate;
+class StampAnnotationPrivate;
+class InkAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -145,16 +152,6 @@ class OKULAR_EXPORT Annotation
             Cancelled = 32,  ///< Has been cancelled
             Completed = 64   ///< Has been completed
         };
-
-        /**
-         * Creates a new annotation.
-         */
-        Annotation();
-
-        /**
-         * Creates a new annotation from the xml @p description
-         */
-        Annotation( const QDomNode &description );
 
         /**
          * Destroys the annotation.
@@ -568,10 +565,13 @@ class OKULAR_EXPORT Annotation
          */
         virtual void transform( const QMatrix &matrix );
 
-    private:
-        class Private;
-        Private* const d;
+    protected:
+        Annotation( AnnotationPrivate &dd );
+        Annotation( AnnotationPrivate &dd, const QDomNode &description );
+        Q_DECLARE_PRIVATE( Annotation )
+        AnnotationPrivate *d_ptr;
 
+    private:
         Q_DISABLE_COPY( Annotation )
 };
 
@@ -712,9 +712,7 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( TextAnnotation )
         Q_DISABLE_COPY( TextAnnotation )
 };
 
@@ -880,9 +878,7 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( LineAnnotation )
         Q_DISABLE_COPY( LineAnnotation )
 };
 
@@ -960,9 +956,7 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( GeomAnnotation )
         Q_DISABLE_COPY( GeomAnnotation )
 };
 
@@ -1111,9 +1105,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( HighlightAnnotation )
         Q_DISABLE_COPY( HighlightAnnotation )
 };
 
@@ -1163,9 +1155,7 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( StampAnnotation )
         Q_DISABLE_COPY( StampAnnotation )
 };
 
@@ -1221,9 +1211,7 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
         virtual void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
-
+        Q_DECLARE_PRIVATE( InkAnnotation )
         Q_DISABLE_COPY( InkAnnotation )
 };
 

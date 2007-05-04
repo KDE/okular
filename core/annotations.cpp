@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include "annotations.h"
+#include "annotations_p.h"
 
 // qt/kde includes
 #include <QtGui/QApplication>
@@ -420,48 +421,31 @@ Annotation::RevisionType Annotation::Revision::type() const
 }
 
 
-class Annotation::Private
-{
-    public:
-        Private()
-            : m_flags( 0 )
-        {
-        }
-
-        ~Private()
-        {
-            // delete all children revisions
-            if ( m_revisions.isEmpty() )
-                return;
-
-            QLinkedList< Revision >::iterator it = m_revisions.begin(), end = m_revisions.end();
-            for ( ; it != end; ++it )
-                delete (*it).annotation();
-        }
-
-        QString m_author;
-        QString m_contents;
-        QString m_uniqueName;
-        QDateTime m_modifyDate;
-        QDateTime m_creationDate;
-
-        int m_flags;
-        NormalizedRect m_boundary;
-        NormalizedRect m_transformedBoundary;
-
-        Style m_style;
-        Window m_window;
-        QLinkedList< Revision > m_revisions;
-};
-
-Annotation::Annotation()
-    : d( new Private )
+AnnotationPrivate::AnnotationPrivate()
+    : m_flags( 0 )
 {
 }
 
-Annotation::Annotation( const QDomNode & annNode )
-    : d( new Private )
+AnnotationPrivate::~AnnotationPrivate()
 {
+    // delete all children revisions
+    if ( m_revisions.isEmpty() )
+        return;
+
+    QLinkedList< Annotation::Revision >::iterator it = m_revisions.begin(), end = m_revisions.end();
+    for ( ; it != end; ++it )
+        delete (*it).annotation();
+}
+
+Annotation::Annotation( AnnotationPrivate &dd )
+    : d_ptr( &dd )
+{
+}
+
+Annotation::Annotation( AnnotationPrivate &dd, const QDomNode & annNode )
+    : d_ptr( &dd )
+{
+    Q_D( Annotation );
     // get the [base] element of the annotation node
     QDomElement e = AnnotationUtils::findChildElement( annNode, "base" );
     if ( e.isNull() )
@@ -564,81 +548,96 @@ Annotation::Annotation( const QDomNode & annNode )
 
 Annotation::~Annotation()
 {
-    delete d;
+    delete d_ptr;
 }
 
 void Annotation::setAuthor( const QString &author )
 {
+    Q_D( Annotation );
     d->m_author = author;
 }
 
 QString Annotation::author() const
 {
+    Q_D( const Annotation );
     return d->m_author;
 }
 
 void Annotation::setContents( const QString &contents )
 {
+    Q_D( Annotation );
     d->m_contents = contents;
 }
 
 QString Annotation::contents() const
 {
+    Q_D( const Annotation );
     return d->m_contents;
 }
 
 void Annotation::setUniqueName( const QString &name )
 {
+    Q_D( Annotation );
     d->m_uniqueName = name;
 }
 
 QString Annotation::uniqueName() const
 {
+    Q_D( const Annotation );
     return d->m_uniqueName;
 }
 
 void Annotation::setModificationDate( const QDateTime &date )
 {
+    Q_D( Annotation );
     d->m_modifyDate = date;
 }
 
 QDateTime Annotation::modificationDate() const
 {
+    Q_D( const Annotation );
     return d->m_modifyDate;
 }
 
 void Annotation::setCreationDate( const QDateTime &date )
 {
+    Q_D( Annotation );
     d->m_creationDate = date;
 }
 
 QDateTime Annotation::creationDate() const
 {
+    Q_D( const Annotation );
     return d->m_creationDate;
 }
 
 void Annotation::setFlags( int flags )
 {
+    Q_D( Annotation );
     d->m_flags = flags;
 }
 
 int Annotation::flags() const
 {
+    Q_D( const Annotation );
     return d->m_flags;
 }
 
 void Annotation::setBoundingRectangle( const NormalizedRect &rectangle )
 {
+    Q_D( Annotation );
     d->m_boundary = rectangle;
 }
 
 NormalizedRect Annotation::boundingRectangle() const
 {
+    Q_D( const Annotation );
     return d->m_boundary;
 }
 
 NormalizedRect Annotation::transformedBoundingRectangle() const
 {
+    Q_D( const Annotation );
     return d->m_transformedBoundary;
 }
 
@@ -649,36 +648,43 @@ Annotation::SubType Annotation::subType() const
 
 Annotation::Style & Annotation::style()
 {
+    Q_D( Annotation );
     return d->m_style;
 }
 
 const Annotation::Style & Annotation::style() const
 {
+    Q_D( const Annotation );
     return d->m_style;
 }
 
 Annotation::Window & Annotation::window()
 {
+    Q_D( Annotation );
     return d->m_window;
 }
 
 const Annotation::Window & Annotation::window() const
 {
+    Q_D( const Annotation );
     return d->m_window;
 }
 
 QLinkedList< Annotation::Revision > & Annotation::revisions()
 {
+    Q_D( Annotation );
     return d->m_revisions;
 }
 
 const QLinkedList< Annotation::Revision > & Annotation::revisions() const
 {
+    Q_D( const Annotation );
     return d->m_revisions;
 }
 
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 {
+    Q_D( const Annotation );
     // create [base] element of the annotation node
     QDomElement e = document.createElement( "base" );
     annNode.appendChild( e );
@@ -779,6 +785,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 
 void Annotation::transform( const QMatrix &matrix )
 {
+    Q_D( Annotation );
     d->m_transformedBoundary = d->m_boundary;
     d->m_transformedBoundary.transform( matrix );
 }
@@ -788,36 +795,38 @@ void Annotation::transform( const QMatrix &matrix )
 
 /** TextAnnotation [Annotation] */
 
-class TextAnnotation::Private
+class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        Private()
-            : m_textType( Linked ), m_textIcon( "Note" ),
-              m_inplaceAlign( 0 ), m_inplaceIntent( Unknown )
+        TextAnnotationPrivate()
+            : AnnotationPrivate(), m_textType( TextAnnotation::Linked ),
+              m_textIcon( "Note" ), m_inplaceAlign( 0 ),
+              m_inplaceIntent( TextAnnotation::Unknown )
         {
         }
 
-        TextType m_textType;
+        TextAnnotation::TextType m_textType;
         QString m_textIcon;
         QFont m_textFont;
         int m_inplaceAlign;
         QString m_inplaceText;
         NormalizedPoint m_inplaceCallout[3];
         NormalizedPoint m_transformedInplaceCallout[3];
-        InplaceIntent m_inplaceIntent;
+        TextAnnotation::InplaceIntent m_inplaceIntent;
 };
 
 /*
   The default textIcon for text annotation is Note as the PDF Reference says
 */
 TextAnnotation::TextAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new TextAnnotationPrivate() )
 {
 }
 
 TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new TextAnnotationPrivate(), node )
 {
+    Q_D( TextAnnotation );
     // loop through the whole children looking for a 'text' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -871,56 +880,65 @@ TextAnnotation::TextAnnotation( const QDomNode & node )
 
 TextAnnotation::~TextAnnotation()
 {
-    delete d;
 }
 
 void TextAnnotation::setTextType( TextType textType )
 {
+    Q_D( TextAnnotation );
     d->m_textType = textType;
 }
 
 TextAnnotation::TextType TextAnnotation::textType() const
 {
+    Q_D( const TextAnnotation );
     return d->m_textType;
 }
 
 void TextAnnotation::setTextIcon( const QString &icon )
 {
+    Q_D( TextAnnotation );
     d->m_textIcon = icon;
 }
 
 QString TextAnnotation::textIcon() const
 {
+    Q_D( const TextAnnotation );
     return d->m_textIcon;
 }
 
 void TextAnnotation::setTextFont( const QFont &font )
 {
+    Q_D( TextAnnotation );
     d->m_textFont = font;
 }
 
 QFont TextAnnotation::textFont() const
 {
+    Q_D( const TextAnnotation );
     return d->m_textFont;
 }
 
 void TextAnnotation::setInplaceAlignment( int alignment )
 {
+    Q_D( TextAnnotation );
     d->m_inplaceAlign = alignment;
 }
 
 int TextAnnotation::inplaceAlignment() const
 {
+    Q_D( const TextAnnotation );
     return d->m_inplaceAlign;
 }
 
 void TextAnnotation::setInplaceText( const QString &text )
 {
+    Q_D( TextAnnotation );
     d->m_inplaceText = text;
 }
 
 QString TextAnnotation::inplaceText() const
 {
+    Q_D( const TextAnnotation );
     return d->m_inplaceText;
 }
 
@@ -929,6 +947,7 @@ void TextAnnotation::setInplaceCallout( const NormalizedPoint &point, int index 
     if ( index < 0 || index > 2 )
         return;
 
+    Q_D( TextAnnotation );
     d->m_inplaceCallout[ index ] = point;
 }
 
@@ -937,6 +956,7 @@ NormalizedPoint TextAnnotation::inplaceCallout( int index ) const
     if ( index < 0 || index > 2 )
         return NormalizedPoint();
 
+    Q_D( const TextAnnotation );
     return d->m_inplaceCallout[ index ];
 }
 
@@ -945,16 +965,19 @@ NormalizedPoint TextAnnotation::transformedInplaceCallout( int index ) const
     if ( index < 0 || index > 2 )
         return NormalizedPoint();
 
+    Q_D( const TextAnnotation );
     return d->m_transformedInplaceCallout[ index ];
 }
 
 void TextAnnotation::setInplaceIntent( InplaceIntent intent )
 {
+    Q_D( TextAnnotation );
     d->m_inplaceIntent = intent;
 }
 
 TextAnnotation::InplaceIntent TextAnnotation::inplaceIntent() const
 {
+    Q_D( const TextAnnotation );
     return d->m_inplaceIntent;
 }
 
@@ -965,6 +988,7 @@ Annotation::SubType TextAnnotation::subType() const
 
 void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const TextAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1009,6 +1033,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
 
 void TextAnnotation::transform( const QMatrix &matrix )
 {
+    Q_D( TextAnnotation );
     Annotation::transform( matrix );
 
     for ( int i = 0; i < 3; ++i ) {
@@ -1019,36 +1044,38 @@ void TextAnnotation::transform( const QMatrix &matrix )
 
 /** LineAnnotation [Annotation] */
 
-class LineAnnotation::Private
+class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        Private()
-            : m_lineStartStyle( None ), m_lineEndStyle( None ),
+        LineAnnotationPrivate()
+            : AnnotationPrivate(),
+              m_lineStartStyle( LineAnnotation::None ), m_lineEndStyle( LineAnnotation::None ),
               m_lineClosed( false ), m_lineLeadingFwdPt( 0 ), m_lineLeadingBackPt( 0 ),
-              m_lineShowCaption( false ), m_lineIntent( Unknown )
+              m_lineShowCaption( false ), m_lineIntent( LineAnnotation::Unknown )
         {
         }
 
         QLinkedList<NormalizedPoint> m_linePoints;
         QLinkedList<NormalizedPoint> m_transformedLinePoints;
-        TermStyle m_lineStartStyle;
-        TermStyle m_lineEndStyle;
+        LineAnnotation::TermStyle m_lineStartStyle;
+        LineAnnotation::TermStyle m_lineEndStyle;
         bool m_lineClosed;
         QColor m_lineInnerColor;
         double m_lineLeadingFwdPt;
         double m_lineLeadingBackPt;
         bool m_lineShowCaption;
-        LineIntent m_lineIntent;
+        LineAnnotation::LineIntent m_lineIntent;
 };
 
 LineAnnotation::LineAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new LineAnnotationPrivate() )
 {
 }
 
 LineAnnotation::LineAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new LineAnnotationPrivate(), node )
 {
+    Q_D( LineAnnotation );
     // loop through the whole children looking for a 'line' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -1101,101 +1128,119 @@ LineAnnotation::LineAnnotation( const QDomNode & node )
 
 LineAnnotation::~LineAnnotation()
 {
-    delete d;
 }
 
 void LineAnnotation::setLinePoints( const QLinkedList<NormalizedPoint> &points )
 {
+    Q_D( LineAnnotation );
     d->m_linePoints = points;
 }
 
 QLinkedList<NormalizedPoint> LineAnnotation::linePoints() const
 {
+    Q_D( const LineAnnotation );
     return d->m_linePoints;
 }
 
 QLinkedList<NormalizedPoint> LineAnnotation::transformedLinePoints() const
 {
+    Q_D( const LineAnnotation );
     return d->m_transformedLinePoints;
 }
 
 void LineAnnotation::setLineStartStyle( TermStyle style )
 {
+    Q_D( LineAnnotation );
     d->m_lineStartStyle = style;
 }
 
 LineAnnotation::TermStyle LineAnnotation::lineStartStyle() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineStartStyle;
 }
 
 void LineAnnotation::setLineEndStyle( TermStyle style )
 {
+    Q_D( LineAnnotation );
     d->m_lineEndStyle = style;
 }
 
 LineAnnotation::TermStyle LineAnnotation::lineEndStyle() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineEndStyle;
 }
 
 void LineAnnotation::setLineClosed( bool closed )
 {
+    Q_D( LineAnnotation );
     d->m_lineClosed = closed;
 }
 
 bool LineAnnotation::lineClosed() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineClosed;
 }
 
 void LineAnnotation::setLineInnerColor( const QColor &color )
 {
+    Q_D( LineAnnotation );
     d->m_lineInnerColor = color;
 }
 
 QColor LineAnnotation::lineInnerColor() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineInnerColor;
 }
 
 void LineAnnotation::setLineLeadingForwardPoint( double point )
 {
+    Q_D( LineAnnotation );
     d->m_lineLeadingFwdPt = point;
 }
 
 double LineAnnotation::lineLeadingForwardPoint() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineLeadingFwdPt;
 }
 
 void LineAnnotation::setLineLeadingBackwardPoint( double point )
 {
+    Q_D( LineAnnotation );
     d->m_lineLeadingBackPt = point;
 }
 
 double LineAnnotation::lineLeadingBackwardPoint() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineLeadingBackPt;
 }
 
 void LineAnnotation::setShowCaption( bool show )
 {
+    Q_D( LineAnnotation );
     d->m_lineShowCaption = show;
 }
 
 bool LineAnnotation::showCaption() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineShowCaption;
 }
 
 void LineAnnotation::setLineIntent( LineIntent intent )
 {
+    Q_D( LineAnnotation );
     d->m_lineIntent = intent;
 }
 
 LineAnnotation::LineIntent LineAnnotation::lineIntent() const
 {
+    Q_D( const LineAnnotation );
     return d->m_lineIntent;
 }
 
@@ -1206,6 +1251,7 @@ Annotation::SubType LineAnnotation::subType() const
 
 void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const LineAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1250,6 +1296,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
 
 void LineAnnotation::transform( const QMatrix &matrix )
 {
+    Q_D( LineAnnotation );
     Annotation::transform( matrix );
 
     d->m_transformedLinePoints = d->m_linePoints;
@@ -1261,27 +1308,29 @@ void LineAnnotation::transform( const QMatrix &matrix )
 
 /** GeomAnnotation [Annotation] */
 
-class GeomAnnotation::Private
+class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        Private()
-            : m_geomType( InscribedSquare ), m_geomWidthPt( 18 )
+        GeomAnnotationPrivate()
+            : AnnotationPrivate(), m_geomType( GeomAnnotation::InscribedSquare ),
+              m_geomWidthPt( 18 )
         {
         }
 
-        GeomType m_geomType;
+        GeomAnnotation::GeomType m_geomType;
         QColor m_geomInnerColor;
         int m_geomWidthPt;
 };
 
 GeomAnnotation::GeomAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new GeomAnnotationPrivate() )
 {
 }
 
 GeomAnnotation::GeomAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new GeomAnnotationPrivate(), node )
 {
+    Q_D( GeomAnnotation );
     // loop through the whole children looking for a 'geom' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -1306,36 +1355,41 @@ GeomAnnotation::GeomAnnotation( const QDomNode & node )
 
 GeomAnnotation::~GeomAnnotation()
 {
-    delete d;
 }
 
 void GeomAnnotation::setGeometricalType( GeomType type )
 {
+    Q_D( GeomAnnotation );
     d->m_geomType = type;
 }
 
 GeomAnnotation::GeomType GeomAnnotation::geometricalType() const
 {
+    Q_D( const GeomAnnotation );
     return d->m_geomType;
 }
 
 void GeomAnnotation::setGeometricalInnerColor( const QColor &color )
 {
+    Q_D( GeomAnnotation );
     d->m_geomInnerColor = color;
 }
 
 QColor GeomAnnotation::geometricalInnerColor() const
 {
+    Q_D( const GeomAnnotation );
     return d->m_geomInnerColor;
 }
 
 void GeomAnnotation::setGeometricalPointWidth( int width )
 {
+    Q_D( GeomAnnotation );
     d->m_geomWidthPt = width;
 }
 
 int GeomAnnotation::geometricalPointWidth() const
 {
+    Q_D( const GeomAnnotation );
     return d->m_geomWidthPt;
 }
 
@@ -1346,6 +1400,7 @@ Annotation::SubType GeomAnnotation::subType() const
 
 void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const GeomAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1470,26 +1525,27 @@ void HighlightAnnotation::Quad::transform( const QMatrix &matrix )
 }
 
 
-class HighlightAnnotation::Private
+class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        Private()
-            : m_highlightType( Highlight )
+        HighlightAnnotationPrivate()
+            : AnnotationPrivate(), m_highlightType( HighlightAnnotation::Highlight )
         {
         }
 
-        HighlightType m_highlightType;
-        QList< Quad > m_highlightQuads;
+        HighlightAnnotation::HighlightType m_highlightType;
+        QList< HighlightAnnotation::Quad > m_highlightQuads;
 };
 
 HighlightAnnotation::HighlightAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new HighlightAnnotationPrivate() )
 {
 }
 
 HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new HighlightAnnotationPrivate(), node )
 {
+    Q_D( HighlightAnnotation );
     // loop through the whole children looking for a 'hl' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -1511,7 +1567,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
             if ( qe.tagName() != "quad" )
                 continue;
 
-            Quad q;
+            HighlightAnnotation::Quad q;
             q.setPoint( NormalizedPoint( qe.attribute( "ax", "0.0" ).toDouble(), qe.attribute( "ay", "0.0" ).toDouble() ), 0 );
             q.setPoint( NormalizedPoint( qe.attribute( "bx", "0.0" ).toDouble(), qe.attribute( "by", "0.0" ).toDouble() ), 1 );
             q.setPoint( NormalizedPoint( qe.attribute( "cx", "0.0" ).toDouble(), qe.attribute( "cy", "0.0" ).toDouble() ), 2 );
@@ -1532,26 +1588,29 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
 
 HighlightAnnotation::~HighlightAnnotation()
 {
-    delete d;
 }
 
 void HighlightAnnotation::setHighlightType( HighlightType type )
 {
+    Q_D( HighlightAnnotation );
     d->m_highlightType = type;
 }
 
 HighlightAnnotation::HighlightType HighlightAnnotation::highlightType() const
 {
+    Q_D( const HighlightAnnotation );
     return d->m_highlightType;
 }
 
 QList< HighlightAnnotation::Quad > & HighlightAnnotation::highlightQuads()
 {
+    Q_D( HighlightAnnotation );
     return d->m_highlightQuads;
 }
 
 void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const HighlightAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1594,20 +1653,21 @@ Annotation::SubType HighlightAnnotation::subType() const
 
 void HighlightAnnotation::transform( const QMatrix &matrix )
 {
+    Q_D( HighlightAnnotation );
     Annotation::transform( matrix );
 
-    QMutableListIterator<Quad> it( d->m_highlightQuads );
+    QMutableListIterator<HighlightAnnotation::Quad> it( d->m_highlightQuads );
     while ( it.hasNext() )
         it.next().transform( matrix );
 }
 
 /** StampAnnotation [Annotation] */
 
-class StampAnnotation::Private
+class Okular::StampAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        Private()
-            : m_stampIconName( "Draft" )
+        StampAnnotationPrivate()
+            : AnnotationPrivate(), m_stampIconName( "Draft" )
         {
         }
 
@@ -1615,13 +1675,14 @@ class StampAnnotation::Private
 };
 
 StampAnnotation::StampAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new StampAnnotationPrivate() )
 {
 }
 
 StampAnnotation::StampAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new StampAnnotationPrivate(), node )
 {
+    Q_D( StampAnnotation );
     // loop through the whole children looking for a 'stamp' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -1642,16 +1703,17 @@ StampAnnotation::StampAnnotation( const QDomNode & node )
 
 StampAnnotation::~StampAnnotation()
 {
-    delete d;
 }
 
 void StampAnnotation::setStampIconName( const QString &name )
 {
+    Q_D( StampAnnotation );
     d->m_stampIconName = name;
 }
 
 QString StampAnnotation::stampIconName() const
 {
+    Q_D( const StampAnnotation );
     return d->m_stampIconName;
 }
 
@@ -1662,6 +1724,7 @@ Annotation::SubType StampAnnotation::subType() const
 
 void StampAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const StampAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1681,21 +1744,27 @@ void StampAnnotation::transform( const QMatrix &matrix )
 
 /** InkAnnotation [Annotation] */
 
-class InkAnnotation::Private
+class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
+        InkAnnotationPrivate()
+            : AnnotationPrivate()
+        {
+        }
+
         QList< QLinkedList<NormalizedPoint> > m_inkPaths;
         QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
 };
 
 InkAnnotation::InkAnnotation()
-    : Annotation(), d( new Private )
+    : Annotation( *new InkAnnotationPrivate() )
 {
 }
 
 InkAnnotation::InkAnnotation( const QDomNode & node )
-    : Annotation( node ), d( new Private )
+    : Annotation( *new InkAnnotationPrivate(), node )
 {
+    Q_D( InkAnnotation );
     // loop through the whole children looking for a 'ink' element
     QDomNode subNode = node.firstChild();
     while( subNode.isElement() )
@@ -1746,21 +1815,23 @@ InkAnnotation::InkAnnotation( const QDomNode & node )
 
 InkAnnotation::~InkAnnotation()
 {
-    delete d;
 }
 
 void InkAnnotation::setInkPaths( const QList< QLinkedList<NormalizedPoint> > &paths )
 {
+    Q_D( InkAnnotation );
     d->m_inkPaths = paths;
 }
 
 QList< QLinkedList<NormalizedPoint> > InkAnnotation::inkPaths() const
 {
+    Q_D( const InkAnnotation );
     return d->m_inkPaths;
 }
 
 QList< QLinkedList<NormalizedPoint> > InkAnnotation::transformedInkPaths() const
 {
+    Q_D( const InkAnnotation );
     return d->m_transformedInkPaths;
 }
 
@@ -1771,6 +1842,7 @@ Annotation::SubType InkAnnotation::subType() const
 
 void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
 {
+    Q_D( const InkAnnotation );
     // recurse to parent objects storing properties
     Annotation::store( node, document );
 
@@ -1802,6 +1874,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
 
 void InkAnnotation::transform( const QMatrix &matrix )
 {
+    Q_D( InkAnnotation );
     Annotation::transform( matrix );
 
     d->m_transformedInkPaths = d->m_inkPaths;

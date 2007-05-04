@@ -106,7 +106,7 @@ Q_OBJECT
 class ThumbnailsBox : public KVBox
 {
     public:
-        ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {};
+        ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {}
         QSize sizeHint() const { return QSize(); }
 };
 

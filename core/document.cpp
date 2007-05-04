@@ -66,7 +66,7 @@ struct AllocatedPixmap
     int page;
     int memory;
     // public constructor: initialize data
-    AllocatedPixmap( int i, int p, int m ) : id( i ), page( p ), memory( m ) {};
+    AllocatedPixmap( int i, int p, int m ) : id( i ), page( p ), memory( m ) {}
 };
 
 struct RunningSearch

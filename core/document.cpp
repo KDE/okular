@@ -1483,7 +1483,7 @@ void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QCo
 
     // add or remove the selection basing whether rect is null or not
     if ( rect )
-        kp->setTextSelections( rect, color );
+        kp->d->setTextSelections( rect, color );
     else
         kp->deleteTextSelections();
 
@@ -1641,7 +1641,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
     pagesToNotify += s->highlightedPages;
     QLinkedList< int >::const_iterator it = s->highlightedPages.begin(), end = s->highlightedPages.end();
     for ( ; it != end; ++it )
-        d->m_pagesVector[ *it ]->deleteHighlights( searchID );
+        d->m_pagesVector[ *it ]->d->deleteHighlights( searchID );
     s->highlightedPages.clear();
 
     // set hourglass cursor
@@ -1680,7 +1680,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                     break;
 
                 // add highligh rect to the page
-                page->setHighlight( searchID, lastMatch, color );
+                page->d->setHighlight( searchID, lastMatch, color );
                 addedHighlights = true;
             }
             delete lastMatch;
@@ -1759,7 +1759,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
             s->continueOnMatch = *match;
             s->highlightedPages.append( currentPage );
             // ..add highlight to the page..
-            d->m_pagesVector[ currentPage ]->setHighlight( searchID, match, color );
+            d->m_pagesVector[ currentPage ]->d->setHighlight( searchID, match, color );
 
             // ..queue page for notifying changes..
             if ( !pagesToNotify.contains( currentPage ) )
@@ -1832,7 +1832,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
                         break;
 
                     // add highligh rect to the page
-                    page->setHighlight( searchID, lastMatch, wordColor );
+                    page->d->setHighlight( searchID, lastMatch, wordColor );
                     wordMatched = true;
                 }
                 allMatched = allMatched && wordMatched;
@@ -1841,7 +1841,7 @@ bool Document::searchText( int searchID, const QString & text, bool fromStart, Q
 
             // if not all words are present in page, remove partial highlights
             if ( !allMatched && matchAll )
-                page->deleteHighlights( searchID );
+                page->d->deleteHighlights( searchID );
 
             // if page contains all words, udpate internals and queue page for notify
             if ( (allMatched && matchAll) || (anyMatched && !matchAll) )
@@ -1898,7 +1898,7 @@ void Document::resetSearch( int searchID )
     for ( ; it != end; ++it )
     {
         int pageNumber = *it;
-        d->m_pagesVector[ pageNumber ]->deleteHighlights( searchID );
+        d->m_pagesVector[ pageNumber ]->d->deleteHighlights( searchID );
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );
     }
 

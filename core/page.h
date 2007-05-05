@@ -210,17 +210,6 @@ class OKULAR_EXPORT Page
         void setObjectRects( const QLinkedList< ObjectRect * > & rects );
 
         /**
-         * Sets the @p color and @p area of the highlight for the observer with
-         * the given @p id.
-         */
-        void setHighlight( int id, RegularAreaRect *area, const QColor & color );
-
-        /**
-         * Sets the @p color and @p areas of text selections.
-         */
-        void setTextSelections( RegularAreaRect *areas, const QColor & color );
-
-        /**
          * Sets the list of source reference objects @p rects.
          */
         void setSourceReferences( const QLinkedList< SourceRefObjectRect * > & rects );
@@ -299,11 +288,6 @@ class OKULAR_EXPORT Page
          * Deletes all object rects of the page.
          */
         void deleteRects();
-
-        /**
-         * Deletes all highlight objects for the observer with the given @p id.
-         */
-        void deleteHighlights( int id = -1 );
 
         /**
          * Deletes all text selection objects of the page.

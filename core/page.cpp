@@ -123,7 +123,7 @@ Page::~Page()
 {
     deletePixmaps();
     deleteRects();
-    deleteHighlights();
+    d->deleteHighlights();
     deleteAnnotations();
     deleteTextSelections();
     deleteSourceReferences();
@@ -268,7 +268,7 @@ void PagePrivate::rotateAt( Rotation orientation )
     if ( orientation == m_rotation )
         return;
 
-    m_page->deleteHighlights();
+    deleteHighlights();
     m_page->deleteTextSelections();
 
     if ( ( (int)m_orientation + (int)m_rotation ) % 2 != ( (int)m_orientation + (int)orientation ) % 2 )
@@ -403,27 +403,27 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
     m_rects << rects;
 }
 
-void Page::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
+void PagePrivate::setHighlight( int s_id, RegularAreaRect *rect, const QColor & color )
 {
     HighlightAreaRect * hr = new HighlightAreaRect(rect);
     hr->s_id = s_id;
     hr->color = color;
 
-    const QMatrix matrix = d->rotationMatrix();
+    const QMatrix matrix = rotationMatrix();
     hr->transform( matrix );
 
-    m_highlights.append( hr );
+    m_page->m_highlights.append( hr );
 }
 
-void Page::setTextSelections( RegularAreaRect *r, const QColor & color )
+void PagePrivate::setTextSelections( RegularAreaRect *r, const QColor & color )
 {
-    deleteTextSelections();
+    m_page->deleteTextSelections();
     if ( r )
     {
         HighlightAreaRect * hr = new HighlightAreaRect( r );
         hr->s_id = -1;
         hr->color = color;
-        d->m_textSelections = hr;
+        m_textSelections = hr;
     }
 }
 
@@ -596,16 +596,16 @@ void Page::deleteRects()
     deleteObjectRects( m_rects, which );
 }
 
-void Page::deleteHighlights( int s_id )
+void PagePrivate::deleteHighlights( int s_id )
 {
     // delete highlights by ID
-    QLinkedList< HighlightAreaRect* >::iterator it = m_highlights.begin(), end = m_highlights.end();
+    QLinkedList< HighlightAreaRect* >::iterator it = m_page->m_highlights.begin(), end = m_page->m_highlights.end();
     while ( it != end )
     {
         HighlightAreaRect* highlight = *it;
         if ( s_id == -1 || highlight->s_id == s_id )
         {
-            it = m_highlights.erase( it );
+            it = m_page->m_highlights.erase( it );
             delete highlight;
         }
         else

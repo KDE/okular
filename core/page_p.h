@@ -19,7 +19,9 @@
 
 // local includes
 #include "global.h"
+#include "area.h"
 
+class QColor;
 class QDomDocument;
 class QDomNode;
 
@@ -72,6 +74,22 @@ class PagePrivate
          * The @p size is meant to be referred to the page not rotated.
          */
         void changeSize( const PageSize &size );
+
+        /**
+         * Sets the @p color and @p areas of text selections.
+         */
+        void setTextSelections( RegularAreaRect *areas, const QColor & color );
+
+        /**
+         * Sets the @p color and @p area of the highlight for the observer with
+         * the given @p id.
+         */
+        void setHighlight( int id, RegularAreaRect *area, const QColor & color );
+
+        /**
+         * Deletes all highlight objects for the observer with the given @p id.
+         */
+        void deleteHighlights( int id = -1 );
 
         class PixmapObject
         {

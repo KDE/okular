@@ -26,6 +26,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 137905: command-line option for presentation mode
 
 In progress [working on]:
+-> core: provide a binary compatible okularcore library to extend the format capabilities
 -> core: forms support (mainly for pdf) (BR91809)
 -> bookmarks: improved interface, with easy handling of the bookmarks of all the documents (BR99787,BR136113)
 -> KPDF -> okular conversion of datafiles {document data(in progress), kwallet passwords(missing)}
@@ -36,7 +37,6 @@ In progress [working on]:
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
 -> thumbnailslist: show Viewport in(blended/contour)
-   (actually it's only a red contour)
 -> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (40% done)
@@ -65,7 +65,6 @@ More items (first items will enter 'In progress list' first):
 -> preload: add a delay when forward loading pages
 -> bookmarks: fastmarks (new bookmark concept with tab-like signs, shortcuts, etc) (BR
 -> viewport restoring: sometimes it seems to restore the viewport a bit under where it was
--> viewport restoring: save the zoom/viewCols/continuous setting between runs (BR97307+patch)
 -> core: Delay TOC (DocumentSynopsis) generation (and move it on thread)
 -> core: add a way to handle "named xpdf links" in Okular::Action instead of resolving all
    dests when displaying a page (speedups a lot generation of page with many links)
@@ -106,7 +105,6 @@ More items (first items will enter 'In progress list' first):
 -> presentation: 2 pages per view, for users reading ebooks with wide screens.
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> move some document related features from part to the document (see find, goto dialog, ...)
--> Albert: Read pdf specification and see if paths with length = 1 are allowed, in case they are allowed see how to fix 97131 without skipping paths with length = 1
 -> tools: ruler (BR111254), measure: distance, perimeter, ?area?, color picker
 -> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
 -> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))

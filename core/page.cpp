@@ -557,9 +557,11 @@ void Page::setPageAction( PageAction action, Action * link )
     switch ( action )
     {
         case Page::Opening:
+            delete d->m_openingAction;
             d->m_openingAction = link;
             break;
         case Page::Closing:
+            delete d->m_closingAction;
             d->m_closingAction = link;
             break;
     }

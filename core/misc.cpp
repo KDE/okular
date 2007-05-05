@@ -9,6 +9,8 @@
 
 #include "core/misc.h"
 
+#include <kdebug.h>
+
 using namespace Okular;
 
 class TextSelection::Private

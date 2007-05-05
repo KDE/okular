@@ -11,6 +11,7 @@
 
 #include <QtCore/QRect>
 #include <QtGui/QPolygonF>
+#include <kdebug.h>
 
 #include <math.h>
 

@@ -14,12 +14,11 @@
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
 
-#include <kdebug.h>
-
 #include <okular/core/okular_export.h>
 
 class QPolygonF;
 class QRect;
+class kdbgstream;
 
 namespace Okular {
 

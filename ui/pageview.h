@@ -28,6 +28,7 @@
 
 class KAction;
 class KActionCollection;
+class KUrl;
 
 namespace Okular {
 class Document;

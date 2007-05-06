@@ -140,6 +140,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotExportAs(QAction *);
         bool slotImportPSFile();
         void slotAboutBackend();
+        void slotReload();
         void close();
         void cannotQuit();
         void splitterMoved( int pos, int index );
@@ -227,6 +228,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KToggleAction* m_showLeftPanel;
         KToggleFullScreenAction* m_showFullScreenAction;
         QAction *m_aboutBackend;
+        QAction *m_reload;
 
         bool m_actionsSearched;
         bool m_searchStarted;

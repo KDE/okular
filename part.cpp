@@ -46,6 +46,7 @@
 #include <kxmlguifactory.h>
 #include <kservicetypetrader.h>
 #include <kstandarddirs.h>
+#include <kstandardshortcut.h>
 #include <ktemporaryfile.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
@@ -404,6 +405,14 @@ m_searchStarted(false), m_cliPresentation(false)
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About backend..."));
     connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
+
+    KAction *reload = ac->add<KAction>( "file_reload" );
+    reload->setText( i18n( "Reloa&d" ) );
+    reload->setIcon( KIcon( "view-refresh" ) );
+    reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
+    connect( reload, SIGNAL(triggered()), this, SLOT(slotReload()) );
+    reload->setShortcut( KStandardShortcut::reload() );
+    m_reload = reload;
 
     KAction *closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
     ac->addAction("close_find_bar", closeFindBar);
@@ -933,6 +942,7 @@ void Part::updateViewActions()
         m_nextPage->setEnabled( !atEnd );
         m_historyBack->setEnabled( !m_document->historyAtBegin() );
         m_historyNext->setEnabled( !m_document->historyAtEnd() );
+        m_reload->setEnabled( true );
     }
     else
     {
@@ -943,6 +953,7 @@ void Part::updateViewActions()
         m_nextPage->setEnabled( false );
         m_historyBack->setEnabled( false );
         m_historyNext->setEnabled( false );
+        m_reload->setEnabled( false );
     }
     updateBookmarksActions();
 }
@@ -1407,6 +1418,16 @@ void Part::slotExportAs(QAction * act)
         if ( !saved )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
     }
+}
+
+
+void Part::slotReload()
+{
+    // stop the dirty handler timer, otherwise we may conflict with the
+    // auto-refresh system
+    m_dirtyHandler->stop();
+
+    slotDoFileDirty();
 }
 
 

@@ -5,6 +5,7 @@
     <Action name="get_new_stuff" group="file_open"/>
     <Action name="import_ps" group="file_open"/>
     <Action name="save" group="file_save"/>
+    <Action name="file_reload" group="file_save"/>
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
     <Action name="properties" group="file_print"/>

@@ -29,10 +29,10 @@
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-
-#ifdef Q_WS_X11
-#include <QX11Info>
-#endif
+#include <QtDBus/QDBusConnection>
+#include <QtDBus/QDBusConnectionInterface>
+#include <QtDBus/QDBusInterface>
+#include <QtDBus/QDBusReply>
 
 #include <kaction.h>
 #include <kstandardaction.h>
@@ -49,7 +49,6 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kicon.h>
-#include <QtDBus/QtDBus>
 
 // system includes
 #include <math.h>
@@ -60,7 +59,7 @@
 #include "pageviewutils.h"
 #include "pagepainter.h"
 #include "core/annotations.h"
-#include "annotwindow.h"    //"embeddedannotationdialog.h"
+#include "annotwindow.h"
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
@@ -75,6 +74,7 @@
 #include <config-okular.h>
 
 #if defined(Q_WS_X11) && defined(HAVE_XRENDER)
+#include <QX11Info>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrender.h>
 #include <fixx11h.h>

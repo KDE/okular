@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Type=Service
 Name=KDE Image libraries
+Name[ja]=KDE 画像ライブラリ
 Name[pa]=KDE ਚਿੱਤਰ ਲਾਇਬਰੇਰੀਆਂ
 Name[sv]=KDE-bildbibliotek
 Name[x-test]=xxKDE Image librariesxx
 Comment=Image backend for okular
+Comment[ja]=okular の画像バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਚਿੱਤਰ ਬੈਕਐਂਡ
 Comment[sv]=Bildgränssnitt för Okular
 Comment[x-test]=xxImage backend for okularxx

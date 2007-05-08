@@ -5,6 +5,7 @@ Name=Poppler
 Name[pa]=ਪੋਪੱਲਰ
 Name[x-test]=xxPopplerxx
 Comment=PDF backend for okular using poppler
+Comment[ja]=okular の PDF バックエンド (poppler を使用)
 Comment[sv]=PDF-gränssnitt för Okular som använder Poppler
 Comment[x-test]=xxPDF backend for okular using popplerxx
 ServiceTypes=okular/Generator

@@ -4,6 +4,7 @@ Type=Service
 Name=dvi
 Name[x-test]=xxdvixx
 Comment=DVI backend for okular
+Comment[ja]=okular の DVI バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DVI ਬੈਕਐਂਡ
 Comment[sv]=DVI-gränssnitt för Okular
 Comment[x-test]=xxDVI backend for okularxx

@@ -5,6 +5,7 @@ Name=Ghostscript
 Name[pa]=ਗੋਸਟ-ਸਕ੍ਰਿਪਟ
 Name[x-test]=xxGhostscriptxx
 Comment=Ghostscript PS/PDF backend for okular
+Comment[ja]=okular の Ghostscript PS/PDF バックエンド
 Comment[sv]=Ghostscript PS/PDF-gränssnitt för Okular
 Comment[x-test]=xxGhostscript PS/PDF backend for okularxx
 ServiceTypes=okular/Generator

@@ -2,10 +2,12 @@
 Encoding=UTF-8
 Type=Service
 Name=okular XPS Plugin
+Name[ja]=okular XPS プラグイン
 Name[pa]=ਓਕੁਲਾਰ XPS ਪਲੱਗਇਨ
 Name[sv]=Okular XPS-gränssnitt
 Name[x-test]=xxokular XPS Pluginxx
 Comment=XPS backend for okular
+Comment[ja]=okular の XPS バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ XPS ਬੈਕਐਂਡ
 Comment[sv]=XPS-gränssnitt för Okular
 Comment[x-test]=xxXPS backend for okularxx

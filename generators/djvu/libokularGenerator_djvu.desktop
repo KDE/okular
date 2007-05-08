@@ -4,6 +4,7 @@ Type=Service
 Name=djvu
 Name[x-test]=xxdjvuxx
 Comment=DjVu backend for okular
+Comment[ja]=okular の DjVu バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DjVu ਬੈਕਐਂਡ
 Comment[sv]=DjVu-gränssnitt för Okular
 Comment[x-test]=xxDjVu backend for okularxx

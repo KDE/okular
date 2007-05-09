@@ -411,6 +411,7 @@ void PDFGenerator::putFontInfo(KListView *list)
 
 bool PDFGenerator::print( KPrinter& printer )
 {
+    // PageSize is a CUPS artificially created setting
     QString ps = printer.option("PageSize");
     int paperWidth, paperHeight;
     int marginTop, marginLeft, marginRight, marginBottom;
@@ -422,7 +423,7 @@ bool PDFGenerator::print( KPrinter& printer )
 
     if (ps.find(QRegExp("w\\d+h\\d+")) == 0)
     {
-        // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
+        // size not supported by Qt, CUPS gives us the size as wWIDTHhHEIGHT, at least on the printers i tester
         // remove the w
         ps = ps.mid(1);
         int hPos = ps.find("h");
@@ -431,10 +432,15 @@ bool PDFGenerator::print( KPrinter& printer )
     }
     else
     {
-        // size is supported by Qt, we get either the pageSize name or nothing because the default pageSize is used
+        // size is supported by Qt, we get either the pageSize name or nothing because the CUPS driver
+        // does not do any translation, then use KPrinter::pageSize to get the page size
+        KPrinter::PageSize qtPageSize;
+        if (!ps.isEmpty()) qtPageSize = pageNameToPageSize(ps);
+        else qtPageSize = printer.pageSize();
+
         QPrinter dummy(QPrinter::PrinterResolution);
         dummy.setFullPage(true);
-        dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
+        dummy.setPageSize((QPrinter::PageSize)qtPageSize);
 
         QPaintDeviceMetrics metrics(&dummy);
         paperWidth = metrics.width();

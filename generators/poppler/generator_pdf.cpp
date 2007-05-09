@@ -760,6 +760,7 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 bool PDFGenerator::print( KPrinter& printer )
 {
     int width, height;
+    // PageSize is a CUPS artificially created setting 
     QString ps = printer.option( "PageSize" );
     QRegExp sizere( "w(\\d+)h(\\d+)" );
     int marginTop, marginLeft, marginRight, marginBottom;
@@ -769,17 +770,22 @@ bool PDFGenerator::print( KPrinter& printer )
     marginBottom = (int)printer.option("kde-margin-bottom").toDouble();
     if ( sizere.exactMatch( ps ) )
     {
-        // size not supported by Qt, KPrinter gives us the size as wWIDTHhHEIGHT
+        // size not supported by Qt, CUPS gives us the size as wWIDTHhHEIGHT, at least on the printers i tested
         width = sizere.cap( 1 ).toInt();
         height = sizere.cap( 2 ).toInt();
     }
     else
     {
-        // size is supported by Qt, we get either the pageSize name or nothing because the default pageSize is used
+        // size is supported by Qt, we get either the pageSize name or nothing because the CUPS driver
+        // does not do any translation, then use KPrinter::pageSize to get the page size
+        KPrinter::PageSize qtPageSize; 
+        if (!ps.isEmpty()) qtPageSize = pageNameToPageSize(ps); 
+        else qtPageSize = printer.pageSize(); 
+
         QPrinter dummy(QPrinter::PrinterResolution);
         dummy.setOrientation((QPrinter::Orientation)printer.orientation());
         dummy.setFullPage(true);
-        dummy.setPageSize((QPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : pageNameToPageSize(ps)));
+        dummy.setPageSize((QPrinter::PageSize)qtPageSize);
 
         width = dummy.width();
         height = dummy.height();

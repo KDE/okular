@@ -16,6 +16,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QHash>
 #include <QtCore/QMap>
+#include <QtCore/QMutex>
 #include <QtCore/QProcess>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
@@ -166,6 +167,7 @@ class Okular::DocumentPrivate
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > m_observers;
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
+        QMutex m_pixmapRequestsMutex;
         QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
         int m_allocatedPixmapsTotalMemory;
         bool m_warnedOutOfMemory;
@@ -627,6 +629,7 @@ void DocumentPrivate::sendGeneratorRequest()
 {
     // find a request
     PixmapRequest * request = 0;
+    m_pixmapRequestsMutex.lock();
     while ( !m_pixmapRequestsStack.isEmpty() && !request )
     {
         PixmapRequest * r = m_pixmapRequestsStack.last();
@@ -657,7 +660,10 @@ void DocumentPrivate::sendGeneratorRequest()
 
     // if no request found (or already generated), return
     if ( !request )
+    {
+        m_pixmapRequestsMutex.unlock();
         return;
+    }
 
     // [MEM] preventive memory freeing
     int pixmapBytes = 4 * request->width() * request->height();
@@ -673,11 +679,18 @@ void DocumentPrivate::sendGeneratorRequest()
         if ( (int)m_rotation % 2 )
             request->swap();
 
+        // we always have to unlock _before_ the generatePixmap() because
+        // a sync generation would end with requestDone() -> deadlock, and
+        // we can not really know if the generator can do async requests
+        m_pixmapRequestsMutex.unlock();
         m_generator->generatePixmap( request );
     }
     else
+    {
+        m_pixmapRequestsMutex.unlock();
         // pino (7/4/2006): set the polling interval from 10 to 30
         QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorRequest()) );
+    }
 }
 
 void DocumentPrivate::rotationFinished( int page )
@@ -983,11 +996,13 @@ void Document::closeDocument()
     d->m_exportFormats.clear();
     d->m_exportToText = ExportFormat();
     // remove requests left in queue
+    d->m_pixmapRequestsMutex.lock();
     QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.begin();
     QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.end();
     for ( ; sIt != sEnd; ++sIt )
         delete *sIt;
     d->m_pixmapRequestsStack.clear();
+    d->m_pixmapRequestsMutex.unlock();
 
     // send an empty list to observers (to free their data)
     foreachObserver( notifySetup( QVector< Page * >(), true ) );
@@ -1338,6 +1353,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id();
+    d->m_pixmapRequestsMutex.lock();
     QLinkedList< PixmapRequest * >::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
@@ -1388,6 +1404,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
             d->m_pixmapRequestsStack.insert( sIt, request );
         }
     }
+    d->m_pixmapRequestsMutex.unlock();
 
     // 3. [START FIRST GENERATION] if <NO>generator is ready, start a new generation,
     // or else (if gen is running) it will be started when the new contents will
@@ -2266,7 +2283,10 @@ void Document::requestDone( PixmapRequest * req )
     delete req;
 
     // 4. start a new generation if some is pending
-    if ( !d->m_pixmapRequestsStack.isEmpty() )
+    d->m_pixmapRequestsMutex.lock();
+    bool hasPixmaps = !d->m_pixmapRequestsStack.isEmpty();
+    d->m_pixmapRequestsMutex.unlock();
+    if ( hasPixmaps )
         d->sendGeneratorRequest();
 }
 

@@ -49,6 +49,13 @@ class Utils
 
             int offset = qRound( y ) % qRound( pageSize.height() );
 
+            if ( x > r ) { // line break, so return a pseudo character on the start line
+                rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
+                               3 / pageSize.width(), startLine.height() / pageSize.height() );
+                page = -1;
+                return;
+            }
+
             page = qRound( y ) / qRound( pageSize.height() );
             rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
                            (r - x) / pageSize.width(), (b - y) / pageSize.height() );

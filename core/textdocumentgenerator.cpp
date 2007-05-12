@@ -63,9 +63,11 @@ Okular::TextPage* TextDocumentGenerator::Private::createTextPage( int pageNumber
         cursor.setPosition( i + 1, QTextCursor::KeepAnchor );
 
         QString text = cursor.selectedText();
-        if ( text.length() == 1 && text[ 0 ].isPrint() ) {
+        if ( text.length() == 1 ) {
             QRectF rect;
             Utils::calculateBoundingRect( mDocument, i, i + 1, rect, pageNumber );
+            if ( pageNumber == -1 )
+                text = "\n";
 
             textPage->append( text, new Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         }

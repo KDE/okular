@@ -23,7 +23,9 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> WISH 131045: Add context menu for URLs
 -> WISH 134115: specifing to kpdf the first-opened page from command line
+-> WISH 136820: would like a reload button or menu item in KPDF
 -> WISH 137905: command-line option for presentation mode
+-> WISH 145345: goto page: update slider while editing page number
 
 In progress [working on]:
 -> core: provide a binary compatible okularcore library to extend the format capabilities
@@ -119,6 +121,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: Reload action to force the reload of the current document (BR136820)
 -> CHG: renamed Okular::Link to Okular::Action
 -> ADD: presentation: add page counter and a widget to manually set pages on the top bar
 -> ADD: basic support for Text and Line DjVu annotations

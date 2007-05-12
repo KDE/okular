@@ -1,0 +1,237 @@
+/**
+\mainpage Okular, the unified document viewer
+
+\section okular_overview Overview
+
+- \ref okular_history
+- \ref okular_design
+- \ref okular_generators
+- <a href="http://www.okular.org">Website</a>
+
+\authors Tobias König <tokoe@kde.org>
+
+\licenses \lgpl
+
+\page okular_history Historical background
+
+Okular is the successor of <a href="kpdf.kde.org">kpdf</a>, the PDF viewer in KDE 3.
+kpdf was refactored and extended in a Google Summer of Code project to support not only
+viewing PDF but also other types of document, e.g. PostScript files, images and many more.
+
+\page okular_design The Design of Okular
+
+To support a wide range of document formats, Okular was designed in a modular way, so you
+have the following components:
+
+  \li \ref Shell
+  \li \ref Part
+  \li \ref Okular::Document Class
+  \li \ref Okular::Generator
+
+The shell is the application which is started by the user as standalone application and
+which embedds the part. The part contains all gui elements of Okular, for example the
+content list, the bookmark manager, menus and the graphical view of the document class.
+The document class is an abstract presentation of the document content. It contains information
+about every page of the document, its size, orientation etc.
+
+But somehow the document class must retrieve these information from the various types of documents.
+This is the task of the Generators. Generators are plugins which are loaded at runtime and which
+have the knowledge about the internal structure of the different document types.
+They extract the needed information from the documents, convert the data into a common format and
+pass them to the document class.
+
+Currently Generators for the following document types are available:
+
+  \li Portable Document Format (PDF)
+  \li PostScript
+  \li Device Independent Format (DVI)
+  \li DeJaVu Format
+  \li Comic Books
+  \li Images (JPEG, PNG, GIF, and many more)
+  \li TIFF Image Format
+  \li FictionBook Format
+  \li Plucker Format
+  \li OpenDocument Text Format
+  \li Microsofts CHM Format
+  \li Microsofts XML Document Format
+
+Now the questions is how can these various formats be represented in a unified way?
+Okular provides features like rotation, text search and extraction, zooming and many more, so how
+does it match with the different capabilities of the formats?
+
+\section okular_design_basics Basics of Generators
+
+Lets start with the smallest commonness of all document formats:
+
+  \li they have pages (one ore more) of a given size
+  \li pages can be represented as pictures
+
+So the first thing every Generator must support is to return the number of pages of a document.
+Furthermore it must be able to return the picture of a page at a requested size.
+
+For vector based document formats (e.g. PDF or PostScript) the Generators can render the page for
+the requested size, for static documents formats (e.g. images), the Generator must scale the
+content according to the requested size, so when you zoom a page in Okular, the Generators are
+just asked to return the page for the zoomed size.
+
+When the document class has retrieved the page pictures from the Generators, it can do further
+image manipulation on it, for example rotating them or applying fancy effects.
+
+\section okular_design_text_support Generators with Text support
+
+Some document formats however support more functionality than just representing a page as an image.
+PDF, PostScript, DVI and DeJaVu for example contains a machine readable representation of the
+included text. For those document formats Okular provides additional features like text search,
+text extraction and text selection.
+
+How is that supported by the Generators?
+
+To access the text from the documents the generators must extract it somehow and make it available
+to the document class. However for the text selection feature the document class must also know <em>where</em>
+the extracted text is located on the page. For a zoom factor of 100% the absolute position of
+the text in the document can be used, however for larger or smaller zoom factors the position
+must be recalculated. To make this calculation as easy as possible, the Generators return an
+abstract represtentation (\ref Okular::TextPage) of the text which includes every character together
+with its <em>normalized</em> position. Normalized means that the width and height of the page is
+in the range of 0 to 1, so a character in the middle of the page is at x=0.5 and y=0.5.
+
+So when you want to know where this character is located on the page which is zoomed at 300%, you just
+multiply the position by 3 * page width (and page height) and get the absolute position for this zoom level.
+
+This abstract text representation also allows an easy rotation of the coordinates, so that text selection
+is available on rotated pages as well.
+
+\section okular_design_meta_information Meta Information
+
+Most documents have additional meta information like the name of the author, date of creation,
+version number etc. These information can be retrieved by the generator as well and will be
+shown by Okular in the document properties dialog.
+
+\page okular_generators How to implement a Generator
+
+The power of Okular is its extensibility by Generator plugins. This section will describe how to
+implement your own plugin for a new document type.
+
+To provide a short overview and don't reimplementing an existing generator we'll work on a Generator
+for the Magic document format, a non existing, pure virtual format :)
+
+Lets assume we have some helper class (MagicDocument) which provides the following functionality for this
+document format:
+
+ \li Loading a document
+ \li Retrieving number of pages
+ \li Returning a fixed size picture representation of a page
+
+The class API looks like this
+
+\code
+class MagicDocument
+{
+    public:
+        MagicDocument();
+        ~MagicDocument();
+
+        bool loadDocument( const QString &fileName );
+
+        int numberOfPages() const;
+
+        QSize pageSize( int pageNumber ) const;
+
+        QImage pictureOfPage( int pageNumber ) const;
+
+    private:
+        ...
+};
+\endcode
+
+The methods should be self explaining, loadDocument() loads a document file and returns false on error,
+numberOfPages() returns the number of pages, pageSize() returns the size of the page and pictureOfPage()
+returns the picture representation of the page.
+
+Our first version of our Generator is a basic one which just provides page pictures to the document class.
+
+The API of the basic Generator looks like this:
+
+\code
+#include "magicdocument.h"
+
+#include <okular/core/generator.h>
+
+class MagicGenerator : public Okular::Generator
+{
+    public:
+        MagicGenerator();
+        ~MagicGenerator();
+
+        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool closeDocument();
+
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest *request );
+
+    private:
+        MagicDocument mMagicDocument;
+};
+
+\endcode
+
+The implementation like this:
+
+\code
+#include <okular/core/page.h>
+
+#include "magicgenerator.h"
+
+OKULAR_EXPORT_PLUGIN(MagicGenerator)
+
+MagicGenerator::MagicGenerator()
+    : Generator()
+{
+}
+
+MagicGenerator::~MagicGenerator()
+{
+}
+
+bool MagicGenerator::loadDocument( const QString &fileName, QVector<Okular::Page*> &pages )
+{
+    if ( !mMagicDocument.loadDocument( fileName ) ) {
+        emit error( i18n( "Unable to load document" ), -1 );
+        return false;
+    }
+
+    pagesVector.resize( mMagicDocument.numberOfPages() );
+
+    for ( int i = 0; i < mMagicDocument.numberOfPages(); ++i ) {
+      const QSize size = mMagicDocument.pageSize( i );
+
+      Okular::Page * page = new Okular::Page( i, size.width(), size.height(), Okular::Rotation0 );
+      pages[ i ] = page;
+    }
+
+    return true;
+}
+
+bool MagicGenerator::closeDocument()
+{
+    return true;
+}
+
+bool MagicGenerator::canGeneratePixmap() const
+{
+    return true;
+}
+
+void MagicGenerator::generatePixmap( Okular::PixmapRequest *request )
+{
+    QImage image = mMagicDocument.pictureOfPage( request->pageNumber() );
+
+    image = image.scaled( request->width(), request->height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image ) ) );
+
+    signalPixmapRequestDone( request );
+}
+
+\endcode
+*/

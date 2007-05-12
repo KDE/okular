@@ -112,6 +112,8 @@ shown by Okular in the document properties dialog.
 The power of Okular is its extensibility by Generator plugins. This section will describe how to
 implement your own plugin for a new document type.
 
+\section okular_generators_basic A Basic Generator
+
 To provide a short overview and don't reimplementing an existing generator we'll work on a Generator
 for the Magic document format, a non existing, pure virtual format :)
 
@@ -150,7 +152,7 @@ returns the picture representation of the page.
 
 Our first version of our Generator is a basic one which just provides page pictures to the document class.
 
-The API of the basic Generator looks like this:
+The API of the Generator looks like the following:
 
 \code
 #include "magicdocument.h"
@@ -172,10 +174,9 @@ class MagicGenerator : public Okular::Generator
     private:
         MagicDocument mMagicDocument;
 };
-
 \endcode
 
-The implementation like this:
+The implementation of the Generator looks like this:
 
 \code
 #include <okular/core/page.h>
@@ -234,4 +235,166 @@ void MagicGenerator::generatePixmap( Okular::PixmapRequest *request )
 }
 
 \endcode
+
+As you can see implementing a basic Generator is quite easy. The loadDocument() method opens the document file
+and extracts the number of pages. For every page in the document it adds an Okular::Page object to the pages vector
+which is passed in as method argument. Each page is initialized with its page number, width, height and initial rotation.
+These page objects will be stored in the document object and act as a container for the picture representation
+of the pages. This code is the same for nearly every Generator. On an failure the error() signal can be emitted
+to inform the user about the issue. This code is the same for nearly every Generator.
+
+In the closeDocument() method you should close the document and free all resources you have allocated in openDocument().
+
+Now we come to the picture creation methods. The canGeneratorPixmap() method returns whether the Generator is currently
+able to handle a new pixmap generation request. For a simple Generator like our one that's always the case as it works
+linear, however a multithreaded Generator might return <em>false</em> here if it is still waiting for one of its working
+threads to finish. In this case the document class will try to request the pixmap later again.
+
+The generatePixmap() method does the actual fetching of the picture for a page. The page number, requested width and
+height of the page is encapsulated in the passed Okular::PixmapRequest object.
+So the task of the Generator is to create a pixmap of the requested page in the requested size and then store this
+pixmap in the Okular::Page object which is associated with the page request.
+When this task is finished, the Generator has to call signalPixmapRequestDone() with the page request object
+as argument. This extra call is needed to allow the Generator to use signals and slots internally and create the
+pixmap asynchronously.
+
+So now you have the code of a working Okular Generator, the next step is to tell Okular about the new plugin.
+Like in other places in KDE that is done by .desktop files, which are installed to the services directory.
+
+Every Generator needs 3 .desktop files:
+
+  \li libokularGenerator_&lt;name&gt;.desktop
+  \li okularApplication_&lt;name&gt;.desktop
+  \li okular&lt;name&gt;.desktop
+
+where &lt;name&gt; should be the name of the document format. So for our Magic Document Generator we
+create the following 3 files:
+
+  \li libokularGenerator_magic.desktop
+  \li okularApplication_magic.desktop
+  \li okularMagic.desktop
+
+with the following content:
+
+\verbatim
+[Desktop Entry]
+Encoding=UTF-8
+Type=Service
+Name=Magic Document
+Name[x-test]=xxMagic Documentxx
+Comment=Magic Document backend for okular
+Comment[x-test]=xxMagic Document backend for okularxx
+ServiceTypes=okular/Generator
+MimeType=application/x-magic
+X-KDE-Library=libokularGenerator_magic
+X-KDE-Priority=1
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false
+\endverbatim
+
+The first 6 fields are standard .desktop entries, the fields afterwards have a special meaning to Okular
+
+  \li <b>ServiceType</b>  Must be 'okular/Generator' for all Okular Generator Plugins
+  \li <b>MimeType</b> The mimetype or list of mimetypes of the supported document format(s)
+  \li <b>X-KDE-Library</b> The name of the plugin library
+  \li <b>X-KDE-Priority</b> When multiple Generators for the same mimetype exists, the one with the highest priority is used
+  \li <b>X-KDE-okularAPIVersion</b> The version of the Generator Plugin API ('1' currently)
+  \li <b>X-KDE-okularHasInternalSettings</b> Is 'true' when the Generator provides configuration dialogs
+
+The second .desktop file has the following content:
+
+\verbatim
+[Desktop Entry]
+Encoding=UTF-8
+MimeType=application/x-magic;
+Terminal=false
+Name=okular
+Name[x-test]=xxokularxx
+GenericName=Document Viewer
+GenericName[x-test]=xxDocument Viewerxx
+Exec=okular %U %i -caption "%c"
+Icon=okular
+Type=Application
+DocPath=okular/index.html
+InitialPreference=7
+Categories=Qt;KDE;Graphics;Viewer;
+NoDisplay=true
+\endverbatim
+
+You can use the file as it is, you just have to adapt the mimetype. This file is needed to allow Okular
+to handle multiple mimetypes.
+
+The third .desktop file looks like this:
+
+\verbatim
+[Desktop Entry]
+Encoding=UTF-8
+Icon=okular
+Name=okular
+Name[x-test]=xxokularxx
+ServiceTypes=KParts/ReadOnlyPart
+X-KDE-Library=libokularpart
+Type=Service
+MimeType=application/x-magic
+\endverbatim
+
+You can use the file as it is as well, you just have to adapt the mimetype. This file is needed to allow
+the Okular part to handle multiple mimetypes.
+
+The last piece you need for a complete Generator is a CMakeLists.txt which compiles and installs the
+Generator. Our CMakeLists.txt looks like the following:
+
+\verbatim
+macro_optional_find_package(Okular)
+
+include_directories( ${OKULAR_INCLUDE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
+
+########### next target ###############
+
+set( okularGenerator_magic_SRCS generator_magic.cpp )
+
+kde4_automoc( ${okularGenerator_magic_SRCS} )
+
+kde4_add_plugin( okularGenerator_magic WITH_PREFIX ${okularGenerator_magic_SRCS} )
+
+target_link_libraries( okularGenerator_magic ${OKULAR_LIBRARIES} ${KDE4_KDEUI_LIBS} )
+
+install( TARGETS okularGenerator_magic DESTINATION ${PLUGIN_INSTALL_DIR} )
+
+########### install files ###############
+
+install( FILES libokularGenerator_magic.desktop okularMagic.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES okularApplication_magic.desktop DESTINATION ${XDG_APPS_DIR} )
+\endverbatim
+
+The macro_optional_find_package(Okular) call is required to make the ${OKULAR_INCLUDE_DIR} and ${OKULAR_LIBRARIES}
+variables available.
+
+Now you can compile the Generator plugin and install it. After a restart of Okular the new plugin is available
+and you can open Magic documents.
+
+\section okular_generators_with_text A Generator with TextPage support
+
+\code
+#include "magicdocument.h"
+
+#include <okular/core/generator.h>
+
+class MagicGenerator : public Okular::Generator
+{
+    public:
+        MagicGenerator();
+        ~MagicGenerator();
+
+        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool closeDocument();
+
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest *request );
+
+    private:
+        MagicDocument mMagicDocument;
+};
+\endcode
+
 */

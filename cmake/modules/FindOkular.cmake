@@ -45,11 +45,12 @@ ENDIF (OKULAR_INCLUDE_DIR AND OKULAR_LIBRARIES)
 # output status
 #
 IF (OKULAR_FOUND)
-     if (NOT OKULAR_FIND_QUIETLY)
+     if (NOT Okular_FIND_QUIETLY)
         MESSAGE (STATUS "Found Okular Generator: ${OKULAR_INCLUDE_DIR} ${OKULAR_LIBRARIES}")
-     endif(NOT OKULAR_FIND_QUIETLY)
+     endif(NOT Okular_FIND_QUIETLY)
 ELSE (OKULAR_FOUND)
-     if (OKULAR_FIND_REQUIRED)
+     if (Okular_FIND_REQUIRED)
         MESSAGE (STATUS "Okular Generator not found." )
-     endif (OKULAR_FIND_REQUIRED)
+     endif (Okular_FIND_REQUIRED)
 ENDIF (OKULAR_FOUND)
+

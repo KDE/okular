@@ -29,7 +29,7 @@ have the following components:
   \li \ref Okular::Generator
 
 The shell is the application which is started by the user as standalone application and
-which embedds the part. The part contains all gui elements of Okular, for example the
+which embedds the part. The part contains all GUI elements of Okular, for example the
 content list, the bookmark manager, menus and the graphical view of the document class.
 The document class is an abstract presentation of the document content. It contains information
 about every page of the document, its size, orientation etc.
@@ -103,14 +103,25 @@ is available on rotated pages as well.
 
 \section okular_design_meta_information Meta Information
 
-Most documents have additional meta information like the name of the author, date of creation,
-version number etc. These information can be retrieved by the generator as well and will be
-shown by Okular in the document properties dialog.
+Most documents have additional meta information:
+
+  \li Name of the author
+  \li Date of creation
+  \li Version number
+  \li Table of Content
+  \li Bookmarks
+  \li Annotations
+
+These information can be retrieved by the generator as well and will be shown by Okular.
 
 \page okular_generators How to implement a Generator
 
 The power of Okular is its extensibility by Generator plugins. This section will describe how to
 implement your own plugin for a new document type.
+
+  \li \ref okular_generators_basic
+  \li \ref okular_generators_with_text
+  \li \ref okular_generators_threaded
 
 \section okular_generators_basic A Basic Generator
 
@@ -375,6 +386,56 @@ and you can open Magic documents.
 
 \section okular_generators_with_text A Generator with TextPage support
 
+In this section we want to extend our Generator to support text search, text extraction and selection
+as well. As mentioned in \ref okular_design_text_support, the Generator must provide an Okular::TextPage
+object for every page which contains readable text.
+
+Since we use the helper class MagicDocument to read the data from the document we have to extend it first,
+so the new API looks as the following:
+
+\code
+class MagicDocument
+{
+    public:
+        MagicDocument();
+        ~MagicDocument();
+
+        bool loadDocument( const QString &fileName );
+
+        int numberOfPages() const;
+
+        QSize pageSize( int pageNumber ) const;
+
+        QImage pictureOfPage( int pageNumber ) const;
+
+        class TextInfo
+        {
+            public:
+                typedef QList<TextInfo> List;
+
+                QChar character;
+                qreal xPos;
+                qreal yPos;
+                qreal width;
+                qreal height;
+        };
+
+        TextInfo::List textOfPage( int pageNumber );
+
+    private:
+        ...
+};
+\endcode
+
+MagicDocument has the new internal class TextInfo now, which contains a character and
+its absolute position on a page. Furthermore MagicDocument provides a method textOfPage()
+which returns a list of all TextInfo objects for a page.
+
+That's really an optimistic API, in reality it is sometimes quite hard to find out
+the position of single characters in a document format.
+
+With the extension of our helper class we can continue on extending our Generator now:
+
 \code
 #include "magicdocument.h"
 
@@ -392,9 +453,171 @@ class MagicGenerator : public Okular::Generator
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
 
+        virtual bool canGenerateTextPage() const;
+        virtual void generateTextPage( Okular::Page *page, enum Okular::GenerationType type = Okular::Synchronous );
+
     private:
         MagicDocument mMagicDocument;
 };
 \endcode
 
+We have extended the MagicGenerator class by two methods canGenerateTextPage() and generateTextPage().
+The first method is equal to canGeneratePixmap(), it returns whether the Generator is currently able to
+handle a new text page generation request. For linear Generators that should be always the case, however
+when the generation is done in a separated worker thread, this method might return <em>false</em>.
+In this case the document class will try to request the text page later again.
+
+The second method will generate the Okular::TextPage object for the passed page. Depending on the capabilities
+of the Generator and the passed <em>type</em> parameter that is done synchronously or asynchronously.
+
+Let us take a look at the implementation of these methods in our MagicGenerator:
+
+\code
+#include <okular/core/textpage.h>
+
+...
+
+MagicGenerator::MagicGenerator()
+{
+    setFeature( TextExtraction );
+}
+
+bool MagicGenerator::canGenerateTextPage() const
+{
+    return true;
+}
+
+void MagicGenerator::generateTextPage( Okular::Page *page, enum Okular::GenerationType )
+{
+    MagicDocument::TextInfo::List characters = mMagicDocument.textOfPage( page->number() );
+    if ( characters.isEmpty() )
+        return;
+
+    Okular::TextPage *textPage = new Okular::TextPage;
+    for ( int i = 0; i < characters.count(); ++i ) {
+        qreal left = characters[ i ].xPos / page->width();
+        qreal top = characters[ i ].yPos / page->height();
+        qreal right = (characters[ i ].xPos + characters[ i ].width) / page->width();
+        qreal bottom = (characters[ i ].yPos + characters[ i ].height) / page->height();
+
+        textPage->append( characters[ i ].character,
+                          new Okular::NormalizedRect( left, top, right, bottom ) );
+    }
+
+    page->setTextPage( textPage );
+}
+\endcode
+
+As you can see the generateTextPage method just iterates over the list of characters returned
+by our MagicDocument helper class and adds the character and its normalized bounding rect to
+the Okular::TextPage object. At the end the text page is assigned to the page. We don't pay
+attention to the GenerationType parameter here, if your Generator want to use threads, it should
+check here whether the request shall be done asynchronously or synchronously and start the generation
+according to that. Additionally we have to tell the Okular::Generator base class that we support
+text handling by setting this flag in the constructor.
+
+In this state we can now search, select and extract text from Magic documents.
+
+\section okular_generators_threaded A Generator with Thread support
+
+Sometimes it makes sense to do the generation of page pictures or text pages asynchronously to
+improve performance and don't blocking the user interface. This can be done in two ways, either
+by using signals and slots or by using threads. Both have there pros and cons:
+
+  <ul>
+    <li><b>Signals and Slots</b></li>
+    <ul>
+    <li>Pro: Can be used with backend libraries which are not thread safe</li>
+    <li>Con: Sometime difficult to implement</li>
+    </ul>
+    <li><b>Threads</b></li>
+    <ul>
+    <li>Pro: Easy to implement as you can make synchronous calls to the backend libraries</li>
+    <li>Con: Backend libraries must be thread safe and you must prevent race conditions by using mutexes</li>
+    </ul>
+  </ul>
+
+The signal and slots approach can be achieved with a normal Generator by calling Okular::Generator::signalPixmapRequestDone()
+from a slot after pixmap generation has been finished.
+
+When using threads you should use a slightly different API, which hides most of the thread usage, to make
+implementing as easy as possible.
+
+Let's assume the pictureOfPage() and textOfPage methods in our MagicDocument helper class are thread safe,
+so we can use them in a multithreaded environment.
+So nothing prevents us from changing the MagicGenerator to use threads for better performance.
+
+The new MagicGenerator API looks like the following:
+
+\code
+#include "magicdocument.h"
+
+#include <okular/core/generator.h>
+
+class MagicGenerator : public Okular::Generator
+{
+    public:
+        MagicGenerator();
+        ~MagicGenerator();
+
+        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool closeDocument();
+
+    proteced:
+        virtual QImage image( Okular::PixmapRequest *request );
+
+        virtual Okular::TextPage* textPage( Okular::Page *page );
+
+    private:
+        MagicDocument mMagicDocument;
+};
+\endcode
+
+As you can see the canGeneratePixmap() generatePixmap(), canGenerateTextPage() and generateTextPage() methods have
+been removed and replaced by the image() and textPage() methods.
+
+Before explaining why, we'll take a look at the implementation:
+
+\code
+
+MagicGenerator::MagicGenerator()
+{
+    setFeature( TextExtraction );
+    setFeature( Threaded );
+}
+
+QImage MagicGenerator::image( Okular::PixmapRequest *request )
+{
+    QImage image = mMagicDocument.pictureOfPage( request->pageNumber() );
+
+    return image.scaled( request->width(), request->height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+}
+
+Okular::TextPage* textPage( Okular::Page *page )
+{
+    MagicDocument::TextInfo::List characters = mMagicDocument.textOfPage( page->number() );
+    if ( characters.isEmpty() )
+        return 0;
+
+    Okular::TextPage *textPage = new Okular::TextPage;
+    for ( int i = 0; i < characters.count(); ++i ) {
+        qreal left = characters[ i ].xPos / page->width();
+        qreal top = characters[ i ].yPos / page->height();
+        qreal right = (characters[ i ].xPos + characters[ i ].width) / page->width();
+        qreal bottom = (characters[ i ].yPos + characters[ i ].height) / page->height();
+
+        textPage->append( characters[ i ].character,
+                          new Okular::NormalizedRect( left, top, right, bottom ) );
+    }
+
+    return textPage;
+}
+\endcode
+
+So the first obviously thing is that both methods return a value instead of modifying the page directly.
+The reason for this is that both methods are executed in its own thread, so the code executed in them can
+block as long as it wants, it won't block the GUI anyway. Additionally we have to tell the Okular::Generator
+base class that we can handle threads by setting the flag in the constructor.
+
+With only a small change we made our MagicGenerator multithreaded now!
 */

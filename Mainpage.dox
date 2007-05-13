@@ -621,3 +621,5 @@ base class that we can handle threads by setting the flag in the constructor.
 
 With only a small change we made our MagicGenerator multithreaded now!
 */
+
+// DOXYGEN_EXCLUDE = conf generators shell ui

@@ -122,6 +122,7 @@ implement your own plugin for a new document type.
   \li \ref okular_generators_basic
   \li \ref okular_generators_with_text
   \li \ref okular_generators_threaded
+  \li \ref okular_generators_extended
 
 \section okular_generators_basic A Basic Generator
 
@@ -197,7 +198,7 @@ The implementation of the Generator looks like this:
 OKULAR_EXPORT_PLUGIN(MagicGenerator)
 
 MagicGenerator::MagicGenerator()
-    : Generator()
+    : Okular::Generator()
 {
 }
 
@@ -620,6 +621,228 @@ block as long as it wants, it won't block the GUI anyway. Additionally we have t
 base class that we can handle threads by setting the flag in the constructor.
 
 With only a small change we made our MagicGenerator multithreaded now!
+
+\section okular_generators_extended An Extended Generator
+
+Now we want to create a new generator with some additional functionality:
+
+  \li Support for document information (author, creation date etc.)
+  \li Support for a table of content
+  \li Support for printing the document
+  \li Support for exporting the document as text
+
+The new Generator shall be able to handle HTML documents. We choose this format as example, because
+we can use QTextDocument to load, render and print a HTML page, so a lot of code can be reused.
+
+The API of our HTMLGenerator looks like the following:
+
+\code
+#include <QtGui/QTextDocument>
+
+#include <okular/core/generator.h>
+
+class HTMLGenerator : public Okular::Generator
+{
+    public:
+        HTMLGenerator();
+        ~HTMLGenerator();
+
+        bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
+        bool closeDocument();
+
+        bool canGeneratePixmap() const;
+        void generatePixmap( Okular::PixmapRequest *request );
+
+        virtual const Okular::DocumentInfo* generateDocumentInfo();
+
+        virtual const Okular::DocumentSynopsis* generateDocumentSynopsis();
+
+        virtual bool print( KPrinter &printer );
+
+        virtual Okular::ExportFormat::List exportFormats() const;
+
+        virtual bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
+    private:
+        QTextDocument *mTextDocument;
+        Okular::DocumentInfo mDocumentInfo;
+        Okular::DocumentSynopsis mDocumentSynopsis;
+};
+\endcode
+
+The Generator doesn't support text search and selection, as the code would be quite complex, we'll show
+how to do it in the next chapter \ref okular_generators_textdocument anyway.
+
+As you can see we have 5 new methods in the class:
+
+  \li <b>generateDocumentInfo()</b> Creates an Okular::DocumentInfo (which is infact a QDomDocument)
+      which contains document information like author, creation time etc.
+  \li <b>generateDocumentSynopsis()</b> Creates an Okular::DocumentSynopsis (which is a QDomDocument as well)
+      which contains the table of content.
+  \li <b>print()</b> Prints the document to the passed printer.
+  \li <b>exportFormats()</b> Returns the supported export formats.
+  \li <b>exportTo()</b> Exports the document to the given file in the given format.
+
+Now that you know what the methods are supposed to do, let's take a look at the implementation:
+
+\code
+#include <QtCore/QFile>
+#include <QtGui/QAbstractTextDocumentLayout>
+
+#include <kprinter.h>
+
+#include <okular/core/document.h>
+#include <okular/core/page.h>
+
+#include "htmlgenerator.h"
+
+OKULAR_EXPORT_PLUGIN(HTMLGenerator)
+
+HTMLGenerator::HTMLGenerator()
+    : Okular::Generator(),
+      mTextDocument( 0 )
+{
+}
+
+HTMLGenerator::~HTMLGenerator()
+{
+    delete mTextDocument;
+}
+
+bool HTMLGenerator::loadDocument( const QString &fileName, QVector<Okular::Page*> &pages )
+{
+    QFile file( fileName );
+    if ( !file.open( QIODevice::ReadOnly ) ) {
+        emit error( i18n( "Unable to open file" ), -1 );
+        return false;
+    }
+
+    const QString data = QString::fromUtf8( file.readAll() );
+
+    file.close();
+
+    mTextDocument = new QTextDocument;
+    mTextDocument->setHtml( data );
+    mTextDocument->setPageSize( QSizeF( 600, 800 ) );
+
+    pages.resize( mTextDocument->pageCount() );
+
+    for ( int i = 0; i < mTextDocument->pageCount(); ++i ) {
+      Okular::Page * page = new Okular::Page( i, 600, 800, Okular::Rotation0 );
+      pages[ i ] = page;
+    }
+
+    mDocumentInfo.set( "author", "Tobias Koenig", i18n( "Author" ) );
+    mDocumentInfo.set( "title", "The Art of Okular Plugin Development", i18n( "Title" ) );
+
+    Okular::DocumentViewport viewport = ... // get the viewport of the chapter
+
+    QDomElement item = mDocumentSynopsis.createElement( "Chapter 1" );
+    item.setAttribute( "Viewport", viewport.toString() );
+    mDocumentSynopsis.appendChild( item );
+
+    viewport = ... // get the viewport of the subchapter
+
+    QDomElement childItem = mDocumentSynopsis.createElement( "SubChapter 1.1" );
+    childItem.setAttribute( "Viewport", viewport.toString() );
+    item.appendChild( childItem );
+
+    return true;
+}
+
+bool HTMLGenerator::closeDocument()
+{
+    delete mTextDocument;
+    mTextDocument = 0;
+
+    return true;
+}
+
+bool HTMLGenerator::canGeneratePixmap() const
+{
+    return true;
+}
+
+void HTMLGenerator::generatePixmap( Okular::PixmapRequest *request )
+{
+    QPixmap *pixmap = new QPixmap( request->width(), request->height() );
+    pixmap->fill( Qt::white );
+
+    QPainter p;
+    p.begin( pixmap );
+
+    qreal width = request->width();
+    qreal height = request->height();
+
+    p.scale( width / 600, height / 800 );
+
+    const QRect rect( 0, request->pageNumber() * 800, 600, 800 );
+    p.translate( QPoint( 0, request->pageNumber() * -800 ) );
+    d->mDocument->drawContents( &p, rect );
+    p.end();
+
+    request->page()->setPixmap( request->id(), pixmap );
+
+    signalPixmapRequestDone( request );
+}
+
+const Okular::DocumentInfo* HTMLGenerator::generateDocumentInfo()
+{
+    return &mDocumentInfo;
+}
+
+const Okular::DocumentSynopsis* HTMLGenerator::generateDocumentSynopsis()
+{
+    if ( !mDocumentSynopsis.hasChildNodes() )
+        return 0;
+    else
+        return &mDocumentSynopsis;
+}
+
+bool HTMLGenerator::print( KPrinter &printer )
+{
+    QPainter p( &printer );
+
+    for ( int i = 0; i < mTextDocument->pageCount(); ++i ) {
+        if ( i != 0 )
+            printer.newPage();
+
+        QRect rect( 0, i * 800, 600, 800 );
+        p.translate( QPoint( 0, i * -800 ) );
+        mTextDocument->drawContents( &p, rect );
+    }
+}
+
+Okular::ExportFormat::List HTMLGenerator::exportFormats() const
+{
+    return Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText );
+}
+
+bool HTMLGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
+{
+    QFile file( fileName );
+    if ( !fileName.open( QIODevice::WriteOnly ) ) {
+        emit error( i18n( "Unable to open file" ), -1 );
+        return false;
+    }
+
+    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) )
+        file.writeBlock( mTextDocument->toPlainText().toUtf8() );
+
+    file.close();
+
+    return true;
+}
+\endcode
+
+Let's take a closer look at the single methods. In the loadDocument() method we try to open the
+passed file name and read all the content into the QTextDocument object. By calling
+QTextDocument::setPageSize(), the whole document is divided into pages of the given size.
+In the next step we create Okular::Page objects for every page in the QTextDocument and fill
+the pages vector with them.
+
+Afterwards we fill our Okular::DocumentInfo object with data. Since extracting the HTML meta data
+would need a lot of code we work with static data here. [to be continued]
 */
 
 // DOXYGEN_EXCLUDE = conf generators shell ui

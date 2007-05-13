@@ -129,9 +129,8 @@ const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo()
     {
         m_docInfo=new Okular::DocumentInfo();
 
-        m_docInfo->set( "mimeType", "application/x-chm" );
-
-        m_docInfo->set( "title", m_file->Title(), i18n("Title") );
+        m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-chm" );
+        m_docInfo->set( Okular::DocumentInfo::Title, m_file->Title() );
     }
     return m_docInfo;
 }

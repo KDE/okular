@@ -123,32 +123,32 @@ const Okular::DocumentInfo * GSInternalDocument::generateDocumentInfo()
     {
         docInfo = new Okular::DocumentInfo();
 
-        docInfo->set( "title", m_dsc->dsc_title(), i18n("Title") );
-        docInfo->set( "author", m_dsc->dsc_for(), i18n("Author") );
-        docInfo->set( "creator", m_dsc->dsc_creator(), i18n("Creator") );
-        docInfo->set( "creationDate", m_dsc->dsc_date(), i18n("Created") );
-        docInfo->set( "copyright", m_dsc->dsc_copyright(), i18n("Copyright") );
+        docInfo->set( Okular::DocumentInfo::Title, m_dsc->dsc_title() );
+        docInfo->set( Okular::DocumentInfo::Author, m_dsc->dsc_for() );
+        docInfo->set( Okular::DocumentInfo::Creator, m_dsc->dsc_creator() );
+        docInfo->set( Okular::DocumentInfo::CreationDate, m_dsc->dsc_date() );
+        docInfo->set( Okular::DocumentInfo::Copyright, m_dsc->dsc_copyright() );
         QString dscVer=m_dsc->dsc_version();
         docInfo->set( "dscversion", dscVer, i18n("DSC version") );
 
         switch (m_format)
         {
             case PDF:
-                docInfo->set( "mimeType", "application/pdf" );
+                docInfo->set( Okular::DocumentInfo::MimeType, "application/pdf" );
                 break;
             case PS:
                 docInfo->set( "langlevel", QString::number(m_dsc->language_level()), i18n("Language Level") );
                 if (dscVer.contains ("EPS"))
-                    docInfo->set( "mimeType", "image/x-eps" );
+                    docInfo->set( Okular::DocumentInfo::MimeType, "image/x-eps" );
                 else
-                    docInfo->set( "mimeType", "application/postscript" );
+                    docInfo->set( Okular::DocumentInfo::MimeType, "application/postscript" );
                 break;
         }
 
         int pages=m_dsc->page_pages();
         if (!pages)
             pages = m_dsc->page_count();
-        docInfo->set( "pages", QString::number(pages), i18n("Pages") );
+        docInfo->set( Okular::DocumentInfo::Pages, QString::number(pages) );
     }
     return docInfo;
 }

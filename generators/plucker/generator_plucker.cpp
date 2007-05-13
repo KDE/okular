@@ -82,11 +82,11 @@ bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::P
             if ( it.key() == QLatin1String( "name" ) )
                 mDocumentInfo.set( "name", it.value(), i18n( "Name" ) );
             else if ( it.key() == QLatin1String( "title" ) )
-                mDocumentInfo.set( "title", it.value(), i18n( "Title" ) );
+                mDocumentInfo.set( Okular::DocumentInfo::Title, it.value() );
             else if ( it.key() == QLatin1String( "author" ) )
-                mDocumentInfo.set( "author", it.value(), i18n( "Author" ) );
+                mDocumentInfo.set( Okular::DocumentInfo::Author, it.value() );
             else if ( it.key() == QLatin1String( "time" ) )
-                mDocumentInfo.set( "creationDate", it.value(), i18n( "Created" ) );
+                mDocumentInfo.set( Okular::DocumentInfo::CreationDate, it.value() );
         }
     }
 

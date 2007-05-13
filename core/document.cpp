@@ -2477,6 +2477,54 @@ void DocumentInfo::set( const QString &key, const QString &value,
         docElement.appendChild( element );
 }
 
+void DocumentInfo::set( enum Key key, const QString &value )
+{
+    switch ( key ) {
+        case Title:
+            set( "title", value, i18n( "Title" ) );
+            break;
+        case Subject:
+            set( "subject", value, i18n( "Subject" ) );
+            break;
+        case Description:
+            set( "description", value, i18n( "Description" ) );
+            break;
+        case Author:
+            set( "author", value, i18n( "Author" ) );
+            break;
+        case Creator:
+            set( "creator", value, i18n( "Creator" ) );
+            break;
+        case Producer:
+            set( "producer", value, i18n( "Producer" ) );
+            break;
+        case Copyright:
+            set( "copyright", value, i18n( "Copyright" ) );
+            break;
+        case Pages:
+            set( "pages", value, i18n( "Pages" ) );
+            break;
+        case CreationDate:
+            set( "creationDate", value, i18n( "Created" ) );
+            break;
+        case ModificationDate:
+            set( "modificationDate", value, i18n( "Modified" ) );
+            break;
+        case MimeType:
+            set( "mimeType", value, i18n( "Mime Type" ) );
+            break;
+        case Category:
+            set( "category", value, i18n( "Category" ) );
+            break;
+        case Keywords:
+            set( "keywords", value, i18n( "Keywords" ) );
+            break;
+        default:
+            qWarning( "DocumentInfo::set(): Invalid key passed" );
+            break;
+    }
+}
+
 QString DocumentInfo::get( const QString &key ) const
 {
     QDomElement docElement = documentElement();

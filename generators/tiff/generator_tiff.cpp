@@ -144,28 +144,28 @@ const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
 
     m_docInfo = new Okular::DocumentInfo();
 
-    m_docInfo->set( "mimeType", "image/tiff" );
+    m_docInfo->set( Okular::DocumentInfo::MimeType, "image/tiff" );
 
     char* buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_IMAGEDESCRIPTION, &buffer );
-    m_docInfo->set( "description", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Description" ) );
+    m_docInfo->set( Okular::DocumentInfo::Description, buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ) );
 
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_SOFTWARE, &buffer );
-    m_docInfo->set( "software", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Software" ) );
+    m_docInfo->set( Okular::DocumentInfo::Producer, buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ) );
 
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_COPYRIGHT, &buffer );
-    m_docInfo->set( "copyright", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Copyright" ) );
+    m_docInfo->set( Okular::DocumentInfo::Copyright, buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ) );
 
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_ARTIST, &buffer );
-    m_docInfo->set( "artist", buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ), i18n( "Artist" ) );
+    m_docInfo->set( Okular::DocumentInfo::Author, buffer ? QString::fromLatin1( buffer ) : i18n( "Unknown" ) );
 
     buffer = 0;
     TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
     QDateTime date = convertTIFFDateTime( buffer );
-    m_docInfo->set( "dateTime", date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : i18n( "Unknown" ), i18n( "Creation date" ) );
+    m_docInfo->set( Okular::DocumentInfo::CreationDate, date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : i18n( "Unknown" ) );
 
     return m_docInfo;
 }

@@ -1245,7 +1245,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
 
     m_docInfo = new Okular::DocumentInfo();
 
-    m_docInfo->set( "mimeType", "application/vnd.ms-xpsdocument" );
+    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/vnd.ms-xpsdocument" );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
         const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));
@@ -1260,23 +1260,23 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
             if ( xml.isStartElement() )
             {
                 if (xml.name() == "title") {
-                    m_docInfo->set( "title", xml.readElementText(), i18n("Title") );
+                    m_docInfo->set( Okular::DocumentInfo::Title, xml.readElementText() );
                 } else if (xml.name() == "subject") {
-                    m_docInfo->set( "subject", xml.readElementText(), i18n("Subject") );
+                    m_docInfo->set( Okular::DocumentInfo::Subject, xml.readElementText() );
                 } else if (xml.name() == "description") {
-                    m_docInfo->set( "description", xml.readElementText(), i18n("Description") );
+                    m_docInfo->set( Okular::DocumentInfo::Description, xml.readElementText() );
                 } else if (xml.name() == "creator") {
-                    m_docInfo->set( "creator", xml.readElementText(), i18n("Author") );
+                    m_docInfo->set( Okular::DocumentInfo::Creator, xml.readElementText() );
                 } else if (xml.name() == "category") {
-                    m_docInfo->set( "category", xml.readElementText(), i18n("Category") );
+                    m_docInfo->set( Okular::DocumentInfo::Category, xml.readElementText() );
                 } else if (xml.name() == "created") {
                     QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( "creationDate", KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ), i18n("Created" ) );
+                    m_docInfo->set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "modified") {
                     QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( "modifiedDate", KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ), i18n("Modified" ) );
+                    m_docInfo->set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "keywords") {
-                    m_docInfo->set( "keywords", xml.readElementText(), i18n("Keywords") );
+                    m_docInfo->set( Okular::DocumentInfo::Keywords, xml.readElementText() );
                 }
             }
         }
@@ -1288,7 +1288,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
         kDebug(XpsDebug) << "No core properties filename" << endl;
     }
 
-    m_docInfo->set( "pages", QString::number(numPages()), i18n("Pages") );
+    m_docInfo->set( Okular::DocumentInfo::Pages, QString::number(numPages()) );
 
     return m_docInfo;
 }

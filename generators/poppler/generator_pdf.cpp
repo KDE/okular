@@ -498,19 +498,21 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
     {
         docLock.lock();
         
-        docInfo.set( "mimeType", "application/pdf" );
+        docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
         
         if ( pdfdoc )
         {
             // compile internal structure reading properties from PDFDoc
-            docInfo.set( "title", pdfdoc->info("Title"), i18n("Title") );
-            docInfo.set( "subject", pdfdoc->info("Subject"), i18n("Subject") );
-            docInfo.set( "author", pdfdoc->info("Author"), i18n("Author") );
-            docInfo.set( "keywords", pdfdoc->info("Keywords"), i18n("Keywords") );
-            docInfo.set( "creator", pdfdoc->info("Creator"), i18n("Creator") );
-            docInfo.set( "producer", pdfdoc->info("Producer"), i18n("Producer") );
-            docInfo.set( "creationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ), i18n("Created") );
-            docInfo.set( "modificationDate", KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ), i18n("Modified") );
+            docInfo.set( Okular::DocumentInfo::Title, pdfdoc->info("Title") );
+            docInfo.set( Okular::DocumentInfo::Subject, pdfdoc->info("Subject") );
+            docInfo.set( Okular::DocumentInfo::Author, pdfdoc->info("Author") );
+            docInfo.set( Okular::DocumentInfo::Keywords, pdfdoc->info("Keywords") );
+            docInfo.set( Okular::DocumentInfo::Creator, pdfdoc->info("Creator") );
+            docInfo.set( Okular::DocumentInfo::Producer, pdfdoc->info("Producer") );
+            docInfo.set( Okular::DocumentInfo::CreationDate,
+                         KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ) );
+            docInfo.set( Okular::DocumentInfo::ModificationDate,
+                         KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
 
             docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1",
                           pdfdoc->pdfVersion() ), i18n( "Format" ) );
@@ -519,25 +521,25 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
             docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),
                          i18n("Optimized") );
 
-            docInfo.set( "pages", QString::number( pdfdoc->numPages() ), i18n("Pages") );
+            docInfo.set( Okular::DocumentInfo::Pages, QString::number( pdfdoc->numPages() ) );
         }
         else
         {
             // TODO not sure one can reach here, check and if it is not possible, remove the code
-            docInfo.set( "title", i18n("Unknown"), i18n("Title") );
-            docInfo.set( "subject", i18n("Unknown"), i18n("Subject") );
-            docInfo.set( "author", i18n("Unknown"), i18n("Author") );
-            docInfo.set( "keywords", i18n("Unknown"), i18n("Keywords") );
-            docInfo.set( "creator", i18n("Unknown"), i18n("Creator") );
-            docInfo.set( "producer", i18n("Unknown"), i18n("Producer") );
-            docInfo.set( "creationDate", i18n("Unknown Date"), i18n("Created") );
-            docInfo.set( "modificationDate", i18n("Unknown Date"), i18n("Modified") );
+            docInfo.set( Okular::DocumentInfo::Title, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::Subject, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::Author, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::Keywords, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::Creator, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::Producer, i18n("Unknown") );
+            docInfo.set( Okular::DocumentInfo::CreationDate, i18n("Unknown Date") );
+            docInfo.set( Okular::DocumentInfo::ModificationDate, i18n("Unknown Date") );
 
             docInfo.set( "format", "PDF", i18n( "Format" ) );
             docInfo.set( "encryption", i18n( "Unknown Encryption" ), i18n( "Security" ) );
             docInfo.set( "optimization", i18n( "Unknown Optimization" ), i18n( "Optimized" ) );
 
-            docInfo.set( "pages", i18n("Unknown"), i18n("Pages") );
+            docInfo.set( Okular::DocumentInfo::Pages, i18n("Unknown") );
         }
         docLock.unlock();
 

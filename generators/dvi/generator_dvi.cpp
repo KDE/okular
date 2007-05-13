@@ -308,7 +308,7 @@ const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
 
     m_docInfo = new Okular::DocumentInfo();
 
-    m_docInfo->set( "mimeType", "application/x-dvi" );
+    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
 
     if ( m_dviRenderer && m_dviRenderer->dviFile )
     {
@@ -318,8 +318,7 @@ const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
         //m_docInfo->set( "filename", dvif->filename, i18n("Filename") );
         m_docInfo->set( "generatorDate", dvif->generatorString,
                        i18n("Generator/Date") );
-        m_docInfo->set( "pages", QString::number( dvif->total_pages ),
-                       i18n("Pages") );
+        m_docInfo->set( Okular::DocumentInfo::Pages, QString::number( dvif->total_pages ) );
     }
     return m_docInfo;
 }

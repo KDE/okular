@@ -640,6 +640,25 @@ class OKULAR_EXPORT DocumentInfo : public QDomDocument
 {
     public:
         /**
+         * The list of predefined keys.
+         */
+        enum Key {
+            Title,              ///< The title of the document
+            Subject,            ///< The subject of the document
+            Description,        ///< The description of the document
+            Author,             ///< The author of the document
+            Creator,            ///< The creator of the document (this can be different from the author)
+            Producer,           ///< The producer of the document (e.g. some software)
+            Copyright,          ///< The copyright of the document
+            Pages,              ///< The number of pages of the document
+            CreationDate,       ///< The date of creation of the document
+            ModificationDate,   ///< The date of last modification of the document
+            MimeType,           ///< The mime type of the document
+            Category,           ///< The category of the document
+            Keywords            ///< The keywords which describe the content of the document
+        };
+
+        /**
          * Creates a new document info.
          */
         DocumentInfo();
@@ -650,6 +669,12 @@ class OKULAR_EXPORT DocumentInfo : public QDomDocument
          */
         void set( const QString &key, const QString &value,
                   const QString &title = QString() );
+
+        /**
+         * Sets the value for a predefined key. You should use this method
+         * whenever a predefined key exists for your value.
+         */
+        void set( enum Key, const QString &value );
 
         /**
          * Returns the value for a given key or an empty string when the

@@ -785,7 +785,7 @@ bool PDFGenerator::print( KPrinter& printer )
         {
             bool ok;
             qtPageSize = pageNameToPageSize(ps, &ok);
-	    // If we could not decode page size from the cups text try KPrinter::pageSize as last resort :-D
+            // If we could not decode page size from the cups text try KPrinter::pageSize as last resort :-D
             if (!ok) qtPageSize = printer.pageSize();
         }
         else qtPageSize = printer.pageSize();

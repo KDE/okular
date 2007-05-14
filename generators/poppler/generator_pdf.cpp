@@ -781,8 +781,14 @@ bool PDFGenerator::print( KPrinter& printer )
         // size is supported by Qt, we get either the pageSize name or nothing because the CUPS driver
         // does not do any translation, then use KPrinter::pageSize to get the page size
         KPrinter::PageSize qtPageSize; 
-        if (!ps.isEmpty()) qtPageSize = pageNameToPageSize(ps); 
-        else qtPageSize = printer.pageSize(); 
+        if (!ps.isEmpty())
+        {
+            bool ok;
+            qtPageSize = pageNameToPageSize(ps, &ok);
+	    // If we could not decode page size from the cups text try KPrinter::pageSize as last resort :-D
+            if (!ok) qtPageSize = printer.pageSize();
+        }
+        else qtPageSize = printer.pageSize();
 
         QPrinter dummy(QPrinter::PrinterResolution);
         dummy.setOrientation((QPrinter::Orientation)printer.orientation());

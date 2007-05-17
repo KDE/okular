@@ -1,23 +1,29 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>DlgAccessibilityBase</class>
  <widget class="QWidget" name="DlgAccessibilityBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
-    <height>408</height>
+    <width>391</width>
+    <height>442</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>0</number>
-   </property>
    <property name="spacing" >
     <number>6</number>
+   </property>
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
    </property>
    <item>
     <widget class="QCheckBox" name="kcfg_HighlightImages" >
@@ -48,18 +54,25 @@
       <bool>false</bool>
      </property>
      <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
       <property name="spacing" >
        <number>6</number>
+      </property>
+      <property name="leftMargin" >
+       <number>9</number>
+      </property>
+      <property name="topMargin" >
+       <number>9</number>
+      </property>
+      <property name="rightMargin" >
+       <number>9</number>
+      </property>
+      <property name="bottomMargin" >
+       <number>9</number>
       </property>
       <item>
        <widget class="QLabel" name="warn" >
         <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>5</hsizetype>
-          <vsizetype>4</vsizetype>
+         <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -77,12 +90,27 @@
       </item>
       <item>
        <widget class="KButtonGroup" name="kcfg_RenderMode" >
+        <property name="title" >
+         <string>Color Modes</string>
+        </property>
+        <property name="flat" >
+         <bool>true</bool>
+        </property>
         <layout class="QVBoxLayout" >
-         <property name="margin" >
-          <number>9</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="leftMargin" >
+          <number>0</number>
+         </property>
+         <property name="topMargin" >
+          <number>4</number>
+         </property>
+         <property name="rightMargin" >
+          <number>0</number>
+         </property>
+         <property name="bottomMargin" >
+          <number>0</number>
          </property>
          <item>
           <widget class="QRadioButton" name="radioInverted" >
@@ -103,11 +131,20 @@
          </item>
          <item>
           <layout class="QHBoxLayout" >
-           <property name="margin" >
-            <number>0</number>
-           </property>
            <property name="spacing" >
             <number>6</number>
+           </property>
+           <property name="leftMargin" >
+            <number>0</number>
+           </property>
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
            </property>
            <item>
             <spacer>
@@ -149,11 +186,20 @@
          </item>
          <item>
           <layout class="QHBoxLayout" >
-           <property name="margin" >
-            <number>0</number>
-           </property>
            <property name="spacing" >
             <number>6</number>
+           </property>
+           <property name="leftMargin" >
+            <number>0</number>
+           </property>
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
            </property>
            <item>
             <spacer>
@@ -185,11 +231,20 @@
          </item>
          <item>
           <layout class="QHBoxLayout" >
-           <property name="margin" >
-            <number>0</number>
-           </property>
            <property name="spacing" >
             <number>6</number>
+           </property>
+           <property name="leftMargin" >
+            <number>0</number>
+           </property>
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
            </property>
            <item>
             <spacer>
@@ -228,10 +283,22 @@
          </item>
          <item>
           <layout class="QGridLayout" >
-           <property name="margin" >
+           <property name="leftMargin" >
             <number>0</number>
            </property>
-           <property name="spacing" >
+           <property name="topMargin" >
+            <number>0</number>
+           </property>
+           <property name="rightMargin" >
+            <number>0</number>
+           </property>
+           <property name="bottomMargin" >
+            <number>0</number>
+           </property>
+           <property name="horizontalSpacing" >
+            <number>5</number>
+           </property>
+           <property name="verticalSpacing" >
             <number>5</number>
            </property>
            <item row="1" column="1" >
@@ -240,22 +307,6 @@
               <string>Contrast:</string>
              </property>
             </widget>
-           </item>
-           <item row="1" column="3" >
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType" >
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>48</width>
-               <height>21</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item row="1" column="0" >
             <spacer>
@@ -289,28 +340,10 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="3" >
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType" >
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>48</width>
-               <height>21</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="1" column="2" >
             <widget class="QSlider" name="kcfg_BWContrast" >
              <property name="sizePolicy" >
-              <sizepolicy>
-               <hsizetype>7</hsizetype>
-               <vsizetype>0</vsizetype>
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -326,9 +359,7 @@
            <item row="0" column="2" >
             <widget class="QSlider" name="kcfg_BWThreshold" >
              <property name="sizePolicy" >
-              <sizepolicy>
-               <hsizetype>7</hsizetype>
-               <vsizetype>0</vsizetype>
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -375,18 +406,15 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KColorButton</class>
-   <extends>QPushButton</extends>
-   <header>kcolorbutton.h</header>
-   <container>0</container>
-   <pixmap></pixmap>
-  </customwidget>
-  <customwidget>
    <class>KButtonGroup</class>
    <extends>QGroupBox</extends>
    <header>kbuttongroup.h</header>
    <container>1</container>
-   <pixmap></pixmap>
+  </customwidget>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

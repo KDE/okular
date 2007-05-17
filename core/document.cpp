@@ -2526,7 +2526,7 @@ void DocumentInfo::set( enum Key key, const QString &value )
             set( "keywords", value, i18n( "Keywords" ) );
             break;
         default:
-            qWarning( "DocumentInfo::set(): Invalid key passed" );
+            kWarning() << "DocumentInfo::set(): Invalid key passed" << endl;
             break;
     }
 }

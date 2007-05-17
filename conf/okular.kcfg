@@ -30,10 +30,7 @@
    <choices>
     <choice name="Inverted" />
     <choice name="Paper" />
-    <choice name="pad_paper_color" />
     <choice name="Recolor" />
-    <choice name="pad_fg_color" />
-    <choice name="pad_bg_color" />
     <choice name="BlackWhite" />
    </choices>
   </entry>
@@ -61,7 +58,6 @@
     <choice name="Low" />
     <choice name="Normal" />
     <choice name="Aggressive" />
-    <choice name="pad_description" />
    </choices>
   </entry>
   <entry key="EnableCompositing" type="Bool" >
@@ -204,6 +200,10 @@
   </entry>
   <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
+  </entry>
+  <entry key="ViewMode" type="UInt" >
+   <default>0</default>
+   <max>2</max>
   </entry>
   <entry key="ZoomMode" type="UInt" >
     <default>2</default>

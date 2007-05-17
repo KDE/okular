@@ -176,7 +176,7 @@ Q_OBJECT
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
         void slotFitToTextToggled( bool );
-        void slotRenderMode( int );
+        void slotViewMode( int );
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();

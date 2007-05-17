@@ -148,13 +148,13 @@ public:
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;
-    KSelectAction * aRenderMode;
+    KSelectAction * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
     KAction * aToggleForms;
     KActionCollection * actionCollection;
 
-    int setting_renderMode;
+    int setting_viewMode;
     int setting_renderCols;
 };
 
@@ -258,7 +258,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
-    d->aRenderMode = 0;
+    d->aViewMode = 0;
     d->zoomMode = (PageView::ZoomMode) Okular::Settings::zoomMode();
     d->zoomFactor = Okular::Settings::zoomFactor();
     d->mouseMode = MouseNormal;
@@ -279,7 +279,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->m_formsVisible = false;
     d->aPrevAction = 0;
     d->aPageSizes=0;
-    d->setting_renderMode = Okular::Settings::renderMode();
+    d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_renderCols = Okular::Settings::viewColumns();
 
     setAttribute( Qt::WA_StaticContents );
@@ -381,16 +381,16 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 
     // View-Layout actions
-    QStringList renderModes;
-    renderModes.append( i18n( "Single" ) );
-    renderModes.append( i18n( "Facing" ) );
-    renderModes.append( i18n( "Overview" ) );
+    QStringList viewModes;
+    viewModes.append( i18n( "Single" ) );
+    viewModes.append( i18n( "Facing" ) );
+    viewModes.append( i18n( "Overview" ) );
 
-    d->aRenderMode  = new KSelectAction(KIcon( "view-left-right" ), i18n("&View Mode"), this);
-    ac->addAction("view_render_mode", d->aRenderMode );
-    connect( d->aRenderMode, SIGNAL( triggered( int ) ), SLOT( slotRenderMode( int ) ) );
-    d->aRenderMode->setItems( renderModes );
-    d->aRenderMode->setCurrentItem( Okular::Settings::renderMode() );
+    d->aViewMode  = new KSelectAction(KIcon( "view-left-right" ), i18n("&View Mode"), this);
+    ac->addAction("view_render_mode", d->aViewMode );
+    connect( d->aViewMode, SIGNAL( triggered( int ) ), SLOT( slotViewMode( int ) ) );
+    d->aViewMode->setItems( viewModes );
+    d->aViewMode->setCurrentItem( Okular::Settings::viewMode() );
 
     d->aViewContinuous  = new KToggleAction(KIcon( "fileview-text" ), i18n("&Continuous"), this);
     ac->addAction("view_continuous", d->aViewContinuous );
@@ -452,18 +452,18 @@ void PageView::setupActions( KActionCollection * ac )
 
 bool PageView::canFitPageWidth() const
 {
-    return Okular::Settings::renderMode() != 0 || d->zoomMode != ZoomFitWidth;
+    return Okular::Settings::viewMode() != 0 || d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
-    Okular::Settings::setRenderMode( 0 );
+    Okular::Settings::setViewMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
     d->aZoomFitText->setChecked( false );
-    d->aRenderMode->setCurrentItem( 0 );
+    d->aViewMode->setCurrentItem( 0 );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
@@ -548,10 +548,10 @@ void PageView::reparseConfig()
         setVerticalScrollBarPolicy( scrollBarMode );
     }
 
-    if ( Okular::Settings::renderMode() == 2 &&
+    if ( Okular::Settings::viewMode() == 2 &&
          ( (int)Okular::Settings::viewColumns() != d->setting_renderCols ) )
     {
-        d->setting_renderMode = Okular::Settings::renderMode();
+        d->setting_viewMode = Okular::Settings::viewMode();
         d->setting_renderCols = Okular::Settings::viewColumns();
 
         slotRelayoutPages();
@@ -2277,7 +2277,7 @@ void PageView::updateCursor( const QPoint &p )
 
 int PageView::viewColumns() const
 {
-    int nr=Okular::Settings::renderMode();
+    int nr = Okular::Settings::viewMode();
     if (nr<2)
 	return nr+1;
     return Okular::Settings::viewColumns();
@@ -2285,7 +2285,7 @@ int PageView::viewColumns() const
 
 int PageView::viewRows() const
 {
-    if (Okular::Settings::renderMode()<2)
+    if ( Okular::Settings::viewMode() < 2 )
 	return 1;
     return Okular::Settings::viewRows();
 }
@@ -2319,7 +2319,7 @@ void PageView::toggleFormWidgets( bool on )
 
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
-// called by: notifySetup, viewportResizeEvent, slotRenderMode, slotContinuousToggled, updateZoom
+// called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
 {
     // set an empty container if we have no pages
     int pageCount = d->items.count();
@@ -2360,7 +2360,7 @@ void PageView::slotRelayoutPages()
         // so we can place widgets 'centered in virtual cells'.
 	int nRows;
 
-// 	if ( Okular::Settings::renderMode() < 2 )
+// 	if ( Okular::Settings::viewMode() < 2 )
         	nRows = (int)ceil( (float)pageCount / (float)nCols );
 // 		nRows=(int)ceil( (float)pageCount / (float) Okular::Settings::viewRows() );
 // 	else
@@ -2454,7 +2454,7 @@ void PageView::slotRelayoutPages()
 	int nRows=viewRows();
 
         // handle the 'centering on first row' stuff
-        if ( centerFirstPage && d->document->currentPage() < 1 && Okular::Settings::renderMode() == 1 )
+        if ( centerFirstPage && d->document->currentPage() < 1 && Okular::Settings::viewMode() == 1 )
             nCols = 1, nRows=1;
 
         // setup varialbles for a M(row) x N(columns) grid
@@ -2819,7 +2819,7 @@ void PageView::slotFitToTextToggled( bool on )
     if ( on ) updateZoom( ZoomFitText );
 }
 
-void PageView::slotRenderMode( int nr )
+void PageView::slotViewMode( int nr )
 {
     uint newColumns;
     if (nr<2)
@@ -2827,9 +2827,9 @@ void PageView::slotRenderMode( int nr )
     else
 	newColumns = Okular::Settings::viewColumns();
 
-    if ( Okular::Settings::renderMode() != nr )
+    if ( (int)Okular::Settings::viewMode() != nr )
     {
-        Okular::Settings::setRenderMode( nr );
+        Okular::Settings::setViewMode( nr );
         Okular::Settings::writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();

@@ -1117,15 +1117,21 @@ void KPDFDocument::requestDone( PixmapRequest * req )
             break;
         }
 
-    // [MEM] 1.2 append memory allocation descriptor to the FIFO
-    int memoryBytes = 4 * req->width * req->height;
-    AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id, req->pageNumber, memoryBytes );
-    d->allocatedPixmapsFifo.append( memoryPage );
-    d->allocatedPixmapsTotalMemory += memoryBytes;
-
-    // 2. notify an observer that its pixmap changed
     if ( d->observers.contains( req->id ) )
+    {
+        // [MEM] 1.2 append memory allocation descriptor to the FIFO
+        int memoryBytes = 4 * req->width * req->height;
+        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id, req->pageNumber, memoryBytes );
+        d->allocatedPixmapsFifo.append( memoryPage );
+        d->allocatedPixmapsTotalMemory += memoryBytes;
+
+        // 2. notify an observer that its pixmap changed
         d->observers[ req->id ]->notifyPageChanged( req->pageNumber, DocumentObserver::Pixmap );
+    }
+#ifndef NDEBUG
+    else
+        kdWarning() << "Receiving a done request for the defunct observer " << req->id << endl;
+#endif
 
     // 3. delete request
     delete req;

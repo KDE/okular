@@ -2268,16 +2268,22 @@ void Document::requestDone( PixmapRequest * req )
             break;
         }
 
-    // [MEM] 1.2 append memory allocation descriptor to the FIFO
-    int memoryBytes = 4 * req->width() * req->height();
-    AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
-    d->m_allocatedPixmapsFifo.append( memoryPage );
-    d->m_allocatedPixmapsTotalMemory += memoryBytes;
-
-    // 2. notify an observer that its pixmap changed
     QMap< int, DocumentObserver * >::const_iterator itObserver = d->m_observers.constFind( req->id() );
     if ( itObserver != d->m_observers.constEnd() )
+    {
+        // [MEM] 1.2 append memory allocation descriptor to the FIFO
+        int memoryBytes = 4 * req->width() * req->height();
+        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
+        d->m_allocatedPixmapsFifo.append( memoryPage );
+        d->m_allocatedPixmapsTotalMemory += memoryBytes;
+
+        // 2. notify an observer that its pixmap changed
         itObserver.value()->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
+    }
+#ifndef NDEBUG
+    else
+        kWarning() << "Receiving a done request for the defunct observer " << req->id() << endl;
+#endif
 
     // 3. delete request
     delete req;

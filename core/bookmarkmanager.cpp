@@ -283,13 +283,11 @@ bool BookmarkManager::setPageBookmark( int page )
 
     bool found = false;
     bool added = false;
-    int count = 0;
     for ( KBookmark bm = it.value().first(); !found && !bm.isNull(); bm = it.value().next( bm ) )
     {
         if ( bm.isSeparator() || bm.isGroup() )
             continue;
 
-        ++count;
         DocumentViewport vp( bm.url().htmlRef() );
         if ( vp.isValid() && vp.pageNumber == page )
             found = true;
@@ -305,7 +303,7 @@ bool BookmarkManager::setPageBookmark( int page )
         vp.rePos.normalizedY = 0;
         KUrl newurl = d->url;
         newurl.setHTMLRef( vp.toString() );
-        it.value().addBookmark( d->manager, QString( "#%1" ).arg( count + 1 ), newurl, QString(), false );
+        it.value().addBookmark( d->manager, QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString(), false );
         added = true;
     }
     return added;

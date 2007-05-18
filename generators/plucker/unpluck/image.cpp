@@ -248,6 +248,12 @@ bool TranscribePalmImageToJPEG
         return false;
     }
 
+    QTemporaryFile tempFile;
+    tempFile.open();
+    FILE *outfile = fopen( QFile::encodeName( tempFile.fileName() ), "w" );
+    if ( !outfile )
+      return false;
+
     /* now create the JPEG image row buffer */
     jpeg_row = (JSAMPLE *) malloc (sizeof (JSAMPLE) * (width * 3));
 
@@ -255,12 +261,6 @@ bool TranscribePalmImageToJPEG
     cinfo.err = jpeg_std_error (&jerr);
     /* Initialize the JPEG compression object. */
     jpeg_create_compress (&cinfo);
-
-    QTemporaryFile tempFile;
-    tempFile.open();
-    FILE *outfile = fopen( QFile::encodeName( tempFile.fileName() ), "w" );
-    if ( !outfile )
-      return false;
 
     jpeg_stdio_dest (&cinfo, outfile);
 

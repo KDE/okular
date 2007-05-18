@@ -1426,10 +1426,11 @@ bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
         QTextStream ts( &f );
         for ( int i = 0; i < m_xpsFile->numPages(); ++i )
         {
-            XpsPage *thisPage = m_xpsFile->page(i);
-            QString text = thisPage->textPage()->text();
+            Okular::TextPage* textPage = m_xpsFile->page(i)->textPage();
+            QString text = textPage->text();
             ts << text;
             ts << QChar('\n');
+            delete textPage;
         }
         f.close();
 

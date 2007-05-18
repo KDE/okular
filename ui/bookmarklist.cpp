@@ -93,7 +93,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     m_tree->setItemDelegate( new PageItemDelegate( m_tree ) );
     m_tree->header()->hide();
     m_tree->setSelectionBehavior( QAbstractItemView::SelectRows );
-    connect( m_tree, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
+    m_tree->setEditTriggers( QAbstractItemView::EditKeyPressed );
     connect( m_tree, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
     connect( m_tree, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( slotContextMenu( const QPoint& ) ) );
     m_searchLine->addTreeWidget( m_tree );

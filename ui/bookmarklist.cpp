@@ -251,12 +251,16 @@ void BookmarkList::rebuildTree( bool filter )
         QTreeWidgetItem * currenturlitem = 0;
         foreach ( const KUrl& url, urls )
         {
-            QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
-            item->setText( 0, url.isLocalFile() ? url.path() : url.prettyUrl() );
-            item->addChildren( createItems( url, m_document->bookmarkManager()->bookmarks( url ) ) );
-            if ( !currenturlitem && url == m_document->currentDocument() )
+            QList<QTreeWidgetItem*> subitems = createItems( url, m_document->bookmarkManager()->bookmarks( url ) );
+            if ( !subitems.isEmpty() )
             {
-                currenturlitem = item;
+                QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
+                item->setText( 0, url.isLocalFile() ? url.path() : url.prettyUrl() );
+                item->addChildren( subitems );
+                if ( !currenturlitem && url == m_document->currentDocument() )
+                {
+                    currenturlitem = item;
+                }
             }
         }
         if ( currenturlitem )

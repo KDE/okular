@@ -71,15 +71,6 @@
 #include "core/generator.h"
 #include "settings.h"
 
-#include <config-okular.h>
-
-#if defined(Q_WS_X11) && defined(HAVE_XRENDER)
-#include <QX11Info>
-#include <X11/Xlib.h>
-#include <X11/extensions/Xrender.h>
-#include <fixx11h.h>
-#endif
-
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;

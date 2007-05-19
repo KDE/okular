@@ -338,7 +338,7 @@ m_searchStarted(false), m_cliPresentation(false)
     }
     else
     {
-                                 // TODO: improve this message
+        // TODO: improve this message
         prefs->setText( i18n( "Configure Viewer..." ) );
     }
 
@@ -372,7 +372,7 @@ m_searchStarted(false), m_cliPresentation(false)
     ghns->setText(i18n("&Get Books From Internet..."));
     ghns->setIcon(KIcon("get-hot-new-stuff"));
     connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
-                                 // TEMP, REMOVE ME!
+    // TEMP, REMOVE ME!
     ghns->setShortcut( Qt::Key_G );
 
     m_showProperties = ac->addAction("properties");

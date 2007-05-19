@@ -155,7 +155,7 @@ public:
     KActionCollection * actionCollection;
 
     int setting_viewMode;
-    int setting_renderCols;
+    int setting_viewCols;
 };
 
 class PageViewWidget : public QWidget
@@ -280,7 +280,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPrevAction = 0;
     d->aPageSizes=0;
     d->setting_viewMode = Okular::Settings::viewMode();
-    d->setting_renderCols = Okular::Settings::viewColumns();
+    d->setting_viewCols = Okular::Settings::viewColumns();
 
     setAttribute( Qt::WA_StaticContents );
 
@@ -549,10 +549,10 @@ void PageView::reparseConfig()
     }
 
     if ( Okular::Settings::viewMode() == 2 &&
-         ( (int)Okular::Settings::viewColumns() != d->setting_renderCols ) )
+         ( (int)Okular::Settings::viewColumns() != d->setting_viewCols ) )
     {
         d->setting_viewMode = Okular::Settings::viewMode();
-        d->setting_renderCols = Okular::Settings::viewColumns();
+        d->setting_viewCols = Okular::Settings::viewColumns();
 
         slotRelayoutPages();
     }

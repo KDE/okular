@@ -14,7 +14,7 @@
 
 \page okular_history Historical background
 
-Okular is the successor of <a href="kpdf.kde.org">kpdf</a>, the PDF viewer in KDE 3.
+Okular is the successor of <a href="http://kpdf.kde.org">kpdf</a>, the PDF viewer in KDE 3.
 kpdf was refactored and extended in a Google Summer of Code project to support not only
 viewing PDF but also other types of document, e.g. PostScript files, images and many more.
 

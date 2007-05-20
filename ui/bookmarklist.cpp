@@ -255,7 +255,9 @@ void BookmarkList::rebuildTree( bool filter )
             if ( !subitems.isEmpty() )
             {
                 QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
-                item->setText( 0, url.isLocalFile() ? url.path() : url.prettyUrl() );
+                QString fileString = url.isLocalFile() ? url.path() : url.prettyUrl();
+                item->setText( 0, fileString );
+                item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, subitems.count() ) );
                 item->addChildren( subitems );
                 if ( !currenturlitem && url == m_document->currentDocument() )
                 {

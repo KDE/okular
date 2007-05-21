@@ -24,6 +24,7 @@
 #include <ktreewidgetsearchline.h>
 
 #include "pageitemdelegate.h"
+#include "core/action.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 
@@ -284,8 +285,8 @@ void BookmarkList::goTo( BookmarkItem * item )
     }
     else
     {
-        m_document->setNextDocumentViewport( item->viewport() );
-        emit openUrl( item->url() );
+        Okular::GotoAction action( item->url().pathOrUrl(), item->viewport() );
+        m_document->processAction( &action );
     }
 }
 

@@ -180,7 +180,6 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // [left toolbox: Bookmarks] | []
     BookmarkList * bookmarkList = new BookmarkList( m_document, m_toolBox );
-    connect( bookmarkList, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
     m_toolBox->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
 
     // widgets: [../miniBarContainer] | []

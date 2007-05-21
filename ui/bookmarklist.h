@@ -38,9 +38,6 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
         void notifyPageChanged( int pageNumber, int changedFlags );
 
-    signals:
-        void openUrl( const KUrl& );
-
     private slots:
         void slotFilterBookmarks( bool );
         void slotExecuted( QTreeWidgetItem * item );

@@ -54,7 +54,10 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     pagesVector.resize(m_file->m_UrlPage.count());
 
     if (!m_syncGen)
+    {
         m_syncGen = new KHTMLPart();
+        connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
+    }
 
     QMap <QString, int>::ConstIterator it=m_file->m_UrlPage.begin(), end=m_file->m_UrlPage.end();
     for (;it!=end;++it)
@@ -64,8 +67,6 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
     }
-
-    connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
 
     return true;
 }
@@ -79,6 +80,10 @@ bool CHMGenerator::closeDocument()
     m_file=0;
     m_textpageAddedList.clear();
     m_docSyn.clear();
+    if (m_syncGen)
+    {
+        m_syncGen->closeUrl();
+    }
 
     return true;
 }
@@ -118,6 +123,8 @@ void CHMGenerator::slotCompleted()
         additionalRequestData();
         m_textpageAddedList.insert( m_request->pageNumber() );
     }
+
+    m_syncGen->closeUrl();
 
     syncLock.unlock();
 

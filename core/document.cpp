@@ -12,6 +12,7 @@
 
 // qt/kde/system includes
 #include <QtCore/QtAlgorithms>
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QHash>
@@ -462,6 +463,9 @@ QString DocumentPrivate::giveAbsolutePath( const QString & fileName )
 {
     if ( !m_url.isValid() )
         return QString();
+
+    if ( !QDir::isRelativePath( fileName ) )
+        return fileName;
 
     return m_url.upUrl().url() + fileName;
 }

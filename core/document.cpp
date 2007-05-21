@@ -422,13 +422,6 @@ void DocumentPrivate::loadDocumentInfo()
             {
                 QDomElement infoElement = infoNode.toElement();
 
-                // compatibility: [pre-3.4 viewport storage] @remove after 3.4 relase
-                if ( infoElement.tagName() == "activePage" )
-                {
-                    if ( infoElement.hasAttribute( "viewport" ) )
-                        *m_viewportIterator = DocumentViewport( infoElement.attribute( "viewport" ) );
-                }
-
                 // restore viewports history
                 if ( infoElement.tagName() == "history" )
                 {

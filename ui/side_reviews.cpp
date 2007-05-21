@@ -276,7 +276,8 @@ void Reviews::slotUpdateListView()
     {
         m_listView->setRootIsDecorated( false );
         m_listView->setSelectionMode( QTreeWidget::NoSelection );
-        new ReviewItem( m_listView, i18n("<No Items>") );
+        QTreeWidgetItem * reviewItem = new ReviewItem( m_listView, i18n("<No Items>") );
+        reviewItem->setTextAlignment( 0, Qt::AlignCenter );
     }
 }
 

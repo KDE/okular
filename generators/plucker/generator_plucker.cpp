@@ -55,18 +55,11 @@ PluckerGenerator::PluckerGenerator()
 
 PluckerGenerator::~PluckerGenerator()
 {
-    qDeleteAll( mPages );
-    mPages.clear();
 }
 
 bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
     QUnpluck unpluck;
-
-    mLinkAdded.clear();
-
-    qDeleteAll( mPages );
-    mPages.clear();
 
     if ( !unpluck.open( fileName ) )
         return false;
@@ -103,6 +96,12 @@ bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::P
 
 bool PluckerGenerator::closeDocument()
 {
+    mLinkAdded.clear();
+    mLinks.clear();
+
+    qDeleteAll( mPages );
+    mPages.clear();
+
     return true;
 }
 

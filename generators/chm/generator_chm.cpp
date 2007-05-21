@@ -47,8 +47,6 @@ CHMGenerator::~CHMGenerator()
 
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
-    m_textpageAddedList.clear();
-
     m_fileName=fileName;
     m_file=new CHMFile (fileName);
     m_file->ParseAndFillTopicsTree (&m_docSyn);
@@ -79,6 +77,8 @@ bool CHMGenerator::closeDocument()
     m_docInfo=0;
     delete m_file;
     m_file=0;
+    m_textpageAddedList.clear();
+    m_docSyn.clear();
 
     return true;
 }

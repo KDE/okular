@@ -421,9 +421,9 @@ bool PDFGenerator::closeDocument()
     docLock.unlock();
     docInfoDirty = true;
     docSynopsisDirty = true;
-    docSyn = Okular::DocumentSynopsis();
+    docSyn.clear();
     docFontsDirty = true;
-    docFonts = Okular::DocumentFonts();
+    docFonts.clear();
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();

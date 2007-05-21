@@ -213,11 +213,6 @@ TextDocumentGenerator::~TextDocumentGenerator()
 
 bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    d->mTitlePositions.clear();
-    d->mLinkPositions.clear();
-    d->mLinkInfos.clear();
-    d->mAnnotationInfos.clear();
-
     d->mDocument = d->mConverter->convert( fileName );
 
     if ( !d->mDocument )
@@ -269,6 +264,11 @@ bool TextDocumentGenerator::closeDocument()
 {
     delete d->mDocument;
     d->mDocument = 0;
+
+    d->mTitlePositions.clear();
+    d->mLinkPositions.clear();
+    d->mLinkInfos.clear();
+    d->mAnnotationInfos.clear();
 
     return true;
 }

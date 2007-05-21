@@ -40,6 +40,11 @@ CHMGenerator::CHMGenerator()
     m_request = 0;
 }
 
+CHMGenerator::~CHMGenerator()
+{
+    delete m_syncGen;
+}
+
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     m_textpageAddedList.clear();

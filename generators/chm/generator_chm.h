@@ -15,7 +15,6 @@
 
 #include <QtCore/QMutex>
 #include <QtCore/QSet>
-#include <QtCore/QSize>
 
 class CHMFile;
 class KHTMLPart;
@@ -33,6 +32,7 @@ class CHMGenerator : public Okular::Generator
     Q_OBJECT
     public:
         CHMGenerator();
+        ~CHMGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
         bool closeDocument();
 

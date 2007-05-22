@@ -13,6 +13,7 @@ GenericName[ja]=文書ビューア
 GenericName[pa]=ਦਸਤਾਵੇਜ਼ ਦਰਸ਼ਕ
 GenericName[sv]=Dokumentvisare
 GenericName[x-test]=xxDocument Viewerxx
+GenericName[zh_TW]=文件檢視器
 Exec=okular %U %i -caption "%c"
 Icon=okular
 Type=Application

@@ -8,6 +8,7 @@ Comment[ja]=okular の Windows HTMLHelp バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਵਿੰਡੋ HTMLHelp ਬੈਕਐਂਡ
 Comment[sv]=Windows HTMLHelp-gränssnitt för Okular
 Comment[x-test]=xxWindows HTMLHelp backend for okularxx
+Comment[zh_TW]=okular 的 Windows HTMLHelp 後端
 ServiceTypes=okular/Generator
 MimeType=application/x-chm
 X-KDE-Library=libokularGenerator_chmlib

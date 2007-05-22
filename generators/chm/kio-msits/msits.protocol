@@ -10,4 +10,5 @@ Description=A kioslave for displaying WinHelp files
 Description[ja]=WinHelp ファイルを表示するための kioslave
 Description[sv]=En I/O-slav för att visa WinHelp-filer
 Description[x-test]=xxA kioslave for displaying WinHelp filesxx
+Description[zh_TW]=顯示 WinHelp 檔的 kioslave
 Icon=help

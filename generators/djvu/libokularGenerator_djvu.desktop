@@ -8,6 +8,7 @@ Comment[ja]=okular の DjVu バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DjVu ਬੈਕਐਂਡ
 Comment[sv]=DjVu-gränssnitt för Okular
 Comment[x-test]=xxDjVu backend for okularxx
+Comment[zh_TW]=okular 的 DjVu 後端
 ServiceTypes=okular/Generator
 MimeType=image/vnd.djvu
 X-KDE-Library=libokularGenerator_djvu

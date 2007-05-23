@@ -697,7 +697,7 @@ void PageViewAnnotator::setEnabled( bool on )
         }
         // save the name
         Okular::Settings::setIdentityAuthor( userName );
-        Okular::Settings::writeConfig();
+        Okular::Settings::self()->writeConfig();
     }
 }
 
@@ -902,7 +902,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     Okular::Settings::setEditToolBarPlacement( (int)side );
-    Okular::Settings::writeConfig();
+    Okular::Settings::self()->writeConfig();
 }
 
 #include "pageviewannotator.moc"

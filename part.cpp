@@ -447,7 +447,7 @@ m_searchStarted(false), m_cliPresentation(false)
     // [SPEECH] check for KTTSD presence and usability
     KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'KTTSD'");
     Okular::Settings::setUseKTTSD( !offers.isEmpty() );
-    Okular::Settings::writeConfig();
+    Okular::Settings::self()->writeConfig();
 
     rebuildBookmarkMenu( false );
 
@@ -856,7 +856,7 @@ void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
     Okular::Settings::setShowLeftPanel( showLeft );
-    Okular::Settings::writeConfig();
+    Okular::Settings::self()->writeConfig();
     // show/hide left panel
     m_leftPanel->setVisible( showLeft );
     // this needs to be hidden explicitly to disable thumbnails gen
@@ -867,7 +867,7 @@ void Part::slotShowLeftPanel()
 void Part::saveSplitterSize()
 {
     Okular::Settings::setSplitterSizes( m_splitter->sizes() );
-    Okular::Settings::writeConfig();
+    Okular::Settings::self()->writeConfig();
 }
 
 

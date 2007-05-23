@@ -2152,7 +2152,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         // store zoom settings
         Okular::Settings::setZoomMode( newZoomMode );
         Okular::Settings::setZoomFactor( newFactor );
-        Okular::Settings::writeConfig();
+        Okular::Settings::self()->writeConfig();
     }
 
     d->aZoomIn->setEnabled( d->zoomFactor < 3.9 );
@@ -2799,7 +2799,7 @@ void PageView::slotViewMode( int nr )
     if ( (int)Okular::Settings::viewMode() != nr )
     {
         Okular::Settings::setViewMode( nr );
-        Okular::Settings::writeConfig();
+        Okular::Settings::self()->writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -2810,7 +2810,7 @@ void PageView::slotContinuousToggled( bool on )
     if ( Okular::Settings::viewContinuous() != on )
     {
         Okular::Settings::setViewContinuous( on );
-        Okular::Settings::writeConfig();
+        Okular::Settings::self()->writeConfig();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }

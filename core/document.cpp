@@ -130,7 +130,7 @@ class Okular::DocumentPrivate
         int getTotalMemory();
         int getFreeMemory();
         void loadDocumentInfo();
-        QString giveAbsolutePath( const QString & fileName );
+        QString giveAbsolutePath( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
         Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
         void loadAllGeneratorLibraries();
@@ -452,7 +452,7 @@ void DocumentPrivate::loadDocumentInfo()
     } // </documentInfo>
 }
 
-QString DocumentPrivate::giveAbsolutePath( const QString & fileName )
+QString DocumentPrivate::giveAbsolutePath( const QString & fileName ) const
 {
     if ( !m_url.isValid() )
         return QString();
@@ -487,6 +487,11 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     }
 
     Generator* (*create_plugin)() = ( Generator* (*)() ) lib->resolveFunction( "create_plugin" );
+    if ( !create_plugin )
+    {
+        kWarning(OkularDebug) << "Broken generator " << libname << ": missing create_plugin()!" << endl;
+        return 0;
+    }
     Generator * generator = create_plugin();
     if ( !generator )
     {
@@ -805,7 +810,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
                 list << offers.at(i)->name();
             }
 
-            ChooseEngineDialog choose( list, mime, 0 );
+            ChooseEngineDialog choose( list, mime, widget() );
 
             if ( choose.exec() == QDialog::Rejected )
                 return false;
@@ -992,6 +997,7 @@ void Document::closeDocument()
     d->m_exportCached = false;
     d->m_exportFormats.clear();
     d->m_exportToText = ExportFormat();
+    d->m_rotation = Rotation0;
     // remove requests left in queue
     d->m_pixmapRequestsMutex.lock();
     QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.begin();
@@ -1103,7 +1109,6 @@ void Document::reparseConfig()
         QVector<Page*>::const_iterator it = d->m_pagesVector.begin(), end = d->m_pagesVector.end();
         for ( ; it != end; ++it ) {
             (*it)->deletePixmaps();
-            (*it)->deleteRects();
         }
 
         // [MEM] remove allocation descriptors
@@ -1338,6 +1343,9 @@ QString Document::pageSizeString(int page) const
 
 void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 {
+    if ( requests.isEmpty() )
+        return;
+
     if ( !d->m_generator )
     {
         // delete requests..
@@ -2247,6 +2255,9 @@ const KComponentData* Document::componentData() const
 
 void Document::requestDone( PixmapRequest * req )
 {
+    if ( !d->m_generator || !req )
+        return;
+
 #ifndef NDEBUG
     if ( !d->m_generator->canGeneratePixmap() )
         kDebug(OkularDebug) << "requestDone with generator not in READY state." << endl;
@@ -2315,8 +2326,13 @@ void Document::setRotation( int r )
 
 void Document::setPageSize( const PageSize &size )
 {
+    if ( !d->m_generator || !d->m_generator->hasFeature( Generator::PageSizes ) )
+        return;
+
+    if ( d->m_pageSizes.isEmpty() )
+        d->m_pageSizes = d->m_generator->pageSizes();
     int sizeid = d->m_pageSizes.indexOf( size );
-    if ( !d->m_generator->hasFeature( Generator::PageSizes ) || sizeid == -1 )
+    if ( sizeid == -1 )
         return;
 
     // tell the pages to change size

@@ -40,7 +40,7 @@ class KDocumentViewer
         virtual void startPresentation() = 0;
 
         /**
-         * Change to @p page the currently shown page.
+         * Return a list with the supported mimetypes.
          */
         virtual QStringList supportedMimeTypes() const = 0;
 };

@@ -93,6 +93,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         bool openDocument(const KUrl& url, uint page);
         void startPresentation();
+        QStringList supportedMimeTypes() const;
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);

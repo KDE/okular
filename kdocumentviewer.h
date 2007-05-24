@@ -10,6 +10,8 @@
 #ifndef _KDOCUMENTVIEWER_H_
 #define _KDOCUMENTVIEWER_H_
 
+#include <QtCore/QStringList>
+
 class KUrl;
 
 /**
@@ -36,6 +38,11 @@ class KDocumentViewer
          * Start the presentation mode.
          */
         virtual void startPresentation() = 0;
+
+        /**
+         * Change to @p page the currently shown page.
+         */
+        virtual QStringList supportedMimeTypes() const = 0;
 };
 
 Q_DECLARE_INTERFACE( KDocumentViewer, "org.kde.kdocumentviewer/0.1" )

@@ -490,6 +490,12 @@ void Part::startPresentation()
 }
 
 
+QStringList Part::supportedMimeTypes() const
+{
+    return m_document->supportedMimeTypes();
+}
+
+
 void Part::openUrlFromDocument(const KUrl &url)
 {
     m_bExtension->openUrlNotify();

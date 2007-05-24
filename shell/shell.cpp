@@ -41,7 +41,6 @@
 #include <kservicetypetrader.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
-#include <kfilterbase.h>
 #include <kactioncollection.h>
 
 // local includes
@@ -195,13 +194,10 @@ void Shell::readProperties(const KConfigGroup &group)
   }
 }
 
-// this comes from kviewpart/kviewpart.cpp, fileformats function	
-
 QStringList Shell::fileFormats() const
 {
 	QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
     KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
-    QStringList supportedMimeTypes;
     QStringList supportedPatterns;
 
     if (offers.isEmpty())
@@ -209,51 +205,19 @@ QStringList Shell::fileFormats() const
         return supportedPatterns;
     }
 
-    KFilterBase* filter = KFilterBase::findFilterByMimeType( "application/x-bzip" );
-    bool bzip2Available = (filter != 0L);
-    delete filter;
     KService::List::ConstIterator iterator = offers.begin();
     KService::List::ConstIterator end = offers.end();
-    QStringList::ConstIterator mimeType;
-    QString tmp;
-    QStringList mimeTypes,pattern,extensions;
-    QString allExt,comment;
     for (; iterator != end; ++iterator)
     {
-        KService::Ptr service = *iterator;
-        mimeTypes = service->serviceTypes();
-        
-        for (mimeType=mimeTypes.begin();mimeType!=mimeTypes.end();++mimeType)
+        QStringList mimeTypes = (*iterator)->serviceTypes();
+        foreach (const QString& mimeType, mimeTypes )
         {
-            if (! (*mimeType).contains("okular"))
+            if ( !mimeType.contains( "okular" ) )
             {
-                KMimeType::Ptr mimePtr = KMimeType::mimeType(*mimeType);
-                if ( mimePtr )
-                {
-                pattern = mimePtr->patterns();
-                supportedMimeTypes << *mimeType;
-            
-               extensions.clear();
-               while(!pattern.isEmpty())
-               {
-                    tmp=pattern.front().trimmed();
-                    extensions.append(tmp);
-                    if (tmp.indexOf(".gz", -3) == -1)
-                        extensions.append(tmp+".gz");
-                    if ((bzip2Available) && (tmp.indexOf(".bz2", -4) == -1)) 
-                        extensions.append(tmp+".bz2");
-		    pattern.pop_front();
-                }
-	       	comment=mimePtr->comment();
-		if (! comment.contains("Unknown"))
-                        supportedPatterns.append( extensions.join( " " ) + '|' + comment );
-                allExt+=extensions.join(" ");
-                }
+                supportedPatterns.append( mimeType );
             }
         }
     }
-
-    supportedPatterns.prepend( allExt + '|' + i18n( "All Supported Files" ) );
 
     return supportedPatterns;
 }
@@ -264,14 +228,26 @@ void Shell::fileOpen()
 	// the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
 	// button is clicked
     if (m_fileformats.isEmpty())
-        m_fileformats = fileFormats();
+    {
+        if ( m_doc )
+            m_fileformats = m_doc->supportedMimeTypes();
+
+        if ( m_fileformats.isEmpty() )
+            m_fileformats = fileFormats();
+    }
 
     if (!m_fileformats.isEmpty())
     {
         QString startDir;
         if ( m_openUrl.isLocalFile() )
             startDir = m_openUrl.path();
-        KUrl url = KFileDialog::getOpenUrl( startDir, m_fileformats.join( "\n" ) );
+        KFileDialog dlg( startDir, QString(), this );
+        dlg.setOperationMode( KFileDialog::Opening );
+        dlg.setMimeFilter( m_fileformats );
+        dlg.setCaption( i18n( "Open a document" ) );
+        if (!dlg.exec())
+            return;
+        KUrl url = dlg.selectedUrl();
         if (!url.isEmpty())
             openUrl(url);
     }

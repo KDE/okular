@@ -2295,6 +2295,8 @@ void Document::requestDone( PixmapRequest * req )
 
 void Document::setRotation( int r )
 {
+    if(!d->m_generator) 
+	return;
     Rotation rotation = (Rotation)r;
     // tell the pages to rotate
     QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();

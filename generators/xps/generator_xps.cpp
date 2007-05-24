@@ -91,7 +91,7 @@ static QRectF stringToRectF( const QString &data )
     return QRectF( origin, size );
 }
 
-static bool parseGUID( const QString guidString, unsigned short guid[16]) {
+static bool parseGUID( const QString &guidString, unsigned short guid[16]) {
 
     if (guidString.length() <= 35) {
         return false;
@@ -167,7 +167,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
 /**
     Read point (two reals delimited by comma) from abbreviated path data
 */
-static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPointF currentPosition) {
+static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPointF &currentPosition) {
     //TODO Check grammar
 
     QPointF result;
@@ -193,7 +193,7 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
 */
 static QPainterPath parseAbbreviatedPathData( const QString &data)
 {
-    QPainterPath path = QPainterPath();
+    QPainterPath path;
 
     AbbPathToken token;
 

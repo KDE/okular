@@ -11,12 +11,12 @@ set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
 )
 
-if (HAVE_POPPLER_HEAD)
+if (HAVE_POPPLER_0_6)
    set(okularGenerator_poppler_PART_SRCS
       ${okularGenerator_poppler_PART_SRCS}
       formfields.cpp
    )
-endif (HAVE_POPPLER_HEAD)
+endif (HAVE_POPPLER_0_6)
 
 kde4_automoc(${okularGenerator_poppler_PART_SRCS})
 

@@ -39,12 +39,10 @@ if (POPPLER_FOUND)
   set(POPPLER_INCLUDE_DIR ${_PopplerIncDir})
   set(POPPLER_LIBRARY ${_PopplerLinkFlags})
 
-  # check whether we're using poppler HEAD
+  # check whether we're using poppler 0.6
   set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR}/poppler ${QT_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
 check_cxx_source_compiles("
-#define UNSTABLE_POPPLER_QT4
-
 #include <poppler-qt4.h>
 
 int main()
@@ -54,24 +52,24 @@ int main()
 
   return 0;
 }
-" HAVE_POPPLER_HEAD )
+" HAVE_POPPLER_0_6 )
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_HEAD)
-    set(popplerHeadMessage "yes")
-  else (HAVE_POPPLER_HEAD)
-    set(popplerHeadMessage "no")
-  endif (HAVE_POPPLER_HEAD)
+  if (HAVE_POPPLER_0_6)
+    set(poppler06Message "yes")
+  else (HAVE_POPPLER_0_6)
+    set(poppler06Message "no")
+  endif (HAVE_POPPLER_0_6)
 
   if (NOT Poppler_FIND_QUIETLY)
-    message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, HEAD? ${popplerHeadMessage}")
+    message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, 0.6.x? ${poppler06Message}")
   endif (NOT Poppler_FIND_QUIETLY)
 else (POPPLER_FOUND)
   if (Poppler_FIND_REQUIRED)
-    message(FATAL_ERROR "Could NOT find Poppler-qt4")
+    message(FATAL_ERROR "Could NOT find Poppler-Qt4")
   endif (Poppler_FIND_REQUIRED)
 endif (POPPLER_FOUND)
 
-MARK_AS_ADVANCED(POPPLER_INCLUDE_DIR POPPLER_LIBRARY)
+MARK_AS_ADVANCED(POPPLER_INCLUDE_DIR POPPLER_LIBRARY HAVE_POPPLER_0_6)
 
 endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

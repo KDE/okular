@@ -476,9 +476,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         page->setLabel( p->label() );
 
         addFormFields( p, page );
-
-        page->setObjectRects( generateLinks(p->links(), pSize.width(), pSize.height(), pdfdoc) );
-        rectsGenerated[ page->number() ] = true;
 #endif
 //        kWarning(PDFDebug) << page->width() << "x" << page->height() << endl;
 

@@ -134,8 +134,8 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
 
                 QSize pageSize = page->pageSize();
                 delete page;
-                viewport.rePos.normalizedX = (double)left / (double)pageSize.width();
-                viewport.rePos.normalizedY = (double)top / (double)pageSize.height();
+                viewport.rePos.normalizedX = left;
+                viewport.rePos.normalizedY = top;
                 viewport.rePos.enabled = true;
                 viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
             }
@@ -231,10 +231,10 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 	foreach(const Poppler::Link *popplerLink, popplerLinks)
 	{
 		QRectF linkArea = popplerLink->linkArea();
-		double nl = linkArea.left() / (double)width,
-		       nt = linkArea.top() / (double)height,
-		       nr = linkArea.right() / (double)width,
-		       nb = linkArea.bottom() / (double)height;
+		double nl = linkArea.left(),
+		       nt = linkArea.top(),
+		       nr = linkArea.right(),
+		       nb = linkArea.bottom();
 		// create the rect using normalized coords and attach the Okular::Link to it
 		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink, pdfdoc) );
 		// add the ObjectRect to the container

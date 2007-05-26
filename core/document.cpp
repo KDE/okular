@@ -1474,7 +1474,7 @@ void Document::removePageAnnotation( int page, Annotation * annotation )
     }
 }
 
-void Document::removePageAnnotations( int page, QList< Annotation * > annotations )
+void Document::removePageAnnotations( int page, const QList< Annotation * > &annotations )
 {
     // find out the page
     Page * kp = d->m_pagesVector[ page ];

@@ -336,7 +336,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Removes the given @p annotations from the given @p page.
          */
-        void removePageAnnotations( int page, QList<Annotation*> annotations );
+        void removePageAnnotations( int page, const QList<Annotation*> &annotations );
 
         /**
          * Sets the text selection for the given @p page.

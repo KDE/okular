@@ -138,8 +138,8 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
                 Poppler::Page *page = pdfdoc->page( viewport.pageNumber );
                 QSize pageSize = page->pageSize();
                 delete page;
-                viewport.rePos.normalizedX = (double)left / (double)pageSize.width();
-                viewport.rePos.normalizedY = (double)top / (double)pageSize.height();
+                viewport.rePos.normalizedX = (double)left / (double)pageSize.width();
+                viewport.rePos.normalizedY = (double)top / (double)pageSize.height();
 #else
                 viewport.rePos.normalizedX = left;
                 viewport.rePos.normalizedY = top;

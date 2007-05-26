@@ -14,7 +14,7 @@
 if(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
   # in cache already
-  set(POPPLER_FOUND)
+  set(POPPLER_FOUND TRUE)
 
 else(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
@@ -36,11 +36,17 @@ if(_PopplerLinkFlags)
 endif(_PopplerLinkFlags)
 
 if (POPPLER_FOUND)
-  set(POPPLER_INCLUDE_DIR ${_PopplerIncDir})
   set(POPPLER_LIBRARY ${_PopplerLinkFlags})
 
+  # the cflags for poppler-qt4 can contain more than one include path
+  separate_arguments(_PopplerCflags)
+  foreach(_includedir ${_PopplerCflags})
+    string(REGEX REPLACE "-I(.+)" "\\1" _includedir "${_includedir}")
+    set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} ${_includedir})
+  endforeach(_includedir)
+
   # check whether we're using poppler 0.6
-  set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR}/poppler ${QT_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
@@ -70,6 +76,9 @@ else (POPPLER_FOUND)
   endif (Poppler_FIND_REQUIRED)
 endif (POPPLER_FOUND)
 
-MARK_AS_ADVANCED(POPPLER_INCLUDE_DIR POPPLER_LIBRARY HAVE_POPPLER_0_6)
+# ensure that they are cached
+set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} CACHE INTERNAL "The Poppler-Qt4 include path")
+set(POPPLER_LIBRARY ${POPPLER_LIBRARY} CACHE INTERNAL "The Poppler-Qt4 library")
+set(HAVE_POPPLER_0_6 ${HAVE_POPPLER_0_6} CACHE INTERNAL "Whether the version of Poppler-Qt4 is 0.6")
 
 endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

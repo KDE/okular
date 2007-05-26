@@ -1,5 +1,5 @@
 include_directories(
-   ${POPPLER_INCLUDE_DIR}/poppler
+   ${POPPLER_INCLUDE_DIR}
    ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )

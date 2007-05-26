@@ -115,6 +115,9 @@ class PDFOptionsPage : public KPrintDialogPage
 
 static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
+#ifdef HAVE_POPPLER_0_6
+    Q_UNUSED( pdfdoc )
+#endif
     viewport.pageNumber = destination.pageNumber() - 1;
 
     if (!viewport.isValid()) return;
@@ -232,6 +235,10 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks, int width, int height, const Poppler::Document *pdfdoc )
 {
+#ifdef HAVE_POPPLER_0_6
+	Q_UNUSED( width )
+	Q_UNUSED( height )
+#endif
 	QLinkedList<Okular::ObjectRect*> links;
 	foreach(const Poppler::Link *popplerLink, popplerLinks)
 	{

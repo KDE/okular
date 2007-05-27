@@ -474,7 +474,7 @@ void ThumbnailList::slotDelayTimeout()
     delete m_bookmarkOverlay;
     int expectedWidth = viewport()->width() / 4;
     if ( expectedWidth > 10 )
-        m_bookmarkOverlay = new QPixmap( DesktopIcon( "attach", expectedWidth ) );
+        m_bookmarkOverlay = new QPixmap( DesktopIcon( "bookmark", expectedWidth ) );
     else
         m_bookmarkOverlay = 0;
 

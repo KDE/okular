@@ -96,7 +96,7 @@ class OKULAR_EXPORT Sound
         int channels() const;
 
         /**
-         * Sets the bits per sample @rate.
+         * Sets the bits per sample @p rate.
          */
         void setBitsPerSample( int rate );
 

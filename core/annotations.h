@@ -217,13 +217,13 @@ class OKULAR_EXPORT Annotation
 
         /**
          * Sets the @p flags of the annotation.
-         * @see @ref Flags
+         * @see @ref Flag
          */
         void setFlags( int flags );
 
         /**
          * Returns the flags of the annotation.
-         * @see @ref Flags
+         * @see @ref Flag
          */
         int flags() const;
 
@@ -346,7 +346,7 @@ class OKULAR_EXPORT Annotation
                 int spaces() const;
 
                 /**
-                 * Sets the line @effect of the style.
+                 * Sets the line @p effect of the style.
                  */
                 void setLineEffect( LineEffect effect );
 

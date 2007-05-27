@@ -184,7 +184,7 @@ class OKULAR_EXPORT Page
         const QLinkedList< Annotation* > annotations() const;
 
         /**
-         * Returns the @ref Link object which is associated with the given page @p action
+         * Returns the @ref Action object which is associated with the given page @p action
          * or 0 if no page action is set.
          */
         const Action * pageAction( PageAction action ) const;

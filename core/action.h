@@ -240,7 +240,7 @@ class OKULAR_EXPORT DocumentAction : public Action
         /**
          * Creates a new document action.
          *
-         * @param actionType The type of document action.
+         * @param documentActionType The type of document action.
          */
         explicit DocumentAction( enum DocumentActionType documentActionType );
 

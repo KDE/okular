@@ -23,6 +23,8 @@
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kicon.h>
+#include <kicontheme.h>
+#include <klocale.h>
 #include <kacceleratormanager.h>
 
 // local includes
@@ -55,6 +57,11 @@ class HoverButton : public QPushButton
     public:
         HoverButton( QWidget * parent );
 
+        void setWidthScaleFactor(double widthScale)
+        {
+            m_widthScale = widthScale;
+        }
+
     protected:
         QSize sizeHint() const;
         QSize minimumSizeHint() const;
@@ -62,6 +69,9 @@ class HoverButton : public QPushButton
         void paintEvent( QPaintEvent * e );
         void enterEvent( QEvent * e );
         void leaveEvent( QEvent * e );
+
+    private:
+        double m_widthScale;
 };
 
 
@@ -74,48 +84,35 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     setObjectName( "miniBar" );
 
     QHBoxLayout * horLayout = new QHBoxLayout( this );
+    
     horLayout->setMargin( 0 );
-    horLayout->setSpacing( 0 );
+    horLayout->setSpacing( 3 );
 
-    QFrame * frame = 0;
-    // left line
-    frame = new QFrame( this );
-    frame->setFrameStyle( QFrame::VLine | QFrame::Plain );
-    frame->setLineWidth( 1 );
-    horLayout->addWidget( frame );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );
+    m_prevButton->setIconSize( QSize(K3Icon::SizeMedium,K3Icon::SizeMedium) );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
     m_pagesEdit = new PagesEdit( this );
     horLayout->addWidget( m_pagesEdit );
-    // bottom: central '/' label
-    horLayout->addWidget( new QLabel( "/", this ) );
+    // bottom: central 'of' label
+    horLayout->addSpacing(5);
+    horLayout->addWidget( new QLabel( i18n("of"), this ) );
     // bottom: right button
     m_pagesButton = new HoverButton( this );
+    m_pagesButton->setWidthScaleFactor(1.0);
     horLayout->addWidget( m_pagesButton );
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
+    m_nextButton->setIconSize( QSize(K3Icon::SizeMedium,K3Icon::SizeMedium) );
     horLayout->addWidget( m_nextButton );
-    // right line
-    frame = new QFrame( this );
-    frame->setFrameStyle( QFrame::VLine | QFrame::Plain );
-    frame->setLineWidth( 1 );
-    horLayout->addWidget( frame );
-
+    
     QSizePolicy sp = sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Fixed );
     sp.setVerticalPolicy( QSizePolicy::Fixed );
     setSizePolicy( sp );
-
-    // resize height of widgets
-    int fixedHeight = fontMetrics().height();
-    m_pagesEdit->setFixedHeight( fixedHeight );
-    m_pagesButton->setFixedHeight( fixedHeight );
-    m_prevButton->setFixedHeight( fixedHeight );
-    m_nextButton->setFixedHeight( fixedHeight );
 
     // resize width of widgets
     resizeForPage( 0 );
@@ -402,6 +399,7 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 
 HoverButton::HoverButton( QWidget * parent )
     : QPushButton( parent )
+    , m_widthScale( 2.0 )
 {
     setMouseTracking( true );
     KAcceleratorManager::setNoAccel( this );
@@ -411,14 +409,14 @@ HoverButton::HoverButton( QWidget * parent )
 QSize HoverButton::sizeHint() const
 {
 	QSize base = QPushButton::sizeHint();
-	base.setWidth( base.width() * 2 );
+	base.setWidth( (int)(base.width() * m_widthScale) );
 	return base;
 }
 
 QSize HoverButton::minimumSizeHint() const
 {
 	QSize base = QPushButton::minimumSizeHint();
-	base.setWidth( base.width() * 2 );
+	base.setWidth( (int)(base.width() * m_widthScale) );
 	return base;
 }
 

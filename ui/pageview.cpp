@@ -273,6 +273,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
 
+    setFrameStyle(QFrame::NoFrame);
+
     setAttribute( Qt::WA_StaticContents );
 
     setObjectName( QLatin1String( "okular::pageView" ) );

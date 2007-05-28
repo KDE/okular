@@ -54,8 +54,7 @@ void cmdout(char *);
  *   we simply put it out, since any special character terminates the
  *   preceding token.
  */
-void specialout(c)
-char c ;
+void specialout(char c)
 {
    if (linepos + 1 > LINELENGTH) {
       (void)fputs("\\n\\\n", out);

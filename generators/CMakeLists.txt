@@ -1,6 +1,7 @@
 include (MacroLogFeature)
 
 macro_optional_find_package(Poppler)
+macro_optional_find_package(LIBGS)
 macro_optional_find_package(CHM)
 macro_optional_find_package(DjVuLibre)
 macro_optional_find_package(TIFF)
@@ -46,6 +47,7 @@ if(JPEG_FOUND)
 endif(JPEG_FOUND)
 
 macro_log_feature(POPPLER_FOUND "Poppler-Qt4" "Support for PDF files in okular" "http://poppler.freedesktop.org" FALSE "0.5.4" "")
+macro_log_feature(LIBGS_FOUND "libgs" "Support for PS files in okular" "http://www.cs.wisc.edu/~ghost" FALSE "" "")
 macro_log_feature(CHM_FOUND "libCHM" "Support for CHM files in okular" "http://morte.jedrea.com/~jedwin/projects/chmlib" FALSE "" "")
 macro_log_feature(DJVULIBRE_FOUND "libdjvulibre" "Support for DjVu files in okular" "http://djvulibre.djvuzone.org" FALSE "3.5.17" "")
 macro_log_feature(TIFF_FOUND "libTIFF" "Support for TIFF files in okular" "http://www.remotesensing.org/libtiff/" FALSE "" "")

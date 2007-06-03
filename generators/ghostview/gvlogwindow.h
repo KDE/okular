@@ -10,37 +10,38 @@
 #ifndef LOGWINDOW_H
 #define LOGWINDOW_H
 
-#include <qgs.h>
-
-#include <kvbox.h>
-#include <qtimer.h>
-
-class QTreeWidget;
-class KTreeWidgetSearchLine;
-class KUrlLabel;
-
-class GSLogWindow : public KVBox
-{
-    Q_OBJECT
-
-public:
-    GSLogWindow( QWidget* parent = 0 );
-
-public slots:
-    void append( GSInterpreterLib::MessageType t, const char* buf, int num );
-    void appendBuffered() { m_lastInt=0; m_clearTimer.stop(); append(m_buffer.first,m_buffer.second); };
-    void append( GSInterpreterLib::MessageType t, const QString &text);
-    void clear();
-    bool event( QEvent * event );
-
-private:
-    QTreeWidget*  m_msgList;
-    KTreeWidgetSearchLine* m_searchLine;
-    QPair <GSInterpreterLib::MessageType, QString> m_buffer;
-    int m_tCol;
-    int m_lastInt;
-    QTimer m_clearTimer;
-};
+// TODO
+// #include <qgs.h>
+// 
+// #include <kvbox.h>
+// #include <qtimer.h>
+// 
+// class QTreeWidget;
+// class KTreeWidgetSearchLine;
+// class KUrlLabel;
+// 
+// class GSLogWindow : public KVBox
+// {
+//     Q_OBJECT
+// 
+// public:
+//     GSLogWindow( QWidget* parent = 0 );
+// 
+// public slots:
+//     void append( GSInterpreterLib::MessageType t, const char* buf, int num );
+//     void appendBuffered() { m_lastInt=0; m_clearTimer.stop(); append(m_buffer.first,m_buffer.second); };
+//     void append( GSInterpreterLib::MessageType t, const QString &text);
+//     void clear();
+//     bool event( QEvent * event );
+// 
+// private:
+//     QTreeWidget*  m_msgList;
+//     KTreeWidgetSearchLine* m_searchLine;
+//     QPair <GSInterpreterLib::MessageType, QString> m_buffer;
+//     int m_tCol;
+//     int m_lastInt;
+//     QTimer m_clearTimer;
+// };
 
 #endif
 

@@ -13,24 +13,23 @@
 #ifndef _OKULAR_GSINTERNALDOC_H_
 #define _OKULAR_GSINTERNALDOC_H_
 
-#include <qlist.h>
-#include <qmap.h>
-#include <qprinter.h>
-
-#include <qgs.h>
+#include <QMap>
+#include <QPair>
+#include <QPrinter>
+#include <QStringList>
 
 #include "interpreter.h"
 #include "dscparse_adapter.h"
 #include "dscparse.h"
 
-class KDSC;
-class QString;
-class QStringList;
 namespace Okular {
     class DocumentInfo;
 }
 
 typedef QList<int> PageList;
+
+//! @typedef a QPair which first element is the beginning of a block in the file while the second is the end
+typedef QPair<unsigned long , unsigned long > PsPosition;
 
 class GSInternalDocument
 {
@@ -52,10 +51,10 @@ class GSInternalDocument
         CDSC_ORIENTATION_ENUM orientation( int pagenumber ) const;
 
         void setOrientation(CDSC_ORIENTATION_ENUM ori) { m_overrideOrientation=ori; };
-        void insertPageData (int n, GSInterpreterLib::Position p) { pagesInternalData.insert(n,p); };
+        void insertPageData (int n, PsPosition p) { pagesInternalData.insert(n,p); };
 
         FILE * file () { return m_internalFile; };
-        GSInterpreterLib::Position pagePos (int i) const { return pagesInternalData[i]; }
+        PsPosition pagePos (int i) const { return pagesInternalData[i]; }
         const QString & fileName () const { return m_fileName ; };
 
         const KDSC* dsc () const { return m_dsc; };
@@ -64,10 +63,10 @@ class GSInternalDocument
         KDSCBBOX boundingBox( int pageNo ) const;
         KDSCBBOX boundingBox() const;
 
-        void setProlog( GSInterpreterLib::Position p )   { m_prolog=p; };
-        GSInterpreterLib::Position prolog() const { return m_prolog ; }
-        void setSetup( GSInterpreterLib::Position p) { m_setup=p; };
-        GSInterpreterLib::Position setup() const { return m_setup; }
+        void setProlog( PsPosition p )   { m_prolog=p; };
+        PsPosition prolog() const { return m_prolog ; }
+        void setSetup( PsPosition p) { m_setup=p; };
+        PsPosition setup() const { return m_setup; }
 
         Format format() const { return m_format; };
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -87,11 +86,11 @@ class GSInternalDocument
         QStringList m_mediaNames;
 
         Okular::DocumentInfo* docInfo;
-        FILE* m_internalFile;
+        FILE* m_internalFile; // TODO QFile
         KDSC* m_dsc;
         Format m_format;
-        GSInterpreterLib::Position m_prolog;
-        GSInterpreterLib::Position m_setup;
-        QMap<int, GSInterpreterLib::Position > pagesInternalData;
+        PsPosition m_prolog;
+        PsPosition m_setup;
+        QMap<int, PsPosition > pagesInternalData;
 };
 #endif

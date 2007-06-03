@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
+ *   Copyright (C) 2007 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,107 +11,69 @@
 #ifndef _OKULAR_GSINTERPETERCMD_H_
 #define _OKULAR_GSINTERPETERCMD_H_
 
-#include <sys/types.h>
-
-#include <qmutex.h>
 #include <qthread.h>
-#include <qmap.h>
+#include <qmutex.h>
 
 #include <kdebug.h>
 
-#include "okulargsasyncgenerator.h"
 #include "internaldocument.h"
 
-#define GS_DATAREADY_ID 6989
-
-class QPixmap;
+class QImage;
 class QString;
 class QStringList;
-class K3Process;
+
 namespace Okular {
     class PixmapRequest;
 }
 
-struct ProcessData
-{
-    ProcessData ();
-    ~ProcessData();
-    QString names[2];
-    int fds[2];
-};
+class GSHandler;
 
 class GSInterpreterCMD : public QThread
 {
-    Q_OBJECT
+Q_OBJECT
     public:
-        GSInterpreterCMD( const QString & fileName);
+        static GSInterpreterCMD *getCreateInterpreter();
+
         ~GSInterpreterCMD();
-        QPixmap* takePixmap();
-        bool startInterpreter();
-        bool stop(bool async=true);
-        bool ready();
-        bool interpreterRunning();
-        void lock() { kDebug() << "locking async\n"; interpreterLock.lock() ; } ;
-        void unlock() { kDebug() << "unlocking async\n"; interpreterLock.unlock() ; } ;
 
-//         void setGhostscriptArguments( const QStringList& arguments );
-        void setOrientation( int orientation );
-        void setSize( int w, int h );
-        void setPlatformFonts(bool pfonts=true);
-        void setAABits(int text=1, int graphics=1);
-        void setMagnify( double magnify );
-        void setMedia( const QString &media );
-//         void setBoundingBox( const KDSCBBOX& boundingBox );
-        void setStructure(GSInterpreterLib::Position prolog, GSInterpreterLib::Position setup);
-        bool run( GSInterpreterLib::Position pos );
-//        void customEvent( QEvent * e );
+        void setFileName(const QString &filename);
+        void setPlatformFonts(bool pfonts);
+        void setAABits(int text, int graphics);
+        void setMagnify(double magnify);
+        void setMedia(const QString &media);
+        void setStructure(const PsPosition &prolog, const PsPosition &setup);
+        void setPosition(const PsPosition &pos);
 
-    private slots:
-        void threadFinished();
+        void fordwardImage(QImage *image);
+
+        void startRequest(Okular::PixmapRequest *request);
 
     signals:
-        /**
-         * This signal gets emitted whenever a page is finished, but contains a reference to the pixmap
-         * used to hold the image.
-         *
-         * Don't change the pixmap or bad things will happen. This is the backing pixmap of the display.
-        */
-        void Finished( QPixmap *);
-        void error (const QString&, int duration);
+        void imageDone(QImage *image, Okular::PixmapRequest *request);
 
     private:
+        GSInterpreterCMD();
+
+        QMutex m_lock;
+
+        static GSInterpreterCMD *theInterpreter;
+
         void run();
-        void destroyInternalProcess(K3Process * stop);
-        // communication stuff
 
-        PageInfo m_info;
-        Okular::PixmapRequest *m_req;
-        ProcessData * m_processData;
+        PsPosition m_position;
 
-        // stopping list
-        QMap<pid_t,ProcessData*> m_stoppingPids;
+        bool m_sendStructure;
+        PsPosition m_structureData[2];
 
-        // result
-        QPixmap* m_pixmap;
-        QMutex interpreterLock;
-        // process stuff
-        K3Process *m_process;
-        QString m_error;
-        // FILE INFORMATION:
-        // hold pointer to a file never delete it, it should 
-        // change every time a new request is done
-        bool m_structurePending;
         double m_magnify;
-        int m_aaText,m_aaGfx;
+        int m_aaText, m_aaGfx;
         bool m_pfonts;
-        // prolog/setup positions
-        GSInterpreterLib::Position m_data[2];
-        bool m_haveStructure;
-        // we have to send structure info
-        int m_orientation;
-        int m_width,m_height;
-        QString m_name;
+
+        QString m_filename;
         QString m_media;
+
+        GSHandler *m_handler;
+        Okular::PixmapRequest *m_request;
 };
 
 #endif

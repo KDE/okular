@@ -34,6 +34,7 @@
 #include "internaldocument.h"
 #include "interpreter.h"
 #include "generator_ghostview.h"
+#include "gshandler.h"
 
 OKULAR_EXPORT_PLUGIN(GSGenerator)
 
@@ -44,33 +45,34 @@ static Okular::PageSize buildPageSizeFromCDSCMEDIA( const CDSCMEDIA & media )
 
 GSGenerator::GSGenerator() :
     Okular::Generator(),
-    m_converted(false)
+    m_converted(false),
+    m_request(0)
 {
     setFeature( PageSizes );
-    pixGenerator = 0;
-    asyncGenerator = 0;
     internalDoc = 0;
     dscForPDF = 0;
-    m_asyncBusy = false;
-    m_sRequest=0;
-    m_asRequest=0;
-    if ( GSSettings::messages() )
-    {
-        m_logWindow = new GSLogWindow();
-    }
-    else
+// TODO
+//     if ( GSSettings::messages() )
+//     {
+//         m_logWindow = new GSLogWindow();
+//     }
+//     else
         m_logWindow = 0;
 
     for ( int i = 0; i < CDSC_KNOWN_MEDIA; ++i )
     {
         m_pageSizes.append( buildPageSizeFromCDSCMEDIA( dsc_known_media[i] ) );
     }
+
+    GSInterpreterCMD *asyncGenerator = GSInterpreterCMD::getCreateInterpreter();
+    if (!asyncGenerator->isRunning()) asyncGenerator->start();
+    connect(asyncGenerator, SIGNAL(imageDone(QImage *, Okular::PixmapRequest *)),
+                            SLOT(slotImageGenerated(QImage *, Okular::PixmapRequest *)),
+                            Qt::QueuedConnection);
 }
 
 GSGenerator::~GSGenerator()
 {
-    delete asyncGenerator;
-    delete pixGenerator;
 }
 
 bool GSGenerator::reparseConfig()
@@ -194,44 +196,6 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
         arg.clear();
         name=dscForPDF->name();
     }*/
-    if (! asyncGenerator )
-    {
-        asyncGenerator= new GSInterpreterCMD ( fileName );
-        connect (asyncGenerator, SIGNAL (Finished(QPixmap *)),
-         this, SLOT(slotAsyncPixmapGenerated (QPixmap *)));
-    }
-    if( !pixGenerator )
-    {
-        pixGenerator = new GSInterpreterLib ();
-        connect (pixGenerator, SIGNAL (Finished(const QImage*)),
-         this, SLOT(slotPixmapGenerated (const QImage*)));
-
-        if ( GSSettings::messages() )
-        {
-            pixGenerator->setBuffered(true);
-            connect (pixGenerator, SIGNAL (io( GSInterpreterLib::MessageType, const char*, int )),
-                m_logWindow, SLOT (append(GSInterpreterLib::MessageType, const char*,int)));
-        }
-    }
-
-    if ( GSSettings::platformFonts() )
-    {
-        pixGenerator->setPlatformFonts(false);
-        asyncGenerator->setPlatformFonts(false);
-    }
-
-    if ( GSSettings::antialiasing())
-    {
-        pixGenerator->setAABits(4,2);
-        asyncGenerator->setAABits(4,2);
-    }
-    else
-    {
-        pixGenerator->setAABits(1,1);
-        asyncGenerator->setAABits(1,1);
-    }
-    pixGenerator->setProgressive(false);
-//  m_pages=pagesVector;
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
@@ -240,24 +204,19 @@ bool GSGenerator::closeDocument()
     return true;
 }
 
-void GSGenerator::slotPixmapGenerated(const QImage* img)
+void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request)
 {
-    kWarning() << "SlotSyncGenerated! - finished m_sRequest id=" << m_sRequest->id() << " " <<m_sRequest->width() << "x" << m_sRequest->height() << "@" << m_sRequest->pageNumber() << " async == " << m_sRequest->asynchronous() << endl;
-//    kWarning() << "sync gen is ready:" << pixGenerator->ready() << endl;
-    kWarning() << "unlocking \n";
-    syncLock.unlock();
-    m_sRequest->page()->setPixmap( m_sRequest->id(), new QPixmap( QPixmap::fromImage( *img ) ) );
-    signalPixmapRequestDone( m_sRequest );
-    m_asRequest=0;
-}
+    // This can happen as GSInterpreterCMD is a singleton and on creation signals all the slots
+    // of all the generators attached to it
+    if (request != m_request) return;
+    
+    kDebug() << "slotImageGenerated " << img->width() << " " << request->width() << " " << img->height() << " " << request->height() << endl;
 
-void GSGenerator::slotAsyncPixmapGenerated(QPixmap * pix)
-{
-    kWarning() << "SlotASyncGenerated!\n";
-    m_asRequest->page()->setPixmap( m_asRequest->id(), pix );
-    signalPixmapRequestDone( m_asRequest );
-    m_asRequest=0;
-    docLock.unlock();
+    m_request = 0;
+    QPixmap *pix = new QPixmap(QPixmap::fromImage(*img));
+    delete img;
+    request->page()->setPixmap( request->id(), pix );
+    signalPixmapRequestDone( request );
 }
 
 Okular::PageSize::List GSGenerator::pageSizes() const
@@ -285,20 +244,22 @@ QString GSGenerator::xmlFile() const
 
 void GSGenerator::setupGui( KActionCollection *ac, QToolBox *tBox )
 {
-    if ( GSSettings::messages() )
+// TODO
+/*    if ( GSSettings::messages() )
     {
         m_box=tBox;
         m_box->addItem( m_logWindow, KIcon("queue"), i18n("GhostScript Messages") );
-    }
+    }*/
     m_actionCollection = ac;
 }
 
 void GSGenerator::freeGui()
 {
-    if ( m_logWindow )
+// TODO
+/*    if ( m_logWindow )
     {
         m_box->removeItem(m_box->indexOf(m_logWindow));
-    }
+    }*/
 }
 
 bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
@@ -346,7 +307,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
     return atLeastOne;
 }
 
-bool GSGenerator::initInterpreter()
+/*bool GSGenerator::initInterpreter()
 {
     if (! pixGenerator->running())
     {
@@ -359,15 +320,13 @@ bool GSGenerator::initInterpreter()
         }
     }
     return pixGenerator->running();
-}
+}*/
 
 bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector, bool ps )
 {
-    if ( internalDoc )
-    {
-        // delete the old document to make room for the new one
-        delete internalDoc;
-    }
+    // delete the old document to make room for the new one
+    delete internalDoc;
+
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
     kDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;
@@ -388,88 +347,37 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
         qSwap( width, height );
         qSwap( reqwidth, reqheight );
     }
-    if ( req->asynchronous() )
+
+    GSInterpreterCMD *asyncGenerator = GSInterpreterCMD::getCreateInterpreter();
+    asyncGenerator->setPlatformFonts(GSSettings::platformFonts());
+    if ( GSSettings::antialiasing())
     {
-        docLock.lock();
-        m_asRequest=req;
-        kWarning() << "setOrientation\n";
-        asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-//         asyncGenerator->setBoundingBox( internalDoc->boundingBox(i));
-        kWarning() << "setSize\n";
-        asyncGenerator->setSize( reqwidth, reqheight );
-        kWarning() << "setMedia\n";
-        asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-        kWarning() << "setMagnify\n";
-        asyncGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
-        GSInterpreterLib::Position u=internalDoc->pagePos(pgNo);
-//         kWarning ()  << "Page pos is " << pgNo << ":"<< u.first << "/" << u.second << endl;
-        if (!asyncGenerator->interpreterRunning())
-        {
-            if ( internalDoc->dsc()->isStructured() )
-            {
-                kWarning() << "setStructure\n";
-                asyncGenerator->setStructure( internalDoc->prolog() , internalDoc->setup() );
-            }
-            if (!asyncGenerator->interpreterRunning())
-            {
-              kWarning() << "start after structure\n";
-              asyncGenerator->startInterpreter();
-            }
-        }
-        kWarning() << "run pagepos\n";
-        asyncGenerator->run (internalDoc->pagePos(pgNo));
+        asyncGenerator->setAABits(4,2);
     }
     else
     {
-
-      syncLock.lock();
-//        disconnect (pixGenerator, SIGNAL (Finished(const QImage*)),
-//          this, SLOT(slotPixmapGenerated (const QImage*)));
-
-      pixGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
-      pixGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
-      pixGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-      pixGenerator->setSize( reqwidth, reqheight );
-  //     pixGenerator->setBoundingBox( internalDoc->boundingBox(i));
-      
-      
-      
-      if (!pixGenerator->running())
-      {
-        initInterpreter();
-      }
-/*       connect (pixGenerator, SIGNAL (Finished(const QImage*)),
-         this, SLOT(slotPixmapGenerated (const QImage*)));*/
-      this->m_sRequest=req;
-kWarning() << "checking req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() << endl;
-kWarning() << "generator running : " << pixGenerator->running() << endl;
-      pixGenerator->run ( internalDoc->file() , internalDoc->pagePos(pgNo),true);
-      
+        asyncGenerator->setAABits(1,1);
     }
-}
 
+// TODO check if needed
+//    asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
+//    asyncGenerator->setSize( reqwidth, reqheight );
+    asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
+    asyncGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
+    PsPosition u=internalDoc->pagePos(pgNo);
+    if ( internalDoc->dsc()->isStructured() )
+    {
+        asyncGenerator->setStructure( internalDoc->prolog() , internalDoc->setup() );
+    }
+    asyncGenerator->setPosition(internalDoc->pagePos(pgNo));
+    asyncGenerator->setFileName(internalDoc->fileName());
+    m_request = req;
+    asyncGenerator->startRequest(req);
+}
 
 bool GSGenerator::canGeneratePixmap() const
 {
-//     kWarning () << "ready Async/Sync " << (! docLock.locked()) << "/ " << (( pixGenerator ) ? !syncLock.locked() : true) << " asking for async: " << async << endl;
-    bool async = true;
-
-    bool isLocked = true;
-    if (async)
-    {
-        if (docLock.tryLock()) {
-            docLock.unlock();
-            isLocked = false;
-        }
-    }
-    else
-    {
-        if (syncLock.tryLock()) {
-            syncLock.unlock();
-            isLocked = false;
-        }
-    }
-    return !isLocked;
+    return !m_request;
 }
 
 const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()

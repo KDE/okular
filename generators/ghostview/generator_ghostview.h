@@ -62,35 +62,23 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         ~GSGenerator();
 
     public slots:
-        void slotPixmapGenerated(const QImage* img);
-        void slotAsyncPixmapGenerated(QPixmap * img);
+        void slotImageGenerated(QImage *img, Okular::PixmapRequest *request);
 
     private:
         // conversion handling
         bool m_converted;
         KTempFile * dscForPDF;
-        QMutex convertLock;
-        GSInterpreterLib* m_convert;
-//         QVector<Okular::Page*> m_pages;
 
         bool loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector , bool ps );
         bool loadPages( QVector< Okular::Page * > & pagesVector );
-        bool initInterpreter();
         int rotation( CDSC_ORIENTATION_ENUM orientation ) const;
         int angle( CDSC_ORIENTATION_ENUM orientation ) const;
         CDSC_ORIENTATION_ENUM orientation( int rot ) const;
-        mutable QMutex docLock;
-        mutable QMutex syncLock;
-        bool m_asyncBusy;
-
-        // pixmap requests
-        Okular::PixmapRequest* m_asRequest;
-        Okular::PixmapRequest* m_sRequest;
 
         // backendish stuff
-        GSInterpreterLib* pixGenerator;
-        GSInterpreterCMD* asyncGenerator;
         GSInternalDocument* internalDoc;
+
+        Okular::PixmapRequest *m_request;
 
         // gui stuff
         GSLogWindow * m_logWindow ;

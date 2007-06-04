@@ -207,6 +207,7 @@ static void FreePluckerDoc
         free (doc->urls);
     if (doc->handle != NULL)
         doc->handle->free (doc->handle);
+    free (doc);
 }
 
 static plkr_DataRecord* FindRecordByIndex
@@ -886,7 +887,6 @@ void plkr_CloseDoc
     }
     else {
         FreePluckerDoc (doc);
-        free (doc);
     }
 }
 

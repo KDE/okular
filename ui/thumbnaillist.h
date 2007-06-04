@@ -18,7 +18,6 @@
 #include "core/observer.h"
 
 class QTimer;
-class KActionCollection;
 class KUrl;
 class ThumbnailWidget;
 

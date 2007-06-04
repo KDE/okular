@@ -14,9 +14,7 @@
 #include <okular/interfaces/guiinterface.h>
 #include <okular/interfaces/configinterface.h>
 
-class GSInterpreterCMD;
 class GSLogWindow;
-class GSInterpreterLib;
 class GSInternalDocument;
 class KTempFile;
 class KActionCollection;

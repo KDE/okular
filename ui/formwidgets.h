@@ -23,7 +23,6 @@ class FormWidgetIface;
 
 namespace Okular {
 class FormField;
-class FormFieldButton;
 class FormFieldChoice;
 class FormFieldText;
 }

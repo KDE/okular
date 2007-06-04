@@ -20,7 +20,6 @@
 
 class QImage;
 class QString;
-class QStringList;
 
 namespace Okular {
     class PixmapRequest;

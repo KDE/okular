@@ -13,7 +13,6 @@
 #include <okular/core/textdocumentgenerator.h>
 
 class QDomElement;
-class QDomText;
 class QTextCursor;
 
 namespace FictionBook {

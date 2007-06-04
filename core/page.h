@@ -17,7 +17,6 @@
 #include <okular/core/global.h>
 
 class QPixmap;
-class QRect;
 
 class PagePainter;
 

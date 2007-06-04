@@ -12,7 +12,6 @@
 
 #include <qwidget.h>
 
-class Ui_DlgIdentityBase;
 
 class DlgIdentity : public QWidget
 {

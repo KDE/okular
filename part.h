@@ -45,7 +45,6 @@ class KTemporaryFile;
 
 class FindBar;
 class ThumbnailList;
-class ThumbnailController;
 class PageSizeLabel;
 class PageView;
 class PageViewTopMessage;

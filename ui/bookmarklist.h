@@ -18,7 +18,6 @@ class QAction;
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
-class KUrl;
 class BookmarkItem;
 
 namespace Okular {

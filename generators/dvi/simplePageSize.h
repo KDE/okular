@@ -19,7 +19,6 @@
 
 class QPaintDevice;
 class QString;
-class QStringList;
 
 
 /** \brief This class represents physical page sizes.

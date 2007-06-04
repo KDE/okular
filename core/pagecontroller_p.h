@@ -15,7 +15,6 @@
 namespace Okular {
 
 class Page;
-class PagePrivate;
 
 class PageController : public QObject
 {

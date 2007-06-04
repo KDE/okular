@@ -18,8 +18,7 @@
 // 
 // class QTreeWidget;
 // class KTreeWidgetSearchLine;
-// class KUrlLabel;
-// 
+// // 
 // class GSLogWindow : public KVBox
 // {
 //     Q_OBJECT

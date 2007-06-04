@@ -16,6 +16,8 @@
 
 #include "gshandler.h"
 
+#include "core/generator.h"
+
 GSInterpreterCMD *GSInterpreterCMD::theInterpreter = 0;
 
 GSInterpreterCMD *GSInterpreterCMD::getCreateInterpreter()
@@ -82,6 +84,17 @@ void GSInterpreterCMD::setPosition(const PsPosition &pos)
 
 void GSInterpreterCMD::fordwardImage(QImage *image)
 {
+    if (image->width() != m_request->width() || image->height() != m_request->height())
+    {
+        kDebug(4656) << "Generated image does not match wanted size " << image->width() << " " << m_request->width() << " " << image->height() << " " << m_request->height() << endl;
+        Qt::TransformationMode transformMode;
+        if (m_aaText == 4 && m_aaGfx == 2) transformMode = Qt::SmoothTransformation;
+        else transformMode = Qt::FastTransformation;
+        QImage aux = image->scaled(m_request->width(), m_request->height(), Qt::IgnoreAspectRatio, transformMode);
+        delete image;
+        image = new QImage(aux);
+    }
+
     emit imageDone(image, m_request);
 }
 

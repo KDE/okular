@@ -209,8 +209,6 @@ void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request
     // This can happen as GSInterpreterCMD is a singleton and on creation signals all the slots
     // of all the generators attached to it
     if (request != m_request) return;
-    
-    kDebug() << "slotImageGenerated " << img->width() << " " << request->width() << " " << img->height() << " " << request->height() << endl;
 
     m_request = 0;
     QPixmap *pix = new QPixmap(QPixmap::fromImage(*img));

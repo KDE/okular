@@ -698,11 +698,13 @@ bool QUnpluck::TranscribeTextRecord
                  plkr_GetRecordBytes (doc, record_index, &data_len,
                                       &type)) == NULL) {
 //                ShowWarning ("Can't open record %d!", record_index);
+                free (paragraphs);
                 return false;
             }
             else if (!(type == PLKR_DRTYPE_TEXT_COMPRESSED ||
                        type == PLKR_DRTYPE_TEXT)) {
 //                ShowWarning ("Bad record type %d in record linked from end of record %d", type, id);
+                free (paragraphs);
                 return false;
             }
             first_record_of_page = false;

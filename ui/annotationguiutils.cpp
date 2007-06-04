@@ -62,7 +62,7 @@ QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
     // 2. if Text and InPlace, the inplace text
     if ( ann->subType() == Okular::Annotation::AText )
     {
-        const Okular::TextAnnotation * txtann = dynamic_cast< const Okular::TextAnnotation * >( ann );
+        const Okular::TextAnnotation * txtann = static_cast< const Okular::TextAnnotation * >( ann );
         if ( txtann->textType() == Okular::TextAnnotation::InPlace )
         {
             ret = txtann->inplaceText();

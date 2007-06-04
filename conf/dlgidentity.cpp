@@ -14,6 +14,6 @@
 DlgIdentity::DlgIdentity( QWidget * parent )
     : QWidget( parent )
 {
-    Ui_DlgIdentityBase *dlg = new Ui_DlgIdentityBase();
-    dlg->setupUi( this );
+    Ui_DlgIdentityBase dlg;
+    dlg.setupUi( this );
 }

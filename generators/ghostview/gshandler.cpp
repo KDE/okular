@@ -138,8 +138,8 @@ void GSHandler::init(const QString &media, double magnify, bool plaformFonts, in
 		<< QString("-dTextAlphaBits=%1").arg(aaText)
 		<< QString("-dGraphicsAlphaBits=%1").arg(aaGfx)
 		<< QString("-sPAPERSIZE=%1").arg(media.toLower())
-		<< QString().sprintf("-r%dx%d", (int)(magnify * Okular::Utils::dpiX()),
-		                                (int)(magnify * Okular::Utils::dpiY()))
+		<< QString().sprintf("-r%fx%f", (magnify * Okular::Utils::dpiX()),
+		                                (magnify * Okular::Utils::dpiY()))
 		<< QString().sprintf("-dDisplayFormat=%d", DISPLAY_COLORS_RGB | DISPLAY_UNUSED_LAST | DISPLAY_DEPTH_8 | DISPLAY_LITTLEENDIAN | DISPLAY_TOPFIRST)
 		<< QString().sprintf("-sDisplayHandle=16#%llx", (unsigned long long int) this );
 

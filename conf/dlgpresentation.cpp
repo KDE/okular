@@ -14,6 +14,6 @@
 DlgPresentation::DlgPresentation( QWidget * parent )
     : QWidget( parent )
 {
-    Ui_DlgPresentationBase *dlg = new Ui_DlgPresentationBase();
-    dlg->setupUi( this );
+    Ui_DlgPresentationBase dlg;
+    dlg.setupUi( this );
 }

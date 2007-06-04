@@ -98,18 +98,16 @@ void GSInterpreterCMD::fordwardImage(QImage *image)
 void GSInterpreterCMD::startRequest(Okular::PixmapRequest *request)
 {
     m_request = request;
-    m_lock.unlock();
+    m_semaphore.release();
 }
 
 void GSInterpreterCMD::run()
 {
     m_handler = new GSHandler();
 
-    m_lock.lock();
-
     while(1)
     {
-        m_lock.lock();
+        m_semaphore.acquire();
         m_handler->init(m_media, m_magnify, m_pfonts, m_aaText, m_aaGfx, this);
 
         // send structural information

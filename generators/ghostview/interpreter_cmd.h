@@ -12,7 +12,7 @@
 #define _OKULAR_GSINTERPETERCMD_H_
 
 #include <qthread.h>
-#include <qmutex.h>
+#include <qsemaphore.h>
 
 #include <kdebug.h>
 
@@ -53,7 +53,7 @@ Q_OBJECT
     private:
         GSInterpreterCMD();
 
-        QMutex m_lock;
+        QSemaphore m_semaphore;
 
         static GSInterpreterCMD *theInterpreter;
 

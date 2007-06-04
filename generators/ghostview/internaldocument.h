@@ -34,7 +34,7 @@ typedef QPair<unsigned long , unsigned long > PsPosition;
 class GSInternalDocument
 {
     public:
-        typedef enum Format{ PS, PDF };
+        enum Format{ PS, PDF };
         GSInternalDocument(const QString &fname, GSInternalDocument::Format f);
         ~GSInternalDocument();
         static QString pageSizeToString( QPrinter::PageSize pSize );
@@ -45,30 +45,30 @@ class GSInternalDocument
         QString getPaperSize( const QString& mediaName ) const;
         QString pageMedia( int pagenumber ) const;
         QString pageMedia() const;
-        void setMedia(const QString & m) { m_overrideMedia=m; };
+        void setMedia(const QString & m) { m_overrideMedia=m; }
 
         CDSC_ORIENTATION_ENUM orientation() const;
         CDSC_ORIENTATION_ENUM orientation( int pagenumber ) const;
 
-        void setOrientation(CDSC_ORIENTATION_ENUM ori) { m_overrideOrientation=ori; };
-        void insertPageData (int n, PsPosition p) { pagesInternalData.insert(n,p); };
+        void setOrientation(CDSC_ORIENTATION_ENUM ori) { m_overrideOrientation=ori; }
+        void insertPageData (int n, PsPosition p) { pagesInternalData.insert(n,p); }
 
-        FILE * file () { return m_internalFile; };
+        FILE * file () { return m_internalFile; }
         PsPosition pagePos (int i) const { return pagesInternalData[i]; }
-        const QString & fileName () const { return m_fileName ; };
+        const QString & fileName () const { return m_fileName ; }
 
-        const KDSC* dsc () const { return m_dsc; };
+        const KDSC* dsc () const { return m_dsc; }
 
         QSize computePageSize( const QString& mediaName ) const;
         KDSCBBOX boundingBox( int pageNo ) const;
         KDSCBBOX boundingBox() const;
 
-        void setProlog( PsPosition p )   { m_prolog=p; };
+        void setProlog( PsPosition p )   { m_prolog=p; }
         PsPosition prolog() const { return m_prolog ; }
-        void setSetup( PsPosition p) { m_setup=p; };
+        void setSetup( PsPosition p) { m_setup=p; }
         PsPosition setup() const { return m_setup; }
 
-        Format format() const { return m_format; };
+        Format format() const { return m_format; }
         const Okular::DocumentInfo * generateDocumentInfo();
         bool psCopyDoc( const QString& inputFile,
             const QString& outputFile, const PageList& pageList );

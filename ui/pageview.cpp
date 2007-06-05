@@ -269,6 +269,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
     d->aPrevAction = 0;
+    d->aToggleForms = 0;
     d->aPageSizes=0;
     d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
@@ -664,19 +665,25 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
                  pageSet.count() ),
             PageViewMessage::Info, 4000 );
 
-    bool pageSizes = d->document->supportsPageSizes();
-    d->aPageSizes->setEnabled( pageSizes );
-    // set the new page sizes:
-    // - if the generator supports them
-    // - if the document changed
-    if ( pageSizes && documentChanged )
-    {
-        QStringList items;
-        foreach ( const Okular::PageSize &p, d->document->pageSizes() )
-            items.append( p.name() );
-        d->aPageSizes->setItems( items );
+    if ( d->aPageSizes )
+    { // may be null if dummy mode is on
+        bool pageSizes = d->document->supportsPageSizes();
+        d->aPageSizes->setEnabled( pageSizes );
+        // set the new page sizes:
+        // - if the generator supports them
+        // - if the document changed
+        if ( pageSizes && documentChanged )
+        {
+            QStringList items;
+            foreach ( const Okular::PageSize &p, d->document->pageSizes() )
+                items.append( p.name() );
+            d->aPageSizes->setItems( items );
+        }
     }
-    d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
+    if ( d->aToggleForms )
+    { // may be null if dummy mode is on
+        d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
+    }
     if ( d->annotator )
         d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
 }
@@ -2278,13 +2285,16 @@ void PageView::toggleFormWidgets( bool on )
     if ( somehadfocus )
         setFocus();
     d->m_formsVisible = on;
-    if ( d->m_formsVisible )
+    if ( d->aToggleForms ) // it may not exist if we are on dummy mode
     {
-        d->aToggleForms->setText( i18n( "Hide Forms" ) );
-    }
-    else
-    {
-        d->aToggleForms->setText( i18n( "Show Forms" ) );
+        if ( d->m_formsVisible )
+        {
+            d->aToggleForms->setText( i18n( "Hide Forms" ) );
+        }
+        else
+        {
+            d->aToggleForms->setText( i18n( "Show Forms" ) );
+        }
     }
 }
 

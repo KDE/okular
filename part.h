@@ -162,6 +162,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);
+        void unsetDummyMode();
 
     private:
         void doPrint( KPrinter& printer );
@@ -240,6 +241,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool m_cliPresentation;
         QString m_addBookmarkText;
         QIcon m_addBookmarkIcon;
+
+        bool m_dummyMode;
 
     private slots:
         void slotGeneratorPreferences();

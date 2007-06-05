@@ -419,22 +419,6 @@ m_searchStarted(false), m_cliPresentation(false)
     closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
     widget()->addAction(closeFindBar);
 
-    // attach the actions of the children widgets too
-    m_pageView->setupActions( ac );
-    m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
-
-    // apply configuration (both internal settings and GUI configured items)
-    QList<int> splitterSizes = Okular::Settings::splitterSizes();
-    if ( !splitterSizes.count() )
-    {
-        // the first time use 1/10 for the panel and 9/10 for the pageView
-        splitterSizes.push_back( 50 );
-        splitterSizes.push_back( 500 );
-    }
-    m_splitter->setSizes( splitterSizes );
-    // get notified about splitter size changes
-    connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
-
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
     connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
@@ -455,6 +439,11 @@ m_searchStarted(false), m_cliPresentation(false)
     setXMLFile("part.rc");
     //
     updateViewActions();
+
+    // By default we start with a clean UI so that for example print preview
+    // does not get all the stuff embedded
+    m_dummyMode = true;
+    m_leftPanel->hide();
 }
 
 
@@ -498,6 +487,8 @@ QStringList Part::supportedMimeTypes() const
 
 void Part::openUrlFromDocument(const KUrl &url)
 {
+    if (m_dummyMode) return;
+
     m_bExtension->openUrlNotify();
     m_bExtension->setLocationBarUrl(url.prettyUrl());
     openUrl(url);
@@ -699,7 +690,8 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles );
-    m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction()->isEnabled() );
+    // m_pageView->toggleFormsAction() may be null on dummy mode
+    m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() );
     m_showPresentation->setEnabled( ok );
     if ( ok )
     {
@@ -1173,6 +1165,8 @@ void Part::slotFindNext()
 
 void Part::slotSaveFileAs()
 {
+    if (m_dummyMode) return;
+
     KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
@@ -1288,6 +1282,8 @@ void Part::slotPrintPreview()
 
 void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 {
+    if (m_dummyMode) return;
+
     bool reallyShow = false;
     if (!m_actionsSearched)
     {
@@ -1580,6 +1576,33 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
     setLocalFilePath( m_temporaryLocalFile );
     openUrl( m_temporaryLocalFile );
     m_temporaryLocalFile.clear();
+}
+
+
+void Part::unsetDummyMode()
+{
+    if (!m_dummyMode) return;
+
+    m_dummyMode = false;
+
+    m_leftPanel->setVisible( Okular::Settings::showLeftPanel() );
+
+    // apply configuration (both internal settings and GUI configured items)
+    QList<int> splitterSizes = Okular::Settings::splitterSizes();
+    if ( !splitterSizes.count() )
+    {
+        // the first time use 1/10 for the panel and 9/10 for the pageView
+        splitterSizes.push_back( 50 );
+        splitterSizes.push_back( 500 );
+    }
+    m_splitter->setSizes( splitterSizes );
+    // get notified about splitter size changes
+    connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
+
+    m_pageView->setupActions( actionCollection() );
+
+    // attach the actions of the children widgets too
+    m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
 }
 
 

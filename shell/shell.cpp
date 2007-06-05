@@ -71,6 +71,9 @@ void Shell::init()
     m_part = (KParts::ReadOnlyPart*) factory->createPart(this, this);
     if (m_part)
     {
+      // we don't want the dummy mode
+      QMetaObject::invokeMethod(m_part, "unsetDummyMode");
+
       // then, setup our actions
       setupActions();
       // tell the KParts::MainWindow that this is indeed the main widget
@@ -103,7 +106,6 @@ void Shell::init()
   setAutoSaveSettings();
 
   if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
-
 }
 
 void Shell::delayedOpen()

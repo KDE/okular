@@ -148,6 +148,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotHideFindBar();
         void setMimeTypes(KIO::Job *job);
         void readMimeType(KIO::Job *job, const QString &mime);
+        void loadCancelled(const QString &reason);
+        void setWindowTitleFromDocument();
         void saveSplitterSize();
         // can be connected to widget elements
         void updateViewActions();

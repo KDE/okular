@@ -103,6 +103,11 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // connect the started signal to tell the job the mimetypes we like
     connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
+
+    // connect the completed signal so we can put the window caption when loading remote files
+    connect(this, SIGNAL(completed()), this, SLOT(setWindowTitleFromDocument()));
+    connect(this, SIGNAL(canceled(const QString &)), this, SLOT(loadCancelled(const QString &)));
+
     // load catalog for translation
     KGlobal::locale()->insertCatalog("okular");
 
@@ -525,6 +530,33 @@ void Part::readMimeType(KIO::Job *, const QString &mime)
     m_jobMime = mime;
 }
 
+void Part::loadCancelled(const QString &reason)
+{
+    emit setWindowCaption( QString() );
+    if (!reason.isEmpty())
+    {
+        KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().prettyUrl(), reason ) );
+    }
+    else
+    {
+        KMessageBox::error( widget(), i18n("Could not open %1", url().prettyUrl() ) );
+    }
+}
+
+void Part::setWindowTitleFromDocument()
+{
+    // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
+    QString title = m_document->metaData( "DocumentTitle" ).toString();
+    if ( !title.isEmpty() && !title.trimmed().isEmpty() )
+    {
+        emit setWindowCaption( title );
+    }
+    else
+    {
+        emit setWindowCaption( url().fileName() );
+    }
+}
+
 void Part::slotGeneratorPreferences( )
 {
     // an instance the dialog could be already created and could be cached,
@@ -772,16 +804,7 @@ bool Part::openUrl(const KUrl &url)
     {
         m_viewportDirty.pageNumber = -1;
 
-        // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
-        QString title = m_document->metaData( "DocumentTitle" ).toString();
-        if ( !title.isEmpty() && !title.trimmed().isEmpty() )
-        {
-            emit setWindowCaption( title );
-        }
-        else
-        {
-            emit setWindowCaption( url.fileName() );
-        }
+        setWindowTitleFromDocument();
     }
 
     emit enablePrintAction(openOk);

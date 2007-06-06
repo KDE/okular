@@ -123,6 +123,7 @@ Shell::~Shell()
 {
     if ( m_part ) writeSettings();
     delete m_part;
+    m_args->clear();
 }
 
 void Shell::openUrl( const KUrl & url, uint page )

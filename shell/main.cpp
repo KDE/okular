@@ -56,8 +56,8 @@ int main(int argc, char** argv)
                 widget->show();
             }
         }
-        args->clear();
     }
+
     int ret = app.exec();
     delete about;
     return ret;

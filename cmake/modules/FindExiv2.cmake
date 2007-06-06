@@ -14,24 +14,21 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 
-IF (DEFINED CACHED_EXIV2)
+if (EXIV2_INCLUDE_DIR AND EXIV2_LIBRARIES)
 
   # in cache already
-  IF ("${CACHED_EXIV2}" STREQUAL "YES")
-    SET(EXIV2_FOUND TRUE)
-  ENDIF ("${CACHED_EXIV2}" STREQUAL "YES")
+  SET(EXIV2_FOUND TRUE)
 
-ELSE (DEFINED CACHED_EXIV2)
-
-IF (NOT WIN32)
-  # use pkg-config to get the directories and then use these values
-  # in the FIND_PATH() and FIND_LIBRARY() calls
-  INCLUDE(UsePkgConfig)
+else (EXIV2_INCLUDE_DIR AND EXIV2_LIBRARIES)
+  if (NOT WIN32)
+    # use pkg-config to get the directories and then use these values
+    # in the FIND_PATH() and FIND_LIBRARY() calls
+    INCLUDE(UsePkgConfig)
   
-  PKGCONFIG(exiv2 _EXIV2IncDir _EXIV2LinkDir _EXIV2LinkFlags _EXIV2Cflags)
+    PKGCONFIG(exiv2 _EXIV2IncDir _EXIV2LinkDir _EXIV2LinkFlags _EXIV2Cflags)
   
-  set(EXIV2_DEFINITIONS ${_EXIV2Cflags})
-ENDIF (NOT WIN32) 
+    set(EXIV2_DEFINITIONS ${_EXIV2Cflags})
+  endif (NOT WIN32) 
 
   FIND_PATH(EXIV2_INCLUDE_DIR exiv2/exiv2_version.h
     ${_EXIV2IncDir}
@@ -51,23 +48,15 @@ ENDIF (NOT WIN32)
   endif (EXIV2_INCLUDE_DIR AND EXIV2_LIBRARIES)
  
   if (EXIV2_FOUND)
-    set(CACHED_EXIV2 "YES")
-    if (NOT Exiv2_FIND_QUIETLY)
+    if (NOT EXIV2_FIND_QUIETLY)
       message(STATUS "Found EXIV2: ${EXIV2_LIBRARIES}")
-    endif (NOT Exiv2_FIND_QUIETLY)
+    endif (NOT EXIV2_FIND_QUIETLY)
   else (EXIV2_FOUND)
-    set(CACHED_EXIV2 "NO")
-    if (NOT Exiv2_FIND_QUIETLY)
-      message(STATUS "didn't find EXIV2")
-    endif (NOT Exiv2_FIND_QUIETLY)
-    if (Exiv2_FIND_REQUIRED)
+    if (EXIV2_FIND_REQUIRED)
       message(FATAL_ERROR "Could NOT find EXIV2")
-    endif (Exiv2_FIND_REQUIRED)
+    endif (EXIV2_FIND_REQUIRED)
   endif (EXIV2_FOUND)
-  
+
   MARK_AS_ADVANCED(EXIV2_INCLUDE_DIR EXIV2_LIBRARIES)
   
-  set(CACHED_EXIV2 ${CACHED_EXIV2} CACHE INTERNAL "If libexiv2 was checked")
-
-ENDIF (DEFINED CACHED_EXIV2)
-
+endif (EXIV2_INCLUDE_DIR AND EXIV2_LIBRARIES)

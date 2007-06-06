@@ -30,7 +30,7 @@ else (EXIV2_INCLUDE_DIR AND EXIV2_LIBRARIES)
     set(EXIV2_DEFINITIONS ${_EXIV2Cflags})
   endif (NOT WIN32) 
 
-  FIND_PATH(EXIV2_INCLUDE_DIR exiv2/exiv2_version.h
+  FIND_PATH(EXIV2_INCLUDE_DIR exiv2/image.hpp
     ${_EXIV2IncDir}
     /usr/include
     /usr/local/include

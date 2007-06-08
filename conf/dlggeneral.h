@@ -18,6 +18,7 @@ class DlgGeneral : public QWidget
 {
     public:
         DlgGeneral( QWidget * parent = 0 );
+        virtual ~DlgGeneral();
 
     protected:
         virtual void showEvent( QShowEvent * );

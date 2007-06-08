@@ -22,6 +22,11 @@ DlgGeneral::DlgGeneral( QWidget * parent )
     m_dlg->setupUi( this );
 }
 
+DlgGeneral::~DlgGeneral()
+{
+    delete m_dlg;
+}
+
 void DlgGeneral::showEvent( QShowEvent * )
 {
 #if OKULAR_FORCE_DRM

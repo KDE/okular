@@ -14,6 +14,6 @@
 DlgAccessibility::DlgAccessibility( QWidget * parent )
     : QWidget( parent )
 {
-    Ui_DlgAccessibilityBase *dlg = new Ui_DlgAccessibilityBase();
-    dlg->setupUi( this );
+    Ui_DlgAccessibilityBase dlg;
+    dlg.setupUi( this );
 }

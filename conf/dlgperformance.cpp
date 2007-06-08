@@ -30,6 +30,11 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     connect( m_dlg->kcfg_MemoryLevel, SIGNAL( changed( int ) ), this, SLOT( radioGroup_changed( int ) ) );
 }
 
+DlgPerformance::~DlgPerformance()
+{
+    delete m_dlg;
+}
+
 void DlgPerformance::radioGroup_changed( int which )
 {
     switch ( which )

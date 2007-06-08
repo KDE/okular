@@ -424,6 +424,7 @@ void PagePrivate::setTextSelections( RegularAreaRect *r, const QColor & color )
         hr->s_id = -1;
         hr->color = color;
         m_textSelections = hr;
+        delete r;
     }
 }
 

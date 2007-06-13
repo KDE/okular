@@ -11,10 +11,11 @@ if (DJVULIBRE_INCLUDE_DIR AND DJVULIBRE_LIBRARY)
   set(DJVULIBRE_FOUND TRUE)
 
 else (DJVULIBRE_INCLUDE_DIR AND DJVULIBRE_LIBRARY)
+  IF (NOT WIN32)
+  	include(UsePkgConfig)
 
-  include(UsePkgConfig)
-
-  pkgconfig(ddjvuapi _ddjvuIncDir _ddjvuLinkDir ddjvuLinkFlags _ddjvuCflags)
+  	pkgconfig(ddjvuapi _ddjvuIncDir _ddjvuLinkDir ddjvuLinkFlags _ddjvuCflags)
+  endif(NOT WIN32)
 
   if(_ddjvuIncDir)
     find_path(DJVULIBRE_INCLUDE_DIR libdjvu/ddjvuapi.h

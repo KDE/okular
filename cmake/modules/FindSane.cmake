@@ -11,7 +11,7 @@
 
 if (SANE_INCLUDE_DIR)
   # Already in cache, be silent
-  set(SANE_FIND_QUIETLY TRUE)
+  set(Sane_FIND_QUIETLY TRUE)
 endif (SANE_INCLUDE_DIR)
 
 FIND_PATH(SANE_INCLUDE_DIR sane/sane.h
@@ -39,9 +39,9 @@ if (SANE_FOUND)
       message(STATUS "Found sane: ${SANE_LIBRARIES}")
    endif (NOT Sane_FIND_QUIETLY)
 else (SANE_FOUND)
-   if (NOT Sane_FIND_QUIETLY)
-      message(STATUS "Did not find SANE")
-   endif (NOT Sane_FIND_QUIETLY)
+   if (NOT Sane_FIND_REQUIRED)
+      message(FATAL_ERROR "Did not find SANE")
+   endif (NOT Sane_FIND_REQUIRED)
 endif (SANE_FOUND)
 
 MARK_AS_ADVANCED(SANE_INCLUDE_DIR SANE_LIBRARIES SANE_LIBRARY)

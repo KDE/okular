@@ -15,7 +15,6 @@
 
 #include <QFile>
 #include <QProcess>
-#include <QStringList>
 #include <QTextStream>
 
 //#define DEBUG_FONTENC

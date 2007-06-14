@@ -22,7 +22,6 @@
 #include <QFile>
 #include <QImage>
 #include <QPainter>
-#include <QStringList>
 
 //#define DEBUG_SPECIAL
 

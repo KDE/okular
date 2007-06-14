@@ -16,7 +16,6 @@
 #include <QMap>
 #include <QPair>
 #include <QPrinter>
-#include <QStringList>
 
 #include "interpreter.h"
 #include "dscparse_adapter.h"

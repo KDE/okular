@@ -44,9 +44,6 @@
           <property name="text" >
            <string>Show scroll&amp;bars</string>
           </property>
-          <property name="shortcut" >
-           <string>Alt+B</string>
-          </property>
          </widget>
         </item>
         <item>
@@ -154,18 +151,12 @@
           <property name="text" >
            <string>&amp;Obey DRM limitations</string>
           </property>
-          <property name="shortcut" >
-           <string>Alt+O</string>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="QCheckBox" name="kcfg_WatchFile" >
           <property name="text" >
            <string>&amp;Reload document on file change</string>
-          </property>
-          <property name="shortcut" >
-           <string>Alt+R</string>
           </property>
          </widget>
         </item>

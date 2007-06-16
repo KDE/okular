@@ -86,7 +86,7 @@ void GSInterpreterCMD::fordwardImage(QImage *image)
 {
     if (image->width() != m_request->width() || image->height() != m_request->height())
     {
-        kDebug(4656) << "Generated image does not match wanted size " << image->width() << " " << m_request->width() << " " << image->height() << " " << m_request->height() << endl;
+        kWarning(4656) << "Generated image does not match wanted size " << image->width() << " " << m_request->width() << " " << image->height() << " " << m_request->height() << endl;
         QImage aux = image->scaled(m_request->width(), m_request->height());
         delete image;
         image = new QImage(aux);
@@ -108,7 +108,7 @@ void GSInterpreterCMD::run()
     while(1)
     {
         m_semaphore.acquire();
-        m_handler->init(m_media, m_magnify, m_pfonts, m_aaText, m_aaGfx, this);
+        m_handler->init(m_media, m_magnify, m_request->width(), m_request->height(), m_pfonts, m_aaText, m_aaGfx, this);
 
         // send structural information
         if (m_sendStructure)

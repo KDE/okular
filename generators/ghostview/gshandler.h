@@ -24,6 +24,8 @@ class GSHandler
 		
 		void init(const QString &media, 
 		          double magnify,
+		          int width,
+		          int height,
 		          bool plaformFonts,
 		          int aaText,
 		          int aaGfx,

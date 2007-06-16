@@ -113,7 +113,7 @@ GSHandler::GSHandler()
 	m_ghostScriptInstance = 0;
 }
 
-void GSHandler::init(const QString &media, double magnify, bool plaformFonts, int aaText, int aaGfx, GSInterpreterCMD *interpreter)
+void GSHandler::init(const QString &media, double magnify, int width, int height, bool plaformFonts, int aaText, int aaGfx, GSInterpreterCMD *interpreter)
 {
 	int errorCode;
 	
@@ -138,6 +138,7 @@ void GSHandler::init(const QString &media, double magnify, bool plaformFonts, in
 		<< QString("-dTextAlphaBits=%1").arg(aaText)
 		<< QString("-dGraphicsAlphaBits=%1").arg(aaGfx)
 		<< QString("-sPAPERSIZE=%1").arg(media.toLower())
+		<< QString().sprintf("-g%dx%d", width, height)
 		<< QString().sprintf("-r%fx%f", (magnify * Okular::Utils::dpiX()),
 		                                (magnify * Okular::Utils::dpiY()))
 		<< QString().sprintf("-dDisplayFormat=%d", DISPLAY_COLORS_RGB | DISPLAY_UNUSED_LAST | DISPLAY_DEPTH_8 | DISPLAY_LITTLEENDIAN | DISPLAY_TOPFIRST)

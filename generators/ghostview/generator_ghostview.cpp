@@ -359,7 +359,6 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 
 // TODO check if needed
 //    asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
-//    asyncGenerator->setSize( reqwidth, reqheight );
     asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
     asyncGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
     PsPosition u=internalDoc->pagePos(pgNo);

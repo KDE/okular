@@ -19,11 +19,6 @@
 			<whatsthis>Determines whether Ghostscript should be allowed to use platform fonts, if false only usage of fonts embedded in the document will be allowed</whatsthis>
 			<default>true</default>
 		</entry>
-		<entry name="WatchFile" type="Bool">
-			<label>Watch File</label>
-			<whatsthis>If this is on, then the file will be reloaded whenever it changes on disk</whatsthis>
-			<default>false</default>
-		</entry>
 	</group>
 	<group name="Ghostscript">
 		<entry name="Arguments" type="String">

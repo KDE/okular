@@ -162,10 +162,10 @@
         <item>
          <widget class="QCheckBox" name="kcfg_WatchFile" >
           <property name="text" >
-           <string>&amp;Watch file</string>
+           <string>&amp;Reload document on file change</string>
           </property>
           <property name="shortcut" >
-           <string>Alt+W</string>
+           <string>Alt+R</string>
           </property>
          </widget>
         </item>

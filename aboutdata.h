@@ -34,8 +34,6 @@ inline KAboutData* okularAboutData( const char* name, const char* iname )
     about->addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
     about->addAuthor("Laurent Montel", 0, "montel@kde.org");
 
-    about->addCredit("Marco Martin", I18N_NOOP("Icon"), "m4rt@libero.it");
-
     return about;
 }
 

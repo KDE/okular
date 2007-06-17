@@ -94,7 +94,7 @@ static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObje
 
 Part::Part(QWidget *parentWidget,
 QObject *parent,
-const QStringList & /*args*/ )
+const QStringList &args )
 : KParts::ReadOnlyPart(parent),
 m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
 m_searchStarted(false), m_cliPresentation(false)
@@ -292,13 +292,9 @@ m_searchStarted(false), m_cliPresentation(false)
     ac->addAction("last_page",m_lastPage);
     m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
 
-    m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), ac );
-    ac->addAction("history_back",m_historyBack);
-    m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
-
-    m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), ac);
-    ac->addAction("history_forward",m_historyNext);
-    m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+    // we do not want back and next in history in the dummy mode
+    m_historyBack = 0;
+    m_historyNext = 0;
 
     m_addBookmark = KStandardAction::addBookmark( this, SLOT( slotAddBookmark() ), ac );
     m_addBookmarkText = m_addBookmark->text();
@@ -445,10 +441,9 @@ m_searchStarted(false), m_cliPresentation(false)
     //
     updateViewActions();
 
-    // By default we start with a clean UI so that for example print preview
-    // does not get all the stuff embedded
     m_dummyMode = true;
     m_leftPanel->hide();
+    if (!args.contains("Print/Preview")) unsetDummyMode();
 }
 
 
@@ -960,8 +955,8 @@ void Part::updateViewActions()
         m_prevPage->setEnabled( !atBegin );
         m_lastPage->setEnabled( !atEnd );
         m_nextPage->setEnabled( !atEnd );
-        m_historyBack->setEnabled( !m_document->historyAtBegin() );
-        m_historyNext->setEnabled( !m_document->historyAtEnd() );
+        if (m_historyBack) m_historyBack->setEnabled( !m_document->historyAtBegin() );
+        if (m_historyNext) m_historyNext->setEnabled( !m_document->historyAtEnd() );
         m_reload->setEnabled( true );
     }
     else
@@ -971,8 +966,8 @@ void Part::updateViewActions()
         m_lastPage->setEnabled( false );
         m_prevPage->setEnabled( false );
         m_nextPage->setEnabled( false );
-        m_historyBack->setEnabled( false );
-        m_historyNext->setEnabled( false );
+        if (m_historyBack) m_historyBack->setEnabled( false );
+        if (m_historyNext) m_historyNext->setEnabled( false );
         m_reload->setEnabled( false );
     }
     updateBookmarksActions();
@@ -1610,6 +1605,15 @@ void Part::unsetDummyMode()
 
     m_leftPanel->setVisible( Okular::Settings::showLeftPanel() );
 
+    // add back and next in history
+    m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), actionCollection() );
+    actionCollection()->addAction("history_back",m_historyBack);
+    m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
+
+    m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), actionCollection());
+    actionCollection()->addAction("history_forward",m_historyNext);
+    m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+
     // apply configuration (both internal settings and GUI configured items)
     QList<int> splitterSizes = Okular::Settings::splitterSizes();
     if ( !splitterSizes.count() )
@@ -1626,6 +1630,9 @@ void Part::unsetDummyMode()
 
     // attach the actions of the children widgets too
     m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
+
+    // ensure history actions are in the correct state
+    updateViewActions();
 }
 
 

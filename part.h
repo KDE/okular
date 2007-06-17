@@ -164,13 +164,14 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);
-        void unsetDummyMode();
 
     private:
         void doPrint( KPrinter& printer );
         bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
+        void unsetDummyMode();
+
         KTemporaryFile *m_tempfile;
 
         // the document

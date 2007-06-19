@@ -50,7 +50,7 @@ IF (OKULAR_FOUND)
      endif(NOT Okular_FIND_QUIETLY)
 ELSE (OKULAR_FOUND)
      if (Okular_FIND_REQUIRED)
-        MESSAGE (STATUS "Okular Generator not found." )
+        MESSAGE (FATAL_ERROR "Okular Generator not found." )
      endif (Okular_FIND_REQUIRED)
 ENDIF (OKULAR_FOUND)
 

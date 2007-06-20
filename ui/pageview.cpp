@@ -157,7 +157,7 @@ public:
 protected:
     bool event( QEvent *e )
     {
-        if ( e->type() == QEvent::ToolTip )
+        if ( e->type() == QEvent::ToolTip && m_pageView->d->mouseMode == PageView::MouseNormal )
         {
             QHelpEvent * he = (QHelpEvent*)e;
             PageViewItem * pageItem = m_pageView->pickItemOnPoint( he->x(), he->y() );
@@ -2220,7 +2220,7 @@ void PageView::updateCursor( const QPoint &p )
 {
     // detect the underlaying page (if present)
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
-    if ( pageItem )
+    if ( pageItem && d->mouseMode == MouseNormal )
     {
         double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();

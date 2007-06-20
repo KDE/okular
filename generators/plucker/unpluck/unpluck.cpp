@@ -613,10 +613,8 @@ static int ParseURLs
   errout4:
     if (buf != NULL)
         free (buf);
-    if (urls != NULL)
-        free (urls);
-    if (records != NULL)
-        free (records);
+    free (urls);
+    free (records);
     return FALSE;
 }
 

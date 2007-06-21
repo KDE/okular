@@ -2,9 +2,11 @@
 Encoding=UTF-8
 Type=Service
 Name=Comic Book
+Name[el]=Βιβλίο κόμικ
 Name[pa]=ਕਾਮਿਕਸ ਕਿਤਾਬ
 Name[x-test]=xxComic Bookxx
 Comment=Comic book backend for okular
+Comment[el]=Σύστημα υποστήριξης βιβλίων κόμικ για το okular
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਕਾਮਿਕਸ ਕਿਤਾਬ ਬੈਕਐਂਡ
 Comment[sv]=Comic book-gränssnitt för Okular
 Comment[x-test]=xxComic book backend for okularxx

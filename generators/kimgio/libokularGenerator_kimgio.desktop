@@ -2,12 +2,15 @@
 Encoding=UTF-8
 Type=Service
 Name=KDE Image libraries
+Name[el]=Βιβλιοθήκες εικόνων του KDE
+Name[is]=Myndmeðhöndlunarforrit KDE
 Name[ja]=KDE 画像ライブラリ
 Name[pa]=KDE ਚਿੱਤਰ ਲਾਇਬਰੇਰੀਆਂ
 Name[sv]=KDE-bildbibliotek
 Name[x-test]=xxKDE Image librariesxx
 Name[zh_TW]=KDE 影像函式庫
 Comment=Image backend for okular
+Comment[el]=Σύστημα υποστήριξης εικόνων για το okular
 Comment[ja]=okular の画像バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਚਿੱਤਰ ਬੈਕਐਂਡ
 Comment[sv]=Bildgränssnitt för Okular

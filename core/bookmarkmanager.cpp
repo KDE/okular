@@ -72,7 +72,7 @@ BookmarkManager::BookmarkManager( Document * document )
 
     d->file = KStandardDirs::locateLocal( "data", "okular/bookmarks.xml" );
 
-    d->manager = KBookmarkManager::managerForFile( d->file, "okular", false );
+    d->manager = KBookmarkManager::managerForFile( d->file, "okular" );
     d->manager->setEditorOptions( KGlobal::caption(), false );
     d->manager->setUpdate( true );
 }

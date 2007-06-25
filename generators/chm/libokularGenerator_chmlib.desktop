@@ -4,6 +4,7 @@ Type=Service
 Name=chmlib
 Name[x-test]=xxchmlibxx
 Comment=Windows HTMLHelp backend for okular
+Comment[de]=Unterstützung für Windows-Hilfe-Dateien in Okular
 Comment[el]=Σύστημα υποστήριξης βοήθειας Windows σε HTML για το okular
 Comment[is]=Windows HTMLHelp stuðningur fyrir Okular
 Comment[ja]=okular の Windows HTMLHelp バックエンド

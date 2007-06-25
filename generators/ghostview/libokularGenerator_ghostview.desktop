@@ -7,6 +7,7 @@ Name[pt]=GhostScript
 Name[pt_BR]=GhostScript
 Name[x-test]=xxGhostscriptxx
 Comment=Ghostscript PS/PDF backend for okular
+Comment[de]=Unterstützung für Ghostscript PS/PDF in Okular
 Comment[el]=Σύστημα υποστήριξης Ghostscript PS/PDF για το okular
 Comment[ja]=okular の Ghostscript PS/PDF バックエンド
 Comment[pt]=Infra-estrutura de PS/PDF do Ghostscript para o okular

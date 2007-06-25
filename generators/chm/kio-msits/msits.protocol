@@ -7,6 +7,7 @@ reading=true
 listing=Name,Type,Size
 defaultMimetype=text/html
 Description=A kioslave for displaying WinHelp files
+Description[de]=Ein-/Ausgabemodul zur Anzeige von Windows-Hilfe-Dateien
 Description[el]=Ένα kioslave για την εμφάνιση αρχείων WinHelp
 Description[is]=Kioslave tilað sýna WinHelp skrár
 Description[ja]=WinHelp ファイルを表示するための kioslave

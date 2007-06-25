@@ -4,6 +4,7 @@ Type=Service
 Name=dvi
 Name[x-test]=xxdvixx
 Comment=DVI backend for okular
+Comment[de]=Unterstützung für DVI in Okular
 Comment[el]=Σύστημα υποστήριξης DVI για το okular
 Comment[ja]=okular の DVI バックエンド
 Comment[pa]=ਓਕੁਲਾਰ ਲਈ DVI ਬੈਕਐਂਡ

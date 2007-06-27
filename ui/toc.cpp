@@ -64,7 +64,8 @@ TOC::TOC(QWidget *parent, KPDFDocument *document) : KListView(parent), m_documen
 #endif
     setSorting(-1);
     setRootIsDecorated(true);
-    setResizeMode(AllColumns);
+    // the next line causes bug:147233
+//    setResizeMode(AllColumns);
     setAllColumnsShowFocus(true);
     connect(this, SIGNAL(clicked(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));
     connect(this, SIGNAL(returnPressed(QListViewItem *)), this, SLOT(slotExecuted(QListViewItem *)));

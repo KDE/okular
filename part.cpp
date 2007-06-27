@@ -186,9 +186,13 @@ Part::Part(QWidget *parentWidget, const char *widgetName,
 
 	int index;
 	// [left toolbox: Table of Contents] | []
-	m_tocFrame = new TOC( m_toolBox, m_document );
+	// dummy wrapper with layout to enable horizontal scroll bars (bug: 147233)
+	QWidget *tocWrapper = new QWidget(m_toolBox);
+	QVBoxLayout *tocWrapperLayout = new QVBoxLayout(tocWrapper);
+	m_tocFrame = new TOC( tocWrapper, m_document );
+	tocWrapperLayout->add(m_tocFrame);
 	connect(m_tocFrame, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)));
-	index = m_toolBox->addItem( m_tocFrame, QIconSet(SmallIcon("text_left")), i18n("Contents") );
+	index = m_toolBox->addItem( tocWrapper, QIconSet(SmallIcon("text_left")), i18n("Contents") );
 	m_toolBox->setItemToolTip(index, i18n("Contents"));
 	enableTOC( false );
 

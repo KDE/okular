@@ -18,20 +18,17 @@
 #include <klocale.h>
 #include "aboutdata.h"
 
-static KCmdLineOptions options[] =
-{
-    { "p", 0, 0 },
-    { "page <number>", I18N_NOOP("Page of the document to be shown"), 0 },
-    { "presentation", I18N_NOOP("Start the document in presentation mode"), 0 },
-    { "+[URL]", I18N_NOOP("Document to open"), 0 },
-    KCmdLineLastOption
-};
-
 int main(int argc, char** argv)
 {
     KAboutData * about = okularAboutData( "okular", I18N_NOOP( "okular" ) );
 
     KCmdLineArgs::init(argc, argv, about);
+
+    KCmdLineOptions options;
+    options.add("p");
+    options.add("page <number>", ki18n("Page of the document to be shown"));
+    options.add("presentation", ki18n("Start the document in presentation mode"));
+    options.add("+[URL]", ki18n("Document to open"));
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
 

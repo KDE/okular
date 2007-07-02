@@ -502,7 +502,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     info.generator = generator;
     info.library = lib;
     if ( generator->componentData() && generator->componentData()->aboutData() )
-        info.appName = QLatin1String( generator->componentData()->aboutData()->appName() );
+        info.appName = generator->componentData()->aboutData()->appName();
     m_loadedGenerators.insert( name, info );
     return generator;
 }

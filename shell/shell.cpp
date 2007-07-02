@@ -110,7 +110,7 @@ void Shell::delayedOpen()
    uint page = 0;
    if (m_args && m_doc)
    {
-       QByteArray pageopt = m_args->getOption("page");
+       QString pageopt = m_args->getOption("page");
        page = pageopt.toUInt();
    }
    openUrl(m_openUrl, page);

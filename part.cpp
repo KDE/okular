@@ -642,7 +642,7 @@ KAboutData* Part::createAboutData()
     // which the part's rc file is installed ('partrcdir' in the
     // Makefile)
     KAboutData* aboutData = okularAboutData( "okularpart", I18N_NOOP( "okularpart" ) );
-    aboutData->addAuthor("Wilco Greven", 0, "greven@kde.org");
+    aboutData->addAuthor(ki18n("Wilco Greven"), KLocalizedString(), "greven@kde.org");
     return aboutData;
 }
 

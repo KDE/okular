@@ -16,23 +16,24 @@ inline KAboutData* okularAboutData( const char* name, const char* iname )
 {
     KAboutData *about = new KAboutData(
         name, //"okular",
-        iname, //I18N_NOOP("okular"),
+        0, // catalog name also "okular"
+        ki18n(iname), //I18N_NOOP("okular"),
         "0.5.83",
-        I18N_NOOP("okular, an universal document viewer"),
+        ki18n("okular, an universal document viewer"),
         KAboutData::License_GPL,
-        "(C) 2002 Wilco Greven, Christophe Devriese\n"
-        "(C) 2004-2005 Albert Astals Cid, Enrico Ros\n"
-        "(C) 2005 Piotr Szymanski"
+        ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
+              "(C) 2004-2005 Albert Astals Cid, Enrico Ros\n"
+              "(C) 2005 Piotr Szymanski")
     );
 
-    about->addAuthor("Pino Toscano", I18N_NOOP("Current maintainer"), "pino@kde.org");
-    about->addAuthor("Tobias Koenig", I18N_NOOP("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
-    about->addAuthor("Albert Astals Cid", I18N_NOOP("Former maintainer"), "aacid@kde.org");
-    about->addAuthor("Piotr Szymanski", I18N_NOOP("Created okular from KPDF codebase"), "djurban@pld-dc.org");
-    about->addAuthor("Enrico Ros", 0, "eros.kde@email.it");
-    about->addAuthor("Wilco Greven", 0, "greven@kde.org");
-    about->addAuthor("Christophe Devriese", 0, "oelewapperke@oelewapperke.org");
-    about->addAuthor("Laurent Montel", 0, "montel@kde.org");
+    about->addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
+    about->addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
+    about->addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
+    about->addAuthor(ki18n("Piotr Szymanski"), ki18n("Created okular from KPDF codebase"), "djurban@pld-dc.org");
+    about->addAuthor(ki18n("Enrico Ros"), KLocalizedString(), "eros.kde@email.it");
+    about->addAuthor(ki18n("Wilco Greven"), KLocalizedString(), "greven@kde.org");
+    about->addAuthor(ki18n("Christophe Devriese"), KLocalizedString(), "oelewapperke@oelewapperke.org");
+    about->addAuthor(ki18n("Laurent Montel"), KLocalizedString(), "montel@kde.org");
 
     return about;
 }

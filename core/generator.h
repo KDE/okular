@@ -416,12 +416,12 @@ class OKULAR_EXPORT Generator : public QObject
          * data like:
          * @code
 KAboutData *about = new KAboutData(
-         "generator_foo",  // we reccomend to use okular_xxx for the component name
-         I18N_NOOP( "Foo Backend" ), "0.1",
-         I18N_NOOP( "A foo backend" ),
+         "generator_foo", 0,  // we reccomend to use okular_xxx for the component name
+         ki18n( "Foo Backend" ), "0.1",
+         ki18n( "A foo backend" ),
          KAboutData::License_GPL,
-         I18N_NOOP( "Copyright (c) 2007 Developer" ) );
-about->addAuthor( "Joe Developer", I18N_NOOP( "Developer" ), " joe@host.com" );
+         ki18n( "Copyright (c) 2007 Developer" ) );
+about->addAuthor( ki18n("Joe Developer"), ki18n( "Developer" ), " joe@host.com" );
 setAboutData( about );
          * @endcode
          */

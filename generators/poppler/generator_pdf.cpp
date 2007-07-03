@@ -71,8 +71,7 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
         
         int size() const
         {
-#ifdef HAVE_POPPLER_0_6
-            /* what's the equivalent in poppler 0.6? */
+#ifndef HAVE_POPPLER_0_6
             return -1;
 #else
             int s = ef->size();

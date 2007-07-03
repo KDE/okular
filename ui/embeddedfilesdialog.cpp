@@ -44,7 +44,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	header.append(i18n("Modified"));
 	m_tw->setHeaderLabels(header);
 	m_tw->setRootIsDecorated(false);
-	m_tw->setSelectionMode(QAbstractItemView::MultiSelection);
+	m_tw->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
 	foreach(Okular::EmbeddedFile* ef, *document->embeddedFiles())
 	{

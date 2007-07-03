@@ -17,6 +17,10 @@
 
 namespace Okular {
 
+class FormFieldPrivate;
+class FormFieldTextPrivate;
+class FormFieldChoicePrivate;
+
 /**
  * @short The base interface of a form field.
  *
@@ -79,11 +83,11 @@ class OKULAR_EXPORT FormField
         virtual bool isVisible() const;
 
     protected:
-        FormField( FieldType t );
+        FormField( FormFieldPrivate &dd );
+        Q_DECLARE_PRIVATE( FormField )
+        FormFieldPrivate *d_ptr;
 
     private:
-        FieldType m_type;
-
         Q_DISABLE_COPY( FormField )
 };
 
@@ -162,6 +166,10 @@ class OKULAR_EXPORT FormFieldText : public FormField
 
     protected:
         FormFieldText();
+
+    private:
+        Q_DECLARE_PRIVATE( FormFieldText )
+        Q_DISABLE_COPY( FormFieldText )
 };
 
 
@@ -239,6 +247,10 @@ class OKULAR_EXPORT FormFieldChoice : public FormField
 
     protected:
         FormFieldChoice();
+
+    private:
+        Q_DECLARE_PRIVATE( FormFieldChoice )
+        Q_DISABLE_COPY( FormFieldChoice )
 };
 
 }

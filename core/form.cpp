@@ -12,18 +12,31 @@
 
 using namespace Okular;
 
-FormField::FormField( FormField::FieldType t )
-    : m_type( t )
+class Okular::FormFieldPrivate
+{
+    public:
+        FormFieldPrivate( FormField::FieldType type )
+            : m_type( type )
+        {
+        }
+
+        FormField::FieldType m_type;
+};
+
+FormField::FormField( FormFieldPrivate &dd )
+    : d_ptr( &dd )
 {
 }
 
 FormField::~FormField()
 {
+    delete d_ptr;
 }
 
 FormField::FieldType FormField::type() const
 {
-    return m_type;
+    Q_D( const FormField );
+    return d->m_type;
 }
 
 bool FormField::isReadOnly() const
@@ -37,8 +50,18 @@ bool FormField::isVisible() const
 }
 
 
+class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
+{
+    public:
+        FormFieldTextPrivate()
+            : FormFieldPrivate( FormField::FormText )
+        {
+        }
+};
+
+
 FormFieldText::FormFieldText()
-    : FormField( FormField::FormText )
+    : FormField( *new FormFieldTextPrivate() )
 {
 }
 
@@ -76,8 +99,18 @@ bool FormFieldText::canBeSpellChecked() const
 }
 
 
+class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
+{
+    public:
+        FormFieldChoicePrivate()
+            : FormFieldPrivate( FormField::FormChoice )
+        {
+        }
+};
+
+
 FormFieldChoice::FormFieldChoice()
-    : FormField( FormField::FormChoice )
+    : FormField( *new FormFieldChoicePrivate() )
 {
 }
 

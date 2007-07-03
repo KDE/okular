@@ -28,8 +28,11 @@ Q_OBJECT
 	
 	private slots:
 		void saveFile();
+		void attachViewContextMenu( const QPoint& pos );
 	
 	private:
+		void saveFile( Okular::EmbeddedFile* );
+
 		QTreeWidget *m_tw;
 		QHash<QTreeWidgetItem *, Okular::EmbeddedFile*> m_files;
 };

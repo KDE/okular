@@ -9,7 +9,10 @@
 
 #include "embeddedfilesdialog.h"
 
+#include <QAction>
+#include <QCursor>
 #include <QDateTime>
+#include <QMenu>
 #include <QTreeWidget>
 
 #include <kfiledialog.h>
@@ -47,6 +50,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	m_tw->setHeaderLabels(header);
 	m_tw->setRootIsDecorated(false);
 	m_tw->setSelectionMode(QAbstractItemView::ExtendedSelection);
+	m_tw->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	foreach(Okular::EmbeddedFile* ef, *document->embeddedFiles())
 	{
@@ -73,6 +77,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
         m_tw->updateGeometry();
 
 	connect(this, SIGNAL(user1Clicked()), this, SLOT(saveFile()));
+	connect(m_tw, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(attachViewContextMenu(QPoint)));
 }
 
 void EmbeddedFilesDialog::saveFile()
@@ -81,19 +86,46 @@ void EmbeddedFilesDialog::saveFile()
 	foreach(QTreeWidgetItem *twi, selected)
 	{
 		Okular::EmbeddedFile* ef = m_files[twi];
-		QString path = KFileDialog::getSaveFileName(ef->name(), QString(), this, i18n("Where do you want to save %1?", ef->name()));
-		if (!path.isEmpty())
-		{
-			QFile f(path);
-			if (!f.exists() || KMessageBox::warningContinueCancel( this, i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", path), QString(), KGuiItem(i18n("Overwrite"))) == KMessageBox::Continue)
-			{
-				f.open(QIODevice::WriteOnly);
-				f.write(ef->data());
-				f.close();
-			}
-			
-		}
+		saveFile(ef);
 	}
+}
+
+void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
+{
+    QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
+    if ( selected.isEmpty() )
+        return;
+
+    if ( selected.size() > 1 )
+        return;
+
+    QMenu menu( this );
+    QAction* saveAsAct = menu.addAction( KIcon( "document-save-as" ), i18n( "Save As..." ) );
+
+    QAction* act = menu.exec( QCursor::pos() );
+    if ( !act )
+        return;
+
+    if ( act == saveAsAct )
+    {
+        Okular::EmbeddedFile* ef = m_files[selected.at(0)];
+        saveFile( ef );
+    }
+}
+
+void EmbeddedFilesDialog::saveFile( Okular::EmbeddedFile* ef )
+{
+    QString path = KFileDialog::getSaveFileName( ef->name(), QString(), this, i18n( "Where do you want to save %1?", ef->name() ) );
+    if ( path.isEmpty() )
+        return;
+
+    QFile f(path);
+    if ( !f.exists() || KMessageBox::warningContinueCancel( this, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18n( "Overwrite" ) ) ) == KMessageBox::Continue )
+    {
+        f.open( QIODevice::WriteOnly );
+        f.write( ef->data() );
+        f.close();
+    }
 }
 
 #include "embeddedfilesdialog.moc"

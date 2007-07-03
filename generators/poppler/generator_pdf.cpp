@@ -71,8 +71,13 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
         
         int size() const
         {
+#ifdef HAVE_POPPLER_0_6
+            /* what's the equivalent in poppler 0.6? */
+            return -1;
+#else
             int s = ef->size();
             return s <= 0 ? -1 : s;
+#endif
         }
         
         QDateTime modificationDate() const

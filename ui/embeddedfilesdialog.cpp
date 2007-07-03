@@ -13,6 +13,7 @@
 #include <QTreeWidget>
 
 #include <kfiledialog.h>
+#include <kglobal.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -40,6 +41,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	QStringList header;
 	header.append(i18n("Name"));
 	header.append(i18n("Description"));
+	header.append(i18n("Size"));
 	header.append(i18n("Created"));
 	header.append(i18n("Modified"));
 	m_tw->setHeaderLabels(header);
@@ -56,8 +58,9 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 			twi->setIcon(0, KIcon(mime->iconName()));
 		}
 		twi->setText(1, ef->description());
-		twi->setText(2, dateToString( ef->creationDate() ) );
-		twi->setText(3, dateToString( ef->modificationDate() ) );
+		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KGlobal::locale()->formatByteSize(ef->size()));
+		twi->setText(3, dateToString( ef->creationDate() ) );
+		twi->setText(4, dateToString( ef->modificationDate() ) );
 		m_tw->addTopLevelItem(twi);
 		m_files.insert(twi, ef);
 	}

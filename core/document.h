@@ -769,6 +769,14 @@ class OKULAR_EXPORT EmbeddedFile
         virtual QByteArray data() const = 0;
 
         /**
+         * Returns the size (in bytes) of the file, if available, or -1 otherwise.
+         *
+         * @note this method should be a fast way to know the size of the file
+         * with no need to extract all the data from it
+         */
+        virtual int size() const = 0;
+
+        /**
          * Returns the modification date of the file, or an invalid date
          * if not available
          */
@@ -779,6 +787,7 @@ class OKULAR_EXPORT EmbeddedFile
          * if not available
          */
         virtual QDateTime creationDate() const = 0;
+
 };
 
 /**

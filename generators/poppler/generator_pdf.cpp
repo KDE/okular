@@ -69,6 +69,12 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
             return ef->data();
         }
         
+        int size() const
+        {
+            int s = ef->size();
+            return s <= 0 ? -1 : s;
+        }
+        
         QDateTime modificationDate() const
         {
             return ef->modDate();

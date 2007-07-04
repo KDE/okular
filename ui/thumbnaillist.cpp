@@ -23,9 +23,6 @@
 #include <kactioncollection.h>
 #include <kicon.h>
 
-// system includes
-#include <math.h>
-
 // local includes
 #include "pagepainter.h"
 #include "core/area.h"
@@ -508,7 +505,7 @@ ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Document * doc
 void ThumbnailWidget::resizeFitWidth( int width )
 {
     m_pixmapWidth = width - m_margin;
-    m_pixmapHeight = lround( m_page->ratio() * (double)m_pixmapWidth );
+    m_pixmapHeight = qRound( m_page->ratio() * (double)m_pixmapWidth );
     setFixedSize( QSize( width, heightHint() ) );
 }
 

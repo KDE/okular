@@ -783,7 +783,6 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     // add forms info if has got any
     if ( !formfields.isEmpty() )
     {
-#if 0
         // create the formList
         QDomElement formListElement = document.createElement( "forms" );
 
@@ -808,7 +807,6 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         // append the annotationList element if annotations have been set
         if ( formListElement.hasChildNodes() )
             pageElement.appendChild( formListElement );
-#endif
     }
 
     // append the page element only if has children

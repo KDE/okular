@@ -290,8 +290,7 @@ void PagePrivate::rotateAt( Rotation orientation )
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, m_rotation, it.key() );
         job->setPage( this );
-        QObject::connect( job, SIGNAL( finished() ), PageController::self(), SLOT( imageRotationDone() ) );
-        job->start();
+        PageController::self()->addRotationJob(job);
     }
 
     /**
@@ -374,8 +373,7 @@ void Page::setPixmap( int id, QPixmap *pixmap )
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );
         job->setPage( d );
-        QObject::connect( job, SIGNAL( finished() ), PageController::self(), SLOT( imageRotationDone() ) );
-        job->start();
+        PageController::self()->addRotationJob(job);
 
         delete pixmap;
     }

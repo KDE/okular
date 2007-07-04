@@ -10,8 +10,9 @@
 #ifndef _OKULAR_ROTATIONJOB_H
 #define _OKULAR_ROTATIONJOB_H
 
-#include <QtCore/QThread>
 #include <QtGui/QImage>
+
+#include <threadweaver/Job.h>
 
 #include "core/global.h"
 
@@ -19,7 +20,7 @@ namespace Okular {
 
 class PagePrivate;
 
-class RotationJob : public QThread
+class RotationJob : public ThreadWeaver::Job
 {
     Q_OBJECT
 

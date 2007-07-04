@@ -11,6 +11,7 @@
 
 // qt/kde includes
 #include <kglobal.h>
+#include <threadweaver/ThreadWeaver.h>
 
 // local includes
 #include "page_p.h"
@@ -23,6 +24,9 @@ using namespace Okular;
 PageController::PageController()
   : QObject()
 {
+    connect( ThreadWeaver::Weaver::instance(),
+             SIGNAL( jobDone(ThreadWeaver::Job*) ),
+             SLOT( imageRotationDone(ThreadWeaver::Job*) ) );
 }
 
 PageController::~PageController()
@@ -34,9 +38,14 @@ PageController * PageController::self()
     return page_controller_self;
 }
 
-void PageController::imageRotationDone()
+void PageController::addRotationJob(RotationJob *job)
 {
-    RotationJob *job = sender() ? qobject_cast< RotationJob * >( sender() ) : 0;
+    ThreadWeaver::Weaver::instance()->enqueue(job);
+}
+
+void PageController::imageRotationDone(ThreadWeaver::Job *j)
+{
+    RotationJob *job = qobject_cast< RotationJob * >(j);
 
     if ( !job )
         return;

@@ -12,9 +12,14 @@
 
 #include <QtCore/QObject>
 
+namespace ThreadWeaver {
+    class Job;
+}
+
 namespace Okular {
 
 class Page;
+class RotationJob;
 
 class PageController : public QObject
 {
@@ -30,11 +35,13 @@ class PageController : public QObject
 
         static PageController * self();
 
+        void addRotationJob( RotationJob *job );
+
     signals:
         void rotationFinished( int page );
 
     private slots:
-        void imageRotationDone();
+        void imageRotationDone(ThreadWeaver::Job*);
 };
 
 }

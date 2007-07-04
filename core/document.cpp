@@ -962,8 +962,8 @@ void Document::closeDocument()
     // close the current document and save document info if a document is still opened
     if ( d->m_generator && d->m_pagesVector.size() > 0 )
     {
-        d->m_generator->closeDocument();
         d->saveDocumentInfo();
+        d->m_generator->closeDocument();
     }
 
     // stop timers

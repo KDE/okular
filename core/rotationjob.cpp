@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "rotationjob.h"
+#include "rotationjob_p.h"
 
 #include <QtGui/QMatrix>
 
@@ -85,4 +85,4 @@ void RotationJob::run()
     mRotatedImage = mImage.transformed( matrix );
 }
 
-#include "rotationjob.moc"
+#include "rotationjob_p.moc"

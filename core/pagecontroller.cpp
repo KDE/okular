@@ -14,7 +14,7 @@
 
 // local includes
 #include "page_p.h"
-#include "rotationjob.h"
+#include "rotationjob_p.h"
 
 K_GLOBAL_STATIC( Okular::PageController, page_controller_self )
 

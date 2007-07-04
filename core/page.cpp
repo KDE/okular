@@ -29,7 +29,7 @@
 #include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"
-#include "rotationjob.h"
+#include "rotationjob_p.h"
 #include "textpage.h"
 
 #ifdef PAGE_PROFILE

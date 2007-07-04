@@ -7,25 +7,33 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-// local includes
 #include "form.h"
+#include "form_p.h"
+
+// qt includes
+#include <QtCore/QVariant>
 
 using namespace Okular;
 
-class Okular::FormFieldPrivate
+FormFieldPrivate::FormFieldPrivate( FormField::FieldType type )
+    : m_type( type )
 {
-    public:
-        FormFieldPrivate( FormField::FieldType type )
-            : m_type( type )
-        {
-        }
+}
 
-        FormField::FieldType m_type;
-};
+FormFieldPrivate::~FormFieldPrivate()
+{
+}
+
+void FormFieldPrivate::setDefault()
+{
+    m_default = value();
+}
+
 
 FormField::FormField( FormFieldPrivate &dd )
     : d_ptr( &dd )
 {
+    d_ptr->q_ptr = this;
 }
 
 FormField::~FormField()
@@ -56,6 +64,20 @@ class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
         FormFieldTextPrivate()
             : FormFieldPrivate( FormField::FormText )
         {
+        }
+
+        Q_DECLARE_PUBLIC( FormFieldText )
+
+        void setValue( const QString& v )
+        {
+            Q_Q( FormFieldText );
+            q->setText( v );
+        }
+
+        QString value() const
+        {
+            Q_Q( const FormFieldText );
+            return q->text();
         }
 };
 
@@ -105,6 +127,37 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
         FormFieldChoicePrivate()
             : FormFieldPrivate( FormField::FormChoice )
         {
+        }
+
+        Q_DECLARE_PUBLIC( FormFieldChoice )
+
+        void setValue( const QString& v )
+        {
+            Q_Q( FormFieldChoice );
+            QStringList choices = v.split( ';', QString::SkipEmptyParts );
+            QList<int> newchoices;
+            foreach ( const QString& str, choices )
+            {
+                bool ok = true;
+                int val = str.toInt( &ok );
+                if ( ok )
+                    newchoices.append( val );
+            }
+            if ( !newchoices.isEmpty() )
+                q->setCurrentChoices( newchoices );
+        }
+
+        QString value() const
+        {
+            Q_Q( const FormFieldChoice );
+            QList<int> choices = q->currentChoices();
+            qSort( choices );
+            QStringList list;
+            foreach ( int c, choices )
+            {
+                list.append( QString::number( c ) );
+            }
+            return list.join( QLatin1String( ";" ) );
         }
 };
 

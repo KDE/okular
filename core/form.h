@@ -17,6 +17,8 @@
 
 namespace Okular {
 
+class Page;
+class PagePrivate;
 class FormFieldPrivate;
 class FormFieldTextPrivate;
 class FormFieldChoicePrivate;
@@ -31,6 +33,9 @@ class FormFieldChoicePrivate;
  */
 class OKULAR_EXPORT FormField
 {
+    friend class Page;
+    friend class PagePrivate;
+
     public:
         /**
          * The types of form field.

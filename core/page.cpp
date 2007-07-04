@@ -10,8 +10,10 @@
 #include "page_p.h"
 
 // qt/kde includes
+#include <QtCore/QHash>
 #include <QtCore/QSet>
 #include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -23,6 +25,7 @@
 #include "annotations.h"
 #include "area.h"
 #include "form.h"
+#include "form_p.h"
 #include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"
@@ -572,6 +575,11 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 {
     qDeleteAll( d->formfields );
     d->formfields = fields;
+    QLinkedList< FormField * >::const_iterator it = d->formfields.begin(), itEnd = d->formfields.end();
+    for ( ; it != itEnd; ++it )
+    {
+        (*it)->d_ptr->setDefault();
+    }
 }
 
 void Page::deletePixmap( int id )
@@ -688,13 +696,43 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
             kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
 #endif
         }
+        // parse formList child element
+        else if ( childElement.tagName() == "forms" )
+        {
+            QHash<int, FormField*> hashedforms;
+            QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
+            for ( ; fIt != fItEnd; ++fItEnd )
+            {
+                hashedforms[(*fIt)->id()] = (*fIt);
+            }
+
+            // iterate over all forms
+            QDomNode formsNode = childElement.firstChild();
+            while( formsNode.isElement() )
+            {
+                // get annotation element and advance to next annot
+                QDomElement formElement = formsNode.toElement();
+                formsNode = formsNode.nextSibling();
+
+                if ( formElement.tagName() != "form" )
+                    continue;
+
+                bool ok = true;
+                int index = formElement.attribute( "id" ).toInt( &ok );
+                if ( !ok )
+                    continue;
+
+                QString value = formElement.attribute( "value" );
+                hashedforms[index]->d_ptr->setValue( value );
+            }
+        }
     }
 }
 
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const
 {
     // only add a node if there is some stuff to write into
-    if ( m_page->m_annotations.isEmpty() )
+    if ( m_page->m_annotations.isEmpty() && formfields.isEmpty() )
         return;
 
     // create the page node and set the 'number' attribute
@@ -740,6 +778,37 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         // append the annotationList element if annotations have been set
         if ( annotListElement.hasChildNodes() )
             pageElement.appendChild( annotListElement );
+    }
+
+    // add forms info if has got any
+    if ( !formfields.isEmpty() )
+    {
+#if 0
+        // create the formList
+        QDomElement formListElement = document.createElement( "forms" );
+
+        // add every form data to the formList
+        QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
+        for ( ; fIt != fItEnd; ++fIt )
+        {
+            // get the form field
+            const FormField * f = *fIt;
+
+            QString newvalue = f->d_ptr->value();
+            if ( f->d_ptr->m_default == newvalue )
+                continue;
+
+            // append an filled-up element called 'annotation' to the list
+            QDomElement formElement = document.createElement( "form" );
+            formElement.setAttribute( "id", f->id() );
+            formElement.setAttribute( "value", newvalue );
+            formListElement.appendChild( formElement );
+        }
+
+        // append the annotationList element if annotations have been set
+        if ( formListElement.hasChildNodes() )
+            pageElement.appendChild( formListElement );
+#endif
     }
 
     // append the page element only if has children

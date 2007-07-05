@@ -19,7 +19,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <k3procio.h>
+#include <kprocess.h>
 
 #include <Q3MemArray>
 #include <QApplication>
@@ -289,10 +289,10 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
   // to find it.
   if (!QFile::exists(_file)) {
     // Otherwise, use kpsewhich to find the eps file.
-    K3ProcIO proc;
+    KProcess proc;
     proc << "kpsewhich" << cp;
-    proc.start(K3Process::Block);
-    proc.readln(_file);
+    proc.execute();
+    _file = QString::fromLocal8Bit(proc.readLine().trimmed());
   }
 
   if (QFile::exists(_file))

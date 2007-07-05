@@ -18,6 +18,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <k3procio.h>
+#include <kprocess.h>
 #include <kurl.h>
 
 #include <QDir>
@@ -335,13 +336,10 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl
   }
 
   // Otherwise, use kpsewhich to find the eps file.
-  QString EPSfilename;
-  K3ProcIO proc;
+  KProcess proc;
   proc << "kpsewhich" << filename;
-  proc.start(K3Process::Block);
-  proc.readln(EPSfilename);
-  
-  return EPSfilename;
+  proc.execute();
+  return QString::fromLocal8Bit(proc.readLine().trimmed());
 }
 
 #include "psgs.moc"

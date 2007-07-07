@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=Plucker document
+Name[ca]=Document Plucker
 Name[de]=Plucker-Dokument
 Name[el]=Έγγραφο Plucker
 Name[ja]=Plucker 文書
@@ -12,6 +13,7 @@ Name[sv]=Plucker-dokument
 Name[x-test]=xxPlucker documentxx
 Name[zh_TW]=Plucker 文件
 Comment=Plucker backend for okular
+Comment[ca]=Dorsal de Plucker per l'okular
 Comment[de]=Unterstützung für Plucker in Okular
 Comment[el]=Σύστημα υποστήριξης Plucker για το okular
 Comment[ja]=okular の Plucker バックエンド

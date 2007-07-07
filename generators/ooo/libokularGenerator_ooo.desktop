@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=OpenDocument format
+Name[ca]=Format OpenDocument
 Name[de]=OpenDocument-Format
 Name[el]=Μορφή OpenDocument
 Name[ja]=OpenDocument フォーマット
@@ -12,6 +13,7 @@ Name[sv]=OpenDocument-format
 Name[x-test]=xxOpenDocument formatxx
 Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for okular
+Comment[ca]=Dorsal d'OpenDocument per l'okular
 Comment[de]=Unterstützung für OpenDocument in Okular
 Comment[el]=Σύστημα υποστήριξης OpenDocument για το okular
 Comment[ja]=okular の OpenDocument バックエンド

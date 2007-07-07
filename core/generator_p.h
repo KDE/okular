@@ -20,6 +20,7 @@ class KComponentData;
 namespace Okular {
 
 class Document;
+class FontInfo;
 class Generator;
 class Page;
 class PixmapGenerationThread;
@@ -101,6 +102,27 @@ class TextPageGenerationThread : public QThread
         Generator *mGenerator;
         Page *mPage;
         TextPage *mTextPage;
+};
+
+class FontExtractionThread : public QThread
+{
+    Q_OBJECT
+
+    public:
+        FontExtractionThread( Generator *generator, int pages );
+
+        void startExtraction( bool async );
+
+    Q_SIGNALS:
+        void gotFont( const Okular::FontInfo& );
+        void progress( int page );
+
+    protected:
+        virtual void run();
+
+    private:
+        Generator *mGenerator;
+        int mNumOfPages;
 };
 
 }

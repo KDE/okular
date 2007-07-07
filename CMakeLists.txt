@@ -27,6 +27,7 @@ set(okularcore_SRCS
    core/bookmarkmanager.cpp
    core/chooseenginedialog.cpp
    core/document.cpp
+   core/fontinfo.cpp
    core/form.cpp
    core/generator.cpp
    core/generator_p.cpp

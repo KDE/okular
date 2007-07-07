@@ -185,9 +185,9 @@ const DocumentSynopsis * Generator::generateDocumentSynopsis()
     return 0;
 }
 
-const DocumentFonts * Generator::generateDocumentFonts()
+FontInfo::List Generator::fontsForPage( int )
 {
-    return 0;
+    return FontInfo::List();
 }
 
 const QList<EmbeddedFile*> * Generator::embeddedFiles() const

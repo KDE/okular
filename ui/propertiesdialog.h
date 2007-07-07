@@ -15,17 +15,37 @@
 
 #include <kpagedialog.h>
 
+#include "core/fontinfo.h"
+
+class QLabel;
+class QProgressBar;
+class FontsListModel;
+
 namespace Okular {
 class Document;
 }
 
 class PropertiesDialog : public KPageDialog
 {
+    Q_OBJECT
+
   public:
   	PropertiesDialog( QWidget *parent, Okular::Document *doc );
-};
 
-class LocalFontInfoStruct;
+    private slots:
+        void pageChanged( KPageWidgetItem *, KPageWidgetItem * );
+        void slotFontReadingProgress( int page );
+        void slotFontReadingEnded();
+        void reallyStartFontReading();
+
+    private:
+        Okular::Document * m_document;
+        KPageWidgetItem * m_fontPage;
+        FontsListModel * m_fontModel;
+        QLabel * m_fontInfo;
+        QProgressBar * m_fontProgressBar;
+        bool m_fontScanStarted;
+};
 
 class FontsListModel
   : public QAbstractTableModel
@@ -36,16 +56,17 @@ class FontsListModel
     FontsListModel( QObject * parent = 0 );
     virtual ~FontsListModel();
 
-    void addFont( const QString &name, const QString &type, const QString &embedded, const QString &file );
-
     // reimplementations from QAbstractTableModel
     virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
     virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
     virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
 
+  public slots:
+    void addFont( const Okular::FontInfo &fi );
+
   private:
-    QList<LocalFontInfoStruct*> m_fonts;
+    QList<Okular::FontInfo> m_fonts;
 };
 
 #endif

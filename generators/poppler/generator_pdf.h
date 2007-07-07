@@ -61,7 +61,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         // [INHERITED] document information
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
-        const Okular::DocumentFonts * generateDocumentFonts();
+        Okular::FontInfo::List fontsForPage( int page );
         const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
         PageSizeMetric pagesSizeMetric() const { return Points; }
 
@@ -115,8 +115,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
-        void initFontNames();
-
         // poppler dependant stuff
         mutable QMutex docLock;
         Poppler::Document *pdfdoc;
@@ -131,13 +129,10 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::DocumentInfo docInfo;
         bool docSynopsisDirty;
         Okular::DocumentSynopsis docSyn;
-        bool docFontsDirty;
-        Okular::DocumentFonts docFonts;
         mutable bool docEmbeddedFilesDirty;
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
 
         QVector<bool> rectsGenerated;
-        QVector<QString> fontNames;
 };
 
 

@@ -119,7 +119,9 @@ class Okular::DocumentPrivate
             m_memCheckTimer( 0 ),
             m_saveBookmarksTimer( 0 ),
             m_generator( 0 ),
-            m_generatorsLoaded( false )
+            m_generatorsLoaded( false ),
+            m_fontThread( 0 ),
+            m_fontsCached( false )
         {
         }
 
@@ -143,6 +145,8 @@ class Okular::DocumentPrivate
         void slotTimedMemoryCheck();
         void sendGeneratorRequest();
         void rotationFinished( int page );
+        void fontReadingProgress( int page );
+        void fontReadingGotFont( const Okular::FontInfo& font );
 
         // member variables
         Document *m_parent;
@@ -202,6 +206,10 @@ class Okular::DocumentPrivate
 
         // cache of the mimetype we support
         QStringList m_supportedMimeTypes;
+
+        FontExtractionThread * m_fontThread;
+        bool m_fontsCached;
+        FontInfo::List m_fontsCache;
 };
 
 QString DocumentPrivate::pagesSizeString() const
@@ -703,6 +711,27 @@ void DocumentPrivate::rotationFinished( int page )
     }
 }
 
+void DocumentPrivate::fontReadingProgress( int page )
+{
+    emit m_parent->fontReadingProgress( page );
+
+    if ( page == (int)m_parent->pages() )
+    {
+        emit m_parent->fontReadingEnded();
+        delete m_fontThread;
+        m_fontThread = 0;
+        m_fontsCached = true;
+    }
+}
+
+void DocumentPrivate::fontReadingGotFont( const Okular::FontInfo& font )
+{
+    // TODO try to avoid duplicate fonts
+    m_fontsCache.append( font );
+
+    emit m_parent->gotFont( font );
+}
+
 
 Document::Document( QWidget *widget )
     : QObject( widget ), d( new DocumentPrivate( this ) )
@@ -711,6 +740,8 @@ Document::Document( QWidget *widget )
 
     connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
              this, SLOT( rotationFinished( int ) ) );
+
+    qRegisterMetaType<Okular::FontInfo>();
 }
 
 Document::~Document()
@@ -997,6 +1028,8 @@ void Document::closeDocument()
     d->m_exportCached = false;
     d->m_exportFormats.clear();
     d->m_exportToText = ExportFormat();
+    d->m_fontsCached = false;
+    d->m_fontsCache.clear();
     d->m_rotation = Rotation0;
     // remove requests left in queue
     d->m_pixmapRequestsMutex.lock();
@@ -1171,9 +1204,35 @@ const DocumentSynopsis * Document::documentSynopsis() const
     return d->m_generator ? d->m_generator->generateDocumentSynopsis() : NULL;
 }
 
-const DocumentFonts * Document::documentFonts() const
+void Document::startFontReading()
 {
-    return d->m_generator ? d->m_generator->generateDocumentFonts() : NULL;
+    if ( !d->m_generator || !d->m_generator->hasFeature( Generator::FontInfo ) || d->m_fontThread )
+        return;
+
+    if ( d->m_fontsCached )
+    {
+        // in case we have cached fonts, simulate a reading
+        // this way the API is the same, and users no need to care about the
+        // internal caching
+        for ( int i = 0; i < d->m_fontsCache.count(); ++i )
+        {
+            emit gotFont( d->m_fontsCache.at( i ) );
+            emit fontReadingProgress( i / pages() );
+        }
+        emit fontReadingEnded();
+        return;
+    }
+
+    d->m_fontThread = new FontExtractionThread( d->m_generator, pages() );
+    connect( d->m_fontThread, SIGNAL( gotFont( const Okular::FontInfo& ) ), this, SLOT( fontReadingGotFont( const Okular::FontInfo& ) ) );
+    connect( d->m_fontThread, SIGNAL( progress( int ) ), this, SLOT( fontReadingProgress( int ) ) );
+
+    d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
+}
+
+bool Document::canProvideFontInformation() const
+{
+    return d->m_generator ? d->m_generator->hasFeature( Generator::FontInfo ) : false;
 }
 
 const QList<EmbeddedFile*> *Document::embeddedFiles() const
@@ -2571,14 +2630,6 @@ DocumentSynopsis::DocumentSynopsis()
 DocumentSynopsis::DocumentSynopsis( const QDomDocument &document )
   : QDomDocument( document )
 {
-}
-
-/** DocumentFonts **/
-
-DocumentFonts::DocumentFonts()
-  : QDomDocument( "DocumentFonts" )
-{
-    // void implementation, only subclassed for naming
 }
 
 /** EmbeddedFile **/

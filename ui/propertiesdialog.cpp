@@ -13,8 +13,10 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
+#include <qprogressbar.h>
 #include <qsortfilterproxymodel.h>
 #include <qtreeview.h>
+#include <qtimer.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <ksqueezedtextlabel.h>
@@ -22,9 +24,10 @@
 
 // local includes
 #include "core/document.h"
+#include "core/fontinfo.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
-  : KPageDialog( parent )
+    : KPageDialog( parent ), m_document( doc ), m_fontScanStarted( false )
 {
   setFaceType( Tabbed );
   setCaption( i18n( "Unknown File" ) );
@@ -84,12 +87,11 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 
   // FONTS
   QVBoxLayout *page2Layout = 0;
-  const Okular::DocumentFonts * fonts = doc->documentFonts();
-  if ( fonts ) {
+  if ( doc->canProvideFontInformation() ) {
     // create fonts tab and layout it
     QFrame *page2 = new QFrame();
-    KPageWidgetItem *item2 = addPage(page2, i18n("&Fonts"));
-    item2->setIcon( KIcon( "fonts" ) );
+    m_fontPage = addPage(page2, i18n("&Fonts"));
+    m_fontPage->setIcon( KIcon( "fonts" ) );
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(marginHint());
     page2Layout->setSpacing(spacingHint());
@@ -102,15 +104,18 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     view->header()->setSortIndicatorShown(true);
     // creating a proxy model so we can sort the data
     QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
-    FontsListModel *model = new FontsListModel(view);
-    proxymodel->setSourceModel(model);
+    m_fontModel = new FontsListModel(view);
+    proxymodel->setSourceModel(m_fontModel);
     view->setModel(proxymodel);
-    // populate the klistview
-    for ( QDomNode node = fonts->documentElement().firstChild(); !node.isNull(); node = node.nextSibling() ) {
-      QDomElement e = node.toElement();
-      model->addFont( e.attribute( "Name" ), e.attribute( "Type" ),
-                      e.attribute( "Embedded" ), e.attribute( "File" ) );
-    }
+    m_fontInfo = new QLabel( this );
+    page2Layout->addWidget( m_fontInfo );
+    m_fontInfo->setText( i18n( "Reading font information..." ) );
+    m_fontInfo->hide();
+    m_fontProgressBar = new QProgressBar( this );
+    page2Layout->addWidget( m_fontProgressBar );
+    m_fontProgressBar->setRange( 0, 100 );
+    m_fontProgressBar->setValue( 0 );
+    m_fontProgressBar->hide();
   }
 
   // current width: left columnt + right column + dialog borders
@@ -123,16 +128,41 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   resize(width, 1);
   // TODO ?
   setMinimumSize(sizeHint());
+
+    connect( pageWidget(), SIGNAL( currentPageChanged( KPageWidgetItem *, KPageWidgetItem * ) ),
+             this, SLOT( pageChanged( KPageWidgetItem *, KPageWidgetItem * ) ) );
 }
 
-class LocalFontInfoStruct
+void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * )
 {
-  public:
-    QString name;
-    QString type;
-    QString embedded;
-    QString file;
-};
+    if ( current == m_fontPage && !m_fontScanStarted )
+    {
+        connect( m_document, SIGNAL( gotFont( const Okular::FontInfo& ) ), m_fontModel, SLOT( addFont( const Okular::FontInfo& ) ) );
+        connect( m_document, SIGNAL( fontReadingProgress( int ) ), this, SLOT( slotFontReadingProgress( int ) ) );
+        connect( m_document, SIGNAL( fontReadingEnded() ), this, SLOT( slotFontReadingEnded() ) );
+        QTimer::singleShot( 0, this, SLOT( reallyStartFontReading() ) );
+
+        m_fontScanStarted = true;
+    }
+}
+
+void PropertiesDialog::slotFontReadingProgress( int page )
+{
+    m_fontProgressBar->setValue( m_fontProgressBar->maximum() * page / m_document->pages() );
+}
+
+void PropertiesDialog::slotFontReadingEnded()
+{
+    m_fontInfo->hide();
+    m_fontProgressBar->hide();
+}
+
+void PropertiesDialog::reallyStartFontReading()
+{
+    m_fontInfo->show();
+    m_fontProgressBar->show();
+    m_document->startFontReading();
+}
 
 FontsListModel::FontsListModel( QObject * parent )
   : QAbstractTableModel( parent )
@@ -141,19 +171,13 @@ FontsListModel::FontsListModel( QObject * parent )
 
 FontsListModel::~FontsListModel()
 {
-  qDeleteAll(m_fonts);
 }
 
-void FontsListModel::addFont( const QString &name, const QString &type, const QString &embedded, const QString &file )
+void FontsListModel::addFont( const Okular::FontInfo &fi )
 {
   beginInsertRows( QModelIndex(), m_fonts.size(), m_fonts.size() );
 
-  LocalFontInfoStruct *info = new LocalFontInfoStruct();
-  info->name = name;
-  info->type = type;
-  info->embedded = embedded;
-  info->file = file;
-  m_fonts << info;
+  m_fonts << fi;
 
   endInsertRows();
 }
@@ -161,6 +185,50 @@ void FontsListModel::addFont( const QString &name, const QString &type, const QS
 int FontsListModel::columnCount( const QModelIndex & ) const
 {
   return 4;
+}
+
+static QString descriptionForFontType( Okular::FontInfo::FontType type )
+{
+    switch ( type )
+    {
+        case Okular::FontInfo::Type1:
+            return i18n("Type 1");
+            break;
+        case Okular::FontInfo::Type1C:
+            return i18n("Type 1C");
+            break;
+        case Okular::FontInfo::Type1COT:
+            return i18nc("OT means OpenType", "Type 1C (OT)");
+            break;
+        case Okular::FontInfo::Type3:
+            return i18n("Type 3");
+            break;
+        case Okular::FontInfo::TrueType:
+            return i18n("TrueType");
+            break;
+        case Okular::FontInfo::TrueTypeOT:
+            return i18nc("OT means OpenType", "TrueType (OT)");
+            break;
+        case Okular::FontInfo::CIDType0:
+            return i18n("CID Type 0");
+            break;
+        case Okular::FontInfo::CIDType0C:
+            return i18n("CID Type 0C");
+            break;
+        case Okular::FontInfo::CIDType0COT:
+            return i18nc("OT means OpenType", "CID Type 0C (OT)");
+            break;
+        case Okular::FontInfo::CIDTrueType:
+            return i18n("CID TrueType");
+            break;
+        case Okular::FontInfo::CIDTrueTypeOT:
+            return i18nc("OT means OpenType", "CID TrueType (OT)");
+            break;
+        case Okular::FontInfo::Unknown:
+            return i18nc("Unknown font type", "Unknown");
+            break;
+     }
+     return QString();
 }
 
 QVariant FontsListModel::data( const QModelIndex &index, int role ) const
@@ -176,10 +244,10 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
 
   switch ( index.column() )
   {
-    case 0: return m_fonts.at(index.row())->name; break;
-    case 1: return m_fonts.at(index.row())->type; break;
-    case 2: return m_fonts.at(index.row())->embedded; break;
-    case 3: return m_fonts.at(index.row())->file; break;
+        case 0: return m_fonts.at( index.row() ).name(); break;
+        case 1: return descriptionForFontType( m_fonts.at( index.row() ).type() ); break;
+        case 2: return m_fonts.at( index.row() ).isEmbedded() ? i18n( "Yes" ) : i18n( "No" ); break;
+        case 3: return m_fonts.at( index.row() ).file(); break;
     default:
        return QVariant();
   }

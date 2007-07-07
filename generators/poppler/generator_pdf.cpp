@@ -293,9 +293,10 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator)
 PDFGenerator::PDFGenerator()
     : Generator(), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docFontsDirty( true ), docEmbeddedFilesDirty( true )
+    docEmbeddedFilesDirty( true )
 {
     setFeature( TextExtraction );
+    setFeature( FontInfo );
 #ifdef HAVE_POPPLER_0_6
     setFeature( ReadRawData );
 #endif
@@ -453,8 +454,6 @@ bool PDFGenerator::closeDocument()
     docInfoDirty = true;
     docSynopsisDirty = true;
     docSyn.clear();
-    docFontsDirty = true;
-    docFonts.clear();
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
@@ -599,45 +598,70 @@ const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     return &docSyn;
 }
 
-const Okular::DocumentFonts * PDFGenerator::generateDocumentFonts()
+static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType( Poppler::FontInfo::Type type )
 {
-    if ( !docFontsDirty )
-        return &docFonts;
+    switch ( type )
+    {
+        case Poppler::FontInfo::Type1:
+            return Okular::FontInfo::Type1;
+            break;
+        case Poppler::FontInfo::Type1C:
+            return Okular::FontInfo::Type1C;
+            break;
+        case Poppler::FontInfo::Type1COT:
+            return Okular::FontInfo::Type1COT;
+            break;
+        case Poppler::FontInfo::Type3:
+            return Okular::FontInfo::Type3;
+            break;
+        case Poppler::FontInfo::TrueType:
+            return Okular::FontInfo::TrueType;
+            break;
+        case Poppler::FontInfo::TrueTypeOT:
+            return Okular::FontInfo::TrueTypeOT;
+            break;
+        case Poppler::FontInfo::CIDType0:
+            return Okular::FontInfo::CIDType0;
+            break;
+        case Poppler::FontInfo::CIDType0C:
+            return Okular::FontInfo::CIDType0C;
+            break;
+        case Poppler::FontInfo::CIDType0COT:
+            return Okular::FontInfo::CIDType0COT;
+            break;
+        case Poppler::FontInfo::CIDTrueType:
+            return Okular::FontInfo::CIDTrueType;
+            break;
+        case Poppler::FontInfo::CIDTrueTypeOT:
+            return Okular::FontInfo::CIDTrueTypeOT;
+            break;
+        case Poppler::FontInfo::unknown:
+        default: ;
+     }
+     return Okular::FontInfo::Unknown;
+}
 
-    // initialize fonts dom
-    docFonts.appendChild( docFonts.createElement( "Fonts" ) );
-
-    // initialize the font names DB
-    initFontNames();
+Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
+{
+    Okular::FontInfo::List list;
 
     docLock.lock();
-    QList<Poppler::FontInfo> fonts = pdfdoc->fonts();
+    QList<Poppler::FontInfo> fonts;
+    pdfdoc->scanForFonts( 1, &fonts );
     docLock.unlock();
 
     foreach (const Poppler::FontInfo &font, fonts)
     {
-        // 0. add font element
-        QDomElement fontElem = docFonts.createElement( "font" );
-        docFonts.firstChild().appendChild( fontElem );
+        Okular::FontInfo of;
+        of.setName( font.name() );
+        of.setType( convertPopplerFontInfoTypeToOkularFontInfoType( font.type() ) );
+        of.setEmbedded( font.isEmbedded() );
+        of.setFile( font.file() );
 
-        // 1. set Name
-        const QString &name = font.name();
-        fontElem.setAttribute( "Name", name.isNull() ? i18n("[none]") : name );
-
-        // 2. set Type
-        QString typestring = font.type() >= 0 && font.type() < fontNames.count() ? fontNames.at(font.type()) : i18nc("not available", "n/a");
-        fontElem.setAttribute( "Type", typestring );
-
-        // 3. set Embedded
-        fontElem.setAttribute( "Embedded", font.isEmbedded() ? i18n("Yes") : i18n("No") );
-
-        // 4. set Path
-        fontElem.setAttribute( "File", font.file() );
+        list.append( of );
     }
 
-    docFontsDirty = false;
-
-    return &docFonts;
+    return list;
 }
 
 const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
@@ -1317,42 +1341,6 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
 #else
     Q_UNUSED( popplerPage )
     Q_UNUSED( page )
-#endif
-}
-
-void PDFGenerator::initFontNames()
-{
-    // fonts names DB already initialized
-    if (!fontNames.isEmpty())
-        return;
-
-    // THESE VALUES HAVE TO BE IN SYNC with the poppler font type enyum
-
-    int i = 0;
-#ifdef HAVE_POPPLER_0_6
-    fontNames.resize(12);
-    fontNames[i++] = i18n("unknown");
-    fontNames[i++] = i18n("Type 1");
-    fontNames[i++] = i18n("Type 1C");
-    fontNames[i++] = i18nc("OT means OpenType", "Type 1C (OT)");
-    fontNames[i++] = i18n("Type 3");
-    fontNames[i++] = i18n("TrueType");
-    fontNames[i++] = i18nc("OT means OpenType", "TrueType (OT)");
-    fontNames[i++] = i18n("CID Type 0");
-    fontNames[i++] = i18n("CID Type 0C");
-    fontNames[i++] = i18nc("OT means OpenType", "CID Type 0C (OT)");
-    fontNames[i++] = i18n("CID TrueType");
-    fontNames[i++] = i18nc("OT means OpenType", "CID TrueType (OT)");
-#else
-    fontNames.resize(8);
-    fontNames[i++] = i18n("unknown");
-    fontNames[i++] = i18n("Type 1");
-    fontNames[i++] = i18n("Type 1C");
-    fontNames[i++] = i18n("Type 3");
-    fontNames[i++] = i18n("TrueType");
-    fontNames[i++] = i18n("CID Type 0");
-    fontNames[i++] = i18n("CID Type 0C");
-    fontNames[i++] = i18n("CID TrueType");
 #endif
 }
 

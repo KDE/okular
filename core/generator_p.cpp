@@ -9,6 +9,9 @@
 
 #include "generator_p.h"
 
+#include <kdebug.h>
+
+#include "fontinfo.h"
 #include "generator.h"
 
 using namespace Okular;
@@ -82,6 +85,37 @@ void TextPageGenerationThread::run()
 
     if ( mPage )
         mTextPage = mGenerator->textPage( mPage );
+}
+
+
+FontExtractionThread::FontExtractionThread( Generator *generator, int pages )
+    : mGenerator( generator ), mNumOfPages( pages )
+{
+}
+
+void FontExtractionThread::startExtraction( bool async )
+{
+    if ( async )
+    {
+        start( QThread::InheritPriority );
+    }
+    else
+    {
+        run();
+    }
+}
+
+void FontExtractionThread::run()
+{
+    for ( int i = 1; i <= mNumOfPages; ++i )
+    {
+        FontInfo::List list = mGenerator->fontsForPage( i );
+        foreach ( const FontInfo& fi, list )
+        {
+            emit gotFont( fi );
+        }
+        emit progress( i );
+    }
 }
 
 #include "generator_p.moc"

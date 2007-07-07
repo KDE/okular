@@ -12,6 +12,7 @@
 #define _OKULAR_GENERATOR_H_
 
 #include <okular/core/okular_export.h>
+#include <okular/core/fontinfo.h>
 #include <okular/core/global.h>
 #include <okular/core/pagesize.h>
 
@@ -189,6 +190,7 @@ class OKULAR_EXPORT Generator : public QObject
             Threaded,
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
             ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
+            FontInfo,          ///< Whether the Generator can provide information about the fonts used in the document
             PageSizes          ///< Whether the Generator can change the size of the document pages.
         };
 
@@ -271,10 +273,13 @@ class OKULAR_EXPORT Generator : public QObject
         virtual const DocumentSynopsis * generateDocumentSynopsis();
 
         /**
-         * Returns the 'list of embedded fonts' object of the document or 0 if
-         * no list of embedded fonts is available.
+         * Returns the 'list of embedded fonts' object of the specified \page
+         * of the document.
+         *
+         * \param page a page of the document, starting from 1 - 0 indicates all
+         * the other fonts
          */
-        virtual const DocumentFonts * generateDocumentFonts();
+        virtual FontInfo::List fontsForPage( int page );
 
         /**
          * Returns the 'list of embedded files' object of the document or 0 if

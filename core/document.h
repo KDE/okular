@@ -36,7 +36,6 @@ namespace Okular {
 
 class Annotation;
 class BookmarkManager;
-class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
 class DocumentPrivate;
@@ -44,6 +43,7 @@ class DocumentSynopsis;
 class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
+class FontInfo;
 class Generator;
 class Action;
 class Page;
@@ -138,10 +138,19 @@ class OKULAR_EXPORT Document : public QObject
         const DocumentSynopsis * documentSynopsis() const;
 
         /**
-         * Returns the description of used fonts or 0 if no description
-         * is available.
+         * Starts the reading of the informations about the fonts in the
+         * document, if available.
+         *
+         * The results as well the end of the reading is notified using the
+         * signals gotFont(), fontReadingProgress() and fontReadingEnded()
          */
-        const DocumentFonts * documentFonts() const;
+        void startFontReading();
+
+        /**
+         * Whether the current document can provide information about the
+         * fonts used in it.
+         */
+        bool canProvideFontInformation() const;
 
         /**
          * Returns the list of embedded files or 0 if no embedded files
@@ -547,6 +556,24 @@ class OKULAR_EXPORT Document : public QObject
          */
         void notice( const QString &text, int duration );
 
+        /**
+         * Emitted when a new font is found during the reading of the fonts of
+         * the document.
+         */
+        void gotFont( const Okular::FontInfo& font );
+
+        /**
+         * Reports the progress when reading the fonts in the document.
+         *
+         * \param page is the page that was just finished to scan for fonts
+         */
+        void fontReadingProgress( int page );
+
+        /**
+         * Reports that the reading of the fonts in the document is finished.
+         */
+        void fontReadingEnded();
+
     private:
         friend class DocumentPrivate;
         DocumentPrivate *const d;
@@ -557,6 +584,8 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
         Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page ) )
+        Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
+        Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
 };
 
 
@@ -710,24 +739,6 @@ class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
          * @p document as parent node.
          */
         DocumentSynopsis( const QDomDocument &document );
-};
-
-/**
- * @short A DOM thee describing fonts used in document.
- *
- * Root's childrend (if any) are font nodes with the following attributes:
- * - Name
- * - Type
- * - Embedded (if font is shipped inside the document)
- * - File (system's file that provides this font
- */
-class OKULAR_EXPORT DocumentFonts : public QDomDocument
-{
-    public:
-        /**
-         * Creates a new document fonts object.
-         */
-        DocumentFonts();
 };
 
 /**

@@ -73,6 +73,7 @@ Q_OBJECT
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );
+        void notifyZoom(int factor);
         bool canUnloadPixmap( int pageNum ) const;
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );

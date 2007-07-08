@@ -107,6 +107,11 @@ class OKULAR_EXPORT DocumentObserver
         virtual void notifyVisibleRectsChanged();
 
         /**
+         * This method is called whenever the zoom of the document has been changed.
+         */
+        virtual void notifyZoom( int factor );
+
+        /**
          * Returns whether the observer agrees that all pixmaps for the given
          * @p page can be unloaded to improve memory usage.
          *

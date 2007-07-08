@@ -318,6 +318,13 @@ class OKULAR_EXPORT Document : public QObject
         void setNextDocumentViewport( const DocumentViewport &viewport );
 
         /**
+         * Sets the zoom for the current document.
+         *
+         * @param excludeId The observer ids which shouldn't be effected by this change.
+         */
+        void setZoom( int factor, int excludeId = -1 );
+
+        /**
          * Sends @p requests for pixmap generation.
          */
         void requestPixmaps( const QLinkedList<PixmapRequest*> &requests );

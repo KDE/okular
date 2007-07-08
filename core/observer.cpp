@@ -40,6 +40,10 @@ void DocumentObserver::notifyVisibleRectsChanged()
 {
 }
 
+void DocumentObserver::notifyZoom( int )
+{
+}
+
 bool DocumentObserver::canUnloadPixmap( int ) const
 {
     return true;

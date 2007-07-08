@@ -53,7 +53,10 @@ class ThumbnailWidget : public QWidget
         QSize sizeHint() const;
 
     protected:
+        void mousePressEvent( QMouseEvent * e );
         void mouseReleaseEvent( QMouseEvent * e );
+        void mouseMoveEvent( QMouseEvent * e );
+        void wheelEvent( QWheelEvent * e );
         void contextMenuEvent( QContextMenuEvent * e );
         void paintEvent(QPaintEvent *);
 
@@ -69,6 +72,7 @@ class ThumbnailWidget : public QWidget
         int m_pixmapWidth, m_pixmapHeight;
         int m_labelHeight, m_labelNumber;
         Okular::NormalizedRect m_visibleRect;
+        QPoint mouseGrabPos;
 };
 
 
@@ -302,6 +306,42 @@ void ThumbnailList::forwardClick( const Okular::Page * p, const QPoint & t, Qt::
     }
 }
 
+void ThumbnailList::forwardTrack( const Okular::Page * p, const QPoint &d, const QPoint &s )
+{
+    Okular::DocumentViewport vp=m_document->viewport();
+
+    QVector< Okular::VisiblePageRect * > vVpr = m_document->visiblePageRects();
+
+    QVector< Okular::VisiblePageRect * >::const_iterator vIt = vVpr.begin();
+    QVector< Okular::VisiblePageRect * >::const_iterator vEnd = vVpr.end();
+    for ( ; vIt != vEnd; ++vIt )
+    {
+        Okular::VisiblePageRect *vpr = ( *vIt );
+        if( vpr->pageNumber == p->number() )
+        {
+            double w = vpr->rect.right - vpr->rect.left,
+            h = vpr->rect.bottom - vpr->rect.top,
+            deltaX = d.x()*w/s.x(),
+            deltaY = d.y()*h/s.y();
+
+            vp.rePos.normalizedX -= deltaX;
+            vp.rePos.normalizedY -= deltaY;
+
+            if( !vp.rePos.enabled )
+            {
+                vp.rePos.enabled = true;
+                vp.rePos.normalizedY += h/2;
+            }
+            m_document->setViewport( vp );
+        }
+    }
+}
+
+void ThumbnailList::forwardZoom( const Okular::Page *, int i )
+{
+    m_document->setZoom( i );
+}
+
 const QPixmap * ThumbnailList::getBookmarkOverlay() const
 {
     return m_bookmarkOverlay;
@@ -500,6 +540,10 @@ ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Document * doc
 {
     m_labelNumber = m_page->number() + 1;
     m_labelHeight = QFontMetrics( font() ).height();
+    setMouseTracking(true);
+    mouseGrabPos.setX(0);
+    mouseGrabPos.setY(0);
+
 }
 
 void ThumbnailWidget::resizeFitWidth( int width )
@@ -533,10 +577,78 @@ QSize ThumbnailWidget::sizeHint() const
     return QSize( width(), heightHint() );
 }
 
+void ThumbnailWidget::mousePressEvent( QMouseEvent * e )
+{
+    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+
+    if ( r.contains( e->pos() ) )
+    {
+        mouseGrabPos = e->pos();
+    }
+    else
+    {
+        mouseGrabPos.setX( 0 );
+        mouseGrabPos.setY( 0 );
+    }
+}
+
 void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
 {
-    // don't handle the mouse click, forward it to the thumbnail list
-    m_tl->forwardClick( m_page, e->globalPos(), e->button() );
+    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+    if ( r.contains( e->pos() ) )
+    {
+        setCursor( Qt::OpenHandCursor );
+    }
+    else
+    {
+        setCursor( Qt::ArrowCursor );
+        if ( mouseGrabPos.isNull() )
+        {
+            // don't handle the mouse click, forward it to the thumbnail list
+            m_tl->forwardClick( m_page, e->globalPos(), e->button() );
+        }
+    }
+    mouseGrabPos.setX( 0 );
+    mouseGrabPos.setY( 0 );
+}
+
+void ThumbnailWidget::mouseMoveEvent( QMouseEvent * e )
+{
+    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+    if ( r.contains( e->pos()-QPoint( m_margin / 2, m_margin / 2 ) ) )
+    {
+        if (!mouseGrabPos.isNull())
+        {
+            setCursor( Qt::ClosedHandCursor );
+            QPoint mousePos = e->pos();
+            QPoint delta = mouseGrabPos - mousePos;
+            // don't handle the mouse move, forward it to the thumbnail list
+            m_tl->forwardTrack( m_page, delta, QPoint( r.width(), r.height() ) );
+            mouseGrabPos = e->pos();
+        }
+        else
+        {
+            setCursor( Qt::OpenHandCursor );
+        }
+    }
+    else
+    {
+        setCursor( Qt::ArrowCursor );
+    }
+}
+
+void ThumbnailWidget::wheelEvent( QWheelEvent * e )
+{
+    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+
+    if ( r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) && e->orientation() == Qt::Vertical && e->modifiers() == Qt::ControlModifier )
+    {
+        m_tl->forwardZoom( m_page, e->delta() );
+    }
+    else
+    {
+        e->ignore();
+    }
 }
 
 void ThumbnailWidget::contextMenuEvent( QContextMenuEvent * e )

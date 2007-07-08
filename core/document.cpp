@@ -1654,6 +1654,15 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     }
 }
 
+void Document::setZoom(int factor, int excludeId)
+{
+    // notify change to all other (different from id) observers
+    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.begin(), end = d->m_observers.end();
+    for ( ; it != end ; ++ it )
+        if ( it.key() != excludeId )
+            (*it)->notifyZoom( factor );
+}
+
 void Document::setPrevViewport()
 // restore viewport from the history
 {

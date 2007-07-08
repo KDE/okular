@@ -15,6 +15,7 @@
 #include <kvbox.h>
 #include <qtoolbar.h>
 
+#include "core/area.h"
 #include "core/observer.h"
 
 class QTimer;
@@ -57,6 +58,10 @@ Q_OBJECT
 
         // called by ThumbnailWidgets to send (forward) the mouse click signals
         void forwardClick( const Okular::Page *, const QPoint &, Qt::MouseButton );
+        // called by ThumbnailWidgets to send (forward) the mouse move signals
+        void forwardTrack( const Okular::Page *, const QPoint &, const QPoint & );
+        // called by ThumbnailWidgets to send (forward) the mouse zoom signals
+        void forwardZoom( const Okular::Page *, int );
         // called by ThumbnailWidgets to get the overlay bookmark pixmap
         const QPixmap * getBookmarkOverlay() const;
 

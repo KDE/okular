@@ -813,6 +813,14 @@ void PageView::notifyContentsCleared( int changedFlags )
         QMetaObject::invokeMethod(this, "slotRequestVisiblePixmaps", Qt::QueuedConnection);
 }
 
+void PageView::notifyZoom( int factor )
+{
+    if ( factor > 0 )
+        updateZoom( ZoomIn );
+    else
+        updateZoom( ZoomOut );
+}
+
 bool PageView::canUnloadPixmap( int pageNumber ) const
 {
     if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Aggressive )

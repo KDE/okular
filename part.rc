@@ -84,11 +84,9 @@
   <Action name="zoom_out"/>
   <Action name="zoom_in"/>
   <Separator/>
-  <Action name="zoom_fit_width"/>
-  <Action name="zoom_fit_page"/>
-  <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_zoom"/>
   <Action name="mouse_select"/>
+  <Action name="mouse_textselect"/>
 </ToolBar>
 </kpartgui>

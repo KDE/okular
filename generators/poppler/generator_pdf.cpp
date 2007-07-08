@@ -647,8 +647,8 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
 {
     Okular::FontInfo::List list;
 
-    docLock.lock();
     QList<Poppler::FontInfo> fonts;
+    docLock.lock();
     pdfdoc->scanForFonts( 1, &fonts );
     docLock.unlock();
 

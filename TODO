@@ -9,6 +9,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH  91146: Add capability to extract plain text from a pdf file.
 -> BUG   97869: kpdf fails to properly hide the context menu
 -> WISH  99352: Cannot change orientation of pdf file
+-> WISH  99787: kpdf needs to have a bookmark list
 -> WISH 100341: first page at right, in two pages mode
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
 -> WISH 102788: Current page number visible
@@ -30,7 +31,6 @@ Bugs and wishes to close when moving okular to kdegraphics:
 In progress [working on]:
 -> core: provide a binary compatible okularcore library to extend the format capabilities
 -> core: forms support (mainly for pdf) (BR91809)
--> bookmarks: improved interface, with easy handling of the bookmarks of all the documents (BR99787,BR136113)
 -> KPDF -> okular conversion of datafiles {document data(in progress), kwallet passwords(missing)}
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link

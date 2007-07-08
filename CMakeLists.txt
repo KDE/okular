@@ -50,6 +50,7 @@ install( FILES
            core/annotations.h
            core/area.h
            core/document.h
+           core/fontinfo.h
            core/form.h
            core/generator.h
            core/global.h

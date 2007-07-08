@@ -38,7 +38,6 @@ In progress [working on]:
 -> open gzipped and bzipped documents (BR102704)
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
--> thumbnailslist: show Viewport in(blended/contour)
 -> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (40% done)
@@ -121,6 +120,12 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: thumbnailslist: show Viewport in a blended way, allowing to be dragged (BR135521)
+-> CHG: async way to read the fonts, no more blocking properties dialog
+-> CHG: use ThreadWeaver for the rotating jobs
+-> ADD: save/restore the values of the form fields when closing/opening a documents
+-> ADD: "dummy" mode for a very simple interface when the okular part is in eg printing preview
+-> ADD: bookmarks: improved interface, with easy handling of the bookmarks of all the documents (BR99787,BR136113)
 -> ADD: Reload action to force the reload of the current document (BR136820)
 -> CHG: renamed Okular::Link to Okular::Action
 -> ADD: presentation: add page counter and a widget to manually set pages on the top bar

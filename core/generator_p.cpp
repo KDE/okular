@@ -89,7 +89,7 @@ void TextPageGenerationThread::run()
 
 
 FontExtractionThread::FontExtractionThread( Generator *generator, int pages )
-    : mGenerator( generator ), mNumOfPages( pages )
+    : mGenerator( generator ), mNumOfPages( pages ), mGoOn( true )
 {
 }
 
@@ -97,17 +97,24 @@ void FontExtractionThread::startExtraction( bool async )
 {
     if ( async )
     {
+        connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
         start( QThread::InheritPriority );
     }
     else
     {
         run();
+        deleteLater();
     }
+}
+
+void FontExtractionThread::stopExtraction()
+{
+    mGoOn = false;
 }
 
 void FontExtractionThread::run()
 {
-    for ( int i = 1; i <= mNumOfPages; ++i )
+    for ( int i = 1; i <= mNumOfPages && mGoOn; ++i )
     {
         FontInfo::List list = mGenerator->fontsForPage( i );
         foreach ( const FontInfo& fi, list )

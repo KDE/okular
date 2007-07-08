@@ -31,6 +31,7 @@ class PropertiesDialog : public KPageDialog
 
   public:
   	PropertiesDialog( QWidget *parent, Okular::Document *doc );
+        virtual ~PropertiesDialog();
 
     private slots:
         void pageChanged( KPageWidgetItem *, KPageWidgetItem * );

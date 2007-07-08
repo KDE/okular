@@ -147,6 +147,12 @@ class OKULAR_EXPORT Document : public QObject
         void startFontReading();
 
         /**
+         * Force the termination of the reading of the informations about the
+         * fonts in the document, if running.
+         */
+        void stopFontReading();
+
+        /**
          * Whether the current document can provide information about the
          * fonts used in it.
          */

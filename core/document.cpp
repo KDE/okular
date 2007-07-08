@@ -120,7 +120,6 @@ class Okular::DocumentPrivate
             m_saveBookmarksTimer( 0 ),
             m_generator( 0 ),
             m_generatorsLoaded( false ),
-            m_fontThread( 0 ),
             m_fontsCached( false )
         {
         }
@@ -207,7 +206,7 @@ class Okular::DocumentPrivate
         // cache of the mimetype we support
         QStringList m_supportedMimeTypes;
 
-        FontExtractionThread * m_fontThread;
+        QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
         FontInfo::List m_fontsCache;
 };
@@ -718,7 +717,6 @@ void DocumentPrivate::fontReadingProgress( int page )
     if ( page == (int)m_parent->pages() )
     {
         emit m_parent->fontReadingEnded();
-        delete m_fontThread;
         m_fontThread = 0;
         m_fontsCached = true;
     }
@@ -990,6 +988,14 @@ void Document::setupGui( KActionCollection *ac, QToolBox *tBox )
 
 void Document::closeDocument()
 {
+    if ( d->m_fontThread )
+    {
+        disconnect( d->m_fontThread, 0, this, 0 );
+        d->m_fontThread->stopExtraction();
+        d->m_fontThread->wait();
+        d->m_fontThread = 0;
+    }
+
     // close the current document and save document info if a document is still opened
     if ( d->m_generator && d->m_pagesVector.size() > 0 )
     {
@@ -1228,6 +1234,17 @@ void Document::startFontReading()
     connect( d->m_fontThread, SIGNAL( progress( int ) ), this, SLOT( fontReadingProgress( int ) ) );
 
     d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
+}
+
+void Document::stopFontReading()
+{
+    if ( !d->m_fontThread )
+        return;
+
+    disconnect( d->m_fontThread, 0, this, 0 );
+    d->m_fontThread->stopExtraction();
+    d->m_fontThread = 0;
+    d->m_fontsCache.clear();
 }
 
 bool Document::canProvideFontInformation() const

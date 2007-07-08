@@ -112,6 +112,7 @@ class FontExtractionThread : public QThread
         FontExtractionThread( Generator *generator, int pages );
 
         void startExtraction( bool async );
+        void stopExtraction();
 
     Q_SIGNALS:
         void gotFont( const Okular::FontInfo& );
@@ -123,6 +124,7 @@ class FontExtractionThread : public QThread
     private:
         Generator *mGenerator;
         int mNumOfPages;
+        bool mGoOn;
 };
 
 }

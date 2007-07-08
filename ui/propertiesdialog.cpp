@@ -135,6 +135,11 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
              this, SLOT( pageChanged( KPageWidgetItem *, KPageWidgetItem * ) ) );
 }
 
+PropertiesDialog::~PropertiesDialog()
+{
+    m_document->stopFontReading();
+}
+
 void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * )
 {
     if ( current == m_fontPage && !m_fontScanStarted )

@@ -608,17 +608,11 @@ static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType
         case Poppler::FontInfo::Type1C:
             return Okular::FontInfo::Type1C;
             break;
-        case Poppler::FontInfo::Type1COT:
-            return Okular::FontInfo::Type1COT;
-            break;
         case Poppler::FontInfo::Type3:
             return Okular::FontInfo::Type3;
             break;
         case Poppler::FontInfo::TrueType:
             return Okular::FontInfo::TrueType;
-            break;
-        case Poppler::FontInfo::TrueTypeOT:
-            return Okular::FontInfo::TrueTypeOT;
             break;
         case Poppler::FontInfo::CIDType0:
             return Okular::FontInfo::CIDType0;
@@ -626,15 +620,23 @@ static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType
         case Poppler::FontInfo::CIDType0C:
             return Okular::FontInfo::CIDType0C;
             break;
-        case Poppler::FontInfo::CIDType0COT:
-            return Okular::FontInfo::CIDType0COT;
-            break;
         case Poppler::FontInfo::CIDTrueType:
             return Okular::FontInfo::CIDTrueType;
+            break;
+#ifdef HAVE_POPPLER_0_6
+        case Poppler::FontInfo::Type1COT:
+            return Okular::FontInfo::Type1COT;
+            break;
+        case Poppler::FontInfo::TrueTypeOT:
+            return Okular::FontInfo::TrueTypeOT;
+            break;
+        case Poppler::FontInfo::CIDType0COT:
+            return Okular::FontInfo::CIDType0COT;
             break;
         case Poppler::FontInfo::CIDTrueTypeOT:
             return Okular::FontInfo::CIDTrueTypeOT;
             break;
+#endif
         case Poppler::FontInfo::unknown:
         default: ;
      }

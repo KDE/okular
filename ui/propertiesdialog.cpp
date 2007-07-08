@@ -231,6 +231,23 @@ static QString descriptionForFontType( Okular::FontInfo::FontType type )
      return QString();
 }
 
+static QString descriptionForEmbedType( Okular::FontInfo::EmbedType type )
+{
+    switch ( type )
+    {
+        case Okular::FontInfo::NotEmbedded:
+            return i18n("No");
+            break;
+        case Okular::FontInfo::EmbeddedSubSet:
+            return i18n("Yes (subset)");
+            break;
+        case Okular::FontInfo::Embedded:
+            return i18n("Yes");
+            break;
+     }
+     return QString();
+}
+
 QVariant FontsListModel::data( const QModelIndex &index, int role ) const
 {
   if ( !index.isValid() )
@@ -246,7 +263,7 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
   {
         case 0: return m_fonts.at( index.row() ).name(); break;
         case 1: return descriptionForFontType( m_fonts.at( index.row() ).type() ); break;
-        case 2: return m_fonts.at( index.row() ).isEmbedded() ? i18n( "Yes" ) : i18n( "No" ); break;
+        case 2: return descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ); break;
         case 3: return m_fonts.at( index.row() ).file(); break;
     default:
        return QVariant();

@@ -657,7 +657,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
         Okular::FontInfo of;
         of.setName( font.name() );
         of.setType( convertPopplerFontInfoTypeToOkularFontInfoType( font.type() ) );
-        of.setEmbedded( font.isEmbedded() );
+        of.setEmbedType( font.isEmbedded() ? Okular::FontInfo::Embedded : Okular::FontInfo::NotEmbedded );
         of.setFile( font.file() );
 
         list.append( of );

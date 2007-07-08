@@ -17,7 +17,7 @@ class Okular::FontInfoPrivate
 {
     public:
         FontInfoPrivate()
-          : name( 0 ), type( FontInfo::Unknown ), embedded( true )
+          : name( 0 ), type( FontInfo::Unknown ), embedType( FontInfo::NotEmbedded )
         {
         }
 
@@ -25,13 +25,13 @@ class Okular::FontInfoPrivate
         {
             return name == rhs.name &&
                    type == rhs.type &&
-                   embedded == rhs.embedded &&
+                   embedType == rhs.embedType &&
                    file == rhs.file;
         }
 
         QString name;
         FontInfo::FontType type;
-        bool embedded;
+        FontInfo::EmbedType embedType;
         QString file;
 };
 
@@ -70,14 +70,14 @@ void FontInfo::setType( FontInfo::FontType type )
     d->type = type;
 }
 
-bool FontInfo::isEmbedded() const
+FontInfo::EmbedType FontInfo::embedType() const
 {
-    return d->embedded;
+    return d->embedType;
 }
 
-void FontInfo::setEmbedded( bool embedded )
+void FontInfo::setEmbedType( FontInfo::EmbedType type )
 {
-    d->embedded = embedded;
+    d->embedType = type;
 }
 
 QString FontInfo::file() const

@@ -49,6 +49,16 @@ class OKULAR_EXPORT FontInfo
         };
 
         /**
+         * The possible kinds of embed.
+         */
+        enum EmbedType
+        {
+            NotEmbedded,
+            EmbeddedSubSet,
+            Embedded
+        };
+
+        /**
          * Construct a new empty font info.
          */
         FontInfo();
@@ -80,13 +90,13 @@ class OKULAR_EXPORT FontInfo
         void setType( FontType type );
 
         /**
-         * Returns whether the font is embedded into the document.
+         * Returns the type of font embedding.
          */
-        bool isEmbedded() const;
+        EmbedType embedType() const;
         /**
-         * Sets whether the font is embedded into the document.
+         * Sets the type of font embedding.
          */
-        void setEmbedded( bool embedded );
+        void setEmbedType( EmbedType type );
 
         /**
          * In case of not embedded font, returns the path of the font that

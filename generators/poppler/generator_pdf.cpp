@@ -643,6 +643,23 @@ static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType
      return Okular::FontInfo::Unknown;
 }
 
+static Okular::FontInfo::EmbedType embedTypeForPopplerFontInfo( const Poppler::FontInfo &fi )
+{
+    Okular::FontInfo::EmbedType ret = Okular::FontInfo::NotEmbedded;
+    if ( fi.isEmbedded() )
+    {
+        if ( fi.isSubset() )
+        {
+            ret = Okular::FontInfo::EmbeddedSubset;
+        }
+        else
+        {
+            ret = Okular::FontInfo::FullyEmbedded;
+        }
+    }
+     return ret;
+}
+
 Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
 {
     Okular::FontInfo::List list;
@@ -657,7 +674,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
         Okular::FontInfo of;
         of.setName( font.name() );
         of.setType( convertPopplerFontInfoTypeToOkularFontInfoType( font.type() ) );
-        of.setEmbedType( font.isEmbedded() ? Okular::FontInfo::Embedded : Okular::FontInfo::NotEmbedded );
+        of.setEmbedType( embedTypeForPopplerFontInfo( font) );
         of.setFile( font.file() );
 
         list.append( of );

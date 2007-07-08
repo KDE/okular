@@ -100,13 +100,15 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     page2Layout->addWidget(view);
     view->setRootIsDecorated(false);
     view->setAlternatingRowColors(true);
-    view->header()->setClickable(true);
-    view->header()->setSortIndicatorShown(true);
+    view->setSortingEnabled( true );
     // creating a proxy model so we can sort the data
     QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
+    proxymodel->setDynamicSortFilter( true );
+    proxymodel->setSortCaseSensitivity( Qt::CaseInsensitive );
     m_fontModel = new FontsListModel(view);
     proxymodel->setSourceModel(m_fontModel);
     view->setModel(proxymodel);
+    view->sortByColumn( 0, Qt::AscendingOrder );
     m_fontInfo = new QLabel( this );
     page2Layout->addWidget( m_fontInfo );
     m_fontInfo->setText( i18n( "Reading font information..." ) );
@@ -182,9 +184,9 @@ void FontsListModel::addFont( const Okular::FontInfo &fi )
   endInsertRows();
 }
 
-int FontsListModel::columnCount( const QModelIndex & ) const
+int FontsListModel::columnCount( const QModelIndex &parent ) const
 {
-  return 4;
+    return parent.isValid() ? 0 : 4;
 }
 
 static QString descriptionForFontType( Okular::FontInfo::FontType type )
@@ -292,9 +294,9 @@ QVariant FontsListModel::headerData( int section, Qt::Orientation orientation, i
   }
 }
 
-int FontsListModel::rowCount( const QModelIndex & ) const
+int FontsListModel::rowCount( const QModelIndex &parent ) const
 {
-  return m_fonts.size();
+    return parent.isValid() ? 0 : m_fonts.size();
 }
 
 #include "propertiesdialog.moc"

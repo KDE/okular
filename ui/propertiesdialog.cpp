@@ -238,10 +238,10 @@ static QString descriptionForEmbedType( Okular::FontInfo::EmbedType type )
         case Okular::FontInfo::NotEmbedded:
             return i18n("No");
             break;
-        case Okular::FontInfo::EmbeddedSubSet:
+        case Okular::FontInfo::EmbeddedSubset:
             return i18n("Yes (subset)");
             break;
-        case Okular::FontInfo::Embedded:
+        case Okular::FontInfo::FullyEmbedded:
             return i18n("Yes");
             break;
      }

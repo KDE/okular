@@ -54,8 +54,8 @@ class OKULAR_EXPORT FontInfo
         enum EmbedType
         {
             NotEmbedded,
-            EmbeddedSubSet,
-            Embedded
+            EmbeddedSubset,
+            FullyEmbedded
         };
 
         /**

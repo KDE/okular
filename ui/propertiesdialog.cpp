@@ -27,7 +27,9 @@
 #include "core/fontinfo.h"
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
-    : KPageDialog( parent ), m_document( doc ), m_fontScanStarted( false )
+    : KPageDialog( parent ), m_document( doc ), m_fontPage( 0 ),
+      m_fontModel( 0 ), m_fontInfo( 0 ), m_fontProgressBar( 0 ),
+      m_fontScanStarted( false )
 {
   setFaceType( Tabbed );
   setCaption( i18n( "Unknown File" ) );

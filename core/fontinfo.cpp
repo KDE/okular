@@ -17,7 +17,7 @@ class Okular::FontInfoPrivate
 {
     public:
         FontInfoPrivate()
-          : name( 0 ), type( FontInfo::Unknown ), embedType( FontInfo::NotEmbedded )
+          : type( FontInfo::Unknown ), embedType( FontInfo::NotEmbedded )
         {
         }
 

@@ -10,7 +10,6 @@ set(okularGenerator_tiff_SRCS
    generator_tiff.cpp
 )
 
-kde4_automoc(${okularGenerator_tiff_SRCS})
 
 kde4_add_plugin(okularGenerator_tiff WITH_PREFIX ${okularGenerator_tiff_SRCS})
 

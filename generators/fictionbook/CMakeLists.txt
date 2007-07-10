@@ -12,7 +12,6 @@ set(okularGenerator_fb_PART_SRCS
   generator_fb.cpp
 )
 
-kde4_automoc(${okularGenerator_fb_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_fb WITH_PREFIX ${okularGenerator_fb_PART_SRCS})
 

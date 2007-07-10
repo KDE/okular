@@ -12,7 +12,6 @@ set(okularGenerator_djvu_SRCS
    kdjvu.cpp
 )
 
-kde4_automoc(${okularGenerator_djvu_SRCS})
 
 kde4_add_plugin(okularGenerator_djvu WITH_PREFIX ${okularGenerator_djvu_SRCS})
 

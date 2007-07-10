@@ -11,7 +11,6 @@ set( okularGenerator_comicbook_PART_SRCS
      unrar.cpp
    )
 
-kde4_automoc(${okularGenerator_comicbook_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_comicbook WITH_PREFIX ${okularGenerator_comicbook_PART_SRCS})
 

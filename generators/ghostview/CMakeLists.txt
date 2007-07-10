@@ -26,7 +26,6 @@ kde4_add_ui_files(okularGenerator_ghostview_SRCS
 
 kde4_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
-kde4_automoc(${okularGenerator_ghostview_SRCS})
 
 kde4_add_plugin(okularGenerator_ghostview WITH_PREFIX ${okularGenerator_ghostview_SRCS})
 

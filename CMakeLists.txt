@@ -78,7 +78,6 @@ kde4_add_ui_files(okularcore_SRCS
 
 kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
 
-kde4_automoc(${okularcore_SRCS})
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
@@ -148,7 +147,6 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
-kde4_automoc(${okularpart_SRCS})
 
 kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 

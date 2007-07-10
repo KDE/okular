@@ -8,7 +8,6 @@ include_directories(
 
 set(kio_msits_PART_SRCS msits.cpp )
 
-kde4_automoc(${kio_msits_PART_SRCS})
 
 kde4_add_plugin(kio_msits ${kio_msits_PART_SRCS})
 

@@ -19,7 +19,6 @@ set(okularGenerator_plucker_SRCS
   generator_plucker.cpp
 )
 
-kde4_automoc(${okularGenerator_plucker_SRCS})
 
 kde4_add_plugin(okularGenerator_plucker WITH_PREFIX ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
 

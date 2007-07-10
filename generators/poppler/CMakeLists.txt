@@ -18,7 +18,6 @@ if (HAVE_POPPLER_0_6)
    )
 endif (HAVE_POPPLER_0_6)
 
-kde4_automoc(${okularGenerator_poppler_PART_SRCS})
 
 kde4_add_plugin(okularGenerator_poppler WITH_PREFIX ${okularGenerator_poppler_PART_SRCS})
 

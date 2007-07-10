@@ -173,6 +173,27 @@ kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect& r )
     return str;
 }
 
+RegularAreaRect::RegularAreaRect()
+    : RegularArea< NormalizedRect, QRect >(), d( 0 )
+{
+}
+
+RegularAreaRect::RegularAreaRect( const RegularAreaRect& rar )
+    : RegularArea< NormalizedRect, QRect >( rar ), d( 0 )
+{
+}
+
+RegularAreaRect::~RegularAreaRect()
+{
+}
+
+RegularAreaRect& RegularAreaRect::operator=( const RegularAreaRect& rar )
+{
+    RegularArea< NormalizedRect, QRect >::operator=( rar );
+    return *this;
+}
+
+
 HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
     : RegularAreaRect(), s_id( -1 )
 {

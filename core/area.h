@@ -676,7 +676,19 @@ void RegularArea<NormalizedShape, Shape>::transform( const QMatrix &matrix )
         givePtr( (*this)[i] )->transform( matrix );
 }
 
-typedef RegularArea<NormalizedRect,QRect> RegularAreaRect;
+class RegularAreaRect : public RegularArea< NormalizedRect, QRect >
+{
+    public:
+        RegularAreaRect();
+        RegularAreaRect( const RegularAreaRect& rar );
+        ~RegularAreaRect();
+
+        RegularAreaRect& operator=( const RegularAreaRect& rar );
+
+    private:
+        class Private;
+        Private * const d;
+};
 
 /**
  * This class stores the coordinates of a highlighting area

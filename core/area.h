@@ -676,7 +676,7 @@ void RegularArea<NormalizedShape, Shape>::transform( const QMatrix &matrix )
         givePtr( (*this)[i] )->transform( matrix );
 }
 
-class RegularAreaRect : public RegularArea< NormalizedRect, QRect >
+class OKULAR_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
 {
     public:
         RegularAreaRect();

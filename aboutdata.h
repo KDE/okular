@@ -23,17 +23,16 @@ inline KAboutData* okularAboutData( const char* name, const char* iname )
         KAboutData::License_GPL,
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Albert Astals Cid, Enrico Ros\n"
-              "(C) 2005 Piotr Szymanski")
+              "(C) 2005 Piotr Szymanski"),
+        KLocalizedString(),
+        "http://okular.kde.org"
     );
 
     about->addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
     about->addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
     about->addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
     about->addAuthor(ki18n("Piotr Szymanski"), ki18n("Created okular from KPDF codebase"), "djurban@pld-dc.org");
-    about->addAuthor(ki18n("Enrico Ros"), KLocalizedString(), "eros.kde@email.it");
-    about->addAuthor(ki18n("Wilco Greven"), KLocalizedString(), "greven@kde.org");
-    about->addAuthor(ki18n("Christophe Devriese"), KLocalizedString(), "oelewapperke@oelewapperke.org");
-    about->addAuthor(ki18n("Laurent Montel"), KLocalizedString(), "montel@kde.org");
+    about->addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
 
     return about;
 }

@@ -8,14 +8,13 @@
  ***************************************************************************/
 
 #include "audioplayer.h"
+#include "audioplayer_p.h"
 
 // qt/kde includes
 #include <qbuffer.h>
-#include <qhash.h>
-#include <qsignalmapper.h>
+#include <qdir.h>
 #include <kdebug.h>
 #include <krandom.h>
-#include <kurl.h>
 #include <phonon/audiopath.h>
 #include <phonon/audiooutput.h>
 #include <phonon/abstractmediastream.h>
@@ -86,34 +85,18 @@ public:
 };
 
 
-class AudioPlayer::Private
+AudioPlayerPrivate::AudioPlayerPrivate( AudioPlayer * qq )
+    : q( qq )
 {
-public:
-    Private( AudioPlayer * qq )
-      : q( qq )
-    {
-        connect( &m_mapper, SIGNAL( mapped( int ) ), q, SLOT( finished( int ) ) );
-    }
+    QObject::connect( &m_mapper, SIGNAL( mapped( int ) ), q, SLOT( finished( int ) ) );
+}
 
-    ~Private()
-    {
-        stopPlayings();
-    }
+AudioPlayerPrivate::~AudioPlayerPrivate()
+{
+    stopPlayings();
+}
 
-    int newId() const;
-    bool play( const SoundInfo& si );
-    void stopPlayings();
-
-    // private slots
-    void finished( int );
-
-    AudioPlayer * q;
-
-    QHash< int, PlayData * > m_playing;
-    QSignalMapper m_mapper;
-};
-
-int AudioPlayer::Private::newId() const
+int AudioPlayerPrivate::newId() const
 {
     int newid = 0;
     QHash< int, PlayData * >::const_iterator it;
@@ -126,7 +109,7 @@ int AudioPlayer::Private::newId() const
     return newid;
 }
 
-bool AudioPlayer::Private::play( const SoundInfo& si )
+bool AudioPlayerPrivate::play( const SoundInfo& si )
 {
     kDebug() << k_funcinfo << endl;
     PlayData * data = new PlayData();
@@ -165,8 +148,8 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
             kDebug() << "[AudioPlayer::Playinfo::play()] Embedded, " << filedata.length() << endl;
             if ( !filedata.isEmpty() )
             {
-                kDebug() << "[AudioPlayer::Playinfo::play()] bytestream: " << data->m_bytestream << endl;
-                if ( data->m_bytestream->addAudioPath( data->m_path ) )
+                kDebug() << "[AudioPlayer::Playinfo::play()] mediaobject: " << data->m_mediaobject << endl;
+                if ( data->m_mediaobject->addAudioPath( data->m_path ) )
                 {
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
@@ -189,19 +172,19 @@ bool AudioPlayer::Private::play( const SoundInfo& si )
     }
     if ( data )
     {
-        connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
+        QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
         data->play();
     }
     return valid;
 }
 
-void AudioPlayer::Private::stopPlayings()
+void AudioPlayerPrivate::stopPlayings()
 {
     qDeleteAll( m_playing );
     m_playing.clear();
 }
 
-void AudioPlayer::Private::finished( int id )
+void AudioPlayerPrivate::finished( int id )
 {
     QHash< int, PlayData * >::iterator it = m_playing.find( id );
     if ( it == m_playing.end() )
@@ -224,7 +207,7 @@ void AudioPlayer::Private::finished( int id )
 
 
 AudioPlayer::AudioPlayer()
-  : QObject(), d( new Private( this ) )
+  : QObject(), d( new AudioPlayerPrivate( this ) )
 {
 }
 
@@ -243,6 +226,10 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
 {
     // we can't play null pointers ;)
     if ( !sound )
+        return;
+
+    // we don't play external sounds for remote documents
+    if ( sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile() )
         return;
 
     kDebug() << k_funcinfo << endl;

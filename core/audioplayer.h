@@ -16,6 +16,8 @@
 
 namespace Okular {
 
+class AudioPlayerPrivate;
+class Document;
 class Sound;
 class SoundAction;
 
@@ -51,8 +53,9 @@ class OKULAR_EXPORT AudioPlayer : public QObject
     private:
         AudioPlayer();
 
-        class Private;
-        Private * const d;
+        friend class AudioPlayerPrivate;
+        AudioPlayerPrivate * const d;
+        friend class Document;
 
         Q_DISABLE_COPY( AudioPlayer )
         Q_PRIVATE_SLOT( d, void finished( int ) )

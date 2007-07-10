@@ -41,6 +41,7 @@
 // local includes
 #include "action.h"
 #include "audioplayer.h"
+#include "audioplayer_p.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog.h"
 #include "generator.h"
@@ -961,6 +962,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_nextDocumentViewport = DocumentViewport();
     }
 
+    AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
+
     return true;
 }
 
@@ -1086,6 +1089,7 @@ void Document::closeDocument()
     d->m_allocatedPixmapsTotalMemory = 0;
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
+    AudioPlayer::instance()->d->m_currentDocument = KUrl();
 }
 
 void Document::addObserver( DocumentObserver * pObserver )

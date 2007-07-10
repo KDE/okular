@@ -10,13 +10,19 @@
 #ifndef _OKULAR_TETXTPAGE_H_
 #define _OKULAR_TETXTPAGE_H_
 
+#include <QtCore/QList>
+#include <QtCore/QString>
+
 #include <okular/core/okular_export.h>
-#include <okular/core/area.h>
 #include <okular/core/global.h>
+
+class QMatrix;
 
 namespace Okular {
 
+class NormalizedRect;
 class TextSelection;
+class RegularAreaRect;
 
 /*! @class TextEntity
  * @short Abstract textentity of Okular

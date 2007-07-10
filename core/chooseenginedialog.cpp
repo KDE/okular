@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "chooseenginedialog.h"
+#include "chooseenginedialog_p.h"
 
 #include <QtGui/QComboBox>
 #include <QtGui/QLabel>

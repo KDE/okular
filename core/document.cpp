@@ -43,7 +43,7 @@
 #include "audioplayer.h"
 #include "audioplayer_p.h"
 #include "bookmarkmanager.h"
-#include "chooseenginedialog.h"
+#include "chooseenginedialog_p.h"
 #include "generator.h"
 #include "generator_p.h"
 #include "interfaces/configinterface.h"

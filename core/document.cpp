@@ -112,6 +112,7 @@ class Okular::DocumentPrivate
           : m_parent( parent ),
             m_lastSearchID( -1 ),
             m_tempFile( 0 ),
+            m_docSize( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
@@ -163,6 +164,7 @@ class Okular::DocumentPrivate
         QString m_docFileName;
         QString m_xmlFileName;
         KTemporaryFile *m_tempFile;
+        int m_docSize;
 
         // viewport stuff
         QLinkedList< DocumentViewport > m_viewportHistory;
@@ -773,6 +775,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
+    int document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     if ( !isstdin )
     {
@@ -790,7 +793,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_url = url;
         d->m_docFileName = docFile;
         QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
-        fn = QString::number(fileReadTest.size()) + '.' + fn + ".xml";
+        document_size = fileReadTest.size();
+        fn = QString::number( document_size ) + '.' + fn + ".xml";
         fileReadTest.close();
         QString newokular = "okular/docdata/" + fn;
         QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
@@ -812,6 +816,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         mime = KMimeType::findByContent( filedata );
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
             return false;
+        document_size = filedata.size();
     }
 
     // 0. load Generator
@@ -963,6 +968,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
+    d->m_docSize = document_size;
 
     return true;
 }
@@ -1034,6 +1040,7 @@ void Document::closeDocument()
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
     d->m_tempFile = 0;
+    d->m_docSize = -1;
     d->m_exportCached = false;
     d->m_exportFormats.clear();
     d->m_exportToText = ExportFormat();
@@ -1198,8 +1205,17 @@ const DocumentInfo * Document::documentInfo() const
 {
     if ( d->m_generator )
     {
-        DocumentInfo *info = const_cast<DocumentInfo *>(d->m_generator->generateDocumentInfo());
+        const DocumentInfo *infoConst = d->m_generator->generateDocumentInfo();
+        if ( !infoConst )
+            return 0;
+
+        DocumentInfo *info = const_cast< DocumentInfo * >( infoConst );
         QString pagesSize = d->pagesSizeString();
+        if ( d->m_docSize != -1 )
+        {
+            QString sizeString = KGlobal::locale()->formatByteSize( d->m_docSize );
+            info->set( "documentSize", sizeString, i18n( "File Size" ) );
+        }
         if (!pagesSize.isEmpty())
         {
             info->set( "pagesSize", pagesSize, i18n("Pages Size") );

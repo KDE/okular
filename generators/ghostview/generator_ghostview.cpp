@@ -201,6 +201,9 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
 
 bool GSGenerator::closeDocument()
 {
+    delete internalDoc;
+    internalDoc = 0;
+
     return true;
 }
 
@@ -322,9 +325,6 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 
 bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector, bool ps )
 {
-    // delete the old document to make room for the new one
-    delete internalDoc;
-
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
     kDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;

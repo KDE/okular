@@ -133,7 +133,17 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                 {
                     int newid = newId();
                     m_mapper.setMapping( data->m_mediaobject, newid );
-                    data->m_mediaobject->setCurrentSource( url );
+                    KUrl newurl;
+                    if ( KUrl::isRelativeUrl( url ) )
+                    {
+                        newurl = m_currentDocument;
+                        newurl.setFileName( url );
+                    }
+                    else
+                    {
+                        newurl = url;
+                    }
+                    data->m_mediaobject->setCurrentSource( newurl );
                     m_playing.insert( newid, data );
                     valid = true;
                     kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;

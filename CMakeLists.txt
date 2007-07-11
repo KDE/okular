@@ -150,7 +150,7 @@ kde4_add_ui_files(okularpart_SRCS
 
 kde4_add_plugin(okularpart WITH_PREFIX ${okularpart_SRCS})
 
-target_link_libraries(okularpart  okularcore  ${KDE4_KDEPRINT_LIBS} ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} ${MATH_LIB})
+target_link_libraries(okularpart  okularcore  ${KDE4_KNEWSTUFF_LIBS} ${KDE4_KHTML_LIBS} ${MATH_LIB})
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

@@ -4,6 +4,7 @@ MimeType=image/bmp;image/x-dds;image/x-eps;image/x-exr;image/gif;image/x-hdr;ima
 Terminal=false
 Name=okular
 Name[de]=Okular
+Name[es]=Okular
 Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
 Name[x-test]=xxokularxx

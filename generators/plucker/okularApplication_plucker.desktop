@@ -4,6 +4,7 @@ MimeType=application/prs.plucker;
 Terminal=false
 Name=okular
 Name[de]=Okular
+Name[es]=Okular
 Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
 Name[x-test]=xxokularxx

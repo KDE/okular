@@ -8,6 +8,7 @@ Comment=PDF backend for okular using poppler
 Comment[ca]=Dorsal de PDF per l'okular emprant el poppler
 Comment[de]=Unterstützung für PDF (mittels Poppler) in Okular
 Comment[el]=Σύστημα υποστήριξης PDF για το okular με χρήση του poppler
+Comment[es]=Motor PDF para Okular que usa Poppler
 Comment[ja]=okular の PDF バックエンド (poppler を使用)
 Comment[pt]=Infra-estrutura de PDF para o okular, usando o poppler
 Comment[pt_BR]=Infra-estrutura de PDF para o okular, usando o poppler

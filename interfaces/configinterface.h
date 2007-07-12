@@ -47,6 +47,11 @@ class OKULAR_EXPORT ConfigInterface
          * This method is called to tell the generator to re-parse its configuration.
          *
          * Returns true if something has changed.
+         *
+         * @note this method can be called also when the generator is not the
+         * active generator, or when there was not changed in the config added
+         * by the generator itself. So the suggestion is to @b check whether
+         * something changed, and only in that case return @p true
          */
         virtual bool reparseConfig() = 0;
 

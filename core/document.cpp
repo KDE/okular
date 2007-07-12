@@ -91,12 +91,13 @@ struct RunningSearch
 struct GeneratorInfo
 {
     GeneratorInfo()
-        : generator( 0 ), library( 0 )
+        : generator( 0 ), library( 0 ), hasConfig( false )
     {}
 
     Generator * generator;
     KLibrary * library;
     QString appName;
+    bool hasConfig;
 };
 
 #define foreachObserver( cmd ) {\
@@ -2329,8 +2330,18 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     {
         Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value().generator );
         if ( iface )
+        {
             iface->addPages( dialog );
+            it.value().hasConfig = true;
+        }
     }
+}
+
+int Document::configurableGenerators() const
+{
+    QString constraint( "([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])" );
+    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    return !offers.isEmpty();
 }
 
 QStringList Document::supportedMimeTypes() const

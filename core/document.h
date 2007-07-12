@@ -474,6 +474,11 @@ class OKULAR_EXPORT Document : public QObject
         void fillConfigDialog( KConfigDialog * dialog );
 
         /**
+         * Returns the number of generators that have a configuration widget.
+         */
+        int configurableGenerators() const;
+
+        /**
          * Returns the list with the supported MIME types.
          */
         QStringList supportedMimeTypes() const;

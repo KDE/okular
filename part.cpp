@@ -345,12 +345,7 @@ m_searchStarted(false), m_cliPresentation(false)
     QAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac );
     ac->addAction("generator_prefs", genPrefs);
     genPrefs->setText( i18n( "Configure Backends..." ) );
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") ;
-    KService::List gens = KServiceTypeTrader::self()->query("okular/Generator",constraint);
-    if (gens.count() <= 0)
-    {
-        genPrefs->setEnabled( false );
-    }
+    genPrefs->setEnabled( m_document->configurableGenerators() > 0 );
 
     m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
     m_printPreview->setEnabled( false );

@@ -623,6 +623,7 @@ void Part::slotDoFileDirty()
     }
     if (m_wasPresentationOpen) slotShowPresentation();
     emit enablePrintAction(true);
+    emit setWindowCaption(url().filename());
   }
   else
   {

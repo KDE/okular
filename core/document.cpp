@@ -104,6 +104,10 @@ struct GeneratorInfo
     QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.begin(), end=d->m_observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
+#define foreachObserverD( cmd ) {\
+    QMap< int, DocumentObserver * >::const_iterator it = m_observers.begin(), end = m_observers.end();\
+    for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
+
 /***** Document ******/
 
 class Okular::DocumentPrivate
@@ -149,6 +153,7 @@ class Okular::DocumentPrivate
         void rotationFinished( int page );
         void fontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
+        void slotGeneratorConfigChanged( const QString& );
 
         // member variables
         Document *m_parent;
@@ -732,6 +737,50 @@ void DocumentPrivate::fontReadingGotFont( const Okular::FontInfo& font )
     m_fontsCache.append( font );
 
     emit m_parent->gotFont( font );
+}
+
+void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
+{
+    if ( !m_generator )
+        return;
+
+    // reparse generator config and if something changed clear Pages
+    bool configchanged = false;
+    QHash< QString, GeneratorInfo >::const_iterator it = m_loadedGenerators.constBegin(), itEnd = m_loadedGenerators.constEnd();
+    for ( ; it != itEnd; ++it )
+    {
+        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value().generator );
+        if ( iface )
+        {
+            bool it_changed = iface->reparseConfig();
+            if ( it_changed && ( m_generator == it.value().generator ) )
+                configchanged = true;
+        }
+    }
+    if ( configchanged )
+    {
+        // invalidate pixmaps
+        QVector<Page*>::const_iterator it = m_pagesVector.begin(), end = m_pagesVector.end();
+        for ( ; it != end; ++it ) {
+            (*it)->deletePixmaps();
+        }
+
+        // [MEM] remove allocation descriptors
+        QLinkedList< AllocatedPixmap * >::const_iterator aIt = m_allocatedPixmapsFifo.begin();
+        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = m_allocatedPixmapsFifo.end();
+        for ( ; aIt != aEnd; ++aIt )
+            delete *aIt;
+        m_allocatedPixmapsFifo.clear();
+        m_allocatedPixmapsTotalMemory = 0;
+
+        // send reload signals to observers
+        foreachObserverD( notifyContentsCleared( DocumentObserver::Pixmap ) );
+    }
+
+    // free memory if in 'low' profile
+    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+         !m_allocatedPixmapsFifo.isEmpty() && !m_pagesVector.isEmpty() )
+        cleanupPixmapMemory();
 }
 
 
@@ -2324,6 +2373,7 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
     d->loadServiceList( offers );
 
+    bool pagesAdded = false;
     QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin();
     QHash< QString, GeneratorInfo >::iterator itEnd = d->m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
@@ -2333,7 +2383,13 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         {
             iface->addPages( dialog );
             it.value().hasConfig = true;
+            pagesAdded = true;
         }
+    }
+    if ( pagesAdded )
+    {
+        connect( dialog, SIGNAL( settingsChanged( const QString& ) ),
+                 this, SLOT( slotGeneratorConfigChanged( const QString& ) ) );
     }
 }
 

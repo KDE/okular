@@ -560,8 +560,8 @@ void Part::slotGeneratorPreferences( )
 
     m_document->fillConfigDialog( dialog );
 
-    // (for now don't FIXME) keep us informed when the user changes settings
-    // connect( dialog, SIGNAL( settingsChanged() ), this, SLOT( slotNewConfig() ) );
+    // keep us informed when the user changes settings
+    connect( dialog, SIGNAL( settingsChanged( const QString& ) ), this, SLOT( slotNewGeneratorConfig() ) );
     dialog->show();
 }
 
@@ -1248,6 +1248,27 @@ void Part::slotNewConfig()
 
     // update document settings
     m_document->reparseConfig();
+
+    // update TOC settings
+    if ( m_toolBox->isItemEnabled(0) )
+        m_toc->reparseConfig();
+
+    // update ThumbnailList contents
+    if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
+        m_thumbnailList->updateWidgets();
+}
+
+
+void Part::slotNewGeneratorConfig()
+{
+    // Apply settings here. A good policy is to check wether the setting has
+    // changed before applying changes.
+
+    // NOTE: it's not needed to reload the configuration of the Document,
+    // the Document itself will take care of that
+
+    // Main View (pageView)
+    m_pageView->reparseConfig();
 
     // update TOC settings
     if ( m_toolBox->isItemEnabled(0) )

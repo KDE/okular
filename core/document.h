@@ -604,6 +604,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void rotationFinished( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
+        Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
 };
 
 

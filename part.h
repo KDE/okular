@@ -131,6 +131,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotSaveFileAs();
         void slotGetNewStuff();
         void slotNewConfig();
+        void slotNewGeneratorConfig();
         void slotShowMenu(const Okular::Page *page, const QPoint &point);
         void slotShowProperties();
         void slotShowEmbeddedFiles();

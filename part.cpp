@@ -129,7 +129,7 @@ m_searchStarted(false), m_cliPresentation(false)
     connect( m_document->bookmarkManager(), SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromBookmarks(const KUrl &) ) );
     connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
 
-    if ( parent && parent->metaObject()->indexOfSlot( SLOT( slotQuit() ) ) != -1 )
+    if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ) ) != -1 )
         connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
     else
         connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
@@ -841,7 +841,8 @@ bool Part::closeUrl()
 
 void Part::close()
 {
-    if (parent() && (parent()->objectName() == QLatin1String("okular::Shell")))
+    // NOTE: don't know why, but the correct object name should be "okular::Shell"
+    if (parent() && (parent()->objectName() == QLatin1String("okular/okular__Shell")))
     {
         closeUrl();
     }

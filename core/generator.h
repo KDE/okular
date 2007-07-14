@@ -421,14 +421,23 @@ class OKULAR_EXPORT Generator : public QObject
          * data like:
          * @code
 KAboutData *about = new KAboutData(
-         "generator_foo", 0,  // we reccomend to use okular_xxx for the component name
-         ki18n( "Foo Backend" ), "0.1",
-         ki18n( "A foo backend" ),
-         KAboutData::License_GPL,
-         ki18n( "Copyright (c) 2007 Developer" ) );
-about->addAuthor( ki18n("Joe Developer"), ki18n( "Developer" ), " joe@host.com" );
+    "generator_foo", // internal name (notes below)
+    "generator_foo",  // i18n catalog (notes below)
+    ki18n( "Foo Backend" ),
+    "0.1",
+    ki18n( "A foo backend" ),
+    KAboutData::License_GPL,
+    ki18n( "© 2007 Developer" )
+);
+about->addAuthor( ki18n( "Joe Developer" ), ki18n( "Developer" ), " joe@kde.org" );
 setAboutData( about );
          * @endcode
+         *
+         * @note both "internal name" and "i18n catalog" are reccomended to be
+         * set like "okular_foo" (where foo is the name of your generator).
+         * The first is important for loading some metadata of the generator
+         * itself, while the second is used for loading the .mo catalog with
+         * the translation.
          */
         void setAboutData( KAboutData* data );
 

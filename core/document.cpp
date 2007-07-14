@@ -96,7 +96,7 @@ struct GeneratorInfo
 
     Generator * generator;
     KLibrary * library;
-    QString appName;
+    QString catalogName;
     bool hasConfig;
 };
 
@@ -518,7 +518,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     info.generator = generator;
     info.library = lib;
     if ( generator->componentData() && generator->componentData()->aboutData() )
-        info.appName = generator->componentData()->aboutData()->appName();
+        info.catalogName = generator->componentData()->aboutData()->catalogName();
     m_loadedGenerators.insert( name, info );
     return generator;
 }
@@ -906,11 +906,11 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     QString propName = offers.at(hRank)->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( propName );
-    QString appName;
+    QString catalogName;
     if ( genIt != d->m_loadedGenerators.constEnd() )
     {
         d->m_generator = genIt.value().generator;
-        appName = genIt.value().appName;
+        catalogName = genIt.value().catalogName;
     }
     else
     {
@@ -919,12 +919,12 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             return false;
         genIt = d->m_loadedGenerators.constFind( propName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-        appName = genIt.value().appName;
+        catalogName = genIt.value().catalogName;
     }
     Q_ASSERT_X( d->m_generator, "Document::load()", "null generator?!" );
 
-    if ( !appName.isEmpty() )
-        KGlobal::locale()->insertCatalog( appName );
+    if ( !catalogName.isEmpty() )
+        KGlobal::locale()->insertCatalog( catalogName );
 
     d->m_generator->d->m_document = this;
 
@@ -967,8 +967,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QApplication::restoreOverrideCursor();
     if ( !openOk || d->m_pagesVector.size() <= 0 )
     {
-        if ( !appName.isEmpty() )
-            KGlobal::locale()->removeCatalog( appName );
+        if ( !catalogName.isEmpty() )
+            KGlobal::locale()->removeCatalog( catalogName );
 
         d->m_generator = 0;
         return openOk;
@@ -1080,8 +1080,8 @@ void Document::closeDocument()
 
         QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-        if ( !genIt.value().appName.isEmpty() )
-            KGlobal::locale()->removeCatalog( genIt.value().appName );
+        if ( !genIt.value().catalogName.isEmpty() )
+            KGlobal::locale()->removeCatalog( genIt.value().catalogName );
     }
     d->m_generator = 0;
     d->m_generatorName = QString();

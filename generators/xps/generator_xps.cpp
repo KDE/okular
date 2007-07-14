@@ -25,6 +25,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qthread.h>
+#include <kaboutdata.h>
 #include <kglobal.h>
 #include <kimageeffect.h>
 #include <klocale.h>
@@ -1332,6 +1333,20 @@ XpsGenerator::XpsGenerator()
   : Okular::Generator(), m_xpsFile( 0 )
 {
     setFeature( TextExtraction );
+
+    KAboutData *about = new KAboutData(
+         "generator_xps",
+         "generator_xps",
+         ki18n( "XPS Backend" ),
+         "0.1",
+         ki18n( "An XPS backend" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2006-2007 Brad Hards\n"
+                "© 2007 Jiri Klement" )
+    );
+    about->addAuthor( ki18n( "Brad Hards" ), KLocalizedString(), "bradh@frogmouth.net" );
+    about->addAuthor( ki18n( "Jiri Klement" ), KLocalizedString(), "jiri.klement@gmail.com" );
+    setAboutData( about );
 }
 
 XpsGenerator::~XpsGenerator()

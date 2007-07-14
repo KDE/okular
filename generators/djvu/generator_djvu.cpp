@@ -20,6 +20,7 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
+#include <kaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprinter.h>
@@ -62,6 +63,18 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
 {
     m_djvu = new KDjVu();
     connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
+
+    KAboutData *about = new KAboutData(
+         "generator_djvu",
+         "generator_djvu",
+         ki18n( "DjVu Backend" ),
+         "0.1",
+         ki18n( "A DjVu backend" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2006-2007 Pino Toscano" )
+    );
+    about->addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    setAboutData( about );
 }
 
 DjVuGenerator::~DjVuGenerator()

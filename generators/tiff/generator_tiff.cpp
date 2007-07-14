@@ -14,6 +14,7 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
+#include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kprinter.h>
@@ -48,6 +49,18 @@ TIFFGenerator::TIFFGenerator()
       d( new Private ), m_docInfo( 0 )
 {
     setFeature( Threaded );
+
+    KAboutData *about = new KAboutData(
+         "generator_tiff",
+         "generator_tiff",
+         ki18n( "TIFF Backend" ),
+         "0.1",
+         ki18n( "A TIFF backend" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2006-2007 Pino Toscano" )
+    );
+    about->addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    setAboutData( about );
 }
 
 TIFFGenerator::~TIFFGenerator()

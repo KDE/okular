@@ -59,6 +59,7 @@ Q_OBJECT
         enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseTextSelect };
 
         // create actions that interact with this widget
+        void setupBaseActions( KActionCollection * collection );
         void setupActions( KActionCollection * collection );
 
         // misc methods (from RMB menu/children)

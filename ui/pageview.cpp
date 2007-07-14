@@ -268,8 +268,22 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
+    d->aRotateClockwise = 0;
+    d->aRotateCounterClockwise = 0;
+    d->aRotateOriginal = 0;
+    d->aPageSizes = 0;
+    d->aMouseNormal = 0;
+    d->aMouseSelect = 0;
+    d->aMouseTextSelect = 0;
+    d->aToggleAnnotator = 0;
+    d->aZoomFitWidth = 0;
+    d->aZoomFitPage = 0;
+    d->aZoomFitText = 0;
+    d->aViewMode = 0;
+    d->aViewContinuous = 0;
     d->aPrevAction = 0;
     d->aToggleForms = 0;
+    d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
@@ -319,6 +333,23 @@ PageView::~PageView()
     delete d;
 }
 
+void PageView::setupBaseActions( KActionCollection * ac )
+{
+    d->actionCollection = ac;
+
+    // Zoom actions ( higher scales takes lots of memory! )
+    d->aZoom  = new KSelectAction(KIcon( "zoom-original" ), i18n("Zoom"), this);
+    ac->addAction("zoom_to", d->aZoom );
+    d->aZoom->setEditable( true );
+    d->aZoom->setMaxComboViewCount( 13 );
+    connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
+    updateZoomText();
+
+    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "zoom_in", this, SLOT( slotZoomIn() ) );
+
+    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "zoom_out", this, SLOT( slotZoomOut() ) );
+}
+
 void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
@@ -349,18 +380,6 @@ void PageView::setupActions( KActionCollection * ac )
             items.append( p.name() );
         d->aPageSizes->setItems( items );
     }
-
-    // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom  = new KSelectAction(KIcon( "zoom-original" ), i18n("Zoom"), this);
-    ac->addAction("zoom_to", d->aZoom );
-    d->aZoom->setEditable( true );
-    d->aZoom->setMaxComboViewCount( 13 );
-    connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
-    updateZoomText();
-
-    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "zoom_in", this, SLOT( slotZoomIn() ) );
-
-    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "zoom_out", this, SLOT( slotZoomOut() ) );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "view_fit_width" ), i18n("Fit &Width"), this);
     ac->addAction("zoom_fit_width", d->aZoomFitWidth );
@@ -2163,9 +2182,12 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         // update zoom text
         updateZoomText();
         // update actions checked state
+        if ( d->aZoomFitWidth )
+        {
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
         d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
+        }
         // store zoom settings
         Okular::Settings::setZoomMode( newZoomMode );
         Okular::Settings::setZoomFactor( newFactor );

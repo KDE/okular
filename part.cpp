@@ -433,7 +433,10 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // set our XML-UI resource file
     setXMLFile("part.rc");
-    //
+
+    m_pageView->setupBaseActions( actionCollection() );
+
+    // ensure history actions are in the correct state
     updateViewActions();
 
     m_dummyMode = true;

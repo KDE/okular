@@ -45,7 +45,8 @@ class BookmarkManager::Private : public KBookmarkOwner
         ~Private()
         {
             knownFiles.clear();
-            delete manager;
+            // no need to delete the manager, it's automatically done by KBookmarkManager
+            // delete manager;
         }
 
         virtual QString currentUrl() const;

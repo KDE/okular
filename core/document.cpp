@@ -67,9 +67,9 @@ struct AllocatedPixmap
     // owner of the page
     int id;
     int page;
-    int memory;
+    qulonglong memory;
     // public constructor: initialize data
-    AllocatedPixmap( int i, int p, int m ) : id( i ), page( p ), memory( m ) {}
+    AllocatedPixmap( int i, int p, qulonglong m ) : id( i ), page( p ), memory( m ) {}
 };
 
 struct RunningSearch
@@ -134,9 +134,9 @@ class Okular::DocumentPrivate
         // private methods
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
-        void cleanupPixmapMemory( int bytesOffset = 0 );
-        int getTotalMemory();
-        int getFreeMemory();
+        void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        qulonglong getTotalMemory();
+        qulonglong getFreeMemory();
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
@@ -182,7 +182,7 @@ class Okular::DocumentPrivate
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QMutex m_pixmapRequestsMutex;
         QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
-        int m_allocatedPixmapsTotalMemory;
+        qulonglong m_allocatedPixmapsTotalMemory;
         bool m_warnedOutOfMemory;
 
         // the rotation applied to the document
@@ -258,11 +258,11 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
     }
 }
 
-void DocumentPrivate::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
+void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
 {
     // [MEM] choose memory parameters based on configuration profile
-    int clipValue = -1;
-    int memoryToFree = -1;
+    qulonglong clipValue = -1;
+    qulonglong memoryToFree = -1;
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:
@@ -309,9 +309,9 @@ void DocumentPrivate::cleanupPixmapMemory( int /*sure? bytesOffset*/ )
     }
 }
 
-int DocumentPrivate::getTotalMemory()
+qulonglong DocumentPrivate::getTotalMemory()
 {
-    static int cachedValue = 0;
+    static qulonglong cachedValue = 0;
     if ( cachedValue )
         return cachedValue;
 
@@ -335,10 +335,10 @@ int DocumentPrivate::getTotalMemory()
     return (cachedValue = 134217728);
 }
 
-int DocumentPrivate::getFreeMemory()
+qulonglong DocumentPrivate::getFreeMemory()
 {
     static QTime lastUpdate = QTime::currentTime();
-    static int cachedValue = 0;
+    static qulonglong cachedValue = 0;
 
     if ( lastUpdate.secsTo( QTime::currentTime() ) <= 2 )
         return cachedValue;
@@ -351,7 +351,7 @@ int DocumentPrivate::getFreeMemory()
 
     // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
     // and 'Cached' fields. consider swapped memory as used memory.
-    int memoryFree = 0;
+    qulonglong memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
     while ( true )
@@ -684,7 +684,7 @@ void DocumentPrivate::sendGeneratorRequest()
     }
 
     // [MEM] preventive memory freeing
-    int pixmapBytes = 4 * request->width() * request->height();
+    qulonglong pixmapBytes = 4 * request->width() * request->height();
     if ( pixmapBytes > (1024 * 1024) )
         cleanupPixmapMemory( pixmapBytes );
 
@@ -2452,7 +2452,7 @@ void Document::requestDone( PixmapRequest * req )
     if ( itObserver != d->m_observers.constEnd() )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
-        int memoryBytes = 4 * req->width() * req->height();
+        qulonglong memoryBytes = 4 * req->width() * req->height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
         d->m_allocatedPixmapsFifo.append( memoryPage );
         d->m_allocatedPixmapsTotalMemory += memoryBytes;

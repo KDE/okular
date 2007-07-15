@@ -89,8 +89,8 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ), page );//time
     gridlayout->addWidget( tmplabel, 1, 1 );
     
-    m_modifyDateLabel = new QLabel( i18n( "Modified:" ), page );
-    gridlayout->addWidget( m_modifyDateLabel, 2, 0 );
+    tmplabel = new QLabel( i18n( "Modified:" ), page );
+    gridlayout->addWidget( tmplabel, 2, 0 );
     m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ), page );//time
     gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
 
@@ -101,20 +101,10 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     addPage( page, i18n( "&Advanced" ) );
     gridlayout = new QGridLayout( page );
     
-    tmplabel = new QLabel( i18n( "uniqueName:" ), page );
-    gridlayout->addWidget( tmplabel, 0, 0 );
-    uniqueNameEdit = new QLineEdit( ann->uniqueName(), page );
-    gridlayout->addWidget( uniqueNameEdit, 0, 1 );
-    
     tmplabel = new QLabel( i18n( "contents:" ), page );
     gridlayout->addWidget( tmplabel, 1, 0 );
     contentsEdit = new QLineEdit( ann->contents(), page );
     gridlayout->addWidget( contentsEdit, 1, 1 );
-
-    tmplabel = new QLabel( i18n( "flags:" ), page );
-    gridlayout->addWidget( tmplabel, 2, 0 );
-    flagsEdit = new QLineEdit( QString::number( m_annot->flags() ), page );
-    gridlayout->addWidget( flagsEdit, 2, 1 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance
@@ -123,14 +113,18 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );
     connect( m_opacity, SIGNAL( valueChanged( int ) ), this, SLOT( setModified() ) );
     connect( AuthorEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
-    connect( uniqueNameEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
     connect( contentsEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
-    connect( flagsEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
     if ( m_annotWidget )
     {
         connect( m_annotWidget, SIGNAL( dataChanged() ), this, SLOT( setModified() ) );
     }
     //END
+
+#if 0
+    kDebug() << "Annotation details:" << endl;
+    kDebug() << " => unique name: '" << ann->uniqueName() << endl;
+    kDebug() << " => flags: '" << QString::number( m_annot->flags(), 2 ) << endl;
+#endif
 
     resize( sizeHint() );
 }
@@ -188,7 +182,6 @@ void AnnotsPropertiesDialog::slotapply()
     m_annot->setAuthor( AuthorEdit->text() );
     m_annot->setContents( contentsEdit->text() );
     m_annot->setModificationDate( QDateTime::currentDateTime() );
-    m_annot->setFlags( flagsEdit->text().toInt() );
     m_annot->style().setColor( colorBn->color() );
     m_annot->style().setOpacity( (double)m_opacity->value() / 100.0 );
 

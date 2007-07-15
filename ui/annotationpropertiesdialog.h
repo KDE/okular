@@ -37,9 +37,7 @@ private:
     Okular::Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
-    QLineEdit *uniqueNameEdit;
     QLineEdit *contentsEdit,
-        *flagsEdit,
         *boundaryEdit;
     KColorButton *colorBn;
     KIntNumInput *m_opacity;

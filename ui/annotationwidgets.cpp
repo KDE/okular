@@ -173,7 +173,7 @@ QWidget * TextAnnotationWidget::widget()
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
     }
 
-    QHBoxLayout * fontlay = new QHBoxLayout( m_widget );
+    QHBoxLayout * fontlay = new QHBoxLayout();
     QLabel * tmplabel = new QLabel( i18n( "Font:" ), m_widget );
     fontlay->addWidget( tmplabel );
     m_fontReq = new KFontRequester( m_widget );

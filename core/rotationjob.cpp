@@ -45,12 +45,12 @@ PagePrivate * RotationJob::page() const
 
 void RotationJob::run()
 {
-    QMatrix matrix;
-
     if ( mOldRotation == mNewRotation ) {
         mRotatedImage = mImage;
         return;
     }
+
+    QMatrix matrix;
 
     if ( mOldRotation == Rotation0 ) {
         if ( mNewRotation == Rotation90 )

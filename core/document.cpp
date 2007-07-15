@@ -382,9 +382,9 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     return ( cachedValue = (1024 * memoryFree) );
 #elif defined(Q_OS_WIN)
-    MEMORYSTATUS stat;
+    MEMORYSTATUSEX stat;
 
-    GlobalMemoryStatus (&stat);
+    GlobalMemoryStatusEx (&stat);
 
     return stat.ullAvailPhys;
 #else

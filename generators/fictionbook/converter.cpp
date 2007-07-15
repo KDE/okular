@@ -732,7 +732,7 @@ bool Converter::convertLink( const QDomElement &element )
     if ( type == "note" )
         mCursor->insertText( "]" );
 
-    if ( href.startsWith( "#" ) ) { // local link
+    if ( href.startsWith( '#' ) ) { // local link
         mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );
     } else {
         // external link

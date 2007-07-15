@@ -14,6 +14,7 @@
 
 class QLabel;
 class QLineEdit;
+class QTextEdit;
 class KColorButton;
 class KIntNumInput;
 class AnnotationWidget;
@@ -37,12 +38,11 @@ private:
     Okular::Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
-    QLineEdit *contentsEdit,
-        *boundaryEdit;
     KColorButton *colorBn;
     KIntNumInput *m_opacity;
     AnnotationWidget *m_annotWidget;
     QLabel *m_modifyDateLabel;
+    QTextEdit *m_contents;
     
     void setCaptionTextbyAnnotType();
 

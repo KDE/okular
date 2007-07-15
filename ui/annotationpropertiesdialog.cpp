@@ -15,6 +15,7 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qheaderview.h>
+#include <qtextedit.h>
 #include <kcolorbutton.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -101,10 +102,13 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     addPage( page, i18n( "&Advanced" ) );
     gridlayout = new QGridLayout( page );
     
-    tmplabel = new QLabel( i18n( "contents:" ), page );
-    gridlayout->addWidget( tmplabel, 1, 0 );
-    contentsEdit = new QLineEdit( ann->contents(), page );
-    gridlayout->addWidget( contentsEdit, 1, 1 );
+    tmplabel = new QLabel( i18n( "Contents:" ), page );
+    gridlayout->addWidget( tmplabel, 0, 0 );
+    m_contents = new QTextEdit( page );
+    gridlayout->addWidget( m_contents, 1, 0 );
+    m_contents->setAcceptRichText( false );
+    m_contents->setReadOnly( true );
+    m_contents->setPlainText( ann->contents() );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance
@@ -113,7 +117,6 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );
     connect( m_opacity, SIGNAL( valueChanged( int ) ), this, SLOT( setModified() ) );
     connect( AuthorEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
-    connect( contentsEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
     if ( m_annotWidget )
     {
         connect( m_annotWidget, SIGNAL( dataChanged() ), this, SLOT( setModified() ) );
@@ -180,7 +183,6 @@ void AnnotsPropertiesDialog::slotapply()
         return;
 
     m_annot->setAuthor( AuthorEdit->text() );
-    m_annot->setContents( contentsEdit->text() );
     m_annot->setModificationDate( QDateTime::currentDateTime() );
     m_annot->style().setColor( colorBn->color() );
     m_annot->style().setOpacity( (double)m_opacity->value() / 100.0 );

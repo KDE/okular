@@ -207,6 +207,7 @@ class OKULAR_EXPORT NormalizedRect
          */
         double bottom;
 };
+KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
 
 /**
  * @short NormalizedRect that contains a reference to an object.
@@ -575,7 +576,7 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
         typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
         for ( ; areaIt != areaItEnd; ++areaIt )
         {
-            if ( !( *it )->isNull() && ( *it )->intersects( *areaIt ) )
+            if ( !( *it ).isNull() && ( *it ).intersects( *areaIt ) )
                 return true;
         }
     }
@@ -633,7 +634,7 @@ bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for ( ; it != itEnd; ++it )
-        if ( ( *it )->contains( x, y ) )
+        if ( ( *it ).contains( x, y ) )
             return true;
 
     return false;

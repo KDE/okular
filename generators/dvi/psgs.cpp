@@ -17,7 +17,6 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <k3procio.h>
 #include <kprocess.h>
 #include <kurl.h>
 
@@ -213,7 +212,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Step 2: Call GS with the File
   QFile::remove(filename.toAscii());
-  K3ProcIO proc;
+  KProcess proc;
   QStringList argus;
   argus << "gs";
   argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
@@ -231,10 +230,14 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 #endif
 
   proc << argus;
-  if (proc.start(K3Process::Block) == false) {
+  proc.start();
+  if (!proc.waitForStarted()) {
     // Starting ghostscript did not work. 
     // TODO: Issue error message, switch PS support off.
     kError(kvs::dvi) << "ghostview could not be started" << endl;
+  } else {
+    while(!proc.waitForFinished(10))
+        qApp->processEvents();
   }
   PSfile.remove();
 
@@ -245,7 +248,9 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     // No. Check is the reason is that the device is not compiled into
     // ghostscript. If so, try again with another device.
     QString GSoutput;
-    while(proc.readln(GSoutput) != -1) {
+    proc.setReadChannel(QProcess::StandardOutput);
+    while(proc.canReadLine()) {
+      GSoutput = QString::fromLocal8Bit(proc.readLine());
       if (GSoutput.contains("Unknown device")) {
 	kDebug(kvs::dvi) << QString("The version of ghostview installed on this computer does not support "
                                      "the '%1' ghostview device driver.").arg(*gsDevice) << endl;

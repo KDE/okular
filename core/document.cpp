@@ -319,7 +319,7 @@ qulonglong DocumentPrivate::getTotalMemory()
     if ( cachedValue )
         return cachedValue;
 
-#ifdef __linux__
+#if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return 128MB
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( QIODevice::ReadOnly ) )
@@ -353,7 +353,7 @@ qulonglong DocumentPrivate::getFreeMemory()
     if ( lastUpdate.secsTo( QTime::currentTime() ) <= 2 )
         return cachedValue;
 
-#ifdef __linux__
+#if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
     if ( !memFile.open( QIODevice::ReadOnly ) )

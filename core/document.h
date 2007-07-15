@@ -138,7 +138,7 @@ class OKULAR_EXPORT Document : public QObject
         const DocumentSynopsis * documentSynopsis() const;
 
         /**
-         * Starts the reading of the informations about the fonts in the
+         * Starts the reading of the information about the fonts in the
          * document, if available.
          *
          * The results as well the end of the reading is notified using the
@@ -147,7 +147,7 @@ class OKULAR_EXPORT Document : public QObject
         void startFontReading();
 
         /**
-         * Force the termination of the reading of the informations about the
+         * Force the termination of the reading of the information about the
          * fonts in the document, if running.
          */
         void stopFontReading();

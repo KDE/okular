@@ -58,6 +58,10 @@
 
 #include <config-okular.h>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 using namespace Okular;
 
 static int OkularDebug = 4650;
@@ -331,6 +335,12 @@ qulonglong DocumentPrivate::getTotalMemory()
         if ( entry.startsWith( "MemTotal:" ) )
             return (cachedValue = (1024 * entry.section( ' ', -2, -2 ).toInt()));
     }
+#elif defined(Q_OS_WIN)
+    MEMORYSTATUSEX stat;
+
+    GlobalMemoryStatusEx (&stat);
+
+    return stat.ullTotalPhys;
 #endif
     return (cachedValue = 134217728);
 }
@@ -371,6 +381,12 @@ qulonglong DocumentPrivate::getFreeMemory()
     lastUpdate = QTime::currentTime();
 
     return ( cachedValue = (1024 * memoryFree) );
+#elif defined(Q_OS_WIN)
+    MEMORYSTATUS stat;
+
+    GlobalMemoryStatus (&stat);
+
+    return stat.ullAvailPhys;
 #else
     // tell the memory is full.. will act as in LOW profile
     return 0;

@@ -45,7 +45,9 @@ static bool handleErrorCode(int code)
 	{
 		const char* errors[]= { "", ERROR_NAMES };
 		int x=(-1)*code;
-		kDebug() << errors[x] << " " << code << endl;
+		if (x < sizeof(errors)/sizeof(const char*)) {
+			kDebug() << errors[x] << " " << code << endl;
+		}
 		return false;
 	}
 	return true;

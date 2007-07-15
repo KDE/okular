@@ -535,8 +535,9 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
     if ( this->isEmpty() )
         return false;
 
-    Q_FOREACH ( const NormalizedShape& ns, *this )
-        if ( !givePtr(ns)->isNull() )
+    typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
+    for ( ; it != itEnd; ++it )
+        if ( !givePtr( *it )->isNull() )
             return false;
 
     return true;
@@ -551,8 +552,9 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
     if ( this->isEmpty() )
         return false;
 
-    Q_FOREACH ( const NormalizedShape& ns, *this )
-        if ( !givePtr(ns)->isNull() && givePtr(ns)->intersects( rect ) )
+    typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
+    for ( ; it != itEnd; ++it )
+        if ( !givePtr( *it )->isNull() && givePtr( *it )->intersects( rect ) )
             return true;
 
     return false;
@@ -567,11 +569,13 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
     if ( this->isEmpty() )
         return false;
 
-    Q_FOREACH ( const NormalizedShape& ns, this )
+    typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
+    for ( ; it != itEnd; ++it )
     {
-        Q_FOREACH ( const Shape& shape, area )
+        typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
+        for ( ; areaIt != areaItEnd; ++areaIt )
         {
-            if ( !ns->isNull() && ns->intersects( shape ) )
+            if ( !( *it )->isNull() && ( *it )->intersects( *areaIt ) )
                 return true;
         }
     }
@@ -583,10 +587,11 @@ template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<NormalizedShape, Shape> *area )
 {
     if ( !this )
-        return false;
+        return;
 
-    Q_FOREACH ( const Shape& shape, area )
-        this->append( shape );
+    typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
+    for ( ; areaIt != areaItEnd; ++areaIt )
+        this->append( *areaIt );
 }
 
 
@@ -626,8 +631,9 @@ bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
     if ( this->isEmpty() )
         return false;
 
-    Q_FOREACH ( const NormalizedShape& ns, this )
-        if ( ns->contains( x, y ) )
+    typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
+    for ( ; it != itEnd; ++it )
+        if ( ( *it )->contains( x, y ) )
             return true;
 
     return false;
@@ -653,9 +659,10 @@ QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int ySca
 
     QList<Shape> ret;
     Shape t;
-    Q_FOREACH ( const NormalizedShape& ns, *this )
+    typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
+    for ( ; it != itEnd; ++it )
     {
-        t = givePtr(ns)->geometry( xScale, yScale );
+        t = givePtr( *it )->geometry( xScale, yScale );
         t.translate( dx, dy );
         ret.append( t );
     }

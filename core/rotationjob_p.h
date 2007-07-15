@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_ROTATIONJOB_H
-#define _OKULAR_ROTATIONJOB_H
+#ifndef _OKULAR_ROTATIONJOB_P_H_
+#define _OKULAR_ROTATIONJOB_P_H_
 
 #include <QtGui/QImage>
 

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_TETXTPAGE_H_
-#define _OKULAR_TETXTPAGE_H_
+#ifndef _OKULAR_TEXTTPAGE_H_
+#define _OKULAR_TEXTTPAGE_H_
 
 #include <QtCore/QList>
 #include <QtCore/QString>

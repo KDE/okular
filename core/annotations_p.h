@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_ANNOTATION_P_H
-#define OKULAR_ANNOTATION_P_H
+#ifndef OKULAR_ANNOTATIONS_P_H
+#define OKULAR_ANNOTATIONS_P_H
 
 #include "area.h"
 #include "annotations.h"

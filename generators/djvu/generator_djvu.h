@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _DJVU_GENERATOR_H_
-#define _DJVU_GENERATOR_H_
+#ifndef _GENERATOR_DJVU_H_
+#define _GENERATOR_DJVU_H_
 
 #include <okular/core/generator.h>
 

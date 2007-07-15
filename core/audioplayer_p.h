@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#ifndef _OKULAR_AUDIOPLAYER_P_H_
+#define _OKULAR_AUDIOPLAYER_P_H_
+
 // qt/kde includes
 #include <qhash.h>
 #include <qsignalmapper.h>
@@ -42,3 +45,5 @@ public:
 };
 
 }
+
+#endif

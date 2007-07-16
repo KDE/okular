@@ -10,6 +10,7 @@
 #include <QtCore/QEventLoop>
 #include <QtGui/QPainter>
 
+#include <kaboutdata.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <klocale.h>
@@ -32,6 +33,18 @@ CHMGenerator::CHMGenerator()
     : Okular::Generator()
 {
     setFeature( TextExtraction );
+
+    KAboutData *about = new KAboutData(
+         "generator_chm",
+         "generator_chm",
+         ki18n( "CHM Backend" ),
+         "0.1",
+         ki18n( "A Microsoft Windows help file renderer" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2005-2007 Piotr Szymański" )
+    );
+    about->addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
+    setAboutData( about );
 
     m_syncGen=0;
     m_file=0;

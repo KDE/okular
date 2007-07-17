@@ -26,6 +26,8 @@ class AnnotationGuiUtils
 
         static QString contents( const Okular::Annotation * annotation );
         static QString contentsHtml( const Okular::Annotation * annotation );
+
+        static bool canBeMoved( Okular::Annotation * annotation );
 };
 
 

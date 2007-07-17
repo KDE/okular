@@ -99,6 +99,8 @@ public:
     bool mouseTextSelecting;
     QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
+    Okular::Annotation * mouseAnn;
+    QPoint mouseAnnPos;
 
     // viewport move
     bool viewportMoveActive;
@@ -257,6 +259,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseSelecting = false;
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
+    d->mouseAnn = 0;
     d->viewportMoveActive = false;
     d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
@@ -1119,6 +1122,29 @@ void PageView::inputMethodEvent( QInputMethodEvent * e )
     Q_UNUSED(e)
 }
 
+static QPoint rotateInRect( const QPoint &rotated, Okular::Rotation rotation )
+{
+    QPoint ret;
+
+    switch ( rotation )
+    {
+        case Okular::Rotation90:
+            ret = QPoint( rotated.y(), -rotated.x() );
+            break;
+        case Okular::Rotation180:
+            ret = QPoint( -rotated.x(), -rotated.y() );
+            break;
+        case Okular::Rotation270:
+            ret = QPoint( -rotated.y(), rotated.x() );
+            break;
+        case Okular::Rotation0:  // no modifications
+        default: // other cases
+            ret = rotated;
+    }
+
+    return ret;
+}
+
 void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 {
     // don't perform any mouse action when no document is shown
@@ -1178,8 +1204,33 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
         case MouseNormal:
             if ( leftButton )
             {
+                if ( d->mouseAnn )
+                {
+                    PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
+                    if ( pageItem )
+                    {
+                        const QRect & itemRect = pageItem->geometry();
+                        QPoint newpos( e->x() - itemRect.left(), e->y() - itemRect.top() );
+                        Okular::NormalizedRect r = d->mouseAnn->boundingRectangle();
+                        QPoint p( newpos - d->mouseAnnPos );
+                        QPointF pf( rotateInRect( p, pageItem->page()->totalOrientation() ) );
+                        if ( pageItem->page()->totalOrientation() % 2 == 0 )
+                        {
+                            pf.rx() /= pageItem->width();
+                            pf.ry() /= pageItem->height();
+                        }
+                        else
+                        {
+                            pf.rx() /= pageItem->height();
+                            pf.ry() /= pageItem->width();
+                        }
+                        d->mouseAnn->translate( Okular::NormalizedPoint( pf.x(), pf.y() ) );
+                        d->mouseAnnPos = newpos;
+                        d->document->modifyPageAnnotation( pageItem->pageNumber(), d->mouseAnn );
+                    }
+                }
                 // drag page
-                if ( !d->mouseGrabPos.isNull() )
+                else if ( !d->mouseGrabPos.isNull() )
                 {
                     QPoint mousePos = e->globalPos();
                     QPoint delta = d->mouseGrabPos - mousePos;
@@ -1316,9 +1367,27 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
         case MouseNormal:   // drag start / click / link following
             if ( leftButton )
             {
+                PageViewItem * pageItem = 0;
+                if ( ( e->modifiers() & Qt::ControlModifier ) && ( pageItem = pickItemOnPoint( e->x(), e->y() ) ) )
+                {
+                    // find out normalized mouse coords inside current item
+                    const QRect & itemRect = pageItem->geometry();
+                    double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
+                    double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
+                    const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+                    d->mouseAnnPos = QPoint( e->x() - itemRect.left(), e->y() - itemRect.top() );
+                    if ( orect )
+                        d->mouseAnn = ( (Okular::AnnotationObjectRect *)orect )->annotation();
+                    // consider no annotation caught if its type is not movable
+                    if ( d->mouseAnn && !AnnotationGuiUtils::canBeMoved( d->mouseAnn ) )
+                        d->mouseAnn = 0;
+                }
+                if ( !d->mouseAnn )
+                {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
                     setCursor( Qt::SizeAllCursor );
+                }
             }
             else if ( rightButton )
             {
@@ -1407,6 +1476,12 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
         PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
         d->annotator->routeEvent( e, pageItem );
         return;
+    }
+
+    if ( d->mouseAnn )
+    {
+        setCursor( Qt::ArrowCursor );
+        d->mouseAnn = 0;
     }
 
     bool leftButton = e->button() == Qt::LeftButton;
@@ -2258,6 +2333,8 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         if ( d->mouseMode == MouseTextSelect )
             setCursor( Qt::IBeamCursor );
+        else if ( d->mouseAnn )
+            setCursor( Qt::ClosedHandCursor );
         else
         {
             const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
@@ -2270,7 +2347,16 @@ void PageView::updateCursor( const QPoint &p )
             else
             {
                 d->mouseOnRect = false;
-                setCursor( Qt::ArrowCursor );
+                if ( annotobj
+                     && ( QApplication::keyboardModifiers() & Qt::ControlModifier )
+                     && AnnotationGuiUtils::canBeMoved( static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation() ) )
+                {
+                    setCursor( Qt::OpenHandCursor );
+                }
+                else
+                {
+                    setCursor( Qt::ArrowCursor );
+                }
             }
         }
     }

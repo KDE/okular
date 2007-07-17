@@ -82,3 +82,21 @@ QString AnnotationGuiUtils::contentsHtml( const Okular::Annotation * ann )
     return contents( ann ).replace( "\n", "<br>" );
 }
 
+bool AnnotationGuiUtils::canBeMoved( Okular::Annotation * ann )
+{
+    if ( !ann )
+        return false;
+
+    switch( ann->subType() )
+    {
+        case Okular::Annotation::ALine:
+        case Okular::Annotation::AStamp:
+        case Okular::Annotation::AGeom:
+            return true;
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+

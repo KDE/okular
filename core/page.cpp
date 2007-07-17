@@ -677,6 +677,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 // append annotation to the list or show warning
                 if ( annotation )
                 {
+                    annotation->d_ptr->m_page = this;
                     m_page->m_annotations.append( annotation );
                     m_page->m_rects.append( new AnnotationObjectRect( annotation ) );
                     int pos = annotation->uniqueName().lastIndexOf("-");

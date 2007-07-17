@@ -28,6 +28,7 @@ class AnnotationObjectRect;
 class AnnotationPrivate;
 class Document;
 class Page;
+class PagePrivate;
 class TextAnnotationPrivate;
 class LineAnnotationPrivate;
 class GeomAnnotationPrivate;
@@ -84,6 +85,7 @@ class OKULAR_EXPORT Annotation
     friend class AnnotationObjectRect;
     friend class Document;
     friend class Page;
+    friend class PagePrivate;
 
     public:
         /**

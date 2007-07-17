@@ -1788,6 +1788,7 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void translate( const NormalizedPoint &coord );
 
         QList< QLinkedList<NormalizedPoint> > m_inkPaths;
         QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
@@ -1920,5 +1921,21 @@ void InkAnnotationPrivate::transform( const QMatrix &matrix )
         QMutableLinkedListIterator<NormalizedPoint> it( m_transformedInkPaths[ i ] );
         while ( it.hasNext() )
             it.next().transform( matrix );
+    }
+}
+
+void InkAnnotationPrivate::translate( const NormalizedPoint &coord )
+{
+    AnnotationPrivate::translate( coord );
+
+    for ( int i = 0; i < m_inkPaths.count(); ++i )
+    {
+        QMutableLinkedListIterator<NormalizedPoint> it( m_inkPaths[ i ] );
+        while ( it.hasNext() )
+        {
+            NormalizedPoint& p = it.next();
+            p.x = p.x + coord.x;
+            p.y = p.y + coord.y;
+        }
     }
 }

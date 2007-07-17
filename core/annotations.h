@@ -26,6 +26,8 @@ namespace Okular {
 class Annotation;
 class AnnotationObjectRect;
 class AnnotationPrivate;
+class Document;
+class Page;
 class TextAnnotationPrivate;
 class LineAnnotationPrivate;
 class GeomAnnotationPrivate;
@@ -80,6 +82,8 @@ class OKULAR_EXPORT AnnotationUtils
 class OKULAR_EXPORT Annotation
 {
     friend class AnnotationObjectRect;
+    friend class Document;
+    friend class Page;
 
     public:
         /**
@@ -244,6 +248,11 @@ class OKULAR_EXPORT Annotation
          * to have them rotated correctly.
          */
         NormalizedRect transformedBoundingRectangle() const;
+
+        /**
+         * Move the annotation by the specified coordinates.
+         */
+        void translate( const NormalizedPoint &coord );
 
         /**
          * The Style class contains all information about style of the

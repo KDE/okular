@@ -40,6 +40,8 @@
 
 // local includes
 #include "action.h"
+#include "annotations.h"
+#include "annotations_p.h"
 #include "audioplayer.h"
 #include "audioplayer_p.h"
 #include "bookmarkmanager.h"
@@ -1597,6 +1599,10 @@ void Document::addPageAnnotation( int page, Annotation * annotation )
     // find out the page to attach annotation
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
+        return;
+
+    // the annotation belongs already to a page
+    if ( annotation->d_ptr->m_page )
         return;
 
     // add annotation to the page

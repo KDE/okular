@@ -14,6 +14,9 @@
 #include <QtGui/QApplication>
 #include <QtGui/QColor>
 
+// local includes
+#include "page_p.h"
+
 using namespace Okular;
 
 //BEGIN AnnotationUtils implementation
@@ -422,7 +425,7 @@ Annotation::RevisionType Annotation::Revision::type() const
 
 
 AnnotationPrivate::AnnotationPrivate()
-    : m_flags( 0 )
+    : m_page( 0 ), m_flags( 0 )
 {
 }
 
@@ -627,6 +630,12 @@ void Annotation::setBoundingRectangle( const NormalizedRect &rectangle )
 {
     Q_D( Annotation );
     d->m_boundary = rectangle;
+    if ( d->m_page )
+    {
+        d->transform( d->m_page->rotationMatrix() );
+    }
+    else
+        d->m_transformedBoundary = d->m_boundary;
 }
 
 NormalizedRect Annotation::boundingRectangle() const
@@ -639,6 +648,18 @@ NormalizedRect Annotation::transformedBoundingRectangle() const
 {
     Q_D( const Annotation );
     return d->m_transformedBoundary;
+}
+
+void Annotation::translate( const NormalizedPoint &coord )
+{
+    Q_D( Annotation );
+    d->translate( coord );
+    if ( d->m_page )
+    {
+        d->transform( d->m_page->rotationMatrix() );
+    }
+    else
+        d->m_transformedBoundary = d->m_boundary;
 }
 
 Annotation::SubType Annotation::subType() const
@@ -787,6 +808,14 @@ void AnnotationPrivate::transform( const QMatrix &matrix )
 {
     m_transformedBoundary = m_boundary;
     m_transformedBoundary.transform( matrix );
+}
+
+void AnnotationPrivate::translate( const NormalizedPoint &coord )
+{
+    m_boundary.left = m_boundary.left + coord.x;
+    m_boundary.right = m_boundary.right + coord.x;
+    m_boundary.top = m_boundary.top + coord.y;
+    m_boundary.bottom = m_boundary.bottom + coord.y;
 }
 
 //END Annotation implementation
@@ -1056,6 +1085,7 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void translate( const NormalizedPoint &coord );
 
         QLinkedList<NormalizedPoint> m_linePoints;
         QLinkedList<NormalizedPoint> m_transformedLinePoints;
@@ -1305,6 +1335,19 @@ void LineAnnotationPrivate::transform( const QMatrix &matrix )
     QMutableLinkedListIterator<NormalizedPoint> it( m_transformedLinePoints );
     while ( it.hasNext() )
         it.next().transform( matrix );
+}
+
+void LineAnnotationPrivate::translate( const NormalizedPoint &coord )
+{
+    AnnotationPrivate::translate( coord );
+
+    QMutableLinkedListIterator<NormalizedPoint> it( m_linePoints );
+    while ( it.hasNext() )
+    {
+        NormalizedPoint& p = it.next();
+        p.x = p.x + coord.x;
+        p.y = p.y + coord.y;
+    }
 }
 
 /** GeomAnnotation [Annotation] */

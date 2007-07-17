@@ -22,6 +22,8 @@ class QMatrix;
 
 namespace Okular {
 
+class PagePrivate;
+
 class AnnotationPrivate
 {
     public:
@@ -34,6 +36,9 @@ class AnnotationPrivate
          * defined by @p matrix.
          */
         virtual void transform( const QMatrix &matrix );
+        virtual void translate( const NormalizedPoint &coord );
+
+        PagePrivate * m_page;
 
         QString m_author;
         QString m_contents;

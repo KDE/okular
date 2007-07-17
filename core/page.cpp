@@ -23,6 +23,7 @@
 // local includes
 #include "action.h"
 #include "annotations.h"
+#include "annotations_p.h"
 #include "area.h"
 #include "form.h"
 #include "form_p.h"
@@ -478,6 +479,7 @@ void Page::addAnnotation( Annotation * annotation )
 
         annotation->setUniqueName( uniqueName );
     }
+    annotation->d_ptr->m_page = d;
     m_annotations.append( annotation );
 
     AnnotationObjectRect *rect = new AnnotationObjectRect( annotation );

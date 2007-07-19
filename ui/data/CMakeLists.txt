@@ -37,3 +37,8 @@ install(FILES
    ghns_star_gray.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 
+# newstuff
+install(FILES
+   okular.knsrc
+   DESTINATION ${CONFIG_INSTALL_DIR})
+

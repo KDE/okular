@@ -53,6 +53,7 @@
 #include <kio/job.h>
 #include <kicon.h>
 #include <kfilterdev.h>
+#include <knewstuff2/engine.h>
 
 // local includes
 #include "aboutdata.h"
@@ -62,9 +63,6 @@
 #include "ui/thumbnaillist.h"
 #include "ui/side_reviews.h"
 #include "ui/minibar.h"
-#if 0
-#include "ui/newstuff.h"
-#endif
 #include "ui/embeddedfilesdialog.h"
 #include "ui/propertiesdialog.h"
 #include "ui/presentationwidget.h"
@@ -1202,13 +1200,11 @@ void Part::slotSaveFileAs()
 
 void Part::slotGetNewStuff()
 {
-#if 0
+    KNS::Engine engine;
+    engine.init( "okular.knsrc" );
     // show the modal dialog over pageview and execute it
-    NewStuffDialog * dialog = new NewStuffDialog( m_pageView );
-    connect ( dialog , SIGNAL ( loadItemClicked( const KUrl & ) ), this , SLOT ( openUrlFromDocument ( const KUrl & ) ) );
-    dialog->exec();
-    delete dialog;
-#endif
+    KNS::Entry::List entries = engine.downloadDialogModal( m_pageView );
+    Q_UNUSED( entries )
 }
 
 

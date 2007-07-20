@@ -1033,50 +1033,57 @@ void PageView::keyPressEvent( QKeyEvent * e )
     // move/scroll page by using keys
     switch ( e->key() )
     {
-        case Qt::Key_Up:
-        case Qt::Key_PageUp:
-        case Qt::Key_Backspace:
-            // if in single page mode and at the top of the screen, go to \ page
-            if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
-            {
-                if ( e->key() == Qt::Key_Up )
-                    verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
-                else
-                    verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
-            }
-            else if ( d->document->currentPage() > 0 )
-            {
-                // more optimized than document->setPrevPage and then move view to bottom
-                Okular::DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber -= viewColumns();
-                if ( newViewport.pageNumber < 0 )
-                    newViewport.pageNumber = 0;
-                newViewport.rePos.enabled = true;
-                newViewport.rePos.normalizedY = 1.0;
-                d->document->setViewport( newViewport );
-            }
-            break;
         case Qt::Key_Down:
         case Qt::Key_PageDown:
         case Qt::Key_Space:
-            // if in single page mode and at the bottom of the screen, go to next page
-            if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
+        case Qt::Key_Up:
+        case Qt::Key_PageUp:
+        case Qt::Key_Backspace:
+            if ( e->key() == Qt::Key_Down
+                 || e->key() == Qt::Key_PageDown
+                 || ( e->key() == Qt::Key_Space && ( e->modifiers() & Qt::ShiftModifier ) != Qt::ShiftModifier ) )
             {
-                if ( e->key() == Qt::Key_Down )
-                    verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
-                else
-                    verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
+                // if in single page mode and at the bottom of the screen, go to next page
+                if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
+                {
+                    if ( e->key() == Qt::Key_Down )
+                        verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
+                    else
+                        verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
+                }
+                else if ( (int)d->document->currentPage() < d->items.count() - 1 )
+                {
+                   // more optimized than document->setNextPage and then move view to top
+                    Okular::DocumentViewport newViewport = d->document->viewport();
+                    newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
+                    if ( newViewport.pageNumber >= (int)d->items.count() )
+                        newViewport.pageNumber = d->items.count() - 1;
+                    newViewport.rePos.enabled = true;
+                    newViewport.rePos.normalizedY = 0.0;
+                    d->document->setViewport( newViewport );
+                }
             }
-            else if ( (int)d->document->currentPage() < d->items.count() - 1 )
+            else
             {
-                // more optimized than document->setNextPage and then move view to top
-                Okular::DocumentViewport newViewport = d->document->viewport();
-                newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
-                if ( newViewport.pageNumber >= (int)d->items.count() )
-                    newViewport.pageNumber = d->items.count() - 1;
-                newViewport.rePos.enabled = true;
-                newViewport.rePos.normalizedY = 0.0;
-                d->document->setViewport( newViewport );
+                // if in single page mode and at the top of the screen, go to \ page
+                if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
+                {
+                   if ( e->key() == Qt::Key_Up )
+                        verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
+                   else
+                       verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
+                }
+                else if ( d->document->currentPage() > 0 )
+                {
+                    // more optimized than document->setPrevPage and then move view to bottom
+                    Okular::DocumentViewport newViewport = d->document->viewport();
+                    newViewport.pageNumber -= viewColumns();
+                    if ( newViewport.pageNumber < 0 )
+                        newViewport.pageNumber = 0;
+                    newViewport.rePos.enabled = true;
+                    newViewport.rePos.normalizedY = 1.0;
+                    d->document->setViewport( newViewport );
+                }
             }
             break;
         case Qt::Key_Left:

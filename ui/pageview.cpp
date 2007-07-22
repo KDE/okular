@@ -2058,7 +2058,8 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     // fill with background color the unpainted area
     const QVector<QRect> &backRects = remainingArea.rects();
     int backRectsNumber = backRects.count();
-    QColor backColor = /*d->items.isEmpty() ? Qt::lightGray :*/ Qt::gray;
+    // the previous color here was Qt::gray
+    QColor backColor = widget()->palette().color( QPalette::Dark );
     for ( int jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], backColor );
 }

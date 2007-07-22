@@ -35,7 +35,10 @@ class AnnotationPrivate
          * Transforms the annotation coordinates with the transformation
          * defined by @p matrix.
          */
+        void annotationTransform( const QMatrix &matrix );
+
         virtual void transform( const QMatrix &matrix );
+        virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
         PagePrivate * m_page;

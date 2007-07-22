@@ -630,12 +630,11 @@ void Annotation::setBoundingRectangle( const NormalizedRect &rectangle )
 {
     Q_D( Annotation );
     d->m_boundary = rectangle;
+    d->resetTransformation();
     if ( d->m_page )
     {
         d->transform( d->m_page->rotationMatrix() );
     }
-    else
-        d->m_transformedBoundary = d->m_boundary;
 }
 
 NormalizedRect Annotation::boundingRectangle() const
@@ -654,12 +653,11 @@ void Annotation::translate( const NormalizedPoint &coord )
 {
     Q_D( Annotation );
     d->translate( coord );
+    d->resetTransformation();
     if ( d->m_page )
     {
         d->transform( d->m_page->rotationMatrix() );
     }
-    else
-        d->m_transformedBoundary = d->m_boundary;
 }
 
 Annotation::SubType Annotation::subType() const
@@ -804,10 +802,20 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     }
 }
 
+void AnnotationPrivate::annotationTransform( const QMatrix &matrix )
+{
+    resetTransformation();
+    transform( matrix );
+}
+
 void AnnotationPrivate::transform( const QMatrix &matrix )
 {
-    m_transformedBoundary = m_boundary;
     m_transformedBoundary.transform( matrix );
+}
+
+void AnnotationPrivate::resetTransformation()
+{
+    m_transformedBoundary = m_boundary;
 }
 
 void AnnotationPrivate::translate( const NormalizedPoint &coord )
@@ -834,6 +842,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
         TextAnnotation::TextType m_textType;
@@ -1067,8 +1076,16 @@ void TextAnnotationPrivate::transform( const QMatrix &matrix )
     AnnotationPrivate::transform( matrix );
 
     for ( int i = 0; i < 3; ++i ) {
-       m_transformedInplaceCallout[i] = m_inplaceCallout[i];
        m_transformedInplaceCallout[i].transform( matrix );
+    }
+}
+
+void TextAnnotationPrivate::resetTransformation()
+{
+    AnnotationPrivate::resetTransformation();
+
+    for ( int i = 0; i < 3; ++i ) {
+       m_transformedInplaceCallout[i] = m_inplaceCallout[i];
     }
 }
 
@@ -1101,6 +1118,7 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
         QLinkedList<NormalizedPoint> m_linePoints;
@@ -1346,11 +1364,16 @@ void LineAnnotationPrivate::transform( const QMatrix &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
-    m_transformedLinePoints = m_linePoints;
-
     QMutableLinkedListIterator<NormalizedPoint> it( m_transformedLinePoints );
     while ( it.hasNext() )
         it.next().transform( matrix );
+}
+
+void LineAnnotationPrivate::resetTransformation()
+{
+    AnnotationPrivate::resetTransformation();
+
+    m_transformedLinePoints = m_linePoints;
 }
 
 void LineAnnotationPrivate::translate( const NormalizedPoint &coord )
@@ -1804,6 +1827,7 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
         QList< QLinkedList<NormalizedPoint> > m_inkPaths;
@@ -1930,14 +1954,19 @@ void InkAnnotationPrivate::transform( const QMatrix &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
-    m_transformedInkPaths = m_inkPaths;
-
     for ( int i = 0; i < m_transformedInkPaths.count(); ++i )
     {
         QMutableLinkedListIterator<NormalizedPoint> it( m_transformedInkPaths[ i ] );
         while ( it.hasNext() )
             it.next().transform( matrix );
     }
+}
+
+void InkAnnotationPrivate::resetTransformation()
+{
+    AnnotationPrivate::resetTransformation();
+
+    m_transformedInkPaths = m_inkPaths;
 }
 
 void InkAnnotationPrivate::translate( const NormalizedPoint &coord )

@@ -320,7 +320,7 @@ AnnotationObjectRect::~AnnotationObjectRect()
 
 void AnnotationObjectRect::transform( const QMatrix &matrix )
 {
-    m_annotation->d_func()->transform( matrix );
+    m_annotation->d_func()->annotationTransform( matrix );
 }
 
 /** class SourceRefObjectRect **/

@@ -834,6 +834,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         }
 
         virtual void transform( const QMatrix &matrix );
+        virtual void translate( const NormalizedPoint &coord );
 
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
@@ -1069,6 +1070,21 @@ void TextAnnotationPrivate::transform( const QMatrix &matrix )
        m_transformedInplaceCallout[i] = m_inplaceCallout[i];
        m_transformedInplaceCallout[i].transform( matrix );
     }
+}
+
+void TextAnnotationPrivate::translate( const NormalizedPoint &coord )
+{
+    AnnotationPrivate::translate( coord );
+
+#define ADD_COORD( c1, c2 ) \
+{ \
+  c1.x = c1.x + c2.x; \
+  c1.y = c1.y + c2.y; \
+}
+    ADD_COORD( m_inplaceCallout[0], coord )
+    ADD_COORD( m_inplaceCallout[1], coord )
+    ADD_COORD( m_inplaceCallout[2], coord )
+#undef ADD_COORD
 }
 
 /** LineAnnotation [Annotation] */

@@ -93,6 +93,7 @@ bool AnnotationGuiUtils::canBeMoved( Okular::Annotation * ann )
         case Okular::Annotation::AStamp:
         case Okular::Annotation::AGeom:
         case Okular::Annotation::AInk:
+        case Okular::Annotation::AText:
             return true;
             break;
         default:

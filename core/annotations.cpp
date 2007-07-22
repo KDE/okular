@@ -660,11 +660,6 @@ void Annotation::translate( const NormalizedPoint &coord )
     }
 }
 
-Annotation::SubType Annotation::subType() const
-{
-    return A_BASE;
-}
-
 Annotation::Style & Annotation::style()
 {
     Q_D( Annotation );

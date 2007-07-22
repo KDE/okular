@@ -566,7 +566,7 @@ class OKULAR_EXPORT Annotation
         /**
          * Returns the sub type of the annotation.
          */
-        virtual SubType subType() const;
+        virtual SubType subType() const = 0;
 
         /**
          * Stores the annotation as xml in @p document under the given parent @p node.

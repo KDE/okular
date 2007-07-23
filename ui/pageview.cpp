@@ -398,8 +398,8 @@ void PageView::setupActions( KActionCollection * ac )
 
     // View-Layout actions
     QStringList viewModes;
-    viewModes.append( i18n( "Single" ) );
-    viewModes.append( i18n( "Facing" ) );
+    viewModes.append( i18n( "Single Page" ) );
+    viewModes.append( i18n( "Facing Pages" ) );
     viewModes.append( i18n( "Overview" ) );
 
     d->aViewMode  = new KSelectAction(KIcon( "view-left-right" ), i18n("&View Mode"), this);

@@ -114,6 +114,9 @@ struct GeneratorInfo
     QMap< int, DocumentObserver * >::const_iterator it = m_observers.begin(), end = m_observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
+#define OKULAR_HISTORY_MAXSTEPS 100
+#define OKULAR_HISTORY_SAVEDSTEPS 10
+
 /***** Document ******/
 
 class Okular::DocumentPrivate
@@ -619,12 +622,12 @@ void DocumentPrivate::saveDocumentInfo() const
         // 2.2. Save document info (current viewport, history, ... ) to DOM
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
-        // <general info><history> ... </history> save history up to 10 viewports
+        // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
         QLinkedList< DocumentViewport >::const_iterator backIterator = m_viewportIterator;
         if ( backIterator != m_viewportHistory.end() )
         {
-            // go back up to 10 steps from the current viewportIterator
-            int backSteps = 10;
+            // go back up to OKULAR_HISTORY_SAVEDSTEPS steps from the current viewportIterator
+            int backSteps = OKULAR_HISTORY_SAVEDSTEPS;
             while ( backSteps-- && backIterator != m_viewportHistory.begin() )
                 --backIterator;
 
@@ -1728,7 +1731,7 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
         d->m_viewportHistory.erase( ++d->m_viewportIterator, d->m_viewportHistory.end() );
 
         // keep the list to a reasonable size by removing head when needed
-        if ( d->m_viewportHistory.count() >= 100 )
+        if ( d->m_viewportHistory.count() >= OKULAR_HISTORY_MAXSTEPS )
             d->m_viewportHistory.pop_front();
 
         // add the item at the end of the queue

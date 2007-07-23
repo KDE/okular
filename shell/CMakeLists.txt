@@ -20,6 +20,6 @@ install(TARGETS okular DESTINATION ${BIN_INSTALL_DIR})
 
 # okular shell data files
 
-install( FILES okular.desktop  DESTINATION  ${XDG_APPS_DIR} )
+install( FILES okular.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install( FILES shell.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
 

@@ -23,4 +23,4 @@ install(TARGETS okularGenerator_fb DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_fb.desktop okularFb.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES okularApplication_fb.desktop  DESTINATION  ${XDG_APPS_DIR} )
+install( FILES okularApplication_fb.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )

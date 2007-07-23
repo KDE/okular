@@ -21,9 +21,8 @@
 #include <qlayout.h>
 #include <QPainter>
 #include <qpushbutton.h>
+#include <qsizegrip.h>
 #include <qstyle.h>
-#include <qstyleoption.h>
-#include <qstylepainter.h>
 #include <qtextedit.h>
 #include <qtoolbutton.h>
 #include <kglobal.h>
@@ -155,48 +154,9 @@ private:
 };
 
 
-class ResizeBox
-  : public QWidget
-{
-public:
-    ResizeBox( QWidget * parent )
-      : QWidget( parent )
-    {
-        setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-        setFixedSize( style()->sizeFromContents( QStyle::CT_SizeGrip, 0, QSize( 11, 11 ) ) );
-        setCursor( layoutDirection() == Qt::LeftToRight ? Qt::SizeFDiagCursor : Qt::SizeBDiagCursor );
-    }
-
-    virtual void paintEvent( QPaintEvent * )
-    {
-        QStyleOptionSizeGrip opt;
-        opt.initFrom( this );
-        opt.corner = layoutDirection() == Qt::LeftToRight ? Qt::BottomRightCorner : Qt::BottomLeftCorner;
-        QStylePainter sp( this );
-        sp.drawControl( QStyle::CE_SizeGrip, opt );
-    }
-
-    virtual void mousePressEvent( QMouseEvent * e )
-    {
-        mousePressPos = e->pos();
-    }
-
-    virtual void mouseMoveEvent( QMouseEvent * e )
-    {
-        QSize sz = parentWidget()->size();
-        QPoint dpt = e->pos() - mousePressPos;
-        sz.setHeight( qMax( parentWidget()->minimumHeight(), sz.height() + dpt.y() ) );
-        sz.setWidth( qMax( parentWidget()->minimumWidth(), sz.width() + dpt.x() ) );
-        parentWidget()->resize( sz );
-    }
-
-private:
-    QPoint mousePressPos;
-};
-
-
+// Qt::SubWindow is needed to make QSizeGrip work
 AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
-    : QFrame( parent ), m_annot( annot )
+    : QFrame( parent, Qt::SubWindow ), m_annot( annot )
 {
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
@@ -220,7 +180,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     QHBoxLayout * lowerlay = new QHBoxLayout();
     mainlay->addLayout( lowerlay );
     lowerlay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Fixed ) );
-    ResizeBox * sb = new ResizeBox( this );
+    QSizeGrip * sb = new QSizeGrip( this );
     lowerlay->addWidget( sb );
 
     m_title->setTitle( m_annot->window().summary() );

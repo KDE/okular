@@ -23,6 +23,7 @@
 #include <kdebug.h>
 #include <kurl.h>
 #include <kmimetype.h>
+#include <kio/udsentry.h>
 
 #include <qfile.h>
 #include <qbitarray.h>
@@ -191,9 +192,9 @@ static void app_entry(UDSEntry& e, unsigned int uds, const QString& str)
 static void app_dir(UDSEntry& e, const QString & name)
 {
 	e.clear();
-	app_entry(e, KIO::UDS_NAME, name);
-	app_entry(e, KIO::UDS_FILE_TYPE, S_IFDIR);
-	app_entry(e, KIO::UDS_SIZE, 1);
+	app_entry(e, KIO::UDSEntry::UDS_NAME, name);
+	app_entry(e, KIO::UDSEntry::UDS_FILE_TYPE, S_IFDIR);
+	app_entry(e, KIO::UDSEntry::UDS_SIZE, 1);
 }
 
 // internal function
@@ -201,9 +202,9 @@ static void app_dir(UDSEntry& e, const QString & name)
 static void app_file(UDSEntry& e, const QString & name, size_t size)
 {
 	e.clear();
-	app_entry(e, KIO::UDS_NAME, name);
-	app_entry(e, KIO::UDS_FILE_TYPE, S_IFREG);
-	app_entry(e, KIO::UDS_SIZE, size);
+	app_entry(e, KIO::UDSEntry::UDS_NAME, name);
+	app_entry(e, KIO::UDSEntry::UDS_FILE_TYPE, S_IFREG);
+	app_entry(e, KIO::UDSEntry::UDS_SIZE, size);
 }
 
 void ProtocolMSITS::stat (const KUrl & url)

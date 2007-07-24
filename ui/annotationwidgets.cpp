@@ -87,7 +87,7 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 
     m_icon = m_comboItems->itemData( id ).toString();
     QString path;
-    QPixmap pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, &path, true );
+    QPixmap pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, QStringList(), &path, true );
     if ( path.isEmpty() )
         pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );

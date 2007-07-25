@@ -764,6 +764,28 @@ bool Part::openFile()
     return true;
 }
 
+static QString compressedMimeFor( const QString& mime_to_check )
+{
+    static QHash< QString, QString > compressedMimeMap;
+    if ( compressedMimeMap.isEmpty() )
+    {
+        compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
+            QString::fromLatin1( "application/x-gzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzip" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+    }
+    QHash< QString, QString >::const_iterator it = compressedMimeMap.find( mime_to_check );
+    if ( it != compressedMimeMap.end() )
+        return it.value();
+
+    return QString();
+}
 
 bool Part::openUrl(const KUrl &url)
 {
@@ -776,11 +798,10 @@ bool Part::openUrl(const KUrl &url)
     const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
     bool isCompressedFile = false;
     KUrl tempUrl;
-    if (( mimetype->name() == "application/x-gzip" )
-        || ( mimetype->name() == "application/x-bzip" )
-        || ( mimetype->parentMimeType() == "application/x-gzip" )
-        || ( mimetype->parentMimeType() == "application/x-bzip" )
-        )
+    QString compressedMime = compressedMimeFor( mimetype->name() );
+    if ( compressedMime.isEmpty() )
+        compressedMime = compressedMimeFor( mimetype->parentMimeType() );
+    if ( !compressedMime.isEmpty() )
     {
         isCompressedFile=handleCompressed(tempUrl,path,mimetype);
     }

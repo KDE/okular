@@ -49,11 +49,24 @@ void PagePainter::paintPageOnPainter( const KPDFPage * page, int id, int flags,
     // if have no pixmap, draw blank page with gray cross and exit
     if ( !pixmap )
     {
-        if ( KpdfSettings::changeColors() &&
-             KpdfSettings::renderMode() == KpdfSettings::EnumRenderMode::Paper )
-            destPainter->fillRect( limits, KpdfSettings::paperColor() );
-        else
-            destPainter->fillRect( limits, Qt::white );
+        QColor color = Qt::white;
+        if ( KpdfSettings::changeColors() )
+        {
+            switch ( KpdfSettings::renderMode() )
+            {
+                case KpdfSettings::EnumRenderMode::Inverted:
+                    color = Qt::black;
+                    break;
+                case KpdfSettings::EnumRenderMode::Paper:
+                    color = KpdfSettings::paperColor();
+                    break;
+                case KpdfSettings::EnumRenderMode::Recolor:
+                    color = KpdfSettings::recolorBackground();
+                    break;
+                default: ;
+            }
+        }
+        destPainter->fillRect( limits, color );
 
         // draw a cross (to  that the pixmap as not yet been loaded)
         // helps a lot on pages that take much to render

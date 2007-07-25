@@ -481,6 +481,15 @@ QStringList Part::supportedMimeTypes() const
 }
 
 
+KUrl Part::realUrl() const
+{
+    if ( !m_realUrl.isEmpty() )
+        return m_realUrl;
+
+    return url();
+}
+
+
 void Part::openUrlFromDocument(const KUrl &url)
 {
     if (m_dummyMode) return;
@@ -544,7 +553,7 @@ void Part::setWindowTitleFromDocument()
     }
     else
     {
-        emit setWindowCaption( url().fileName() );
+        emit setWindowCaption( realUrl().fileName() );
     }
 }
 
@@ -816,6 +825,8 @@ bool Part::openUrl(const KUrl &url)
     {
         m_viewportDirty.pageNumber = -1;
 
+        m_realUrl = url;
+
         setWindowTitleFromDocument();
     }
 
@@ -853,6 +864,7 @@ bool Part::closeUrl()
     emit setWindowCaption("");
     emit enablePrintAction(false);
     m_searchStarted = false;
+    m_realUrl = KUrl();
     if (!localFilePath().isEmpty()) m_watcher->removeFile(localFilePath());
     m_document->closeDocument();
     updateViewActions();

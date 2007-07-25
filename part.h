@@ -94,6 +94,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void startPresentation();
         QStringList supportedMimeTypes() const;
 
+        KUrl realUrl() const;
+
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
         Q_SCRIPTABLE Q_NOREPLY void openDocument(KUrl doc);
@@ -247,6 +249,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QIcon m_addBookmarkIcon;
 
         bool m_dummyMode;
+
+        KUrl m_realUrl;
 
     private slots:
         void slotGeneratorPreferences();

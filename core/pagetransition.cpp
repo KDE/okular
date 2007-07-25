@@ -43,9 +43,8 @@ PageTransition::PageTransition( Type type )
 }
 
 PageTransition::PageTransition( const PageTransition &other )
-    : d( new Private( Replace ) )
+    : d( new Private( *other.d ) )
 {
-    *d = *other.d;
 }
 
 PageTransition& PageTransition::operator=( const PageTransition &other )

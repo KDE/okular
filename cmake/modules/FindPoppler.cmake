@@ -53,8 +53,8 @@ check_cxx_source_compiles("
 
 int main()
 {
-  Poppler::SoundObject * so = 0;
-  (void)so;
+  Poppler::Document *doc = Poppler::Document::load(QString());
+  doc->embeddedFiles().at(0)->checksum();
 
   return 0;
 }

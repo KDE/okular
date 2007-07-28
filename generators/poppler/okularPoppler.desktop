@@ -11,4 +11,4 @@ Name[x-test]=xxokularxx
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service
-MimeType=application/x-pdf;application/pdf
+MimeType=application/x-pdf;application/pdf;application/x-gzpdf;application/x-bzpdf

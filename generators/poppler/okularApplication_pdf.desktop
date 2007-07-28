@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-MimeType=application/pdf
+MimeType=application/pdf;application/x-gzpdf;application/x-bzpdf;
 Terminal=false
 Name=okular
 Name[de]=Okular

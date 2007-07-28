@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-MimeType=application/postscript;image/x-eps;
+MimeType=application/postscript;image/x-eps;application/x-gzpostscript;application/x-bzpostscript;
 Terminal=false
 Name=okular
 Name[de]=Okular

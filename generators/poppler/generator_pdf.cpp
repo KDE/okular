@@ -74,8 +74,14 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
 #ifndef HAVE_POPPLER_0_6
             return -1;
 #else
+// temporarly disabled until 0.6 final, as the EmbeddedFile::size() was added
+// after the 0.6rc1
+#if 0
             int s = ef->size();
             return s <= 0 ? -1 : s;
+#else
+            return -1;
+#endif
 #endif
         }
         

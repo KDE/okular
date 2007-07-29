@@ -12,6 +12,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH  99787: kpdf needs to have a bookmark list
 -> WISH 100341: first page at right, in two pages mode
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
+-> WISH 102704: Handle gzipped and bzipped PDFs
 -> WISH 102788: Current page number visible
 -> BUG  106546: Search with "/" and ALT+TAB
 -> WISH 107998: kpdf horizontal scroll bar
@@ -35,7 +36,6 @@ In progress [working on]:
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link
    provide a configuration widget to choose the editor and configure a custom one
--> open gzipped and bzipped documents (BR102704)
 -> toc: highlight the row of the current page (BR127358)
    (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
 -> annotations: renderers in PagePainter (for the 6 annots)
@@ -120,6 +120,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: open gzipped and bzipped documents (BR102704)
 -> ADD: thumbnailslist: show Viewport in a blended way, allowing to be dragged (BR135521)
 -> CHG: async way to read the fonts, no more blocking properties dialog
 -> CHG: use ThreadWeaver for the rotating jobs

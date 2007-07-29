@@ -170,7 +170,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private:
         void doPrint( KPrinter& printer );
-        bool handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype);
+        bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
         void unsetDummyMode();

@@ -90,6 +90,29 @@ static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObje
     return act;
 }
 
+static QString compressedMimeFor( const QString& mime_to_check )
+{
+    static QHash< QString, QString > compressedMimeMap;
+    if ( compressedMimeMap.isEmpty() )
+    {
+        compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
+            QString::fromLatin1( "application/x-gzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzip" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+        compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] =
+            QString::fromLatin1( "application/x-bzip" );
+    }
+    QHash< QString, QString >::const_iterator it = compressedMimeMap.find( mime_to_check );
+    if ( it != compressedMimeMap.end() )
+        return it.value();
+
+    return QString();
+}
+
 Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QStringList &args )
@@ -710,7 +733,23 @@ bool Part::openFile()
     {
         mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
     }
-    bool ok = m_document->openDocument( localFilePath(), url(), mime );
+    bool isCompressedFile = false;
+    bool uncompressOk = true;
+    QString fileNameToOpen = localFilePath();
+    QString compressedMime = compressedMimeFor( mime->name() );
+    if ( compressedMime.isEmpty() )
+        compressedMime = compressedMimeFor( mime->parentMimeType() );
+    if ( !compressedMime.isEmpty() )
+    {
+        isCompressedFile = true;
+        uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
+        mime = KMimeType::findByPath( fileNameToOpen );
+    }
+    bool ok = false;
+    if ( uncompressOk )
+    {
+        ok = m_document->openDocument( fileNameToOpen, url(), mime );
+    }
     bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
@@ -734,6 +773,10 @@ bool Part::openFile()
         for ( ; it != itEnd; ++it )
         {
             menu->addAction( actionForExportFormat( *it ) );
+        }
+        if ( isCompressedFile )
+        {
+            m_realUrl = url();
         }
     }
     m_exportAsText->setEnabled( ok && m_document->canExportToText() );
@@ -773,59 +816,16 @@ bool Part::openFile()
     return true;
 }
 
-static QString compressedMimeFor( const QString& mime_to_check )
-{
-    static QHash< QString, QString > compressedMimeMap;
-    if ( compressedMimeMap.isEmpty() )
-    {
-        compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
-            QString::fromLatin1( "application/x-gzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzip" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-    }
-    QHash< QString, QString >::const_iterator it = compressedMimeMap.find( mime_to_check );
-    if ( it != compressedMimeMap.end() )
-        return it.value();
-
-    return QString();
-}
-
 bool Part::openUrl(const KUrl &url)
 {
-    // note: this can be the right place to check the file for gz or bz2 extension
-    // if it matches then: download it (if not local) extract to a temp file using
-    // KTar and proceed with the URL of the temporary file
-
     m_jobMime.clear();
-    const QString path = url.path();
-    const KMimeType::Ptr mimetype = KMimeType::findByPath( path );
-    bool isCompressedFile = false;
-    KUrl tempUrl;
-    QString compressedMime = compressedMimeFor( mimetype->name() );
-    if ( compressedMime.isEmpty() )
-        compressedMime = compressedMimeFor( mimetype->parentMimeType() );
-    if ( !compressedMime.isEmpty() )
-    {
-        isCompressedFile=handleCompressed(tempUrl,path,mimetype);
-    }
 
     // this calls in sequence the 'closeUrl' and 'openFile' methods
-    bool openOk;
-    if ( !isCompressedFile )
-        openOk = KParts::ReadOnlyPart::openUrl(url);
-    else openOk = KParts::ReadOnlyPart::openUrl(tempUrl);
+    bool openOk = KParts::ReadOnlyPart::openUrl( url );
 
     if ( openOk )
     {
         m_viewportDirty.pageNumber = -1;
-
-        m_realUrl = url;
 
         setWindowTitleFromDocument();
     }
@@ -1686,7 +1686,7 @@ void Part::unsetDummyMode()
 }
 
 
-bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Ptr mimetype)
+bool Part::handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype )
 {
 
     // we are working with a compressed file, decompressing
@@ -1713,13 +1713,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
     }
 
     // decompression filer
-    QIODevice* filterDev;
-    if (( mimetype->parentMimeType() == "application/x-gzip" ) ||
-        ( mimetype->parentMimeType() == "application/x-bzip" ))
-        filterDev = KFilterDev::deviceForFile(path, mimetype->parentMimeType());
-    else
-        filterDev = KFilterDev::deviceForFile(path);
-
+    QIODevice* filterDev = KFilterDev::deviceForFile( path, compressedMimetype );
     if (!filterDev)
     {
         delete m_tempfile;
@@ -1765,7 +1759,7 @@ bool Part::handleCompressed(KUrl & url, const QString &path, const KMimeType::Pt
         delete m_tempfile;
         return false;
     }
-    url=m_tempfile->fileName();
+    destpath = m_tempfile->fileName();
     return true;
 }
 

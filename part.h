@@ -98,10 +98,10 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
-        Q_SCRIPTABLE Q_NOREPLY void openDocument(KUrl doc);
+        Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
         Q_SCRIPTABLE uint pages();
         Q_SCRIPTABLE uint currentPage();
-        Q_SCRIPTABLE KUrl currentDocument();
+        Q_SCRIPTABLE QString currentDocument();
         Q_SCRIPTABLE void slotPreferences();
         Q_SCRIPTABLE void slotFind();
         Q_SCRIPTABLE void slotPrintPreview();

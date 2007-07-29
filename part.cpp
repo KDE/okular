@@ -637,9 +637,9 @@ void Part::goToPage(uint i)
 }
 
 
-void Part::openDocument(KUrl doc)
+void Part::openDocument( const QString &doc )
 {
-    openUrl(doc);
+    openUrl( KUrl( doc ) );
 }
 
 
@@ -655,9 +655,9 @@ uint Part::currentPage()
 }
 
 
-KUrl Part::currentDocument()
+QString Part::currentDocument()
 {
-    return m_document->currentDocument();
+    return m_document->currentDocument().pathOrUrl();
 }
 
 

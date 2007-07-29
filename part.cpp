@@ -117,7 +117,7 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QStringList &args )
 : KParts::ReadOnlyPart(parent),
-m_showMenuBarAction(0), m_showFullScreenAction(0), m_actionsSearched(false),
+m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_searchStarted(false), m_cliPresentation(false)
 {
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
@@ -131,8 +131,6 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // load catalog for translation
     KGlobal::locale()->insertCatalog("okular");
-
-    m_tempfile= 0L;
 
     // create browser extension (for printing when embedded into browser)
     m_bExtension = new BrowserExtension(this);
@@ -869,6 +867,8 @@ bool Part::closeUrl()
     m_document->closeDocument();
     updateViewActions();
     m_searchWidget->clearText();
+    delete m_tempfile;
+    m_tempfile = 0;
     return KParts::ReadOnlyPart::closeUrl();
 }
 
@@ -1709,6 +1709,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             "<nobr><strong>%1</strong></nobr>.</qt>",
             strerror(m_tempfile->error())));
         delete m_tempfile;
+        m_tempfile = 0;
         return false;
     }
 
@@ -1717,6 +1718,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
     if (!filterDev)
     {
         delete m_tempfile;
+        m_tempfile = 0;
         return false;
     }
 
@@ -1734,6 +1736,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
 
         delete filterDev;
         delete m_tempfile;
+        m_tempfile = 0;
         return false;
     }
 
@@ -1757,6 +1760,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             "If you want to be sure, try to decompress the file manually "
             "using command-line tools.</qt>"));
         delete m_tempfile;
+        m_tempfile = 0;
         return false;
     }
     destpath = m_tempfile->fileName();

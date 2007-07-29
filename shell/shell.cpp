@@ -60,6 +60,7 @@ void Shell::init()
   // set the shell's ui resource file
   setXMLFile("shell.rc");
   m_doc=0L;
+  m_fileformatsscanned = false;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -228,35 +229,32 @@ void Shell::fileOpen()
 	// this slot is called whenever the File->Open menu is selected,
 	// the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
 	// button is clicked
-    if (m_fileformats.isEmpty())
+    if ( !m_fileformatsscanned )
     {
         if ( m_doc )
             m_fileformats = m_doc->supportedMimeTypes();
 
         if ( m_fileformats.isEmpty() )
             m_fileformats = fileFormats();
+
+        m_fileformatsscanned = true;
     }
 
-    if (!m_fileformats.isEmpty())
-    {
-        QString startDir;
-        if ( m_openUrl.isLocalFile() )
-            startDir = m_openUrl.path();
-        KFileDialog dlg( startDir, QString(), this );
-        dlg.setOperationMode( KFileDialog::Opening );
-        dlg.setMimeFilter( m_fileformats );
-        dlg.setCaption( i18n( "Open a document" ) );
-        if (!dlg.exec())
-            return;
-        KUrl url = dlg.selectedUrl();
-        if (!url.isEmpty())
-            openUrl(url);
-    }
+    QString startDir;
+    if ( m_openUrl.isLocalFile() )
+        startDir = m_openUrl.path();
+    KFileDialog dlg( startDir, QString(), this );
+    dlg.setOperationMode( KFileDialog::Opening );
+    if ( m_fileformatsscanned && m_fileformats.isEmpty() )
+        dlg.setFilter( i18n( "*|All the Files" ) );
     else
-    {
-        KMessageBox::error(this, i18n("No okular plugins were found."));
-        slotQuit();
-    }
+        dlg.setMimeFilter( m_fileformats );
+    dlg.setCaption( i18n( "Open a document" ) );
+    if ( !dlg.exec() )
+        return;
+    KUrl url = dlg.selectedUrl();
+    if ( !url.isEmpty() )
+        openUrl( url );
 }
 
   void

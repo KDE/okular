@@ -94,6 +94,7 @@ private:
   KDocumentViewer* m_doc;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
+  bool m_fileformatsscanned;
   KAction* m_printAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;

@@ -10,8 +10,6 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-include(CheckLibraryExists)
-
 if (CHM_LIBRARY AND CHM_INCLUDE_DIR)
   # in cache already
   set(CHM_FOUND TRUE)

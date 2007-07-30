@@ -189,7 +189,7 @@
    <default>true</default>
   </entry>
   <entry key="ViewColumns" type="UInt" >
-   <default>1</default>
+   <default>3</default>
    <min>1</min>
    <max>8</max>
   </entry>

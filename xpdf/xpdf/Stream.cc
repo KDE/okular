@@ -418,8 +418,9 @@ StreamPredictor::StreamPredictor(Stream *strA, int predictorA,
   ok = gFalse;
 
   if (width <= 0 || nComps <= 0 || nBits <= 0 ||
-      nComps >= INT_MAX / nBits ||
-      width >= INT_MAX / nComps / nBits)
+      nComps > gfxColorMaxComps || nBits > 16 ||
+      width >= INT_MAX / nComps ||
+      nVals >= (INT_MAX - 7) / nBits )
     return;
 
   nVals = width * nComps;

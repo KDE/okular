@@ -13,12 +13,12 @@
 #include <QtCore/QList>
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
+#include <kdebug.h>
 
 #include <okular/core/okular_export.h>
 
 class QPolygonF;
 class QRect;
-class kdbgstream;
 
 namespace Okular {
 
@@ -724,14 +724,16 @@ class HighlightAreaRect : public RegularAreaRect
 
 }
 
+#ifndef QT_NO_DEBUG_STREAM
 /**
  * Debug operator for normalized @p point.
  */
-OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint &point );
+OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedPoint &point );
 
 /**
  * Debug operator for normalized @p rect.
  */
-OKULAR_EXPORT kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect &rect );
+OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedRect &rect );
+#endif
 
 #endif

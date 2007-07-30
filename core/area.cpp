@@ -44,7 +44,7 @@ void NormalizedPoint::transform( const QMatrix &matrix )
     matrix.map( x, y, &x, &y );
 }
 
-kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedPoint& p )
+QDebug operator<<( QDebug str, const Okular::NormalizedPoint& p )
 {
     str << "NormPt(" << p.x << "," << p.y << ")";
     return str;
@@ -140,7 +140,7 @@ bool NormalizedRect::operator==( const NormalizedRect & r ) const
 }
 
 /*
-kdbgstream& operator << (kdbgstream& str , const NormalizedRect &r)
+QDebug operator << (QDebug str , const NormalizedRect &r)
 {
     str << "[" <<r.left() << "," << r.top() << "] x "<< "[" <<r.right() << "," << r.bottom() << "]";
     return str;
@@ -167,7 +167,7 @@ void NormalizedRect::transform( const QMatrix &matrix )
     bottom = rect.bottom();
 }
 
-kdbgstream& operator<<( kdbgstream& str, const Okular::NormalizedRect& r )
+QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 {
     str << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
     return str;

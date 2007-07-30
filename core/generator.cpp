@@ -456,7 +456,7 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
     return d != other.d;
 }
 
-kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req )
+QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
     QString s = QString( "%1 PixmapRequest (id: %2) (%3x%4), prio %5, pageNo %6" )
         .arg( QString( req.asynchronous() ? "Async" : "Sync" ) )

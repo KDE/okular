@@ -35,7 +35,6 @@ class KAboutData;
 class KComponentData;
 class KIcon;
 class KPrinter;
-class kdbgstream;
 
 namespace Okular {
 
@@ -546,6 +545,8 @@ class OKULAR_EXPORT PixmapRequest
 
 }
 
-kdbgstream& operator<<( kdbgstream &str, const Okular::PixmapRequest &req );
+#ifndef QT_NO_DEBUG_STREAM
+QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
+#endif
 
 #endif

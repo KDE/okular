@@ -2422,7 +2422,7 @@ int Document::configurableGenerators() const
 {
     QString constraint( "([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])" );
     KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
-    return !offers.isEmpty();
+    return offers.count();
 }
 
 QStringList Document::supportedMimeTypes() const

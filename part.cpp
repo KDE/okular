@@ -484,6 +484,10 @@ Part::~Part()
 bool Part::openDocument(const KUrl& url, uint page)
 {
     Okular::DocumentViewport vp( page - 1 );
+    vp.rePos.enabled = true;
+    vp.rePos.normalizedX = 0;
+    vp.rePos.normalizedY = 0;
+    vp.rePos.pos = Okular::DocumentViewport::TopLeft;
     if ( vp.isValid() )
         m_document->setNextDocumentViewport( vp );
     return openUrl( url );

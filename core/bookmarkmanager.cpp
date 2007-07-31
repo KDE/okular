@@ -299,9 +299,6 @@ bool BookmarkManager::setPageBookmark( int page )
         d->urlBookmarks.insert( page );
         DocumentViewport vp;
         vp.pageNumber = page;
-        vp.rePos.enabled = true;
-        vp.rePos.normalizedX = 0;
-        vp.rePos.normalizedY = 0;
         KUrl newurl = d->url;
         newurl.setHTMLRef( vp.toString() );
         it.value().addBookmark( d->manager, QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString(), false );

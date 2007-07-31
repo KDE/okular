@@ -14,6 +14,7 @@
 #include <kdebug.h>
 
 #include "area.h"
+#include "debug_p.h"
 #include "misc.h"
 
 using namespace Okular;
@@ -148,7 +149,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     if ( sel->direction() == 1 || ( sel->itB() == -1 && sel->direction() == 0 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        kWarning() << "running first loop\n";
+        kWarning() << "running first loop";
 #endif
         const int count = d->m_words.count();
         for ( it = 0; it < count; it++ )
@@ -161,7 +162,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (rx,ry)x(tx,ty)
                 itB = it;
 #ifdef DEBUG_TEXTPAGE
-                kWarning() << "start is " << itB << " count is " << d->m_words.count() << endl;
+                kWarning() << "start is" << itB << "count is" << d->m_words.count();
 #endif
                 break;
             }
@@ -170,13 +171,13 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
     itB = sel->itB();
 #ifdef DEBUG_TEXTPAGE
-    kWarning() << "direction is " << sel->direction() << endl;
-    kWarning() << "reloaded start is " << itB << " against " << sel->itB() << endl;
+    kWarning() << "direction is" << sel->direction();
+    kWarning() << "reloaded start is" << itB << "against" << sel->itB();
 #endif
     if ( sel->direction() == 0 || ( sel->itE() == -1 && sel->direction() == 1 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        kWarning() << "running second loop\n";
+        kWarning() << "running second loop";
 #endif
         for ( it = d->m_words.count() - 1; it >= itB; it-- )
         {
@@ -188,10 +189,10 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (ux,uy)x(vx,vy)
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
-                kWarning() << "ending is " << itE << " count is " << d->m_words.count() << endl;
-                kWarning () << "conditions " << tmp->contains( endCx, endCy ) << " " 
+                kWarning() << "ending is" << itE << "count is" << d->m_words.count();
+                kWarning() << "conditions" << tmp->contains( endCx, endCy ) << " " 
                   << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
-                  ( tmp->top >= endCy) << endl;
+                  ( tmp->top >= endCy);
 #endif
                 break;
             }
@@ -199,7 +200,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         sel->itE( itE );
     }
 #ifdef DEBUG_TEXTPAGE
-    kWarning() << "reloaded ending is " << itE << " against " << sel->itE() << endl;
+    kWarning() << "reloaded ending is" << itE << "against" << sel->itE();
 #endif
 
     if ( sel->itB() != -1 && sel->itE() != -1 )
@@ -326,7 +327,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
         {
             // lets match newline as a space
 #ifdef DEBUG_TEXTPAGE
-            kDebug(1223) << "newline or space" << endl;
+            kDebug(OkularDebug) << "newline or space";
 #endif
             j++;
             queryLeft--;
@@ -341,7 +342,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
-            kDebug(1223) << str.mid(offset,min) << " : " << _query.mid(j,min) << endl;
+            kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
             // we have equal (or less then) area of the query left as the lengt of the current 
             // entity
@@ -358,7 +359,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
                     haveMatch=false;
                     ret->clear();
 #ifdef DEBUG_TEXTPAGE
-            kDebug(1223) << "\tnot matched" << endl;
+            kDebug(OkularDebug) << "\tnot matched";
 #endif
                     j=0;
                     offset = 0;
@@ -373,7 +374,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
                     // substract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-            kDebug(1223) << "\tmatched" << endl;
+            kDebug(OkularDebug) << "\tmatched";
 #endif
                     haveMatch=true;
                     ret->append( *curEntity->transformedArea() );

@@ -46,6 +46,7 @@
 #include "audioplayer_p.h"
 #include "bookmarkmanager.h"
 #include "chooseenginedialog_p.h"
+#include "debug_p.h"
 #include "generator.h"
 #include "generator_p.h"
 #include "interfaces/configinterface.h"
@@ -65,8 +66,6 @@
 #endif
 
 using namespace Okular;
-
-static int OkularDebug = 4650;
 
 struct AllocatedPixmap
 {
@@ -402,7 +401,7 @@ void DocumentPrivate::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    //kDebug(OkularDebug) << "Using '" << d->m_xmlFileName << "' as document info file." << endl;
+    //kDebug(OkularDebug).nospace() << "Using '" << d->m_xmlFileName << "' as document info file.";
     if ( m_xmlFileName.isEmpty() )
         return;
 
@@ -414,7 +413,7 @@ void DocumentPrivate::loadDocumentInfo()
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kDebug(OkularDebug) << "Can't load XML pair! Check for broken xml." << endl;
+        kDebug(OkularDebug) << "Can't load XML pair! Check for broken xml.";
         infoFile.close();
         return;
     }
@@ -506,7 +505,7 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
     if ( absFileName.isEmpty() )
         return false;
 
-    kDebug(OkularDebug) << "openDocument: '" << absFileName << "'" << endl;
+    kDebug(OkularDebug).nospace() << "openDocument: '" << absFileName << "'";
 
     emit m_parent->openUrl( absFileName );
     return true;
@@ -517,8 +516,8 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     KLibrary *lib = KLibLoader::self()->library( QFile::encodeName( libname ), QLibrary::ExportExternalSymbolsHint );
     if ( !lib )
     {
-        kWarning() << "Could not load '" << libname << "' library." << endl;
-        kWarning() << KLibLoader::self()->lastErrorMessage() << endl;
+        kWarning().nospace() << "Could not load '" << libname << "' library.";
+        kWarning() << KLibLoader::self()->lastErrorMessage();
         emit m_parent->error( i18n( "Could not load the necessary plugin to view the document" ), -1 );
         return 0;
     }
@@ -526,13 +525,13 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     Generator* (*create_plugin)() = ( Generator* (*)() ) lib->resolveFunction( "create_plugin" );
     if ( !create_plugin )
     {
-        kWarning(OkularDebug) << "Broken generator " << libname << ": missing create_plugin()!" << endl;
+        kWarning(OkularDebug).nospace() << "Broken generator " << libname << ": missing create_plugin()!";
         return 0;
     }
     Generator * generator = create_plugin();
     if ( !generator )
     {
-        kWarning() << "Broken generator " << libname << "!" << endl;
+        kWarning().nospace() << "Broken generator " << libname << "!";
         return 0;
     }
     GeneratorInfo info;
@@ -686,9 +685,9 @@ void DocumentPrivate::sendGeneratorRequest()
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
             {
-                kWarning() << "Running out of memory on page " << r->pageNumber()
-                    << " (" << r->width() << "x" << r->height() << " px);" << endl;
-                kWarning() << "this message will be reported only once." << endl;
+                kWarning().nospace() << "Running out of memory on page " << r->pageNumber()
+                    << " (" << r->width() << "x" << r->height() << " px);";
+                kWarning() << "this message will be reported only once.";
                 m_warnedOutOfMemory = true;
             }
             delete r;
@@ -712,7 +711,7 @@ void DocumentPrivate::sendGeneratorRequest()
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
     {
-        kDebug(OkularDebug) << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << endl;
+        kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous();
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( (int)m_rotation % 2 )
@@ -897,7 +896,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the passed document." ), -1 );
-        kWarning() << "No plugin for mimetype '" << mime->name() << "'." << endl;
+        kWarning().nospace() << "No plugin for mimetype '" << mime->name() << "'.";
         return false;
     }
     int hRank=0;
@@ -1546,7 +1545,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kDebug(OkularDebug) << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << endl;
+        kDebug(OkularDebug).nospace() << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -1717,7 +1716,7 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     DocumentViewport & oldViewport = *d->m_viewportIterator;
     // disabled by enrico on 2005-03-18 (less debug output)
     //if ( viewport == oldViewport )
-    //    kDebug(OkularDebug) << "setViewport with the same viewport." << endl;
+    //    kDebug(OkularDebug) << "setViewport with the same viewport.";
 
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
@@ -2184,7 +2183,7 @@ void Document::processAction( const Action * action )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
-                kWarning() << "Action: Error opening '" << go->fileName() << "'." << endl;
+                kWarning().nospace() << "Action: Error opening '" << go->fileName() << "'.";
                 return;
             }
             else
@@ -2333,7 +2332,7 @@ void Document::processSourceReference( const SourceReference * ref )
 
     if ( !QFile::exists( ref->fileName() ) )
     {
-        kDebug(OkularDebug) << "No such file: '" << ref->fileName() << "'" << endl;
+        kDebug(OkularDebug).nospace() << "No such file: '" << ref->fileName() << "'";
         return;
     }
 
@@ -2457,7 +2456,7 @@ void Document::requestDone( PixmapRequest * req )
 
 #ifndef NDEBUG
     if ( !d->m_generator->canGeneratePixmap() )
-        kDebug(OkularDebug) << "requestDone with generator not in READY state." << endl;
+        kDebug(OkularDebug) << "requestDone with generator not in READY state.";
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
@@ -2487,7 +2486,7 @@ void Document::requestDone( PixmapRequest * req )
     }
 #ifndef NDEBUG
     else
-        kWarning() << "Receiving a done request for the defunct observer " << req->id() << endl;
+        kWarning() << "Receiving a done request for the defunct observer" << req->id();
 #endif
 
     // 3. delete request
@@ -2519,7 +2518,7 @@ void Document::setRotation( int r )
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
-    kDebug(OkularDebug) << "Rotated: " << r << endl;
+    kDebug(OkularDebug) << "Rotated:" << r;
 }
 
 void Document::setPageSize( const PageSize &size )
@@ -2552,7 +2551,7 @@ void Document::setPageSize( const PageSize &size )
 
     foreachObserver( notifySetup( d->m_pagesVector, true ) );
     foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
-    kDebug(OkularDebug) << "New PageSize id: " << sizeid << endl;
+    kDebug(OkularDebug) << "New PageSize id:" << sizeid;
 }
 
 
@@ -2739,7 +2738,7 @@ void DocumentInfo::set( enum Key key, const QString &value )
             set( "keywords", value, i18n( "Keywords" ) );
             break;
         default:
-            kWarning() << "DocumentInfo::set(): Invalid key passed" << endl;
+            kWarning() << "DocumentInfo::set(): Invalid key passed";
             break;
     }
 }

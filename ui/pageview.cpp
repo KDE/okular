@@ -645,7 +645,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry() << endl;
+        kDebug().nospace() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry();
 #endif
         const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.begin(), ffEnd = pageFields.end();
@@ -731,12 +731,12 @@ void PageView::notifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kWarning() << "viewport for page " << vp.pageNumber << " has no matching item!" << endl;
+        kWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
         d->blockViewport = false;
         return;
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << "document viewport changed\n";
+    kDebug() << "document viewport changed";
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
@@ -877,7 +877,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
             return;
 
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "paintevent " << contentsRect << endl;
+        kDebug() << "paintevent" << contentsRect;
 #endif
 
         // create the screen painter. a pixel painted at contentsX,contentsY
@@ -922,7 +922,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                     continue;
             }
 #ifdef PAGEVIEW_DEBUG
-            kDebug() << contentsRect << endl;
+            kDebug() << contentsRect;
 #endif
 
             // note: this check will take care of all things requiring alpha blending (not only selection)
@@ -1679,7 +1679,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page " << item->pageNumber() << " has text " << okularPage->hasTextPage() << endl;
+                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
@@ -1922,7 +1922,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << ">>>> item selected by mouse: " << affectedItemsSet.count() << endl;
+    kDebug() << ">>>> item selected by mouse:" << affectedItemsSet.count();
 #endif
 
     if ( !affectedItemsSet.isEmpty() )
@@ -1947,7 +1947,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         for ( int i = min; i <= max; ++i )
             affectedItemsIds.append( i );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << ">>>> pages: " << affectedItemsIds << endl;
+        kDebug() << ">>>> pages:" << affectedItemsIds;
 #endif
         firstpage = affectedItemsIds.first();
 
@@ -2093,7 +2093,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!" << endl;
+        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!";
 #endif
 }
 
@@ -2189,7 +2189,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
 
     Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" ) << endl;
+    kDebug().nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
 #endif
     return selectionArea;
 }
@@ -2545,7 +2545,7 @@ void PageView::slotRelayoutPages()
                 insertY += rHeight;
             }
 #ifdef PAGEVIEW_DEBUG
-            kWarning() << "updating size for pageno " << item->pageNumber() << " to " << item->geometry() << endl;
+            kWarning() << "updating size for pageno" << item->pageNumber() << "to" << item->geometry();
 #endif
         }
 
@@ -2730,8 +2730,8 @@ void PageView::slotRequestVisiblePixmaps()
     {
         PageViewItem * i = *iIt;
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking page " << i->pageNumber() << endl;
-        kWarning() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() ) << endl;
+        kWarning() << "checking page" << i->pageNumber();
+        kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() );
 #endif
         // if the item doesn't intersect the viewport, skip it
         QRect intersectionRect = viewportRect.intersect( i->geometry() );
@@ -2743,14 +2743,14 @@ void PageView::slotRequestVisiblePixmaps()
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page " << i->pageNumber() <<  " = " << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) << "\n";
-        kWarning() << "checking for text for page " << i->pageNumber() <<  " = " << i->page()->hasTextPage() << "\n";
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() );
+        kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
         // if the item has not the right pixmap, add a request for it
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
         {
 #ifdef PAGEVIEW_DEBUG
-            kWarning() << "rerequesting visible pixmaps for page " << i->pageNumber() <<  " !\n";
+            kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );

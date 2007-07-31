@@ -220,8 +220,8 @@ QList<QTreeWidgetItem*> createItems( const KUrl& baseurl, const KBookmark::List&
     QList<QTreeWidgetItem*> ret;
     foreach ( const KBookmark& bm, bmlist )
     {
-//        kDebug() << "checking '" << tmp << "'" << endl;
-//        kDebug() << "      vs '" << baseurl << "'" << endl;
+//        kDebug().nospace() << "checking '" << tmp << "'";
+//        kDebug().nospace() << "      vs '" << baseurl << "'";
         // TODO check that bm and baseurl are the same (#ref excluded)
         QTreeWidgetItem * item = new BookmarkItem( bm );
         ret.append( item );

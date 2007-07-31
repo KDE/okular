@@ -164,7 +164,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
-        kWarning() << "Frames setup changed while a Presentation is in progress." << endl;
+        kWarning() << "Frames setup changed while a Presentation is in progress.";
     m_frames.clear();
 
     // create the new frames

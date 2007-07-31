@@ -111,7 +111,7 @@ int AudioPlayerPrivate::newId() const
 
 bool AudioPlayerPrivate::play( const SoundInfo& si )
 {
-    kDebug() << k_funcinfo << endl;
+    kDebug() << k_funcinfo;
     PlayData * data = new PlayData();
     data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
     data->m_output->setVolume( si.volume );
@@ -126,7 +126,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::External:
         {
             QString url = si.sound->url();
-            kDebug() << "[AudioPlayer::Playinfo::play()] External, " << url << endl;
+            kDebug() << "[AudioPlayer::Playinfo::play()] External," << url;
             if ( !url.isEmpty() )
             {
                 if ( data->m_mediaobject->addAudioPath( data->m_path ) )
@@ -146,7 +146,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                     data->m_mediaobject->setCurrentSource( newurl );
                     m_playing.insert( newid, data );
                     valid = true;
-                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url" << endl;
+                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url";
                 }
             }
             break;
@@ -155,10 +155,10 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         {
 #if 0 // disable because of broken bytestream in xine :(
             QByteArray filedata = si.sound->data();
-            kDebug() << "[AudioPlayer::Playinfo::play()] Embedded, " << filedata.length() << endl;
+            kDebug() << "[AudioPlayer::Playinfo::play()] Embedded," << filedata.length();
             if ( !filedata.isEmpty() )
             {
-                kDebug() << "[AudioPlayer::Playinfo::play()] mediaobject: " << data->m_mediaobject << endl;
+                kDebug() << "[AudioPlayer::Playinfo::play()] mediaobject:" << data->m_mediaobject;
                 if ( data->m_mediaobject->addAudioPath( data->m_path ) )
                 {
                     int newid = newId();
@@ -168,7 +168,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                     data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
                     m_playing.insert( newid, data );
                     valid = true;
-                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data" << endl;
+                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data";
                 }
             }
 #endif
@@ -212,7 +212,7 @@ void AudioPlayerPrivate::finished( int id )
         delete it.value();
         m_playing.erase( it );
     }
-    kDebug() << k_funcinfo << "finished, " << m_playing.count() << endl;
+    kDebug() << k_funcinfo << "finished," << m_playing.count();
 }
 
 
@@ -242,7 +242,7 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
     if ( sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile() )
         return;
 
-    kDebug() << k_funcinfo << endl;
+    kDebug() << k_funcinfo;
     SoundInfo si( sound, linksound );
 
     // if the mix flag of the new sound is false, then the currently playing

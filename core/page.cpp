@@ -475,7 +475,7 @@ void Page::addAnnotation( Annotation * annotation )
         QString uniqueName = "okular-";
         uniqueName += ( QString::number(d->m_number) + '-' + QString::number(++(d->m_maxuniqueNum)) );
 
-        kDebug()<<"astario:     inc m_maxuniqueNum="<<d->m_maxuniqueNum<<endl;
+        kDebug().nospace() << "inc m_maxuniqueNum=" << d->m_maxuniqueNum;
 
         annotation->setUniqueName( uniqueName );
     }
@@ -540,7 +540,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     it = m_rects.erase( it );
                     rectfound = true;
                 }
-            kDebug() << "removed annotation: " << annotation->uniqueName() << endl;
+            kDebug() << "removed annotation:" << annotation->uniqueName();
             delete *aIt;
             m_annotations.erase( aIt );
             break;
@@ -688,13 +688,13 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                             m_maxuniqueNum = uniqID;
                     }
 
-                    kDebug()<<"astario:  restored annot:"<<annotation->uniqueName()<<endl;
+                    kDebug() << "restored annot:" << annotation->uniqueName();
                 }
                 else
-                    kWarning() << "page (" << m_number << "): can't restore an annotation from XML." << endl;
+                    kWarning().nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
             }
 #ifdef PAGE_PROFILE
-            kDebug() << "annots: XML Load time: " << time.elapsed() << "ms" << endl;
+            kDebug().nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
 #endif
         }
         // parse formList child element
@@ -772,7 +772,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
                 QDomElement annElement = document.createElement( "annotation" );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
-                kDebug()<<"astario:  save annot:"<<a->uniqueName()<<endl;
+                kDebug() << "save annotation:" << a->uniqueName();
             }
         }
 

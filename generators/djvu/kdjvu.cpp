@@ -25,31 +25,31 @@
 
 #include <stdio.h>
 
-kdbgstream &operator<<( kdbgstream & s, const ddjvu_rect_t &r )
+QDebug &operator<<( QDebug & s, const ddjvu_rect_t &r )
 {
-    s << "[" << r.x << "," << r.y << " - " << r.w << "x" << r.h << "]";
-    return s;
+    s.nospace() << "[" << r.x << "," << r.y << " - " << r.w << "x" << r.h << "]";
+    return s.space();
 }
 
 static void which_ddjvu_message( const ddjvu_message_t *msg )
 {
 #ifdef KDJVU_DEBUG
-    kDebug() << "which_djvu_message(...): " << msg->m_any.tag << endl;
+    kDebug() << "which_djvu_message(...):" << msg->m_any.tag;
     switch( msg->m_any.tag )
     {
         case DDJVU_ERROR:
-            kDebug() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno << endl;
-            kDebug() << "ERROR: function '" << msg->m_error.function << "'" << endl;
-            kDebug() << "ERROR: '" << msg->m_error.message << "'" << endl;
+            kDebug().nospace() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno;
+            kDebug().nospace() << "ERROR: function '" << msg->m_error.function << "'";
+            kDebug().nospace() << "ERROR: '" << msg->m_error.message << "'";
             break;
         case DDJVU_INFO:
-            kDebug() << "INFO: '" << msg->m_info.message << "'" << endl;
+            kDebug().nospace() << "INFO: '" << msg->m_info.message << "'";
             break;
         case DDJVU_CHUNK:
-            kDebug() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'" << endl;
+            kDebug().nospace() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'";
             break;
         case DDJVU_PROGRESS:
-            kDebug() << "PROGRESS: '" << msg->m_progress.percent << "'" << endl;
+            kDebug().nospace() << "PROGRESS: '" << msg->m_progress.percent << "'";
             break;
         default: ;
     }
@@ -314,7 +314,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     renderrect.w = realwidth;
     renderrect.h = realheight;
 #ifdef KDJVU_DEBUG
-    kDebug() << "renderrect: " << renderrect << endl;
+    kDebug() << "renderrect:" << renderrect;
 #endif
     ddjvu_rect_t pagerect;
     pagerect.x = 0;
@@ -322,14 +322,14 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     pagerect.w = width;
     pagerect.h = height;
 #ifdef KDJVU_DEBUG
-    kDebug() << "pagerect: " << pagerect << endl;
+    kDebug() << "pagerect:" << pagerect;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     char* imagebuffer = new char[ realwidth * realheight * 4 + 1 ];
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, realwidth * 4, imagebuffer );
 #ifdef KDJVU_DEBUG
-    kDebug() << "rendering result: " << res << endl;
+    kDebug() << "rendering result:" << res;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     QImage res_img;
@@ -463,7 +463,7 @@ bool KDjVu::openFile( const QString & fileName )
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );
 
-    kDebug() << "# of pages: " << ddjvu_document_get_pagenum( d->m_djvu_document ) << endl;
+    kDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
     int numofpages = ddjvu_document_get_pagenum( d->m_djvu_document );
     d->m_pages.clear();
     d->m_pages.resize( numofpages );
@@ -507,7 +507,7 @@ bool KDjVu::openFile( const QString & fileName )
             handle_ddjvu_messages( d->m_djvu_cxt, true );
         if ( sts >= DDJVU_JOB_FAILED )
         {
-            kDebug() << "\t>>> page " << i << " failed: " << sts << endl;
+            kDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
             return false;
         }
 
@@ -872,7 +872,7 @@ bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& page
     FILE* f = fopen( fn.constData(), "w+" );
     if ( !f )
     {
-        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file" << endl;
+        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file";
         return false;
     }
 

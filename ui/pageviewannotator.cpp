@@ -170,7 +170,7 @@ class PickPointEngine : public AnnotatorEngine
                     rect.top = qMin(startpoint.y,point.y);
                     rect.right = qMax(startpoint.x,point.x);
                     rect.bottom = qMax(startpoint.y,point.y);
-                    kDebug()<<"astario:   xyScale="<<xscale<<","<<yscale<<endl;
+                    kDebug().nospace() << "xyScale=" << xscale << "," << yscale;
                     static int padding = 2;
                     QFontMetricsF mf(ta->textFont());
                     QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
@@ -617,11 +617,11 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
             }
         }
         else
-            kWarning() << "AnnotatingTools XML file seems to be damaged" << endl;
+            kWarning() << "AnnotatingTools XML file seems to be damaged";
         infoFile.close();
     }
     else
-        kWarning() << "Unable to open AnnotatingTools XML definition" << endl;
+        kWarning() << "Unable to open AnnotatingTools XML definition";
 }
 
 PageViewAnnotator::~PageViewAnnotator()
@@ -879,7 +879,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else if ( type == "TextSelector" )
                     m_engine = new TextSelectorEngine( toolSubElement, m_pageView );
                 else
-                    kWarning() << "tools.xml: engine type:'" << type << "' is not defined!" << endl;
+                    kWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
             }
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
@@ -892,7 +892,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 
         // consistancy warning
         if ( !m_engine )
-            kWarning() << "tools.xml: couldn't find good engine description. check xml." << endl;
+            kWarning() << "tools.xml: couldn't find good engine description. check xml.";
 
         // stop after parsing selected tool's node
         break;

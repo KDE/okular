@@ -523,7 +523,7 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                    }
             }
 #ifdef DEBUG_REGULARAREA
-            kDebug() << "from " << prev_end << " to " << this->count() << endl;
+    kDebug() << "from" << prev_end << "to" << this->count();
 #endif
 }
 

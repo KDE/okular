@@ -46,8 +46,8 @@ void NormalizedPoint::transform( const QMatrix &matrix )
 
 QDebug operator<<( QDebug str, const Okular::NormalizedPoint& p )
 {
-    str << "NormPt(" << p.x << "," << p.y << ")";
-    return str;
+    str.nospace() << "NormPt(" << p.x << "," << p.y << ")";
+    return str.space();
 }
 
 /** class NormalizedRect **/
@@ -169,8 +169,8 @@ void NormalizedRect::transform( const QMatrix &matrix )
 
 QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 {
-    str << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
-    return str;
+    str.nospace() << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
+    return str.space();
 }
 
 RegularAreaRect::RegularAreaRect()
@@ -286,7 +286,7 @@ ObjectRect::~ObjectRect()
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else
-        kDebug() << "Object deletion not implemented for type '" << m_objectType << "' ." << endl;
+        kDebug().nospace() << "Object deletion not implemented for type '" << m_objectType << "' .";
 }
 
 /** class AnnotationObjectRect **/

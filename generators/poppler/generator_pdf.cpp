@@ -329,7 +329,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
         return false;
     }
 #endif
@@ -349,7 +349,7 @@ bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Ok
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it." << endl;
+        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
         return false;
     }
 #endif
@@ -511,10 +511,10 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 
         addFormFields( p, page );
 #endif
-//        kWarning(PDFDebug) << page->width() << "x" << page->height() << endl;
+//        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
-        kDebug(PDFDebug) << "load page " << i << " with rotation " << rotation << " and orientation " << orientation << endl;
+        kDebug(PDFDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
 #endif
 	delete p;
 
@@ -741,14 +741,14 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
 #ifndef NDEBUG
     if ( !ready )
-        kDebug(PDFDebug) << "calling generatePixmap() when not in READY state!" << endl;
+        kDebug(PDFDebug) << "calling generatePixmap() when not in READY state!";
 #endif
     // update busy state (not really needed here, because the flag needs to
     // be set only to prevent asking a pixmap while the thread is running)
     ready = false;
 
     // debug requests to this (xpdf) generator
-    //kDebug(PDFDebug) << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "]." << endl;
+    //kDebug(PDFDebug) << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "].";
 
     /** asynchronous requests (generation in PDFPixmapGeneratorThread::run() **/
     if ( request->asynchronous() )
@@ -820,7 +820,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
-    kDebug(PDFDebug) << "calling textPage( Okular::Page * page )" << endl;
+    kDebug(PDFDebug) << "calling" << k_funcinfo;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();
@@ -1046,7 +1046,7 @@ bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
 inline void append (Okular::TextPage* ktp,
     const QString &s, double l, double b, double r, double t)
 {
-//       kWarning(PDFDebug) << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")" << endl;
+//    kWarning(PDFDebug).nospace() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")";
                 ktp->append( s ,
                     new Okular::NormalizedRect(
                     l,
@@ -1060,7 +1060,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
 {    
     Okular::TextPage* ktp=new Okular::TextPage;
     Poppler::TextBox *next; 
-    kWarning(PDFDebug) << "getting text page in generator pdf - rotation: " << rot << endl;
+    kWarning(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
     int charCount=0;
     int j;
     QString s;
@@ -1242,7 +1242,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
                 <<", window.title:"<<a->window.title
                 <<", window.summary:"<<a->window.summary
                 <<", window.text:"<<a->window.text;
-        kDebug(PDFDebug)<<"astario:    "<<szanno<<endl;*/
+        kDebug(PDFDebug) << "astario:    " << szanno; */
         // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
         //TODO add annotations after poppler write feather is full suported
         QDomDocument doc;
@@ -1431,7 +1431,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         else if ( line.startsWith( QLatin1String( "p*" ) ) && locstarre.exactMatch( line ) )
         {
             // TODO
-            kDebug(PDFDebug) << "PdfSync: 'p*' line ignored" << endl;
+            kDebug(PDFDebug) << "PdfSync: 'p*' line ignored";
         }
         else if ( line.startsWith( QLatin1Char( 'p' ) ) && locre.exactMatch( line ) )
         {
@@ -1452,7 +1452,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
                 currentfile = newfile;
             }
             else
-                kDebug(PDFDebug) << "PdfSync: more than one file level: " << newfile << endl;
+                kDebug(PDFDebug) << "PdfSync: more than one file level:" << newfile;
         }
         else if ( line == QLatin1String( ")" ) )
         {
@@ -1461,10 +1461,10 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
                 currentfile.clear();
             }
             else
-                kDebug(PDFDebug) << "PdfSync: going one level down: " << currentfile << endl;
+                kDebug(PDFDebug) << "PdfSync: going one level down:" << currentfile;
         }
         else
-            kDebug(PDFDebug) << "PdfSync: unknown line format: '" << line << "'" << endl;
+            kDebug(PDFDebug).nospace() << "PdfSync: unknown line format: '" << line << "'";
 
     }
 
@@ -1521,7 +1521,7 @@ void PDFGenerator::threadFinished()
         if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
         {
             kWarning(PDFDebug) << "PDFGenerator: thread sent 'data available' "
-                        << "signal but had problems ending." << endl;
+                        << "signal but had problems ending.";
             return;
         }
 }
@@ -1536,7 +1536,7 @@ void PDFGenerator::threadFinished()
     if ( isLocked )
     {
         kWarning(PDFDebug) << "PDFGenerator: 'data available' but mutex still "
-                    << "held. Recovering." << endl;
+                    << "held. Recovering.";
         // synchronize GUI thread (must not happen)
         docLock.lock();
         docLock.unlock();
@@ -1622,7 +1622,7 @@ void PDFPixmapGeneratorThread::startGeneration( Okular::PixmapRequest * request 
     if ( d->currentRequest )
     {
         kDebug(PDFDebug) << "PDFPixmapGeneratorThread: requesting a pixmap "
-                  << "when another is being generated." << endl;
+                  << "when another is being generated.";
         delete request;
         return;
     }
@@ -1636,7 +1636,7 @@ void PDFPixmapGeneratorThread::startGeneration( Okular::PixmapRequest * request 
     if ( isLocked )
     {
         kDebug(PDFDebug) << "PDFPixmapGeneratorThread: requesting a pixmap "
-                  << "with the mutex already held." << endl;
+                  << "with the mutex already held.";
         delete request;
         return;
     }
@@ -1653,7 +1653,7 @@ void PDFPixmapGeneratorThread::endGeneration()
     if ( !d->currentRequest )
     {
         kDebug(PDFDebug) << "PDFPixmapGeneratorThread: 'end generation' called "
-                  << "but generation was not started." << endl;
+                  << "but generation was not started.";
         return;
     }
 #endif
@@ -1723,9 +1723,9 @@ void PDFPixmapGeneratorThread::run()
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
     if ( d->m_image )
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous image not taken" << endl;
+        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous image not taken";
     if ( !d->m_textList.isEmpty() )
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken" << endl;
+        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
 #endif
 #ifdef HAVE_POPPLER_0_6
     d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );

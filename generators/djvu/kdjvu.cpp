@@ -450,11 +450,20 @@ KDjVu::KDjVu() : QObject(), d( new Private )
     // creating the djvu context
     d->m_djvu_cxt = ddjvu_context_create( "KDjVu" );
     // creating the rendering format
+#if DDJVUAPI_VERSION >= 18
+    d->m_formatmask = new unsigned int[4];
+    d->m_formatmask[0] = 0x00ff0000;
+    d->m_formatmask[1] = 0x0000ff00;
+    d->m_formatmask[2] = 0x000000ff;
+    d->m_formatmask[3] = 0xff000000;
+    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 4, d->m_formatmask );
+#else
     d->m_formatmask = new unsigned int[3];
     d->m_formatmask[0] = 0x00ff0000;
     d->m_formatmask[1] = 0x0000ff00;
     d->m_formatmask[2] = 0x000000ff;
     d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 3, d->m_formatmask );
+#endif
     ddjvu_format_set_row_order( d->m_format, 1 );
     ddjvu_format_set_y_direction( d->m_format, 1 );
 }

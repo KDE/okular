@@ -232,7 +232,7 @@ void GSGenerator::pageSizeChanged( const Okular::PageSize &size, const Okular::P
         if ( size == m_pageSizes.at(i) )
         {
             internalDoc->setMedia( size.name() );
-            kDebug() << "New Page size:" << size.name() << ":" << internalDoc->computePageSize( internalDoc->pageMedia() ) << endl;
+            kDebug() << "New Page size:" << size.name() << ":" << internalDoc->computePageSize( internalDoc->pageMedia() );
             break;
         }
     }
@@ -280,7 +280,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
             tmpPage=(internalDoc->dsc() -> page() + i);
             if (!tmpPage)
             {
-                kDebug() << "no tmpPage for page nr " << i << endl;
+                kDebug() << "no tmpPage for page nr " << i;
                 continue;
             }
             pSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
@@ -327,14 +327,14 @@ bool GSGenerator::loadDocumentWithDSC( const QString & name, QVector< Okular::Pa
 {
     internalDoc = new GSInternalDocument (name, ps ? GSInternalDocument::PS : GSInternalDocument::PDF);
     pagesVector.resize( internalDoc->dsc()->page_count() );
-    kDebug() << "Page count: " << internalDoc->dsc()->page_count() << endl;
-    kDebug() << "Page size: " << internalDoc->computePageSize( internalDoc->pageMedia() ) << endl;
+    kDebug() << "Page count: " << internalDoc->dsc()->page_count();
+    kDebug() << "Page size: " << internalDoc->computePageSize( internalDoc->pageMedia() );
     return loadPages (pagesVector);
 }
 
 void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
-    kWarning() << "receiving req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() << endl;
+    kWarning() << "receiving req id=" << req->id() << " " <<req->width() << "x" << req->height() << "@" << req->pageNumber() << " async == " << req->asynchronous() ;
     int pgNo=req->pageNumber();
     double width = req->page()->width();
     double height = req->page()->height();

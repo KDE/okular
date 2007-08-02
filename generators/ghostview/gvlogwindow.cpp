@@ -26,7 +26,7 @@
 // GSLogWindow::GSLogWindow( QWidget* parent )
 //  : KVBox( parent )
 // {
-//     kDebug() << "Starting logwindow" <<endl;
+//     kDebug() << "Starting logwindow";
 // 
 //     layout()->setSpacing( 2 );
 //     QWidget *searchWidget = new QWidget( this );
@@ -67,7 +67,7 @@
 //     if ( event->type() == QEvent::Reparent && ( m_msgList->childCount() ) )
 //     {
 //         int w=( m_msgList->firstChild() ) -> width(  m_msgList->fontMetrics() , m_msgList, m_tCol);
-//         kDebug() << "new width = " << w << endl;
+//         kDebug() << "new width = " << w;
 //         m_msgList->setColumnWidth(m_tCol, w);
 //     }
 //     return true;
@@ -77,8 +77,8 @@
 // 
 // void GSLogWindow::append( GSInterpreterLib::MessageType t, const QString &text)
 // {
-//     //kDebug() << "Appending: " << text <<endl;
-//     kDebug() << "last int: " << m_lastInt << endl;
+//     //kDebug() << "Appending: " << text;
+//     kDebug() << "last int: " << m_lastInt;
 //     QStringList l=text.trimmed().split("\n",QString::SkipEmptyParts);
 //     QStringList::Iterator it=l.begin(), end=l.end();
 //     while (it!=end)
@@ -112,15 +112,15 @@
 //     // ghostscript splits messages longer then 128 to chunks, handle this properly
 //     if (m_lastInt == 128)
 //     {
-//         kDebug() << "last was full line" << endl;
+//         kDebug() << "last was full line";
 //         if (t==m_buffer.first)
 //         {
-//             kDebug() << "appending to buffer" << endl;
+//             kDebug() << "appending to buffer";
 //             m_buffer.second +=QString::fromLocal8Bit( buf, num );
 //         }
 //         else
 //         {
-//             kDebug() << "appending from buffer" << endl;
+//             kDebug() << "appending from buffer";
 //             // sets m_lastInt to 0
 //             appendBuffered();
 //         }
@@ -128,10 +128,10 @@
 // 
 //     if (num==128)
 //     {
-//         kDebug() << "this is full line" << endl;
+//         kDebug() << "this is full line";
 //         if (m_lastInt != 128)
 //         {
-//             kDebug() << "appending to buffer" << endl;
+//             kDebug() << "appending to buffer";
 //             m_buffer.first=t;
 //             m_buffer.second=QString::fromLocal8Bit( buf, num );
 //         }
@@ -140,22 +140,22 @@
 //     }
 //     else
 //     {
-//         kDebug() << "this is normal line" << endl;
+//         kDebug() << "this is normal line";
 //         if (m_lastInt == 128)
 //         {
-//             kDebug() << "appending from buffer" << endl;
+//             kDebug() << "appending from buffer";
 //             appendBuffered();
 //         }
 //         else
 //         {
-//             kDebug() << "appending directly" << endl;
+//             kDebug() << "appending directly";
 //             append(t,QString::fromLocal8Bit( buf, num ));
 //             m_clearTimer.stop();
 //         }
 //     }
 //     m_lastInt=num;
 // 
-//     //    kDebug()<< "LogWindow before split: " << msgString << " length: " << num << endl;
+//     //    kDebug()<< "LogWindow before split: " << msgString << " length: " << num;
 // 
 // }
 // 

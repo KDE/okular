@@ -29,9 +29,9 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
 {
 #ifdef DEBUG_PFB
   if (enc != 0)
-    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )" << endl;
+    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )";
   else
-    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )" << endl;
+    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )";
 #endif
 
   fatalErrorInFontLoading = false;
@@ -80,12 +80,12 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     // the FreeType library function 'FT_Get_Name_Index()' to
     // associate glyph indices to those names.
 #ifdef DEBUG_PFB
-    kDebug(kvs::dvi) << "Trying to associate glyph indices to names from the encoding vector." << endl;
+    kDebug(kvs::dvi) << "Trying to associate glyph indices to names from the encoding vector.";
 #endif
     for(int i=0; i<256; i++) {
       charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].toAscii().data()) );
 #ifdef DEBUG_PFB
-      kDebug(kvs::dvi) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i] << endl;
+      kDebug(kvs::dvi) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i];
 #endif
     }
   } else {
@@ -105,7 +105,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       // Feed the charMap array with the charmap data found in the
       // previous step.
 #ifdef DEBUG_PFB
-      kDebug(kvs::dvi) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font." << endl;
+      kDebug(kvs::dvi) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font.";
 #endif
       for(int i=0; i<256; i++)
         charMap[i] = FT_Get_Char_Index( face, i );
@@ -120,7 +120,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       } else {
         // As a last resort, we use the identity map.
 #ifdef DEBUG_PFB
-        kDebug(kvs::dvi) << "No encoding given, no suitable charmaps found in the font: using identity charmap." << endl;
+        kDebug(kvs::dvi) << "No encoding given, no suitable charmaps found in the font: using identity charmap.";
 #endif
         for(int i=0; i<256; i++)
           charMap[i] = i;
@@ -139,7 +139,7 @@ TeXFont_PFB::~TeXFont_PFB()
 glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PFB
-  kDebug(kvs::dvi) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
+  kDebug(kvs::dvi) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )";
 #endif
 
   // Paranoia checks

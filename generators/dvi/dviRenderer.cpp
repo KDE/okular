@@ -69,7 +69,7 @@ dviRenderer::dviRenderer()
     currentlyDrawnPage(0)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )" << endl;
+  //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
 #endif
 
 //  connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
@@ -82,7 +82,7 @@ dviRenderer::dviRenderer()
 dviRenderer::~dviRenderer()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "~dviRenderer" << endl;
+  kDebug(kvs::dvi) << "~dviRenderer";
 #endif
 
   QMutexLocker locker(&mutex);
@@ -117,7 +117,7 @@ void dviRenderer::showInfo()
 void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber << endl;
+  //kDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber;
 #endif
 
   // Paranoid safety checks
@@ -177,7 +177,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   }
   else
   {
-    kDebug(kvs::dvi) << "painter creation failed." << endl;
+    kDebug(kvs::dvi) << "painter creation failed.";
   } 
   page->img = img;
 //page->setImage(img);
@@ -324,7 +324,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 void dviRenderer::embedPostScript()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::embedPostScript()" << endl;
+  kDebug(kvs::dvi) << "dviRenderer::embedPostScript()";
 #endif
 
   if (!dviFile)
@@ -370,7 +370,7 @@ void dviRenderer::embedPostScript()
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -399,7 +399,7 @@ void dviRenderer::embedPostScript()
 
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   _isModified = true;
@@ -432,7 +432,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "' )"<<endl; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )" << endl;
+  kDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";
 #endif
 
   //QMutexLocker lock(&mutex);
@@ -531,7 +531,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms" << endl;
+  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -580,7 +580,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 #endif
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms" << endl;
+  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   // PRESCAN ENDS HERE

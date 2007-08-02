@@ -112,7 +112,7 @@ fontMap::fontMap()
     kError(kvs::dvi) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
 
 #ifdef DEBUG_FONTMAP
-  kDebug(kvs::dvi) << "FontMap file parsed. Results:" << endl;
+  kDebug(kvs::dvi) << "FontMap file parsed. Results:";
   QMap<QString, fontMapEntry>::Iterator it;
   for ( it = fontMapEntries.begin(); it != fontMapEntries.end(); ++it )
     kDebug(kvs::dvi) << "TeXName: " << it.key()

@@ -44,7 +44,7 @@ fontPool::fontPool()
               0)
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::fontPool() called" << endl;
+  kDebug(kvs::dvi) << "fontPool::fontPool() called";
 #endif
 
   setObjectName("Font Pool");
@@ -89,12 +89,12 @@ fontPool::fontPool()
 
   if ((result == 0xff) || (result == 0x00)) {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap does not support the alpha channel" << endl;
+    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap does not support the alpha channel";
 #endif
     QPixmapSupportsAlpha = false;
   } else {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel" << endl;
+    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel";
 #endif
     QPixmapSupportsAlpha = true;
   }
@@ -104,7 +104,7 @@ fontPool::fontPool()
 fontPool::~fontPool()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::~fontPool() called" << endl;
+  kDebug(kvs::dvi) << "fontPool::~fontPool() called";
 #endif
 
 #ifdef HAVE_FREETYPE
@@ -169,7 +169,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
 QString fontPool::status()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::status() called" << endl;
+  kDebug(kvs::dvi) << "fontPool::status() called";
 #endif
 
   QString       text;
@@ -225,7 +225,7 @@ QString fontPool::status()
 bool fontPool::areFontsLocated()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::areFontsLocated() called" << endl;
+  kDebug(kvs::dvi) << "fontPool::areFontsLocated() called";
 #endif
 
   // Is there a font whose name we did not try to find out yet?
@@ -237,7 +237,7 @@ bool fontPool::areFontsLocated()
   }
 
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "... yes, all fonts are located (but not necessarily loaded)." << endl;
+  kDebug(kvs::dvi) << "... yes, all fonts are located (but not necessarily loaded).";
 #endif
   return true; // That says that all fonts are located.
 }
@@ -406,7 +406,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
-        kDebug(kvs::dvi) << "Associated " << fontp->fontname << " to " << matchingFiles.first() << endl;
+        kDebug(kvs::dvi) << "Associated " << fontp->fontname << " to " << matchingFiles.first();
 #endif
         QString fname = matchingFiles.first();
         fontp->fontNameReceiver(fname);
@@ -430,7 +430,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 void fontPool::setCMperDVIunit( double _CMperDVI )
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )" << endl;
+  kDebug(kvs::dvi) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )";
 #endif
 
   if (CMperDVIunit == _CMperDVI)
@@ -449,7 +449,7 @@ void fontPool::setCMperDVIunit( double _CMperDVI )
 void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called" << endl;
+  kDebug(kvs::dvi) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called";
 #endif
 
   // Ignore minute changes by less than 2 DPI. The difference would
@@ -458,7 +458,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
   // changes the window size by 1 pixel all the time.
   if ( fabs(displayResolution_in_dpi - _displayResolution_in_dpi) <= 2.0 ) {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting." << endl;
+    kDebug(kvs::dvi) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting.";
 #endif
     return;
   }
@@ -493,7 +493,7 @@ void fontPool::markFontsAsLocated()
 void fontPool::mark_fonts_as_unused()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::mark_fonts_as_unused() called" << endl;
+  kDebug(kvs::dvi) << "fontPool::mark_fonts_as_unused() called";
 #endif
 
   TeXFontDefinition  *fontp = fontList.first();
@@ -507,7 +507,7 @@ void fontPool::mark_fonts_as_unused()
 void fontPool::release_fonts()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "Release_fonts" << endl;
+  kDebug(kvs::dvi) << "Release_fonts";
 #endif
 
   TeXFontDefinition  *fontp = fontList.first();

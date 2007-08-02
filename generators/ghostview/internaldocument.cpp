@@ -106,7 +106,7 @@ GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_er
     }
 
     if (m_error)
-        kDebug(4656) << m_errorString << endl;
+        kDebug(4656) << m_errorString;
 }
 
 GSInternalDocument::~GSInternalDocument()
@@ -248,7 +248,7 @@ QString GSInternalDocument::getPaperSize( const QString& mediaName ) const
             m++;
         }
         // should never happen as we have fallback
-        kDebug(4656) << "UNABLE TO FIND PAPER SIZE FOR MEDIA NAME: " << mediaName << endl;
+        kDebug(4656) << "UNABLE TO FIND PAPER SIZE FOR MEDIA NAME: " << mediaName;
         return QString("a4");
     }
     return QString(r->name);

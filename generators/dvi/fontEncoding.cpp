@@ -23,7 +23,7 @@
 fontEncoding::fontEncoding(const QString &encName)
 {
 #ifdef DEBUG_FONTENC
-  kDebug(kvs::dvi) << "fontEncoding( " << encName << " )" << endl;
+  kDebug(kvs::dvi) << "fontEncoding( " << encName << " )";
 #endif
 
   _isValid = false;
@@ -50,7 +50,7 @@ fontEncoding::fontEncoding(const QString &encName)
   }
 
 #ifdef DEBUG_FONTENC
-  kDebug(kvs::dvi) << "FileName of the encoding: " << encFileName << endl;
+  kDebug(kvs::dvi) << "FileName of the encoding: " << encFileName;
 #endif
 
   QFile file( encFileName );
@@ -68,7 +68,7 @@ fontEncoding::fontEncoding(const QString &encName)
     // Find the name of the encoding
     encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
-    kDebug(kvs::dvi) << "encodingFullName: " << encodingFullName << endl;
+    kDebug(kvs::dvi) << "encodingFullName: " << encodingFullName;
 #endif
 
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
@@ -78,7 +78,7 @@ fontEncoding::fontEncoding(const QString &encName)
     for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplified();
 #ifdef DEBUG_FONTENC
-      kDebug(kvs::dvi) << i << ": " << glyphNameVector[i] << endl;
+      kDebug(kvs::dvi) << i << ": " << glyphNameVector[i];
 #endif
       i++;
     }

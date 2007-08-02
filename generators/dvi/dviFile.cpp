@@ -195,7 +195,7 @@ void dvifile::read_postamble()
     command_pointer += len;
 
 #ifdef DEBUG_FONTS
-    kDebug(kvs::dvi) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kDebug(kvs::dvi) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design;
 #endif
 
     // According to section A.4 of the DVI driver standard, this font
@@ -233,7 +233,7 @@ void dvifile::read_postamble()
 void dvifile::prepare_pages()
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "prepare_pages" << endl;
+  kDebug(kvs::dvi) << "prepare_pages";
 #endif
 
   if (page_offset.resize(total_pages+1) == false) {
@@ -266,7 +266,7 @@ void dvifile::prepare_pages()
 dvifile::dvifile(const QString& fname, fontPool* pool)
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "init_dvi_file: " << fname << endl;
+  kDebug(kvs::dvi) << "init_dvi_file: " << fname;
 #endif
 
   errorMsg.clear();
@@ -312,7 +312,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
 dvifile::~dvifile()
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "destroy dvi-file" << endl;
+  kDebug(kvs::dvi) << "destroy dvi-file";
 #endif
 
   // Delete converted PDF files

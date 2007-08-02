@@ -29,11 +29,11 @@ static bool handleErrorCode(int code)
 		switch (code)
 		{
 			case e_Fatal:
-				kDebug() << "fatal internal error " << code << endl;
+				kDebug() << "fatal internal error " << code;
 				break;
 
 			case e_ExecStackUnderflow:
-				kDebug() << "stack overflow " << code << endl;
+				kDebug() << "stack overflow " << code;
 				break;
 
 			// no error or not important
@@ -46,7 +46,7 @@ static bool handleErrorCode(int code)
 		const char* errors[]= { "", ERROR_NAMES };
 		int x=(-1)*code;
 		if (x < sizeof(errors)/sizeof(const char*)) {
-			kDebug() << errors[x] << " " << code << endl;
+			kDebug() << errors[x] << " " << code;
 		}
 		return false;
 	}

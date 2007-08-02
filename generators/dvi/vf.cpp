@@ -68,7 +68,7 @@ extern void oops(const QString& message);
 void TeXFontDefinition::read_VF_index()
 {
 #ifdef DEBUG_FONTS
-  kDebug(kvs::dvi) << "font::read_VF_index()" << endl;
+  kDebug(kvs::dvi) << "font::read_VF_index()";
 #endif
   FILE *VF_file = file;
   unsigned char        cmnd;
@@ -78,7 +78,7 @@ void TeXFontDefinition::read_VF_index()
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviRenderer::set_vf_char;
 #ifdef DEBUG_FONTS
-  kDebug(kvs::dvi) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename << endl;
+  kDebug(kvs::dvi) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename;
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);        /* skip comment */
@@ -103,7 +103,7 @@ void TeXFontDefinition::read_VF_index()
     fontname[len] = '\0';
 
 #ifdef DEBUG_FONTS
-    kDebug(kvs::dvi) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design << endl;
+    kDebug(kvs::dvi) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design;
 #endif
 
     // According to Knuth's documentation found in the web source code

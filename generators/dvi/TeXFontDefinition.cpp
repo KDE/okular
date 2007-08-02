@@ -34,7 +34,7 @@ TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayRe
            class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement << endl;
+  kDebug(kvs::dvi) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement;
 #endif
 
   enlargement              = _enlargement;
@@ -60,7 +60,7 @@ TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayRe
 TeXFontDefinition::~TeXFontDefinition()
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi" << endl;
+  kDebug(kvs::dvi) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi";
 #endif
 
   if (font != 0) {
@@ -86,7 +86,7 @@ TeXFontDefinition::~TeXFontDefinition()
 void TeXFontDefinition::fontNameReceiver(const QString& fname)
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "void TeXFontDefinition::fontNameReceiver( " << fname << " )" << endl;
+  kDebug(kvs::dvi) << "void TeXFontDefinition::fontNameReceiver( " << fname << " )";
 #endif
 
   flags |= TeXFontDefinition::FONT_LOADED;
@@ -120,7 +120,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       font = new TeXFont_PK(this);
       set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum))
-        kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1", filename) << endl;
+        kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1", filename) ;
       fontTypeName = "TeX PK";
       return;
     }
@@ -152,12 +152,12 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 
   if (enc.isEmpty() == false) {
 #ifdef DEBUG_FONT
-    kDebug(kvs::dvi) << "Font " << fontname << " uses encoding " << enc << endl;
+    kDebug(kvs::dvi) << "Font " << fontname << " uses encoding " << enc;
 #endif
     font = new TeXFont_PFB(this, font_pool->encodingPool.findByName(enc), font_pool->fontsByTeXName.findSlant(fontname) );
   } else {
 #ifdef DEBUG_FONT
-    kDebug(kvs::dvi) << "Font " << fontname << " does not have an encoding." << endl;
+    kDebug(kvs::dvi) << "Font " << fontname << " does not have an encoding.";
 #endif
     font = new TeXFont_PFB(this);
   }
@@ -214,7 +214,7 @@ void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 void TeXFontDefinition::mark_as_used()
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "TeXFontDefinition::mark_as_used()" << endl;
+  kDebug(kvs::dvi) << "TeXFontDefinition::mark_as_used()";
 #endif
 
   if (flags & TeXFontDefinition::FONT_IN_USE)

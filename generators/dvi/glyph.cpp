@@ -16,7 +16,7 @@
 glyph::glyph()
 {
 #ifdef DEBUG_GLYPH
-  kDebug(kvs::dvi) << "glyph::glyph()" << endl;
+  kDebug(kvs::dvi) << "glyph::glyph()";
 #endif
 
   addr                     = 0;

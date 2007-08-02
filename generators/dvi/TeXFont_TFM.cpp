@@ -21,7 +21,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   : TeXFont(parent)
 {
 #ifdef DEBUG_TFM
-  kDebug(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( parent=" << parent << " )" << endl;
+  kDebug(kvs::dvi) << "TeXFont_TFM::TeXFont_TFM( parent=" << parent << " )";
 #endif
 
   QFile file( parent->filename );
@@ -36,7 +36,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   quint16 lf, lh, bc, ec, nw, nh, nd;
   stream >> lf >> lh >> bc >> ec >> nw >> nh >> nd;
 #ifdef DEBUG_TFM
-  kDebug(kvs::dvi) << "lf= " << lf << endl
+  kDebug(kvs::dvi) << "lf= " << lf
                 << "lh= " << lh << endl
                 << "bc= " << bc << endl
                 << "ec= " << ec << endl
@@ -54,7 +54,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
   file.seek(24);
   stream >> checksum >> design_size_in_TeX_points.value;
 #ifdef DEBUG_TFM
-  kDebug(kvs::dvi) << "checksum    = " << checksum << endl
+  kDebug(kvs::dvi) << "checksum    = " << checksum
                 << "design_size = " << design_size_in_TeX_points.toDouble() << " TeX Points" << endl
                 << "            = " << design_size_in_TeX_points.toDouble()*254.0/7227.0 << " cm" << endl;
 #endif
@@ -121,7 +121,7 @@ TeXFont_TFM::~TeXFont_TFM()
 glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_TFM
-  kDebug(kvs::dvi) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )" << endl;
+  kDebug(kvs::dvi) << "TeXFont_TFM::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )";
 #endif
 
   // Paranoia checks

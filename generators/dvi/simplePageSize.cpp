@@ -39,7 +39,7 @@ double SimplePageSize::zoomForWidth(quint32 width, const QPaintDevice& pd) const
 double SimplePageSize::zoomToFitInto(const SimplePageSize &target) const
 {
   if (!isValid() || isSmall() || !target.isValid()) {
-    kWarning(kvs::shell) << "SimplePageSize::zoomToFitInto(...) with unsuitable source of target" << endl;
+    kWarning(kvs::shell) << "SimplePageSize::zoomToFitInto(...) with unsuitable source of target" ;
     return 1.0;
   }
 

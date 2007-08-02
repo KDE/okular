@@ -12,8 +12,10 @@
 
 #include <qcolor.h>
 #include <qimage.h>
+#include <qlist.h>
 #include <qobject.h>
 #include <qpolygon.h>
+#include <qrect.h>
 #include <qvariant.h>
 #include <qvector.h>
 
@@ -174,6 +176,26 @@ class KDjVu : public QObject
 
 
         /**
+         * A DjVu text entity.
+         */
+        class TextEntity
+        {
+            friend class KDjVu;
+
+            public:
+                ~TextEntity();
+
+                QString text() const;
+                QRect rect() const;
+
+            private:
+                TextEntity();
+
+                QString m_text;
+                QRect m_rect;
+        };
+
+        /**
          * Opens the file \p fileName, closing the old one if necessary.
          */
         bool openFile( const QString & fileName );
@@ -235,6 +257,12 @@ class KDjVu : public QObject
          * \returns whether the exporting was successful
           */
         bool exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const;
+
+        /**
+         * Return the list of the text entities for the specified \p page, that matches the
+         * specified \p granularity.
+         */
+        QList<KDjVu::TextEntity> textEntities( int page, const QString & granularity ) const;
 
     signals:
         /**

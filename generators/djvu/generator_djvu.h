@@ -41,6 +41,9 @@ class DjVuGenerator : public Okular::Generator
         // printing
         bool print( KPrinter& printer );
 
+    protected:
+        Okular::TextPage* textPage( Okular::Page *page );
+
     private slots:
         void djvuImageGenerated( int page, const QImage & img );
 

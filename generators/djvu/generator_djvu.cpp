@@ -14,6 +14,7 @@
 #include <okular/core/area.h>
 #include <okular/core/document.h>
 #include <okular/core/page.h>
+#include <okular/core/textpage.h>
 #include <okular/core/utils.h>
 
 #include <qdom.h>
@@ -61,6 +62,7 @@ OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 DjVuGenerator::DjVuGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
+    setFeature( TextExtraction );
     m_djvu = new KDjVu();
     connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
 
@@ -213,6 +215,28 @@ bool DjVuGenerator::print( KPrinter& printer )
         return printer.printFiles( QStringList( tempfilename ), true );
     }
     return false;
+}
+
+Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
+{
+#if 0
+    QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "char" );
+    if ( te.isEmpty() )
+        te = m_djvu->textEntities( page->number(), "word" );
+#else
+    QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "word" );
+#endif
+    QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
+    QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
+    QList<Okular::TextEntity*> words;
+    const KDjVu::Page* djvupage = m_djvu->pages().at( page->number() );
+    for ( ; it != itEnd; ++it )
+    {
+        const KDjVu::TextEntity& cur = *it;
+        words.append( new Okular::TextEntity( cur.text(), new Okular::NormalizedRect( cur.rect(), djvupage->width(), djvupage->height() ) ) );
+    }
+    Okular::TextPage *textpage = new Okular::TextPage( words );
+    return textpage;
 }
 
 

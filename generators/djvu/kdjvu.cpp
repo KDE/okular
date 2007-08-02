@@ -15,6 +15,7 @@
 #include <qhash.h>
 #include <qlist.h>
 #include <qpainter.h>
+#include <qqueue.h>
 #include <qstring.h>
 
 #include <kdebug.h>
@@ -270,6 +271,25 @@ int KDjVu::LineAnnotation::width() const
     return m_width;
 }
 
+// KDjVu::TextEntity
+
+KDjVu::TextEntity::TextEntity()
+{
+}
+
+KDjVu::TextEntity::~TextEntity()
+{
+}
+
+QString KDjVu::TextEntity::text() const
+{
+    return m_text;
+}
+
+QRect KDjVu::TextEntity::rect() const
+{
+    return m_rect;
+}
 
 
 class KDjVu::Private
@@ -898,6 +918,61 @@ bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& page
     free( optv );
 
     return fclose( f ) == 0;
+}
+
+QList<KDjVu::TextEntity> KDjVu::textEntities( int page, const QString & granularity ) const
+{
+    if ( ( page < 0 ) || ( page >= d->m_pages.count() ) )
+        return QList<KDjVu::TextEntity>();
+
+    miniexp_t r;
+    while ( ( r = ddjvu_document_get_pagetext( d->m_djvu_document, page, 0 ) ) == miniexp_dummy )
+        handle_ddjvu_messages( d->m_djvu_cxt, true );
+
+    if ( r == miniexp_nil )
+        return QList<KDjVu::TextEntity>();
+
+    QList<KDjVu::TextEntity> ret;
+
+    int height = d->m_pages.at( page )->height();
+
+    QQueue<miniexp_t> queue;
+    queue.enqueue( r );
+
+    while ( !queue.isEmpty() )
+    {
+        miniexp_t cur = queue.dequeue();
+
+        if ( miniexp_listp( cur )
+             && ( miniexp_length( cur ) > 0 )
+             && miniexp_symbolp( miniexp_nth( 0, cur ) ) )
+        {
+            int size = miniexp_length( cur );
+            QString sym = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, cur ) ) );
+            if ( sym == granularity )
+            {
+                if ( size >= 6 )
+                {
+                    int xmin = miniexp_to_int( miniexp_nth( 1, cur ) );
+                    int ymin = miniexp_to_int( miniexp_nth( 2, cur ) );
+                    int xmax = miniexp_to_int( miniexp_nth( 3, cur ) );
+                    int ymax = miniexp_to_int( miniexp_nth( 4, cur ) );
+                    QRect rect( xmin, height - ymax, xmax - xmin, ymax - ymin );
+                    KDjVu::TextEntity entity;
+                    entity.m_rect = rect;
+                    entity.m_text = QString::fromUtf8( miniexp_to_str( miniexp_nth( 5, cur ) ) );
+                    ret.append( entity );
+                }
+            }
+            else
+            {
+                for ( int i = 5; i < size; ++i )
+                    queue.enqueue( miniexp_nth( i, cur ) );
+            }
+        }
+    }
+
+    return ret;
 }
 
 

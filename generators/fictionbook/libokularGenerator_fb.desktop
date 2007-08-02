@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=FictionBook document
+Name[bg]=FictionBook документ
 Name[ca]=Document FictionBook
 Name[de]=Fictionbook-Dokument
 Name[el]=Έγγραφο FictionBook
@@ -15,6 +16,7 @@ Name[sv]=FictionBook-dokument
 Name[x-test]=xxFictionBook documentxx
 Name[zh_TW]=FictionBook 文件
 Comment=FictionBook backend for okular
+Comment[bg]=FictionBook backend за okular
 Comment[ca]=Dorsal de FictionBook per l'okular
 Comment[de]=Unterstützung für Fictionbook in Okular
 Comment[el]=Σύστημα υποστήριξης FictionBook για το okular

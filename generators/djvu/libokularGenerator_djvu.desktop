@@ -4,6 +4,7 @@ Type=Service
 Name=djvu
 Name[x-test]=xxdjvuxx
 Comment=DjVu backend for okular
+Comment[bg]=DjVu backend за okular
 Comment[ca]=Dorsal de DjVu per l'okular
 Comment[de]=Unterstützung für DjVu in Okular
 Comment[el]=Σύστημα υποστήριξης DjVu για το okular

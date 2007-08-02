@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=okular TIFF Library
+Name[bg]=Библиотека okular TIFF
 Name[ca]=Biblioteca TIFF de l'okular
 Name[de]=TIFF-Bibliothek
 Name[el]=Βιβλιοθήκη TIFF του okular
@@ -16,6 +17,7 @@ Name[sv]=Okular TIFF-bibliotek
 Name[x-test]=xxokular TIFF Libraryxx
 Name[zh_TW]=okular TIFF 函式庫
 Comment=TIFF backend for okular
+Comment[bg]=TIFF backend за okular
 Comment[ca]=Dorsal de TIFF per l'okular
 Comment[de]=Unterstützung für TIFF in Okular
 Comment[el]=Σύστημα υποστήριξης TIFF για το okular

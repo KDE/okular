@@ -12,6 +12,7 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <qbitmap.h>
+#include <qbrush.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -22,7 +23,6 @@
 #include <qtoolbutton.h>
 #include <kacceleratormanager.h>
 #include <kiconloader.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 
 // system includes
@@ -598,12 +598,25 @@ void ToolBarPrivate::buildToolBar()
     QPainter bufferPainter( &backgroundPixmap );
     QPalette pal = q->palette();
     // 5.1. draw horizontal/vertical gradient
-    QColor fromColor = topLeft ? pal.color( QPalette::Active, QPalette::Button ) : pal.color( QPalette::Active, QPalette::Light );
-    QColor toColor = topLeft ? pal.color( QPalette::Active, QPalette::Light ) : pal.color( QPalette::Active, QPalette::Button );
-    QImage gradientPattern = KImageEffect::gradient(
-            vertical ? QSize( myWidth + 1, 1 ) : QSize( 1, myHeight + 1 ), fromColor, toColor,
-            vertical ? KImageEffect::HorizontalGradient : KImageEffect::VerticalGradient );
-    bufferPainter.drawTiledPixmap( 0, 0, myWidth + 1, myHeight + 1, QPixmap::fromImage(gradientPattern) );
+    QLinearGradient grad;
+    switch ( anchorSide )
+    {
+        case PageViewToolBar::Left:
+            grad = QLinearGradient( 0, 1, myWidth + 1, 1 );
+            break;
+        case PageViewToolBar::Right:
+            grad = QLinearGradient( myWidth + 1, 1, 0, 1 );
+            break;
+        case PageViewToolBar::Top:
+            grad = QLinearGradient( 1, 0, 1, myHeight + 1 );
+            break;
+        case PageViewToolBar::Bottom:
+            grad = QLinearGradient( 1, myHeight + 1, 0, 1 );
+            break;
+    }
+    grad.setColorAt( 0, pal.color( QPalette::Active, QPalette::Button ) );
+    grad.setColorAt( 1, pal.color( QPalette::Active, QPalette::Light ) );
+    bufferPainter.fillRect( 0, 0, myWidth + 1, myHeight + 1, grad );
     // 5.2. draw rounded border
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Dark ) );
     bufferPainter.setRenderHints( QPainter::Antialiasing );

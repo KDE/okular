@@ -4,6 +4,7 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
  <kcfgfile name="kpdfpartrc" />
+ <include>kuser.h</include>
  <group name="Debugging Options" >
   <entry key="DebugDrawBoundaries" type="Bool" >
    <default>false</default>
@@ -216,6 +217,16 @@
   </entry>
  </group>
  <group name="Identity" >
-  <entry key="IdentityAuthor" type="String" />
+  <entry key="IdentityAuthor" type="String">
+    <code>
+      KUser currentUser;
+      QString userString = currentUser.fullName();
+      if ( userString.isEmpty() )
+      {
+        userString = currentUser.loginName();
+      }
+    </code>
+    <default code="true">userString</default>
+  </entry>
  </group>
 </kcfg>

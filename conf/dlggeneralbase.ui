@@ -28,7 +28,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>Program Look</string>
+      <string>Appearance</string>
      </property>
      <layout class="QHBoxLayout" >
       <property name="spacing" >

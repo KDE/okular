@@ -9,9 +9,6 @@
     <height>387</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>DlgGeneral</string>
-  </property>
   <layout class="QVBoxLayout" >
    <property name="leftMargin" >
     <number>0</number>
@@ -206,9 +203,6 @@
          <widget class="QCheckBox" name="kcfg_ChooseGenerators" >
           <property name="text" >
            <string>Show backend selection dialog</string>
-          </property>
-          <property name="shortcut" >
-           <string/>
           </property>
          </widget>
         </item>

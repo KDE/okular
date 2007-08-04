@@ -2930,12 +2930,6 @@ void PageView::slotFitToTextToggled( bool on )
 
 void PageView::slotViewMode( int nr )
 {
-    uint newColumns;
-    if (nr<2)
-	newColumns = nr+1;
-    else
-	newColumns = Okular::Settings::viewColumns();
-
     if ( (int)Okular::Settings::viewMode() != nr )
     {
         Okular::Settings::setViewMode( nr );

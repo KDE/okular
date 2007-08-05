@@ -416,7 +416,7 @@ void PageView::setupActions( KActionCollection * ac )
     // Mouse-Mode actions
     QActionGroup * actGroup = new QActionGroup( this );
     actGroup->setExclusive( true );
-    d->aMouseNormal  = new KAction(KIcon( "mouse" ), i18n("&Browse Tool"), this);
+    d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL( triggered() ), this, SLOT( slotSetMouseNormal() ) );
     d->aMouseNormal->setCheckable( true );

@@ -30,8 +30,6 @@
 
 class QAction;
 class QWidget;
-class QSplitter;
-class QToolBox;
 
 class KUrl;
 class KConfigGroup;
@@ -51,6 +49,7 @@ class PageViewTopMessage;
 class PresentationWidget;
 class ProgressWidget;
 class SearchWidget;
+class Sidebar;
 class TOC;
 class MiniBar;
 
@@ -146,14 +145,12 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotReload();
         void close();
         void cannotQuit();
-        void splitterMoved( int pos, int index );
         void slotShowFindBar();
         void slotHideFindBar();
         void setMimeTypes(KIO::Job *job);
         void readMimeType(KIO::Job *job, const QString &mime);
         void loadCancelled(const QString &reason);
         void setWindowTitleFromDocument();
-        void saveSplitterSize();
         // can be connected to widget elements
         void updateViewActions();
         void updateBookmarksActions();
@@ -182,9 +179,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QString m_temporaryLocalFile;
 
         // main widgets
-        QSplitter *m_splitter;
-        QWidget *m_leftPanel;
-        QToolBox *m_toolBox;
+        Sidebar *m_sidebar;
         SearchWidget *m_searchWidget;
         FindBar * m_findBar;
         PageViewTopMessage * m_topMessage;

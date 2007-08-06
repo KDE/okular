@@ -128,6 +128,7 @@ set(okularpart_SRCS
    ui/propertiesdialog.cpp
    ui/searchlineedit.cpp
    ui/searchwidget.cpp
+   ui/sidebar.cpp
    ui/side_reviews.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp

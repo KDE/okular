@@ -69,6 +69,7 @@
 #include "ui/pagesizelabel.h"
 #include "ui/bookmarklist.h"
 #include "ui/findbar.h"
+#include "ui/sidebar.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/bookmarkmanager.h"
@@ -138,6 +139,9 @@ m_searchStarted(false), m_cliPresentation(false)
     // we need an instance
     setComponentData(okularPartFactory::componentData());
 
+    m_sidebar = new Sidebar( parentWidget );
+    setWidget( m_sidebar );
+
     // build the document
     m_document = new Okular::Document(widget());
     connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
@@ -160,55 +164,35 @@ m_searchStarted(false), m_cliPresentation(false)
     //      sLabel->setBuddy( m_searchWidget );
     //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
-    // widgets: [] splitter []
-    m_splitter = new QSplitter( parentWidget );
-    m_splitter->setOpaqueResize( true );
-    m_splitter->setChildrenCollapsible( false );
-    setWidget( m_splitter );
-
-    // widgets: [left panel] | []
-    m_leftPanel = new QWidget( m_splitter );
-    m_leftPanel->setMinimumWidth( 90 );
-    m_leftPanel->setMaximumWidth( 300 );
-    QVBoxLayout * leftPanelLayout = new QVBoxLayout( m_leftPanel );
-    leftPanelLayout->setMargin( 0 );
-    m_splitter->setCollapsible( 0, true );
-
-    // widgets: [left toolbox/..] | []
-    m_toolBox = new QToolBox( m_leftPanel );
-    leftPanelLayout->addWidget( m_toolBox );
-
     int tbIndex;
     // [left toolbox: Table of Contents] | []
-    m_toc = new TOC( m_toolBox, m_document );
+    m_toc = new TOC( 0, m_document );
     connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-    tbIndex = m_toolBox->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "format-justify-right"), i18n("Contents") );
-    m_toolBox->setItemToolTip( tbIndex, i18n("Contents") );
+    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
-    KVBox * thumbsBox = new ThumbnailsBox( m_toolBox );
+    KVBox * thumbsBox = new ThumbnailsBox( 0 );
     thumbsBox->setSpacing( 4 );
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
     connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-    tbIndex = m_toolBox->addItem( thumbsBox, KIcon("thumbnail-show"), i18n("Thumbnails") );
-    m_toolBox->setItemToolTip( tbIndex, i18n("Thumbnails") );
-    m_toolBox->setCurrentIndex( m_toolBox->indexOf( thumbsBox ) );
+    tbIndex = m_sidebar->addItem( thumbsBox, KIcon("thumbnail-show"), i18n("Thumbnails") );
+    m_sidebar->setCurrentIndex( tbIndex );
 
     // [left toolbox: Reviews] | []
-    Reviews * reviewsWidget = new Reviews( m_toolBox, m_document );
-    m_toolBox->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
+    Reviews * reviewsWidget = new Reviews( 0, m_document );
+    m_sidebar->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
 
     // [left toolbox: Bookmarks] | []
-    BookmarkList * bookmarkList = new BookmarkList( m_document, m_toolBox );
-    m_toolBox->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
+    BookmarkList * bookmarkList = new BookmarkList( m_document, 0 );
+    m_sidebar->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
 
     // widgets: [../miniBarContainer] | []
-    QWidget * miniBarContainer = new QWidget( m_leftPanel );
-    leftPanelLayout->addWidget( miniBarContainer );
+    QWidget * miniBarContainer = new QWidget( 0 );
+    m_sidebar->setBottomWidget( miniBarContainer );
     QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
     miniBarLayout->setMargin( 0 );
     // widgets: [../[spacer/..]] | []
@@ -224,7 +208,8 @@ m_searchStarted(false), m_cliPresentation(false)
     miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
 
     // widgets: [] | [right 'pageView']
-    QWidget * rightContainer = new QWidget( m_splitter );
+    QWidget * rightContainer = new QWidget( 0 );
+    m_sidebar->setMainWidget( rightContainer );
     QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
     rightLayout->setMargin( 0 );
     rightLayout->setSpacing( 0 );
@@ -239,7 +224,7 @@ m_searchStarted(false), m_cliPresentation(false)
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
     m_pageView->setFocus();      //usability setting
-    m_splitter->setFocusProxy(m_pageView);
+//    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
     connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
     connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
@@ -459,7 +444,7 @@ m_searchStarted(false), m_cliPresentation(false)
     updateViewActions();
 
     m_dummyMode = true;
-    m_leftPanel->hide();
+    m_sidebar->setSidebarVisibility( false );
     if (!args.contains("Print/Preview")) unsetDummyMode();
 }
 
@@ -799,9 +784,9 @@ bool Part::openFile()
         m_watcher->addFile(localFilePath());
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( "OpenTOC" ).toBool() && m_toolBox->isItemEnabled( 0 ) )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) )
     {
-        m_toolBox->setCurrentIndex( 0 );
+        m_sidebar->setCurrentIndex( 0 );
     }
     // if the 'StartFullScreen' flag is set, or the command line flag was
     // specified, start presentation
@@ -814,7 +799,7 @@ bool Part::openFile()
     }
     /*    if (m_document->getXMLFile() != QString::null)
             setXMLFile(m_document->getXMLFile(),true);*/
-    m_document->setupGui( actionCollection(), m_toolBox );
+    m_document->setupGui( actionCollection(), 0 );
     return true;
 }
 
@@ -894,30 +879,13 @@ void Part::cannotQuit()
 }
 
 
-void Part::splitterMoved( int /*pos*/, int index )
-{
-    // if pageView has been resized, save splitter sizes
-    if ( index == 1 )
-        saveSplitterSize();
-}
-
-
 void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
     Okular::Settings::setShowLeftPanel( showLeft );
     Okular::Settings::self()->writeConfig();
     // show/hide left panel
-    m_leftPanel->setVisible( showLeft );
-    // this needs to be hidden explicitly to disable thumbnails gen
-    m_thumbnailList->setVisible( showLeft );
-}
-
-
-void Part::saveSplitterSize()
-{
-    Okular::Settings::setSplitterSizes( m_splitter->sizes() );
-    Okular::Settings::self()->writeConfig();
+    m_sidebar->setSidebarVisibility( showLeft );
 }
 
 
@@ -944,7 +912,7 @@ void Part::slotDoFileDirty()
         m_viewportDirty = m_document->viewport();
 
         // store the current toolbox pane
-        m_dirtyToolboxIndex = m_toolBox->currentIndex();
+        m_dirtyToolboxIndex = m_sidebar->currentIndex();
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
@@ -961,9 +929,9 @@ void Part::slotDoFileDirty()
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
-        if ( m_toolBox->currentIndex() != m_dirtyToolboxIndex && m_toolBox->isItemEnabled( m_dirtyToolboxIndex ) )
+        if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex ) )
         {
-            m_toolBox->setCurrentIndex( m_dirtyToolboxIndex );
+            m_sidebar->setCurrentIndex( m_dirtyToolboxIndex );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true);
@@ -1036,7 +1004,7 @@ void Part::updateBookmarksActions()
 
 void Part::enableTOC(bool enable)
 {
-    m_toolBox->setItemEnabled(0, enable);
+    m_sidebar->setItemEnabled(0, enable);
 }
 
 
@@ -1287,7 +1255,7 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update TOC settings
-    if ( m_toolBox->isItemEnabled(0) )
+    if ( m_sidebar->isItemEnabled(0) )
         m_toc->reparseConfig();
 
     // update ThumbnailList contents
@@ -1308,7 +1276,7 @@ void Part::slotNewGeneratorConfig()
     m_pageView->reparseConfig();
 
     // update TOC settings
-    if ( m_toolBox->isItemEnabled(0) )
+    if ( m_sidebar->isItemEnabled(0) )
         m_toc->reparseConfig();
 
     // update ThumbnailList contents
@@ -1657,7 +1625,7 @@ void Part::unsetDummyMode()
 
     m_dummyMode = false;
 
-    m_leftPanel->setVisible( Okular::Settings::showLeftPanel() );
+    m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history
     m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), actionCollection() );
@@ -1667,18 +1635,6 @@ void Part::unsetDummyMode()
     m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), actionCollection());
     actionCollection()->addAction("history_forward",m_historyNext);
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
-
-    // apply configuration (both internal settings and GUI configured items)
-    QList<int> splitterSizes = Okular::Settings::splitterSizes();
-    if ( !splitterSizes.count() )
-    {
-        // the first time use 1/10 for the panel and 9/10 for the pageView
-        splitterSizes.push_back( 50 );
-        splitterSizes.push_back( 500 );
-    }
-    m_splitter->setSizes( splitterSizes );
-    // get notified about splitter size changes
-    connect( m_splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
 
     m_pageView->setupActions( actionCollection() );
 

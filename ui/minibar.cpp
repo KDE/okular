@@ -290,8 +290,13 @@ void ProgressWidget::wheelEvent( QWheelEvent * e )
 
 void ProgressWidget::paintEvent( QPaintEvent * e )
 {
+    QPainter p( this );
+
     if ( m_progressPercentage < 0.0 )
+    {
+        p.fillRect( rect(), palette().color( QPalette::Active, QPalette::HighlightedText ) );
         return;
+    }
 
     // find out the 'fill' and the 'clear' rectangles
     int w = width(),
@@ -299,7 +304,6 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
         l = (int)( (float)w * m_progressPercentage );
     QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersect( e->rect() );
     QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersect( e->rect() );
-    QPainter p( this );
 
     QPalette pal = palette();
     // paint clear rect

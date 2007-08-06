@@ -16,15 +16,11 @@ if (CHM_LIBRARY AND CHM_INCLUDE_DIR)
 else (CHM_LIBRARY AND CHM_INCLUDE_DIR)
 
   find_path(CHM_INCLUDE_DIR chm_lib.h
-    /usr/local/include
-    /usr/include
     ${GNUWIN32_DIR}/include
   )
 
   find_library(CHM_LIBRARY NAMES chm
     PATHS
-    /usr/lib
-    /usr/local/lib
     ${GNUWIN32_DIR}/lib
   )
 

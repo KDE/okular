@@ -13,15 +13,9 @@ if (KADMOS_INCLUDE_DIR)
   set(Kadmos_FIND_QUIETLY TRUE)
 endif (KADMOS_INCLUDE_DIR)
 
-FIND_PATH(KADMOS_INCLUDE_DIR kadmos.h
-   /usr/include
-   /usr/local/include
-)
+FIND_PATH(KADMOS_INCLUDE_DIR kadmos.h)
 
-FIND_PATH(KADMOS_LIBRARY NAMES librep.a
-   /usr/lib
-   /usr/local/lib
-)
+FIND_PATH(KADMOS_LIBRARY NAMES librep.a)
 
 if (KADMOS_INCLUDE_DIR AND KADMOS_LIBRARY)
    set(KADMOS_FOUND TRUE)

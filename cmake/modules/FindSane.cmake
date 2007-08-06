@@ -14,17 +14,12 @@ if (SANE_INCLUDE_DIR)
   set(Sane_FIND_QUIETLY TRUE)
 endif (SANE_INCLUDE_DIR)
 
-FIND_PATH(SANE_INCLUDE_DIR sane/sane.h
-   /usr/include
-   /usr/local/include
-)
+FIND_PATH(SANE_INCLUDE_DIR sane/sane.h)
 
 FIND_LIBRARY(SANE_LIBRARY NAMES  sane libsane
    PATHS
    /usr/lib/sane
-   /usr/lib
    /usr/local/lib/sane
-   /usr/local/lib
 )
 
 if (SANE_INCLUDE_DIR AND SANE_LIBRARY)

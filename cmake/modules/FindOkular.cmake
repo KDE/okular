@@ -16,14 +16,10 @@ ELSE (OKULAR_INCLUDE_DIR AND OKULAR_LIBRARIES)
 
   FIND_LIBRARY (OKULAR_LIBRARIES okularcore
     PATHS
-    /usr/lib
-    /usr/local/lib
     ${KDE4_LIB_DIR}
   )
 
   FIND_PATH (OKULAR_INCLUDE_DIR okular/core/document.h
-    /usr/include/
-    /usr/local/include/
     ${KDE4_INCLUDE_DIR}
   )
 

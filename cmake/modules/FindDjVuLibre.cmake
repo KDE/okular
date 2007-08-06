@@ -20,16 +20,12 @@ else (DJVULIBRE_INCLUDE_DIR AND DJVULIBRE_LIBRARY)
   if(_ddjvuIncDir)
     find_path(DJVULIBRE_INCLUDE_DIR libdjvu/ddjvuapi.h
       ${_ddjvuIncDir}
-      /usr/local/include
-      /usr/include
       ${GNUWIN32_DIR}/include
     )
 
     find_library(DJVULIBRE_LIBRARY NAMES djvulibre
       PATHS
       ${_ddjvuLinkDir}
-      /usr/lib
-      /usr/local/lib
       ${GNUWIN32_DIR}/lib
     )
   endif(_ddjvuIncDir)

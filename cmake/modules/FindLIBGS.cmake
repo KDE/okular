@@ -20,8 +20,6 @@ else (LIBGS_LIBRARY)
   set(CMAKE_LIBRARY_PATH "${LIB_INSTALL_DIR}")
   find_library(LIBGS_LIBRARY NAMES gs gs-esp
     PATHS
-    /usr/lib
-    /usr/local/lib
     ${GNUWIN32_DIR}/lib
   )
 

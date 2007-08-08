@@ -373,8 +373,18 @@ int Sidebar::currentIndex() const
 
 void Sidebar::setSidebarVisibility( bool visible )
 {
+    static bool sideWasVisible = d->sideContainer->isVisible();
+
     d->list->setVisible( visible );
-    d->sideContainer->setVisible( visible );
+    if ( visible )
+    {
+        d->sideContainer->setVisible( sideWasVisible );
+    }
+    else
+    {
+        sideWasVisible = d->sideContainer->isVisible();
+        d->sideContainer->setVisible( false );
+    }
 }
 
 void Sidebar::itemClicked( QListWidgetItem *item )

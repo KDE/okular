@@ -98,7 +98,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->addWidget( m_pagesEdit );
     // bottom: central 'of' label
     horLayout->addSpacing(5);
-    horLayout->addWidget( new QLabel( i18n("of"), this ) );
+    horLayout->addWidget( new QLabel( i18nc( "Layouted like: '5 [pages] of 10'", "of" ), this ) );
     // bottom: right button
     m_pagesButton = new HoverButton( this );
     m_pagesButton->setWidthScaleFactor(1.0);

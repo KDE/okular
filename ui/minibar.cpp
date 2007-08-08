@@ -67,8 +67,6 @@ class HoverButton : public QPushButton
         QSize minimumSizeHint() const;
 
         void paintEvent( QPaintEvent * e );
-        void enterEvent( QEvent * e );
-        void leaveEvent( QEvent * e );
 
     private:
         double m_widthScale;
@@ -88,10 +86,11 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->setMargin( 0 );
     horLayout->setSpacing( 3 );
 
+    QSize buttonSize( K3Icon::SizeSmallMedium, K3Icon::SizeSmallMedium );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );
-    m_prevButton->setIconSize( QSize(K3Icon::SizeMedium,K3Icon::SizeMedium) );
+    m_prevButton->setIconSize( buttonSize );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
     m_pagesEdit = new PagesEdit( this );
@@ -106,7 +105,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
-    m_nextButton->setIconSize( QSize(K3Icon::SizeMedium,K3Icon::SizeMedium) );
+    m_nextButton->setIconSize( buttonSize );
     horLayout->addWidget( m_nextButton );
     
     QSizePolicy sp = sizePolicy();
@@ -403,9 +402,10 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 
 HoverButton::HoverButton( QWidget * parent )
     : QPushButton( parent )
-    , m_widthScale( 2.0 )
+    , m_widthScale( 1.8 )
 {
     setMouseTracking( true );
+    setAttribute( Qt::WA_Hover );
     KAcceleratorManager::setNoAccel( this );
     setFocusPolicy(Qt::NoFocus);
 }
@@ -424,18 +424,6 @@ QSize HoverButton::minimumSizeHint() const
 	return base;
 }
 
-void HoverButton::enterEvent( QEvent * e )
-{
-	update();
-	QPushButton::enterEvent( e );
-}
-
-void HoverButton::leaveEvent( QEvent * e )
-{
-	update();
-	QPushButton::leaveEvent( e );
-}
-
 void HoverButton::paintEvent( QPaintEvent * e )
 {
     if ( testAttribute( Qt::WA_UnderMouse ) && isEnabled() )
@@ -446,11 +434,8 @@ void HoverButton::paintEvent( QPaintEvent * e )
     {
         QStylePainter p( this );
         QStyleOptionButton opt;
-        opt.initFrom( this );
-        opt.features = QStyleOptionButton::Flat;
-        opt.icon = icon();
-        opt.iconSize = iconSize();
-        opt.text = text();
+        initStyleOption( &opt );
+        opt.features |= QStyleOptionButton::Flat;
         p.drawControl( QStyle::CE_PushButton, opt );
     }
 }

@@ -531,13 +531,7 @@ void Part::setMimeTypes(KIO::Job *job)
     {
         QStringList supportedMimeTypes = m_document->supportedMimeTypes();
         job->addMetaData("accept", supportedMimeTypes.join(", ") + ", */*;q=0.5");
-        connect(job, SIGNAL(mimetype(KIO::Job*,const QString&)), this, SLOT(readMimeType(KIO::Job*,const QString&)));
     }
-}
-
-void Part::readMimeType(KIO::Job *, const QString &mime)
-{
-    m_jobMime = mime;
 }
 
 void Part::loadCancelled(const QString &reason)
@@ -701,24 +695,13 @@ bool Part::slotImportPSFile()
 bool Part::openFile()
 {
     KMimeType::Ptr mime;
-    if ( m_bExtension->urlArgs().serviceType.isEmpty() )
+    if ( arguments().mimeType().isEmpty() )
     {
-        if (!m_jobMime.isEmpty())
-        {
-            mime = KMimeType::mimeType(m_jobMime);
-            if ( !mime )
-            {
-                mime = KMimeType::findByPath( localFilePath() );
-            }
-        }
-        else
-        {
-            mime = KMimeType::findByPath( localFilePath() );
-        }
+        mime = KMimeType::mimeType( arguments().mimeType() );
     }
-    else
+    if ( !mime )
     {
-        mime = KMimeType::mimeType( m_bExtension->urlArgs().serviceType );
+        mime = KMimeType::findByPath( localFilePath() );
     }
     bool isCompressedFile = false;
     bool uncompressOk = true;
@@ -805,8 +788,6 @@ bool Part::openFile()
 
 bool Part::openUrl(const KUrl &url)
 {
-    m_jobMime.clear();
-
     // this calls in sequence the 'closeUrl' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openUrl( url );
 

@@ -15,7 +15,7 @@
 #include <qdir.h>
 #include <kdebug.h>
 #include <krandom.h>
-#include <phonon/audiopath.h>
+#include <Phonon/Path>
 #include <phonon/audiooutput.h>
 #include <phonon/abstractmediastream.h>
 #include <phonon/mediaobject.h>
@@ -55,7 +55,7 @@ class PlayData
 {
 public:
     PlayData()
-        : m_mediaobject( 0 ), m_path( 0 ), m_output( 0 ), m_buffer( 0 )
+        : m_mediaobject( 0 ), m_output( 0 ), m_buffer( 0 )
     {
     }
 
@@ -72,13 +72,11 @@ public:
     {
         m_mediaobject->stop();
         delete m_mediaobject;
-        delete m_path;
         delete m_output;
         delete m_buffer;
     }
 
     Phonon::MediaObject * m_mediaobject;
-    Phonon::AudioPath * m_path;
     Phonon::AudioOutput * m_output;
     QBuffer * m_buffer;
     SoundInfo m_info;
@@ -115,9 +113,8 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     PlayData * data = new PlayData();
     data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
     data->m_output->setVolume( si.volume );
-    data->m_path = new Phonon::AudioPath();
-    data->m_path->addOutput( data->m_output );
     data->m_mediaobject = new Phonon::MediaObject();
+    Phonon::createPath(data->m_mediaobject, data->m_output);
     data->m_info = si;
     bool valid = false;
 
@@ -129,25 +126,22 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
             kDebug() << "[AudioPlayer::Playinfo::play()] External," << url;
             if ( !url.isEmpty() )
             {
-                if ( data->m_mediaobject->addAudioPath( data->m_path ) )
+                int newid = newId();
+                m_mapper.setMapping( data->m_mediaobject, newid );
+                KUrl newurl;
+                if ( KUrl::isRelativeUrl( url ) )
                 {
-                    int newid = newId();
-                    m_mapper.setMapping( data->m_mediaobject, newid );
-                    KUrl newurl;
-                    if ( KUrl::isRelativeUrl( url ) )
-                    {
-                        newurl = m_currentDocument;
-                        newurl.setFileName( url );
-                    }
-                    else
-                    {
-                        newurl = url;
-                    }
-                    data->m_mediaobject->setCurrentSource( newurl );
-                    m_playing.insert( newid, data );
-                    valid = true;
-                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url";
+                    newurl = m_currentDocument;
+                    newurl.setFileName( url );
                 }
+                else
+                {
+                    newurl = url;
+                }
+                data->m_mediaobject->setCurrentSource( newurl );
+                m_playing.insert( newid, data );
+                valid = true;
+                kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url";
             }
             break;
         }
@@ -159,17 +153,14 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
             if ( !filedata.isEmpty() )
             {
                 kDebug() << "[AudioPlayer::Playinfo::play()] mediaobject:" << data->m_mediaobject;
-                if ( data->m_mediaobject->addAudioPath( data->m_path ) )
-                {
-                    int newid = newId();
-                    m_mapper.setMapping( data->m_mediaobject, newid );
-                    data->m_buffer = new QBuffer();
-                    data->m_buffer->setData( filedata );
-                    data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
-                    m_playing.insert( newid, data );
-                    valid = true;
-                    kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data";
-                }
+                int newid = newId();
+                m_mapper.setMapping( data->m_mediaobject, newid );
+                data->m_buffer = new QBuffer();
+                data->m_buffer->setData( filedata );
+                data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
+                m_playing.insert( newid, data );
+                valid = true;
+                kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data";
             }
 #endif
             break;

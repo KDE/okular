@@ -148,20 +148,9 @@ bool Generator::canGenerateTextPage() const
     return d->mTextPageReady;
 }
 
-void Generator::generateTextPage( Page *page, enum GenerationType type )
+void Generator::generateTextPage( Page *page )
 {
-    d->mTextPageReady = false;
-
-    if ( type == Asynchronous ) {
-        if ( hasFeature( Threaded ) )
-        {
-            d->textPageGenerationThread()->startGeneration( page );
-            return;
-        }
-    }
-
     page->setTextPage( textPage( page ) );
-
     d->mTextPageReady = true;
 }
 

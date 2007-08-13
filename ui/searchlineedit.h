@@ -53,6 +53,7 @@ class SearchLineEdit : public KLineEdit
     private slots:
         void slotTextChanged( const QString & text );
         void startSearch();
+        void searchFinished(Okular::Document::SearchStatus endStatus);
 };
 
 #endif

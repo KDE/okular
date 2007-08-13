@@ -94,11 +94,10 @@ void PageViewItem::setWHZ( int w, int h, double z )
     m_geometry.setWidth( w );
     m_geometry.setHeight( h );
     m_zoomFactor = z;
-    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
-    for ( ; it != itEnd; ++it )
+    foreach(FormWidgetIface *fwi, m_formWidgets)
     {
-        Okular::NormalizedRect r = (*it)->rect();
-        (*it)->setWidthHeight( qRound( fabs( r.right - r.left ) * w ), qRound( fabs( r.bottom - r.top ) * h ) );
+        Okular::NormalizedRect r = fwi->rect();
+        fwi->setWidthHeight( qRound( fabs( r.right - r.left ) * w ), qRound( fabs( r.bottom - r.top ) * h ) );
     }
 }
 

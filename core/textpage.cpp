@@ -33,15 +33,13 @@ class SearchPoint
 };
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
-    : m_text( text ), m_area( area ), m_transformed_area( 0 ), d( 0 )
+    : m_text( text ), m_area( area ), d( 0 )
 {
-    m_transformed_area = new NormalizedRect( *m_area );
 }
 
 TextEntity::~TextEntity()
 {
     delete m_area;
-    delete m_transformed_area;
 }
 
 QString TextEntity::text() const
@@ -54,15 +52,11 @@ NormalizedRect* TextEntity::area() const
     return m_area;
 }
 
-NormalizedRect* TextEntity::transformedArea() const
+NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
 {
-    return m_transformed_area;
-}
-
-void TextEntity::transform( const QMatrix &matrix )
-{
-    *m_transformed_area = *m_area;
-    m_transformed_area->transform( matrix );
+    NormalizedRect transformed_area = *m_area;
+    transformed_area.transform( matrix );
+    return transformed_area;
 }
 
 class TextPage::Private
@@ -86,6 +80,7 @@ class TextPage::Private
 
         TextEntity::List m_words;
         QMap< int, SearchPoint* > m_searchPoints;
+        QMatrix m_transformMatrix;
 };
 
 
@@ -134,9 +129,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     int itE = -1;
 
     // ending cursor is higher then start cursor, we need to find positions in reverse
-    NormalizedRect *tmp = 0;
-    NormalizedRect *start = 0;
-    NormalizedRect *end = 0;
+    NormalizedRect tmp;
+    NormalizedRect start;
+    NormalizedRect end;
 
     NormalizedPoint startC = sel->start();
     double startCx = startC.x;
@@ -154,10 +149,10 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         const int count = d->m_words.count();
         for ( it = 0; it < count; it++ )
         {
-            tmp = d->m_words[ it ]->transformedArea();
-            if ( tmp->contains( startCx, startCy )
-                 || ( tmp->top <= startCy && tmp->bottom >= startCy && tmp->left >= startCx )
-                 || ( tmp->top >= startCy))
+            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            if ( tmp.contains( startCx, startCy )
+                 || ( tmp.top <= startCy && tmp.bottom >= startCy && tmp.left >= startCx )
+                 || ( tmp.top >= startCy))
             {
                 /// we have found the (rx,ry)x(tx,ty)
                 itB = it;
@@ -181,18 +176,18 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #endif
         for ( it = d->m_words.count() - 1; it >= itB; it-- )
         {
-            tmp = d->m_words[ it ]->transformedArea();
-            if ( tmp->contains( endCx, endCy )
-                 || ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx )
-                 || ( tmp->bottom <= endCy ) )
+            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            if ( tmp.contains( endCx, endCy )
+                 || ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx )
+                 || ( tmp.bottom <= endCy ) )
             {
                 /// we have found the (ux,uy)x(vx,vy)
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
                 kWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                kWarning() << "conditions" << tmp->contains( endCx, endCy ) << " " 
-                  << ( tmp->top <= endCy && tmp->bottom >= endCy && tmp->right <= endCx ) << " " <<
-                  ( tmp->top >= endCy);
+                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
+                  << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
+                  ( tmp.top >= endCy);
 #endif
                 break;
             }
@@ -205,25 +200,25 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     if ( sel->itB() != -1 && sel->itE() != -1 )
     {
-        start = d->m_words[ sel->itB() ]->transformedArea();
-        end = d->m_words[ sel->itE() ]->transformedArea();
+        start = d->m_words[ sel->itB() ]->transformedArea(d->m_transformMatrix);
+        end = d->m_words[ sel->itE() ]->transformedArea(d->m_transformMatrix);
 
         NormalizedRect first, second, third;
         /// finding out if there are more then one baseline between them is a hard and discussable task
         /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
         /// areas, if more than one -> we have a three or over line selection
-        first = *start;
-        second.top = start->bottom;
+        first = start;
+        second.top = start.bottom;
         first.right = second.right = 1;
-        third = *end;
+        third = end;
         third.left = second.left = 0;
-        second.bottom = end->top;
+        second.bottom = end.top;
         int selMax = qMax( sel->itB(), sel->itE() );
         for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
         {
-            tmp = d->m_words[ it ]->transformedArea();
-            if ( tmp->intersects( &first ) || tmp->intersects( &second ) || tmp->intersects( &third ) )
-                ret->appendShape( *tmp );
+            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            if ( tmp.intersects( &first ) || tmp.intersects( &second ) || tmp.intersects( &third ) )
+                ret->appendShape( tmp );
         }
     }
 
@@ -303,8 +298,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
-    QString str;
-    TextEntity* curEntity = 0;
+    const TextEntity* curEntity = 0;
     int j=0, len=0, queryLeft=query.length();
     int offset = 0;
     bool haveMatch=false;
@@ -314,7 +308,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
     for ( ; it != end; ++it )
     {
         curEntity = *it;
-        str = curEntity->text();
+        const QString &str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )
@@ -377,7 +371,7 @@ RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const
             kDebug(OkularDebug) << "\tmatched";
 #endif
                     haveMatch=true;
-                    ret->append( *curEntity->transformedArea() );
+                    ret->append( curEntity->transformedArea(m_transformMatrix) );
                     j+=min;
                     queryLeft-=min;
             }
@@ -421,7 +415,7 @@ QString TextPage::text(const RegularAreaRect *area) const
     {
         for ( ; it != itEnd; ++it )
         {
-            if ( area->intersects( *(*it)->transformedArea() ) )
+            if ( area->intersects( (*it)->transformedArea(d->m_transformMatrix) ) )
             {
                 ret += (*it)->text();
             }
@@ -437,6 +431,5 @@ QString TextPage::text(const RegularAreaRect *area) const
 
 void TextPage::transform( const QMatrix &matrix )
 {
-    for ( int i = 0; i < d->m_words.count(); ++i )
-        d->m_words[ i ]->transform( matrix );
+    d->m_transformMatrix = matrix;
 }

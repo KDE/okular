@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
- *   Copyright (C) 2004-2005 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -338,7 +338,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Sends a request for text page generation for the given page @p number.
          */
-        void requestTextPage( uint number, enum GenerationType type = Synchronous );
+        void requestTextPage( uint number );
 
         /**
          * Adds a new @p annotation to the given @p page.
@@ -381,6 +381,16 @@ class OKULAR_EXPORT Document : public QObject
         };
 
         /**
+         * Describes how search ended
+         */
+        enum SearchStatus
+        {
+            MatchFound,        ///< Any match was found
+            NoMatchFound,      ///< No match was found
+            SearchCancelled    ///< The search was cancelled
+        };
+
+        /**
          * Searches the given @p text in the document.
          *
          * @param searchID The unique id for this search request.
@@ -391,13 +401,13 @@ class OKULAR_EXPORT Document : public QObject
          * @param color The highlighting color of the matches.
          * @param noDialogs Whether a search dialog shall be shown.
          */
-        bool searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
+        void searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
                          SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
 
         /**
          * Continues the search for the given @p searchID.
          */
-        bool continueSearch( int searchID );
+        void continueSearch( int searchID );
 
         /**
          * Resets the search for the given @p searchID.
@@ -407,7 +417,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Continues with the last search.
          */
-        bool continueLastSearch();
+        void continueLastSearch();
 
         /**
          * Adds a bookmark for the given @p page.
@@ -507,6 +517,12 @@ class OKULAR_EXPORT Document : public QObject
          */
         void setPageSize( const PageSize &size );
 
+        /**
+         * Cancels the current search
+         */
+        void cancelSearch();
+
+
     Q_SIGNALS:
         /**
          * This signal is emitted whenever an action requests a
@@ -592,6 +608,11 @@ class OKULAR_EXPORT Document : public QObject
          */
         void fontReadingEnded();
 
+        /**
+         * Reports that the current search finished
+         */
+        void searchFinished(Okular::Document::SearchStatus endStatus);
+
     private:
         friend class DocumentPrivate;
         DocumentPrivate *const d;
@@ -605,6 +626,11 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
+
+        // search thread simulators
+        Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
+        Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color) );
+        Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll) );
 };
 
 

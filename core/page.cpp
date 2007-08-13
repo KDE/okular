@@ -172,8 +172,8 @@ double Page::ratio() const
 
 bool Page::hasPixmap( int id, int width, int height ) const
 {
-    QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.find( id );
-    if ( it == d->m_pixmaps.end() )
+    QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constFind( id );
+    if ( it == d->m_pixmaps.constEnd() )
         return false;
 
     if ( width == -1 || height == -1 )

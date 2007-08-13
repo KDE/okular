@@ -10,6 +10,9 @@
 
 #include "searchlineedit.h"
 
+// local includes
+#include "core/document.h"
+
 // qt/kde includes
 #include <qapplication.h>
 #include <qtimer.h>
@@ -29,6 +32,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
              this, SLOT( startSearch() ) );
 
     connect(this, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
+    connect(document, SIGNAL( searchFinished(Okular::Document::SearchStatus) ), this, SLOT( searchFinished(Okular::Document::SearchStatus) ));
 }
 
 void SearchLineEdit::clearText()
@@ -113,16 +117,19 @@ void SearchLineEdit::startSearch()
     m_changed = false;
     // search text if have more than 3 chars or else clear search
     QString thistext = text();
-    bool ok = true;
     if ( thistext.length() >= qMax( m_minLength, 1 ) )
     {
-        ok = m_document->searchText( m_id, thistext, true, m_caseSensitivity,
-                                     m_searchType, m_moveViewport, m_color );
+        m_document->searchText( m_id, thistext, true, m_caseSensitivity,
+                                m_searchType, m_moveViewport, m_color );
     }
     else
         m_document->resetSearch( m_id );
+}
+
+void SearchLineEdit::searchFinished(Okular::Document::SearchStatus endStatus)
+{
     // if not found, use warning colors
-    if ( !ok )
+    if ( endStatus == Okular::Document::NoMatchFound )
     {
         QPalette pal = palette();
         pal.setColor( QPalette::Base, Qt::red );

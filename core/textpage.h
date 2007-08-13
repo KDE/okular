@@ -66,17 +66,11 @@ class OKULAR_EXPORT TextEntity
         /**
          * Returns the transformed area of the text entity.
          */
-        NormalizedRect* transformedArea() const;
-
-        /**
-         * Transforms the area coordinates of the text entity.
-         */
-        void transform( const QMatrix &matrix );
+        NormalizedRect transformedArea(const QMatrix &matrix) const;
 
     private:
         QString m_text;
         NormalizedRect* m_area;
-        NormalizedRect* m_transformed_area;
 
         class Private;
         const Private *d;

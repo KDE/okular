@@ -148,7 +148,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotShowFindBar();
         void slotHideFindBar();
         void setMimeTypes(KIO::Job *job);
-        void readMimeType(KIO::Job *job, const QString &mime);
         void loadCancelled(const QString &reason);
         void setWindowTitleFromDocument();
         // can be connected to widget elements
@@ -201,9 +200,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         // Remember the search history
         QStringList m_searchHistory;
-
-        // mimetype got from the job
-        QString m_jobMime;
 
         // actions
         QAction *m_gotoPage;

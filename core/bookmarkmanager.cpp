@@ -181,7 +181,7 @@ static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& 
             // folder not found :(
             // then, in a single step create a new folder and add it in our cache :)
             QString purl = url.isLocalFile() ? url.path() : url.prettyUrl();
-            it = files.insert( url, root.createNewFolder( manager, purl ) );
+            it = files.insert( url, root.createNewFolder( purl ) );
         }
     }
     return it;
@@ -213,7 +213,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
         newtitle = title;
     KUrl newurl = referurl;
     newurl.setHTMLRef( vp.toString() );
-    it.value().addBookmark( d->manager, newtitle, newurl, QString(), false );
+    it.value().addBookmark( newtitle, newurl, QString() );
     return true;
 }
 
@@ -301,7 +301,7 @@ bool BookmarkManager::setPageBookmark( int page )
         vp.pageNumber = page;
         KUrl newurl = d->url;
         newurl.setHTMLRef( vp.toString() );
-        it.value().addBookmark( d->manager, QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString(), false );
+        it.value().addBookmark( QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
         added = true;
     }
     return added;

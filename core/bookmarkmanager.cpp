@@ -51,8 +51,7 @@ class BookmarkManager::Private : public KBookmarkOwner
 
         virtual QString currentUrl() const;
         virtual QString currentTitle() const;
-        virtual bool addBookmarkEntry() const;
-        virtual bool editBookmarkEntry() const;
+        virtual bool enableOption(BookmarkOption option) const;
         virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
 
         BookmarkManager * q;
@@ -95,12 +94,7 @@ QString BookmarkManager::Private::currentTitle() const
     return url.isLocalFile() ? url.path() : url.prettyUrl();
 }
 
-bool BookmarkManager::Private::addBookmarkEntry() const
-{
-    return false;
-}
-
-bool BookmarkManager::Private::editBookmarkEntry() const
+bool BookmarkManager::Private::enableOption(BookmarkOption option) const
 {
     return false;
 }

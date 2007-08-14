@@ -96,6 +96,7 @@ QString BookmarkManager::Private::currentTitle() const
 
 bool BookmarkManager::Private::enableOption(BookmarkOption option) const
 {
+    Q_UNUSED( option )
     return false;
 }
 

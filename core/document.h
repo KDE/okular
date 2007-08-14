@@ -629,8 +629,8 @@ class OKULAR_EXPORT Document : public QObject
 
         // search thread simulators
         Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
-        Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color) );
-        Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll) );
+        Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color) )
+        Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll) )
 };
 
 

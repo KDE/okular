@@ -395,7 +395,7 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     GlobalMemoryStatusEx (&stat);
 
-    return stat.ullAvailPhys;
+    return ( cachedValue = stat.ullAvailPhys );
 #else
     // tell the memory is full.. will act as in LOW profile
     return 0;

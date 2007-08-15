@@ -37,8 +37,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2006-10-16</date>
-		<releaseinfo>0.5.81</releaseinfo>
+		<date>2007-08-15</date>
+		<releaseinfo>0.5.90</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -94,7 +94,7 @@
 			<para>
 				There are multiple ways of scrolling the viewing area. One is to use the 
 				<keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys. You may also use
-				the scrollbar, your <!--TODO: insert entity, if any-->mousewheel or the <keycap>Page Up</keycap> and <keycap>Page Down</keycap>
+				the scrollbar, your mousewheel or the <keycap>Page Up</keycap> and <keycap>Page Down</keycap>
 				keys.
 			</para>
 			<para>
@@ -206,6 +206,12 @@
 			<para>
 				You can exit presentation mode at any time by pressing the <keycap>ESC</keycap> key or clicking
 				the <guiicon>Quit</guiicon> icon in the top bar.
+			</para>
+			<para>
+				You can also draw on the current page with a pencil. Click on the
+				<guilabel>Toggle Drawing Mode</guilabel> icon in the top bar to enable or disable the possibility
+				of draw in the presentation mode. The drawings are cleared automatically when switching to
+				another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
 			</para>
 			<para>
 				Presentation mode has some configuration options, you can find their
@@ -412,7 +418,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>Q</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo></shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Quit</guimenuitem>
 						</menuchoice>
@@ -430,14 +436,16 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>F</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Edit</guimenu>
 							<guimenuitem>Find...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Open a dialogue that allows you to <action>search for a string in
-							the document</action>.</para>
+						<para>
+							Show the find bar on the bottom of the viewing area that allows you to
+							<action>search for a string in the document</action>.
+						</para>
 					</listitem>
 				</varlistentry>
 
@@ -542,13 +550,13 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Render Mode</guimenuitem>
+							<guimenuitem>View Mode</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
 						<para>This submenu makes you choose the view mode for the pages. The possible
-							options are: <guimenuitem>Single</guimenuitem> (only one page per row),
-							<guimenuitem>Facing</guimenuitem> (two pages per row, in a book style) and
+							options are: <guimenuitem>Single Page</guimenuitem> (only one page per row),
+							<guimenuitem>Facing Pages</guimenuitem> (two pages per row, in a book style) and
 							<guimenuitem>Overview</guimenuitem> (the number of columns is the one
 							specified in the <link linkend="configure">&okular; settings</link>).</para>
 					</listitem>
@@ -561,24 +569,59 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Changes the orientation</action> of the pages of the
-							document.</para>
-						<note><para>The rotation is applied to the orientation of every
-							page.</para></note>
+						<para>
+							This submenu allows you to <action>changes the orientation</action>
+							of the pages of the document.
+						</para>
+						<note>
+							<para>
+								The rotation is applied to the orientation of every page.
+							</para>
+						</note>
+						<para>
+							You can select <guimenuitem>Original Orientation</guimenuitem> to restore
+							the orientation of the document, discarding all the rotations applied
+							manually.
+						</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Paper sizes</guimenuitem>
+							<guimenuitem>Page Size</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Changes the size of the paper</action> of the pages of the
-							document.</para>
-						<note><para>This submenu is active only if the current type of document
-							supports different paper sizes.</para></note>
+						<para>
+							<action>Changes the size of the pages</action> of the document.
+						</para>
+						<note>
+							<para>
+								This submenu is active only if the current type of document
+								supports different page sizes.
+							</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>View</guimenu>
+							<guimenuitem>Show/Hide Forms</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+							<action>Show or hides the display</action> of the form fields of the
+							document.
+						</para>
+						<note>
+							<para>
+								This submenu is active only if the current document has form
+								fields.
+							</para>
+						</note>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -614,7 +657,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl; <keycap>Home</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>First Page</guimenuitem>
 					  </menuchoice>
@@ -626,7 +669,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;	<keycap>End</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Last Page</guimenuitem>
 						</menuchoice>
@@ -638,7 +681,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;	<keycap>Left</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Alt;<keycap>Left</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Back</guimenuitem>
 						</menuchoice>
@@ -662,32 +705,6 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;	<keycap>Left</keycap></keycombo></shortcut>
-							<guimenu>Go</guimenu>
-							<guimenuitem>Previous Bookmark</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Go to the previous bookmarked page</action>, or do nothing if there
-							are no bookmarked pages prior to the current one.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;<keycap>Right</keycap></keycombo></shortcut>
-							<guimenu>Go</guimenu>
-							<guimenuitem>Next Bookmark</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Go to the next bookmarked page</action>, or do nothing if there
-							are no bookmarked pages after the current one.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Go to Page</guimenuitem>
@@ -700,12 +717,56 @@
 			</variablelist>
 		</sect1>
 
+		<sect1 id="menubookmarks">
+			<title>The <guimenu>Bookmarks</guimenu> Menu</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Bookmarks</guimenu>
+							<guimenuitem>Add/Remove Bookmark</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+							<action>Add or remove a bookmark for the current page</action>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Bookmarks</guimenu>
+							<guimenuitem>Previous Bookmark</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to the previous bookmarked page</action>, or do nothing if there
+							are no bookmarked pages prior to the current one.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Bookmarks</guimenu>
+							<guimenuitem>Next Bookmark</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Go to the next bookmarked page</action>, or do nothing if there
+							are no bookmarked pages after the current one.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
 		<sect1 id="menutools">
 			<title>The <guimenu>Tools</guimenu> Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>1</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Browse Tool</guimenuitem>
 						</menuchoice>
@@ -717,6 +778,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>2</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Zoom Tool</guimenuitem>
 						</menuchoice>
@@ -728,6 +790,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>3</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Select Tool</guimenuitem>
 						</menuchoice>
@@ -739,7 +802,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo><keycap>F6</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>4</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Text Selection Tool</guimenuitem>
 						</menuchoice>
@@ -753,6 +816,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo><keycap>F6</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Review</guimenuitem>
 						</menuchoice>
@@ -796,7 +860,8 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut>
+<!-- 							<shortcut><keycombo action="simul"><keycap>F7</keycap></keycombo></shortcut> -->
+							<shortcut><keycap>F7</keycap></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
 						</menuchoice>
@@ -955,13 +1020,6 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Center first page in facing mode</term>
-					<listitem>
-						<para>Whether the first page should be centered or aligned to the right when
-							displaying the pages in facing mode.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
 					<term>Obey DRM limitations</term>
 					<listitem>
 						<para>Whether &okular; should obey <firstterm>DRM</firstterm>
@@ -972,7 +1030,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Watch file</term>
+					<term>Reload the document on file change</term>
 					<listitem>
 						<para>Whether opened files should be automatically checked for
 							changes and updated, if necessary.</para>
@@ -987,10 +1045,18 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Overview rows/columns</term>
+					<term>Center first page in facing mode</term>
 					<listitem>
-						<para>These options represent the number of rows and columns to use in the overview
-							mode.</para>
+						<para>Whether the first page should be centered or aligned to the right when
+							displaying the pages in facing mode.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Overview columns</term>
+					<listitem>
+						<para>
+							This options represent the number of columns to use in the overview mode.
+						</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -1148,12 +1214,9 @@
 		
 		<itemizedlist>
 			<title>Program Copyright:</title>
-			<listitem><para>Albert Astals Cid<email>aacid@kde.org</email> Current maintainer</para></listitem>
-			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
-			<listitem><para>Christophe Devriese<email>oelewapperke@ulyssis.org</email></para></listitem>
-			<listitem><para>&Wilco.Greven; &Wilco.Greven.mail; Original &kpdf; author</para></listitem>
-			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> &kpdf; refactoring for &kde; 3.4</para></listitem>
-			<listitem><para>Laurent Montel<email>montel@kde.org</email></para></listitem>
+			<listitem><para>Albert Astals Cid<email>aacid@kde.org</email> </para></listitem>
+			<listitem><para>Pino Toscano <email>pino@kde.org</email> Current maintainer</para></listitem>
+			<listitem><para>Enrico Ros<email>eros.kde@email.it</email> &kpdf; developer</para></listitem>
 		</itemizedlist>
 
 		<itemizedlist>

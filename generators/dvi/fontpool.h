@@ -176,13 +176,13 @@ private:
   void locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound=0);
 
   // This QString is used internally by the mf_output_receiver()
-  // method.  This string is set to QString::null in locateFonts(bool,
+  // method.  This string is set to QString() in locateFonts(bool,
   // bool, bool *). Values are set and read by the
   // mf_output_receiver(...)  method
   QString MetafontOutput;
 
   // This QString is used to collect the output of kpsewhich and
-  // MetaFont. The string is set to QString::null in the
+  // MetaFont. The string is set to QString() in the
   // locateFonts()-method, and content is gathered by the
   // mf_output_receiver(). This string is used by locateFonts() and
   // locateFonts(bool, bool, bool *) to display error messages.

@@ -78,7 +78,7 @@ QString KCHMMainTreeViewItem::getUrl( ) const
 		if ( !title )
 		{
 			qWarning ("Could not get item name for url '%s'", urls[i].ascii());
-			titles.push_back(QString::null);
+			titles.push_back(QString::null);	//krazy:exclude=nullstrassign for old broken gcc
 		}
 		else
 			titles.push_back(title);

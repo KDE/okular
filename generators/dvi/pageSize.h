@@ -188,8 +188,8 @@ public:
       297x210.
 
       @returns A name for the current page size, if the format has a
-      name, or QString::null otherwise. If the result is not
-      QString::null, it is guaranteed to be one of the strings
+      name, or QString() otherwise. If the result is not
+      QString(), it is guaranteed to be one of the strings
       returned by the pageSizeNames() method.
   */
   QString     formatName() const;

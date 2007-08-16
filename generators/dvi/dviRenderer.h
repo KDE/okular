@@ -153,7 +153,7 @@ public:
 //  void          editor_finished(const DVISourceEditor*);
 
 public slots:
-  void          exportPS(const QString& fname = QString::null, const QStringList& options = QStringList(), KPrinter* printer = 0);
+  void          exportPS(const QString& fname = QString::null, const QStringList& options = QStringList(), KPrinter* printer = 0);	//krazy:exclude=nullstrassign for old broken gcc
   void          exportPDF();
 
 //  void          showInfo();
@@ -161,7 +161,7 @@ public slots:
 
   void          embedPostScript();
 
-  /** simply emits "setStatusBarText( QString::null )". This is used
+  /** simply emits "setStatusBarText( QString::null )". This is used	//krazy:exclude=nullstrassign for old broken gcc
       in dviRenderer::mouseMoveEvent(), see the explanation there. */
   void          clearStatusBar();
 

@@ -167,7 +167,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
     if (mime->name().contains("pdf"))
     {
         ps=false;
-        dscForPDF=new KTempFile( QString::null, ".ps" );
+        dscForPDF=new KTempFile( QString::null, ".ps" );	//krazy:exclude=nullstrassign for old broken gcc
         Q_CHECK_PTR( dscForPDF );
         dscForPDF->setAutoDelete(true);
         if( dscForPDF->status() != 0 )

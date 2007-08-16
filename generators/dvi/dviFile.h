@@ -113,7 +113,7 @@ class dvifile : public bigEndianByteReader
     name, the method will then NOT convert the file, but simply return
     the name from the buffer
 
-  @returns The name of the PS file, or QString::null on failure.
+  @returns The name of the PS file, or QString() on failure.
   */
   QString convertPDFtoPS(const QString &PDFFilename, QString *converrorms=0);
 
@@ -141,7 +141,7 @@ class dvifile : public bigEndianByteReader
 
   This map contains names of PDF files that were converted to
   PostScript. The key is the name of the PDF file, the data the name
-  of the associated PS file, or QString::null, if the file could not
+  of the associated PS file, or QString(), if the file could not
   be converted. The PS files are deleted when the DVI-file is
   destructed. */
   QMap<QString, QString> convertedFiles;

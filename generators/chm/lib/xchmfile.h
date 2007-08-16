@@ -69,7 +69,7 @@ class KCHMParsedIndexEntry
 {
 	public:
 		KCHMParsedIndexEntry () { m_imagenum = -1; }
-		KCHMParsedIndexEntry ( QString name, KCHMParsedIndexEntry * parent = 0, QString url = QString::null, int imagenum = -1 ) : m_parent(parent), m_name (name), m_url (url), m_imagenum (imagenum) {}
+		KCHMParsedIndexEntry ( QString name, KCHMParsedIndexEntry * parent = 0, QString url = QString::null, int imagenum = -1 ) : m_parent(parent), m_name (name), m_url (url), m_imagenum (imagenum) {}	//krazy:exclude=nullstrassign for old broken gcc
 		
 	public:
 		KCHMParsedIndexEntry	*	m_parent;

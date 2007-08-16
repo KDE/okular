@@ -343,7 +343,7 @@ bool GSInternalDocument::savePages( const QString& saveFileName,
     
 /*    if( _format == PDF ) 
     {
-	KTempFile psSaveFile( QString::null, ".ps" );
+	KTempFile psSaveFile( QString::null, ".ps" );	//krazy:exclude=nullstrassign for old broken gcc
 	psSaveFile.setAutoDelete( true );
 	if( psSaveFile.status() != 0 )
 	    return false;

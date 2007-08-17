@@ -1171,7 +1171,7 @@ void Part::slotSaveFileAs()
     KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
-        if ( KIO::NetAccess::exists( saveUrl, false, widget() ) )
+        if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
         {
             if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
                 return;

@@ -435,7 +435,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     QString oEPSfilename = EPSfilename;
     //emit setStatusBarText( i18n("Converting PDF-file %1...", EPSfilename) );
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
-    //emit setStatusBarText( QString::null );
+    //emit setStatusBarText( QString::null );	//krazy:exclude=nullstrassign for old broken gcc
     if (convErrorMsg.isEmpty() != true) {
 /*      KMessageBox::detailedError(parentWidget,
                                  i18n("<qt><strong>File conversion error</strong> KDVI was not able to convert the external "

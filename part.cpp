@@ -780,7 +780,7 @@ bool Part::openFile()
         m_cliPresentation = false;
         QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
     }
-    /*    if (m_document->getXMLFile() != QString::null)	//krazy:exclude=nullstrassign for old broken gcc
+    /*    if (m_document->getXMLFile() != QString())
             setXMLFile(m_document->getXMLFile(),true);*/
     m_document->setupGui( actionCollection(), 0 );
     return true;

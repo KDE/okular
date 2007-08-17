@@ -153,7 +153,7 @@ public:
 //  void          editor_finished(const DVISourceEditor*);
 
 public slots:
-  void          exportPS(const QString& fname = QString::null, const QStringList& options = QStringList(), KPrinter* printer = 0);	//krazy:exclude=nullstrassign for old broken gcc
+  void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), KPrinter* printer = 0);
   void          exportPDF();
 
 //  void          showInfo();

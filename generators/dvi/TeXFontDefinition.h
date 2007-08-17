@@ -118,14 +118,14 @@ class TeXFontDefinition {
   /** For FREETYPE fonts, which use a map file, this field will
       contain the full name of the font (e.g. 'Computer Modern'). If
       the name does not exist, or cannot be found, this field will be
-      QString::null. Only subclasses of TeXFont should write into this
+      QString(). Only subclasses of TeXFont should write into this
       field. */
   QString        fullFontName;
 
   /** For FREETYPE fonts, which use a map file, this field will
       contain the full name of the font encoding (e.g. 'TexBase1'). If
       the encoding name does not exist, or cannot be found, this field
-      will be QString::null. Only subclasses of TeXFont should write
+      will be QString(). Only subclasses of TeXFont should write
       into this field. */
   QString        fullEncodingName;
 #endif

@@ -24,8 +24,8 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>1</shortcut>
     </tool>
-    <tool id="2" name="FreeText" pixmap="text">
-        <tooltip>Free Text Annotation (drag to select a zone)</tooltip>
+    <tool id="2" name="Inline Note" pixmap="text">
+        <tooltip>Inline Text Annotation (drag to select a zone)</tooltip>
         <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note" block="true">
             <annotation type="FreeText" color="#FFFF00" />
         </engine>
@@ -85,6 +85,5 @@ Engine/Annotation Types [specific attributes]:
         <engine type="PickPoint" color="#00ffff">
             <annotation type="GeomCircle" color="#00ffff" />
         </engine>
-        <shortcut>10</shortcut>
     </tool>
 </annotatingTools>

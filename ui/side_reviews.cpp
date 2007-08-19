@@ -312,7 +312,7 @@ void Reviews::addContents( const Okular::Page * page )
             // get author's name
             QString author = annotation->author();
             if ( author.isEmpty() )
-                author = i18n( "Unknown" );
+                author = i18nc( "Unknown author", "Unknown" );
 
             // find out a previous entry by author
             QTreeWidgetItemIterator it = pageItem
@@ -328,7 +328,7 @@ void Reviews::addContents( const Okular::Page * page )
                     authorItem = new QTreeWidgetItem( pageItem );
                 else
                     authorItem = new QTreeWidgetItem( m_listView );
-                QString icon = author != i18n( "Unknown" ) ? "personal" : "presence_away";
+                QString icon = author != i18nc( "Unknown author", "Unknown" ) ? "personal" : "presence_away";
                 authorItem->setText( 0, author );
                 authorItem->setIcon( 0, KIcon( icon ) );
             }

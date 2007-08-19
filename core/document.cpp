@@ -523,7 +523,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     {
         kWarning().nospace() << "Could not load '" << libname << "' library.";
         kWarning() << KLibLoader::self()->lastErrorMessage();
-        emit m_parent->error( i18n( "Could not load the necessary plugin to view the document" ), -1 );
+        emit m_parent->error( i18n( "Could not load the necessary plugin to view the document." ), -1 );
         return 0;
     }
 

@@ -155,9 +155,9 @@ class PickPointEngine : public AnnotatorEngine
             if ( typeString == "FreeText")	//<annotation type="Text"
             {
                 //note dialog
-                QString prompt = i18n( "Please input the free text:" ) ;
+                QString prompt = i18n( "Text of the new note:" );
                 bool resok;
-                QString note = KInputDialog::getMultiLineText( i18n( "Free Text" ), prompt, QString(), &resok );
+                QString note = KInputDialog::getMultiLineText( i18n( "New Text Note" ), prompt, QString(), &resok );
                 if(resok)
                 {
                     //add note

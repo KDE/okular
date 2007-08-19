@@ -147,13 +147,13 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
             if(((Okular::TextAnnotation*)m_annot)->textType()==Okular::TextAnnotation::Linked)
                 captiontext = i18n( "Note Properties" );
             else
-                captiontext = i18n( "FreeText Properties" );
+                captiontext = i18n( "Inline Note Properties" );
             break;
         case Okular::Annotation::ALine:
             captiontext = i18n( "Line Properties" );
             break;
         case Okular::Annotation::AGeom:
-            captiontext = i18n( "Geom Properties" );
+            captiontext = i18n( "Geometry Properties" );
             break;
         case Okular::Annotation::AHighlight:
             captiontext = i18n( "Highlight Properties" );

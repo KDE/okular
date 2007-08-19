@@ -27,13 +27,13 @@ QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )
             if( ( (Okular::TextAnnotation*)ann )->textType() == Okular::TextAnnotation::Linked )
                 ret = i18n( "Note" );
             else
-                ret = i18n( "FreeText" );
+                ret = i18n( "Inline Note" );
             break;
         case Okular::Annotation::ALine:
             ret = i18n( "Line" );
             break;
         case Okular::Annotation::AGeom:
-            ret = i18n( "Geom" );
+            ret = i18n( "Geometry" );
             break;
         case Okular::Annotation::AHighlight:
             ret = i18n( "Highlight" );

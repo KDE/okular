@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Service
 Name=Ghostscript
+Name[ne]=घोस्टस्क्रिप्ट
 Name[pa]=ਗੋਸਟ-ਸਕ੍ਰਿਪਟ
 Name[pt]=GhostScript
 Name[pt_BR]=GhostScript
@@ -13,6 +14,7 @@ Comment[de]=Unterstützung für Ghostscript PS/PDF in Okular
 Comment[el]=Σύστημα υποστήριξης Ghostscript PS/PDF για το okular
 Comment[es]=Motor PS/PDF de Ghostscript para Okular
 Comment[ja]=okular の Ghostscript PS/PDF バックエンド
+Comment[ne]=ओकुलरका लागि घोस्टस्क्रिप्ट पीएस/पीडीएफ ब्याकइन्ड
 Comment[nl]=GhostScript PS/PDF-backend voor Okular
 Comment[pt]=Infra-estrutura de PS/PDF do Ghostscript para o okular
 Comment[pt_BR]=Infra-estrutura de PS/PDF do Ghostscript para o okular

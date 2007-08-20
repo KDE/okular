@@ -17,6 +17,7 @@
 #include <kurl.h>
 #include <dom/html_misc.h>
 #include <dom/dom_node.h>
+#include <dom/dom_html.h>
 
 #include <okular/core/action.h>
 #include <okular/core/observer.h> //for PAGEVIEW_ID

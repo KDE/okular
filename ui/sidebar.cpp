@@ -10,8 +10,10 @@
 #include "sidebar.h"
 
 #include <qabstractitemdelegate.h>
+#include <qaction.h>
 #include <qevent.h>
 #include <qfont.h>
+#include <qfontmetrics.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
@@ -20,6 +22,9 @@
 #include <qscrollbar.h>
 #include <qsplitter.h>
 #include <qstackedwidget.h>
+
+#include <klocale.h>
+#include <kmenu.h>
 
 #include "settings.h"
 
@@ -35,7 +40,7 @@ class SidebarItem : public QListWidgetItem
         {
             setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             setIcon( icon );
-            setText( QString() );
+            setText( text );
             setToolTip( text );
         }
 
@@ -50,19 +55,31 @@ class SidebarItem : public QListWidgetItem
 
 
 /* A simple delegate to paint the icon of each item */
+#define ITEM_MARGIN_LEFT 5
+#define ITEM_MARGIN_TOP 5
+#define ITEM_MARGIN_RIGHT 5
+#define ITEM_MARGIN_BOTTOM 5
+#define ITEM_PADDING 5
+
 class SidebarDelegate : public QAbstractItemDelegate
 {
     public:
         SidebarDelegate( QObject *parent = 0 );
         ~SidebarDelegate();
 
+        void setShowText( bool show );
+        bool isTextShown() const;
+
         // from QAbstractItemDelegate
         void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
         QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+
+    private:
+        bool m_showText;
 };
 
 SidebarDelegate::SidebarDelegate( QObject *parent )
-    : QAbstractItemDelegate( parent )
+    : QAbstractItemDelegate( parent ), m_showText( true )
 {
 }
 
@@ -70,26 +87,41 @@ SidebarDelegate::~SidebarDelegate()
 {
 }
 
+void SidebarDelegate::setShowText( bool show )
+{
+    m_showText = show;
+}
+
+bool SidebarDelegate::isTextShown() const
+{
+    return m_showText;
+}
+
 void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
     QBrush backBrush;
+    QBrush foreBrush;
     bool disabled = false;
     if ( !( option.state & QStyle::State_Enabled ) )
     {
         backBrush = option.palette.brush( QPalette::Disabled, QPalette::Base );
+        foreBrush = option.palette.brush( QPalette::Disabled, QPalette::Text );
         disabled = true;
     }
     else if ( option.state & ( QStyle::State_HasFocus | QStyle::State_Selected ) )
     {
         backBrush = option.palette.brush( QPalette::Highlight );
+        foreBrush = option.palette.brush( QPalette::HighlightedText );
     }
     else if ( option.state & QStyle::State_MouseOver )
     {
         backBrush = option.palette.color( QPalette::Highlight ).light( 115 );
+        foreBrush = option.palette.brush( QPalette::HighlightedText );
     }
     else /*if ( option.state & QStyle::State_Enabled )*/
     {
         backBrush = option.palette.brush( QPalette::Base );
+        foreBrush = option.palette.brush( QPalette::Text );
     }
     painter->fillRect( option.rect, backBrush );
     QIcon icon = index.data( Qt::DecorationRole ).value< QIcon >();
@@ -97,18 +129,39 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     {
         QPoint iconpos(
             ( option.rect.width() - option.decorationSize.width() ) / 2,
-            ( option.rect.height() - option.decorationSize.height() ) / 2
+            ITEM_MARGIN_TOP
         );
         iconpos += option.rect.topLeft();
         QIcon::Mode iconmode = disabled ? QIcon::Disabled : QIcon::Normal;
         painter->drawPixmap( iconpos, icon.pixmap( option.decorationSize, iconmode ) );
     }
+
+    if ( m_showText )
+    {
+        QString text = index.data( Qt::DisplayRole ).toString();
+        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( text );
+        QPoint textPos(
+            ITEM_MARGIN_LEFT + ( option.rect.width() - ITEM_MARGIN_LEFT - ITEM_MARGIN_RIGHT - fontBoundaries.width() ) / 2,
+            ITEM_MARGIN_TOP + option.decorationSize.height() + ITEM_PADDING
+        );
+        fontBoundaries.translate( -fontBoundaries.topLeft() );
+        fontBoundaries.translate( textPos );
+        fontBoundaries.translate( option.rect.topLeft() );
+        painter->setBrush( foreBrush );
+        painter->drawText( fontBoundaries, Qt::AlignCenter, text );
+    }
 }
 
 QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
-    Q_UNUSED( index )
-    return option.decorationSize + QSize( 10, 10 );
+    QSize baseSize( option.decorationSize.width(), option.decorationSize.height() );
+    if ( m_showText )
+    {
+        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( index.data( Qt::DisplayRole ).toString() );
+        baseSize.setWidth( qMax( fontBoundaries.width(), baseSize.width() ) );
+        baseSize.setHeight( baseSize.height() + fontBoundaries.height() + ITEM_PADDING );
+    }
+    return baseSize + QSize( ITEM_MARGIN_LEFT + ITEM_MARGIN_RIGHT, ITEM_MARGIN_TOP + ITEM_MARGIN_BOTTOM );
 }
 
 
@@ -192,11 +245,14 @@ class Sidebar::Private
 {
 public:
     Private()
-        : sideWidget( 0 ), bottomWidget( 0 ), splitterSizesSet( false )
+        : sideWidget( 0 ), bottomWidget( 0 ), splitterSizesSet( false ),
+          itemsHeight( 0 )
     {
     }
 
-    QListWidget *list;
+    void adjustListSize( bool expand = true );
+
+    SidebarListWidget *list;
     QSplitter *splitter;
     QStackedWidget *stack;
     QWidget *sideContainer;
@@ -206,7 +262,25 @@ public:
     QWidget *bottomWidget;
     QList< SidebarItem* > pages;
     bool splitterSizesSet;
+    int itemsHeight;
+    SidebarDelegate *sideDelegate;
 };
+
+void Sidebar::Private::adjustListSize( bool expand )
+{
+    QRect bottomElemRect(
+        QPoint( 0, 0 ),
+        list->sizeHintForIndex( list->model()->index( list->count() - 1, 0 ) )
+    );
+    bottomElemRect.translate( 0, bottomElemRect.height() * ( list->count() - 1 ) );
+    itemsHeight = bottomElemRect.height() * list->count();
+    list->setMinimumHeight( itemsHeight + list->frameWidth() * 2 );
+    int curWidth = list->minimumWidth();
+    int newWidth = expand
+                   ? qMax( bottomElemRect.width() + list->frameWidth() * 2, curWidth )
+                   : qMin( bottomElemRect.width() + list->frameWidth() * 2, curWidth );
+    list->setFixedWidth( newWidth );
+}
 
 
 Sidebar::Sidebar( QWidget *parent )
@@ -219,16 +293,14 @@ Sidebar::Sidebar( QWidget *parent )
     mainlay->addWidget( d->list );
     d->list->setMouseTracking( true );
     d->list->viewport()->setAttribute( Qt::WA_Hover );
-    d->list->setItemDelegate( new SidebarDelegate( d->list ) );
+    d->sideDelegate = new SidebarDelegate( d->list );
+    d->list->setItemDelegate( d->sideDelegate );
     d->list->setUniformItemSizes( true );
     d->list->setSelectionMode( QAbstractItemView::SingleSelection );
     d->list->setIconSize( QSize( 48, 48 ) );
     d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    d->list->setFixedWidth(
-        d->list->iconSize().width() +
-        d->list->verticalScrollBar()->sizeHint().width() +
-        d->list->frameWidth() * 2
-    );
+    d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    d->list->setContextMenuPolicy( Qt::CustomContextMenu );
     QPalette pal = d->list->palette();
     pal.setBrush( QPalette::Base, pal.brush( QPalette::Window ) );
     d->list->setPalette( pal );
@@ -257,6 +329,8 @@ Sidebar::Sidebar( QWidget *parent )
     d->sideContainer->hide();
 
     connect( d->list, SIGNAL( itemClicked( QListWidgetItem* ) ), this, SLOT( itemClicked( QListWidgetItem* ) ) );
+    connect( d->list, SIGNAL( customContextMenuRequested( const QPoint & ) ),
+             this, SLOT( listContextMenu( const QPoint & ) ) );
     connect( d->splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );
 }
 
@@ -276,10 +350,7 @@ int Sidebar::addItem( QWidget *widget, const QIcon &icon, const QString &text )
     widget->setParent( d->stack );
     d->stack->addWidget( widget );
     // updating the minimum height of the icon view, so all are visible with no scrolling
-    d->list->setMinimumHeight(
-        d->list->visualRect( d->list->model()->index( d->pages.count() - 1, 0 ) ).bottom() +
-        d->list->frameWidth() * 2
-    );
+    d->adjustListSize( true );
     return d->pages.count() - 1;
 }
 
@@ -287,11 +358,11 @@ void Sidebar::setMainWidget( QWidget *widget )
 {
     delete d->sideWidget;
     d->sideWidget = widget;
-    if ( widget )
+    if ( d->sideWidget )
     {
         // setting the splitter as parent for the widget automatically plugs it
         // into the splitter, neat!
-        widget->setParent( d->splitter );
+        d->sideWidget->setParent( d->splitter );
 
         if ( !d->splitterSizesSet )
         {
@@ -312,9 +383,9 @@ void Sidebar::setBottomWidget( QWidget *widget )
 {
     delete d->bottomWidget;
     d->bottomWidget = widget;
-    if ( widget )
+    if ( d->bottomWidget )
     {
-        widget->setParent( this );
+        d->bottomWidget->setParent( this );
         d->vlay->addWidget( d->bottomWidget );
     }
 }
@@ -423,5 +494,23 @@ void Sidebar::saveSplitterSize() const
     Okular::Settings::self()->writeConfig();
 }
 
+void Sidebar::listContextMenu( const QPoint &pos )
+{
+    KMenu menu( this );
+    menu.addTitle( i18n( "Okular" ) );
+    QAction *showTextAct = menu.addAction( i18n( "Show Text" ) );
+    showTextAct->setCheckable( true );
+    showTextAct->setChecked( d->sideDelegate->isTextShown() );
+    connect( showTextAct, SIGNAL( toggled( bool ) ), this, SLOT( showTextToggled( bool ) ) );
+    menu.exec( mapToGlobal( pos ) );
+}
+
+void Sidebar::showTextToggled( bool on )
+{
+    d->sideDelegate->setShowText( on );
+    d->adjustListSize( on );
+    d->list->reset();
+    d->list->update();
+}
 
 #include "sidebar.moc"

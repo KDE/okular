@@ -38,6 +38,8 @@ class Sidebar : public QWidget
     private slots:
         void itemClicked( QListWidgetItem *item );
         void splitterMoved( int pos, int index );
+        void listContextMenu( const QPoint & );
+        void showTextToggled( bool );
 
     private:
         void saveSplitterSize() const;

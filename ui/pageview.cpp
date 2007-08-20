@@ -419,6 +419,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL( triggered() ), this, SLOT( slotSetMouseNormal() ) );
+    d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
     d->aMouseNormal->setActionGroup( actGroup );
@@ -427,6 +428,7 @@ void PageView::setupActions( KActionCollection * ac )
     KAction * mz  = new KAction(KIcon( "zoom-original" ), i18n("&Zoom Tool"), this);
     ac->addAction("mouse_zoom", mz );
     connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
+    mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
     mz->setActionGroup( actGroup );
@@ -434,6 +436,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect  = new KAction(KIcon( "frame-edit" ), i18n("&Select Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
+    d->aMouseSelect->setIconText( i18nc( "Select Tool", "Select" ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
     d->aMouseSelect->setActionGroup( actGroup );
@@ -441,6 +444,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect  = new KAction(KIcon( "text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
     connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
+    d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
     d->aMouseTextSelect->setActionGroup( actGroup );

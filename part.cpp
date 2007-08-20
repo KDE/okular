@@ -274,6 +274,8 @@ m_searchStarted(false), m_cliPresentation(false)
 
     m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
     ac->addAction("previous_page", m_prevPage);
+    m_prevPage->setIconText( i18nc( "Previous page", "Previous" ) );
+    m_prevPage->setToolTip( i18n( "Go back to the Previous Page" ) );
     m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
     m_prevPage->setShortcut( 0 );
     // dirty way to activate prev page when pressing miniBar's button
@@ -282,6 +284,8 @@ m_searchStarted(false), m_cliPresentation(false)
 
     m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
     ac->addAction("next_page", m_nextPage);
+    m_nextPage->setIconText( i18nc( "Next page", "Next" ) );
+    m_nextPage->setToolTip( i18n( "Advance to the Next Page" ) );
     m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
     m_nextPage->setShortcut( 0 );
     // dirty way to activate next page when pressing miniBar's button

@@ -76,9 +76,8 @@
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
-  <Separator/>
-  <Action name="history_back"/>
-  <Action name="history_forward" />
+  <Action name="previous_page"/>
+  <Action name="next_page"/>
   <Separator/>
   <Action name="zoom_to" />
   <Action name="zoom_out"/>

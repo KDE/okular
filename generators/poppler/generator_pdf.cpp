@@ -820,7 +820,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
-    kDebug(PDFDebug) << "calling" << k_funcinfo;
+    kDebug(PDFDebug) << "calling" ;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     docLock.lock();

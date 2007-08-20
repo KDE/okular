@@ -109,7 +109,7 @@ int AudioPlayerPrivate::newId() const
 
 bool AudioPlayerPrivate::play( const SoundInfo& si )
 {
-    kDebug() << k_funcinfo;
+    kDebug() ;
     PlayData * data = new PlayData();
     data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
     data->m_output->setVolume( si.volume );
@@ -203,7 +203,7 @@ void AudioPlayerPrivate::finished( int id )
         delete it.value();
         m_playing.erase( it );
     }
-    kDebug() << k_funcinfo << "finished," << m_playing.count();
+    kDebug() << "finished," << m_playing.count();
 }
 
 
@@ -233,7 +233,7 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
     if ( sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile() )
         return;
 
-    kDebug() << k_funcinfo;
+    kDebug() ;
     SoundInfo si( sound, linksound );
 
     // if the mix flag of the new sound is false, then the currently playing

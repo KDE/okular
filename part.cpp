@@ -25,6 +25,7 @@
 
 // qt/kde includes
 #include <qapplication.h>
+#include <qfile.h>
 #include <qsplitter.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -121,6 +122,14 @@ const QStringList &args )
 m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_searchStarted(false), m_cliPresentation(false)
 {
+    // first necessary step: copy the configuration from kpdf, if available
+    QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
+    QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
+    if ( !QFile::exists( newokularconffile ) && QFile::exists( oldkpdfconffile ) )
+    {
+        QFile::copy( oldkpdfconffile, newokularconffile );
+    }
+
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
     // connect the started signal to tell the job the mimetypes we like

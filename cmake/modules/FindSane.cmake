@@ -9,10 +9,10 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-if (SANE_INCLUDE_DIR)
+if (SANE_INCLUDE_DIR AND SANE_LIBRARY)
   # Already in cache, be silent
   set(Sane_FIND_QUIETLY TRUE)
-endif (SANE_INCLUDE_DIR)
+endif (SANE_INCLUDE_DIR AND SANE_LIBRARY)
 
 FIND_PATH(SANE_INCLUDE_DIR sane/sane.h)
 

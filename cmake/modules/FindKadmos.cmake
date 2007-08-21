@@ -8,10 +8,10 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-if (KADMOS_INCLUDE_DIR)
+if (KADMOS_INCLUDE_DIR AND KADMOS_LIBRARY)
   # Already in cache, be silent
   set(Kadmos_FIND_QUIETLY TRUE)
-endif (KADMOS_INCLUDE_DIR)
+endif (KADMOS_INCLUDE_DIR AND KADMOS_LIBRARY)
 
 FIND_PATH(KADMOS_INCLUDE_DIR kadmos.h)
 

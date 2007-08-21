@@ -32,7 +32,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 In progress [working on]:
 -> core: provide a binary compatible okularcore library to extend the format capabilities
 -> core: forms support (mainly for pdf) (BR91809)
--> KPDF -> okular conversion of datafiles {document data(in progress), kwallet passwords(missing)}
+-> KPDF -> okular conversion of configuration & datafiles {configuration(done), document data(in progress), kwallet passwords(missing)}
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link
    provide a configuration widget to choose the editor and configure a custom one

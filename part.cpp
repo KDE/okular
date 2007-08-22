@@ -612,7 +612,7 @@ void Part::slotDoFileDirty()
     m_pageView->showText(i18n("Reloading the document..."), 0);
   }
 
-  if (KParts::ReadOnlyPart::openURL(m_file))
+  if (KParts::ReadOnlyPart::openURL(KURL::fromPathOrURL(m_file)))
   {
     if (m_viewportDirty.pageNumber >= (int)m_document->pages()) m_viewportDirty.pageNumber = (int)m_document->pages() - 1;
     m_document->setViewport(m_viewportDirty);

@@ -100,28 +100,28 @@ bool SidebarDelegate::isTextShown() const
 void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
     QBrush backBrush;
-    QBrush foreBrush;
+    QColor foreColor;
     bool disabled = false;
     if ( !( option.state & QStyle::State_Enabled ) )
     {
         backBrush = option.palette.brush( QPalette::Disabled, QPalette::Base );
-        foreBrush = option.palette.brush( QPalette::Disabled, QPalette::Text );
+        foreColor = option.palette.color( QPalette::Disabled, QPalette::Text );
         disabled = true;
     }
     else if ( option.state & ( QStyle::State_HasFocus | QStyle::State_Selected ) )
     {
         backBrush = option.palette.brush( QPalette::Highlight );
-        foreBrush = option.palette.brush( QPalette::HighlightedText );
+        foreColor = option.palette.color( QPalette::HighlightedText );
     }
     else if ( option.state & QStyle::State_MouseOver )
     {
         backBrush = option.palette.color( QPalette::Highlight ).light( 115 );
-        foreBrush = option.palette.brush( QPalette::HighlightedText );
+        foreColor = option.palette.color( QPalette::HighlightedText );
     }
     else /*if ( option.state & QStyle::State_Enabled )*/
     {
         backBrush = option.palette.brush( QPalette::Base );
-        foreBrush = option.palette.brush( QPalette::Text );
+        foreColor = option.palette.color( QPalette::Text );
     }
     painter->fillRect( option.rect, backBrush );
     QIcon icon = index.data( Qt::DecorationRole ).value< QIcon >();
@@ -147,7 +147,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
         fontBoundaries.translate( -fontBoundaries.topLeft() );
         fontBoundaries.translate( textPos );
         fontBoundaries.translate( option.rect.topLeft() );
-        painter->setBrush( foreBrush );
+        painter->setPen( foreColor );
         painter->drawText( fontBoundaries, Qt::AlignCenter, text );
     }
 }
@@ -433,8 +433,7 @@ void Sidebar::setCurrentIndex( int index )
         return;
 
     itemClicked( d->pages.at( index ) );
-    d->list->selectionModel()->clear();
-    d->list->setCurrentRow( index );
+    d->list->selectionModel()->select( d->list->model()->index( index, 0 ), QItemSelectionModel::ClearAndSelect );
 }
 
 int Sidebar::currentIndex() const

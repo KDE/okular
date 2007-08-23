@@ -10,6 +10,7 @@
 #include "findbar.h"
 
 // qt/kde includes
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qmenu.h>
 #include <qtoolbutton.h>
@@ -33,6 +34,9 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
     lay->addWidget( closeBtn );
+
+    QLabel * label = new QLabel( i18nc( "Find text", "Find:" ), this );
+    lay->addWidget( label );
 
     m_text = new SearchLineEdit( this, document );
     m_text->setSearchCaseSensitivity( Qt::CaseInsensitive );

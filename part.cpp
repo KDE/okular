@@ -177,7 +177,7 @@ m_searchStarted(false), m_cliPresentation(false)
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "format-justify-right"), i18n("Contents") );
+    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []

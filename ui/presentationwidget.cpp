@@ -157,8 +157,13 @@ PresentationWidget::~PresentationWidget()
 }
 
 
-void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet, bool /*documentChanged*/ )
+void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
 {
+    // same document, nothing to change - here we assume the document sets up
+    // us with the whole document set as first notifySetup()
+    if ( !documentChanged )
+        return;
+
     // delete previous frames (if any (shouldn't be))
     QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
@@ -220,7 +225,7 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
     // check if it's the last requested pixmap. if so update the widget.
     if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations | DocumentObserver::Highlights ) ) && pageNumber == m_frameIndex )
-        generatePage( changedFlags & DocumentObserver::Annotations );
+        generatePage( changedFlags & ( DocumentObserver::Annotations | DocumentObserver::Highlights ) );
 }
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const

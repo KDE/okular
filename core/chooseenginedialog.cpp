@@ -30,9 +30,9 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMi
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
-        i18n( "More than one backend found for the MIME type:<br />"
+        i18n( "<qt>More than one backend found for the MIME type:<br />"
               "<b>%1</b> (%2).<br /><br />"
-              "Please select which one to use:", mime->comment(), mime->name() ) );
+              "Please select which one to use:</qt>", mime->comment(), mime->name() ) );
 }
 
 ChooseEngineDialog::~ChooseEngineDialog()

@@ -611,7 +611,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Reports that the current search finished
          */
-        void searchFinished(Okular::Document::SearchStatus endStatus);
+        void searchFinished( int id, Okular::Document::SearchStatus endStatus );
 
     private:
         friend class DocumentPrivate;

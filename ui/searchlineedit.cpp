@@ -32,7 +32,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
              this, SLOT( startSearch() ) );
 
     connect(this, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
-    connect(document, SIGNAL( searchFinished(Okular::Document::SearchStatus) ), this, SLOT( searchFinished(Okular::Document::SearchStatus) ));
+    connect(document, SIGNAL( searchFinished(int, Okular::Document::SearchStatus) ), this, SLOT( searchFinished(int, Okular::Document::SearchStatus) ));
 }
 
 void SearchLineEdit::clearText()
@@ -126,8 +126,12 @@ void SearchLineEdit::startSearch()
         m_document->resetSearch( m_id );
 }
 
-void SearchLineEdit::searchFinished(Okular::Document::SearchStatus endStatus)
+void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endStatus )
 {
+    // ignore the searches not started by this search edit
+    if ( id != m_id )
+        return;
+
     // if not found, use warning colors
     if ( endStatus == Okular::Document::NoMatchFound )
     {

@@ -818,7 +818,7 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
-        emit m_parent->searchFinished(Document::SearchCancelled);
+        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         delete pagesToNotify;
         return;
     }
@@ -894,8 +894,8 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
         foreach(DocumentObserver *observer, m_observers)
             observer->notifyPageChanged( pageNumber, DocumentObserver::Highlights );
 
-    if (foundAMatch) emit m_parent->searchFinished(Document::MatchFound);
-    else emit m_parent->searchFinished(Document::NoMatchFound);
+    if (foundAMatch) emit m_parent->searchFinished( searchID, Document::MatchFound );
+    else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
 
     delete pagesToNotify;
 }
@@ -911,7 +911,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         typedef QVector<RegularAreaRect *> MatchesVector;
 
         QApplication::restoreOverrideCursor();
-        emit m_parent->searchFinished(Document::SearchCancelled);
+        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         foreach(const MatchesVector &mv, *pageMatches) qDeleteAll(mv);
         delete pageMatches;
         delete pagesToNotify;
@@ -976,8 +976,8 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             foreach(DocumentObserver *observer, m_observers)
                 observer->notifyPageChanged( pageNumber, DocumentObserver::Highlights );
 
-        if (foundAMatch) emit m_parent->searchFinished(Document::MatchFound);
-        else emit m_parent->searchFinished(Document::NoMatchFound);
+        if (foundAMatch) emit m_parent->searchFinished(searchID, Document::MatchFound );
+        else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
 
         delete pageMatches;
         delete pagesToNotify;
@@ -996,7 +996,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         typedef QVector<MatchColor> MatchesVector;
 
         QApplication::restoreOverrideCursor();
-        emit m_parent->searchFinished(Document::SearchCancelled);
+        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
 
         foreach(const MatchesVector &mv, *pageMatches)
         {
@@ -1094,8 +1094,8 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             foreach(DocumentObserver *observer, m_observers)
                 observer->notifyPageChanged( pageNumber, DocumentObserver::Highlights );
 
-        if (foundAMatch) emit m_parent->searchFinished(Document::MatchFound);
-        else emit m_parent->searchFinished(Document::NoMatchFound);
+        if (foundAMatch) emit m_parent->searchFinished( searchID, Document::MatchFound );
+        else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
 
         delete pageMatches;
         delete pagesToNotify;
@@ -2110,7 +2110,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     // safety checks: don't perform searches on empty or unsearchable docs
     if ( !d->m_generator || !d->m_generator->hasFeature( Generator::TextExtraction ) || d->m_pagesVector.isEmpty() )
     {
-        emit searchFinished(NoMatchFound);
+        emit searchFinished( searchID, NoMatchFound );
         return;
     }
 
@@ -2123,7 +2123,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         searchDialog->setMainWidget( searchLabel );
 
         QTimer::singleShot(500, searchDialog, SLOT(show()));
-        connect(this, SIGNAL( searchFinished(Okular::Document::SearchStatus) ), searchDialog, SLOT(deleteLater()));
+        connect(this, SIGNAL( searchFinished(int, Okular::Document::SearchStatus) ), searchDialog, SLOT(deleteLater()));
         connect(searchDialog, SIGNAL( finished() ), this, SLOT(cancelSearch()));
     }
 
@@ -2215,7 +2215,7 @@ void Document::continueSearch( int searchID )
     QMap< int, RunningSearch * >::const_iterator it = d->m_searches.constFind( searchID );
     if ( it == d->m_searches.constEnd() )
     {
-        emit searchFinished(NoMatchFound);
+        emit searchFinished( searchID, NoMatchFound );
         return;
     }
 

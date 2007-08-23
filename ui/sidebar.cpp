@@ -489,12 +489,16 @@ int Sidebar::currentIndex() const
 
 void Sidebar::setSidebarVisibility( bool visible )
 {
+    if ( visible == d->list->isVisible() )
+        return;
+
     static bool sideWasVisible = d->sideContainer->isVisible();
 
     d->list->setVisible( visible );
     if ( visible )
     {
         d->sideContainer->setVisible( sideWasVisible );
+        sideWasVisible = true;
     }
     else
     {

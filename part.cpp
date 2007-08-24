@@ -182,7 +182,7 @@ m_searchStarted(false), m_cliPresentation(false)
 
     // [left toolbox: Thumbnails and Bookmarks] | []
     KVBox * thumbsBox = new ThumbnailsBox( 0 );
-    thumbsBox->setSpacing( 4 );
+    thumbsBox->setSpacing( 6 );
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );

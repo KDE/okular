@@ -73,14 +73,10 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
-
-    QHBoxLayout *searchlay = new QHBoxLayout();
-    searchlay->setMargin( 2 );
-    searchlay->setSpacing( 2 );
-    mainlay->addLayout( searchlay );
+    mainlay->setSpacing( 6 );
 
     m_searchLine = new KTreeWidgetSearchLine( this );
-    searchlay->addWidget( m_searchLine );
+    mainlay->addWidget( m_searchLine );
 
     m_tree = new QTreeWidget( this );
     mainlay->addWidget( m_tree );

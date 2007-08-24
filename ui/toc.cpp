@@ -93,14 +93,10 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
-
-    QHBoxLayout *searchlay = new QHBoxLayout();
-    searchlay->setMargin( 2 );
-    searchlay->setSpacing( 2 );
-    mainlay->addLayout( searchlay );
+    mainlay->setSpacing( 6 );
 
     m_searchLine = new KTreeWidgetSearchLine( this );
-    searchlay->addWidget( m_searchLine );
+    mainlay->addWidget( m_searchLine );
 
     m_treeView = new QTreeWidget( this );
     mainlay->addWidget( m_treeView );

@@ -38,28 +38,23 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // create widgets and layout them vertically
     QVBoxLayout * vLayout = new QVBoxLayout( this );
     vLayout->setMargin( 0 );
-    vLayout->setSpacing( 4 );
-    m_toolBar1 = new QToolBar( this );
-    m_toolBar1->setObjectName( "reviewSearchBar" );
-    vLayout->addWidget( m_toolBar1 );
-    QSizePolicy sp = m_toolBar1->sizePolicy();
-    sp.setVerticalPolicy( QSizePolicy::Minimum );
-    m_toolBar1->setSizePolicy( sp );
+    vLayout->setSpacing( 6 );
+
     m_listView = new QTreeWidget( this );
-    vLayout->addWidget( m_listView );
     m_toolBar2 = new QToolBar( this );
     m_toolBar2->setObjectName( "reviewOptsBar" );
-    vLayout->addWidget( m_toolBar2 );
-    sp = m_toolBar2->sizePolicy();
+    QSizePolicy sp = m_toolBar2->sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     m_toolBar2->setSizePolicy( sp );
 
     // setup 1-UPPER toolbar and searchLine
-    m_searchLine = new KTreeWidgetSearchLine( m_toolBar1, m_listView );
-    m_toolBar1->setIconSize( QSize( 16, 16 ) );
-    m_toolBar1->setMovable( false );
-    // - add Search line
-    m_toolBar1->addWidget(m_searchLine);
+    m_searchLine = new KTreeWidgetSearchLine( this, m_listView );
+
+    vLayout->addWidget( m_searchLine );
+
+    vLayout->addWidget( m_listView );
+
+    vLayout->addWidget( m_toolBar2 );
 
     // setup 2-LOWER toolbar
     m_toolBar2->setIconSize( QSize( 16, 16 ) );

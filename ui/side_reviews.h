@@ -63,7 +63,6 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void requestListViewUpdate( int delayms = 200 );
 
         // data fields (GUI)
-        QToolBar * m_toolBar1;
         QToolBar * m_toolBar2;
         QTreeWidget * m_listView;
         KTreeWidgetSearchLine * m_searchLine;

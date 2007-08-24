@@ -10,6 +10,7 @@
 #include "searchwidget.h"
 
 // qt/kde includes
+#include <qlayout.h>
 #include <qmenu.h>
 #include <qaction.h>
 #include <qsizepolicy.h>
@@ -21,15 +22,17 @@
 #include "searchlineedit.h"
 
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
-    : QToolBar( parent )
+    : QWidget( parent )
 {
     setObjectName( "iSearchBar" );
-    // change toolbar appearance
-    setIconSize(QSize(16, 16));
-    setMovable( false );
+
     QSizePolicy sp = sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     setSizePolicy( sp );
+
+    QHBoxLayout * mainlay = new QHBoxLayout( this );
+    mainlay->setMargin( 0 );
+    mainlay->setSpacing( 3 );
 
     // 2. text line
     m_lineEdit = new SearchLineEdit( this, document );
@@ -40,7 +43,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     m_lineEdit->setSearchType( Okular::Document::GoogleAll );
     m_lineEdit->setSearchId( SW_SEARCH_ID );
     m_lineEdit->setSearchColor( qRgb( 0, 183, 255 ) );
-    addWidget(m_lineEdit);
+    mainlay->addWidget( m_lineEdit );
 
     // 3.1. create the popup menu for changing filtering features
     m_menu = new QMenu( this );
@@ -64,7 +67,8 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
 
     // 3.2. create the toolbar button that spawns the popup menu
     QToolButton *optionsMenuAction =  new QToolButton( this );
-    addWidget(optionsMenuAction);
+    mainlay->addWidget( optionsMenuAction );
+    optionsMenuAction->setAutoRaise( true );
     optionsMenuAction->setIcon( KIcon( "okular" ) );
     optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
     optionsMenuAction->setPopupMode( QToolButton::InstantPopup );

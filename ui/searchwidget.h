@@ -10,7 +10,7 @@
 #ifndef _OKULAR_SEARCHWIDGET_H_
 #define _OKULAR_SEARCHWIDGET_H_
 
-#include <qtoolbar.h>
+#include <qwidget.h>
 
 namespace Okular {
 class Document;
@@ -29,7 +29,7 @@ class SearchLineEdit;
  * It supports case sensitive/unsensitive(default) and provieds a button
  * for switching between the 2 modes.
  */
-class SearchWidget : public QToolBar
+class SearchWidget : public QWidget
 {
     Q_OBJECT
     public:

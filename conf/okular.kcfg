@@ -178,6 +178,9 @@
   <entry key="TocPageColumn" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="SidebarShowText" type="Bool" >
+   <default>true</default>
+  </entry>
  </group>
  <group name="PageView" >
   <entry key="CenterFirstPageInRow" type="Bool" >

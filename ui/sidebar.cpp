@@ -340,6 +340,7 @@ Sidebar::Sidebar( QWidget *parent )
     d->list->setMouseTracking( true );
     d->list->viewport()->setAttribute( Qt::WA_Hover );
     d->sideDelegate = new SidebarDelegate( d->list );
+    d->sideDelegate->setShowText( Okular::Settings::sidebarShowText() );
     d->list->setItemDelegate( d->sideDelegate );
     d->list->setUniformItemSizes( true );
     d->list->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -569,6 +570,8 @@ void Sidebar::showTextToggled( bool on )
     d->adjustListSize( on );
     d->list->reset();
     d->list->update();
+    Okular::Settings::setSidebarShowText( on );
+    Okular::Settings::self()->writeConfig();
 }
 
 #include "sidebar.moc"

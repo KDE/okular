@@ -479,7 +479,9 @@ void Sidebar::setCurrentIndex( int index )
         return;
 
     itemClicked( d->pages.at( index ) );
-    d->list->selectionModel()->select( d->list->model()->index( index, 0 ), QItemSelectionModel::ClearAndSelect );
+    QModelIndex modelindex = d->list->model()->index( index, 0 );
+    d->list->setCurrentIndex( modelindex );
+    d->list->selectionModel()->select( modelindex, QItemSelectionModel::ClearAndSelect );
 }
 
 int Sidebar::currentIndex() const
@@ -516,10 +518,17 @@ void Sidebar::itemClicked( QListWidgetItem *item )
     if ( !sbItem )
         return;
 
-    if ( !d->sideContainer->isHidden() && sbItem->widget() == d->stack->currentWidget() )
+    if ( sbItem->widget() == d->stack->currentWidget() )
     {
-        d->list->selectionModel()->clear();
-        d->sideContainer->hide();
+        if ( d->sideContainer->isVisible() )
+        {
+            d->list->selectionModel()->clear();
+            d->sideContainer->hide();
+        }
+        else
+        {
+            d->sideContainer->show();
+        }
     }
     else
     {

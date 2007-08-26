@@ -108,6 +108,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         Q_SCRIPTABLE void slotNextPage();
         Q_SCRIPTABLE void slotGotoFirst();
         Q_SCRIPTABLE void slotGotoLast();
+        Q_SCRIPTABLE void slotTogglePresentation();
 
     signals:
         void enablePrintAction(bool enable);

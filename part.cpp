@@ -999,9 +999,12 @@ void Part::slotHidePresentation()
 
 void Part::slotTogglePresentation()
 {
-    if ( !m_presentationWidget )
-      m_presentationWidget = new PresentationWidget( widget(), m_document );
-    else delete (PresentationWidget*) m_presentationWidget;
+    if ( m_document->isOpened() )
+    {
+        if ( !m_presentationWidget )
+            m_presentationWidget = new PresentationWidget( widget(), m_document );
+        else delete (PresentationWidget*) m_presentationWidget;
+    }
 }
 
 void Part::slotPrint()

@@ -768,6 +768,7 @@ void Part::slotHistoryNext()
 
 void Part::slotFind()
 {
+    static bool savedCaseSensitive = false;
     KFindDialog dlg( widget() );
     dlg.setHasCursor( false );
     if ( !m_searchHistory.empty() )
@@ -777,12 +778,17 @@ void Part::slotFind()
     dlg.setSupportsWholeWordsFind( false );
     dlg.setSupportsRegularExpressionFind( false );
 #endif
+    if ( savedCaseSensitive )
+    {
+        dlg.setOptions( dlg.options() | KFindDialog::CaseSensitive );
+    }
     if ( dlg.exec() == QDialog::Accepted )
     {
+        savedCaseSensitive = dlg.options() & KFindDialog::CaseSensitive;
         m_searchHistory = dlg.findHistory();
         m_searchStarted = true;
         m_document->resetSearch( PART_SEARCH_ID );
-        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, dlg.options() & KFindDialog::CaseSensitive,
+        m_document->searchText( PART_SEARCH_ID, dlg.pattern(), false, savedCaseSensitive,
                                 KPDFDocument::NextMatch, true, qRgb( 255, 255, 64 ) );
     }
 }

@@ -702,7 +702,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         {
             QHash<int, FormField*> hashedforms;
             QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
-            for ( ; fIt != fItEnd; ++fItEnd )
+            for ( ; fIt != fItEnd; ++fIt )
             {
                 hashedforms[(*fIt)->id()] = (*fIt);
             }
@@ -723,8 +723,12 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( !ok )
                     continue;
 
+                QHash<int, FormField*>::const_iterator wantedIt = hashedforms.find( index );
+                if ( wantedIt == hashedforms.end() )
+                    continue;
+
                 QString value = formElement.attribute( "value" );
-                hashedforms[index]->d_ptr->setValue( value );
+                (*wantedIt)->d_ptr->setValue( value );
             }
         }
     }

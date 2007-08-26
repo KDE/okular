@@ -29,6 +29,7 @@ K_DCOP
     virtual void slotNextPage() = 0;
     virtual void slotGotoFirst() = 0;
     virtual void slotGotoLast() = 0;
+    virtual void slotTogglePresentation() = 0;
 };
 
 #endif

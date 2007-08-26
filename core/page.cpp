@@ -700,6 +700,9 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         // parse formList child element
         else if ( childElement.tagName() == "forms" )
         {
+            if ( formfields.isEmpty() )
+                continue;
+
             QHash<int, FormField*> hashedforms;
             QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
             for ( ; fIt != fItEnd; ++fIt )

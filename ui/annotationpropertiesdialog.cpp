@@ -34,11 +34,20 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 {
     setFaceType( Tabbed );
     m_annot=ann;
+    bool canEditAnnotations = m_document->isAllowed( Okular::AllowNotes );
     setCaptionTextbyAnnotType();
-    setButtons( Ok | Apply | Cancel );
-    enableButton( Apply, false );
-    connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
-    connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
+    if ( canEditAnnotations )
+    {
+        setButtons( Ok | Apply | Cancel );
+        enableButton( Apply, false );
+        connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
+        connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
+    }
+    else
+    {
+        setButtons( Close );
+        setDefaultButton( Close );
+    }
 
     m_annotWidget = AnnotationWidgetFactory::widgetFor( ann );
 
@@ -55,6 +64,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     hlay->addWidget( tmplabel );
     colorBn = new KColorButton( page );
     colorBn->setColor( ann->style().color() );
+    colorBn->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( colorBn );
     hlay->addWidget( colorBn );
 
@@ -65,11 +75,16 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     m_opacity = new KIntNumInput( page );
     m_opacity->setRange( 0, 100, 1, true );
     m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
+    m_opacity->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
 
     if ( m_annotWidget )
-        lay->addWidget( m_annotWidget->widget() );
+    {
+        QWidget * configWidget = m_annotWidget->widget();
+        lay->addWidget( configWidget );
+        configWidget->setEnabled( canEditAnnotations );
+    }
 
     lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ) );
     //END tab1
@@ -81,6 +96,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     QGridLayout * gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
     AuthorEdit = new QLineEdit( ann->author(), page );
+    AuthorEdit->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( AuthorEdit );
     gridlayout->addWidget( tmplabel, 0, 0 );
     gridlayout->addWidget( AuthorEdit, 0, 1 );
@@ -109,6 +125,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     m_contents->setAcceptRichText( false );
     m_contents->setReadOnly( true );
     m_contents->setPlainText( ann->contents() );
+    m_contents->setEnabled( canEditAnnotations );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
     //END advance

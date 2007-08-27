@@ -41,6 +41,7 @@ void AnnotationPopup::exec( const QPoint &point )
     menu.addTitle( i18n( "Annotation" ) );
     popoutWindow = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
     deleteNote = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
+    deleteNote->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
 
     if ( mAnnotation->flags() & Okular::Annotation::DenyDelete )
         deleteNote->setEnabled( false );

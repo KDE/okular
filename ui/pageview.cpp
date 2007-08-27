@@ -714,8 +714,19 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
     { // may be null if dummy mode is on
         d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
     }
+    bool allowAnnotations = d->document->isAllowed( Okular::AllowNotes );
     if ( d->annotator )
-        d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
+    {
+        if ( allowAnnotations )
+        {
+            d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
+        }
+        else if ( d->aToggleAnnotator->isChecked() )
+        {
+            d->aToggleAnnotator->trigger();
+        }
+    }
+    d->aToggleAnnotator->setEnabled( allowAnnotations );
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

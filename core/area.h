@@ -377,6 +377,7 @@ class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
         NormalizedPoint m_point;
 };
 
+/// @cond PRIVATE
 /** @internal */
 template <typename T>
 void doDelete( T& t )
@@ -418,6 +419,7 @@ static T& deref( T* t )
 {
     return *t;
 }
+/// @endcond
 
 /**
  * @short A regular area of NormalizedShape which normalizes a Shape

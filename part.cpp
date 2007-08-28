@@ -120,7 +120,7 @@ QObject *parent,
 const QStringList &args )
 : KParts::ReadOnlyPart(parent),
 m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_searchStarted(false), m_cliPresentation(false)
+m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
 {
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
@@ -793,9 +793,9 @@ bool Part::openFile()
         m_cliPresentation = false;
         QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
     }
-    /*    if (m_document->getXMLFile() != QString())
-            setXMLFile(m_document->getXMLFile(),true);*/
-    m_document->setupGui( actionCollection(), 0 );
+    m_generatorGuiClient = factory() ? m_document->guiClient() : 0;
+    if ( m_generatorGuiClient )
+        factory()->addClient( m_generatorGuiClient );
     return true;
 }
 
@@ -847,6 +847,9 @@ bool Part::closeUrl()
     m_searchStarted = false;
     m_realUrl = KUrl();
     if (!localFilePath().isEmpty()) m_watcher->removeFile(localFilePath());
+    if ( m_generatorGuiClient )
+        factory()->removeClient( m_generatorGuiClient );
+    m_generatorGuiClient = 0;
     m_document->closeDocument();
     updateViewActions();
     m_searchWidget->clearText();

@@ -244,6 +244,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         KUrl m_realUrl;
 
+        KXMLGUIClient *m_generatorGuiClient;
+
     private slots:
         void slotGeneratorPreferences();
 };

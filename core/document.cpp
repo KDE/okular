@@ -542,8 +542,9 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     GeneratorInfo info;
     info.generator = generator;
     info.library = lib;
-    if ( generator->componentData() && generator->componentData()->aboutData() )
-        info.catalogName = generator->componentData()->aboutData()->catalogName();
+    const KComponentData* compData = m_parent->componentData();
+    if ( compData && compData->aboutData() )
+        info.catalogName = compData->aboutData()->catalogName();
     m_loadedGenerators.insert( name, info );
     return generator;
 }
@@ -1343,25 +1344,15 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 }
 
 
-QString Document::xmlFile() const
+KXMLGUIClient* Document::guiClient()
 {
     if ( d->m_generator )
     {
         Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( d->m_generator );
-        return iface ? iface->xmlFile() : QString();
-    }
-    else
-        return QString();
-}
-
-void Document::setupGui( KActionCollection *ac, QToolBox *tBox )
-{
-    if ( d->m_generator && ac && tBox )
-    {
-        Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( d->m_generator );
         if ( iface )
-            iface->setupGui( ac, tBox );
+            return iface->guiClient();
     }
+    return 0;
 }
 
 void Document::closeDocument()
@@ -1389,9 +1380,6 @@ void Document::closeDocument()
 
     if ( d->m_generator )
     {
-        Okular::GuiInterface * iface = qobject_cast< Okular::GuiInterface * >( d->m_generator );
-        if ( iface )
-            iface->freeGui();
         // disconnect the generator from this document ...
         d->m_generator->d->m_document = 0;
         // .. and this document from the generator signals
@@ -2590,7 +2578,7 @@ QStringList Document::supportedMimeTypes() const
 
 const KComponentData* Document::componentData() const
 {
-    return d->m_generator ? d->m_generator->componentData() : 0;
+    return d->m_generator ? d->m_generator->ownComponentData() : 0;
 }
 
 void Document::requestDone( PixmapRequest * req )

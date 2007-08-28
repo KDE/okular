@@ -351,7 +351,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Returns the component data associated with the generator. May be null.
          */
-        const KComponentData* componentData() const;
+        const KComponentData* ownComponentData() const;
 
     Q_SIGNALS:
         /**

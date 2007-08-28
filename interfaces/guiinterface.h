@@ -14,8 +14,7 @@
 
 #include <QtCore/QObject>
 
-class QToolBox;
-class KActionCollection;
+#include <kxmlguiclient.h>
 
 namespace Okular {
 
@@ -37,7 +36,7 @@ namespace Okular {
  * @endcode
  * and - of course - implementing its methods.
  */
-class OKULAR_EXPORT GuiInterface
+class OKULAR_EXPORT GuiInterface : protected KXMLGUIClient
 {
     public:
         /**
@@ -46,28 +45,9 @@ class OKULAR_EXPORT GuiInterface
         virtual ~GuiInterface() {}
 
         /**
-         * Returns the name of the gui description file that shall
-         * be merged with the Okular menu.
+         * This method requests the XML GUI Client provided by the interface.
          */
-        virtual QString xmlFile() const = 0;
-
-        /**
-         * This method is called when the Okular gui is set up.
-         *
-         * You can insert the action which are listed in the file returned by
-         * @p xmlFile() into the given @p collection to make them appear in the
-         * menu bar.
-         *
-         * The @p toolbox pointer allows you to add new custom widgets to Okulars left
-         * side pane.
-         */
-        virtual void setupGui( KActionCollection *collection, QToolBox *toolbox ) = 0;
-
-        /**
-         * This method is called when the Okular gui is cleaned up.
-         * You should free all the gui elements created in @p setupGui() here.
-         */
-        virtual void freeGui() = 0;
+        KXMLGUIClient* guiClient() { return this; }
 };
 
 }

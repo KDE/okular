@@ -26,11 +26,10 @@
 class KComponentData;
 class KBookmark;
 class KConfigDialog;
+class KXMLGUIClient;
 class KPrinter;
 class KPrintDialogPage;
 class KUrl;
-class KActionCollection;
-class QToolBox;
 
 namespace Okular {
 
@@ -279,16 +278,9 @@ class OKULAR_EXPORT Document : public QObject
         QString pageSizeString( int page ) const;
 
         /**
-         * Returns the gui description file of the document that shall be merged with
-         * Okulars menu/tool bar.
+         * Returns the gui client of the generator, if it provides one.
          */
-        QString xmlFile() const;
-
-        /**
-         * Calling this method allows the document to add custom actions to the gui
-         * and extend Okulars side pane via @p toolbox.
-         */
-        void setupGui( KActionCollection *collection, QToolBox *toolbox );
+        KXMLGUIClient* guiClient();
 
         /**
          * Sets the current document viewport to the given @p page.

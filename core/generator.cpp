@@ -232,7 +232,7 @@ bool Generator::hasFeature( GeneratorFeature feature ) const
     return d->m_features.contains( feature );
 }
 
-const KComponentData* Generator::componentData() const
+const KComponentData* Generator::ownComponentData() const
 {
     return d->m_componentData;
 }

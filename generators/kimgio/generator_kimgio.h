@@ -11,12 +11,14 @@
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
 #include <core/generator.h>
+#include <interfaces/guiinterface.h>
 
 #include <QtGui/QImage>
 
-class KIMGIOGenerator : public Okular::Generator
+class KIMGIOGenerator : public Okular::Generator, public Okular::GuiInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::GuiInterface )
     public:
         KIMGIOGenerator();
         virtual ~KIMGIOGenerator();
@@ -31,6 +33,9 @@ class KIMGIOGenerator : public Okular::Generator
 
     protected:
         QImage image( Okular::PixmapRequest * request );
+
+    private slots:
+        void slotTest();
 
     private:
         QImage m_img;

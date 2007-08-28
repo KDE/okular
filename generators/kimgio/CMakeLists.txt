@@ -20,3 +20,4 @@ install(TARGETS okularGenerator_kimgio DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES libokularGenerator_kimgio.desktop okularKimgio.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES okularApplication_kimgio.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 
+#install( FILES gui.rc DESTINATION ${DATA_INSTALL_DIR}/okular_kimgio )

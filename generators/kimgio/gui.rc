@@ -1,0 +1,6 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui version="1" name="okular_kimgio" >
+  <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+  <Action name="kimgio_test" />
+ </ToolBar>
+</kpartgui>

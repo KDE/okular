@@ -360,29 +360,23 @@ void PageView::setupActions( KActionCollection * ac )
     // orientation menu actions
     d->aRotateClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate Right" ), this );
     ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
+    d->aRotateClockwise->setEnabled( false );
     connect( d->aRotateClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateClockwise() ) );
     d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate Left" ), this );
     ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
+    d->aRotateCounterClockwise->setEnabled( false );
     connect( d->aRotateCounterClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateCounterClockwise() ) );
     d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
     ac->addAction( "view_orientation_original", d->aRotateOriginal );
+    d->aRotateOriginal->setEnabled( false );
     connect( d->aRotateOriginal, SIGNAL( triggered() ), this, SLOT( slotRotateOriginal() ) );
 
     d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
     ac->addAction("view_pagesizes", d->aPageSizes);
+    d->aPageSizes->setEnabled( false );
 
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          this, SLOT( slotPageSizes( int ) ) );
-
-    bool pageSizes = d->document->supportsPageSizes();
-    d->aPageSizes->setEnabled( pageSizes );
-    if ( pageSizes )
-    {
-        QStringList items;
-        foreach ( const Okular::PageSize &p, d->document->pageSizes() )
-            items.append( p.name() );
-        d->aPageSizes->setItems( items );
-    }
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "view_fit_width" ), i18n("Fit &Width"), this);
     ac->addAction("zoom_fit_width", d->aZoomFitWidth );
@@ -471,6 +465,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aToggleForms = new KAction( this );
     ac->addAction( "view_toggle_forms", d->aToggleForms );
     connect( d->aToggleForms, SIGNAL( triggered() ), this, SLOT( slotToggleForms() ) );
+    d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 }
 
@@ -645,6 +640,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
     d->visibleItems.clear();
     toggleFormWidgets( false );
 
+    bool haspages = !pageSet.isEmpty();
     bool hasformwidgets = false;
     // create children widgets
     QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
@@ -672,7 +668,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
     }
 
     // invalidate layout so relayout/repaint will happen on next viewport change
-    if ( pageSet.count() > 0 )
+    if ( haspages )
         // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
         // suboptimal in some cases, i'd say it is not but a recheck will not hurt
         // Need slotRelayoutPages() here instead of d->dirtyLayout = true
@@ -710,9 +706,15 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
             d->aPageSizes->setItems( items );
         }
     }
+    if ( d->aRotateClockwise )
+        d->aRotateClockwise->setEnabled( haspages );
+    if ( d->aRotateCounterClockwise )
+        d->aRotateCounterClockwise->setEnabled( haspages );
+    if ( d->aRotateOriginal )
+        d->aRotateOriginal->setEnabled( haspages );
     if ( d->aToggleForms )
     { // may be null if dummy mode is on
-        d->aToggleForms->setEnabled( !pageSet.isEmpty() && hasformwidgets );
+        d->aToggleForms->setEnabled( haspages && hasformwidgets );
     }
     bool allowAnnotations = d->document->isAllowed( Okular::AllowNotes );
     if ( d->annotator )
@@ -721,12 +723,13 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool docu
         {
             d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
         }
-        else if ( d->aToggleAnnotator->isChecked() )
+        else if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
         {
             d->aToggleAnnotator->trigger();
         }
     }
-    d->aToggleAnnotator->setEnabled( allowAnnotations );
+    if ( d->aToggleAnnotator )
+        d->aToggleAnnotator->setEnabled( allowAnnotations );
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

@@ -46,7 +46,7 @@ class BookmarkItem : public QTreeWidgetItem
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
         }
 
-        KBookmark bookmark() const
+        KBookmark& bookmark()
         {
             return m_bookmark;
         }
@@ -109,6 +109,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     m_showBoomarkOnlyAction->setCheckable( true );
     connect( m_showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotFilterBookmarks( bool ) ) );
 
+    rebuildTree( m_showBoomarkOnlyAction->isChecked() );
 }
 
 BookmarkList::~BookmarkList()
@@ -126,11 +127,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, bool do
         return;
 
     // clear contents
-    m_tree->clear();
     m_searchLine->clear();
-
-    if ( pages.isEmpty() )
-        return;
 
     rebuildTree( m_showBoomarkOnlyAction->isChecked() );
 }
@@ -143,15 +140,11 @@ void BookmarkList::notifyPageChanged( int pageNumber, int changedFlags )
 
     (void)pageNumber;
 
-    m_tree->clear();
-
     rebuildTree( m_showBoomarkOnlyAction->isChecked() );
 }
 
 void BookmarkList::slotFilterBookmarks( bool on )
 {
-    m_tree->clear();
-
     rebuildTree( on );
 }
 
@@ -170,20 +163,7 @@ void BookmarkList::slotChanged( QTreeWidgetItem * item )
     if ( !bmItem || !bmItem->viewport().isValid() )
         return;
 
-    QDomElement el = bmItem->bookmark().internalElement();
-    QDomElement titleel = el.firstChild().toElement();
-    if ( titleel.isNull() )
-    {
-        titleel = el.ownerDocument().createElement( "title" );
-        el.appendChild( titleel );
-    }
-    QDomText textel = titleel.firstChild().toText();
-    if ( textel.isNull() )
-    {
-        textel = el.ownerDocument().createTextNode( "" );
-        titleel.appendChild( textel );
-    }
-    textel.setData( bmItem->text( 0 ) );
+    bmItem->bookmark().setFullText( bmItem->text( 0 ) );
     m_document->bookmarkManager()->save();
 }
 
@@ -231,9 +211,13 @@ void BookmarkList::rebuildTree( bool filter )
     // signals for all the current items
     disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 
+    m_tree->clear();
+
     KUrl::List urls = m_document->bookmarkManager()->files();
     if ( filter )
     {
+        if ( m_document->isOpened() )
+        {
         foreach ( const KUrl& url, urls )
         {
             if ( url == m_document->currentDocument() )
@@ -241,6 +225,7 @@ void BookmarkList::rebuildTree( bool filter )
                 m_tree->addTopLevelItems( createItems( url, m_document->bookmarkManager()->bookmarks( url ) ) );
                 break;
             }
+        }
         }
     }
     else

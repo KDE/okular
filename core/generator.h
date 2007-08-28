@@ -420,8 +420,8 @@ class OKULAR_EXPORT Generator : public QObject
          * data like:
          * @code
 KAboutData *about = new KAboutData(
-    "generator_foo", // internal name (notes below)
-    "generator_foo",  // i18n catalog (notes below)
+    "okular_foo", // internal name (notes below)
+    "okular_foo",  // i18n catalog (notes below)
     ki18n( "Foo Backend" ),
     "0.1",
     ki18n( "A foo backend" ),

@@ -36,8 +36,8 @@ CHMGenerator::CHMGenerator()
     setFeature( TextExtraction );
 
     KAboutData *about = new KAboutData(
-         "generator_chm",
-         "generator_chm",
+         "okular_chm",
+         "okular_chm",
          ki18n( "CHM Backend" ),
          "0.1",
          ki18n( "A Microsoft Windows help file renderer" ),

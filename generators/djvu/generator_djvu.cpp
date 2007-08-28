@@ -67,8 +67,8 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
     connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
 
     KAboutData *about = new KAboutData(
-         "generator_djvu",
-         "generator_djvu",
+         "okular_djvu",
+         "okular_djvu",
          ki18n( "DjVu Backend" ),
          "0.1",
          ki18n( "A DjVu backend" ),

@@ -1335,8 +1335,8 @@ XpsGenerator::XpsGenerator()
     setFeature( TextExtraction );
 
     KAboutData *about = new KAboutData(
-         "generator_xps",
-         "generator_xps",
+         "okular_xps",
+         "okular_xps",
          ki18n( "XPS Backend" ),
          "0.1",
          ki18n( "An XPS backend" ),

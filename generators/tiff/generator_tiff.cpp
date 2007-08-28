@@ -51,8 +51,8 @@ TIFFGenerator::TIFFGenerator()
     setFeature( Threaded );
 
     KAboutData *about = new KAboutData(
-         "generator_tiff",
-         "generator_tiff",
+         "okular_tiff",
+         "okular_tiff",
          ki18n( "TIFF Backend" ),
          "0.1",
          ki18n( "A TIFF backend" ),

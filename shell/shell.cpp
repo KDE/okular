@@ -26,7 +26,7 @@
 #include <kcmdlineargs.h>
 #include <kedittoolbar.h>
 #include <kfiledialog.h>
-#include <klibloader.h>
+#include <kpluginloader.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandardaction.h>
@@ -35,7 +35,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmenubar.h>
-#include <kparts/componentfactory.h>
 #include <kio/netaccess.h>
 #include <krecentfilesaction.h>
 #include <kservicetypetrader.h>
@@ -64,12 +63,12 @@ void Shell::init()
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KParts::Factory *factory = (KParts::Factory *) KLibLoader::self()->factory("libokularpart");
+  KPluginFactory *factory = KPluginLoader("libokularpart").factory();
   if (factory)
   {
     // now that the Part is loaded, we cast it to a Part to get
     // our hands on it
-    m_part = (KParts::ReadOnlyPart*) factory->createPart(this, this);
+    m_part = factory->create< KParts::ReadOnlyPart >( this );
     if (m_part)
     {
       // then, setup our actions

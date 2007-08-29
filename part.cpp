@@ -76,8 +76,8 @@
 #include "core/generator.h"
 #include "core/page.h"
 
-typedef KParts::GenericFactory<Part> okularPartFactory;
-K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
+K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
+K_EXPORT_PLUGIN( okularPartFactory( "okularpart" ) )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {
@@ -114,7 +114,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
 
 Part::Part(QWidget *parentWidget,
 QObject *parent,
-const QStringList &args )
+const QVariantList &args )
 : KParts::ReadOnlyPart(parent),
 m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)

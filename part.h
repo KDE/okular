@@ -76,7 +76,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     public:
         // Default constructor
-        Part(QWidget* parentWidget, QObject* parent, const QStringList& args);
+        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor
         ~Part();

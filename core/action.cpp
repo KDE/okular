@@ -324,6 +324,7 @@ Okular::Sound *SoundAction::sound() const
 
 // MovieAction
 
+#if 0
 class Okular::MovieActionPrivate : public Okular::ActionPrivate
 {
     public:
@@ -351,3 +352,4 @@ QString MovieAction::actionTip() const
 {
     return i18n( "Play movie..." );
 }
+#endif

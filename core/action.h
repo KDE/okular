@@ -331,6 +331,7 @@ class OKULAR_EXPORT SoundAction : public Action
         Q_DISABLE_COPY( SoundAction )
 };
 
+#if 0
 /**
  * The Movie action plays a video on activation.
  */
@@ -361,6 +362,7 @@ class MovieAction : public Action
         Q_DECLARE_PRIVATE( MovieAction )
         Q_DISABLE_COPY( MovieAction )
 };
+#endif
 
 }
 

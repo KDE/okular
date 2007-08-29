@@ -26,11 +26,9 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <qfile.h>
-#include <qsplitter.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <kvbox.h>
-#include <qtoolbox.h>
 #include <kaboutapplicationdialog.h>
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -77,7 +75,6 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
-#include "interfaces/configinterface.h"
 
 typedef KParts::GenericFactory<Part> okularPartFactory;
 K_EXPORT_COMPONENT_FACTORY(libokularpart, okularPartFactory)
@@ -416,6 +413,7 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About backend..."));
+    m_aboutBackend->setEnabled( false );
     connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
 
     KAction *reload = ac->add<KAction>( "file_reload" );

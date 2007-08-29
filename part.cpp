@@ -456,7 +456,7 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_dummyMode = true;
     m_sidebar->setSidebarVisibility( false );
-    if (!args.contains("Print/Preview")) unsetDummyMode();
+    if ( !args.contains( QVariant( "Print/Preview" ) ) ) unsetDummyMode();
 }
 
 

@@ -35,9 +35,18 @@ bool ComicBookGenerator::loadDocument( const QString & fileName, QVector<Okular:
     int pages = mDocument.pages();
     pagesVector.resize( pages );
 
+    QSize aux;
     for ( int i = 0; i < pages; ++i ) {
-        Okular::Page * page = new Okular::Page( i, 800, 600, Okular::Rotation0 );
-        pagesVector[i] = page;
+         aux = mDocument.pageImage( i ).size();
+
+         if ( aux.height() > aux.width() ) {
+             Okular::Page * page = new Okular::Page( i, 600, 800, Okular::Rotation0 );
+             pagesVector[i] = page;
+         }
+         else {
+             Okular::Page * page = new Okular::Page( i, 800, 600, Okular::Rotation0 );
+             pagesVector[i] = page;
+         }
     }
 
     return true;

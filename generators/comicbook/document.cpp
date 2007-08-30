@@ -32,6 +32,7 @@ bool Document::open( const QString &fileName )
 {
     delete mZip;
     delete mUnrar;
+    mPageMap.clear();
 
     /**
      * We have a zip archive

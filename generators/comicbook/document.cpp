@@ -14,6 +14,7 @@
 #include <kzip.h>
 
 #include "unrar.h"
+#include "qnatsort.h"
 
 using namespace ComicBook;
 
@@ -91,7 +92,7 @@ void Document::extractImageFiles( const QStringList &list )
 {
     QStringList files( list );
 
-    qSort( files );
+    qSort( files.begin(), files.end(), caseSensitiveNaturalOrderLessThen );
 
     for ( int i = 0; i < files.count(); ++i ) {
         const QString lowerFile = files[ i ].toLower();

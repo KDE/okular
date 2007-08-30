@@ -88,7 +88,7 @@ static int natural_order_compare( const QString &leftStr, const QString &rightSt
   ai = bi = 0;
 
   while ( true ) {
-    ca = leftStr[ ai ]; cb = leftStr[ bi ];
+    ca = leftStr[ ai ]; cb = rightStr[ bi ];
 
     /* skip over leading spaces or zeros */
     while ( ca.isSpace() )

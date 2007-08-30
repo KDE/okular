@@ -15,7 +15,7 @@
 #include <ktempdir.h>
 
 Unrar::Unrar()
-    : QObject( 0 ), mTempDir( 0 ), mErrorOccured( false )
+    : QObject( 0 ), mTempDir( 0 )
 {
 }
 
@@ -41,22 +41,14 @@ bool Unrar::open( const QString &fileName )
 
     connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
     connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
-    connect( mProcess, SIGNAL( finished( int, QProcess::ExitStatus ) ), SLOT( processExited() ) );
-    connect( mProcess, SIGNAL( error( QProcess::ProcessError ) ), SLOT( processExited() ) );
 
     mProcess->start( "unrar", QStringList() << "e" << mFileName << mTempDir->name(), QIODevice::ReadOnly );
-
-    mEventLoop.exec();
+    bool ok = mProcess->waitForFinished( -1 );
 
     delete mProcess;
     mProcess = 0;
 
-    if ( mErrorOccured ) {
-        mErrorOccured = false;
-        return false;
-    }
-
-    return true;
+    return ok;
 }
 
 QStringList Unrar::list()
@@ -68,12 +60,9 @@ QStringList Unrar::list()
 
     connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
     connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
-    connect( mProcess, SIGNAL( finished( int, QProcess::ExitStatus ) ), SLOT( processExited() ) );
-    connect( mProcess, SIGNAL( error( QProcess::ProcessError ) ), SLOT( processError() ) );
 
     mProcess->start( "unrar", QStringList() << "lb" << mFileName, QIODevice::ReadOnly );
-
-    mEventLoop.exec();
+    mProcess->waitForFinished( -1 );
 
     delete mProcess;
     mProcess = 0;
@@ -98,16 +87,6 @@ void Unrar::readFromStdout()
 void Unrar::readFromStderr()
 {
     mStdErrData += mProcess->readAllStandardError();
-}
-
-void Unrar::processExited()
-{
-    mEventLoop.exit();
-}
-
-void Unrar::processError()
-{
-    mErrorOccured = true;
 }
 
 #include "unrar.moc"

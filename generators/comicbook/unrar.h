@@ -10,7 +10,6 @@
 #ifndef UNRAR_H
 #define UNRAR_H
 
-#include <QtCore/QEventLoop>
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 
@@ -48,19 +47,15 @@ class Unrar : public QObject
         QByteArray contentOf( const QString &fileName ) const;
 
     private Q_SLOTS:
-        void processExited();
-        void processError();
         void readFromStdout();
         void readFromStderr();
 
     private:
         QProcess *mProcess;
-        QEventLoop mEventLoop;
         QString mFileName;
         QByteArray mStdOutData;
         QByteArray mStdErrData;
         KTempDir *mTempDir;
-        bool mErrorOccured;
 };
 
 #endif

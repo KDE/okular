@@ -8,6 +8,7 @@ libkpdfui_la_SOURCES = pagepainter.cpp pageview.cpp pageviewutils.cpp \
 
 noinst_LTLIBRARIES = libkpdfui.la
 
+pagepainter.lo: ../conf/settings.h
 pageview.lo: ../conf/settings.h
 pageviewutils.lo: ../conf/settings.h
 presentationwidget.lo: ../conf/settings.h

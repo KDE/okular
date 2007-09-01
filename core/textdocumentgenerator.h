@@ -105,7 +105,9 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
 
 class OKULAR_EXPORT TextDocumentGenerator : public Generator
 {
+    /// @cond PRIVATE
     friend class TextDocumentConverter;
+    /// @endcond
 
     Q_OBJECT
 

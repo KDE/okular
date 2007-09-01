@@ -33,8 +33,10 @@ class FormFieldChoicePrivate;
  */
 class OKULAR_EXPORT FormField
 {
+    /// @cond PRIVATE
     friend class Page;
     friend class PagePrivate;
+    /// @endcond
 
     public:
         /**
@@ -88,9 +90,11 @@ class OKULAR_EXPORT FormField
         virtual bool isVisible() const;
 
     protected:
+        /// @cond PRIVATE
         FormField( FormFieldPrivate &dd );
         Q_DECLARE_PRIVATE( FormField )
         FormFieldPrivate *d_ptr;
+        /// @endcond
 
     private:
         Q_DISABLE_COPY( FormField )

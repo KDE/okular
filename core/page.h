@@ -305,6 +305,7 @@ class OKULAR_EXPORT Page
 
     private:
         PagePrivate* const d;
+        /// @cond PRIVATE
         friend class PagePrivate;
         friend class Document;
         friend class DocumentPrivate;
@@ -314,6 +315,7 @@ class OKULAR_EXPORT Page
          * member variables directly.
          */
         friend class ::PagePainter;
+        /// @endcond
 
         const QPixmap * _o_nearestPixmap( int, int, int ) const;
 

@@ -115,7 +115,9 @@ class OKULAR_EXPORT FontInfo
         bool operator!=( const FontInfo &fi ) const;
 
     private:
+        /// @cond PRIVATE
         friend class FontInfoPrivate;
+        /// @endcond
         QSharedDataPointer<FontInfoPrivate> d;
 };
 

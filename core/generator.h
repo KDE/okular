@@ -152,7 +152,9 @@ class OKULAR_EXPORT ExportFormat
         bool operator!=( const ExportFormat &other ) const;
 
     private:
+        /// @cond PRIVATE
         friend class ExportFormatPrivate;
+        /// @endcond
         QSharedDataPointer<ExportFormatPrivate> d;
 };
 
@@ -174,8 +176,10 @@ class OKULAR_EXPORT ExportFormat
  */
 class OKULAR_EXPORT Generator : public QObject
 {
+    /// @cond PRIVATE
     friend class PixmapGenerationThread;
     friend class TextPageGenerationThread;
+    /// @endcond
 
     Q_OBJECT
 
@@ -441,10 +445,14 @@ setAboutData( about );
         void setAboutData( KAboutData* data );
 
     private:
+        /// @cond PRIVATE
         friend class GeneratorPrivate;
+        /// @endcond PRIVATE
         GeneratorPrivate* const d;
 
+        /// @cond PRIVATE
         friend class Document;
+        /// @endcond PRIVATE
 
         Q_PRIVATE_SLOT( d, void pixmapGenerationFinished() )
         Q_PRIVATE_SLOT( d, void textpageGenerationFinished() )
@@ -521,6 +529,7 @@ class OKULAR_EXPORT PixmapRequest
         void swap();
 
     protected:
+        /// @cond PRIVATE
         /**
          * Internal usage.
          */
@@ -535,6 +544,7 @@ class OKULAR_EXPORT PixmapRequest
          * Internal usage.
          */
         void setPage( Page *page );
+        /// @endcond
 
     private:
         Q_DISABLE_COPY( PixmapRequest )

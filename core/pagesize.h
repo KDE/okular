@@ -72,7 +72,9 @@ class OKULAR_EXPORT PageSize
         bool operator!=( const PageSize &pageSize ) const;
 
     private:
+        /// @cond PRIVATE
         friend class PageSizePrivate;
+        /// @endcond
         QSharedDataPointer<PageSizePrivate> d;
 };
 

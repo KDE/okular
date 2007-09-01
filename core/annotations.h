@@ -82,10 +82,12 @@ class OKULAR_EXPORT AnnotationUtils
  */
 class OKULAR_EXPORT Annotation
 {
+    /// @cond PRIVATE
     friend class AnnotationObjectRect;
     friend class Document;
     friend class Page;
     friend class PagePrivate;
+    /// @endcond
 
     public:
         /**
@@ -574,10 +576,12 @@ class OKULAR_EXPORT Annotation
         virtual void store( QDomNode & node, QDomDocument & document ) const;
 
     protected:
+        /// @cond PRIVATE
         Annotation( AnnotationPrivate &dd );
         Annotation( AnnotationPrivate &dd, const QDomNode &description );
         Q_DECLARE_PRIVATE( Annotation )
         AnnotationPrivate *d_ptr;
+        /// @endcond
 
     private:
         Q_DISABLE_COPY( Annotation )

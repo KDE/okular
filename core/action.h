@@ -68,9 +68,11 @@ class OKULAR_EXPORT Action
         virtual QString actionTip() const;
 
     protected:
+        /// @cond PRIVATE
         Action( ActionPrivate &dd );
         Q_DECLARE_PRIVATE( Action )
         ActionPrivate *d_ptr;
+        /// @endcond
 
     private:
         Q_DISABLE_COPY( Action )

@@ -606,7 +606,9 @@ class OKULAR_EXPORT Document : public QObject
         void searchFinished( int id, Okular::Document::SearchStatus endStatus );
 
     private:
+        /// @cond PRIVATE
         friend class DocumentPrivate;
+        /// @endcond
         DocumentPrivate *const d;
 
         Q_DISABLE_COPY( Document )

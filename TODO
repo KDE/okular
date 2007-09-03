@@ -16,6 +16,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 102788: Current page number visible
 -> BUG  106546: Search with "/" and ALT+TAB
 -> WISH 107998: kpdf horizontal scroll bar
+-> WISH 109346: ability to select everything on page(s) and use ctrl+a to select all (text)
 -> BUG  110440: Almost all options in Find dialog are always disabled
 -> WISH 111651: Usability: Make find-as-you-type widget more distinguishable
 -> WISH 117449: kpdf should read files from stdin with the - option
@@ -44,7 +45,6 @@ In progress [working on]:
 -> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
--> text selection: select all (BR109346)
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a Okular::Anchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
@@ -121,6 +121,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: text selection: select all (BR109346)
 -> ADD: text selection in wordprocessor style (BR130123)
 -> ADD: open gzipped and bzipped documents (BR102704)
 -> ADD: thumbnailslist: show Viewport in a blended way, allowing to be dragged (BR135521)

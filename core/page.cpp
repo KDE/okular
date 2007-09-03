@@ -278,6 +278,7 @@ void PagePrivate::rotateAt( Rotation orientation )
     if ( ( (int)m_orientation + (int)m_rotation ) % 2 != ( (int)m_orientation + (int)orientation ) % 2 )
         qSwap( m_width, m_height );
 
+    Rotation oldRotation = m_rotation;
     m_rotation = orientation;
 
     /**
@@ -301,6 +302,16 @@ void PagePrivate::rotateAt( Rotation orientation )
     QLinkedList< ObjectRect * >::const_iterator objectIt = m_page->m_rects.begin(), end = m_page->m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
+
+    if ( m_text )
+    {
+        m_text->transform( rotationMatrix() );
+    }
+    QLinkedList< HighlightAreaRect* >::const_iterator hlIt = m_page->m_highlights.begin(), hlItEnd = m_page->m_highlights.end();
+    for ( ; hlIt != hlItEnd; ++hlIt )
+    {
+        (*hlIt)->transform( RotationJob::rotationMatrix( oldRotation, m_rotation ) );
+    }
 }
 
 void PagePrivate::changeSize( const PageSize &size )
@@ -385,6 +396,10 @@ void Page::setTextPage( TextPage * textPage )
     delete d->m_text;
 
     d->m_text = textPage;
+    if ( d->m_text )
+    {
+        d->m_text->transform( d->rotationMatrix() );
+    }
 }
 
 void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
@@ -410,9 +425,6 @@ void PagePrivate::setHighlight( int s_id, RegularAreaRect *rect, const QColor & 
     HighlightAreaRect * hr = new HighlightAreaRect(rect);
     hr->s_id = s_id;
     hr->color = color;
-
-    const QMatrix matrix = rotationMatrix();
-    hr->transform( matrix );
 
     m_page->m_highlights.append( hr );
 }

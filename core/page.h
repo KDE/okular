@@ -180,7 +180,7 @@ class OKULAR_EXPORT Page
         /**
          * Returns the list of annotations of the page.
          */
-        const QLinkedList< Annotation* > annotations() const;
+        QLinkedList< Annotation* > annotations() const;
 
         /**
          * Returns the @ref Action object which is associated with the given page @p action
@@ -191,7 +191,7 @@ class OKULAR_EXPORT Page
         /**
          * Returns the list of FormField of the page.
          */
-        const QLinkedList< FormField * > formFields() const;
+        QLinkedList< FormField * > formFields() const;
 
         /**
          * Sets the @p pixmap for the observer with the given @p id.

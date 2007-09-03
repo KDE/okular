@@ -344,7 +344,7 @@ const PageTransition * Page::transition() const
     return d->m_transition;
 }
 
-const QLinkedList< Annotation* > Page::annotations() const
+QLinkedList< Annotation* > Page::annotations() const
 {
     return m_annotations;
 }
@@ -364,7 +364,7 @@ const Action * Page::pageAction( PageAction action ) const
     return 0;
 }
 
-const QLinkedList< FormField * > Page::formFields() const
+QLinkedList< FormField * > Page::formFields() const
 {
     return d->formfields;
 }

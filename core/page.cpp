@@ -240,7 +240,7 @@ RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection 
                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect ) const
 {
     RegularAreaRect* rect = 0;
-    if ( text.isEmpty() )
+    if ( text.isEmpty() || !d->m_text )
         return rect;
 
     rect = d->m_text->findText( id, text, direction, caseSensitivity, lastRect );

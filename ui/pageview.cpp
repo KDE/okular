@@ -2273,7 +2273,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             newZoomMode = ZoomFixed;
             break;
         case ZoomOut:
-            newFactor -= (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;
+            newFactor -= (newFactor > 1.01) ? ( newFactor > 2.01 ? 0.5 : 0.2 ) : 0.1;
             newZoomMode = ZoomFixed;
             break;
         case ZoomFitWidth:

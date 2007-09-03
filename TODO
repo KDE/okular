@@ -23,6 +23,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 118938: No way to find out the page size(s)
 -> WISH 119455: use poppler library for kpdf
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
+-> BUG  130123: kpdf text selection inconsistent with the rest of KDE
 -> WISH 131045: Add context menu for URLs
 -> WISH 134115: specifing to kpdf the first-opened page from command line
 -> WISH 136820: would like a reload button or menu item in KPDF
@@ -43,7 +44,7 @@ In progress [working on]:
 -> annotations: creators in PageViewAnnotator (40% done)
 -> annotations: framework (BR67300,BR62793) and tools (BR67300,BR91251)
 -> annotations: add the annot pane (cool plz!)
--> text selection in wordprocessor style (BR109346,BR130123)
+-> text selection: select all (BR109346)
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a Okular::Anchor link class
 -> (done: 100%) refactor, pdf parser, xml storage
@@ -120,6 +121,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: text selection in wordprocessor style (BR130123)
 -> ADD: open gzipped and bzipped documents (BR102704)
 -> ADD: thumbnailslist: show Viewport in a blended way, allowing to be dragged (BR135521)
 -> CHG: async way to read the fonts, no more blocking properties dialog

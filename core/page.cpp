@@ -32,6 +32,7 @@
 #include "pagetransition.h"
 #include "rotationjob_p.h"
 #include "textpage.h"
+#include "textpage_p.h"
 
 #ifdef PAGE_PROFILE
 #include <QtCore/QTime>
@@ -305,7 +306,7 @@ void PagePrivate::rotateAt( Rotation orientation )
 
     if ( m_text )
     {
-        m_text->transform( rotationMatrix() );
+        m_text->d->m_transformMatrix = rotationMatrix();
     }
     QLinkedList< HighlightAreaRect* >::const_iterator hlIt = m_page->m_highlights.begin(), hlItEnd = m_page->m_highlights.end();
     for ( ; hlIt != hlItEnd; ++hlIt )
@@ -398,7 +399,7 @@ void Page::setTextPage( TextPage * textPage )
     d->m_text = textPage;
     if ( d->m_text )
     {
-        d->m_text->transform( d->rotationMatrix() );
+        d->m_text->d->m_transformMatrix = d->rotationMatrix();
     }
 }
 

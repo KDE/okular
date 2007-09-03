@@ -21,6 +21,8 @@ class QMatrix;
 namespace Okular {
 
 class NormalizedRect;
+class Page;
+class PagePrivate;
 class TextPagePrivate;
 class TextSelection;
 class RegularAreaRect;
@@ -86,6 +88,11 @@ class OKULAR_EXPORT TextEntity
  */
 class OKULAR_EXPORT TextPage
 {
+    /// @cond PRIVATE
+    friend class Page;
+    friend class PagePrivate;
+    /// @endcond
+
     public:
         /**
          * Creates a new text page.
@@ -137,11 +144,6 @@ class OKULAR_EXPORT TextPage
          * Returns the rectangular area of the given @p selection.
          */
         RegularAreaRect *textArea( TextSelection *selection ) const;
-
-        /**
-         * Transforms the area coordinates of the text entities.
-         */
-        void transform( const QMatrix &matrix );
 
     private:
         TextPagePrivate* const d;

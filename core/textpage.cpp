@@ -438,8 +438,3 @@ QString TextPage::text(const RegularAreaRect *area) const
     }
     return ret;
 }
-
-void TextPage::transform( const QMatrix &matrix )
-{
-    d->m_transformMatrix = matrix;
-}

@@ -191,10 +191,12 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     // [left toolbox: Reviews] | []
     Reviews * reviewsWidget = new Reviews( 0, m_document );
     m_sidebar->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
+    m_sidebar->setItemEnabled( 2, false );
 
     // [left toolbox: Bookmarks] | []
     BookmarkList * bookmarkList = new BookmarkList( m_document, 0 );
     m_sidebar->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
+    m_sidebar->setItemEnabled( 3, false );
 
     // widgets: [../miniBarContainer] | []
     QWidget * miniBarContainer = new QWidget( 0 );
@@ -1631,6 +1633,8 @@ void Part::unsetDummyMode()
 
     m_dummyMode = false;
 
+    m_sidebar->setItemEnabled( 2, true );
+    m_sidebar->setItemEnabled( 3, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history

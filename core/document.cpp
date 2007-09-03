@@ -1967,7 +1967,7 @@ void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QCo
     if ( rect )
         kp->d->setTextSelections( rect, color );
     else
-        kp->deleteTextSelections();
+        kp->d->deleteTextSelections();
 
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::TextSelection ) );

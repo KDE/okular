@@ -91,6 +91,11 @@ class PagePrivate
          */
         void deleteHighlights( int id = -1 );
 
+        /**
+         * Deletes all text selection objects of the page.
+         */
+        void deleteTextSelections();
+
         class PixmapObject
         {
             public:

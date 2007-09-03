@@ -289,11 +289,6 @@ class OKULAR_EXPORT Page
         void deleteRects();
 
         /**
-         * Deletes all text selection objects of the page.
-         */
-        void deleteTextSelections();
-
-        /**
          * Deletes all source reference objects of the page.
          */
         void deleteSourceReferences();

@@ -130,7 +130,7 @@ Page::~Page()
     deleteRects();
     d->deleteHighlights();
     deleteAnnotations();
-    deleteTextSelections();
+    d->deleteTextSelections();
     deleteSourceReferences();
 
     delete d;
@@ -274,7 +274,7 @@ void PagePrivate::rotateAt( Rotation orientation )
         return;
 
     deleteHighlights();
-    m_page->deleteTextSelections();
+    deleteTextSelections();
 
     if ( ( (int)m_orientation + (int)m_rotation ) % 2 != ( (int)m_orientation + (int)orientation ) % 2 )
         qSwap( m_width, m_height );
@@ -432,7 +432,7 @@ void PagePrivate::setHighlight( int s_id, RegularAreaRect *rect, const QColor & 
 
 void PagePrivate::setTextSelections( RegularAreaRect *r, const QColor & color )
 {
-    m_page->deleteTextSelections();
+    deleteTextSelections();
     if ( r )
     {
         HighlightAreaRect * hr = new HighlightAreaRect( r );
@@ -637,10 +637,10 @@ void PagePrivate::deleteHighlights( int s_id )
     }
 }
 
-void Page::deleteTextSelections()
+void PagePrivate::deleteTextSelections()
 {
-    delete d->m_textSelections;
-    d->m_textSelections = 0;
+    delete m_textSelections;
+    m_textSelections = 0;
 }
 
 void Page::deleteSourceReferences()

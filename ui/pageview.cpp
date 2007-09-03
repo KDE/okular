@@ -2189,18 +2189,41 @@ void PageView::selectionEndPoint( const QPoint & pos )
     widget()->update( updateRect.adjusted( -1, -1, 1, 1 ) );
 }
 
+static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QRect &rect, Okular::Rotation rotation )
+{
+    Okular::NormalizedPoint ret;
+
+    switch ( rotation )
+    {
+        case Okular::Rotation0:
+            ret = Okular::NormalizedPoint( rotated.x(), rotated.y(), rect.width(), rect.height() );
+            break;
+        case Okular::Rotation90:
+            ret = Okular::NormalizedPoint( rotated.y(), rect.width() - rotated.x(), rect.height(), rect.width() );
+            break;
+        case Okular::Rotation180:
+            ret = Okular::NormalizedPoint( rect.width() - rotated.x(), rect.height() - rotated.y(), rect.width(), rect.height() );
+            break;
+        case Okular::Rotation270:
+            ret = Okular::NormalizedPoint( rect.height() - rotated.y(), rotated.x(), rect.height(), rect.width() );
+            break;
+    }
+
+    return ret;
+}
+
 Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
 {
     const QRect & geometry = item->geometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
     if ( !startPoint.isNull() )
     {
-        startCursor = Okular::NormalizedPoint( startPoint.x(), startPoint.y(), (int)geometry.width(), (int)geometry.height() );
+        startCursor = rotateInNormRect( startPoint, geometry, item->page()->rotation() );
     }
     Okular::NormalizedPoint endCursor( 1.0, 1.0 );
     if ( !endPoint.isNull() )
     {
-        endCursor = Okular::NormalizedPoint( endPoint.x(), endPoint.y(), (int)geometry.width(), (int)geometry.height() );
+        endCursor = rotateInNormRect( endPoint, geometry, item->page()->rotation() );
     }
     Okular::TextSelection mouseTextSelectionInfo( startCursor, endCursor );
 

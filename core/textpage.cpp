@@ -124,6 +124,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     or that has a left border >= cx and bottom border >= cy. 
 */
     RegularAreaRect * ret= new RegularAreaRect;
+#if 0
     int it = -1;
     int itB = -1;
     int itE = -1;
@@ -149,7 +150,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         const int count = d->m_words.count();
         for ( it = 0; it < count; it++ )
         {
-            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            tmp = *d->m_words[ it ]->area();
             if ( tmp.contains( startCx, startCy )
                  || ( tmp.top <= startCy && tmp.bottom >= startCy && tmp.left >= startCx )
                  || ( tmp.top >= startCy))
@@ -176,7 +177,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #endif
         for ( it = d->m_words.count() - 1; it >= itB; it-- )
         {
-            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            tmp = *d->m_words[ it ]->area();
             if ( tmp.contains( endCx, endCy )
                  || ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx )
                  || ( tmp.bottom <= endCy ) )
@@ -200,8 +201,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     if ( sel->itB() != -1 && sel->itE() != -1 )
     {
-        start = d->m_words[ sel->itB() ]->transformedArea(d->m_transformMatrix);
-        end = d->m_words[ sel->itE() ]->transformedArea(d->m_transformMatrix);
+        start = *d->m_words[ sel->itB() ]->area();
+        end = *d->m_words[ sel->itE() ]->area();
 
         NormalizedRect first, second, third;
         /// finding out if there are more then one baseline between them is a hard and discussable task
@@ -216,11 +217,33 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         int selMax = qMax( sel->itB(), sel->itE() );
         for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
         {
-            tmp = d->m_words[ it ]->transformedArea(d->m_transformMatrix);
+            tmp = *d->m_words[ it ]->area();
             if ( tmp.intersects( &first ) || tmp.intersects( &second ) || tmp.intersects( &third ) )
-                ret->appendShape( tmp );
+                ret->appendShape( d->m_words.at( it )->transformedArea( d->m_transformMatrix ) );
         }
     }
+#else
+    NormalizedRect tmp;
+
+    NormalizedPoint startC = sel->start();
+    double startCx = startC.x;
+    double startCy = startC.y;
+
+    NormalizedPoint endC = sel->end();
+    double endCx = endC.x;
+    double endCy = endC.y;
+
+    TextEntity::List::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    for ( ; it != itEnd; ++it )
+    {
+        tmp = *(*it)->area();
+        if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
+             && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
+        {
+            ret->appendShape( (*it)->transformedArea( d->m_transformMatrix ) );
+        }
+    }
+#endif
 
     return ret;
 }
@@ -415,7 +438,7 @@ QString TextPage::text(const RegularAreaRect *area) const
     {
         for ( ; it != itEnd; ++it )
         {
-            if ( area->intersects( (*it)->transformedArea(d->m_transformMatrix) ) )
+            if ( area->intersects( *(*it)->area() ) )
             {
                 ret += (*it)->text();
             }

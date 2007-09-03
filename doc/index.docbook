@@ -251,24 +251,40 @@
 			<para>
 				&okular; allows you to review and annotate your documents. 
 			</para>
+				<note>
+					<para>
+						Due to DRM limitations (typically with &PDF; documents), adding, editing some properties
+						or removing annotations could not be possible.
+					</para>
+				</note>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
 				<para>
 					To add some annotations to the document, you have to activate the annotating toolbar.
-					This is done by either slecting
+					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
-					pressing <keycap>F6</keycap>. Once you have the annotating toolbar, just press one of
+					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
 					its buttons to start constructing that annotation.
 				</para>
 				<note>
 					<para>
-						The annotating toolbar can be docked in any side of the pageview: just drag it to
+						The annotating toolbar can be docked in any side of the viewing are: just drag it to
 						move it to another place.
+					</para>
+				</note>
+				<note>
+					<para>
+						Activating the annotating toolbar will make you switch to the Normal Mode.
 					</para>
 				</note>
 				<para>
 					You can stop the construction any time by pressing again on the button of the
 					annotation you are constructing.
+				</para>
+				<para>
+					The newly constructed annotation will have as author the author you set in the
+					<guilabel>Identity</guilabel> section in the
+					<link linkend="configure">settings</link>.
 				</para>
 			</sect2>
 			<sect2 id="annotations-remove">

@@ -101,6 +101,7 @@ Q_OBJECT
         }
 
         void copyTextSelection() const;
+        void selectAll();
 
         void setAnnotationWindow( Okular::Annotation *annotation );
 

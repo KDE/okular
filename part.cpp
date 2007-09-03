@@ -331,6 +331,8 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
     ac->addAction("edit_copy",m_copy);
 
+    m_selectAll = KStandardAction::selectAll( m_pageView, SLOT( selectAll() ), ac );
+
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT( slotShowFindBar() ), ac );
     ac->addAction("find", m_find);

@@ -618,6 +618,20 @@ void PageView::copyTextSelection() const
     }
 }
 
+void PageView::selectAll()
+{
+    if ( d->mouseMode != MouseTextSelect )
+        return;
+
+    QVector< PageViewItem * >::const_iterator it = d->items.begin(), itEnd = d->items.end();
+    for ( ; it < itEnd; ++it )
+    {
+        Okular::RegularAreaRect * area = textSelectionForItem( *it );
+        d->pagesWithTextSelection.insert( (*it)->pageNumber() );
+        d->document->setPageTextSelection( (*it)->pageNumber(), area, palette().color( QPalette::Active, QPalette::Highlight ) );
+    }
+}
+
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
 {

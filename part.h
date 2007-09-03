@@ -214,6 +214,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QAction *m_prevBookmark;
         QAction *m_nextBookmark;
         QAction *m_copy;
+        QAction *m_selectAll;
         QAction *m_find;
         QAction *m_findNext;
         QAction *m_saveAs;

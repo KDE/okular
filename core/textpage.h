@@ -21,6 +21,7 @@ class QMatrix;
 namespace Okular {
 
 class NormalizedRect;
+class TextPagePrivate;
 class TextSelection;
 class RegularAreaRect;
 
@@ -143,8 +144,7 @@ class OKULAR_EXPORT TextPage
         void transform( const QMatrix &matrix );
 
     private:
-        class Private;
-        Private* const d;
+        TextPagePrivate* const d;
 
         Q_DISABLE_COPY( TextPage )
 };

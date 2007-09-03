@@ -8,8 +8,7 @@
  ***************************************************************************/
 
 #include "textpage.h"
-
-#include <QtCore/QMap>
+#include "textpage_p.h"
 
 #include <kdebug.h>
 
@@ -59,38 +58,26 @@ NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
     return transformed_area;
 }
 
-class TextPage::Private
+
+TextPagePrivate::TextPagePrivate( const TextEntity::List &words )
+    : m_words( words )
 {
-    public:
-        Private( const TextEntity::List &words )
-            : m_words( words )
-        {
-        }
+}
 
-        ~Private()
-        {
-            qDeleteAll( m_searchPoints );
-            qDeleteAll( m_words );
-        }
-
-        RegularAreaRect * findTextInternalForward( int searchID, const QString &query,
-                                                   Qt::CaseSensitivity caseSensitivity,
-                                                   const TextEntity::List::ConstIterator &start,
-                                                   const TextEntity::List::ConstIterator &end );
-
-        TextEntity::List m_words;
-        QMap< int, SearchPoint* > m_searchPoints;
-        QMatrix m_transformMatrix;
-};
+TextPagePrivate::~TextPagePrivate()
+{
+    qDeleteAll( m_searchPoints );
+    qDeleteAll( m_words );
+}
 
 
 TextPage::TextPage()
-    : d( new Private( TextEntity::List() ) )
+    : d( new TextPagePrivate( TextEntity::List() ) )
 {
 }
 
 TextPage::TextPage( const TextEntity::List &words )
-    : d( new Private( words ) )
+    : d( new TextPagePrivate( words ) )
 {
 }
 
@@ -309,7 +296,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 }
 
 
-RegularAreaRect* TextPage::Private::findTextInternalForward( int searchID, const QString &_query,
+RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
                                                              Qt::CaseSensitivity caseSensitivity,
                                                              const TextEntity::List::ConstIterator &start,
                                                              const TextEntity::List::ConstIterator &end )

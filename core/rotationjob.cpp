@@ -50,39 +50,46 @@ void RotationJob::run()
         return;
     }
 
+    QMatrix matrix = rotationMatrix( mOldRotation, mNewRotation );
+
+    mRotatedImage = mImage.transformed( matrix );
+}
+
+QMatrix RotationJob::rotationMatrix( Rotation from, Rotation to )
+{
     QMatrix matrix;
 
-    if ( mOldRotation == Rotation0 ) {
-        if ( mNewRotation == Rotation90 )
+    if ( from == Rotation0 ) {
+        if ( to == Rotation90 )
             matrix.rotate( 90 );
-        else if ( mNewRotation == Rotation180 )
+        else if ( to == Rotation180 )
             matrix.rotate( 180 );
-        else if ( mNewRotation == Rotation270 )
+        else if ( to == Rotation270 )
             matrix.rotate( 270 );
-    } else if ( mOldRotation == Rotation90 ) {
-        if ( mNewRotation == Rotation180 )
+    } else if ( from == Rotation90 ) {
+        if ( to == Rotation180 )
             matrix.rotate( 90 );
-        else if ( mNewRotation == Rotation270 )
+        else if ( to == Rotation270 )
             matrix.rotate( 180 );
-        else if ( mNewRotation == Rotation0 )
+        else if ( to == Rotation0 )
             matrix.rotate( 270 );
-    } else if ( mOldRotation == Rotation180 ) {
-        if ( mNewRotation == Rotation270 )
+    } else if ( from == Rotation180 ) {
+        if ( to == Rotation270 )
             matrix.rotate( 90 );
-        else if ( mNewRotation == Rotation0 )
+        else if ( to == Rotation0 )
             matrix.rotate( 180 );
-        else if ( mNewRotation == Rotation90 )
+        else if ( to == Rotation90 )
             matrix.rotate( 270 );
-    } else if ( mOldRotation == Rotation270 ) {
-        if ( mNewRotation == Rotation0 )
+    } else if ( from == Rotation270 ) {
+        if ( to == Rotation0 )
             matrix.rotate( 90 );
-        else if ( mNewRotation == Rotation90 )
+        else if ( to == Rotation90 )
             matrix.rotate( 180 );
-        else if ( mNewRotation == Rotation180 )
+        else if ( to == Rotation180 )
             matrix.rotate( 270 );
     }
 
-    mRotatedImage = mImage.transformed( matrix );
+    return matrix;
 }
 
 #include "rotationjob_p.moc"

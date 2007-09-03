@@ -428,6 +428,8 @@ void DocumentPrivate::loadDocumentInfo()
     if ( root.tagName() != "documentInfo" )
         return;
 
+    KUrl documentUrl( root.attribute( "url" ) );
+
     // Parse the DOM tree
     QDomNode topLevelNode = root.firstChild();
     while ( topLevelNode.isElement() )
@@ -614,6 +616,7 @@ void DocumentPrivate::saveDocumentInfo() const
         // 1. Create DOM
         QDomDocument doc( "documentInfo" );
         QDomElement root = doc.createElement( "documentInfo" );
+        root.setAttribute( "url", m_url.pathOrUrl() );
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM

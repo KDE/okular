@@ -304,10 +304,6 @@ void PagePrivate::rotateAt( Rotation orientation )
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
 
-    if ( m_text )
-    {
-        m_text->d->m_transformMatrix = rotationMatrix();
-    }
     QLinkedList< HighlightAreaRect* >::const_iterator hlIt = m_page->m_highlights.begin(), hlItEnd = m_page->m_highlights.end();
     for ( ; hlIt != hlItEnd; ++hlIt )
     {
@@ -399,7 +395,7 @@ void Page::setTextPage( TextPage * textPage )
     d->m_text = textPage;
     if ( d->m_text )
     {
-        d->m_text->d->m_transformMatrix = d->rotationMatrix();
+        d->m_text->d->m_page = d;
     }
 }
 

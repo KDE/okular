@@ -15,6 +15,7 @@
 #include "area.h"
 #include "debug_p.h"
 #include "misc.h"
+#include "page_p.h"
 
 using namespace Okular;
 
@@ -60,7 +61,7 @@ NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
 
 
 TextPagePrivate::TextPagePrivate( const TextEntity::List &words )
-    : m_words( words )
+    : m_words( words ), m_page( 0 )
 {
 }
 
@@ -111,6 +112,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     or that has a left border >= cx and bottom border >= cy. 
 */
     RegularAreaRect * ret= new RegularAreaRect;
+
+    QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
 #if 0
     int it = -1;
     int itB = -1;
@@ -206,7 +209,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         {
             tmp = *d->m_words[ it ]->area();
             if ( tmp.intersects( &first ) || tmp.intersects( &second ) || tmp.intersects( &third ) )
-                ret->appendShape( d->m_words.at( it )->transformedArea( d->m_transformMatrix ) );
+                ret->appendShape( d->m_words.at( it )->transformedArea( matrix ) );
         }
     }
 #else
@@ -227,7 +230,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
              && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
         {
-            ret->appendShape( (*it)->transformedArea( d->m_transformMatrix ) );
+            ret->appendShape( (*it)->transformedArea( matrix ) );
         }
     }
 #endif
@@ -301,6 +304,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                                                              const TextEntity::List::ConstIterator &start,
                                                              const TextEntity::List::ConstIterator &end )
 {
+    QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
     QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
@@ -381,7 +385,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             kDebug(OkularDebug) << "\tmatched";
 #endif
                     haveMatch=true;
-                    ret->append( curEntity->transformedArea(m_transformMatrix) );
+                    ret->append( curEntity->transformedArea( matrix ) );
                     j+=min;
                     queryLeft-=min;
             }

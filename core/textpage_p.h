@@ -21,6 +21,8 @@ class SearchPoint;
 namespace Okular
 {
 
+class PagePrivate;
+
 class TextPagePrivate
 {
     public:
@@ -34,7 +36,7 @@ class TextPagePrivate
 
         TextEntity::List m_words;
         QMap< int, SearchPoint* > m_searchPoints;
-        QMatrix m_transformMatrix;
+        PagePrivate *m_page;
 };
 
 }

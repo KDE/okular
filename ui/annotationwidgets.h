@@ -40,6 +40,8 @@ public:
     void setPreviewSize( int size );
     int previewSize() const;
 
+    void setEditable( bool editable );
+
 signals:
     void iconChanged( const QString& );
 

@@ -38,7 +38,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
     setPreviewSize( 32 );
 
     connect( m_comboItems, SIGNAL( currentIndexChanged( const QString& ) ), this, SLOT( iconComboChanged( const QString& ) ) );
-    connect( m_comboItems, SIGNAL( currentIndexChanged( const QString& ) ), this, SIGNAL( iconChanged( const QString& ) ) );
+    connect( m_comboItems, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( iconComboChanged( const QString& ) ) );
 }
 
 PixmapPreviewSelector::~PixmapPreviewSelector()
@@ -53,6 +53,11 @@ void PixmapPreviewSelector::setIcon( const QString& icon )
     if ( id > -1 )
     {
         m_comboItems->setCurrentIndex( id );
+    }
+    else if ( m_comboItems->isEditable() )
+    {
+        m_comboItems->addItem( icon, QVariant( icon ) );
+        m_comboItems->setCurrentIndex( m_comboItems->findText( icon, Qt::MatchFixedString ) );
     }
 }
 
@@ -79,18 +84,30 @@ int PixmapPreviewSelector::previewSize() const
     return m_previewSize;
 }
 
+void PixmapPreviewSelector::setEditable( bool editable )
+{
+    m_comboItems->setEditable( editable );
+}
+
 void PixmapPreviewSelector::iconComboChanged( const QString& icon )
 {
     int id = m_comboItems->findText( icon, Qt::MatchFixedString );
-    if ( id < 0 )
-        return;
+    if ( id >= 0 )
+    {
+        m_icon = m_comboItems->itemData( id ).toString();
+    }
+    else
+    {
+        m_icon = icon;
+    }
 
-    m_icon = m_comboItems->itemData( id ).toString();
     QString path;
     QPixmap pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), K3Icon::User, m_previewSize, K3Icon::DefaultState, QStringList(), &path, true );
     if ( path.isEmpty() )
         pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), K3Icon::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );
+
+    emit iconChanged( m_icon );
 }
 
 
@@ -217,12 +234,13 @@ QWidget * StampAnnotationWidget::widget()
     QHBoxLayout * gblay = new QHBoxLayout( gb );
     m_pixmapSelector = new PixmapPreviewSelector( gb );
     gblay->addWidget( m_pixmapSelector );
+    m_pixmapSelector->setEditable( true );
 
     // FIXME!!! use the standard names instead (when we'll have the artwork)
     m_pixmapSelector->addItem( i18n( "okular" ), "okular" );
-    m_pixmapSelector->addItem( i18n( "KMenu" ), "kmenu" );
-    m_pixmapSelector->addItem( i18n( "KTTSD" ), "kttsd" );
-    m_pixmapSelector->addItem( i18n( "Password" ), "password" );
+    m_pixmapSelector->addItem( i18n( "Bookmark" ), "bookmark" );
+    m_pixmapSelector->addItem( i18n( "KDE" ), "about-kde" );
+    m_pixmapSelector->addItem( i18n( "Love" ), "love" );
 #if 0
     m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
     m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );

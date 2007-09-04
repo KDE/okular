@@ -79,14 +79,14 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
 
-    if ( m_annotWidget )
+    QWidget * configWidget = 0;
+    if ( m_annotWidget && ( configWidget = m_annotWidget->widget() ) )
     {
-        QWidget * configWidget = m_annotWidget->widget();
         lay->addWidget( configWidget );
         configWidget->setEnabled( canEditAnnotations );
     }
 
-    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ) );
+    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ) );
     //END tab1
     
     //BEGIN tab 2
@@ -111,7 +111,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ), page );//time
     gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
 
-    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 3, 0 );
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
     //BEGIN advance properties:
     page = new QFrame();
@@ -127,7 +127,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     m_contents->setPlainText( ann->contents() );
     m_contents->setEnabled( canEditAnnotations );
 
-    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::Expanding ), 4, 0 );
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 4, 0 );
     //END advance
 
     //BEGIN connections

@@ -203,7 +203,7 @@ HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
         RegularAreaRect::ConstIterator itEnd = area->end();
         for ( ; it != itEnd; ++it )
         {
-            appendShape( NormalizedRect( *it ) );
+            append( NormalizedRect( *it ) );
         }
     }
 }

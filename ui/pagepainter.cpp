@@ -292,10 +292,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         // 4B.4. paint annotations [COMPOSITED ONES]
         if ( bufferedAnnotations )
         {
-            // This is cheap
-            // TODO Enable again once we switch to Arthur instead Agg for drawShapeOnImage
-            // backImage = backImage.convertToFormat(QImage::Format_ARGB32);
-
+            // Albert: This is quite "heavy" but all the backImage that reach here are QImage::Format_ARGB32_Premultiplied
+            // and have to be so that the QPainter::CompositionMode_Multiply works
+            // we could also put a
+            // backImage = backImage.convertToFormat(QImage::Format_ARGB32_Premultiplied)
+            // that would be almost a noop, but we'll leave the assert for now
+            Q_ASSERT(backImage.format() == QImage::Format_ARGB32_Premultiplied);
             // precalc costants for normalizing the quads to the image
             double pageScale = (double)scaledWidth / page->width();
             double xOffset = (double)limits.left() / (double)scaledWidth,
@@ -699,10 +701,10 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
-        QPixmap croppedPixmap( r.width(), r.height() );
-        QPainter p( &croppedPixmap );
+        QImage croppedImage( r.width(), r.height(), QImage::Format_ARGB32_Premultiplied );
+        QPainter p( &croppedImage );
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
-        dest = croppedPixmap.toImage();
+        dest = croppedImage;
     }
 }
 
@@ -801,115 +803,6 @@ void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
     }
 }
 
-//BEGIN of Anti-Grain dependant code
-/** Shape Drawing using Anti-Grain Geometry library **/
-// The following code uses the AGG2.3 lib imported into the "painter_agg2"
-// directory. This is to be replaced by Arthur calls for drawing antialiased
-// primitives, but until that AGG2 does its job very fast and good-looking.
-
-#include "okular_pixfmt_rgba.h"
-#include "agg_rendering_buffer.h"
-#include "agg_renderer_base.h"
-#include "agg_scanline_u.h"
-#include "agg_rasterizer_scanline_aa.h"
-#include "agg_renderer_scanline.h"
-#include "agg_conv_stroke.h"
-#include "agg_path_storage.h"
-
-void PagePainter::drawShapeOnImage(
-    QImage & image,
-    const NormalizedPath & normPath,
-    bool closeShape,
-    const QPen & pen,
-    const QBrush & brush,
-    double penWidthMultiplier,
-    RasterOperation op
-    //float antiAliasRadius
-    )
-{
-    // safety checks
-    int pointsNumber = normPath.size();
-    if ( pointsNumber < 2 )
-        return;
-
-    int imageWidth = image.width();
-    int imageHeight = image.height();
-    double fImageWidth = (double)imageWidth;
-    double fImageHeight = (double)imageHeight;
-
-    // create a 'path'
-    agg::path_storage path;
-    path.move_to( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
-    for ( int i = 1; i < pointsNumber; i++ )
-        path.line_to( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
-        //path.curve4( normPath[ i ].x * fImageWidth + 2, normPath[ i ].y * fImageHeight - 2,
-        //             normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
-    if ( closeShape )
-        path.close_polygon();
-
-    // create the 'rendering buffer' over qimage memory
-    agg::rendering_buffer buffer( image.bits(), imageWidth, imageHeight, imageWidth << 2 );
-    // create 'pixel buffer', 'clipped renderer', 'scanline renderer' on bgra32 format
-    typedef agg::pixfmt_bgra32 bgra32;
-    typedef agg::renderer_base< bgra32 > rb_bgra32;
-    bgra32 pixels( buffer, op == Multiply ? 1 : 0 );
-    rb_bgra32 rb( pixels );
-    agg::renderer_scanline_aa_solid< rb_bgra32 > render( rb );
-    // create rasterizer and scaline
-    agg::rasterizer_scanline_aa<> rasterizer;
-    agg::scanline_u8 scanline;
-
-#if 0
-    //draw RAINBOW
-    agg::rgba8 span[ imageWidth ];
-    for( int x = 0; x < imageWidth; x++ )
-    {
-        agg::rgba c( 380.0 + 400.0 * x / imageWidth, 0.8 );
-        span[ x ] = agg::rgba8(c);
-    }
-    for( int y = 0; y < imageHeight; y++ )
-        pixels.blend_color_hspan( 0, y, imageWidth, span, 0, (123*y)/imageHeight );
-#endif
-
-    // fill rect
-    if ( brush.style() != Qt::NoBrush )
-    {
-        const QColor & brushColor = brush.color();
-        render.color( agg::rgba8( brushColor.red(), brushColor.green(), brushColor.blue(), (int)( agg::rgba8::base_mask * brushColor.alphaF() ) ) );
-        rasterizer.add_path( path );
-        agg::render_scanlines( rasterizer, scanline, render );
-        rasterizer.reset();
-    }
-
-    // stroke outline
-    double penWidth = (double)pen.width() * penWidthMultiplier;
-    if ( penWidth > 0.1 )
-    {
-        const QColor & penColor = pen.color();
-        render.color( agg::rgba8( penColor.red(), penColor.green(), penColor.blue(), (int)( agg::rgba8::base_mask * penColor.alphaF() ) ) );
-#if 0
-        // BSPLINE curve over path
-        typedef agg::conv_bspline< agg::path_storage > conv_bspline_type;
-        conv_bspline_type bspline( path );
-        bspline.interpolation_step( 0.2 );
-        agg::conv_stroke< conv_bspline_type > strokedPath( bspline );
-#else
-        agg::conv_stroke< agg::path_storage > strokedPath( path );
-#endif
-        strokedPath.width( penWidth );
-        rasterizer.add_path( strokedPath );
-        agg::render_scanlines( rasterizer, scanline, render );
-    }
-}
-
-//END of Anti-Grain dependant code
-
-// TODO Enable this and remove AGG code when
-// http://www.trolltech.com/developer/task-tracker/index_html?id=158815&method=entry
-// gets fixed
-// remember to uncomment
-// backImage = backImage.convertToFormat(QImage::Format_ARGB32);
-#if 0
 void PagePainter::drawShapeOnImage(
     QImage & image,
     const NormalizedPath & normPath,
@@ -955,4 +848,3 @@ void PagePainter::drawShapeOnImage(
 
     painter.drawPath(path);
 }
-#endif

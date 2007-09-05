@@ -13,7 +13,6 @@ else(NOT WIN32)
 endif(NOT WIN32)
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
-   ${CMAKE_CURRENT_SOURCE_DIR}/ui/painter_agg2/
 )
 
 
@@ -132,11 +131,6 @@ set(okularpart_SRCS
    ui/side_reviews.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
-   ui/painter_agg2/agg_bezier_arc.cpp
-   ui/painter_agg2/agg_path_storage.cpp
-   ui/painter_agg2/agg_rasterizer_scanline_aa.cpp
-   ui/painter_agg2/agg_trans_affine.cpp
-   ui/painter_agg2/agg_vcgen_stroke.cpp
 )
 
 kde4_add_ui_files(okularpart_SRCS

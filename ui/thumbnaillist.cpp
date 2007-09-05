@@ -217,11 +217,12 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
     }
 }
 
-void ThumbnailList::notifyPageChanged( int pageNumber, int /*changedFlags*/ )
+void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
 {
-    // only handle pixmap changed notifies (the only defined for now)
-    //if ( !(changedFlags & DocumentObserver::Pixmap) )
-    //    return;
+    static int interestingFlags = DocumentObserver::Pixmap | DocumentObserver::Bookmark | DocumentObserver::Highlights | DocumentObserver::Annotations;
+    // only handle change notifications we are interested in
+    if ( !( changedFlags & interestingFlags ) )
+        return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();

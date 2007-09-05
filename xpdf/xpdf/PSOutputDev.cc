@@ -3140,7 +3140,7 @@ void PSOutputDev::startPage(int pageNum, GfxState *state) {
       writePSFmt("{0:.4g} {1:.4g} translate\n", tx, ty);
     }
     if (xScale != 1 || yScale != 1) {
-      writePSFmt("{0:.4f} {0:.4f} scale\n", xScale, yScale);
+      writePSFmt("{0:.4f} {1:.4f} scale\n", xScale, yScale);
     }
     if (clipLLX0 < clipURX0 && clipLLY0 < clipURY0) {
       writePSFmt("{0:.4g} {1:.4g} {2:.4g} {3:.4g} re W\n",

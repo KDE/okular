@@ -466,7 +466,7 @@ bool PDFGenerator::print( KPrinter& printer )
     {
       pstitlechar = 0;
     }
-    PSOutputDev *psOut = new PSOutputDev(const_cast<char*>(tf.name().latin1()), const_cast<char*>(pstitlechar), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginRight, marginBottom, paperWidth - marginLeft, paperHeight - marginTop, forceRasterize);
+    PSOutputDev *psOut = new PSOutputDev(const_cast<char*>(tf.name().latin1()), const_cast<char*>(pstitlechar), pdfdoc->getXRef(), pdfdoc->getCatalog(), 1, pdfdoc->getNumPages(), psModePS, marginLeft, marginBottom, paperWidth - marginRight, paperHeight - marginTop, forceRasterize);
 
     if (psOut->isOk())
     {

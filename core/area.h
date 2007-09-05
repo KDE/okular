@@ -15,6 +15,7 @@
 #include <QtGui/QPainterPath>
 #include <kdebug.h>
 
+#include <okular/core/global.h>
 #include <okular/core/okular_export.h>
 
 class QPolygonF;
@@ -469,7 +470,7 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         /**
          * Appends the given @p shape to the regular area.
          */
-        void appendShape( const NormalizedShape& shape );
+        void appendShape( const NormalizedShape& shape, MergeSide side = MergeAll );
 
         /**
          * Simplifies the regular area by merging its intersecting subareas.
@@ -599,7 +600,7 @@ void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<Normaliz
 
 
 template <class NormalizedShape, class Shape>
-void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& shape )
+void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& shape, MergeSide side )
 {
     if ( !this )
         return;
@@ -612,9 +613,57 @@ void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& sh
     }
     else
     {
+        bool intersection = false;
+        NormalizedShape& last = (*this)[size - 1];
+#define O_LAST givePtr( last )
+#  define O_LAST_R O_LAST->right
+#  define O_LAST_L O_LAST->left
+#  define O_LAST_T O_LAST->top
+#  define O_LAST_B O_LAST->bottom
+#define O_NEW givePtr( shape )
+#  define O_NEW_R O_NEW->right
+#  define O_NEW_L O_NEW->left
+#  define O_NEW_T O_NEW->top
+#  define O_NEW_B O_NEW->bottom
+        switch ( side )
+        {
+            case MergeRight:
+                intersection = ( O_LAST_R >= O_NEW_L ) && ( O_LAST_L <= O_NEW_R )
+                               && ( ( O_LAST_T <= O_NEW_T && O_LAST_B >= O_NEW_B )
+                                  || ( O_LAST_T >= O_NEW_T && O_LAST_B <= O_NEW_B ) );
+                break;
+            case MergeBottom:
+                intersection = ( O_LAST_B >= O_NEW_T ) && ( O_LAST_T <= O_NEW_B )
+                               && ( ( O_LAST_R <= O_NEW_R && O_LAST_L >= O_NEW_L )
+                                  || ( O_LAST_R >= O_NEW_R && O_LAST_L <= O_NEW_L ) );
+                break;
+            case MergeLeft:
+                intersection = ( O_LAST_L <= O_NEW_R ) && ( O_LAST_R >= O_NEW_L )
+                               && ( ( O_LAST_T <= O_NEW_T && O_LAST_B >= O_NEW_B )
+                                  || ( O_LAST_T >= O_NEW_T && O_LAST_B <= O_NEW_B ) );
+                break;
+            case MergeTop:
+                intersection = ( O_LAST_T <= O_NEW_B ) && ( O_LAST_B >= O_NEW_T )
+                               && ( ( O_LAST_R <= O_NEW_R && O_LAST_L >= O_NEW_L )
+                                  || ( O_LAST_R >= O_NEW_R && O_LAST_L <= O_NEW_L ) );
+                break;
+            case MergeAll:
+                intersection = O_LAST->intersects( shape );
+                break;
+        }
+#undef O_LAST
+#  undef O_LAST_R
+#  undef O_LAST_L
+#  undef O_LAST_T
+#  undef O_LAST_B
+#undef O_NEW
+#  undef O_NEW_R
+#  undef O_NEW_L
+#  undef O_NEW_T
+#  undef O_NEW_B
         // if the new shape intersects with the last shape in the list, then
         // merge it with that and delete the shape
-        if ( givePtr((*this)[size - 1])->intersects( shape ) )
+        if ( intersection )
         {
             deref((*this)[size - 1]) |= deref( shape );
             doDelete( const_cast<NormalizedShape&>( shape ) );

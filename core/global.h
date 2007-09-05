@@ -58,6 +58,18 @@ enum GenerationType
     Asynchronous      ///< Will create the object in an asynchronous way
 };
 
+/**
+ * The side(s) to be considered when merging areas.
+ */
+enum MergeSide
+{
+    MergeRight = 0,    ///< Merge only if the right side of the first area intersect.
+    MergeBottom = 1,   ///< Merge only if the bottom side of the first area intersect.
+    MergeLeft = 2,  ///< Merge only if the left side of the first area intersect.
+    MergeTop = 3,   ///< Merge only if the top side of the first area intersect.
+    MergeAll = 4   ///< Merge if the areas intersects, no matter which side(s).
+};
+
 }
 
 #endif

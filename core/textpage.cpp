@@ -15,6 +15,7 @@
 #include "area.h"
 #include "debug_p.h"
 #include "misc.h"
+#include "page.h"
 #include "page_p.h"
 
 using namespace Okular;
@@ -224,13 +225,14 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     double endCy = endC.y;
 
     TextEntity::List::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
     for ( ; it != itEnd; ++it )
     {
         tmp = *(*it)->area();
         if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
              && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
         {
-            ret->appendShape( (*it)->transformedArea( matrix ) );
+            ret->appendShape( (*it)->transformedArea( matrix ), side );
         }
     }
 #endif

@@ -199,6 +199,7 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_sidebar->setItemEnabled( 3, false );
 
     // widgets: [../miniBarContainer] | []
+#ifdef OKULAR_ENABLE_MINIBAR
     QWidget * miniBarContainer = new QWidget( 0 );
     m_sidebar->setBottomWidget( miniBarContainer );
     QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
@@ -214,6 +215,7 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     bevelContainerLayout->addWidget( m_progressWidget );
     miniBarLayout->addWidget( bevelContainer );
     miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+#endif
 
     // widgets: [] | [right 'pageView']
     QWidget * rightContainer = new QWidget( 0 );
@@ -265,7 +267,9 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_document->addObserver( m_pageView );
     m_document->addObserver( m_toc );
     m_document->addObserver( m_miniBar );
+#ifdef OKULAR_ENABLE_MINIBAR
     m_document->addObserver( m_progressWidget );
+#endif
     m_document->addObserver( reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( bookmarkList );
@@ -288,7 +292,9 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_prevPage->setShortcut( 0 );
     // dirty way to activate prev page when pressing miniBar's button
     connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+#ifdef OKULAR_ENABLE_MINIBAR
     connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+#endif
 
     m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
     ac->addAction("next_page", m_nextPage);
@@ -298,7 +304,9 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_nextPage->setShortcut( 0 );
     // dirty way to activate next page when pressing miniBar's button
     connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+#ifdef OKULAR_ENABLE_MINIBAR
     connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+#endif
 
     m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
     ac->addAction("first_page", m_firstPage);
@@ -471,7 +479,9 @@ Part::~Part()
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
+#ifdef OKULAR_ENABLE_MINIBAR
     delete m_progressWidget;
+#endif
     delete m_pageSizeLabel;
 
     delete m_document;

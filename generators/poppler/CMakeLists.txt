@@ -1,3 +1,10 @@
+
+
+configure_file(
+   ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
+   ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h
+)
+
 include_directories(
    ${POPPLER_INCLUDE_DIR}
    ${CMAKE_BINARY_DIR}/okular

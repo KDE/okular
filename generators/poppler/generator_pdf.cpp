@@ -39,7 +39,7 @@
 // local includes
 #include "settings.h"
 
-#include <config-okular.h>
+#include <config-okular-poppler.h>
 
 #ifdef HAVE_POPPLER_0_6
 #include "formfields.h"

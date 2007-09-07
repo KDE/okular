@@ -15,10 +15,10 @@
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qvarlengtharray.h>
-#include <kimageeffect.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <QApplication>
+#include <qimageblitz/qimageblitz.h>
 
 // system includes
 #include <math.h>
@@ -228,8 +228,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     backImage.invertPixels(QImage::InvertRgb);
                     break;
                 case Okular::Settings::EnumRenderMode::Recolor:
-                    // Recolor image using KImageEffect::flatten with dither:0
-                    KImageEffect::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
+                    // Recolor image using Blitz::flatten with dither:0
+                    Blitz::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
                     break;
                 case Okular::Settings::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast

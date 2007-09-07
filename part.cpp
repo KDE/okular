@@ -1246,10 +1246,6 @@ void Part::slotNewConfig()
         m_watcher->stopScan();
     }
 
-    bool showSearch = Okular::Settings::showSearchBar();
-    if ( !m_searchWidget->isHidden() != showSearch )
-        m_searchWidget->setVisible( showSearch );
-
     // Main View (pageView)
     m_pageView->reparseConfig();
 

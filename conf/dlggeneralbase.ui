@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>282</width>
-    <height>387</height>
+    <width>287</width>
+    <height>361</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -64,16 +64,6 @@
          <widget class="QCheckBox" name="kcfg_ShowScrollBars" >
           <property name="text" >
            <string>Show scroll&amp;bars</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="kcfg_ShowSearchBar" >
-          <property name="enabled" >
-           <bool>true</bool>
-          </property>
-          <property name="text" >
-           <string>Show &amp;search bar in thumbnails list</string>
           </property>
          </widget>
         </item>

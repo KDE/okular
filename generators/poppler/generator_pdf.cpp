@@ -905,7 +905,7 @@ bool PDFGenerator::print( KPrinter& printer )
     QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
     if ( pstitle.trimmed().isEmpty() )
     {
-        pstitle = document()->currentDocument().path();
+        pstitle = document()->currentDocument().fileName();
     }
     bool forceRasterize = printer.option("kde-okular-poppler-forceRaster").toInt();
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();

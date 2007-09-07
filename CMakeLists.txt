@@ -13,6 +13,7 @@ else(NOT WIN32)
 endif(NOT WIN32)
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
+   ${BLITZ_INCLUDES}
 )
 
 

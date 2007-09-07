@@ -413,6 +413,7 @@ m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
     m_exportAs->setMenu( menu );
     m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), menu );
     menu->addAction( m_exportAsText );
+    m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
 
     m_aboutBackend = ac->addAction("help_about_backend");
@@ -765,6 +766,7 @@ bool Part::openFile()
         }
     }
     m_exportAsText->setEnabled( ok && m_document->canExportToText() );
+    m_exportAs->setEnabled( ok );
 
     // update viewing actions
     updateViewActions();
@@ -833,6 +835,7 @@ bool Part::closeUrl()
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showEmbeddedFiles->setEnabled( false );
+    m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
     m_exportFormats.clear();
     QMenu *menu = m_exportAs->menu();

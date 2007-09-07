@@ -231,10 +231,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QAction *m_reload;
 
         bool m_actionsSearched;
-        bool m_searchStarted;
         BrowserExtension *m_bExtension;
 
-        KSelectAction * m_confGens;
         QList<Okular::ExportFormat> m_exportFormats;
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;

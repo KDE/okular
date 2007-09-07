@@ -117,7 +117,7 @@ QObject *parent,
 const QVariantList &args )
 : KParts::ReadOnlyPart(parent),
 m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_searchStarted(false), m_cliPresentation(false), m_generatorGuiClient(0)
+m_cliPresentation(false), m_generatorGuiClient(0)
 {
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
@@ -859,7 +859,6 @@ bool Part::closeUrl()
     m_showPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
-    m_searchStarted = false;
     m_realUrl = KUrl();
     if (!localFilePath().isEmpty()) m_watcher->removeFile(localFilePath());
     if ( m_generatorGuiClient )
@@ -1371,8 +1370,6 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )
             fitPageWidth = popup->addAction( KIcon("zoom-best-fit"), i18n("Fit Width") );
-        //popup->insertItem( SmallIcon("pencil"), i18n("Edit"), 3 );
-        //popup->setItemEnabled( 3, false );
         popup->addAction( m_prevBookmark );
         popup->addAction( m_nextBookmark );
         reallyShow = true;

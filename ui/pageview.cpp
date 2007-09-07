@@ -1356,6 +1356,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                 }
                 d->pagesWithTextSelection = pagesWithSelectionSet;
             }
+            updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
             break;
     }
 }
@@ -2392,7 +2393,7 @@ void PageView::updateCursor( const QPoint &p )
 {
     // detect the underlaying page (if present)
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
-    if ( pageItem && d->mouseMode == MouseNormal )
+    if ( pageItem )
     {
         double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
                nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();

@@ -210,7 +210,7 @@ bool DjVuGenerator::print( KPrinter& printer )
 
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
-        return printer.printFiles( QStringList( tf.fileName() ), true );
+        return printer.printFiles( QStringList( tf.fileName() ), false );
     }
     return false;
 }

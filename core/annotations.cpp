@@ -1107,8 +1107,8 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         LineAnnotationPrivate()
             : AnnotationPrivate(),
               m_lineStartStyle( LineAnnotation::None ), m_lineEndStyle( LineAnnotation::None ),
-              m_lineClosed( false ), m_lineLeadingFwdPt( 0 ), m_lineLeadingBackPt( 0 ),
-              m_lineShowCaption( false ), m_lineIntent( LineAnnotation::Unknown )
+              m_lineClosed( false ), m_lineShowCaption( false ), m_lineLeadingFwdPt( 0 ),
+              m_lineLeadingBackPt( 0 ), m_lineIntent( LineAnnotation::Unknown )
         {
         }
 
@@ -1120,11 +1120,11 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         QLinkedList<NormalizedPoint> m_transformedLinePoints;
         LineAnnotation::TermStyle m_lineStartStyle;
         LineAnnotation::TermStyle m_lineEndStyle;
-        bool m_lineClosed;
+        bool m_lineClosed : 1;
+        bool m_lineShowCaption : 1;
         QColor m_lineInnerColor;
         double m_lineLeadingFwdPt;
         double m_lineLeadingBackPt;
-        bool m_lineShowCaption;
         LineAnnotation::LineIntent m_lineIntent;
 };
 
@@ -1506,8 +1506,8 @@ class HighlightAnnotation::Quad::Private
 
         NormalizedPoint m_points[4];
         NormalizedPoint m_transformedPoints[4];
-        bool m_capStart;
-        bool m_capEnd;
+        bool m_capStart : 1;
+        bool m_capEnd : 1;
         double m_feather;
 };
 

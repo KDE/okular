@@ -267,9 +267,9 @@ class Okular::SoundActionPrivate : public Okular::ActionPrivate
         }
 
         double m_volume;
-        bool m_sync;
-        bool m_repeat;
-        bool m_mix;
+        bool m_sync : 1;
+        bool m_repeat : 1;
+        bool m_mix : 1;
         Okular::Sound *m_sound;
 };
 

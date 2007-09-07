@@ -50,8 +50,8 @@ class GeneratorPrivate
         Generator *m_generator;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
-        bool mPixmapReady;
-        bool mTextPageReady;
+        bool mPixmapReady : 1;
+        bool mTextPageReady : 1;
 };
 
 

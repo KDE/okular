@@ -89,8 +89,8 @@ struct RunningSearch
     QString cachedString;
     Document::SearchType cachedType;
     Qt::CaseSensitivity cachedCaseSensitivity;
-    bool cachedViewportMove;
-    bool cachedNoDialogs;
+    bool cachedViewportMove : 1;
+    bool cachedNoDialogs : 1;
     QColor cachedColor;
 };
 
@@ -103,7 +103,7 @@ struct GeneratorInfo
     Generator * generator;
     KLibrary * library;
     QString catalogName;
-    bool hasConfig;
+    bool hasConfig : 1;
 };
 
 #define foreachObserver( cmd ) {\

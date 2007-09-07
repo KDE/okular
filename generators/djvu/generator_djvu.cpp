@@ -207,12 +207,10 @@ bool DjVuGenerator::print( KPrinter& printer )
     tf.setSuffix( ".ps" );
     if ( !tf.open() )
         return false;
-    QString tempfilename = tf.fileName();
-    tf.close();
 
-    if ( m_djvu->exportAsPostScript( tempfilename, pageList ) )
+    if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
-        return printer.printFiles( QStringList( tempfilename ), true );
+        return printer.printFiles( QStringList( tf.fileName() ), true );
     }
     return false;
 }

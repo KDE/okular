@@ -897,11 +897,25 @@ bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& page
     if ( !d->m_djvu_document || fileName.trimmed().isEmpty() || pageList.isEmpty() )
         return false;
 
-    QByteArray fn = QFile::encodeName( fileName );
-    FILE* f = fopen( fn.constData(), "w+" );
+    QFile f( fileName );
+    f.open( QIODevice::ReadWrite );
+    bool ret = exportAsPostScript( &f, pageList );
+    if ( ret )
+    {
+        f.close();
+    }
+    return ret;
+}
+
+bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
+{
+    if ( !d->m_djvu_document || !file || pageList.isEmpty() )
+        return false;
+
+    FILE* f = fdopen( file->handle(), "w+" );
     if ( !f )
     {
-        kDebug() << "KDjVu::exportAsPostScript(): error while opening the file";
+        kDebug() << "error while getting the FILE*";
         return false;
     }
 

@@ -20,6 +20,7 @@
 #include <qvector.h>
 
 class QDomDocument;
+class QFile;
 
 /**
  * @brief Qt (KDE) encapsulation of the DjVuLibre
@@ -257,6 +258,12 @@ class KDjVu : public QObject
          * \returns whether the exporting was successful
           */
         bool exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const;
+
+        /**
+         * Export the currently open document as PostScript file.
+         * \returns whether the exporting was successful
+          */
+        bool exportAsPostScript( QFile* file, const QList<int>& pageList ) const;
 
         /**
          * Return the list of the text entities for the specified \p page, that matches the

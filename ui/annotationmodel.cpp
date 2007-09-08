@@ -42,9 +42,11 @@ public:
 
     virtual uint observerId() const;
     virtual void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
+    virtual void notifyPageChanged( int page, int flags );
 
     QModelIndex indexForItem( AnnotationItem *item ) const;
     void rebuildTree( const QVector< Okular::Page * > &pages );
+    AnnotationItem* findItem( int page, int *index ) const;
 
     AnnotationModel *q;
     AnnotationItem *root;
@@ -104,6 +106,102 @@ void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages
     rebuildTree( pages );
 }
 
+void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
+{
+    // we are strictly interested in annotations
+    if ( !(flags & Okular::DocumentObserver::Annotations ) )
+        return;
+
+    QLinkedList< Okular::Annotation* > annots = document->page( page )->annotations();
+    int annItemIndex = -1;
+    AnnotationItem *annItem = findItem( page, &annItemIndex );
+    // case 1: the page has no more annotations
+    //         => remove the branch, if any
+    if ( annots.isEmpty() )
+    {
+        if ( annItem )
+        {
+            q->beginRemoveRows( indexForItem( root ), annItemIndex, annItemIndex );
+            delete root->children.at( annItemIndex );
+            root->children.removeAt( annItemIndex );
+            q->endRemoveRows();
+        }
+        return;
+    }
+    // case 2: no existing branch
+    //         => add a new branch, and add the annotations for the page
+    if ( !annItem )
+    {
+        int i = 0;
+        while ( i < root->children.count() && root->children.at( i )->page < page ) ++i;
+
+        AnnotationItem *annItem = new AnnotationItem();
+        annItem->page = page;
+        annItem->parent = root;
+        q->beginInsertRows( indexForItem( root ), i, i );
+        annItem->parent->children.insert( i, annItem );
+        q->endInsertRows();
+        QLinkedList< Okular::Annotation* >::ConstIterator it = annots.begin(), itEnd = annots.end();
+        int newid = 0;
+        for ( ; it != itEnd; ++it, ++newid )
+        {
+            q->beginInsertRows( indexForItem( annItem ), newid, newid );
+            new AnnotationItem( annItem, *it );
+            q->endInsertRows();
+        }
+        return;
+    }
+    // case 3: existing branch, less annotations than items
+    //         => lookup and remove the annotations
+    if ( annItem->children.count() > annots.count() )
+    {
+        for ( int i = annItem->children.count(); i > 0; --i )
+        {
+            Okular::Annotation *ref = annItem->children.at( i - 1 )->annotation;
+            bool found = false;
+            QLinkedList< Okular::Annotation* >::ConstIterator it = annots.begin(), itEnd = annots.end();
+            for ( ; !found && it != itEnd; ++it )
+            {
+                if ( ( *it ) == ref )
+                    found = true;
+            }
+            if ( !found )
+            {
+                q->beginRemoveRows( indexForItem( annItem ), i - 1, i - 1 );
+                annItem->children.removeAt( i - 1 );
+                q->endRemoveRows();
+            }
+        }
+        return;
+    }
+    // case 4: existing branch, less items than annotations
+    //         => lookup and add annotations if not in the branch
+    if ( annots.count() > annItem->children.count() )
+    {
+        QLinkedList< Okular::Annotation* >::ConstIterator it = annots.begin(), itEnd = annots.end();
+        for ( ; it != itEnd; ++it )
+        {
+            Okular::Annotation *ref = *it;
+            bool found = false;
+            int count = annItem->children.count();
+            for ( int i = 0; !found && i < count; ++i )
+            {
+                if ( ref == annItem->children.at( i )->annotation )
+                    found = true;
+            }
+            if ( !found )
+            {
+                q->beginInsertRows( indexForItem( annItem ), count, count );
+                new AnnotationItem( annItem, ref );
+                q->endInsertRows();
+            }
+        }
+        return;
+    }
+    // case 5: the data of some annotation changed
+    // TODO: what do we do in this case?
+}
+
 QModelIndex AnnotationModelPrivate::indexForItem( AnnotationItem *item ) const
 {
     if ( item->parent )
@@ -134,6 +232,23 @@ void AnnotationModelPrivate::rebuildTree( const QVector< Okular::Page * > &pages
     emit q->layoutChanged();
 }
 
+AnnotationItem* AnnotationModelPrivate::findItem( int page, int *index ) const
+{
+    for ( int i = 0; i < root->children.count(); ++i )
+    {
+        AnnotationItem *tmp = root->children.at( i );
+        if ( tmp->page == page )
+        {
+            if ( index )
+                *index = i;
+            return tmp;
+        }
+    }
+    if ( index )
+        *index = -1;
+    return 0;
+}
+
 
 AnnotationModel::AnnotationModel( Okular::Document *document, QObject *parent )
     : QAbstractItemModel( parent ), d( new AnnotationModelPrivate( this ) )
@@ -162,7 +277,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
     AnnotationItem *item = static_cast< AnnotationItem* >( index.internalPointer() );
     if ( !item->annotation )
     {
-        if ( role == Qt::DisplayRole )
+        if ( role == Qt::DisplayRole || role == PageRole )
            return item->page;
         return QVariant();
     }

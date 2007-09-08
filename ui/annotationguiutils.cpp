@@ -15,7 +15,9 @@
 // local includes
 #include "core/annotations.h"
 
-QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )
+namespace AnnotationGuiUtils {
+
+QString captionForAnnotation( const Okular::Annotation * ann )
 {
     if ( !ann )
         return QString();
@@ -50,7 +52,7 @@ QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )
     return ret;
 }
 
-QString AnnotationGuiUtils::authorForAnnotation( const Okular::Annotation * ann )
+QString authorForAnnotation( const Okular::Annotation * ann )
 {
     if ( !ann )
         return QString();
@@ -58,7 +60,7 @@ QString AnnotationGuiUtils::authorForAnnotation( const Okular::Annotation * ann 
     return !ann->author().isEmpty() ? ann->author() : i18nc( "Unknown author", "Unknown" );
 }
 
-QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
+QString contents( const Okular::Annotation * ann )
 {
     if ( !ann )
         return QString();
@@ -85,12 +87,12 @@ QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
     return ret;
 }
 
-QString AnnotationGuiUtils::contentsHtml( const Okular::Annotation * ann )
+QString contentsHtml( const Okular::Annotation * ann )
 {
     return contents( ann ).replace( "\n", "<br>" );
 }
 
-QString AnnotationGuiUtils::prettyToolTip( const Okular::Annotation * ann )
+QString prettyToolTip( const Okular::Annotation * ann )
 {
     if ( !ann )
         return QString();
@@ -107,7 +109,7 @@ QString AnnotationGuiUtils::prettyToolTip( const Okular::Annotation * ann )
     return tooltip;
 }
 
-bool AnnotationGuiUtils::canBeMoved( Okular::Annotation * ann )
+bool canBeMoved( const Okular::Annotation * ann )
 {
     if ( !ann )
         return false;
@@ -127,3 +129,4 @@ bool AnnotationGuiUtils::canBeMoved( Okular::Annotation * ann )
     return false;
 }
 
+}

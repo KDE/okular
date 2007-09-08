@@ -16,22 +16,21 @@ namespace Okular {
 class Annotation;
 }
 
-class AnnotationGuiUtils
+namespace AnnotationGuiUtils
 {
-    public:
-        /**
-         * Returns the translated string with the type of the given @p annotation.
-         */
-        static QString captionForAnnotation( Okular::Annotation * annotation );
-        static QString authorForAnnotation( const Okular::Annotation * annotation );
+    /**
+     * Returns the translated string with the type of the given @p annotation.
+     */
+    QString captionForAnnotation( const Okular::Annotation * annotation );
+    QString authorForAnnotation( const Okular::Annotation * annotation );
 
-        static QString contents( const Okular::Annotation * annotation );
-        static QString contentsHtml( const Okular::Annotation * annotation );
+    QString contents( const Okular::Annotation * annotation );
+    QString contentsHtml( const Okular::Annotation * annotation );
 
-        static QString prettyToolTip( const Okular::Annotation * annotation );
+    QString prettyToolTip( const Okular::Annotation * annotation );
 
-        static bool canBeMoved( Okular::Annotation * annotation );
-};
+    bool canBeMoved( const Okular::Annotation * annotation );
+}
 
 
 #endif

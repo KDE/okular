@@ -31,6 +31,7 @@
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
 
+static const int AuthorRole = Qt::UserRole + 100;
 
 Reviews::Reviews( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ), m_delayTimer( 0 ), m_currentPage( -1 )
@@ -306,14 +307,12 @@ void Reviews::addContents( const Okular::Page * page )
         {
             // get author's name
             QString author = annotation->author();
-            if ( author.isEmpty() )
-                author = i18nc( "Unknown author", "Unknown" );
 
             // find out a previous entry by author
             QTreeWidgetItemIterator it = pageItem
                 ? QTreeWidgetItemIterator( pageItem, itFlags )
                 : QTreeWidgetItemIterator( m_listView, itFlags );
-            while ( (*it) && ( (*it)->text(0) != author ) ) ++it;
+            while ( (*it) && ( (*it)->data( 0, AuthorRole ) != author ) ) ++it;
             authorItem = *it;
 
             // if item not found, create one
@@ -323,9 +322,9 @@ void Reviews::addContents( const Okular::Page * page )
                     authorItem = new QTreeWidgetItem( pageItem );
                 else
                     authorItem = new QTreeWidgetItem( m_listView );
-                QString icon = author != i18nc( "Unknown author", "Unknown" ) ? "personal" : "presence_away";
-                authorItem->setText( 0, author );
-                authorItem->setIcon( 0, KIcon( icon ) );
+                authorItem->setText( 0, !author.isEmpty() ? author : i18nc( "Unknown author", "Unknown" ) );
+                authorItem->setIcon( 0, KIcon( !author.isEmpty() ? "personal" : "presence_away" ) );
+                authorItem->setData( 0, AuthorRole, author );
             }
         }
 

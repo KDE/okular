@@ -590,14 +590,14 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
         {
             m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
 
-            // create the AnnotationItems from the XML dom tree
+            // create the AnnotationToolItems from the XML dom tree
             QDomNode toolDescription = m_toolsDefinition.firstChild();
             while ( toolDescription.isElement() )
             {
                 QDomElement toolElement = toolDescription.toElement();
                 if ( toolElement.tagName() == "tool" )
                 {
-                    AnnotationItem item;
+                    AnnotationToolItem item;
                     item.id = toolElement.attribute("id").toInt();
                     item.text = toolElement.attribute("name");
                     item.pixmap = toolElement.attribute("pixmap");
@@ -629,7 +629,7 @@ PageViewAnnotator::~PageViewAnnotator()
     delete m_engine;
 }
 
-static QLinkedList<AnnotationItem> filteredItems( const QLinkedList<AnnotationItem> &items, bool textTools )
+static QLinkedList<AnnotationToolItem> filteredItems( const QLinkedList<AnnotationToolItem> &items, bool textTools )
 {
     if ( textTools )
     {
@@ -637,8 +637,8 @@ static QLinkedList<AnnotationItem> filteredItems( const QLinkedList<AnnotationIt
     }
     else
     {
-        QLinkedList<AnnotationItem> newitems;
-        QLinkedList<AnnotationItem>::ConstIterator it = items.begin(), itEnd = items.end();
+        QLinkedList<AnnotationToolItem> newitems;
+        QLinkedList<AnnotationToolItem>::ConstIterator it = items.begin(), itEnd = items.end();
         for ( ; it != itEnd; ++it )
         {
             if ( !(*it).isText )

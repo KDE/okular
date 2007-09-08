@@ -328,7 +328,7 @@ void PageViewTopMessage::setActionButton( QAction * action )
 /** PageViewToolBar  */
 /*********************/
 
-ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationItem &item )
+ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
     : QToolButton( parent ), m_id( item.id )
 {
     setCheckable( true );
@@ -414,7 +414,7 @@ PageViewToolBar::~PageViewToolBar()
     delete d;
 }
 
-void PageViewToolBar::setItems( const QLinkedList<AnnotationItem> &items )
+void PageViewToolBar::setItems( const QLinkedList<AnnotationToolItem> &items )
 {
     // delete buttons if already present
     if ( !d->buttons.isEmpty() )
@@ -426,7 +426,7 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationItem> &items )
     }
 
     // create new buttons for given items
-    QLinkedList<AnnotationItem>::const_iterator it = items.begin(), end = items.end();
+    QLinkedList<AnnotationToolItem>::const_iterator it = items.begin(), end = items.end();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );

@@ -111,9 +111,9 @@ class PageViewTopMessage : public QWidget
 };
 
 
-struct AnnotationItem
+struct AnnotationToolItem
 {
-    AnnotationItem()
+    AnnotationToolItem()
         : id( -1 ), isText( false )
     {
     }
@@ -132,7 +132,7 @@ class ToolBarButton : public QToolButton
         static const int iconSize = 32;
         static const int buttonSize = 40;
 
-        ToolBarButton( QWidget * parent, const AnnotationItem &item );
+        ToolBarButton( QWidget * parent, const AnnotationToolItem &item );
         int buttonID() const { return m_id; }
 
     private:
@@ -157,7 +157,7 @@ class PageViewToolBar : public QWidget
         // animated widget controls
         enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };
 
-        void setItems( const QLinkedList<AnnotationItem> &items );
+        void setItems( const QLinkedList<AnnotationToolItem> &items );
         void setSide( Side side );
 
         void showAndAnimate();

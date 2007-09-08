@@ -19,15 +19,15 @@
 #include "core/observer.h"
 #include "core/page.h"
 
-struct AnnotationItem
+struct AnnItem
 {
-    AnnotationItem();
-    AnnotationItem( AnnotationItem *parent, Okular::Annotation *ann );
-    AnnotationItem( AnnotationItem *parent, int page );
-    ~AnnotationItem();
+    AnnItem();
+    AnnItem( AnnItem *parent, Okular::Annotation *ann );
+    AnnItem( AnnItem *parent, int page );
+    ~AnnItem();
 
-    AnnotationItem *parent;
-    QList< AnnotationItem* > children;
+    AnnItem *parent;
+    QList< AnnItem* > children;
 
     Okular::Annotation *annotation;
     int page;
@@ -44,43 +44,43 @@ public:
     virtual void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
     virtual void notifyPageChanged( int page, int flags );
 
-    QModelIndex indexForItem( AnnotationItem *item ) const;
+    QModelIndex indexForItem( AnnItem *item ) const;
     void rebuildTree( const QVector< Okular::Page * > &pages );
-    AnnotationItem* findItem( int page, int *index ) const;
+    AnnItem* findItem( int page, int *index ) const;
 
     AnnotationModel *q;
-    AnnotationItem *root;
+    AnnItem *root;
     Okular::Document *document;
 };
 
 
-AnnotationItem::AnnotationItem()
+AnnItem::AnnItem()
     : parent( 0 ), annotation( 0 ), page( -1 )
 {
 }
 
-AnnotationItem::AnnotationItem( AnnotationItem *_parent, Okular::Annotation *ann )
+AnnItem::AnnItem( AnnItem *_parent, Okular::Annotation *ann )
     : parent( _parent ), annotation( ann ), page( _parent->page )
 {
     Q_ASSERT( !parent->annotation );
     parent->children.append( this );
 }
 
-AnnotationItem::AnnotationItem( AnnotationItem *_parent, int _page )
+AnnItem::AnnItem( AnnItem *_parent, int _page )
     : parent( _parent ), annotation( 0 ), page( _page )
 {
     Q_ASSERT( !parent->parent );
     parent->children.append( this );
 }
 
-AnnotationItem::~AnnotationItem()
+AnnItem::~AnnItem()
 {
     qDeleteAll( children );
 }
 
 
 AnnotationModelPrivate::AnnotationModelPrivate( AnnotationModel *qq )
-    : q( qq ), root( new AnnotationItem )
+    : q( qq ), root( new AnnItem )
 {
 }
 
@@ -114,7 +114,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
 
     QLinkedList< Okular::Annotation* > annots = document->page( page )->annotations();
     int annItemIndex = -1;
-    AnnotationItem *annItem = findItem( page, &annItemIndex );
+    AnnItem *annItem = findItem( page, &annItemIndex );
     // case 1: the page has no more annotations
     //         => remove the branch, if any
     if ( annots.isEmpty() )
@@ -135,7 +135,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
         int i = 0;
         while ( i < root->children.count() && root->children.at( i )->page < page ) ++i;
 
-        AnnotationItem *annItem = new AnnotationItem();
+        AnnItem *annItem = new AnnItem();
         annItem->page = page;
         annItem->parent = root;
         q->beginInsertRows( indexForItem( root ), i, i );
@@ -146,7 +146,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
         for ( ; it != itEnd; ++it, ++newid )
         {
             q->beginInsertRows( indexForItem( annItem ), newid, newid );
-            new AnnotationItem( annItem, *it );
+            new AnnItem( annItem, *it );
             q->endInsertRows();
         }
         return;
@@ -192,7 +192,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
             if ( !found )
             {
                 q->beginInsertRows( indexForItem( annItem ), count, count );
-                new AnnotationItem( annItem, ref );
+                new AnnItem( annItem, ref );
                 q->endInsertRows();
             }
         }
@@ -202,7 +202,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
     // TODO: what do we do in this case?
 }
 
-QModelIndex AnnotationModelPrivate::indexForItem( AnnotationItem *item ) const
+QModelIndex AnnotationModelPrivate::indexForItem( AnnItem *item ) const
 {
     if ( item->parent )
     {
@@ -222,21 +222,21 @@ void AnnotationModelPrivate::rebuildTree( const QVector< Okular::Page * > &pages
         if ( annots.isEmpty() )
             continue;
 
-        AnnotationItem *annItem = new AnnotationItem( root, i );
+        AnnItem *annItem = new AnnItem( root, i );
         QLinkedList< Okular::Annotation* >::ConstIterator it = annots.begin(), itEnd = annots.end();
         for ( ; it != itEnd; ++it )
         {
-            new AnnotationItem( annItem, *it );
+            new AnnItem( annItem, *it );
         }
     }
     emit q->layoutChanged();
 }
 
-AnnotationItem* AnnotationModelPrivate::findItem( int page, int *index ) const
+AnnItem* AnnotationModelPrivate::findItem( int page, int *index ) const
 {
     for ( int i = 0; i < root->children.count(); ++i )
     {
-        AnnotationItem *tmp = root->children.at( i );
+        AnnItem *tmp = root->children.at( i );
         if ( tmp->page == page )
         {
             if ( index )
@@ -274,7 +274,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
     if ( !index.isValid() )
         return QVariant();
 
-    AnnotationItem *item = static_cast< AnnotationItem* >( index.internalPointer() );
+    AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     if ( !item->annotation )
     {
         if ( role == Qt::DisplayRole || role == PageRole )
@@ -304,7 +304,7 @@ bool AnnotationModel::hasChildren( const QModelIndex &parent ) const
     if ( !parent.isValid() )
         return true;
 
-    AnnotationItem *item = static_cast< AnnotationItem* >( parent.internalPointer() );
+    AnnItem *item = static_cast< AnnItem* >( parent.internalPointer() );
     return !item->children.isEmpty();
 }
 
@@ -324,7 +324,7 @@ QModelIndex AnnotationModel::index( int row, int column, const QModelIndex &pare
     if ( row < 0 || column != 0 )
         return QModelIndex();
 
-    AnnotationItem *item = parent.isValid() ? static_cast< AnnotationItem* >( parent.internalPointer() ) : d->root;
+    AnnItem *item = parent.isValid() ? static_cast< AnnItem* >( parent.internalPointer() ) : d->root;
     if ( row < item->children.count() )
         return createIndex( row, column, item->children.at( row ) );
 
@@ -336,13 +336,13 @@ QModelIndex AnnotationModel::parent( const QModelIndex &index ) const
     if ( !index.isValid() )
         return QModelIndex();
 
-    AnnotationItem *item = static_cast< AnnotationItem* >( index.internalPointer() );
+    AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     return d->indexForItem( item->parent );
 }
 
 int AnnotationModel::rowCount( const QModelIndex &parent ) const
 {
-    AnnotationItem *item = parent.isValid() ? static_cast< AnnotationItem* >( parent.internalPointer() ) : d->root;
+    AnnItem *item = parent.isValid() ? static_cast< AnnItem* >( parent.internalPointer() ) : d->root;
     return item->children.count();
 }
 
@@ -356,7 +356,7 @@ Okular::Annotation* AnnotationModel::annotationForIndex( const QModelIndex &inde
     if ( !index.isValid() )
         return 0;
 
-    AnnotationItem *item = static_cast< AnnotationItem* >( index.internalPointer() );
+    AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     return item->annotation;
 }
 

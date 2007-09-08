@@ -875,7 +875,9 @@ bool PDFGenerator::print( KPrinter& printer )
     if ( !tf.open() )
         return false;
     QString tempfilename = tf.fileName();
+#if !POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
     tf.close();
+#endif
 
     QList<int> pageList;
     if (!printer.previewOnly()) pageList = printer.pageList();
@@ -903,7 +905,11 @@ bool PDFGenerator::print( KPrinter& printer )
     }
     bool forceRasterize = printer.option("kde-okular-poppler-forceRaster").toInt();
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
+#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+    psConverter->setOutputDevice(&tf);
+#else
     psConverter->setOutputFileName(tempfilename);
+#endif
     psConverter->setPageList(pageList);
     psConverter->setPaperWidth(width);
     psConverter->setPaperHeight(height);

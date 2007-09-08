@@ -50,6 +50,14 @@ QString AnnotationGuiUtils::captionForAnnotation( Okular::Annotation * ann )
     return ret;
 }
 
+QString AnnotationGuiUtils::authorForAnnotation( const Okular::Annotation * ann )
+{
+    if ( !ann )
+        return QString();
+
+    return !ann->author().isEmpty() ? ann->author() : i18nc( "Unknown author", "Unknown" );
+}
+
 QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
 {
     if ( !ann )
@@ -80,6 +88,23 @@ QString AnnotationGuiUtils::contents( const Okular::Annotation * ann )
 QString AnnotationGuiUtils::contentsHtml( const Okular::Annotation * ann )
 {
     return contents( ann ).replace( "\n", "<br>" );
+}
+
+QString AnnotationGuiUtils::prettyToolTip( const Okular::Annotation * ann )
+{
+    if ( !ann )
+        return QString();
+
+    QString author = authorForAnnotation( ann );
+    QString contents = contentsHtml( ann );
+
+    QString tooltip = QString( "<qt><b>" ) + i18n( "Author: %1", author ) + QString( "</b>" );
+    if ( !contents.isEmpty() )
+        tooltip += QString( "<hr />" ) + contents;
+
+    tooltip += "</qt>";
+
+    return tooltip;
 }
 
 bool AnnotationGuiUtils::canBeMoved( Okular::Annotation * ann )

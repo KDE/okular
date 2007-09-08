@@ -322,7 +322,7 @@ void Reviews::addContents( const Okular::Page * page )
                     authorItem = new QTreeWidgetItem( pageItem );
                 else
                     authorItem = new QTreeWidgetItem( m_listView );
-                authorItem->setText( 0, !author.isEmpty() ? author : i18nc( "Unknown author", "Unknown" ) );
+                authorItem->setText( 0, AnnotationGuiUtils::authorForAnnotation( annotation ) );
                 authorItem->setIcon( 0, KIcon( !author.isEmpty() ? "personal" : "presence_away" ) );
                 authorItem->setData( 0, AuthorRole, author );
             }
@@ -361,12 +361,7 @@ void Reviews::itemEntered( QTreeWidgetItem * item, int /*column*/ )
     if ( !annItem )
         return;
 
-    QString contents = AnnotationGuiUtils::contentsHtml( annItem->annotation() );
-    if ( contents.isEmpty() )
-        return;
-
-    QString tooltip = QString( "<qt><b>%1</b><hr>%2</qt>" )
-                .arg( i18n( "Author: %1", annItem->annotation()->author() ), contents );
+    QString tooltip = AnnotationGuiUtils::prettyToolTip( annItem->annotation() );
 
     QToolTip::showText( QCursor::pos(), tooltip, m_listView, m_listView->visualItemRect( annItem ) );
 }

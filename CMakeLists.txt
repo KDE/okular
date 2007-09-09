@@ -134,6 +134,7 @@ set(okularpart_SRCS
    ui/side_reviews.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
+   ui/tocmodel.cpp
 )
 
 kde4_add_ui_files(okularpart_SRCS

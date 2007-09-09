@@ -14,10 +14,10 @@
 #include "core/observer.h"
 
 class QDomNode;
-class QTreeWidget;
-class QTreeWidgetItem;
-class KTreeWidgetSearchLine;
-class TOCItem;
+class QModelIndex;
+class QTreeView;
+class KTreeViewSearchLine;
+class TOCModel;
 
 namespace Okular {
 class Document;
@@ -41,14 +41,13 @@ Q_OBJECT
         void hasTOC(bool has);
 
     private slots:
-        void slotExecuted(QTreeWidgetItem *i);
+        void slotExecuted( const QModelIndex & );
 
     private:
-        void addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem = 0 );
         Okular::Document *m_document;
-        QTreeWidget *m_treeView;
-        KTreeWidgetSearchLine *m_searchLine;
-        TOCItem *m_current;
+        QTreeView *m_treeView;
+        KTreeViewSearchLine *m_searchLine;
+        TOCModel *m_model;
         int m_currentPage;
 };
 

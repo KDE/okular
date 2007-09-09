@@ -13,105 +13,39 @@
 #include <qdom.h>
 #include <qheaderview.h>
 #include <qlayout.h>
-#include <qstringlist.h>
-#include <qtreewidget.h>
-#include <qvariant.h>
-#include <kicon.h>
-#include <klocale.h>
-#include <ktreewidgetsearchline.h>
+#include <qtreeview.h>
+
+#include <klineedit.h>
 
 // local includes
+#include "ktreeviewsearchline.h"
 #include "pageitemdelegate.h"
+#include "tocmodel.h"
 #include "core/action.h"
 #include "core/document.h"
-#include "core/page.h"
 
-class TOCItem : public QTreeWidgetItem
-{
-    public:
-        TOCItem( QTreeWidget *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
-            : QTreeWidgetItem( parent, after )
-        {
-            init( document, e );
-        }
-
-        TOCItem( QTreeWidgetItem *parent, TOCItem *after, Okular::Document *document, const QDomElement & e )
-            : QTreeWidgetItem( parent, after )
-        {
-            init( document, e );
-        }
-
-        void init( Okular::Document *document, const QDomElement & e )
-        {
-            // viewport loading
-            if ( e.hasAttribute( "Viewport" ) )
-            {
-                // if the node has a viewport, set it
-                m_viewport = Okular::DocumentViewport( e.attribute( "Viewport" ) );
-            }
-            else if ( e.hasAttribute( "ViewportName" ) )
-            {
-                // if the node references a viewport, get the reference and set it
-                const QString & page = e.attribute( "ViewportName" );
-                QString viewport = document->metaData( "NamedViewport", page ).toString();
-                if ( !viewport.isNull() )
-                    m_viewport = Okular::DocumentViewport( viewport );
-            }
-
-            if ( m_viewport.isValid() )
-            {
-                setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
-                QString label = document->page( m_viewport.pageNumber )->label();
-                if ( !label.isEmpty() )
-                    setData( 0, PageItemDelegate::PageLabelRole, label );
-            }
-            m_extFileName = e.attribute( "ExternalFileName" );
-            setText( 0, e.tagName() );
-        }
-
-        QString externalFileName() const
-        {
-            return m_extFileName;
-        }
-
-        const Okular::DocumentViewport& viewport() const
-        {
-            return m_viewport;
-        }
-
-        void setCurrent( bool selected )
-        {
-            setIcon( 0, selected ? KIcon( treeWidget()->layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) : QIcon() );
-        }
-
-    private:
-        Okular::DocumentViewport m_viewport;
-        QString m_extFileName;
-};
-
-TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_current(0), m_currentPage(-1)
+TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_currentPage(-1)
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
     mainlay->setSpacing( 6 );
 
-    m_searchLine = new KTreeWidgetSearchLine( this );
+    m_searchLine = new KTreeViewSearchLine( this );
     mainlay->addWidget( m_searchLine );
 
-    m_treeView = new QTreeWidget( this );
+    m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
-    QStringList cols;
-    cols.append( "Topics" );
-    m_treeView->setHeaderLabels( cols );
+    m_model = new TOCModel( document, m_treeView );
+    m_treeView->setModel( m_model );
     m_treeView->setSortingEnabled( false );
     m_treeView->setRootIsDecorated( true );
     m_treeView->setAlternatingRowColors( true );
     m_treeView->setItemDelegate( new PageItemDelegate( m_treeView ) );
     m_treeView->header()->hide();
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
-    connect( m_treeView, SIGNAL( itemClicked( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
-    connect( m_treeView, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
-    m_searchLine->addTreeWidget( m_treeView );
+    connect( m_treeView, SIGNAL( clicked( const QModelIndex & ) ), this, SLOT( slotExecuted( const QModelIndex & ) ) );
+    connect( m_treeView, SIGNAL( activated( const QModelIndex & ) ), this, SLOT( slotExecuted( const QModelIndex & ) ) );
+    m_searchLine->addTreeView( m_treeView );
 }
 
 TOC::~TOC()
@@ -130,9 +64,7 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
         return;
 
     // clear contents
-    m_treeView->clear();
-    m_searchLine->clear();
-    m_current = 0;
+    m_model->clear();
     m_currentPage = -1;
 
     // request synopsis description (is a dom tree)
@@ -146,7 +78,7 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
     }
 
     // else populate the listview and enable the tab
-    addChildren( *syn );
+    m_model->fill( syn );
     emit hasTOC( true );
 }
 
@@ -158,25 +90,7 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
 
     m_currentPage = newpage;
 
-    if ( m_current )
-    {
-        m_current->setCurrent( false );
-        m_current = 0;
-    }
-
-    QTreeWidgetItemIterator it( m_treeView );
-    while ( (*it) && !m_current )
-    {
-        TOCItem *tmp = dynamic_cast<TOCItem*>( *it );
-        int p = tmp ? tmp->viewport().pageNumber : -1;
-        if ( p == newpage )
-        {
-            m_current = tmp;
-            if (m_current)
-                m_current->setCurrent( true );
-        }
-        ++it;
-    }
+    m_model->setCurrentViewport( m_document->viewport() );
 }
 
 
@@ -186,52 +100,21 @@ void TOC::reparseConfig()
 }
 
 
-void TOC::addChildren( const QDomNode & parentNode, QTreeWidgetItem * parentItem )
+void TOC::slotExecuted( const QModelIndex &index )
 {
-    // keep track of the current listViewItem
-    TOCItem * currentItem = 0;
-    QDomNode n = parentNode.firstChild();
-    while( !n.isNull() )
-    {
-        // convert the node to an element (sure it is)
-        QDomElement e = n.toElement();
-
-        // insert the entry as top level (listview parented) or 2nd+ level
-        if ( !parentItem )
-            currentItem = new TOCItem( m_treeView, currentItem, m_document, e );
-        else
-            currentItem = new TOCItem( parentItem, currentItem, m_document, e );
-
-        // descend recursively and advance to the next node
-        if ( e.hasChildNodes() )
-            addChildren( n, currentItem );
-
-        // open/keep close the item
-        bool isOpen = false;
-        if ( e.hasAttribute( "Open" ) )
-            isOpen = QVariant( e.attribute( "Open" ) ).toBool();
-        currentItem->setExpanded( isOpen );
-
-        n = n.nextSibling();
-    }
-}
-
-void TOC::slotExecuted( QTreeWidgetItem *i )
-{
-    TOCItem* tocItem = dynamic_cast<TOCItem*>( i );
-    // that filters clicks on [+] that for a strange reason don't seem to be TOCItem*
-    if (tocItem == NULL)
+    if ( !index.isValid() )
         return;
 
-    QString externalFileName = tocItem->externalFileName();
+    QString externalFileName = m_model->externalFileNameForIndex( index );
+    Okular::DocumentViewport viewport = m_model->viewportForIndex( index );
     if ( !externalFileName.isEmpty() )
     {
-        Okular::GotoAction action( externalFileName, tocItem->viewport() );
+        Okular::GotoAction action( externalFileName, viewport );
         m_document->processAction( &action );
     }
     else
     {
-        m_document->setViewport( tocItem->viewport() );
+        m_document->setViewport( viewport );
     }
 }
 

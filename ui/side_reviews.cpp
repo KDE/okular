@@ -11,6 +11,7 @@
 
 // qt/kde includes
 #include <QtCore/QStringList>
+#include <QtGui/QHeaderView>
 #include <QtGui/QLayout>
 #include <QtGui/QSizePolicy>
 #include <QtGui/QToolBar>
@@ -41,6 +42,8 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     vLayout->setSpacing( 6 );
 
     m_view = new QTreeView( this );
+    m_view->setAlternatingRowColors( true );
+    m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar( this );
     toolBar->setObjectName( "reviewOptsBar" );

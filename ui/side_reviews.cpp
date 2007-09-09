@@ -145,17 +145,9 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 }
 
 //BEGIN DocumentObserver Notifies 
-void Reviews::notifySetup( const QVector< Okular::Page * >&, int )
-{
-}
-
 void Reviews::notifyViewportChanged( bool )
 {
     m_filterProxy->setCurrentPage( m_document->currentPage() );
-}
-
-void Reviews::notifyPageChanged( int, int )
-{
 }
 //END DocumentObserver Notifies 
 

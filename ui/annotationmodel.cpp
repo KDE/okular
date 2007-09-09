@@ -201,6 +201,12 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
     }
     // case 5: the data of some annotation changed
     // TODO: what do we do in this case?
+    // FIXME: for now, update ALL the annotations for that page
+    for ( int i = 0; i < annItem->children.count(); ++i )
+    {
+        QModelIndex index = indexForItem( annItem->children.at( i ) );
+        emit q->dataChanged( index, index );
+    }
 }
 
 QModelIndex AnnotationModelPrivate::indexForItem( AnnItem *item ) const

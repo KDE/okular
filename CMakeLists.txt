@@ -117,6 +117,7 @@ set(okularpart_SRCS
    ui/bookmarklist.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp
+   ui/ktreeviewsearchline.cpp
    ui/minibar.cpp
    ui/pageitemdelegate.cpp
    ui/pagepainter.cpp

@@ -14,11 +14,13 @@
 #include <qpointer.h>
 
 #include <kicon.h>
+#include <klocale.h>
 
 #include "core/annotations.h"
 #include "core/document.h"
 #include "core/observer.h"
 #include "core/page.h"
+#include "ui/annotationguiutils.h"
 
 struct AnnItem
 {
@@ -290,8 +292,13 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
     AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     if ( !item->annotation )
     {
-        if ( role == Qt::DisplayRole || role == PageRole )
-           return item->page;
+        if ( role == Qt::DisplayRole )
+          return i18n( "Page %1", item->page + 1 );
+        else if ( role == Qt::DecorationRole )
+          return KIcon( "txt" );
+        else if ( role == PageRole )
+          return item->page;
+
         return QVariant();
     }
     switch ( role )
@@ -301,6 +308,9 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
             break;
         case Qt::DecorationRole:
             return KIcon( "okular" );
+            break;
+        case Qt::ToolTipRole:
+            return AnnotationGuiUtils::prettyToolTip( item->annotation );
             break;
         case AuthorRole:
             return item->annotation->author();

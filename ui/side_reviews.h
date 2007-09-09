@@ -16,7 +16,6 @@
 #include "core/observer.h"
 
 class QModelIndex;
-class QTreeView;
 
 namespace Okular {
 class Annotation;
@@ -27,6 +26,7 @@ class Page;
 class AnnotationModel;
 class PageFilterProxyModel;
 class PageGroupProxyModel;
+class TreeView;
 
 /**
  * @short ...
@@ -58,7 +58,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
 
     private:
         // data fields (GUI)
-        QTreeView * m_view;
+        TreeView * m_view;
         // internal storage
         Okular::Document * m_document;
         AnnotationModel * m_model;

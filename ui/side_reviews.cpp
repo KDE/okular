@@ -13,7 +13,10 @@
 #include <QtCore/QStringList>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLayout>
+#include <QtGui/QPaintEvent>
+#include <QtGui/QPainter>
 #include <QtGui/QSizePolicy>
+#include <QtGui/QTextDocument>
 #include <QtGui/QToolBar>
 #include <QtGui/QTreeView>
 
@@ -33,6 +36,51 @@
 #include "annotationmodel.h"
 #include "ktreeviewsearchline.h"
 
+class TreeView : public QTreeView
+{
+  public:
+    TreeView( Okular::Document *document, QWidget *parent = 0 )
+      : QTreeView( parent ), m_document( document )
+    {
+    }
+
+  protected:
+    virtual void paintEvent( QPaintEvent *event )
+    {
+      bool hasAnnotations = false;
+      for ( uint i = 0; i < m_document->pages(); ++i )
+        if ( m_document->page( i )->hasAnnotations() ) {
+          hasAnnotations = true;
+          break;
+        }
+      if ( !hasAnnotations ) {
+        QPainter p( viewport() );
+        p.setClipRect( event->rect() );
+
+        QTextDocument document;
+        document.setHtml( i18n( "<div align=center><h3>No annotations</h3>"
+                                "To create new annotations press F6 or select <i>Tools -&gt; Review</i>"
+                                " from the menu.</div>" ) );
+        document.setTextWidth( width() - 50 );
+
+        const uint w = document.size().width() + 20;
+        const uint h = document.size().height() + 20;
+
+        p.setBrush( palette().background() );
+        p.drawRoundRect( 15, 15, w, h, (8*200)/w, (8*200)/h );
+        p.translate( 20, 20 );
+        document.drawContents( &p );
+
+      } else {
+        QTreeView::paintEvent( event );
+      }
+    }
+
+  private:
+    Okular::Document *m_document;
+};
+
+
 Reviews::Reviews( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document )
 {
@@ -41,7 +89,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     vLayout->setMargin( 0 );
     vLayout->setSpacing( 6 );
 
-    m_view = new QTreeView( this );
+    m_view = new TreeView( m_document, this );
     m_view->setAlternatingRowColors( true );
     m_view->header()->hide();
 

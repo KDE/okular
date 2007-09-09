@@ -42,7 +42,7 @@ public:
     virtual ~AnnotationModelPrivate();
 
     virtual uint observerId() const;
-    virtual void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
+    virtual void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
     virtual void notifyPageChanged( int page, int flags );
 
     QModelIndex indexForItem( AnnItem *item ) const;
@@ -95,9 +95,9 @@ uint AnnotationModelPrivate::observerId() const
     return ANNOTATIONMODEL_ID;
 }
 
-void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged )
+void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages, int setupFlags )
 {
-    if ( !documentChanged )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     qDeleteAll( root->children );

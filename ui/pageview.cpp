@@ -631,10 +631,11 @@ void PageView::selectAll()
 }
 
 //BEGIN DocumentObserver inherited methods
-void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
+void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
+    bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
     // reuse current pages if nothing new
-    if ( ( pageSet.count() == d->items.count() ) && !documentChanged )
+    if ( ( pageSet.count() == d->items.count() ) && !documentChanged && !( setupFlags & Okular::DocumentObserver::NewLayoutForPages ) )
     {
         int count = pageSet.count();
         for ( int i = 0; (i < count) && !documentChanged; i++ )

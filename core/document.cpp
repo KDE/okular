@@ -973,7 +973,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
 
         foreach(DocumentObserver *observer, m_observers)
-            observer->notifySetup( m_pagesVector, false );
+            observer->notifySetup( m_pagesVector, 0 );
 
         // notify observers about highlights changes
         foreach(int pageNumber, *pagesToNotify)
@@ -1091,7 +1091,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
 
         // send page lists to update observers (since some filter on bookmarks)
         foreach(DocumentObserver *observer, m_observers)
-            observer->notifySetup( m_pagesVector, false );
+            observer->notifySetup( m_pagesVector, 0 );
 
         // notify observers about highlights changes
         foreach(int pageNumber, *pagesToNotify)
@@ -1304,7 +1304,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
-    foreachObserver( notifySetup( d->m_pagesVector, true ) );
+    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged ) );
 
     // 4. set initial page (restoring the page saved in xml if loaded)
     DocumentViewport loadedViewport = (*d->m_viewportIterator);
@@ -1417,7 +1417,7 @@ void Document::closeDocument()
     d->m_pixmapRequestsMutex.unlock();
 
     // send an empty list to observers (to free their data)
-    foreachObserver( notifySetup( QVector< Page * >(), true ) );
+    foreachObserver( notifySetup( QVector< Page * >(), DocumentObserver::DocumentChanged ) );
 
     // delete pages and clear 'd->m_pagesVector' container
     QVector< Page * >::const_iterator pIt = d->m_pagesVector.begin();
@@ -1467,7 +1467,7 @@ void Document::addObserver( DocumentObserver * pObserver )
     // if the observer is added while a document is already opened, tell it
     if ( !d->m_pagesVector.isEmpty() )
     {
-        pObserver->notifySetup( d->m_pagesVector, true );
+        pObserver->notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged );
         pObserver->notifyViewportChanged( false /*disables smoothMove*/ );
     }
 }
@@ -2235,7 +2235,7 @@ void Document::resetSearch( int searchID )
     }
 
     // send the setup signal too (to update views that filter on matches)
-    foreachObserver( notifySetup( d->m_pagesVector, false ) );
+    foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
 
     // remove serch from the runningSearches list and delete it
     d->m_searches.erase( searchIt );
@@ -2651,7 +2651,7 @@ void Document::setRotation( int r )
     // set the new rotation
     d->m_rotation = rotation;
 
-    foreachObserver( notifySetup( d->m_pagesVector, true ) );
+    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::NewLayoutForPages ) );
     foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
     kDebug(OkularDebug) << "Rotated:" << r;
 }
@@ -2684,7 +2684,7 @@ void Document::setPageSize( const PageSize &size )
     // set the new page size
     d->m_pageSize = size;
 
-    foreachObserver( notifySetup( d->m_pagesVector, true ) );
+    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::NewLayoutForPages ) );
     foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
     kDebug(OkularDebug) << "New PageSize id:" << sizeid;
 }

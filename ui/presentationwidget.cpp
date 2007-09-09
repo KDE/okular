@@ -157,11 +157,11 @@ PresentationWidget::~PresentationWidget()
 }
 
 
-void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet, bool documentChanged )
+void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
     // same document, nothing to change - here we assume the document sets up
     // us with the whole document set as first notifySetup()
-    if ( !documentChanged )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     // delete previous frames (if any (shouldn't be))

@@ -124,9 +124,9 @@ uint TOC::observerId() const
     return TOC_ID;
 }
 
-void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool documentChanged )
+void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFlags )
 {
-    if ( !documentChanged )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     // clear contents

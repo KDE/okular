@@ -41,7 +41,7 @@ Q_OBJECT
         // inherited: return thumbnails observer id
         uint observerId() const { return THUMBNAILS_ID; }
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
         void notifyViewportChanged( bool smoothMove );
         // inherited: redraw thumbnail ( inherited as DocumentObserver )

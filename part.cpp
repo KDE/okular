@@ -606,9 +606,9 @@ void Part::slotGeneratorPreferences( )
 }
 
 
-void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, bool documentChanged )
+void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFlags )
 {
-    if ( !documentChanged )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     rebuildBookmarkMenu();

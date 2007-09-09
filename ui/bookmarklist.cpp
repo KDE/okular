@@ -121,9 +121,9 @@ uint BookmarkList::observerId() const
     return BOOKMARKLIST_ID;
 }
 
-void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged )
+void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
-    if ( !documentChanged )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     // clear contents

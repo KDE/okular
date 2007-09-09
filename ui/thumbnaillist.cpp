@@ -118,12 +118,12 @@ ThumbnailList::~ThumbnailList()
 }
 
 //BEGIN DocumentObserver inherited methods
-void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged )
+void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
     // if there was a widget selected, save its pagenumber to restore
     // its selection (if available in the new set of pages)
     int prevPage = -1;
-    if ( !documentChanged && m_selected )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) && m_selected )
     {
         prevPage = m_selected->page()->number();
     }

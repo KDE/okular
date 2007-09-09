@@ -133,10 +133,10 @@ MiniBar::~MiniBar()
     m_document->removeObserver( this );
 }
 
-void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, bool changed )
+void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
 {
     // only process data when document changes
-    if ( !changed )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     // if document is closed or has no pages, hide widget

@@ -83,7 +83,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         // inherited from DocumentObserver
         uint observerId() const { return PART_ID; }
-        void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int page, int flags );
 

@@ -76,12 +76,20 @@ class OKULAR_EXPORT DocumentObserver
         };
 
         /**
+         * ...
+         */
+        enum SetupFlags {
+            DocumentChanged = 1,    ///< The document is a new document.
+            NewLayoutForPages = 2   ///< All the pages have
+        };
+
+        /**
          * This method is called whenever the document is initialized or reconstructed.
          *
          * @param pages The vector of pages of the document.
-         * @param documentChanged If true, the document is reconstructed.
+         * @param setupFlags the flags with the information about the setup
          */
-        virtual void notifySetup( const QVector< Okular::Page * > &pages, bool documentChanged );
+        virtual void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
 
         /**
          * This method is called whenever the viewport has been changed.

@@ -70,7 +70,7 @@ Q_OBJECT
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
-        void notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         void notifyContentsCleared( int changedFlags );

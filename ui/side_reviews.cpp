@@ -30,6 +30,7 @@
 #include "settings.h"
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
+#include <kdebug.h>
 
 static const int AuthorRole = Qt::UserRole + 100;
 
@@ -98,10 +99,10 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 }
 
 //BEGIN DocumentObserver Notifies -> requestListViewUpdate
-void Reviews::notifySetup( const QVector< Okular::Page * > & pages, bool documentChanged )
+void Reviews::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
     // grab the page array when document changes
-    if ( documentChanged )
+    if ( setupFlags & Okular::DocumentObserver::DocumentChanged )
     {
         m_currentPage = -1;
         m_pages = pages;

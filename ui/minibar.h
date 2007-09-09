@@ -33,7 +33,7 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return MINIBAR_ID; }
-        void notifySetup( const QVector< Okular::Page * > & pages, bool );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
 
     signals:

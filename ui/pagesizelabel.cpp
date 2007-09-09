@@ -32,10 +32,10 @@ QWidget *PageSizeLabel::antiWidget()
     return m_antiWidget;
 }
 
-void PageSizeLabel::notifySetup( const QVector< Okular::Page * > & pageVector, bool changed )
+void PageSizeLabel::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
 {
     // only process data when document changes
-    if ( !changed )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
     // if document is closed or all pages have size hide widget

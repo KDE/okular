@@ -10,9 +10,13 @@
 #ifndef _OKULAR_SIDE_REVIEWS_H_
 #define _OKULAR_SIDE_REVIEWS_H_
 
-#include <qwidget.h>
-#include <qvector.h>
+#include <QtCore/QVector>
+#include <QtGui/QWidget>
+
 #include "core/observer.h"
+
+class QModelIndex;
+class QTreeView;
 
 namespace Okular {
 class Annotation;
@@ -20,11 +24,9 @@ class Document;
 class Page;
 }
 
-class QToolBar;
-class QTreeWidget;
-class QTreeWidgetItem;
-class KTreeWidgetSearchLine;
-class QTimer;
+class AnnotationModel;
+class PageFilterProxyModel;
+class PageGroupProxyModel;
 
 /**
  * @short ...
@@ -45,32 +47,23 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void slotPageEnabled( bool );
         void slotAuthorEnabled( bool );
         void slotCurrentPageOnly( bool );
-        void slotUpdateListView();
 
     Q_SIGNALS:
         void setAnnotationWindow( Okular::Annotation *annotation );
         void removeAnnotationWindow( Okular::Annotation *annotation );
 
     private Q_SLOTS:
-        void itemActivated( QTreeWidgetItem *, int );
-        void itemEntered( QTreeWidgetItem *, int );
-        void contextMenuRequested( const QPoint &pos );
+        void activated( const QModelIndex& );
+        void contextMenuRequested( const QPoint& );
 
     private:
-        // add all annotations of a page to the listView taking care of grouping
-        void addContents( const Okular::Page * page );
-        // delay an update to the listView
-        void requestListViewUpdate( int delayms = 200 );
-
         // data fields (GUI)
-        QToolBar * m_toolBar2;
-        QTreeWidget * m_listView;
-        KTreeWidgetSearchLine * m_searchLine;
+        QTreeView * m_view;
         // internal storage
         Okular::Document * m_document;
-        QVector< Okular::Page * > m_pages;
-        QTimer * m_delayTimer;
-        int m_currentPage;
+        AnnotationModel * m_model;
+        PageFilterProxyModel * m_filterProxy;
+        PageGroupProxyModel * m_groupProxy;
 };
 
 #endif

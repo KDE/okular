@@ -112,6 +112,7 @@ set(okularpart_SRCS
    ui/annotationmodel.cpp
    ui/annotationpopup.cpp
    ui/annotationpropertiesdialog.cpp
+   ui/annotationproxymodels.cpp
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp

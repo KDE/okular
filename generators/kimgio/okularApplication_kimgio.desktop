@@ -33,6 +33,6 @@ Exec=okular %U %i -caption "%c"
 Icon=okular
 Type=Application
 X-DocPath=okular/index.html
-InitialPreference=7
+InitialPreference=1
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true

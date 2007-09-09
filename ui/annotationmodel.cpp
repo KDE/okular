@@ -11,6 +11,7 @@
 
 #include <qlinkedlist.h>
 #include <qlist.h>
+#include <qpointer.h>
 
 #include <kicon.h>
 
@@ -50,7 +51,7 @@ public:
 
     AnnotationModel *q;
     AnnItem *root;
-    Okular::Document *document;
+    QPointer< Okular::Document > document;
 };
 
 
@@ -215,6 +216,9 @@ QModelIndex AnnotationModelPrivate::indexForItem( AnnItem *item ) const
 
 void AnnotationModelPrivate::rebuildTree( const QVector< Okular::Page * > &pages )
 {
+    if ( pages.isEmpty() )
+        return;
+
     emit q->layoutAboutToBeChanged();
     for ( int i = 0; i < pages.count(); ++i )
     {
@@ -260,6 +264,9 @@ AnnotationModel::AnnotationModel( Okular::Document *document, QObject *parent )
 
 AnnotationModel::~AnnotationModel()
 {
+    if ( d->document )
+        d->document->removeObserver( d );
+
     delete d;
 }
 

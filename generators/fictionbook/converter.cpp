@@ -70,9 +70,6 @@ QTextDocument* Converter::convert( const QString &fileName )
         return false;
     }
 
-    delete mTextDocument;
-    delete mCursor;
-
     mTextDocument = new QTextDocument;
     mCursor = new QTextCursor( mTextDocument );
     mSectionCounter = 0;
@@ -99,6 +96,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
     if ( documentElement.tagName() != QLatin1String( "FictionBook" ) ) {
         emit error( i18n( "Document is not a valid FictionBook" ), -1 );
+        delete mCursor;
         return false;
     }
 
@@ -108,8 +106,10 @@ QTextDocument* Converter::convert( const QString &fileName )
     QDomElement element = documentElement.firstChildElement();
     while ( !element.isNull() ) {
         if ( element.tagName() == QLatin1String( "binary" ) ) {
-            if ( !convertBinary( element ) )
+            if ( !convertBinary( element ) ) {
+                delete mCursor;
                 return false;
+            }
         }
 
         element = element.nextSiblingElement();
@@ -121,8 +121,10 @@ QTextDocument* Converter::convert( const QString &fileName )
     element = documentElement.firstChildElement();
     while ( !element.isNull() ) {
         if ( element.tagName() == QLatin1String( "description" ) ) {
-            if ( !convertDescription( element ) )
+            if ( !convertDescription( element ) ) {
+                delete mCursor;
                 return false;
+            }
         } else if ( element.tagName() == QLatin1String( "body" ) ) {
             if ( !mTitleInfo->mCoverPage.isNull() ) {
                 convertCover( mTitleInfo->mCoverPage );
@@ -161,8 +163,10 @@ QTextDocument* Converter::convert( const QString &fileName )
 
             mCursor->insertBlock();
 
-            if ( !convertBody( element ) )
+            if ( !convertBody( element ) ) {
+                delete mCursor;
                 return false;
+            }
         }
 
         element = element.nextSiblingElement();
@@ -203,6 +207,8 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         emit addAction( action, it.value().first, it.value().second );
     }
+
+    delete mCursor;
 
     return mTextDocument;
 }

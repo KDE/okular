@@ -80,9 +80,6 @@ QTextDocument* Converter::convert( const QString &fileName )
     return 0;
   }
 
-  delete mTextDocument;
-  delete mCursor;
-
   mTextDocument = new QTextDocument;
   mCursor = new QTextCursor( mTextDocument );
 
@@ -98,6 +95,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   QDomDocument document;
   if ( !document.setContent( &source, &reader, &errorMsg ) ) {
     emit error( i18n( "Invalid XML document: %1", errorMsg ), -1 );
+    delete mCursor;
     return false;
   }
 
@@ -108,6 +106,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   StyleParser styleParser( &oooDocument, document, mStyleInformation );
   if ( !styleParser.parse() ) {
     emit error( i18n( "Unable to read style information" ), -1 );
+    delete mCursor;
     return false;
   }
 
@@ -145,6 +144,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     if ( element.tagName() == QLatin1String( "body" ) ) {
       if ( !convertBody( element ) ) {
         emit error( i18n( "Unable to convert document content" ), -1 );
+        delete mCursor;
         return false;
       }
     }
@@ -158,6 +158,8 @@ QTextDocument* Converter::convert( const QString &fileName )
                       metaInformation[ i ].value(),
                       metaInformation[ i ].title() );
   }
+
+  delete mCursor;
 
   return mTextDocument;
 }

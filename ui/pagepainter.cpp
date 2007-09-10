@@ -311,6 +311,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             {
                 Okular::Annotation * a = *aIt;
                 Okular::Annotation::SubType type = a->subType();
+                QColor acolor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), (int)( 255.0 * a->style().opacity() ) );
 
                 // draw LineAnnotation MISSING: all
                 if ( type == Okular::Annotation::ALine )
@@ -410,7 +411,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         {
                             // highlight the whole rect
                             case Okular::HighlightAnnotation::Highlight:
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style().color(), pageScale, Multiply );
+                                drawShapeOnImage( backImage, path, true, Qt::NoPen, acolor, pageScale, Multiply );
                                 break;
                             // highlight the bottom part of the rect
                             case Okular::HighlightAnnotation::Squiggly:
@@ -418,7 +419,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 3 ].y = ( path[ 0 ].y + path[ 3 ].y ) / 2.0;
                                 path[ 2 ].x = ( path[ 1 ].x + path[ 2 ].x ) / 2.0;
                                 path[ 2 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
-                                drawShapeOnImage( backImage, path, true, QPen(), a->style().color(), pageScale, Multiply );
+                                drawShapeOnImage( backImage, path, true, Qt::NoPen, acolor, pageScale, Multiply );
                                 break;
                             // make a line at 3/4 of the height
                             case Okular::HighlightAnnotation::Underline:
@@ -428,7 +429,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 1 ].y = ( 3 * path[ 1 ].y + path[ 2 ].y ) / 4.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style().color(), 2 ), QBrush(), pageScale );
+                                drawShapeOnImage( backImage, path, false, QPen( acolor, 2 ), QBrush(), pageScale );
                                 break;
                             // make a line at 1/2 of the height
                             case Okular::HighlightAnnotation::StrikeOut:
@@ -438,7 +439,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                                 path[ 1 ].y = ( path[ 1 ].y + path[ 2 ].y ) / 2.0;
                                 path.pop_back();
                                 path.pop_back();
-                                drawShapeOnImage( backImage, path, false, QPen( a->style().color(), 2 ), QBrush(), pageScale );
+                                drawShapeOnImage( backImage, path, false, QPen( acolor, 2 ), QBrush(), pageScale );
                                 break;
                         }
                     }
@@ -469,7 +470,6 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        QColor acolor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), (int)( 255.0 * a->style().opacity() ) );
                         drawShapeOnImage( backImage, path, false, QPen( acolor, a->style().width() ), QBrush(), pageScale );
                     }
                 }

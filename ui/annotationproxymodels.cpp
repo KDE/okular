@@ -8,6 +8,9 @@
  ***************************************************************************/
 
 #include <QtCore/QList>
+#include <QtGui/QItemSelection>
+
+#include <kicon.h>
 
 #include "annotationmodel.h"
 
@@ -215,6 +218,337 @@ void PageGroupProxyModel::groupByPage( bool value )
   mGroupByPage = value;
 
   rebuildIndexes();
+}
+
+
+class AuthorGroupItem
+{
+    public:
+        enum Type
+        {
+            Page,
+            Author,
+            Annotation
+        };
+
+        AuthorGroupItem( AuthorGroupItem *parent, Type type = Page, const QModelIndex &index = QModelIndex() )
+            : mParent( parent ), mType( type ), mIndex( index )
+        {
+        }
+
+        ~AuthorGroupItem()
+        {
+            qDeleteAll( mChilds );
+        }
+
+        void appendChild( AuthorGroupItem *child ) { mChilds.append( child ); }
+        AuthorGroupItem* parent() const { return mParent; }
+        AuthorGroupItem* child( int row ) const { return mChilds.value( row ); }
+        int childCount() const { return mChilds.count(); }
+
+        void dump( int level = 0 )
+        {
+            QString prefix;
+            for ( int i = 0; i < level; ++i ) prefix += " ";
+
+            qDebug( "%s%s", qPrintable( prefix ), ( mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation") ) );
+
+            for ( int i = 0; i < mChilds.count(); ++i )
+                mChilds[ i ]->dump( level + 2 );
+        }
+
+        const AuthorGroupItem* findIndex( const QModelIndex &index ) const
+        {
+            if ( index == mIndex )
+                return this;
+
+            for ( int i = 0; i < mChilds.count(); ++i ) {
+                const AuthorGroupItem *item = mChilds[ i ]->findIndex( index );
+                if ( item )
+                    return item;
+            }
+
+            return 0;
+        }
+
+        int row() const
+        {
+            return ( mParent ? mParent->mChilds.indexOf( const_cast<AuthorGroupItem*>( this ) ) : 0 );
+        }   
+
+        Type type() const { return mType; }
+        QModelIndex index() const { return mIndex; }
+
+        void setAuthor( const QString &author ) { mAuthor = author; }
+        QString author() const { return mAuthor; }
+
+    private:
+        AuthorGroupItem *mParent;
+        Type mType;
+        QModelIndex mIndex;
+        QList<AuthorGroupItem*> mChilds;
+        QString mAuthor;
+};
+
+class AuthorGroupProxyModel::Private
+{
+    public:
+        Private( AuthorGroupProxyModel *parent )
+            : mParent( parent ), mRoot( 0 ),
+            mGroupByAuthor( false )
+        {
+        }
+
+        AuthorGroupProxyModel *mParent;
+        AuthorGroupItem *mRoot;
+        bool mGroupByAuthor;
+};
+
+AuthorGroupProxyModel::AuthorGroupProxyModel( QObject *parent )
+    : QAbstractProxyModel( parent ),
+      d( new Private( this ) )
+{
+}
+
+AuthorGroupProxyModel::~AuthorGroupProxyModel()
+{
+}
+
+int AuthorGroupProxyModel::columnCount( const QModelIndex& ) const
+{
+    return 1;
+}
+
+int AuthorGroupProxyModel::rowCount( const QModelIndex &parentIndex ) const
+{
+    AuthorGroupItem *item = 0;
+    if ( !parentIndex.isValid() )
+        item = d->mRoot;
+    else
+        item = static_cast<AuthorGroupItem*>( parentIndex.internalPointer() );
+
+    return item->childCount();
+}
+
+QModelIndex AuthorGroupProxyModel::index( int row, int column, const QModelIndex &parentIndex ) const
+{
+    if ( !hasIndex( row, column, parentIndex ) )
+        return QModelIndex();
+
+    AuthorGroupItem *parentItem = 0;
+    if ( !parentIndex.isValid() )
+        parentItem = d->mRoot;
+    else
+        parentItem = static_cast<AuthorGroupItem*>( parentIndex.internalPointer() );
+
+    AuthorGroupItem *child = parentItem->child( row );
+    if ( child )
+        return createIndex( row, column, child );
+    else
+        return QModelIndex();
+}
+
+QModelIndex AuthorGroupProxyModel::parent( const QModelIndex &index ) const
+{
+    if ( !index.isValid() )
+        return QModelIndex();
+
+    AuthorGroupItem *childItem = static_cast<AuthorGroupItem*>( index.internalPointer() );
+    AuthorGroupItem *parentItem = childItem->parent();
+
+    if ( parentItem == d->mRoot )
+        return QModelIndex();
+    else
+        return createIndex( parentItem->row(), 0, parentItem );
+}
+
+QModelIndex AuthorGroupProxyModel::mapFromSource( const QModelIndex &sourceIndex ) const
+{
+    const AuthorGroupItem *item = d->mRoot->findIndex( sourceIndex );
+    if ( !item )
+        return QModelIndex();
+
+    return createIndex( item->row(), 0, const_cast<AuthorGroupItem*>( item ) );
+}
+
+QModelIndex AuthorGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) const
+{
+    if ( !proxyIndex.isValid() )
+        return QModelIndex();
+
+    AuthorGroupItem *item = static_cast<AuthorGroupItem*>( proxyIndex.internalPointer() );
+
+    return item->index();
+}
+
+void AuthorGroupProxyModel::setSourceModel( QAbstractItemModel *model )
+{
+    if ( sourceModel() ) {
+        disconnect( sourceModel(), SIGNAL( layoutChanged() ), this, SLOT( rebuildIndexes() ) );
+        disconnect( sourceModel(), SIGNAL( modelReset() ), this, SLOT( rebuildIndexes() ) );
+        disconnect( sourceModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( rebuildIndexes() ) );
+        disconnect( sourceModel(), SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( rebuildIndexes() ) );
+    }
+
+    QAbstractProxyModel::setSourceModel( model );
+
+    connect( sourceModel(), SIGNAL( layoutChanged() ), this, SLOT( rebuildIndexes() ) );
+    connect( sourceModel(), SIGNAL( modelReset() ), this, SLOT( rebuildIndexes() ) );
+    connect( sourceModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ), this, SLOT( rebuildIndexes() ) );
+    connect( sourceModel(), SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ), this, SLOT( rebuildIndexes() ) );
+
+    rebuildIndexes();
+}
+
+static bool isAuthorItem( const QModelIndex &index )
+{
+    AuthorGroupItem *item = static_cast<AuthorGroupItem*>( index.internalPointer() );
+    return (item->type() == AuthorGroupItem::Author);
+}
+
+QItemSelection AuthorGroupProxyModel::mapSelectionToSource( const QItemSelection &selection ) const
+{
+    QModelIndexList proxyIndexes = selection.indexes();
+    QItemSelection sourceSelection;
+    for ( int i = 0; i < proxyIndexes.size(); ++i ) {
+        if ( !isAuthorItem( proxyIndexes.at( i ) ) )
+            sourceSelection << QItemSelectionRange( mapToSource( proxyIndexes.at( i ) ) );
+    }
+
+    return sourceSelection;
+}
+
+QItemSelection AuthorGroupProxyModel::mapSelectionFromSource( const QItemSelection &selection ) const
+{
+    return QAbstractProxyModel::mapSelectionFromSource( selection );
+}
+
+QVariant AuthorGroupProxyModel::data( const QModelIndex &proxyIndex, int role ) const
+{
+    if ( isAuthorItem( proxyIndex ) ) {
+        AuthorGroupItem *item = static_cast<AuthorGroupItem*>( proxyIndex.internalPointer() );
+        if ( role == Qt::DisplayRole )
+            return item->author();
+        else if ( role == Qt::DecorationRole )
+            return KIcon( item->author().isEmpty() ? "precense_away" : "personal" );
+        else
+            return QVariant();
+    } else {
+        return QAbstractProxyModel::data( proxyIndex, role );
+    }
+}
+
+QMap<int, QVariant> AuthorGroupProxyModel::itemData( const QModelIndex &index ) const
+{
+    if ( isAuthorItem( index ) ) {
+        return QMap<int, QVariant>();
+    } else {
+        return QAbstractProxyModel::itemData( index );
+    }
+}
+
+Qt::ItemFlags AuthorGroupProxyModel::flags( const QModelIndex &index ) const
+{
+    if ( isAuthorItem( index ) ) {
+        return Qt::ItemIsEnabled;
+    } else {
+        return QAbstractProxyModel::flags( index );
+    }
+}
+
+void AuthorGroupProxyModel::groupByAuthor( bool value )
+{
+    if ( d->mGroupByAuthor == value )
+        return;
+
+    d->mGroupByAuthor = value;
+
+    rebuildIndexes();
+}
+
+void AuthorGroupProxyModel::rebuildIndexes()
+{
+    delete d->mRoot;
+    d->mRoot = new AuthorGroupItem( 0 );
+
+    if ( d->mGroupByAuthor ) {
+        QMap<QString, AuthorGroupItem*> authorMap;
+
+        for ( int row = 0; row < sourceModel()->rowCount(); ++row ) {
+            const QModelIndex idx = sourceModel()->index( row, 0 );
+            const QString author = sourceModel()->data( idx, AnnotationModel::AuthorRole ).toString();
+            if ( !author.isEmpty() ) {
+                // We have the annotations as top-level, so introduce authors as new
+                // top-levels and append the annotations
+                if ( !authorMap.contains( author ) ) {
+                    AuthorGroupItem *item = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Author );
+                    item->setAuthor( author );
+
+                    // Add item to tree
+                    d->mRoot->appendChild( item );
+
+                    // Insert to lookup list
+                    authorMap.insert( author, item );
+                }
+
+                AuthorGroupItem *authorItem = authorMap.value( author );
+
+                AuthorGroupItem *item = new AuthorGroupItem( authorItem, AuthorGroupItem::Annotation, idx );
+                authorItem->appendChild( item );
+            } else {
+                // We have the pages as top-level, so we use them as top-level, append the
+                // authors for all annotations of the page, and then the annotations themself
+                AuthorGroupItem *pageItem = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Page, idx );
+                d->mRoot->appendChild( pageItem );
+
+                // First collect all authors...
+                QMap<QString, AuthorGroupItem*> pageAuthorMap;
+                for ( int subRow = 0; subRow < sourceModel()->rowCount( idx ); ++subRow ) {
+                    const QModelIndex annIdx = sourceModel()->index( subRow, 0, idx );
+                    const QString author = sourceModel()->data( annIdx, AnnotationModel::AuthorRole ).toString();
+
+                    if ( !pageAuthorMap.contains( author ) ) {
+                        AuthorGroupItem *item = new AuthorGroupItem( pageItem, AuthorGroupItem::Author );
+                        item->setAuthor( author );
+
+                        // Add item to tree
+                        pageItem->appendChild( item );
+
+                        // Insert to lookup list
+                        pageAuthorMap.insert( author, item );
+                    }
+        
+                    AuthorGroupItem *authorItem = pageAuthorMap.value( author );
+
+                    AuthorGroupItem *item = new AuthorGroupItem( authorItem, AuthorGroupItem::Annotation, annIdx );
+                    authorItem->appendChild( item );
+                }
+            }
+        }
+    } else {
+        for ( int row = 0; row < sourceModel()->rowCount(); ++row ) {
+            const QModelIndex idx = sourceModel()->index( row, 0 );
+            const QString author = sourceModel()->data( idx, AnnotationModel::AuthorRole ).toString();
+            if ( !author.isEmpty() ) {
+                // We have the annotations as top-level items
+                AuthorGroupItem *item = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Annotation, idx );
+                d->mRoot->appendChild( item );
+            } else {
+                // We have the pages as top-level items
+                AuthorGroupItem *pageItem = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Page, idx );
+                d->mRoot->appendChild( pageItem );
+
+                // Append all annotations as second-level
+                for ( int subRow = 0; subRow < sourceModel()->rowCount( idx ); ++subRow ) {
+                    const QModelIndex subIdx = sourceModel()->index( subRow, 0, idx );
+                    AuthorGroupItem *item = new AuthorGroupItem( pageItem, AuthorGroupItem::Annotation, subIdx );
+                    pageItem->appendChild( item );
+                }
+            }
+        }
+    }
+
+    reset();
 }
 
 #include "annotationproxymodels.moc"

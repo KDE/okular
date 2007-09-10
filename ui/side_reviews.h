@@ -23,6 +23,7 @@ class Document;
 }
 
 class AnnotationModel;
+class AuthorGroupProxyModel;
 class PageFilterProxyModel;
 class PageGroupProxyModel;
 class TreeView;
@@ -59,6 +60,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         // internal storage
         Okular::Document * m_document;
         AnnotationModel * m_model;
+        AuthorGroupProxyModel * m_authorProxy;
         PageFilterProxyModel * m_filterProxy;
         PageGroupProxyModel * m_groupProxy;
 };

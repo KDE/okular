@@ -304,7 +304,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
     switch ( role )
     {
         case Qt::DisplayRole:
-            return item->annotation->author();
+            return AnnotationGuiUtils::captionForAnnotation( item->annotation );
             break;
         case Qt::DecorationRole:
             return KIcon( "okular" );

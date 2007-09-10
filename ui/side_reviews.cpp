@@ -103,11 +103,14 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 
     m_filterProxy = new PageFilterProxyModel( m_view );
     m_groupProxy = new PageGroupProxyModel( m_view );
+    m_authorProxy  = new AuthorGroupProxyModel( m_view );
 
     m_filterProxy->setSourceModel( m_model );
     m_groupProxy->setSourceModel( m_filterProxy );
+    m_authorProxy->setSourceModel( m_groupProxy );
 
-    m_view->setModel( m_groupProxy );
+
+    m_view->setModel( m_authorProxy );
 
     vLayout->addWidget( new KTreeViewSearchLine( this, m_view ) );
     vLayout->addWidget( m_view );
@@ -121,12 +124,11 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-/*
     QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
-*/
+
     // - add separator
     toolBar->addSeparator();
     // - add Current Page Only button
@@ -157,13 +159,17 @@ void Reviews::slotPageEnabled( bool on )
     // store toggle state in Settings and update the listview
     Okular::Settings::setGroupByPage( on );
     m_groupProxy->groupByPage( on );
+
+    m_view->expandAll();
 }
 
 void Reviews::slotAuthorEnabled( bool on )
 {
     // store toggle state in Settings and update the listview
     Okular::Settings::setGroupByAuthor( on );
-    //m_proxy->groupByAuthor( on );
+    m_authorProxy->groupByAuthor( on );
+
+    m_view->expandAll();
 }
 
 void Reviews::slotCurrentPageOnly( bool on )
@@ -171,13 +177,16 @@ void Reviews::slotCurrentPageOnly( bool on )
     // store toggle state in Settings and update the listview
     Okular::Settings::setCurrentPageOnly( on );
     m_filterProxy->groupByCurrentPage( on );
+
+    m_view->expandAll();
 }
 //END GUI Slots
 
 
 void Reviews::activated( const QModelIndex &index )
 {
-    const QModelIndex filterIndex = m_groupProxy->mapToSource( index );
+    const QModelIndex authorIndex = m_authorProxy->mapToSource( index );
+    const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
     const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
 
     Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );

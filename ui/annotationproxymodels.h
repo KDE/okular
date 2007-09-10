@@ -61,7 +61,7 @@ class PageGroupProxyModel : public QAbstractProxyModel
 
   public:
     /**
-     * Creates a new  page group proxy model.
+     * Creates a new page group proxy model.
      *
      * @param parent The parent object.
      */
@@ -93,4 +93,53 @@ class PageGroupProxyModel : public QAbstractProxyModel
     QList<QModelIndex> mIndexes;
     QList<QPair< QModelIndex, QList<QModelIndex> > > mTreeIndexes;
 };
+
+/**
+ * A proxy model which groups the annotations by author.
+ */
+class AuthorGroupProxyModel : public QAbstractProxyModel
+{
+    Q_OBJECT
+
+    public:
+        /**
+         * Creates a new author group proxy model.
+         *
+         * @param parent The parent object.
+         */
+        AuthorGroupProxyModel( QObject *parent = 0 );
+        ~AuthorGroupProxyModel();
+
+        virtual int columnCount( const QModelIndex &parentIndex ) const;
+        virtual int rowCount( const QModelIndex &parentIndex ) const;
+
+        virtual QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const;
+        virtual QModelIndex parent( const QModelIndex &index ) const;
+
+        virtual QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const;
+        virtual QModelIndex mapToSource( const QModelIndex &proxyIndex ) const;
+
+        virtual void setSourceModel( QAbstractItemModel *model );
+
+        virtual QItemSelection mapSelectionToSource(const QItemSelection &selection) const;
+        virtual QItemSelection mapSelectionFromSource(const QItemSelection &selection) const;
+        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
+        QMap<int, QVariant> itemData(const QModelIndex &index) const;
+        Qt::ItemFlags flags(const QModelIndex &index) const;
+
+    public Q_SLOTS:
+        /**
+         * Sets whether the proxy model shall group
+         * the annotations by author.
+         */
+        void groupByAuthor( bool value );
+
+    private Q_SLOTS:
+        void rebuildIndexes();
+
+    private:
+        class Private;
+        Private* const d;
+};
+
 #endif

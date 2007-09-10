@@ -32,8 +32,6 @@ void PageFilterProxyModel::groupByCurrentPage( bool value )
   mGroupByCurrentPage = value;
 
   invalidateFilter();
-
-  emit layoutChanged();
 }
 
 void PageFilterProxyModel::setCurrentPage( int page )
@@ -43,9 +41,11 @@ void PageFilterProxyModel::setCurrentPage( int page )
 
   mCurrentPage = page;
 
-  invalidateFilter();
+  // no need to invalidate when we're not showing the current page only
+  if ( !mGroupByCurrentPage )
+    return;
 
-  emit layoutChanged();
+  invalidateFilter();
 }
 
 bool PageFilterProxyModel::filterAcceptsRow( int row, const QModelIndex &sourceParent ) const

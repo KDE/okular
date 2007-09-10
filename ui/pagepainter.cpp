@@ -514,33 +514,19 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 Okular::TextAnnotation * text = (Okular::TextAnnotation *)a;
                 if ( text->textType() == Okular::TextAnnotation::InPlace )
                 {
-                    QRect bigRect = a->transformedBoundingRectangle().geometry( (int)page->width(), (int)page->height() );
-
-                    // the strategy behind 'bigger': if where are we going to
-                    // draw is bigger than the Page, then draw the rect only
-                    // after then scaling, so it won't be wider than 1px;
-                    // otherwise draw it right after the text
-                    bool bigger = mixedPainter->device()->width() > page->width();
-                    QImage image( bigRect.size(), QImage::Format_ARGB32 );
+                    QImage image( annotBoundary.size(), QImage::Format_ARGB32 );
                     image.fill( qRgba( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) );
                     QPainter painter( &image );
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
                     Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
+                    painter.scale( 1.0 * scaledWidth / page->width(), 1.0 * scaledHeight / page->height() );
                     painter.drawText( 2, 2, image.width() - 2, image.height() - 2,
                                       Qt::AlignTop | halign | Qt::TextWordWrap,
                                       text->inplaceText() );
-                    if ( !bigger )
-                        painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
+                    painter.resetTransform();
+                    painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
                     painter.end();
-                    image = image.scaled( annotBoundary.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-                    if ( bigger )
-                    {
-                        painter.begin( &image );
-                        painter.setPen( Qt::black );
-                        painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
-                        painter.end();
-                    }
 
 //                    mixedPainter->drawImage( annotBoundary.topLeft(), image.scaled( annotBoundary.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );

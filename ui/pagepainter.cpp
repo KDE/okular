@@ -380,11 +380,6 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         drawShapeOnImage( backImage, path3, false, QPen( a->style().color(), a->style().width() ), QBrush(), pageScale, Multiply );
                     }
                 }
-                // draw GeomAnnotation MISSING: all
-                else if ( type == Okular::Annotation::AGeom )
-                {
-                    // TODO
-                }
                 // draw HighlightAnnotation MISSING: under/strike width, feather, capping
                 else if ( type == Okular::Annotation::AHighlight )
                 {
@@ -528,7 +523,6 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
                     painter.end();
 
-//                    mixedPainter->drawImage( annotBoundary.topLeft(), image.scaled( annotBoundary.size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );
                 }
                 else if ( text->textType() == Okular::TextAnnotation::Linked )
@@ -608,21 +602,6 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 p.end();
                 mixedPainter->drawImage( annotBoundary.topLeft(), shape );
             }
-#if 0
-            else // WARNING: TEMPORARY CODE! migrate everything to AGG
-            {
-                //GeomAnnotation * geom = (GeomAnnotation *)a;
-                //if ( geom->geomType == GeomAnnotation::InscribedSquare )
-                //{
-                    QImage rectImage( innerRect.width(), innerRect.height(), QImage::Format_ARGB32 );
-                    const QColor & c = a->style.color;
-                    unsigned int color = qRgba( c.red(), c.green(), c.blue(), opacity );
-                    rectImage.fill( color );
-                    mixedPainter->drawImage( annotRect.topLeft(), rectImage );
-                //}
-                //else if ( geom->geomType == GeomAnnotation::InscribedCircle )
-            }
-#endif
 
             // draw extents rectangle
             if ( Okular::Settings::debugDrawAnnotationRect() )

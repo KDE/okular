@@ -121,10 +121,11 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 {
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
-    QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
-    if ( !QFile::exists( newokularconffile ) && QFile::exists( oldkpdfconffile ) )
+    if ( !QFile::exists( newokularconffile ) )
     {
-        QFile::copy( oldkpdfconffile, newokularconffile );
+        QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
+        if ( QFile::exists( oldkpdfconffile ) )
+            QFile::copy( oldkpdfconffile, newokularconffile );
     }
 
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);

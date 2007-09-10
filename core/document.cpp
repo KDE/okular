@@ -1171,13 +1171,16 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         fileReadTest.close();
         QString newokular = "okular/docdata/" + fn;
         QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-        QString oldkpdf = "kpdf/" + fn;
-        QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-        if ( QFile::exists( oldkpdffile ) && !QFile::exists( newokularfile ) )
+        if ( !QFile::exists( newokularfile ) )
         {
-            // ### copy or move?
-            if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                return false;
+            QString oldkpdf = "kpdf/" + fn;
+            QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+            if ( QFile::exists( oldkpdffile ) )
+            {
+                // ### copy or move?
+                if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                    return false;
+            }
         }
         d->m_xmlFileName = newokularfile;
     }

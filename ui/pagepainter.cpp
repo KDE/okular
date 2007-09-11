@@ -18,7 +18,7 @@
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <QApplication>
-#include <qimageblitz/qimageblitz.h>
+#include <qimageblitz.h>
 
 // system includes
 #include <math.h>

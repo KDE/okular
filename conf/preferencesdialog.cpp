@@ -23,12 +23,12 @@
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton )
     : KConfigDialog( parent, "preferences", skeleton )
 {
-    m_general = new DlgGeneral(0);
-    m_performance = new DlgPerformance(0);
-    m_accessibility = new DlgAccessibility(0);
-    m_presentation = new DlgPresentation(0);
-    m_identity = new DlgIdentity(0);
-    m_debug = new DlgDebug(0);
+    m_general = new DlgGeneral( this );
+    m_performance = new DlgPerformance( this );
+    m_accessibility = new DlgAccessibility( this );
+    m_presentation = new DlgPresentation( this );
+    m_identity = new DlgIdentity( this );
+    m_debug = new DlgDebug( this );
 
     addPage( m_general, i18n("General"), "okular", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "access", i18n("Accessibility Reading Aids") );

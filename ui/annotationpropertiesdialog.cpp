@@ -54,7 +54,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     QLabel* tmplabel;
   //1. Appearance
     //BEGIN tab1
-    QFrame *page = new QFrame();
+    QFrame *page = new QFrame( this );
     addPage( page, i18n( "&Appearance" ) );
     QVBoxLayout * lay = new QVBoxLayout( page );
 
@@ -90,7 +90,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     //END tab1
     
     //BEGIN tab 2
-    page = new QFrame();
+    page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
 //    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
     QGridLayout * gridlayout = new QGridLayout( page );
@@ -114,7 +114,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
     //BEGIN advance properties:
-    page = new QFrame();
+    page = new QFrame( this );
     addPage( page, i18n( "&Advanced" ) );
     gridlayout = new QGridLayout( page );
     

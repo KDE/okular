@@ -83,7 +83,7 @@ bool GSGenerator::reparseConfig()
 void GSGenerator::addPages( KConfigDialog *dlg )
 {
     Ui_GSSettingsWidget gsw;
-    QWidget* w = new QWidget(0);
+    QWidget* w = new QWidget(dlg);
     gsw.setupUi(w);
     dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), "kghostview", i18n("Ghostscript backend configuration") );
 }

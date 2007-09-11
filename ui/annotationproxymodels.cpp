@@ -298,6 +298,10 @@ class AuthorGroupProxyModel::Private
             mGroupByAuthor( false )
         {
         }
+        ~Private()
+        {
+            delete mRoot;
+        }
 
         AuthorGroupProxyModel *mParent;
         AuthorGroupItem *mRoot;
@@ -312,6 +316,7 @@ AuthorGroupProxyModel::AuthorGroupProxyModel( QObject *parent )
 
 AuthorGroupProxyModel::~AuthorGroupProxyModel()
 {
+    delete d;
 }
 
 int AuthorGroupProxyModel::columnCount( const QModelIndex& ) const

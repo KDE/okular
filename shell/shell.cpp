@@ -141,7 +141,6 @@ void Shell::readSettings()
 {
     m_recent->loadEntries( KGlobal::config()->group( "Recent Files" ) );
     m_recent->setEnabled( true ); // force enabling
-    m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
 
     const KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
     bool fullScreen = group.readEntry( "FullScreen", false );
@@ -163,6 +162,7 @@ void Shell::setupActions()
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   m_recent->setToolButtonPopupMode( QToolButton::DelayedPopup );
   connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
+  m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
   m_printAction->setEnabled( false );

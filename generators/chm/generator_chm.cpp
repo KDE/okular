@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_chm.h"
+
 #include <QtCore/QEventLoop>
 #include <QtGui/QPainter>
 
@@ -24,9 +26,7 @@
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
 
-#include "generator_chm.h"
 #include "lib/xchmfile.h"
-#include "settings.h"
 
 OKULAR_EXPORT_PLUGIN(CHMGenerator)
 

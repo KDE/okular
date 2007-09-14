@@ -490,12 +490,6 @@ class OKULAR_EXPORT Document : public QObject
          */
         const KComponentData* componentData() const;
 
-        /**
-         * This method is used by the generators to signal the finish of
-         * the pixmap generation @p request.
-         */
-        void requestDone( PixmapRequest * request );
-
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

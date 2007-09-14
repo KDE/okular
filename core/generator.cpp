@@ -17,6 +17,7 @@
 #include <klocale.h>
 
 #include "document.h"
+#include "document_p.h"
 #include "page.h"
 
 using namespace Okular;
@@ -264,7 +265,7 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
 const Document * Generator::document() const
 {
     Q_D( const Generator );
-    return d->m_document;
+    return d->m_document->m_parent;
 }
 
 void Generator::setFeature( GeneratorFeature feature, bool on )

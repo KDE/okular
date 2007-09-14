@@ -19,7 +19,7 @@ class KComponentData;
 
 namespace Okular {
 
-class Document;
+class DocumentPrivate;
 class FontInfo;
 class Generator;
 class Page;
@@ -44,7 +44,7 @@ class GeneratorPrivate
         void pixmapGenerationFinished();
         void textpageGenerationFinished();
 
-        Document *m_document;
+        DocumentPrivate *m_document;
         // NOTE: the following should be a QSet< GeneratorFeature >,
         // but it is not to avoid #include'ing generator.h
         QSet< int > m_features;

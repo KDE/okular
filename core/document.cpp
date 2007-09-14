@@ -1123,7 +1123,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !catalogName.isEmpty() )
         KGlobal::locale()->insertCatalog( catalogName );
 
-    d->m_generator->d_func()->m_document = this;
+    d->m_generator->d_func()->m_document = d;
 
     // connect error reporting signals
     connect( d->m_generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
@@ -2458,37 +2458,37 @@ const KComponentData* Document::componentData() const
     return d->m_generator ? d->m_generator->ownComponentData() : 0;
 }
 
-void Document::requestDone( PixmapRequest * req )
+void DocumentPrivate::requestDone( PixmapRequest * req )
 {
-    if ( !d->m_generator || !req )
+    if ( !m_generator || !req )
         return;
 
 #ifndef NDEBUG
-    if ( !d->m_generator->canGeneratePixmap() )
+    if ( !m_generator->canGeneratePixmap() )
         kDebug(OkularDebug) << "requestDone with generator not in READY state.";
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmapsFifo.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmapsFifo.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
         {
             AllocatedPixmap * p = *aIt;
-            d->m_allocatedPixmapsFifo.erase( aIt );
-            d->m_allocatedPixmapsTotalMemory -= p->memory;
+            m_allocatedPixmapsFifo.erase( aIt );
+            m_allocatedPixmapsTotalMemory -= p->memory;
             delete p;
             break;
         }
 
-    QMap< int, DocumentObserver * >::const_iterator itObserver = d->m_observers.constFind( req->id() );
-    if ( itObserver != d->m_observers.constEnd() )
+    QMap< int, DocumentObserver * >::const_iterator itObserver = m_observers.constFind( req->id() );
+    if ( itObserver != m_observers.constEnd() )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 4 * req->width() * req->height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
-        d->m_allocatedPixmapsFifo.append( memoryPage );
-        d->m_allocatedPixmapsTotalMemory += memoryBytes;
+        m_allocatedPixmapsFifo.append( memoryPage );
+        m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
         itObserver.value()->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
@@ -2502,11 +2502,11 @@ void Document::requestDone( PixmapRequest * req )
     delete req;
 
     // 4. start a new generation if some is pending
-    d->m_pixmapRequestsMutex.lock();
-    bool hasPixmaps = !d->m_pixmapRequestsStack.isEmpty();
-    d->m_pixmapRequestsMutex.unlock();
+    m_pixmapRequestsMutex.lock();
+    bool hasPixmaps = !m_pixmapRequestsStack.isEmpty();
+    m_pixmapRequestsMutex.unlock();
     if ( hasPixmaps )
-        d->sendGeneratorRequest();
+        sendGeneratorRequest();
 }
 
 void Document::setRotation( int r )

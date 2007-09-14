@@ -96,6 +96,13 @@ class DocumentPrivate
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll);
 
+        // generators stuff
+        /**
+         * This method is used by the generators to signal the finish of
+         * the pixmap generation @p request.
+         */
+        void requestDone( PixmapRequest * request );
+
         // member variables
         Document *m_parent;
 

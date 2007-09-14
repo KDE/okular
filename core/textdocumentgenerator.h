@@ -94,7 +94,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         /**
          * This method can be used to calculate the viewport for a given text block.
          *
-         * Note: This method should be called at the end of the convertion, because it
+         * @note This method should be called at the end of the convertion, because it
          *       triggers QTextDocument to do the layout calculation.
          */
         DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block );
@@ -104,6 +104,12 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         Private* const d;
 };
 
+/**
+ * @brief QTextDocument-based Generator
+ *
+ * This generator provides a document in the form of a QTextDocument object,
+ * parsed using a specialized TextDocumentConverter.
+ */
 class OKULAR_EXPORT TextDocumentGenerator : public Generator
 {
     /// @cond PRIVATE
@@ -113,6 +119,12 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
     Q_OBJECT
 
     public:
+        /**
+         * Creates a new generator that uses the specified @p converter.
+         *
+         * @note the generator will take ownership of the converter, so you
+         *       don't have to delete it yourself
+         */
         TextDocumentGenerator( TextDocumentConverter *converter );
         virtual ~TextDocumentGenerator();
 

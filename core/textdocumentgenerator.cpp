@@ -49,7 +49,7 @@ DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *docume
 /**
  * Generic Generator Implementation
  */
-Okular::TextPage* TextDocumentGenerator::Private::createTextPage( int pageNumber ) const
+Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber ) const
 {
     Okular::TextPage *textPage = new Okular::TextPage;
 
@@ -76,7 +76,7 @@ Okular::TextPage* TextDocumentGenerator::Private::createTextPage( int pageNumber
     return textPage;
 }
 
-void TextDocumentGenerator::Private::addAction( Action *action, int cursorBegin, int cursorEnd )
+void TextDocumentGeneratorPrivate::addAction( Action *action, int cursorBegin, int cursorEnd )
 {
     if ( !action )
         return;
@@ -89,7 +89,7 @@ void TextDocumentGenerator::Private::addAction( Action *action, int cursorBegin,
     mLinkPositions.append( position );
 }
 
-void TextDocumentGenerator::Private::addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd )
+void TextDocumentGeneratorPrivate::addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd )
 {
     if ( !annotation )
         return;
@@ -102,7 +102,7 @@ void TextDocumentGenerator::Private::addAnnotation( Annotation *annotation, int 
     mAnnotationPositions.append( position );
 }
 
-void TextDocumentGenerator::Private::addTitle( int level, const QString &title, const QTextBlock &block )
+void TextDocumentGeneratorPrivate::addTitle( int level, const QString &title, const QTextBlock &block )
 {
     TitlePosition position;
     position.level = level;
@@ -112,12 +112,12 @@ void TextDocumentGenerator::Private::addTitle( int level, const QString &title, 
     mTitlePositions.append( position );
 }
 
-void TextDocumentGenerator::Private::addMetaData( const QString &key, const QString &value, const QString &title )
+void TextDocumentGeneratorPrivate::addMetaData( const QString &key, const QString &value, const QString &title )
 {
     mDocumentInfo.set( key, value, title );
 }
 
-void TextDocumentGenerator::Private::generateLinkInfos()
+void TextDocumentGeneratorPrivate::generateLinkInfos()
 {
     for ( int i = 0; i < mLinkPositions.count(); ++i ) {
         const LinkPosition &linkPosition = mLinkPositions[ i ];
@@ -132,7 +132,7 @@ void TextDocumentGenerator::Private::generateLinkInfos()
     }
 }
 
-void TextDocumentGenerator::Private::generateAnnotationInfos()
+void TextDocumentGeneratorPrivate::generateAnnotationInfos()
 {
     for ( int i = 0; i < mAnnotationPositions.count(); ++i ) {
         const AnnotationPosition &annotationPosition = mAnnotationPositions[ i ];
@@ -147,7 +147,7 @@ void TextDocumentGenerator::Private::generateAnnotationInfos()
     }
 }
 
-void TextDocumentGenerator::Private::generateTitleInfos()
+void TextDocumentGeneratorPrivate::generateTitleInfos()
 {
     QStack<QDomNode> parentNodeStack;
 
@@ -185,7 +185,7 @@ void TextDocumentGenerator::Private::generateTitleInfos()
 }
 
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
-    : Okular::Generator(), d( new Private( this, converter ) )
+    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ) )
 {
     setFeature( TextExtraction );
 
@@ -208,11 +208,11 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
 
 TextDocumentGenerator::~TextDocumentGenerator()
 {
-    delete d;
 }
 
 bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
+    Q_D( TextDocumentGenerator );
     d->mDocument = d->mConverter->convert( fileName );
 
     if ( !d->mDocument )
@@ -228,7 +228,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
 
     QVector< QLinkedList<Okular::ObjectRect*> > objects( d->mDocument->pageCount() );
     for ( int i = 0; i < d->mLinkInfos.count(); ++i ) {
-        const Private::LinkInfo &info = d->mLinkInfos.at( i );
+        const TextDocumentGeneratorPrivate::LinkInfo &info = d->mLinkInfos.at( i );
 
         const QRectF rect = info.boundingRect;
         objects[ info.page ].append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
@@ -237,7 +237,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
 
     QVector< QLinkedList<Okular::Annotation*> > annots( d->mDocument->pageCount() );
     for ( int i = 0; i < d->mAnnotationInfos.count(); ++i ) {
-        const Private::AnnotationInfo &info = d->mAnnotationInfos[ i ];
+        const TextDocumentGeneratorPrivate::AnnotationInfo &info = d->mAnnotationInfos[ i ];
 
         QRect rect( 0, info.page * size.height(), size.width(), size.height() );
         info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
@@ -262,6 +262,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
 
 bool TextDocumentGenerator::closeDocument()
 {
+    Q_D( TextDocumentGenerator );
     delete d->mDocument;
     d->mDocument = 0;
 
@@ -280,6 +281,7 @@ bool TextDocumentGenerator::canGeneratePixmap() const
 
 void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
+    Q_D( TextDocumentGenerator );
     if ( !d->mDocument )
         return;
 
@@ -309,11 +311,13 @@ void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* TextDocumentGenerator::textPage( Okular::Page * page )
 {
+    Q_D( TextDocumentGenerator );
     return d->createTextPage( page->number() );
 }
 
 bool TextDocumentGenerator::print( KPrinter& printer )
 {
+    Q_D( TextDocumentGenerator );
     if ( !d->mDocument )
         return false;
 
@@ -334,11 +338,13 @@ bool TextDocumentGenerator::print( KPrinter& printer )
 
 const Okular::DocumentInfo* TextDocumentGenerator::generateDocumentInfo()
 {
+    Q_D( TextDocumentGenerator );
     return &d->mDocumentInfo;
 }
 
 const Okular::DocumentSynopsis* TextDocumentGenerator::generateDocumentSynopsis()
 {
+    Q_D( TextDocumentGenerator );
     if ( !d->mDocumentSynopsis.hasChildNodes() )
         return 0;
     else
@@ -358,6 +364,7 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
 
 bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
+    Q_D( TextDocumentGenerator );
     if ( !d->mDocument )
         return false;
 

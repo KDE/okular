@@ -1252,7 +1252,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !catalogName.isEmpty() )
         KGlobal::locale()->insertCatalog( catalogName );
 
-    d->m_generator->d->m_document = this;
+    d->m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
     connect( d->m_generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
@@ -1387,7 +1387,7 @@ void Document::closeDocument()
     if ( d->m_generator )
     {
         // disconnect the generator from this document ...
-        d->m_generator->d->m_document = 0;
+        d->m_generator->d_func()->m_document = 0;
         // .. and this document from the generator signals
         disconnect( d->m_generator, 0, this, 0 );
 

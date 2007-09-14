@@ -16,6 +16,7 @@
 
 #include "action.h"
 #include "document.h"
+#include "generator_p.h"
 #include "textdocumentgenerator.h"
 
 namespace Okular {
@@ -96,17 +97,17 @@ class TextDocumentConverter::Private
 {
 };
 
-class TextDocumentGenerator::Private
+class TextDocumentGeneratorPrivate : public GeneratorPrivate
 {
     friend class TextDocumentConverter;
 
     public:
-        Private( TextDocumentGenerator *parent, TextDocumentConverter *converter )
-            : mParent( parent ), mConverter( converter ), mDocument( 0 )
+        TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
+            : mConverter( converter ), mDocument( 0 )
         {
         }
 
-        ~Private()
+        virtual ~TextDocumentGeneratorPrivate()
         {
             delete mConverter;
             delete mDocument;
@@ -125,7 +126,6 @@ class TextDocumentGenerator::Private
         void generateAnnotationInfos();
         void generateTitleInfos();
 
-        TextDocumentGenerator *mParent;
         TextDocumentConverter *mConverter;
 
         QTextDocument *mDocument;

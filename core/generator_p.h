@@ -31,9 +31,12 @@ class TextPageGenerationThread;
 class GeneratorPrivate
 {
     public:
-        GeneratorPrivate( Generator *parent );
+        GeneratorPrivate();
 
-        ~GeneratorPrivate();
+        virtual ~GeneratorPrivate();
+
+        Q_DECLARE_PUBLIC( Generator )
+        Generator *q_ptr;
 
         PixmapGenerationThread* pixmapGenerationThread();
         TextPageGenerationThread* textPageGenerationThread();
@@ -47,7 +50,6 @@ class GeneratorPrivate
         QSet< int > m_features;
         KAboutData *m_about;
         KComponentData *m_componentData;
-        Generator *m_generator;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
         bool mPixmapReady : 1;

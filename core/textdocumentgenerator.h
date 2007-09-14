@@ -21,6 +21,7 @@ class QTextDocument;
 namespace Okular {
 
 class TextDocumentGenerator;
+class TextDocumentGeneratorPrivate;
 
 class OKULAR_EXPORT TextDocumentConverter : public QObject
 {
@@ -137,13 +138,13 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         Okular::TextPage* textPage( Okular::Page *page );
 
     private:
-        class Private;
-        Private* const d;
+        Q_DECLARE_PRIVATE( TextDocumentGenerator )
+        Q_DISABLE_COPY( TextDocumentGenerator )
 
-        Q_PRIVATE_SLOT( d, void addAction( Action*, int, int ) )
-        Q_PRIVATE_SLOT( d, void addAnnotation( Annotation*, int, int ) )
-        Q_PRIVATE_SLOT( d, void addTitle( int, const QString&, const QTextBlock& ) )
-        Q_PRIVATE_SLOT( d, void addMetaData( const QString&, const QString&, const QString& ) )
+        Q_PRIVATE_SLOT( d_func(), void addAction( Action*, int, int ) )
+        Q_PRIVATE_SLOT( d_func(), void addAnnotation( Annotation*, int, int ) )
+        Q_PRIVATE_SLOT( d_func(), void addTitle( int, const QString&, const QTextBlock& ) )
+        Q_PRIVATE_SLOT( d_func(), void addMetaData( const QString&, const QString&, const QString& ) )
 };
 
 }

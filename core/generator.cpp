@@ -21,9 +21,8 @@
 
 using namespace Okular;
 
-GeneratorPrivate::GeneratorPrivate( Generator *parent )
+GeneratorPrivate::GeneratorPrivate()
     : m_document( 0 ), m_about( 0 ), m_componentData( 0 ),
-      m_generator( parent ),
       mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
       mPixmapReady( true ), mTextPageReady( true )
 {
@@ -51,9 +50,10 @@ PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
     if ( mPixmapGenerationThread )
         return mPixmapGenerationThread;
 
-    mPixmapGenerationThread = new PixmapGenerationThread( m_generator );
+    Q_Q( Generator );
+    mPixmapGenerationThread = new PixmapGenerationThread( q );
     QObject::connect( mPixmapGenerationThread, SIGNAL( finished() ),
-                      m_generator, SLOT( pixmapGenerationFinished() ),
+                      q, SLOT( pixmapGenerationFinished() ),
                       Qt::QueuedConnection );
 
     return mPixmapGenerationThread;
@@ -64,9 +64,10 @@ TextPageGenerationThread* GeneratorPrivate::textPageGenerationThread()
     if ( mTextPageGenerationThread )
         return mTextPageGenerationThread;
 
-    mTextPageGenerationThread = new TextPageGenerationThread( m_generator );
+    Q_Q( Generator );
+    mTextPageGenerationThread = new TextPageGenerationThread( q );
     QObject::connect( mTextPageGenerationThread, SIGNAL( finished() ),
-                      m_generator, SLOT( textpageGenerationFinished() ),
+                      q, SLOT( textpageGenerationFinished() ),
                       Qt::QueuedConnection );
 
     return mTextPageGenerationThread;
@@ -74,6 +75,7 @@ TextPageGenerationThread* GeneratorPrivate::textPageGenerationThread()
 
 void GeneratorPrivate::pixmapGenerationFinished()
 {
+    Q_Q( Generator );
     PixmapRequest *request = mPixmapGenerationThread->request();
     mPixmapGenerationThread->endGeneration();
 
@@ -81,7 +83,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
 
     mPixmapReady = true;
 
-    m_generator->signalPixmapRequestDone( request );
+    q->signalPixmapRequestDone( request );
 }
 
 void GeneratorPrivate::textpageGenerationFinished()
@@ -97,13 +99,20 @@ void GeneratorPrivate::textpageGenerationFinished()
 
 
 Generator::Generator()
-    : d( new GeneratorPrivate( this ) )
+    : d_ptr( new GeneratorPrivate() )
 {
+    d_ptr->q_ptr = this;
+}
+
+Generator::Generator( GeneratorPrivate &dd )
+    : d_ptr( &dd )
+{
+    d_ptr->q_ptr = this;
 }
 
 Generator::~Generator()
 {
-    delete d;
+    delete d_ptr;
 }
 
 bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
@@ -113,11 +122,13 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
 
 bool Generator::canGeneratePixmap() const
 {
+    Q_D( const Generator );
     return d->mPixmapReady;
 }
 
 void Generator::generatePixmap( PixmapRequest *request )
 {
+    Q_D( Generator );
     d->mPixmapReady = false;
 
     if ( hasFeature( Threaded ) )
@@ -140,16 +151,18 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     d->mPixmapReady = true;
 
-    d->m_generator->signalPixmapRequestDone( request );
+    signalPixmapRequestDone( request );
 }
 
 bool Generator::canGenerateTextPage() const
 {
+    Q_D( const Generator );
     return d->mTextPageReady;
 }
 
 void Generator::generateTextPage( Page *page )
 {
+    Q_D( Generator );
     page->setTextPage( textPage( page ) );
     d->mTextPageReady = true;
 }
@@ -229,16 +242,19 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
 
 bool Generator::hasFeature( GeneratorFeature feature ) const
 {
+    Q_D( const Generator );
     return d->m_features.contains( feature );
 }
 
 const KComponentData* Generator::ownComponentData() const
 {
+    Q_D( const Generator );
     return d->m_componentData;
 }
 
 void Generator::signalPixmapRequestDone( PixmapRequest * request )
 {
+    Q_D( Generator );
     if ( d->m_document )
         d->m_document->requestDone( request );
     else
@@ -247,11 +263,13 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
 
 const Document * Generator::document() const
 {
+    Q_D( const Generator );
     return d->m_document;
 }
 
 void Generator::setFeature( GeneratorFeature feature, bool on )
 {
+    Q_D( Generator );
     if ( on )
         d->m_features.insert( feature );
     else
@@ -260,6 +278,7 @@ void Generator::setFeature( GeneratorFeature feature, bool on )
 
 void Generator::setAboutData( KAboutData* data )
 {
+    Q_D( Generator );
     delete d->m_componentData;
     delete d->m_about;
     d->m_about = data;

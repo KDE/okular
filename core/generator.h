@@ -444,18 +444,20 @@ setAboutData( about );
          */
         void setAboutData( KAboutData* data );
 
-    private:
+    protected:
         /// @cond PRIVATE
-        friend class GeneratorPrivate;
-        /// @endcond PRIVATE
-        GeneratorPrivate* const d;
+        Generator( GeneratorPrivate &dd );
+        Q_DECLARE_PRIVATE( Generator )
+        GeneratorPrivate *d_ptr;
 
-        /// @cond PRIVATE
         friend class Document;
         /// @endcond PRIVATE
 
-        Q_PRIVATE_SLOT( d, void pixmapGenerationFinished() )
-        Q_PRIVATE_SLOT( d, void textpageGenerationFinished() )
+    private:
+        Q_DISABLE_COPY( Generator )
+
+        Q_PRIVATE_SLOT( d_func(), void pixmapGenerationFinished() )
+        Q_PRIVATE_SLOT( d_func(), void textpageGenerationFinished() )
 };
 
 /**

@@ -24,6 +24,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
       m_moveViewport( false ), m_changed( false )
 {
     setObjectName( "SearchLineEdit" );
+    setClearButtonShown( true );
 
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);

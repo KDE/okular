@@ -9,15 +9,14 @@
  ***************************************************************************/
 
 #include "document.h"
+#include "document_p.h"
 
 // qt/kde/system includes
 #include <QtCore/QtAlgorithms>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtCore/QHash>
 #include <QtCore/QMap>
-#include <QtCore/QMutex>
 #include <QtCore/QProcess>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
@@ -34,7 +33,6 @@
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
 #include <krun.h>
-#include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
@@ -48,7 +46,6 @@
 #include "bookmarkmanager.h"
 #include "chooseenginedialog_p.h"
 #include "debug_p.h"
-#include "generator.h"
 #include "generator_p.h"
 #include "interfaces/configinterface.h"
 #include "interfaces/guiinterface.h"
@@ -94,18 +91,6 @@ struct RunningSearch
     QColor cachedColor;
 };
 
-struct GeneratorInfo
-{
-    GeneratorInfo()
-        : generator( 0 ), library( 0 ), hasConfig( false )
-    {}
-
-    Generator * generator;
-    KLibrary * library;
-    QString catalogName;
-    bool hasConfig : 1;
-};
-
 #define foreachObserver( cmd ) {\
     QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.begin(), end=d->m_observers.end();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
@@ -118,120 +103,6 @@ struct GeneratorInfo
 #define OKULAR_HISTORY_SAVEDSTEPS 10
 
 /***** Document ******/
-
-class Okular::DocumentPrivate
-{
-    public:
-        DocumentPrivate( Document *parent )
-          : m_parent( parent ),
-            m_lastSearchID( -1 ),
-            m_tempFile( 0 ),
-            m_docSize( -1 ),
-            m_allocatedPixmapsTotalMemory( 0 ),
-            m_warnedOutOfMemory( false ),
-            m_rotation( Rotation0 ),
-            m_exportCached( false ),
-            m_bookmarkManager( 0 ),
-            m_memCheckTimer( 0 ),
-            m_saveBookmarksTimer( 0 ),
-            m_generator( 0 ),
-            m_generatorsLoaded( false ),
-            m_fontsCached( false )
-        {
-        }
-
-        // private methods
-        QString pagesSizeString() const;
-        QString localizedSize(const QSizeF &size) const;
-        void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
-        qulonglong getTotalMemory();
-        qulonglong getFreeMemory();
-        void loadDocumentInfo();
-        QString giveAbsolutePath( const QString & fileName ) const;
-        bool openRelativeFile( const QString & fileName );
-        Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
-        void loadAllGeneratorLibraries();
-        void loadServiceList( const KService::List& offers );
-        void unloadGenerator( const GeneratorInfo& info );
-        void cacheExportFormats();
-
-        // private slots
-        void saveDocumentInfo() const;
-        void slotTimedMemoryCheck();
-        void sendGeneratorRequest();
-        void rotationFinished( int page );
-        void fontReadingProgress( int page );
-        void fontReadingGotFont( const Okular::FontInfo& font );
-        void slotGeneratorConfigChanged( const QString& );
-        void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
-        void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
-        void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll);
-
-        // member variables
-        Document *m_parent;
-
-        // find descriptors, mapped by ID (we handle multiple searches)
-        QMap< int, RunningSearch * > m_searches;
-        int m_lastSearchID;
-        bool m_searchCancelled;
-
-        // needed because for remote documents docFileName is a local file and
-        // we want the remote url when the document refers to relativeNames
-        KUrl m_url;
-
-        // cached stuff
-        QString m_docFileName;
-        QString m_xmlFileName;
-        KTemporaryFile *m_tempFile;
-        int m_docSize;
-
-        // viewport stuff
-        QLinkedList< DocumentViewport > m_viewportHistory;
-        QLinkedList< DocumentViewport >::iterator m_viewportIterator;
-        DocumentViewport m_nextDocumentViewport; // see Link::Goto for an explanation
-
-        // observers / requests / allocator stuff
-        QMap< int, DocumentObserver * > m_observers;
-        QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
-        QMutex m_pixmapRequestsMutex;
-        QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
-        qulonglong m_allocatedPixmapsTotalMemory;
-        bool m_warnedOutOfMemory;
-
-        // the rotation applied to the document
-        Rotation m_rotation;
-
-        // the current size of the pages (if available), and the cache of the
-        // available page sizes
-        PageSize m_pageSize;
-        PageSize::List m_pageSizes;
-
-        // cache of the export formats
-        bool m_exportCached;
-        ExportFormat::List m_exportFormats;
-        ExportFormat m_exportToText;
-
-        // our bookmark manager
-        BookmarkManager *m_bookmarkManager;
-
-        // timers (memory checking / info saver)
-        QTimer *m_memCheckTimer;
-        QTimer *m_saveBookmarksTimer;
-
-        QHash<QString, GeneratorInfo> m_loadedGenerators;
-        Generator * m_generator;
-        QString m_generatorName;
-        bool m_generatorsLoaded;
-        QVector< Page * > m_pagesVector;
-        QVector< VisiblePageRect * > m_pageRects;
-
-        // cache of the mimetype we support
-        QStringList m_supportedMimeTypes;
-
-        QPointer< FontExtractionThread > m_fontThread;
-        bool m_fontsCached;
-        FontInfo::List m_fontsCache;
-};
 
 QString DocumentPrivate::pagesSizeString() const
 {

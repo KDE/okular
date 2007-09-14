@@ -24,9 +24,6 @@ using namespace Okular;
 PageController::PageController()
   : QObject()
 {
-    connect( ThreadWeaver::Weaver::instance(),
-             SIGNAL( jobDone(ThreadWeaver::Job*) ),
-             SLOT( imageRotationDone(ThreadWeaver::Job*) ) );
 }
 
 PageController::~PageController()
@@ -40,6 +37,7 @@ PageController * PageController::self()
 
 void PageController::addRotationJob(RotationJob *job)
 {
+    initWeaver();
     ThreadWeaver::Weaver::instance()->enqueue(job);
 }
 
@@ -58,6 +56,18 @@ void PageController::imageRotationDone(ThreadWeaver::Job *j)
     }
 
     job->deleteLater();
+}
+
+void PageController::initWeaver()
+{
+    static bool weaverInited = false;
+    if ( weaverInited )
+        return;
+
+    connect( ThreadWeaver::Weaver::instance(), SIGNAL( jobDone(ThreadWeaver::Job*) ),
+             this, SLOT( imageRotationDone(ThreadWeaver::Job*) ) );
+
+    weaverInited = true;
 }
 
 #include "pagecontroller_p.moc"

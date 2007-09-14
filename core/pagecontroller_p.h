@@ -42,6 +42,9 @@ class PageController : public QObject
 
     private slots:
         void imageRotationDone(ThreadWeaver::Job*);
+
+    private:
+        void initWeaver();
 };
 
 }

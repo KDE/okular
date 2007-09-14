@@ -102,6 +102,11 @@ class DocumentPrivate
          * the pixmap generation @p request.
          */
         void requestDone( PixmapRequest * request );
+        /**
+         * Request a particular metadata of the Document itself (ie, not something
+         * depending on the document type/backend).
+         */
+        QVariant documentMetaData( const QString &key, const QVariant &option ) const;
 
         // member variables
         Document *m_parent;

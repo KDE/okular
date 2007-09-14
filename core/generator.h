@@ -444,6 +444,12 @@ setAboutData( about );
          */
         void setAboutData( KAboutData* data );
 
+        /**
+         * Request a meta data of the Document, if available, like an internal
+         * setting.
+         */
+        QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
+
     protected:
         /// @cond PRIVATE
         Generator( GeneratorPrivate &dd );

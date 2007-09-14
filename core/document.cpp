@@ -977,6 +977,32 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     }
 }
 
+QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &option ) const
+{
+    if ( key == QLatin1String( "PaperColor" ) )
+    {
+        bool giveDefault = option.toBool();
+        // load paper color from Settings, or use the default color (white)
+        // if we were told to do so
+        QColor color;
+        if ( ( Settings::renderMode() == Settings::EnumRenderMode::Paper )
+             && Settings::changeColors() )
+        {
+            color = Settings::paperColor();
+        }
+        else if ( giveDefault )
+        {
+            color = Qt::white;
+        }
+        return color;
+    }
+    else if ( key == QLatin1String( "ZoomFactor" ) )
+    {
+        return Settings::zoomFactor();
+    }
+    return QVariant();
+}
+
 
 Document::Document( QWidget *widget )
     : QObject( widget ), d( new DocumentPrivate( this ) )

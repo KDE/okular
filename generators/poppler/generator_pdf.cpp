@@ -36,9 +36,6 @@
 #include <okular/core/sourcereference.h>
 #include <okular/core/textpage.h>
 
-// local includes
-#include "settings.h"
-
 #include <config-okular-poppler.h>
 
 #ifdef HAVE_POPPLER_0_6
@@ -985,9 +982,8 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
 
 bool PDFGenerator::reparseConfig()
 {
-    // load paper color from Settings or use the white default color
-    QColor color = ( (Okular::Settings::renderMode() == Okular::Settings::EnumRenderMode::Paper ) &&
-                     Okular::Settings::changeColors() ) ? Okular::Settings::paperColor() : Qt::white;
+    // load paper color
+    QColor color = documentMetaData( "PaperColor", true ).value< QColor >();
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.

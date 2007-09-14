@@ -286,6 +286,15 @@ void Generator::setAboutData( KAboutData* data )
     d->m_componentData = d->m_about ? new KComponentData( d->m_about ) : 0;
 }
 
+QVariant Generator::documentMetaData( const QString &key, const QVariant &option ) const
+{
+    Q_D( const Generator );
+    if ( !d->m_document )
+        return QVariant();
+
+    return d->m_document->documentMetaData( key, option );
+}
+
 
 class PixmapRequest::Private
 {

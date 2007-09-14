@@ -3023,6 +3023,8 @@ void PageView::slotSetMouseNormal()
     // reshow the annotator toolbar if hiding was forced
     if ( d->aToggleAnnotator->isChecked() )
         slotToggleAnnotator( true );
+    // force an update of the cursor
+    updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
 }
 
 void PageView::slotSetMouseZoom()
@@ -3033,6 +3035,8 @@ void PageView::slotSetMouseZoom()
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );
+    // force an update of the cursor
+    updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
 }
 
 void PageView::slotSetMouseSelect()
@@ -3043,6 +3047,8 @@ void PageView::slotSetMouseSelect()
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );
+    // force an update of the cursor
+    updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
 }
 
 void PageView::slotSetMouseTextSelect()
@@ -3053,6 +3059,8 @@ void PageView::slotSetMouseTextSelect()
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );
+    // force an update of the cursor
+    updateCursor( widget()->mapFromGlobal( QCursor::pos() ) );
 }
 
 void PageView::slotToggleAnnotator( bool on )

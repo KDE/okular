@@ -63,6 +63,7 @@
 #include "annotationguiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
+#include "toolaction.h"
 #include "core/action.h"
 #include "core/document.h"
 #include "core/form.h"
@@ -446,6 +447,11 @@ void PageView::setupActions( KActionCollection * ac )
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
     d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
+
+    ToolAction *ta = new ToolAction( this );
+    ac->addAction( "mouse_selecttools", ta );
+    ta->addAction( d->aMouseSelect );
+    ta->addAction( d->aMouseTextSelect );
 
     // Other actions
     KAction * su  = new KAction(i18n("Scroll Up"), this);
@@ -1324,6 +1330,7 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
 
         case MouseZoom:
         case MouseSelect:
+        case MouseImageSelect:
             // set second corner of selection
             if ( d->mouseSelecting )
                 selectionEndPoint( e->pos() );
@@ -1469,6 +1476,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
             break;
 
         case MouseSelect:   // set first corner of the selection rect
+        case MouseImageSelect:
              if ( leftButton )
              {
                 selectionStart( e->pos(), palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
@@ -1674,7 +1682,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             }
             break;
 
-        case MouseSelect:{
+        case MouseSelect:
+        case MouseImageSelect:
+        {
             // if mouse is released and selection is null this is a rightClick
             if ( rightButton && !d->mouseSelecting )
             {

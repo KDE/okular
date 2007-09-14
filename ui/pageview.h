@@ -56,7 +56,7 @@ Q_OBJECT
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseTextSelect };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect };
 
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );

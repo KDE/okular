@@ -2116,11 +2116,6 @@ void Document::resetSearch( int searchID )
     delete s;
 }
 
-void Document::continueLastSearch()
-{
-    return continueSearch( d->m_lastSearchID );
-}
-
 void Document::cancelSearch()
 {
     d->m_searchCancelled = true;

@@ -407,11 +407,6 @@ class OKULAR_EXPORT Document : public QObject
         void resetSearch( int searchID );
 
         /**
-         * Continues with the last search.
-         */
-        void continueLastSearch();
-
-        /**
          * Adds a bookmark for the given @p page.
          */
         void addBookmark( int page );

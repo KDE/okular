@@ -26,6 +26,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> BUG  130123: kpdf text selection inconsistent with the rest of KDE
 -> WISH 131045: Add context menu for URLs
+-> WISH 132152: Usability: contents / pdfbookmarks panel is not accessible via keyboard only
 -> WISH 134115: specifing to kpdf the first-opened page from command line
 -> WISH 136820: would like a reload button or menu item in KPDF
 -> WISH 137905: command-line option for presentation mode
@@ -39,7 +40,7 @@ In progress [working on]:
    find with an usability expert the "best" way to activate such a link
    provide a configuration widget to choose the editor and configure a custom one
 -> toc: highlight the row of the current page (BR127358)
-   (check if there's a better way to do the highlighting - in case just edit TOCItem::setCurrent())
+   (check if there's a better way to do the highlighting - in case just edit TOCModel)
 -> annotations: renderers in PagePainter (for the 6 annots)
 -> annotations: handlers in PageView for WindowAnnots and others..
 -> annotations: creators in PageViewAnnotator (40% done)
@@ -47,13 +48,11 @@ In progress [working on]:
 -> annotations: add the annot pane (cool plz!)
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a Okular::Anchor link class
--> (done: 100%) refactor, pdf parser, xml storage
 -> check mouse wrapping not screH / 2
--> check if fix was applied in head only (pageview.cpp 1676)
 -> pageview: update layout when toggling the 'ebook atyle alignment'
 
 More items (first items will enter 'In progress list' first):
--> rethink which buttons show in the toolbar (BR92620,BR139825)
+-> rethink which buttons show in the toolbar (BR139825)
 -> annotations: configurabile tools in the toolbar (BR137903)
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
 -> annotations: toolbar: display tooltip only the first time
@@ -108,7 +107,7 @@ More items (first items will enter 'In progress list' first):
 -> goto 'logical' page (usually differs from pdf's page) (req. by Luca Burrelli)
 -> move some document related features from part to the document (see find, goto dialog, ...)
 -> tools: ruler (BR111254), measure: distance, perimeter, ?area?, color picker
--> export: export to other formats keeping formatting (PS is easy, we just have PSOutputDev that does it :-D. PNG is easy too)
+-> export: export to other formats keeping formatting (PS is basically printing. PNG is easy too)
 -> export: extract images (have a look at ImageOutputDev.cc and pdfimages.cc from xpdf (not in our xpdf sources))
 -> history as a toolbox child (collecting Doc's viewport changes notifications)
 -> take care of TODOs in code

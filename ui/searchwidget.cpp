@@ -78,8 +78,8 @@ void SearchWidget::clearText()
 
 void SearchWidget::slotTextChanged( const QString & text )
 {
-    // if length<3 set 'red' text and send a blank string to document
-    QColor color = text.length() < 3 ? Qt::darkRed : palette().active().text();
+    // if 0<length<3 set 'red' text and send a blank string to document
+    QColor color = text.length() > 0 && text.length() < 3 ? Qt::darkRed : palette().active().text();
     KLineEdit * lineEdit = getLined( LEDIT_ID );
     lineEdit->setPaletteForegroundColor( color );
     lineEdit->setPaletteBackgroundColor( palette().active().base() );

@@ -67,6 +67,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     m_file->ParseAndFillTopicsTree (&m_docSyn);
 
     pagesVector.resize(m_file->m_UrlPage.count());
+    m_textpageAddedList.fill(false, pagesVector.count());
 
     if (!m_syncGen)
     {
@@ -134,9 +135,9 @@ void CHMGenerator::slotCompleted()
     if ( m_pixmapRequestZoom > 1 )
         m_pixmapRequestZoom = 1;
 
-    if ( !m_textpageAddedList.contains( m_request->pageNumber() ) ) {
+    if ( !m_textpageAddedList.at( m_request->pageNumber() ) ) {
         additionalRequestData();
-        m_textpageAddedList.insert( m_request->pageNumber() );
+        m_textpageAddedList[ m_request->pageNumber() ] = true;
     }
 
     m_syncGen->closeUrl();

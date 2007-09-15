@@ -13,8 +13,6 @@
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
 
-#include <QtCore/QSet>
-
 class CHMFile;
 class KHTMLPart;
 
@@ -61,7 +59,7 @@ class CHMGenerator : public Okular::Generator
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
         Okular::DocumentInfo* m_docInfo;
-        QSet<int> m_textpageAddedList;
+        QVector<bool> m_textpageAddedList;
 };
 
 #endif

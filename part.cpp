@@ -405,6 +405,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_showEmbeddedFiles = ac->addAction("embedded_files");
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
+    m_showEmbeddedFiles->setIcon( KIcon( "attach" ) );
     connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
     m_showEmbeddedFiles->setEnabled( false );
 

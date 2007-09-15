@@ -17,6 +17,8 @@
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
+class KAccel;
+class KActionCollection;
 class KToolBar;
 class QTimer;
 
@@ -36,6 +38,8 @@ class PresentationWidget : public QDialog, public DocumentObserver
     public:
         PresentationWidget( QWidget * parent, KPDFDocument * doc );
         ~PresentationWidget();
+
+        void setupActions( KActionCollection * ac );
 
         // inherited from DocumentObserver
         uint observerId() const { return PRESENTATION_ID; }
@@ -90,6 +94,7 @@ class PresentationWidget : public QDialog, public DocumentObserver
         int m_frameIndex;
         QStringList m_metaStrings;
         KToolBar * m_topBar;
+        KAccel * m_accel;
 
     private slots:
         void slotNextPage();

@@ -14,6 +14,8 @@
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 #include <qtooltip.h>
+#include <kaccel.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kcursor.h>
 #include <ktoolbar.h>
@@ -59,6 +61,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, KPDFDocument * doc )
 
     m_width = -1;
 
+    m_accel = new KAccel( this, this, "presentationmode-accel" );
+
     // show widget and take control
     showFullScreen();
 
@@ -94,6 +98,13 @@ PresentationWidget::~PresentationWidget()
         delete *fIt;
 }
 
+void PresentationWidget::setupActions( KActionCollection * ac )
+{
+    m_accel->insert( "previous_page", ac->action( "previous_page" )->shortcut(), this, SLOT( slotPrevPage() ), false, true );
+    m_accel->insert( "next_page", ac->action( "next_page" )->shortcut(), this, SLOT( slotNextPage() ), false, true );
+    m_accel->insert( "first_page", ac->action( "first_page" )->shortcut(), this, SLOT( slotFirstPage() ), false, true );
+    m_accel->insert( "last_page", ac->action( "last_page" )->shortcut(), this, SLOT( slotLastPage() ), false, true );
+}
 
 void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )
 {

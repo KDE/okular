@@ -881,7 +881,6 @@ bool PDFGenerator::print( KPrinter& printer )
     if (!printer.previewOnly()) pageList = printer.pageList();
     else for(int i = 1; i <= pdfdoc->numPages(); i++) pageList.push_back(i);
     
-    userMutex()->lock();
     // TODO rotation
 #ifdef HAVE_POPPLER_0_6
     double xScale = ((double)width - (double)marginLeft - (double)marginRight) / (double)width;
@@ -918,6 +917,7 @@ bool PDFGenerator::print( KPrinter& printer )
     psConverter->setStrictMargins(strictMargins);
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
+    userMutex()->lock();
     if (psConverter->convert())
     {
         userMutex()->unlock();
@@ -928,6 +928,7 @@ bool PDFGenerator::print( KPrinter& printer )
     {
         delete psConverter;
 #else
+    userMutex()->lock();
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
         userMutex()->unlock();

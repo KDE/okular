@@ -10,6 +10,7 @@
 #include "generator_chm.h"
 
 #include <QtCore/QEventLoop>
+#include <QtCore/QMutex>
 #include <QtGui/QPainter>
 
 #include <kaboutdata.h>
@@ -140,7 +141,7 @@ void CHMGenerator::slotCompleted()
 
     m_syncGen->closeUrl();
 
-    syncLock.unlock();
+    userMutex()->unlock();
 
     Okular::PixmapRequest *req = m_request;
     m_request = 0;
@@ -174,8 +175,8 @@ const Okular::DocumentFonts * CHMGenerator::generateDocumentFonts()
 bool CHMGenerator::canGeneratePixmap () const
 {
     bool isLocked = true;
-    if ( syncLock.tryLock() ) {
-        syncLock.unlock();
+    if ( userMutex()->tryLock() ) {
+        userMutex()->unlock();
         isLocked = false;
     }
 
@@ -193,7 +194,7 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         requestHeight*=m_pixmapRequestZoom;
     }
 
-    syncLock.lock();
+    userMutex()->lock();
     QString url= m_file->getUrlForPage ( request->pageNumber() + 1 );
     int zoom = qRound( qMax( static_cast<double>(requestWidth)/static_cast<double>(request->page()->width())
         , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
@@ -350,14 +351,14 @@ void CHMGenerator::additionalRequestData()
 Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
 {
     bool ok = true;
-    syncLock.lock();
+    userMutex()->lock();
     double zoomP = documentMetaData( "ZoomFactor" ).toInt( &ok );
     int zoom = ok ? qRound( zoomP * 100 ) : 100;
     m_syncGen->view()->resize(qRound( page->width() * zoomP ) , qRound( page->height() * zoomP ));
     preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
-    syncLock.unlock();
+    userMutex()->unlock();
     return tp;
 }
 

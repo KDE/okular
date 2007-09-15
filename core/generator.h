@@ -31,6 +31,7 @@
          KDE_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
     }
 
+class QMutex;
 class KAboutData;
 class KComponentData;
 class KIcon;
@@ -449,6 +450,11 @@ setAboutData( about );
          * setting.
          */
         QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
+
+        /**
+         * Return the pointer to a mutex the generator can use freely.
+         */
+        QMutex* userMutex() const;
 
     protected:
         /// @cond PRIVATE

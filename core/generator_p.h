@@ -14,6 +14,7 @@
 #include <QtCore/QThread>
 #include <QtGui/QImage>
 
+class QMutex;
 class KAboutData;
 class KComponentData;
 
@@ -52,6 +53,7 @@ class GeneratorPrivate
         KComponentData *m_componentData;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
+        mutable QMutex *m_mutex;
         bool mPixmapReady : 1;
         bool mTextPageReady : 1;
 };

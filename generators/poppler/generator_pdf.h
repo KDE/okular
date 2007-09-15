@@ -15,7 +15,6 @@
 
 #include <poppler-qt4.h>
 
-#include <qmutex.h>
 #include <qthread.h>
 
 #include <okular/core/document.h>
@@ -116,7 +115,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
         // poppler dependant stuff
-        mutable QMutex docLock;
         Poppler::Document *pdfdoc;
 
         // asynchronous generation related stuff

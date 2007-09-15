@@ -25,7 +25,7 @@ using namespace Okular;
 GeneratorPrivate::GeneratorPrivate()
     : m_document( 0 ), m_about( 0 ), m_componentData( 0 ),
       mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
-      mPixmapReady( true ), mTextPageReady( true )
+      m_mutex( 0 ), mPixmapReady( true ), mTextPageReady( true )
 {
 }
 
@@ -44,6 +44,8 @@ GeneratorPrivate::~GeneratorPrivate()
     // first delete the component data, then the about
     delete m_componentData;
     delete m_about;
+
+    delete m_mutex;
 }
 
 PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
@@ -293,6 +295,16 @@ QVariant Generator::documentMetaData( const QString &key, const QVariant &option
         return QVariant();
 
     return d->m_document->documentMetaData( key, option );
+}
+
+QMutex* Generator::userMutex() const
+{
+    Q_D( const Generator );
+    if ( !d->m_mutex )
+    {
+        d->m_mutex = new QMutex();
+    }
+    return d->m_mutex;
 }
 
 

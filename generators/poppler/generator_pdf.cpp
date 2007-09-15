@@ -16,6 +16,7 @@
 #include <qfile.h>
 #include <qimage.h>
 #include <qlayout.h>
+#include <qmutex.h>
 #include <qregexp.h>
 #include <qtextstream.h>
 #include <klocale.h>
@@ -444,10 +445,10 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
 bool PDFGenerator::closeDocument()
 {
     // remove internal objects
-    docLock.lock();
+    userMutex()->lock();
     delete pdfdoc;
     pdfdoc = 0;
-    docLock.unlock();
+    userMutex()->unlock();
     docInfoDirty = true;
     docSynopsisDirty = true;
     docSyn.clear();
@@ -520,7 +521,7 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
 {
     if ( docInfoDirty )
     {
-        docLock.lock();
+        userMutex()->lock();
         
         docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
         
@@ -565,7 +566,7 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
 
             docInfo.set( Okular::DocumentInfo::Pages, i18n("Unknown") );
         }
-        docLock.unlock();
+        userMutex()->unlock();
 
         // if pdfdoc is valid then we cached good info -> don't cache them again
         if ( pdfdoc )
@@ -582,9 +583,9 @@ const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
     if ( !pdfdoc )
         return NULL;
 
-    docLock.lock();
+    userMutex()->lock();
     QDomDocument *toc = pdfdoc->toc();
-    docLock.unlock();
+    userMutex()->unlock();
     if ( !toc )
         return NULL;
 
@@ -662,9 +663,9 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
     Okular::FontInfo::List list;
 
     QList<Poppler::FontInfo> fonts;
-    docLock.lock();
+    userMutex()->lock();
     pdfdoc->scanForFonts( 1, &fonts );
-    docLock.unlock();
+    userMutex()->unlock();
 
     foreach (const Poppler::FontInfo &font, fonts)
     {
@@ -684,13 +685,13 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
 {
     if (docEmbeddedFilesDirty)
     {
-        docLock.lock();
+        userMutex()->lock();
         const QList<Poppler::EmbeddedFile*> &popplerFiles = pdfdoc->embeddedFiles();
         foreach(Poppler::EmbeddedFile* pef, popplerFiles)
         {
             docEmbeddedFiles.append(new PDFEmbeddedFile(pef));
         }
-        docLock.unlock();
+        userMutex()->unlock();
 
         docEmbeddedFilesDirty = false;
     }
@@ -770,7 +771,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     bool genObjectRects = !rectsGenerated.at( page->number() );
 
     // 0. LOCK [waits for the thread end]
-    docLock.lock();
+    userMutex()->lock();
 
     // 1. Set OutputDev parameters and Generate contents
     // note: thread safety is set on 'false' for the GUI (this) thread
@@ -793,7 +794,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     }
 
     // 3. UNLOCK [re-enables shared access]
-    docLock.unlock();
+    userMutex()->unlock();
     if ( genTextPage )
     {
         QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->orientation());
@@ -814,9 +815,9 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     kDebug(PDFDebug) << "calling" ;
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
-    docLock.lock();
+    userMutex()->lock();
     QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->orientation());
-    docLock.unlock();
+    userMutex()->unlock();
     delete pp;
 
     const double pageWidth = ( page->rotation() % 2 ? page->height() : page->width() );
@@ -880,7 +881,7 @@ bool PDFGenerator::print( KPrinter& printer )
     if (!printer.previewOnly()) pageList = printer.pageList();
     else for(int i = 1; i <= pdfdoc->numPages(); i++) pageList.push_back(i);
     
-    docLock.lock();
+    userMutex()->lock();
     // TODO rotation
 #ifdef HAVE_POPPLER_0_6
     double xScale = ((double)width - (double)marginLeft - (double)marginRight) / (double)width;
@@ -919,7 +920,7 @@ bool PDFGenerator::print( KPrinter& printer )
     psConverter->setTitle(pstitle);
     if (psConverter->convert())
     {
-        docLock.unlock();
+        userMutex()->unlock();
         delete psConverter;
         return printer.printFiles(QStringList(tempfilename), true);
     }
@@ -929,13 +930,13 @@ bool PDFGenerator::print( KPrinter& printer )
 #else
     if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
     {
-        docLock.unlock();
+        userMutex()->unlock();
         return printer.printFiles(QStringList(tempfilename), true);
     }
     else
     {
 #endif
-        docLock.unlock();
+        userMutex()->unlock();
         return false;
     }
 	return false;
@@ -954,9 +955,9 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         // asking for the page related to a 'named link destination'. the
         // option is the link name. @see addSynopsisChildren.
         Okular::DocumentViewport viewport;
-        docLock.lock();
+        userMutex()->lock();
         Poppler::LinkDestination *ld = pdfdoc->linkDestination( option.toString() );
-        docLock.unlock();
+        userMutex()->unlock();
         if ( ld )
         {
             fillViewportFromLinkDestination( viewport, *ld, pdfdoc );
@@ -967,9 +968,9 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     else if ( key == "DocumentTitle" )
     {
-        docLock.lock();
+        userMutex()->lock();
         QString title = pdfdoc->info( "Title" );
-        docLock.unlock();
+        userMutex()->unlock();
         return title;
     }
     else if ( key == "OpenTOC" )
@@ -989,9 +990,9 @@ bool PDFGenerator::reparseConfig()
     // over the page rendered on 'standard' white background.
     if ( pdfdoc && color != pdfdoc->paperColor() )
     {
-        docLock.lock();
+        userMutex()->lock();
         pdfdoc->setPaperColor(color);
-        docLock.unlock();
+        userMutex()->unlock();
         return true;
     }
     return false;
@@ -1022,10 +1023,10 @@ bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
         int num = document()->pages();
         for ( int i = 0; i < num; ++i )
         {
-            docLock.lock();
+            userMutex()->lock();
             Poppler::Page *pp = pdfdoc->page(i);
             QString text = pp->text(QRect());
-            docLock.unlock();
+            userMutex()->unlock();
             ts << text;
             delete pp;
         }
@@ -1525,8 +1526,8 @@ void PDFGenerator::threadFinished()
 
     // 1. the mutex must be unlocked now
     bool isLocked = true;
-    if (docLock.tryLock()) {
-        docLock.unlock();
+    if (userMutex()->tryLock()) {
+        userMutex()->unlock();
         isLocked = false;
     }
     if ( isLocked )
@@ -1534,8 +1535,8 @@ void PDFGenerator::threadFinished()
         kWarning(PDFDebug) << "PDFGenerator: 'data available' but mutex still "
                     << "held. Recovering.";
         // synchronize GUI thread (must not happen)
-        docLock.lock();
-        docLock.unlock();
+        userMutex()->lock();
+        userMutex()->unlock();
     }
 
     // 2. put thread's generated data into the Okular::Page
@@ -1625,8 +1626,8 @@ void PDFPixmapGeneratorThread::startGeneration( Okular::PixmapRequest * request 
 
     // check if the mutex is already held
     bool isLocked = true;
-    if (d->generator->docLock.tryLock()) {
-        d->generator->docLock.unlock();
+    if (d->generator->userMutex()->tryLock()) {
+        d->generator->userMutex()->unlock();
         isLocked = false;
     }
     if ( isLocked )
@@ -1711,7 +1712,7 @@ void PDFPixmapGeneratorThread::run()
     bool genObjectRects = !d->generator->rectsGenerated.at( page->number() );
 
     // 0. LOCK s[tart locking XPDF thread unsafe classes]
-    d->generator->docLock.lock();
+    d->generator->userMutex()->lock();
 
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
@@ -1742,7 +1743,7 @@ void PDFPixmapGeneratorThread::run()
     delete pp;
     
     // 3. [UNLOCK] mutex
-    d->generator->docLock.unlock();
+    d->generator->userMutex()->unlock();
 
     // by ending the thread notifies the GUI thread that data is pending and can be read
 }

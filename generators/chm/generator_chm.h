@@ -13,7 +13,6 @@
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
 
-#include <QtCore/QMutex>
 #include <QtCore/QSet>
 
 class CHMFile;
@@ -58,7 +57,6 @@ class CHMGenerator : public Okular::Generator
         Okular::DocumentSynopsis m_docSyn;
         CHMFile* m_file;
         KHTMLPart *m_syncGen;
-        mutable QMutex syncLock;
         QString m_fileName;
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;

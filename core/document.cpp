@@ -220,7 +220,7 @@ qulonglong DocumentPrivate::getTotalMemory()
 
     GlobalMemoryStatusEx (&stat);
 
-    return stat.ullTotalPhys;
+    return ( cachedValue = stat.ullTotalPhys );
 #endif
     return (cachedValue = 134217728);
 }

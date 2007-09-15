@@ -722,7 +722,7 @@ bool Part::slotImportPSFile()
 bool Part::openFile()
 {
     KMimeType::Ptr mime;
-    if ( arguments().mimeType().isEmpty() )
+    if ( !arguments().mimeType().isEmpty() )
     {
         mime = KMimeType::mimeType( arguments().mimeType() );
     }

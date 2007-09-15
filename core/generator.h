@@ -542,8 +542,9 @@ class OKULAR_EXPORT PixmapRequest
          */
         void swap();
 
-    protected:
-        /// @cond PRIVATE
+    private:
+        Q_DISABLE_COPY( PixmapRequest )
+
         /**
          * Internal usage.
          */
@@ -558,10 +559,6 @@ class OKULAR_EXPORT PixmapRequest
          * Internal usage.
          */
         void setPage( Page *page );
-        /// @endcond
-
-    private:
-        Q_DISABLE_COPY( PixmapRequest )
 
         class Private;
         Private* const d;

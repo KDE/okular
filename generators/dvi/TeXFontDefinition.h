@@ -19,6 +19,7 @@
 
 
 #include <cstdio>
+#include <stdio.h>
 
 class dviRenderer;
 class TeXFont;

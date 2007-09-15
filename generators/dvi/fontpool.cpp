@@ -18,6 +18,7 @@
 #include <QPainter>
 
 #include <cmath>
+#include <math.h>
 
 //#define DEBUG_FONTPOOL
 

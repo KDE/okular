@@ -13,6 +13,7 @@
 #define _length_h_
 
 #include <cmath>
+#include <math.h>
 
 class QString;
 

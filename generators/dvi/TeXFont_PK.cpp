@@ -63,6 +63,7 @@
 #include <QImage>
 
 #include <cmath>
+#include <math.h>
 
 //#define DEBUG_PK
 

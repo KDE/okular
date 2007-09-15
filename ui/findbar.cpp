@@ -49,7 +49,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     label->setBuddy( m_text );
     lay->addWidget( m_text );
 
-    QPushButton * findNextBtn = new QPushButton( KIcon( "find-next" ), i18n( "Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( KIcon( "find-next" ), i18nc( "Find and go to the next search match", "Next" ), this );
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 

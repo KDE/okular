@@ -35,7 +35,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     closeBtn->setAutoRaise( true );
     lay->addWidget( closeBtn );
 
-    QLabel * label = new QLabel( i18nc( "Find text", "Find:" ), this );
+    QLabel * label = new QLabel( i18nc( "Find text", "F&ind:" ), this );
     lay->addWidget( label );
 
     m_text = new SearchLineEdit( this, document );
@@ -45,13 +45,17 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     m_text->setSearchId( PART_SEARCH_ID );
     m_text->setSearchColor( qRgb( 255, 255, 64 ) );
     m_text->setSearchMoveViewport( true );
+    m_text->setToolTip( i18n( "Text to search for" ) );
+    label->setBuddy( m_text );
     lay->addWidget( m_text );
 
-    KPushButton * findNextBtn = new KPushButton( KIcon( "find-next" ), i18n( "Find Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( KIcon( "find-next" ), i18n( "Next" ), this );
+    findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 
     QPushButton * optionsBtn = new QPushButton( this );
     optionsBtn->setText( i18n( "Options" ) );
+    optionsBtn->setToolTip( i18n( "Modify search behaviour" ) );
     QMenu * optionsMenu = new QMenu( optionsBtn );
     m_caseSensitiveAct = optionsMenu->addAction( i18n( "Case sensitive" ) );
     m_caseSensitiveAct->setCheckable( true );

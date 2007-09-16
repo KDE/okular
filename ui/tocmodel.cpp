@@ -49,7 +49,7 @@ public:
     TOCItem *root;
     bool dirty : 1;
     Okular::Document *document;
-    QList< TOCItem* > itemsToCollapse;
+    QList< TOCItem* > itemsToOpen;
     QList< TOCItem* > currentPage;
 };
 
@@ -118,11 +118,11 @@ void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parent
             addChildren( n, currentItem );
 
         // open/keep close the item
-        bool isOpen = true;
+        bool isOpen = false;
         if ( e.hasAttribute( "Open" ) )
             isOpen = QVariant( e.attribute( "Open" ) ).toBool();
         if ( !isOpen )
-            itemsToCollapse.append( currentItem );
+            itemsToOpen.append( currentItem );
 
         n = n.nextSibling();
     }
@@ -250,16 +250,15 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
     d->addChildren( *toc, d->root );
     d->dirty = true;
     emit layoutChanged();
-    QMetaObject::invokeMethod( QObject::parent(), "expandAll" );
-    foreach ( TOCItem *item, d->itemsToCollapse )
+    foreach ( TOCItem *item, d->itemsToOpen )
     {
         QModelIndex index = d->indexForItem( item );
         if ( !index.isValid() )
             continue;
 
-        QMetaObject::invokeMethod( QObject::parent(), "collapse", Q_ARG( QModelIndex, index ) );
+        QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
     }
-    d->itemsToCollapse.clear();
+    d->itemsToOpen.clear();
 }
 
 void TOCModel::clear()

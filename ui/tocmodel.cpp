@@ -19,6 +19,8 @@
 #include "core/document.h"
 #include "core/page.h"
 
+Q_DECLARE_METATYPE( QModelIndex )
+
 struct TOCItem
 {
     TOCItem();
@@ -153,6 +155,8 @@ TOCModel::TOCModel( Okular::Document *document, QObject *parent )
     : QAbstractItemModel( parent ), d( new TOCModelPrivate( this ) )
 {
     d->document = document;
+
+    qRegisterMetaType< QModelIndex >();
 }
 
 TOCModel::~TOCModel()

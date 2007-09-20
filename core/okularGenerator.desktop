@@ -18,6 +18,7 @@ Comment[pt]=Infra-estrutura do formato de ficheiros para o okular
 Comment[pt_BR]=Infra-estrutura do formato de ficheiros para o okular
 Comment[sv]=Filformatgränssnitt för Okular
 Comment[x-test]=xxFile format backend for okularxx
+Comment[zh_CN]=okular 文件格式后端
 Comment[zh_TW]=okular 檔案格式後端
 # Priority of the plugin. 0 - disabled
 [PropertyDef::X-KDE-Priority]

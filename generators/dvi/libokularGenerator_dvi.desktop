@@ -18,6 +18,7 @@ Comment[pt]=Infra-estrutura de DVI para o okular
 Comment[pt_BR]=Infra-estrutura de DVI para o okular
 Comment[sv]=DVI-gränssnitt för Okular
 Comment[x-test]=xxDVI backend for okularxx
+Comment[zh_CN]=okular 的 DVI 格式后端
 Comment[zh_TW]=okular 的 DVI 後端
 ServiceTypes=okular/Generator
 MimeType=application/x-dvi

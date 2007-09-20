@@ -18,6 +18,7 @@ Comment[pt]=Infra-estrutura do DjVu para o okular
 Comment[pt_BR]=Infra-estrutura do DjVu para o okular
 Comment[sv]=DjVu-gränssnitt för Okular
 Comment[x-test]=xxDjVu backend for okularxx
+Comment[zh_CN]=okular 的 Djvu 格式后端
 Comment[zh_TW]=okular 的 DjVu 後端
 ServiceTypes=okular/Generator
 MimeType=image/vnd.djvu

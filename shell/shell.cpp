@@ -240,8 +240,8 @@ void Shell::fileOpen()
     }
 
     QString startDir;
-    if ( m_openUrl.isLocalFile() )
-        startDir = m_openUrl.path();
+    if ( m_part->url().isLocalFile() )
+        startDir = m_part->url().path();
     KFileDialog dlg( startDir, QString(), this );
     dlg.setOperationMode( KFileDialog::Opening );
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )

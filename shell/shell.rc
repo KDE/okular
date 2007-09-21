@@ -13,6 +13,9 @@
    <DefineGroup append="show_merge" name="show_merge" />
   </Menu>
   <Merge/>
+  <Menu name="help">
+   <DefineGroup append="about_merge" name="about_merge" />
+  </Menu>
  </MenuBar>
  <ToolBar noMerge="1" name="mainToolBar" >
   <text>Main Toolbar</text>

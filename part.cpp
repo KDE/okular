@@ -382,7 +382,6 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_showLeftPanel->setIcon(KIcon( "show_side_panel" ));
     connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
     m_showLeftPanel->setShortcut( Qt::Key_F7 );
-    m_showLeftPanel->setCheckedState( KGuiItem(i18n( "Hide &Navigation Panel" ) ));
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
     slotShowLeftPanel();
 

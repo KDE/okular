@@ -24,22 +24,10 @@ else (CHM_LIBRARY AND CHM_INCLUDE_DIR)
     ${GNUWIN32_DIR}/lib
   )
 
-  if(CHM_INCLUDE_DIR AND CHM_LIBRARY)
-    set(CHM_FOUND TRUE)
-  endif(CHM_INCLUDE_DIR AND CHM_LIBRARY)
-
-  if (CHM_FOUND)
-    if (NOT CHM_FIND_QUIETLY)
-      message(STATUS "Found CHM: ${CHM_LIBRARY}")
-    endif (NOT CHM_FIND_QUIETLY)
-  else (CHM_FOUND)
-    if (CHM_FIND_REQUIRED)
-      message(FATAL_ERROR "Could NOT find CHM")
-    endif (CHM_FIND_REQUIRED)
-  endif (CHM_FOUND)
-
-    # ensure that they are cached
-    set(CHM_INCLUDE_DIR ${CHM_INCLUDE_DIR} CACHE INTERNAL "The chmlib include path")
-    set(CHM_LIBRARY ${CHM_LIBRARY} CACHE INTERNAL "The libraries needed to use chmlib")
+  include(FindPackageHandleStandardArgs)
+  FIND_PACKAGE_HANDLE_STANDARD_ARGS(CHM DEFAULT_MSG CHM_INCLUDE_DIR CHM_LIBRARY )
+  # ensure that they are cached
+  set(CHM_INCLUDE_DIR ${CHM_INCLUDE_DIR} CACHE INTERNAL "The chmlib include path")
+  set(CHM_LIBRARY ${CHM_LIBRARY} CACHE INTERNAL "The libraries needed to use chmlib")
 
 endif (CHM_LIBRARY AND CHM_INCLUDE_DIR)

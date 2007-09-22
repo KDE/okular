@@ -70,8 +70,8 @@
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_leftpanel" group="show_merge"/>
+    <Action name="generator_prefs" group="configure_merge"/>
     <Action name="preferences"/>
-    <Action name="generator_prefs"/>
   </Menu>
   <Menu name="help"><text>&amp;Help</text>
     <Action name="help_about_backend" group="about_merge"/>

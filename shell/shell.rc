@@ -11,6 +11,7 @@
   </Menu-->
   <Menu name="settings" >
    <DefineGroup append="show_merge" name="show_merge" />
+   <DefineGroup append="configure_merge" name="configure_merge" />
   </Menu>
   <Merge/>
   <Menu name="help">

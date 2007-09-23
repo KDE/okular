@@ -210,6 +210,15 @@ bool DjVuGenerator::print( KPrinter& printer )
     return false;
 }
 
+QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) const
+{
+    if ( key == "DocumentTitle" )
+    {
+        return m_djvu->metaData( "title" );
+    }
+    return QVariant();
+}
+
 Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
 {
     userMutex()->lock();

@@ -37,6 +37,8 @@ class DjVuGenerator : public Okular::Generator
         // printing
         bool print( KPrinter& printer );
 
+        QVariant metaData( const QString & key, const QVariant & option ) const;
+
     protected:
         // pixmap generation
         QImage image( Okular::PixmapRequest *request );

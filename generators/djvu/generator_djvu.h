@@ -53,9 +53,6 @@ class DjVuGenerator : public Okular::Generator
 
         Okular::DocumentInfo *m_docInfo;
         Okular::DocumentSynopsis *m_docSyn;
-        bool ready;
-
-        Okular::PixmapRequest *m_request;
 };
 
 #endif

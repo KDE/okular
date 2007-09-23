@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 #include "generator_djvu.h"
-#include "kdjvu.h"
+
 #include <okular/core/action.h>
 #include <okular/core/annotations.h>
 #include <okular/core/area.h>
@@ -60,8 +60,8 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
 
 OKULAR_EXPORT_PLUGIN(DjVuGenerator)
 
-DjVuGenerator::DjVuGenerator() : Okular::Generator(),
-  m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
+DjVuGenerator::DjVuGenerator()
+    : Okular::Generator(), m_docInfo( 0 ), m_docSyn( 0 )
 {
     setFeature( TextExtraction );
     setFeature( Threaded );
@@ -96,7 +96,6 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Pag
 
     loadPages( pagesVector, 0 );
 
-    ready = true;
     return true;
 }
 
@@ -110,8 +109,6 @@ bool DjVuGenerator::closeDocument()
     m_docInfo = 0;
     delete m_docSyn;
     m_docSyn = 0;
-
-    ready = false;
 
     return true;
 }

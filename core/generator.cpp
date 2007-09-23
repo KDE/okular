@@ -102,13 +102,13 @@ void GeneratorPrivate::textpageGenerationFinished()
 
 
 Generator::Generator()
-    : d_ptr( new GeneratorPrivate() )
+    : QObject( 0 ), d_ptr( new GeneratorPrivate() )
 {
     d_ptr->q_ptr = this;
 }
 
 Generator::Generator( GeneratorPrivate &dd )
-    : d_ptr( &dd )
+    : QObject( 0 ), d_ptr( &dd )
 {
     d_ptr->q_ptr = this;
 }

@@ -18,6 +18,7 @@
 #include <okular/core/utils.h>
 
 #include <qdom.h>
+#include <qmutex.h>
 #include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
@@ -63,6 +64,8 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSyn( 0 ), ready( false )
 {
     setFeature( TextExtraction );
+    setFeature( Threaded );
+
     m_djvu = new KDjVu();
 
     KAboutData *about = new KAboutData(
@@ -85,8 +88,11 @@ DjVuGenerator::~DjVuGenerator()
 
 bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
+    QMutexLocker locker( userMutex() );
     if ( !m_djvu->openFile( fileName ) )
         return false;
+
+    locker.unlock();
 
     loadPages( pagesVector, 0 );
 
@@ -96,7 +102,9 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Pag
 
 bool DjVuGenerator::closeDocument()
 {
+    userMutex()->lock();
     m_djvu->closeFile();
+    userMutex()->unlock();
 
     delete m_docInfo;
     m_docInfo = 0;
@@ -108,25 +116,12 @@ bool DjVuGenerator::closeDocument()
     return true;
 }
 
-bool DjVuGenerator::canGeneratePixmap() const
+QImage DjVuGenerator::image( Okular::PixmapRequest *request )
 {
-    return ready;
-}
-
-void DjVuGenerator::generatePixmap( Okular::PixmapRequest * request )
-{
-    ready = false;
-
-    m_request = request;
-
+    userMutex()->lock();
     QImage img = m_djvu->image( request->pageNumber(), request->width(), request->height(), request->page()->rotation() );
-    if ( img.isNull() )
-    {
-    }
-    else
-    {
-        djvuImageGenerated( request->pageNumber(), img );
-    }
+    userMutex()->unlock();
+    return img;
 }
 
 const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
@@ -175,6 +170,7 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
 
 const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 {
+    QMutexLocker locker( userMutex() );
     if ( m_docSyn )
         return m_docSyn;
 
@@ -184,6 +180,7 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
         m_docSyn = new Okular::DocumentSynopsis();
         recurseCreateTOC( *m_docSyn, *const_cast<QDomDocument*>( doc ), *m_docSyn );
     }
+    locker.unlock();
 
     return m_docSyn;
 }
@@ -205,6 +202,7 @@ bool DjVuGenerator::print( KPrinter& printer )
     if ( !tf.open() )
         return false;
 
+    QMutexLocker locker( userMutex() );
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
         return printer.printFiles( QStringList( tf.fileName() ), false );
@@ -214,6 +212,7 @@ bool DjVuGenerator::print( KPrinter& printer )
 
 Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
 {
+    userMutex()->lock();
 #if 0
     QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "char" );
     if ( te.isEmpty() )
@@ -221,6 +220,7 @@ Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
 #else
     QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "word" );
 #endif
+    userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
     QList<Okular::TextEntity*> words;
@@ -234,16 +234,6 @@ Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
     return textpage;
 }
 
-
-void DjVuGenerator::djvuImageGenerated( int page, const QImage & img )
-{
-    (void)page;
-    m_request->page()->setPixmap( m_request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
-
-    ready = true;
-    signalPixmapRequestDone( m_request );
-    m_request = 0;
-}
 
 void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotation )
 {
@@ -265,7 +255,9 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
 
         QList<KDjVu::Annotation*> annots;
         QList<KDjVu::Link*> links;
+        userMutex()->lock();
         m_djvu->linksAndAnnotationsForPage( i, &links, &annots );
+        userMutex()->unlock();
         if ( !links.isEmpty() )
         {
             QLinkedList<Okular::ObjectRect *> rects;

@@ -40,31 +40,31 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
     const QPixmap * pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
 
+    QColor color = Qt::white;
+    if ( Okular::Settings::changeColors() )
+    {
+        switch ( Okular::Settings::renderMode() )
+        {
+            case Okular::Settings::EnumRenderMode::Inverted:
+                color = Qt::black;
+                break;
+            case Okular::Settings::EnumRenderMode::Paper:
+                color = Okular::Settings::paperColor();
+                break;
+            case Okular::Settings::EnumRenderMode::Recolor:
+                color = Okular::Settings::recolorBackground();
+                break;
+            default: ;
+        }
+    }
+    destPainter->fillRect( limits, color );
+
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
     double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
     long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
     if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
          (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
     {
-        QColor color = Qt::white;
-        if ( Okular::Settings::changeColors() )
-        {
-            switch ( Okular::Settings::renderMode() )
-            {
-                case Okular::Settings::EnumRenderMode::Inverted:
-                    color = Qt::black;
-                    break;
-                case Okular::Settings::EnumRenderMode::Paper:
-                    color = Okular::Settings::paperColor();
-                    break;
-                case Okular::Settings::EnumRenderMode::Recolor:
-                    color = Okular::Settings::recolorBackground();
-                    break;
-                default: ;
-            }
-        }
-        destPainter->fillRect( limits, color );
-
         // draw something on the blank page: the okular icon or a cross (as a fallback)
         if ( !busyPixmap->isNull() )
         {

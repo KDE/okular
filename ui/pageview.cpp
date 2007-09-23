@@ -1165,6 +1165,23 @@ void PageView::keyPressEvent( QKeyEvent * e )
     }
 }
 
+void PageView::keyReleaseEvent( QKeyEvent * e )
+{
+    e->accept();
+
+    if ( d->annotator && d->annotator->routeEvents() )
+    {
+        if ( d->annotator->routeKeyEvent( e ) )
+            return;
+    }
+
+    if ( e->key() == Qt::Key_Escape && d->autoScrollTimer )
+    {
+        d->scrollIncrement = 0;
+        d->autoScrollTimer->stop();
+    }
+}
+
 void PageView::inputMethodEvent( QInputMethodEvent * e )
 {
     Q_UNUSED(e)

@@ -16,6 +16,7 @@
 
 #include "pageviewutils.h"
 
+class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 
@@ -60,6 +61,7 @@ class PageViewAnnotator : public QObject
         // methods used when creating the annotation
         bool routeEvents() const;
         QRect routeEvent( QMouseEvent * event, PageViewItem * item );
+        bool routeKeyEvent( QKeyEvent * event );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
 

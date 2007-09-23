@@ -116,6 +116,7 @@ Q_OBJECT
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* );
+        void keyReleaseEvent( QKeyEvent* );
         void inputMethodEvent( QInputMethodEvent * );
         void wheelEvent( QWheelEvent* );
 

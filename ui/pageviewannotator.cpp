@@ -793,6 +793,16 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     return modifiedRect;
 }
 
+bool PageViewAnnotator::routeKeyEvent( QKeyEvent * event )
+{
+    if ( event->key() == Qt::Key_Escape )
+    {
+        m_toolBar->selectButton( -1 );
+        return true;
+    }
+    return false;
+}
+
 bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const
 {
     return m_engine && m_toolBar && wantedRect.intersects( m_lastDrawnRect ) && m_lockedItem;

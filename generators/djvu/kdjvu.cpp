@@ -445,7 +445,7 @@ void KDjVu::Private::readMetaData( int page )
 }
 
 
-KDjVu::KDjVu() : QObject(), d( new Private )
+KDjVu::KDjVu() : d( new Private )
 {
     // creating the djvu context
     d->m_djvu_cxt = ddjvu_context_create( "KDjVu" );
@@ -775,25 +775,15 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
                : cur->width == height && cur->height == width ) )
             found = true;
     }
-    if ( !found )
-        return QImage();
-
-    // taking the element and pushing to the top of the list
-    --it;
-    ImageCacheItem* cur2 = *it;
-    d->mImgCache.erase( it );
-    d->mImgCache.push_front( cur2 );
-
-    return cur2->img;
-}
-
-void KDjVu::requestImage( int page, int width, int height, int rotation )
-{
-    QImage tmp = image( page, width, height, rotation );
-    if ( !tmp.isNull() )
+    if ( found )
     {
-        emit imageGenerated( page, tmp );
-        return;
+        // taking the element and pushing to the top of the list
+        --it;
+        ImageCacheItem* cur2 = *it;
+        d->mImgCache.erase( it );
+        d->mImgCache.push_front( cur2 );
+
+        return cur2->img;
     }
 
     if ( !d->m_pages_cache.at( page ) )
@@ -854,15 +844,11 @@ void KDjVu::requestImage( int page, int width, int height, int rotation )
         p.end();
     }
 
-    QImage resimg;
-
     if ( res )
     {
-        resimg = newimg;
-
         // delete all the cached pixmaps for the current page with a size that
         // differs no more than 35% of the new pixmap size
-        int imgsize = resimg.width() * resimg.height();
+        int imgsize = newimg.width() * newimg.height();
         if ( imgsize > 0 )
         {
             for( int i = 0; i < d->mImgCache.count(); )
@@ -889,7 +875,7 @@ void KDjVu::requestImage( int page, int width, int height, int rotation )
         d->mImgCache.push_front( ich );
     }
 
-    emit imageGenerated( page, newimg );
+    return newimg;
 }
 
 bool KDjVu::exportAsPostScript( const QString & fileName, const QList<int>& pageList ) const
@@ -997,6 +983,3 @@ QList<KDjVu::TextEntity> KDjVu::textEntities( int page, const QString & granular
 
     return ret;
 }
-
-
-#include "kdjvu.moc"

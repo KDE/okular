@@ -64,7 +64,6 @@ DjVuGenerator::DjVuGenerator() : Okular::Generator(),
 {
     setFeature( TextExtraction );
     m_djvu = new KDjVu();
-    connect( m_djvu, SIGNAL( imageGenerated( int, const QImage & ) ), this, SLOT( djvuImageGenerated( int, const QImage & ) ) );
 
     KAboutData *about = new KAboutData(
          "okular_djvu",
@@ -123,8 +122,6 @@ void DjVuGenerator::generatePixmap( Okular::PixmapRequest * request )
     QImage img = m_djvu->image( request->pageNumber(), request->width(), request->height(), request->page()->rotation() );
     if ( img.isNull() )
     {
-
-        m_djvu->requestImage( request->pageNumber(), request->width(), request->height(), request->page()->rotation() );
     }
     else
     {

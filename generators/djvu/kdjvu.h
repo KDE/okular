@@ -13,7 +13,6 @@
 #include <qcolor.h>
 #include <qimage.h>
 #include <qlist.h>
-#include <qobject.h>
 #include <qpolygon.h>
 #include <qrect.h>
 #include <qvariant.h>
@@ -25,9 +24,8 @@ class QFile;
 /**
  * @brief Qt (KDE) encapsulation of the DjVuLibre
  */
-class KDjVu : public QObject
+class KDjVu
 {
-    Q_OBJECT
     public:
         KDjVu();
         ~KDjVu();
@@ -240,18 +238,12 @@ class KDjVu : public QObject
          */
         void linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links, QList<KDjVu::Annotation*> *annotations ) const;
 
-        // image handling
         /**
          * Check if the image for the specified \p page with the specified
          * \p width, \p height and \p rotation is already in cache, and returns
          * it. If not, a null image is returned.
          */
         QImage image( int page, int width, int height, int rotation );
-        /**
-         * Request to load the pixmap for \p page having the specified \p width,
-         * \p height and \p rotation. It will emit pixmapGenerated() when done.
-         */
-        void requestImage( int page, int width, int height, int rotation );
 
         /**
          * Export the currently open document as PostScript file \p fileName.
@@ -270,12 +262,6 @@ class KDjVu : public QObject
          * specified \p granularity.
          */
         QList<KDjVu::TextEntity> textEntities( int page, const QString & granularity ) const;
-
-    signals:
-        /**
-         * The image \p pix for page \p page was generated.
-         */
-        void imageGenerated( int page, const QImage & pix );
 
     private:
         class Private;

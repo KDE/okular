@@ -369,6 +369,7 @@ public:
     // compute the visible and hidden positions along current side
     QPoint getInnerPoint() const;
     QPoint getOuterPoint() const;
+    void selectButton( ToolBarButton * button );
 
     PageViewToolBar * q;
 
@@ -464,6 +465,23 @@ void PageViewToolBar::hideAndDestroy()
 
     // start scrolling out
     d->animTimer->start( 20 );
+}
+
+void PageViewToolBar::selectButton( int id )
+{
+    ToolBarButton * button = 0;
+    if ( id >= 0 && id < d->buttons.count() )
+        button = *(d->buttons.begin() + id);
+    else
+    {
+        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+        for ( ; !button && it != end; ++it )
+            if ( (*it)->isChecked() )
+                button = *it;
+        if ( button )
+            button->setChecked( false );
+    }
+    d->selectButton( button );
 }
 
 bool PageViewToolBar::eventFilter( QObject * obj, QEvent * e )
@@ -743,15 +761,20 @@ void PageViewToolBar::slotAnimate()
 void PageViewToolBar::slotButtonClicked()
 {
     ToolBarButton * button = qobject_cast<ToolBarButton *>( sender() );
+    d->selectButton( button );
+}
+
+void ToolBarPrivate::selectButton( ToolBarButton * button )
+{
     if ( button )
     {
         // deselect other buttons
-        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+        QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
         for ( ; it != end; ++it )
             if ( *it != button )
                 (*it)->setChecked( false );
         // emit signal (-1 if button has been unselected)
-        emit toolSelected( button->isChecked() ? button->buttonID() : -1 );
+        emit q->toolSelected( button->isChecked() ? button->buttonID() : -1 );
     }
 }
 

@@ -163,6 +163,8 @@ class PageViewToolBar : public QWidget
         void showAndAnimate();
         void hideAndDestroy();
 
+        void selectButton( int id );
+
         // query properties
 
     signals:
@@ -181,6 +183,7 @@ class PageViewToolBar : public QWidget
 
     private:
         // private variables
+        friend class ToolBarPrivate;
         class ToolBarPrivate * d;
 
     private slots:

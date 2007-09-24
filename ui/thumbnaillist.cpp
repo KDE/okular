@@ -713,7 +713,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
             p.save();
             p.setPen( QColor( 255, 255, 0, 200 ) );
             p.setBrush( QColor( 0, 0, 0, 100 ) );
-            p.drawRect( m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ) );
+            p.drawRect( m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ).adjusted( 0, 0, -1, -1 ) );
             p.restore();
         }
 

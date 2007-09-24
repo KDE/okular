@@ -17,6 +17,7 @@
 #include "gshandler.h"
 
 #include "core/generator.h"
+#include "core/page.h"
 
 GSInterpreterCMD *GSInterpreterCMD::theInterpreter = 0;
 
@@ -82,12 +83,20 @@ void GSInterpreterCMD::setPosition(const PsPosition &pos)
     m_position = pos;
 }
 
+void GSInterpreterCMD::setOrientation(int orientation)
+{
+    m_orientation = orientation;
+}
+
 void GSInterpreterCMD::fordwardImage(QImage *image)
 {
-    if (image->width() != m_request->width() || image->height() != m_request->height())
+    int wantedWidth = m_request->width();
+    int wantedHeight = m_request->height();    
+    if ( m_request->page()->orientation() % 2 != 0 ) qSwap(wantedWidth, wantedHeight);
+    if (image->width() != wantedWidth || image->height() != wantedHeight)
     {
         kWarning(4656) << "Generated image does not match wanted size " << image->width() << " " << m_request->width() << " " << image->height() << " " << m_request->height() ;
-        QImage aux = image->scaled(m_request->width(), m_request->height());
+        QImage aux = image->scaled(wantedWidth, wantedHeight);
         delete image;
         image = new QImage(aux);
     }
@@ -108,7 +117,7 @@ void GSInterpreterCMD::run()
     while(1)
     {
         m_semaphore.acquire();
-        m_handler->init(m_media, m_magnify, m_request->width(), m_request->height(), m_pfonts, m_aaText, m_aaGfx, this);
+        m_handler->init(m_media, m_magnify, m_request->width(), m_request->height(), m_orientation, m_pfonts, m_aaText, m_aaGfx, this);
 
         // send structural information
         if (m_sendStructure)

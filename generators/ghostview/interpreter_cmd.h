@@ -42,6 +42,7 @@ Q_OBJECT
         void setMedia(const QString &media);
         void setStructure(const PsPosition &prolog, const PsPosition &setup);
         void setPosition(const PsPosition &pos);
+        void setOrientation(int orientation);
 
         void fordwardImage(QImage *image);
 
@@ -60,6 +61,7 @@ Q_OBJECT
         void run();
 
         PsPosition m_position;
+        int m_orientation;
 
         bool m_sendStructure;
         PsPosition m_structureData[2];

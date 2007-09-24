@@ -115,7 +115,7 @@ GSHandler::GSHandler()
 	m_ghostScriptInstance = 0;
 }
 
-void GSHandler::init(const QString &media, double magnify, int width, int height, bool plaformFonts, int aaText, int aaGfx, GSInterpreterCMD *interpreter)
+void GSHandler::init(const QString &media, double magnify, int width, int height, int orientation, bool plaformFonts, int aaText, int aaGfx, GSInterpreterCMD *interpreter)
 {
 	int errorCode;
 	
@@ -139,12 +139,13 @@ void GSHandler::init(const QString &media, double magnify, int width, int height
 		<< "-dNOPAGEPROMPT"
 		<< QString("-dTextAlphaBits=%1").arg(aaText)
 		<< QString("-dGraphicsAlphaBits=%1").arg(aaGfx)
-		<< QString("-sPAPERSIZE=%1").arg(media.toLower())
 		<< QString().sprintf("-g%dx%d", width, height)
 		<< QString().sprintf("-r%fx%f", (magnify * Okular::Utils::dpiX()),
 		                                (magnify * Okular::Utils::dpiY()))
 		<< QString().sprintf("-dDisplayFormat=%d", DISPLAY_COLORS_RGB | DISPLAY_UNUSED_LAST | DISPLAY_DEPTH_8 | DISPLAY_LITTLEENDIAN | DISPLAY_TOPFIRST)
 		<< QString().sprintf("-sDisplayHandle=16#%llx", (unsigned long long int) this );
+
+	if (!media.isEmpty()) internalArgs << QString("-sPAPERSIZE=%1").arg(media.toLower());
 
 	if ( !plaformFonts )
 		internalArgs << "-dNOPLATFONTS";
@@ -164,7 +165,7 @@ void GSHandler::init(const QString &media, double magnify, int width, int height
 	
 	for (int i = 0; i < t; ++i) delete[] args[i];
 	
-	QString set = "<< /Orientation 0 >> setpagedevice .locksafe";
+	QString set = QString("<< /Orientation %1 >> setpagedevice .locksafe").arg(orientation);
 	gsapi_run_string_with_length(m_ghostScriptInstance, set.toLatin1().constData(), set.length(), 0, &errorCode);
 	handleErrorCode(errorCode);
 	

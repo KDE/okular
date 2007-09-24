@@ -26,6 +26,7 @@ class GSHandler
 		          double magnify,
 		          int width,
 		          int height,
+		          int orientation,
 		          bool plaformFonts,
 		          int aaText,
 		          int aaGfx,

@@ -114,11 +114,11 @@ int GSGenerator::rotation ( CDSC_ORIENTATION_ENUM orientation ) const
         case CDSC_PORTRAIT:
             return 0;
         case CDSC_LANDSCAPE:
-            return 1;
+            return 3;
         case CDSC_UPSIDEDOWN:
             return 2;
         case CDSC_SEASCAPE:
-            return 3;
+            return 1;
         default: ;
     }
 // get rid of warnings, should never happen
@@ -265,7 +265,7 @@ void GSGenerator::freeGui()
 
 bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 {
-    QSize pSize;
+    int width, height;
     bool atLeastOne=false;
     if( internalDoc->dsc()->isStructured() )
     {
@@ -283,26 +283,26 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
                 kDebug() << "no tmpPage for page nr " << i;
                 continue;
             }
-            pSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
-            pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
-            pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
-            pagesVector[i]=new Okular::Page( i, pSize.width(),
-                pSize.height() , (Okular::Rotation)rotation (internalDoc ->  orientation(i) ) );
+            const QSize &pageSize = internalDoc -> computePageSize( internalDoc -> pageMedia( i ) );
+            height = (int)ceil(pageSize.height()*DPIMod::Y);
+            width = (int)ceil(pageSize.width()*DPIMod::X);
+            if (rotation (internalDoc ->  orientation() ) % 2 != 0) qSwap(height, width);
+            pagesVector[i]=new Okular::Page( i, width, height , (Okular::Rotation)rotation (internalDoc ->  orientation(i) ) );
             internalDoc -> insertPageData (i,qMakePair(tmpPage->begin, tmpPage->end));
             atLeastOne=true;
         }
     }
     else
     {
-        pSize = internalDoc -> computePageSize( internalDoc -> pageMedia() );
-        pSize.setHeight((int)ceil(pSize.height()*DPIMod::Y));
-        pSize.setWidth((int)ceil(pSize.width()*DPIMod::X));
+        const QSize &pageSize = internalDoc -> computePageSize( internalDoc -> pageMedia() );
         QFile f(internalDoc->fileName());
         unsigned long end = f.size();
         internalDoc -> insertPageData (0,qMakePair((unsigned long) 0, end));
         pagesVector.resize(1);
-        pagesVector[0]=new Okular::Page( 0, pSize.width(),
-            pSize.height() , (Okular::Rotation)rotation (internalDoc ->  orientation() ) );
+        height = (int)ceil(pageSize.height()*DPIMod::Y);
+        width = (int)ceil(pageSize.width()*DPIMod::X);
+        if (rotation (internalDoc ->  orientation() ) % 2 != 0) qSwap(height, width);
+        pagesVector[0]=new Okular::Page( 0, width, height , (Okular::Rotation)rotation (internalDoc ->  orientation() ) );
         atLeastOne=true;
     }
     return atLeastOne;
@@ -340,10 +340,15 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     double height = req->page()->height();
     int reqwidth = req->width();
     int reqheight = req->height();
-    if ( req->page()->rotation() % 2 == 1 )
+    if ( req->page()->orientation() % 2 == 1 )
     {
         qSwap( width, height );
         qSwap( reqwidth, reqheight );
+        req->swap();
+    }
+    if ( req->page()->rotation() % 2 == 1 )
+    {
+        qSwap( width, height );
     }
 
     GSInterpreterCMD *asyncGenerator = GSInterpreterCMD::getCreateInterpreter();
@@ -357,9 +362,9 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
         asyncGenerator->setAABits(1,1);
     }
 
-// TODO check if needed
-//    asyncGenerator->setOrientation(rotation (internalDoc->orientation(pgNo)));
+    asyncGenerator->setOrientation(req->page()->orientation());
     asyncGenerator->setMedia( internalDoc -> getPaperSize ( internalDoc -> pageMedia( pgNo )) );
+    kDebug() << reqwidth << width << reqheight << height;
     asyncGenerator->setMagnify( qMax( (double)reqwidth / width, (double)reqheight / height ) );
     PsPosition u=internalDoc->pagePos(pgNo);
     if ( internalDoc->dsc()->isStructured() )

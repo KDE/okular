@@ -123,7 +123,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::External:
         {
             QString url = si.sound->url();
-            kDebug() << "[AudioPlayer::Playinfo::play()] External," << url;
+            kDebug() << "External," << url;
             if ( !url.isEmpty() )
             {
                 int newid = newId();
@@ -141,17 +141,16 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                 data->m_mediaobject->setCurrentSource( newurl );
                 m_playing.insert( newid, data );
                 valid = true;
-                kDebug() << "[AudioPlayer::Playinfo::play()] PLAY url";
             }
             break;
         }
         case Sound::Embedded:
         {
             QByteArray filedata = si.sound->data();
-            kDebug() << "[AudioPlayer::Playinfo::play()] Embedded," << filedata.length();
+            kDebug() << "Embedded," << filedata.length();
             if ( !filedata.isEmpty() )
             {
-                kDebug() << "[AudioPlayer::Playinfo::play()] mediaobject:" << data->m_mediaobject;
+                kDebug() << "Mediaobject:" << data->m_mediaobject;
                 int newid = newId();
                 m_mapper.setMapping( data->m_mediaobject, newid );
                 data->m_buffer = new QBuffer();
@@ -159,7 +158,6 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                 data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
                 m_playing.insert( newid, data );
                 valid = true;
-                kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data";
             }
             break;
         }
@@ -172,6 +170,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     if ( data )
     {
         QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
+        kDebug() << "PLAY";
         data->play();
     }
     return valid;

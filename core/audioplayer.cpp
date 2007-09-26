@@ -147,7 +147,6 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         }
         case Sound::Embedded:
         {
-#if 0 // disable because of broken bytestream in xine :(
             QByteArray filedata = si.sound->data();
             kDebug() << "[AudioPlayer::Playinfo::play()] Embedded," << filedata.length();
             if ( !filedata.isEmpty() )
@@ -162,7 +161,6 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
                 valid = true;
                 kDebug() << "[AudioPlayer::Playinfo::play()] PLAY data";
             }
-#endif
             break;
         }
     }

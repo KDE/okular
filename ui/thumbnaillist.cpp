@@ -582,7 +582,7 @@ void ThumbnailWidget::mousePressEvent( QMouseEvent * e )
 {
     QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
 
-    if ( e->button() != Qt::RightButton && r.contains( e->pos() ) )
+    if ( e->button() != Qt::RightButton && r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) )
     {
         mouseGrabPos = e->pos();
     }
@@ -596,7 +596,7 @@ void ThumbnailWidget::mousePressEvent( QMouseEvent * e )
 void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
 {
     QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
-    if ( r.contains( e->pos() ) )
+    if ( r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) )
     {
         setCursor( Qt::OpenHandCursor );
     }

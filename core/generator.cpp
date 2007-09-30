@@ -308,21 +308,8 @@ QMutex* Generator::userMutex() const
 }
 
 
-class PixmapRequest::Private
-{
-    public:
-        int mId;
-        int mPageNumber;
-        int mWidth;
-        int mHeight;
-        int mPriority;
-        bool mAsynchronous;
-        Page *mPage;
-};
-
-
 PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous )
-  : d( new Private )
+  : d( new PixmapRequestPrivate )
 {
     d->mId = id;
     d->mPageNumber = pageNumber;
@@ -370,21 +357,6 @@ bool PixmapRequest::asynchronous() const
 Page* PixmapRequest::page() const
 {
     return d->mPage;
-}
-
-void PixmapRequest::setPriority( int priority )
-{
-    d->mPriority = priority;
-}
-
-void PixmapRequest::setAsynchronous( bool asynchronous )
-{
-    d->mAsynchronous = asynchronous;
-}
-
-void PixmapRequest::setPage( Page *page )
-{
-    d->mPage = page;
 }
 
 void PixmapRequest::swap()

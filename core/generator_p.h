@@ -59,6 +59,19 @@ class GeneratorPrivate
 };
 
 
+class PixmapRequestPrivate
+{
+    public:
+        int mId;
+        int mPageNumber;
+        int mWidth;
+        int mHeight;
+        int mPriority;
+        bool mAsynchronous;
+        Page *mPage;
+};
+
+
 class PixmapGenerationThread : public QThread
 {
     Q_OBJECT

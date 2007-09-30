@@ -1743,13 +1743,13 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
             continue;
         }
 
-        request->setPage( d->m_pagesVector.value( request->pageNumber() ) );
+        request->d->mPage = d->m_pagesVector.value( request->pageNumber() );
 
         if ( !request->asynchronous() )
-            request->setPriority( 0 );
+            request->d->mPriority = 0;
 
         if ( request->asynchronous() && threadingDisabled )
-            request->setAsynchronous( false );
+            request->d->mAsynchronous = false;
 
         // add request to the 'stack' at the right place
         if ( !request->priority() )

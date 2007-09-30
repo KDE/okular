@@ -48,6 +48,7 @@ class ExportFormatPrivate;
 class GeneratorPrivate;
 class Page;
 class PixmapRequest;
+class PixmapRequestPrivate;
 class TextPage;
 
 /* Note: on contents generation and asynchronous queries.
@@ -478,6 +479,7 @@ setAboutData( about );
 class OKULAR_EXPORT PixmapRequest
 {
     friend class Document;
+    friend class DocumentPrivate;
 
     public:
         /**
@@ -545,23 +547,8 @@ class OKULAR_EXPORT PixmapRequest
     private:
         Q_DISABLE_COPY( PixmapRequest )
 
-        /**
-         * Internal usage.
-         */
-        void setPriority( int priority );
-
-        /**
-         * Internal usage.
-         */
-        void setAsynchronous( bool asynchronous );
-
-        /**
-         * Internal usage.
-         */
-        void setPage( Page *page );
-
-        class Private;
-        Private* const d;
+        friend class PixmapRequestPrivate;
+        PixmapRequestPrivate* const d;
 };
 
 }

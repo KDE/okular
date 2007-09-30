@@ -671,18 +671,6 @@ QString Part::currentDocument()
 }
 
 
-//this don't go anywhere but is required by genericfactory.h
-KAboutData* Part::createAboutData()
-{
-    // the non-i18n name here must be the same as the directory in
-    // which the part's rc file is installed ('partrcdir' in the
-    // Makefile)
-    KAboutData* aboutData = okularAboutData( "okularpart", I18N_NOOP( "okularpart" ) );
-    aboutData->addAuthor(ki18n("Wilco Greven"), KLocalizedString(), "greven@kde.org");
-    return aboutData;
-}
-
-
 bool Part::slotImportPSFile()
 {
     QString app = KStandardDirs::findExe( "ps2pdf" );

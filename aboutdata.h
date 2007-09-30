@@ -12,9 +12,9 @@
 
 #include <kaboutdata.h>
 
-inline KAboutData* okularAboutData( const char* name, const char* iname )
+inline KAboutData okularAboutData( const char* name, const char* iname )
 {
-    KAboutData *about = new KAboutData(
+    KAboutData about(
         name, //"okular",
         0, // catalog name also "okular"
         ki18n(iname), //I18N_NOOP("okular"),
@@ -28,11 +28,11 @@ inline KAboutData* okularAboutData( const char* name, const char* iname )
         "http://okular.kde.org"
     );
 
-    about->addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
-    about->addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
-    about->addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
-    about->addAuthor(ki18n("Piotr Szymanski"), ki18n("Created okular from KPDF codebase"), "djurban@pld-dc.org");
-    about->addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
+    about.addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
+    about.addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
+    about.addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
+    about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created okular from KPDF codebase"), "djurban@pld-dc.org");
+    about.addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
 
     return about;
 }

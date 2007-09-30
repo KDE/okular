@@ -87,8 +87,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int page, int flags );
 
-        static KAboutData* createAboutData();
-
         bool openDocument(const KUrl& url, uint page);
         void startPresentation();
         QStringList supportedMimeTypes() const;

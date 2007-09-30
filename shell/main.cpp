@@ -20,9 +20,9 @@
 
 int main(int argc, char** argv)
 {
-    KAboutData * about = okularAboutData( "okular", I18N_NOOP( "okular" ) );
+    KAboutData about = okularAboutData( "okular", I18N_NOOP( "okular" ) );
 
-    KCmdLineArgs::init(argc, argv, about);
+    KCmdLineArgs::init(argc, argv, &about);
 
     KCmdLineOptions options;
     options.add("p");
@@ -55,9 +55,7 @@ int main(int argc, char** argv)
         }
     }
 
-    int ret = app.exec();
-    delete about;
-    return ret;
+    return app.exec();
 }
 
 // vim:ts=2:sw=2:tw=78:et

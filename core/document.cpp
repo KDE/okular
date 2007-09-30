@@ -1045,7 +1045,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
-    int document_size = -1;
+    qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     if ( !isstdin )
     {

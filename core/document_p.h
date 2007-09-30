@@ -124,7 +124,7 @@ class DocumentPrivate
         QString m_docFileName;
         QString m_xmlFileName;
         KTemporaryFile *m_tempFile;
-        int m_docSize;
+        qint64 m_docSize;
 
         // viewport stuff
         QLinkedList< DocumentViewport > m_viewportHistory;

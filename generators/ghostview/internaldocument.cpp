@@ -112,6 +112,7 @@ GSInternalDocument::GSInternalDocument(const QString &fname, Format form) : m_er
 GSInternalDocument::~GSInternalDocument()
 {
     delete docInfo;
+    delete m_dsc;
 }
 
 const Okular::DocumentInfo * GSInternalDocument::generateDocumentInfo()

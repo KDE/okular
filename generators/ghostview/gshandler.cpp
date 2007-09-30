@@ -164,6 +164,7 @@ void GSHandler::init(const QString &media, double magnify, int width, int height
 	handleErrorCode(errorCode);
 	
 	for (int i = 0; i < t; ++i) delete[] args[i];
+	delete[] args;
 	
 	QString set = QString("<< /Orientation %1 >> setpagedevice .locksafe").arg(orientation);
 	gsapi_run_string_with_length(m_ghostScriptInstance, set.toLatin1().constData(), set.length(), 0, &errorCode);

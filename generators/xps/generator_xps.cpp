@@ -1302,6 +1302,7 @@ bool XpsFile::closeDocument()
 
     m_docInfo = 0;
 
+    qDeleteAll( m_documents );
     m_documents.clear();
 
     delete m_xpsArchive;

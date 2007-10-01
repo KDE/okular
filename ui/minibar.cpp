@@ -86,7 +86,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->setMargin( 0 );
     horLayout->setSpacing( 3 );
 
-    QSize buttonSize( K3Icon::SizeSmallMedium, K3Icon::SizeSmallMedium );
+    QSize buttonSize( KIconLoader::SizeSmallMedium, KIconLoader::SizeSmallMedium );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
     m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );

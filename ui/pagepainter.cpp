@@ -30,7 +30,7 @@
 #include "core/utils.h"
 #include "settings.h"
 
-K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", K3Icon::NoGroup, 32, K3Icon::DefaultState, QStringList(), 0, true) ) )
+K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 
@@ -529,9 +529,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 {
                 // get pixmap, colorize and alpha-blend it
                     QString path;
-                    QPixmap pixmap = KIconLoader::global()->loadIcon( text->textIcon().toLower(), K3Icon::User, 32, K3Icon::DefaultState, QStringList(), &path, true );
+                    QPixmap pixmap = KIconLoader::global()->loadIcon( text->textIcon().toLower(), KIconLoader::User, 32, KIconLoader::DefaultState, QStringList(), &path, true );
                     if ( path.isEmpty() )
-                        pixmap = KIconLoader::global()->loadIcon( text->textIcon().toLower(), K3Icon::NoGroup, 32 );
+                        pixmap = KIconLoader::global()->loadIcon( text->textIcon().toLower(), KIconLoader::NoGroup, 32 );
                     QImage scaledImage;
                     QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
                     QRect annotRect2 = annotBoundary2.intersect( limits );
@@ -559,9 +559,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
                 // get pixmap and alpha blend it if needed
                 QString path;
-                QPixmap pixmap = KIconLoader::global()->loadIcon( stamp->stampIconName().toLower(), K3Icon::User, qMin( annotBoundary.width(), annotBoundary.height() ), K3Icon::DefaultState, QStringList(), &path, true );
+                QPixmap pixmap = KIconLoader::global()->loadIcon( stamp->stampIconName().toLower(), KIconLoader::User, qMin( annotBoundary.width(), annotBoundary.height() ), KIconLoader::DefaultState, QStringList(), &path, true );
                 if ( path.isEmpty() )
-                    pixmap = KIconLoader::global()->loadIcon( stamp->stampIconName().toLower(), K3Icon::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                    pixmap = KIconLoader::global()->loadIcon( stamp->stampIconName().toLower(), KIconLoader::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect, QImage::Format_ARGB32 );

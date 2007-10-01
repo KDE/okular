@@ -1655,28 +1655,20 @@ void Part::unsetDummyMode()
 
 bool Part::handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype )
 {
+    m_tempfile = 0;
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    m_tempfile = new KTemporaryFile;
-    if ( !m_tempfile )
-    {
-        KMessageBox::error( widget(),
-            i18n("<qt><strong>File Error!</strong> Could not create "
-            "temporary file.</qt>"));
-        return false;
-    }
+    KTemporaryFile *newtempfile = new KTemporaryFile();
+    newtempfile->setAutoRemove(true);
 
-    m_tempfile->setAutoRemove(true);
-
-    if ( ! m_tempfile->open() )
+    if ( !newtempfile->open() )
     {
         KMessageBox::error( widget(),
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
             "<nobr><strong>%1</strong></nobr>.</qt>",
-            strerror(m_tempfile->error())));
-        delete m_tempfile;
-        m_tempfile = 0;
+            strerror(newtempfile->error())));
+        delete newtempfile;
         return false;
     }
 
@@ -1684,8 +1676,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
     QIODevice* filterDev = KFilterDev::deviceForFile( path, compressedMimetype );
     if (!filterDev)
     {
-        delete m_tempfile;
-        m_tempfile = 0;
+        delete newtempfile;
         return false;
     }
 
@@ -1702,8 +1693,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             "file manager and then choose the 'Properties' menu.</qt>"));
 
         delete filterDev;
-        delete m_tempfile;
-        m_tempfile = 0;
+        delete newtempfile;
         return false;
     }
 
@@ -1712,12 +1702,12 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
 
     while ((read = filterDev->read(buf.data(), buf.size())) > 0)
     {
-        wrtn = m_tempfile->write(buf.data(), read);
+        wrtn = newtempfile->write(buf.data(), read);
         if ( read != wrtn )
             break;
     }
     delete filterDev;
-    if ((read != 0) || (m_tempfile->size() == 0))
+    if ((read != 0) || (newtempfile->size() == 0))
     {
         KMessageBox::detailedError(widget(),
             i18n("<qt><strong>File Error!</strong> Could not uncompress "
@@ -1726,10 +1716,10 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             i18n("<qt>This error typically occurs if the file is corrupt. "
             "If you want to be sure, try to decompress the file manually "
             "using command-line tools.</qt>"));
-        delete m_tempfile;
-        m_tempfile = 0;
+        delete newtempfile;
         return false;
     }
+    m_tempfile = newtempfile;
     destpath = m_tempfile->fileName();
     return true;
 }

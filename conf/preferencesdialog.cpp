@@ -31,9 +31,9 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_debug = new DlgDebug( this );
 
     addPage( m_general, i18n("General"), "okular", i18n("General Options") );
-    addPage( m_accessibility, i18n("Accessibility"), "access", i18n("Accessibility Reading Aids") );
+    addPage( m_accessibility, i18n("Accessibility"), "preferences-desktop-accessibility", i18n("Accessibility Reading Aids") );
     addPage( m_performance, i18n("Performance"), "launch", i18n("Performance Tuning") );
-    addPage( m_presentation, i18n("Presentation"), "kpresenter_kpr",
+    addPage( m_presentation, i18n("Presentation"), "document-start-presentation",
              i18n("Options for Presentation Mode") );
     addPage( m_identity, i18n("Identity"), "identity",
              i18n("Identity Settings") );

@@ -387,7 +387,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     QAction * importPS = ac->addAction("import_ps");
     importPS->setText(i18n("&Import Postscript as PDF..."));
-    importPS->setIcon(KIcon("psimport"));
+    importPS->setIcon(KIcon("file-import"));
     connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
     QAction * ghns = ac->addAction("get_new_stuff");
     ghns->setText(i18n("&Get Books From Internet..."));
@@ -404,7 +404,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_showEmbeddedFiles = ac->addAction("embedded_files");
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
-    m_showEmbeddedFiles->setIcon( KIcon( "attach" ) );
+//     m_showEmbeddedFiles->setIcon( KIcon( "attach" ) );
     connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
     m_showEmbeddedFiles->setEnabled( false );
 
@@ -417,6 +417,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_exportAs = ac->addAction("file_export_as");
     m_exportAs->setText(i18n("E&xport As"));
+    m_exportAs->setIcon( KIcon( "file-export" ) );
     QMenu *menu = new QMenu(widget());
     connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
     m_exportAs->setMenu( menu );

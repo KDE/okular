@@ -77,7 +77,7 @@
 #include "core/page.h"
 
 K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
-K_EXPORT_PLUGIN( okularPartFactory( "okularpart" ) )
+K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "okular" ) ) ) )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {
@@ -136,9 +136,6 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     // connect the completed signal so we can put the window caption when loading remote files
     connect(this, SIGNAL(completed()), this, SLOT(setWindowTitleFromDocument()));
     connect(this, SIGNAL(canceled(const QString &)), this, SLOT(loadCancelled(const QString &)));
-
-    // load catalog for translation
-    KGlobal::locale()->insertCatalog("okular");
 
     // create browser extension (for printing when embedded into browser)
     m_bExtension = new BrowserExtension(this);

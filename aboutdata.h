@@ -16,7 +16,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
 {
     KAboutData about(
         name, //"okular",
-        0, // catalog name also "okular"
+        "okular",
         ki18n(iname), //I18N_NOOP("okular"),
         "0.5.91",
         ki18n("okular, a universal document viewer"),

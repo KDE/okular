@@ -69,7 +69,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     QToolButton *optionsMenuAction =  new QToolButton( this );
     mainlay->addWidget( optionsMenuAction );
     optionsMenuAction->setAutoRaise( true );
-    optionsMenuAction->setIcon( KIcon( "okular" ) );
+    optionsMenuAction->setIcon( KIcon( "graphics-viewer-document" ) );
     optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
     optionsMenuAction->setPopupMode( QToolButton::InstantPopup );
     optionsMenuAction->setMenu( m_menu );

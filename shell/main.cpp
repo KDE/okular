@@ -15,6 +15,7 @@
 #include "shell.h"
 #include <kapplication.h>
 #include <kcmdlineargs.h>
+#include <kicon.h>
 #include <klocale.h>
 #include "aboutdata.h"
 
@@ -31,6 +32,7 @@ int main(int argc, char** argv)
     options.add("+[URL]", ki18n("Document to open"));
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
+    QApplication::setWindowIcon( KIcon( "graphics-viewer-document" ) );
 
     // see if we are starting with session management
     if (app.isSessionRestored())

@@ -18,7 +18,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         name, //"okular",
         "okular",
         ki18n(iname), //I18N_NOOP("okular"),
-        "0.5.91",
+        "0.5.92",
         ki18n("okular, a universal document viewer"),
         KAboutData::License_GPL,
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"

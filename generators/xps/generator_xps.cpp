@@ -27,7 +27,6 @@
 #include <qthread.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 #include <QFileInfo>
 #include <QBuffer>

@@ -27,7 +27,6 @@
 #include <qstack.h>
 
 #include <kdebug.h>
-#include <kimageeffect.h>
 #include <klocale.h>
 
 OKULAR_EXPORT_PLUGIN(DviGenerator)

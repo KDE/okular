@@ -14,7 +14,6 @@
 
 class QLabel;
 class QLineEdit;
-class QTextEdit;
 class KColorButton;
 class KIntNumInput;
 class AnnotationWidget;
@@ -42,7 +41,6 @@ private:
     KIntNumInput *m_opacity;
     AnnotationWidget *m_annotWidget;
     QLabel *m_modifyDateLabel;
-    QTextEdit *m_contents;
     
     void setCaptionTextbyAnnotType();
 

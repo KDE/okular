@@ -789,15 +789,6 @@ void PagePainter::drawShapeOnImage(
     double fImageWidth = (double)imageWidth;
     double fImageHeight = (double)imageHeight;
 
-    // create a 'path'
-    QPainterPath path;
-    path.moveTo( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
-    for ( int i = 1; i < pointsNumber; i++ )
-    {
-        path.lineTo( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
-    }
-    if ( closeShape ) path.closeSubpath();
-
     // stroke outline
     double penWidth = (double)pen.width() * penWidthMultiplier;
     QPainter painter(&image);
@@ -811,5 +802,31 @@ void PagePainter::drawShapeOnImage(
         painter.setCompositionMode(QPainter::CompositionMode_Multiply);
     }
 
-    painter.drawPath(path);
+    if ( brush.style() == Qt::NoBrush )
+    {
+        // create a polygon
+        QPolygonF poly( closeShape ? pointsNumber + 1 : pointsNumber );
+        for ( int i = 0; i < pointsNumber; ++i )
+        {
+            poly[ i ] = QPointF( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
+        }
+        if ( closeShape )
+            poly[ pointsNumber ] = poly[ 0 ];
+
+        painter.drawPolyline( poly );
+    }
+    else
+    {
+        // create a 'path'
+        QPainterPath path;
+        path.moveTo( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
+        for ( int i = 1; i < pointsNumber; i++ )
+        {
+            path.lineTo( normPath[ i ].x * fImageWidth, normPath[ i ].y * fImageHeight );
+        }
+        if ( closeShape )
+            path.closeSubpath();
+
+        painter.drawPath( path );
+    }
 }

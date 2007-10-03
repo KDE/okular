@@ -220,7 +220,7 @@
   <entry key="IdentityAuthor" type="String">
     <code>
       KUser currentUser;
-      QString userString = currentUser.fullName();
+      QString userString = currentUser.property( KUser::FullName ).toString();
       if ( userString.isEmpty() )
       {
         userString = currentUser.loginName();

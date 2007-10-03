@@ -685,7 +685,7 @@ void PageViewAnnotator::setEnabled( bool on )
     {
         // get default username from the kdelibs/kdecore/KUser
         KUser currentUser;
-        QString userName = currentUser.fullName();
+        QString userName = currentUser.property( KUser::FullName ).toString();
         // ask the user for confirmation/change
         bool firstTry = true;
         while ( firstTry || userName.isEmpty()  )

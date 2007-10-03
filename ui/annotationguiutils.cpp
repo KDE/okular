@@ -19,8 +19,7 @@ namespace AnnotationGuiUtils {
 
 QString captionForAnnotation( const Okular::Annotation * ann )
 {
-    if ( !ann )
-        return QString();
+    Q_ASSERT( ann );
 
     QString ret;
     switch( ann->subType() )
@@ -54,16 +53,14 @@ QString captionForAnnotation( const Okular::Annotation * ann )
 
 QString authorForAnnotation( const Okular::Annotation * ann )
 {
-    if ( !ann )
-        return QString();
+    Q_ASSERT( ann );
 
     return !ann->author().isEmpty() ? ann->author() : i18nc( "Unknown author", "Unknown" );
 }
 
 QString contents( const Okular::Annotation * ann )
 {
-    if ( !ann )
-        return QString();
+    Q_ASSERT( ann );
 
     // 1. window text
     QString ret = ann->window().text();
@@ -94,8 +91,7 @@ QString contentsHtml( const Okular::Annotation * ann )
 
 QString prettyToolTip( const Okular::Annotation * ann )
 {
-    if ( !ann )
-        return QString();
+    Q_ASSERT( ann );
 
     QString author = authorForAnnotation( ann );
     QString contents = contentsHtml( ann );
@@ -111,8 +107,7 @@ QString prettyToolTip( const Okular::Annotation * ann )
 
 bool canBeMoved( const Okular::Annotation * ann )
 {
-    if ( !ann )
-        return false;
+    Q_ASSERT( ann );
 
     switch( ann->subType() )
     {

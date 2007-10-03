@@ -1260,6 +1260,10 @@ KXMLGUIClient* Document::guiClient()
 
 void Document::closeDocument()
 {
+    // check if there's anything to close...
+    if ( !d->m_generator )
+        return;
+
     if ( d->m_fontThread )
     {
         disconnect( d->m_fontThread, 0, this, 0 );

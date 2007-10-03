@@ -102,7 +102,7 @@ QString prettyToolTip( const Okular::Annotation * ann )
 
     QString tooltip = QString( "<qt><b>" ) + i18n( "Author: %1", author ) + QString( "</b>" );
     if ( !contents.isEmpty() )
-        tooltip += QString( "<hr />" ) + contents;
+        tooltip += QString( "<div style=\"font-size: 4px;\"><hr /></div>" ) + contents;
 
     tooltip += "</qt>";
 

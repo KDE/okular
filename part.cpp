@@ -474,6 +474,9 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
 Part::~Part()
 {
+    if ( m_document->isOpened() )
+        Part::closeUrl();
+
     delete m_toc;
     delete m_pageView;
     delete m_thumbnailList;

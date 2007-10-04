@@ -56,46 +56,45 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     //BEGIN tab1
     QFrame *page = new QFrame( this );
     addPage( page, i18n( "&Appearance" ) );
-    QVBoxLayout * lay = new QVBoxLayout( page );
+    QGridLayout * gridlayout = new QGridLayout( page );
 
-    QHBoxLayout * hlay = new QHBoxLayout();
-    lay->addLayout( hlay );
     tmplabel = new QLabel( i18n( "&Color:" ), page );
-    hlay->addWidget( tmplabel );
+    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
+    gridlayout->addWidget( tmplabel, 0, 0 );
     colorBn = new KColorButton( page );
     colorBn->setColor( ann->style().color() );
     colorBn->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( colorBn );
-    hlay->addWidget( colorBn );
+    gridlayout->addWidget( colorBn, 0, 1 );
 
-    hlay = new QHBoxLayout();
-    lay->addLayout( hlay );
     tmplabel = new QLabel( i18n( "&Opacity:" ), page );
-    hlay->addWidget( tmplabel );
+    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
+    gridlayout->addWidget( tmplabel, 1, 0 );
     m_opacity = new KIntNumInput( page );
     m_opacity->setRange( 0, 100, 1, true );
     m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
     m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
     m_opacity->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( m_opacity );
-    hlay->addWidget( m_opacity );
+    gridlayout->addWidget( m_opacity, 1, 1 );
 
     QWidget * configWidget = 0;
     if ( m_annotWidget && ( configWidget = m_annotWidget->widget() ) )
     {
-        lay->addWidget( configWidget );
+        gridlayout->addWidget( configWidget, 2, 0, 1, 2 );
         configWidget->setEnabled( canEditAnnotations );
     }
 
-    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ) );
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab1
     
     //BEGIN tab 2
     page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
 //    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
-    QGridLayout * gridlayout = new QGridLayout( page );
+    gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
+    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
     AuthorEdit = new QLineEdit( ann->author(), page );
     AuthorEdit->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( AuthorEdit );

@@ -101,15 +101,13 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addWidget( tmplabel, 0, 0 );
     gridlayout->addWidget( AuthorEdit, 0, 1 );
     
-    tmplabel = new QLabel( i18n( "Created:" ), page );
-    gridlayout->addWidget( tmplabel, 1, 0 );
-    tmplabel = new QLabel( KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ), page );//time
-    gridlayout->addWidget( tmplabel, 1, 1 );
+    tmplabel = new QLabel( page );
+    tmplabel->setText( i18n( "Created: %1", KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ) ) );
+    gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
     
-    tmplabel = new QLabel( i18n( "Modified:" ), page );
-    gridlayout->addWidget( tmplabel, 2, 0 );
-    m_modifyDateLabel = new QLabel( KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ), page );//time
-    gridlayout->addWidget( m_modifyDateLabel, 2, 1 );
+    m_modifyDateLabel = new QLabel( page );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ) ) );
+    gridlayout->addWidget( m_modifyDateLabel, 2, 0, 1, 2 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
@@ -193,7 +191,7 @@ void AnnotsPropertiesDialog::slotapply()
 
     m_document->modifyPageAnnotation( m_page, m_annot );
 
-    m_modifyDateLabel->setText( KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) ) );
 
     modified = false;
     enableButton( Apply, false );

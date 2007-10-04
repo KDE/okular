@@ -11,6 +11,7 @@
 #define _EMBEDDEDFILESDIALOG_H_
 
 #include <kdialog.h>
+#include <QtCore/QHash>
 
 class QTreeWidget;
 class QTreeWidgetItem;

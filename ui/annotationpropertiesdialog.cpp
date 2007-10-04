@@ -75,6 +75,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     m_opacity = new KIntNumInput( page );
     m_opacity->setRange( 0, 100, 1, true );
     m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
+    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
     m_opacity->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( m_opacity );
     hlay->addWidget( m_opacity );
@@ -113,22 +114,6 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
-    //BEGIN advance properties:
-    page = new QFrame( this );
-    addPage( page, i18n( "&Advanced" ) );
-    gridlayout = new QGridLayout( page );
-    
-    tmplabel = new QLabel( i18n( "Contents:" ), page );
-    gridlayout->addWidget( tmplabel, 0, 0 );
-    m_contents = new QTextEdit( page );
-    gridlayout->addWidget( m_contents, 1, 0 );
-    m_contents->setAcceptRichText( false );
-    m_contents->setReadOnly( true );
-    m_contents->setPlainText( ann->contents() );
-    m_contents->setEnabled( canEditAnnotations );
-
-    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 4, 0 );
-    //END advance
 
     //BEGIN connections
     connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );

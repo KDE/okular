@@ -1008,6 +1008,7 @@ Document::Document( QWidget *widget )
     : QObject( widget ), d( new DocumentPrivate( this ) )
 {
     d->m_bookmarkManager = new BookmarkManager( this );
+    d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
 
     connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
              this, SLOT( rotationFinished( int ) ) );

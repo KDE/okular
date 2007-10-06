@@ -28,7 +28,9 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_accessibility = new DlgAccessibility( this );
     m_presentation = new DlgPresentation( this );
     m_identity = new DlgIdentity( this );
+#ifdef OKULAR_DEBUG_CONFIGPAGE
     m_debug = new DlgDebug( this );
+#endif
 
     addPage( m_general, i18n("General"), "graphics-viewer-document", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "preferences-desktop-accessibility", i18n("Accessibility Reading Aids") );
@@ -37,5 +39,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
              i18n("Options for Presentation Mode") );
     addPage( m_identity, i18n("Identity"), "contact",
              i18n("Identity Settings") );
+#ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage( m_debug, "Debug", "gear", "Debug options" );
+#endif
 }

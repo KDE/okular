@@ -1247,6 +1247,12 @@ int KPDFDocument::getTotalMemory()
 
 int KPDFDocument::getFreeMemory()
 {
+    static QTime lastUpdate = QTime::currentTime();
+    static int cachedValue = 0;
+
+    if ( lastUpdate.secsTo( QTime::currentTime() ) <= 2 )
+        return cachedValue;
+
 #ifdef __linux__
     // if /proc/meminfo doesn't exist, return MEMORY FULL
     QFile memFile( "/proc/meminfo" );
@@ -1270,7 +1276,10 @@ int KPDFDocument::getFreeMemory()
             memoryFree -= entry.section( ' ', -2, -2 ).toInt();
     }
     memFile.close();
-    return 1024 * memoryFree;
+
+    lastUpdate = QTime::currentTime();
+
+    return ( cachedValue = ( 1024 * memoryFree ) );
 #else
     // tell the memory is full.. will act as in LOW profile
     return 0;

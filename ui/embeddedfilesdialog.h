@@ -10,10 +10,6 @@
 #ifndef _EMBEDDEDFILESDIALOG_H_
 #define _EMBEDDEDFILESDIALOG_H_
 
-#include <QtCore/QHash>
-
-#include <QtCore/QHash>
-
 #include <kdialog.h>
 #include <QtCore/QHash>
 

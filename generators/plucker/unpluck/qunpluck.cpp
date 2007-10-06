@@ -9,6 +9,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QtCore/QDateTime>
 #include <QtCore/QFile>
 #include <QtCore/QHash>
 #include <QtCore/QStack>

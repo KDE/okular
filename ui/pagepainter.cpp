@@ -662,6 +662,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     if ( r == QRect( 0, 0, src->width(), src->height() ) )
     {
         dest = src->toImage();
+        dest = dest.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     }
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else

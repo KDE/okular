@@ -14,6 +14,7 @@
 #include <QtCore/QStack>
 #include <QtCore/QString>
 #include <QtCore/QUrl>
+#include <QtCore/QDateTime>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QFont>
 #include <QtGui/QTextBlock>

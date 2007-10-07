@@ -393,7 +393,6 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
     : QWidget( parent ), d( new ToolBarPrivate( this ) )
 {
     setAttribute( Qt::WA_OpaquePaintEvent, true );
-    setMouseTracking( true );
 
     // initialize values of the private data storage structure
     d->anchorWidget = anchorWidget;

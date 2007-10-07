@@ -68,8 +68,8 @@ Engine/Annotation Types [specific attributes]:
     </tool>
     <tool id="8" name="Stamp" pixmap="stamp">
         <tooltip>Put a stamp symbol</tooltip>
-        <engine type="PickPoint" hoverIcon="okular" center="true" size="64">
-            <annotation type="Stamp" icon="okular"/>
+        <engine type="PickPoint" hoverIcon="graphics-viewer-document" center="true" size="64">
+            <annotation type="Stamp" icon="graphics-viewer-document"/>
         </engine>
         <shortcut>8</shortcut>
   </tool>

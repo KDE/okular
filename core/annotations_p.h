@@ -38,6 +38,7 @@ class AnnotationPrivate
         void annotationTransform( const QMatrix &matrix );
 
         virtual void transform( const QMatrix &matrix );
+        virtual void baseTransform( const QMatrix &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 

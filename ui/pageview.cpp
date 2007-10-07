@@ -346,9 +346,9 @@ void PageView::setupBaseActions( KActionCollection * ac )
     connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
-    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "zoom_in", this, SLOT( slotZoomIn() ) );
+    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "view_zoom_in", this, SLOT( slotZoomIn() ) );
 
-    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "zoom_out", this, SLOT( slotZoomOut() ) );
+    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "view_zoom_out", this, SLOT( slotZoomOut() ) );
 }
 
 void PageView::setupActions( KActionCollection * ac )
@@ -377,11 +377,11 @@ void PageView::setupActions( KActionCollection * ac )
          this, SLOT( slotPageSizes( int ) ) );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "view_fit_width" ), i18n("Fit &Width"), this);
-    ac->addAction("zoom_fit_width", d->aZoomFitWidth );
+    ac->addAction("view_fit_to_width", d->aZoomFitWidth );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
     d->aZoomFitPage  = new KToggleAction(KIcon( "view_fit_window" ), i18n("Fit &Page"), this);
-    ac->addAction("zoom_fit_page", d->aZoomFitPage );
+    ac->addAction("view_fit_to_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
     d->aZoomFitText  = new KToggleAction(KIcon( "zoom-best-fit" ), i18n("Fit &Text"), this);

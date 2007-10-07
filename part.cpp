@@ -277,13 +277,11 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     // Page Traversal actions
     m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac );
-    ac->addAction("goto_page", m_gotoPage);
     m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
     // dirty way to activate gotopage when pressing miniBar's button
     connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
 
     m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
-    ac->addAction("previous_page", m_prevPage);
     m_prevPage->setIconText( i18nc( "Previous page", "Previous" ) );
     m_prevPage->setToolTip( i18n( "Go back to the Previous Page" ) );
     m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
@@ -295,7 +293,6 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 #endif
 
     m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
-    ac->addAction("next_page", m_nextPage);
     m_nextPage->setIconText( i18nc( "Next page", "Next" ) );
     m_nextPage->setToolTip( i18n( "Advance to the Next Page" ) );
     m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
@@ -335,20 +332,17 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
-    ac->addAction("edit_copy",m_copy);
 
     m_selectAll = KStandardAction::selectAll( m_pageView, SLOT( selectAll() ), ac );
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT( slotShowFindBar() ), ac );
-    ac->addAction("find", m_find);
     QList<QKeySequence> s = m_find->shortcuts();
     s.append( QKeySequence( Qt::Key_Slash ) );
     m_find->setShortcuts( s );
     m_find->setEnabled( false );
 
     m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
-    ac->addAction("find_next",m_findNext);
     m_findNext->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );

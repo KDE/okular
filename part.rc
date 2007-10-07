@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="22">
+<kpartgui name="okular_part" version="23">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -17,16 +17,16 @@
     <Separator/>
     <Action name="edit_select_all"/>
     <Separator/>
-    <Action name="find"/>
-    <Action name="find_next"/>
+    <Action name="edit_find"/>
+    <Action name="edit_find_next"/>
   </Menu>
   <Menu name="view"><text>&amp;View</text>
     <Action name="presentation"/>
     <Separator/>
-    <Action name="zoom_in"/>
-    <Action name="zoom_out"/>
-    <Action name="zoom_fit_width"/>
-    <Action name="zoom_fit_page"/>
+    <Action name="view_zoom_in"/>
+    <Action name="view_zoom_out"/>
+    <Action name="view_fit_to_width"/>
+    <Action name="view_fit_to_page"/>
     <Action name="zoom_fit_rect"/>
     <Separator/>
     <Action name="view_continuous"/>
@@ -42,8 +42,8 @@
     <Action name="view_toggle_forms"/>
   </Menu>
   <Menu name="go"><text>&amp;Go</text>
-    <Action name="previous_page"/>
-    <Action name="next_page"/>
+    <Action name="go_previous"/>
+    <Action name="go_next"/>
     <Separator/>
     <Action name="first_page"/>
     <Action name="last_page"/>
@@ -51,9 +51,9 @@
     <Action name="history_back"/>
     <Action name="history_forward" />
     <Separator/>
-    <Action name="goto_page"/>
+    <Action name="go_goto_page"/>
   </Menu>
-  <Menu name="okular_bookmarks"><text>&amp;Bookmarks</text>
+  <Menu name="bookmarks"><text>&amp;Bookmarks</text>
     <Action name="bookmark_add"/>
     <Action name="previous_bookmark"/>
     <Action name="next_bookmark" />
@@ -78,12 +78,12 @@
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
-  <Action name="previous_page"/>
-  <Action name="next_page"/>
+  <Action name="go_previous"/>
+  <Action name="go_next"/>
   <Separator/>
   <Action name="zoom_to" />
-  <Action name="zoom_out"/>
-  <Action name="zoom_in"/>
+  <Action name="view_zoom_out"/>
+  <Action name="view_zoom_in"/>
   <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_zoom"/>

@@ -348,8 +348,8 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
     ac->addAction("save",m_saveAs);
     m_saveAs->setEnabled( false );
+
     QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
-    ac->addAction("preferences", prefs);
     if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
     {
         prefs->setText( i18n( "Configure okular..." ) );
@@ -360,10 +360,12 @@ m_cliPresentation(false), m_generatorGuiClient(0)
         prefs->setText( i18n( "Configure Viewer..." ) );
     }
 
-    QAction * genPrefs = KStandardAction::preferences( this, SLOT( slotGeneratorPreferences() ), ac );
-    ac->addAction("generator_prefs", genPrefs);
+    KAction * genPrefs = new KAction( ac );
+    ac->addAction("options_configure_generators", genPrefs);
     genPrefs->setText( i18n( "Configure Backends..." ) );
+    genPrefs->setIcon( KIcon( "configure" ) );
     genPrefs->setEnabled( m_document->configurableGenerators() > 0 );
+    connect( genPrefs, SIGNAL( triggered( bool ) ), this, SLOT( slotGeneratorPreferences() ) );
 
     m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
     m_printPreview->setEnabled( false );

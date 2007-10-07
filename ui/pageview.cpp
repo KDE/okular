@@ -346,9 +346,9 @@ void PageView::setupBaseActions( KActionCollection * ac )
     connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
     updateZoomText();
 
-    d->aZoomIn = ac->addAction( KStandardAction::ZoomIn, "view_zoom_in", this, SLOT( slotZoomIn() ) );
+    d->aZoomIn = KStandardAction::zoomIn( this, SLOT( slotZoomIn() ), ac );
 
-    d->aZoomOut = ac->addAction( KStandardAction::ZoomOut, "view_zoom_out", this, SLOT( slotZoomOut() ) );
+    d->aZoomOut = KStandardAction::zoomOut( this, SLOT( slotZoomOut() ), ac );
 }
 
 void PageView::setupActions( KActionCollection * ac )

@@ -442,7 +442,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     return true;
 }
 
-bool PDFGenerator::closeDocument()
+bool PDFGenerator::doCloseDocument()
 {
     // remove internal objects
     userMutex()->lock();

@@ -86,7 +86,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     return true;
 }
 
-bool TIFFGenerator::closeDocument()
+bool TIFFGenerator::doCloseDocument()
 {
     // closing the old document
     if ( d->tiff )

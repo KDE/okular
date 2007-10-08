@@ -123,6 +123,11 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
     return false;
 }
 
+bool Generator::closeDocument()
+{
+    return doCloseDocument();
+}
+
 bool Generator::canGeneratePixmap() const
 {
     Q_D( const Generator );

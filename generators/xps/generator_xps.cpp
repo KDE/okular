@@ -1376,7 +1376,7 @@ bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*
     return true;
 }
 
-bool XpsGenerator::closeDocument()
+bool XpsGenerator::doCloseDocument()
 {
     m_xpsFile->closeDocument();
     delete m_xpsFile;

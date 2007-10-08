@@ -99,7 +99,7 @@ bool DjVuGenerator::loadDocument( const QString & fileName, QVector< Okular::Pag
     return true;
 }
 
-bool DjVuGenerator::closeDocument()
+bool DjVuGenerator::doCloseDocument()
 {
     userMutex()->lock();
     m_djvu->closeFile();

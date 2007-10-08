@@ -24,12 +24,12 @@ class ComicBookGenerator : public Okular::Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
 
     protected:
+        bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
 
     private:

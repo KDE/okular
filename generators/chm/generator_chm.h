@@ -31,7 +31,6 @@ class CHMGenerator : public Okular::Generator
         CHMGenerator();
         ~CHMGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
-        bool closeDocument();
 
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
@@ -46,6 +45,7 @@ class CHMGenerator : public Okular::Generator
         void slotCompleted();
 
     protected:
+        bool doCloseDocument();
         Okular::TextPage* textPage( Okular::Page *page );
 
     private:

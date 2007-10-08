@@ -94,7 +94,7 @@ bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::P
     return true;
 }
 
-bool PluckerGenerator::closeDocument()
+bool PluckerGenerator::doCloseDocument()
 {
     mLinkAdded.clear();
     mLinks.clear();

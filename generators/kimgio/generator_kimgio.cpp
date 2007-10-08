@@ -100,7 +100,7 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
     return true;
 }
 
-bool KIMGIOGenerator::closeDocument()
+bool KIMGIOGenerator::doCloseDocument()
 {
     m_img = QImage();
 

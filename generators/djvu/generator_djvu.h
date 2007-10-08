@@ -28,7 +28,6 @@ class DjVuGenerator : public Okular::Generator
         DjVuGenerator();
         ~DjVuGenerator();
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         // document information
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -40,6 +39,7 @@ class DjVuGenerator : public Okular::Generator
         QVariant metaData( const QString & key, const QVariant & option ) const;
 
     protected:
+        bool doCloseDocument();
         // pixmap generation
         QImage image( Okular::PixmapRequest *request );
         Okular::TextPage* textPage( Okular::Page *page );

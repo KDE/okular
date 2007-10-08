@@ -55,7 +55,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     return true;
 }
 
-bool DviGenerator::closeDocument()
+bool DviGenerator::doCloseDocument()
 {
     delete m_docInfo;
     m_docInfo = 0;

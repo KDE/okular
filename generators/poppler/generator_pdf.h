@@ -55,7 +55,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -89,6 +88,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         KPrintDialogPage* printConfigurationWidget() const;
 
     protected:
+        bool doCloseDocument();
         Okular::TextPage* textPage( Okular::Page *page );
 
     private slots:

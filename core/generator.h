@@ -233,7 +233,7 @@ class OKULAR_EXPORT Generator : public QObject
          *
          * @returns true on success, false otherwise.
          */
-        virtual bool closeDocument() = 0;
+        bool closeDocument();
 
         /**
          * This method returns whether the generator is ready to
@@ -390,6 +390,14 @@ class OKULAR_EXPORT Generator : public QObject
          * has been finished.
          */
         void signalPixmapRequestDone( PixmapRequest * request );
+
+        /**
+         * This method is called when the document is closed and not used
+         * any longer.
+         *
+         * @returns true on success, false otherwise.
+         */
+        virtual bool doCloseDocument() = 0;
 
         /**
          * Returns the image of the page as specified in

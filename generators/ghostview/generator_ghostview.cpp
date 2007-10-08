@@ -199,7 +199,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
     return loadDocumentWithDSC(name,pagesVector,ps);
 }
 
-bool GSGenerator::closeDocument()
+bool GSGenerator::doCloseDocument()
 {
     delete internalDoc;
     internalDoc = 0;

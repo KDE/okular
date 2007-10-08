@@ -130,7 +130,6 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap() const;
@@ -147,6 +146,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         const Okular::DocumentSynopsis* generateDocumentSynopsis();
 
     protected:
+        bool doCloseDocument();
         Okular::TextPage* textPage( Okular::Page *page );
 
     private:

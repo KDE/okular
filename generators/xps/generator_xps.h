@@ -266,14 +266,15 @@ class XpsGenerator : public Okular::Generator
         virtual ~XpsGenerator();
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
         Okular::ExportFormat::List exportFormats() const;
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
     protected:
+        bool doCloseDocument();
         QImage image( Okular::PixmapRequest *page );
         Okular::TextPage* textPage( Okular::Page * page );
 

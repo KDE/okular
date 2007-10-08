@@ -29,7 +29,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
-        bool closeDocument();
 
         // Document description and Table of contents
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -61,6 +60,9 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
 
     public slots:
         void slotImageGenerated(QImage *img, Okular::PixmapRequest *request);
+
+    protected:
+        bool doCloseDocument();
 
     private:
         // conversion handling

@@ -20,13 +20,13 @@ class TIFFGenerator : public Okular::Generator
         virtual ~TIFFGenerator();
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         const Okular::DocumentInfo * generateDocumentInfo();
 
         bool print( KPrinter& printer );
 
     protected:
+        bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
 
     private:

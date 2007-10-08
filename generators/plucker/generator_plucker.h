@@ -29,7 +29,6 @@ class PluckerGenerator : public Okular::Generator
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool closeDocument();
 
         // [INHERITED] document information
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -43,6 +42,9 @@ class PluckerGenerator : public Okular::Generator
 
         // [INHERITED] print document using already configured kprinter
         bool print( KPrinter& printer );
+
+    protected:
+        bool doCloseDocument();
 
     private:
       QList<QTextDocument*> mPages;

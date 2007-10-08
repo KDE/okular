@@ -52,7 +52,7 @@ bool ComicBookGenerator::loadDocument( const QString & fileName, QVector<Okular:
     return true;
 }
 
-bool ComicBookGenerator::closeDocument()
+bool ComicBookGenerator::doCloseDocument()
 {
     return true;
 }

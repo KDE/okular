@@ -260,7 +260,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     return true;
 }
 
-bool TextDocumentGenerator::closeDocument()
+bool TextDocumentGenerator::doCloseDocument()
 {
     Q_D( TextDocumentGenerator );
     delete d->mDocument;

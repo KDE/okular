@@ -87,7 +87,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     return true;
 }
 
-bool CHMGenerator::closeDocument()
+bool CHMGenerator::doCloseDocument()
 {
     // delete the document information of the old document
     delete m_docInfo;

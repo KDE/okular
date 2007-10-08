@@ -10,6 +10,8 @@
 #include "generator.h"
 #include "generator_p.h"
 
+#include <qeventloop.h>
+
 #include <kaboutdata.h>
 #include <kcomponentdata.h>
 #include <kdebug.h>
@@ -19,13 +21,15 @@
 #include "document.h"
 #include "document_p.h"
 #include "page.h"
+#include "textpage.h"
 
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
     : m_document( 0 ), m_about( 0 ), m_componentData( 0 ),
       mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
-      m_mutex( 0 ), mPixmapReady( true ), mTextPageReady( true )
+      m_mutex( 0 ), m_threadsMutex( 0 ), mPixmapReady( true ), mTextPageReady( true ),
+      m_closing( false ), m_closingLoop( 0 )
 {
 }
 
@@ -46,6 +50,7 @@ GeneratorPrivate::~GeneratorPrivate()
     delete m_about;
 
     delete m_mutex;
+    delete m_threadsMutex;
 }
 
 PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
@@ -82,9 +87,21 @@ void GeneratorPrivate::pixmapGenerationFinished()
     PixmapRequest *request = mPixmapGenerationThread->request();
     mPixmapGenerationThread->endGeneration();
 
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( mPixmapGenerationThread->image() ) ) );
-
+    QMutexLocker locker( threadsLock() );
     mPixmapReady = true;
+
+    if ( m_closing )
+    {
+        delete request;
+        if ( mTextPageReady )
+        {
+            locker.unlock();
+            m_closingLoop->quit();
+        }
+        return;
+    }
+
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( mPixmapGenerationThread->image() ) ) );
 
     q->signalPixmapRequestDone( request );
 }
@@ -94,10 +111,29 @@ void GeneratorPrivate::textpageGenerationFinished()
     Page *page = mTextPageGenerationThread->page();
     mTextPageGenerationThread->endGeneration();
 
+    QMutexLocker locker( threadsLock() );
     mTextPageReady = true;
+
+    if ( m_closing )
+    {
+        delete mTextPageGenerationThread->textPage();
+        if ( mPixmapReady )
+        {
+            locker.unlock();
+            m_closingLoop->quit();
+        }
+        return;
+    }
 
     if ( mTextPageGenerationThread->textPage() )
         page->setTextPage( mTextPageGenerationThread->textPage() );
+}
+
+QMutex* GeneratorPrivate::threadsLock()
+{
+    if ( !m_threadsMutex )
+        m_threadsMutex = new QMutex();
+    return m_threadsMutex;
 }
 
 
@@ -125,7 +161,32 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
 
 bool Generator::closeDocument()
 {
-    return doCloseDocument();
+    Q_D( Generator );
+
+    d->m_closing = true;
+
+    d->threadsLock()->lock();
+    if ( !( d->mPixmapReady && d->mTextPageReady ) )
+    {
+        QEventLoop loop;
+        d->m_closingLoop = &loop;
+
+        d->threadsLock()->unlock();
+
+        loop.exec();
+
+        d->m_closingLoop = 0;
+    }
+    else
+    {
+        d->threadsLock()->unlock();
+    }
+
+    bool ret = doCloseDocument();
+
+    d->m_closing = false;
+
+    return ret;
 }
 
 bool Generator::canGeneratePixmap() const

@@ -69,6 +69,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // create labels and layout them
     QLabel *key = new QLabel( i18n( "%1:", titleString ), page );
     QLabel *value = new KSqueezedTextLabel( valueString, page );
+    value->setTextInteractionFlags( Qt::TextSelectableByMouse );
     layout->addWidget( key, row, 0, Qt::AlignRight );
     layout->addWidget( value, row, 1 );
     row++;
@@ -82,6 +83,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   if ( list.count() == 0 ) {
     QLabel *key = new QLabel( i18n( "Pages:" ), page );
     QLabel *value = new QLabel( QString::number( doc->pages() ), page );
+    value->setTextInteractionFlags( Qt::TextSelectableByMouse );
 
     layout->addWidget( key, row, 0, Qt::AlignRight );
     layout->addWidget( value, row, 1 );

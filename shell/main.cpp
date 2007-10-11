@@ -3,7 +3,7 @@
  *   Copyright (C) 2003 by Christophe Devriese                             *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2003-2007 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Andy Goossens <andygoossens@telenet.be>         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *

@@ -12,6 +12,7 @@ Description[ca]=Un kioslave per visualitzar els fitxers WinHelp
 Description[de]=Ein-/Ausgabemodul zur Anzeige von Windows-Hilfe-Dateien
 Description[el]=Ένα kioslave για την εμφάνιση αρχείων WinHelp
 Description[es]=Un «kioslave» para mostrar archivos WinHelp
+Description[et]=KIO-moodul WinHelp-failide näitamiseks
 Description[gl]=Un kioslave para mostrar ficheiros WinHelp
 Description[is]=Kioslave tilað sýna WinHelp skrár
 Description[ja]=WinHelp ファイルを表示するための kioslave

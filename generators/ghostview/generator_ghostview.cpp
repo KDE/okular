@@ -14,6 +14,7 @@
 #include <qpixmap.h>
 #include <qsize.h>
 #include <qtoolbox.h>
+#include <QtGui/QPrinter>
 
 #include <kactioncollection.h>
 #include <kconfigdialog.h>
@@ -21,7 +22,6 @@
 #include <kicon.h>
 #include <klocale.h>
 #include <kmimetype.h>
-#include <kprinter.h>
 #include <ktemporaryfile.h>
 
 #include <okular/core/page.h>
@@ -141,8 +141,10 @@ int GSGenerator::angle( CDSC_ORIENTATION_ENUM orientation ) const
     return angle;
 }
 
-bool GSGenerator::print( KPrinter& printer ) 
+bool GSGenerator::print( QPrinter& printer ) 
 {
+/*  This printing method unsupported in QPrinter, looking for alternative.
+
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
     if ( tf.open() )
@@ -155,6 +157,7 @@ bool GSGenerator::print( KPrinter& printer )
         tf.close();
         return result;
     }
+*/
     return false; 
 }
 

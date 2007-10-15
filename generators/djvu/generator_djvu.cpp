@@ -22,10 +22,11 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
+#include <QtGui/QPrinter>
+
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kprinter.h>
 #include <ktemporaryfile.h>
 
 static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode &parentDestination )
@@ -182,8 +183,10 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     return m_docSyn;
 }
 
-bool DjVuGenerator::print( KPrinter& printer )
+bool DjVuGenerator::print( QPrinter& printer )
 {
+/*  This printing method unsupported in QPrinter, looking for alternative.
+
     QList<int> pageList;
     if ( !printer.previewOnly() )
         pageList = printer.pageList();
@@ -204,6 +207,7 @@ bool DjVuGenerator::print( KPrinter& printer )
     {
         return printer.printFiles( QStringList( tf.fileName() ), false );
     }
+*/
     return false;
 }
 

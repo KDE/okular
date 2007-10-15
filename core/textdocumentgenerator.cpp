@@ -16,8 +16,7 @@
 #include <QtCore/QVector>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
-
-#include <kprinter.h>
+#include <QtGui/QPrinter>
 
 #include <okular/core/action.h>
 #include <okular/core/annotations.h>
@@ -315,7 +314,7 @@ Okular::TextPage* TextDocumentGenerator::textPage( Okular::Page * page )
     return d->createTextPage( page->number() );
 }
 
-bool TextDocumentGenerator::print( KPrinter& printer )
+bool TextDocumentGenerator::print( QPrinter& printer )
 {
     Q_D( TextDocumentGenerator );
     if ( !d->mDocument )

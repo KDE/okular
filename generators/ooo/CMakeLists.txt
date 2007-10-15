@@ -18,7 +18,7 @@ set(okularGenerator_ooo_PART_SRCS
 
 kde4_add_plugin(okularGenerator_ooo WITH_PREFIX ${okularGenerator_ooo_PART_SRCS})
 
-target_link_libraries(okularGenerator_ooo   ${POPPLER_LIBRARY} okularcore ${KDE4_KDEPRINT_LIBS} ${MATH_LIB} )
+target_link_libraries(okularGenerator_ooo   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} )
 
 install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 

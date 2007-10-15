@@ -40,7 +40,7 @@ class dvifile;
 class dviRenderer;
 class ghostscript_interface;
 //class infoDialog;
-class KPrinter;
+class QPrinter;
 class KProgressDialog;
 class PreBookmark;
 class TeXFontDefinition;
@@ -153,7 +153,7 @@ public:
 //  void          editor_finished(const DVISourceEditor*);
 
 public slots:
-  void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), KPrinter* printer = 0);
+  void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0);
   void          exportPDF();
 
 //  void          showInfo();

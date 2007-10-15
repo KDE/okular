@@ -14,13 +14,13 @@
 #include <QtCore/QBuffer>
 #include <QtGui/QImageReader>
 #include <QtGui/QPainter>
+#include <QtGui/QPrinter>
 
 #include <kaboutdata.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kprinter.h>
 
 #include <okular/core/page.h>
 
@@ -118,12 +118,15 @@ QImage KIMGIOGenerator::image( Okular::PixmapRequest * request )
     return m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 }
 
-bool KIMGIOGenerator::print( KPrinter& printer )
+bool KIMGIOGenerator::print( QPrinter& printer )
 {
     QPainter p( &printer );
 
     uint left, top, right, bottom;
-    printer.margins( &left, &top, &right, &bottom );
+    left = printer.paperRect().left() - printer.pageRect().left();
+    top = printer.paperRect().top() - printer.pageRect().top();
+    right = printer.paperRect().right() - printer.pageRect().right();
+    bottom = printer.paperRect().bottom() - printer.pageRect().bottom();
 
     int pageWidth = printer.width() - right;
     int pageHeight = printer.height() - bottom;

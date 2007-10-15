@@ -41,7 +41,7 @@ class PluckerGenerator : public Okular::Generator
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
 
         // [INHERITED] print document using already configured kprinter
-        bool print( KPrinter& printer );
+        bool print( QPrinter& printer );
 
     protected:
         bool doCloseDocument();

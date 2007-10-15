@@ -28,12 +28,14 @@
 #include <qfile.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <QtGui/QPrinter>
+#include <QtGui/QPrintDialog>
+
 #include <kvbox.h>
 #include <kaboutapplicationdialog.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
-#include <kprinter.h>
 #include <kstandardaction.h>
 #include <kparts/genericfactory.h>
 #include <kfiledialog.h>
@@ -53,6 +55,7 @@
 #include <kicon.h>
 #include <kfilterdev.h>
 #include <knewstuff2/engine.h>
+#include <kdeprintdialog.h>
 
 // local includes
 #include "aboutdata.h"
@@ -1280,6 +1283,10 @@ void Part::slotNewGeneratorConfig()
 
 void Part::slotPrintPreview()
 {
+/*  Disable as Qt does not support Print Preview in 4.3 (coming in 4.4) and
+    the interim KPrintPreview class just generates a PDF and calls the okular
+    KPart to display it.  Recursion has its limits :-)
+
     if (m_document->pages() == 0) return;
 
     double width, height;
@@ -1310,6 +1317,7 @@ void Part::slotPrintPreview()
     }
 
     doPrint(printer);
+*/
 }
 
 
@@ -1480,12 +1488,17 @@ void Part::slotPrint()
 
     double width, height;
     int landscape, portrait;
-    KPrinter printer;
+    QPrinter printer;
     const Okular::Page *page;
+
+/*  Disable as QPrinter does not support most of this page management stuff.
+    Besides no point sorting this out until we solve the main printFiles problem.
+    However leave basic printing in place as some formats still support it.
 
     printer.setPageSelection(KPrinter::ApplicationSide);
     printer.setMinMax(1, m_document->pages());
     printer.setCurrentPage(m_document->currentPage()+1);
+*/
 
     // if some pages are landscape and others are not the most common win as kprinter does
     // not accept a per page setting
@@ -1500,8 +1513,9 @@ void Part::slotPrint()
         if (width > height) landscape++;
         else portrait++;
     }
-    if (landscape > portrait) printer.setOrientation(KPrinter::Landscape);
+    if (landscape > portrait) printer.setOrientation(QPrinter::Landscape);
 
+/*
     // range detecting
     QString range;
     uint pages = m_document->pages();
@@ -1543,6 +1557,7 @@ void Part::slotPrint()
             range += QString::number( startId + 1 );
     }
     printer.setOption( "kde-range", range );
+*/
 
     // title
     QString title = m_document->metaData( "DocumentTitle" ).toString();
@@ -1555,20 +1570,29 @@ void Part::slotPrint()
         printer.setDocName( title );
     }
 
+    QPrintDialog *printDialog;
+    QWidget * w;
+
     if ( m_document->canConfigurePrinter() )
     {
-        KPrintDialogPage * w = m_document->printConfigurationWidget();
-        if ( w )
-        {
-            printer.addDialogPage( w );
-        }
+        w = m_document->printConfigurationWidget();
     }
-    if ( printer.setup( widget() ) )
+
+    if ( w )
+    {
+        printDialog = KdePrint::createPrintDialog( &printer, QList<QWidget*>() << w, widget() );
+    }
+    else
+    {
+        printDialog = KdePrint::createPrintDialog( &printer, widget() );
+    }
+
+    if ( printDialog->exec() )
         doPrint( printer );
 }
 
 
-void Part::doPrint(KPrinter &printer)
+void Part::doPrint(QPrinter &printer)
 {
     if (!m_document->isAllowed(Okular::AllowPrint))
     {

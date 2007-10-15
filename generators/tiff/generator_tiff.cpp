@@ -14,10 +14,11 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
+#include <QtGui/QPrinter>
+
 #include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kprinter.h>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
@@ -210,7 +211,7 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
     }
 }
 
-bool TIFFGenerator::print( KPrinter& printer )
+bool TIFFGenerator::print( QPrinter& printer )
 {
     uint32 width = 0;
     uint32 height = 0;

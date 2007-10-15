@@ -28,12 +28,12 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprinter.h>
 #include <kprocess.h>
 
 #include <QFileInfo>
 #include <QLabel>
 #include <QTemporaryFile>
+#include <QtGui/QPrinter>
 
 #include <cassert>
 
@@ -309,7 +309,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                              QWidget* parent_widget,
                              const QString& output_name,
                              const QStringList& options,
-                             KPrinter* printer)
+                             QPrinter* printer)
   : DVIExport(parent, parent_widget),
     printer_(printer)
 {
@@ -479,7 +479,8 @@ void DVIExportToPS::finished_impl(int exit_code)
   if (printer_ && !output_name_.isEmpty()) {
     const QFileInfo output(output_name_);
     if (output.exists() && output.isReadable())
-      printer_->printFiles(QStringList(output_name_), true);
+      //Unsupported in Qt
+      //printer_->printFiles(QStringList(output_name_), true);
   }
 
 #ifndef DVIEXPORT_USE_QPROCESS

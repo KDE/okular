@@ -10,8 +10,7 @@
 #include "generator_comicbook.h"
 
 #include <QtGui/QPainter>
-
-#include <kprinter.h>
+#include <QtGui/QPrinter>
 
 #include <okular/core/page.h>
 
@@ -67,14 +66,17 @@ QImage ComicBookGenerator::image( Okular::PixmapRequest * request )
     return image.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 }
 
-bool ComicBookGenerator::print( KPrinter& printer )
+bool ComicBookGenerator::print( QPrinter& printer )
 {
     QPainter p( &printer );
 
     for ( int i = 0; i < mDocument.pages(); ++i ) {
         QImage image = mDocument.pageImage( i );
         uint left, top, right, bottom;
-        printer.margins( &left, &top, &right, &bottom );
+        left = printer.paperRect().left() - printer.pageRect().left();
+        top = printer.paperRect().top() - printer.pageRect().top();
+        right = printer.paperRect().right() - printer.pageRect().right();
+        bottom = printer.paperRect().bottom() - printer.pageRect().bottom();
 
         int pageWidth = printer.width() - right;
         int pageHeight = printer.height() - bottom;

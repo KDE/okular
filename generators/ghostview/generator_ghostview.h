@@ -48,7 +48,7 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         void freeGui();
 
         // print document using already configured kprinter
-        bool print( KPrinter& /*printer*/ );
+        bool print( QPrinter& /*printer*/ );
         QString fileName() const;
 
         bool reparseConfig();

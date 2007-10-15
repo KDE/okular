@@ -71,7 +71,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void generatePixmap( Okular::PixmapRequest * request );
 
         // [INHERITED] print page using an already configured kprinter
-        bool print( KPrinter& printer );
+        bool print( QPrinter& printer );
 
         // [INHERITED] reply to some metadata requests
         QVariant metaData( const QString & key, const QVariant & option ) const;
@@ -85,7 +85,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
 
         // [INHERITED] print interface
-        KPrintDialogPage* printConfigurationWidget() const;
+        QWidget* printConfigurationWidget() const;
 
     protected:
         bool doCloseDocument();

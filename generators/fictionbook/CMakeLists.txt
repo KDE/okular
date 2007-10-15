@@ -15,7 +15,7 @@ set(okularGenerator_fb_PART_SRCS
 
 kde4_add_plugin(okularGenerator_fb WITH_PREFIX ${okularGenerator_fb_PART_SRCS})
 
-target_link_libraries(okularGenerator_fb ${POPPLER_LIBRARY} okularcore ${KDE4_KDEPRINT_LIBS} ${MATH_LIB} )
+target_link_libraries(okularGenerator_fb ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} )
 
 install(TARGETS okularGenerator_fb DESTINATION ${PLUGIN_INSTALL_DIR})
 

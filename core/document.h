@@ -23,12 +23,11 @@
 
 #include <kmimetype.h>
 
+class QPrinter;
 class KComponentData;
 class KBookmark;
 class KConfigDialog;
 class KXMLGUIClient;
-class KPrinter;
-class KPrintDialogPage;
 class KUrl;
 
 namespace Okular {
@@ -456,13 +455,13 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Prints the document to the given @p printer.
          */
-        bool print( KPrinter &printer );
+        bool print( QPrinter &printer );
 
         /**
          * Returns a custom printer configuration page or 0 if no
          * custom printer configuration page is available.
          */
-        KPrintDialogPage* printConfigurationWidget() const;
+        QWidget* printConfigurationWidget() const;
 
         /**
          * Fill the KConfigDialog @p dialog with the setting pages of the

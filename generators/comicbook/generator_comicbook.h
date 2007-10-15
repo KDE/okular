@@ -26,7 +26,7 @@ class ComicBookGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
         // [INHERITED] print document using already configured kprinter
-        bool print( KPrinter& printer );
+        bool print( QPrinter& printer );
 
     protected:
         bool doCloseDocument();

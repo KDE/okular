@@ -19,15 +19,15 @@
 #include <qmutex.h>
 #include <qregexp.h>
 #include <qtextstream.h>
+#include <QtGui/QPrinter>
+
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
 #include <kwallet.h>
-#include <kprinter.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kdeprint/kprintdialogpage.h>
 
 #include <okular/core/action.h>
 #include <okular/core/page.h>
@@ -91,12 +91,12 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
         Poppler::EmbeddedFile *ef;
 };
 
-class PDFOptionsPage : public KPrintDialogPage
+class PDFOptionsPage : public QWidget
 {
    public:
        PDFOptionsPage()
        {
-           setTitle( i18n( "PDF Options" ) );
+           setWindowTitle( i18n( "PDF Options" ) );
            QVBoxLayout *layout = new QVBoxLayout(this);
            m_forceRaster = new QCheckBox(i18n("Force rasterization"), this);
            m_forceRaster->setToolTip(i18n("Rasterize into an image before printing"));
@@ -828,8 +828,9 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     return tp;
 }
 
-bool PDFGenerator::print( KPrinter& printer )
+bool PDFGenerator::print( QPrinter& printer )
 {
+/*  This printing method unsupported in QPrinter, looking for alternative.
     int width, height;
     // PageSize is a CUPS artificially created setting 
     QString ps = printer.option( "PageSize" );
@@ -940,6 +941,7 @@ bool PDFGenerator::print( KPrinter& printer )
         userMutex()->unlock();
         return false;
     }
+*/
 	return false;
 }
 
@@ -1499,7 +1501,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
             pagesVector[i]->setSourceReferences( refRects.at(i) );
 }
 
-KPrintDialogPage* PDFGenerator::printConfigurationWidget() const
+QWidget* PDFGenerator::printConfigurationWidget() const
 {
 #ifdef HAVE_POPPLER_0_6
     return new PDFOptionsPage();

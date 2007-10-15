@@ -30,6 +30,7 @@
 
 class QAction;
 class QWidget;
+class QPrinter;
 
 class KUrl;
 class KConfigGroup;
@@ -38,7 +39,6 @@ class KToggleAction;
 class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
-class KPrinter;
 class KTemporaryFile;
 
 class FindBar;
@@ -164,7 +164,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void psTransformEnded(int, QProcess::ExitStatus);
 
     private:
-        void doPrint( KPrinter& printer );
+        void doPrint( QPrinter& printer );
         bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();

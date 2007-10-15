@@ -32,10 +32,10 @@
     }
 
 class QMutex;
+class QPrinter;
 class KAboutData;
 class KComponentData;
 class KIcon;
-class KPrinter;
 
 namespace Okular {
 
@@ -330,7 +330,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * This method is called to print the document to the given @p printer.
          */
-        virtual bool print( KPrinter &printer );
+        virtual bool print( QPrinter &printer );
 
         /**
          * This method returns the meta data of the given @p key with the given @p option

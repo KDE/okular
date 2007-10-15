@@ -12,6 +12,7 @@
 #include <QtCore/QFile>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
+#include <QtGui/QPrinter>
 #include <QtGui/QTextDocument>
 
 #include <klocale.h>
@@ -185,7 +186,7 @@ bool PluckerGenerator::exportTo( const QString &fileName, const Okular::ExportFo
     return false;
 }
 
-bool PluckerGenerator::print( KPrinter& )
+bool PluckerGenerator::print( QPrinter& )
 {
 /*
     for ( int i = 0; i < mPages.count(); ++i )

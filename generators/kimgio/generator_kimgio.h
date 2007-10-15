@@ -28,7 +28,7 @@ class KIMGIOGenerator : public Okular::Generator, public Okular::GuiInterface
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
 
         // [INHERITED] print document using already configured kprinter
-        bool print( KPrinter& printer );
+        bool print( QPrinter& printer );
 
     protected:
         bool doCloseDocument();

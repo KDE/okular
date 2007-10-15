@@ -22,6 +22,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QLabel>
+#include <QtGui/QPrinter>
 
 #include <kaboutdata.h>
 #include <kauthorized.h>
@@ -2406,12 +2407,12 @@ void Document::processSourceReference( const SourceReference * ref )
     QProcess::startDetached( p );
 }
 
-bool Document::print( KPrinter &printer )
+bool Document::print( QPrinter &printer )
 {
     return d->m_generator ? d->m_generator->print( printer ) : false;
 }
 
-KPrintDialogPage* Document::printConfigurationWidget() const
+QWidget* Document::printConfigurationWidget() const
 {
     if ( d->m_generator )
     {

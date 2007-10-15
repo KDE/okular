@@ -766,7 +766,7 @@ void dviRenderer::exportPDF()
 }
 
 
-void dviRenderer::exportPS(const QString& fname, const QStringList& options, KPrinter* printer)
+void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer)
 {
   Q_UNUSED( fname );
   Q_UNUSED( options );

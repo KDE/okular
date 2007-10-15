@@ -11,6 +11,7 @@
 #include "generator_p.h"
 
 #include <qeventloop.h>
+#include <QtGui/QPrinter>
 
 #include <kaboutdata.h>
 #include <kcomponentdata.h>
@@ -289,7 +290,7 @@ void Generator::pageSizeChanged( const PageSize &, const PageSize & )
 {
 }
 
-bool Generator::print( KPrinter& )
+bool Generator::print( QPrinter& )
 {
     return false;
 }

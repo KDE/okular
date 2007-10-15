@@ -14,7 +14,7 @@
 
 #include <QtCore/QObject>
 
-class KPrintDialogPage;
+class QWidget;
 
 namespace Okular {
 
@@ -50,7 +50,7 @@ class OKULAR_EXPORT PrintInterface
          * @note don't keep a pointer to the new constructed widget, as it
          * will be handled elsewhere (in the Okular KPart)
          */
-        virtual KPrintDialogPage* printConfigurationWidget() const = 0;
+        virtual QWidget* printConfigurationWidget() const = 0;
 };
 
 }

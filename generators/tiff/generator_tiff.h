@@ -23,7 +23,7 @@ class TIFFGenerator : public Okular::Generator
 
         const Okular::DocumentInfo * generateDocumentInfo();
 
-        bool print( KPrinter& printer );
+        bool print( QPrinter& printer );
 
     protected:
         bool doCloseDocument();

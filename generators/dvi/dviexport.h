@@ -26,7 +26,7 @@
 
 class dviRenderer;
 class fontProgressDialog;
-class KPrinter;
+class QPrinter;
 class KProcess;
 class QStringList;
 
@@ -132,14 +132,14 @@ public:
                 QWidget* parent_widget,
                 const QString& output_name,
                 const QStringList& options,
-                KPrinter* printer);
+                QPrinter* printer);
 
 private:
   virtual void abort_process_impl();
   //virtual void finished_impl(int exit_code);
   virtual void finished_impl();
 
-  KPrinter* printer_;
+  QPrinter* printer_;
   QString output_name_;
   QString tmpfile_name_;
 };

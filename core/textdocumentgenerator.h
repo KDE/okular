@@ -135,8 +135,8 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest * request );
 
-        // [INHERITED] print document using already configured kprinter
-        bool print( KPrinter& printer );
+        // [INHERITED] print document using already configured QPrinter
+        bool print( QPrinter& printer );
 
         // [INHERITED] text exporting
         Okular::ExportFormat::List exportFormats() const;

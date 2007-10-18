@@ -56,6 +56,7 @@
 #include <kfilterdev.h>
 #include <knewstuff2/engine.h>
 #include <kdeprintdialog.h>
+#include <kprintpreview.h>
 
 // local includes
 #include "aboutdata.h"
@@ -1283,19 +1284,15 @@ void Part::slotNewGeneratorConfig()
 
 void Part::slotPrintPreview()
 {
-/*  Disable as Qt does not support Print Preview in 4.3 (coming in 4.4) and
-    the interim KPrintPreview class just generates a PDF and calls the okular
-    KPart to display it.  Recursion has its limits :-)
-
     if (m_document->pages() == 0) return;
 
     double width, height;
     int landscape, portrait;
-    KPrinter printer;
+    QPrinter printer;
     const Okular::Page *page;
 
-    printer.setMinMax(1, m_document->pages());
-    printer.setPreviewOnly( true );
+//     printer.setMinMax(1, m_document->pages());
+//     printer.setPreviewOnly( true );
 
     // if some pages are landscape and others are not the most common win as kprinter does
     // not accept a per page setting
@@ -1313,11 +1310,14 @@ void Part::slotPrintPreview()
     if (landscape > portrait)
     {
         //  printer.setOption("orientation-requested", "4");
-        printer.setOrientation(KPrinter::Landscape);
+        printer.setOrientation( QPrinter::Landscape );
     }
 
+    KPrintPreview previewdlg( &printer, widget() );
+
     doPrint(printer);
-*/
+
+    previewdlg.exec();
 }
 
 

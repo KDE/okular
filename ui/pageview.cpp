@@ -79,7 +79,12 @@ static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
 class PageViewPrivate
 {
 public:
+    PageViewPrivate( PageView *qq );
+
+    FormWidgetsController* formWidgetsController();
+
     // the document, pageviewItems and the 'visible cache'
+    PageView *q;
     Okular::Document * document;
     QVector< PageViewItem * > items;
     QLinkedList< PageViewItem * > visibleItems;
@@ -121,6 +126,7 @@ public:
     bool blockPixmapsRequest;           // prevent pixmap requests
     PageViewMessage * messageWindow;    // in pageviewutils.h
     bool m_formsVisible;
+    FormWidgetsController *formsWidgetController;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -150,6 +156,24 @@ public:
     int setting_viewMode;
     int setting_viewCols;
 };
+
+PageViewPrivate::PageViewPrivate( PageView *qq )
+    : q( qq )
+{
+}
+
+FormWidgetsController* PageViewPrivate::formWidgetsController()
+{
+    if ( !formsWidgetController )
+    {
+        formsWidgetController = new FormWidgetsController();
+        QObject::connect( formsWidgetController, SIGNAL( changed( FormWidgetIface* ) ),
+                          q, SLOT( slotFormWidgetChanged( FormWidgetIface * ) ) );
+    }
+
+    return formsWidgetController;
+}
+
 
 class PageViewWidget : public QWidget
 {
@@ -244,7 +268,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     : QScrollArea( parent )
 {
     // create and initialize private storage structure
-    d = new PageViewPrivate();
+    d = new PageViewPrivate( this );
     d->document = document;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
@@ -269,6 +293,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
+    d->formsWidgetController = 0;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
@@ -330,6 +355,7 @@ PageView::~PageView()
     QVector< PageViewItem * >::const_iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
         delete *dIt;
+    delete d->formsWidgetController;
     d->document->removeObserver( this );
     delete d;
 }
@@ -677,6 +703,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             FormWidgetIface * w = FormWidgetFactory::createWidget( ff, widget() );
             if ( w )
             {
+                w->setPageItem( item );
+                w->setFormWidgetsController( d->formWidgetsController() );
                 w->setVisibility( d->m_formsVisible );
                 w->setCanBeFilled( d->document->isAllowed( Okular::AllowFillForms ) );
                 item->formWidgets().insert( ff->name(), w );
@@ -3152,6 +3180,10 @@ void PageView::slotPageSizes( int newsize )
 void PageView::slotToggleForms()
 {
     toggleFormWidgets( !d->m_formsVisible );
+}
+
+void PageView::slotFormWidgetChanged( FormWidgetIface *w )
+{
 }
 //END private SLOTS
 

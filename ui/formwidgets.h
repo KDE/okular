@@ -20,12 +20,29 @@
 #include <kurlrequester.h>
 
 class FormWidgetIface;
+class PageViewItem;
 
 namespace Okular {
 class FormField;
 class FormFieldChoice;
 class FormFieldText;
 }
+
+
+class FormWidgetsController : public QObject
+{
+    Q_OBJECT
+
+    public:
+        FormWidgetsController( QObject *parent = 0 );
+        virtual ~FormWidgetsController();
+
+        void signalChanged( FormWidgetIface *w );
+
+    signals:
+        void changed( FormWidgetIface *w );
+};
+
 
 class FormWidgetFactory
 {
@@ -46,9 +63,18 @@ class FormWidgetIface
         bool setVisibility( bool visible );
         void setCanBeFilled( bool fill );
 
+        void setPageItem( PageViewItem *pageItem );
+        PageViewItem* pageItem() const;
+
+        void setFormWidgetsController( FormWidgetsController *controller );
+
+    protected:
+        FormWidgetsController * m_controller;
+
     private:
         QWidget * m_widget;
         Okular::FormField * m_ff;
+        PageViewItem * m_pageItem;
 };
 
 

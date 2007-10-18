@@ -15,6 +15,21 @@
 // local includes
 #include "core/form.h"
 
+FormWidgetsController::FormWidgetsController( QObject *parent )
+    : QObject( parent )
+{
+}
+
+FormWidgetsController::~FormWidgetsController()
+{
+}
+
+void FormWidgetsController::signalChanged( FormWidgetIface *w )
+{
+    emit changed( w );
+}
+
+
 FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidget * parent )
 {
     FormWidgetIface * widget = 0;
@@ -58,7 +73,7 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
 
 
 FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
-    : m_widget( w ), m_ff( ff )
+    : m_controller( 0 ), m_widget( w ), m_ff( ff ), m_pageItem( 0 )
 {
 }
 
@@ -96,6 +111,21 @@ bool FormWidgetIface::setVisibility( bool visible )
 void FormWidgetIface::setCanBeFilled( bool fill )
 {
     m_widget->setEnabled( fill );
+}
+
+void FormWidgetIface::setPageItem( PageViewItem *pageItem )
+{
+    m_pageItem = pageItem;
+}
+
+PageViewItem* FormWidgetIface::pageItem() const
+{
+    return m_pageItem;
+}
+
+void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controller )
+{
+    m_controller = controller;
 }
 
 

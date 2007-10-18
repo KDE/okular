@@ -35,6 +35,7 @@ class Document;
 class Annotation;
 }
 
+class FormWidgetIface;
 class PageViewPrivate;
 class PageViewWidget;
 
@@ -194,6 +195,7 @@ Q_OBJECT
         void slotRotateOriginal();
         void slotPageSizes( int );
         void slotToggleForms();
+        void slotFormWidgetChanged( FormWidgetIface *w );
 };
 
 #endif

@@ -2489,7 +2489,8 @@ void PageView::toggleFormWidgets( bool on )
     QVector< PageViewItem * >::const_iterator dIt = d->items.begin(), dEnd = d->items.end();
     for ( ; dIt != dEnd; ++dIt )
     {
-        somehadfocus = somehadfocus || (*dIt)->setFormWidgetsVisible( on );
+        bool hadfocus = (*dIt)->setFormWidgetsVisible( on );
+        somehadfocus = somehadfocus || hadfocus;
     }
     if ( somehadfocus )
         setFocus();

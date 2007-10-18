@@ -123,7 +123,10 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
     bool somehadfocus = false;
     QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
-        somehadfocus = somehadfocus || (*it)->setVisibility( visible );
+    {
+        bool hadfocus = (*it)->setVisibility( visible );
+        somehadfocus = somehadfocus || hadfocus;
+    }
     return somehadfocus;
 }
 

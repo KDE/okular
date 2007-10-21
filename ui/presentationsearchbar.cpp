@@ -75,7 +75,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     m_search->setSearchMoveViewport( true );
     lay->addWidget( m_search );
 
-    KPushButton * findNextBtn = new KPushButton( KIcon( "find-next" ), i18n( "Find Next" ), this );
+    KPushButton * findNextBtn = new KPushButton( KIcon( "edit-find-next" ), i18n( "Find Next" ), this );
     lay->addWidget( findNextBtn );
 
     m_anchor->installEventFilter( this );

@@ -325,13 +325,13 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
-    m_prevBookmark->setIcon(KIcon( "find-previous" ));
+    m_prevBookmark->setIcon(KIcon( "edit-find-previous" ));
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
     connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
-    m_nextBookmark->setIcon(KIcon( "find-next" ));
+    m_nextBookmark->setIcon(KIcon( "edit-find-next" ));
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
     connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 

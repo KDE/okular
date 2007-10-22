@@ -176,12 +176,12 @@ SplashT1Font::~SplashT1Font() {
 }
 
 GBool SplashT1Font::getGlyph(int c, int xFrac, int yFrac,
-			     SplashGlyphBitmap *bitmap) {
-  return SplashFont::getGlyph(c, 0, 0, bitmap);
+			     SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes) {
+  return SplashFont::getGlyph(c, 0, 0, bitmap, x0, y0, clip, clipRes);
 }
 
 GBool SplashT1Font::makeGlyph(int c, int xFrac, int yFrac,
-			      SplashGlyphBitmap *bitmap) {
+			      SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes) {
   GLYPH *glyph;
   int n, i;
 
@@ -210,6 +210,11 @@ GBool SplashT1Font::makeGlyph(int c, int xFrac, int yFrac,
     }
     bitmap->freeData = gTrue;
   }
+
+  *clipRes = clip->testRect(x0 - bitmap->x,
+                            y0 - bitmap->y,
+                            x0 - bitmap->x + bitmap->w - 1,
+                            y0 - bitmap->y + bitmap->h - 1);
 
   return gTrue;
 }

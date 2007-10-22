@@ -52,6 +52,7 @@ extern void *grealloc(void *p, int size) GMEM_EXCEP;
  */
 extern void *gmallocn(int nObjs, int objSize) GMEM_EXCEP;
 extern void *greallocn(void *p, int nObjs, int objSize) GMEM_EXCEP;
+extern void *gmallocn_checkoverflow(int nObjs, int objSize) GMEM_EXCEP;
 
 /*
  * Same as free, but checks for and ignores NULL pointers.

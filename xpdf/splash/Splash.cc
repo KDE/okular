@@ -1626,7 +1626,7 @@ SplashError Splash::fillChar(SplashCoord x, SplashCoord y,
   SplashGlyphBitmap glyph;
   SplashCoord xt, yt;
   int x0, y0, xFrac, yFrac;
-  SplashError err;
+  SplashClipResult clipRes;
 
   if (debugMode) {
     printf("fillChar: x=%.2f y=%.2f c=%3d=0x%02x='%c'\n",
@@ -1637,17 +1637,20 @@ SplashError Splash::fillChar(SplashCoord x, SplashCoord y,
   xFrac = splashFloor((xt - x0) * splashFontFraction);
   y0 = splashFloor(yt);
   yFrac = splashFloor((yt - y0) * splashFontFraction);
-  if (!font->getGlyph(c, xFrac, yFrac, &glyph)) {
+  if (!font->getGlyph(c, xFrac, yFrac, &glyph, x0, y0, state->clip, &clipRes)) {
     return splashErrNoGlyph;
   }
-  err = fillGlyph2(x0, y0, &glyph);
+  if (clipRes != splashClipAllOutside) {
+    fillGlyph2(x0, y0, &glyph, clipRes == splashClipAllInside);
+  }
+  opClipRes = clipRes;
   if (glyph.freeData) {
     gfree(glyph.data);
   }
-  return err;
+  return splashOk;
 }
 
-SplashError Splash::fillGlyph(SplashCoord x, SplashCoord y,
+void Splash::fillGlyph(SplashCoord x, SplashCoord y,
 			      SplashGlyphBitmap *glyph) {
   SplashCoord xt, yt;
   int x0, y0;
@@ -1655,23 +1658,21 @@ SplashError Splash::fillGlyph(SplashCoord x, SplashCoord y,
   transform(state->matrix, x, y, &xt, &yt);
   x0 = splashFloor(xt);
   y0 = splashFloor(yt);
-  return fillGlyph2(x0, y0, glyph);
+  SplashClipResult clipRes = state->clip->testRect(x0 - glyph->x,
+                             y0 - glyph->y,
+                             x0 - glyph->x + glyph->w - 1,
+                             y0 - glyph->y + glyph->h - 1);
+  if (clipRes != splashClipAllOutside) {
+    fillGlyph2(x0, y0, glyph, clipRes == splashClipAllInside);
+  }
+  opClipRes = clipRes;
 }
 
-SplashError Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph) {
+void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) {
   SplashPipe pipe;
-  SplashClipResult clipRes;
-  GBool noClip;
   int alpha0, alpha;
   Guchar *p;
   int x1, y1, xx, xx1, yy;
-
-  if ((clipRes = state->clip->testRect(x0 - glyph->x,
-				       y0 - glyph->y,
-				       x0 - glyph->x + glyph->w - 1,
-				       y0 - glyph->y + glyph->h - 1))
-      != splashClipAllOutside) {
-    noClip = clipRes == splashClipAllInside;
 
     if (noClip) {
       if (glyph->aa) {
@@ -1763,10 +1764,6 @@ SplashError Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph) {
 	}
       }
     }
-  }
-  opClipRes = clipRes;
-
-  return splashOk;
 }
 
 SplashError Splash::fillImageMask(SplashImageMaskSource src, void *srcData,

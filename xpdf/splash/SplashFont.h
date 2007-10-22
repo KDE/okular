@@ -15,6 +15,7 @@
 
 #include "gtypes.h"
 #include "SplashTypes.h"
+#include "SplashClip.h"
 
 struct SplashGlyphBitmap;
 struct SplashFontCacheTag;
@@ -66,12 +67,12 @@ public:
   // should override this to zero out xFrac and/or yFrac if they don't
   // support fractional coordinates.
   virtual GBool getGlyph(int c, int xFrac, int yFrac,
-			 SplashGlyphBitmap *bitmap);
+			 SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes);
 
   // Rasterize a glyph.  The <xFrac> and <yFrac> values are the same
   // as described for getGlyph.
   virtual GBool makeGlyph(int c, int xFrac, int yFrac,
-			  SplashGlyphBitmap *bitmap) = 0;
+			  SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes) = 0;
 
   // Return the path for a glyph.
   virtual SplashPath *getGlyphPath(int c) = 0;

@@ -151,7 +151,7 @@ public:
 
   // Draw a glyph, using the current fill pattern.  This function does
   // not free any data, i.e., it ignores glyph->freeData.
-  SplashError fillGlyph(SplashCoord x, SplashCoord y,
+  void fillGlyph(SplashCoord x, SplashCoord y,
 			SplashGlyphBitmap *glyph);
 
   // Draws an image mask using the fill color.  This will read <h>
@@ -267,7 +267,7 @@ private:
   SplashPath *makeDashedPath(SplashPath *xPath);
   SplashError fillWithPattern(SplashPath *path, GBool eo,
 			      SplashPattern *pattern, SplashCoord alpha);
-  SplashError fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph);
+  void fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noclip);
   void dumpPath(SplashPath *path);
   void dumpXPath(SplashXPath *path);
 

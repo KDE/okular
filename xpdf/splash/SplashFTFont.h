@@ -35,12 +35,12 @@ public:
 
   // Munge xFrac and yFrac before calling SplashFont::getGlyph.
   virtual GBool getGlyph(int c, int xFrac, int yFrac,
-			 SplashGlyphBitmap *bitmap);
+			 SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes);
 
   // Rasterize a glyph.  The <xFrac> and <yFrac> values are the same
   // as described for getGlyph.
   virtual GBool makeGlyph(int c, int xFrac, int yFrac,
-			  SplashGlyphBitmap *bitmap);
+			  SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes);
 
   // Return the path for a glyph.
   virtual SplashPath *getGlyphPath(int c);

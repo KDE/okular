@@ -172,6 +172,25 @@ void *gmallocn(int nObjs, int objSize) GMEM_EXCEP {
   return gmalloc(n);
 }
 
+void *gmallocn_checkoverflow(int nObjs, int objSize) GMEM_EXCEP {
+  int n;
+
+  if (nObjs == 0) {
+    return NULL;
+  }
+  n = nObjs * objSize;
+  if (objSize <= 0 || nObjs < 0 || nObjs >= INT_MAX / objSize) {
+#if USE_EXCEPTIONS
+    throw GMemException();
+#else
+    fprintf(stderr, "Bogus memory allocation size\n");
+    return NULL;
+#endif
+  }
+  return gmalloc(n);
+}
+
+
 void *greallocn(void *p, int nObjs, int objSize) GMEM_EXCEP {
   int n;
 

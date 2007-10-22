@@ -147,12 +147,12 @@ SplashFTFont::~SplashFTFont() {
 }
 
 GBool SplashFTFont::getGlyph(int c, int xFrac, int /*yFrac*/,
-			     SplashGlyphBitmap *bitmap) {
-  return SplashFont::getGlyph(c, xFrac, 0, bitmap);
+			     SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes) {
+  return SplashFont::getGlyph(c, xFrac, 0, bitmap, x0, y0, clip, clipRes);
 }
 
 GBool SplashFTFont::makeGlyph(int c, int xFrac, int /*yFrac*/,
-			      SplashGlyphBitmap *bitmap) {
+			      SplashGlyphBitmap *bitmap, int x0, int y0, SplashClip *clip, SplashClipResult *clipRes) {
   SplashFTFontFile *ff;
   FT_Vector offset;
   FT_GlyphSlot slot;
@@ -196,6 +196,24 @@ GBool SplashFTFont::makeGlyph(int c, int xFrac, int /*yFrac*/,
     return gFalse;
   }
 #endif
+
+  FT_Glyph_Metrics *glyphMetrics = &(ff->face->glyph->metrics);
+  // prelimirary values from FT_Glyph_Metrics
+  bitmap->x = splashRound(-glyphMetrics->horiBearingX / 64.0);
+  bitmap->y = splashRound(glyphMetrics->horiBearingY / 64.0);
+  bitmap->w = splashRound(glyphMetrics->width / 64.0);
+  bitmap->h = splashRound(glyphMetrics->height / 64.0);
+
+  *clipRes = clip->testRect(x0 - bitmap->x,
+                            y0 - bitmap->y,
+                            x0 - bitmap->x + bitmap->w - 1,
+                            y0 - bitmap->y + bitmap->h - 1);
+  if (*clipRes == splashClipAllOutside)
+  {
+    bitmap->freeData = gFalse;
+    return gTrue;
+  }
+
   if (FT_Render_Glyph(slot, aa ? ft_render_mode_normal
 		               : ft_render_mode_mono)) {
     return gFalse;

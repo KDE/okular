@@ -1609,7 +1609,7 @@ void Part::doPrint(QPrinter &printer)
 
 void Part::restoreDocument(const KConfigGroup &group)
 {
-    KUrl url ( group.readPathEntry( "URL" ) );
+    KUrl url ( group.readPathEntry( "URL", QString() ) );
     if ( url.isValid() )
     {
         QString viewport = group.readEntry( "Viewport" );

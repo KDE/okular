@@ -787,7 +787,10 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
         }
 
         // go on creating annotations of the same type
-        slotToolSelected( m_lastToolID );
+        // for now, disable the "construct again the same annotation"
+        //slotToolSelected( m_lastToolID );
+        slotToolSelected( -1 );
+        m_toolBar->selectButton( -1 );
     }
 
     return modifiedRect;

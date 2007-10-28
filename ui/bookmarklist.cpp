@@ -187,7 +187,7 @@ void BookmarkList::slotContextMenu( const QPoint& p )
     else if ( res == editbm )
         m_tree->editItem( item, 0 );
     else if ( res == removebm )
-        m_document->removeBookmark( bmItem->url(), bmItem->bookmark() );
+        m_document->bookmarkManager()->removeBookmark( bmItem->url(), bmItem->bookmark() );
 }
 
 QList<QTreeWidgetItem*> createItems( const KUrl& baseurl, const KBookmark::List& bmlist )

@@ -1008,7 +1008,7 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
 Document::Document( QWidget *widget )
     : QObject( widget ), d( new DocumentPrivate( this ) )
 {
-    d->m_bookmarkManager = new BookmarkManager( this );
+    d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
 
     connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
@@ -2153,46 +2153,7 @@ void Document::cancelSearch()
     d->m_searchCancelled = true;
 }
 
-void Document::addBookmark( int n )
-{
-    if ( n >= 0 && n < (int)d->m_pagesVector.count() )
-    {
-        if ( d->m_bookmarkManager->setPageBookmark( n ) )
-            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
-    }
-}
-
-void Document::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
-{
-    if ( !vp.isValid() )
-        return;
-
-    if ( d->m_bookmarkManager->addBookmark( referurl, vp, title ) )
-        foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
-}
-
-bool Document::isBookmarked( int page ) const
-{
-    return d->m_bookmarkManager->isPageBookmarked( page );
-}
-
-void Document::removeBookmark( int n )
-{
-    if ( n >= 0 && n < (int)d->m_pagesVector.count() )
-    {
-        if ( d->m_bookmarkManager->removePageBookmark( n ) )
-            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
-    }
-}
-
-void Document::removeBookmark( const KUrl& referurl, const KBookmark& bm )
-{
-    int changedpage = d->m_bookmarkManager->removeBookmark( referurl, bm );
-    if ( changedpage != -1 )
-        foreachObserver( notifyPageChanged( changedpage, DocumentObserver::Bookmark ) );
-}
-
-const BookmarkManager * Document::bookmarkManager() const
+BookmarkManager * Document::bookmarkManager() const
 {
     return d->m_bookmarkManager;
 }

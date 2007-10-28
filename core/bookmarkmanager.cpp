@@ -19,9 +19,14 @@
 #include <kstandarddirs.h>
 
 // local includes
-#include "document.h"
+#include "document_p.h"
+#include "observer.h"
 
 using namespace Okular;
+
+#define foreachObserver( cmd ) {\
+    QMap< int, DocumentObserver * >::const_iterator it = d->document->m_observers.begin(), end = d->document->m_observers.end();\
+    for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 class OkularBookmarkAction : public KBookmarkAction
 {
@@ -57,14 +62,14 @@ class BookmarkManager::Private : public KBookmarkOwner
         BookmarkManager * q;
         KUrl url;
         QSet<int> urlBookmarks;
-        Document * document;
+        DocumentPrivate * document;
         QString file;
         KBookmarkManager * manager;
         QHash<KUrl, KBookmarkGroup> knownFiles;
 };
 
-BookmarkManager::BookmarkManager( Document * document )
-    : QObject( document ), d( new Private( this ) )
+BookmarkManager::BookmarkManager( DocumentPrivate * document )
+    : QObject( document->m_parent ), d( new Private( this ) )
 {
     setObjectName( "Okular::BookmarkManager" );
 
@@ -182,6 +187,15 @@ static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& 
     return it;
 }
 
+void BookmarkManager::addBookmark( int n )
+{
+    if ( n >= 0 && n < (int)d->document->m_pagesVector.count() )
+    {
+        if ( setPageBookmark( n ) )
+            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+    }
+}
+
 bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
 {
     if ( !referurl.isValid() || !vp.isValid() )
@@ -209,7 +223,17 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
     KUrl newurl = referurl;
     newurl.setHTMLRef( vp.toString() );
     it.value().addBookmark( newtitle, newurl, QString() );
+    foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
     return true;
+}
+
+void BookmarkManager::removeBookmark( int n )
+{
+    if ( n >= 0 && n < (int)d->document->m_pagesVector.count() )
+    {
+        if ( removePageBookmark( n ) )
+            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+    }
 }
 
 int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
@@ -226,6 +250,9 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
         return -1;
 
     it.value().deleteBookmark( bm );
+
+    foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+
     return vp.pageNumber;
 }
 
@@ -325,7 +352,7 @@ bool BookmarkManager::removePageBookmark( int page )
     return found;
 }
 
-bool BookmarkManager::isPageBookmarked( int page ) const
+bool BookmarkManager::isBookmarked( int page ) const
 {
     return d->urlBookmarks.contains( page );
 }

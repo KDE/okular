@@ -26,6 +26,7 @@
 // local includes
 #include "pagepainter.h"
 #include "core/area.h"
+#include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
@@ -677,7 +678,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( clipRect.top() < m_pixmapHeight + m_margin )
     {
         // if page is bookmarked draw a colored border
-        bool isBookmarked = m_document->isBookmarked( pageNumber() );
+        bool isBookmarked = m_document->bookmarkManager()->isBookmarked( pageNumber() );
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 1, m_pixmapHeight + 1 );

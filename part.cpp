@@ -983,7 +983,7 @@ void Part::updateBookmarksActions()
     if ( opened )
     {
         m_addBookmark->setEnabled( true );
-        if ( m_document->isBookmarked( m_document->currentPage() ) )
+        if ( m_document->bookmarkManager()->isBookmarked( m_document->currentPage() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
             m_addBookmark->setIcon( KIcon( "bookmark" ) ); // ### 'bookmark-remove' or similar
@@ -1112,13 +1112,13 @@ void Part::slotHistoryNext()
 void Part::slotAddBookmark()
 {
     uint current = m_document->currentPage();
-    if ( m_document->isBookmarked( current ) )
+    if ( m_document->bookmarkManager()->isBookmarked( current ) )
     {
-        m_document->removeBookmark( current );
+        m_document->bookmarkManager()->removeBookmark( current );
     }
     else
     {
-        m_document->addBookmark( current );
+        m_document->bookmarkManager()->addBookmark( current );
     }
 }
 
@@ -1132,7 +1132,7 @@ void Part::slotPreviousBookmark()
 
     for ( int i = current - 1; i >= 0; --i )
     {
-        if ( m_document->isBookmarked( i ) )
+        if ( m_document->bookmarkManager()->isBookmarked( i ) )
         {
             m_document->setViewportPage( i );
             break;
@@ -1151,7 +1151,7 @@ void Part::slotNextBookmark()
 
     for ( uint i = current + 1; i < pages; ++i )
     {
-        if ( m_document->isBookmarked( i ) )
+        if ( m_document->bookmarkManager()->isBookmarked( i ) )
         {
             m_document->setViewportPage( i );
             break;
@@ -1358,7 +1358,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     if (page)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-        if ( m_document->isBookmarked( page->number() ) )
+        if ( m_document->bookmarkManager()->isBookmarked( page->number() ) )
             removeBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
         else
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
@@ -1390,8 +1390,8 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         QAction *res = popup->exec(point);
         if (res)
         {
-            if (res == addBookmark) m_document->addBookmark( page->number() );
-            else if (res == removeBookmark) m_document->removeBookmark( page->number() );
+            if (res == addBookmark) m_document->bookmarkManager()->addBookmark( page->number() );
+            else if (res == removeBookmark) m_document->bookmarkManager()->removeBookmark( page->number() );
             else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
         }
     }
@@ -1524,7 +1524,7 @@ void Part::slotPrint()
 
     for ( uint i = 0; i < pages; ++i )
     {
-        if ( m_document->isBookmarked( i ) )
+        if ( m_document->bookmarkManager()->isBookmarked( i ) )
         {
             if ( startId < 0 )
                 startId = i;

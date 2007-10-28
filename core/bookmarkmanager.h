@@ -20,6 +20,7 @@ class KUrl;
 namespace Okular {
 
 class Document;
+class DocumentPrivate;
 class DocumentViewport;
 
 /**
@@ -50,6 +51,11 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         void save() const;
 
         /**
+         * Adds a bookmark for the given @p page.
+         */
+        void addBookmark( int page );
+
+        /**
          * Adds a new bookmark for the @p referurl at the specified viewport @p vp,
          * with an optional @p title.
          *
@@ -58,9 +64,19 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         bool addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title = QString() );
 
         /**
+         * Remove a bookmark for the given @p page.
+         */
+        void removeBookmark( int page );
+
+        /**
          * Removes the bookmark @p bm for the @p referurl specified.
          */
         int removeBookmark( const KUrl& referurl, const KBookmark& bm );
+
+        /**
+         * Returns whether the given @p page is bookmarked.
+         */
+        bool isBookmarked( int page ) const;
 
         /**
          * Returns a list of actions for the bookmarks of the specified @p url.
@@ -83,13 +99,13 @@ class OKULAR_EXPORT BookmarkManager : public QObject
 
         // private interface used by the Document
         friend class Document;
+        friend class DocumentPrivate;
 
-        explicit BookmarkManager( Document * document );
+        BookmarkManager( DocumentPrivate * document );
 
         void setUrl( const KUrl& url );
         bool setPageBookmark( int page );
         bool removePageBookmark( int page );
-        bool isPageBookmarked( int page ) const;
 
         Q_DISABLE_COPY( BookmarkManager )
 };

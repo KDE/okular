@@ -406,36 +406,9 @@ class OKULAR_EXPORT Document : public QObject
         void resetSearch( int searchID );
 
         /**
-         * Adds a bookmark for the given @p page.
-         */
-        void addBookmark( int page );
-
-        /**
-         * Adds a bookmark for the given @p referUrl at @p viewport.
-         *
-         * @param title The title of the bookmark.
-         */
-        void addBookmark( const KUrl& referUrl, const Okular::DocumentViewport& viewport, const QString& title = QString() );
-
-        /**
-         * Returns whether the given @p page is bookmarked.
-         */
-        bool isBookmarked( int page ) const;
-
-        /**
-         * Remove a bookmark for the given @p page.
-         */
-        void removeBookmark( int page );
-
-        /**
-         * Removes the given @p bookmark with the given @p referUrl.
-         */
-        void removeBookmark( const KUrl& referUrl, const KBookmark& bookmark );
-
-        /**
          * Returns the bookmark manager of the document.
          */
-        const BookmarkManager * bookmarkManager() const;
+        BookmarkManager * bookmarkManager() const;
 
         /**
          * Processes the given @p action.

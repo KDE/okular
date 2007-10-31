@@ -152,7 +152,7 @@ bool PDFGenerator::loadDocument( const QString & filePath, QValueVector<KPDFPage
         }
 
         // 2. reopen the document using the password
-        GString * pwd2 = new GString( password.data() );
+        GString * pwd2 = new GString( QString::fromLocal8Bit(password.data()).latin1() );
             delete pdfdoc;
         pdfdoc = new PDFDoc( new GString( QFile::encodeName( filePath ) ), pwd2, pwd2 );
             delete pwd2;

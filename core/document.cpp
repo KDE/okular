@@ -11,6 +11,11 @@
 #include "document.h"
 #include "document_p.h"
 
+#ifdef Q_OS_WIN
+#define _WIN32_WINNT 0x0500
+#include <windows.h>
+#endif
+
 // qt/kde/system includes
 #include <QtCore/QtAlgorithms>
 #include <QtCore/QDir>
@@ -59,10 +64,6 @@
 #include "sourcereference.h"
 
 #include <config-okular.h>
-
-#ifdef Q_OS_WIN
-#include <windows.h>
-#endif
 
 using namespace Okular;
 
@@ -146,8 +147,8 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
 void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
 {
     // [MEM] choose memory parameters based on configuration profile
-    qulonglong clipValue = -1;
-    qulonglong memoryToFree = -1;
+    qulonglong clipValue = ~0U;
+    qulonglong memoryToFree = ~0U;
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:

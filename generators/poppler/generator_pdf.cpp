@@ -411,7 +411,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
         }
 
         // 2. reopen the document using the password
-        pdfdoc->unlock( password.toLocal8Bit(), password.toLocal8Bit() );
+        pdfdoc->unlock( password.toLatin1(), password.toLatin1() );
 
         // 3. if the password is correct and the user chose to remember it, store it to the wallet
         if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() && keep )

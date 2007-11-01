@@ -34,6 +34,7 @@ class Sidebar : public QWidget
         int currentIndex() const;
 
         void setSidebarVisibility( bool visible );
+        bool isSidebarVisible() const;
 
     private slots:
         void itemClicked( QListWidgetItem *item );

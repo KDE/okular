@@ -914,6 +914,7 @@ void Part::slotDoFileDirty()
 
         // store the current toolbox pane
         m_dirtyToolboxIndex = m_sidebar->currentIndex();
+        m_wasSidebarVisible = m_sidebar->isSidebarVisible();
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
@@ -933,6 +934,10 @@ void Part::slotDoFileDirty()
         if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex ) )
         {
             m_sidebar->setCurrentIndex( m_dirtyToolboxIndex );
+        }
+        if ( m_sidebar->isSidebarVisible() != m_wasSidebarVisible )
+        {
+            m_sidebar->setCurrentIndex( m_sidebar->currentIndex() );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true);

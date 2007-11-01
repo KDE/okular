@@ -510,6 +510,11 @@ void Sidebar::setSidebarVisibility( bool visible )
     }
 }
 
+bool Sidebar::isSidebarVisible() const
+{
+    return d->sideContainer->isVisible();
+}
+
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
     if ( !item )

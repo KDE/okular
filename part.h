@@ -196,6 +196,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
         int m_dirtyToolboxIndex;
+        bool m_wasSidebarVisible;
 
         // Remember the search history
         QStringList m_searchHistory;

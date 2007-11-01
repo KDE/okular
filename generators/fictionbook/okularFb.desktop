@@ -13,4 +13,4 @@ Name[x-test]=xxokularxx
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service
-MimeType=application/x-fb
+MimeType=application/x-fb;

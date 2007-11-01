@@ -83,6 +83,7 @@ class DocumentPrivate
         void loadServiceList( const KService::List& offers );
         void unloadGenerator( const GeneratorInfo& info );
         void cacheExportFormats();
+        void setRotationInternal( int r, bool notify );
 
         // private slots
         void saveDocumentInfo() const;

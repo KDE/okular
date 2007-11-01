@@ -360,6 +360,16 @@ void DocumentPrivate::loadDocumentInfo()
                     if ( m_viewportHistory.isEmpty() )
                         m_viewportIterator = m_viewportHistory.insert( m_viewportHistory.end(), DocumentViewport() );
                 }
+                else if ( infoElement.tagName() == "rotation" )
+                {
+                    QString str = infoElement.text();
+                    bool ok = true;
+                    int newrotation = !str.isEmpty() ? ( str.toInt( &ok ) % 4 ) : 0;
+                    if ( ok && newrotation != 0 )
+                    {
+                        setRotationInternal( newrotation, false );
+                    }
+                }
                 infoNode = infoNode.nextSibling();
             }
         }
@@ -503,6 +513,13 @@ void DocumentPrivate::saveDocumentInfo() const
         // 2.2. Save document info (current viewport, history, ... ) to DOM
         QDomElement generalInfo = doc.createElement( "generalInfo" );
         root.appendChild( generalInfo );
+        // create rotation node
+        if ( m_rotation != Rotation0 )
+        {
+            QDomElement rotationNode = doc.createElement( "rotation" );
+            generalInfo.appendChild( rotationNode );
+            rotationNode.appendChild( doc.createTextNode( QString::number( (int)m_rotation ) ) );
+        }
         // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
         QLinkedList< DocumentViewport >::const_iterator backIterator = m_viewportIterator;
         if ( backIterator != m_viewportHistory.end() )
@@ -2500,22 +2517,33 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 
 void Document::setRotation( int r )
 {
+    d->setRotationInternal( r, true );
+}
+
+void DocumentPrivate::setRotationInternal( int r, bool notify )
+{
     Rotation rotation = (Rotation)r;
-    if ( !d->m_generator || ( d->m_rotation == rotation ) )
+    if ( !m_generator || ( m_rotation == rotation ) )
 	return;
 
     // tell the pages to rotate
-    QVector< Okular::Page * >::const_iterator pIt = d->m_pagesVector.begin();
-    QVector< Okular::Page * >::const_iterator pEnd = d->m_pagesVector.end();
+    QVector< Okular::Page * >::const_iterator pIt = m_pagesVector.begin();
+    QVector< Okular::Page * >::const_iterator pEnd = m_pagesVector.end();
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->d->rotateAt( rotation );
-    // notify the generator that the current rotation has changed
-    d->m_generator->rotationChanged( rotation, d->m_rotation );
+    if ( notify )
+    {
+        // notify the generator that the current rotation has changed
+        m_generator->rotationChanged( rotation, m_rotation );
+    }
     // set the new rotation
-    d->m_rotation = rotation;
+    m_rotation = rotation;
 
-    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::NewLayoutForPages ) );
-    foreachObserver( notifyContentsCleared (DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations));
+    if ( notify )
+    {
+        foreachObserverD( notifySetup( m_pagesVector, DocumentObserver::NewLayoutForPages ) );
+        foreachObserverD( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations ) );
+    }
     kDebug(OkularDebug) << "Rotated:" << r;
 }
 

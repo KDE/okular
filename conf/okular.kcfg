@@ -178,6 +178,9 @@
   <entry key="SidebarShowText" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="SidebarIconSize" type="UInt" >
+   <default>48</default>
+  </entry>
  </group>
  <group name="PageView" >
   <entry key="CenterFirstPageInRow" type="Bool" >

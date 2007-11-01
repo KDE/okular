@@ -41,6 +41,7 @@ class Sidebar : public QWidget
         void splitterMoved( int pos, int index );
         void listContextMenu( const QPoint & );
         void showTextToggled( bool );
+        void iconSizeChanged( QAction *action );
 
     private:
         void saveSplitterSize() const;

@@ -344,7 +344,8 @@ Sidebar::Sidebar( QWidget *parent )
     d->list->setItemDelegate( d->sideDelegate );
     d->list->setUniformItemSizes( true );
     d->list->setSelectionMode( QAbstractItemView::SingleSelection );
-    d->list->setIconSize( QSize( 48, 48 ) );
+    int iconsize = Okular::Settings::sidebarIconSize();
+    d->list->setIconSize( QSize( iconsize, iconsize ) );
     d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -566,6 +567,22 @@ void Sidebar::listContextMenu( const QPoint &pos )
     showTextAct->setCheckable( true );
     showTextAct->setChecked( d->sideDelegate->isTextShown() );
     connect( showTextAct, SIGNAL( toggled( bool ) ), this, SLOT( showTextToggled( bool ) ) );
+    menu.addSeparator();
+    QActionGroup *sizeGroup = new QActionGroup( &menu );
+    int curSize = d->list->iconSize().width();
+#define ADD_SIZE_ACTION( text, itssize ) \
+{ \
+    QAction *sizeAct = menu.addAction( text ); \
+    sizeAct->setCheckable( true ); \
+    sizeAct->setData( qVariantFromValue( itssize ) ); \
+    sizeAct->setChecked( itssize == curSize ); \
+    sizeGroup->addAction( sizeAct ); \
+}
+    ADD_SIZE_ACTION( i18n( "Small Icons" ), 22 )
+    ADD_SIZE_ACTION( i18n( "Normal Icons" ), 32 )
+    ADD_SIZE_ACTION( i18n( "Big Icons" ), 48 )
+#undef ADD_SIZE_ACTION
+    connect( sizeGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( iconSizeChanged( QAction* ) ) );
     menu.exec( mapToGlobal( pos ) );
 }
 
@@ -576,6 +593,18 @@ void Sidebar::showTextToggled( bool on )
     d->list->reset();
     d->list->update();
     Okular::Settings::setSidebarShowText( on );
+    Okular::Settings::self()->writeConfig();
+}
+
+void Sidebar::iconSizeChanged( QAction *action )
+{
+    int size = action->data().toInt();
+    int oldSize = d->list->iconSize().width();
+    d->list->setIconSize( QSize( size, size ) );
+    d->adjustListSize( size > oldSize );
+    d->list->reset();
+    d->list->update();
+    Okular::Settings::setSidebarIconSize( size );
     Okular::Settings::self()->writeConfig();
 }
 

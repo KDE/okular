@@ -137,6 +137,9 @@ QModelIndex PageGroupProxyModel::mapFromSource( const QModelIndex &sourceIndex )
 
 QModelIndex PageGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) const
 {
+  if ( !proxyIndex.isValid() )
+    return QModelIndex();
+
   if ( mGroupByPage ) {
     if ( proxyIndex.internalId() == 0 ) {
 

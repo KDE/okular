@@ -1467,7 +1467,7 @@ void Part::slotExportAs(QAction * act)
         return;
 
     QString filter = id == 0 ? "text/plain" : m_exportFormats.at( id - 1 ).mimeType()->name();
-    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().fileName() : QString(), filter, widget() );
+    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(), filter, widget() );
     if ( !fileName.isEmpty() )
     {
         bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportFormats.at( id - 1 ) );

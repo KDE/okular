@@ -245,7 +245,7 @@ void Shell::fileOpen()
     KFileDialog dlg( startDir, QString(), this );
     dlg.setOperationMode( KFileDialog::Opening );
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )
-        dlg.setFilter( i18n( "*|All the Files" ) );
+        dlg.setFilter( i18n( "*|All Files" ) );
     else
         dlg.setMimeFilter( m_fileformats );
     dlg.setCaption( i18n( "Open a document" ) );

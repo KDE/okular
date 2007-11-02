@@ -412,9 +412,11 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction("view_fit_to_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
+/*
     d->aZoomFitText  = new KToggleAction(KIcon( "zoom-best-fit" ), i18n("Fit &Text"), this);
     ac->addAction("zoom_fit_text", d->aZoomFitText );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
+*/
 
     // View-Layout actions
     QStringList viewModes;

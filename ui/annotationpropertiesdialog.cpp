@@ -71,7 +71,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
     gridlayout->addWidget( tmplabel, 1, 0 );
     m_opacity = new KIntNumInput( page );
-    m_opacity->setRange( 0, 100, 1, true );
+    m_opacity->setRange( 0, 100 );
     m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
     m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
     m_opacity->setEnabled( canEditAnnotations );

@@ -24,7 +24,7 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     labelFont.setBold( true );
     m_dlg->descLabel->setFont( labelFont );
 
-    m_dlg->cpuLabel->setPixmap( BarIcon( "kcmprocessor", 32 ) );
+    m_dlg->cpuLabel->setPixmap( BarIcon( "cpu", 32 ) );
     m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) );
 
     connect( m_dlg->kcfg_MemoryLevel, SIGNAL( changed( int ) ), this, SLOT( radioGroup_changed( int ) ) );

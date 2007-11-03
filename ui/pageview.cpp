@@ -514,7 +514,7 @@ void PageView::fitPageWidth( int page )
     Okular::Settings::setViewMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
-    d->aZoomFitText->setChecked( false );
+//    d->aZoomFitText->setChecked( false );
     d->aViewMode->setCurrentItem( 0 );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
@@ -2386,7 +2386,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         {
         d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
-        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
+//        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         }
         // store zoom settings
         Okular::Settings::setZoomMode( newZoomMode );

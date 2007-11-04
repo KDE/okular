@@ -136,7 +136,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 
 void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
-    kWarning() << "receiving req id=" << *req;
+    kWarning() << "receiving" << *req;
 
     SpectrePage *page = spectre_document_get_page(m_internalDocument, req->pageNumber());
 

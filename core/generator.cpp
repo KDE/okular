@@ -534,7 +534,7 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
         .arg( req.height() )
         .arg( req.priority() )
         .arg( req.pageNumber() );
-    str << s;
+    str << qPrintable( s );
     return str;
 }
 

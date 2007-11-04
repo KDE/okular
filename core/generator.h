@@ -562,7 +562,7 @@ class OKULAR_EXPORT PixmapRequest
 }
 
 #ifndef QT_NO_DEBUG_STREAM
-QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
+OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
 #endif
 
 #endif

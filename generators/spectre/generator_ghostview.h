@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Piotr Szymanski <niedakh@gmail.com>             *
+ *   Copyright (C) 2007 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -14,10 +14,7 @@
 #include <okular/interfaces/guiinterface.h>
 #include <okular/interfaces/configinterface.h>
 
-class GSLogWindow;
-class GSInternalDocument;
-class KTempFile;
-class KActionCollection;
+#include <libspectre/spectre.h>
 
 class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::GuiInterface
 {
@@ -39,14 +36,6 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest * request );
 
-        // page size management
-        Okular::PageSize::List pageSizes() const;
-        void pageSizeChanged( const Okular::PageSize &, const Okular::PageSize & );
-
-        QString xmlFile() const;
-        void setupGui( KActionCollection *, QToolBox * );
-        void freeGui();
-
         // print document using already configured kprinter
         bool print( QPrinter& /*printer*/ );
         QString fileName() const;
@@ -65,27 +54,14 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool doCloseDocument();
 
     private:
-        // conversion handling
-        bool m_converted;
-        KTempFile * dscForPDF;
-
-        bool loadDocumentWithDSC( const QString & name, QVector< Okular::Page * > & pagesVector , bool ps );
         bool loadPages( QVector< Okular::Page * > & pagesVector );
-        int rotation( CDSC_ORIENTATION_ENUM orientation ) const;
-        int angle( CDSC_ORIENTATION_ENUM orientation ) const;
-        CDSC_ORIENTATION_ENUM orientation( int rot ) const;
+        Okular::Rotation orientation(SpectreOrientation orientation) const;
 
         // backendish stuff
-        GSInternalDocument* internalDoc;
+        SpectreDocument *m_internalDocument;
+        Okular::DocumentInfo *m_docInfo;
 
         Okular::PixmapRequest *m_request;
-
-        // gui stuff
-        GSLogWindow * m_logWindow ;
-        KActionCollection* m_actionCollection;
-        QToolBox * m_box;
-
-        Okular::PageSize::List m_pageSizes;
 };
 
 #endif

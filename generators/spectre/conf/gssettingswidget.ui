@@ -1,0 +1,71 @@
+<ui version="4.0" >
+ <class>GSSettingsWidget</class>
+ <widget class="QWidget" name="GSSettingsWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>370</width>
+    <height>180</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>General Settings</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_TextAntialiasing" >
+        <property name="whatsThis" >
+         <string>Anti-aliasing makes the result look better, but it makes the display take longer</string>
+        </property>
+        <property name="text" >
+         <string>&amp;Enable anti-aliasing of fonts</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_GraphicsAntialiasing" >
+        <property name="whatsThis" >
+         <string>Anti-aliasing makes the result look better, but it makes the display take longer</string>
+        </property>
+        <property name="text" >
+         <string>&amp;Enable anti-aliasing of graphics</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_PlatformFonts" >
+        <property name="enabled" >
+         <bool>true</bool>
+        </property>
+        <property name="text" >
+         <string>&amp;Use platform fonts</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>352</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <resources/>
+ <connections/>
+</ui>

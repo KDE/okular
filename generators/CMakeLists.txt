@@ -15,7 +15,7 @@ if(POPPLER_FOUND)
 endif(POPPLER_FOUND)
 
 if(LIBGS_FOUND)
-  add_subdirectory(ghostview)
+  add_subdirectory(spectre)
 endif(LIBGS_FOUND)
 
 add_subdirectory( kimgio )

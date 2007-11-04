@@ -94,6 +94,9 @@ bool GSGenerator::doCloseDocument()
     spectre_document_free(m_internalDocument);
     m_internalDocument = 0;
 
+    delete m_docInfo;
+    m_docInfo = 0;
+
     return true;
 }
 

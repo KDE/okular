@@ -119,7 +119,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     toolBar->setIconSize( QSize( 16, 16 ) );
     toolBar->setMovable( false );
     // - add Page button
-    QAction * groupByPageAction = toolBar->addAction( KIcon( "txt" ), i18n( "Group by Page" ) );
+    QAction * groupByPageAction = toolBar->addAction( KIcon( "text-plain" ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
     connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );

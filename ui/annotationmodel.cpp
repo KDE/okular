@@ -295,7 +295,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
         if ( role == Qt::DisplayRole )
           return i18n( "Page %1", item->page + 1 );
         else if ( role == Qt::DecorationRole )
-          return KIcon( "txt" );
+          return KIcon( "text-plain" );
         else if ( role == PageRole )
           return item->page;
 

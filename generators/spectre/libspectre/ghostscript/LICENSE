@@ -1,0 +1,53 @@
+
+  The files in the src, lib, toolbin, examples, doc and man
+  directories (folders) and any subdirectories (sub-folders)
+  thereof are part of GPL Ghostscript.
+
+  The files in the Resource directory and any subdirectories thereof
+  are also part of GPL Ghostscript, with the explicit exception of
+  the files in the CMap subdirectory. The CMap files are copyright
+  Adobe Systems Incorporated and covered by a separate license
+  which permits only verbatim distribution.
+
+  GPL Ghostscript is free software; you can redistribute it and/or
+  modify it under the terms of version 2 of the GNU General Public
+  License as published by the Free Software Foundation.
+
+  GPL Ghostscript is distributed in the hope that it will be
+  useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program so you can know your rights and responsibilities.
+  It should be in a file named doc/COPYING. If not, write to the
+  Free Software Foundation, Inc., 59 Temple Place Suite 330, Boston, MA
+  02111-1307, USA.
+
+ ---
+
+  GPL Ghostscript contains an implementation of techniques covered 
+  by US Patents 5,055,942 and 5,917,614, and corresponding
+  international patents. These patents are licensed for use with
+  GPL Ghostscript under the following grant:
+
+  Whereas, Raph Levien (hereinafter "Inventor") has obtained patent
+  protection for related technology (hereinafter "Patented
+  Technology"), Inventor wishes to aid the the GNU free software
+  project in achieving its goals, and Inventor also wishes to
+  increase public awareness of Patented Technology, Inventor hereby
+  grants a fully paid up, nonexclusive, royalty free license to
+  practice the patents listed below ("the Patents") if and only if
+  practiced in conjunction with software distributed under the
+  terms of any version of the GNU General Public License as
+  published by the Free Software Foundation, 59 Temple Place, Suite
+  330, Boston, MA 02111. Inventor reserves all other rights,
+  including without limitation, licensing for software not
+  distributed under the GNU General Public License.
+
+   5055942 Photographic image reproduction device using digital 
+           halftoning to screen images allowing adjustable coarseness
+
+   5917614 Method and apparatus for error diffusion screening of 
+           images with improved smoothness in highlight and shadow 
+           regions

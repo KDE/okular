@@ -15,15 +15,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+/* For stat */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include "spectre-document.h"
 #include "spectre-private.h"
+#include "spectre-exporter.h"
 
 struct SpectreDocument
 {
@@ -226,6 +232,86 @@ spectre_document_get_page (SpectreDocument *document,
 		document->status = SPECTRE_STATUS_SUCCESS;
 	
 	return page;
+}
+
+void
+spectre_document_save (SpectreDocument *document,
+		       const char      *filename)
+{
+	struct stat stat_buf;
+	FILE *from;
+	FILE *to;
+	
+	if (stat (document->doc->filename, &stat_buf) != 0) {
+		document->status = SPECTRE_STATUS_SAVE_ERROR;
+		return;
+	}
+
+	from = fopen (document->doc->filename, "r");
+	if (!from) {
+		document->status = SPECTRE_STATUS_SAVE_ERROR;
+		return;
+	}
+
+	to = fopen (filename, "w");
+	if (!to) {
+		document->status = SPECTRE_STATUS_SAVE_ERROR;
+		fclose (from);
+		return;
+	}
+
+	pscopy (from, to, document->doc, 0, stat_buf.st_size - 1);
+
+	fclose (from);
+	fclose (to);
+
+	document->status = SPECTRE_STATUS_SUCCESS;
+}
+
+void
+spectre_document_save_to_pdf (SpectreDocument *document,
+			      const char      *filename)
+{
+	SpectreExporter *exporter;
+	SpectreStatus    status;
+	unsigned int     i;
+
+	exporter = spectre_exporter_new (document, SPECTRE_EXPORTER_FORMAT_PDF);
+	if (!exporter) {
+		document->status = SPECTRE_STATUS_NO_MEMORY;
+		return;
+	}
+
+	status = spectre_exporter_begin (exporter, filename);
+	if (status) {
+		document->status = status == SPECTRE_STATUS_NO_MEMORY ?
+			SPECTRE_STATUS_NO_MEMORY : SPECTRE_STATUS_SAVE_ERROR;
+		spectre_exporter_free (exporter);
+		return;
+	}
+
+	for (i = 0; i < spectre_document_get_n_pages (document); i++) {
+		status = spectre_exporter_do_page (exporter, i);
+		if (status)
+			break;
+	}
+
+	if (status) {
+		document->status = status == SPECTRE_STATUS_NO_MEMORY ?
+			SPECTRE_STATUS_NO_MEMORY : SPECTRE_STATUS_SAVE_ERROR;
+		spectre_exporter_free (exporter);
+		return;
+	}
+		
+	status = spectre_exporter_end (exporter);
+	spectre_exporter_free (exporter);
+
+	if (status) {
+		document->status = status == SPECTRE_STATUS_NO_MEMORY ?
+			SPECTRE_STATUS_NO_MEMORY : SPECTRE_STATUS_SAVE_ERROR;
+	} else {
+		document->status = SPECTRE_STATUS_SUCCESS;
+	}
 }
 
 struct document *

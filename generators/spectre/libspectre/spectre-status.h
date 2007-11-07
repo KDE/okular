@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #ifndef SPECTRE_STATUS_H
@@ -43,7 +43,9 @@ typedef enum _SpectreStatus {
 	SPECTRE_STATUS_RENDER_ERROR          /*! There has been a problem
 					         rendering the page */,
 	SPECTRE_STATUS_EXPORTER_ERROR        /*! There has been a problem
-					         exporting the document */
+					         exporting the document */,
+	SPECTRE_STATUS_SAVE_ERROR            /*! There has been a problem
+					         saving the document */
 } SpectreStatus;
 
 /*! Gets a textual description of the given status

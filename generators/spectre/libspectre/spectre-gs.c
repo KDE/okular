@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #include <stdio.h>
@@ -61,7 +61,7 @@ critic_error_code (int code)
 		const char *errors[] = { "", ERROR_NAMES };
 		int x = (-1) * code;
 
-		if (x < sizeof (errors) / sizeof (const char*)) {
+		if (x < (int) (sizeof (errors) / sizeof (const char*))) {
 			fprintf (stderr, "%s %d\n", errors[x], code);
 		}
 		return TRUE;
@@ -216,7 +216,7 @@ spectre_gs_send_page (SpectreGS       *gs,
 	if (doc->numpages > 0) {
 		if (!spectre_gs_process (gs,
 					 doc->filename,
-					 0, 0,
+					 llx, lly,
 					 doc->pages[page_index].begin,
 					 doc->pages[page_index].end))
 			return FALSE;

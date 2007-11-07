@@ -15,8 +15,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with GNU gv; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, 
+ * Boston, MA  02110-1301, USA
  *
  *   Author: Tim Theisen           Systems Programmer
  * Internet: tim@cs.wisc.edu       Department of Computer Sciences
@@ -55,7 +55,6 @@
  */
 #define USE_ACROREAD_WORKAROUND
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <string.h>
@@ -68,6 +67,8 @@
 #define BUFSIZ 1024
 #endif
 #include <ctype.h>
+
+#include "spectre-utils.h"
 
 #include "ps.h"
 
@@ -106,13 +107,13 @@ static int dsc_strncmp(s1, s2, n)
 {
  char *tmp;	
 
- if (strncasecmp(s1, s2, n) == 0)
+ if (_spectre_strncasecmp(s1, s2, n) == 0)
 	 return 0;
  if (s2[n-1] == ':'){
 	 tmp = (char *) PS_malloc(n*sizeof(char));
 	 strncpy(tmp, s2, (n-1));
 	 tmp[n-1]=' ';
-	 if (strncasecmp(s1, tmp, n) == 0){
+	 if (_spectre_strncasecmp(s1, tmp, n) == 0){
 		 PS_free(tmp);
 		 return 0;
 	 }
@@ -172,7 +173,6 @@ typedef struct FileDataStruct_ *FileData;
 
 typedef struct FileDataStruct_ {
    FILE *file;           /* file */
-   int   file_desc;      /* file descriptor corresponding to file */
    int   filepos;        /* file position corresponding to the start of the line */
    char *buf;            /* buffer */
    int   buf_size;       /* size of buffer */
@@ -423,13 +423,13 @@ psscan(const char *filename, int scanstyle)
       }
 
       doc->ref_count = 1;
-      doc->filename = strdup (filename);
+      doc->filename = _spectre_strdup (filename);
       doc->beginheader = position;
       section_len = line_len;
 
       text[0] = '\0';
       sscanf(line, "%%!%256s %*s", text);
-      doc->format = strdup (text);
+      doc->format = _spectre_strdup (text);
       
       text[0] = '\0';
       sscanf(line, "%*s %256s", text);
@@ -453,7 +453,7 @@ psscan(const char *filename, int scanstyle)
 	CHECK_MALLOCED(doc);
 	memset(doc, 0, sizeof(struct document));
 	doc->ref_count = 1;
-	doc->filename = strdup (filename);
+	doc->filename = _spectre_strdup (filename);
 	doc->default_page_orientation = NONE;
 	doc->orientation = NONE;
     }
@@ -629,7 +629,7 @@ psscan(const char *filename, int scanstyle)
 		     * name.  Case insensitive compares are only used for
 		     * PaperSize comments.
 		     */
-		    if (strcasecmp(doc->media[0].name, dmp->name) == 0) {
+		    if (_spectre_strcasecmp(doc->media[0].name, dmp->name) == 0) {
 			PS_free(doc->media[0].name);
 			doc->media[0].name = (char *)PS_malloc(strlen(dmp->name)+1);
                         CHECK_MALLOCED(doc->media[0].name);
@@ -659,7 +659,7 @@ psscan(const char *filename, int scanstyle)
 		     * name.  Case insensitive compares are only used for
 		     * PaperSize comments.
 		     */
-		    if (strcasecmp(doc->media[doc->nummedia].name,
+		    if (_spectre_strcasecmp(doc->media[doc->nummedia].name,
 			       dmp->name) == 0) {
 			PS_free(doc->media[doc->nummedia].name);
 			doc->media[doc->nummedia].name =
@@ -696,7 +696,7 @@ psscan(const char *filename, int scanstyle)
 			 * name.  Case insensitive compares are only used for
 			 * PaperSize comments.
 			 */
-			if (strcasecmp(doc->media[doc->nummedia].name,
+			if (_spectre_strcasecmp(doc->media[doc->nummedia].name,
 				   dmp->name) == 0) {
 			    doc->media[doc->nummedia].width = dmp->width;
 			    doc->media[doc->nummedia].height = dmp->height;
@@ -907,7 +907,7 @@ psscan(const char *filename, int scanstyle)
 		     * name.  Case insensitive compares are only used for
 		     * PaperSize comments.
 		     */
-		    if (strcasecmp(cp, dmp->name) == 0) {
+		    if (_spectre_strcasecmp(cp, dmp->name) == 0) {
 			doc->default_page_media = dmp;
 			page_media_set = 1;
 			break;
@@ -1058,7 +1058,7 @@ continuepage:
 		     * name.  Case insensitive compares are only used for
 		     * PaperSize comments.
 		     */
-		    if (strcasecmp(cp, dmp->name) == 0) {
+		    if (_spectre_strcasecmp(cp, dmp->name) == 0) {
 			doc->pages[doc->numpages].media = dmp;
 			break;
 		    }
@@ -1454,7 +1454,6 @@ ps_gettext(line, next_char)
 /*----------------------------------------------------------*/
 
 #define FD_FILE             (fd->file)
-#define FD_FILE_DESC        (fd->file_desc)
 #define FD_FILEPOS	    (fd->filepos)
 #define FD_LINE_BEGIN       (fd->line_begin)
 #define FD_LINE_END	    (fd->line_end)
@@ -1486,7 +1485,6 @@ static FileData ps_io_init(file)
 
    rewind(file);
    FD_FILE      = file;
-   FD_FILE_DESC = fileno(file);
    FD_FILEPOS   = ftell(file);
    FD_BUF_SIZE  = (2*LINE_CHUNK_SIZE)+1;
    FD_BUF       = PS_XtMalloc(FD_BUF_SIZE);
@@ -1944,6 +1942,16 @@ static int blank(line)
    while (*cp == ' ' || *cp == '\t') cp++;
    ENDMESSAGE(blank)
    return *cp == '\n' || *cp== '\r' || (*cp == '%' && (line[0] != '%' || line[1] != '%'));
+}
+
+void
+pscopy (FILE *from, FILE *to, Document d, long begin, long end)
+{
+    FileData fd;
+
+    fd = ps_io_init(from);
+    pscopyuntil(fd, to, begin, end, NULL);
+    ps_io_exit(fd);
 }
 
 void

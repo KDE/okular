@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #ifndef SPECTRE_DOCUMENT_H
@@ -118,7 +118,20 @@ unsigned int       spectre_document_get_language_level (SpectreDocument *documen
 */
 SpectrePage       *spectre_document_get_page           (SpectreDocument *document,
 							unsigned int     page_index);
-
+/*! Save document as filename. This function can fail
+    @param document the document that will be saved
+    @param filename the path where document will be saved
+    @see spectre_document_status
+*/
+void               spectre_document_save               (SpectreDocument *document,
+							const char      *filename);
+/* Save document as a pdf document. This function can fail
+   @param document the document that will be saved
+   @param filename the path where document will be saved as pdf
+   @see spectre_document_status
+*/
+void               spectre_document_save_to_pdf        (SpectreDocument *document,
+							const char      *filename);
 SPECTRE_END_DECLS
 
 #endif /* SPECTRE_DOCUMENT_H */

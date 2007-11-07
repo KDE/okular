@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #ifndef SPECTRE_UTILS_H
@@ -28,6 +28,12 @@
 SPECTRE_BEGIN_DECLS
 
 char *_spectre_strdup_printf (const char *format, ...);
+char *_spectre_strdup        (const char *str);
+int   _spectre_strncasecmp   (const char *s1,
+			      const char *s2,
+			      size_t      n);
+int   _spectre_strcasecmp    (const char *s1,
+			      const char *s2);
 
 SPECTRE_END_DECLS
 

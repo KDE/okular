@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 #include <stdlib.h>
@@ -27,8 +27,16 @@ spectre_exporter_ps_begin (SpectreExporter *exporter,
 			   const char      *filename)
 {
 	exporter->from = fopen (exporter->doc->filename, "r");
+	if (!exporter->from)
+		return SPECTRE_STATUS_EXPORTER_ERROR;
+	
 	exporter->to = fopen (filename, "w");
-
+	if (!exporter->to) {
+		fclose (exporter->from);
+		exporter->from = NULL;
+		return SPECTRE_STATUS_EXPORTER_ERROR;
+	}
+		
 	pscopyheaders (exporter->from, exporter->to, exporter->doc);
 	
 	return SPECTRE_STATUS_SUCCESS;

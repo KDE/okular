@@ -1255,14 +1255,18 @@ CCITTFaxStream::CCITTFaxStream(Stream *strA, int encodingA, GBool endOfLineA,
   // ---> max codingLine size = columns + 1
   // refLine has one extra guard entry at the end
   // ---> max refLine size = columns + 2
-  codingLine = (int *)gmallocn(columns + 1, sizeof(int));
-  refLine = (int *)gmallocn(columns + 2, sizeof(int));
+  codingLine = (int *)gmallocn_checkoverflow(columns + 1, sizeof(int));
+  refLine = (int *)gmallocn_checkoverflow(columns + 2, sizeof(int));
 
-  eof = gFalse;
+  if (codingLine != NULL && refLine != NULL) {
+    eof = gFalse;
+    codingLine[0] = columns;
+  } else {
+    eof = gTrue;
+  }
   row = 0;
   nextLine2D = encoding < 0;
   inputBits = 0;
-  codingLine[0] = columns;
   a0i = 0;
   outputBits = 0;
 
@@ -1279,11 +1283,16 @@ void CCITTFaxStream::reset() {
   short code1;
 
   str->reset();
-  eof = gFalse;
+
+  if (codingLine != NULL && refLine != NULL) {
+    eof = gFalse;
+    codingLine[0] = columns;
+  } else {
+    eof = gTrue;
+  }
   row = 0;
   nextLine2D = encoding < 0;
   inputBits = 0;
-  codingLine[0] = columns;
   a0i = 0;
   outputBits = 0;
   buf = EOF;

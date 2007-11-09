@@ -1211,7 +1211,7 @@ void Part::slotSaveFileAs()
 
 void Part::slotGetNewStuff()
 {
-    KNS::Engine engine;
+    KNS::Engine engine(widget());
     engine.init( "okular.knsrc" );
     // show the modal dialog over pageview and execute it
     KNS::Entry::List entries = engine.downloadDialogModal( m_pageView );

@@ -1652,7 +1652,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
-                            actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Location" ) );
+                            actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Address" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
                         {

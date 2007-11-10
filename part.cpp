@@ -187,7 +187,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
     connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-    tbIndex = m_sidebar->addItem( thumbsBox, KIcon("thumbnail-show"), i18n("Thumbnails") );
+    tbIndex = m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
     m_sidebar->setCurrentIndex( tbIndex );
 
     // [left toolbox: Reviews] | []

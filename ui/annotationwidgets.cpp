@@ -48,7 +48,7 @@ PixmapPreviewSelector::~PixmapPreviewSelector()
 void PixmapPreviewSelector::setIcon( const QString& icon )
 {
     int id = m_comboItems->findData( QVariant( icon ), Qt::UserRole, Qt::MatchFixedString );
-    if ( id > -1 )
+    if ( id == -1 )
         id = m_comboItems->findText( icon, Qt::MatchFixedString );
     if ( id > -1 )
     {
@@ -237,10 +237,10 @@ QWidget * StampAnnotationWidget::widget()
     m_pixmapSelector->setEditable( true );
 
     // FIXME!!! use the standard names instead (when we'll have the artwork)
-    m_pixmapSelector->addItem( i18n( "okular" ), "okular" );
+    m_pixmapSelector->addItem( i18n( "okular" ), "graphics-viewer-document" );
     m_pixmapSelector->addItem( i18n( "Bookmark" ), "bookmark" );
-    m_pixmapSelector->addItem( i18n( "KDE" ), "about-kde" );
-    m_pixmapSelector->addItem( i18n( "Love" ), "love" );
+    m_pixmapSelector->addItem( i18n( "KDE" ), "start-here" );
+    m_pixmapSelector->addItem( i18n( "Information" ), "document-properties" );
 #if 0
     m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
     m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );

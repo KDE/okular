@@ -455,8 +455,16 @@ void PageViewToolBar::showAndAnimate()
 
     show();
 
+#ifdef OKULAR_ANIMATE_REVIEW_TOOBAR
     // start scrolling in
     d->animTimer->start( 20 );
+#else
+    d->currentPosition = d->endPosition;
+
+    move( d->currentPosition );
+
+    d->visible = true;
+#endif
 }
 
 void PageViewToolBar::hideAndDestroy()
@@ -465,8 +473,17 @@ void PageViewToolBar::hideAndDestroy()
     d->hiding = true;
     d->endPosition = d->getOuterPoint();
 
+#ifdef OKULAR_ANIMATE_REVIEW_TOOBAR
     // start scrolling out
     d->animTimer->start( 20 );
+#else
+    d->currentPosition = d->endPosition;
+
+    move( d->currentPosition );
+
+    d->visible = false;
+    deleteLater();
+#endif
 }
 
 void PageViewToolBar::selectButton( int id )

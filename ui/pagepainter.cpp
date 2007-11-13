@@ -143,7 +143,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             for ( ; aIt != aEnd; ++aIt )
             {
                 Okular::Annotation * ann = *aIt;
-                if ( ann->flags() & ( Okular::Annotation::Hidden | Okular::Annotation::External ) )
+                if ( ann->flags() & ( Okular::Annotation::Hidden /*| Okular::Annotation::External*/ ) )
                     continue;
 
                 bool intersects = ann->transformedBoundingRectangle().intersects( nXMin, nYMin, nXMax, nYMax );

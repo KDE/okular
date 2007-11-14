@@ -36,12 +36,12 @@ bool fontPoolTimerFlag;
 
 fontPool::fontPool()
   :  progress("fontgen",  // Chapter in the documentation for help.
-              i18n("KDVI is currently generating bitmap fonts..."),
+              i18n("Okular is currently generating bitmap fonts..."),
               i18n("Aborts the font generation. Don't do this."),
-              i18n("KDVI is currently generating bitmap fonts which are needed to display your document. "
-                   "For this, KDVI uses a number of external programs, such as MetaFont. You can find "
+              i18n("Okular is currently generating bitmap fonts which are needed to display your document. "
+                   "For this, okular uses a number of external programs, such as MetaFont. You can find "
                    "the output of these programs later in the document info dialog."),
-              i18n("KDVI is generating fonts. Please wait."),
+              i18n("Okular is generating fonts. Please wait."),
               0)
 {
 #ifdef DEBUG_FONTPOOL
@@ -275,7 +275,7 @@ void fontPool::locateFonts()
   if (!areFontsLocated()) {
     markFontsAsLocated();
     QString details = QString("<qt><p><b>PATH:</b> %1</p>%2</qt>").arg(getenv("PATH")).arg(kpsewhichOutput);
-    KMessageBox::detailedError( 0, i18n("<qt><p>KDVI was not able to locate all the font files "
+    KMessageBox::detailedError( 0, i18n("<qt><p>Okular was not able to locate all the font files "
                                         "which are necessary to display the current DVI file. "
                                         "Your document might be unreadable.</p></qt>"),
                                 details,
@@ -338,7 +338,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     "<p><b>" + kpsewhich_exe + ' ' + kpsewhich_args.join(" ") + "</b></p>";
 
   const QString importanceOfKPSEWHICH =
-    i18n("<p>KDVI relies on the <b>kpsewhich</b> program to locate font files "
+    i18n("<p>Okular relies on the <b>kpsewhich</b> program to locate font files "
          "on your hard disc and to generate PK fonts, if necessary.</p>");
 
   kpsewhich_.start(kpsewhich_exe, kpsewhich_args,
@@ -351,7 +351,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
            "<p><b>Possible reason:</b> The kpsewhich program is perhaps not installed on your system, or it "
            "cannot be found in the current search path.</p>"
            "<p><b>What you can do:</b> The kpsewhich program is normally contained in distributions of the TeX "
-           "typesetting system. If TeX is not installed on your system, you could install the TeTeX distribution (www.tetex.org). "
+           "typesetting system. If TeX is not installed on your system, you could install the TeX Live distribution (www.tug.org/texlive). "
            "If you are sure that TeX is installed, please try to use the kpsewhich program from the command line to check if it "
            "really works.</p>");
     const QString details =
@@ -360,7 +360,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     KMessageBox::detailedError(0,
                                QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
                                details,
-                               i18n("Problem locating fonts - KDVI"));
+                               i18n("Problem locating fonts - okular"));
 
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();
@@ -381,7 +381,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     KMessageBox::sorry(0,
                        QString("<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, error %2). As a result, "
                                "some font files could not be located, and your document might be unreadable.</p></qt>").arg(kpsewhich_exit_code).arg(kpsewhich_.errorString()),
-                       i18n("Font generation aborted - KDVI") );
+                       i18n("Font generation aborted - okular") );
 
     // This makes sure the we don't try to run kpsewhich again
     if (makePK == false)

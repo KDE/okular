@@ -265,7 +265,7 @@ void dviRenderer::getText(RenderedDocumentPagePixmap* page)
   _postscript = postscriptBackup;
 }
 
-#if 0
+/*
 void dviRenderer::showThatSourceInformationIsPresent()
 {
   // In principle, we should use a KMessagebox here, but we want to
@@ -319,7 +319,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     config->sync();
   }
 }
-#endif
+*/
 
 void dviRenderer::embedPostScript()
 {
@@ -454,12 +454,12 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
-#if 0
+/*
     KMessageBox::error( parentWidget,
                         i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
                              "KDVI already tried to add the ending '.dvi'.</qt>", filename),
                         i18n("File Error"));
-#endif
+*/
 	  return false;
   }
 
@@ -630,14 +630,14 @@ Anchor dviRenderer::parseReference(const QString &reference)
     QString  refFileName   = splitter.filePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
-#if 0
+/*
       KMessageBox::sorry(parentWidget, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
                                     "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
                                     "does not contain the necessary source file information. "
                                     "We refer to the manual of KDVI for a detailed explanation on how to include this "
                                     "information. Press the F1 key to open the manual.</qt>", refLineNumber, refFileName),
                          i18n("Could Not Find Reference"));
-#endif
+*/
       return Anchor();
     }
 
@@ -674,11 +674,11 @@ Anchor dviRenderer::parseReference(const QString &reference)
     else
       if (anchorForRefFileFound == false)
       {
-#if 0
+/*
         KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
                                               "line %1 in the TeX-file <strong>%2</strong>.</qt>", refLineNumber, refFileName),
                            i18n( "Could Not Find Reference" ));
-#endif
+*/
       }
       else
         return Anchor();
@@ -758,11 +758,11 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
 
 void dviRenderer::exportPDF()
 {
-#if 0
+/*
   KSharedPtr<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
-#endif
+*/
 }
 
 
@@ -771,14 +771,14 @@ void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPr
   Q_UNUSED( fname );
   Q_UNUSED( options );
   Q_UNUSED( printer );
-#if 0
+/*
   KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
-#endif
+*/
 }
 
-#if 0
+/*
 void dviRenderer::update_info_dialog(const QString& text, bool clear)
 {
   if (clear)
@@ -791,9 +791,9 @@ void dviRenderer::editor_finished(const DVISourceEditor*)
 {
   editor_.attach(0);
 }
-#endif
+*/
 
-#if 0
+/*
 void dviRenderer::export_finished(const DVIExport* key)
 {
   typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
@@ -801,6 +801,6 @@ void dviRenderer::export_finished(const DVIExport* key)
   if (it != all_exports_.end())
     all_exports_.remove(key);
 }
-#endif
+*/
 
 #include "dviRenderer.moc"

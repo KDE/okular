@@ -77,11 +77,11 @@ void oops(const QString& message)
                       i18n("Fatal error.\n\n") +
                       message +
                       i18n("\n\n\
-This probably means that either you found a bug in KDVI,\n\
+This probably means that either you found a bug in okular,\n\
 or that the DVI file, or auxiliary files (such as font files, \n\
 or virtual font files) were really badly broken.\n\
-KDVI will abort after this message. If you believe that you \n\
-found a bug, or that KDVI should behave better in this situation\n\
+Okular will abort after this message. If you believe that you \n\
+found a bug, or that okular should behave better in this situation\n\
 please report the problem."));
   exit(1);
 }

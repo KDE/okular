@@ -11,13 +11,9 @@
 #define _dvirenderer_h_
 
 #include "bigEndianByteReader.h"
-#if 0
-#include "documentRenderer.h"
-#endif
-#include "dviexport.h"
-#if 0
-#include "dvisourceeditor.h"
-#endif 
+//#include "documentRenderer.h"
+//#include "dviexport.h"
+//#include "dvisourceeditor.h"
 #include "fontpool.h"
 #include "dviPageInfo.h"
 #include "pageSize.h"
@@ -149,14 +145,14 @@ public:
   void          html_href_special(const QString& msg);
   void          html_anchor_end();
   void          draw_page();
-  void          export_finished(const DVIExport*);
-//  void          editor_finished(const DVISourceEditor*);
+//void          export_finished(const DVIExport*);
+//void          editor_finished(const DVISourceEditor*);
 
 public slots:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0);
   void          exportPDF();
 
-//  void          showInfo();
+//void          showInfo();
   void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
 
   void          embedPostScript();
@@ -310,7 +306,7 @@ private:
 
   drawinf currinf;
   RenderedDocumentPagePixmap* currentlyDrawnPage;
-  QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
+  //QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
   //KSharedPtr<DVISourceEditor> editor_;
 
   /** Flag if document is modified

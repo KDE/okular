@@ -176,7 +176,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
-    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "leftjust" : "rightjust"), i18n("Contents") );
+    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
@@ -966,6 +966,8 @@ void Part::updateViewActions()
         if (m_historyBack) m_historyBack->setEnabled( !m_document->historyAtBegin() );
         if (m_historyNext) m_historyNext->setEnabled( !m_document->historyAtEnd() );
         m_reload->setEnabled( true );
+        m_copy->setEnabled( true );
+        m_selectAll->setEnabled( true );
     }
     else
     {
@@ -977,6 +979,8 @@ void Part::updateViewActions()
         if (m_historyBack) m_historyBack->setEnabled( false );
         if (m_historyNext) m_historyNext->setEnabled( false );
         m_reload->setEnabled( false );
+        m_copy->setEnabled( false );
+        m_selectAll->setEnabled( false );
     }
     updateBookmarksActions();
 }

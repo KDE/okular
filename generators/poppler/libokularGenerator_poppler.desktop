@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=Poppler
 Name[ne]=पप्प्लर
@@ -27,7 +26,7 @@ Comment[sv]=PDF-gränssnitt för Okular som använder Poppler
 Comment[x-test]=xxPDF backend for okular using popplerxx
 Comment[zh_CN]=使用 poppler 的 okular PDF 格式后端
 Comment[zh_TW]=okular 使用 poppler 的 PDF 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-pdf;application/pdf;
 X-KDE-Library=libokularGenerator_poppler
 X-KDE-Priority=1

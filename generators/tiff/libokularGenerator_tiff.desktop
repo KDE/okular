@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=okular TIFF Library
 Name[bg]=Библиотека okular TIFF
@@ -48,7 +47,7 @@ Comment[sv]=TIFF-gränssnitt för Okular
 Comment[x-test]=xxTIFF backend for okularxx
 Comment[zh_CN]=okular 的 TIFF 格式后端
 Comment[zh_TW]=okular TIFF 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=image/tiff;
 X-KDE-Library=libokularGenerator_tiff
 X-KDE-Priority=4

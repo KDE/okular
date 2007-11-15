@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Icon=graphics-viewer-document
 Name=okular
 Name[de]=Okular
@@ -10,7 +9,7 @@ Name[nl]=Okular
 Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
 Name[x-test]=xxokularxx
-ServiceTypes=KParts/ReadOnlyPart
+X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service
 MimeType=application/vnd.ms-xpsdocument;

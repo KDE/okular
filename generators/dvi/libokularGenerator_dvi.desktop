@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=dvi
 Name[x-test]=xxdvixx
@@ -26,7 +25,7 @@ Comment[sv]=DVI-gränssnitt för Okular
 Comment[x-test]=xxDVI backend for okularxx
 Comment[zh_CN]=okular 的 DVI 格式后端
 Comment[zh_TW]=okular 的 DVI 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-dvi;
 X-KDE-Library=libokularGenerator_dvi
 X-KDE-Priority=2

@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=Comic Book
 Name[de]=Comicbook
@@ -37,7 +36,7 @@ Comment[sv]=Comic book-gränssnitt för Okular
 Comment[x-test]=xxComic book backend for okularxx
 Comment[zh_CN]=okular 的 Comic book 格式后端
 Comment[zh_TW]=okular 的 Comic book 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-cbz;application/x-cbr;
 X-KDE-Library=libokularGenerator_comicbook
 X-KDE-Priority=1

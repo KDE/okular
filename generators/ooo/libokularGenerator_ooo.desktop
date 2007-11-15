@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=OpenDocument format
 Name[bg]=Формат OpenDocument
@@ -48,7 +47,7 @@ Comment[sv]=OpenDocument-gränssnitt för Okular
 Comment[x-test]=xxOpenDocument backend for okularxx
 Comment[zh_CN]=okular 的开放文档格式后端
 Comment[zh_TW]=okular 的 OpenDocument 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/vnd.oasis.opendocument.text;
 X-KDE-Library=libokularGenerator_ooo
 X-KDE-Priority=1

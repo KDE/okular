@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=FictionBook document
 Name[bg]=FictionBook документ
@@ -47,7 +46,7 @@ Comment[sv]=FictionBook-gränssnitt för Okular
 Comment[x-test]=xxFictionBook backend for okularxx
 Comment[zh_CN]=okular 的 FictionBook 格式后端
 Comment[zh_TW]=okular FictionBook 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-fb;
 X-KDE-Library=libokularGenerator_fb
 X-KDE-Priority=1

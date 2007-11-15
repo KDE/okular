@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=Ghostscript
 Name[ne]=घोस्टस्क्रिप्ट
@@ -30,7 +29,7 @@ Comment[sv]=Ghostscript PS/PDF-gränssnitt för Okular
 Comment[x-test]=xxGhostscript PS/PDF backend for okularxx
 Comment[zh_CN]=okular 的 Ghostscript PS/PDF 格式后端
 Comment[zh_TW]=okular 的 Ghostscript PS/PDF 後端
-ServiceTypes=okular/Generator
+X-KDE-ServiceTypes=okular/Generator
 MimeType=application/postscript;image/x-eps;
 X-KDE-Library=libokularGenerator_ghostview
 X-KDE-Priority=2

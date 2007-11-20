@@ -228,7 +228,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
     KMessageBox::detailedError(parentWidget,
-                               i18n("<qt><strong>File corruption</strong> KDVI could not interprete your DVI file. This is "
+                               i18n("<qt><strong>File corruption</strong> Okular could not interprete your DVI file. This is "
                                     "most commonly caused by a corrupted file.</qt>"),
                                errorMsg, i18n("DVI File Error"));
     errorMsg.clear();

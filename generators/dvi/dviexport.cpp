@@ -255,13 +255,13 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
   if (!find_exe("dvipdfm")) {
     KMessageBox::sorry(parent_widget,
-                               i18n("KDVI could not locate the program 'dvipdfm' on your computer. That program is "
+                               i18n("Okular could not locate the program 'dvipdfm' on your computer. That program is "
                                "essential for the export function to work. You can, however, convert "
-                               "the DVI-file to PDF using the print function of KDVI, but that will often "
+                               "the DVI-file to PDF using the print function of Okular, but that will often "
                                "produce documents which print ok, but are of inferior quality if viewed in the "
                                "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
                                "TeX distribution which includes the 'dvipdfm' program.\n"
-                               "Hint to the perplexed system administrator: KDVI uses the PATH environment variable "
+                               "Hint to the perplexed system administrator: Okular uses the PATH environment variable "
                                "when looking for programs."));
     return;
   }
@@ -285,7 +285,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
   initialise_progress_dialog(dvi.total_pages,
                              i18n("Using dvipdfm to export the file to PDF"),
-                             i18n("KDVI is currently using the external program 'dvipdfm' to "
+                             i18n("Okular is currently using the external program 'dvipdfm' to "
                                   "convert your DVI-file to PDF. Sometimes that can take "
                                   "a while because dvipdfm needs to generate its own bitmap fonts "
                                   "Please be patient."),
@@ -328,11 +328,11 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   if (dvi.numberOfExternalNONPSFiles != 0) {
     KMessageBox::sorry(parent_widget,
                        i18n("<qt><P>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
-                            "<strong>dvips</strong> program that KDVI uses interally to print or to export to PostScript. The functionality that "
-                            "you require is therefore unavailable in this version of KDVI.</p>"
+                            "<strong>dvips</strong> program that Okular uses interally to print or to export to PostScript. The functionality that "
+                            "you require is therefore unavailable in this version of Okular.</p>"
                             "<p>As a workaround, you can use the <strong>File/Export As</strong>-Menu to save this file in PDF format, and then use "
                             "a PDF viewer.</p>"
-                            "<p>The author of KDVI apologizes for the inconvenience. If enough users complain, the missing functionality might later "
+                            "<p>The author of Okular apologizes for the inconvenience. If enough users complain, the missing functionality might later "
                             "be added.</p></qt>") ,
                        i18n("Functionality Unavailable"));
     return;
@@ -340,9 +340,9 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 
   if (!find_exe("dvips")) {
     KMessageBox::sorry(parent_widget,
-                          i18n("KDVI could not locate the program 'dvips' on your computer. That program is "
+                          i18n("Okular could not locate the program 'dvips' on your computer. That program is "
                                "essential for the export function to work.\n"
-                               "Hint to the perplexed system administrator: KDVI uses the PATH environment variable "
+                               "Hint to the perplexed system administrator: Okular uses the PATH environment variable "
                                "when looking for programs."));
     return;
   }
@@ -440,7 +440,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 
   initialise_progress_dialog(dvi.total_pages,
                              i18n("Using dvips to export the file to PostScript"),
-                             i18n("KDVI is currently using the external program 'dvips' to "
+                             i18n("Okular is currently using the external program 'dvips' to "
                                   "convert your DVI-file to PostScript. Sometimes that can take "
                                   "a while because dvips needs to generate its own bitmap fonts "
                                   "Please be patient."),

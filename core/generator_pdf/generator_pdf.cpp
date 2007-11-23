@@ -808,7 +808,7 @@ QString PDFGenerator::getDocumentDate( const QString & data ) const
         if ( s[0] == 'D' && s[1] == ':' )
             s = s.mid(2);
 
-        if ( sscanf( s.latin1(), "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
+        if ( !s.isEmpty() && sscanf( s.latin1(), "%4d%2d%2d%2d%2d%2d", &year, &mon, &day, &hour, &min, &sec ) == 6 )
         {
             QDate d( year, mon, day );  //CHECK: it was mon-1, Jan->0 (??)
             QTime t( hour, min, sec );

@@ -2461,7 +2461,16 @@ QStringList Document::supportedMimeTypes() const
 
 const KComponentData* Document::componentData() const
 {
-    return d->m_generator ? d->m_generator->ownComponentData() : 0;
+    if ( !d->m_generator )
+        return 0;
+
+    const KComponentData* kcd = d->m_generator->ownComponentData();
+
+    // empty about data
+    if ( kcd && kcd->aboutData() && kcd->aboutData()->programName().isEmpty() )
+        return 0;
+
+    return kcd;
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

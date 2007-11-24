@@ -130,7 +130,7 @@ class ListEdit : public QListWidget, public FormWidgetIface
         explicit ListEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
 
     private slots:
-        void selectionChanged();
+        void slotSelectionChanged();
 
     private:
         Okular::FormFieldChoice * m_form;

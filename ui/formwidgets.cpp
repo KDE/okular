@@ -212,11 +212,11 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     }
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( itemSelectionChanged() ), this, SLOT( selectionChanged() ) );
+    connect( this, SIGNAL( itemSelectionChanged() ), this, SLOT( slotSelectionChanged() ) );
     setVisible( m_form->isVisible() );
 }
 
-void ListEdit::selectionChanged()
+void ListEdit::slotSelectionChanged()
 {
     QList< QListWidgetItem * > selection = selectedItems();
     QList< int > rows;

@@ -26,6 +26,7 @@
 #include <qvector.h>
 #include <qstack.h>
 
+#include <kaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -34,6 +35,17 @@ OKULAR_EXPORT_PLUGIN(DviGenerator)
 DviGenerator::DviGenerator() : Okular::Generator(),
   m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_dvi",
+         "okular_dvi",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData( about );
     setFeature( TextExtraction );
 }
 

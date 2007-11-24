@@ -11,9 +11,22 @@
 
 #include "converter.h"
 
+#include <kaboutdata.h>
+
 OKULAR_EXPORT_PLUGIN(FictionBookGenerator)
 
 FictionBookGenerator::FictionBookGenerator()
     : Okular::TextDocumentGenerator( new FictionBook::Converter )
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_fictionbook",
+         "okular_fictionbook",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData( about );
 }

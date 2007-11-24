@@ -15,6 +15,7 @@
 #include <qsize.h>
 #include <QtGui/QPrinter>
 
+#include <kaboutdata.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kmimetype.h>
@@ -36,6 +37,18 @@ GSGenerator::GSGenerator() :
     m_docInfo(0),
     m_request(0)
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_ghostscript",
+         "okular_ghostscript",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData(about);
+
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
     if (!renderer->isRunning()) renderer->start();
     connect(renderer, SIGNAL(imageDone(QImage *, Okular::PixmapRequest *)),

@@ -15,6 +15,7 @@
 #include <QtGui/QPrinter>
 #include <QtGui/QTextDocument>
 
+#include <kaboutdata.h>
 #include <klocale.h>
 
 #include <okular/core/page.h>
@@ -51,6 +52,17 @@ static void calculateBoundingRect( QTextDocument *document, int startPosition, i
 PluckerGenerator::PluckerGenerator()
     : Generator()
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_plucker",
+         "okular_plucker",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData( about );
     setFeature( Threaded );
 }
 

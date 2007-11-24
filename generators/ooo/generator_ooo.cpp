@@ -11,9 +11,22 @@
 
 #include "converter.h"
 
+#include <kaboutdata.h>
+
 OKULAR_EXPORT_PLUGIN(KOOOGenerator)
 
 KOOOGenerator::KOOOGenerator()
   : Okular::TextDocumentGenerator( new OOO::Converter )
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_ooo",
+         "okular_ooo",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData( about );
 }

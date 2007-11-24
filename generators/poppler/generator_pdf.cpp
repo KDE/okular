@@ -21,6 +21,7 @@
 #include <qtextstream.h>
 #include <QtGui/QPrinter>
 
+#include <kaboutdata.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
@@ -293,6 +294,17 @@ PDFGenerator::PDFGenerator()
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true )
 {
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData *about = new KAboutData(
+         "okular_poppler",
+         "okular_poppler",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    setAboutData( about );
     setFeature( TextExtraction );
     setFeature( FontInfo );
 #ifdef HAVE_POPPLER_0_6

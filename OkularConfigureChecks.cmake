@@ -4,11 +4,11 @@ option(
    "Forces okular to check for DRM to decide if you can copy/print protected pdf. (default=no)"
    OFF
 )
-if(OKULAR_FORCE_DRM STREQUAL "ON")
+if (OKULAR_FORCE_DRM)
    set(_OKULAR_FORCE_DRM 1)
-else(OKULAR_FORCE_DRM STREQUAL "ON")
+else (OKULAR_FORCE_DRM)
    set(_OKULAR_FORCE_DRM 0)
-endif(OKULAR_FORCE_DRM STREQUAL "ON")
+endif (OKULAR_FORCE_DRM)
 
 # at the end, output the configuration
 configure_file(

@@ -406,8 +406,8 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     KLibrary *lib = KLibLoader::self()->library( QFile::encodeName( libname ), QLibrary::ExportExternalSymbolsHint );
     if ( !lib )
     {
-        kWarning().nospace() << "Could not load '" << libname << "' library.";
-        kWarning() << KLibLoader::self()->lastErrorMessage();
+        kWarning(OkularDebug).nospace() << "Could not load '" << libname << "' library.";
+        kWarning(OkularDebug) << KLibLoader::self()->lastErrorMessage();
         emit m_parent->error( i18n( "Could not load the necessary plugin to view the document." ), -1 );
         return 0;
     }
@@ -421,7 +421,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     Generator * generator = create_plugin();
     if ( !generator )
     {
-        kWarning().nospace() << "Broken generator " << libname << "!";
+        kWarning(OkularDebug).nospace() << "Broken generator " << libname << "!";
         return 0;
     }
     GeneratorInfo info;
@@ -584,9 +584,9 @@ void DocumentPrivate::sendGeneratorRequest()
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
             {
-                kWarning().nospace() << "Running out of memory on page " << r->pageNumber()
+                kWarning(OkularDebug).nospace() << "Running out of memory on page " << r->pageNumber()
                     << " (" << r->width() << "x" << r->height() << " px);";
-                kWarning() << "this message will be reported only once.";
+                kWarning(OkularDebug) << "this message will be reported only once.";
                 m_warnedOutOfMemory = true;
             }
             delete r;
@@ -1119,7 +1119,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the passed document." ), -1 );
-        kWarning().nospace() << "No plugin for mimetype '" << mime->name() << "'.";
+        kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime->name() << "'.";
         return false;
     }
     int hRank=0;
@@ -2198,7 +2198,7 @@ void Document::processAction( const Action * action )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
-                kWarning().nospace() << "Action: Error opening '" << go->fileName() << "'.";
+                kWarning(OkularDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
                 return;
             }
             else
@@ -2510,7 +2510,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     }
 #ifndef NDEBUG
     else
-        kWarning() << "Receiving a done request for the defunct observer" << req->id();
+        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << req->id();
 #endif
 
     // 3. delete request
@@ -2773,7 +2773,7 @@ void DocumentInfo::set( enum Key key, const QString &value )
             set( "keywords", value, i18n( "Keywords" ) );
             break;
         default:
-            kWarning() << "DocumentInfo::set(): Invalid key passed";
+            kWarning(OkularDebug) << "Invalid key passed";
             break;
     }
 }

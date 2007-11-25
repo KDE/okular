@@ -427,7 +427,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QS
     GeneratorInfo info;
     info.generator = generator;
     info.library = lib;
-    const KComponentData* compData = m_parent->componentData();
+    const KComponentData* compData = generator->ownComponentData();
     if ( compData && compData->aboutData() )
         info.catalogName = compData->aboutData()->catalogName();
     m_loadedGenerators.insert( name, info );

@@ -39,8 +39,8 @@ GSGenerator::GSGenerator() :
 {
     // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData *about = new KAboutData(
-         "okular_ghostscript",
-         "okular_ghostscript",
+         "okular_ghostview",
+         "okular_ghostview",
          KLocalizedString(),
          "0.1",
          KLocalizedString(),

@@ -457,7 +457,7 @@ void DocumentPrivate::loadServiceList( const KService::List& offers )
         QString propName = offers.at(i)->name();
         // don't load already loaded generators
         QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
-        if ( genIt != m_loadedGenerators.end() )
+        if ( !m_loadedGenerators.isEmpty() && genIt != m_loadedGenerators.end() )
             continue;
 
         Generator * g = loadGeneratorLibrary( propName, offers.at(i)->library() );

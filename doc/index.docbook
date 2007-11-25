@@ -261,7 +261,7 @@
 				</para>
 				<note>
 					<para>
-						The annotating toolbar can be docked in any side of the viewing are: just drag it to
+						The annotating toolbar can be docked in any side of the viewing area: just drag it to
 						move it to another place.
 					</para>
 				</note>
@@ -284,7 +284,7 @@
 				<title>Removing annotations</title>
 				<para>
 					To remove an annotation, just click on it with the &RMB;, and select
-					<guimenuitem>Remove</guimenuitem>.
+					<guimenuitem>Delete</guimenuitem>.
 				</para>
 				<para>
 					When removing the annotation, its window will be closed if open.
@@ -801,7 +801,7 @@
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>3</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Select Tool</guimenuitem>
+							<guimenuitem>Selection Tool</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>

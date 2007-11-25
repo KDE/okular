@@ -488,6 +488,16 @@ void DocumentPrivate::cacheExportFormats()
     m_exportCached = true;
 }
 
+ConfigInterface* DocumentPrivate::generatorConfig( GeneratorInfo& info )
+{
+    if ( info.configChecked )
+        return info.config;
+
+    info.config = qobject_cast< Okular::ConfigInterface * >( info.generator );
+    info.configChecked = true;
+    return info.config;
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_docFileName.isEmpty() )
@@ -665,10 +675,10 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
 
     // reparse generator config and if something changed clear Pages
     bool configchanged = false;
-    QHash< QString, GeneratorInfo >::const_iterator it = m_loadedGenerators.constBegin(), itEnd = m_loadedGenerators.constEnd();
+    QHash< QString, GeneratorInfo >::iterator it = m_loadedGenerators.begin(), itEnd = m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
     {
-        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value().generator );
+        Okular::ConfigInterface * iface = generatorConfig( it.value() );
         if ( iface )
         {
             bool it_changed = iface->reparseConfig();
@@ -1314,7 +1324,7 @@ void Document::closeDocument()
 
         QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-        if ( !genIt.value().catalogName.isEmpty() )
+        if ( !genIt.value().catalogName.isEmpty() && !genIt.value().config )
             KGlobal::locale()->removeCatalog( genIt.value().catalogName );
     }
     d->m_generator = 0;
@@ -2417,12 +2427,13 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     QHash< QString, GeneratorInfo >::iterator itEnd = d->m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
     {
-        Okular::ConfigInterface * iface = qobject_cast< Okular::ConfigInterface * >( it.value().generator );
+        Okular::ConfigInterface * iface = d->generatorConfig( it.value() );
         if ( iface )
         {
             iface->addPages( dialog );
-            it.value().hasConfig = true;
             pagesAdded = true;
+            if ( !it.value().catalogName.isEmpty() )
+                KGlobal::locale()->insertCatalog( it.value().catalogName );
         }
     }
     if ( pagesAdded )

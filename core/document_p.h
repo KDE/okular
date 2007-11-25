@@ -32,16 +32,21 @@ class KTemporaryFile;
 struct AllocatedPixmap;
 struct RunningSearch;
 
+namespace Okular {
+class ConfigInterface;
+}
+
 struct GeneratorInfo
 {
     GeneratorInfo()
-        : generator( 0 ), library( 0 ), hasConfig( false )
+        : generator( 0 ), library( 0 ), config( 0 ), configChecked( false )
     {}
 
     Okular::Generator * generator;
     KLibrary * library;
     QString catalogName;
-    bool hasConfig : 1;
+    Okular::ConfigInterface * config;
+    bool configChecked : 1;
 };
 
 namespace Okular {
@@ -84,6 +89,7 @@ class DocumentPrivate
         void unloadGenerator( const GeneratorInfo& info );
         void cacheExportFormats();
         void setRotationInternal( int r, bool notify );
+        ConfigInterface* generatorConfig( GeneratorInfo& info );
 
         // private slots
         void saveDocumentInfo() const;

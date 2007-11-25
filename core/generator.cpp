@@ -509,7 +509,7 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
             return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
             break;
         case PDF:
-            return ExportFormat( i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
+            return ExportFormat( KIcon( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
             break;
     }
     return ExportFormat();

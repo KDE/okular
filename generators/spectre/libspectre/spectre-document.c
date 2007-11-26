@@ -234,6 +234,33 @@ spectre_document_get_page (SpectreDocument *document,
 	return page;
 }
 
+SpectrePage *
+spectre_document_get_page_by_label (SpectreDocument *document,
+				    const char      *label)
+{
+	unsigned int i;
+	int page_index = -1;
+	
+	if (!label) {
+		document->status = SPECTRE_STATUS_INVALID_PAGE;
+		return NULL;
+	}
+
+	for (i = 0; i < document->doc->numpages; i++) {
+		if (strcmp (document->doc->pages[i].label, label) == 0) {
+			page_index = i;
+			break;
+		}
+	}
+
+	if (page_index == -1) {
+		document->status = SPECTRE_STATUS_INVALID_PAGE;
+		return NULL;
+	}
+
+	return spectre_document_get_page (document, page_index);
+}
+
 void
 spectre_document_save (SpectreDocument *document,
 		       const char      *filename)

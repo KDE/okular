@@ -77,6 +77,12 @@ spectre_page_get_index (SpectrePage *page)
 	return page->index;
 }
 
+const char *
+spectre_page_get_label (SpectrePage *page)
+{
+	return page->doc->numpages > 0 ? page->doc->pages[page->index].label : NULL;
+}
+
 SpectreOrientation
 spectre_page_get_orientation (SpectrePage *page)
 {

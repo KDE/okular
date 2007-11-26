@@ -55,6 +55,11 @@ void               spectre_page_free            (SpectrePage          *page);
 */
 unsigned int       spectre_page_get_index       (SpectrePage          *page);
 
+/*! Returns the label of the page inside the document.
+    @param page The page whose label will be returned
+*/
+const char        *spectre_page_get_label       (SpectrePage          *page);
+
 /*! Returns the orientation of the page
     @param page The page whose orientation will be returned
 */

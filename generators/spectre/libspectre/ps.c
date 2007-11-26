@@ -1712,6 +1712,7 @@ static char * readline (fd, lineP, positionP, line_lenP)
 {
    unsigned int nbytes=0;
    int skipped=0;
+   int nesting_level=0;
    char *line;
 
    BEGINMESSAGE(readline)
@@ -1770,10 +1771,18 @@ static char * readline (fd, lineP, positionP, line_lenP)
 #endif
    if  (!IS_COMMENT("Begin"))     {} /* Do nothing */
    else if IS_BEGIN("Document:")  {  /* Skip the EPS without handling its content */
-            while (line && !IS_END("Document")) {
-               line = ps_io_fgetchars(fd,-1);
-               if (line) *line_lenP += FD_LINE_LEN;
-            }
+       nesting_level=1;
+       line = ps_io_fgetchars(fd,-1);
+       if (line) *line_lenP += FD_LINE_LEN;
+       while (line) {
+           if (IS_COMMENT("Begin") && IS_BEGIN("Document:"))
+	       nesting_level++;
+	   else if (IS_COMMENT("End") && IS_END("Document"))
+	       nesting_level--;
+	   if (nesting_level == 0) break;
+	   line = ps_io_fgetchars(fd,-1);
+	   if (line) *line_lenP += FD_LINE_LEN;
+       }
    }
    else if IS_BEGIN("Feature:")   SKIP_UNTIL_1("EndFeature")
 #ifdef USE_ACROREAD_WORKAROUND

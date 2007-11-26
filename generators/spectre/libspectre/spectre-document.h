@@ -118,6 +118,15 @@ unsigned int       spectre_document_get_language_level (SpectreDocument *documen
 */
 SpectrePage       *spectre_document_get_page           (SpectreDocument *document,
 							unsigned int     page_index);
+
+/*! Returns a page of the document referenced by label. This function can fail
+    @param document the document whose page will be returned
+    @param label the label of the page to get.
+    @see spectre_document_status
+*/
+SpectrePage       *spectre_document_get_page_by_label  (SpectreDocument *document,
+							const char      *label);
+
 /*! Save document as filename. This function can fail
     @param document the document that will be saved
     @param filename the path where document will be saved

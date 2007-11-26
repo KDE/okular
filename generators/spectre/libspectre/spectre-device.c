@@ -171,7 +171,7 @@ spectre_device_render (SpectreDevice        *device,
 {
 	SpectreGS *gs;
 	char **args;
-	int n_args = 10;
+	int n_args = 12;
 	int arg = 0;
 	int success;
 	char *text_alpha, *graph_alpha;
@@ -226,10 +226,12 @@ spectre_device_render (SpectreDevice        *device,
 		n_args++;
 	
 	args = calloc (sizeof (char *), n_args);
+	args[arg++] = "libspectre"; /* This value doesn't really matter */
 	args[arg++] = "-dMaxBitmap=10000000";
 	args[arg++] = "-dDELAYSAFER";
 	args[arg++] = "-dNOPAUSE";
 	args[arg++] = "-dNOPAGEPROMPT";
+	args[arg++] = "-sDEVICE=display";
 	args[arg++] = text_alpha =_spectre_strdup_printf("-dTextAlphaBits=%d",
 							 rc->text_alpha_bits);
 	args[arg++] = graph_alpha = _spectre_strdup_printf("-dGraphicsAlphaBits=%d",

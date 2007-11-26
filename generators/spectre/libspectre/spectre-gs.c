@@ -194,14 +194,31 @@ spectre_gs_send_page (SpectreGS       *gs,
 		      struct document *doc,
 		      unsigned int     page_index)
 {
-	int urx, ury, llx, lly;
+	int doc_llx = 0, doc_lly = 0;
+	int page_llx = 0, page_lly = 0;
 
-	psgetpagebox (doc, page_index,
-		      &urx, &ury, &llx, &lly);
-	
+	if ((doc->boundingbox[URX] > doc->boundingbox[LLX]) &&
+	    (doc->boundingbox[URY] > doc->boundingbox[LLY])) {
+		doc_llx = doc->boundingbox[LLX];
+		doc_lly = doc->boundingbox[LLY];
+	}
+
+	if (doc->numpages > 0 &&
+	    (doc->pages[page_index].boundingbox[URX] >
+	     doc->pages[page_index].boundingbox[LLX]) &&
+	    (doc->pages[page_index].boundingbox[URY] >
+	     doc->pages[page_index].boundingbox[LLY])) {
+		/* Do not translate twice */
+		if (doc->pages[page_index].boundingbox[LLX] != doc_llx &&
+		    doc->pages[page_index].boundingbox[LLY] != doc_lly) {
+			page_llx =  doc->pages[page_index].boundingbox[LLX];
+			page_lly = doc->pages[page_index].boundingbox[LLY];
+		}
+	}
+
 	if (!spectre_gs_process (gs,
 				 doc->filename,
-				 llx, lly,
+				 doc_llx, doc_lly,
 				 doc->beginprolog,
 				 doc->endprolog))
 		return FALSE;
@@ -216,7 +233,7 @@ spectre_gs_send_page (SpectreGS       *gs,
 	if (doc->numpages > 0) {
 		if (!spectre_gs_process (gs,
 					 doc->filename,
-					 llx, lly,
+					 page_llx, page_lly,
 					 doc->pages[page_index].begin,
 					 doc->pages[page_index].end))
 			return FALSE;

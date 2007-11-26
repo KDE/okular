@@ -37,6 +37,7 @@
 #include <okular/core/sound.h>
 #include <okular/core/sourcereference.h>
 #include <okular/core/textpage.h>
+#include <okular/core/fileprinter.h>
 
 #include <config-okular-poppler.h>
 
@@ -106,15 +107,14 @@ class PDFOptionsPage : public QWidget
            layout->addStretch(1);
        }
 
-       void getOptions( QMap<QString,QString>& opts, bool incldef = false )
+       bool printForceRaster()
        {
-           Q_UNUSED(incldef);
-           opts[ "kde-okular-poppler-forceRaster" ] = QString::number( m_forceRaster->isChecked() );
+           return m_forceRaster->isChecked();
        }
 
-       void setOptions( const QMap<QString,QString>& opts )
+       void setPrintForceRaster( bool forceRaster )
        {
-           m_forceRaster->setChecked( opts[ "kde-okular-poppler-forceRaster" ].toInt() );
+           m_forceRaster->setChecked( forceRaster );
        }
 
     private:
@@ -292,7 +292,7 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator)
 PDFGenerator::PDFGenerator()
     : Generator(), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docEmbeddedFilesDirty( true )
+    docEmbeddedFilesDirty( true ), pdfOptionsPage( 0 )
 {
     // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData *about = new KAboutData(
@@ -307,8 +307,10 @@ PDFGenerator::PDFGenerator()
     setAboutData( about );
     setFeature( TextExtraction );
     setFeature( FontInfo );
+    setFeature( PrintPostscript );
 #ifdef HAVE_POPPLER_0_6
     setFeature( ReadRawData );
+    pdfOptionsPage = new PDFOptionsPage();
 #endif
     // update the configuration
     reparseConfig();
@@ -325,6 +327,8 @@ PDFGenerator::~PDFGenerator()
         generatorThread->wait();
         delete generatorThread;
     }
+
+    delete pdfOptionsPage;
 }
 
 //BEGIN Generator inherited functions
@@ -842,119 +846,104 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 
 bool PDFGenerator::print( QPrinter& printer )
 {
-/*  This printing method unsupported in QPrinter, looking for alternative.
-    int width, height;
-    // PageSize is a CUPS artificially created setting 
-    QString ps = printer.option( "PageSize" );
-    QRegExp sizere( "w(\\d+)h(\\d+)" );
-    int marginTop, marginLeft, marginRight, marginBottom;
-    marginTop = (int)printer.option("kde-margin-top").toDouble();
-    marginLeft = (int)printer.option("kde-margin-left").toDouble();
-    marginRight = (int)printer.option("kde-margin-right").toDouble();
-    marginBottom = (int)printer.option("kde-margin-bottom").toDouble();
-    if ( sizere.exactMatch( ps ) )
-    {
-        // size not supported by Qt, CUPS gives us the size as wWIDTHhHEIGHT, at least on the printers i tested
-        width = sizere.cap( 1 ).toInt();
-        height = sizere.cap( 2 ).toInt();
-    }
-    else
-    {
-        // size is supported by Qt, we get either the pageSize name or nothing because the CUPS driver
-        // does not do any translation, then use KPrinter::pageSize to get the page size
-        KPrinter::PageSize qtPageSize; 
-        if (!ps.isEmpty())
-        {
-            bool ok;
-            qtPageSize = pageNameToPageSize(ps, &ok);
-            // If we could not decode page size from the cups text try KPrinter::pageSize as last resort :-D
-            if (!ok) qtPageSize = printer.pageSize();
-        }
-        else qtPageSize = printer.pageSize();
+    // Get the real page size to pass to the ps generator
+    QPrinter dummy( QPrinter::PrinterResolution );
+    dummy.setFullPage( true );
+    dummy.setOrientation( printer.orientation() );
+    int width = dummy.width();
+    int height = dummy.height();
 
-        QPrinter dummy(QPrinter::PrinterResolution);
-        dummy.setOrientation((QPrinter::Orientation)printer.orientation());
-        dummy.setFullPage(true);
-        dummy.setPageSize((QPrinter::PageSize)qtPageSize);
-
-        width = dummy.width();
-        height = dummy.height();
-    }
-
+    // Create the tempfile to send to FilePrinter, which will manage the deletion
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
     if ( !tf.open() )
         return false;
     QString tempfilename = tf.fileName();
-#if !POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+
+    // Generate the list of pages to be printed as selected in the print dialog
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
+                                                         document()->bookmarkedPageList() );
+
+    // TODO rotation
+
+#ifdef HAVE_POPPLER_0_6
+
+#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+    tf.setAutoRemove(false);
+#else
     tf.close();
 #endif
 
-    QList<int> pageList;
-    if (!printer.previewOnly()) pageList = printer.pageList();
-    else for(int i = 1; i <= pdfdoc->numPages(); i++) pageList.push_back(i);
-    
-    // TODO rotation
-#ifdef HAVE_POPPLER_0_6
-    double xScale = ((double)width - (double)marginLeft - (double)marginRight) / (double)width;
-    double yScale = ((double)height - (double)marginBottom - (double)marginTop) / (double)height;
-    bool strictMargins = false;
-    if ( abs((int)(xScale * 100) - (int)(yScale * 100)) > 5 ) {
-        int result = KMessageBox::questionYesNo(document()->widget(),
-                                               i18n("The margins you specified are changing the page aspect ratio. Do you want to print with the aspect ratio changed or do you want the margins to be adapted so that aspect ratio is preserved?"),
-                                               i18n("Aspect ratio change"),
-                                               KGuiItem( i18n("Print with specified margins") ),
-                                               KGuiItem( i18n("Print adapting margins to keep aspect ratio") ),
-                                               "kpdfStrictlyObeyMargins");
-        if (result == KMessageBox::Yes) strictMargins = true;
-    }
     QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
     if ( pstitle.trimmed().isEmpty() )
     {
         pstitle = document()->currentDocument().fileName();
     }
-    bool forceRasterize = printer.option("kde-okular-poppler-forceRaster").toInt();
+
+    bool forceRasterize = pdfOptionsPage->printForceRaster();
+
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
+
 #if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
     psConverter->setOutputDevice(&tf);
 #else
     psConverter->setOutputFileName(tempfilename);
 #endif
+
     psConverter->setPageList(pageList);
     psConverter->setPaperWidth(width);
     psConverter->setPaperHeight(height);
-    psConverter->setRightMargin(marginRight);
-    psConverter->setBottomMargin(marginBottom);
-    psConverter->setLeftMargin(marginLeft);
-    psConverter->setTopMargin(marginTop);
-    psConverter->setStrictMargins(strictMargins);
+    psConverter->setRightMargin(0);
+    psConverter->setBottomMargin(0);
+    psConverter->setLeftMargin(0);
+    psConverter->setTopMargin(0);
+    psConverter->setStrictMargins(false);
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
+
     userMutex()->lock();
     if (psConverter->convert())
     {
         userMutex()->unlock();
         delete psConverter;
-        return printer.printFiles(QStringList(tempfilename), true);
+        int ret = Okular::FilePrinter::printFile( printer, tempfilename,
+                                                  Okular::FilePrinter::SystemDeletesFiles,
+                                                  Okular::FilePrinter::ApplicationSelectsPages,
+                                                  document()->bookmarkedPageRange() );
+        if ( ret >= 0 ) return true;
     }
     else
     {
         delete psConverter;
-#else
-    userMutex()->lock();
-    if (pdfdoc->print(tempfilename, pageList, 72, 72, 0, width, height))
-    {
-        userMutex()->unlock();
-        return printer.printFiles(QStringList(tempfilename), true);
-    }
-    else
-    {
-#endif
         userMutex()->unlock();
         return false;
     }
-*/
-	return false;
+
+#else // Not HAVE_POPPLER_0_6
+
+    userMutex()->lock();
+
+    if ( pdfdoc->print( tempfilename, pageList, 72, 72, 0, width, height ) )
+    {
+        userMutex()->unlock();
+        tf.setAutoRemove( false );
+        int ret = Okular::FilePrinter::printFile( printer, tempfilename,
+                                                  Okular::FilePrinter::SystemDeletesFiles,
+                                                  Okular::FilePrinter::ApplicationSelectsPages,
+                                                  document()->bookmarkedPageRange() );
+        if ( ret >= 0 ) return true;
+    }
+    else
+    {
+        userMutex()->unlock();
+        return false;
+    }
+
+#endif // HAVE_POPPLER_0_6
+
+    tf.close();
+
+    return false;
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const
@@ -1515,11 +1504,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
 
 QWidget* PDFGenerator::printConfigurationWidget() const
 {
-#ifdef HAVE_POPPLER_0_6
-    return new PDFOptionsPage();
-#else
-    return 0;
-#endif
+    return pdfOptionsPage;
 }
 
 

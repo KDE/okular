@@ -24,6 +24,7 @@
 #include <kmimetype.h>
 
 class QPrinter;
+class QPrintDialog;
 class KComponentData;
 class KBookmark;
 class KConfigDialog;
@@ -416,6 +417,16 @@ class OKULAR_EXPORT Document : public QObject
         void processAction( const Action *action );
 
         /**
+         * Returns a list of the bookmarked.pages
+         */
+        QList<int> bookmarkedPageList() const;
+
+        /**
+         * Returns the range of the bookmarked.pages
+         */
+        QString bookmarkedPageRange() const;
+
+        /**
          * Processes/Executes the given source @p reference.
          */
         void processSourceReference( const SourceReference *reference );
@@ -424,6 +435,27 @@ class OKULAR_EXPORT Document : public QObject
          * Returns whether the document can configure the printer itself.
          */
         bool canConfigurePrinter() const;
+
+        /**
+         * What type of printing a document supports
+         */
+        enum PrintingType
+        {
+            NoPrinting,            ///< Printing Not Supported
+            NativePrinting,        ///< Native Cross-Platform Printing
+            PostscriptPrinting     ///< Postscript file printing
+        };
+
+        /**
+         * Returns what sort of printing the document supports:
+         *   Native, Postscript, None
+         */
+        PrintingType printingSupport() const;
+
+        /**
+         * Returns whether the document supports printing to both PDF and PS files.
+         */
+        bool supportsPrintToFile() const;
 
         /**
          * Prints the document to the given @p printer.

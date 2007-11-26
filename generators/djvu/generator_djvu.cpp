@@ -16,6 +16,7 @@
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
 #include <okular/core/utils.h>
+#include <okular/core/fileprinter.h>
 
 #include <qdom.h>
 #include <qmutex.h>
@@ -66,6 +67,7 @@ DjVuGenerator::DjVuGenerator()
 {
     setFeature( TextExtraction );
     setFeature( Threaded );
+    setFeature( PrintPostscript );
 
     m_djvu = new KDjVu();
 
@@ -185,30 +187,31 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
 
 bool DjVuGenerator::print( QPrinter& printer )
 {
-/*  This printing method unsupported in QPrinter, looking for alternative.
+    bool result = false;
 
-    QList<int> pageList;
-    if ( !printer.previewOnly() )
-        pageList = printer.pageList();
-    else
-    {
-        int pages = m_djvu->pages().count();
-        for( int i = 1; i <= pages; ++i )
-            pageList.push_back(i);
-    }
-
+    // Create tempfile to write to
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
     if ( !tf.open() )
         return false;
 
     QMutexLocker locker( userMutex() );
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, m_djvu->pages().count(),
+                                                         document()->bookmarkedPageList() );
+
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
-        return printer.printFiles( QStringList( tf.fileName() ), false );
+        tf.setAutoRemove( false );
+        int ret = Okular::FilePrinter::printFile( printer, tf.fileName(),
+                                                  Okular::FilePrinter::SystemDeletesFiles,
+                                                  Okular::FilePrinter::ApplicationSelectsPages,
+                                                  document()->bookmarkedPageRange() );
+        result = ( ret >=0 );
     }
-*/
-    return false;
+
+    tf.close();
+
+    return result;
 }
 
 QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) const

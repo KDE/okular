@@ -22,6 +22,7 @@
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
+#include <okular/core/fileprinter.h>
 
 #include <tiff.h>
 #include <tiffio.h>
@@ -50,6 +51,8 @@ TIFFGenerator::TIFFGenerator()
       d( new Private ), m_docInfo( 0 )
 {
     setFeature( Threaded );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 
     KAboutData *about = new KAboutData(
          "okular_tiff",
@@ -220,9 +223,12 @@ bool TIFFGenerator::print( QPrinter& printer )
 
     QPainter p( &printer );
 
-    for ( tdir_t i = 0; i < dirs; ++i )
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->bookmarkedPageList() );
+
+    for ( tdir_t i = 0; i < pageList.count(); ++i )
     {
-        if ( !TIFFSetDirectory( d->tiff, i ) )
+        if ( !TIFFSetDirectory( d->tiff, pageList[i] - 1 ) )
             continue;
 
         if ( TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width ) != 1 ||

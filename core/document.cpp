@@ -28,6 +28,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QLabel>
 #include <QtGui/QPrinter>
+#include <QtGui/QPrintDialog>
 
 #include <kaboutdata.h>
 #include <kauthorized.h>
@@ -2186,6 +2187,68 @@ BookmarkManager * Document::bookmarkManager() const
     return d->m_bookmarkManager;
 }
 
+QList<int> Document::bookmarkedPageList() const
+{
+    QList<int> list;
+    uint docPages = pages();
+
+    //pages are 0-indexed internally, but 1-indexed externally
+    for ( uint i = 0; i < docPages; i++ )
+    {
+        if ( bookmarkManager()->isBookmarked( i ) )
+        {
+            list << i + 1;
+        }
+    }
+    return list;
+}
+
+QString Document::bookmarkedPageRange() const
+{
+    // Code formerly in Part::slotPrint()
+    // range detecting
+    QString range;
+    uint docPages = pages();
+    int startId = -1;
+    int endId = -1;
+
+    for ( uint i = 0; i < docPages; ++i )
+    {
+        if ( bookmarkManager()->isBookmarked( i ) )
+        {
+            if ( startId < 0 )
+                startId = i;
+            if ( endId < 0 )
+                endId = startId;
+            else
+                ++endId;
+        }
+        else if ( startId >= 0 && endId >= 0 )
+        {
+            if ( !range.isEmpty() )
+                range += ',';
+
+            if ( endId - startId > 0 )
+                range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+            else
+                range += QString::number( startId + 1 );
+            startId = -1;
+            endId = -1;
+        }
+    }
+    if ( startId >= 0 && endId >= 0 )
+    {
+        if ( !range.isEmpty() )
+            range += ',';
+
+        if ( endId - startId > 0 )
+            range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+        else
+            range += QString::number( startId + 1 );
+    }
+    return range;
+}
+
 void Document::processAction( const Action * action )
 {
     if ( !action )
@@ -2394,6 +2457,33 @@ void Document::processSourceReference( const SourceReference * ref )
         return;
 
     QProcess::startDetached( p );
+}
+
+Document::PrintingType Document::printingSupport() const
+{
+    if ( d->m_generator )
+    {
+
+        if ( d->m_generator->hasFeature( Generator::PrintNative ) )
+        {
+            return NativePrinting;
+        }
+
+#ifndef Q_OS_WIN
+        if ( d->m_generator->hasFeature( Generator::PrintPostscript ) )
+        {
+            return PostscriptPrinting;
+        }
+#endif
+
+    }
+
+    return NoPrinting;
+}
+
+bool Document::supportsPrintToFile() const
+{
+    return d->m_generator ? d->m_generator->hasFeature( Generator::PrintToFile ) : false;
 }
 
 bool Document::print( QPrinter &printer )

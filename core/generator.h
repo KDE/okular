@@ -33,6 +33,7 @@
 
 class QMutex;
 class QPrinter;
+class QPrintDialog;
 class KAboutData;
 class KComponentData;
 class KIcon;
@@ -196,7 +197,10 @@ class OKULAR_EXPORT Generator : public QObject
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
             ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
             FontInfo,          ///< Whether the Generator can provide information about the fonts used in the document
-            PageSizes          ///< Whether the Generator can change the size of the document pages.
+            PageSizes,         ///< Whether the Generator can change the size of the document pages.
+            PrintNative,       ///< Whether the Generator supports native cross-platform printing (QPainter-based).
+            PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
+            PrintToFile        ///< Whether the Generator supports export to PDF & PS through the Print Dialog
         };
 
         /**

@@ -79,6 +79,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "core/fileprinter.h"
 
 K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
 K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "okular" ) ) ) )
@@ -742,7 +743,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_saveAs->setEnabled( ok );
-    m_printPreview->setEnabled( ok );
+    m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
@@ -815,7 +816,7 @@ bool Part::openUrl(const KUrl &url)
         setWindowTitleFromDocument();
     }
 
-    emit enablePrintAction(openOk);
+    emit enablePrintAction(openOk && m_document->printingSupport() != Okular::Document::NoPrinting);
     return openOk;
 }
 
@@ -940,7 +941,7 @@ void Part::slotDoFileDirty()
             m_sidebar->setCurrentIndex( m_sidebar->currentIndex() );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
-        emit enablePrintAction(true);
+        emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
     }
     else
     {
@@ -1295,38 +1296,33 @@ void Part::slotPrintPreview()
 {
     if (m_document->pages() == 0) return;
 
-    double width, height;
-    int landscape, portrait;
     QPrinter printer;
-    const Okular::Page *page;
 
-//     printer.setMinMax(1, m_document->pages());
-//     printer.setPreviewOnly( true );
-
-    // if some pages are landscape and others are not the most common win as kprinter does
-    // not accept a per page setting
-    landscape = 0;
-    portrait = 0;
-    for (uint i = 0; i < m_document->pages(); i++)
+    // Native printing supports KPrintPreview, Postscript needs to use FilePrinterPreview
+    if ( m_document->printingSupport() == Okular::Document::NativePrinting )
     {
-        page = m_document->page(i);
-        width = page->width();
-        height = page->height();
-        if (page->orientation() == 90 || page->orientation() == 270) qSwap(width, height);
-        if (width > height) landscape++;
-        else portrait++;
+        KPrintPreview previewdlg( &printer, widget() );
+        setupPrint( printer );
+        doPrint( printer );
+        previewdlg.exec();
     }
-    if (landscape > portrait)
+    else
     {
-        //  printer.setOption("orientation-requested", "4");
-        printer.setOrientation( QPrinter::Landscape );
+        // Generate a temp filename for Print to File, then release the file so generator can write to it
+        KTemporaryFile tf;
+        tf.setAutoRemove( true );
+        tf.setSuffix( ".ps" );
+        tf.open();
+        printer.setOutputFileName( tf.fileName() );
+        tf.close();
+        setupPrint( printer );
+        doPrint( printer );
+        if ( QFile::exists( printer.outputFileName() ) )
+        {
+            Okular::FilePrinterPreview previewdlg( printer.outputFileName(), widget() );
+            previewdlg.exec();
+        }
     }
-
-    KPrintPreview previewdlg( &printer, widget() );
-
-    doPrint(printer);
-
-    previewdlg.exec();
 }
 
 
@@ -1495,21 +1491,61 @@ void Part::slotPrint()
 {
     if (m_document->pages() == 0) return;
 
+    QPrinter printer;
+    QPrintDialog *printDialog = 0;
+    QWidget *printConfigWidget = 0;
+
+    // Must do certain QPrinter setup before creating QPrintDialog
+    setupPrint( printer );
+
+    // Create the Print Dialog with extra config widgets if required
+    if ( m_document->canConfigurePrinter() )
+    {
+        printConfigWidget = m_document->printConfigurationWidget();
+    }
+    if ( printConfigWidget )
+    {
+        printDialog = KdePrint::createPrintDialog( &printer, QList<QWidget*>() << printConfigWidget, widget() );
+    }
+    else
+    {
+        printDialog = KdePrint::createPrintDialog( &printer, widget() );
+    }
+
+    if ( printDialog )
+    {
+
+        // Set the available Print Range
+        printDialog->setMinMax( 1, m_document->pages() );
+        printDialog->setFromTo( 1, m_document->pages() );
+
+        // If the user has bookmarked pages for printing, then enable Selection
+        if ( !m_document->bookmarkedPageRange().isEmpty() )
+        {
+            printDialog->addEnabledOption( QAbstractPrintDialog::PrintSelection );
+        }
+
+        // If the Document type doesn't support print to both PS & PDF then disable the Print Dialog option
+        if ( printDialog->isOptionEnabled( QAbstractPrintDialog::PrintToFile ) &&
+             !m_document->supportsPrintToFile() )
+        {
+            printDialog->setEnabledOptions( printDialog->enabledOptions() ^ QAbstractPrintDialog::PrintToFile );
+        }
+
+        if ( printDialog->exec() )
+            doPrint( printer );
+
+    }
+}
+
+
+void Part::setupPrint( QPrinter &printer )
+{
     double width, height;
     int landscape, portrait;
-    QPrinter printer;
     const Okular::Page *page;
 
-/*  Disable as QPrinter does not support most of this page management stuff.
-    Besides no point sorting this out until we solve the main printFiles problem.
-    However leave basic printing in place as some formats still support it.
-
-    printer.setPageSelection(KPrinter::ApplicationSide);
-    printer.setMinMax(1, m_document->pages());
-    printer.setCurrentPage(m_document->currentPage()+1);
-*/
-
-    // if some pages are landscape and others are not the most common win as kprinter does
+    // if some pages are landscape and others are not the most common win as QPrinter does
     // not accept a per page setting
     landscape = 0;
     portrait = 0;
@@ -1524,50 +1560,6 @@ void Part::slotPrint()
     }
     if (landscape > portrait) printer.setOrientation(QPrinter::Landscape);
 
-/*
-    // range detecting
-    QString range;
-    uint pages = m_document->pages();
-    int startId = -1;
-    int endId = -1;
-
-    for ( uint i = 0; i < pages; ++i )
-    {
-        if ( m_document->bookmarkManager()->isBookmarked( i ) )
-        {
-            if ( startId < 0 )
-                startId = i;
-            if ( endId < 0 )
-                endId = startId;
-            else
-                ++endId;
-        }
-        else if ( startId >= 0 && endId >= 0 )
-        {
-            if ( !range.isEmpty() )
-                range += ',';
-
-            if ( endId - startId > 0 )
-                range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
-            else
-                range += QString::number( startId + 1 );
-            startId = -1;
-            endId = -1;
-        }
-    }
-    if ( startId >= 0 && endId >= 0 )
-    {
-        if ( !range.isEmpty() )
-            range += ',';
-
-        if ( endId - startId > 0 )
-            range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
-        else
-            range += QString::number( startId + 1 );
-    }
-    printer.setOption( "kde-range", range );
-*/
-
     // title
     QString title = m_document->metaData( "DocumentTitle" ).toString();
     if ( title.isEmpty() )
@@ -1578,26 +1570,6 @@ void Part::slotPrint()
     {
         printer.setDocName( title );
     }
-
-    QPrintDialog *printDialog;
-    QWidget * w;
-
-    if ( m_document->canConfigurePrinter() )
-    {
-        w = m_document->printConfigurationWidget();
-    }
-
-    if ( w )
-    {
-        printDialog = KdePrint::createPrintDialog( &printer, QList<QWidget*>() << w, widget() );
-    }
-    else
-    {
-        printDialog = KdePrint::createPrintDialog( &printer, widget() );
-    }
-
-    if ( printDialog->exec() )
-        doPrint( printer );
 }
 
 

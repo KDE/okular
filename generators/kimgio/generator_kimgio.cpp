@@ -31,6 +31,8 @@ KIMGIOGenerator::KIMGIOGenerator()
 {
     setFeature( ReadRawData );
     setFeature( Threaded );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 
     KAboutData *about = new KAboutData(
          "okular_kimgio",
@@ -122,18 +124,12 @@ bool KIMGIOGenerator::print( QPrinter& printer )
 {
     QPainter p( &printer );
 
-    uint left, top, right, bottom;
-    left = printer.paperRect().left() - printer.pageRect().left();
-    top = printer.paperRect().top() - printer.pageRect().top();
-    right = printer.paperRect().right() - printer.pageRect().right();
-    bottom = printer.paperRect().bottom() - printer.pageRect().bottom();
-
-    int pageWidth = printer.width() - right;
-    int pageHeight = printer.height() - bottom;
-
     QImage image( m_img );
-    if ( (image.width() > pageWidth) || (image.height() > pageHeight) )
-        image = image.scaled( pageWidth, pageHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation );
+
+    if ( ( image.width() > printer.width() ) || ( image.height() > printer.height() ) )
+
+        image = image.scaled( printer.width(), printer.height(),
+                              Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
     p.drawImage( 0, 0, image );
 

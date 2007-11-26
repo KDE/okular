@@ -19,9 +19,11 @@
 #include <kconfigdialog.h>
 #include <kdebug.h>
 #include <kmimetype.h>
+#include <ktemporaryfile.h>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
+#include <okular/core/fileprinter.h>
 
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"
@@ -37,6 +39,9 @@ GSGenerator::GSGenerator() :
     m_docInfo(0),
     m_request(0)
 {
+    setFeature( PrintPostscript );
+    setFeature( PrintToFile );
+
     // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData *about = new KAboutData(
          "okular_ghostview",
@@ -75,22 +80,54 @@ void GSGenerator::addPages( KConfigDialog *dlg )
 
 bool GSGenerator::print( QPrinter& printer )
 {
-/*  This printing method unsupported in QPrinter, looking for alternative.
+    bool result = false;
 
+    // Create tempfile to write to
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
-    if ( tf.open() )
+    if ( !tf.open() )
+        return false;
+
+    // Get list of pages to print
+    QList<int> pageList = Okular::FilePrinter::pageList( printer,
+                                               spectre_document_get_n_pages( m_internalDocument ),
+                                               document()->bookmarkedPageList() );
+
+    // Default to Postscript export, but if printing to PDF use that instead
+    SpectreExporterFormat exportFormat = SPECTRE_EXPORTER_FORMAT_PS;
+    if ( printer.outputFileName().right(3) == "pdf" )
     {
-        bool result = false;
-        if ( internalDoc->savePages( tf.fileName(), printer.pageList() ) )
-        {
-            result = printer.printFiles( QStringList( tf.fileName() ), true );
-        }
-        tf.close();
-        return result;
+        exportFormat = SPECTRE_EXPORTER_FORMAT_PDF;
+        tf.setSuffix(".pdf");
     }
-*/
-    return false; 
+
+    SpectreExporter *exporter = spectre_exporter_new( m_internalDocument, exportFormat );
+    SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toAscii() );
+
+    int i = 0;
+    while ( i < pageList.count() && exportStatus == SPECTRE_STATUS_SUCCESS )
+    {
+        exportStatus = spectre_exporter_do_page( exporter, i );
+        i++;
+    }
+
+    SpectreStatus endStatus = spectre_exporter_end( exporter );
+
+    spectre_exporter_free( exporter );
+
+    if ( exportStatus == SPECTRE_STATUS_SUCCESS && endStatus == SPECTRE_STATUS_SUCCESS )
+    {
+        tf.setAutoRemove( false );
+        int ret = Okular::FilePrinter::printFile( printer, tf.fileName(),
+                                                  Okular::FilePrinter::SystemDeletesFiles,
+                                                  Okular::FilePrinter::ApplicationSelectsPages,
+                                                  document()->bookmarkedPageRange() );
+        if ( ret >= 0 ) result = true;
+    }
+
+    tf.close();
+
+    return result;
 }
 
 bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )

@@ -12,7 +12,9 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPrinter>
 
+#include <okular/core/document.h>
 #include <okular/core/page.h>
+#include <okular/core/fileprinter.h>
 
 OKULAR_EXPORT_PLUGIN(ComicBookGenerator)
 
@@ -20,6 +22,8 @@ ComicBookGenerator::ComicBookGenerator()
     : Generator()
 {
     setFeature( Threaded );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 }
 
 ComicBookGenerator::~ComicBookGenerator()
@@ -70,19 +74,17 @@ bool ComicBookGenerator::print( QPrinter& printer )
 {
     QPainter p( &printer );
 
-    for ( int i = 0; i < mDocument.pages(); ++i ) {
-        QImage image = mDocument.pageImage( i );
-        uint left, top, right, bottom;
-        left = printer.paperRect().left() - printer.pageRect().left();
-        top = printer.paperRect().top() - printer.pageRect().top();
-        right = printer.paperRect().right() - printer.pageRect().right();
-        bottom = printer.paperRect().bottom() - printer.pageRect().bottom();
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->bookmarkedPageList() );
 
-        int pageWidth = printer.width() - right;
-        int pageHeight = printer.height() - bottom;
+    for ( int i = 0; i < pageList.count(); ++i ) {
 
-        if ( (image.width() > pageWidth) || (image.height() > pageHeight) )
-            image = image.scaled( pageWidth, pageHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        QImage image = mDocument.pageImage( pageList[i] - 1 );
+
+        if ( ( image.width() > printer.width() ) || ( image.height() > printer.height() ) )
+
+            image = image.scaled( printer.width(), printer.height(),
+                                  Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
         if ( i != 0 )
             printer.newPage();

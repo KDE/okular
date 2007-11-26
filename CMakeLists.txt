@@ -43,6 +43,7 @@ set(okularcore_SRCS
    core/textdocumentgenerator.cpp
    core/textpage.cpp
    core/utils.cpp
+   core/fileprinter.cpp
 )
 
 install( FILES
@@ -64,6 +65,7 @@ install( FILES
            core/textdocumentgenerator.h
            core/textpage.h
            core/utils.h
+           core/fileprinter.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
 
 install( FILES

@@ -478,9 +478,13 @@ void DVIExportToPS::finished_impl(int exit_code)
 {
   if (printer_ && !output_name_.isEmpty()) {
     const QFileInfo output(output_name_);
-    if (output.exists() && output.isReadable())
-      //Unsupported in Qt
-      //printer_->printFiles(QStringList(output_name_), true);
+    if (output.exists() && output.isReadable()) {
+        // I'm not 100% sure on this, think we still need to select pages in export to ps above
+        FilePrinter::printFile( printer_, output_name_,
+                                FilePrinter::ApplicationDeletesFiles,
+                                FilePrinter::ApplicationSelectsPages,
+                                QString() );
+    }
   }
 
 #ifndef DVIEXPORT_USE_QPROCESS

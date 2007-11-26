@@ -164,7 +164,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void psTransformEnded(int, QProcess::ExitStatus);
 
     private:
-        void doPrint( QPrinter& printer );
+        void setupPrint( QPrinter &printer );
+        void doPrint( QPrinter &printer );
         bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();

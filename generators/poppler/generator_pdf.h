@@ -26,6 +26,7 @@ namespace Okular {
 class ObjectRect;
 }
 
+class PDFOptionsPage;
 class PDFPixmapGeneratorThread;
 
 /**
@@ -131,6 +132,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
 
         QVector<bool> rectsGenerated;
+
+        PDFOptionsPage * pdfOptionsPage;
 };
 
 

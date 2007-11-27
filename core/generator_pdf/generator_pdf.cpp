@@ -455,11 +455,18 @@ bool PDFGenerator::print( KPrinter& printer )
     {
         pstitle = m_document->currentDocument().fileName( false );
     }
-    QCString pstitle8Bit = pstitle.local8Bit();
+    // this looks non-unicode-safe and it is. anything other than ASCII is not specified
+    // and some printers actually stop printing when they encounter non-ASCII characters in the
+    // Postscript %%Title tag
+    QCString pstitle8Bit = pstitle.latin1();
     const char* pstitlechar;
     if (!pstitle.isEmpty())
     {
       pstitlechar = pstitle8Bit.data();
+      for (unsigned char* p = (unsigned char*) pstitle8Bit.data(); *p; ++p)
+          if (*p >= 0x80)
+              *p = '?';
+
       printer.setDocName(pstitle);
     }
     else

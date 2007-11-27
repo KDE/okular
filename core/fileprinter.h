@@ -17,8 +17,8 @@
 #ifndef FILEPRINTER_H
 #define FILEPRINTER_H
 
-#include <QList>
-#include <QString>
+#include <QtCore/QList>
+#include <QtCore/QString>
 
 #include <kdialog.h>
 

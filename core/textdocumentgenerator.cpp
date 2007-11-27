@@ -187,6 +187,8 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
     : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ) )
 {
     setFeature( TextExtraction );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 
     connect( converter, SIGNAL( addAction( Action*, int, int ) ),
              this, SLOT( addAction( Action*, int, int ) ) );
@@ -320,17 +322,7 @@ bool TextDocumentGenerator::print( QPrinter& printer )
     if ( !d->mDocument )
         return false;
 
-    QPainter p( &printer );
-
-    const QSize size = d->mDocument->pageSize().toSize();
-    for ( int i = 0; i < d->mDocument->pageCount(); ++i ) {
-        if ( i != 0 )
-            printer.newPage();
-
-        QRect rect( 0, i * size.height(), size.width(), size.height() );
-        p.translate( QPoint( 0, i * size.height() * -1 ) );
-        d->mDocument->drawContents( &p, rect );
-    }
+    d->mDocument->print( &printer );
 
     return true;
 }

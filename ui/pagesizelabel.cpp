@@ -43,9 +43,16 @@ void PageSizeLabel::notifySetup( const QVector< Okular::Page * > & pageVector, i
     if ( pages < 1 || m_document->allPagesSize().isValid() )
     {
         hide();
+        if ( m_antiWidget )
+            m_antiWidget->hide();
         return;
     }
-    else show();
+    else
+    {
+        show();
+        if ( m_antiWidget )
+            m_antiWidget->show();
+    }
 }
 
 void PageSizeLabel::notifyViewportChanged( bool /*smoothMove*/ )

@@ -68,6 +68,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
             button->menu()->addAction( action );
         }
         button->setDefaultAction( button->menu()->actions().first() );
+        button->setToolTip( i18n("Click to use the current selection tool\nClick and hold to choose another selection tool") );
     }
 
     return button;

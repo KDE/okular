@@ -16,10 +16,10 @@
 #include <okular/core/page.h>
 #include <okular/core/fileprinter.h>
 
-OKULAR_EXPORT_PLUGIN(ComicBookGenerator)
+OKULAR_EXPORT_PLUGIN( ComicBookGenerator, "okular_comicbook" )
 
-ComicBookGenerator::ComicBookGenerator()
-    : Generator()
+ComicBookGenerator::ComicBookGenerator( QObject *parent, const QVariantList &args )
+    : Generator( parent, args )
 {
     setFeature( Threaded );
     setFeature( PrintNative );

@@ -402,36 +402,20 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
     return true;
 }
 
-Generator * DocumentPrivate::loadGeneratorLibrary( const QString& name, const QString& libname )
+Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service )
 {
-    KLibrary *lib = KLibLoader::self()->library( QFile::encodeName( libname ), QLibrary::ExportExternalSymbolsHint );
-    if ( !lib )
+    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
+    if ( !factory )
     {
-        kWarning(OkularDebug).nospace() << "Could not load '" << libname << "' library.";
-        kWarning(OkularDebug) << KLibLoader::self()->lastErrorMessage();
-        emit m_parent->error( i18n( "Could not load the necessary plugin to view the document." ), -1 );
+        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
         return 0;
     }
-
-    Generator* (*create_plugin)() = ( Generator* (*)() ) lib->resolveFunction( "create_plugin" );
-    if ( !create_plugin )
-    {
-        kWarning(OkularDebug).nospace() << "Broken generator " << libname << ": missing create_plugin()!";
-        return 0;
-    }
-    Generator * generator = create_plugin();
-    if ( !generator )
-    {
-        kWarning(OkularDebug).nospace() << "Broken generator " << libname << "!";
-        return 0;
-    }
-    GeneratorInfo info;
+    Generator * generator = factory->create< Okular::Generator >( 0 );
+    GeneratorInfo info( factory->componentData() );
     info.generator = generator;
-    info.library = lib;
-    const KComponentData* compData = generator->ownComponentData();
-    if ( compData && compData->aboutData() )
-        info.catalogName = compData->aboutData()->catalogName();
-    m_loadedGenerators.insert( name, info );
+    if ( info.data.isValid() && info.data.aboutData() )
+        info.catalogName = info.data.aboutData()->catalogName();
+    m_loadedGenerators.insert( service->name(), info );
     return generator;
 }
 
@@ -461,7 +445,7 @@ void DocumentPrivate::loadServiceList( const KService::List& offers )
         if ( !m_loadedGenerators.isEmpty() && genIt != m_loadedGenerators.end() )
             continue;
 
-        Generator * g = loadGeneratorLibrary( propName, offers.at(i)->library() );
+        Generator * g = loadGeneratorLibrary( offers.at(i) );
         (void)g;
     }
 }
@@ -469,7 +453,6 @@ void DocumentPrivate::loadServiceList( const KService::List& offers )
 void DocumentPrivate::unloadGenerator( const GeneratorInfo& info )
 {
     delete info.generator;
-    info.library->unload();
 }
 
 void DocumentPrivate::cacheExportFormats()
@@ -1168,7 +1151,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
     else
     {
-        d->m_generator = d->loadGeneratorLibrary( propName, offers.at(hRank)->library() );
+        d->m_generator = d->loadGeneratorLibrary( offers.at(hRank) );
         if ( !d->m_generator )
             return false;
         genIt = d->m_loadedGenerators.constFind( propName );
@@ -2565,10 +2548,12 @@ const KComponentData* Document::componentData() const
     if ( !d->m_generator )
         return 0;
 
-    const KComponentData* kcd = d->m_generator->ownComponentData();
+    QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
+    const KComponentData* kcd = &genIt.value().data;
 
     // empty about data
-    if ( kcd && kcd->aboutData() && kcd->aboutData()->programName().isEmpty() )
+    if ( kcd->isValid() && kcd->aboutData() && kcd->aboutData()->programName().isEmpty() )
         return 0;
 
     return kcd;

@@ -60,18 +60,9 @@ static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode 
     }
 }
 
-OKULAR_EXPORT_PLUGIN(DjVuGenerator)
-
-DjVuGenerator::DjVuGenerator()
-    : Okular::Generator(), m_docInfo( 0 ), m_docSyn( 0 )
+static KAboutData createAboutData()
 {
-    setFeature( TextExtraction );
-    setFeature( Threaded );
-    setFeature( PrintPostscript );
-
-    m_djvu = new KDjVu();
-
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_djvu",
          "okular_djvu",
          ki18n( "DjVu Backend" ),
@@ -80,8 +71,20 @@ DjVuGenerator::DjVuGenerator()
          KAboutData::License_GPL,
          ki18n( "© 2006-2007 Pino Toscano" )
     );
-    about->addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    setAboutData( about );
+    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( DjVuGenerator, createAboutData() )
+
+DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args ), m_docInfo( 0 ), m_docSyn( 0 )
+{
+    setFeature( TextExtraction );
+    setFeature( Threaded );
+    setFeature( PrintPostscript );
+
+    m_djvu = new KDjVu();
 }
 
 DjVuGenerator::~DjVuGenerator()

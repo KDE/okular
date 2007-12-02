@@ -50,7 +50,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
     Q_INTERFACES( Okular::PrintInterface )
 
     public:
-        PDFGenerator();
+        PDFGenerator( QObject *parent, const QVariantList &args );
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

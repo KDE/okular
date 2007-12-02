@@ -25,7 +25,7 @@ set(okularGenerator_chmlib_SRCS
 set(okularGenerator_chmlib_PART_SRCS ${chmlib_SRCS} ${okularGenerator_chmlib_SRCS} )
 
 
-kde4_add_plugin(okularGenerator_chmlib WITH_PREFIX ${okularGenerator_chmlib_PART_SRCS})
+kde4_add_plugin(okularGenerator_chmlib ${okularGenerator_chmlib_PART_SRCS})
 
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${KDE4_KHTML_LIBS} )
 

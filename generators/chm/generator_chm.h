@@ -28,7 +28,7 @@ class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        CHMGenerator();
+        CHMGenerator( QObject *parent, const QVariantList &args );
         ~CHMGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 

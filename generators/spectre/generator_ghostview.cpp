@@ -31,19 +31,10 @@
 #include "generator_ghostview.h"
 #include "rendererthread.h"
 
-OKULAR_EXPORT_PLUGIN(GSGenerator)
-
-GSGenerator::GSGenerator() :
-    Okular::Generator(),
-    m_internalDocument(0),
-    m_docInfo(0),
-    m_request(0)
+static KAboutData createAboutData()
 {
-    setFeature( PrintPostscript );
-    setFeature( PrintToFile );
-
     // ### TODO fill after the KDE 4.0 unfreeze
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_ghostview",
          "okular_ghostview",
          KLocalizedString(),
@@ -52,7 +43,19 @@ GSGenerator::GSGenerator() :
          KAboutData::License_GPL,
          KLocalizedString()
     );
-    setAboutData(about);
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN(GSGenerator, createAboutData())
+
+GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
+    Okular::Generator( parent, args ),
+    m_internalDocument(0),
+    m_docInfo(0),
+    m_request(0)
+{
+    setFeature( PrintPostscript );
+    setFeature( PrintToFile );
 
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
     if (!renderer->isRunning()) renderer->start();

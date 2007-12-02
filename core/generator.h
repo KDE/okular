@@ -24,12 +24,11 @@
 #include <QtCore/QVector>
 
 #include <kmimetype.h>
+#include <kpluginfactory.h>
 
-// KDE_EXPORT is correct here - the function needs to be exported every time
-#define OKULAR_EXPORT_PLUGIN( classname ) \
-    extern "C" { \
-         KDE_EXPORT Okular::Generator* create_plugin() { return new classname(); } \
-    }
+#define OKULAR_EXPORT_PLUGIN( classname, aboutdata ) \
+    K_PLUGIN_FACTORY( classname ## Factory, registerPlugin< classname >(); ) \
+    K_EXPORT_PLUGIN( classname ## Factory( aboutdata ) )
 
 class QMutex;
 class QPrinter;
@@ -206,7 +205,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator();
+        Generator( QObject *parent, const QVariantList &args );
 
         /**
          * Destroys the generator.
@@ -471,7 +470,7 @@ setAboutData( about );
 
     protected:
         /// @cond PRIVATE
-        Generator( GeneratorPrivate &dd );
+        Generator( GeneratorPrivate &dd, QObject *parent, const QVariantList &args );
         Q_DECLARE_PRIVATE( Generator )
         GeneratorPrivate *d_ptr;
 

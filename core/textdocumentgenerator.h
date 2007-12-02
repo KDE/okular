@@ -125,7 +125,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
          * @note the generator will take ownership of the converter, so you
          *       don't have to delete it yourself
          */
-        TextDocumentGenerator( TextDocumentConverter *converter );
+        TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args );
         virtual ~TextDocumentGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

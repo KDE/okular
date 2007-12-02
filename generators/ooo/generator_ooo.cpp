@@ -13,13 +13,10 @@
 
 #include <kaboutdata.h>
 
-OKULAR_EXPORT_PLUGIN(KOOOGenerator)
-
-KOOOGenerator::KOOOGenerator()
-  : Okular::TextDocumentGenerator( new OOO::Converter )
+static KAboutData createAboutData()
 {
     // ### TODO fill after the KDE 4.0 unfreeze
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_ooo",
          "okular_ooo",
          KLocalizedString(),
@@ -28,5 +25,12 @@ KOOOGenerator::KOOOGenerator()
          KAboutData::License_GPL,
          KLocalizedString()
     );
-    setAboutData( about );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
+
+KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, parent, args )
+{
 }

@@ -20,7 +20,22 @@
 
 #include <okular/core/page.h>
 
-OKULAR_EXPORT_PLUGIN(PluckerGenerator)
+static KAboutData createAboutData()
+{
+    // ### TODO fill after the KDE 4.0 unfreeze
+    KAboutData aboutData(
+         "okular_plucker",
+         "okular_plucker",
+         KLocalizedString(),
+         "0.1",
+         KLocalizedString(),
+         KAboutData::License_GPL,
+         KLocalizedString()
+    );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( PluckerGenerator, createAboutData() )
 
 static void calculateBoundingRect( QTextDocument *document, int startPosition, int endPosition,
                                    QRectF &rect )
@@ -49,20 +64,9 @@ static void calculateBoundingRect( QTextDocument *document, int startPosition, i
                    (r - x) / size.width(), (b - y) / size.height() );
 }
 
-PluckerGenerator::PluckerGenerator()
-    : Generator()
+PluckerGenerator::PluckerGenerator( QObject *parent, const QVariantList &args )
+    : Generator( parent, args )
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
-    KAboutData *about = new KAboutData(
-         "okular_plucker",
-         "okular_plucker",
-         KLocalizedString(),
-         "0.1",
-         KLocalizedString(),
-         KAboutData::License_GPL,
-         KLocalizedString()
-    );
-    setAboutData( about );
     setFeature( Threaded );
 }
 

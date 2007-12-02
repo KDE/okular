@@ -15,7 +15,7 @@
 class FictionBookGenerator : public Okular::TextDocumentGenerator
 {
     public:
-        FictionBookGenerator();
+        FictionBookGenerator( QObject *parent, const QVariantList &args );
 };
 
 #endif

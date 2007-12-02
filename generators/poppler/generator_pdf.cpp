@@ -287,15 +287,10 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
  * in async thread and 2) doing the 'heavy' print operation.
  */
 
-OKULAR_EXPORT_PLUGIN(PDFGenerator)
-
-PDFGenerator::PDFGenerator()
-    : Generator(), pdfdoc( 0 ), ready( true ),
-    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docEmbeddedFilesDirty( true ), pdfOptionsPage( 0 )
+static KAboutData createAboutData()
 {
     // ### TODO fill after the KDE 4.0 unfreeze
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_poppler",
          "okular_poppler",
          KLocalizedString(),
@@ -304,7 +299,16 @@ PDFGenerator::PDFGenerator()
          KAboutData::License_GPL,
          KLocalizedString()
     );
-    setAboutData( about );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
+
+PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
+    : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
+    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
+    docEmbeddedFilesDirty( true ), pdfOptionsPage( 0 )
+{
     setFeature( TextExtraction );
     setFeature( FontInfo );
     setFeature( PrintPostscript );

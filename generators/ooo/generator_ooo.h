@@ -15,7 +15,7 @@
 class KOOOGenerator : public Okular::TextDocumentGenerator
 {
   public:
-    KOOOGenerator();
+    KOOOGenerator( QObject *parent, const QVariantList &args );
 };
 
 #endif

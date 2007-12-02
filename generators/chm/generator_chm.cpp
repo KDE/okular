@@ -29,14 +29,9 @@
 
 #include "lib/xchmfile.h"
 
-OKULAR_EXPORT_PLUGIN(CHMGenerator)
-
-CHMGenerator::CHMGenerator()
-    : Okular::Generator()
+static KAboutData createAboutData()
 {
-    setFeature( TextExtraction );
-
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_chm",
          "okular_chm",
          ki18n( "CHM Backend" ),
@@ -45,8 +40,16 @@ CHMGenerator::CHMGenerator()
          KAboutData::License_GPL,
          ki18n( "© 2005-2007 Piotr Szymański" )
     );
-    about->addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
-    setAboutData( about );
+    aboutData.addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( CHMGenerator, createAboutData() )
+
+CHMGenerator::CHMGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args )
+{
+    setFeature( TextExtraction );
 
     m_syncGen=0;
     m_file=0;

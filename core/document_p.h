@@ -19,6 +19,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 
+#include <kcomponentdata.h>
 #include <kservicetypetrader.h>
 
 // local includes
@@ -26,7 +27,6 @@
 #include "generator.h"
 
 class QTimer;
-class KLibrary;
 class KTemporaryFile;
 
 struct AllocatedPixmap;
@@ -38,12 +38,12 @@ class ConfigInterface;
 
 struct GeneratorInfo
 {
-    GeneratorInfo()
-        : generator( 0 ), library( 0 ), config( 0 ), configChecked( false )
+    GeneratorInfo( const KComponentData &_data )
+        : generator( 0 ), data( _data ), config( 0 ), configChecked( false )
     {}
 
     Okular::Generator * generator;
-    KLibrary * library;
+    KComponentData data;
     QString catalogName;
     Okular::ConfigInterface * config;
     bool configChecked : 1;
@@ -83,7 +83,7 @@ class DocumentPrivate
         void loadDocumentInfo();
         QString giveAbsolutePath( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
-        Generator * loadGeneratorLibrary( const QString& name, const QString& libname );
+        Generator * loadGeneratorLibrary( const KService::Ptr &service );
         void loadAllGeneratorLibraries();
         void loadServiceList( const KService::List& offers );
         void unloadGenerator( const GeneratorInfo& info );

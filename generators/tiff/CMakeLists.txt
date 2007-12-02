@@ -11,7 +11,7 @@ set(okularGenerator_tiff_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_tiff WITH_PREFIX ${okularGenerator_tiff_SRCS})
+kde4_add_plugin(okularGenerator_tiff ${okularGenerator_tiff_SRCS})
 
 target_link_libraries(okularGenerator_tiff   okularcore ${TIFF_LIBRARIES} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} )
 

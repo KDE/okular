@@ -44,17 +44,9 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
     return QDateTime::fromString( QString::fromLatin1( tiffdate ), "yyyy:MM:dd HH:mm:ss" );
 }
 
-OKULAR_EXPORT_PLUGIN(TIFFGenerator)
-
-TIFFGenerator::TIFFGenerator()
-    : Okular::Generator(),
-      d( new Private ), m_docInfo( 0 )
+static KAboutData createAboutData()
 {
-    setFeature( Threaded );
-    setFeature( PrintNative );
-    setFeature( PrintToFile );
-
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_tiff",
          "okular_tiff",
          ki18n( "TIFF Backend" ),
@@ -63,8 +55,19 @@ TIFFGenerator::TIFFGenerator()
          KAboutData::License_GPL,
          ki18n( "© 2006-2007 Pino Toscano" )
     );
-    about->addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    setAboutData( about );
+    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( TIFFGenerator, createAboutData() )
+
+TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args ),
+      d( new Private ), m_docInfo( 0 )
+{
+    setFeature( Threaded );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 }
 
 TIFFGenerator::~TIFFGenerator()

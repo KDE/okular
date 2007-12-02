@@ -183,8 +183,8 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
     }
 }
 
-TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter )
-    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ) )
+TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args )
+    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
 {
     setFeature( TextExtraction );
     setFeature( PrintNative );

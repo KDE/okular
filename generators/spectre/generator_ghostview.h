@@ -44,7 +44,7 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         void addPages( KConfigDialog* dlg );
 
         /** constructor **/
-        GSGenerator();
+        GSGenerator( QObject *parent, const QVariantList &args );
         ~GSGenerator();
 
     public slots:

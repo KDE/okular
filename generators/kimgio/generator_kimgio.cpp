@@ -24,17 +24,9 @@
 
 #include <okular/core/page.h>
 
-OKULAR_EXPORT_PLUGIN(KIMGIOGenerator)
-
-KIMGIOGenerator::KIMGIOGenerator()
-    : Generator()
+static KAboutData createAboutData()
 {
-    setFeature( ReadRawData );
-    setFeature( Threaded );
-    setFeature( PrintNative );
-    setFeature( PrintToFile );
-
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_kimgio",
          "okular_kimgio",
          ki18n( "Image Backend" ),
@@ -45,10 +37,21 @@ KIMGIOGenerator::KIMGIOGenerator()
                 "© 2006-2007 Pino Toscano\n"
                 "© 2006-2007 Tobias Koenig" )
     );
-    about->addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
-    about->addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    about->addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
-    setAboutData( about );
+    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
+    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( KIMGIOGenerator, createAboutData() )
+
+KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
+    : Generator( parent, args )
+{
+    setFeature( ReadRawData );
+    setFeature( Threaded );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
 
 /*
     setComponentData( *ownComponentData() );

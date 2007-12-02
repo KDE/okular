@@ -12,7 +12,7 @@ set( okularGenerator_comicbook_PART_SRCS
    )
 
 
-kde4_add_plugin(okularGenerator_comicbook WITH_PREFIX ${okularGenerator_comicbook_PART_SRCS})
+kde4_add_plugin(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
 
 target_link_libraries(okularGenerator_comicbook  okularcore ${KDE4_KDEUI_LIBS} )
 

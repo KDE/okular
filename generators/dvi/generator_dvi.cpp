@@ -30,13 +30,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-OKULAR_EXPORT_PLUGIN(DviGenerator)
-
-DviGenerator::DviGenerator() : Okular::Generator(),
-  m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
+static KAboutData createAboutData()
 {
     // ### TODO fill after the KDE 4.0 unfreeze
-    KAboutData *about = new KAboutData(
+    KAboutData aboutData(
          "okular_dvi",
          "okular_dvi",
          KLocalizedString(),
@@ -45,7 +42,14 @@ DviGenerator::DviGenerator() : Okular::Generator(),
          KAboutData::License_GPL,
          KLocalizedString()
     );
-    setAboutData( about );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
+
+DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
+  m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
+{
     setFeature( TextExtraction );
 }
 

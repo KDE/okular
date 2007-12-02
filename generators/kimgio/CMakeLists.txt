@@ -8,7 +8,7 @@ include_directories(
 set(okularGenerator_kimgio_PART_SRCS generator_kimgio.cpp )
 
 
-kde4_add_plugin(okularGenerator_kimgio WITH_PREFIX ${okularGenerator_kimgio_PART_SRCS})
+kde4_add_plugin(okularGenerator_kimgio ${okularGenerator_kimgio_PART_SRCS})
 
 target_link_libraries(okularGenerator_kimgio  okularcore ${KDE4_KDEUI_LIBS} )
 

@@ -138,16 +138,18 @@ QMutex* GeneratorPrivate::threadsLock()
 }
 
 
-Generator::Generator()
-    : QObject( 0 ), d_ptr( new GeneratorPrivate() )
+Generator::Generator( QObject *parent, const QVariantList &args )
+    : QObject( parent ), d_ptr( new GeneratorPrivate() )
 {
     d_ptr->q_ptr = this;
+    Q_UNUSED( args )
 }
 
-Generator::Generator( GeneratorPrivate &dd )
-    : QObject( 0 ), d_ptr( &dd )
+Generator::Generator( GeneratorPrivate &dd, QObject *parent, const QVariantList &args )
+    : QObject( parent ), d_ptr( &dd )
 {
     d_ptr->q_ptr = this;
+    Q_UNUSED( args )
 }
 
 Generator::~Generator()

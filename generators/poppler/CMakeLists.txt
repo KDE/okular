@@ -41,7 +41,7 @@ if (HAVE_POPPLER_0_6)
 endif (HAVE_POPPLER_0_6)
 
 
-kde4_add_plugin(okularGenerator_poppler WITH_PREFIX ${okularGenerator_poppler_PART_SRCS})
+kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
 target_link_libraries(okularGenerator_poppler   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} m )
 

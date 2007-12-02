@@ -19,7 +19,7 @@ class ComicBookGenerator : public Okular::Generator
     Q_OBJECT
 
     public:
-        ComicBookGenerator();
+        ComicBookGenerator( QObject *parent, const QVariantList &args );
         virtual ~ComicBookGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

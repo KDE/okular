@@ -25,7 +25,7 @@ class DviGenerator : public Okular::Generator
 {
     Q_OBJECT
     public:
-        DviGenerator();
+        DviGenerator( QObject *parent, const QVariantList &args );
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 
         bool canGeneratePixmap() const;

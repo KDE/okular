@@ -38,7 +38,24 @@
 
 const int XpsDebug = 4658;
 
-OKULAR_EXPORT_PLUGIN(XpsGenerator)
+static KAboutData createAboutData()
+{
+    KAboutData aboutData(
+         "okular_xps",
+         "okular_xps",
+         ki18n( "XPS Backend" ),
+         "0.1",
+         ki18n( "An XPS backend" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2006-2007 Brad Hards\n"
+                "© 2007 Jiri Klement" )
+    );
+    aboutData.addAuthor( ki18n( "Brad Hards" ), KLocalizedString(), "bradh@frogmouth.net" );
+    aboutData.addAuthor( ki18n( "Jiri Klement" ), KLocalizedString(), "jiri.klement@gmail.com" );
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( XpsGenerator, createAboutData() )
 
 // From Qt4
 static int hex2int(char hex)
@@ -1329,24 +1346,10 @@ XpsPage* XpsFile::page(int pageNum) const
     return m_pages.at( pageNum );
 }
 
-XpsGenerator::XpsGenerator()
-  : Okular::Generator(), m_xpsFile( 0 )
+XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
+  : Okular::Generator( parent, args ), m_xpsFile( 0 )
 {
     setFeature( TextExtraction );
-
-    KAboutData *about = new KAboutData(
-         "okular_xps",
-         "okular_xps",
-         ki18n( "XPS Backend" ),
-         "0.1",
-         ki18n( "An XPS backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2007 Brad Hards\n"
-                "© 2007 Jiri Klement" )
-    );
-    about->addAuthor( ki18n( "Brad Hards" ), KLocalizedString(), "bradh@frogmouth.net" );
-    about->addAuthor( ki18n( "Jiri Klement" ), KLocalizedString(), "jiri.klement@gmail.com" );
-    setAboutData( about );
 }
 
 XpsGenerator::~XpsGenerator()

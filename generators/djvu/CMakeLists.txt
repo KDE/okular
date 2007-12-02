@@ -13,7 +13,7 @@ set(okularGenerator_djvu_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_djvu WITH_PREFIX ${okularGenerator_djvu_SRCS})
+kde4_add_plugin(okularGenerator_djvu ${okularGenerator_djvu_SRCS})
 
 target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} ${KDE4_KDEUI_LIBS} )
 

@@ -10,5 +10,5 @@ Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
 Name[x-test]=xxokularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
-X-KDE-Library=libokularpart
+X-KDE-Library=okularpart
 Type=Service

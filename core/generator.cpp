@@ -13,8 +13,6 @@
 #include <qeventloop.h>
 #include <QtGui/QPrinter>
 
-#include <kaboutdata.h>
-#include <kcomponentdata.h>
 #include <kdebug.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -27,7 +25,7 @@
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
-    : m_document( 0 ), m_about( 0 ), m_componentData( 0 ),
+    : m_document( 0 ),
       mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
       m_mutex( 0 ), m_threadsMutex( 0 ), mPixmapReady( true ), mTextPageReady( true ),
       m_closing( false ), m_closingLoop( 0 )
@@ -45,10 +43,6 @@ GeneratorPrivate::~GeneratorPrivate()
         mTextPageGenerationThread->wait();
 
     delete mTextPageGenerationThread;
-
-    // first delete the component data, then the about
-    delete m_componentData;
-    delete m_about;
 
     delete m_mutex;
     delete m_threadsMutex;
@@ -318,12 +312,6 @@ bool Generator::hasFeature( GeneratorFeature feature ) const
     return d->m_features.contains( feature );
 }
 
-const KComponentData* Generator::ownComponentData() const
-{
-    Q_D( const Generator );
-    return d->m_componentData;
-}
-
 void Generator::signalPixmapRequestDone( PixmapRequest * request )
 {
     Q_D( Generator );
@@ -346,15 +334,6 @@ void Generator::setFeature( GeneratorFeature feature, bool on )
         d->m_features.insert( feature );
     else
         d->m_features.remove( feature );
-}
-
-void Generator::setAboutData( KAboutData* data )
-{
-    Q_D( Generator );
-    delete d->m_componentData;
-    delete d->m_about;
-    d->m_about = data;
-    d->m_componentData = d->m_about ? new KComponentData( d->m_about ) : 0;
 }
 
 QVariant Generator::documentMetaData( const QString &key, const QVariant &option ) const

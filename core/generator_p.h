@@ -16,8 +16,6 @@
 
 class QEventLoop;
 class QMutex;
-class KAboutData;
-class KComponentData;
 
 namespace Okular {
 
@@ -52,8 +50,6 @@ class GeneratorPrivate
         // NOTE: the following should be a QSet< GeneratorFeature >,
         // but it is not to avoid #include'ing generator.h
         QSet< int > m_features;
-        KAboutData *m_about;
-        KComponentData *m_componentData;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
         mutable QMutex *m_mutex;

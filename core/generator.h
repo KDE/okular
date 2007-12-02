@@ -33,8 +33,6 @@
 class QMutex;
 class QPrinter;
 class QPrintDialog;
-class KAboutData;
-class KComponentData;
 class KIcon;
 
 namespace Okular {
@@ -357,11 +355,6 @@ class OKULAR_EXPORT Generator : public QObject
          */
         bool hasFeature( GeneratorFeature feature ) const;
 
-        /**
-         * Returns the component data associated with the generator. May be null.
-         */
-        const KComponentData* ownComponentData() const;
-
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occurred in the generator.
@@ -428,34 +421,6 @@ class OKULAR_EXPORT Generator : public QObject
          * Toggle the @p feature .
          */
         void setFeature( GeneratorFeature feature, bool on = true );
-
-        /**
-         * Sets a new about @p data for the generator. The base generator
-         * class will take ownership of the data.
-         *
-         * Create it on the heap (\b never on the stack!), and fill it with
-         * data like:
-         * @code
-KAboutData *about = new KAboutData(
-    "okular_foo", // internal name (notes below)
-    "okular_foo",  // i18n catalog (notes below)
-    ki18n( "Foo Backend" ),
-    "0.1",
-    ki18n( "A foo backend" ),
-    KAboutData::License_GPL,
-    ki18n( "© 2007 Developer" )
-);
-about->addAuthor( ki18n( "Joe Developer" ), ki18n( "Developer" ), " joe@kde.org" );
-setAboutData( about );
-         * @endcode
-         *
-         * @note both "internal name" and "i18n catalog" are reccomended to be
-         * set like "okular_foo" (where foo is the name of your generator).
-         * The first is important for loading some metadata of the generator
-         * itself, while the second is used for loading the .mo catalog with
-         * the translation.
-         */
-        void setAboutData( KAboutData* data );
 
         /**
          * Request a meta data of the Document, if available, like an internal

@@ -174,14 +174,16 @@ The API of the Generator looks like the following:
 class MagicGenerator : public Okular::Generator
 {
     public:
-        MagicGenerator();
+        MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
         bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
-        bool closeDocument();
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
+
+    protected:
+        bool doCloseDocument();
 
     private:
         MagicDocument mMagicDocument;
@@ -195,10 +197,17 @@ The implementation of the Generator looks like this:
 
 #include "magicgenerator.h"
 
-OKULAR_EXPORT_PLUGIN(MagicGenerator)
+static KAboutData createAboutData()
+{
+    KAboutData aboutData(...);
+    // fill the about data
+    return aboutData;
+}
 
-MagicGenerator::MagicGenerator()
-    : Okular::Generator()
+OKULAR_EXPORT_PLUGIN(MagicGenerator, createAboutData())
+
+MagicGenerator::MagicGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args )
 {
 }
 
@@ -225,7 +234,7 @@ bool MagicGenerator::loadDocument( const QString &fileName, QVector<Okular::Page
     return true;
 }
 
-bool MagicGenerator::closeDocument()
+bool MagicGenerator::doCloseDocument()
 {
     return true;
 }
@@ -255,7 +264,7 @@ These page objects will be stored in the document object and act as a container 
 of the pages. This code is the same for nearly every Generator. On an failure the error() signal can be emitted
 to inform the user about the issue. This code is the same for nearly every Generator.
 
-In the closeDocument() method you should close the document and free all resources you have allocated in openDocument().
+In the doCloseDocument() method you should close the document and free all resources you have allocated in openDocument().
 
 Now we come to the picture creation methods. The canGeneratorPixmap() method returns whether the Generator is currently
 able to handle a new pixmap generation request. For a simple Generator like our one that's always the case as it works
@@ -298,7 +307,7 @@ Comment=Magic Document backend for okular
 Comment[x-test]=xxMagic Document backend for okularxx
 ServiceTypes=okular/Generator
 MimeType=application/x-magic
-X-KDE-Library=libokularGenerator_magic
+X-KDE-Library=okularGenerator_magic
 X-KDE-Priority=1
 X-KDE-okularAPIVersion=1
 X-KDE-okularHasInternalSettings=false
@@ -365,9 +374,7 @@ include_directories( ${OKULAR_INCLUDE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
 set( okularGenerator_magic_SRCS generator_magic.cpp )
 
-kde4_automoc( ${okularGenerator_magic_SRCS} )
-
-kde4_add_plugin( okularGenerator_magic WITH_PREFIX ${okularGenerator_magic_SRCS} )
+kde4_add_plugin( okularGenerator_magic ${okularGenerator_magic_SRCS} )
 
 target_link_libraries( okularGenerator_magic ${OKULAR_LIBRARIES} ${KDE4_KDEUI_LIBS} )
 
@@ -445,17 +452,19 @@ With the extension of our helper class we can continue on extending our Generato
 class MagicGenerator : public Okular::Generator
 {
     public:
-        MagicGenerator();
+        MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
         bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
-        bool closeDocument();
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
 
         virtual bool canGenerateTextPage() const;
         virtual void generateTextPage( Okular::Page *page, enum Okular::GenerationType type = Okular::Synchronous );
+
+    protected:
+        bool doCloseDocument();
 
     private:
         MagicDocument mMagicDocument;
@@ -478,7 +487,8 @@ Let us take a look at the implementation of these methods in our MagicGenerator:
 
 ...
 
-MagicGenerator::MagicGenerator()
+MagicGenerator::MagicGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args )
 {
     setFeature( TextExtraction );
 }
@@ -558,13 +568,14 @@ The new MagicGenerator API looks like the following:
 class MagicGenerator : public Okular::Generator
 {
     public:
-        MagicGenerator();
+        MagicGenerator( QObject *parent, const QVariantList &args );
         ~MagicGenerator();
 
         bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
-        bool closeDocument();
 
-    proteced:
+    protected:
+        bool doCloseDocument();
+
         virtual QImage image( Okular::PixmapRequest *request );
 
         virtual Okular::TextPage* textPage( Okular::Page *page );
@@ -581,7 +592,8 @@ Before explaining why, we'll take a look at the implementation:
 
 \code
 
-MagicGenerator::MagicGenerator()
+MagicGenerator::MagicGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args )
 {
     setFeature( TextExtraction );
     setFeature( Threaded );
@@ -644,11 +656,10 @@ The API of our HTMLGenerator looks like the following:
 class HTMLGenerator : public Okular::Generator
 {
     public:
-        HTMLGenerator();
+        HTMLGenerator( QObject *parent, const QVariantList &args );
         ~HTMLGenerator();
 
         bool loadDocument( const QString &fileName, QVector<Okular::Page*> &pages );
-        bool closeDocument();
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
@@ -662,6 +673,9 @@ class HTMLGenerator : public Okular::Generator
         virtual Okular::ExportFormat::List exportFormats() const;
 
         virtual bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
+    protected:
+        bool doCloseDocument();
 
     private:
         QTextDocument *mTextDocument;
@@ -696,10 +710,17 @@ Now that you know what the methods are supposed to do, let's take a look at the 
 
 #include "htmlgenerator.h"
 
-OKULAR_EXPORT_PLUGIN(HTMLGenerator)
+static KAboutData createAboutData()
+{
+    KAboutData aboutData(...);
+    // fill the about data
+    return aboutData;
+}
 
-HTMLGenerator::HTMLGenerator()
-    : Okular::Generator(),
+OKULAR_EXPORT_PLUGIN(HTMLGenerator, createAboutData())
+
+HTMLGenerator::HTMLGenerator( QObject *parent, const QVariantList &args )
+    : Okular::Generator( parent, args ),
       mTextDocument( 0 )
 {
 }
@@ -750,7 +771,7 @@ bool HTMLGenerator::loadDocument( const QString &fileName, QVector<Okular::Page*
     return true;
 }
 
-bool HTMLGenerator::closeDocument()
+bool HTMLGenerator::doCloseDocument()
 {
     delete mTextDocument;
     mTextDocument = 0;

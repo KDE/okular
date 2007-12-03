@@ -230,7 +230,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
     //	rightLayout->addWidget( rtb );
     m_topMessage = new PageViewTopMessage( rightContainer );
-    m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "attach" ) );
+    m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "mail-attachment" ) );
     connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
     rightLayout->addWidget( m_topMessage );
     m_formsMessage = new PageViewTopMessage( rightContainer );
@@ -327,13 +327,13 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
-    m_prevBookmark->setIcon(KIcon( "edit-find-previous" ));
+    m_prevBookmark->setIcon(KIcon( "go-up-search" ));
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
     connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
-    m_nextBookmark->setIcon(KIcon( "edit-find-next" ));
+    m_nextBookmark->setIcon(KIcon( "go-down-search" ));
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
     connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
 
@@ -378,7 +378,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
     m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
-    m_showLeftPanel->setIcon(KIcon( "show_side_panel" ));
+    m_showLeftPanel->setIcon(KIcon( "view-sidetree" ));
     connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
     m_showLeftPanel->setShortcut( Qt::Key_F7 );
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
@@ -403,13 +403,13 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_showEmbeddedFiles = ac->addAction("embedded_files");
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
-//     m_showEmbeddedFiles->setIcon( KIcon( "attach" ) );
+//     m_showEmbeddedFiles->setIcon( KIcon( "mail-attachment" ) );
     connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
     m_showEmbeddedFiles->setEnabled( false );
 
     m_showPresentation = ac->addAction("presentation");
     m_showPresentation->setText(i18n("P&resentation"));
-    m_showPresentation->setIcon( KIcon( "document-start-presentation" ) );
+    m_showPresentation->setIcon( KIcon( "media-playback-start-presentation" ) );
     connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
     m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
     m_showPresentation->setEnabled( false );
@@ -997,7 +997,7 @@ void Part::updateBookmarksActions()
         if ( m_document->bookmarkManager()->isBookmarked( m_document->currentPage() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
-            m_addBookmark->setIcon( KIcon( "bookmark" ) ); // ### 'bookmark-remove' or similar
+            m_addBookmark->setIcon( KIcon( "bookmark-delete" ) );
         }
         else
         {
@@ -1365,7 +1365,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
         if ( m_document->bookmarkManager()->isBookmarked( page->number() ) )
-            removeBookmark = popup->addAction( KIcon("bookmark"), i18n("Remove Bookmark") );
+            removeBookmark = popup->addAction( KIcon("bookmark-delete"), i18n("Remove Bookmark") );
         else
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )

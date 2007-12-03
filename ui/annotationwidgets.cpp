@@ -239,8 +239,8 @@ QWidget * StampAnnotationWidget::widget()
     // FIXME!!! use the standard names instead (when we'll have the artwork)
     m_pixmapSelector->addItem( i18n( "okular" ), "graphics-viewer-document" );
     m_pixmapSelector->addItem( i18n( "Bookmark" ), "bookmark" );
-    m_pixmapSelector->addItem( i18n( "KDE" ), "start-here" );
-    m_pixmapSelector->addItem( i18n( "Information" ), "document-properties" );
+    m_pixmapSelector->addItem( i18n( "KDE" ), "kde" );
+    m_pixmapSelector->addItem( i18n( "Information" ), "help-about" );
 #if 0
     m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
     m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );

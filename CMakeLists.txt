@@ -88,7 +88,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_PHONON_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
 
 set_target_properties(okularcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 
@@ -118,6 +118,7 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp
    ui/ktreeviewsearchline.cpp
@@ -152,7 +153,7 @@ kde4_add_ui_files(okularpart_SRCS
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${BLITZ_LIBRARIES})
+target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${BLITZ_LIBRARIES})
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

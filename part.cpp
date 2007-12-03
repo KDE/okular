@@ -73,6 +73,7 @@
 #include "ui/bookmarklist.h"
 #include "ui/findbar.h"
 #include "ui/sidebar.h"
+#include "ui/fileprinterpreview.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/bookmarkmanager.h"

@@ -1,9 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by John Layt <john@layt.net>                       *
  *                                                                         *
- *   FilePrinterPreview based on KPrintPreview (originally LGPL)           *
- *   Copyright (c) 2007 Alex Merry <huntedhacker@tiscali.co.uk>            *
- *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
@@ -19,8 +16,6 @@
 
 #include <QtCore/QList>
 #include <QtCore/QString>
-
-#include <kdialog.h>
 
 #include <okular/core/okular_export.h>
 
@@ -166,31 +161,6 @@ protected:
     QStringList optionDoubleSidedPrinting( QPrinter &printer );
     QStringList optionPageOrder( QPrinter &printer );
     QStringList optionCollateCopies( QPrinter &printer );
-};
-
-// This code copied from KPrintPreview by Alex Merry, adapted to do PS files instead of PDF
-
-class FilePrinterPreviewPrivate;
-
-class OKULAR_EXPORT FilePrinterPreview : public KDialog
-{
-    Q_OBJECT
-
-public:
-    /**
-     * Create a Print Preview dialog for a given file.
-     *
-     * @param printer file to print preview
-     * @param parent  pointer to the parent widget for the dialog
-     */
-    explicit FilePrinterPreview( const QString &filename, QWidget *parent = 0 );
-    virtual ~FilePrinterPreview();
-
-protected:
-    void showEvent( QShowEvent *event );
-
-private:
-    FilePrinterPreviewPrivate * const d;
 };
 
 }

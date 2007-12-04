@@ -407,9 +407,9 @@ Page* PixmapRequest::page() const
     return d->mPage;
 }
 
-void PixmapRequest::swap()
+void PixmapRequestPrivate::swap()
 {
-    qSwap( d->mWidth, d->mHeight );
+    qSwap( mWidth, mHeight );
 }
 
 class Okular::ExportFormatPrivate : public QSharedData

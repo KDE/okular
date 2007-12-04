@@ -608,7 +608,7 @@ void DocumentPrivate::sendGeneratorRequest()
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( (int)m_rotation % 2 )
-            request->swap();
+            request->d->swap();
 
         // we always have to unlock _before_ the generatePixmap() because
         // a sync generation would end with requestDone() -> deadlock, and

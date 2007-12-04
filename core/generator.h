@@ -515,11 +515,6 @@ class OKULAR_EXPORT PixmapRequest
          */
         Page *page() const;
 
-        /**
-         * Internal usage.
-         */
-        void swap();
-
     private:
         Q_DISABLE_COPY( PixmapRequest )
 

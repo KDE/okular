@@ -64,6 +64,8 @@ class GeneratorPrivate
 class PixmapRequestPrivate
 {
     public:
+        void swap();
+
         int mId;
         int mPageNumber;
         int mWidth;

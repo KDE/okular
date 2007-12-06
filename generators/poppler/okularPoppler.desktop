@@ -10,6 +10,6 @@ Name[pa]=ਓਕੁਲਾਰ
 Name[sv]=Okular
 Name[x-test]=xxokularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
-X-KDE-Library=libokularpart
+X-KDE-Library=okularpart
 Type=Service
 MimeType=application/x-pdf;application/pdf;application/x-gzpdf;application/x-bzpdf;

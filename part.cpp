@@ -28,6 +28,7 @@
 #include <qfile.h>
 #include <qlayout.h>
 #include <qlabel.h>
+#include <qtimer.h>
 #include <QtGui/QPrinter>
 #include <QtGui/QPrintDialog>
 

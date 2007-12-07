@@ -94,6 +94,8 @@ public:
         optionButton->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
         optionButton->setFixedSize( s );
         optionlay->addWidget( optionButton );
+        // ### disabled for now
+        optionButton->hide();
 
         titleLabel->installEventFilter( this );
         dateLabel->installEventFilter( this );

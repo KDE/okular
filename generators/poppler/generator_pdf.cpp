@@ -1703,9 +1703,6 @@ void PDFPixmapGeneratorThread::run()
     if ( page->rotation() % 2 )
         qSwap( pageWidth, pageHeight );
 
-    double fakeDpiX = width * 72.0 / pageWidth,
-           fakeDpiY = height * 72.0 / pageHeight;
-
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
     bool genTextPage = !page->hasTextPage() &&
@@ -1720,7 +1717,11 @@ void PDFPixmapGeneratorThread::run()
 
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
+    const QSizeF &pageSizeF = pp->pageSizeF();
     
+    double fakeDpiX = width * 72.0 / pageSizeF.width(),
+           fakeDpiY = height * 72.0 / pageSizeF.height();
+
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
     if ( d->m_image )

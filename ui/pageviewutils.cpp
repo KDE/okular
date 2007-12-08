@@ -332,7 +332,7 @@ void PageViewTopMessage::setActionButton( QAction * action )
 /*********************/
 
 ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
-    : QToolButton( parent ), m_id( item.id )
+    : QToolButton( parent ), m_id( item.id ), m_isText( item.isText )
 {
     setCheckable( true );
     setAutoRaise( true );
@@ -795,6 +795,21 @@ void ToolBarPrivate::selectButton( ToolBarButton * button )
         // emit signal (-1 if button has been unselected)
         emit q->toolSelected( button->isChecked() ? button->buttonID() : -1 );
     }
+}
+
+void PageViewToolBar::setToolsEnabled( bool on )
+{
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    for ( ; it != end; ++it )
+        (*it)->setEnabled( on );
+}
+
+void PageViewToolBar::setTextToolsEnabled( bool on )
+{
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    for ( ; it != end; ++it )
+        if ( (*it)->isText() )
+            (*it)->setEnabled( on );
 }
 
 #include "pageviewutils.moc"

@@ -134,9 +134,11 @@ class ToolBarButton : public QToolButton
 
         ToolBarButton( QWidget * parent, const AnnotationToolItem &item );
         int buttonID() const { return m_id; }
+        bool isText() const { return m_isText; }
 
     private:
         int m_id;
+        bool m_isText;
 };
 
 /**
@@ -164,6 +166,9 @@ class PageViewToolBar : public QWidget
         void hideAndDestroy();
 
         void selectButton( int id );
+
+        void setToolsEnabled( bool on );
+        void setTextToolsEnabled( bool on );
 
         // query properties
 

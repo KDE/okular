@@ -58,6 +58,8 @@ class PageViewAnnotator : public QObject
         // called to toggle the usage of text annotating tools
         void setTextToolsEnabled( bool enabled );
 
+        void setToolsEnabled( bool enabled );
+
         // methods used when creating the annotation
         bool routeEvents() const;
         QRect routeEvent( QMouseEvent * event, PageViewItem * item );
@@ -78,6 +80,7 @@ class PageViewAnnotator : public QObject
         QDomElement m_toolsDefinition;
         QLinkedList<AnnotationToolItem> m_items;
         bool m_textToolsEnabled;
+        bool m_toolsEnabled;
 
         // creation related variables
         int m_lastToolID;

@@ -769,6 +769,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     bool allowAnnotations = d->document->isAllowed( Okular::AllowNotes );
     if ( d->annotator )
     {
+        d->annotator->setToolsEnabled( haspages );
         if ( allowAnnotations )
         {
             d->annotator->setTextToolsEnabled( d->document->supportsSearching() );

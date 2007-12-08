@@ -578,8 +578,8 @@ class TextSelectorEngine : public AnnotatorEngine
 
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
-    m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( true ), m_lastToolID( -1 ),
-    m_lockedItem( 0 )
+    m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
+    m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
@@ -629,25 +629,6 @@ PageViewAnnotator::~PageViewAnnotator()
     delete m_engine;
 }
 
-static QLinkedList<AnnotationToolItem> filteredItems( const QLinkedList<AnnotationToolItem> &items, bool textTools )
-{
-    if ( textTools )
-    {
-        return items;
-    }
-    else
-    {
-        QLinkedList<AnnotationToolItem> newitems;
-        QLinkedList<AnnotationToolItem>::ConstIterator it = items.begin(), itEnd = items.end();
-        for ( ; it != itEnd; ++it )
-        {
-            if ( !(*it).isText )
-                newitems.append( *it );
-        }
-        return newitems;
-    }
-}
-
 void PageViewAnnotator::setEnabled( bool on )
 {
     if ( !on )
@@ -670,7 +651,9 @@ void PageViewAnnotator::setEnabled( bool on )
     {
         m_toolBar = new PageViewToolBar( m_pageView, m_pageView->viewport() );
         m_toolBar->setSide( (PageViewToolBar::Side)Okular::Settings::editToolBarPlacement() );
-        m_toolBar->setItems( filteredItems( m_items, m_textToolsEnabled ) );
+        m_toolBar->setItems( m_items );
+        m_toolBar->setToolsEnabled( m_toolsEnabled );
+        m_toolBar->setTextToolsEnabled( m_textToolsEnabled );
         connect( m_toolBar, SIGNAL( toolSelected(int) ),
                 this, SLOT( slotToolSelected(int) ) );
         connect( m_toolBar, SIGNAL( orientationChanged(int) ),
@@ -703,12 +686,16 @@ void PageViewAnnotator::setEnabled( bool on )
 
 void PageViewAnnotator::setTextToolsEnabled( bool enabled )
 {
-    if ( m_textToolsEnabled == enabled )
-        return;
-
     m_textToolsEnabled = enabled;
     if ( m_toolBar )
-        m_toolBar->setItems( filteredItems( m_items, m_textToolsEnabled ) );
+        m_toolBar->setTextToolsEnabled( m_textToolsEnabled );
+}
+
+void PageViewAnnotator::setToolsEnabled( bool enabled )
+{
+    m_toolsEnabled = enabled;
+    if ( m_toolBar )
+        m_toolBar->setToolsEnabled( m_toolsEnabled );
 }
 
 bool PageViewAnnotator::routeEvents() const

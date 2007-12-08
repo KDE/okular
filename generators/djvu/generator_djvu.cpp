@@ -448,6 +448,8 @@ Okular::Annotation* DjVuGenerator::convertKDjVuAnnotation( int w, int h, KDjVu::
         uid.chop( 1 );
         uid.remove( QLatin1Char( '-' ) );
         newann->setUniqueName( uid );
+        // is external
+        newann->setFlags( newann->flags() | Okular::Annotation::External );
     }
     return newann;
 }

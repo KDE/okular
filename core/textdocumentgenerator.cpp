@@ -93,6 +93,8 @@ void TextDocumentGeneratorPrivate::addAnnotation( Annotation *annotation, int cu
     if ( !annotation )
         return;
 
+    annotation->setFlags( annotation->flags() | Okular::Annotation::External );
+
     AnnotationPosition position;
     position.annotation = annotation;
     position.startPosition = cursorBegin;

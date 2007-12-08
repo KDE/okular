@@ -448,7 +448,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         QAction * drawingAct = m_topBar->addAction( KIcon( "pencil" ), i18n( "Toggle Drawing Mode" ) );
         drawingAct->setCheckable( true );
         connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
-        QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "eraser" ), i18n( "Erase Drawings" ) );
+        QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );
         connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
         QWidget *spacer = new QWidget(m_topBar);
         spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );

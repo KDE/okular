@@ -445,7 +445,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
         m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next-rtl" : "go-next" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         m_topBar->addSeparator();
-        QAction * drawingAct = m_topBar->addAction( KIcon( "pencil" ), i18n( "Toggle Drawing Mode" ) );
+        QAction * drawingAct = m_topBar->addAction( KIcon( "draw-freehand" ), i18n( "Toggle Drawing Mode" ) );
         drawingAct->setCheckable( true );
         connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
         QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );

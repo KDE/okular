@@ -195,7 +195,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     // [left toolbox: Reviews] | []
     Reviews * reviewsWidget = new Reviews( 0, m_document );
-    m_sidebar->addItem( reviewsWidget, KIcon("pencil"), i18n("Reviews") );
+    m_sidebar->addItem( reviewsWidget, KIcon("draw-freehand"), i18n("Reviews") );
     m_sidebar->setItemEnabled( 2, false );
 
     // [left toolbox: Bookmarks] | []

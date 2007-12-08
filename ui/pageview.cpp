@@ -471,7 +471,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
     d->aMouseTextSelect->setActionGroup( actGroup );
 
-    d->aToggleAnnotator  = new KToggleAction(KIcon( "pencil" ), i18n("&Review"), this);
+    d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );

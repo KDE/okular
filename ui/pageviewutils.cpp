@@ -176,7 +176,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         switch ( icon )
         {
             case Annotation:
-                symbol = SmallIcon( "pencil" );
+                symbol = SmallIcon( "draw-freehand" );
                 break;
             case Find:
                 symbol = SmallIcon( "zoom-original" );

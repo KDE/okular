@@ -29,7 +29,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     lay->setMargin( 2 );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( KIcon( "fileclose" ) );
+    closeBtn->setIcon( KIcon( "process-stop" ) );
     closeBtn->setIconSize( QSize( 24, 24 ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );

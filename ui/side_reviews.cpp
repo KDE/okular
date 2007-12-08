@@ -55,6 +55,7 @@ class TreeView : public QTreeView
         }
       if ( !hasAnnotations ) {
         QPainter p( viewport() );
+        p.setRenderHint( QPainter::Antialiasing, true );
         p.setClipRect( event->rect() );
 
         QTextDocument document;

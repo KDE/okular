@@ -21,4 +21,6 @@ kde4_add_library(spectreOkular SHARED ${spectreOkular_SRCS})
 
 target_link_libraries(spectreOkular ${LIBGS_LIBRARY} )
 
+set_target_properties(spectreOkular PROPERTIES VERSION 1.0.0 SOVERSION 1 )
+
 install(TARGETS spectreOkular DESTINATION ${LIB_INSTALL_DIR})

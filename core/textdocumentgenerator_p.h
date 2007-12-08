@@ -93,7 +93,7 @@ class Utils
         }
 };
 
-class TextDocumentConverter::Private
+class TextDocumentConverterPrivate
 {
 };
 

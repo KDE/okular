@@ -31,13 +31,13 @@ using namespace Okular;
  * Generic Converter Implementation
  */
 TextDocumentConverter::TextDocumentConverter()
-    : QObject( 0 ), d( new Private )
+    : QObject( 0 ), d_ptr( 0 )
 {
 }
 
 TextDocumentConverter::~TextDocumentConverter()
 {
-    delete d;
+    delete d_ptr;
 }
 
 DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *document, const QTextBlock &block )

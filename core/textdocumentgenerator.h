@@ -20,6 +20,7 @@ class QTextDocument;
 
 namespace Okular {
 
+class TextDocumentConverterPrivate;
 class TextDocumentGenerator;
 class TextDocumentGeneratorPrivate;
 
@@ -100,8 +101,9 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block );
 
     private:
-        class Private;
-        Private* const d;
+        TextDocumentConverterPrivate *d_ptr;
+        Q_DECLARE_PRIVATE( TextDocumentConverter )
+        Q_DISABLE_COPY( TextDocumentConverter )
 };
 
 /**

@@ -286,16 +286,14 @@ LineAnnotationWidget::LineAnnotationWidget( Okular::Annotation * ann )
 
 QWidget * LineAnnotationWidget::widget()
 {
-    // only lines are supported for now
-    if ( m_lineType != 0 )
-        return 0;
-
     if ( m_widget )
         return m_widget;
 
     m_widget = new QWidget();
     QVBoxLayout * lay = new QVBoxLayout( m_widget );
     lay->setMargin( 0 );
+    if ( m_lineType == 0 )
+    {
     QGroupBox * gb = new QGroupBox( m_widget );
     lay->addWidget( gb );
     gb->setTitle( i18n( "Line Extensions" ) );
@@ -310,14 +308,34 @@ QWidget * LineAnnotationWidget::widget()
     m_spinLLE = new QDoubleSpinBox( gb );
     gridlay->addWidget( m_spinLLE, 1, 1 );
     tmplabel->setBuddy( m_spinLLE );
+    }
 
+    QGroupBox * gb2 = new QGroupBox( m_widget );
+    lay->addWidget( gb2 );
+    gb2->setTitle( i18n( "Style" ) );
+    QGridLayout * gridlay2 = new QGridLayout( gb2 );
+    QLabel * tmplabel2 = new QLabel( i18n( "&Size:" ), gb2 );
+    gridlay2->addWidget( tmplabel2, 0, 0 );
+    m_spinSize = new QDoubleSpinBox( gb2 );
+    gridlay2->addWidget( m_spinSize, 0, 1 );
+    tmplabel2->setBuddy( m_spinSize );
+
+    if ( m_lineType == 0 )
+    {
     m_spinLL->setRange( -500, 500 );
     m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
     m_spinLLE->setRange( 0, 500 );
     m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+    }
+    m_spinSize->setRange( 1, 100 );
+    m_spinSize->setValue( m_lineAnn->style().width() );
 
+    if ( m_lineType == 0 )
+    {
     connect( m_spinLL, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
     connect( m_spinLLE, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+    }
+    connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
 
     return m_widget;
 }
@@ -329,6 +347,7 @@ void LineAnnotationWidget::applyChanges()
         m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
         m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
     }
+    m_lineAnn->style().setWidth( m_spinSize->value() );
 }
 
 

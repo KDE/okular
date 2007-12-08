@@ -143,6 +143,7 @@ private:
     QWidget * m_widget;
     QDoubleSpinBox * m_spinLL;
     QDoubleSpinBox * m_spinLLE;
+    QDoubleSpinBox * m_spinSize;
 };
 
 class HighlightAnnotationWidget

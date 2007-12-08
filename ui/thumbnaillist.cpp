@@ -429,7 +429,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         delayedRequestVisiblePixmaps( 2000 );
 
         // resize and reposition items
-        int newWidth = contentsRect().width() - verticalScrollBar()->width();
+        int newWidth = contentsRect().width();
         int newHeight = 0;
         QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
         for ( ; tIt != tEnd; ++tIt )

@@ -131,7 +131,7 @@ class PickPointEngine : public AnnotatorEngine
                     pen.setStyle( Qt::DashLine );
                     painter->setPen( pen );
                     Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
-                    QRect realrect = tmprect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
+                    QRect realrect = tmprect.geometry( (int)xScale, (int)yScale );
                     painter->drawRect( realrect );
                     painter->setPen( origpen );
                 }

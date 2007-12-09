@@ -38,7 +38,7 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>3</shortcut>
     </tool>
-    <tool id="4" name="Pink Highlighter" pixmap="tool_hl_pink">
+    <tool id="4" name="Pink Highlighter" pixmap="draw-brush">
         <tooltip>Pink Ink</tooltip>
         <engine type="SmoothLine" color="#FF0080">
             <annotation type="Ink" color="#FF0080" width="4" />
@@ -80,7 +80,7 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>9</shortcut>
     </tool>
-    <tool id="10" name="Cyan Ellipse" pixmap="ellipse">
+    <tool id="10" name="Cyan Ellipse" pixmap="draw-ellipse">
         <tooltip>A cyan ellipse</tooltip>
         <engine type="PickPoint" color="#00ffff">
             <annotation type="GeomCircle" color="#00ffff" />

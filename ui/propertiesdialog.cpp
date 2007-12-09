@@ -95,7 +95,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // create fonts tab and layout it
     QFrame *page2 = new QFrame();
     m_fontPage = addPage(page2, i18n("&Fonts"));
-    m_fontPage->setIcon( KIcon( "fonts" ) );
+    m_fontPage->setIcon( KIcon( "preferences-desktop-font" ) );
     page2Layout = new QVBoxLayout(page2);
     page2Layout->setMargin(marginHint());
     page2Layout->setSpacing(spacingHint());

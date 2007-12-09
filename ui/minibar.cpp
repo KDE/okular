@@ -402,7 +402,7 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 
 HoverButton::HoverButton( QWidget * parent )
     : QPushButton( parent )
-    , m_widthScale( 1.8 )
+    , m_widthScale( 1.5 )
 {
     setMouseTracking( true );
     setAttribute( Qt::WA_Hover );

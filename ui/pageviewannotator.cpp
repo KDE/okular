@@ -599,7 +599,7 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
                 {
                     AnnotationToolItem item;
                     item.id = toolElement.attribute("id").toInt();
-                    item.text = toolElement.attribute("name");
+                    item.text = i18n( toolElement.attribute( "name" ).toUtf8() );
                     item.pixmap = toolElement.attribute("pixmap");
                     QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
                     if ( shortcutNode.isElement() )

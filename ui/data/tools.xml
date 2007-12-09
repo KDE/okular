@@ -82,7 +82,7 @@ Engine/Annotation Types [specific attributes]:
     </tool>
     <tool id="10" name="Cyan Ellipse" pixmap="draw-ellipse">
         <tooltip>A cyan ellipse</tooltip>
-        <engine type="PickPoint" color="#00ffff">
+        <engine type="PickPoint" color="#00ffff" block="true">
             <annotation type="GeomCircle" color="#00ffff" />
         </engine>
     </tool>

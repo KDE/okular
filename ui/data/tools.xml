@@ -31,19 +31,12 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>2</shortcut>
     </tool>
-    <tool id="3" name="Green Highlighter" pixmap="tool_ink_green">
+    <tool id="3" name="Green Highlighter" pixmap="draw-brush">
         <tooltip>Green Ink</tooltip>
         <engine type="SmoothLine" color="#00FF00">
             <annotation type="Ink" color="#00FF00" width="2" />
         </engine>
         <shortcut>3</shortcut>
-    </tool>
-    <tool id="4" name="Pink Highlighter" pixmap="draw-brush">
-        <tooltip>Pink Ink</tooltip>
-        <engine type="SmoothLine" color="#FF0080">
-            <annotation type="Ink" color="#FF0080" width="4" />
-        </engine>
-        <shortcut>4</shortcut>
     </tool>
     <tool id="5" name="Yellow Highlighter" pixmap="tool_hl_yellow">
         <tooltip>Yellow Highlight</tooltip>

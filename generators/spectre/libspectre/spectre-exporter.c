@@ -70,7 +70,7 @@ spectre_exporter_free (SpectreExporter *exporter)
 		exporter->to = NULL;
 	}
 
-	free (exporter->doc);
+	free (exporter);
 }
 
 SpectreStatus

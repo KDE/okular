@@ -5,8 +5,8 @@ install(FILES
 
 # install annotation tool images
 install(FILES
-   tool_hl_orange.png
-   tool_hl_pink.png
+#   tool_hl_orange.png
+#   tool_hl_pink.png
    tool_hl_yellow.png
    tool_ink_green.png
    tool_note.png

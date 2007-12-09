@@ -769,18 +769,18 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     bool allowAnnotations = d->document->isAllowed( Okular::AllowNotes );
     if ( d->annotator )
     {
-        d->annotator->setToolsEnabled( haspages );
-        if ( allowAnnotations )
-        {
-            d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
-        }
-        else if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+        bool allowTools = haspages && allowAnnotations;
+        d->annotator->setToolsEnabled( allowTools );
+        d->annotator->setTextToolsEnabled( allowTools && d->document->supportsSearching() );
+    }
+    if ( d->aToggleAnnotator )
+    {
+        if ( !allowAnnotations && d->aToggleAnnotator->isChecked() )
         {
             d->aToggleAnnotator->trigger();
         }
-    }
-    if ( d->aToggleAnnotator )
         d->aToggleAnnotator->setEnabled( allowAnnotations );
+    }
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -3130,7 +3130,9 @@ void PageView::slotToggleAnnotator( bool on )
     if ( !d->annotator )
     {
         d->annotator = new PageViewAnnotator( this, d->document );
-        d->annotator->setTextToolsEnabled( d->document->supportsSearching() );
+        bool allowTools = d->document->pages() > 0 && d->document->isAllowed( Okular::AllowNotes );
+        d->annotator->setToolsEnabled( allowTools );
+        d->annotator->setTextToolsEnabled( allowTools && d->document->supportsSearching() );
     }
 
     // initialize/reset annotator (and show/hide toolbar)

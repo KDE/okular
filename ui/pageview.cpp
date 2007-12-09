@@ -1033,7 +1033,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                     }
                     // draw border (red if the selection is too small)
                     pixmapPainter.setPen( selBlendColor );
-                    pixmapPainter.drawRect( selectionRect );
+                    pixmapPainter.drawRect( selectionRect.adjusted( 0, 0, -1, -1 ) );
                 }
                 // 3) Layer 1: give annotator painting control
                 if ( d->annotator && d->annotator->routePaints( contentsRect ) )

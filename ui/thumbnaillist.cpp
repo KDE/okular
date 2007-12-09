@@ -87,6 +87,7 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     // set scrollbars
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+    verticalScrollBar()->setEnabled( false );
 
     setAttribute( Qt::WA_StaticContents );
 
@@ -181,6 +182,9 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     // update scrollview's contents size (sets scrollbars limits)
     height -= KDialog::spacingHint();
     m_pagesWidget->resize( width, height );
+
+    // enable scrollbar when there's something to scroll
+    verticalScrollBar()->setEnabled( viewport()->height() < height );
 
     // request for thumbnail generation
     delayedRequestVisiblePixmaps( 200 );
@@ -443,6 +447,9 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         // update scrollview's contents size (sets scrollbars limits)
         newHeight -= KDialog::spacingHint();
         m_pagesWidget->resize( newWidth, newHeight );
+
+        // enable scrollbar when there's something to scroll
+        verticalScrollBar()->setEnabled( viewport()->height() < newHeight );
 
         // ensure selected item remains visible
         if ( m_selected )

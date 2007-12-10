@@ -129,7 +129,8 @@ void TextDocumentGeneratorPrivate::generateLinkInfos()
         Utils::calculateBoundingRect( mDocument, linkPosition.startPosition, linkPosition.endPosition,
                                       info.boundingRect, info.page );
 
-        mLinkInfos.append( info );
+        if ( info.page >= 0 )
+            mLinkInfos.append( info );
     }
 }
 

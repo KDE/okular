@@ -145,7 +145,8 @@ void TextDocumentGeneratorPrivate::generateAnnotationInfos()
         Utils::calculateBoundingRect( mDocument, annotationPosition.startPosition, annotationPosition.endPosition,
                                       info.boundingRect, info.page );
 
-        mAnnotationInfos.append( info );
+        if ( info.page >= 0 )
+            mAnnotationInfos.append( info );
     }
 }
 

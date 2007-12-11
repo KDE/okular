@@ -45,14 +45,14 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>5</shortcut>
     </tool>
-    <tool id="6" name="Straight Yellow Line" pixmap="tool_hl_yellow">
+    <tool id="6" name="Straight Yellow Line" pixmap="tool_line_okular">
         <tooltip>Straight Yellow Line</tooltip>
         <engine type="PolyLine" color="#FFE000" points="2">
             <annotation type="Line" width="4" color="#FFE000" />
         </engine>
         <shortcut>6</shortcut>
     </tool>
-    <tool id="7" name="Blue Polygon" pixmap="polygon">
+    <tool id="7" name="Blue Polygon" pixmap="tool_polygon_okular">
         <tooltip>Draw a polygon (click on the first point to close it)</tooltip>
         <engine type="PolyLine" color="#007EEE" points="-1">
             <annotation type="Line" width="4" color="#007EEE" />
@@ -73,7 +73,7 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>9</shortcut>
     </tool>
-    <tool id="10" name="Cyan Ellipse" pixmap="draw-ellipse">
+    <tool id="10" name="Cyan Ellipse" pixmap="tool_ellipse_okular">
         <tooltip>A cyan ellipse</tooltip>
         <engine type="PickPoint" color="#00ffff" block="true">
             <annotation type="GeomCircle" color="#00ffff" />

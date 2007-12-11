@@ -269,6 +269,8 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     GlobalMemoryStatusEx (&stat);
 
+    lastUpdate = QTime::currentTime();
+
     return ( cachedValue = stat.ullAvailPhys );
 #else
     // tell the memory is full.. will act as in LOW profile

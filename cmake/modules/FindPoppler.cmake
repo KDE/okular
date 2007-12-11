@@ -41,14 +41,13 @@ else(_PopplerLinkFlags)
   find_path( INCLUDEPOPPLER poppler-qt4.h PATHS ${INCLUDEPOPPLERQT4}/qt4 )
   if( LIBPOPPLER_QT4 AND LIBPOPPLER AND INCLUDEPOPPLER )
     set( POPPLER_FOUND TRUE )
+    set(_PopplerLinkFlags ${LIBPOPPLER} ${LIBPOPPLER_QT4})
+    set(POPPLER_INCLUDE_DIR ${INCLUDEPOPPLER})
   endif( LIBPOPPLER_QT4 AND LIBPOPPLER AND INCLUDEPOPPLER )
 endif(_PopplerLinkFlags)
 
 if (POPPLER_FOUND)
   set(POPPLER_LIBRARY ${_PopplerLinkFlags})
-  if( LIBPOPPLER AND LIBPOPPLER_QT4 )
-    set( POPPLER_LIBRARY ${LIBPOPPLER} ${LIBPOPPLER_QT4} )
-  endif( LIBPOPPLER AND LIBPOPPLER_QT4 )
 
   # the cflags for poppler-qt4 can contain more than one include path
   separate_arguments(_PopplerCflags)
@@ -56,9 +55,6 @@ if (POPPLER_FOUND)
     string(REGEX REPLACE "-I(.+)" "\\1" _includedir "${_includedir}")
     set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} ${_includedir})
   endforeach(_includedir)
-  if( INCLUDEPOPPLER )
-    set( POPPLER_INCLUDE_DIR ${INCLUDEPOPPLER} )
-  endif( INCLUDEPOPPLER )
 
   # check whether we're using poppler 0.6
   set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})

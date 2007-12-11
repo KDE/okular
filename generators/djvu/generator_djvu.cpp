@@ -30,7 +30,7 @@
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
-static void recurseCreateTOC( QDomDocument &maindoc, QDomNode &parent, QDomNode &parentDestination )
+static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination )
 {
     QDomNode n = parent.firstChild();
     while( !n.isNull() )
@@ -181,7 +181,7 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     if ( doc )
     {
         m_docSyn = new Okular::DocumentSynopsis();
-        recurseCreateTOC( *m_docSyn, *const_cast<QDomDocument*>( doc ), *m_docSyn );
+        recurseCreateTOC( *m_docSyn, *doc, *m_docSyn );
     }
     locker.unlock();
 

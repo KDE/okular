@@ -36,7 +36,7 @@ else (LIBGS_LIBRARY)
   if (LIBGS_MINIMUM_VERSION)
     string(REPLACE "." "" mingsver "${LIBGS_MINIMUM_VERSION}")
     set(CMAKE_REQUIRED_LIBRARIES "${LIBGS_LIBRARY}")
-set(CMAKE_REQUIRED_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/spectre/libspectre")
+    set(CMAKE_REQUIRED_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/spectre/libspectre")
     check_c_source_runs("
 #include <ghostscript/iapi.h>
 
@@ -53,6 +53,7 @@ int main(int argc, char **argv)
 }
 " HAVE_LIBGS_MINIMUM_VERSION)
     set(CMAKE_REQUIRED_LIBRARIES)
+    set(CMAKE_REQUIRED_INCLUDES)
     if (NOT HAVE_LIBGS_MINIMUM_VERSION)
       set(LIBGS_FOUND FALSE)
     endif (NOT HAVE_LIBGS_MINIMUM_VERSION)

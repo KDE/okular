@@ -13,6 +13,8 @@ install(FILES
    tool_line_okular.png
    tool_polygon_okular.png
    tool_ellipse_okular.png
+   tool-note.png
+   tool-note-inline.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation page images
 install(FILES

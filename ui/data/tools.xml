@@ -17,16 +17,16 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-    <tool id="1" name="Note" pixmap="tool_note">
+    <tool id="1" name="Note" pixmap="tool-note">
         <tooltip>Text Annotation</tooltip>
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note">
+        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note">
             <annotation type="Text" color="#FFFF00" />
         </engine>
         <shortcut>1</shortcut>
     </tool>
-    <tool id="2" name="Inline Note" pixmap="text">
+    <tool id="2" name="Inline Note" pixmap="tool-note-inline">
         <tooltip>Inline Text Annotation (drag to select a zone)</tooltip>
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool_note" block="true">
+        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note-inline" block="true">
             <annotation type="FreeText" color="#FFFF00" />
         </engine>
         <shortcut>2</shortcut>

@@ -525,11 +525,18 @@ T3FontCache::T3FontCache(Ref *fontIDA, double m11A, double m12A,
   } else {
     cacheSets = 1;
   }
-  cacheData = (Guchar *)gmallocn(cacheSets * cacheAssoc, glyphSize);
-  cacheTags = (T3FontCacheTag *)gmallocn(cacheSets * cacheAssoc,
+  cacheData = (Guchar *)gmallocn_checkoverflow(cacheSets * cacheAssoc, glyphSize);
+  if (cacheData != NULL)
+  {
+    cacheTags = (T3FontCacheTag *)gmallocn(cacheSets * cacheAssoc,
 					 sizeof(T3FontCacheTag));
-  for (i = 0; i < cacheSets * cacheAssoc; ++i) {
-    cacheTags[i].mru = i & (cacheAssoc - 1);
+    for (i = 0; i < cacheSets * cacheAssoc; ++i) {
+      cacheTags[i].mru = i & (cacheAssoc - 1);
+    }
+  }
+  else
+  {
+    cacheTags = NULL;
   }
 }
 
@@ -1522,11 +1529,13 @@ GBool SplashOutputDev::beginType3Char(GfxState *state, double /*x*/, double /*y*
   // is the glyph in the cache?
   i = (code & (t3Font->cacheSets - 1)) * t3Font->cacheAssoc;
   for (j = 0; j < t3Font->cacheAssoc; ++j) {
-    if ((t3Font->cacheTags[i+j].mru & 0x8000) &&
+    if (t3Font->cacheTags != NULL) {
+      if ((t3Font->cacheTags[i+j].mru & 0x8000) &&
 	t3Font->cacheTags[i+j].code == code) {
-      drawType3Glyph(t3Font, &t3Font->cacheTags[i+j],
+        drawType3Glyph(t3Font, &t3Font->cacheTags[i+j],
 		     t3Font->cacheData + (i+j) * t3Font->glyphSize);
-      return gTrue;
+        return gTrue;
+      }
     }
   }
 

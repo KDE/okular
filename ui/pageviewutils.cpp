@@ -356,7 +356,6 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
 /* PageViewToolBar */
 
 static const int toolBarGridSize = 40;
-static const int toolBarRBMargin = 2;
 
 class ToolBarPrivate
 {
@@ -727,25 +726,45 @@ void ToolBarPrivate::reposition()
 QPoint ToolBarPrivate::getInnerPoint() const
 {
     // returns the final position of the widget
-    if ( anchorSide == PageViewToolBar::Left )
-        return QPoint( 0, ( anchorWidget->height() - q->height() ) / 2 );
-    if ( anchorSide == PageViewToolBar::Top )
-        return QPoint( ( anchorWidget->width() - q->width() ) / 2, 0 );
-    if ( anchorSide == PageViewToolBar::Right )
-        return QPoint( anchorWidget->width() - q->width() + toolBarRBMargin, ( anchorWidget->height() - q->height() ) / 2 );
-    return QPoint( ( anchorWidget->width() - q->width()) / 2, anchorWidget->height() - q->height() + toolBarRBMargin );
+    QPoint newPos;
+    switch ( anchorSide )
+    {
+        case PageViewToolBar::Left:
+            newPos = QPoint( 0, ( anchorWidget->height() - q->height() ) / 2 );
+            break;
+        case PageViewToolBar::Top:
+            newPos = QPoint( ( anchorWidget->width() - q->width() ) / 2, 0 );
+            break;
+        case PageViewToolBar::Right:
+            newPos = QPoint( anchorWidget->width() - q->width(), ( anchorWidget->height() - q->height() ) / 2 );
+            break;
+        case PageViewToolBar::Bottom:
+            newPos = QPoint( ( anchorWidget->width() - q->width()) / 2, anchorWidget->height() - q->height() );
+            break;
+    }
+    return newPos + anchorWidget->pos();
 }
 
 QPoint ToolBarPrivate::getOuterPoint() const
 {
     // returns the point from which the transition starts
-    if ( anchorSide == PageViewToolBar::Left )
-        return QPoint( -q->width(), ( anchorWidget->height() - q->height() ) / 2 );
-    if ( anchorSide == PageViewToolBar::Top )
-        return QPoint( ( anchorWidget->width() - q->width() ) / 2, -q->height() );
-    if ( anchorSide == PageViewToolBar::Right )
-        return QPoint( anchorWidget->width() + toolBarRBMargin, ( anchorWidget->height() - q->height() ) / 2 );
-    return QPoint( ( anchorWidget->width() - q->width() ) / 2, anchorWidget->height() + toolBarRBMargin );
+    QPoint newPos;
+    switch ( anchorSide )
+    {
+        case PageViewToolBar::Left:
+            newPos = QPoint( -q->width(), ( anchorWidget->height() - q->height() ) / 2 );
+            break;
+        case PageViewToolBar::Top:
+            newPos = QPoint( ( anchorWidget->width() - q->width() ) / 2, -q->height() );
+            break;
+        case PageViewToolBar::Right:
+            newPos = QPoint( anchorWidget->width(), ( anchorWidget->height() - q->height() ) / 2 );
+            break;
+        case PageViewToolBar::Bottom:
+            newPos = QPoint( ( anchorWidget->width() - q->width() ) / 2, anchorWidget->height() );
+            break;
+    }
+    return newPos + anchorWidget->pos();
 }
 
 void PageViewToolBar::slotAnimate()

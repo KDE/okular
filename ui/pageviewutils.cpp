@@ -170,7 +170,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         height = textRect.height(),
         textXOffset = 0,
         iconXOffset = 0,
-        shadowOffset = message.isRightToLeft() ? -1 : 1;
+        shadowOffset = 1;
 
     // load icon (if set) and update geometry
     QPixmap symbol;

@@ -51,6 +51,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     int width = textRect.width(),
         height = textRect.height(),
         textXOffset = 0,
+        iconXOffset = 0,
         shadowOffset = message.isRightToLeft() ? -1 : 1;
 
     // load icon (if set) and update geometry
@@ -72,8 +73,15 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
                 symbol = SmallIcon( "messagebox_info" );
                 break;
         }
-        textXOffset = 2 + symbol.width();
-        width += textXOffset;
+        if ( QApplication::reverseLayout() )
+        {
+            iconXOffset = 2 + textRect.width();
+        }
+        else
+        {
+            textXOffset = 2 + symbol.width();
+        }
+        width += 2 + symbol.width();
         height = QMAX( height, symbol.height() );
     }
     QRect geometry( 0, 0, width + 10, height + 8 );
@@ -99,7 +107,7 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // draw icon if present
     if ( !symbol.isNull() )
-        bufferPainter.drawPixmap( 5, 4, symbol, 0, 0, symbol.width(), symbol.height() );
+        bufferPainter.drawPixmap( 5 + iconXOffset, 4, symbol, 0, 0, symbol.width(), symbol.height() );
 
     // draw shadow and text
     int yText = geometry.height() - height / 2;

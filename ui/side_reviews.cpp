@@ -217,7 +217,8 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     if ( !index.isValid() )
       return;
 
-    const QModelIndex filterIndex = m_groupProxy->mapToSource( index );
+    const QModelIndex authorIndex = m_authorProxy->mapToSource( index );
+    const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
     const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
 
     Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );

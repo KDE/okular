@@ -1015,6 +1015,17 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
     {
         return Settings::zoomFactor();
     }
+    else if ( key == QLatin1String( "TextAntialias" ) )
+    {
+        // TODO: add a configuration
+        // TODO: eventually read the KDE configuration
+        return true;
+    }
+    else if ( key == QLatin1String( "GraphicsAntialias" ) )
+    {
+        // TODO: add a configuration
+        return true;
+    }
     return QVariant();
 }
 

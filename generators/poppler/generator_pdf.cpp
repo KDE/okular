@@ -453,10 +453,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
 
     loadPages(pagesVector, 0, false);
 
-#ifdef HAVE_POPPLER_0_6
-    pdfdoc->setRenderHint(Poppler::Document::Antialiasing);
-    pdfdoc->setRenderHint(Poppler::Document::TextAntialiasing);
-#endif
+    setAAOptions();
 
     // the file has been loaded correctly
     return true;
@@ -991,23 +988,50 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
 
 bool PDFGenerator::reparseConfig()
 {
+    if ( !pdfdoc )
+        return false;
+
+    bool somethingchanged = false;
     // load paper color
     QColor color = documentMetaData( "PaperColor", true ).value< QColor >();
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.
-    if ( pdfdoc && color != pdfdoc->paperColor() )
+    if ( color != pdfdoc->paperColor() )
     {
         userMutex()->lock();
         pdfdoc->setPaperColor(color);
         userMutex()->unlock();
-        return true;
+        somethingchanged = true;
     }
-    return false;
+    bool aaChanged = setAAOptions();
+    somethingchanged = somethingchanged || aaChanged;
+    return somethingchanged;
 }
 
 void PDFGenerator::addPages( KConfigDialog * )
 {
+}
+
+bool PDFGenerator::setAAOptions()
+{
+    bool changed = false;
+#ifdef HAVE_POPPLER_0_6
+    Poppler::Document::RenderHints oldhints = pdfdoc->renderHints();
+#define SET_HINT(hintname, hintdefvalue, hintflag) \
+{ \
+    bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
+    if (newhint != (oldhints & hintflag)) \
+    { \
+        pdfdoc->setRenderHint(hintflag); \
+        changed = true; \
+    } \
+}
+    SET_HINT("GraphicsAntialias", true, Poppler::Document::Antialiasing)
+    SET_HINT("TextAntialias", true, Poppler::Document::TextAntialiasing)
+#undef SET_HINT
+#endif
+    return changed;
 }
 
 Okular::ExportFormat::List PDFGenerator::exportFormats() const

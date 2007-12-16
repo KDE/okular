@@ -185,16 +185,18 @@ void KTreeViewSearchLine::Private::checkItemParentsNotVisible( QTreeView *treeVi
 bool KTreeViewSearchLine::Private::checkItemParentsVisible( QTreeView *treeView, const QModelIndex &index )
 {
   bool childMatch = false;
-  for ( int i = 0; i < treeView->model()->rowCount( index ); ++i )
+  const int rowcount = treeView->model()->rowCount( index );
+  for ( int i = 0; i < rowcount; ++i )
     childMatch |= checkItemParentsVisible( treeView, treeView->model()->index( i, 0, index ) );
 
   // Should this item be shown? It should if any children should be, or if it matches.
-  if ( childMatch || parent->itemMatches( index.parent(), index.row(), search ) ) {
-    treeView->setRowHidden( index.row(), index.parent(), false );
+  const QModelIndex parentindex = index.parent();
+  if ( childMatch || parent->itemMatches( parentindex, index.row(), search ) ) {
+    treeView->setRowHidden( index.row(), parentindex, false );
     return true;
   }
 
-  treeView->setRowHidden( index.row(), index.parent(), true );
+  treeView->setRowHidden( index.row(), parentindex, true );
 
   return false;
 }
@@ -317,11 +319,14 @@ void KTreeViewSearchLine::updateSearch( QTreeView *treeView )
 
   QModelIndex currentIndex = treeView->currentIndex();
 
+  bool wasUpdateEnabled = treeView->updatesEnabled();
+  treeView->setUpdatesEnabled( false );
   if ( d->keepParentsVisible )
     for ( int i = 0; i < treeView->model()->rowCount(); ++i )
       d->checkItemParentsVisible( treeView, treeView->rootIndex() );
   else
     d->checkItemParentsNotVisible( treeView );
+  treeView->setUpdatesEnabled( wasUpdateEnabled );
 
   if ( currentIndex.isValid() )
     treeView->scrollTo( currentIndex );
@@ -385,15 +390,16 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &index, int row, const 
   // If the search column list is populated, search just the columns
   // specifified.  If it is empty default to searching all of the columns.
 
+  const int columncount = index.model()->columnCount( index );
   if ( !d->searchColumns.isEmpty() ) {
     QList<int>::ConstIterator it = d->searchColumns.begin();
     for ( ; it != d->searchColumns.end(); ++it ) {
-      if ( *it < index.model()->columnCount( index ) &&
+      if ( *it < columncount &&
            index.child( row, *it ).data( Qt::DisplayRole ).toString().indexOf( pattern, 0, d->caseSensitive ) >= 0 )
         return true;
     }
   } else {
-    for ( int i = 0; i < index.model()->columnCount( index ); ++i) {
+    for ( int i = 0; i < columncount; ++i) {
       if ( index.child( row, i ).data( Qt::DisplayRole ).toString().indexOf( pattern, 0, d->caseSensitive ) >= 0 )
         return true;
     }

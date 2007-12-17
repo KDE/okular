@@ -48,10 +48,13 @@ In progress [working on]:
 -> annotations: add the annot pane (cool plz!)
 -> rotate the whole document / individual pages (on screen/print?) (BR99352)
 -> link: add a Okular::Anchor link class
--> check mouse wrapping not screH / 2
 -> pageview: update layout when toggling the 'ebook atyle alignment'
 
 More items (first items will enter 'In progress list' first):
+-> annotations: "move" and "delete" tools
+-> gui: add config for gfx (yes/no) and text (yes/no/kde) antialias
+-> PS backend: get rid of the own AA config and use the Document one
+-> various backends: fill about data information
 -> rethink which buttons show in the toolbar (BR139825)
 -> annotations: configurabile tools in the toolbar (BR137903)
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
@@ -116,7 +119,7 @@ More items (first items will enter 'In progress list' first):
 Icons needed:
 - okular (ToolBAR): 1 continuous, 2 tied-pages, 3 Normal (not scroll only, it
     performs other ops), 4 Zoom, 5 Select, 6 Annotation/Review
-- okular (Edit Tools): highlighter( transp base, we colorize it)
+- okular (Edit Tools): text highlighter, line, polygon, ellipse, text underline
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):

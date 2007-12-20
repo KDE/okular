@@ -60,7 +60,7 @@
     <Separator/>
     <ActionList name="bookmarks_currentdocument" />
   </Menu>
-  <Menu name="mouseMode"><text>&amp;Tools</text>
+  <Menu name="tools"><text>&amp;Tools</text>
     <Action name="mouse_drag"/>
     <Action name="mouse_zoom"/>
     <Action name="mouse_select"/>

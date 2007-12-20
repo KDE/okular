@@ -37,8 +37,8 @@ else(_PopplerLinkFlags)
   # try to find poppler without pkgconfig
   find_library( LIBPOPPLER poppler )
   find_library( LIBPOPPLER_QT4 poppler-qt4 )
-  find_path( INCLUDEPOPPLERQT4 qt4/poppler-qt4.h )
-  find_path( INCLUDEPOPPLER poppler-qt4.h PATHS ${INCLUDEPOPPLERQT4}/qt4 )
+  find_path( INCLUDEPOPPLER_QT4 poppler/qt4/poppler-qt4.h )
+  find_path( INCLUDEPOPPLER poppler-qt4.h PATHS ${INCLUDEPOPPLER_QT4}/poppler/qt4 )
   if( LIBPOPPLER_QT4 AND LIBPOPPLER AND INCLUDEPOPPLER )
     set( POPPLER_FOUND TRUE )
     set(_PopplerLinkFlags ${LIBPOPPLER} ${LIBPOPPLER_QT4})
@@ -85,6 +85,7 @@ else (POPPLER_FOUND)
   if (Poppler_FIND_REQUIRED)
     message(FATAL_ERROR "Could NOT find Poppler-Qt4")
   endif (Poppler_FIND_REQUIRED)
+  message(STATUS "Could not find OPTIONAL package Poppler-Qt4")
 endif (POPPLER_FOUND)
 
 # ensure that they are cached

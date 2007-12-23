@@ -5,11 +5,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>180</height>
+    <width>328</width>
+    <height>131</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
@@ -56,8 +68,8 @@
      </property>
      <property name="sizeHint" >
       <size>
-       <width>352</width>
-       <height>20</height>
+       <width>10</width>
+       <height>5</height>
       </size>
      </property>
     </spacer>

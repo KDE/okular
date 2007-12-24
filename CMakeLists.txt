@@ -110,7 +110,6 @@ set(okularpart_SRCS
    conf/dlgpresentation.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
-   ui/annotationguiutils.cpp
    ui/annotationmodel.cpp
    ui/annotationpopup.cpp
    ui/annotationpropertiesdialog.cpp
@@ -121,6 +120,7 @@ set(okularpart_SRCS
    ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp
+   ui/guiutils.cpp
    ui/ktreeviewsearchline.cpp
    ui/minibar.cpp
    ui/pageitemdelegate.cpp

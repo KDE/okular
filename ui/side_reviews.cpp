@@ -30,7 +30,6 @@
 #include "core/document.h"
 #include "core/page.h"
 #include "settings.h"
-#include "annotationguiutils.h"
 #include "annotationpopup.h"
 #include "annotationproxymodels.h"
 #include "annotationmodel.h"

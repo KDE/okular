@@ -20,7 +20,7 @@
 #include "core/document.h"
 #include "core/observer.h"
 #include "core/page.h"
-#include "ui/annotationguiutils.h"
+#include "ui/guiutils.h"
 
 struct AnnItem
 {
@@ -304,13 +304,13 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
     switch ( role )
     {
         case Qt::DisplayRole:
-            return AnnotationGuiUtils::captionForAnnotation( item->annotation );
+            return GuiUtils::captionForAnnotation( item->annotation );
             break;
         case Qt::DecorationRole:
             return KIcon( "graphics-viewer-document" );
             break;
         case Qt::ToolTipRole:
-            return AnnotationGuiUtils::prettyToolTip( item->annotation );
+            return GuiUtils::prettyToolTip( item->annotation );
             break;
         case AuthorRole:
             return item->annotation->author();

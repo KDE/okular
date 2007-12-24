@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2006-2007 by Pino Toscano <pino@kde.org>                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef ANNOTATIONGUIUTILS_H
-#define ANNOTATIONGUIUTILS_H
+#ifndef OKULAR_GUIUTILS_H
+#define OKULAR_GUIUTILS_H
 
 #include <QtCore/QString>
 
@@ -16,7 +16,7 @@ namespace Okular {
 class Annotation;
 }
 
-namespace AnnotationGuiUtils
+namespace GuiUtils
 {
     /**
      * Returns the translated string with the type of the given @p annotation.

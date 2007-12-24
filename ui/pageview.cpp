@@ -59,7 +59,7 @@
 #include "pagepainter.h"
 #include "core/annotations.h"
 #include "annotwindow.h"
-#include "annotationguiutils.h"
+#include "guiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
 #include "toolaction.h"
@@ -209,7 +209,7 @@ protected:
             {
                 QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
                 r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
-                QString tip = AnnotationGuiUtils::prettyToolTip( ann );
+                QString tip = GuiUtils::prettyToolTip( ann );
                 QToolTip::showText( he->globalPos(), tip, this, r );
             }
             else if ( link )
@@ -1478,7 +1478,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                     if ( orect )
                         d->mouseAnn = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     // consider no annotation caught if its type is not movable
-                    if ( d->mouseAnn && !AnnotationGuiUtils::canBeMoved( d->mouseAnn ) )
+                    if ( d->mouseAnn && !GuiUtils::canBeMoved( d->mouseAnn ) )
                         d->mouseAnn = 0;
                 }
                 if ( !d->mouseAnn )
@@ -2475,7 +2475,7 @@ void PageView::updateCursor( const QPoint &p )
                 d->mouseOnRect = false;
                 if ( annotobj
                      && ( QApplication::keyboardModifiers() & Qt::ControlModifier )
-                     && AnnotationGuiUtils::canBeMoved( static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation() ) )
+                     && GuiUtils::canBeMoved( static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation() ) )
                 {
                     setCursor( Qt::OpenHandCursor );
                 }

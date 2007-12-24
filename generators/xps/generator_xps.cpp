@@ -36,7 +36,7 @@
 #include <okular/core/page.h>
 #include <okular/core/area.h>
 
-const int XpsDebug = 4658;
+const int XpsDebug = 4712;
 
 static KAboutData createAboutData()
 {

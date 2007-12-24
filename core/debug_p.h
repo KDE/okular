@@ -10,6 +10,6 @@
 #ifndef _OKUAR_DEBUG_P_H_
 #define _OKUAR_DEBUG_P_H_
 
-#define OkularDebug 4650
+#define OkularDebug 4700
 
 #endif

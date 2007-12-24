@@ -45,7 +45,7 @@
 #include "formfields.h"
 #endif
 
-static const int PDFDebug = 4653;
+static const int PDFDebug = 4710;
 
 class PDFEmbeddedFile : public Okular::EmbeddedFile
 {

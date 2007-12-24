@@ -94,7 +94,7 @@ void GSRendererThread::run()
 
         if (image->width() != wantedWidth || image->height() != wantedHeight)
         {
-            kWarning(4656) << "Generated image does not match wanted size " << image->width() << " " << m_currentRequest->width() << " " << image->height() << " " << m_currentRequest->height() ;
+            kWarning(4711) << "Generated image does not match wanted size " << image->width() << " " << m_currentRequest->width() << " " << image->height() << " " << m_currentRequest->height() ;
             QImage aux = image->scaled(wantedWidth, wantedHeight);
             delete image;
             image = new QImage(aux);

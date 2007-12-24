@@ -1639,12 +1639,10 @@ void Part::unsetDummyMode()
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history
-    m_historyBack = KStandardAction::back( this, SLOT( slotHistoryBack() ), actionCollection() );
-    actionCollection()->addAction("history_back",m_historyBack);
+    m_historyBack = KStandardAction::documentBack( this, SLOT( slotHistoryBack() ), actionCollection() );
     m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
 
-    m_historyNext = KStandardAction::forward( this, SLOT( slotHistoryNext() ), actionCollection());
-    actionCollection()->addAction("history_forward",m_historyNext);
+    m_historyNext = KStandardAction::documentForward( this, SLOT( slotHistoryNext() ), actionCollection());
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
     m_pageView->setupActions( actionCollection() );

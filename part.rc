@@ -48,8 +48,8 @@
     <Action name="first_page"/>
     <Action name="last_page"/>
     <Separator/>
-    <Action name="history_back"/>
-    <Action name="history_forward" />
+    <Action name="go_document_back"/>
+    <Action name="go_document_forward" />
     <Separator/>
     <Action name="go_goto_page"/>
   </Menu>

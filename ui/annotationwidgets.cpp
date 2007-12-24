@@ -23,6 +23,8 @@
 #include <klocale.h>
 #include <kdebug.h>
 
+#include "guiutils.h"
+
 PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
   : QWidget( parent )
 {
@@ -102,9 +104,9 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
     }
 
     QString path;
-    QPixmap pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), KIconLoader::User, m_previewSize, KIconLoader::DefaultState, QStringList(), &path, true );
+    QPixmap pixmap = GuiUtils::iconLoader()->loadIcon( m_icon.toLower(), KIconLoader::User, m_previewSize, KIconLoader::DefaultState, QStringList(), &path, true );
     if ( path.isEmpty() )
-        pixmap = KIconLoader::global()->loadIcon( m_icon.toLower(), KIconLoader::NoGroup, m_previewSize );
+        pixmap = GuiUtils::iconLoader()->loadIcon( m_icon.toLower(), KIconLoader::NoGroup, m_previewSize );
     m_iconLabel->setPixmap( pixmap );
 
     emit iconChanged( m_icon );

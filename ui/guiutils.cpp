@@ -10,10 +10,24 @@
 #include "guiutils.h"
 
 // qt/kde includes
+#include <kglobal.h>
+#include <kiconloader.h>
 #include <klocale.h>
 
 // local includes
 #include "core/annotations.h"
+
+struct GuiUtilsHelper
+{
+    GuiUtilsHelper()
+        : il( 0 )
+    {
+    }
+
+    KIconLoader * il;
+};
+
+K_GLOBAL_STATIC( GuiUtilsHelper, s_data )
 
 namespace GuiUtils {
 
@@ -122,6 +136,16 @@ bool canBeMoved( const Okular::Annotation * ann )
             break;
     }
     return false;
+}
+
+void setIconLoader( KIconLoader * loader )
+{
+    s_data->il = loader;
+}
+
+KIconLoader* iconLoader()
+{
+    return s_data->il ? s_data->il : KIconLoader::global();
 }
 
 }

@@ -75,6 +75,7 @@
 #include "ui/findbar.h"
 #include "ui/sidebar.h"
 #include "ui/fileprinterpreview.h"
+#include "ui/guiutils.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/bookmarkmanager.h"
@@ -149,6 +150,8 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     // we need an instance
     setComponentData(okularPartFactory::componentData());
+
+    GuiUtils::setIconLoader( iconLoader() );
 
     m_sidebar = new Sidebar( parentWidget );
     setWidget( m_sidebar );

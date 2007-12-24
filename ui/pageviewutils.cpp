@@ -30,6 +30,7 @@
 
 // local includes
 #include "formwidgets.h"
+#include "guiutils.h"
 #include "core/page.h"
 #include "settings.h"
 
@@ -348,7 +349,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
     setAutoRaise( true );
     resize( buttonSize, buttonSize );
     setIconSize( QSize( iconSize, iconSize ) );
-    setIcon( KIcon( item.pixmap ) );
+    setIcon( KIcon( item.pixmap, GuiUtils::iconLoader() ) );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setShortcut( QKeySequence( item.shortcut ) );

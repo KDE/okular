@@ -1032,7 +1032,7 @@ bool XpsDocument::hasDocumentStructure()
     return m_haveDocumentStructure;
 }
 
-XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false )
+XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false ), m_docStructure( 0 )
 {
     kDebug(XpsDebug) << "document file name: " << fileName;
 

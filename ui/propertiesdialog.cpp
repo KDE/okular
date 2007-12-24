@@ -272,13 +272,17 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
 
   switch ( index.column() )
   {
-        case 0: return m_fonts.at( index.row() ).name(); break;
+        case 0:
+        {
+            QString fontname = m_fonts.at( index.row() ).name();
+            return fontname.isEmpty() ? QString::fromLatin1( "-" ) : fontname; // TODO i18n
+            break;
+        }
         case 1: return descriptionForFontType( m_fonts.at( index.row() ).type() ); break;
         case 2: return descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ); break;
         case 3: return m_fonts.at( index.row() ).file(); break;
-    default:
-       return QVariant();
   }
+  return QVariant();
 }
 
 QVariant FontsListModel::headerData( int section, Qt::Orientation orientation, int role ) const

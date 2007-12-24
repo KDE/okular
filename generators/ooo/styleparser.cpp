@@ -296,8 +296,9 @@ ParagraphFormatProperty StyleParser::parseParagraphProperty( QDomElement &parent
     property.setTextAlignment( alignMap[ parent.attribute( "text-align", "left" ) ] );
   }
 
-  if ( parent.hasAttribute( "background-color" ) ) {
-    property.setBackgroundColor( parent.attribute( "background-color" ) );
+  const QString colorText = parent.attribute( "background-color" );
+  if ( !colorText.isEmpty() && colorText != QLatin1String( "transparent" ) ) {
+    property.setBackgroundColor( QColor( colorText ) );
   }
 
   return property;

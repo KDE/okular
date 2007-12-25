@@ -237,8 +237,8 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 void PresentationWidget::setupActions( KActionCollection * collection )
 {
     m_ac = collection;
-    addAction( m_ac->action( "previous_page" ) );
-    addAction( m_ac->action( "next_page" ) );
+    addAction( m_ac->action( "go_previous" ) );
+    addAction( m_ac->action( "go_next" ) );
     addAction( m_ac->action( "first_page" ) );
     addAction( m_ac->action( "last_page" ) );
 }

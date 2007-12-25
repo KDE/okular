@@ -171,6 +171,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
             if ( !found )
             {
                 q->beginRemoveRows( indexForItem( annItem ), i - 1, i - 1 );
+                delete annItem->children.at( i - 1 );
                 annItem->children.removeAt( i - 1 );
                 q->endRemoveRows();
             }

@@ -435,6 +435,11 @@ class TextSelectorEngine : public AnnotatorEngine
             // parse engine specific attributes
         }
 
+        ~TextSelectorEngine()
+        {
+            delete selection;
+        }
+
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
         {
             // only proceed if pressing left button

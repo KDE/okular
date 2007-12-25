@@ -12,4 +12,4 @@ Name[x-test]=xxokularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
-MimeType=application/x-fb;
+MimeType=application/x-fictionbook;

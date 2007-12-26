@@ -41,6 +41,8 @@ class TOCModel : public QAbstractItemModel
         void clear();
         void setCurrentViewport( const Okular::DocumentViewport &viewport );
 
+        bool isEmpty() const;
+
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
 

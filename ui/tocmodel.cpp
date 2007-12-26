@@ -313,6 +313,11 @@ void TOCModel::setCurrentViewport( const Okular::DocumentViewport &viewport )
     }
 }
 
+bool TOCModel::isEmpty() const
+{
+    return d->root->children.isEmpty();
+}
+
 QString TOCModel::externalFileNameForIndex( const QModelIndex &index ) const
 {
     if ( !index.isValid() )

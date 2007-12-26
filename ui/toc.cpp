@@ -79,7 +79,7 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
 
     // else populate the listview and enable the tab
     m_model->fill( syn );
-    emit hasTOC( true );
+    emit hasTOC( !m_model->isEmpty() );
 }
 
 void TOC::notifyViewportChanged( bool /*smoothMove*/ )

@@ -344,20 +344,19 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         return m_docSynopsis;
 
     m_docSynopsis = new Okular::DocumentSynopsis();
- 
-    QStack<QDomElement*> stack;
 
     QVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
 
     if ( prebookmarks.isEmpty() ) 
         return m_docSynopsis;
 
+    QStack<QDomElement> stack;
+
     QVector<PreBookmark>::ConstIterator it = prebookmarks.begin();
     QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.end();
     for( ; it != itEnd; ++it ) 
     {
-        QDomElement *domel = new QDomElement; 
-        *domel= m_docSynopsis->createElement( (*it).title );
+        QDomElement domel = m_docSynopsis->createElement( (*it).title );
 
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if ( a.isValid() )
@@ -367,19 +366,17 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             const Okular::Page *p = document()->page( a.page - 1 );
             /* Don't care about rotations... */
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height(), 0 );
-            domel->setAttribute( "Viewport", vp.toString() );
+            domel.setAttribute( "Viewport", vp.toString() );
         }
         if ( stack.isEmpty() )
-            m_docSynopsis->appendChild( *domel );
+            m_docSynopsis->appendChild( domel );
         else 
         {
-            stack.top()->appendChild( *domel );
+            stack.top().appendChild( domel );
             stack.pop();
         }
         for ( int i = 0; i < (*it).noOfChildren; ++i )
             stack.push( domel );
-        if (!(*it).noOfChildren)
-            delete domel;
     }
 
     return m_docSynopsis;

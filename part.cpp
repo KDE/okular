@@ -413,7 +413,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     m_showPresentation = ac->addAction("presentation");
     m_showPresentation->setText(i18n("P&resentation"));
-    m_showPresentation->setIcon( KIcon( "media-playback-start-presentation" ) );
+    m_showPresentation->setIcon( KIcon( "view-presentation" ) );
     connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
     m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
     m_showPresentation->setEnabled( false );

@@ -429,7 +429,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->setObjectName( "presentationBar" );
         m_topBar->setIconSize( QSize( 32, 32 ) );
         m_topBar->setMovable( false );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous-rtl" : "go-previous" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
+        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
         m_pagesEdit = new QLineEdit( m_topBar );
         QSizePolicy sp = m_pagesEdit->sizePolicy();
         sp.setHorizontalPolicy( QSizePolicy::Minimum );
@@ -443,7 +443,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
         m_topBar->addWidget( pagesLabel );
         connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next-rtl" : "go-next" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
+        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
         m_topBar->addSeparator();
         QAction * drawingAct = m_topBar->addAction( KIcon( "draw-freehand" ), i18n( "Toggle Drawing Mode" ) );
         drawingAct->setCheckable( true );

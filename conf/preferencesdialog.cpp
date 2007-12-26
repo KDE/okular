@@ -35,11 +35,11 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     addPage( m_general, i18n("General"), "graphics-viewer-document", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "preferences-desktop-accessibility", i18n("Accessibility Reading Aids") );
     addPage( m_performance, i18n("Performance"), "preferences-system-performance", i18n("Performance Tuning") );
-    addPage( m_presentation, i18n("Presentation"), "document-start-presentation",
+    addPage( m_presentation, i18n("Presentation"), "view-presentation",
              i18n("Options for Presentation Mode") );
-    addPage( m_identity, i18n("Identity"), "contact",
+    addPage( m_identity, i18n("Identity"), "preferences-desktop-personal",
              i18n("Identity Settings") );
 #ifdef OKULAR_DEBUG_CONFIGPAGE
-    addPage( m_debug, "Debug", "gear", "Debug options" );
+    addPage( m_debug, "Debug", "system-run", "Debug options" );
 #endif
 }

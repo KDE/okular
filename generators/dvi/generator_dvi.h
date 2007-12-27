@@ -50,12 +50,11 @@ class DviGenerator : public Okular::Generator
         bool ready;
         dviRenderer *m_dviRenderer;
 
-        void loadPages( QVector< Okular::Page * > & pagesVector, int orientation );
-        Okular::TextPage *extractTextFromPage( dviPageInfo *pageInfo, int orientation );
+        void loadPages( QVector< Okular::Page * > & pagesVector );
+        Okular::TextPage *extractTextFromPage( dviPageInfo *pageInfo );
         void fillViewportFromAnchor( Okular::DocumentViewport &vp, const Anchor &anch, 
-                                     int pW, int pH, int orientation ); 
-        QLinkedList<Okular::ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo, 
-                                                   int orientation );
+                                     int pW, int pH ); 
+        QLinkedList<Okular::ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo );
 };
 
 #endif

@@ -438,7 +438,7 @@ QVariant AuthorGroupProxyModel::data( const QModelIndex &proxyIndex, int role ) 
         if ( role == Qt::DisplayRole )
             return item->author();
         else if ( role == Qt::DecorationRole )
-            return KIcon( item->author().isEmpty() ? "precense_away" : "user" );
+            return KIcon( item->author().isEmpty() ? "user-away" : "user-identity" );
         else
             return QVariant();
     } else {

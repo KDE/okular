@@ -119,12 +119,12 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     toolBar->setIconSize( QSize( 16, 16 ) );
     toolBar->setMovable( false );
     // - add Page button
-    QAction * groupByPageAction = toolBar->addAction( KIcon( "text-plain" ), i18n( "Group by Page" ) );
+    QAction * groupByPageAction = toolBar->addAction( KIcon( "text-x-generic" ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
     connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-    QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user" ), i18n( "Group by Author" ) );
+    QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user-identity" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );

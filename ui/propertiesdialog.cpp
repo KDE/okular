@@ -159,7 +159,7 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 
 void PropertiesDialog::slotFontReadingProgress( int page )
 {
-    m_fontProgressBar->setValue( m_fontProgressBar->maximum() * page / m_document->pages() );
+    m_fontProgressBar->setValue( m_fontProgressBar->maximum() * ( page + 1 ) / m_document->pages() );
 }
 
 void PropertiesDialog::slotFontReadingEnded()

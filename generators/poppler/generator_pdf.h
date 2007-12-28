@@ -132,6 +132,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::DocumentSynopsis docSyn;
         mutable bool docEmbeddedFilesDirty;
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
+        int nextFontPage;
 
         QVector<bool> rectsGenerated;
 

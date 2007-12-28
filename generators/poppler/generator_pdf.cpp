@@ -307,7 +307,7 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docEmbeddedFilesDirty( true ), pdfOptionsPage( 0 )
+    docEmbeddedFilesDirty( true ), nextFontPage( 0 ), pdfOptionsPage( 0 )
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );
@@ -472,6 +472,7 @@ bool PDFGenerator::doCloseDocument()
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
+    nextFontPage = 0;
 
     return true;
 }
@@ -675,9 +676,12 @@ static Okular::FontInfo::EmbedType embedTypeForPopplerFontInfo( const Poppler::F
      return ret;
 }
 
-Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
+Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
 {
     Okular::FontInfo::List list;
+
+    if ( page != nextFontPage )
+        return list;
 
     QList<Poppler::FontInfo> fonts;
     userMutex()->lock();
@@ -694,6 +698,8 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int /*page*/ )
 
         list.append( of );
     }
+
+    ++nextFontPage;
 
     return list;
 }

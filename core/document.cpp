@@ -638,7 +638,7 @@ void DocumentPrivate::fontReadingProgress( int page )
 {
     emit m_parent->fontReadingProgress( page );
 
-    if ( page == (int)m_parent->pages() )
+    if ( page >= (int)m_parent->pages() - 1 )
     {
         emit m_parent->fontReadingEnded();
         m_fontThread = 0;

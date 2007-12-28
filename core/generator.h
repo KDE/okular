@@ -282,7 +282,7 @@ class OKULAR_EXPORT Generator : public QObject
          * Returns the 'list of embedded fonts' object of the specified \page
          * of the document.
          *
-         * \param page a page of the document, starting from 1 - 0 indicates all
+         * \param page a page of the document, starting from 0 - -1 indicates all
          * the other fonts
          */
         virtual FontInfo::List fontsForPage( int page );

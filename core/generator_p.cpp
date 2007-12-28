@@ -114,7 +114,7 @@ void FontExtractionThread::stopExtraction()
 
 void FontExtractionThread::run()
 {
-    for ( int i = 1; i <= mNumOfPages && mGoOn; ++i )
+    for ( int i = -1; i < mNumOfPages && mGoOn; ++i )
     {
         FontInfo::List list = mGenerator->fontsForPage( i );
         foreach ( const FontInfo& fi, list )

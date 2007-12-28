@@ -16,6 +16,7 @@ Comment[fi]=Poppler-kirjastoa käyttävä PDF-taustaosa ohjelmaa okular varten
 Comment[fr]=Interface d'okular pour les PDf (utilise poppler)
 Comment[gl]=Infraestrutura de PDF mediante poppler para okular
 Comment[is]=PDF stuðningur fyrir Okular í gegnum Poppler
+Comment[it]=Backend PDF per okular che utilizza poppler
 Comment[ja]=okular の PDF バックエンド (poppler を使用)
 Comment[ko]=poppler를 사용하는 okular PDF 백엔드
 Comment[lv]=PDF aizmugure priekš okular, lietojot poppler

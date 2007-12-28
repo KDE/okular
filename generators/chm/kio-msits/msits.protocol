@@ -18,6 +18,7 @@ Description[fi]=Kioslave WinHelp-tiedostojen näyttämiseksi
 Description[fr]=Module d'entrées-sorties pour l'affichage des fichiers d'aide Win Help
 Description[gl]=Un kioslave para mostrar ficheiros WinHelp
 Description[is]=Kioslave tilað sýna WinHelp skrár
+Description[it]=Un kioslave per visualizzare i file della guida di windows
 Description[ja]=WinHelp ファイルを表示するための kioslave
 Description[ko]=WinHelp 파일을 표시하기 위한 KIO 슬레이브
 Description[lv]=Kioslave WinHelp failu attēlošanai

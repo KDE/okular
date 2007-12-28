@@ -29,7 +29,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     lay->setMargin( 2 );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( KIcon( "process-stop" ) );
+    closeBtn->setIcon( KIcon( "dialog-close" ) );
     closeBtn->setIconSize( QSize( 24, 24 ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
@@ -49,7 +49,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     label->setBuddy( m_text );
     lay->addWidget( m_text );
 
-    QPushButton * findNextBtn = new QPushButton( KIcon( "edit-find-next" ), i18nc( "Find and go to the next search match", "Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( KIcon( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 

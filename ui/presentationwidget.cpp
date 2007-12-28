@@ -104,6 +104,7 @@ void PresentationWidget::setupActions( KActionCollection * ac )
     m_accel->insert( "next_page", ac->action( "next_page" )->shortcut(), this, SLOT( slotNextPage() ), false, true );
     m_accel->insert( "first_page", ac->action( "first_page" )->shortcut(), this, SLOT( slotFirstPage() ), false, true );
     m_accel->insert( "last_page", ac->action( "last_page" )->shortcut(), this, SLOT( slotLastPage() ), false, true );
+    m_accel->insert( "presentation", ac->action( "presentation" )->shortcut(), this, SLOT( close() ), false, true );
 }
 
 void PresentationWidget::notifySetup( const QValueVector< KPDFPage * > & pageSet, bool /*documentChanged*/ )

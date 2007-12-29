@@ -9,6 +9,7 @@ set( okularGenerator_comicbook_PART_SRCS
      document.cpp
      generator_comicbook.cpp
      unrar.cpp qnatsort.cpp
+     unrarflavours.cpp
    )
 
 

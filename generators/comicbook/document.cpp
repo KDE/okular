@@ -70,6 +70,11 @@ bool Document::open( const QString &fileName )
         extractImageFiles( entries );
 
     } else {
+        if ( !Unrar::isAvailable() ) {
+            // TODO emit a visible error
+            return false;
+        }
+
         /**
          * We have a rar archive
          */

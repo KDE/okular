@@ -11,8 +11,53 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QProcess>
+#include <QtCore/QRegExp>
 
+#include <kdebug.h>
+#include <kglobal.h>
 #include <ktempdir.h>
+
+#include "unrarflavours.h"
+
+struct UnrarHelper
+{
+    UnrarHelper();
+    ~UnrarHelper();
+
+    UnrarFlavour *kind;
+};
+
+K_GLOBAL_STATIC( UnrarHelper, helper )
+
+UnrarHelper::UnrarHelper()
+   : kind( 0 )
+{
+    QProcess proc;
+    proc.start( "unrar", QStringList() << "--version" );
+    bool ok = proc.waitForFinished( -1 );
+    Q_UNUSED( ok )
+    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( "\n", QString::SkipEmptyParts );
+    if ( !lines.isEmpty() )
+    {
+        if ( lines.first().startsWith( "UNRAR " ) )
+            kind = new NonFreeUnrarFlavour();
+        else if ( lines.first().startsWith( "unrar " ) )
+            kind = new FreeUnrarFlavour();
+    }
+
+    if ( !kind )
+    {
+        // no luck so far, assume unrar-nonfree
+        kind = new NonFreeUnrarFlavour();
+    }
+    kDebug() << "detected:" << kind->name();
+}
+
+UnrarHelper::~UnrarHelper()
+{
+    delete kind;
+}
+
 
 Unrar::Unrar()
     : QObject( 0 ), mTempDir( 0 )
@@ -67,7 +112,7 @@ QStringList Unrar::list()
     delete mProcess;
     mProcess = 0;
 
-    return QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts );
+    return helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts ) );
 }
 
 QByteArray Unrar::contentOf( const QString &fileName ) const
@@ -77,6 +122,11 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
         return QByteArray();
 
     return file.readAll();
+}
+
+bool Unrar::isAvailable()
+{
+    return dynamic_cast< NonFreeUnrarFlavour * >( helper->kind );
 }
 
 void Unrar::readFromStdout()

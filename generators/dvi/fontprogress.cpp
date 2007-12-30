@@ -39,7 +39,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
   setButtonGuiItem(Cancel, KGuiItem(i18n("Abort"), "process-stop", abortTip));
 
   if (helpIndex.isEmpty() == false) {
-    setHelp(helpIndex, "kdvi");
+    setHelp(helpIndex, "okular");
     setHelpLinkText( i18n( "What's going on here?") );
     enableLinkedHelp(true);
   } else

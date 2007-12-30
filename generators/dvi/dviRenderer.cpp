@@ -31,16 +31,15 @@
 #include <kstandarddirs.h>
 #include <kvbox.h>
 
-#include <q3ptrstack.h>
 #include <QApplication>
 #include <QCheckBox>
+#include <QEventLoop>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPainter>
 #include <QProgressBar>
 #include <QRegExp>
-
 
 //#define DEBUG_DVIRENDERER
 
@@ -66,7 +65,8 @@ dviRenderer::dviRenderer()
     current_page(0),
     penWidth_in_mInch(0),
     number_of_elements_in_path(0),
-    currentlyDrawnPage(0)
+    currentlyDrawnPage(0),
+    m_eventLoop(0)
 {
 #ifdef DEBUG_DVIRENDERER
   //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
@@ -768,14 +768,9 @@ void dviRenderer::exportPDF()
 
 void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer)
 {
-  Q_UNUSED( fname );
-  Q_UNUSED( options );
-  Q_UNUSED( printer );
-/*
   KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
-*/
 }
 
 /*
@@ -793,7 +788,6 @@ void dviRenderer::editor_finished(const DVISourceEditor*)
 }
 */
 
-/*
 void dviRenderer::export_finished(const DVIExport* key)
 {
   typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
@@ -801,6 +795,16 @@ void dviRenderer::export_finished(const DVIExport* key)
   if (it != all_exports_.end())
     all_exports_.remove(key);
 }
-*/
+
+void dviRenderer::setEventLoop(QEventLoop *el) 
+{
+  if (el == NULL)
+  {
+     delete m_eventLoop;
+     m_eventLoop = NULL; 
+  }
+  else
+     m_eventLoop = el;
+}
 
 #include "dviRenderer.moc"

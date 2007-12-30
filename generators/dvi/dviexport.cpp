@@ -17,6 +17,7 @@
  */
 
 #include <config.h>
+#include <okular/core/fileprinter.h>
 
 #include "dviexport.h"
 
@@ -29,15 +30,15 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <ktemporaryfile.h>
 
+#include <QEventLoop>
 #include <QFileInfo>
 #include <QLabel>
-#include <QTemporaryFile>
 #include <QtGui/QPrinter>
 
 #include <cassert>
 
-//#define DVIEXPORT_USE_QPROCESS
 
 DVIExport::DVIExport(dviRenderer& parent, QWidget* parent_widget)
   : started_(false),
@@ -72,7 +73,7 @@ void DVIExport::initialise_progress_dialog(int total_steps,
   if (progress_) {
     progress_->TextLabel2->setText(i18n("Please be patient"));
     progress_->setTotalSteps(total_steps);
-    connect(progress_, SIGNAL(finished()), this, SLOT(abort_process()));
+    //connect(progress_, SIGNAL(finished()), this, SLOT(abort_process()));
   }
 }
 
@@ -84,34 +85,27 @@ void DVIExport::start(const QString& command,
 {
   assert(!process_);
 
-#ifndef DVIEXPORT_USE_QPROCESS
   process_ = new KProcess;
-  connect(process_, SIGNAL(receivedStderr(KProcess* , char* , int)), this, SLOT(output_receiver(KProcess* , char* , int)));
-  connect(process_, SIGNAL(receivedStdout(KProcess* , char* , int)), this, SLOT(output_receiver(KProcess* , char* , int)));
-  connect(process_, SIGNAL(processExited(KProcess* )), this, SLOT(finished(KProcess*)));
-
-  *process_ << command << args;
-#else
-  process_ = new QProcess;
-  process_->setReadChannelMode(QProcess::MergedChannels);
+  process_->setOutputChannelMode(KProcess::MergedChannels);
+  process_->setNextOpenMode(QIODevice::Text);
   connect(process_, SIGNAL(readyReadStandardOutput()), this, SLOT(output_receiver()));
   connect(process_, SIGNAL(finished(int)), this, SLOT(finished(int)));
-#endif
+
+  *process_ << command << args;
 
   if (!working_directory.isEmpty())
     process_->setWorkingDirectory(working_directory);
 
   error_message_ = error_message;
 
-#ifndef DVIEXPORT_USE_QPROCESS
-  if (!process_->start(KProcess::NotifyOnExit, KProcess::AllOutput))
-#else
-  process_->start(command, args, QIODevice::ReadOnly);
+  process_->start();
   if (!process_->waitForStarted(-1))
-#endif
     kError(kvs::dvi) << command << " failed to start" << endl;
   else
     started_ = true;
+
+  if (parent_->m_eventLoop)
+     parent_->m_eventLoop->exec();
 }
 
 
@@ -133,46 +127,28 @@ void DVIExport::abort_process_impl()
 }
 
 
-#ifndef DVIEXPORT_USE_QPROCESS
-void DVIExport::finished_impl()
-#else
 void DVIExport::finished_impl(int exit_code)
-#endif
 {
   if (progress_) {
     // Explicitly disconnect to prevent a recursive call of abort_process.
-    disconnect(progress_, SIGNAL(finished()), 0, 0);
+    //disconnect(progress_, SIGNAL(finished()), 0, 0);
     if (progress_->isVisible())
       progress_->hide();
   }
 
-#ifndef DVIEXPORT_USE_QPROCESS
-  if (process_ && process_->normalExit() && process_->exitStatus() != 0)
-#else
   if (process_ && exit_code != 0)
-#endif
     KMessageBox::error(parent_widget_, error_message_);
   // Remove this from the store of all export processes.
+  parent_->m_eventLoop->exit( exit_code );
   parent_->export_finished(this);
 }
 
 
-#ifndef DVIEXPORT_USE_QPROCESS
-void DVIExport::output_receiver(KProcess* , char* buffer, int buflen)
-#else
 void DVIExport::output_receiver()
-#endif
 {
-#ifndef DVIEXPORT_USE_QPROCESS
-  // Paranoia.
-  if (buflen <= 0)
-    return;
-#endif
-
   if (process_) {
-#ifndef DVIEXPORT_USE_QPROCESS
-    parent_->update_info_dialog(QString::fromLocal8Bit(buffer, buflen));
-#else
+     QString out = process_->readAllStandardOutput();
+#if 0
     parent_->update_info_dialog(process_->readAll());
 #endif
     if (progress_)
@@ -278,7 +254,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
       KMessageBox::warningContinueCancel(parent_widget,
                                          i18n("The file %1\nexists. Do you want to overwrite that file?", output_name),
                                          i18n("Overwrite File"),
-                                         i18n("Overwrite"));
+                                         KGuiItem( i18n("Overwrite") ));
     if (result == KMessageBox::Cancel)
       return;
   }
@@ -291,8 +267,10 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
                                   "Please be patient."),
                              i18n("Waiting for dvipdfm to finish...") );
 
+#if 0
   parent.update_info_dialog(i18n("Export: %1 to PDF", dvi.filename),
                               true);
+#endif
 
   start("dvipdfm",
         QStringList() << "-o"
@@ -363,7 +341,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
         KMessageBox::warningContinueCancel(parent_widget,
                                            i18n("The file %1\nexists. Do you want to overwrite that file?", output_name_),
                                            i18n("Overwrite File"),
-                                           i18n("Overwrite"));
+                                           KGuiItem( i18n("Overwrite") ));
       if (result == KMessageBox::Cancel)
         return;
     }
@@ -394,7 +372,8 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   if (!options.isEmpty() || dvi.suggestedPageSize != 0) {
     // Get a name for a temporary file.
     // Must open the QTemporaryFile to access the name.
-    QTemporaryFile tmpfile;
+    KTemporaryFile tmpfile;
+    tmpfile.setAutoRemove(false);
     tmpfile.open();
     tmpfile_name_ = tmpfile.fileName();
     tmpfile.close();
@@ -446,8 +425,10 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                                   "Please be patient."),
                              i18n("Waiting for dvips to finish...") );
 
+#if 0
   parent.update_info_dialog(i18n("Export: %1 to PostScript", dvi.filename),
                               true);
+#endif
 
   QStringList args;
   if (!printer)
@@ -470,28 +451,26 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 }
 
 
-#ifndef DVIEXPORT_USE_QPROCESS
-void DVIExportToPS::finished_impl()
-#else
 void DVIExportToPS::finished_impl(int exit_code)
-#endif
 {
   if (printer_ && !output_name_.isEmpty()) {
     const QFileInfo output(output_name_);
     if (output.exists() && output.isReadable()) {
         // I'm not 100% sure on this, think we still need to select pages in export to ps above
-        FilePrinter::printFile( printer_, output_name_,
-                                FilePrinter::ApplicationDeletesFiles,
-                                FilePrinter::ApplicationSelectsPages,
+        Okular::FilePrinter::printFile( (*printer_), output_name_,
+                                Okular::FilePrinter::ApplicationDeletesFiles,
+                                Okular::FilePrinter::ApplicationSelectsPages,
                                 QString() );
     }
   }
 
-#ifndef DVIEXPORT_USE_QPROCESS
-  DVIExport::finished_impl();
-#else
+  if (!tmpfile_name_.isEmpty()) {
+     // Delete the file.
+    QFile(tmpfile_name_).remove();
+    tmpfile_name_.clear();
+  }
+
   DVIExport::finished_impl(exit_code);
-#endif
 }
 
 

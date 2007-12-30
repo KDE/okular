@@ -37,6 +37,8 @@ class DviGenerator : public Okular::Generator
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
+        bool print( QPrinter &printer );
+
     protected:
         bool doCloseDocument();
         Okular::TextPage* textPage( Okular::Page *page );

@@ -12,7 +12,7 @@
 
 #include "bigEndianByteReader.h"
 //#include "documentRenderer.h"
-//#include "dviexport.h"
+#include "dviexport.h"
 //#include "dvisourceeditor.h"
 #include "fontpool.h"
 #include "dviPageInfo.h"
@@ -36,6 +36,7 @@ class dvifile;
 class dviRenderer;
 class ghostscript_interface;
 //class infoDialog;
+class QEventLoop;
 class QPrinter;
 class KProgressDialog;
 class PreBookmark;
@@ -123,6 +124,10 @@ public:
 
   virtual PageNumber totalPages() const;
 
+  void setParentWidget(QWidget *parent) {parentWidget = parent;}
+
+  void setEventLoop(QEventLoop *el);
+
 #if 0
   /** Called by the exporter or editor in order to update the
    *  contents of the global info dialog with @c text.
@@ -145,7 +150,7 @@ public:
   void          html_href_special(const QString& msg);
   void          html_anchor_end();
   void          draw_page();
-//void          export_finished(const DVIExport*);
+  void          export_finished(const DVIExport*);
 //void          editor_finished(const DVISourceEditor*);
 
 public slots:
@@ -177,8 +182,9 @@ private slots:
 //  void          showThatSourceInformationIsPresent();
 
 private:
-//  friend class DVIExportToPS;
-  friend class DVISourceEditor;
+  friend class DVIExportToPS;
+  friend class DVIExport;
+//  friend class DVISourceEditor;
 
   /** URL to the DVI file
       This field is initialized by the setFile() method. See the
@@ -306,7 +312,7 @@ private:
 
   drawinf currinf;
   RenderedDocumentPagePixmap* currentlyDrawnPage;
-  //QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
+  QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
   //KSharedPtr<DVISourceEditor> editor_;
 
   /** Flag if document is modified
@@ -326,6 +332,15 @@ private:
   QVector<SimplePageSize> pageSizes;
 
   QMap<QString, Anchor> anchorList;
+
+  /** pointer to the parent widget
+
+  This pointer can be used by implementations e.g. to display error
+  messages. This pointer can well be zero.
+  */
+  QWidget* parentWidget;
+
+  QEventLoop* m_eventLoop;
 };
 
 #endif

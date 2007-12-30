@@ -4,7 +4,7 @@ include_directories(
 )
 
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
-#add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN)
+#add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN -DDEBUG_PSGS -DDEBUG_FONTPOOL)
 
 if (FREETYPE_FOUND)
    add_definitions(-DHAVE_FREETYPE)
@@ -44,6 +44,7 @@ set(okularGenerator_dvi_SRCS
    fontpool.cpp
    fontprogress.cpp
    dvisourcesplitter.cpp
+   dviexport.cpp
 )
 
 

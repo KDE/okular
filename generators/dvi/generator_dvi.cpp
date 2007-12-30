@@ -9,6 +9,7 @@
 
 #include <okular/core/action.h>
 #include <okular/core/document.h>
+#include <okular/core/fileprinter.h>
 #include <okular/core/page.h>
 #include <okular/core/sourcereference.h>
 #include <okular/core/textpage.h>
@@ -19,6 +20,7 @@
 #include "dviPageInfo.h"
 #include "dviRenderer.h"
 #include "pageSize.h"
+#include "dviexport.h"
 
 #include <qapplication.h>
 #include <qstring.h>
@@ -29,6 +31,7 @@
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <ktemporaryfile.h>
 
 static KAboutData createAboutData()
 {
@@ -51,6 +54,7 @@ DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular
   m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
 {
     setFeature( TextExtraction );
+    setFeature( PrintPostscript );
 }
 
 bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
@@ -61,6 +65,8 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     m_dviRenderer = new dviRenderer();
     if ( ! m_dviRenderer->setFile( fileName, base ) )
         return false;
+
+    m_dviRenderer->setParentWidget( document()->widget() );
 
     kDebug() << "# of pages: " << m_dviRenderer->dviFile->total_pages;
 
@@ -385,5 +391,37 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
         if ( !refRects.at(i).isEmpty() )
             pagesVector[i]->setSourceReferences( refRects.at(i) );
 }
+
+bool DviGenerator::print( QPrinter& printer )
+{
+    // Create tempfile to write to
+    KTemporaryFile tf;
+    tf.setSuffix( ".ps" );
+    if ( !tf.open() )
+        return false;
+
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, 
+                                 m_dviRenderer->totalPages(),
+                                 document()->bookmarkedPageList() );
+    QString pages;
+    QStringList printOptions;
+    // List of pages to print.
+    foreach ( int p, pageList )
+    {
+        pages += QString(",%1").arg(p);
+    }
+    if ( !pages.isEmpty() )
+        printOptions << "-pp" << pages.mid(1);
+
+    QEventLoop el;
+    m_dviRenderer->setEventLoop( &el );
+    m_dviRenderer->exportPS( tf.fileName(), printOptions, &printer );
+
+    tf.close();
+
+    // Error messages are handled by the generator - ugly, but it works.
+    return true; 
+}
+
 
 #include "generator_dvi.moc"

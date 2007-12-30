@@ -78,20 +78,17 @@ protected:
    *  when the external process finishes.
    *  @param exit_code the exit code retuned by the external process.
    */
-  //virtual void finished_impl(int exit_code);
-  virtual void finished_impl();
+  virtual void finished_impl(int exit_code);
 
 private slots:
   /// Calls an impl() inline so that derived classes don't need slots.
   void abort_process() { abort_process_impl(); }
-  //void finished(int exit_code) { finished_impl(exit_code); }
-  void finished(KProcess*) { finished_impl(); }
+  void finished(int exit_code) { finished_impl(exit_code); }
 
   /** This slot receives all output from the child process's stdin
    *  and stdout streams.
    */
-  //void output_receiver();
-  void output_receiver(KProcess *, char *, int);
+  void output_receiver();
 
 private:
   QString error_message_;
@@ -136,8 +133,7 @@ public:
 
 private:
   virtual void abort_process_impl();
-  //virtual void finished_impl(int exit_code);
-  virtual void finished_impl();
+  virtual void finished_impl(int exit_code);
 
   QPrinter* printer_;
   QString output_name_;

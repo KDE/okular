@@ -884,7 +884,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == pageNumber )
+        if ( (*iIt)->pageNumber() == pageNumber && (*iIt)->isVisible() )
         {
             // update item's rectangle plus the little outline
             QRect expandedRect = (*iIt)->geometry();
@@ -2013,7 +2013,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
     QRect selectionRect = QRect( start, end ).normalized();
     foreach( PageViewItem * item, d->items )
     {
-        if ( selectionRect.intersects( item->geometry() ) )
+        if ( item->isVisible() && selectionRect.intersects( item->geometry() ) )
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
@@ -2099,7 +2099,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     for ( ; iIt != iEnd; ++iIt )
     {
         // check if a piece of the page intersects the contents rect
-        if ( !(*iIt)->geometry().intersects( checkRect ) )
+        if ( !(*iIt)->isVisible() || !(*iIt)->geometry().intersects( checkRect ) )
             continue;
 
         // get item and item's outline geometries
@@ -2573,10 +2573,12 @@ void PageView::slotRelayoutPages()
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
     bool centerFirstPage = Okular::Settings::centerFirstPageInRow() && nCols > 1;
+    const bool continuousView = Okular::Settings::viewContinuous();
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
-    if ( Okular::Settings::viewContinuous() )
-    {
+
+    PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
+
         // handle the 'centering on first row' stuff
         if ( centerFirstPage )
             pageCount += nCols - 1;
@@ -2600,7 +2602,10 @@ void PageView::slotRelayoutPages()
             rowHeight[ i ] = 0;
         // handle the 'centering on first row' stuff
         if ( centerFirstPage )
+        {
             pageCount -= nCols - 1;
+            cIdx += nCols - 1;
+        }
 
         // 1) find the maximum columns width and rows height for a grid in
         // which each page must well-fit inside a cell
@@ -2615,8 +2620,6 @@ void PageView::slotRelayoutPages()
             if ( item->height() + 12 > rowHeight[ rIdx ] )
                 rowHeight[ rIdx ] = item->height() + 12;
             // handle the 'centering on first row' stuff
-            if ( centerFirstPage && !item->pageNumber() )
-                cIdx += nCols - 1;
             // update col/row indices
             if ( ++cIdx == nCols )
             {
@@ -2625,34 +2628,47 @@ void PageView::slotRelayoutPages()
             }
         }
 
+        const int pageRowIdx = ( ( centerFirstPage ? nCols - 1 : 0 ) + currentItem->pageNumber() ) / nCols;
+
         // 2) compute full size
         for ( int i = 0; i < nCols; i++ )
             fullWidth += colWidth[ i ];
-        for ( int i = 0; i < nRows; i++ )
-            fullHeight += rowHeight[ i ];
+        if ( continuousView )
+        {
+            for ( int i = 0; i < nRows; i++ )
+                fullHeight += rowHeight[ i ];
+        }
+        else
+            fullHeight = rowHeight[ pageRowIdx ];
 
         // 3) arrange widgets inside cells (and refine fullHeight if needed)
         int insertX = 0,
             insertY = fullHeight < viewportHeight ? ( viewportHeight - fullHeight ) / 2 : 0;
+        const int origInsertY = insertY;
         cIdx = 0;
         rIdx = 0;
+        if ( centerFirstPage )
+        {
+            cIdx += nCols - 1;
+            for ( int i = 0; i < cIdx; ++i )
+                insertX += colWidth[ i ];
+        }
         for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
         {
             PageViewItem * item = *iIt;
             int cWidth = colWidth[ cIdx ],
                 rHeight = rowHeight[ rIdx ];
-            if ( centerFirstPage && !rIdx && !cIdx )
+            if ( continuousView || rIdx == pageRowIdx )
             {
-                // handle the 'centering on first row' stuff
-                item->moveTo( insertX + (fullWidth - item->width()) / 2,
-                              insertY + (rHeight - item->height()) / 2 );
-                cIdx += nCols - 1;
+                const bool reallyDoCenterFirst = item->pageNumber() == 0 && centerFirstPage;
+                item->moveTo( (reallyDoCenterFirst ? 0 : insertX) + ( (reallyDoCenterFirst ? fullWidth : cWidth) - item->width()) / 2,
+                              (continuousView ? insertY : origInsertY) + (rHeight - item->height()) / 2 );
+                item->setVisible( true );
             }
             else
             {
-                // center widget inside 'cells'
-                item->moveTo( insertX + (cWidth - item->width()) / 2,
-                              insertY + (rHeight - item->height()) / 2 );
+                item->moveTo( 0, 0 );
+                item->setVisible( false );
             }
             // advance col/row index
             insertX += cWidth;
@@ -2670,110 +2686,6 @@ void PageView::slotRelayoutPages()
 
         delete [] colWidth;
         delete [] rowHeight;
-    }
-    else // viewContinuous is FALSE
-    {
-        PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
-	
-	int nRows=viewRows();
-
-        // handle the 'centering on first row' stuff
-        if ( centerFirstPage && d->document->currentPage() < 1 && Okular::Settings::viewMode() == 1 )
-            nCols = 1, nRows=1;
-
-        // setup varialbles for a M(row) x N(columns) grid
-        int * colWidth = new int[ nCols ],
-            cIdx = 0;
-
-        int * rowHeight = new int[ nRows ],
-            rIdx = 0;
-
-        for ( int i = 0; i < nCols; i++ )
-            colWidth[ i ] = viewportWidth / nCols;
-
-        for ( int i = 0; i < nRows; i++ )
-            rowHeight[ i ] = viewportHeight / nRows;
-
-        // 1) find out maximum area extension for the pages
-	bool wasCurrent = false;
-        for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
-        {
-            PageViewItem * item = *iIt;
-            if ( rIdx >= 0 && rIdx < nRows )
-            {
-            	if ( item == currentItem )
-			wasCurrent=true;
-		if ( wasCurrent && cIdx >= 0 && cIdx < nCols )
-            	{
-			// update internal page size (leaving a little margin in case of Fit* modes)
-			updateItemSize( item, colWidth[ cIdx ] - 6, rowHeight[ rIdx ] - 12 );
-			// find row's maximum height and column's max width
-			if ( item->width() + 6 > colWidth[ cIdx ] )
-			colWidth[ cIdx ] = item->width() + 6;
-			if ( item->height() + 12 > rowHeight[ rIdx ] )
-			rowHeight[ rIdx ] = item->height() + 12;
-			cIdx++;
-		}
-		if( cIdx>=nCols )
-		{
-            		rIdx++;
-            		cIdx=0;
-            	}
-            }
-        }
-
-        // 2) calc full size (fullHeight is alredy ok)
-        for ( int i = 0; i < nCols; i++ )
-            fullWidth += colWidth[ i ];
-
-         for ( int i = 0; i < nRows; i++ )
-            fullHeight += rowHeight[ i ];
-
-        // 3) hide all widgets except the displayable ones and dispose those
-        int insertX = 0;
-	int insertY = 0;
-        cIdx = 0;
-	rIdx = 0;
-	wasCurrent=false;
-        for ( iIt = d->items.begin(); iIt != iEnd; ++iIt )
-        {
-            PageViewItem * item = *iIt;
-            if ( rIdx >= 0 && rIdx < nRows )
-            {
-            	if ( item == currentItem )
-			wasCurrent=true;
-		if ( wasCurrent && cIdx >= 0 && cIdx < nCols )
-		{
-			// center widget inside 'cells'
-			item->moveTo( insertX + (colWidth[ cIdx ] - item->width()) / 2,
-				insertY + ( rowHeight[ rIdx ] - item->height() ) / 2 );
-			// advance col index
-			insertX += colWidth[ cIdx ];
-			cIdx++;
-		} else
-			// pino: I used invalidate() instead of setGeometry() so
-			// the geometry rect of the item is really invalidated
-			//item->setGeometry( 0, 0, -1, -1 );
-			item->invalidate();
-
-		if( cIdx>=nCols)
-		{
-			insertY += rowHeight[ rIdx ];
-            		rIdx++;
-			insertX = 0;
-            		cIdx=0;
-            	}
-            }
-            else
-		// pino: I used invalidate() instead of setGeometry() so
-		// the geometry rect of the item is really invalidated
-		//item->setGeometry( 0, 0, -1, -1 );
-		item->invalidate();
-        }
-
-        delete [] colWidth;
-	delete [] rowHeight;
-    }
 
     // 3) reset dirty state
     d->dirtyLayout = false;
@@ -2848,6 +2760,8 @@ void PageView::slotRequestVisiblePixmaps()
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
+        if ( !i->isVisible() )
+            continue;
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking page" << i->pageNumber();
         kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() );

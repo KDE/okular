@@ -18,12 +18,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <ktemporaryfile.h>
 #include <kurl.h>
 
 #include <QDir>
 #include <QPainter>
 #include <QPixmap>
-#include <QTemporaryFile>
 #include <QTextStream>
 #include <QTimer>
 
@@ -158,7 +158,9 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
-  QTemporaryFile PSfile;
+  KTemporaryFile PSfile;
+  PSfile.setAutoRemove(false);
+  PSfile.setSuffix(".ps");
   PSfile.open();
   const QString PSfileName = PSfile.fileName();
 
@@ -224,21 +226,20 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   argus << "-dTextAlphaBits=4 -dGraphicsAlphaBits=2"; // Antialiasing
   argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
   argus << "-f" << PSfileName;
- 
+
 #ifdef DEBUG_PSGS
   kDebug(kvs::dvi) << argus.join(" ");
 #endif
-
+ 
   proc << argus;
-  proc.start();
-  if (!proc.waitForStarted()) {
+  int res = proc.execute();
+  
+  if ( res ) {
     // Starting ghostscript did not work. 
     // TODO: Issue error message, switch PS support off.
     kError(kvs::dvi) << "ghostview could not be started" << endl;
-  } else {
-    while(!proc.waitForFinished(10))
-        qApp->processEvents();
-  }
+  } 
+
   PSfile.remove();
 
  // Check if gs has indeed produced a file.

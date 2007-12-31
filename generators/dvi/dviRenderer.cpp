@@ -59,7 +59,7 @@ dviRenderer::dviRenderer()
     editorCommand(""),
     PostScriptOutPutString(0),
     PS_interface(new ghostscript_interface),
-    _postscript(false),
+    _postscript(true),
     line_boundary_encountered(false),
     word_boundary_encountered(false),
     current_page(0),

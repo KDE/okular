@@ -686,6 +686,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         delete *dIt;
     d->items.clear();
     d->visibleItems.clear();
+    d->pagesWithTextSelection.clear();
     toggleFormWidgets( false );
 
     bool haspages = !pageSet.isEmpty();

@@ -39,7 +39,7 @@
 /*********************/
 
 PageViewItem::PageViewItem( const Okular::Page * page )
-    : m_page( page ), m_zoomFactor( 1.0 )
+    : m_page( page ), m_zoomFactor( 1.0 ), m_visible( true )
 {
 }
 
@@ -80,6 +80,11 @@ double PageViewItem::zoomFactor() const
     return m_zoomFactor;
 }
 
+bool PageViewItem::isVisible() const
+{
+    return m_visible;
+}
+
 QHash<QString, FormWidgetIface*>& PageViewItem::formWidgets()
 {
     return m_formWidgets;
@@ -112,6 +117,11 @@ void PageViewItem::moveTo( int x, int y )
         Okular::NormalizedRect r = (*it)->rect();
         (*it)->moveTo( qRound( x + m_geometry.width() * r.left ) + 1, qRound( y + m_geometry.height() * r.top ) + 1 );
     }
+}
+
+void PageViewItem::setVisible( bool visible )
+{
+    m_visible = visible;
 }
 
 void PageViewItem::invalidate()

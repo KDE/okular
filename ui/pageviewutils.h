@@ -45,11 +45,13 @@ class PageViewItem
         int width() const;
         int height() const;
         double zoomFactor() const;
+        bool isVisible() const;
         QHash<QString, FormWidgetIface*>& formWidgets();
 
         void setGeometry( int x, int y, int width, int height );
         void setWHZ( int w, int h, double zoom );
         void moveTo( int x, int y );
+        void setVisible( bool visible );
         void invalidate();
         bool setFormWidgetsVisible( bool visible );
 
@@ -57,6 +59,7 @@ class PageViewItem
         const Okular::Page * m_page;
         double m_zoomFactor;
         QRect m_geometry;
+        bool m_visible;
         QHash<QString, FormWidgetIface*> m_formWidgets;
 };
 

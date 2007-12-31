@@ -155,6 +155,7 @@ public:
 
     int setting_viewMode;
     int setting_viewCols;
+    bool setting_centerFirst;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -313,6 +314,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->setting_centerFirst = Okular::Settings::centerFirstPageInRow();
 
     setFrameStyle(QFrame::NoFrame);
 
@@ -600,11 +602,14 @@ void PageView::reparseConfig()
         setVerticalScrollBarPolicy( scrollBarMode );
     }
 
-    if ( Okular::Settings::viewMode() == 2 &&
-         ( (int)Okular::Settings::viewColumns() != d->setting_viewCols ) )
+    const int viewMode = Okular::Settings::viewMode();
+    if ( ( viewMode == 2 && ( (int)Okular::Settings::viewColumns() != d->setting_viewCols ) )
+         || ( viewMode > 0 && ( Okular::Settings::centerFirstPageInRow() != d->setting_centerFirst ) )
+       )
     {
         d->setting_viewMode = Okular::Settings::viewMode();
         d->setting_viewCols = Okular::Settings::viewColumns();
+        d->setting_centerFirst = Okular::Settings::centerFirstPageInRow();
 
         slotRelayoutPages();
     }

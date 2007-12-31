@@ -39,7 +39,8 @@
 /*********************/
 
 PageViewItem::PageViewItem( const Okular::Page * page )
-    : m_page( page ), m_zoomFactor( 1.0 ), m_visible( true )
+    : m_page( page ), m_zoomFactor( 1.0 ), m_visible( true ),
+    m_formsVisible( false )
 {
 }
 
@@ -121,6 +122,7 @@ void PageViewItem::moveTo( int x, int y )
 
 void PageViewItem::setVisible( bool visible )
 {
+    setFormWidgetsVisible( visible && m_formsVisible );
     m_visible = visible;
 }
 
@@ -131,6 +133,11 @@ void PageViewItem::invalidate()
 
 bool PageViewItem::setFormWidgetsVisible( bool visible )
 {
+    m_formsVisible = visible;
+
+    if ( !m_visible )
+        return false;
+
     bool somehadfocus = false;
     QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )

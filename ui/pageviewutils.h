@@ -60,6 +60,7 @@ class PageViewItem
         double m_zoomFactor;
         QRect m_geometry;
         bool m_visible;
+        bool m_formsVisible;
         QHash<QString, FormWidgetIface*> m_formWidgets;
 };
 

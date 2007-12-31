@@ -710,7 +710,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             {
                 w->setPageItem( item );
                 w->setFormWidgetsController( d->formWidgetsController() );
-                w->setVisibility( d->m_formsVisible );
+                w->setVisibility( false );
                 w->setCanBeFilled( d->document->isAllowed( Okular::AllowFillForms ) );
                 item->formWidgets().insert( ff->name(), w );
                 hasformwidgets = true;
@@ -2671,6 +2671,7 @@ void PageView::slotRelayoutPages()
                 item->moveTo( 0, 0 );
                 item->setVisible( false );
             }
+            item->setFormWidgetsVisible( d->m_formsVisible );
             // advance col/row index
             insertX += cWidth;
             if ( ++cIdx == nCols )

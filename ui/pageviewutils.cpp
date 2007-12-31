@@ -289,6 +289,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     pal.setColor( QPalette::Active, QPalette::Window, Qt::yellow );
     pal.setColor( QPalette::Inactive, QPalette::Window, Qt::yellow );
     pal.setColor( QPalette::Disabled, QPalette::Window, Qt::yellow );
+    pal.setColor( QPalette::WindowText, Qt::black );
     setPalette( pal );
     QHBoxLayout * lay = new QHBoxLayout( this );
     lay->setMargin( 4 );

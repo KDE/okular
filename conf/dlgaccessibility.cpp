@@ -17,6 +17,9 @@ DlgAccessibility::DlgAccessibility( QWidget * parent )
     m_dlg = new Ui_DlgAccessibilityBase();
     m_dlg->setupUi( this );
 
+    // ### not working yet, hide for now
+    m_dlg->kcfg_HighlightImages->hide();
+
     m_color_pages.append( m_dlg->page_invert );
     m_color_pages.append( m_dlg->page_paperColor );
     m_color_pages.append( m_dlg->page_darkLight );

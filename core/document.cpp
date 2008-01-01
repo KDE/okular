@@ -486,7 +486,7 @@ ConfigInterface* DocumentPrivate::generatorConfig( GeneratorInfo& info )
 
 void DocumentPrivate::saveDocumentInfo() const
 {
-    if ( m_docFileName.isEmpty() )
+    if ( m_xmlFileName.isEmpty() )
         return;
 
     QFile infoFile( m_xmlFileName );
@@ -1089,6 +1089,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         // determine the related "xml document-info" filename
         d->m_url = url;
         d->m_docFileName = docFile;
+        if ( url.isLocalFile() )
+        {
         QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
         document_size = fileReadTest.size();
         fn = QString::number( document_size ) + '.' + fn + ".xml";
@@ -1107,6 +1109,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             }
         }
         d->m_xmlFileName = newokularfile;
+        }
     }
     else
     {

@@ -426,7 +426,7 @@ void PageView::setupActions( KActionCollection * ac )
     viewModes.append( i18n( "Facing Pages" ) );
     viewModes.append( i18n( "Overview" ) );
 
-    d->aViewMode  = new KSelectAction(KIcon( "view-left-right" ), i18n("&View Mode"), this);
+    d->aViewMode  = new KSelectAction(KIcon( "view-split-left-right" ), i18n("&View Mode"), this);
     ac->addAction("view_render_mode", d->aViewMode );
     connect( d->aViewMode, SIGNAL( triggered( int ) ), SLOT( slotViewMode( int ) ) );
     d->aViewMode->setItems( viewModes );

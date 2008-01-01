@@ -786,7 +786,7 @@ bool Part::openFile()
     }
 
     // set the file to the fileWatcher
-    if ( !m_watcher->contains(localFilePath()) )
+    if ( url().isLocalFile() && !m_watcher->contains( localFilePath() ) )
         m_watcher->addFile(localFilePath());
 
     // if the 'OpenTOC' flag is set, open the TOC
@@ -856,7 +856,8 @@ bool Part::closeUrl()
     emit setWindowCaption("");
     emit enablePrintAction(false);
     m_realUrl = KUrl();
-    if (!localFilePath().isEmpty()) m_watcher->removeFile(localFilePath());
+    if ( url().isLocalFile() )
+        m_watcher->removeFile( localFilePath() );
     if ( m_generatorGuiClient )
         factory()->removeClient( m_generatorGuiClient );
     m_generatorGuiClient = 0;

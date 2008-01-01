@@ -432,7 +432,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aViewMode->setItems( viewModes );
     d->aViewMode->setCurrentItem( Okular::Settings::viewMode() );
 
-    d->aViewContinuous  = new KToggleAction(KIcon( "fileview-text" ), i18n("&Continuous"), this);
+    d->aViewContinuous  = new KToggleAction(KIcon( "view-list-text" ), i18n("&Continuous"), this);
     ac->addAction("view_continuous", d->aViewContinuous );
     connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );

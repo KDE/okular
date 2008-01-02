@@ -67,6 +67,7 @@ class TreeView : public QTreeView
         const uint h = document.size().height() + 20;
 
         p.setBrush( palette().background() );
+        p.translate( 0.5, 0.5 );
         p.drawRoundRect( 15, 15, w, h, (8*200)/w, (8*200)/h );
         p.translate( 20, 20 );
         document.drawContents( &p );

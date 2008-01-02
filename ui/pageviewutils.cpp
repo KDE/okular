@@ -261,6 +261,7 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( Qt::black );
     painter.setBrush( palette().color( QPalette::Window ) );
+    painter.translate( 0.5, 0.5 );
     painter.drawRoundRect( 1, 1, width()-2, height()-2, 1600 / width(), 1600 / height() );
 
     // draw icon if present

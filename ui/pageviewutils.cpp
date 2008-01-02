@@ -411,8 +411,6 @@ public:
 PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
     : QWidget( parent ), d( new ToolBarPrivate( this ) )
 {
-    setAttribute( Qt::WA_OpaquePaintEvent, true );
-
     // initialize values of the private data storage structure
     d->anchorWidget = anchorWidget;
     d->anchorSide = Left;
@@ -539,7 +537,7 @@ void PageViewToolBar::paintEvent( QPaintEvent * e )
 {
     // paint the internal pixmap over the widget
     QPainter p( this );
-    p.drawPixmap( e->rect().topLeft(), d->backgroundPixmap, e->rect() );
+    p.drawImage( e->rect().topLeft(), d->backgroundPixmap.toImage(), e->rect() );
 }
 
 void PageViewToolBar::mousePressEvent( QMouseEvent * e )
@@ -630,26 +628,15 @@ void ToolBarPrivate::buildToolBar()
     bool prevUpdates = q->updatesEnabled();
     q->setUpdatesEnabled( false );
 
-    // 3. resize pixmap, mask and widget
-    QBitmap mask( myWidth + 1, myHeight + 1 );
+    // 3. resize pixmap and widget
     backgroundPixmap = QPixmap( myWidth + 1, myHeight + 1 );
+    backgroundPixmap.fill(Qt::transparent);
     q->resize( myWidth + 1, myHeight + 1 );
 
-    // 4. create and set transparency mask
-    QPainter maskPainter( &mask);
-    mask.fill( Qt::white );
-    maskPainter.setBrush( Qt::black );
-    if ( vertical )
-        maskPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
-    else
-        maskPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
-    maskPainter.end();
-    q->setMask( mask );
-
-    // 5. draw background
+    // 4. draw background
     QPainter bufferPainter( &backgroundPixmap );
     QPalette pal = q->palette();
-    // 5.1. draw horizontal/vertical gradient
+    // 4.1. draw horizontal/vertical gradient
     QLinearGradient grad;
     switch ( anchorSide )
     {
@@ -668,15 +655,15 @@ void ToolBarPrivate::buildToolBar()
     }
     grad.setColorAt( 0, pal.color( QPalette::Active, QPalette::Button ) );
     grad.setColorAt( 1, pal.color( QPalette::Active, QPalette::Light ) );
-    bufferPainter.fillRect( 0, 0, myWidth + 1, myHeight + 1, grad );
-    // 5.2. draw rounded border
+    bufferPainter.setBrush( QBrush( grad ) );
+    // 4.2. draw rounded border
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Dark ) );
     bufferPainter.setRenderHints( QPainter::Antialiasing );
     if ( vertical )
         bufferPainter.drawRoundRect( topLeft ? -10 : 0, 0, myWidth + 10, myHeight, 2000 / (myWidth + 10), 2000 / myHeight );
     else
         bufferPainter.drawRoundRect( 0, topLeft ? -10 : 0, myWidth, myHeight + 10, 2000 / myWidth, 2000 / (myHeight + 10) );
-    // 5.3. draw handle
+    // 4.3. draw handle
     bufferPainter.setPen( pal.color( QPalette::Active, QPalette::Mid ) );
     if ( vertical )
     {
@@ -697,7 +684,7 @@ void ToolBarPrivate::buildToolBar()
         bufferPainter.drawLine( 10, dy + 1, 10, dy + myHeight - 7 );
     }
 
-    // 6. reposition buttons (in rows/col grid)
+    // 5. reposition buttons (in rows/col grid)
     int gridX = 0,
         gridY = 0;
     QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();

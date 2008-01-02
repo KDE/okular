@@ -85,7 +85,8 @@ class PageViewMessage : public QWidget
         void mousePressEvent( QMouseEvent * e );
 
     private:
-        QPixmap m_pixmap;
+        QString m_message;
+        QPixmap m_symbol;
         QTimer * m_timer;
 };
 

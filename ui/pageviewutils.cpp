@@ -157,7 +157,6 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 {
     setObjectName( "pageViewMessage" );
     setFocusPolicy( Qt::NoFocus );
-    setAttribute( Qt::WA_OpaquePaintEvent );
     QPalette pal = palette();
     pal.setColor( QPalette::Active, QPalette::Window, QApplication::palette().color( QPalette::Active, QPalette::Window ) );
     setPalette( pal );
@@ -178,88 +177,50 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         return;
     }
 
-    bool isRTL = layoutDirection() == Qt::RightToLeft;
+    // set text
+    m_message = message;
 
     // determine text rectangle
-    QRect textRect = fontMetrics().boundingRect( message );
+    QRect textRect = fontMetrics().boundingRect( m_message );
     textRect.translate( -textRect.left(), -textRect.top() );
     textRect.adjust( 0, 0, 2, 2 );
     int width = textRect.width(),
-        height = textRect.height(),
-        textXOffset = 0,
-        iconXOffset = 0,
-        shadowOffset = 1;
+        height = textRect.height();
 
     // load icon (if set) and update geometry
-    QPixmap symbol;
+    m_symbol = QPixmap();
     if ( icon != None )
     {
         switch ( icon )
         {
             case Annotation:
-                symbol = SmallIcon( "draw-freehand" );
+                m_symbol = SmallIcon( "draw-freehand" );
                 break;
             case Find:
-                symbol = SmallIcon( "zoom-original" );
+                m_symbol = SmallIcon( "zoom-original" );
                 break;
             case Error:
-                symbol = SmallIcon( "dialog-error" );
+                m_symbol = SmallIcon( "dialog-error" );
                 break;
             case Warning:
-                symbol = SmallIcon( "dialog-warning" );
+                m_symbol = SmallIcon( "dialog-warning" );
                 break;
             default:
-                symbol = SmallIcon( "dialog-information" );
+                m_symbol = SmallIcon( "dialog-information" );
                 break;
         }
-        if ( isRTL )
-        {
-            iconXOffset = 2 + textRect.width();
-        }
-        else
-        {
-            textXOffset = 2 + symbol.width();
-        }
-        width += 2 + symbol.width();
-        height = qMax( height, symbol.height() );
+
+        width += 2 + m_symbol.width();
+        height = qMax( height, m_symbol.height() );
     }
-    QRect geometry( 0, 0, width + 10, height + 8 );
 
-    // resize pixmap, mask and widget
-    QBitmap mask( geometry.size() + QSize( 1, 1 ) );
-    m_pixmap = QPixmap( geometry.size() + QSize( 1, 1 ) );
-    resize( geometry.size() + QSize( 1, 1 ) );
-
-    // create and set transparency mask
-    QPainter maskPainter( &mask);
-    mask.fill( Qt::white );
-    maskPainter.setBrush( Qt::black );
-    maskPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
-    maskPainter.end();
-    setMask( mask );
-
-    // draw background
-    QPalette pal = palette();
-    QPainter bufferPainter( &m_pixmap );
-    bufferPainter.setPen( Qt::black );
-    bufferPainter.setBrush( pal.color( QPalette::Window ) );
-    bufferPainter.drawRoundRect( geometry, 1600 / geometry.width(), 1600 / geometry.height() );
-
-    // draw icon if present
-    if ( !symbol.isNull() )
-        bufferPainter.drawPixmap( 5 + iconXOffset, 4, symbol, 0, 0, symbol.width(), symbol.height() );
-
-    // draw shadow and text
-    int yText = geometry.height() - height / 2;
-    bufferPainter.setPen( pal.color( QPalette::Window ).dark( 115 ) );
-    bufferPainter.drawText( 5 + textXOffset + shadowOffset, yText + 1, message );
-    bufferPainter.setPen( pal.color( QPalette::WindowText ) );
-    bufferPainter.drawText( 5 + textXOffset, yText, message );
+    // resize widget
+    resize( QRect( 0, 0, width + 10, height + 8 ).size() );
 
     // if the layout is RtL, we can move it to the right place only after we
     // know how much size it will take
-    if ( isRTL )
-        move( parentWidget()->width() - geometry.width() - 10 - 1, 10 );
+    if ( layoutDirection() == Qt::RightToLeft )
+        move( parentWidget()->width() - geometry().width() - 10 - 1, 10 );
 
     // show widget and schedule a repaint
     show();
@@ -279,11 +240,38 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
         m_timer->stop();
 }
 
-void PageViewMessage::paintEvent( QPaintEvent * e )
+void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
 {
-    // paint the internal pixmap over the widget
-    QPainter p( this );
-    p.drawPixmap( e->rect().topLeft(), m_pixmap, e->rect() );
+    QRect textRect = fontMetrics().boundingRect( m_message );
+    textRect.translate( -textRect.left(), -textRect.top() );
+    textRect.adjust( 0, 0, 2, 2 );
+
+    int textXOffset = 0,
+        textYOffset = geometry().height() - textRect.height() / 2,
+        iconXOffset = 0,
+        shadowOffset = 1;
+
+    if ( layoutDirection() == Qt::RightToLeft )
+        iconXOffset = 2 + textRect.width();
+    else
+        textXOffset = 2 + m_symbol.width();
+
+    // draw background
+    QPainter painter( this );
+    painter.setRenderHint( QPainter::Antialiasing, true );
+    painter.setPen( Qt::black );
+    painter.setBrush( palette().color( QPalette::Window ) );
+    painter.drawRoundRect( 1, 1, width()-2, height()-2, 1600 / width(), 1600 / height() );
+
+    // draw icon if present
+    if ( !m_symbol.isNull() )
+        painter.drawPixmap( 5 + iconXOffset, 4, m_symbol, 0, 0, m_symbol.width(), m_symbol.height() );
+
+    // draw shadow and text
+    painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );
+    painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + shadowOffset, m_message );
+    painter.setPen( palette().color( QPalette::WindowText ) );
+    painter.drawText( 5 + textXOffset, textYOffset, m_message );
 }
 
 void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )

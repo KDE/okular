@@ -197,27 +197,19 @@ void Shell::readProperties(const KConfigGroup &group)
 
 QStringList Shell::fileFormats() const
 {
-	QString constraint("([X-KDE-Priority] > 0) and (exist Library) ") ;
-    KService::List offers = KServiceTypeTrader::self()->query("okular/Generator",constraint);
     QStringList supportedPatterns;
 
-    if (offers.isEmpty())
+    QString constraint( "(Library == 'okularpart')" );
+    QLatin1String basePartService( "KParts/ReadOnlyPart" );
+    KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
+    KService::List::ConstIterator it = offers.begin(), itEnd = offers.end();
+    for ( ; it != itEnd; ++it )
     {
-        return supportedPatterns;
-    }
-
-    KService::List::ConstIterator iterator = offers.begin();
-    KService::List::ConstIterator end = offers.end();
-    for (; iterator != end; ++iterator)
-    {
-        QStringList mimeTypes = (*iterator)->serviceTypes();
-        foreach (const QString& mimeType, mimeTypes )
-        {
-            if ( !mimeType.contains( "okular" ) )
-            {
+        KService::Ptr service = *it;
+        QStringList mimeTypes = service->serviceTypes();
+        foreach ( const QString& mimeType, mimeTypes )
+            if ( mimeType != basePartService )
                 supportedPatterns.append( mimeType );
-            }
-        }
     }
 
     return supportedPatterns;

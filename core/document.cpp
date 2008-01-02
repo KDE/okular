@@ -2544,15 +2544,16 @@ QStringList Document::supportedMimeTypes() const
     if ( !d->m_supportedMimeTypes.isEmpty() )
         return d->m_supportedMimeTypes;
 
-    QString constraint( "([X-KDE-Priority] > 0) and (exist Library)" );
-    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    QString constraint( "(Library == 'okularpart')" );
+    QLatin1String basePartService( "KParts/ReadOnlyPart" );
+    KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
     KService::List::ConstIterator it = offers.begin(), itEnd = offers.end();
     for ( ; it != itEnd; ++it )
     {
         KService::Ptr service = *it;
         QStringList mimeTypes = service->serviceTypes();
         foreach ( const QString& mimeType, mimeTypes )
-            if ( !mimeType.contains( "okular" ) )
+            if ( mimeType != basePartService )
                 d->m_supportedMimeTypes.append( mimeType );
     }
 

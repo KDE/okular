@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=chmlib
+Name[hi]=सीएचएमलिब
 Name[x-test]=xxchmlibxx
 Comment=Windows HTMLHelp backend for okular
 Comment[bg]=Windows HTMLHelp backend за Okular
@@ -14,9 +15,11 @@ Comment[fi]=Windows HTMLHelp -taustaosa ohjelmaa okular varten
 Comment[fr]=Interface d'okular pour les fichiers d'aide Wndows HTMLHelp
 Comment[ga]=Inneall HTMLHelp Windows le haghaidh okular
 Comment[gl]=Infraestrutura de ficheiros Windows HTMLHelp para okular
+Comment[hi]=ऑकुलर के लिए विंडोज़ एचटीएमएलहेल्प बैकएण्ड
 Comment[is]=Windows HTMLHelp stuðningur fyrir Okular
 Comment[it]=Backend guida di Windows in HTML per okular
 Comment[ja]=okular の Windows HTMLHelp バックエンド
+Comment[km]=ផ្នែក​ខាង​ក្រោយ​ HTMLHelp របស់​វីនដូ​សម្រាប់ okular
 Comment[ko]=okular의 윈도 HTMLHelp 백엔드
 Comment[lv]=Windows HTMLHelp aizmugure priekš okular
 Comment[nds]=En Okular-Hülpprogramm för HTML-Hülpdateien vun Windows

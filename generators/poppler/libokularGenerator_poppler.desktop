@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Poppler
+Name[hi]=पॉपलर
 Name[ne]=पप्प्लर
 Name[pa]=ਪੋਪੱਲਰ
 Name[x-test]=xxPopplerxx
@@ -15,9 +16,11 @@ Comment[et]=Okulari PDF-i taustaprogramm poppleri vahendusel
 Comment[fi]=Poppler-kirjastoa käyttävä PDF-taustaosa ohjelmaa okular varten
 Comment[fr]=Interface d'okular pour les PDf (utilise poppler)
 Comment[gl]=Infraestrutura de PDF mediante poppler para okular
+Comment[hi]=ऑकुलर के लिए पॉपलर का प्रयोग करता हुआ पीडीएफ बैकएण्ड
 Comment[is]=PDF stuðningur fyrir Okular í gegnum Poppler
 Comment[it]=Backend PDF per okular che utilizza poppler
 Comment[ja]=okular の PDF バックエンド (poppler を使用)
+Comment[km]=ផ្នែក​ខាង​ក្រោយ​របស់ PDF សម្រាប់ okular ដោយ​ប្រើ poppler
 Comment[ko]=poppler를 사용하는 okular PDF 백엔드
 Comment[lv]=PDF aizmugure priekš okular, lietojot poppler
 Comment[nds]=PDF-Hülpprogramm för Okular mit Poppler

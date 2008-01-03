@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=dvi
+Name[hi]=डीवीआई
 Name[x-test]=xxdvixx
 Comment=DVI backend for okular
 Comment[bg]=DVI backend за okular
@@ -14,9 +15,11 @@ Comment[fi]=DVI-taustaosa ohjelmaa okular varten
 Comment[fr]=Interface d'Okular pour le DVI
 Comment[ga]=Inneall DVI le haghaidh okular
 Comment[gl]=Infraestrutura de DVI para okular
+Comment[hi]=ऑकुलर के लिए डीवीआई बैकएण्ड
 Comment[is]=DVI stuðningur fyrir Okular
 Comment[it]=Backend DVI per okular
 Comment[ja]=okular の DVI バックエンド
+Comment[km]=ផ្នែក​ខាង​ក្រោយ​ DVI សម្រាប់ okular
 Comment[ko]=okular의 DVI 백엔드
 Comment[lv]=DVI aizmugure priekš okular
 Comment[nds]=DVI-Hülpprogramm för Okular

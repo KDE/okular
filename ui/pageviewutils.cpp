@@ -249,6 +249,7 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     int textXOffset = 0,
         textYOffset = geometry().height() - textRect.height() / 2,
         iconXOffset = 0,
+        iconYOffset = !m_symbol.isNull() ? ( geometry().height() - m_symbol.height() ) / 2 : 0,
         shadowOffset = 1;
 
     if ( layoutDirection() == Qt::RightToLeft )
@@ -266,7 +267,7 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
 
     // draw icon if present
     if ( !m_symbol.isNull() )
-        painter.drawPixmap( 5 + iconXOffset, 4, m_symbol, 0, 0, m_symbol.width(), m_symbol.height() );
+        painter.drawPixmap( 5 + iconXOffset, iconYOffset, m_symbol, 0, 0, m_symbol.width(), m_symbol.height() );
 
     // draw shadow and text
     painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );

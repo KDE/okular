@@ -520,7 +520,7 @@ void ThumbnailList::slotDelayTimeout()
     delete m_bookmarkOverlay;
     int expectedWidth = viewport()->width() / 4;
     if ( expectedWidth > 10 )
-        m_bookmarkOverlay = new QPixmap( DesktopIcon( "bookmark", expectedWidth ) );
+        m_bookmarkOverlay = new QPixmap( DesktopIcon( "bookmarks", expectedWidth ) );
     else
         m_bookmarkOverlay = 0;
 
@@ -757,7 +757,7 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
     // insert a togglebutton [show only bookmarked pages]
     //insertSeparator();
     QAction * showBoomarkOnlyAction = addAction(
-        KIcon( "bookmark" ), i18n( "Show bookmarked pages only" ) );
+        KIcon( "bookmarks" ), i18n( "Show bookmarked pages only" ) );
     showBoomarkOnlyAction->setCheckable( true );
     connect( showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), list, SLOT( slotFilterBookmarks( bool ) ) );
     showBoomarkOnlyAction->setChecked( Okular::Settings::filterBookmarks() );

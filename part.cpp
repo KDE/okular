@@ -203,7 +203,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
 
     // [left toolbox: Bookmarks] | []
     BookmarkList * bookmarkList = new BookmarkList( m_document, 0 );
-    m_sidebar->addItem( bookmarkList, KIcon("bookmark"), i18n("Bookmarks") );
+    m_sidebar->addItem( bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( 3, false );
 
     // widgets: [../miniBarContainer] | []

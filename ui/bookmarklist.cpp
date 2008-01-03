@@ -105,7 +105,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     bookmarkController->setSizePolicy( sp );
     // insert a togglebutton [show only bookmarks in the current document]
-    m_showBoomarkOnlyAction = bookmarkController->addAction( KIcon( "bookmark" ), i18n( "Current document only" ) );
+    m_showBoomarkOnlyAction = bookmarkController->addAction( KIcon( "bookmarks" ), i18n( "Current document only" ) );
     m_showBoomarkOnlyAction->setCheckable( true );
     connect( m_showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotFilterBookmarks( bool ) ) );
 
@@ -250,7 +250,7 @@ void BookmarkList::rebuildTree( bool filter )
         if ( currenturlitem )
         {
             currenturlitem->setExpanded( true );
-            currenturlitem->setIcon( 0, KIcon( "bookmark" ) );
+            currenturlitem->setIcon( 0, KIcon( "bookmarks" ) );
             m_tree->scrollToItem( currenturlitem, QAbstractItemView::PositionAtTop );
         }
     }

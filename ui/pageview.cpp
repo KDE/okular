@@ -457,7 +457,7 @@ void PageView::setupActions( KActionCollection * ac )
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
     mz->setActionGroup( actGroup );
 
-    d->aMouseSelect  = new KAction(KIcon( "frame-edit" ), i18n("&Selection Tool"), this);
+    d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );

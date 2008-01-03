@@ -487,7 +487,7 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
     switch ( type )
     {
         case PlainText:
-            return ExportFormat( KIcon( "text" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+            return ExportFormat( KIcon( "text-x-generic" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
             break;
         case PDF:
             return ExportFormat( KIcon( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );

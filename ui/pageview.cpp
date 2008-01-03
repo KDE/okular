@@ -415,7 +415,7 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 
 /*
-    d->aZoomFitText  = new KToggleAction(KIcon( "zoom-best-fit" ), i18n("Fit &Text"), this);
+    d->aZoomFitText  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Text"), this);
     ac->addAction("zoom_fit_text", d->aZoomFitText );
     connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
 */
@@ -465,7 +465,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
     d->aMouseSelect->setActionGroup( actGroup );
 
-    d->aMouseTextSelect  = new KAction(KIcon( "text" ), i18n("&Text Selection Tool"), this);
+    d->aMouseTextSelect  = new KAction(KIcon( "draw-text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
     connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );

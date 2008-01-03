@@ -1002,7 +1002,7 @@ void Part::updateBookmarksActions()
         if ( m_document->bookmarkManager()->isBookmarked( m_document->currentPage() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
-            m_addBookmark->setIcon( KIcon( "bookmark-delete" ) );
+            m_addBookmark->setIcon( KIcon( "edit-delete-bookmark" ) );
         }
         else
         {
@@ -1370,11 +1370,11 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
         if ( m_document->bookmarkManager()->isBookmarked( page->number() ) )
-            removeBookmark = popup->addAction( KIcon("bookmark-delete"), i18n("Remove Bookmark") );
+            removeBookmark = popup->addAction( KIcon("edit-delete-bookmark"), i18n("Remove Bookmark") );
         else
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )
-            fitPageWidth = popup->addAction( KIcon("zoom-best-fit"), i18n("Fit Width") );
+            fitPageWidth = popup->addAction( KIcon("zoom-fit-best"), i18n("Fit Width") );
         popup->addAction( m_prevBookmark );
         popup->addAction( m_nextBookmark );
         reallyShow = true;

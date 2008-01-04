@@ -31,6 +31,7 @@ Description[nl]=Een kioslave voor het weergeven van WinHelp-bestanden
 Description[pl]=Moduł wyświetlający pliki WinHelp
 Description[pt]=Um 'kioslave' para mostrar ficheiros do WinHelp
 Description[pt_BR]=Um 'kioslave' para mostrar ficheiros do WinHelp
+Description[sl]=KIOSlave za prikaz datotek s pomočjo za Windows
 Description[sv]=En I/O-slav för att visa WinHelp-filer
 Description[uk]=Підлеглий В/В для перегляду файлів WinHelp
 Description[x-test]=xxA kioslave for displaying WinHelp filesxx

@@ -22,8 +22,10 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         ki18n("okular, a universal document viewer"),
         KAboutData::License_GPL,
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
-              "(C) 2004-2005 Albert Astals Cid, Enrico Ros\n"
-              "(C) 2005 Piotr Szymanski"),
+              "(C) 2004-2005 Enrico Ros\n"
+              "(C) 2005 Piotr Szymanski\n"
+              "(C) 2004-2008 Albert Astals Cid\n"
+              "(C) 2006-2008 Pino Toscano")
         KLocalizedString(),
         "http://okular.kde.org"
     );

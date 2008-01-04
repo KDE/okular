@@ -392,12 +392,14 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     importPS->setText(i18n("&Import Postscript as PDF..."));
     importPS->setIcon(KIcon("document-import"));
     connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
+#if 0
     QAction * ghns = ac->addAction("get_new_stuff");
     ghns->setText(i18n("&Get Books From Internet..."));
     ghns->setIcon(KIcon("get-hot-new-stuff"));
     connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
     // TEMP, REMOVE ME!
     ghns->setShortcut( Qt::Key_G );
+#endif
 
     m_showProperties = ac->addAction("properties");
     m_showProperties->setText(i18n("&Properties"));

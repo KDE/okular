@@ -356,6 +356,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_findNext->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
+    m_saveAs->setText( i18n( "Save a &Copy As..." ) );
     ac->addAction("save",m_saveAs);
     m_saveAs->setEnabled( false );
 

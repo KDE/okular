@@ -389,7 +389,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     slotShowLeftPanel();
 
     QAction * importPS = ac->addAction("import_ps");
-    importPS->setText(i18n("&Import Postscript as PDF..."));
+    importPS->setText(i18n("&Import PostScript as PDF..."));
     importPS->setIcon(KIcon("document-import"));
     connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
 #if 0

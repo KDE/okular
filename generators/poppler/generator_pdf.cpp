@@ -1023,13 +1023,17 @@ bool PDFGenerator::setAAOptions()
 {
     bool changed = false;
 #ifdef HAVE_POPPLER_0_6
-    Poppler::Document::RenderHints oldhints = pdfdoc->renderHints();
+    static Poppler::Document::RenderHints oldhints = 0;
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
     bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
     if (newhint != (oldhints & hintflag)) \
     { \
-        pdfdoc->setRenderHint(hintflag); \
+        pdfdoc->setRenderHint(hintflag, newhint); \
+        if (newhint) \
+            oldhints |= hintflag; \
+        else \
+            oldhints &= ~(int)hintflag; \
         changed = true; \
     } \
 }

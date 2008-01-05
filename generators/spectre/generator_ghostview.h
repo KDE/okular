@@ -62,6 +62,9 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         Okular::DocumentInfo *m_docInfo;
 
         Okular::PixmapRequest *m_request;
+
+        bool cache_AAtext;
+        bool cache_AAgfx;
 };
 
 #endif

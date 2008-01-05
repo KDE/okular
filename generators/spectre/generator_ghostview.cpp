@@ -70,7 +70,23 @@ GSGenerator::~GSGenerator()
 
 bool GSGenerator::reparseConfig()
 {
-    return false;
+    bool changed = false;
+    if (m_internalDocument)
+    {
+#define SET_HINT(hintname, hintdefvalue, hintvar) \
+{ \
+    bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
+    if (newhint != cache_##hintvar) \
+    { \
+        cache_##hintvar = newhint; \
+        changed = true; \
+    } \
+}
+    SET_HINT("GraphicsAntialias", true, AAgfx)
+    SET_HINT("TextAntialias", true, AAtext)
+#undef SET_HINT
+    }
+    return changed;
 }
 
 void GSGenerator::addPages( KConfigDialog *dlg )
@@ -135,6 +151,9 @@ bool GSGenerator::print( QPrinter& printer )
 
 bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
+    cache_AAtext = documentMetaData("TextAntialias", true).toBool();
+    cache_AAgfx = documentMetaData("GraphicsAntialias", true).toBool();
+
     m_internalDocument = spectre_document_new();
     spectre_document_load(m_internalDocument, QFile::encodeName(fileName));
     pagesVector.resize( spectre_document_get_n_pages(m_internalDocument) );
@@ -197,8 +216,8 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     renderer->setPlatformFonts(GSSettings::platformFonts());
     int graphicsAA = 1;
     int textAA = 1;
-    if (GSSettings::graphicsAntialiasing()) graphicsAA = 4;
-    if (GSSettings::textAntialiasing()) textAA = 2;
+    if (cache_AAgfx) graphicsAA = 4;
+    if (cache_AAtext) textAA = 2;
     renderer->setAABits(graphicsAA, textAA);
 
     renderer->setRotation( req->page()->orientation() * 90 );

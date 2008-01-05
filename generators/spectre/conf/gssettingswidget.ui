@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>328</width>
-    <height>131</height>
+    <height>73</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -28,26 +28,6 @@
       <string>General Settings</string>
      </property>
      <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QCheckBox" name="kcfg_TextAntialiasing" >
-        <property name="whatsThis" >
-         <string>Anti-aliasing makes the result look better, but it makes the display take longer</string>
-        </property>
-        <property name="text" >
-         <string>&amp;Enable anti-aliasing of fonts</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="kcfg_GraphicsAntialiasing" >
-        <property name="whatsThis" >
-         <string>Anti-aliasing makes the result look better, but it makes the display take longer</string>
-        </property>
-        <property name="text" >
-         <string>&amp;Enable anti-aliasing of graphics</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QCheckBox" name="kcfg_PlatformFonts" >
         <property name="enabled" >

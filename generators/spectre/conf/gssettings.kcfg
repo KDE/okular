@@ -5,14 +5,6 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
 	<kcfgfile name="okular-generator-ghostscriptrc"/>
 	<group name="General">
-		<entry name="GraphicsAntialiasing" type="Bool">
-			<label>Whether to use anti-aliasing for graphics.</label>
-			<whatsthis>Anti-aliasing makes the result look better, but it makes the display take longer</whatsthis>
-		</entry>
-		<entry name="TextAntialiasing" type="Bool">
-			<label>Whether to use anti-aliasing for graphics.</label>
-			<whatsthis>Anti-aliasing makes the result look better, but it makes the display take longer</whatsthis>
-		</entry>
 		<entry name="PlatformFonts" type="Bool">
 			<label>Use Platform Fonts</label>
 			<whatsthis>Determines whether Ghostscript should be allowed to use platform fonts, if false only usage of fonts embedded in the document will be allowed</whatsthis>

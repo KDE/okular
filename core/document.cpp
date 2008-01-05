@@ -1017,14 +1017,33 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
     }
     else if ( key == QLatin1String( "TextAntialias" ) )
     {
-        // TODO: add a configuration
-        // TODO: eventually read the KDE configuration
-        return true;
+        switch ( Settings::textAntialias() )
+        {
+            case Settings::EnumTextAntialias::Enabled:
+                return true;
+                break;
+#if 0
+            case Settings::EnumTextAntialias::UseKDESettings:
+                // TODO: read the KDE configuration
+                return true;
+                break;
+#endif
+            case Settings::EnumTextAntialias::Disabled:
+                return false;
+                break;
+        }
     }
     else if ( key == QLatin1String( "GraphicsAntialias" ) )
     {
-        // TODO: add a configuration
-        return true;
+        switch ( Settings::graphicsAntialias() )
+        {
+            case Settings::EnumGraphicsAntialias::Enabled:
+                return true;
+                break;
+            case Settings::EnumGraphicsAntialias::Disabled:
+                return false;
+                break;
+        }
     }
     return QVariant();
 }

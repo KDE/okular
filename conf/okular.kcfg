@@ -67,6 +67,20 @@
   <entry key="EnableThreading" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="TextAntialias" type="Enum" >
+   <default>Enabled</default>
+   <choices>
+    <choice name="Enabled" />
+    <choice name="Disabled" />
+   </choices>
+  </entry>
+  <entry key="GraphicsAntialias" type="Enum" >
+   <default>Enabled</default>
+   <choices>
+    <choice name="Enabled" />
+    <choice name="Disabled" />
+   </choices>
+  </entry>
  </group>
  <group name="Dlg Presentation" >
   <entry key="SlidesAdvance" type="Bool" >

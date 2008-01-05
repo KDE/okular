@@ -356,7 +356,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_findNext->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
-    m_saveAs->setText( i18n( "Save a &Copy As..." ) );
+    m_saveAs->setText( i18n( "Save &Copy As..." ) );
     ac->addAction("save",m_saveAs);
     m_saveAs->setEnabled( false );
 
@@ -433,7 +433,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_exportAsText->setEnabled( false );
 
     m_aboutBackend = ac->addAction("help_about_backend");
-    m_aboutBackend->setText(i18n("About backend..."));
+    m_aboutBackend->setText(i18n("About Backend"));
     m_aboutBackend->setEnabled( false );
     connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
 

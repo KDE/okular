@@ -46,7 +46,7 @@ void AnnotationPopup::exec( const QPoint &point )
     if ( mAnnotation->flags() & Okular::Annotation::DenyDelete )
         deleteNote->setEnabled( false );
 
-    showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties..." ) );
+    showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
 
     QAction *choice = menu.exec( point.isNull() ? QCursor::pos() : point );
 

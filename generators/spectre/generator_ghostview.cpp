@@ -78,7 +78,7 @@ void GSGenerator::addPages( KConfigDialog *dlg )
     Ui_GSSettingsWidget gsw;
     QWidget* w = new QWidget(dlg);
     gsw.setupUi(w);
-    dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), "okular-gv", i18n("Ghostscript backend configuration") );
+    dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), "okular-gv", i18n("Ghostscript Backend Configuration") );
 }
 
 bool GSGenerator::print( QPrinter& printer )

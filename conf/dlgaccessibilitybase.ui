@@ -42,7 +42,7 @@
       <bool>true</bool>
      </property>
      <property name="title" >
-      <string>Change &amp;Colors</string>
+      <string>Change &amp;colors</string>
      </property>
      <property name="checkable" >
       <bool>true</bool>
@@ -75,7 +75,7 @@
         <item>
          <widget class="QLabel" name="label" >
           <property name="text" >
-           <string>Color Mode:</string>
+           <string>Color mode:</string>
           </property>
           <property name="alignment" >
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -86,22 +86,22 @@
          <widget class="KComboBox" name="kcfg_RenderMode" >
           <item>
            <property name="text" >
-            <string>Invert colors</string>
+            <string>Invert Colors</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>Change paper color</string>
+            <string>Change Paper Color</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>Change dark and light colors</string>
+            <string>Change Dark &amp; Light Colors</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>Convert to black and white</string>
+            <string>Convert to Black &amp; White</string>
            </property>
           </item>
          </widget>

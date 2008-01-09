@@ -302,11 +302,9 @@ with the following content:
 Encoding=UTF-8
 Type=Service
 Name=Magic Document
-Name[x-test]=xxMagic Documentxx
 Comment=Magic Document backend for okular
-Comment[x-test]=xxMagic Document backend for okularxx
 ServiceTypes=okular/Generator
-MimeType=application/x-magic
+MimeType=application/x-magic;
 X-KDE-Library=okularGenerator_magic
 X-KDE-Priority=1
 X-KDE-okularAPIVersion=1
@@ -330,13 +328,10 @@ Encoding=UTF-8
 MimeType=application/x-magic;
 Terminal=false
 Name=okular
-Name[x-test]=xxokularxx
 GenericName=Document Viewer
-GenericName[x-test]=xxDocument Viewerxx
 Exec=okular %U %i -caption "%c"
 Icon=okular
 Type=Application
-DocPath=okular/index.html
 InitialPreference=7
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
@@ -352,11 +347,10 @@ The third .desktop file looks like this:
 Encoding=UTF-8
 Icon=okular
 Name=okular
-Name[x-test]=xxokularxx
 ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=libokularpart
 Type=Service
-MimeType=application/x-magic
+MimeType=application/x-magic;
 \endverbatim
 
 You can use the file as it is as well, you just have to adapt the mimetype. This file is needed to allow

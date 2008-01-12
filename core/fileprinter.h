@@ -68,7 +68,7 @@ public:
      *          otherwise the KProcess exit code
      */
 
-    static int printFile( QPrinter &printer, const QString file,
+    static int printFile( QPrinter &printer, const QString &file,
                           FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
                           PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
                           const QString &pageRange = QString() );
@@ -137,7 +137,7 @@ protected:
     bool detectCupsService();
     bool detectCupsConfig();
 
-    int doPrintFiles( QPrinter &printer, const QStringList fileList,
+    int doPrintFiles( QPrinter &printer, const QStringList &fileList,
                              FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
                              const QString &pageRange );
 

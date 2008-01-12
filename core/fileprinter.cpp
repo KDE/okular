@@ -31,7 +31,7 @@
 
 using namespace Okular;
 
-int FilePrinter::printFile( QPrinter &printer, QString file, FileDeletePolicy fileDeletePolicy,
+int FilePrinter::printFile( QPrinter &printer, const QString &file, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
     FilePrinter fp;
@@ -44,7 +44,7 @@ int FilePrinter::printFiles( QPrinter &printer, const QStringList &fileList, Fil
     return fp.doPrintFiles( printer, fileList, fileDeletePolicy, FilePrinter::ApplicationSelectsPages, QString() );
 }
 
-int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
+int FilePrinter::doPrintFiles( QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy,
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
     QString exe("lpr");

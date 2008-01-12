@@ -42,4 +42,5 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage( m_debug, "Debug", "system-run", "Debug options" );
 #endif
+    setHelp(QString(),"okular");
 }

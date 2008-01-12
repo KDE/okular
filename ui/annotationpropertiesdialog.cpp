@@ -13,11 +13,11 @@
 #include <qframe.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qheaderview.h>
 #include <qtextedit.h>
 #include <kcolorbutton.h>
 #include <kicon.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kglobal.h>
@@ -95,7 +95,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
     tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
-    AuthorEdit = new QLineEdit( ann->author(), page );
+    AuthorEdit = new KLineEdit( ann->author(), page );
     AuthorEdit->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( AuthorEdit );
     gridlayout->addWidget( tmplabel, 0, 0 );

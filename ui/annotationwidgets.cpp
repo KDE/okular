@@ -11,13 +11,13 @@
 
 // qt/kde includes
 #include <qcheckbox.h>
-#include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qspinbox.h>
 #include <qvariant.h>
 #include <kcolorbutton.h>
+#include <kcombobox.h>
 #include <kfontrequester.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -30,7 +30,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
 {
     QHBoxLayout * mainlay = new QHBoxLayout( this );
     mainlay->setMargin( 0 );
-    m_comboItems = new QComboBox( this );
+    m_comboItems = new KComboBox( this );
     mainlay->addWidget( m_comboItems );
     m_iconLabel = new QLabel( this );
     mainlay->addWidget( m_iconLabel );
@@ -372,7 +372,7 @@ QWidget * HighlightAnnotationWidget::widget()
     lay->addLayout( typelay );
     QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
     typelay->addWidget( tmplabel );
-    m_typeCombo = new QComboBox( m_widget );
+    m_typeCombo = new KComboBox( m_widget );
     tmplabel->setBuddy( m_typeCombo );
     typelay->addWidget( m_typeCombo );
 
@@ -410,7 +410,7 @@ QWidget * GeomAnnotationWidget::widget()
     lay->setMargin( 0 );
     QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
     lay->addWidget( tmplabel, 0, 0 );
-    m_typeCombo = new QComboBox( m_widget );
+    m_typeCombo = new KComboBox( m_widget );
     tmplabel->setBuddy( m_typeCombo );
     lay->addWidget( m_typeCombo, 0, 1 );
     m_useColor = new QCheckBox( i18n( "Inner color:" ), m_widget );

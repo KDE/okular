@@ -23,10 +23,10 @@
 #include <qpushbutton.h>
 #include <qsizegrip.h>
 #include <qstyle.h>
-#include <qtextedit.h>
 #include <qtoolbutton.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <ktextedit.h>
 #include <kdebug.h>
 
 // local includes
@@ -163,7 +163,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
 
-    textEdit=new QTextEdit(m_annot->window().text(), this);
+    textEdit=new KTextEdit(m_annot->window().text(), this);
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     

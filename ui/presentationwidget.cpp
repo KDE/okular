@@ -16,7 +16,6 @@
 #include <qtimer.h>
 #include <qimage.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qpainter.h>
 #include <qtooltip.h>
 #include <qvalidator.h>
@@ -28,6 +27,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kglobalsettings.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -430,7 +430,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_topBar->setIconSize( QSize( 32, 32 ) );
         m_topBar->setMovable( false );
         m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
-        m_pagesEdit = new QLineEdit( m_topBar );
+        m_pagesEdit = new KLineEdit( m_topBar );
         QSizePolicy sp = m_pagesEdit->sizePolicy();
         sp.setHorizontalPolicy( QSizePolicy::Minimum );
         m_pagesEdit->setSizePolicy( sp );

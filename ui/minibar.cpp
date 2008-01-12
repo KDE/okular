@@ -16,7 +16,6 @@
 #include <qframe.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qlayout.h>
 #include <QStyleOptionButton>
 #include <QStylePainter>
@@ -24,6 +23,7 @@
 #include <qpainter.h>
 #include <kicon.h>
 #include <kicontheme.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kacceleratormanager.h>
 
@@ -31,7 +31,7 @@
 #include "core/document.h"
 
 // [private widget] lineEdit for entering/validating page numbers
-class PagesEdit : public QLineEdit
+class PagesEdit : public KLineEdit
 {
     public:
         PagesEdit( MiniBar * parent );
@@ -326,7 +326,7 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
 /** PagesEdit **/
 
 PagesEdit::PagesEdit( MiniBar * parent )
-    : QLineEdit( parent ), m_miniBar( parent ), m_eatClick( false )
+    : KLineEdit( parent ), m_miniBar( parent ), m_eatClick( false )
 {
     // use an integer validator
     m_validator = new QIntValidator( 1, 1, this );
@@ -352,7 +352,7 @@ void PagesEdit::setText( const QString & text )
     backString = text;
     // call default handler if hasn't focus
     if ( !hasFocus() )
-        QLineEdit::setText( text );
+        KLineEdit::setText( text );
 }
 
 void PagesEdit::focusInEvent( QFocusEvent * e )
@@ -366,7 +366,7 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
     pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
     setPalette( pal );
     // call default handler
-    QLineEdit::focusInEvent( e );
+    KLineEdit::focusInEvent( e );
 }
 
 void PagesEdit::focusOutEvent( QFocusEvent * e )
@@ -376,16 +376,16 @@ void PagesEdit::focusOutEvent( QFocusEvent * e )
     pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
     setPalette( pal );
     // restore text
-    QLineEdit::setText( backString );
+    KLineEdit::setText( backString );
     // call default handler
-    QLineEdit::focusOutEvent( e );
+    KLineEdit::focusOutEvent( e );
 }
 
 void PagesEdit::mousePressEvent( QMouseEvent * e )
 {
     // if this click got the focus in, don't process the event
     if ( !m_eatClick )
-        QLineEdit::mousePressEvent( e );
+        KLineEdit::mousePressEvent( e );
     m_eatClick = false;
 }
 

@@ -574,13 +574,20 @@ void Part::setMimeTypes(KIO::Job *job)
 void Part::loadCancelled(const QString &reason)
 {
     emit setWindowCaption( QString() );
-    if (!reason.isEmpty())
+
+    // when m_viewportDirty.pageNumber != -1 we come from slotDoFileDirty
+    // so we don't want to show an ugly messagebox just because the document is
+    // taking more than usual to be recreated
+    if (m_viewportDirty.pageNumber == -1)
     {
-        KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().prettyUrl(), reason ) );
-    }
-    else
-    {
-        KMessageBox::error( widget(), i18n("Could not open %1", url().prettyUrl() ) );
+        if (!reason.isEmpty())
+        {
+            KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().prettyUrl(), reason ) );
+        }
+        else
+        {
+            KMessageBox::error( widget(), i18n("Could not open %1", url().prettyUrl() ) );
+        }
     }
 }
 

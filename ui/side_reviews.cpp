@@ -92,6 +92,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 
     m_view = new TreeView( m_document, this );
     m_view->setAlternatingRowColors( true );
+    m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
     m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar( this );
@@ -213,28 +214,26 @@ void Reviews::activated( const QModelIndex &index )
 
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
-    const QModelIndex index = m_view->indexAt( pos );
-    if ( !index.isValid() )
-      return;
+    AnnotationPopup popup( m_document, this );
+    connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
+             this, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ) );
+    connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
+             this, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ) );
 
-    const QModelIndex authorIndex = m_authorProxy->mapToSource( index );
-    const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
-    const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
-
-    Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );
-    if ( annotation ) {
-        int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
-
-        AnnotationPopup popup( m_document, this );
-        popup.addAnnotation( annotation, pageNumber );
-
-        connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
-                 this, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ) );
-        connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
-                 this, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ) );
-
-        popup.exec( m_view->viewport()->mapToGlobal( pos ) );
+    QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
+    Q_FOREACH ( const QModelIndex &index, indexes )
+    {
+        const QModelIndex authorIndex = m_authorProxy->mapToSource( index );
+        const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
+        const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
+        Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );
+        if ( annotation ) {
+            const int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
+            popup.addAnnotation( annotation, pageNumber );
+        }
     }
+
+    popup.exec( m_view->viewport()->mapToGlobal( pos ) );
 }
 
 #include "side_reviews.moc"

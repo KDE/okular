@@ -2697,6 +2697,9 @@ void PageView::slotRelayoutPages()
     // 3) reset dirty state
     d->dirtyLayout = false;
 
+    horizontalScrollBar()->setRange( 0, qMax( 0, fullWidth - viewport()->width() ) );
+    verticalScrollBar()->setRange( 0, qMax( 0, fullHeight - viewport()->height() ) );
+
     // 4) update scrollview's contents size and recenter view
     bool wasUpdatesEnabled = viewport()->updatesEnabled();
     if ( fullWidth != widget()->width() || fullHeight != widget()->height() )

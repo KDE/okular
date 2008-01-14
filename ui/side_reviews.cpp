@@ -225,8 +225,8 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     if ( annotation ) {
         int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
 
-        AnnotationPopup popup( annotation, m_document, this );
-        popup.setPageNumber( pageNumber );
+        AnnotationPopup popup( m_document, this );
+        popup.addAnnotation( annotation, pageNumber );
 
         connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
                  this, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ) );

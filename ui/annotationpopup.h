@@ -11,6 +11,8 @@
 #define ANNOTATIONPOPUP_H
 
 #include <QtCore/QObject>
+#include <QtCore/QList>
+#include <QtCore/QPair>
 #include <QtCore/QPoint>
 
 namespace Okular {
@@ -23,11 +25,10 @@ class AnnotationPopup : public QObject
     Q_OBJECT
 
     public:
-        AnnotationPopup( Okular::Annotation *annotation,
-                         Okular::Document *document,
+        AnnotationPopup( Okular::Document *document,
                          QWidget *parent = 0 );
 
-        void setPageNumber( int pageNumber );
+        void addAnnotation( Okular::Annotation* annotation, int pageNumber );
 
         void exec( const QPoint &point = QPoint() );
 
@@ -37,9 +38,9 @@ class AnnotationPopup : public QObject
 
     private:
         QWidget *mParent;
-        Okular::Annotation *mAnnotation;
+        typedef QPair< Okular::Annotation*, int > AnnotPagePair;
+        QList< AnnotPagePair > mAnnotations;
         Okular::Document *mDocument;
-        int mPageNumber;
 };
 
 

@@ -1509,8 +1509,8 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                         ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     if ( ann )
                     {
-                        AnnotationPopup popup( ann, d->document, this );
-                        popup.setPageNumber( pageItem->pageNumber() );
+                        AnnotationPopup popup( d->document, this );
+                        popup.addAnnotation( ann, pageItem->pageNumber() );
 
                         connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
                                  this, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );

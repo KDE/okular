@@ -17,52 +17,59 @@
 #include "core/annotations.h"
 #include "core/document.h"
 
-AnnotationPopup::AnnotationPopup( Okular::Annotation *annotation,
-                                  Okular::Document *document,
+AnnotationPopup::AnnotationPopup( Okular::Document *document,
                                   QWidget *parent )
-    : mParent( parent ), mAnnotation( annotation ),
-      mDocument( document ), mPageNumber( -1 )
+    : mParent( parent ), mDocument( document )
 {
 }
 
-void AnnotationPopup::setPageNumber( int pageNumber )
+void AnnotationPopup::addAnnotation( Okular::Annotation* annotation, int pageNumber )
 {
-    mPageNumber = pageNumber;
+    mAnnotations.append( qMakePair( annotation, pageNumber ) );
 }
 
 void AnnotationPopup::exec( const QPoint &point )
 {
+    if ( mAnnotations.isEmpty() )
+        return;
+
     KMenu menu( mParent );
 
     QAction *popoutWindow = 0;
     QAction *deleteNote = 0;
     QAction *showProperties = 0;
 
-    menu.addTitle( i18n( "Annotation" ) );
+    const bool onlyOne = mAnnotations.count() == 1;
+
+    menu.addTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
     popoutWindow = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
+    popoutWindow->setEnabled( onlyOne );
     deleteNote = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
     deleteNote->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
 
-    if ( mAnnotation->flags() & Okular::Annotation::DenyDelete )
+    if ( onlyOne && mAnnotations.first().first->flags() & Okular::Annotation::DenyDelete )
         deleteNote->setEnabled( false );
 
     showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
+    showProperties->setEnabled( onlyOne );
 
     QAction *choice = menu.exec( point.isNull() ? QCursor::pos() : point );
 
     // check if the user really selected an action
     if ( choice ) {
         if ( choice == popoutWindow ) {
-            emit setAnnotationWindow( mAnnotation );
+            emit setAnnotationWindow( mAnnotations.first().first  );
         } else if( choice == deleteNote ) {
-            emit removeAnnotationWindow( mAnnotation );
+            Q_FOREACH ( const AnnotPagePair& pair, mAnnotations )
+            {
+                if ( pair.second != -1 )
+                    mDocument->removePageAnnotation( pair.second, pair.first );
 
-            if ( mPageNumber != -1 )
-                mDocument->removePageAnnotation( mPageNumber, mAnnotation );
-
+                emit removeAnnotationWindow( pair.first );
+            }
         } else if( choice == showProperties ) {
-            if ( mPageNumber != -1 ) {
-                AnnotsPropertiesDialog propdialog( mParent, mDocument, mPageNumber, mAnnotation );
+            if ( mAnnotations.first().second != -1 ) {
+                AnnotsPropertiesDialog propdialog( mParent, mDocument, mAnnotations.first().second, mAnnotations.first().first );
                 propdialog.exec();
             }
         }

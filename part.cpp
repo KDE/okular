@@ -815,7 +815,7 @@ void Part::slotSaveFileAs()
                 return;
         }
 
-        if ( !KIO::NetAccess::file_copy( url(), saveURL, -1, true ) )
+        if ( !KIO::NetAccess::file_copy( m_file, saveURL, -1, true ) )
             KMessageBox::information( 0, i18n("File could not be saved in '%1'. Try to save it to another location.").arg( saveURL.prettyURL() ) );
     }
 }

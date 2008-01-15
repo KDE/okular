@@ -1223,7 +1223,7 @@ void Part::slotSaveFileAs()
                 return;
         }
 
-        KIO::Job *copyJob = KIO::file_copy( url(), saveUrl, -1, KIO::Overwrite );
+        KIO::Job *copyJob = KIO::file_copy( localFilePath(), saveUrl, -1, KIO::Overwrite );
         if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
     }

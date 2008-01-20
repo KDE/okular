@@ -86,7 +86,7 @@ void Shell::init()
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
-    KMessageBox::error(this, i18n("Unable to find okular part."));
+    KMessageBox::error(this, i18n("Unable to find the Okular component."));
     m_part = 0;
     return;
   }

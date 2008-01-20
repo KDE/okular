@@ -21,7 +21,7 @@
 
 int main(int argc, char** argv)
 {
-    KAboutData about = okularAboutData( "okular", I18N_NOOP( "okular" ) );
+    KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
 
     KCmdLineArgs::init(argc, argv, &about);
 

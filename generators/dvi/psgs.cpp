@@ -261,23 +261,23 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 	  // TODO: show a requestor of some sort.
 	  KMessageBox::detailedError(0, 
 				     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
-					  "any of the Ghostview device drivers that are known to okular. PostScript "
-					  "support has therefore been turned off in okular.</qt>"), 
-				     i18n("<qt><p>The Ghostview program, which okular uses internally to display the "
+					  "any of the Ghostview device drivers that are known to Okular. PostScript "
+					  "support has therefore been turned off in Okular.</qt>"), 
+				     i18n("<qt><p>The Ghostview program, which Okular uses internally to display the "
 					  "PostScript graphics that is included in this DVI file, is generally able to "
 					  "write its output in a variety of formats. The sub-programs that Ghostview uses "
 					  "for these tasks are called 'device drivers'; there is one device driver for "
 					  "each format that Ghostview is able to write. Different versions of Ghostview "
 					  "often have different sets of device drivers available. It seems that the "
 					  "version of Ghostview that is installed on this computer does not contain "
-					  "<strong>any</strong> of the device drivers that are known to okular.</p>"
+					  "<strong>any</strong> of the device drivers that are known to Okular.</p>"
 					  "<p>It seems unlikely that a regular installation of Ghostview would not contain "
 					  "these drivers. This error may therefore point to a serious misconfiguration of "
 					  "the Ghostview installation on your computer.</p>"
 					  "<p>If you want to fix the problems with Ghostview, you can use the command "
 					  "<strong>gs --help</strong> to display the list of device drivers contained in "
-					  "Ghostview. Among others, okular can use the 'png256', 'jpeg' and 'pnm' "
-					  "drivers. Note that okular needs to be restarted to re-enable PostScript support."
+					  "Ghostview. Among others, Okular can use the 'png256', 'jpeg' and 'pnm' "
+					  "drivers. Note that Okular needs to be restarted to re-enable PostScript support."
 					  "</p></qt>"));
 	else {
 	  kDebug(kvs::dvi) << QString("Okular will now try to use the '%1' device driver.").arg(*gsDevice);

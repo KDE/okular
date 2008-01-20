@@ -85,7 +85,7 @@
 #include "core/fileprinter.h"
 
 K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
-K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "okular" ) ) ) )
+K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "Okular" ) ) ) )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {
@@ -363,7 +363,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
     if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
     {
-        prefs->setText( i18n( "Configure okular..." ) );
+        prefs->setText( i18n( "Configure Okular..." ) );
     }
     else
     {
@@ -694,7 +694,7 @@ bool Part::slotImportPSFile()
     if ( app.isEmpty() )
     {
         // TODO point the user to their distro packages?
-        KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so okular can not import PS files using it." ), i18n("ps2pdf not found") );
+        KMessageBox::error( widget(), i18n( "The program \"ps2pdf\" was not found, so Okular can not import PS files using it." ), i18n("ps2pdf not found") );
         return false;
     }
 

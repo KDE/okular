@@ -410,7 +410,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"
                           "<p><b>Possible reason:</b> The file %1 might be broken, or might not be a PDF-file at all. "
-                          "This is the output of the <strong>pdf2ps</strong> program that okular used:</p>"
+                          "This is the output of the <strong>pdf2ps</strong> program that Okular used:</p>"
                           "<p><strong>%2</strong></p></qt>", PDFFilename, output);
     }
     return QString();

@@ -39,7 +39,7 @@ fontPool::fontPool()
               i18n("Okular is currently generating bitmap fonts..."),
               i18n("Aborts the font generation. Don't do this."),
               i18n("Okular is currently generating bitmap fonts which are needed to display your document. "
-                   "For this, okular uses a number of external programs, such as MetaFont. You can find "
+                   "For this, Okular uses a number of external programs, such as MetaFont. You can find "
                    "the output of these programs later in the document info dialog."),
               i18n("Okular is generating fonts. Please wait."),
               0)
@@ -360,7 +360,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     KMessageBox::detailedError(0,
                                QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
                                details,
-                               i18n("Problem locating fonts - okular"));
+                               i18n("Problem locating fonts"));
 
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();
@@ -381,7 +381,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     KMessageBox::sorry(0,
                        QString("<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, error %2). As a result, "
                                "some font files could not be located, and your document might be unreadable.</p></qt>").arg(kpsewhich_exit_code).arg(kpsewhich_.errorString()),
-                       i18n("Font generation aborted - okular") );
+                       i18n("Font generation aborted") );
 
     // This makes sure the we don't try to run kpsewhich again
     if (makePK == false)

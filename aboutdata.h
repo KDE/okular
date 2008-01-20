@@ -19,7 +19,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         "okular",
         ki18n(iname), //I18N_NOOP("okular"),
         "0.6.80",
-        ki18n("okular, a universal document viewer"),
+        ki18n("Okular, a universal document viewer"),
         KAboutData::License_GPL,
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Enrico Ros\n"
@@ -33,7 +33,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
     about.addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
     about.addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
     about.addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
-    about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created okular from KPDF codebase"), "djurban@pld-dc.org");
+    about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created Okular from KPDF codebase"), "djurban@pld-dc.org");
     about.addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
 
     return about;

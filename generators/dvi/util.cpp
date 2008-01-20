@@ -77,11 +77,11 @@ void oops(const QString& message)
                       i18n("Fatal error.\n\n") +
                       message +
                       i18n("\n\n\
-This probably means that either you found a bug in okular,\n\
+This probably means that either you found a bug in Okular,\n\
 or that the DVI file, or auxiliary files (such as font files, \n\
 or virtual font files) were really badly broken.\n\
 Okular will abort after this message. If you believe that you \n\
-found a bug, or that okular should behave better in this situation\n\
+found a bug, or that Okular should behave better in this situation\n\
 please report the problem."));
   exit(1);
 }

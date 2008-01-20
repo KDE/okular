@@ -25,6 +25,7 @@
 #include "annotations.h"
 #include "annotations_p.h"
 #include "area.h"
+#include "debug_p.h"
 #include "form.h"
 #include "form_p.h"
 #include "pagecontroller_p.h"
@@ -484,7 +485,7 @@ void Page::addAnnotation( Annotation * annotation )
         QString uniqueName = "okular-";
         uniqueName += ( QString::number(d->m_number) + '-' + QString::number(++(d->m_maxuniqueNum)) );
 
-        kDebug().nospace() << "inc m_maxuniqueNum=" << d->m_maxuniqueNum;
+        kDebug(OkularDebug).nospace() << "inc m_maxuniqueNum=" << d->m_maxuniqueNum;
 
         annotation->setUniqueName( uniqueName );
     }
@@ -548,7 +549,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     it = m_rects.erase( it );
                     rectfound = true;
                 }
-            kDebug() << "removed annotation:" << annotation->uniqueName();
+            kDebug(OkularDebug) << "removed annotation:" << annotation->uniqueName();
             delete *aIt;
             m_annotations.erase( aIt );
             break;
@@ -696,13 +697,13 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                             m_maxuniqueNum = uniqID;
                     }
 
-                    kDebug() << "restored annot:" << annotation->uniqueName();
+                    kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else
-                    kWarning().nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
+                    kWarning(OkularDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
             }
 #ifdef PAGE_PROFILE
-            kDebug().nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
+            kDebug(OkularDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
 #endif
         }
         // parse formList child element
@@ -787,7 +788,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
                 QDomElement annElement = document.createElement( "annotation" );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
-                kDebug() << "save annotation:" << a->uniqueName();
+                kDebug(OkularDebug) << "save annotation:" << a->uniqueName();
             }
         }
 

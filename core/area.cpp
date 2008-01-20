@@ -18,6 +18,7 @@
 #include "action.h"
 #include "annotations.h"
 #include "annotations_p.h"
+#include "debug_p.h"
 #include "sourcereference.h"
 
 using namespace Okular;
@@ -286,7 +287,7 @@ ObjectRect::~ObjectRect()
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else
-        kDebug().nospace() << "Object deletion not implemented for type '" << m_objectType << "' .";
+        kDebug(OkularDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
 }
 
 /** class AnnotationObjectRect **/

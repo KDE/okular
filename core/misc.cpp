@@ -11,6 +11,8 @@
 
 #include <kdebug.h>
 
+#include "debug_p.h"
+
 using namespace Okular;
 
 class TextSelection::Private
@@ -46,7 +48,7 @@ void TextSelection::end( const NormalizedPoint & p )
   int dir1 = d->direction;
   d->direction = (p.y - d->cur[0].y < 0 || (p.y - d->cur[0].y == 0 && p.x - d->cur[0].x < 0));
   if (d->direction != dir1)
-    kDebug() << "changing direction in selection";
+    kDebug(OkularDebug) << "changing direction in selection";
 
   d->cur[1] = p;
 }

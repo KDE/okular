@@ -28,6 +28,7 @@
 #include <ktempdir.h>
 #include <kdebug.h>
 
+#include "debug_p.h"
 
 using namespace Okular;
 
@@ -91,7 +92,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
     bool useCupsOptions = cupsAvailable();
     QStringList argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, exe )
                           << fileList;
-    kDebug() << "Executing " << exe << " with arguments" << argList;
+    kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
 
     int ret = KProcess::execute( exe, argList );
 
@@ -102,7 +103,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
 
         argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, exe )
                   << fileList;
-        kDebug() << "Retrying " << exe << " without cups arguments" << argList;
+        kDebug(OkularDebug) << "Retrying" << exe << "without CUPS arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
     }
@@ -192,9 +193,9 @@ bool FilePrinter::detectCupsService()
     // original license LGPL
     KLocalSocket sock;
     sock.connectToPath("/ipp");
-    kDebug() << "socket wait = " << sock.waitForConnected();
-    kDebug() << "socket error = " << sock.error();
-    kDebug() << "socket isOpen() = " << sock.isOpen();
+    kDebug(OkularDebug) << "socket wait =" << sock.waitForConnected();
+    kDebug(OkularDebug) << "socket error =" << sock.error();
+    kDebug(OkularDebug) << "socket isOpen() =" << sock.isOpen();
     return sock.isOpen();
 }
 

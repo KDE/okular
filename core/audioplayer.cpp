@@ -22,6 +22,7 @@
 
 // local includes
 #include "action.h"
+#include "debug_p.h"
 #include "sound.h"
 
 using namespace Okular;
@@ -123,7 +124,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::External:
         {
             QString url = si.sound->url();
-            kDebug() << "External," << url;
+            kDebug(OkularDebug) << "External," << url;
             if ( !url.isEmpty() )
             {
                 int newid = newId();
@@ -147,10 +148,10 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::Embedded:
         {
             QByteArray filedata = si.sound->data();
-            kDebug() << "Embedded," << filedata.length();
+            kDebug(OkularDebug) << "Embedded," << filedata.length();
             if ( !filedata.isEmpty() )
             {
-                kDebug() << "Mediaobject:" << data->m_mediaobject;
+                kDebug(OkularDebug) << "Mediaobject:" << data->m_mediaobject;
                 int newid = newId();
                 m_mapper.setMapping( data->m_mediaobject, newid );
                 data->m_buffer = new QBuffer();
@@ -170,7 +171,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     if ( data )
     {
         QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
-        kDebug() << "PLAY";
+        kDebug(OkularDebug) << "PLAY";
         data->play();
     }
     return valid;
@@ -200,7 +201,7 @@ void AudioPlayerPrivate::finished( int id )
         delete it.value();
         m_playing.erase( it );
     }
-    kDebug() << "finished," << m_playing.count();
+    kDebug(OkularDebug) << "finished," << m_playing.count();
 }
 
 

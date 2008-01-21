@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY okular "<application>okular</application>">
   <!ENTITY kappname "&okular;">
   <!ENTITY package "kdegraphics">
   <!ENTITY kpdf "<application>KPDF</application>">
@@ -30,8 +29,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2007-08-15</date>
-		<releaseinfo>0.5.90</releaseinfo>
+		<date>2008-01-10</date>
+		<releaseinfo>0.6.80</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -304,6 +303,10 @@
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
 				</para>
+				<para>
+					To move an annotation, hold down the &Ctrl; key, move the mouse pointer on it and 
+					then start dragging with the &LMB;.
+				</para>
 				<note>
 					<para>
 						Depending on the document permissions (typically with &PDF; documents), some options
@@ -354,7 +357,34 @@
 						</para>
 					</listitem>
 				</varlistentry>
-				
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycap>G</keycap></shortcut>
+							<guimenu>File</guimenu>
+							<guimenuitem>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>File</guimenu>
+							<guimenuitem>Import PostScript as PDF...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+							<action>Open</action> a PostScript file and convert it to &PDF;.
+						</para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term>
 						<menuchoice>
@@ -364,6 +394,19 @@
 					</term>
 					<listitem>
 						<para><action>Save</action> the currently open file under a different name.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycap>F5</keycap></shortcut>
+							<guimenu>File</guimenu>
+							<guimenuitem>Reload</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Reload</action> the currently open file.</para>
 					</listitem>
 				</varlistentry>
 
@@ -427,6 +470,19 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<guimenu>File</guimenu>
+							<guisubmenu>Export As</guisubmenu>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>This item contains the export formats the current document can be exported to.
+						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo></shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Quit</guimenuitem>
@@ -441,6 +497,38 @@
 
 		<sect1 id="menuedit">
 			<title>The <guimenu>Edit</guimenu> Menu</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Copy</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Copy</action> the currently selected text in 
+						<guibutton>Text Selection</guibutton> mode to the clipboard.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>A</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Select All</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Selects</action> all the text (if the document provides it). This works only in 
+						<guibutton>Text Selection</guibutton> mode.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -559,7 +647,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>View Mode</guimenuitem>
+							<guisubmenu>View Mode</guisubmenu>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -574,7 +662,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Orientation</guimenuitem>
+							<guisubmenu>Orientation</guisubmenu>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -598,7 +686,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Page Size</guimenuitem>
+							<guisubmenu>Page Size</guisubmenu>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -617,7 +705,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Show/Hide Forms</guimenuitem>
+							<guimenuitem>Show Forms</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -627,7 +715,7 @@
 						</para>
 						<note>
 							<para>
-								This submenu is active only if the current document has form
+								This menu item is active only if the current document has form
 								fields.
 							</para>
 						</note>
@@ -690,9 +778,8 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;<keycap>Left</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Back</guimenuitem>
+							<guimenuitem>Back in the Document</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -702,9 +789,8 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;<keycap>Right</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Forward</guimenuitem>
+							<guimenuitem>Forward in the Document</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -716,7 +802,7 @@
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>G</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Go to Page</guimenuitem>
+							<guimenuitem>Go to Page...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -732,6 +818,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>B</keycap></keycombo></shortcut>
 							<guimenu>Bookmarks</guimenu>
 							<guimenuitem>Add/Remove Bookmark</guimenuitem>
 						</menuchoice>
@@ -764,6 +851,19 @@
 					<listitem>
 						<para><action>Go to the next bookmarked page</action>, or do nothing if there
 							are no bookmarked pages after the current one.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Bookmarks</guimenu>
+							<guimenuitem>No Bookmarks</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>This an always disabled action that appears in this menu only if the current document has 
+						no bookmarks. Otherwise a list of all bookmarked pages is displayed here. Clicking on these bookmarks
+						allows you to go directly to the associated pages.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -825,7 +925,7 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo><keycap>F6</keycap></keycombo></shortcut>
+							<shortcut><keycap>F6</keycap></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Review</guimenuitem>
 						</menuchoice>
@@ -847,7 +947,7 @@
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show/Hide Menubar</guimenuitem>
+							<guimenuitem>Show Menubar</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -859,7 +959,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show/Hide Toolbar</guimenuitem>
+							<guimenuitem>Show Toolbar</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -869,10 +969,9 @@
 				<varlistentry>
 					<term>
 						<menuchoice>
-<!-- 							<shortcut><keycombo action="simul"><keycap>F7</keycap></keycombo></shortcut> -->
 							<shortcut><keycap>F7</keycap></shortcut>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show/Hide Navigation Panel</guimenuitem>
+							<guimenuitem>Show Navigation Panel</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -923,11 +1022,11 @@
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure &okular;...</guimenuitem>
+							<guimenuitem>Configure Backends...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens the <link linkend="configure">Configure</link>
+						<para>Opens the <link linkend="configure">Backend Configuration</link>
 							window.</para>
 					</listitem>
 				</varlistentry>
@@ -935,11 +1034,11 @@
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure Backends...</guimenuitem>
+							<guimenuitem>Configure &okular;...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens the <link linkend="configure">Backend Configuration</link>
+						<para>Opens the <link linkend="configure">Configure</link>
 							window.</para>
 					</listitem>
 				</varlistentry>
@@ -1001,35 +1100,27 @@
 			<title>General</title>
 			<variablelist>
 				<varlistentry>
-					<term>Show scrollbars</term>
+					<term><guilabel>Show scrollbars</guilabel></term>
 					<listitem>
 						<para>Whether to show scrollbars for the document view.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show search bar in thumbnails list</term>
-					<listitem>
-						<para>Whether to the show a search bar in the thumbnails view or not. That
-							search bar is useful for filtering pages that contain a given
-							string.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>Link thumbnails list with the page</term>
+					<term><guilabel>Link the thumbnails with the page</guilabel></term>
 					<listitem>
 						<para>Whether the thumbnails view should always display the current
 							page or not.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show hints and info messages</term>
+					<term><guilabel>Show hints and info messages</guilabel></term>
 					<listitem>
 						<para>Whether to show some informative messages on startup, file
 							load, &etc;.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Obey DRM limitations</term>
+					<term><guilabel>Obey DRM limitations</guilabel></term>
 					<listitem>
 						<para>Whether &okular; should obey <firstterm>DRM</firstterm>
 							(Digital Rights Management) restrictions. DRM limitations are used
@@ -1039,14 +1130,14 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Reload the document on file change</term>
+					<term><guilabel>Reload document on file change</guilabel></term>
 					<listitem>
 						<para>Whether opened files should be automatically checked for
 							changes and updated, if necessary.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show backend selection dialog</term>
+					<term><guilabel>Show backend selection dialog</guilabel></term>
 					<listitem>
 						<para>Whether &okular; should ask the user which backend to use in case of more
 							than one backend able to open the current file. If unchecked, &okular; will
@@ -1054,14 +1145,14 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Center first page in facing mode</term>
+					<term><guilabel>Center first page</guilabel></term>
 					<listitem>
 						<para>Whether the first page should be centered or aligned to the right when
 							displaying the pages in facing mode.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Overview columns</term>
+					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
 						<para>
 							This options represent the number of columns to use in the overview mode.
@@ -1074,37 +1165,31 @@
 			<title>Accessibility</title>
 			<variablelist>
 				<varlistentry>
-					<term>Draw border around images</term>
-					<listitem>
-						<para>Whether to draw a border around images.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>Draw border around links</term>
+					<term><guilabel>Draw border around links</guilabel></term>
 					<listitem>
 						<para>Whether to draw a border around links.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Change colors</term>
+					<term><guilabel>Change Colors</guilabel></term>
 					<listitem>
 						<para><action>Enables</action> the color changing options.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Invert colors</term>
+					<term><guilabel>Invert colors</guilabel></term>
 					<listitem>
 						<para><action>Inverts</action> colors on the view, &ie; black objects will be shown white.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Change paper color</term>
+					<term><guilabel>Change paper color</guilabel></term>
 					<listitem>
 						<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Change dark and light colors</term>
+					<term><guilabel>Change dark and light colors</guilabel></term>
 					<listitem>
 						<para><action>Changes</action> the dark and light color to your preference, that means 
 							black will not be rendered as black but as the selected dark color and white
@@ -1112,7 +1197,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Convert to black and white</term>
+					<term><guilabel>Convert to black and white</guilabel></term>
 					<listitem>
 						<para><action>Converts</action> the document to black and white. You can set the
 							threshold and the contrast. Setting the threshold to a higher value
@@ -1125,7 +1210,7 @@
 			<title>Performance</title>
 			<variablelist>
 				<varlistentry>
-					<term>Enable transparency effects</term>
+					<term><guilabel>Enable transparency effects</guilabel></term>
 					<listitem>
 						<para>Draw selections and other special graphics using
 							transparency effects. Disable the option to draw them using
@@ -1133,7 +1218,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Enable background generation</term>
+					<term><guilabel>Enable background generation</guilabel></term>
 					<listitem>
 						<para>Use a background thread to generate the pages. By disabling
 							this option the user interface will become less reactive (will be blocked
@@ -1141,7 +1226,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Memory usage profiles</term>
+					<term><guilabel>Memory usage profiles</guilabel></term>
 					<listitem>
 						<para>&okular; can achieve best performance by tuning the memory usage, based on your system and your tastes.
 							The more memory you let it to use, the faster the program will behave. The Default profile is good
@@ -1155,51 +1240,51 @@
 			<title>Presentation</title>
 			<variablelist>
 				<varlistentry>
-					<term>Advance every</term>
+					<term><guilabel>Advance every</guilabel></term>
 					<listitem>
 						<para>Enables automatic advancing of pages given a time period.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Loop after last page</term>
+					<term><guilabel>Loop after last page</guilabel></term>
 					<listitem>
 						<para>When navigating on presentation mode and going past the last page the first page will appear.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Background color</term>
+					<term><guilabel>Background color</guilabel></term>
 					<listitem>
 						<para>The color that will fill the part of the screen not covered by the page when on presentation mode.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Default transition</term>
+					<term><guilabel>Default transition</guilabel></term>
 					<listitem>
 						<para>The transition effect between page and page if the document does not specify one. Set this to <guilabel>Random
 							Transition</guilabel> to make &okular; randomly choose one of the available effects.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Mouse cursor</term>
+					<term><guilabel>Mouse cursor</guilabel></term>
 					<listitem>
 						<para>Whether the mouse should be always hidden, always shown or hidden after a small time of inactivity.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show progress indicator</term>
+					<term><guilabel>Show progress indicator</guilabel></term>
 					<listitem>
 						<para>Whether to show a progress circle that shows the current page and the total number of pages on the upper
 							right corner of the presentation screen everytime you change the page.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Show summary page</term>
+					<term><guilabel>Show summary page</guilabel></term>
 					<listitem>
 						<para>Whether to show a summary page at the beginning of the presentation with the title, author and number of pages of the document.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term>Pencil color</term>
+					<term><guilabel>Pencil color</guilabel></term>
 					<listitem>
 						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
 					</listitem>
@@ -1210,7 +1295,7 @@
 			<title>Identity</title>
 			<variablelist>
 				<varlistentry>
-					<term>Author</term>
+					<term><guilabel>Author</guilabel></term>
 					<listitem>
 						<para>The author of the contents added on a document.</para>
 					</listitem>

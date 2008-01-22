@@ -49,6 +49,6 @@ GenericName[zh_TW]=文件檢視器
 Exec=okular %U %i -caption "%c"
 Icon=graphics-viewer-document
 Type=Application
-InitialPreference=7
+InitialPreference=2
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true

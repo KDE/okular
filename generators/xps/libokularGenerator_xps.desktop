@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-Name=okular XPS Plugin
+Name=Okular XPS Plugin
 Name[bg]=Приставка okular XPS
 Name[ca]=Connector XPS per l'okular
 Name[de]=XPS-Modul
@@ -31,7 +31,7 @@ Name[sv]=Okular XPS-gränssnitt
 Name[x-test]=xxokular XPS Pluginxx
 Name[zh_CN]=okular XPS 插件
 Name[zh_TW]=okular XPS 外掛程式
-Comment=XPS backend for okular
+Comment=XPS backend for Okular
 Comment[bg]=XPS backend за okular
 Comment[ca]=Dorsal d'XPS per l'okular
 Comment[de]=Unterstützung für XPS in Okular

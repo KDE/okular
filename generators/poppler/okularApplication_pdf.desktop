@@ -1,7 +1,7 @@
 [Desktop Entry]
 MimeType=application/pdf;application/x-gzpdf;application/x-bzpdf;
 Terminal=false
-Name=okular
+Name==kular
 Name[de]=Okular
 Name[es]=Okular
 Name[hi]=ऑकुलर

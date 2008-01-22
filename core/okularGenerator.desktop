@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
 X-KDE-ServiceType=okular/Generator
-Comment=File format backend for okular
+Comment=File format backend for Okular
 Comment[bg]=Файлов формат за okular
 Comment[ca]=Dorsal de format de fitxer per l'okular
 Comment[de]=Dateiformat-Unterstützung für Okular

@@ -22,6 +22,7 @@
 #include <qtimer.h>
 #include <qtoolbutton.h>
 #include <kacceleratormanager.h>
+#include <kcolorscheme.h>
 #include <kiconloader.h>
 #include <klocale.h>
 
@@ -293,10 +294,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
 {
     setAutoFillBackground( true );
     QPalette pal = palette();
-    pal.setColor( QPalette::Active, QPalette::Window, Qt::yellow );
-    pal.setColor( QPalette::Inactive, QPalette::Window, Qt::yellow );
-    pal.setColor( QPalette::Disabled, QPalette::Window, Qt::yellow );
-    pal.setColor( QPalette::WindowText, Qt::black );
+    KColorScheme::adjustBackground( pal, KColorScheme::NeutralBackground, QPalette::Window );
     setPalette( pal );
     QHBoxLayout * lay = new QHBoxLayout( this );
     lay->setMargin( 4 );

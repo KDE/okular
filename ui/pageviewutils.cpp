@@ -295,6 +295,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     setAutoFillBackground( true );
     QPalette pal = palette();
     KColorScheme::adjustBackground( pal, KColorScheme::NeutralBackground, QPalette::Window );
+    KColorScheme::adjustForeground( pal, KColorScheme::NeutralText, QPalette::Text );
     setPalette( pal );
     QHBoxLayout * lay = new QHBoxLayout( this );
     lay->setMargin( 4 );

@@ -504,27 +504,27 @@ int Sidebar::currentIndex() const
 
 void Sidebar::setSidebarVisibility( bool visible )
 {
-    if ( visible == d->list->isVisible() )
+    if ( visible != d->list->isHidden() )
         return;
 
-    static bool sideWasVisible = d->sideContainer->isVisible();
+    static bool sideWasVisible = !d->sideContainer->isHidden();
 
-    d->list->setVisible( visible );
+    d->list->setHidden( !visible );
     if ( visible )
     {
-        d->sideContainer->setVisible( sideWasVisible );
+        d->sideContainer->setHidden( !sideWasVisible );
         sideWasVisible = true;
     }
     else
     {
-        sideWasVisible = d->sideContainer->isVisible();
-        d->sideContainer->setVisible( false );
+        sideWasVisible = !d->sideContainer->isHidden();
+        d->sideContainer->setHidden( true );
     }
 }
 
 bool Sidebar::isSidebarVisible() const
 {
-    return d->sideContainer->isVisible();
+    return !d->sideContainer->isHidden();
 }
 
 void Sidebar::itemClicked( QListWidgetItem *item )

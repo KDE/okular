@@ -1,15 +1,6 @@
 [Desktop Entry]
 Icon=graphics-viewer-document
 Name=Okular
-Name[de]=Okular
-Name[es]=Okular
-Name[hi]=ऑकुलर
-Name[nds]=Okular
-Name[ne]=ओकुलर
-Name[nl]=Okular
-Name[pa]=ਓਕੁਲਾਰ
-Name[sv]=Okular
-Name[x-test]=xxokularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service

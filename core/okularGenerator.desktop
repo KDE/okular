@@ -2,37 +2,6 @@
 Type=ServiceType
 X-KDE-ServiceType=okular/Generator
 Comment=File format backend for Okular
-Comment[bg]=Файлов формат за okular
-Comment[ca]=Dorsal de format de fitxer per l'okular
-Comment[de]=Dateiformat-Unterstützung für Okular
-Comment[el]=Σύστημα υποστήριξης μορφής αρχείων για το okular
-Comment[eo]=Dosierformata interno por okular
-Comment[es]=Motor de formato de archivos para Okular
-Comment[et]=Okulari failivormingu taustaporgramm
-Comment[fi]=Tiedostomuodot-taustaosa ohjelmaa okular varten
-Comment[fr]=Interface du format de fichier d'okular
-Comment[ga]=Inneall formáide comhaid le haghaidh okular
-Comment[gl]=Infraestrutura dun formato de ficheiro para okular
-Comment[hi]=ऑकुलर के लिए फ़ाइल प्रारूप
-Comment[is]=Skráasniðsstuðningur fyrir Okular
-Comment[it]=Backend per i formati di file okular
-Comment[ja]=okular のファイル形式バックエンド
-Comment[km]=ផ្នែក​ខាង​ក្រោយ​ទ្រង់ទ្រាយ​ឯកសារ​សម្រាប់ okular
-Comment[ko]=okular용 파일 형식 백엔드
-Comment[lv]=Failu formātu aizmugure priekš okular
-Comment[nds]=Dateiformaat-Hülpprogramm för Okular
-Comment[ne]=ओकुलरका लागि फाइल ढाँचा ब्याकइन्ड
-Comment[nl]=Bestandsformaat-backend voor Okular
-Comment[pa]=ਓਕੁਲਾਰ ਲਈ ਫਾਇਲ ਫਾਰਮੈਟ ਬੈਕਐਂਡ
-Comment[pl]=Obsługa formatu pliku dla okulara
-Comment[pt]=Infra-estrutura do formato de ficheiros para o okular
-Comment[pt_BR]=Backend de Formato de Arquivo para okular
-Comment[sl]=Hrbtenica za vrste datotek za Okular
-Comment[sv]=Filformatgränssnitt för Okular
-Comment[vi]=Hỗ trợ các định dạng tập tin cho Okular
-Comment[x-test]=xxFile format backend for okularxx
-Comment[zh_CN]=okular 文件格式后端
-Comment[zh_TW]=okular 檔案格式後端
 # Priority of the plugin. 0 - disabled
 [PropertyDef::X-KDE-Priority]
 Type=int

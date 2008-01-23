@@ -2,15 +2,6 @@
 MimeType=application/pdf;application/x-gzpdf;application/x-bzpdf;
 Terminal=false
 Name==kular
-Name[de]=Okular
-Name[es]=Okular
-Name[hi]=ऑकुलर
-Name[nds]=Okular
-Name[ne]=ओकुलर
-Name[nl]=Okular
-Name[pa]=ਓਕੁਲਾਰ
-Name[sv]=Okular
-Name[x-test]=xxokularxx
 GenericName=Document Viewer
 GenericName[bg]=Визуализатор
 GenericName[ca]=Visualitzador de documents
@@ -43,6 +34,7 @@ GenericName[pt]=Visualizador de Documentos
 GenericName[pt_BR]=Visualizador de Documentos
 GenericName[sl]=Pregledovalnik dokumentov
 GenericName[sv]=Dokumentvisare
+GenericName[uk]=Переглядач документів
 GenericName[x-test]=xxDocument Viewerxx
 GenericName[zh_CN]=文档查看器
 GenericName[zh_TW]=文件檢視器

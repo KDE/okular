@@ -33,6 +33,7 @@ Description[pt]=Um 'kioslave' para mostrar ficheiros do WinHelp
 Description[pt_BR]=Um kioslave para mostrar arquivos WinHelp
 Description[sl]=KIOSlave za prikaz datotek s pomočjo za Windows
 Description[sv]=En I/O-slav för att visa WinHelp-filer
+Description[uk]=Підлеглий В/В для перегляду файлів WinHelp
 Description[vi]=Dịch vụ trợ giúp đọc tập tin CHM của Windows
 Description[x-test]=xxA kioslave for displaying WinHelp filesxx
 Description[zh_CN]=用以显示 WinHelp 文件的 kioslave

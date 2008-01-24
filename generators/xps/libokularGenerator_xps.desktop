@@ -1,7 +1,13 @@
 [Desktop Entry]
 Type=Service
 Name=Okular XPS Plugin
+Name[ga]=Breiseán XPS Okular
+Name[pt_BR]=Plug-in XPS para Okular
+Name[zh_TW]=Okular XPS 外掛程式
 Comment=XPS backend for Okular
+Comment[ga]=Inneall XPS le haghaidh Okular
+Comment[pt_BR]=Backend XPS para Okular
+Comment[zh_TW]=Okular 的 XPS 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/vnd.ms-xpsdocument;
 X-KDE-Library=okularGenerator_xps

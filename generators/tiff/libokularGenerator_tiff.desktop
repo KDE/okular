@@ -1,7 +1,13 @@
 [Desktop Entry]
 Type=Service
 Name=Okular TIFF Library
+Name[ga]=Leabharlann TIFF Okular
+Name[pt_BR]=Biblioteca TIFF para Okular
+Name[zh_TW]=Okular TIFF 函式庫
 Comment=TIFF backend for Okular
+Comment[ga]=Inneall TIFF le haghaidh Okular
+Comment[pt_BR]=Backend TIFF para Okular
+Comment[zh_TW]=Okular TIFF 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=image/tiff;
 X-KDE-Library=okularGenerator_tiff

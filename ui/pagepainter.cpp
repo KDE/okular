@@ -312,7 +312,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             {
                 Okular::Annotation * a = *aIt;
                 Okular::Annotation::SubType type = a->subType();
-                QColor acolor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), (int)( 255.0 * a->style().opacity() ) );
+                QColor acolor = a->style().color();
+                if ( !acolor.isValid() )
+                    acolor = Qt::yellow;
+                acolor.setAlphaF( a->style().opacity() );
 
                 // draw LineAnnotation MISSING: all
                 if ( type == Okular::Annotation::ALine )
@@ -496,6 +499,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             if ( opacity <= 0 && a->subType() != Okular::Annotation::AText )
                 continue;
 
+            QColor acolor = a->style().color();
+            if ( !acolor.isValid() )
+                acolor = Qt::yellow;
+            acolor.setAlpha( opacity );
+
             // get annotation boundary and drawn rect
             QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight );
             QRect annotRect = annotBoundary.intersect( limits );
@@ -511,7 +519,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 if ( text->textType() == Okular::TextAnnotation::InPlace )
                 {
                     QImage image( annotBoundary.size(), QImage::Format_ARGB32 );
-                    image.fill( qRgba( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) );
+                    image.fill( acolor.rgba() );
                     QPainter painter( &image );
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
@@ -582,7 +590,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                 // width is already divided by two
                 double width = geom->geometricalPointWidth() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                 QPainter p( &shape );
-                p.setPen( QPen( QBrush( QColor( a->style().color().red(), a->style().color().green(), a->style().color().blue(), opacity ) ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+                p.setPen( QPen( QBrush( acolor ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
                 QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                 r.adjust( width, width, -width, -width );
                 if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )

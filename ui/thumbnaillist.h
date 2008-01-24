@@ -15,12 +15,10 @@
 #include <kvbox.h>
 #include <qtoolbar.h>
 
-#include "core/area.h"
 #include "core/observer.h"
 
-class QTimer;
 class KUrl;
-class ThumbnailWidget;
+class ThumbnailListPrivate;
 
 namespace Okular {
 class Document;
@@ -56,15 +54,6 @@ Q_OBJECT
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
-        // called by ThumbnailWidgets to send (forward) the mouse click signals
-        void forwardClick( const Okular::Page *, const QPoint &, Qt::MouseButton );
-        // called by ThumbnailWidgets to send (forward) the mouse move signals
-        void forwardTrack( const Okular::Page *, const QPoint &, const QPoint & );
-        // called by ThumbnailWidgets to send (forward) the mouse zoom signals
-        void forwardZoom( const Okular::Page *, int );
-        // called by ThumbnailWidgets to get the overlay bookmark pixmap
-        const QPixmap * getBookmarkOverlay() const;
-
     public slots:
         // these are connected to ThumbnailController buttons
         void slotFilterBookmarks( bool filterOn );
@@ -73,8 +62,6 @@ Q_OBJECT
         // scroll up/down the view
         void keyPressEvent( QKeyEvent * e );
 
-        // resize thumbnails to fit the width
-        void viewportResizeEvent( QResizeEvent * );
         // catch the viewport event and filter them if necessary
         bool viewportEvent( QEvent * );
 
@@ -87,21 +74,11 @@ Q_OBJECT
         void rightClick( const Okular::Page *, const QPoint & );
 
     private:
-        void delayedRequestVisiblePixmaps( int delayMs = 0 );
-        Okular::Document *m_document;
-        ThumbnailWidget *m_selected;
-        QTimer *m_delayTimer;
-        QPixmap *m_bookmarkOverlay;
-        QVector<ThumbnailWidget *> m_thumbnails;
-        QList<ThumbnailWidget *> m_visibleThumbnails;
-        int m_vectorIndex;
-        QWidget *m_pagesWidget;
+        friend class ThumbnailListPrivate;
+        ThumbnailListPrivate *d;
 
-    private slots:
-        // make requests for generating pixmaps for visible thumbnails
-        void slotRequestVisiblePixmaps( int newContentsY = -1 );
-        // delay timeout: resize overlays and requests pixmaps
-        void slotDelayTimeout();
+        Q_PRIVATE_SLOT( d, void slotRequestVisiblePixmaps( int newContentsY = -1 ) )
+        Q_PRIVATE_SLOT( d, void slotDelayTimeout() )
 };
 
 /**

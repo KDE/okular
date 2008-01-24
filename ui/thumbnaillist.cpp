@@ -32,11 +32,58 @@
 #include "core/page.h"
 #include "settings.h"
 
-// ThumbnailWidget represents a single thumbnail in the ThumbnailList
-class ThumbnailWidget : public QWidget
+class ThumbnailWidget;
+
+class ThumbnailListPrivate : public QWidget
 {
     public:
-        ThumbnailWidget( QWidget * parent, const Okular::Document * document, const Okular::Page * page, ThumbnailList * tl );
+        ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document );
+        ~ThumbnailListPrivate();
+
+        ThumbnailList *q;
+        Okular::Document *m_document;
+        ThumbnailWidget *m_selected;
+        QTimer *m_delayTimer;
+        QPixmap *m_bookmarkOverlay;
+        QVector<ThumbnailWidget *> m_thumbnails;
+        QList<ThumbnailWidget *> m_visibleThumbnails;
+        int m_vectorIndex;
+        QPoint mouseGrabPos;
+        // this is a (temporary) HACK to prevent jumping of the selected area
+        // when dragging the mouse between pages
+        ThumbnailWidget *mouseGrabItem;
+
+        // resize thumbnails to fit the width
+        void viewportResizeEvent( QResizeEvent * );
+        // called by ThumbnailWidgets to get the overlay bookmark pixmap
+        const QPixmap * getBookmarkOverlay() const;
+        // called by ThumbnailWidgets to send (forward) the mouse move signals
+        void forwardTrack( const Okular::Page *, const QPoint &, const QPoint & );
+
+        ThumbnailWidget* itemFor( const QPoint & p ) const;
+        void delayedRequestVisiblePixmaps( int delayMs = 0 );
+
+        // SLOTS:
+        // make requests for generating pixmaps for visible thumbnails
+        void slotRequestVisiblePixmaps( int newContentsY = -1 );
+        // delay timeout: resize overlays and requests pixmaps
+        void slotDelayTimeout();
+
+    protected:
+        void mousePressEvent( QMouseEvent * e );
+        void mouseReleaseEvent( QMouseEvent * e );
+        void mouseMoveEvent( QMouseEvent * e );
+        void wheelEvent( QWheelEvent * e );
+        void contextMenuEvent( QContextMenuEvent * e );
+        void paintEvent( QPaintEvent * e );
+};
+
+
+// ThumbnailWidget represents a single thumbnail in the ThumbnailList
+class ThumbnailWidget
+{
+    public:
+        ThumbnailWidget( ThumbnailListPrivate * parent, const Okular::Page * page );
 
         // set internal parameters to fit the page in the given width
         void resizeFitWidth( int width );
@@ -51,37 +98,81 @@ class ThumbnailWidget : public QWidget
         int pixmapHeight() const { return m_pixmapHeight; }
         int pageNumber() const { return m_page->number(); }
         const Okular::Page * page() const { return m_page; }
-        QSize sizeHint() const;
+        QRect visibleRect() const { return m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ); }
 
-    protected:
-        void mousePressEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void contextMenuEvent( QContextMenuEvent * e );
-        void paintEvent(QPaintEvent *);
+        void paint( QPainter &p, const QRect &clipRect );
+
+        static int margin() { return m_margin; }
+
+        // simulating QWidget
+        QRect rect() const { return m_rect; }
+        int height() const { return m_rect.height(); }
+        int width() const { return m_rect.width(); }
+        QPoint pos() const { return m_rect.topLeft(); }
+        void move( int x, int y ) { m_rect.setTopLeft( QPoint( x, y ) ); }
+        void update() { m_parent->update( m_rect ); }
+        void update( const QRect & rect ) { m_parent->update( rect.translated( m_rect.topLeft() ) ); }
 
     private:
         // the margin around the widget
         static int const m_margin = 16;
 
-        // used to access 'forwardClick( .. )' and 'getBookmarkOverlay()'
-        ThumbnailList * m_tl;
-        const Okular::Document * m_document;
+        ThumbnailListPrivate * m_parent;
         const Okular::Page * m_page;
         bool m_selected;
         int m_pixmapWidth, m_pixmapHeight;
         int m_labelHeight, m_labelNumber;
         Okular::NormalizedRect m_visibleRect;
-        QPoint mouseGrabPos;
+        QRect m_rect;
 };
+
+
+ThumbnailListPrivate::ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document )
+    : QWidget(), q( qq ), m_document( document ), m_selected( 0 ),
+    m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
+{
+    setMouseTracking( true );
+    mouseGrabItem = 0;
+}
+
+ThumbnailListPrivate::~ThumbnailListPrivate()
+{
+}
+
+ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint & p ) const
+{
+    QVector< ThumbnailWidget * >::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        if ( (*tIt)->rect().contains( p ) )
+            return (*tIt);
+    }
+    return 0;
+}
+
+void ThumbnailListPrivate::paintEvent( QPaintEvent * e )
+{
+    QPainter painter( this );
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    for ( ; tIt != tEnd; ++tIt )
+    {
+        QRect rect = e->rect().intersected( (*tIt)->rect() );
+        if ( !rect.isNull() )
+        {
+            rect.translate( -(*tIt)->pos() );
+            painter.save();
+            painter.translate( (*tIt)->pos() );
+            (*tIt)->paint( painter, rect );
+            painter.restore();
+        }
+    }
+}
 
 
 /** ThumbnailList implementation **/
 
 ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
-    : QScrollArea( parent ),
-    m_document( document ), m_selected( 0 ), m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
+    : QScrollArea( parent ), d( new ThumbnailListPrivate( this, document ) )
 {
     setObjectName( "okular::Thumbnails" );
     // set scrollbars
@@ -99,14 +190,13 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
     viewport()->setPalette( viewportPal );
 
-    m_pagesWidget = new QWidget();
-    setWidget( m_pagesWidget );
+    setWidget( d );
     // widget setup: can be focused by tab and mouse click (not wheel)
-    m_pagesWidget->setFocusPolicy( Qt::StrongFocus );
-    m_pagesWidget->show();
-    QPalette widgetPal = m_pagesWidget->palette();
-    widgetPal.setColor( m_pagesWidget->backgroundRole(), pal.color( QPalette::Base ) );
-    m_pagesWidget->setPalette( widgetPal );
+    widget()->setFocusPolicy( Qt::StrongFocus );
+    widget()->show();
+    QPalette widgetPal = widget()->palette();
+    widgetPal.setColor( widget()->backgroundRole(), pal.color( QPalette::Base ) );
+    widget()->setPalette( widgetPal );
 
     setFrameStyle( StyledPanel | Raised );
 
@@ -115,8 +205,8 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
 
 ThumbnailList::~ThumbnailList()
 {
-    m_document->removeObserver( this );
-    delete m_bookmarkOverlay;
+    d->m_document->removeObserver( this );
+    delete d->m_bookmarkOverlay;
 }
 
 //BEGIN DocumentObserver inherited methods
@@ -125,22 +215,22 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     // if there was a widget selected, save its pagenumber to restore
     // its selection (if available in the new set of pages)
     int prevPage = -1;
-    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) && m_selected )
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) && d->m_selected )
     {
-        prevPage = m_selected->page()->number();
+        prevPage = d->m_selected->page()->number();
     }
 
     // delete all the Thumbnails
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.begin(), tEnd = d->m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
         delete *tIt;
-    m_thumbnails.clear();
-    m_visibleThumbnails.clear();
-    m_selected = 0;
+    d->m_thumbnails.clear();
+    d->m_visibleThumbnails.clear();
+    d->m_selected = 0;
 
     if ( pages.count() < 1 )
     {
-        m_pagesWidget->resize( 0, 0 );
+        widget()->resize( 0, 0 );
         return;
     }
 
@@ -162,63 +252,61 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
         //if ( skipCheck || (*pIt)->attributes() & flags )
         if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
         {
-            ThumbnailWidget * t = new ThumbnailWidget( widget(), m_document, *pIt, this );
-            t->setFocusProxy( this );
+            ThumbnailWidget * t = new ThumbnailWidget( d, *pIt );
             t->move(0, height);
             // add to the internal queue
-            m_thumbnails.push_back( t );
+            d->m_thumbnails.push_back( t );
             // update total height (asking widget its own height)
             t->resizeFitWidth( width );
             // restoring the previous selected page, if any
             if ( (*pIt)->number() == prevPage )
             {
-                m_selected = t;
-                m_selected->setSelected( true );
+                d->m_selected = t;
+                d->m_selected->setSelected( true );
             }
-            t->show();
             height += t->height() + KDialog::spacingHint();
         }
 
     // update scrollview's contents size (sets scrollbars limits)
     height -= KDialog::spacingHint();
-    m_pagesWidget->resize( width, height );
+    widget()->resize( width, height );
 
     // enable scrollbar when there's something to scroll
     verticalScrollBar()->setEnabled( viewport()->height() < height );
 
     // request for thumbnail generation
-    delayedRequestVisiblePixmaps( 200 );
+    d->delayedRequestVisiblePixmaps( 200 );
 }
 
 void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 {
     // skip notifies for the current page (already selected)
-    int newPage = m_document->viewport().pageNumber;
-    if ( m_selected && m_selected->pageNumber() == newPage )
+    int newPage = d->m_document->viewport().pageNumber;
+    if ( d->m_selected && d->m_selected->pageNumber() == newPage )
         return;
 
     // deselect previous thumbnail
-    if ( m_selected )
-        m_selected->setSelected( false );
-    m_selected = 0;
+    if ( d->m_selected )
+        d->m_selected->setSelected( false );
+    d->m_selected = 0;
 
     // select the page with viewport and ensure it's centered in the view
-    m_vectorIndex = 0;
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    d->m_vectorIndex = 0;
+    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.begin(), tEnd = d->m_thumbnails.end();
     for ( ; tIt != tEnd; ++tIt )
     {
         if ( (*tIt)->pageNumber() == newPage )
         {
-            m_selected = *tIt;
-            m_selected->setSelected( true );
+            d->m_selected = *tIt;
+            d->m_selected->setSelected( true );
             if ( Okular::Settings::syncThumbnailsViewport() )
             {
-                int yOffset = qMax( viewport()->height() / 4, m_selected->height() / 2 );
-                ensureVisible( 0, m_selected->pos().y() + m_selected->height()/2, 0, yOffset );
+                int yOffset = qMax( viewport()->height() / 4, d->m_selected->height() / 2 );
+                ensureVisible( 0, d->m_selected->pos().y() + d->m_selected->height()/2, 0, yOffset );
             }
             break;
         }
-        m_vectorIndex++;
+        d->m_vectorIndex++;
     }
 }
 
@@ -230,7 +318,7 @@ void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
         return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
         {
@@ -243,14 +331,14 @@ void ThumbnailList::notifyContentsCleared( int changedFlags )
 {
     // if pixmaps were cleared, re-ask them
     if ( changedFlags & DocumentObserver::Pixmap )
-        slotRequestVisiblePixmaps();
+        d->slotRequestVisiblePixmaps();
 }
 
 void ThumbnailList::notifyVisibleRectsChanged()
 {
     bool found = false;
-    const QVector<Okular::VisiblePageRect *> & visibleRects = m_document->visiblePageRects();
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
+    const QVector<Okular::VisiblePageRect *> & visibleRects = d->m_document->visiblePageRects();
+    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
     for ( ; tIt != tEnd; ++tIt )
     {
@@ -274,7 +362,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
 bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 {
     // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
-    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
             return false;
@@ -288,11 +376,11 @@ void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
     QRect viewportRect = viewport()->rect().translated( viewport()->pos() );
-    QList<ThumbnailWidget *>::const_iterator vIt = m_visibleThumbnails.begin(), vEnd = m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
-        QRect thumbRect = t->rect().translated( m_pagesWidget->mapToParent( t->pos() ) );
+        QRect thumbRect = t->rect().translated( widget()->mapToParent( t->pos() ) );
         // update only the exposed area of the widget (saves pixels..)
         QRect relativeRect = thumbRect.intersect( viewport()->rect() );
         if ( !relativeRect.isValid() )
@@ -301,18 +389,7 @@ void ThumbnailList::updateWidgets()
     }
 }
 
-void ThumbnailList::forwardClick( const Okular::Page * p, const QPoint & t, Qt::MouseButton button )
-{
-    if ( button == Qt::RightButton )
-        emit rightClick( p, t );
-    else if ( button == Qt::LeftButton )
-    {
-        if ( m_document->viewport().pageNumber != p->number() )
-            m_document->setViewportPage( p->number() );
-    }
-}
-
-void ThumbnailList::forwardTrack( const Okular::Page * p, const QPoint &d, const QPoint &s )
+void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &point, const QPoint &s )
 {
     Okular::DocumentViewport vp=m_document->viewport();
 
@@ -327,8 +404,8 @@ void ThumbnailList::forwardTrack( const Okular::Page * p, const QPoint &d, const
         {
             double w = vpr->rect.right - vpr->rect.left,
             h = vpr->rect.bottom - vpr->rect.top,
-            deltaX = d.x()*w/s.x(),
-            deltaY = d.y()*h/s.y();
+            deltaX = point.x()*w/s.x(),
+            deltaY = point.y()*h/s.y();
 
             vp.rePos.normalizedX -= deltaX;
             vp.rePos.normalizedY -= deltaY;
@@ -343,12 +420,7 @@ void ThumbnailList::forwardTrack( const Okular::Page * p, const QPoint &d, const
     }
 }
 
-void ThumbnailList::forwardZoom( const Okular::Page *, int i )
-{
-    m_document->setZoom( i );
-}
-
-const QPixmap * ThumbnailList::getBookmarkOverlay() const
+const QPixmap * ThumbnailListPrivate::getBookmarkOverlay() const
 {
     return m_bookmarkOverlay;
 }
@@ -360,49 +432,49 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
     Okular::Settings::self()->writeConfig();
     // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
-    m_document->removeObserver( this );
-    m_document->addObserver( this );
+    d->m_document->removeObserver( this );
+    d->m_document->addObserver( this );
 }
 
 
 //BEGIN widget events 
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
-    if ( m_thumbnails.count() < 1 )
+    if ( d->m_thumbnails.count() < 1 )
         return keyEvent->ignore();
 
     int nextPage = -1;
     if ( keyEvent->key() == Qt::Key_Up )
     {
-        if ( !m_selected )
+        if ( !d->m_selected )
             nextPage = 0;
-        else if ( m_vectorIndex > 0 )
-            nextPage = m_thumbnails[ m_vectorIndex - 1 ]->pageNumber();
+        else if ( d->m_vectorIndex > 0 )
+            nextPage = d->m_thumbnails[ d->m_vectorIndex - 1 ]->pageNumber();
     }
     else if ( keyEvent->key() == Qt::Key_Down )
     {
-        if ( !m_selected )
+        if ( !d->m_selected )
             nextPage = 0;
-        else if ( m_vectorIndex < (int)m_thumbnails.count() - 1 )
-            nextPage = m_thumbnails[ m_vectorIndex + 1 ]->pageNumber();
+        else if ( d->m_vectorIndex < (int)d->m_thumbnails.count() - 1 )
+            nextPage = d->m_thumbnails[ d->m_vectorIndex + 1 ]->pageNumber();
     }
     else if ( keyEvent->key() == Qt::Key_PageUp )
         verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
     else if ( keyEvent->key() == Qt::Key_PageDown )
         verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
     else if ( keyEvent->key() == Qt::Key_Home )
-        nextPage = m_thumbnails[ 0 ]->pageNumber();
+        nextPage = d->m_thumbnails[ 0 ]->pageNumber();
     else if ( keyEvent->key() == Qt::Key_End )
-        nextPage = m_thumbnails[ m_thumbnails.count() - 1 ]->pageNumber();
+        nextPage = d->m_thumbnails[ d->m_thumbnails.count() - 1 ]->pageNumber();
 
     if ( nextPage == -1 )
         return keyEvent->ignore();
 
     keyEvent->accept();
-    if ( m_selected )
-        m_selected->setSelected( false );
-    m_selected = 0;
-    m_document->setViewportPage( nextPage );
+    if ( d->m_selected )
+        d->m_selected->setSelected( false );
+    d->m_selected = 0;
+    d->m_document->setViewportPage( nextPage );
 }
 
 bool ThumbnailList::viewportEvent( QEvent * e )
@@ -411,7 +483,7 @@ bool ThumbnailList::viewportEvent( QEvent * e )
     {
         case QEvent::Resize:
         {
-            viewportResizeEvent( (QResizeEvent*)e );
+            d->viewportResizeEvent( (QResizeEvent*)e );
             break;
         }
         default:
@@ -420,7 +492,7 @@ bool ThumbnailList::viewportEvent( QEvent * e )
     return QScrollArea::viewportEvent( e );
 }
 
-void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
+void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
 {
     if ( m_thumbnails.count() < 1 || width() < 1 )
         return;
@@ -433,7 +505,7 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
         delayedRequestVisiblePixmaps( 2000 );
 
         // resize and reposition items
-        int newWidth = viewport()->width();
+        int newWidth = q->viewport()->width();
         int newHeight = 0;
         QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
         for ( ; tIt != tEnd; ++tIt )
@@ -446,14 +518,14 @@ void ThumbnailList::viewportResizeEvent( QResizeEvent * e )
 
         // update scrollview's contents size (sets scrollbars limits)
         newHeight -= KDialog::spacingHint();
-        m_pagesWidget->resize( newWidth, newHeight );
+        q->widget()->resize( newWidth, newHeight );
 
         // enable scrollbar when there's something to scroll
-        verticalScrollBar()->setEnabled( viewport()->height() < newHeight );
+        q->verticalScrollBar()->setEnabled( q->viewport()->height() < newHeight );
 
         // ensure selected item remains visible
         if ( m_selected )
-            ensureVisible( 0, m_selected->mapToParent( QPoint( 0, 0 ) ).y() + m_selected->height()/2, 0, viewport()->height()/2 );
+            q->ensureVisible( 0, m_selected->pos().y() + m_selected->height() / 2, 0, q->viewport()->height() / 2 );
     }
     else if ( e->size().height() <= e->oldSize().height() )
         return;
@@ -482,21 +554,22 @@ void ThumbnailList::dropEvent( QDropEvent * ev )
 //END widget events
 
 //BEGIN internal SLOTS 
-void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
+void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
 {
     // if an update is already scheduled or the widget is hidden, don't proceed
-    if ( (m_delayTimer && m_delayTimer->isActive()) || isHidden() )
+    if ( ( m_delayTimer && m_delayTimer->isActive() ) || q->isHidden() )
         return;
 
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
     QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QRect viewportRect = q->viewport()->rect().translated( q->horizontalScrollBar()->value(), q->verticalScrollBar()->value() );
     for ( ; tIt != tEnd; ++tIt )
     {
         ThumbnailWidget * t = *tIt;
-        QRect thumbRect = t->rect().translated( m_pagesWidget->mapToParent( t->pos() ) );
-        if ( !thumbRect.intersects( viewport()->rect() ) )
+        QRect thumbRect = t->rect();
+        if ( !thumbRect.intersects( viewportRect ) )
           continue;
         // add ThumbnailWidget to visible list
         m_visibleThumbnails.push_back( t );
@@ -514,11 +587,11 @@ void ThumbnailList::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         m_document->requestPixmaps( requestedPixmaps );
 }
 
-void ThumbnailList::slotDelayTimeout()
+void ThumbnailListPrivate::slotDelayTimeout()
 {
     // resize the bookmark overlay
     delete m_bookmarkOverlay;
-    int expectedWidth = viewport()->width() / 4;
+    int expectedWidth = q->viewport()->width() / 4;
     if ( expectedWidth > 10 )
         m_bookmarkOverlay = new QPixmap( DesktopIcon( "bookmarks", expectedWidth ) );
     else
@@ -529,13 +602,13 @@ void ThumbnailList::slotDelayTimeout()
 }
 //END internal SLOTS
 
-void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
+void ThumbnailListPrivate::delayedRequestVisiblePixmaps( int delayMs )
 {
     if ( !m_delayTimer )
     {
-        m_delayTimer = new QTimer( this );
+        m_delayTimer = new QTimer( q );
         m_delayTimer->setSingleShot( true );
-        connect( m_delayTimer, SIGNAL( timeout() ), this, SLOT( slotDelayTimeout() ) );
+        connect( m_delayTimer, SIGNAL( timeout() ), q, SLOT( slotDelayTimeout() ) );
     }
     m_delayTimer->start( delayMs );
 }
@@ -543,15 +616,12 @@ void ThumbnailList::delayedRequestVisiblePixmaps( int delayMs )
 
 /** ThumbnailWidget implementation **/
 
-ThumbnailWidget::ThumbnailWidget( QWidget * parent, const Okular::Document * document, const Okular::Page * kp, ThumbnailList * tl )
-    : QWidget( parent ), m_tl( tl ), m_document( document ), m_page( kp ),
+ThumbnailWidget::ThumbnailWidget( ThumbnailListPrivate * parent, const Okular::Page * kp )
+    : m_parent( parent ), m_page( kp ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;
-    m_labelHeight = QFontMetrics( font() ).height();
-    setMouseTracking(true);
-    mouseGrabPos.setX(0);
-    mouseGrabPos.setY(0);
+    m_labelHeight = QFontMetrics( m_parent->font() ).height();
 
 }
 
@@ -559,7 +629,7 @@ void ThumbnailWidget::resizeFitWidth( int width )
 {
     m_pixmapWidth = width - m_margin;
     m_pixmapHeight = qRound( m_page->ratio() * (double)m_pixmapWidth );
-    setFixedSize( QSize( width, heightHint() ) );
+    m_rect.setSize( QSize( width, heightHint() ) );
 }
 
 void ThumbnailWidget::setSelected( bool selected )
@@ -581,30 +651,40 @@ void ThumbnailWidget::setVisibleRect( const Okular::NormalizedRect & rect )
     update();
 }
 
-QSize ThumbnailWidget::sizeHint() const
+void ThumbnailListPrivate::mousePressEvent( QMouseEvent * e )
 {
-    return QSize( width(), heightHint() );
-}
+    ThumbnailWidget* item = itemFor( e->pos() );
+    if ( !item ) // mouse on the spacing between items
+        return e->ignore();
 
-void ThumbnailWidget::mousePressEvent( QMouseEvent * e )
-{
-    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+    QRect r = item->visibleRect();
+    int margin = ThumbnailWidget::margin();
+    QPoint p = e->pos() - item->pos();
 
-    if ( e->button() != Qt::RightButton && r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) )
+    if ( e->button() != Qt::RightButton && r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
     {
         mouseGrabPos = e->pos();
+        mouseGrabItem = item;
     }
     else
     {
         mouseGrabPos.setX( 0 );
         mouseGrabPos.setY( 0 );
+        mouseGrabItem = 0;
     }
 }
 
-void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
+void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
 {
-    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
-    if ( r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) )
+    ThumbnailWidget* item = itemFor( e->pos() );
+    if ( !item ) // mouse on the spacing between items
+        return e->ignore();
+
+    QRect r = item->visibleRect();
+    int margin = ThumbnailWidget::margin();
+    QPoint p = e->pos() - item->pos();
+
+    if ( r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
     {
         setCursor( Qt::OpenHandCursor );
     }
@@ -613,30 +693,40 @@ void ThumbnailWidget::mouseReleaseEvent( QMouseEvent * e )
         setCursor( Qt::ArrowCursor );
         if ( mouseGrabPos.isNull() )
         {
-            // don't handle the mouse click, forward it to the thumbnail list
-            m_tl->forwardClick( m_page, e->globalPos(), e->button() );
+            if ( m_document->viewport().pageNumber != item->pageNumber() )
+                m_document->setViewportPage( item->pageNumber() );
         }
     }
     mouseGrabPos.setX( 0 );
     mouseGrabPos.setY( 0 );
+    mouseGrabItem = item;
 }
 
-void ThumbnailWidget::mouseMoveEvent( QMouseEvent * e )
+void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
 {
-    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
-    if ( r.contains( e->pos()-QPoint( m_margin / 2, m_margin / 2 ) ) )
+    ThumbnailWidget* item = itemFor( e->pos() );
+    if ( !item ) // mouse on the spacing between items
+        return e->ignore();
+
+    QRect r = item->visibleRect();
+    int margin = ThumbnailWidget::margin();
+    QPoint p = e->pos() - item->pos();
+
+    if ( r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
     {
-        if (!mouseGrabPos.isNull())
+        if ( !mouseGrabPos.isNull() && mouseGrabItem == item )
         {
             setCursor( Qt::ClosedHandCursor );
             QPoint mousePos = e->pos();
             QPoint delta = mouseGrabPos - mousePos;
             // don't handle the mouse move, forward it to the thumbnail list
-            m_tl->forwardTrack( m_page, delta, QPoint( r.width(), r.height() ) );
+            forwardTrack( item->page(), delta, QPoint( r.width(), r.height() ) );
             mouseGrabPos = e->pos();
         }
         else
         {
+            mouseGrabPos = QPoint();
+            mouseGrabItem = 0;
             setCursor( Qt::OpenHandCursor );
         }
     }
@@ -646,13 +736,18 @@ void ThumbnailWidget::mouseMoveEvent( QMouseEvent * e )
     }
 }
 
-void ThumbnailWidget::wheelEvent( QWheelEvent * e )
+void ThumbnailListPrivate::wheelEvent( QWheelEvent * e )
 {
-    QRect r = m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight );
+    ThumbnailWidget* item = itemFor( e->pos() );
+    if ( !item ) // wheeling on the spacing between items
+        return e->ignore();
 
-    if ( r.contains( e->pos() - QPoint( m_margin / 2, m_margin / 2 ) ) && e->orientation() == Qt::Vertical && e->modifiers() == Qt::ControlModifier )
+    QRect r = item->visibleRect();
+    int margin = ThumbnailWidget::margin();
+
+    if ( r.contains( e->pos() - QPoint( margin / 2, margin / 2 ) ) && e->orientation() == Qt::Vertical && e->modifiers() == Qt::ControlModifier )
     {
-        m_tl->forwardZoom( m_page, e->delta() );
+        m_document->setZoom( e->delta() );
     }
     else
     {
@@ -660,20 +755,20 @@ void ThumbnailWidget::wheelEvent( QWheelEvent * e )
     }
 }
 
-void ThumbnailWidget::contextMenuEvent( QContextMenuEvent * e )
+void ThumbnailListPrivate::contextMenuEvent( QContextMenuEvent * e )
 {
-    // don't handle the mouse click, forward it to the thumbnail list
-    m_tl->forwardClick( m_page, e->globalPos(), Qt::RightButton );
+    ThumbnailWidget* item = itemFor( e->pos() );
+    if ( item )
+    {
+        emit q->rightClick( item->page(), e->globalPos() );
+    }
 }
 
-void ThumbnailWidget::paintEvent( QPaintEvent * e )
+void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
 {
     int width = m_pixmapWidth + m_margin;
-    QRect clipRect = e->rect();
-    if ( !clipRect.isValid() )
-        return;
-    QPainter p( this );
-    QPalette pal = palette();
+    QRect clipRect = _clipRect;
+    QPalette pal = m_parent->palette();
 
     // draw the bottom label + highlight mark
     QColor fillColor = m_selected ? pal.color( QPalette::Active, QPalette::Highlight ) : pal.color( QPalette::Active, QPalette::Base );
@@ -685,7 +780,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
     if ( clipRect.top() < m_pixmapHeight + m_margin )
     {
         // if page is bookmarked draw a colored border
-        bool isBookmarked = m_document->bookmarkManager()->isBookmarked( pageNumber() );
+        bool isBookmarked = m_parent->m_document->bookmarkManager()->isBookmarked( pageNumber() );
         // draw the inner rect
         p.setPen( isBookmarked ? QColor( 0xFF8000 ) : Qt::black );
         p.drawRect( m_margin/2 - 1, m_margin/2 - 1, m_pixmapWidth + 1, m_pixmapHeight + 1 );
@@ -726,7 +821,7 @@ void ThumbnailWidget::paintEvent( QPaintEvent * e )
         }
 
         // draw the bookmark overlay on the top-right corner
-        const QPixmap * bookmarkPixmap = m_tl->getBookmarkOverlay();
+        const QPixmap * bookmarkPixmap = m_parent->getBookmarkOverlay();
         if ( isBookmarked && bookmarkPixmap )
         {
             int pixW = bookmarkPixmap->width(),

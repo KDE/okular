@@ -1,7 +1,7 @@
 [Desktop Entry]
 MimeType=application/pdf;application/x-gzpdf;application/x-bzpdf;
 Terminal=false
-Name==kular
+Name=Okular
 Name[pt_BR]=Okular
 Name[zh_TW]=Okular
 GenericName=Document Viewer

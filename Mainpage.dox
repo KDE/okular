@@ -861,3 +861,4 @@ would need a lot of code we work with static data here. [to be continued]
 */
 
 // DOXYGEN_EXCLUDE = conf generators shell ui
+// DOXYGEN_FILE_PATTERNS = core/*.h *.dox

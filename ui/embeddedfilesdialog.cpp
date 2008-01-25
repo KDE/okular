@@ -121,9 +121,15 @@ void EmbeddedFilesDialog::saveFile( Okular::EmbeddedFile* ef )
     QFile f(path);
     if ( !f.exists() || KMessageBox::warningContinueCancel( this, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18n( "Overwrite" ) ) ) == KMessageBox::Continue )
     {
-        f.open( QIODevice::WriteOnly );
-        f.write( ef->data() );
-        f.close();
+        if (f.open( QIODevice::WriteOnly ))
+        {
+            f.write( ef->data() );
+            f.close();
+        }
+        else
+        {
+            KMessageBox::error( this, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
+        }
     }
 }
 

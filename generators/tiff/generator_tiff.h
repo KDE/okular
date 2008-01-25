@@ -12,6 +12,8 @@
 
 #include <core/generator.h>
 
+#include <qhash.h>
+
 class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
@@ -34,8 +36,10 @@ class TIFFGenerator : public Okular::Generator
         Private * const d;
 
         void loadPages( QVector<Okular::Page*> & pagesVector );
+        int mapPage( int page ) const;
 
         Okular::DocumentInfo * m_docInfo;
+        QHash< int, int > m_pageMapping;
 };
 
 #endif

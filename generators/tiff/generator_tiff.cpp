@@ -17,6 +17,7 @@
 #include <QtGui/QPrinter>
 
 #include <kaboutdata.h>
+#include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 
@@ -26,6 +27,8 @@
 
 #include <tiff.h>
 #include <tiffio.h>
+
+#define TiffDebug 4714
 
 class TIFFGenerator::Private
 {
@@ -102,6 +105,7 @@ bool TIFFGenerator::doCloseDocument()
         d->tiff = 0;
         delete m_docInfo;
         m_docInfo = 0;
+        m_pageMapping.clear();
     }
 
     return true;
@@ -112,7 +116,7 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
     bool generated = false;
     QImage img;
 
-    if ( TIFFSetDirectory( d->tiff, request->page()->number() ) )
+    if ( TIFFSetDirectory( d->tiff, mapPage( request->page()->number() ) ) )
     {
         int rotation = request->page()->rotation();
         uint32 width = (uint32)request->page()->width();
@@ -197,6 +201,7 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
 
     tdir_t dirs = TIFFNumberOfDirectories( d->tiff );
     pagesVector.resize( dirs );
+    tdir_t realdirs = 0;
 
     uint32 width = 0;
     uint32 height = 0;
@@ -210,11 +215,15 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
              TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             continue;
 
-        delete pagesVector[i];
-        Okular::Page * page = new Okular::Page( i, width, height, Okular::Rotation0 );
-        pagesVector[i] = page;
+        Okular::Page * page = new Okular::Page( realdirs, width, height, Okular::Rotation0 );
+        pagesVector[ realdirs ] = page;
 
+        m_pageMapping[ realdirs ] = i;
+
+        ++realdirs;
     }
+
+    pagesVector.resize( realdirs );
 }
 
 bool TIFFGenerator::print( QPrinter& printer )
@@ -231,7 +240,7 @@ bool TIFFGenerator::print( QPrinter& printer )
 
     for ( tdir_t i = 0; i < pageList.count(); ++i )
     {
-        if ( !TIFFSetDirectory( d->tiff, pageList[i] - 1 ) )
+        if ( !TIFFSetDirectory( d->tiff, mapPage( pageList[i] - 1 ) ) )
             continue;
 
         if ( TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width ) != 1 ||
@@ -261,6 +270,17 @@ bool TIFFGenerator::print( QPrinter& printer )
     }
 
     return true;
+}
+
+int TIFFGenerator::mapPage( int page ) const
+{
+    QHash< int, int >::const_iterator it = m_pageMapping.find( page );
+    if ( it == m_pageMapping.end() )
+    {
+        kWarning(TiffDebug) << "Requesting unmapped page" << page << ":" << m_pageMapping;
+        return -1;
+    }
+    return it.value();
 }
 
 #include "generator_tiff.moc"

@@ -8,6 +8,7 @@ Name[pt]=GhostScript
 Name[x-test]=xxGhostscriptxx
 Name[zh_CN]=GhostScript 信息
 Comment=Ghostscript PS/PDF backend for Okular
+Comment[el]=Σύστημα υποστήριξης Ghostscript PS/PDF για το Okular
 Comment[ga]=Inneall PS/PDF Ghostscript le haghaidh Okular
 Comment[pt_BR]=Backend Ghostscript PS/PDF para Okular
 Comment[zh_TW]=Okular 的 Ghostscript PS/PDF 後端

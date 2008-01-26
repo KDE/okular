@@ -2,6 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=okular/Generator
 Comment=File format backend for Okular
+Comment[el]=Σύστημα υποστήριξης μορφής αρχείων για το Okular
 Comment[ga]=Inneall formáide comhaid le haghaidh Okular
 Comment[pt_BR]=Backend de Formato de Arquivo para Okular
 Comment[zh_TW]=Okular 檔案格式後端

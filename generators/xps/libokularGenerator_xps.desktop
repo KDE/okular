@@ -1,10 +1,12 @@
 [Desktop Entry]
 Type=Service
 Name=Okular XPS Plugin
+Name[el]=Πρόσθετο XPS του Okular
 Name[ga]=Breiseán XPS Okular
 Name[pt_BR]=Plug-in XPS para Okular
 Name[zh_TW]=Okular XPS 外掛程式
 Comment=XPS backend for Okular
+Comment[el]=Σύστημα υποστήριξης XPS για το Okular
 Comment[ga]=Inneall XPS le haghaidh Okular
 Comment[pt_BR]=Backend XPS para Okular
 Comment[zh_TW]=Okular 的 XPS 後端

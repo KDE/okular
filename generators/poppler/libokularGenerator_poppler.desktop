@@ -6,6 +6,7 @@ Name[ne]=पप्प्लर
 Name[pa]=ਪੋਪੱਲਰ
 Name[x-test]=xxPopplerxx
 Comment=PDF backend for Okular using poppler
+Comment[el]=Σύστημα υποστήριξης PDF για το Okular με χρήση του poppler
 Comment[ga]=Inneall PDF a úsáideann poppler le haghaidh Okular
 Comment[pt_BR]=Backend PDF para Okular usando poppler
 Comment[zh_TW]=Okular 使用 poppler 的 PDF 後端

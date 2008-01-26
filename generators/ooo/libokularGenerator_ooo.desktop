@@ -35,6 +35,7 @@ Name[x-test]=xxOpenDocument formatxx
 Name[zh_CN]=开放文档格式
 Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for Okular
+Comment[el]=Σύστημα υποστήριξης OpenDocument για το Okular
 Comment[ga]=Inneall OpenDocument le haghaidh Okular
 Comment[pt_BR]=Backend OpenDocument para Okular
 Comment[zh_TW]=Okular 的 OpenDocument 後端

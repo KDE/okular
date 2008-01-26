@@ -4,6 +4,7 @@ Name=chmlib
 Name[hi]=सीएचएमलिब
 Name[x-test]=xxchmlibxx
 Comment=Windows HTMLHelp backend for Okular
+Comment[el]=Σύστημα υποστήριξης βοήθειας Windows σε HTML για το Okular
 Comment[ga]=Inneall HTMLHelp Windows le haghaidh Okular
 Comment[pt_BR]=Backend do Windows HTMLHelp para Okular
 Comment[zh_TW]=Okular 的 Windows HTMLHelp 後端

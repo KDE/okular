@@ -4,6 +4,7 @@ Name=dvi
 Name[hi]=डीवीआई
 Name[x-test]=xxdvixx
 Comment=DVI backend for Okular
+Comment[el]=Σύστημα υποστήριξης DVI για το Okular
 Comment[ga]=Inneall DVI le haghaidh Okular
 Comment[pt_BR]=Backend DVI para Okular
 Comment[zh_TW]=Okular 的 DVI 後端

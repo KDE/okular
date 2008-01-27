@@ -56,7 +56,8 @@ static KAboutData createAboutData()
          "0.1",
          ki18n( "A TIFF backend" ),
          KAboutData::License_GPL,
-         ki18n( "© 2006-2007 Pino Toscano" )
+         ki18n( "© 2006-2008 Pino Toscano" ),
+         ki18nc( "This represents the libtiff version, as string with copyrights as well; can be left as-is.", "%1" ).subs( TIFFGetVersion() )
     );
     aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
     return aboutData;

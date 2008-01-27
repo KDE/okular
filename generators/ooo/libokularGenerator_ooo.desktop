@@ -37,6 +37,7 @@ Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for Okular
 Comment[el]=Σύστημα υποστήριξης OpenDocument για το Okular
 Comment[ga]=Inneall OpenDocument le haghaidh Okular
+Comment[nds]=OpenDocument-Hülpprogramm för Okular
 Comment[pt_BR]=Backend OpenDocument para Okular
 Comment[zh_TW]=Okular 的 OpenDocument 後端
 X-KDE-ServiceTypes=okular/Generator

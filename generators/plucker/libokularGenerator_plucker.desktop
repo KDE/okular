@@ -36,6 +36,7 @@ Name[zh_TW]=Plucker 文件
 Comment=Plucker backend for Okular
 Comment[el]=Σύστημα υποστήριξης Plucker για το Okular
 Comment[ga]=Inneall Plucker le haghaidh Okular
+Comment[nds]=Plucker-Hülpprogramm för Okular
 Comment[pt_BR]=Backend Plucker para Okular
 Comment[zh_TW]=Okular 的 Plucker 後端
 X-KDE-ServiceTypes=okular/Generator

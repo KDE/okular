@@ -6,6 +6,7 @@ Name[x-test]=xxdjvuxx
 Comment=DjVu backend for Okular
 Comment[el]=Σύστημα υποστήριξης DjVu για το Okular
 Comment[ga]=Inneall DjVu le haghaidh Okular
+Comment[nds]=DjVu-Hülpprogramm för Okular
 Comment[pt_BR]=Backend DjVu para Okular
 Comment[zh_TW]=Okular 的 DjVu 後端
 X-KDE-ServiceTypes=okular/Generator

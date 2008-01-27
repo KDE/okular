@@ -8,6 +8,7 @@ Name[x-test]=xxPopplerxx
 Comment=PDF backend for Okular using poppler
 Comment[el]=Σύστημα υποστήριξης PDF για το Okular με χρήση του poppler
 Comment[ga]=Inneall PDF a úsáideann poppler le haghaidh Okular
+Comment[nds]=PDF-Hülpprogramm för Okular, bruukt Poppler
 Comment[pt_BR]=Backend PDF para Okular usando poppler
 Comment[zh_TW]=Okular 使用 poppler 的 PDF 後端
 X-KDE-ServiceTypes=okular/Generator

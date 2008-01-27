@@ -20,12 +20,16 @@ configure_file(
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h
 )
 
+# Can be multiple include directories for poppler
+separate_arguments(POPPLER_INCLUDE_DIR)
+foreach(_include_dir ${POPPLER_INCLUDE_DIR})
+    include_directories(${_include_dir})
+endforeach(_include_dir ${POPPLER_INCLUDE_DIR})
+
 include_directories(
-   ${POPPLER_INCLUDE_DIR}
    ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
-
 
 ########### next target ###############
 

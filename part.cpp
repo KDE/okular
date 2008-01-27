@@ -1569,7 +1569,7 @@ void Part::setupPrint( QPrinter &printer )
         page = m_document->page(i);
         width = page->width();
         height = page->height();
-        if (page->orientation() == 90 || page->orientation() == 270) qSwap(width, height);
+        if (page->orientation() == Okular::Rotation90 || page->orientation() == Okular::Rotation270) qSwap(width, height);
         if (width > height) landscape++;
         else portrait++;
     }

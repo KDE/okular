@@ -64,6 +64,7 @@ install( FILES
            core/textdocumentgenerator.h
            core/textpage.h
            core/utils.h
+           core/version.h
            core/fileprinter.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
 

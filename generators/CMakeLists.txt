@@ -1,12 +1,12 @@
 include (MacroLogFeature)
 
-set(LIBGS_MINIMUM_VERSION "8.56")
+set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 
 macro_optional_find_package(Poppler)
 macro_log_feature(POPPLER_FOUND "Poppler-Qt4" "A PDF rendering library" "http://poppler.freedesktop.org" FALSE "0.5.4" "Support for PDF files in okular.")
 
-macro_optional_find_package(LIBGS)
-macro_log_feature(LIBGS_FOUND "libgs, Ghostscript libraries" "A PostScript renderining library" "http://www.cs.wisc.edu/~ghost" FALSE "${LIBGS_MINIMUM_VERSION}" "Support for PS files in okular.")
+macro_optional_find_package(LibSpectre)
+macro_log_feature(LIBSPECTRE_FOUND "libspectre" "A PostScript rendering library" "http://libspectre.freedesktop.org/wiki/" FALSE "${LIBSPECTRE_MINIMUM_VERSION}" "Support for PS files in okular.")
 
 macro_optional_find_package(CHM)
 macro_log_feature(CHM_FOUND "CHM" "A library for dealing with Microsoft ITSS/CHM format files" "http://www.jedrea.com/chmlib" FALSE "" "Support CHM files in okular.")
@@ -30,9 +30,9 @@ if(POPPLER_FOUND)
   add_subdirectory(poppler)
 endif(POPPLER_FOUND)
 
-if(LIBGS_FOUND)
+if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)
-endif(LIBGS_FOUND)
+endif(LIBSPECTRE_FOUND)
 
 add_subdirectory( kimgio )
 

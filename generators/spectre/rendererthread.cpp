@@ -37,7 +37,7 @@ GSRendererThread::~GSRendererThread()
 
 void GSRendererThread::setMagnify(double magnify)
 {
-    spectre_render_context_set_scale(m_renderContext, magnify);
+    spectre_render_context_set_scale(m_renderContext, magnify, magnify);
 }
 
 void GSRendererThread::setPlatformFonts(bool pfonts)

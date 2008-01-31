@@ -2650,8 +2650,12 @@ void SplashOutputDev::setSoftMask(GfxState * /*state*/, double * /*bbox*/,
   memset(softMask->getDataPtr(), 0,
 	 softMask->getRowSize() * softMask->getHeight());
   p = softMask->getDataPtr() + ty * softMask->getRowSize() + tx;
-  for (y = 0; y < tBitmap->getHeight(); ++y) {
-    for (x = 0; x < tBitmap->getWidth(); ++x) {
+  int xMax = tBitmap->getWidth();
+  int yMax = tBitmap->getHeight();
+  if (xMax + tx > bitmap->getWidth()) xMax = bitmap->getWidth() - tx;
+  if (yMax + ty > bitmap->getHeight()) yMax = bitmap->getHeight() - ty;
+  for (y = 0; y < yMax; ++y) {
+    for (x = 0; x < xMax; ++x) {
       tBitmap->getPixel(x, y, color);
       if (alpha) {
 	//~ unimplemented

@@ -26,6 +26,7 @@
 #include "fontinfo.h"
 #include "generator.h"
 
+class QEventLoop;
 class QTimer;
 class KTemporaryFile;
 
@@ -70,6 +71,7 @@ class DocumentPrivate
             m_saveBookmarksTimer( 0 ),
             m_generator( 0 ),
             m_generatorsLoaded( false ),
+            m_closingLoop( 0 ),
             m_fontsCached( false )
         {
         }
@@ -141,6 +143,7 @@ class DocumentPrivate
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > m_observers;
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
+        QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;
         QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
         qulonglong m_allocatedPixmapsTotalMemory;
@@ -175,6 +178,8 @@ class DocumentPrivate
 
         // cache of the mimetype we support
         QStringList m_supportedMimeTypes;
+
+        QEventLoop *m_closingLoop;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;

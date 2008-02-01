@@ -318,7 +318,9 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
     if ( d->m_document )
         d->m_document->requestDone( request );
     else
-        Q_ASSERT( !"No document set for generator in signalPixmapRequestDone!" );
+    {
+        delete request;
+    }
 }
 
 const Document * Generator::document() const

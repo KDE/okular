@@ -615,6 +615,7 @@ void DocumentPrivate::sendGeneratorRequest()
         // we always have to unlock _before_ the generatePixmap() because
         // a sync generation would end with requestDone() -> deadlock, and
         // we can not really know if the generator can do async requests
+        m_executingPixmapRequests.push_back( request );
         m_pixmapRequestsMutex.unlock();
         m_generator->generatePixmap( request );
     }
@@ -1293,6 +1294,22 @@ void Document::closeDocument()
     // check if there's anything to close...
     if ( !d->m_generator )
         return;
+
+    QEventLoop loop;
+    bool startEventLoop = false;
+    do
+    {
+        d->m_pixmapRequestsMutex.lock();
+        startEventLoop = !d->m_executingPixmapRequests.isEmpty();
+        d->m_pixmapRequestsMutex.unlock();
+        if ( startEventLoop )
+        {
+            d->m_closingLoop = &loop;
+            loop.exec();
+            d->m_closingLoop = 0;
+        }
+    }
+    while ( startEventLoop );
 
     if ( d->m_fontThread )
     {
@@ -2578,8 +2595,19 @@ const KComponentData* Document::componentData() const
 
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
-    if ( !m_generator || !req )
+    if ( !req )
         return;
+
+    if ( !m_generator || m_closingLoop )
+    {
+        m_pixmapRequestsMutex.lock();
+        m_executingPixmapRequests.removeAll( req );
+        m_pixmapRequestsMutex.unlock();
+        delete req;
+        if ( m_closingLoop )
+            m_closingLoop->exit();
+        return;
+    }
 
 #ifndef NDEBUG
     if ( !m_generator->canGeneratePixmap() )
@@ -2617,6 +2645,9 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 #endif
 
     // 3. delete request
+    m_pixmapRequestsMutex.lock();
+    m_executingPixmapRequests.removeAll( req );
+    m_pixmapRequestsMutex.unlock();
     delete req;
 
     // 4. start a new generation if some is pending

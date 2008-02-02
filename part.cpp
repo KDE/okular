@@ -85,7 +85,7 @@
 #include "core/fileprinter.h"
 
 K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
-K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "okular" ) ) ) )
+K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "Okular" ) ) ) )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {

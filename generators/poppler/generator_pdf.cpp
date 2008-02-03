@@ -289,15 +289,14 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_poppler",
          "okular_poppler",
-         KLocalizedString(),
+         ki18n( "PDF Backend" ),
          "0.1",
-         KLocalizedString(),
+         ki18n( "A PDF file renderer" ),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n( "© 2005-2008 Albert Astals Cid" )
     );
     return aboutData;
 }

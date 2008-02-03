@@ -16,18 +16,20 @@
   
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 */
 
 
-//#define FIXENDIAN16(x) (x = wxUINT16_SWAP_ON_BE(x))
-//#define FIXENDIAN32(x) (x = wxUINT32_SWAP_ON_BE(x))
-#define FIXENDIAN16(x)
-#define FIXENDIAN32(x)
 #define UINT16ARRAY(x) ((unsigned char)(x)[0] | ((u_int16_t)(x)[1] << 8))
 #define UINT32ARRAY(x) (UINT16ARRAY(x) | ((u_int32_t)(x)[2] << 16) \
 		| ((u_int32_t)(x)[3] << 24))
+
+inline unsigned int get_int32_le( void *addr)
+{
+	unsigned char *p = (unsigned char*) addr;
+	return (unsigned int) ( p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24) );
+}
 
 
 inline u_int64_t be_encint(unsigned char* buffer, size_t& length)

@@ -1,6 +1,9 @@
+//Added by qt3to4:
+#include <QPixmap>
 /***************************************************************************
- *   Copyright (C) 2005 by tim   *
- *   tim@krasnogorsk.ru   *
+ *   Copyright (C) 2004-2007 by Georgy Yunaev, gyunaev@ulduzsoft.com       *
+ *   Please do not use email address above for bug reports; see            *
+ *   the README file                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,49 +18,18 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef ICON_STORAGE_H
-#define ICON_STORAGE_H
 
-#include <qmap.h>
-#include <qpixmap.h>
+#include <QPixmap>
 
-static const unsigned int MAX_BUILTIN_ICONS = 42;
-
-class KCHMIconStorage
+//! This class is used to retrieve the book TOC icons associated with images
+class LCHMTocImageKeeper
 {
-public:
-	typedef struct
-	{
-		unsigned int 	size;
-		const char * 	data;
-	} png_memory_image_t;
-
-	enum pixmap_index_t
-	{
-		back = 1000,
-		bookmark_add,
-		fileopen,
-		print,
-		findnext,
-		findprev,
-		forward,
-		gohome,
-		viewsource,
-		view_decrease,
-		view_increase
-	};
-
-	const QPixmap * getBookIconPixmap (unsigned int id);
-	const QPixmap * getToolbarPixmap (pixmap_index_t pix);
-
-private:
-	const QPixmap * returnOrLoadImage (unsigned int id, const png_memory_image_t * image);
-
-	QMap<unsigned int, QPixmap*>	m_iconMap;
+	public:
+		LCHMTocImageKeeper();
+		const QPixmap * getImage( int id );
+		
+	private:
+		QPixmap	m_images[LCHMBookIcons::MAX_BUILTIN_ICONS];
 };
-
-extern KCHMIconStorage	gIconStorage;
-
-#endif /* ICON_STORAGE_H */

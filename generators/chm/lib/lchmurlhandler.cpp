@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Georgy Yunaev                                   *
- *   tim@krasnogorsk.ru                                                    *
+ *   Copyright (C) 2004-2005 by Georgy Yunaev, gyunaev@ulduzsoft.com       *
+ *   Please do not use email address above for bug reports; see            *
+ *   the README file                                                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,34 +16,17 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KCHMTEXTENCODING_H
-#define KCHMTEXTENCODING_H
+#include "lchmurlhandler.h"
 
-/**
-@author Georgy Yunaev
-*/
-class KCHMTextEncoding
+LCHMUrlHandler::LCHMUrlHandler()
 {
-public:
-	typedef struct
-	{
-		const char	*	charset;
-		const char	*	country;
-		int				winlcid;
-		int				wincodepage;
-		int				wincharset;
-		const char	*	qtcodec;
-	}
-	text_encoding_t;
+}
 
-	static const text_encoding_t * getTextEncoding();
-	static const text_encoding_t * lookupByLCID (short lcid);
-	static const text_encoding_t * lookupByWinCharset (int charset);
-	
-private:
-    KCHMTextEncoding() {};
-};
 
-#endif
+LCHMUrlHandler::~LCHMUrlHandler()
+{
+}
+
+

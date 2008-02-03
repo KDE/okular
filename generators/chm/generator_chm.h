@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Piotr Szymański <niedakh@gmail.com>             *
+ *   Copyright (C) 2008 by Albert Astals Cid <aacid@kde.org>               * 
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -13,7 +14,8 @@
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
 
-class CHMFile;
+#include "lib/libchmfile.h"
+
 class KHTMLPart;
 
 namespace Okular {
@@ -52,8 +54,10 @@ class CHMGenerator : public Okular::Generator
         void additionalRequestData();
         void recursiveExploreNodes( DOM::Node node, Okular::TextPage *tp );
         void preparePageForSyncOperation( int zoom , const QString &url );
+        QMap<QString, int> m_urlPage;
+        QVector<QString> m_pageUrl;
         Okular::DocumentSynopsis m_docSyn;
-        CHMFile* m_file;
+        LCHMFile* m_file;
         KHTMLPart *m_syncGen;
         QString m_fileName;
         Okular::PixmapRequest* m_request;

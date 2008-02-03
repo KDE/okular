@@ -11,11 +11,12 @@ include_directories(
 ########### next target ###############
 
 set(chmlib_SRCS
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/iconstorage.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/kchmtextencoding.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/kchmtreeviewitem.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/kchmurl.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/xchmfile.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/lchmurlhandler.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfile.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfileimpl.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfile_search.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmtextencoding.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmtocimage.cpp
 )
 
 set(okularGenerator_chmlib_SRCS

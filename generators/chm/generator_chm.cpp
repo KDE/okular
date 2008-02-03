@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Piotr Szymański <niedakh@gmail.com>             *
+ *   Copyright (C) 2008 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,6 +13,7 @@
 #include <QtCore/QEventLoop>
 #include <QtCore/QMutex>
 #include <QtGui/QPainter>
+#include <QtXml/QDomElement>
 
 #include <kaboutdata.h>
 #include <khtml_part.h>
@@ -27,8 +29,6 @@
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
 
-#include "lib/xchmfile.h"
-
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
@@ -38,9 +38,10 @@ static KAboutData createAboutData()
          "0.1",
          ki18n( "A Microsoft Windows help file renderer" ),
          KAboutData::License_GPL,
-         ki18n( "© 2005-2007 Piotr Szymański" )
+         ki18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
     );
     aboutData.addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
+    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
     return aboutData;
 }
 
@@ -66,10 +67,41 @@ CHMGenerator::~CHMGenerator()
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
     m_fileName=fileName;
-    m_file=new CHMFile (fileName);
-    m_file->ParseAndFillTopicsTree (&m_docSyn);
+    m_file=new LCHMFile ();
+    m_file->loadFile(fileName);
+    QVector< LCHMParsedEntry > topics;
+    m_file->parseTableOfContents(&topics);
+    
+    // fill m_docSyn
+    QMap<int, QDomElement> lastIndentElement;
+    foreach(const LCHMParsedEntry &e, topics)
+    {
+        QDomElement item = m_docSyn.createElement(e.name);
+        item.setAttribute("ViewportName", e.urls.first());
+        item.setAttribute("Icon", e.imageid);
+        if (e.indent == 0) m_docSyn.appendChild(item);
+        else lastIndentElement[e.indent - 1].appendChild(item);
+        lastIndentElement[e.indent] = item;
+    }
+    
+    // fill m_urlPage and m_pageUrl
+    int pageNum = 0;
+    foreach(const LCHMParsedEntry &e, topics)
+    {
+        const QString &url = e.urls.first();
+        int pos = url.indexOf ('#');
+        QString tmpUrl = pos == -1 ? url : url.left(pos);
 
-    pagesVector.resize(m_file->m_UrlPage.count());
+        // url already there, abort insertion
+        if (m_urlPage.contains(tmpUrl)) continue;
+
+        // insert the url into the maps, but insert always the variant without the #ref part
+        m_urlPage.insert(tmpUrl, pageNum);
+        m_pageUrl.append(tmpUrl);
+        pageNum++;
+    }
+
+    pagesVector.resize(m_pageUrl.count());
     m_textpageAddedList.fill(false, pagesVector.count());
 
     if (!m_syncGen)
@@ -78,11 +110,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
     }
 
-    QMap <QString, int>::ConstIterator it=m_file->m_UrlPage.begin(), end=m_file->m_UrlPage.end();
-    for (;it!=end;++it)
+    for (int i = 0; i < m_pageUrl.count(); ++i)
     {
-        preparePageForSyncOperation(100,it.key());
-        int i= it.value() - 1;
+        preparePageForSyncOperation(100, m_pageUrl.at(i));
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
     }
@@ -98,6 +128,8 @@ bool CHMGenerator::doCloseDocument()
     delete m_file;
     m_file=0;
     m_textpageAddedList.clear();
+    m_urlPage.clear();
+    m_pageUrl.clear();
     m_docSyn.clear();
     if (m_syncGen)
     {
@@ -161,7 +193,7 @@ const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo()
         m_docInfo=new Okular::DocumentInfo();
 
         m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-chm" );
-        m_docInfo->set( Okular::DocumentInfo::Title, m_file->Title() );
+        m_docInfo->set( Okular::DocumentInfo::Title, m_file->title() );
     }
     return m_docInfo;
 }
@@ -199,7 +231,7 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
     }
 
     userMutex()->lock();
-    QString url= m_file->getUrlForPage ( request->pageNumber() + 1 );
+    QString url= m_pageUrl[request->pageNumber()];
     int zoom = qRound( qMax( static_cast<double>(requestWidth)/static_cast<double>(request->page()->width())
         , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
         ) ) * 100;
@@ -359,7 +391,8 @@ Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
     double zoomP = documentMetaData( "ZoomFactor" ).toInt( &ok );
     int zoom = ok ? qRound( zoomP * 100 ) : 100;
     m_syncGen->view()->resize(qRound( page->width() * zoomP ) , qRound( page->height() * zoomP ));
-    preparePageForSyncOperation(zoom, m_file->getUrlForPage ( page->number() + 1 ));
+    
+    preparePageForSyncOperation(zoom, m_pageUrl[page->number()]);
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
     userMutex()->unlock();
@@ -371,15 +404,21 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
     if ( key == "NamedViewport" && !option.toString().isEmpty() )
     {
         Okular::DocumentViewport viewport;
-        viewport.pageNumber = m_file->getPageNum( option.toString() ) -1;
-        if ( viewport.pageNumber >= 0 )
+        QMap<QString,int>::const_iterator it = m_urlPage.find(option.toString());
+        if (it != m_urlPage.end())
+        {
+            viewport.pageNumber = it.value();
             return viewport.toString();
+        }
+        
     }
     else if ( key == "DocumentTitle" )
     {
-        return m_file->Title();
+        return m_file->title();
     }
     return QVariant();
 }
+
+/* kate: replace-tabs on; tab-width 4; */
 
 #include "generator_chm.moc"

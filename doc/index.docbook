@@ -705,7 +705,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Show Forms</guimenuitem>
+							<guimenuitem>Show/Hide Forms</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -861,7 +861,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>This an always disabled action that appears in this menu only if the current document has 
+						<para>This is an always disabled action that appears in this menu only if the current document has 
 						no bookmarks. Otherwise a list of all bookmarked pages is displayed here. Clicking on these bookmarks
 						allows you to go directly to the associated pages.</para>
 					</listitem>

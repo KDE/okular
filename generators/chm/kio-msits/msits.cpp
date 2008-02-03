@@ -19,18 +19,16 @@
 #include <sys/stat.h>
 
 #include <kapplication.h>
-#include <kcomponentdata.h>
 #include <kdebug.h>
 #include <kurl.h>
 #include <kmimetype.h>
-#include <kio/udsentry.h>
 
 #include <qfile.h>
 #include <qbitarray.h>
 #include <qvector.h>
 
 #include "msits.h"
-
+#include "libchmurlfactory.h"
 
 using namespace KIO;
 
@@ -80,8 +78,9 @@ static bool isDirectory ( const QString & filename )
 
 void ProtocolMSITS::get( const KUrl& url )
 {
-	QString fileName;
+	QString htmdata, fileName;
 	chmUnitInfo ui;
+	QByteArray buf;
 
     kDebug() << "kio_msits::get() " << url.path();
 
@@ -90,35 +89,43 @@ void ProtocolMSITS::get( const KUrl& url )
 
 	kDebug() << "kio_msits::get: parseLoadAndLookup returned " << fileName;
 
-	if ( isDirectory (fileName) )
+	if ( LCHMUrlFactory::handleFileType( url.path(), htmdata ) )
 	{
-		error( KIO::ERR_IS_DIRECTORY, url.prettyUrl() );
-		return;
+		buf = htmdata.toUtf8();
+		kDebug() << "Using special handling for image pages: " << htmdata;
+	}
+	else
+	{
+		if ( isDirectory (fileName) )
+		{
+			error( KIO::ERR_IS_DIRECTORY, url.prettyUrl() );
+			return;
+		}
+
+		if ( !ResolveObject ( fileName, &ui) )
+		{
+			kDebug() << "kio_msits::get: could not resolve filename " << fileName;
+        	error( KIO::ERR_DOES_NOT_EXIST, url.prettyUrl() );
+			return;
+		}
+
+    	buf.resize( ui.length );
+
+		if ( RetrieveObject (&ui, (unsigned char*) buf.data(), 0, ui.length) == 0 )
+		{
+			kDebug() << "kio_msits::get: could not retrieve filename " << fileName;
+        	error( KIO::ERR_NO_CONTENT, url.prettyUrl() );
+			return;
+		}
 	}
 
-	if ( !ResolveObject ( fileName, &ui) )
-	{
-		kDebug() << "kio_msits::get: could not resolve filename " << fileName;
-        error( KIO::ERR_DOES_NOT_EXIST, url.prettyUrl() );
-		return;
-	}
-
-    QByteArray buf (ui.length, '\0');
-
-	if ( RetrieveObject (&ui, (unsigned char*) buf.data(), 0, ui.length) == 0 )
-	{
-		kDebug() << "kio_msits::get: could not retrieve filename " << fileName;
-        error( KIO::ERR_NO_CONTENT, url.prettyUrl() );
-		return;
-	}
-
-    totalSize( ui.length );
+    totalSize( buf.size() );
     KMimeType::Ptr result = KMimeType::findByNameAndContent( fileName, buf );
     kDebug() << "Emitting mimetype " << result->name();
 
 	mimeType( result->name() );
     data( buf );
-	processedSize( ui.length );
+	processedSize( buf.size() );
 
     finished();
 }
@@ -138,7 +145,11 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 
 	QString filename = url.path().left (pos);
 	abspath = url.path().mid (pos + 2); // skip ::
-
+	
+	// Some buggy apps add ms-its:/ to the path as well
+	if ( abspath.startsWith( "ms-its:" ) )
+		abspath = abspath.mid( 7 );
+			
 	kDebug() << "ProtocolMSITS::parseLoadAndLookup: filename " << filename << ", path " << abspath;
 
     if ( filename.isEmpty() )
@@ -276,7 +287,6 @@ void ProtocolMSITS::listDir (const KUrl & url)
 		return;
 	}
 
-//	totalFiles(listing.size());
 	UDSEntry entry;
 	int striplength = filepath.length();
 

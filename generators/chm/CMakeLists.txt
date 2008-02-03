@@ -2,31 +2,24 @@ add_subdirectory( kio-msits )
 
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CMAKE_BINARY_DIR}/okular
    ${CHM_INCLUDE_DIR}
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib
+   ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
 
 
 ########### next target ###############
 
-set(chmlib_SRCS
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/lchmurlhandler.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfile.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfileimpl.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmfile_search.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmtextencoding.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/lib/libchmtocimage.cpp
-)
-
 set(okularGenerator_chmlib_SRCS
-   ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/chm/generator_chm.cpp
+   lib/lchmurlhandler.cpp
+   lib/libchmfile.cpp
+   lib/libchmfileimpl.cpp
+   lib/libchmfile_search.cpp
+   lib/libchmtextencoding.cpp
+   lib/libchmtocimage.cpp
+   generator_chm.cpp
 )
 
-set(okularGenerator_chmlib_PART_SRCS ${chmlib_SRCS} ${okularGenerator_chmlib_SRCS} )
-
-
-kde4_add_plugin(okularGenerator_chmlib ${okularGenerator_chmlib_PART_SRCS})
+kde4_add_plugin(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
 
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${KDE4_KHTML_LIBS} )
 

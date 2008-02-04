@@ -43,6 +43,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​របស់ OpenDoc
 Comment[nds]=OpenDocument-Hülpprogramm för Okular
 Comment[pt_BR]=Backend OpenDocument para Okular
 Comment[tr]=Okular için OpenDocument arka ucu
+Comment[zh_CN]=Okular 的开放文档格式后端
 Comment[zh_TW]=Okular 的 OpenDocument 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/vnd.oasis.opendocument.text;

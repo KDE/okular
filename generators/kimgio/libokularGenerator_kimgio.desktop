@@ -43,6 +43,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​សម្រាប�
 Comment[nds]=Bild-Hülpprogramm för Okular
 Comment[pt_BR]=Backend de Imagens para Okular
 Comment[tr]=Okular için resim arka ucu
+Comment[zh_CN]=Okular 的图像格式后端
 Comment[zh_TW]=Okular 影像後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=image/bmp;image/x-dds;image/x-eps;image/x-exr;image/gif;image/x-hdr;image/x-ico;image/jpeg2000;image/jpeg;video/x-mng;image/x-portable-bitmap;image/x-pcx;image/x-portable-graymap;image/png;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/tiff;image/x-xbitmap;image/x-xcf;image/x-xpixmap;

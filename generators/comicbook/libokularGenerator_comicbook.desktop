@@ -28,6 +28,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​សៀវភៅ​�
 Comment[nds]=Comicbook-Hülpprogramm för Okular
 Comment[pt_BR]=Backend Comic book para Okular
 Comment[tr]=Okular için Comic book arka ucu
+Comment[zh_CN]=Okular 的 Comic book 格式后端
 Comment[zh_TW]=Okular 的 Comic book 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-cbz;application/x-cbr;

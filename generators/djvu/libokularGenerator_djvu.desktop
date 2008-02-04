@@ -11,6 +11,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ DjVu សម្រា�
 Comment[nds]=DjVu-Hülpprogramm för Okular
 Comment[pt_BR]=Backend DjVu para Okular
 Comment[tr]=Okular için DjVu arka ucu
+Comment[zh_CN]=Okular 的 Djvu 格式后端
 Comment[zh_TW]=Okular 的 DjVu 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=image/vnd.djvu;

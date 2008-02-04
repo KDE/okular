@@ -11,6 +11,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​ DVI សម្រា
 Comment[nds]=DVI-Hülpprogramm för Okular
 Comment[pt_BR]=Backend DVI para Okular
 Comment[tr]=Okular için DVI arka ucu
+Comment[zh_CN]=Okular 的 DVI 格式后端
 Comment[zh_TW]=Okular 的 DVI 後端
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-dvi;

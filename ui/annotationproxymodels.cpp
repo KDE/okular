@@ -7,14 +7,14 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annotationproxymodels.h"
+
 #include <QtCore/QList>
 #include <QtGui/QItemSelection>
 
 #include <kicon.h>
 
 #include "annotationmodel.h"
-
-#include "annotationproxymodels.h"
 
 PageFilterProxyModel::PageFilterProxyModel( QObject *parent )
   : QSortFilterProxyModel( parent ),
@@ -252,7 +252,7 @@ class AuthorGroupItem
         void dump( int level = 0 )
         {
             QString prefix;
-            for ( int i = 0; i < level; ++i ) prefix += " ";
+            for ( int i = 0; i < level; ++i ) prefix += ' ';
 
             qDebug( "%s%s", qPrintable( prefix ), ( mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation") ) );
 

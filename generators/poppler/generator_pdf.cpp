@@ -1294,7 +1294,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
             QString contents = newann->contents();
             contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
             newann->setContents( contents );
-            // explicitely mark as external
+            // explicitly mark as external
             newann->setFlags( newann->flags() | Okular::Annotation::External );
             page->addAnnotation(newann);
         }

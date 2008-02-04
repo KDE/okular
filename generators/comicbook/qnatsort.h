@@ -19,6 +19,9 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
+#ifndef QNATSORT_H
+#define QNATSORT_H
+
 #include <QtCore/QString>
 
 /**
@@ -47,3 +50,5 @@ bool caseSensitiveNaturalOrderLessThen( const QString &left, const QString &righ
  * in natural order and case insensitive.
  */
 bool caseInsensitiveNaturalOrderLessThen( const QString &left, const QString &right );
+
+#endif

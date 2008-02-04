@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "generator_ghostview.h"
+
 #include <math.h>
 
 #include <qfile.h>
@@ -28,7 +30,6 @@
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"
 
-#include "generator_ghostview.h"
 #include "rendererthread.h"
 
 static KAboutData createAboutData()

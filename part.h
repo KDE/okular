@@ -153,6 +153,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void updateViewActions();
         void updateBookmarksActions();
         void enableTOC(bool enable);
+        void slotRebuildBookmarkMenu();
 
     public slots:
         // connected to Shell action (and browserExtension), not local one

@@ -150,6 +150,7 @@ KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
 void BookmarkManager::save() const
 {
     d->manager->save( false );
+    emit const_cast<BookmarkManager*>( this )->saved();
 }
 
 static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& files, const KUrl& url, KBookmarkManager * manager, bool doCreate )

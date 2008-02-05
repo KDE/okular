@@ -282,6 +282,9 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( bookmarkList );
 
+    connect( m_document->bookmarkManager(), SIGNAL( saved() ),
+        this, SLOT( slotRebuildBookmarkMenu() ) );
+
     // ACTIONS
     KActionCollection * ac = actionCollection();
 
@@ -1034,6 +1037,10 @@ void Part::enableTOC(bool enable)
     m_sidebar->setItemEnabled(0, enable);
 }
 
+void Part::slotRebuildBookmarkMenu()
+{
+    rebuildBookmarkMenu();
+}
 
 void Part::slotShowFindBar()
 {

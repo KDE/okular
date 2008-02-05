@@ -92,6 +92,11 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          */
         void openUrl( const KUrl& url );
 
+        /**
+         * This signal is emitted whenever bookmarks have been saved.
+         */
+        void saved();
+
     private:
         class Private;
         Private * const d;

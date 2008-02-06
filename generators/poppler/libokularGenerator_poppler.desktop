@@ -13,6 +13,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​របស់ PDF ស
 Comment[nds]=PDF-Hülpprogramm för Okular, bruukt Poppler
 Comment[pt_BR]=Backend PDF para Okular usando poppler
 Comment[tr]=Okular için poppler kullanan PDF arka ucu
+Comment[uk]=Втулка PDF для Okular з використанням poppler
 Comment[zh_CN]=使用 poppler 的 Okular PDF 格式后端
 Comment[zh_TW]=Okular 使用 poppler 的 PDF 後端
 X-KDE-ServiceTypes=okular/Generator

@@ -11,6 +11,7 @@ Comment[km]=ផ្នែក​ខាង​ក្រោយ​ HTMLHelp របស�
 Comment[nds]=En Okular-Hülpprogramm för HTML-Hülpdateien vun Windows
 Comment[pt_BR]=Backend do Windows HTMLHelp para Okular
 Comment[tr]=Okular için Windows HTMLHelp arka ucu
+Comment[uk]=Втулка Windows HTMLHelp для okular
 Comment[zh_CN]=Okular 的 Windows HTMLHelp 格式后端
 Comment[zh_TW]=Okular 的 Windows HTMLHelp 後端
 X-KDE-ServiceTypes=okular/Generator

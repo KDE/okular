@@ -329,6 +329,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
   case '/':
     p = tokBuf;
     n = 0;
+    s = NULL;
     while ((c = lookChar()) != EOF && !specialChars[c]) {
       getChar();
       if (c == '#') {
@@ -356,14 +357,27 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	}
       }
      notEscChar:
-      if (++n == tokBufSize) {
-	error(getPos(), "Name token too long");
-	break;
+      if (n == tokBufSize) {
+	if (!s)
+	  s = new GooString(tokBuf, tokBufSize);
+	else
+	{
+	  // the spec says 127 is the maximum, we are already at 256 so bail out
+	  error(getPos(), "Name token too long");
+	  break;
+	}
+	p = tokBuf;
+	n = 0;
       }
       *p++ = c;
+      ++n;
     }
     *p = '\0';
-    obj->initName(tokBuf);
+    if (s) {
+      s->append(tokBuf, n);
+      obj->initName(s->getCString());
+      delete s;
+    } else obj->initName(tokBuf);
     break;
 
   // array punctuation

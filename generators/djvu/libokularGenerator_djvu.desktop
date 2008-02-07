@@ -2,6 +2,7 @@
 Type=Service
 Name=djvu
 Name[hi]=डीजेवीयू
+Name[th]=เอกสาร djvu
 Name[x-test]=xxdjvuxx
 Comment=DjVu backend for Okular
 Comment[el]=Σύστημα υποστήριξης DjVu για το Okular
@@ -10,6 +11,7 @@ Comment[ja]=Okular の DjVu バックエンド
 Comment[km]=ផ្នែក​ខាង​ក្រោយ DjVu សម្រាប់ Okular
 Comment[nds]=DjVu-Hülpprogramm för Okular
 Comment[pt_BR]=Backend DjVu para Okular
+Comment[th]=แบ็คเอนต์เอกสาร DjVu สำหรับ Okular
 Comment[tr]=Okular için DjVu arka ucu
 Comment[uk]=Втулка DjVu для Okular
 Comment[zh_CN]=Okular 的 Djvu 格式后端

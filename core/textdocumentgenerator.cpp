@@ -207,6 +207,8 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, 
              this, SLOT( addTitle( int, const QString&, const QTextBlock& ) ) );
     connect( converter, SIGNAL( addMetaData( const QString&, const QString&, const QString& ) ),
              this, SLOT( addMetaData( const QString&, const QString&, const QString& ) ) );
+    connect( converter, SIGNAL( addMetaData( DocumentInfo::Key, const QString& ) ),
+             this, SLOT( addMetaData( DocumentInfo::Key, const QString& ) ) );
 
     connect( converter, SIGNAL( error( const QString&, int ) ),
              this, SIGNAL( error( const QString&, int ) ) );

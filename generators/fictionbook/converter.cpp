@@ -177,23 +177,22 @@ QTextDocument* Converter::convert( const QString &fileName )
      */
     if ( mTitleInfo ) {
         if ( !mTitleInfo->mTitle.isEmpty() )
-            emit addMetaData( "title", mTitleInfo->mTitle, i18n( "Title" ) );
+            emit addMetaData( Okular::DocumentInfo::Title, mTitleInfo->mTitle );
 
         if ( !mTitleInfo->mAuthor.isEmpty() )
-            emit addMetaData( "author", mTitleInfo->mAuthor, i18n( "Author" ) );
+            emit addMetaData( Okular::DocumentInfo::Author, mTitleInfo->mAuthor );
     }
 
     if ( mDocumentInfo ) {
         if ( !mDocumentInfo->mProducer.isEmpty() )
-            emit addMetaData( "producer", mDocumentInfo->mProducer, i18n( "Producer" ) );
+            emit addMetaData( Okular::DocumentInfo::Producer, mDocumentInfo->mProducer );
 
         if ( !mDocumentInfo->mProducer.isEmpty() )
             emit addMetaData( "creator", mDocumentInfo->mAuthor, i18n( "Creator" ) );
 
         if ( mDocumentInfo->mDate.isValid() )
-            emit addMetaData( "creationDate",
-                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, KLocale::ShortDate ),
-                      i18n( "Created" ) );
+            emit addMetaData( Okular::DocumentInfo::CreationDate,
+                      KGlobal::locale()->formatDate( mDocumentInfo->mDate, KLocale::ShortDate ) );
     }
 
     QMapIterator<QString, QPair<int, int> > it( mLocalLinks );

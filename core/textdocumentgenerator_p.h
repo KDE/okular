@@ -121,6 +121,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         void addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd );
         void addTitle( int level, const QString &title, const QTextBlock &position );
         void addMetaData( const QString &key, const QString &value, const QString &title );
+        void addMetaData( DocumentInfo::Key, const QString &value );
 
         void generateLinkInfos();
         void generateAnnotationInfos();

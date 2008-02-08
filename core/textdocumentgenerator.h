@@ -68,6 +68,11 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         void addMetaData( const QString &key, const QString &value, const QString &title );
 
         /**
+         * Adds a set of meta data to the generator.
+         */
+        void addMetaData( DocumentInfo::Key key, const QString &value );
+
+        /**
          * This signal should be emitted whenever an error occurred in the converter.
          *
          * @param message The message which should be shown to the user.
@@ -159,6 +164,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         Q_PRIVATE_SLOT( d_func(), void addAnnotation( Annotation*, int, int ) )
         Q_PRIVATE_SLOT( d_func(), void addTitle( int, const QString&, const QTextBlock& ) )
         Q_PRIVATE_SLOT( d_func(), void addMetaData( const QString&, const QString&, const QString& ) )
+        Q_PRIVATE_SLOT( d_func(), void addMetaData( DocumentInfo::Key, const QString& ) )
 };
 
 }

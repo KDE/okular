@@ -860,4 +860,6 @@ class OKULAR_EXPORT VisiblePageRect
 
 }
 
+Q_DECLARE_METATYPE( Okular::DocumentInfo::Key )
+
 #endif

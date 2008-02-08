@@ -118,6 +118,11 @@ void TextDocumentGeneratorPrivate::addMetaData( const QString &key, const QStrin
     mDocumentInfo.set( key, value, title );
 }
 
+void TextDocumentGeneratorPrivate::addMetaData( DocumentInfo::Key key, const QString &value )
+{
+    mDocumentInfo.set( key, value );
+}
+
 void TextDocumentGeneratorPrivate::generateLinkInfos()
 {
     for ( int i = 0; i < mLinkPositions.count(); ++i ) {

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _ANNOTATIONSSPROPERTIESDIALOG_H_
-#define _ANNOTATIONSSPROPERTIESDIALOG_H_
+#ifndef _ANNOTATIONPROPERTIESDIALOG_H_
+#define _ANNOTATIONPROPERTIESDIALOG_H_
 
 #include <kpagedialog.h>
 

@@ -1261,7 +1261,7 @@ void PostScriptFunction::resizeCode(int newSize) {
 
 void PostScriptFunction::exec(PSStack *stack, int codePtr) {
   int i1, i2;
-  double r1, r2;
+  double r1, r2, result;
   GBool b1, b2;
 
   while (1) {
@@ -1306,7 +1306,9 @@ void PostScriptFunction::exec(PSStack *stack, int codePtr) {
       case psOpAtan:
 	r2 = stack->popNum();
 	r1 = stack->popNum();
-	stack->pushReal(atan2(r1, r2));
+	result = atan2(r1, r2) * 180.0 / M_PI;
+	if (result < 0) result += 360.0;
+	stack->pushReal(result);
 	break;
       case psOpBitshift:
 	i2 = stack->popInt();

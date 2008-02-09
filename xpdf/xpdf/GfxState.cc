@@ -1820,9 +1820,9 @@ GfxFunctionShading *GfxFunctionShading::parse(Dict *dict) {
       obj1.arrayGetLength() == 4) {
     x0A = obj1.arrayGet(0, &obj2)->getNum();
     obj2.free();
-    y0A = obj1.arrayGet(1, &obj2)->getNum();
+    x1A = obj1.arrayGet(1, &obj2)->getNum();
     obj2.free();
-    x1A = obj1.arrayGet(2, &obj2)->getNum();
+    y0A = obj1.arrayGet(2, &obj2)->getNum();
     obj2.free();
     y1A = obj1.arrayGet(3, &obj2)->getNum();
     obj2.free();

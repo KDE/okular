@@ -359,7 +359,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
      notEscChar:
       if (n == tokBufSize) {
 	if (!s)
-	  s = new GooString(tokBuf, tokBufSize);
+	  s = new GString(tokBuf, tokBufSize);
 	else
 	{
 	  // the spec says 127 is the maximum, we are already at 256 so bail out

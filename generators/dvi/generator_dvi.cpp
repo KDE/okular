@@ -123,7 +123,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
     
-    foreach( const Hyperlink dviLink, pageInfo->hyperLinkList )
+    foreach( const Hyperlink &dviLink, pageInfo->hyperLinkList )
     {
         QRect boxArea = dviLink.box;
         double nl = (double)boxArea.left() / pageWidth,

@@ -1330,7 +1330,7 @@ void PostScriptFunction::exec(PSStack *stack, int codePtr) {
 	stack->copy(stack->popInt());
 	break;
       case psOpCos:
-	stack->pushReal(cos(stack->popNum()));
+	stack->pushReal(cos(stack->popNum() * M_PI / 180.0));
 	break;
       case psOpCvi:
 	if (!stack->topIsInt()) {
@@ -1511,7 +1511,7 @@ void PostScriptFunction::exec(PSStack *stack, int codePtr) {
 	}
 	break;
       case psOpSin:
-	stack->pushReal(sin(stack->popNum()));
+	stack->pushReal(sin(stack->popNum() * M_PI / 180.0));
 	break;
       case psOpSqrt:
 	stack->pushReal(sqrt(stack->popNum()));

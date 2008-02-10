@@ -24,6 +24,10 @@
 
 #include "core/document.h"
 
+Q_DECLARE_METATYPE( Okular::EmbeddedFile* )
+
+static const int EmbeddedFileRole = Qt::UserRole + 100;
+
 static QString dateToString( const QDateTime & date )
 {
 	return date.isValid()
@@ -64,8 +68,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KGlobal::locale()->formatByteSize(ef->size()));
 		twi->setText(3, dateToString( ef->creationDate() ) );
 		twi->setText(4, dateToString( ef->modificationDate() ) );
+		twi->setData( 0, EmbeddedFileRole, qVariantFromValue( ef ) );
 		m_tw->addTopLevelItem(twi);
-		m_files.insert(twi, ef);
 	}
         // Having filled the columns, it is nice to resize them to be able to read the contents
         for (int lv = 0; lv <  m_tw->columnCount(); ++lv) {
@@ -84,7 +88,7 @@ void EmbeddedFilesDialog::saveFile()
 	QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
 	foreach(QTreeWidgetItem *twi, selected)
 	{
-		Okular::EmbeddedFile* ef = m_files[twi];
+		Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( twi->data( 0, EmbeddedFileRole ) );
 		saveFile(ef);
 	}
 }
@@ -107,7 +111,7 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
 
     if ( act == saveAsAct )
     {
-        Okular::EmbeddedFile* ef = m_files[selected.at(0)];
+        Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( selected.at( 0 )->data( 0, EmbeddedFileRole ) );
         saveFile( ef );
     }
 }

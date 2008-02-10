@@ -11,10 +11,8 @@
 #define _EMBEDDEDFILESDIALOG_H_
 
 #include <kdialog.h>
-#include <QtCore/QHash>
 
 class QTreeWidget;
-class QTreeWidgetItem;
 
 namespace Okular {
 class Document;
@@ -35,7 +33,6 @@ Q_OBJECT
 		void saveFile( Okular::EmbeddedFile* );
 
 		QTreeWidget *m_tw;
-		QHash<QTreeWidgetItem *, Okular::EmbeddedFile*> m_files;
 };
 
 #endif

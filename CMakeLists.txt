@@ -90,7 +90,7 @@ ENDIF(APPLE)
 
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
 
-set_target_properties(okularcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
+set_target_properties(okularcore PROPERTIES VERSION 1.1.0 SOVERSION 1 )
 
 install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
 

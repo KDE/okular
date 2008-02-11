@@ -9,7 +9,7 @@
 
 #include "formfields.h"
 
-#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+#ifdef HAVE_POPPLER_0_7
 PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field )
     : Okular::FormFieldButton(), m_field( field )
 {

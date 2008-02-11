@@ -15,7 +15,7 @@
 
 #include <config-okular-poppler.h>
 
-#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+#ifdef HAVE_POPPLER_0_7
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {
     public:

@@ -874,7 +874,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
 #ifdef HAVE_POPPLER_0_6
 
-#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+#if HAVE_POPPLER_0_7
     tf.setAutoRemove(false);
 #else
     tf.close();
@@ -890,7 +890,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
 
-#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+#if HAVE_POPPLER_0_7
     psConverter->setOutputDevice(&tf);
 #else
     psConverter->setOutputFileName(tempfilename);
@@ -1386,7 +1386,7 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
         Okular::FormField * of = 0;
         switch ( f->type() )
         {
-#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+#ifdef HAVE_POPPLER_0_7
             case Poppler::FormField::FormButton:
                 of = new PopplerFormFieldButton( static_cast<Poppler::FormFieldButton*>( f ) );
                 break;

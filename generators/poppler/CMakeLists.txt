@@ -1,30 +1,17 @@
 
-# check for Poppler::PSConverter::setOutputDevice()
+# check for Poppler::FormFieldButton as "0.7 check"
 set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
-check_cxx_source_compiles("
-#include <poppler-qt4.h>
-int main()
-{
-  Poppler::Document * doc = Poppler::Document::load(\"foo\");
-  Poppler::PSConverter * psconv = doc->psConverter();
-  psconv->setOutputDevice( 0 );
-  return 0;
-}
-" POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE)
-macro_bool_to_01(POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE _POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE)
-
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
 #include <poppler-form.h>
 int main()
 {
   Poppler::FormFieldButton * button = 0;
+  button->buttonType();
   return 0;
 }
-" POPPLER_HAVE_FORMFIELDBUTTON)
-macro_bool_to_01(POPPLER_HAVE_FORMFIELDBUTTON _POPPLER_HAVE_FORMFIELDBUTTON)
-
+" HAVE_POPPLER_0_7)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

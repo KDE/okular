@@ -1386,6 +1386,11 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
         Okular::FormField * of = 0;
         switch ( f->type() )
         {
+#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+            case Poppler::FormField::FormButton:
+                of = new PopplerFormFieldButton( static_cast<Poppler::FormFieldButton*>( f ) );
+                break;
+#endif
             case Poppler::FormField::FormText:
                 of = new PopplerFormFieldText( static_cast<Poppler::FormFieldText*>( f ) );
                 break;

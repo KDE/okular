@@ -13,6 +13,37 @@
 #include <poppler-form.h>
 #include "core/form.h"
 
+#include <config-okular-poppler.h>
+
+#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+class PopplerFormFieldButton : public Okular::FormFieldButton
+{
+    public:
+        PopplerFormFieldButton( Poppler::FormFieldButton * field );
+        virtual ~PopplerFormFieldButton();
+
+        // inherited from Okular::FormField
+        virtual Okular::NormalizedRect rect() const;
+        virtual int id() const;
+        virtual QString name() const;
+        virtual QString uiName() const;
+        virtual bool isReadOnly() const;
+        virtual bool isVisible() const;
+
+        // inherited from Okular::FormFieldButton
+        virtual ButtonType buttonType() const;
+        virtual QString caption() const;
+        virtual bool state() const;
+        virtual void setState( bool state );
+        virtual QList< int > siblings() const;
+
+    private:
+        Poppler::FormFieldButton * m_field;
+        Okular::NormalizedRect m_rect;
+
+};
+#endif
+
 class PopplerFormFieldText : public Okular::FormFieldText
 {
     public:

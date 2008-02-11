@@ -14,6 +14,17 @@ int main()
 " POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE)
 macro_bool_to_01(POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE _POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE)
 
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+#include <poppler-form.h>
+int main()
+{
+  Poppler::FormFieldButton * button = 0;
+  return 0;
+}
+" POPPLER_HAVE_FORMFIELDBUTTON)
+macro_bool_to_01(POPPLER_HAVE_FORMFIELDBUTTON _POPPLER_HAVE_FORMFIELDBUTTON)
+
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

@@ -9,6 +9,84 @@
 
 #include "formfields.h"
 
+#ifdef POPPLER_HAVE_FORMFIELDBUTTON
+PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field )
+    : Okular::FormFieldButton(), m_field( field )
+{
+    m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
+}
+
+PopplerFormFieldButton::~PopplerFormFieldButton()
+{
+    delete m_field;
+}
+
+Okular::NormalizedRect PopplerFormFieldButton::rect() const
+{
+    return m_rect;
+}
+
+int PopplerFormFieldButton::id() const
+{
+    return m_field->id();
+}
+
+QString PopplerFormFieldButton::name() const
+{
+    return m_field->name();
+}
+
+QString PopplerFormFieldButton::uiName() const
+{
+    return m_field->uiName();
+}
+
+bool PopplerFormFieldButton::isReadOnly() const
+{
+    return m_field->isReadOnly();
+}
+
+bool PopplerFormFieldButton::isVisible() const
+{
+    return m_field->isVisible();
+}
+
+Okular::FormFieldButton::ButtonType PopplerFormFieldButton::buttonType() const
+{
+    switch ( m_field->buttonType() )
+    {
+        case Poppler::FormFieldButton::Push:
+            return Okular::FormFieldButton::Push;
+        case Poppler::FormFieldButton::CheckBox:
+            return Okular::FormFieldButton::CheckBox;
+        case Poppler::FormFieldButton::Radio:
+            return Okular::FormFieldButton::Radio;
+    }
+    return Okular::FormFieldButton::Push;
+}
+
+QString PopplerFormFieldButton::caption() const
+{
+    return m_field->caption();
+}
+
+bool PopplerFormFieldButton::state() const
+{
+    return m_field->state();
+}
+
+void PopplerFormFieldButton::setState( bool state )
+{
+    m_field->setState( state );
+}
+
+QList< int > PopplerFormFieldButton::siblings() const
+{
+    return m_field->siblings();
+}
+#endif
+
+
 PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )
 {

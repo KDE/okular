@@ -20,6 +20,7 @@ namespace Okular {
 class Page;
 class PagePrivate;
 class FormFieldPrivate;
+class FormFieldButtonPrivate;
 class FormFieldTextPrivate;
 class FormFieldChoicePrivate;
 
@@ -98,6 +99,66 @@ class OKULAR_EXPORT FormField
 
     private:
         Q_DISABLE_COPY( FormField )
+};
+
+
+/**
+ * @short Interface of a button form field.
+ *
+ * This is the base interface to reimplement to represent a button field, like
+ * a push button, a check box or a radio button.
+ *
+ * @since 0.7 (KDE 4.1)
+ */
+class OKULAR_EXPORT FormFieldButton : public FormField
+{
+    public:
+        /**
+         * The types of button field.
+         */
+        enum ButtonType
+        {
+            Push,          ///< A simple push button.
+            CheckBox,      ///< A check box.
+            Radio          ///< A radio button.
+        };
+
+        virtual ~FormFieldButton();
+
+        /**
+          The particular type of the button field.
+         */
+        virtual ButtonType buttonType() const = 0;
+
+        /**
+         * The caption to be used for the button.
+         */
+        virtual QString caption() const = 0;
+
+        /**
+         * The state of the button.
+         */
+        virtual bool state() const = 0;
+
+        /**
+         * Sets the state of the button to the new \p state .
+         */
+        virtual void setState( bool state );
+
+        /**
+         * The list with the IDs of siblings (ie, buttons belonging to the same
+         * group as the current one.
+         *
+         * Valid only for \ref Radio buttons, an empty list otherwise.
+         */
+        virtual QList< int > siblings() const = 0;
+
+    protected:
+        FormFieldButton();
+
+    private:
+        Q_DECLARE_PRIVATE( FormFieldButton )
+        Q_DISABLE_COPY( FormFieldButton )
 };
 
 

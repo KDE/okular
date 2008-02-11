@@ -12,22 +12,34 @@
 
 #include "core/area.h"
 
+#include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qlistwidget.h>
 #include <qpushbutton.h>
+#include <qradiobutton.h>
 #include <ktextedit.h>
 #include <kurlrequester.h>
 
+class QButtonGroup;
 class FormWidgetIface;
 class PageViewItem;
+class RadioButtonEdit;
 
 namespace Okular {
 class FormField;
+class FormFieldButton;
 class FormFieldChoice;
 class FormFieldText;
 }
 
+struct RadioData
+{
+    RadioData() {}
+
+    QList< int > ids;
+    QButtonGroup *group;
+};
 
 class FormWidgetsController : public QObject
 {
@@ -39,8 +51,14 @@ class FormWidgetsController : public QObject
 
         void signalChanged( FormWidgetIface *w );
 
+        QButtonGroup* registerRadioButton( RadioButtonEdit* radio );
+        void dropRadioButtons();
+
     signals:
         void changed( FormWidgetIface *w );
+
+    private:
+        QList< RadioData > m_radios;
 };
 
 
@@ -66,7 +84,7 @@ class FormWidgetIface
         void setPageItem( PageViewItem *pageItem );
         PageViewItem* pageItem() const;
 
-        void setFormWidgetsController( FormWidgetsController *controller );
+        virtual void setFormWidgetsController( FormWidgetsController *controller );
 
     protected:
         FormWidgetsController * m_controller;
@@ -77,6 +95,50 @@ class FormWidgetIface
         PageViewItem * m_pageItem;
 };
 
+
+class PushButtonEdit : public QPushButton, public FormWidgetIface
+{
+    Q_OBJECT
+
+    public:
+        PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+
+    private:
+        Okular::FormFieldButton * m_form;
+};
+
+class CheckBoxEdit : public QCheckBox, public FormWidgetIface
+{
+    Q_OBJECT
+
+    public:
+        CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+
+    private slots:
+        void slotStateChanged( int state );
+
+    private:
+        Okular::FormFieldButton * m_form;
+};
+
+class RadioButtonEdit : public QRadioButton, public FormWidgetIface
+{
+    Q_OBJECT
+
+    public:
+        RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+
+        // reimplemented from FormWidgetIface
+        void setFormWidgetsController( FormWidgetsController *controller );
+
+        Okular::FormFieldButton* buttonForm() const { return m_form; }
+
+    private slots:
+        void slotToggled( bool checked );
+
+    private:
+        Okular::FormFieldButton * m_form;
+};
 
 class FormLineEdit : public QLineEdit, public FormWidgetIface
 {

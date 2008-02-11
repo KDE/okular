@@ -58,6 +58,44 @@ bool FormField::isVisible() const
 }
 
 
+class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
+{
+    public:
+        FormFieldButtonPrivate()
+            : FormFieldPrivate( FormField::FormButton )
+        {
+        }
+
+        Q_DECLARE_PUBLIC( FormFieldButton )
+
+        void setValue( const QString& v )
+        {
+            Q_Q( FormFieldButton );
+            q->setState( QVariant( v ).toBool() );
+        }
+
+        QString value() const
+        {
+            Q_Q( const FormFieldButton );
+            return qVariantFromValue<bool>( q->state() ).toString();
+        }
+};
+
+
+FormFieldButton::FormFieldButton()
+    : FormField( *new FormFieldButtonPrivate() )
+{
+}
+
+FormFieldButton::~FormFieldButton()
+{
+}
+
+void FormFieldButton::setState( bool )
+{
+}
+
+
 class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
 {
     public:

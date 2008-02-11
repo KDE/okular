@@ -9,6 +9,7 @@
 
 #include "formwidgets.h"
 
+#include <qbuttongroup.h>
 #include <klineedit.h>
 #include <klocale.h>
 
@@ -29,12 +30,62 @@ void FormWidgetsController::signalChanged( FormWidgetIface *w )
     emit changed( w );
 }
 
+QButtonGroup* FormWidgetsController::registerRadioButton( RadioButtonEdit* radio )
+{
+    QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
+    const int id = radio->buttonForm()->id();
+    for ( ; it != itEnd; ++it )
+    {
+        const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
+        if ( idsIt != (*it).ids.end() )
+        {
+            (*it).group->addButton( radio );
+            return (*it).group;
+        }
+    }
+    RadioData newdata;
+    newdata.ids = radio->buttonForm()->siblings();
+    newdata.ids.append( id );
+    newdata.group = new QButtonGroup();
+    newdata.group->addButton( radio );
+    m_radios.append( newdata );
+    return newdata.group;
+}
+
+void FormWidgetsController::dropRadioButtons()
+{
+    QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
+    for ( ; it != itEnd; ++it )
+    {
+        delete (*it).group;
+    }
+    m_radios.clear();
+}
+
 
 FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidget * parent )
 {
     FormWidgetIface * widget = 0;
     switch ( ff->type() )
     {
+        case Okular::FormField::FormButton:
+        {
+            Okular::FormFieldButton * ffb = static_cast< Okular::FormFieldButton * >( ff );
+            switch ( ffb->buttonType() )
+            {
+                case Okular::FormFieldButton::Push:
+                    widget = new PushButtonEdit( ffb, parent );
+                    break;
+                case Okular::FormFieldButton::CheckBox:
+                    widget = new CheckBoxEdit( ffb, parent );
+                    break;
+                case Okular::FormFieldButton::Radio:
+                    widget = new RadioButtonEdit( ffb, parent );
+                    break;
+                default: ;
+            }
+            break;
+        }
         case Okular::FormField::FormText:
         {
             Okular::FormFieldText * fft = static_cast< Okular::FormFieldText * >( ff );
@@ -126,6 +177,57 @@ PageViewItem* FormWidgetIface::pageItem() const
 void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controller )
 {
     m_controller = controller;
+}
+
+
+PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
+    : QPushButton( parent ), FormWidgetIface( this, button ), m_form( button )
+{
+    setText( m_form->caption() );
+    setEnabled( !m_form->isReadOnly() );
+    setVisible( m_form->isVisible() );
+}
+
+
+CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
+    : QCheckBox( parent ), FormWidgetIface( this, button ), m_form( button )
+{
+    setText( m_form->caption() );
+    setEnabled( !m_form->isReadOnly() );
+    setCheckState( m_form->state() ? Qt::Checked : Qt::Unchecked );
+
+    connect( this, SIGNAL( stateChanged( int ) ), this, SLOT( slotStateChanged( int ) ) );
+    setVisible( m_form->isVisible() );
+}
+
+void CheckBoxEdit::slotStateChanged( int state )
+{
+    m_form->setState( state == Qt::Checked );
+}
+
+
+RadioButtonEdit::RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
+    : QRadioButton( parent ), FormWidgetIface( this, button ), m_form( button )
+{
+    setText( m_form->caption() );
+    setEnabled( !m_form->isReadOnly() );
+
+    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( slotToggled( bool ) ) );
+    setVisible( m_form->isVisible() );
+}
+
+void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controller )
+{
+    FormWidgetIface::setFormWidgetsController( controller );
+
+    m_controller->registerRadioButton( this );
+
+    setChecked( m_form->state() );
+}
+
+void RadioButtonEdit::slotToggled( bool checked )
+{
+    m_form->setState( checked );
 }
 
 

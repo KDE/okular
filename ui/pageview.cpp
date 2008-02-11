@@ -693,6 +693,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     d->visibleItems.clear();
     d->pagesWithTextSelection.clear();
     toggleFormWidgets( false );
+    if ( d->formsWidgetController )
+        d->formsWidgetController->dropRadioButtons();
 
     bool haspages = !pageSet.isEmpty();
     bool hasformwidgets = false;

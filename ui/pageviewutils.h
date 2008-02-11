@@ -46,7 +46,7 @@ class PageViewItem
         int height() const;
         double zoomFactor() const;
         bool isVisible() const;
-        QHash<QString, FormWidgetIface*>& formWidgets();
+        QHash<int, FormWidgetIface*>& formWidgets();
 
         void setGeometry( int x, int y, int width, int height );
         void setWHZ( int w, int h, double zoom );
@@ -61,7 +61,7 @@ class PageViewItem
         QRect m_geometry;
         bool m_visible;
         bool m_formsVisible;
-        QHash<QString, FormWidgetIface*> m_formWidgets;
+        QHash<int, FormWidgetIface*> m_formWidgets;
 };
 
 

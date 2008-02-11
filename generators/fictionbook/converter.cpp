@@ -187,9 +187,6 @@ QTextDocument* Converter::convert( const QString &fileName )
         if ( !mDocumentInfo->mProducer.isEmpty() )
             emit addMetaData( "producer", mDocumentInfo->mProducer, i18n( "Producer" ) );
 
-        if ( !mDocumentInfo->mProducer.isEmpty() )
-            emit addMetaData( "creator", mDocumentInfo->mAuthor, i18n( "Creator" ) );
-
         if ( mDocumentInfo->mDate.isValid() )
             emit addMetaData( "creationDate",
                       KGlobal::locale()->formatDate( mDocumentInfo->mDate, KLocale::ShortDate ),

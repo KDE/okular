@@ -66,6 +66,7 @@ static inline bool isJavascriptURL( const QString & url )
 static inline bool isNewChmURL( const QString & url, QString & chmfile, QString & page )
 {
 	QRegExp uriregex ( "^ms-its:(.*)::(.*)$" );
+	uriregex.setCaseSensitivity( Qt::CaseInsensitive );
 
 	if ( uriregex.indexIn ( url ) != -1 )
 	{

@@ -119,6 +119,16 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 		m_searchAvailable = true;
 	else
 		m_searchAvailable = false;
+
+	// Some CHM files have toc and index files, but do not set the name properly.
+	// Some heuristics here.
+	chmUnitInfo tui;
+	
+	if ( m_topicsFile.isEmpty() && ResolveObject("/toc.hhc", &tui) )
+		m_topicsFile = "/toc.hhc";
+	
+	if ( m_indexFile.isEmpty() && ResolveObject("/index.hhk", &tui) )
+		m_indexFile = "/index.hhk";
 	
 	return true;
 }
@@ -1011,7 +1021,10 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 					if ( root_indent_offset > 1 )
 						qWarning("CHM has improper index; root indent offset is %d", root_indent_offset);
 				}
-
+				
+				// Trim the entry name
+				entry.name = entry.name.trimmed();
+				
 				int real_indent = indent - root_indent_offset;
 				
 				entry.indent = real_indent;

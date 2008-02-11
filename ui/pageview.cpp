@@ -717,7 +717,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 w->setFormWidgetsController( d->formWidgetsController() );
                 w->setVisibility( false );
                 w->setCanBeFilled( d->document->isAllowed( Okular::AllowFillForms ) );
-                item->formWidgets().insert( ff->name(), w );
+                item->formWidgets().insert( ff->id(), w );
                 hasformwidgets = true;
             }
         }

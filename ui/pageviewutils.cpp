@@ -47,7 +47,7 @@ PageViewItem::PageViewItem( const Okular::Page * page )
 
 PageViewItem::~PageViewItem()
 {
-    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
         delete *it;
 }
@@ -87,7 +87,7 @@ bool PageViewItem::isVisible() const
     return m_visible;
 }
 
-QHash<QString, FormWidgetIface*>& PageViewItem::formWidgets()
+QHash<int, FormWidgetIface*>& PageViewItem::formWidgets()
 {
     return m_formWidgets;
 }
@@ -113,7 +113,7 @@ void PageViewItem::moveTo( int x, int y )
 {
     m_geometry.moveLeft( x );
     m_geometry.moveTop( y );
-    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
         Okular::NormalizedRect r = (*it)->rect();
@@ -140,7 +140,7 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
         return false;
 
     bool somehadfocus = false;
-    QHash<QString, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
         bool hadfocus = (*it)->setVisibility( visible );

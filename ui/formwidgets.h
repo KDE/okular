@@ -51,7 +51,7 @@ class FormWidgetsController : public QObject
 
         void signalChanged( FormWidgetIface *w );
 
-        QButtonGroup* registerRadioButton( RadioButtonEdit* radio );
+        QButtonGroup* registerRadioButton( FormWidgetIface* widget, const QList< int >& siblings );
         void dropRadioButtons();
 
     signals:
@@ -82,9 +82,11 @@ class FormWidgetIface
         void setCanBeFilled( bool fill );
 
         void setPageItem( PageViewItem *pageItem );
+        Okular::FormField* formField() const;
         PageViewItem* pageItem() const;
 
         virtual void setFormWidgetsController( FormWidgetsController *controller );
+        virtual QAbstractButton* button();
 
     protected:
         FormWidgetsController * m_controller;
@@ -114,6 +116,10 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
     public:
         CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
 
+        // reimplemented from FormWidgetIface
+        void setFormWidgetsController( FormWidgetsController *controller );
+        QAbstractButton* button();
+
     private slots:
         void slotStateChanged( int state );
 
@@ -130,8 +136,7 @@ class RadioButtonEdit : public QRadioButton, public FormWidgetIface
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller );
-
-        Okular::FormFieldButton* buttonForm() const { return m_form; }
+        QAbstractButton* button();
 
     private slots:
         void slotToggled( bool checked );

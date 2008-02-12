@@ -30,24 +30,27 @@ void FormWidgetsController::signalChanged( FormWidgetIface *w )
     emit changed( w );
 }
 
-QButtonGroup* FormWidgetsController::registerRadioButton( RadioButtonEdit* radio )
+QButtonGroup* FormWidgetsController::registerRadioButton( FormWidgetIface* widget, const QList< int >& siblings )
 {
+    if ( !widget->button() )
+        return 0;
+
     QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
-    const int id = radio->buttonForm()->id();
+    const int id = widget->formField()->id();
     for ( ; it != itEnd; ++it )
     {
         const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
         if ( idsIt != (*it).ids.end() )
         {
-            (*it).group->addButton( radio );
+            (*it).group->addButton( widget->button() );
             return (*it).group;
         }
     }
     RadioData newdata;
-    newdata.ids = radio->buttonForm()->siblings();
+    newdata.ids = siblings;
     newdata.ids.append( id );
     newdata.group = new QButtonGroup();
-    newdata.group->addButton( radio );
+    newdata.group->addButton( widget->button() );
     m_radios.append( newdata );
     return newdata.group;
 }
@@ -161,12 +164,20 @@ bool FormWidgetIface::setVisibility( bool visible )
 
 void FormWidgetIface::setCanBeFilled( bool fill )
 {
-    m_widget->setEnabled( fill );
+    if ( m_widget->isEnabled() )
+    {
+        m_widget->setEnabled( fill );
+    }
 }
 
 void FormWidgetIface::setPageItem( PageViewItem *pageItem )
 {
     m_pageItem = pageItem;
+}
+
+Okular::FormField* FormWidgetIface::formField() const
+{
+    return m_ff;
 }
 
 PageViewItem* FormWidgetIface::pageItem() const
@@ -177,6 +188,11 @@ PageViewItem* FormWidgetIface::pageItem() const
 void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controller )
 {
     m_controller = controller;
+}
+
+QAbstractButton* FormWidgetIface::button()
+{
+    return 0;
 }
 
 
@@ -194,10 +210,25 @@ CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
 {
     setText( m_form->caption() );
     setEnabled( !m_form->isReadOnly() );
-    setCheckState( m_form->state() ? Qt::Checked : Qt::Unchecked );
 
     connect( this, SIGNAL( stateChanged( int ) ), this, SLOT( slotStateChanged( int ) ) );
     setVisible( m_form->isVisible() );
+}
+
+void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
+{
+    FormWidgetIface::setFormWidgetsController( controller );
+
+    const QList< int > siblings = m_form->siblings();
+    if ( !siblings.isEmpty() )
+        m_controller->registerRadioButton( this, siblings );
+
+    setCheckState( m_form->state() ? Qt::Checked : Qt::Unchecked );
+}
+
+QAbstractButton* CheckBoxEdit::button()
+{
+    return this;
 }
 
 void CheckBoxEdit::slotStateChanged( int state )
@@ -220,9 +251,14 @@ void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controlle
 {
     FormWidgetIface::setFormWidgetsController( controller );
 
-    m_controller->registerRadioButton( this );
+    m_controller->registerRadioButton( this, m_form->siblings() );
 
     setChecked( m_form->state() );
+}
+
+QAbstractButton* RadioButtonEdit::button()
+{
+    return this;
 }
 
 void RadioButtonEdit::slotToggled( bool checked )

@@ -110,7 +110,10 @@ bool FormWidgetIface::setVisibility( bool visible )
 
 void FormWidgetIface::setCanBeFilled( bool fill )
 {
-    m_widget->setEnabled( fill );
+    if ( m_widget->isEnabled() )
+    {
+        m_widget->setEnabled( fill );
+    }
 }
 
 void FormWidgetIface::setPageItem( PageViewItem *pageItem )

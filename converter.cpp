@@ -34,7 +34,7 @@ Converter::~Converter()
   //  delete mTextDocument;
 }
 
-QString _strPack(xmlChar **str, int size)
+QString _strPack(unsigned char **str, int size)
 {
   QString res;
   
@@ -54,7 +54,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
 {
 
   int size;
-  xmlChar **data;
+   unsigned char **data;
   
   data = epub_get_metadata(mDocument, type, &size);
   

@@ -3,10 +3,15 @@ include(KDE4Defaults)
 
 find_package(Okular REQUIRED)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+find_package(EPub REQUIRED)
+
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
    ${KDE4_INCLUDES}
    ${OKULAR_INCLUDE_DIR}
+   ${EPUB_INCLUDE_DIR}
 )
 
 
@@ -19,9 +24,7 @@ set(okularGenerator_epub_PART_SRCS
 
 kde4_add_plugin(okularGenerator_epub ${okularGenerator_epub_PART_SRCS})
 
-include_directories (/usr/local/include ${LIBXML2_INCLUDE_DIR} ${LIBZIP_INCLUDE_DIR})
-link_directories (/usr/local/lib)
-target_link_libraries(okularGenerator_epub ${OKULAR_LIBRARIES} epub ${KDE4_KIO_LIBS} ${MATH_LIB} )
+target_link_libraries(okularGenerator_epub ${OKULAR_LIBRARIES} ${EPUB_LIBRARIES} ${KDE4_KIO_LIBS} ${MATH_LIB})
 
 install(TARGETS okularGenerator_epub DESTINATION ${PLUGIN_INSTALL_DIR})
 

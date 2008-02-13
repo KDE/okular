@@ -167,27 +167,35 @@ GBool SplashFont::getGlyph(int c, int xFrac, int yFrac,
     size = ((bitmap2.w + 7) >> 3) * bitmap2.h;
   }
   p = NULL; // make gcc happy
-  for (j = 0; j < cacheAssoc; ++j) {
-    if ((cacheTags[i+j].mru & 0x7fffffff) == cacheAssoc - 1) {
-      cacheTags[i+j].mru = 0x80000000;
-      cacheTags[i+j].c = c;
-      cacheTags[i+j].xFrac = (short)xFrac;
-      cacheTags[i+j].yFrac = (short)yFrac;
-      cacheTags[i+j].x = bitmap2.x;
-      cacheTags[i+j].y = bitmap2.y;
-      cacheTags[i+j].w = bitmap2.w;
-      cacheTags[i+j].h = bitmap2.h;
-      p = cache + (i+j) * glyphSize;
-      memcpy(p, bitmap2.data, size);
-    } else {
-      ++cacheTags[i+j].mru;
-    }
+  if (cacheAssoc == 0)
+  {
+    // we had problems on the malloc of the cache, so ignore it
+    *bitmap = bitmap2;
   }
-  *bitmap = bitmap2;
-  bitmap->data = p;
-  bitmap->freeData = gFalse;
-  if (bitmap2.freeData) {
-    gfree(bitmap2.data);
+  else
+  {
+    for (j = 0; j < cacheAssoc; ++j) {
+      if ((cacheTags[i+j].mru & 0x7fffffff) == cacheAssoc - 1) {
+        cacheTags[i+j].mru = 0x80000000;
+        cacheTags[i+j].c = c;
+        cacheTags[i+j].xFrac = (short)xFrac;
+        cacheTags[i+j].yFrac = (short)yFrac;
+        cacheTags[i+j].x = bitmap2.x;
+        cacheTags[i+j].y = bitmap2.y;
+        cacheTags[i+j].w = bitmap2.w;
+        cacheTags[i+j].h = bitmap2.h;
+        p = cache + (i+j) * glyphSize;
+        memcpy(p, bitmap2.data, size);
+      } else {
+        ++cacheTags[i+j].mru;
+      }
+    }
+    *bitmap = bitmap2;
+    bitmap->data = p;
+    bitmap->freeData = gFalse;
+    if (bitmap2.freeData) {
+      gfree(bitmap2.data);
+    }
   }
   return gTrue;
 }

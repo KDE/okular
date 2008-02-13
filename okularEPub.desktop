@@ -1,0 +1,7 @@
+[Desktop Entry]
+Icon=graphics-viewer-document
+Name=Okular
+X-KDE-ServiceTypes=KParts/ReadOnlyPart
+X-KDE-Library=okularpart
+Type=Service
+MimeType=application/epub+zip;

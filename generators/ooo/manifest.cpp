@@ -301,6 +301,7 @@ void Manifest::savePasswordToWallet()
 
 void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData )
 {
+#ifdef QCA2
   QCA::SymmetricKey key = QCA::PBKDF2( "sha1" ).makeKey( QCA::Hash( "sha1" ).hash( m_password.toLocal8Bit() ),
 							 QCA::InitializationVector( entry->salt() ),
 							 16, //128 bit key
@@ -328,6 +329,9 @@ void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, 
   } else {
     m_haveGoodPassword = false;
   }
+#else
+  m_haveGoodPassword = false;
+#endif
 }
 
 QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fileData )

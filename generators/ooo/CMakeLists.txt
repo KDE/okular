@@ -18,14 +18,10 @@ set(okularGenerator_ooo_PART_SRCS
   document.cpp
   formatproperty.cpp
   generator_ooo.cpp
+  manifest.cpp
   styleinformation.cpp
   styleparser.cpp
 )
-if (QCA2_FOUND)
-  set(okularGenerator_ooo_PART_SRCS ${okularGenerator_ooo_PART_SRCS}
-    manifest.cpp
-  )
-endif (QCA2_FOUND)
 
 
 kde4_add_plugin(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})

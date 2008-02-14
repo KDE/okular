@@ -120,4 +120,4 @@ static inline bool handleFileType( const QString& link, QString& generated )
 }
 
 
-};
+}

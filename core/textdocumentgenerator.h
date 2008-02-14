@@ -72,6 +72,8 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
 
         /**
          * Adds a set of meta data to the generator.
+         *
+         * @since 0.7 (KDE 4.1)
          */
         void addMetaData( DocumentInfo::Key key, const QString &value );
 
@@ -112,6 +114,8 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
          * Returns the generator that owns this converter.
          *
          * @note May be null if the converter was not created for a generator.
+         *
+         * @since 0.7 (KDE 4.1)
          */
         TextDocumentGenerator* generator() const;
 

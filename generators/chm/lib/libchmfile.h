@@ -39,7 +39,7 @@ namespace LCHMBookIcons
 	const int IMAGE_INDEX = -3;
 	
 	const int MAX_BUILTIN_ICONS = 42;
-};
+}
 
 
 //! Contains a single index or TOC entry. See LCHMFile::parseTOC() and LCHMFile::parseIndex()

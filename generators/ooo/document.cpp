@@ -15,7 +15,7 @@
 using namespace OOO;
 
 Document::Document( const QString &fileName )
-  : mFileName( fileName )
+  : mFileName( fileName ), mManifest( 0 )
 {
 }
 
@@ -37,13 +37,33 @@ bool Document::open()
   }
 
   const QStringList entries = directory->entries();
+  if ( !entries.contains( "META-INF" ) ) {
+    setError( i18n( "Invalid document structure (META-INF directory is missing)" ) );
+    return false;
+  }
+  const KArchiveDirectory *metaInfDirectory = static_cast<const KArchiveDirectory*>( directory->entry( "META-INF" ) );
+  if ( !(metaInfDirectory->entries().contains( "manifest.xml" ) ) ) {
+    setError( i18n( "Invalid document structure (META-INF/manifest.xml is missing)" ) );
+    return false;
+  }
+
+  const KArchiveFile *file = static_cast<const KArchiveFile*>( metaInfDirectory->entry( "manifest.xml" ) );
+  mManifest = new Manifest( mFileName, file->data() );
+
+  // we should really get the file names from the manifest, but for now, we only care
+  // if the manifest says the files are encrypted.
+  
   if ( !entries.contains( "content.xml" ) ) {
     setError( i18n( "Invalid document structure (content.xml is missing)" ) );
     return false;
   }
 
-  const KArchiveFile *file = static_cast<const KArchiveFile*>( directory->entry( "content.xml" ) );
-  mContent = file->data();
+  file = static_cast<const KArchiveFile*>( directory->entry( "content.xml" ) );
+  if ( mManifest->testIfEncrypted( "content.xml" )  ) {
+    mContent = mManifest->decryptFile( "content.xml", file->data() );
+  } else {
+    mContent = file->data();
+  }
 
   if ( !entries.contains( "styles.xml" ) ) {
     setError( i18n( "Invalid document structure (styles.xml is missing)" ) );
@@ -51,7 +71,11 @@ bool Document::open()
   }
 
   file = static_cast<const KArchiveFile*>( directory->entry( "styles.xml" ) );
-  mStyles = file->data();
+  if ( mManifest->testIfEncrypted( "styles.xml" )  ) {
+    mStyles = mManifest->decryptFile( "styles.xml", file->data() );
+  } else {
+    mStyles = file->data();
+  }
 
   if ( !entries.contains( "meta.xml" ) ) {
     setError( i18n( "Invalid document structure (meta.xml is missing)" ) );
@@ -59,7 +83,11 @@ bool Document::open()
   }
 
   file = static_cast<const KArchiveFile*>( directory->entry( "meta.xml" ) );
-  mMeta = file->data();
+  if ( mManifest->testIfEncrypted( "meta.xml" )  ) {
+    mMeta = mManifest->decryptFile( "meta.xml", file->data() );
+  } else {
+    mMeta = file->data();
+  }
 
   if ( entries.contains( "Pictures" ) ) {
     const KArchiveDirectory *imagesDirectory = static_cast<const KArchiveDirectory*>( directory->entry( "Pictures" ) );
@@ -67,13 +95,23 @@ bool Document::open()
     const QStringList imagesEntries = imagesDirectory->entries();
     for ( int i = 0; i < imagesEntries.count(); ++i ) {
       file = static_cast<const KArchiveFile*>( imagesDirectory->entry( imagesEntries[ i ] ) );
-      mImages.insert( QString( "Pictures/%1" ).arg( imagesEntries[ i ] ), file->data() );
+      QString fullPath = QString( "Pictures/%1" ).arg( imagesEntries[ i ] );
+      if ( mManifest->testIfEncrypted( fullPath ) ) {
+	mImages.insert( fullPath, mManifest->decryptFile( fullPath, file->data() ) );
+      } else {
+	mImages.insert( fullPath, file->data() );
+      }
     }
   }
 
   zip.close();
 
   return true;
+}
+
+Document::~Document()
+{
+  delete mManifest;
 }
 
 QString Document::lastErrorString() const

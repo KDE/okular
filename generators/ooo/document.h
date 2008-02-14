@@ -14,12 +14,15 @@
 #include <QtCore/QMap>
 #include <QtCore/QString>
 
+#include "manifest.h"
+
 namespace OOO {
 
 class Document
 {
   public:
     Document( const QString &fileName );
+    ~Document();
 
     bool open();
 
@@ -38,6 +41,7 @@ class Document
     QByteArray mMeta;
     QByteArray mStyles;
     QMap<QString, QByteArray> mImages;
+    Manifest *mManifest;
     QString mErrorString;
 };
 

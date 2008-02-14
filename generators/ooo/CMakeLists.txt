@@ -3,6 +3,12 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
+macro_optional_find_package(QCA2)
+
+if ( QCA2_FOUND )
+   include_directories( ${QCA2_INCLUDE_DIR} )
+   add_definitions( -DQCA2 )
+endif( QCA2_FOUND )
 
 ########### next target ###############
 
@@ -11,6 +17,7 @@ set(okularGenerator_ooo_PART_SRCS
   document.cpp
   formatproperty.cpp
   generator_ooo.cpp
+  manifest.cpp
   styleinformation.cpp
   styleparser.cpp
 )
@@ -18,7 +25,11 @@ set(okularGenerator_ooo_PART_SRCS
 
 kde4_add_plugin(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
-target_link_libraries(okularGenerator_ooo   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} )
+if (QCA2_FOUND)
+  target_link_libraries(okularGenerator_ooo   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${QCA2_LIBRARIES})
+else (QCA2_FOUND)
+  target_link_libraries(okularGenerator_ooo   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} ${MATH_LIB})
+endif (QCA2_FOUND)
 
 install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 

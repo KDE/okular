@@ -28,6 +28,9 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
 {
     Q_OBJECT
 
+    friend class TextDocumentGenerator;
+    friend class TextDocumentGeneratorPrivate;
+
     public:
         /**
          * Creates a new generic converter.
@@ -104,6 +107,13 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
          *       triggers QTextDocument to do the layout calculation.
          */
         DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block );
+
+        /**
+         * Returns the generator that owns this converter.
+         *
+         * @note May be null if the converter was not created for a generator.
+         */
+        TextDocumentGenerator* generator() const;
 
     private:
         TextDocumentConverterPrivate *d_ptr;

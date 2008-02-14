@@ -31,7 +31,7 @@ using namespace Okular;
  * Generic Converter Implementation
  */
 TextDocumentConverter::TextDocumentConverter()
-    : QObject( 0 ), d_ptr( 0 )
+    : QObject( 0 ), d_ptr( new TextDocumentConverterPrivate )
 {
 }
 
@@ -43,6 +43,11 @@ TextDocumentConverter::~TextDocumentConverter()
 DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *document, const QTextBlock &block )
 {
     return Utils::calculateViewport( document, block );
+}
+
+TextDocumentGenerator* TextDocumentConverter::generator() const
+{
+    return d_ptr->mParent ? d_ptr->mParent->q_func() : 0;
 }
 
 /**
@@ -195,6 +200,8 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args )
     : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
 {
+    converter->d_ptr->mParent = d_func();
+
     setFeature( TextExtraction );
     setFeature( PrintNative );
     setFeature( PrintToFile );

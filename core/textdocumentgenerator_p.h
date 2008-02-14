@@ -95,6 +95,13 @@ class Utils
 
 class TextDocumentConverterPrivate
 {
+    public:
+        TextDocumentConverterPrivate()
+            : mParent( 0 )
+        {
+        }
+
+        TextDocumentGeneratorPrivate *mParent;
 };
 
 class TextDocumentGeneratorPrivate : public GeneratorPrivate
@@ -112,6 +119,8 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
             delete mConverter;
             delete mDocument;
         }
+
+        Q_DECLARE_PUBLIC( TextDocumentGenerator )
 
         void calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page ) const;
         void calculatePositions( int page, int &start, int &end ) const;

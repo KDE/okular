@@ -211,7 +211,6 @@ CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
     setText( m_form->caption() );
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( stateChanged( int ) ), this, SLOT( slotStateChanged( int ) ) );
     setVisible( m_form->isVisible() );
 }
 
@@ -224,6 +223,8 @@ void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
         m_controller->registerRadioButton( this, siblings );
 
     setCheckState( m_form->state() ? Qt::Checked : Qt::Unchecked );
+
+    connect( this, SIGNAL( stateChanged( int ) ), this, SLOT( slotStateChanged( int ) ) );
 }
 
 QAbstractButton* CheckBoxEdit::button()
@@ -243,7 +244,6 @@ RadioButtonEdit::RadioButtonEdit( Okular::FormFieldButton * button, QWidget * pa
     setText( m_form->caption() );
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( slotToggled( bool ) ) );
     setVisible( m_form->isVisible() );
 }
 
@@ -254,6 +254,8 @@ void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controlle
     m_controller->registerRadioButton( this, m_form->siblings() );
 
     setChecked( m_form->state() );
+
+    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( slotToggled( bool ) ) );
 }
 
 QAbstractButton* RadioButtonEdit::button()

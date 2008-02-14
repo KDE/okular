@@ -310,7 +310,7 @@ bool TranscribePalmImageToJPEG
         }
         else if (((flags & PALM_IS_COMPRESSED_FLAG) &&
                   (compression_type == PALM_COMPRESSION_NONE)) ||
-                 (flags && PALM_IS_COMPRESSED_FLAG) == 0) {
+                 (flags & PALM_IS_COMPRESSED_FLAG) == 0) {
             memcpy (rowbuf, palm_ptr, bytes_per_row);
             palm_ptr += bytes_per_row;
         }

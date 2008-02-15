@@ -54,7 +54,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
 {
 
   int size;
-   unsigned char **data;
+  unsigned char **data;
   
   data = epub_get_metadata(mDocument, type, &size);
   
@@ -94,14 +94,27 @@ QTextDocument* Converter::convert( const QString &fileName )
   _emitData(Okular::DocumentInfo::Copyright, EPUB_RIGHTS);
   emit addMetaData( Okular::DocumentInfo::MimeType, "application/epub+zip");  
 
-  struct eiterator *it = epub_get_iterator(mDocument, EITERATOR_NONLINEAR, 0);
-  
+  struct eiterator *it;
+
   // go in linear order
-  mCursor->insertHtml(epub_it_get_curr(it));
+  it = epub_get_iterator(mDocument, EITERATOR_LINEAR, 0);
+
+  do {
+    if (epub_it_get_curr(it))
+      mCursor->insertHtml(epub_it_get_curr(it));
+  } while (epub_it_get_next(it));
+
+  epub_free_iterator(it);
+
+  // shove non linear in the end
+  it = epub_get_iterator(mDocument, EITERATOR_NONLINEAR, 0);
   
-  while (epub_it_get_next(it)) {
-    mCursor->insertHtml(epub_it_get_curr(it));
-  }
+  do {
+    if (epub_it_get_curr(it))
+      mCursor->insertHtml(epub_it_get_curr(it));
+  } while (epub_it_get_next(it));
+
+  epub_free_iterator(it);
 
   return mTextDocument;
 }

@@ -96,19 +96,9 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   struct eiterator *it;
 
-  // go in linear order
-  it = epub_get_iterator(mDocument, EITERATOR_LINEAR, 0);
+  // iterate over the book
+  it = epub_get_iterator(mDocument, EITERATOR_SPINE, 0);
 
-  do {
-    if (epub_it_get_curr(it))
-      mCursor->insertHtml(epub_it_get_curr(it));
-  } while (epub_it_get_next(it));
-
-  epub_free_iterator(it);
-
-  // shove non linear in the end
-  it = epub_get_iterator(mDocument, EITERATOR_NONLINEAR, 0);
-  
   do {
     if (epub_it_get_curr(it))
       mCursor->insertHtml(epub_it_get_curr(it));

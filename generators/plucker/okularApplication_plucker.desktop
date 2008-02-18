@@ -2,6 +2,7 @@
 MimeType=application/prs.plucker;
 Terminal=false
 Name=okular
+Name[da]=Okular
 Name[de]=Okular
 Name[es]=Okular
 Name[hi]=ऑकुलर
@@ -17,6 +18,7 @@ GenericName=Document Viewer
 GenericName[bg]=Визуализатор
 GenericName[ca]=Visualitzador de documents
 GenericName[cs]=Prohlížeč dokumentů
+GenericName[da]=Dokumentfremviser
 GenericName[de]=Dokumentenbetrachter
 GenericName[el]=Προβολέας εγγράφων
 GenericName[eo]=Dokumenta rigardilo

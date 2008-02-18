@@ -298,7 +298,7 @@ Object *Lexer::getObj(Object *obj, int objNum) {
 	  n = 0;
 	  
 	  // we are growing see if the document is not malformed and we are growing too much
-	  if (objNum > 0)
+	  if (objNum > 0 && xref != NULL)
 	  {
 	    int newObjNum = xref->getNumEntry(curStr.streamGetPos());
 	    if (newObjNum != objNum)

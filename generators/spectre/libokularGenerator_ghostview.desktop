@@ -10,6 +10,7 @@ Name[x-test]=xxGhostscriptxx
 Name[zh_CN]=GhostScript 信息
 Comment=Ghostscript PS/PDF backend for Okular
 Comment[el]=Σύστημα υποστήριξης Ghostscript PS/PDF για το Okular
+Comment[es]=Motor PS/PDF de Ghostscript para Okular
 Comment[ga]=Inneall PS/PDF Ghostscript le haghaidh Okular
 Comment[ja]=Okular の Ghostscript PS/PDF バックエンド
 Comment[km]=ផ្នែក​ខាង​ក្រោយ Ghostscript PS/PDF សម្រាប់ Okular

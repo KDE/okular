@@ -2,6 +2,7 @@
 Type=Service
 Name=Okular TIFF Library
 Name[el]=Βιβλιοθήκη TIFF του Okular
+Name[es]=Biblioteca TIFF de Okular
 Name[ga]=Leabharlann TIFF Okular
 Name[ja]=Okular TIFF ライブラリ
 Name[km]=បណ្ណាល័យ Okular TIFF
@@ -15,6 +16,7 @@ Name[zh_CN]=Okular TIFF 库
 Name[zh_TW]=Okular TIFF 函式庫
 Comment=TIFF backend for Okular
 Comment[el]=Σύστημα υποστήριξης TIFF για το Okular
+Comment[es]=Motor TIFF para Okular
 Comment[ga]=Inneall TIFF le haghaidh Okular
 Comment[ja]=Okular の TIFF バックエンド
 Comment[km]=ផ្នែក​ខាង​ក្រោយ​ TIFF សម្រាប់ Okular

@@ -2,6 +2,7 @@
 Type=Service
 Name=Okular XPS Plugin
 Name[el]=Πρόσθετο XPS του Okular
+Name[es]=Complemento XPS de Okular
 Name[ga]=Breiseán XPS Okular
 Name[ja]=Okular XPS プラグイン
 Name[km]=កម្មវិធី​ជំនួយ Okular XPS
@@ -15,6 +16,7 @@ Name[zh_CN]=Okular XPS 插件
 Name[zh_TW]=Okular XPS 外掛程式
 Comment=XPS backend for Okular
 Comment[el]=Σύστημα υποστήριξης XPS για το Okular
+Comment[es]=Motor XPS para Okular
 Comment[ga]=Inneall XPS le haghaidh Okular
 Comment[ja]=Okular の XPS バックエンド
 Comment[km]=ផ្នែក​ខា​ងក្រោយ XPS សម្រាប់ Okular

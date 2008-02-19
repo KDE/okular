@@ -17,7 +17,6 @@
 
 #include <okular/core/action.h>
 
-
 #include <QtCore/QDebug>
 
 using namespace EPub;
@@ -100,8 +99,15 @@ QTextDocument* Converter::convert( const QString &fileName )
   it = epub_get_iterator(mDocument, EITERATOR_SPINE, 0);
 
   do {
-    if (epub_it_get_curr(it))
+    if (epub_it_get_curr(it)) {
+      mCursor->insertBlock();
+      //      emit addTitle(level, heading, mCursor->block());  
       mCursor->insertHtml(epub_it_get_curr(it));
+      
+      int page = mTextDocument->pageCount();
+      while(mTextDocument->pageCount() == page)
+        mCursor->insertText("\n");
+    }
   } while (epub_it_get_next(it));
 
   epub_free_iterator(it);

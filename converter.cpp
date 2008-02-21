@@ -28,7 +28,6 @@ Converter::Converter() : mTextDocument( 0 )
 
 Converter::~Converter()
 {    
-  epub_close(mDocument);
   epub_cleanup();
   //  delete mTextDocument;
 }
@@ -55,7 +54,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
   int size;
   unsigned char **data;
   
-  data = epub_get_metadata(mDocument, type, &size);
+  data = epub_get_metadata(mTextDocument->getEpub(), type, &size);
   
   if (data) { 
     
@@ -68,8 +67,9 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
 
 QTextDocument* Converter::convert( const QString &fileName )
 {
-  mTextDocument = new QTextDocument;
-  mTextDocument->setPageSize( QSizeF( 600, 800 ) );
+  mTextDocument = new EpubDocument(fileName);
+  mTextDocument->setPageSize(QSizeF(600, 800));
+
   mCursor = new QTextCursor( mTextDocument );
 
   QTextFrameFormat frameFormat;
@@ -78,8 +78,6 @@ QTextDocument* Converter::convert( const QString &fileName )
   QTextFrame *rootFrame = mTextDocument->rootFrame();
   rootFrame->setFrameFormat( frameFormat );
 
-  mDocument = epub_open(qPrintable(fileName), 3);
-  
   // Emit the document meta data 
   _emitData(Okular::DocumentInfo::Title, EPUB_TITLE);
   _emitData(Okular::DocumentInfo::Author, EPUB_CREATOR);
@@ -96,7 +94,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   struct eiterator *it;
 
   // iterate over the book
-  it = epub_get_iterator(mDocument, EITERATOR_SPINE, 0);
+  it = epub_get_iterator(mTextDocument->getEpub(), EITERATOR_SPINE, 0);
 
   do {
     if (epub_it_get_curr(it)) {

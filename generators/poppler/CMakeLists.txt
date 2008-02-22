@@ -45,7 +45,10 @@ endif (HAVE_POPPLER_0_6)
 
 kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} m )
+target_link_libraries(okularGenerator_poppler   ${POPPLER_LIBRARY} okularcore ${KDE4_KIO_LIBS} )
+if(NOT WIN32)
+    target_link_libraries(okularGenerator_poppler m )
+endif(NOT WIN32)
 
 install(TARGETS okularGenerator_poppler DESTINATION ${PLUGIN_INSTALL_DIR})
 

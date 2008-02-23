@@ -398,9 +398,9 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     {
       if (parent.current_page < newFile.total_pages) {
         parent.command_pointer =
-          newFile.dvi_Data() + parent.dviFile->page_offset[parent.current_page];
+          newFile.dvi_Data() + parent.dviFile->page_offset[int(parent.current_page)];
         parent.end_pointer =
-          newFile.dvi_Data() + parent.dviFile->page_offset[parent.current_page+1];
+          newFile.dvi_Data() + parent.dviFile->page_offset[int(parent.current_page+1)];
       } else {
         parent.command_pointer = 0;
         parent.end_pointer = 0;

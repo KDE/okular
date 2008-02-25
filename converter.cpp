@@ -12,15 +12,16 @@
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
-
-#include <klocale.h>
-
-#include <okular/core/action.h>
-
+#include <QTextDocumentFragment>
 #include <QtCore/QDebug>
 
-#include <QTextDocumentFragment>
-using namespace EPub;
+#include <klocale.h>
+#include <okular/core/action.h>
+
+
+
+
+using namespace Epub;
 
 Converter::Converter() : mTextDocument( 0 )
 {

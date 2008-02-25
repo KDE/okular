@@ -10,62 +10,27 @@
 #define EPUB_DOCUMENT_H
 
 #include <QTextDocument>
+#include <QUrl>
+#include <QVariant>
 #include <QImage>
-#include <QSyntaxHighlighter>
 #include <epub.h>
 
-namespace EPub {
+namespace Epub {
 
-  class EpubDocument : public QTextDocument 
-  {
+  class EpubDocument : public QTextDocument {
       
   public:
-    
-    EpubDocument(const QString &fileName) : QTextDocument() {
-      mEpub = epub_open(qPrintable(fileName), 3);
-    }
-  
-    bool isValid() {
-      return (mEpub?true:false); 
-    }
-
-    ~EpubDocument() {
-      epub_close(mEpub);
-    }
-  
-    struct epub *getEpub() {
-      return mEpub;
-    }
+    EpubDocument(const QString &fileName);  
+    bool isValid();
+    ~EpubDocument();   
+    struct epub *getEpub();
     
   protected:
-    virtual QVariant loadResource(int type, const QUrl &name) {
-      int size;
-      char *data;
-      //    qDebug() << "loading resource: type -" << type << "name -" << name.toString() << "\n";
-    
-      size = epub_get_data(mEpub, qPrintable(name.toString()), &data);
-      QVariant resource;
-    
-      switch(type) {
-      case QTextDocument::ImageResource:
-        resource.setValue(QImage::fromData((unsigned char *)data, size));
-        break;
-      
-      default:
-        resource.setValue(QString(data));
-        break;
-      }
-    
-      free(data);
-    
-      // add to cache
-      addResource(type, name, resource); 
-    
-      return resource;
-    }
+    virtual QVariant loadResource(int type, const QUrl &name);
     
   private:
     struct epub *mEpub;
+
   };
 
 }

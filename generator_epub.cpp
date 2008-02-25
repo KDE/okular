@@ -14,22 +14,24 @@
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_epub",
          "okular_epub",
-         KLocalizedString(),
+         ki18n("EPUB Backend"),
          "0.1",
-         KLocalizedString(),
+         ki18n("A EPUB backend"),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n("© 2008 Ely Levy")
     );
+    aboutData.addAuthor(ki18n("Ely Levy"), KLocalizedString(),
+                        "elylevy@cs.huji.ac.il");
+
     return aboutData;
 }
 
 OKULAR_EXPORT_PLUGIN( EPubGenerator, createAboutData() )
 
 EPubGenerator::EPubGenerator( QObject *parent, const QVariantList &args )
-: Okular::TextDocumentGenerator( new EPub::Converter, parent, args )
+: Okular::TextDocumentGenerator( new Epub::Converter, parent, args )
 {
 }

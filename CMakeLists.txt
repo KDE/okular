@@ -19,6 +19,7 @@ include_directories(
 
 set(okularGenerator_epub_PART_SRCS
   converter.cpp
+  epubdocument.cpp
   generator_epub.cpp
 )
 

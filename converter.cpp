@@ -34,6 +34,7 @@ Converter::~Converter()
   //  delete mTextDocument;
 }
 
+// join the char * array into one QString
 QString _strPack(unsigned char **str, int size)
 {
   QString res;
@@ -48,6 +49,7 @@ QString _strPack(unsigned char **str, int size)
   return res;
 }
 
+// emit data wrap function that map between epub metadata to okular's
 void Converter::_emitData(Okular::DocumentInfo::Key key,
                           enum epub_metadata type) 
 {
@@ -66,6 +68,8 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
   }
 }
 
+// Got over the blocks from start and add them to hashes use name as the 
+// prefix for local links
 void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
 
   for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
@@ -143,13 +147,18 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   do {
     if (epub_it_get_curr(it)) {
+      
+      // insert block for links
       mCursor->insertBlock();
+
       QString link(epub_it_get_curr_url(it));
+
+      // Pass on all the anchor since last block
       const QTextBlock &before = mCursor->block();
       mSectionMap.insert(link, before);
-      //      emit addTitle(level, heading, mCursor->block());  
       mCursor->insertHtml(epub_it_get_curr(it));
 
+      // Add anchors to hashes
       _handle_anchors(before, link);
 
       // Start new file in a new page 
@@ -161,12 +170,13 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   epub_free_iterator(it);
 
+  // adding link actions
   QHashIterator<QString, QPair<int, int> > hit(mLocalLinks);
   while (hit.hasNext()) {
     hit.next();
 
     const QTextBlock &block = mSectionMap[hit.key()];
-    if (block.isValid()) {
+    if (block.isValid()) { // be sure we actually got a block
       Okular::DocumentViewport viewport = 
         calculateViewport(mTextDocument, block);
 

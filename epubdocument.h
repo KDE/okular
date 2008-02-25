@@ -11,19 +11,24 @@
 
 #include <QTextDocument>
 #include <QImage>
+#include <QSyntaxHighlighter>
 #include <epub.h>
 
 namespace EPub {
+
   class EpubDocument : public QTextDocument 
   {
-    
+      
   public:
-  
     
     EpubDocument(const QString &fileName) : QTextDocument() {
       mEpub = epub_open(qPrintable(fileName), 3);
     }
   
+    bool isValid() {
+      return (mEpub?true:false); 
+    }
+
     ~EpubDocument() {
       epub_close(mEpub);
     }
@@ -62,5 +67,6 @@ namespace EPub {
   private:
     struct epub *mEpub;
   };
+
 }
 #endif

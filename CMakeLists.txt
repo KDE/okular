@@ -25,7 +25,7 @@ set(okularGenerator_epub_PART_SRCS
 
 kde4_add_plugin(okularGenerator_epub ${okularGenerator_epub_PART_SRCS})
 
-target_link_libraries(okularGenerator_epub ${OKULAR_LIBRARIES} ${EPUB_LIBRARIES} ${KDE4_KIO_LIBS} ${MATH_LIB})
+target_link_libraries(okularGenerator_epub ${OKULAR_LIBRARIES} ${EPUB_LIBRARIES} ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY})
 
 install(TARGETS okularGenerator_epub DESTINATION ${PLUGIN_INSTALL_DIR})
 

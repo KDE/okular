@@ -82,6 +82,7 @@ public:
     PageViewPrivate( PageView *qq );
 
     FormWidgetsController* formWidgetsController();
+    QString selectedText() const;
 
     // the document, pageviewItems and the 'visible cache'
     PageView *q;
@@ -620,39 +621,43 @@ KAction *PageView::toggleFormsAction() const
     return d->aToggleForms;
 }
 
-void PageView::copyTextSelection() const
+QString PageViewPrivate::selectedText() const
 {
-    if ( d->pagesWithTextSelection.isEmpty() )
-        return;
+    if ( pagesWithTextSelection.isEmpty() )
+        return QString();
 
     QString text;
-    QList< int > selpages = d->pagesWithTextSelection.toList();
+    QList< int > selpages = pagesWithTextSelection.toList();
     qSort( selpages );
     const Okular::Page * pg = 0;
     if ( selpages.count() == 1 )
     {
-        pg = d->document->page( selpages.first() );
+        pg = document->page( selpages.first() );
         text.append( pg->text( pg->textSelection() ) );
     }
     else
     {
-        pg = d->document->page( selpages.first() );
+        pg = document->page( selpages.first() );
         text.append( pg->text( pg->textSelection() ) );
         int end = selpages.count() - 1;
         for( int i = 1; i < end; ++i )
         {
-            pg = d->document->page( selpages.at( i ) );
+            pg = document->page( selpages.at( i ) );
             text.append( pg->text() );
         }
-        pg = d->document->page( selpages.last() );
+        pg = document->page( selpages.last() );
         text.append( pg->text( pg->textSelection() ) );
     }
+    return text;
+}
+
+void PageView::copyTextSelection() const
+{
+    const QString text = d->selectedText();
     if ( !text.isEmpty() )
     {
         QClipboard *cb = QApplication::clipboard();
         cb->setText( text, QClipboard::Clipboard );
-        if ( cb->supportsSelection() )
-            cb->setText( text, QClipboard::Selection );
     }
 }
 
@@ -1913,6 +1918,13 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     d->mouseTextSelecting = false;
 //                    textSelectionClear();
+                    const QString text = d->selectedText();
+                    if ( !text.isEmpty() )
+                    {
+                        QClipboard *cb = QApplication::clipboard();
+                        if ( cb->supportsSelection() )
+                            cb->setText( text, QClipboard::Selection );
+                    }
                 }
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {

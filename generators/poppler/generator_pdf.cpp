@@ -298,6 +298,7 @@ static KAboutData createAboutData()
          KAboutData::License_GPL,
          ki18n( "© 2005-2008 Albert Astals Cid" )
     );
+    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
     return aboutData;
 }
 

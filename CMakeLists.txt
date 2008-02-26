@@ -92,7 +92,7 @@ target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON
 
 set_target_properties(okularcore PROPERTIES VERSION 1.1.0 SOVERSION 1 )
 
-install(TARGETS okularcore DESTINATION ${LIB_INSTALL_DIR} )
+install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})

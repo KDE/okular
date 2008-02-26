@@ -259,6 +259,23 @@ static QString pathOrDescription( const Okular::FontInfo &font )
      return QString();
 }
 
+static QString descriptionForEmbedType( Okular::FontInfo::EmbedType type )
+{
+    switch ( type )
+    {
+        case Okular::FontInfo::NotEmbedded:
+            return i18n("No");
+            break;
+        case Okular::FontInfo::EmbeddedSubset:
+            return i18n("Yes (subset)");
+            break;
+        case Okular::FontInfo::FullyEmbedded:
+            return i18n("Yes");
+            break;
+     }
+     return QString();
+}
+
 QVariant FontsListModel::data( const QModelIndex &index, int role ) const
 {
     if ( !index.isValid() || index.row() < 0 || index.row() >= m_fonts.count() )
@@ -283,6 +300,19 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
                     break;
             }
             break;
+        case Qt::ToolTipRole:
+        {
+            QString fontname = m_fonts.at( index.row() ).name();
+            if ( fontname.isEmpty() )
+                fontname = i18n( "Unknown font" );
+            QString tooltip = QString::fromLatin1( "<html><b>" ) +  fontname + QString::fromLatin1( "</b>" );
+            if ( m_fonts.at( index.row() ).embedType() == Okular::FontInfo::NotEmbedded )
+                tooltip += QString::fromLatin1( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname ).arg( fontname );
+            tooltip += QString::fromLatin1( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
+            tooltip += QString::fromLatin1( "</html>" );
+            return tooltip;
+            break;
+        }
     }
 
   return QVariant();

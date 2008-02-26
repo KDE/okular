@@ -195,7 +195,7 @@ void FontsListModel::addFont( const Okular::FontInfo &fi )
 
 int FontsListModel::columnCount( const QModelIndex &parent ) const
 {
-    return parent.isValid() ? 0 : 4;
+    return parent.isValid() ? 0 : 3;
 }
 
 static QString descriptionForFontType( Okular::FontInfo::FontType type )
@@ -242,18 +242,18 @@ static QString descriptionForFontType( Okular::FontInfo::FontType type )
      return QString();
 }
 
-static QString descriptionForEmbedType( Okular::FontInfo::EmbedType type )
+static QString pathOrDescription( const Okular::FontInfo &font )
 {
-    switch ( type )
+    switch ( font.embedType() )
     {
         case Okular::FontInfo::NotEmbedded:
-            return i18n("No");
+            return font.file();
             break;
         case Okular::FontInfo::EmbeddedSubset:
-            return i18n("Yes (subset)");
+            return i18n("Embedded (subset)");
             break;
         case Okular::FontInfo::FullyEmbedded:
-            return i18n("Yes");
+            return i18n("Fully embedded");
             break;
      }
      return QString();
@@ -272,17 +272,14 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
                 case 0:
                 {
                     QString fontname = m_fonts.at( index.row() ).name();
-                    return fontname.isEmpty() ? QString::fromLatin1( "-" ) : fontname; // TODO i18n
+                    return fontname.isEmpty() ? i18nc( "font name not available (empty)", "[n/a]" ) : fontname;
                     break;
                 }
                 case 1:
                     return descriptionForFontType( m_fonts.at( index.row() ).type() );
                     break;
                 case 2:
-                    return descriptionForEmbedType( m_fonts.at( index.row() ).embedType() );
-                    break;
-                case 3:
-                    return m_fonts.at( index.row() ).file();
+                    return pathOrDescription( m_fonts.at( index.row() ) );
                     break;
             }
             break;
@@ -306,8 +303,7 @@ QVariant FontsListModel::headerData( int section, Qt::Orientation orientation, i
   {
     case 0: return i18n( "Name" ); break;
     case 1: return i18n( "Type" ); break;
-    case 2: return i18n( "Embedded" ); break;
-    case 3: return i18n( "File" ); break;
+    case 2: return i18n( "File" ); break;
     default:
       return QVariant();
   }

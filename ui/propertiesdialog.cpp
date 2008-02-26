@@ -261,27 +261,33 @@ static QString descriptionForEmbedType( Okular::FontInfo::EmbedType type )
 
 QVariant FontsListModel::data( const QModelIndex &index, int role ) const
 {
-  if ( !index.isValid() )
-    return QVariant();
+    if ( !index.isValid() || index.row() < 0 || index.row() >= m_fonts.count() )
+        return QVariant();
 
-  if ( ( index.row() < 0 ) || ( index.row() >= m_fonts.size() ) )
-    return QVariant();
-
-  if ( role != Qt::DisplayRole )
-    return QVariant();
-
-  switch ( index.column() )
-  {
-        case 0:
-        {
-            QString fontname = m_fonts.at( index.row() ).name();
-            return fontname.isEmpty() ? QString::fromLatin1( "-" ) : fontname; // TODO i18n
+    switch ( role )
+    {
+        case Qt::DisplayRole:
+            switch ( index.column() )
+            {
+                case 0:
+                {
+                    QString fontname = m_fonts.at( index.row() ).name();
+                    return fontname.isEmpty() ? QString::fromLatin1( "-" ) : fontname; // TODO i18n
+                    break;
+                }
+                case 1:
+                    return descriptionForFontType( m_fonts.at( index.row() ).type() );
+                    break;
+                case 2:
+                    return descriptionForEmbedType( m_fonts.at( index.row() ).embedType() );
+                    break;
+                case 3:
+                    return m_fonts.at( index.row() ).file();
+                    break;
+            }
             break;
-        }
-        case 1: return descriptionForFontType( m_fonts.at( index.row() ).type() ); break;
-        case 2: return descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ); break;
-        case 3: return m_fonts.at( index.row() ).file(); break;
-  }
+    }
+
   return QVariant();
 }
 

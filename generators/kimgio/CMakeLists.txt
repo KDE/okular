@@ -10,7 +10,7 @@ set(okularGenerator_kimgio_PART_SRCS generator_kimgio.cpp )
 
 kde4_add_plugin(okularGenerator_kimgio ${okularGenerator_kimgio_PART_SRCS})
 
-target_link_libraries(okularGenerator_kimgio  okularcore ${KDE4_KDEUI_LIBS} )
+target_link_libraries(okularGenerator_kimgio okularcore ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY})
 
 install(TARGETS okularGenerator_kimgio DESTINATION ${PLUGIN_INSTALL_DIR})
 

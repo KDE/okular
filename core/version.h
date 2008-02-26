@@ -10,10 +10,10 @@
 #ifndef _OKULAR_VERSION_H_
 #define _OKULAR_VERSION_H_
 
-#define OKULAR_VERSION_STRING "0.6.1"
+#define OKULAR_VERSION_STRING "0.6.2"
 #define OKULAR_VERSION_MAJOR 0
 #define OKULAR_VERSION_MINOR 6
-#define OKULAR_VERSION_RELEASE 1
+#define OKULAR_VERSION_RELEASE 2
 #define OKULAR_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
 #define OKULAR_VERSION \

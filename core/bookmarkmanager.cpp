@@ -59,6 +59,8 @@ class BookmarkManager::Private : public KBookmarkOwner
         virtual bool enableOption(BookmarkOption option) const;
         virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
 
+        QHash<KUrl, KBookmarkGroup>::iterator bookmarkFind( const KUrl& url, bool doCreate );
+
         BookmarkManager * q;
         KUrl url;
         QSet<int> urlBookmarks;
@@ -153,10 +155,10 @@ void BookmarkManager::save() const
     emit const_cast<BookmarkManager*>( this )->saved();
 }
 
-static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& files, const KUrl& url, KBookmarkManager * manager, bool doCreate )
+QHash<KUrl, KBookmarkGroup>::iterator BookmarkManager::Private::bookmarkFind( const KUrl& url, bool doCreate )
 {
-    QHash<KUrl, KBookmarkGroup>::iterator it = files.find( url );
-    if ( it == files.end() )
+    QHash<KUrl, KBookmarkGroup>::iterator it = knownFiles.find( url );
+    if ( it == knownFiles.end() )
     {
         // if the url we want to add a new entry for is not in the hash of the
         // known files, then first try to find the file among the top-level
@@ -172,7 +174,7 @@ static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& 
             if ( tmpurl == url )
             {
                 // got it! place it the hash of known files
-                it = files.insert( url, bm.toGroup() );
+                it = knownFiles.insert( url, bm.toGroup() );
                 found = true;
                 break;
             }
@@ -182,7 +184,7 @@ static QHash<KUrl, KBookmarkGroup>::iterator find( QHash<KUrl, KBookmarkGroup>& 
             // folder not found :(
             // then, in a single step create a new folder and add it in our cache :)
             QString purl = url.isLocalFile() ? url.path() : url.prettyUrl();
-            it = files.insert( url, root.createNewFolder( purl ) );
+            it = knownFiles.insert( url, root.createNewFolder( purl ) );
         }
     }
     return it;
@@ -202,7 +204,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
     if ( !referurl.isValid() || !vp.isValid() )
         return false;
 
-    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, referurl, d->manager, true );
+    QHash<KUrl, KBookmarkGroup>::iterator it = d->bookmarkFind( referurl, true );
     Q_ASSERT( it != d->knownFiles.end() );
 
     QString newtitle;
@@ -246,7 +248,7 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
     if ( !vp.isValid() )
         return -1;
 
-    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, referurl, d->manager, false );
+    QHash<KUrl, KBookmarkGroup>::iterator it = d->bookmarkFind( referurl, false );
     if ( it == d->knownFiles.end() )
         return -1;
 
@@ -283,7 +285,7 @@ void BookmarkManager::setUrl( const KUrl& url )
 {
     d->url = url;
     d->urlBookmarks.clear();
-    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, url, d->manager, false );
+    QHash<KUrl, KBookmarkGroup>::iterator it = d->bookmarkFind( url, false );
     if ( it != d->knownFiles.end() )
     {
         for ( KBookmark bm = it.value().first(); !bm.isNull(); bm = it.value().next( bm ) )
@@ -302,7 +304,7 @@ void BookmarkManager::setUrl( const KUrl& url )
 
 bool BookmarkManager::setPageBookmark( int page )
 {
-    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, d->url, d->manager, true );
+    QHash<KUrl, KBookmarkGroup>::iterator it = d->bookmarkFind( d->url, true );
     Q_ASSERT( it != d->knownFiles.end() );
 
     bool found = false;
@@ -332,7 +334,7 @@ bool BookmarkManager::setPageBookmark( int page )
 
 bool BookmarkManager::removePageBookmark( int page )
 {
-    QHash<KUrl, KBookmarkGroup>::iterator it = find( d->knownFiles, d->url, d->manager, false );
+    QHash<KUrl, KBookmarkGroup>::iterator it = d->bookmarkFind( d->url, false );
     if ( it == d->knownFiles.end() )
         return false;
 

@@ -18,9 +18,6 @@
 #include <klocale.h>
 #include <okular/core/action.h>
 
-
-
-
 using namespace Epub;
 
 Converter::Converter() : mTextDocument( 0 )

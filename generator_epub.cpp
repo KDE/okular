@@ -14,19 +14,19 @@
 
 static KAboutData createAboutData()
 {
-    KAboutData aboutData(
-         "okular_epub",
-         "okular_epub",
-         ki18n("EPUB Backend"),
-         "0.1",
-         ki18n("A EPUB backend"),
-         KAboutData::License_GPL,
-         ki18n("© 2008 Ely Levy")
-    );
-    aboutData.addAuthor(ki18n("Ely Levy"), KLocalizedString(),
-                        "elylevy@cs.huji.ac.il");
+  KAboutData aboutData(
+                       "okular_epub",
+                       "okular_epub",
+                       ki18n("EPUB Backend"),
+                       "0.1",
+                       ki18n("A EPUB backend"),
+                       KAboutData::License_GPL,
+                       ki18n("© 2008 Ely Levy")
+                       );
+  aboutData.addAuthor(ki18n("Ely Levy"), KLocalizedString(),
+                      "elylevy@cs.huji.ac.il");
 
-    return aboutData;
+  return aboutData;
 }
 
 OKULAR_EXPORT_PLUGIN( EPubGenerator, createAboutData() )

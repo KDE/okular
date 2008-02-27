@@ -108,6 +108,9 @@ fontPool::~fontPool()
   kDebug(kvs::dvi) << "fontPool::~fontPool() called";
 #endif
 
+  // need to manually clear the fonts _before_ freetype gets unloaded
+  fontList.clear();
+
 #ifdef HAVE_FREETYPE
   if (FreeType_could_be_loaded == true)
     FT_Done_FreeType( FreeType_library );

@@ -36,7 +36,7 @@ class Converter : public Okular::TextDocumentConverter
     bool convertBody( const QDomElement &element );
     bool convertText( const QDomElement &element );
     bool convertHeader( QTextCursor *cursor, const QDomElement &element );
-    bool convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &format = QTextBlockFormat() );
+    bool convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &format = QTextBlockFormat(), bool merge = false );
     bool convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format );
     bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
     bool convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );

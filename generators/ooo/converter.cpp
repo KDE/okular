@@ -239,7 +239,7 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
   return true;
 }
 
-bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &parentFormat )
+bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &parentFormat, bool merge )
 {
   const QString styleName = element.attribute( "style-name" );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
@@ -249,7 +249,10 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
   property.applyBlock( &blockFormat );
   property.applyText( &textFormat );
 
-  cursor->setBlockFormat( blockFormat );
+  if ( merge )
+    cursor->mergeBlockFormat( blockFormat );
+  else
+    cursor->setBlockFormat( blockFormat );
 
   QDomNode child = element.firstChild();
   while ( !child.isNull() ) {
@@ -337,15 +340,13 @@ bool Converter::convertList( const QDomElement &element )
         continue;
       }
 
-        // FIXME: as soon as Qt is fixed
-//      if ( loop > 1 )
-        mCursor->insertBlock();
+      if ( loop > 1 )
+          mCursor->insertBlock();
 
-      if ( !convertParagraph( mCursor, paragraphElement ) )
+      if ( !convertParagraph( mCursor, paragraphElement, QTextBlockFormat(), true ) )
         return false;
 
-//      if ( loop > 1 )
-        list->add( mCursor->block() );
+      list->add( mCursor->block() );
     }
 
     child = child.nextSiblingElement();

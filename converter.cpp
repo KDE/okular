@@ -20,7 +20,7 @@
 
 using namespace Epub;
 
-Converter::Converter() : mTextDocument( 0 )
+Converter::Converter() : mTextDocument(NULL)
 {
   
 }
@@ -28,19 +28,18 @@ Converter::Converter() : mTextDocument( 0 )
 Converter::~Converter()
 {    
   epub_cleanup();
-  //  delete mTextDocument;
 }
 
 // join the char * array into one QString
-QString _strPack(unsigned char **str, int size)
+QString _strPack(char **str, int size)
 {
   QString res;
   
-  res = QString::fromUtf8((char *)str[0]);
+  res = QString::fromUtf8(str[0]);
 
   for (int i=1;i<size;i++) {
     res += ", ";
-    res += QString::fromUtf8((char *)str[i]);
+    res += QString::fromUtf8(str[i]);
   }
 
   return res;
@@ -58,7 +57,7 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
   
   if (data) { 
     
-    emit addMetaData(key, _strPack(data, size));
+    emit addMetaData(key, _strPack((char **)data, size));
     for (int i=0;i<size;i++)
       free(data[i]);
     free(data);
@@ -113,7 +112,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   mTextDocument->setPageSize(QSizeF(600, 800));
 
-  mCursor = new QTextCursor( mTextDocument );
+  QTextCursor *_cursor = new QTextCursor( mTextDocument );
 
   QTextFrameFormat frameFormat;
   frameFormat.setMargin( 20 );
@@ -146,14 +145,14 @@ QTextDocument* Converter::convert( const QString &fileName )
     if (epub_it_get_curr(it)) {
       
       // insert block for links
-      mCursor->insertBlock();
+      _cursor->insertBlock();
 
       QString link(epub_it_get_curr_url(it));
 
       // Pass on all the anchor since last block
-      const QTextBlock &before = mCursor->block();
+      const QTextBlock &before = _cursor->block();
       mSectionMap.insert(link, before);
-      mCursor->insertHtml(epub_it_get_curr(it));
+      _cursor->insertHtml(epub_it_get_curr(it));
 
       // Add anchors to hashes
       _handle_anchors(before, link);
@@ -161,7 +160,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       // Start new file in a new page 
       int page = mTextDocument->pageCount();
       while(mTextDocument->pageCount() == page)
-        mCursor->insertText("\n");
+        _cursor->insertText("\n");
     }
   } while (epub_it_get_next(it));
 
@@ -185,7 +184,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     }
   }
 
-  delete mCursor;
+  delete _cursor;
 
   return mTextDocument;
 }

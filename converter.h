@@ -30,7 +30,6 @@ namespace Epub {
       void _emitData(Okular::DocumentInfo::Key key, enum epub_metadata type); 
       void _handle_anchors(const QTextBlock &start, const QString &name);
       EpubDocument *mTextDocument;
-      QTextCursor *mCursor;
       
       QHash<QString, QTextBlock> mSectionMap;
       QHash<QString, QPair<int, int> > mLocalLinks;

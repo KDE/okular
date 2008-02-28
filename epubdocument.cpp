@@ -21,7 +21,8 @@ bool EpubDocument::isValid()
 }
 
 EpubDocument::~EpubDocument() {
-  epub_close(mEpub);
+  if (mEpub)
+    epub_close(mEpub);
 }
   
 struct epub *EpubDocument::getEpub() 
@@ -36,20 +37,24 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
    
   // Get the data from the epub file
   size = epub_get_data(mEpub, qPrintable(name.toString()), &data);
+
+
   QVariant resource;
-    
-  switch(type) {
-  case QTextDocument::ImageResource:
-    resource.setValue(QImage::fromData((unsigned char *)data, size));
-    break;
+
+  if (size > 0) {
+    switch(type) {
+    case QTextDocument::ImageResource:
+      resource.setValue(QImage::fromData((unsigned char *)data, size));
+      break;
       
-  default:
-    resource.setValue(QString(data));
-    break;
+    default:
+      resource.setValue(QString(data));
+      break;
+    }
+    
+    free(data);
   }
-    
-  free(data);
-    
+ 
   // add to cache
   addResource(type, name, resource); 
     

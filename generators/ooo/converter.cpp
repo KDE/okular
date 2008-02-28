@@ -324,32 +324,50 @@ bool Converter::convertList( const QDomElement &element )
   const ListFormatProperty property = mStyleInformation->listProperty( styleName );
 
   QTextListFormat format;
+
+  if ( mCursor->currentList() ) { // we are in a nested list
+    format = mCursor->currentList()->format();
+    format.setIndent( format.indent() + 1 );
+  }
+
   property.apply( &format, 0 );
 
   QTextList *list = mCursor->insertList( format );
 
-  QDomElement child = element.firstChildElement();
+  QDomElement itemChild = element.firstChildElement();
   int loop = 0;
-  while ( !child.isNull() ) {
-    if ( child.tagName() == QLatin1String( "list-item" ) ) {
+  while ( !itemChild.isNull() ) {
+    if ( itemChild.tagName() == QLatin1String( "list-item" ) ) {
       loop++;
 
-      const QDomElement paragraphElement = child.firstChildElement();
-      if ( paragraphElement.tagName() != QLatin1String( "p" ) ) {
-        child = child.nextSiblingElement();
-        continue;
+      QDomElement childElement = itemChild.firstChildElement();
+      while ( !childElement.isNull() ) {
+
+        QTextBlock prevBlock;
+
+        if ( childElement.tagName() == QLatin1String( "p" ) ) {
+          if ( loop > 1 )
+            mCursor->insertBlock();
+
+          prevBlock = mCursor->block();
+
+          if ( !convertParagraph( mCursor, childElement, QTextBlockFormat(), true ) )
+            return false;
+
+        } else if ( childElement.tagName() == QLatin1String( "list" ) ) {
+          prevBlock = mCursor->block();
+
+          if ( !convertList( childElement ) )
+            return false;
+        }
+
+        list->add( prevBlock );
+
+        childElement = childElement.nextSiblingElement();
       }
-
-      if ( loop > 1 )
-          mCursor->insertBlock();
-
-      if ( !convertParagraph( mCursor, paragraphElement, QTextBlockFormat(), true ) )
-        return false;
-
-      list->add( mCursor->block() );
     }
 
-    child = child.nextSiblingElement();
+    itemChild = itemChild.nextSiblingElement();
   }
 
   return true;

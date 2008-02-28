@@ -21,8 +21,11 @@ bool EpubDocument::isValid()
 }
 
 EpubDocument::~EpubDocument() {
+
   if (mEpub)
     epub_close(mEpub);
+
+  epub_cleanup();  
 }
   
 struct epub *EpubDocument::getEpub() 

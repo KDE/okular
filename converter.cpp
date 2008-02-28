@@ -27,7 +27,6 @@ Converter::Converter() : mTextDocument(NULL)
 
 Converter::~Converter()
 {    
-  epub_cleanup();
 }
 
 // join the char * array into one QString

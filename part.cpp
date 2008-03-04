@@ -1073,6 +1073,7 @@ class GotoPageDialog : public KDialog
             e1 = new KIntNumInput(current, w);
             e1->setRange(1, max);
             e1->setEditFocus(true);
+            e1->setSliderEnabled(true);
 
             QLabel *label = new QLabel(i18n("&Page:"), w);
             label->setBuddy(e1);

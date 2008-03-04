@@ -46,14 +46,10 @@ if (LIBSPECTRE_FOUND)
     set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} ${_includedir})
   endforeach(_includedir)
 
-  set(CMAKE_REQUIRED_INCLUDES)
-  set(CMAKE_REQUIRED_LIBRARIES)
-else (LIBSPECTRE_FOUND)
-  if (LIBSPECTRE_FIND_REQUIRED)
-    message(FATAL_ERROR "Could NOT find libspectre")
-  endif (LIBSPECTRE_FIND_REQUIRED)
-  message(STATUS "Could not find OPTIONAL package libspectre")
 endif (LIBSPECTRE_FOUND)
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBSPECTRE_FOUND)
 
 # ensure that they are cached
 set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} CACHE INTERNAL "The libspectre include path")

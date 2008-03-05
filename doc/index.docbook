@@ -345,7 +345,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>File</guimenu>
-							<guimenuitem>Open Recent</guimenuitem>
+							<guisubmenu>Open Recent</guisubmenu>
 						</menuchoice>
 					</term>
 					<listitem>

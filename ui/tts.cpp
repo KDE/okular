@@ -9,30 +9,74 @@
 
 #include "tts.h"
 
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusReply>
-
 #include <klocale.h>
 #include <ktoolinvocation.h>
 
 #include "pageviewutils.h"
+#include "kspeechinterface.h"
 
 /* Private storage. */
 class OkularTTS::Private
 {
 public:
-    Private()
+    Private( OkularTTS *qq )
+        : q( qq ), kspeech( 0 )
     {
     }
 
+    void setupIface();
+    void teardownIface();
+
+    OkularTTS *q;
     PageViewMessage *messageWindow;
+    org::kde::KSpeech* kspeech;
 };
+
+void OkularTTS::Private::setupIface()
+{
+    if ( kspeech )
+        return;
+
+    // If KTTSD not running, start it.
+    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered( "org.kde.kttsd" );
+    bool kttsdactive = false;
+    if ( reply.isValid() )
+        kttsdactive = reply.value();
+    if ( !kttsdactive )
+    {
+        QString error;
+        if ( KToolInvocation::startServiceByDesktopName( "kttsd", QStringList(), &error ) )
+        {
+            messageWindow->display( i18n( "Starting KTTSD Failed: %1", error ) );
+        }
+        else
+        {
+            kttsdactive = true;
+        }
+    }
+    if ( kttsdactive )
+    {
+        // creating the connection to the kspeech interface
+        kspeech = new org::kde::KSpeech( "org.kde.kttsd", "/KSpeech", QDBusConnection::sessionBus() );
+        kspeech->setApplicationName( "Okular" );
+        connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceUnregistered( const QString & ) ),
+                 q, SLOT( slotServiceUnregistered( const QString & ) ) );
+        connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceOwnerChanged( const QString &, const QString &, const QString & ) ),
+                 q, SLOT( slotServiceOwnerChanged( const QString &, const QString &, const QString & ) ) );
+    }
+}
+
+void OkularTTS::Private::teardownIface()
+{
+    disconnect( QDBusConnection::sessionBus().interface(), 0, q, 0 );
+
+    delete kspeech;
+    kspeech = 0;
+}
 
 
 OkularTTS::OkularTTS( PageViewMessage *messageWindow, QObject *parent )
-    : QObject( parent ), d( new Private )
+    : QObject( parent ), d( new Private( this ) )
 {
     d->messageWindow = messageWindow;
 }
@@ -47,31 +91,26 @@ void OkularTTS::say( const QString &text )
     if ( text.isEmpty() )
         return;
 
-    // Albert says is this ever necessary?
-    // we already attached on Part constructor
-    // If KTTSD not running, start it.
-    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered( "org.kde.kttsd" );
-    bool kttsdactive = false;
-    if ( reply.isValid() )
-        kttsdactive = reply.value();
-    if ( !kttsdactive )
+    d->setupIface();
+    if ( d->kspeech )
     {
-        QString error;
-        if ( KToolInvocation::startServiceByDesktopName( "kttsd", QStringList(), &error ) )
-        {
-            d->messageWindow->display( i18n( "Starting KTTSD Failed: %1", error ) );
-        }
-        else
-        {
-            kttsdactive = true;
-        }
+        d->kspeech->say( text, 0 );
     }
-    if ( kttsdactive )
+}
+
+void OkularTTS::slotServiceUnregistered( const QString &service )
+{
+    if ( service == QLatin1String( "org.kde.kttsd" ) )
     {
-        // creating the connection to the kspeech interface
-        QDBusInterface kspeech( "org.kde.kttsd", "/KSpeech", "org.kde.KSpeech" );
-        kspeech.call( "setApplicationName", "Okular" );
-        kspeech.call( "say", text, 0 );
+        d->teardownIface();
+    }
+}
+
+void OkularTTS::slotServiceOwnerChanged( const QString &service, const QString &, const QString &newOwner )
+{
+    if ( service == QLatin1String( "org.kde.kttsd" ) && newOwner.isEmpty() )
+    {
+        d->teardownIface();
     }
 }
 

@@ -23,6 +23,10 @@ class OkularTTS : public QObject
 
         void say( const QString &text );
 
+    private slots:
+        void slotServiceUnregistered( const QString& );
+        void slotServiceOwnerChanged( const QString&, const QString&, const QString& );
+
     private:
         // private storage
         class Private;

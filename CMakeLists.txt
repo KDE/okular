@@ -151,6 +151,7 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
+qt4_add_dbus_interfaces(okularpart_SRCS ${DBUS_INTERFACES_INSTALL_DIR}/org.kde.KSpeech.xml)
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
 

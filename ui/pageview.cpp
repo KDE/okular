@@ -494,6 +494,18 @@ void PageView::setupActions( KActionCollection * ac )
     ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTextSelect );
 
+    // speak actions
+    const bool hasTTS = Okular::Settings::useKTTSD();
+    KAction *speakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );
+    ac->addAction( "speak_document", speakDoc );
+    speakDoc->setEnabled( hasTTS );
+    connect( speakDoc, SIGNAL( triggered() ), SLOT( slotSpeakDocument() ) );
+
+    KAction *speakPage = new KAction( KIcon( "text-speak" ), i18n( "Speak Current Page" ), this );
+    ac->addAction( "speak_current_page", speakPage );
+    speakPage->setEnabled( hasTTS );
+    connect( speakPage, SIGNAL( triggered() ), SLOT( slotSpeakCurrentPage() ) );
+
     // Other actions
     KAction * su  = new KAction(i18n("Scroll Up"), this);
     ac->addAction("view_scroll_up", su );
@@ -1917,6 +1929,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     KMenu menu( this );
                     QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
+                    QAction *speakText = 0;
+                    if ( Okular::Settings::useKTTSD() )
+                        speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
                     if ( !d->document->isAllowed( Okular::AllowCopy ) )
                     {
                         textToClipboard->setEnabled( false );
@@ -1928,6 +1943,11 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         if ( choice == textToClipboard )
                             copyTextSelection();
+                        else if ( choice == speakText )
+                        {
+                            const QString text = d->selectedText();
+                            d->tts()->say( text );
+                        }
                     }
                 }
             break;
@@ -3116,6 +3136,33 @@ void PageView::slotToggleForms()
 
 void PageView::slotFormWidgetChanged( FormWidgetIface *w )
 {
+}
+
+void PageView::slotSpeakDocument()
+{
+    QString text;
+    QVector< PageViewItem * >::const_iterator it = d->items.begin(), itEnd = d->items.end();
+    for ( ; it < itEnd; ++it )
+    {
+        Okular::RegularAreaRect * area = textSelectionForItem( *it );
+        text.append( (*it)->page()->text( area ) );
+        text.append( '\n' );
+        delete area;
+    }
+
+    d->tts()->say( text );
+}
+
+void PageView::slotSpeakCurrentPage()
+{
+    const int currentPage = d->document->viewport().pageNumber;
+
+    PageViewItem *item = d->items.at( currentPage );
+    Okular::RegularAreaRect * area = textSelectionForItem( item );
+    const QString text = item->page()->text( area );
+    delete area;
+
+    d->tts()->say( text );
 }
 //END private SLOTS
 

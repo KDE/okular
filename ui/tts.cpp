@@ -62,6 +62,7 @@ void OkularTTS::Private::setupIface()
     {
         // creating the connection to the kspeech interface
         kspeech = new org::kde::KSpeech( "org.kde.kttsd", "/KSpeech", QDBusConnection::sessionBus() );
+        kspeech->setParent( q );
         kspeech->setApplicationName( "Okular" );
         connect( kspeech, SIGNAL( jobStateChanged( const QString &, int, int ) ),
                  q, SLOT( slotJobStateChanged( const QString &, int, int ) ) );

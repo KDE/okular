@@ -22,10 +22,15 @@ class OkularTTS : public QObject
         ~OkularTTS();
 
         void say( const QString &text );
+        void stopAllSpeechs();
+
+    signals:
+        void hasSpeechs( bool has );
 
     private slots:
         void slotServiceUnregistered( const QString& );
         void slotServiceOwnerChanged( const QString&, const QString&, const QString& );
+        void slotJobStateChanged( const QString &appId, int jobNum, int state );
 
     private:
         // private storage

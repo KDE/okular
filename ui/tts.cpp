@@ -9,7 +9,10 @@
 
 #include "tts.h"
 
+#include <qset.h>
+
 #include <klocale.h>
+#include <kspeech.h>
 #include <ktoolinvocation.h>
 
 #include "pageviewutils.h"
@@ -30,6 +33,7 @@ public:
     OkularTTS *q;
     PageViewMessage *messageWindow;
     org::kde::KSpeech* kspeech;
+    QSet< int > jobs;
 };
 
 void OkularTTS::Private::setupIface()
@@ -59,6 +63,8 @@ void OkularTTS::Private::setupIface()
         // creating the connection to the kspeech interface
         kspeech = new org::kde::KSpeech( "org.kde.kttsd", "/KSpeech", QDBusConnection::sessionBus() );
         kspeech->setApplicationName( "Okular" );
+        connect( kspeech, SIGNAL( jobStateChanged( const QString &, int, int ) ),
+                 q, SLOT( slotJobStateChanged( const QString &, int, int ) ) );
         connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceUnregistered( const QString & ) ),
                  q, SLOT( slotServiceUnregistered( const QString & ) ) );
         connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceOwnerChanged( const QString &, const QString &, const QString & ) ),
@@ -94,8 +100,21 @@ void OkularTTS::say( const QString &text )
     d->setupIface();
     if ( d->kspeech )
     {
-        d->kspeech->say( text, 0 );
+        QDBusReply< int > reply = d->kspeech->say( text, KSpeech::soPlainText );
+        if ( reply.isValid() )
+        {
+            d->jobs.insert( reply.value() );
+            emit hasSpeechs( true );
+        }
     }
+}
+
+void OkularTTS::stopAllSpeechs()
+{
+    if ( !d->kspeech )
+        return;
+
+    d->kspeech->removeAllJobs();
 }
 
 void OkularTTS::slotServiceUnregistered( const QString &service )
@@ -111,6 +130,24 @@ void OkularTTS::slotServiceOwnerChanged( const QString &service, const QString &
     if ( service == QLatin1String( "org.kde.kttsd" ) && newOwner.isEmpty() )
     {
         d->teardownIface();
+    }
+}
+
+void OkularTTS::slotJobStateChanged( const QString &appId, int jobNum, int state )
+{
+    // discard non ours job
+    if ( appId != QDBusConnection::sessionBus().baseService() || !d->kspeech )
+        return;
+
+    switch ( state )
+    {
+        case KSpeech::jsDeleted:
+            d->jobs.remove( jobNum );
+            emit hasSpeechs( !d->jobs.isEmpty() );
+            break;
+        case KSpeech::jsFinished:
+            d->kspeech->removeJob( jobNum );
+            break;
     }
 }
 

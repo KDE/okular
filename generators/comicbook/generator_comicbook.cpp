@@ -12,11 +12,30 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPrinter>
 
+#include <kaboutdata.h>
+#include <klocale.h>
+
 #include <okular/core/document.h>
 #include <okular/core/page.h>
 #include <okular/core/fileprinter.h>
 
-OKULAR_EXPORT_PLUGIN( ComicBookGenerator, "okular_comicbook" )
+static KAboutData createAboutData()
+{
+    KAboutData aboutData(
+         "okular_comicbook",
+         "okular_comicbook",
+         ki18n( "ComicBook Backend" ),
+         "0.1",
+         ki18n( "A renderer for various comic book formats" ),
+         KAboutData::License_GPL,
+         ki18n( "© 2007-2008 Tobias Koenig" )
+    );
+    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+
+    return aboutData;
+}
+
+OKULAR_EXPORT_PLUGIN( ComicBookGenerator, createAboutData() )
 
 ComicBookGenerator::ComicBookGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )

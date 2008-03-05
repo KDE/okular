@@ -22,16 +22,17 @@
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_plucker",
          "okular_plucker",
-         KLocalizedString(),
+         ki18n( "Plucker Document Backend" ),
          "0.1",
-         KLocalizedString(),
+         ki18n( "A renderer for Plucker eBooks" ),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n( "© 2007-2008 Tobias Koenig" )
     );
+    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+
     return aboutData;
 }
 

@@ -12,19 +12,21 @@
 #include "converter.h"
 
 #include <kaboutdata.h>
+#include <klocale.h>
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_fictionbook",
          "okular_fictionbook",
-         KLocalizedString(),
+         ki18n( "Fiction Book Backend" ),
          "0.1",
-         KLocalizedString(),
+         ki18n( "A renderer for FictionBook eBooks" ),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n( "© 2007-2008 Tobias Koenig" )
     );
+    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+
     return aboutData;
 }
 

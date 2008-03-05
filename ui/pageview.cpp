@@ -368,6 +368,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
 PageView::~PageView()
 {
+    if ( d->m_tts )
+        d->m_tts->stopAllSpeechs();
+
     // delete the local storage structure
     qDeleteAll(d->m_annowindows);
     // delete all widgets

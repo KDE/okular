@@ -140,6 +140,7 @@ set(okularpart_SRCS
    ui/toc.cpp
    ui/tocmodel.cpp
    ui/toolaction.cpp
+   ui/tts.cpp
 )
 
 kde4_add_ui_files(okularpart_SRCS

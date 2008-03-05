@@ -29,10 +29,6 @@
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusConnectionInterface>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusReply>
 
 #include <kaction.h>
 #include <kstandardaction.h>
@@ -44,7 +40,6 @@
 #include <kglobalsettings.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
-#include <ktoolinvocation.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kicon.h>
@@ -63,6 +58,7 @@
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
 #include "toolaction.h"
+#include "tts.h"
 #include "core/action.h"
 #include "core/document.h"
 #include "core/form.h"
@@ -82,6 +78,7 @@ public:
     PageViewPrivate( PageView *qq );
 
     FormWidgetsController* formWidgetsController();
+    OkularTTS* tts();
     QString selectedText() const;
 
     // the document, pageviewItems and the 'visible cache'
@@ -128,6 +125,7 @@ public:
     PageViewMessage * messageWindow;    // in pageviewutils.h
     bool m_formsVisible;
     FormWidgetsController *formsWidgetController;
+    OkularTTS * m_tts;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -174,6 +172,16 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
     }
 
     return formsWidgetController;
+}
+
+OkularTTS* PageViewPrivate::tts()
+{
+    if ( !m_tts )
+    {
+        m_tts = new OkularTTS( messageWindow, q );
+    }
+
+    return m_tts;
 }
 
 
@@ -296,6 +304,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
     d->formsWidgetController = 0;
+    d->m_tts = 0;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
@@ -1873,32 +1882,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == speakText )
                 {
                     // [2] speech selection using KTTSD
-                    // Albert says is this ever necessary?
-                    // we already attached on Part constructor
-                    // If KTTSD not running, start it.
-                    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.kttsd");
-                    bool kttsdactive = false;
-                    if ( reply.isValid() )
-                        kttsdactive = reply.value();
-                    if ( !kttsdactive )
-                    {
-                        QString error;
-                        if (KToolInvocation::startServiceByDesktopName("kttsd", QStringList(), &error))
-                        {
-                            d->messageWindow->display( i18n("Starting KTTSD Failed: %1", error) );
-                        }
-                        else
-                        {
-                            kttsdactive = true;
-                        }
-                    }
-                    if ( kttsdactive )
-                    {
-                        // creating the connection to the kspeech interface
-                        QDBusInterface kspeech("org.kde.kttsd", "/KSpeech", "org.kde.KSpeech");
-                        kspeech.call("setApplicationName", "okular");
-                        kspeech.call("say", selectedText, 0);
-                    }
+                    d->tts()->say( selectedText );
                 }
             }
             }

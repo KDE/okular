@@ -70,6 +70,7 @@
     <Separator/>
     <Action name="speak_document"/>
     <Action name="speak_current_page"/>
+    <Action name="speak_stop_all"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_leftpanel" group="show_merge"/>

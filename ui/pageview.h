@@ -198,6 +198,7 @@ Q_OBJECT
         void slotFormWidgetChanged( FormWidgetIface *w );
         void slotSpeakDocument();
         void slotSpeakCurrentPage();
+        void slotStopSpeaks();
 };
 
 #endif

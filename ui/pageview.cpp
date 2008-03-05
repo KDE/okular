@@ -150,6 +150,7 @@ public:
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
     KAction * aToggleForms;
+    KAction * aSpeakStop;
     KActionCollection * actionCollection;
 
     int setting_viewMode;
@@ -179,6 +180,11 @@ OkularTTS* PageViewPrivate::tts()
     if ( !m_tts )
     {
         m_tts = new OkularTTS( messageWindow, q );
+        if ( aSpeakStop )
+        {
+            QObject::connect( m_tts, SIGNAL( hasSpeechs( bool ) ),
+                              aSpeakStop, SLOT( setEnabled( bool ) ) );
+        }
     }
 
     return m_tts;
@@ -320,6 +326,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aViewContinuous = 0;
     d->aPrevAction = 0;
     d->aToggleForms = 0;
+    d->aSpeakStop = 0;
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewMode = Okular::Settings::viewMode();
@@ -505,6 +512,11 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction( "speak_current_page", speakPage );
     speakPage->setEnabled( hasTTS );
     connect( speakPage, SIGNAL( triggered() ), SLOT( slotSpeakCurrentPage() ) );
+
+    d->aSpeakStop = new KAction( KIcon( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
+    ac->addAction( "speak_stop_all", d->aSpeakStop );
+    d->aSpeakStop->setEnabled( false );
+    connect( d->aSpeakStop, SIGNAL( triggered() ), SLOT( slotStopSpeaks() ) );
 
     // Other actions
     KAction * su  = new KAction(i18n("Scroll Up"), this);
@@ -3163,6 +3175,14 @@ void PageView::slotSpeakCurrentPage()
     delete area;
 
     d->tts()->say( text );
+}
+
+void PageView::slotStopSpeaks()
+{
+    if ( !d->m_tts )
+        return;
+
+    d->m_tts->stopAllSpeechs();
 }
 //END private SLOTS
 

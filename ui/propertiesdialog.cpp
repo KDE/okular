@@ -132,8 +132,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   QRect screenContainer = KGlobalSettings::desktopGeometry( this );
   width = qMin( width, 2*screenContainer.width()/3 );
   resize(width, 1);
-  // TODO ?
-  setMinimumSize(sizeHint());
 
     connect( pageWidget(), SIGNAL( currentPageChanged( KPageWidgetItem *, KPageWidgetItem * ) ),
              this, SLOT( pageChanged( KPageWidgetItem *, KPageWidgetItem * ) ) );

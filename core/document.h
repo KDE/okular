@@ -341,6 +341,10 @@ class OKULAR_EXPORT Document : public QObject
 
         /**
          * Sends @p requests for pixmap generation.
+         *
+         * @param reqOptions the options for the request
+         *
+         * @since 0.7 (KDE 4.1)
          */
         void requestPixmaps( const QLinkedList<PixmapRequest*> &requests, PixmapRequestFlags reqOptions );
 

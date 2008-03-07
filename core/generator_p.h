@@ -72,6 +72,7 @@ class PixmapRequestPrivate
         int mHeight;
         int mPriority;
         bool mAsynchronous;
+        bool mForce : 1;
         Page *mPage;
 };
 

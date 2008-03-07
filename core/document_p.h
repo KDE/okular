@@ -101,6 +101,7 @@ class DocumentPrivate
         void fontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
         void slotGeneratorConfigChanged( const QString& );
+        void refreshPixmaps( int );
         void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll);

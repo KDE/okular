@@ -323,9 +323,26 @@ class OKULAR_EXPORT Document : public QObject
         void setZoom( int factor, int excludeId = -1 );
 
         /**
+         * Describes the possible options for the pixmap requests.
+         */
+        enum PixmapRequestFlag
+        {
+            NoOption = 0,                ///< No options
+            RemoveAllPrevious = 1        ///< Remove all the previous requests, even for non requested page pixmaps
+        };
+        Q_DECLARE_FLAGS( PixmapRequestFlags, PixmapRequestFlag )
+
+        /**
          * Sends @p requests for pixmap generation.
+         *
+         * The same as requestPixmaps( requests, RemoveAllPrevious );
          */
         void requestPixmaps( const QLinkedList<PixmapRequest*> &requests );
+
+        /**
+         * Sends @p requests for pixmap generation.
+         */
+        void requestPixmaps( const QLinkedList<PixmapRequest*> &requests, PixmapRequestFlags reqOptions );
 
         /**
          * Sends a request for text page generation for the given page @p number.
@@ -613,6 +630,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
+        Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )
 
         // search thread simulators
         Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
@@ -861,5 +879,6 @@ class OKULAR_EXPORT VisiblePageRect
 }
 
 Q_DECLARE_METATYPE( Okular::DocumentInfo::Key )
+Q_DECLARE_OPERATORS_FOR_FLAGS( Okular::Document::PixmapRequestFlags )
 
 #endif

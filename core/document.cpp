@@ -570,7 +570,7 @@ void DocumentPrivate::sendGeneratorRequest()
             m_pixmapRequestsStack.pop_back();
 
         // request only if page isn't already present or request has invalid id
-        else if ( r->page()->hasPixmap( r->id(), r->width(), r->height() ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID)
+        else if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
         {
             m_pixmapRequestsStack.pop_back();
             delete r;
@@ -697,6 +697,27 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
          !m_allocatedPixmapsFifo.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
+}
+
+void DocumentPrivate::refreshPixmaps( int pageNumber )
+{
+    Page* page = m_pagesVector.value( pageNumber, 0 );
+    if ( !page )
+        return;
+
+    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+    QMap< int, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.begin(), itEnd = page->d->m_pixmaps.end();
+    for ( ; it != itEnd; ++it )
+    {
+        QSize size = (*it).m_pixmap->size();
+        if ( (*it).m_rotation % 2 )
+            size.transpose();
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, true );
+        p->d->mForce = true;
+        requestedPixmaps.push_back( p );
+    }
+    if ( !requestedPixmaps.isEmpty() )
+        m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
 }
 
 void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
@@ -1769,6 +1790,11 @@ QString Document::pageSizeString(int page) const
 
 void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 {
+    requestPixmaps( requests, RemoveAllPrevious );
+}
+
+void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, PixmapRequestFlags reqOptions )
+{
     if ( requests.isEmpty() )
         return;
 
@@ -1784,11 +1810,19 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
     int requesterID = requests.first()->id();
+    QSet< int > requestedPages;
+    {
+        QLinkedList< PixmapRequest * >::const_iterator rIt = requests.begin(), rEnd = requests.end();
+        for ( ; rIt != rEnd; ++rIt )
+            requestedPages.insert( (*rIt)->pageNumber() );
+    }
+    const bool removeAllPrevious = reqOptions & RemoveAllPrevious;
     d->m_pixmapRequestsMutex.lock();
     QLinkedList< PixmapRequest * >::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
-        if ( (*sIt)->id() == requesterID )
+        if ( (*sIt)->id() == requesterID
+             && ( removeAllPrevious || requestedPages.contains( (*sIt)->pageNumber() ) ) )
         {
             // delete request and remove it from stack
             delete *sIt;

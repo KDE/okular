@@ -367,6 +367,7 @@ PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int
     d->mHeight = height;
     d->mPriority = priority;
     d->mAsynchronous = asynchronous;
+    d->mForce = false;
 }
 
 PixmapRequest::~PixmapRequest()

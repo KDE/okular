@@ -3115,6 +3115,7 @@ void PageView::slotToggleForms()
 
 void PageView::slotFormWidgetChanged( FormWidgetIface *w )
 {
+    Q_UNUSED( w )
 }
 //END private SLOTS
 

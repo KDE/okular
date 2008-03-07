@@ -51,6 +51,8 @@ QButtonGroup* FormWidgetsController::registerRadioButton( FormWidgetIface* widge
     newdata.ids.append( id );
     newdata.group = new QButtonGroup();
     newdata.group->addButton( widget->button() );
+    connect( newdata.group, SIGNAL( buttonClicked( QAbstractButton * ) ),
+             this, SLOT( slotButtonClicked( QAbstractButton * ) ) );
     m_radios.append( newdata );
     return newdata.group;
 }
@@ -63,6 +65,14 @@ void FormWidgetsController::dropRadioButtons()
         delete (*it).group;
     }
     m_radios.clear();
+}
+
+void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
+{
+    if ( CheckBoxEdit *check = qobject_cast< CheckBoxEdit * >( button ) )
+        emit changed( check );
+    else if ( RadioButtonEdit *radio = qobject_cast< RadioButtonEdit * >( button ) )
+        emit changed( radio );
 }
 
 
@@ -235,6 +245,9 @@ QAbstractButton* CheckBoxEdit::button()
 void CheckBoxEdit::slotStateChanged( int state )
 {
     m_form->setState( state == Qt::Checked );
+
+    if ( !group() )
+        m_controller->signalChanged( this );
 }
 
 
@@ -266,6 +279,9 @@ QAbstractButton* RadioButtonEdit::button()
 void RadioButtonEdit::slotToggled( bool checked )
 {
     m_form->setState( checked );
+
+    if ( !group() )
+        m_controller->signalChanged( this );
 }
 
 
@@ -288,6 +304,8 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
 void FormLineEdit::textEdited( const QString& )
 {
     m_form->setText( text() );
+
+    m_controller->signalChanged( this );
 }
 
 
@@ -307,6 +325,8 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
 void TextAreaEdit::slotChanged()
 {
     m_form->setText( toPlainText() );
+
+    m_controller->signalChanged( this );
 }
 
 
@@ -326,6 +346,8 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 void FileEdit::slotChanged( const QString& )
 {
     m_form->setText( url().path() );
+
+    m_controller->signalChanged( this );
 }
 
 
@@ -363,6 +385,8 @@ void ListEdit::slotSelectionChanged()
     foreach( const QListWidgetItem * item, selection )
         rows.append( row( item ) );
     m_form->setCurrentChoices( rows );
+
+    m_controller->signalChanged( this );
 }
 
 
@@ -384,6 +408,8 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 void ComboEdit::indexChanged( int index )
 {
     m_form->setCurrentChoices( QList< int >() << index );
+
+    m_controller->signalChanged( this );
 }
 
 

@@ -57,6 +57,9 @@ class FormWidgetsController : public QObject
     signals:
         void changed( FormWidgetIface *w );
 
+    private slots:
+        void slotButtonClicked( QAbstractButton *button );
+
     private:
         QList< RadioData > m_radios;
 };

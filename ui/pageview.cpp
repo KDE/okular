@@ -126,6 +126,8 @@ public:
     bool m_formsVisible;
     FormWidgetsController *formsWidgetController;
     OkularTTS * m_tts;
+    QTimer * refreshTimer;
+    int refreshPage;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -311,6 +313,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->m_formsVisible = false;
     d->formsWidgetController = 0;
     d->m_tts = 0;
+    d->refreshTimer = 0;
+    d->refreshPage = -1;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
@@ -3151,6 +3155,25 @@ void PageView::slotToggleForms()
 
 void PageView::slotFormWidgetChanged( FormWidgetIface *w )
 {
+    if ( !d->refreshTimer )
+    {
+        d->refreshTimer = new QTimer( this );
+        d->refreshTimer->setSingleShot( true );
+        connect( d->refreshTimer, SIGNAL( timeout() ),
+                 this, SLOT( slotRefreshPage() ) );
+    }
+    d->refreshPage = w->pageItem()->pageNumber();
+    d->refreshTimer->start( 1000 );
+}
+
+void PageView::slotRefreshPage()
+{
+    const int req = d->refreshPage;
+    if ( req < 0 )
+        return;
+    d->refreshPage = -1;
+    QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
+                               Q_ARG( int, req ) );
 }
 
 void PageView::slotSpeakDocument()

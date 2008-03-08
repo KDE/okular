@@ -28,6 +28,7 @@
 #include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kurl.h>
 #include <QFileInfo>
 #include <QBuffer>
 #include <QImageReader>
@@ -404,6 +405,42 @@ static QMatrix parseRscRefMatrix( const QString &data )
     } else {
         return attsToMatrix( data );
     }
+}
+
+/**
+   \return The path of the entry
+*/
+static QString entryPath( const QString &entry )
+{
+    const int index = entry.lastIndexOf( QChar::fromLatin1( '/' ) );
+    QString ret = QString::fromLatin1( "/" ) + entry.mid( 0, index );
+    if ( index > 0 ) {
+        ret.append( QChar::fromLatin1( '/' ) );
+    }
+    return ret;
+}
+
+/**
+   \return The path of the entry
+*/
+static QString entryPath( const KZipFileEntry* entry )
+{
+    return entryPath( entry->path() );
+}
+
+/**
+   \return The absolute path of the \p location, according to \p path if it's non-absolute
+*/
+static QString absolutePath( const QString &path, const QString &location )
+{
+    if ( location.at( 0 ) == QLatin1Char( '/' ) ) {
+        // already absolute
+        return location;
+    }
+
+    KUrl url = KUrl::fromPath( path );
+    url.setFileName( location );
+    return url.toLocalFile();
 }
 
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
@@ -824,6 +861,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
     // kDebug(XpsDebug) << "image file name: " << fileName;
 
+    const QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
     const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
     /* WORKAROUND:
@@ -1037,6 +1075,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
     kDebug(XpsDebug) << "document file name: " << fileName;
 
     const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry( fileName ));
+    const QString documentFilePath = entryPath( documentFile );
 
     QXmlStreamReader docXml;
     docXml.addData( documentFile->data() );
@@ -1046,12 +1085,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
             if ( docXml.name() == "PageContent" ) {
                 QString pagePath = docXml.attributes().value("Source").toString();
                 kDebug(XpsDebug) << "Page Path: " << pagePath;
-                if (pagePath.startsWith('/') == false ) {
-                    int offset = fileName.lastIndexOf('/');
-                    QString thisDir = fileName.mid(0,  offset) + '/';
-                    pagePath.prepend(thisDir);
-                }
-                XpsPage *page = new XpsPage( file, pagePath );
+                XpsPage *page = new XpsPage( file, absolutePath( documentFilePath, pagePath ) );
                 m_pages.append(page);
             } else if ( docXml.name() == "PageContent.LinkTargets" ) {
                 // do nothing - wait for the real LinkTarget elements
@@ -1225,6 +1259,7 @@ bool XpsFile::loadDocument(const QString &filename)
     }
 
     const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fixedRepresentationFileName ));
+    const QString fixedRepresentationFilePath = entryPath( fixedRepFile );
 
     QXmlStreamReader fixedRepXml;
     fixedRepXml.addData( fixedRepFile->data() );
@@ -1234,7 +1269,8 @@ bool XpsFile::loadDocument(const QString &filename)
         fixedRepXml.readNext();
         if ( fixedRepXml.isStartElement() ) {
             if ( fixedRepXml.name() == "DocumentReference" ) {
-                XpsDocument *doc = new XpsDocument( this, fixedRepXml.attributes().value("Source").toString() );
+                const QString source = fixedRepXml.attributes().value("Source").toString();
+                XpsDocument *doc = new XpsDocument( this, absolutePath( fixedRepresentationFilePath, source ) );
                 for (int lv = 0; lv < doc->numPages(); ++lv) {
                     // our own copy of the pages list
                     m_pages.append( doc->page( lv ) );

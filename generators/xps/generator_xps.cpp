@@ -861,6 +861,12 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
     // kDebug(XpsDebug) << "image file name: " << fileName;
 
+    if ( fileName.at( 0 ) == QLatin1Char( '{' ) ) {
+        // for example: '{ColorConvertedBitmap /Resources/bla.wdp /Resources/foobar.icc}'
+        // TODO: properly read a ColorConvertedBitmap
+        return QImage();
+    }
+
     const QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
     const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( absoluteFileName ));
 

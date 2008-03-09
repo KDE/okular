@@ -494,7 +494,7 @@ XpsHandler::~XpsHandler()
 bool XpsHandler::startDocument()
 {
     kDebug(XpsDebug) << "start document" << m_page->m_fileName ;
-    m_page->m_pageImage->fill( QColor("White").rgba() );
+    m_page->m_pageImage->fill( qRgba( 255, 255, 255, 255 ) );
 
     XpsRenderNode node;
     node.name = "document";

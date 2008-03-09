@@ -481,6 +481,24 @@ static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString 
     return data;
 }
 
+/**
+   \return The name of a resource from the \p fileName
+*/
+static QString resourceName( const QString &fileName )
+{
+    QString resource = fileName;
+    const int slashPos = fileName.lastIndexOf( QLatin1Char( '/' ) );
+    const int dotPos = fileName.lastIndexOf( QLatin1Char( '.' ) );
+    if ( slashPos > -1 ) {
+        if ( dotPos > -1 && dotPos > slashPos ) {
+            resource = fileName.mid( slashPos + 1, dotPos - slashPos - 1 );
+        } else {
+            resource = fileName.mid( slashPos + 1 );
+        }
+    }
+    return resource;
+}
+
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
     m_painter = NULL;
@@ -859,9 +877,7 @@ int XpsFile::loadFontByName( const QString &fileName )
         // Try to deobfuscate font
        // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
 
-        QFileInfo* fileInfo = new QFileInfo(fileName);
-        QString baseName = fileInfo->baseName();
-        delete fileInfo;
+        const QString baseName = resourceName( fileName );
 
         unsigned short guid[16];
         if (!parseGUID(baseName, guid))

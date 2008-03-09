@@ -1373,6 +1373,8 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
                     m_docInfo->set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "keywords") {
                     m_docInfo->set( Okular::DocumentInfo::Keywords, xml.readElementText() );
+                } else if (xml.name() == "revision") {
+                    m_docInfo->set( "revision", xml.readElementText(), i18n( "Revision" ) );
                 }
             }
         }

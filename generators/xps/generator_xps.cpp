@@ -1136,6 +1136,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
 
     const KArchiveEntry* documentEntry = file->xpsArchive()->directory()->entry( fileName );
     QString documentFilePath = fileName;
+    const QString documentEntryPath = entryPath( fileName );
 
     QXmlStreamReader docXml;
     docXml.addData( readFileOrDirectoryParts( documentEntry, &documentFilePath ) );
@@ -1169,14 +1170,10 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
     // content structure description
 
     // We should be able to find this using a reference from some other part of the document, but I can't see it.
-    QString maybeDocumentRelationshipPath = fileName;
-    // trim off the old filename
-    int slashPosition = maybeDocumentRelationshipPath.lastIndexOf( '/' );
-    maybeDocumentRelationshipPath.truncate( slashPosition );
-    // add in the path to the document relationships
-    maybeDocumentRelationshipPath.append( "/_rels/FixedDoc.fdoc.rels" );
+    const int slashPosition = fileName.lastIndexOf( '/' );
+    const QString documentRelationshipFile = absolutePath( documentEntryPath, "_rels/" + fileName.mid( slashPosition + 1 ) + ".rels" );
 
-    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry(maybeDocumentRelationshipPath));
+    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry(documentRelationshipFile));
 
     QString documentStructureFile;
     if ( relFile ) {
@@ -1198,27 +1195,19 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
         }
         if ( xml.error() ) {
             kDebug(XpsDebug) << "Could not parse XPS page relationships file ( "
-                             << maybeDocumentRelationshipPath
+                             << documentRelationshipFile
                              << " ) - " << xml.errorString() << endl;
         }
     } else { // the page relationship file didn't exist in the zipfile
         // this isn't fatal
-        kDebug(XpsDebug) << "Could not open Document relationship file from " << maybeDocumentRelationshipPath;
+        kDebug(XpsDebug) << "Could not open Document relationship file from " << documentRelationshipFile;
     }
 
     if ( ! documentStructureFile.isEmpty() )
     {
         // kDebug(XpsDebug) << "Document structure filename: " << documentStructureFile;
         // make the document path absolute
-        if ( documentStructureFile.startsWith( '/' ) )
-        {
-            // it is already absolute, don't do anything
-        } else
-        {
-            // we reuse the relationship string
-            maybeDocumentRelationshipPath.truncate( slashPosition );
-            documentStructureFile.prepend( maybeDocumentRelationshipPath + '/' );
-        }
+        documentStructureFile = absolutePath( documentEntryPath, documentStructureFile );
         // kDebug(XpsDebug) << "Document structure absolute path: " << documentStructureFile;
         parseDocumentStructure( documentStructureFile );
     }

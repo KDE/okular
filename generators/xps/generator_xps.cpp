@@ -443,6 +443,44 @@ static QString absolutePath( const QString &path, const QString &location )
     return url.toLocalFile();
 }
 
+/**
+   Read the content of an archive entry in both the cases:
+   a) single file
+      + foobar
+   b) directory
+      + foobar/
+        + [0].piece
+        + [1].piece
+        + ...
+        + [x].last.piece
+
+   \see XPS specification 10.1.2
+*/
+static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString *pathOfFile = 0 )
+{
+    QByteArray data;
+    if ( entry->isDirectory() ) {
+        const KArchiveDirectory* relDir = static_cast<const KArchiveDirectory *>( entry );
+        QStringList entries = relDir->entries();
+        qSort( entries );
+        Q_FOREACH ( const QString &entry, entries ) {
+            const KArchiveEntry* relSubEntry = relDir->entry( entry );
+            if ( !relSubEntry->isFile() )
+                continue;
+
+            const KZipFileEntry* relSubFile = static_cast<const KZipFileEntry *>( relSubEntry );
+            data.append( relSubFile->data() );
+        }
+    } else {
+        const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>( entry );
+        data.append( relFile->data() );
+        if ( pathOfFile ) {
+            *pathOfFile = entryPath( relFile );
+        }
+    }
+    return data;
+}
+
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
     m_painter = NULL;
@@ -1080,11 +1118,11 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
 {
     kDebug(XpsDebug) << "document file name: " << fileName;
 
-    const KZipFileEntry* documentFile = static_cast<const KZipFileEntry *>(file->xpsArchive()->directory()->entry( fileName ));
-    const QString documentFilePath = entryPath( documentFile );
+    const KArchiveEntry* documentEntry = file->xpsArchive()->directory()->entry( fileName );
+    QString documentFilePath = fileName;
 
     QXmlStreamReader docXml;
-    docXml.addData( documentFile->data() );
+    docXml.addData( readFileOrDirectoryParts( documentEntry, &documentFilePath ) );
     while( !docXml.atEnd() ) {
         docXml.readNext();
         if ( docXml.isStartElement() ) {
@@ -1216,15 +1254,14 @@ bool XpsFile::loadDocument(const QString &filename)
     }
 
     // The only fixed entry in XPS is /_rels/.rels
-    const KZipFileEntry* relFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry("_rels/.rels"));
-
-    if ( !relFile ) {
+    const KArchiveEntry* relEntry = m_xpsArchive->directory()->entry("_rels/.rels");
+    if ( !relEntry ) {
         // this might occur if we can't read the zip directory, or it doesn't have the relationships entry
         return false;
     }
 
     QXmlStreamReader relXml;
-    relXml.addData( relFile->data() );
+    relXml.addData( readFileOrDirectoryParts( relEntry ) );
 
     QString fixedRepresentationFileName;
     // We work through the relationships document and pull out each element.
@@ -1264,11 +1301,11 @@ bool XpsFile::loadDocument(const QString &filename)
         return false;
     }
 
-    const KZipFileEntry* fixedRepFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fixedRepresentationFileName ));
-    const QString fixedRepresentationFilePath = entryPath( fixedRepFile );
+    const KArchiveEntry* fixedRepEntry = m_xpsArchive->directory()->entry( fixedRepresentationFileName );
+    QString fixedRepresentationFilePath = fixedRepresentationFileName;
 
     QXmlStreamReader fixedRepXml;
-    fixedRepXml.addData( fixedRepFile->data() );
+    fixedRepXml.addData( readFileOrDirectoryParts( fixedRepEntry, &fixedRepresentationFileName ) );
 
     while ( !fixedRepXml.atEnd() )
     {

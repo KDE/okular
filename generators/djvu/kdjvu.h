@@ -131,15 +131,15 @@ class KDjVu
                 virtual int type() const = 0;
                 QPoint point() const;
                 QString comment() const;
-                QColor color() const;
+                void setComment( const QString &comment );
+                virtual QColor color() const;
+                virtual void setColor( const QColor &color );
 
             protected:
                 Annotation( miniexp_t anno );
 
                 miniexp_t m_anno;
                 QPoint m_point;
-                QString m_comment;
-                QColor m_color;
         };
 
         /**
@@ -151,6 +151,8 @@ class KDjVu
 
             public:
                 virtual int type() const;
+                virtual QColor color() const;
+                virtual void setColor( const QColor &color );
                 QSize size() const;
                 bool inlineText() const;
 
@@ -169,15 +171,18 @@ class KDjVu
 
             public:
                 virtual int type() const;
+                virtual QColor color() const;
+                virtual void setColor( const QColor &color );
                 QPoint point2() const;
                 bool isArrow() const;
                 int width() const;
+                void setWidth( int width );
 
             private:
                 LineAnnotation( miniexp_t anno );
                 QPoint m_point2;
                 bool m_isArrow;
-                int m_width;
+                miniexp_t m_width;
         };
 
 

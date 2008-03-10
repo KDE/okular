@@ -97,6 +97,51 @@ static int flipRotation( int r )
     return ( 4 - r ) % 4;
 }
 
+static miniexp_t find_second_in_pair( miniexp_t theexp, const char* which )
+{
+    miniexp_t exp = theexp;
+    while ( exp )
+    {
+        miniexp_t cur = miniexp_car( exp );
+        if ( !miniexp_consp( cur ) || !miniexp_symbolp( miniexp_car( cur ) ) )
+        {
+            exp = miniexp_cdr( exp );
+            continue;
+        }
+
+        const QString id = QString::fromUtf8( miniexp_to_name( miniexp_car( cur ) ) );
+        if ( id == QLatin1String( which ) )
+            return miniexp_cadr( cur );
+        exp = miniexp_cdr( exp );
+    }
+    return miniexp_nil;
+}
+
+static bool find_replace_or_add_second_in_pair( miniexp_t theexp, const char* which, miniexp_t replacement )
+{
+    miniexp_t exp = miniexp_cdddr( theexp );
+    while ( exp )
+    {
+        miniexp_t cur = miniexp_car( exp );
+        if ( !miniexp_consp( cur ) || !miniexp_symbolp( miniexp_car( cur ) ) )
+        {
+            exp = miniexp_cdr( exp );
+            continue;
+        }
+
+        const QString id = QString::fromUtf8( miniexp_to_name( miniexp_car( cur ) ) );
+        if ( id == QLatin1String( which ) )
+        {
+            miniexp_t reversed = miniexp_reverse( cur );
+            miniexp_rplaca( reversed, replacement );
+            cur = miniexp_reverse( reversed );
+            return true;
+        }
+        exp = miniexp_cdr( exp );
+    }
+    // TODO add the new replacement ad the end of the list
+    return false;
+}
 
 // ImageCacheItem
 
@@ -225,9 +270,21 @@ QString KDjVu::Annotation::comment() const
     return QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, m_anno ) ) );
 }
 
+void KDjVu::Annotation::setComment( const QString &comment )
+{
+    miniexp_t exp = m_anno;
+    exp = miniexp_cdr( exp );
+    exp = miniexp_cdr( exp );
+    miniexp_rplaca( exp, miniexp_string( comment.toUtf8() ) );
+}
+
 QColor KDjVu::Annotation::color() const
 {
-    return m_color;
+    return QColor();
+}
+
+void KDjVu::Annotation::setColor( const QColor & )
+{
 }
 
 // KDjVu::TextAnnotation
@@ -235,7 +292,6 @@ QColor KDjVu::Annotation::color() const
 KDjVu::TextAnnotation::TextAnnotation( miniexp_t anno )
   : Annotation( anno ), m_inlineText( true )
 {
-    m_color.setRgb( 255, 255, 255, 0 );
     const int num = miniexp_length( m_anno );
     for ( int j = 4; j < num; ++j )
     {
@@ -244,9 +300,7 @@ KDjVu::TextAnnotation::TextAnnotation( miniexp_t anno )
             continue;
 
         QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
-        if ( id == QLatin1String( "backclr" ) )
-            m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
-        else if ( id == QLatin1String( "pushpin" ) )
+        if ( id == QLatin1String( "pushpin" ) )
             m_inlineText = false;
     }
 }
@@ -264,6 +318,21 @@ int KDjVu::TextAnnotation::type() const
     return KDjVu::Annotation::TextAnnotation;
 }
 
+QColor KDjVu::TextAnnotation::color() const
+{
+    miniexp_t col = find_second_in_pair( m_anno, "backclr" );
+    if ( !miniexp_symbolp( col ) )
+        return Qt::transparent;
+
+    return QColor( QString::fromUtf8( miniexp_to_name( col ) ) );
+}
+
+void KDjVu::TextAnnotation::setColor( const QColor &color )
+{
+    const QByteArray col = color.name().toLatin1();
+    find_replace_or_add_second_in_pair( m_anno, "backclr", miniexp_symbol( col ) );
+}
+
 bool KDjVu::TextAnnotation::inlineText() const
 {
     return m_inlineText;
@@ -272,9 +341,8 @@ bool KDjVu::TextAnnotation::inlineText() const
 // KDjVu::LineAnnotation
 
 KDjVu::LineAnnotation::LineAnnotation( miniexp_t anno )
-  : Annotation( anno ), m_isArrow( false ), m_width( 1 )
+  : Annotation( anno ), m_isArrow( false ), m_width( miniexp_nil )
 {
-    m_color = Qt::black;
     const int num = miniexp_length( m_anno );
     for ( int j = 4; j < num; ++j )
     {
@@ -283,18 +351,31 @@ KDjVu::LineAnnotation::LineAnnotation( miniexp_t anno )
             continue;
 
         QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
-        if ( id == QLatin1String( "lineclr" ) )
-            m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
-        else if ( id == QLatin1String( "arrow" ) )
+        if ( id == QLatin1String( "arrow" ) )
             m_isArrow = true;
         else if ( id == QLatin1String( "width" ) )
-            m_width = miniexp_to_int( miniexp_nth( 1, curelem ) );
+            m_width = curelem;
     }
 }
 
 int KDjVu::LineAnnotation::type() const
 {
     return KDjVu::Annotation::LineAnnotation;
+}
+
+QColor KDjVu::LineAnnotation::color() const
+{
+    miniexp_t col = find_second_in_pair( m_anno, "lineclr" );
+    if ( !miniexp_symbolp( col ) )
+        return Qt::black;
+
+    return QColor( QString::fromUtf8( miniexp_to_name( col ) ) );
+}
+
+void KDjVu::LineAnnotation::setColor( const QColor &color )
+{
+    const QByteArray col = color.name().toLatin1();
+    find_replace_or_add_second_in_pair( m_anno, "lineclr", miniexp_symbol( col ) );
 }
 
 QPoint KDjVu::LineAnnotation::point2() const
@@ -312,7 +393,15 @@ bool KDjVu::LineAnnotation::isArrow() const
 
 int KDjVu::LineAnnotation::width() const
 {
-    return m_width;
+    if ( m_width == miniexp_nil )
+        return 1;
+
+    return miniexp_to_int( miniexp_cadr( m_width ) );
+}
+
+void KDjVu::LineAnnotation::setWidth( int width )
+{
+    find_replace_or_add_second_in_pair( m_anno, "width", miniexp_number( width ) );
 }
 
 // KDjVu::TextEntity

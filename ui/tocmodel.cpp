@@ -123,7 +123,7 @@ void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parent
         bool isOpen = false;
         if ( e.hasAttribute( "Open" ) )
             isOpen = QVariant( e.attribute( "Open" ) ).toBool();
-        if ( !isOpen )
+        if ( isOpen )
             itemsToOpen.append( currentItem );
 
         n = n.nextSibling();

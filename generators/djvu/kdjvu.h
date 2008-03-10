@@ -21,6 +21,10 @@
 class QDomDocument;
 class QFile;
 
+#ifndef MINIEXP_H
+typedef struct miniexp_s* miniexp_t;
+#endif
+
 /**
  * @brief Qt (KDE) encapsulation of the DjVuLibre
  */
@@ -129,7 +133,10 @@ class KDjVu
                 QString comment() const;
                 QColor color() const;
 
-            private:
+            protected:
+                Annotation( miniexp_t anno );
+
+                miniexp_t m_anno;
                 QPoint m_point;
                 QString m_comment;
                 QColor m_color;
@@ -148,7 +155,7 @@ class KDjVu
                 bool inlineText() const;
 
             private:
-                TextAnnotation();
+                TextAnnotation( miniexp_t anno );
                 QSize m_size;
                 bool m_inlineText;
         };
@@ -167,7 +174,7 @@ class KDjVu
                 int width() const;
 
             private:
-                LineAnnotation();
+                LineAnnotation( miniexp_t anno );
                 QPoint m_point2;
                 bool m_isArrow;
                 int m_width;

@@ -203,18 +203,26 @@ QString KDjVu::UrlLink::url() const
 
 // KDjVu::Annotation
 
+KDjVu::Annotation::Annotation( miniexp_t anno )
+    : m_anno( anno )
+{
+}
+
 KDjVu::Annotation::~Annotation()
 {
 }
 
 QPoint KDjVu::Annotation::point() const
 {
-    return m_point;
+    miniexp_t area = miniexp_nth( 3, m_anno );
+    int a = miniexp_to_int( miniexp_nth( 1, area ) );
+    int b = miniexp_to_int( miniexp_nth( 2, area ) );
+    return QPoint( a, b );
 }
 
 QString KDjVu::Annotation::comment() const
 {
-    return m_comment;
+    return QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, m_anno ) ) );
 }
 
 QColor KDjVu::Annotation::color() const
@@ -224,14 +232,31 @@ QColor KDjVu::Annotation::color() const
 
 // KDjVu::TextAnnotation
 
-KDjVu::TextAnnotation::TextAnnotation()
-  : m_inlineText( true )
+KDjVu::TextAnnotation::TextAnnotation( miniexp_t anno )
+  : Annotation( anno ), m_inlineText( true )
 {
+    m_color.setRgb( 255, 255, 255, 0 );
+    const int num = miniexp_length( m_anno );
+    for ( int j = 4; j < num; ++j )
+    {
+        miniexp_t curelem = miniexp_nth( j, m_anno );
+        if ( !miniexp_listp( curelem ) )
+            continue;
+
+        QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
+        if ( id == QLatin1String( "backclr" ) )
+            m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
+        else if ( id == QLatin1String( "pushpin" ) )
+            m_inlineText = false;
+    }
 }
 
 QSize KDjVu::TextAnnotation::size() const
 {
-    return m_size;
+    miniexp_t area = miniexp_nth( 3, m_anno );
+    int c = miniexp_to_int( miniexp_nth( 3, area ) );
+    int d = miniexp_to_int( miniexp_nth( 4, area ) );
+    return QSize( c, d );
 }
 
 int KDjVu::TextAnnotation::type() const
@@ -246,9 +271,25 @@ bool KDjVu::TextAnnotation::inlineText() const
 
 // KDjVu::LineAnnotation
 
-KDjVu::LineAnnotation::LineAnnotation()
-  : m_isArrow( false ), m_width( 1 )
+KDjVu::LineAnnotation::LineAnnotation( miniexp_t anno )
+  : Annotation( anno ), m_isArrow( false ), m_width( 1 )
 {
+    m_color = Qt::black;
+    const int num = miniexp_length( m_anno );
+    for ( int j = 4; j < num; ++j )
+    {
+        miniexp_t curelem = miniexp_nth( j, m_anno );
+        if ( !miniexp_listp( curelem ) )
+            continue;
+
+        QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
+        if ( id == QLatin1String( "lineclr" ) )
+            m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
+        else if ( id == QLatin1String( "arrow" ) )
+            m_isArrow = true;
+        else if ( id == QLatin1String( "width" ) )
+            m_width = miniexp_to_int( miniexp_nth( 1, curelem ) );
+    }
 }
 
 int KDjVu::LineAnnotation::type() const
@@ -258,7 +299,10 @@ int KDjVu::LineAnnotation::type() const
 
 QPoint KDjVu::LineAnnotation::point2() const
 {
-    return m_point2;
+    miniexp_t area = miniexp_nth( 3, m_anno );
+    int c = miniexp_to_int( miniexp_nth( 3, area ) );
+    int d = miniexp_to_int( miniexp_nth( 4, area ) );
+    return QPoint( c, d );
 }
 
 bool KDjVu::LineAnnotation::isArrow() const
@@ -661,25 +705,16 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links,
                   ( type == QLatin1String( "text" ) ||
                     type == QLatin1String( "line" ) ) )
         {
-            miniexp_t area = miniexp_nth( 3, cur );
-            int a = miniexp_to_int( miniexp_nth( 1, area ) );
-            int b = miniexp_to_int( miniexp_nth( 2, area ) );
-            int c = miniexp_to_int( miniexp_nth( 3, area ) );
-            int d = miniexp_to_int( miniexp_nth( 4, area ) );
             if ( type == QLatin1String( "text" ) )
             {
-                KDjVu::TextAnnotation * textann = new KDjVu::TextAnnotation();
-                textann->m_size = QSize( c, d );
+                KDjVu::TextAnnotation * textann = new KDjVu::TextAnnotation( cur );
                 ann = textann;
             }
             else if ( type == QLatin1String( "line" ) )
             {
-                KDjVu::LineAnnotation * lineann = new KDjVu::LineAnnotation();
-                lineann->m_point2 = QPoint( c, d );
+                KDjVu::LineAnnotation * lineann = new KDjVu::LineAnnotation( cur );
                 ann = lineann;
             }
-            ann->m_point = QPoint( a, b );
-            ann->m_comment = QString::fromUtf8( miniexp_to_str( miniexp_nth( 2, cur ) ) );
         }
         if ( link /* safety check */ && links )
         {
@@ -716,42 +751,6 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links,
         }
         else if ( ann /* safety check */ && annotations )
         {
-            if ( type == QLatin1String( "text" ) )
-            {
-                KDjVu::TextAnnotation* txtann = (KDjVu::TextAnnotation*)ann;
-                txtann->m_color.setRgb( 255, 255, 255, 0 );
-                for ( int j = 4; j < num; ++j )
-                {
-                    miniexp_t curelem = miniexp_nth( j, cur );
-                    if ( !miniexp_listp( curelem ) )
-                        continue;
-
-                    QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
-                    if ( id == QLatin1String( "backclr" ) )
-                        txtann->m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
-                    else if ( id == QLatin1String( "pushpin" ) )
-                        txtann->m_inlineText = false;
-                }
-            }
-            else if ( type == QLatin1String( "line" ) )
-            {
-                KDjVu::LineAnnotation* lineann = (KDjVu::LineAnnotation*)ann;
-                lineann->m_color = Qt::black;
-                for ( int j = 4; j < num; ++j )
-                {
-                    miniexp_t curelem = miniexp_nth( j, cur );
-                    if ( !miniexp_listp( curelem ) )
-                        continue;
-
-                    QString id = QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, curelem ) ) );
-                    if ( id == QLatin1String( "lineclr" ) )
-                        lineann->m_color.setNamedColor( QString::fromUtf8( miniexp_to_name( miniexp_nth( 1, curelem ) ) ) );
-                    else if ( id == QLatin1String( "arrow" ) )
-                        lineann->m_isArrow = true;
-                    else if ( id == QLatin1String( "width" ) )
-                        lineann->m_width = miniexp_to_int( miniexp_nth( 1, curelem ) );
-                }
-            }
             annotations->append( ann );
         }
     }

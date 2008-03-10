@@ -271,9 +271,9 @@ void Shell::slotQuit()
 void Shell::setFullScreen( bool useFullScreen )
 {
     if( useFullScreen )
-        showFullScreen();
+        setWindowState( windowState() | Qt::WindowFullScreen ); // set
     else
-        showNormal();
+        setWindowState( windowState() & ~Qt::WindowFullScreen ); // reset
 }
 
 void Shell::slotUpdateFullScreen()
@@ -287,8 +287,8 @@ void Shell::slotUpdateFullScreen()
       m_toolBarWasShown = m_showToolBarAction->isChecked();
       m_showToolBarAction->setChecked(false);
       toolBar()->hide();
-      
-      showFullScreen();
+
+      KToggleFullScreenAction::setFullScreen(this, true);      
     }
     else
     {
@@ -302,7 +302,7 @@ void Shell::slotUpdateFullScreen()
         m_showToolBarAction->setChecked(true);
         toolBar()->show();
       }
-      showNormal();
+      KToggleFullScreenAction::setFullScreen(this, false);      
     }
 }
 

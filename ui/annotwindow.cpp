@@ -31,7 +31,7 @@
 
 // local includes
 #include "core/annotations.h"
-
+#include "guiutils.h"
 
 class CloseButton
   : public QPushButton
@@ -163,7 +163,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
 
-    textEdit=new KTextEdit(m_annot->window().text(), this);
+    textEdit = new KTextEdit( GuiUtils::contents( m_annot ), this );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     
@@ -201,7 +201,27 @@ void AnnotWindow::slotOptionBtn()
 
  void AnnotWindow::slotsaveWindowText()
 {
-    m_annot->window().setText( textEdit->toPlainText() );
+    const QString newText = textEdit->toPlainText();
+
+    // 1. window text
+    if ( !m_annot->window().text().isEmpty() )
+    {
+        m_annot->window().setText( newText );
+        return;
+    }
+    // 2. if Text and InPlace, the inplace text
+    if ( m_annot->subType() == Okular::Annotation::AText )
+    {
+        Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( m_annot );
+        if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+        {
+            txtann->setInplaceText( newText );
+            return;
+        }
+    }
+
+    // 3. contents
+    m_annot->setContents( newText );
 }
 
 #include "annotwindow.moc"

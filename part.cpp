@@ -358,9 +358,12 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
     m_findNext->setEnabled( false );
 
+    m_saveCopyAs = KStandardAction::saveAs( this, SLOT( slotSaveCopyAs() ), ac );
+    m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
+    ac->addAction( "file_save_copy", m_saveCopyAs );
+    m_saveCopyAs->setEnabled( false );
+
     m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
-    m_saveAs->setText( i18n( "Save &Copy As..." ) );
-    ac->addAction("save",m_saveAs);
     m_saveAs->setEnabled( false );
 
     QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
@@ -760,7 +763,8 @@ bool Part::openFile()
     // update one-time actions
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
-    m_saveAs->setEnabled( ok );
+    m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
+    m_saveCopyAs->setEnabled( ok );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
@@ -851,6 +855,7 @@ bool Part::closeUrl()
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_saveAs->setEnabled( false );
+    m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     m_showEmbeddedFiles->setEnabled( false );
@@ -1219,6 +1224,60 @@ void Part::slotFindNext()
 
 
 void Part::slotSaveFileAs()
+{
+    if (m_dummyMode) return;
+
+    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
+    if ( !saveUrl.isValid() || saveUrl.isEmpty() )
+        return;
+
+    if ( saveUrl.isLocalFile() )
+    {
+        const QString fileName = saveUrl.toLocalFile();
+        if ( QFile::exists( fileName ) )
+        {
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
+                return;
+        }
+
+        if ( !m_document->saveChanges( fileName ) )
+        {
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+            return;
+        }
+    }
+    else
+    {
+        if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
+        {
+            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
+                return;
+        }
+
+        KTemporaryFile tf;
+        QString fileName;
+        if ( !tf.open() )
+        {
+            KMessageBox::information( widget(), i18n("File could not open the temporary file for saving." ) );
+                return;
+        }
+        fileName = tf.fileName();
+        tf.close();
+
+        if ( !m_document->saveChanges( fileName ) )
+        {
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+            return;
+        }
+
+        KIO::Job *copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
+        if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
+    }
+}
+
+
+void Part::slotSaveCopyAs()
 {
     if (m_dummyMode) return;
 

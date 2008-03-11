@@ -510,6 +510,22 @@ class OKULAR_EXPORT Document : public QObject
          */
         const KComponentData* componentData() const;
 
+        /**
+         * Returns whether the changes to the document (modified annotations,
+         * values in form fields, etc) can be saved to another document.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        bool canSaveChanges() const;
+
+        /**
+         * Save the document and the optional changes to it to the specified
+         * @p fileName.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        bool saveChanges( const QString &fileName );
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

@@ -35,19 +35,24 @@ struct RunningSearch;
 
 namespace Okular {
 class ConfigInterface;
+class SaveInterface;
 }
 
 struct GeneratorInfo
 {
     GeneratorInfo( const KComponentData &_data )
-        : generator( 0 ), data( _data ), config( 0 ), configChecked( false )
+        : generator( 0 ), data( _data ),
+          config( 0 ), save( 0 ),
+          configChecked( false ), saveChecked( false )
     {}
 
     Okular::Generator * generator;
     KComponentData data;
     QString catalogName;
     Okular::ConfigInterface * config;
+    Okular::SaveInterface * save;
     bool configChecked : 1;
+    bool saveChecked : 1;
 };
 
 namespace Okular {
@@ -92,6 +97,7 @@ class DocumentPrivate
         void cacheExportFormats();
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
+        SaveInterface* generatorSave( GeneratorInfo& info );
 
         // private slots
         void saveDocumentInfo() const;

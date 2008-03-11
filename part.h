@@ -129,6 +129,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotNextBookmark();
         void slotFindNext();
         void slotSaveFileAs();
+        void slotSaveCopyAs();
         void slotGetNewStuff();
         void slotNewConfig();
         void slotNewGeneratorConfig();
@@ -219,6 +220,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QAction *m_find;
         QAction *m_findNext;
         QAction *m_saveAs;
+        QAction *m_saveCopyAs;
         QAction *m_printPreview;
         QAction *m_showProperties;
         QAction *m_showEmbeddedFiles;

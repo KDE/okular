@@ -57,6 +57,7 @@
 #include "interfaces/configinterface.h"
 #include "interfaces/guiinterface.h"
 #include "interfaces/printinterface.h"
+#include "interfaces/saveinterface.h"
 #include "observer.h"
 #include "page.h"
 #include "page_p.h"
@@ -482,6 +483,16 @@ ConfigInterface* DocumentPrivate::generatorConfig( GeneratorInfo& info )
     info.config = qobject_cast< Okular::ConfigInterface * >( info.generator );
     info.configChecked = true;
     return info.config;
+}
+
+SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
+{
+    if ( info.saveChecked )
+        return info.save;
+
+    info.save = qobject_cast< Okular::SaveInterface * >( info.generator );
+    info.saveChecked = true;
+    return info.save;
 }
 
 void DocumentPrivate::saveDocumentInfo() const
@@ -2644,6 +2655,36 @@ const KComponentData* Document::componentData() const
         return 0;
 
     return kcd;
+}
+
+bool Document::canSaveChanges() const
+{
+    if ( !d->m_generator )
+        return false;
+    Q_ASSERT( !d->m_generatorName.isEmpty() );
+
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
+    SaveInterface* saveIface = d->generatorSave( genIt.value() );
+    if ( !saveIface )
+        return false;
+
+    return saveIface->supportsOption( SaveInterface::SaveChanges );
+}
+
+bool Document::saveChanges( const QString &fileName )
+{
+    if ( !d->m_generator || fileName.isEmpty() )
+        return false;
+    Q_ASSERT( !d->m_generatorName.isEmpty() );
+
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
+    SaveInterface* saveIface = d->generatorSave( genIt.value() );
+    if ( !saveIface || !saveIface->supportsOption( SaveInterface::SaveChanges ) )
+        return false;
+
+    return saveIface->save( fileName, SaveInterface::SaveChanges );
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

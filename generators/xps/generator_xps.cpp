@@ -931,7 +931,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
         To workaround this I used this procedure: load image, set its dpi to 96, load image again. When dpi isn't set in file,
         dpi set by me stays unchanged.
 
-        I've posted a bug to qt.
+        Trolltech task ID: 159527.
 
     */
 

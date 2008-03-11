@@ -1552,6 +1552,36 @@ QWidget* PDFGenerator::printConfigurationWidget() const
     return pdfOptionsPage;
 }
 
+bool PDFGenerator::supportsOption( SaveOption option ) const
+{
+    switch ( option )
+    {
+#if HAVE_POPPLER_0_7
+        case SaveChanges:
+            return true;
+#endif
+        default: ;
+    }
+    return false;
+}
+
+bool PDFGenerator::save( const QString &fileName, SaveOptions options )
+{
+#if HAVE_POPPLER_0_7
+    Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
+
+    pdfConv->setOutputFileName( fileName );
+    if ( options & SaveChanges )
+        pdfConv->setPDFOptions( pdfConv->pdfOptions() | Poppler::PDFConverter::WithChanges );
+
+    QMutexLocker locker( userMutex() );
+    return pdfConv->convert();
+#else
+    Q_UNUSED( fileName )
+    Q_UNUSED( options )
+    return false;
+#endif
+}
 
 void PDFGenerator::threadFinished()
 {

@@ -219,6 +219,7 @@ bool DjVuGenerator::print( QPrinter& printer )
 
 QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) const
 {
+    Q_UNUSED( option )
     if ( key == "DocumentTitle" )
     {
         return m_djvu->metaData( "title" );

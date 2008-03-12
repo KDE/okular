@@ -875,7 +875,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
 #ifdef HAVE_POPPLER_0_6
 
-#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+#ifdef HAVE_POPPLER_0_7
     tf.setAutoRemove(false);
 #else
     tf.close();
@@ -891,7 +891,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
 
-#if POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE
+#ifdef HAVE_POPPLER_0_7
     psConverter->setOutputDevice(&tf);
 #else
     psConverter->setOutputFileName(tempfilename);

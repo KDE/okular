@@ -1,5 +1,5 @@
 /* Defined if we have the 0.6 version of the Poppler library */
 #cmakedefine HAVE_POPPLER_0_6 1
 
-/* Defined if Poppler::PSConverter has setOutputDevice */
-#define POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE ${_POPPLER_HAVE_PSCONVERTER_SETOUTPUTDEVICE}
+/* Defined if we have the 0.7 version of the Poppler library */
+#cmakedefine HAVE_POPPLER_0_7 1

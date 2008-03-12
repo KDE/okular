@@ -512,6 +512,7 @@ void KDjVu::Private::readBookmarks()
     {
         m_docBookmarks = new QDomDocument( "KDjVuBookmarks" );
         fillBookmarksRecurse( *m_docBookmarks, *m_docBookmarks, outline, 1 );
+        ddjvu_miniexp_release( m_djvu_document, outline );
     }
 }
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -820,7 +820,11 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     userMutex()->unlock();
     if ( genTextPage )
     {
+#ifdef HAVE_POPPLER_0_7
+        QList<Poppler::TextBox*> textList = p->textList();
+#else
         QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->orientation());
+#endif
         page->setTextPage( abstractTextPage(textList, page->height(), page->width(), request->page()->orientation()) );
         qDeleteAll(textList);
     }
@@ -839,12 +843,21 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     userMutex()->lock();
+#ifdef HAVE_POPPLER_0_7
+    QList<Poppler::TextBox*> textList = pp->textList();
+#else
     QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->orientation());
+#endif
     userMutex()->unlock();
     delete pp;
 
+#ifdef HAVE_POPPLER_0_7
+    const double pageWidth = page->width();
+    const double pageHeight = page->height();
+#else
     const double pageWidth = ( page->rotation() % 2 ? page->height() : page->width() );
     const double pageHeight = ( page->rotation() % 2 ? page->width() : page->height() );
+#endif
 
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
@@ -1099,6 +1112,38 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
     int charCount=0;
     int j;
     QString s;
+#ifdef HAVE_POPPLER_0_7
+    foreach (Poppler::TextBox *word, text)
+    {
+        charCount=word->text().length();
+        next=word->nextWord();
+        for (j = 0; j < charCount; j++)
+        {
+            s = word->text().at(j);
+            QRectF charBBox = word->charBoundingBox(j);
+            append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
+                charBBox.left()/width,
+                charBBox.bottom()/height,
+                charBBox.right()/width,
+                charBBox.top()/height);
+        }
+
+        if ( word->hasSpaceAfter() && next )
+        {
+            // TODO Check with a document with vertical text
+            // probably won't work and we will need to do comparisons
+            // between wordBBox and nextWordBBox to see if they are
+            // vertically or horizontally aligned
+            QRectF wordBBox = word->boundingBox();
+            QRectF nextWordBBox = next->boundingBox();
+            append(ktp, " ", 
+                     wordBBox.right()/width,
+                     wordBBox.bottom()/height,
+                     nextWordBBox.left()/width,
+                     wordBBox.top()/height);
+        }
+    }
+#else
     Okular::NormalizedRect * wordRect = new Okular::NormalizedRect;
     
     rot = rot % 4;
@@ -1208,6 +1253,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
         }
     }
     delete wordRect;
+#endif
     return ktp;
 }
 
@@ -1775,7 +1821,11 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
+#ifdef HAVE_POPPLER_0_7
+        d->m_textList = pp->textList();
+#else
         d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page()->orientation());
+#endif
     }
     delete pp;
     

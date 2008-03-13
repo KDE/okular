@@ -6,23 +6,14 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>352</height>
+    <height>396</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
    <property name="spacing" >
     <number>6</number>
    </property>
-   <property name="leftMargin" >
-    <number>0</number>
-   </property>
-   <property name="topMargin" >
-    <number>0</number>
-   </property>
-   <property name="rightMargin" >
-    <number>0</number>
-   </property>
-   <property name="bottomMargin" >
+   <property name="margin" >
     <number>0</number>
    </property>
    <item>
@@ -34,16 +25,7 @@
       <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="leftMargin" >
-       <number>9</number>
-      </property>
-      <property name="topMargin" >
-       <number>9</number>
-      </property>
-      <property name="rightMargin" >
-       <number>9</number>
-      </property>
-      <property name="bottomMargin" >
+      <property name="margin" >
        <number>9</number>
       </property>
       <item>
@@ -51,16 +33,7 @@
         <property name="spacing" >
          <number>6</number>
         </property>
-        <property name="leftMargin" >
-         <number>0</number>
-        </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
+        <property name="margin" >
          <number>0</number>
         </property>
         <item>
@@ -104,36 +77,15 @@
       <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="leftMargin" >
-       <number>9</number>
-      </property>
-      <property name="topMargin" >
-       <number>9</number>
-      </property>
-      <property name="rightMargin" >
-       <number>9</number>
-      </property>
-      <property name="bottomMargin" >
+      <property name="margin" >
        <number>9</number>
       </property>
       <item>
        <layout class="QGridLayout" >
-        <property name="leftMargin" >
+        <property name="margin" >
          <number>0</number>
         </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
-         <number>0</number>
-        </property>
-        <property name="horizontalSpacing" >
-         <number>6</number>
-        </property>
-        <property name="verticalSpacing" >
+        <property name="spacing" >
          <number>6</number>
         </property>
         <item row="0" column="0" >
@@ -150,110 +102,6 @@
          <widget class="KColorButton" name="kcfg_SlidesBackgroundColor" />
         </item>
         <item row="1" column="0" >
-         <widget class="QLabel" name="textLabel1" >
-          <property name="text" >
-           <string>Default transition:</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QComboBox" name="kcfg_SlidesTransition" >
-          <item>
-           <property name="text" >
-            <string>Blinds Vertical</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Blinds Horizontal</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Box In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Box Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Dissolve</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Right</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Right-Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Random Transition</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Replace</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Horizontal In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Horizontal Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Vertical In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Vertical Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Right</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Left</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Up</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="0" >
          <widget class="QLabel" name="textLabel2" >
           <property name="text" >
            <string>Mouse cursor:</string>
@@ -263,7 +111,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1" >
+        <item row="1" column="1" >
          <widget class="QComboBox" name="kcfg_SlidesCursor" >
           <item>
            <property name="text" >
@@ -302,6 +150,125 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="kcfg_SlidesTransitionsEnabled" >
+     <property name="title" >
+      <string>Enable transitions</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="textLabel1" >
+        <property name="text" >
+         <string>Default transition:</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QComboBox" name="kcfg_SlidesTransition" >
+        <item>
+         <property name="text" >
+          <string>Blinds Vertical</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Blinds Horizontal</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Box In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Box Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Dissolve</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Right</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Right-Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Random Transition</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Replace</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Horizontal In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Horizontal Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Vertical In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Vertical Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Right</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Left</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Up</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_3" >
      <property name="title" >
       <string>Drawing</string>
@@ -310,16 +277,7 @@
       <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="leftMargin" >
-       <number>9</number>
-      </property>
-      <property name="topMargin" >
-       <number>9</number>
-      </property>
-      <property name="rightMargin" >
-       <number>9</number>
-      </property>
-      <property name="bottomMargin" >
+      <property name="margin" >
        <number>9</number>
       </property>
       <item>
@@ -327,16 +285,7 @@
         <property name="spacing" >
          <number>6</number>
         </property>
-        <property name="leftMargin" >
-         <number>0</number>
-        </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
+        <property name="margin" >
          <number>0</number>
         </property>
         <item>
@@ -365,7 +314,7 @@
      <property name="sizeType" >
       <enum>QSizePolicy::Expanding</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>318</width>
        <height>16</height>

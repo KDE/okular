@@ -137,6 +137,9 @@
   <entry key="SlidesPencilColor" type="Color" >
    <default code="true" >Qt::red</default>
   </entry>
+  <entry key="SlidesTransitionsEnabled" type="Bool" >
+   <default>true</default>
+  </entry>
  </group>
  <group name="General" >
   <entry key="ObeyDRM" type="Bool" >

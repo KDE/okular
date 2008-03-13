@@ -692,7 +692,7 @@ void PresentationWidget::generatePage( bool disableTransition )
 #endif
 
     // start transition on pages that have one
-    if ( !disableTransition )
+    if ( !disableTransition && Okular::Settings::slidesTransitionsEnabled() )
     {
         const Okular::PageTransition * transition = m_frameIndex != -1 ?
             m_frames[ m_frameIndex ]->page->transition() : 0;

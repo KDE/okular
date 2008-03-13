@@ -1258,7 +1258,7 @@ void Part::slotSaveFileAs()
         QString fileName;
         if ( !tf.open() )
         {
-            KMessageBox::information( widget(), i18n("File could not open the temporary file for saving." ) );
+            KMessageBox::information( widget(), i18n("Could not open the temporary file for saving." ) );
                 return;
         }
         fileName = tf.fileName();

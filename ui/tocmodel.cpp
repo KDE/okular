@@ -179,6 +179,7 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
     switch ( role )
     {
         case Qt::DisplayRole:
+        case Qt::ToolTipRole:
             return item->text;
             break;
         case Qt::DecorationRole:

@@ -815,10 +815,21 @@ bool Part::openFile()
     // specified, start presentation
     if ( m_document->metaData( "StartFullScreen" ).toBool() || m_cliPresentation )
     {
+        bool goAheadWithPresentationMode = true;
         if ( !m_cliPresentation )
-            KMessageBox::information( m_presentationWidget, i18n("The document is going to be launched on presentation mode because the file requested it."), QString(), "autoPresentationWarning" );
+        {
+            const QString text = i18n( "The document requested to be launched on presentation mode.\n"
+                                       "Do you want to allow it?" );
+            const QString caption = i18n( "Presentation Mode" );
+            const KGuiItem yesItem = KGuiItem( i18n( "Allow" ), "dialog-ok", i18n( "Allow the presentation mode" ) );
+            const KGuiItem noItem = KGuiItem( i18n( "Do Not Allow" ), "process-stop", i18n( "Do not allow the presentation mode" ) );
+            const int result = KMessageBox::questionYesNo( widget(), text, caption, yesItem, noItem );
+            if ( result == KMessageBox::No )
+                goAheadWithPresentationMode = false;
+        }
         m_cliPresentation = false;
-        QMetaObject::invokeMethod(this, "slotShowPresentation", Qt::QueuedConnection);
+        if ( goAheadWithPresentationMode )
+            QMetaObject::invokeMethod( this, "slotShowPresentation", Qt::QueuedConnection );
     }
     m_generatorGuiClient = factory() ? m_document->guiClient() : 0;
     if ( m_generatorGuiClient )

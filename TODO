@@ -19,10 +19,12 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 109346: ability to select everything on page(s) and use ctrl+a to select all (text)
 -> BUG  110440: Almost all options in Find dialog are always disabled
 -> WISH 111651: Usability: Make find-as-you-type widget more distinguishable
+-> WISH 114648: An option to deny documents' fullscreen requests is desirable.
 -> WISH 117449: kpdf should read files from stdin with the - option
 -> WISH 117805: Wish: Select pages like kghostview
 -> WISH 118938: No way to find out the page size(s)
 -> WISH 119455: use poppler library for kpdf
+-> WISH 119919: make it possible to disable transition in presentation mode
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
 -> BUG  130123: kpdf text selection inconsistent with the rest of KDE
 -> WISH 131045: Add context menu for URLs
@@ -33,9 +35,9 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 145345: goto page: update slider while editing page number
 
 In progress [working on]:
+-> various backends: fill about data information
 -> gui: add config for gfx (yes/no) and text (yes/no/kde) antialias
 -> core: provide a binary compatible okularcore library to extend the format capabilities
--> core: forms support (mainly for pdf) (BR91809)
 -> KPDF -> okular conversion of configuration & datafiles {configuration(done), document data(in progress), kwallet passwords(missing)}
 -> inverse search (BR113191)
    find with an usability expert the "best" way to activate such a link
@@ -53,7 +55,6 @@ In progress [working on]:
 
 More items (first items will enter 'In progress list' first):
 -> annotations: "move" and "delete" tools
--> various backends: fill about data information
 -> rethink which buttons show in the toolbar (BR139825)
 -> annotations: configurabile tools in the toolbar (BR137903)
 -> pageview: add vp damaging queue and flush function. add coolfx to smoothmove using damaging
@@ -119,6 +120,7 @@ Icons needed:
 - COMMON (here in ToolBox): Toc, Annotations
 
 Done (newest features come first):
+-> ADD: core: forms support (BR91809)
 -> ADD: kspeech TTS interface. speech {document(BR118872) / page / selection}
 -> CHG: thumbnails list: refactor to do internal rendering as pageview does
 -> ADD: select more than one annotation in the annotation tree (BR155668)

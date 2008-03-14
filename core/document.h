@@ -423,6 +423,14 @@ class OKULAR_EXPORT Document : public QObject
         void continueSearch( int searchID );
 
         /**
+         * Continues the search for the given @p searchID, optionally specifing
+         * a new direction for the search.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void continueSearch( int searchID, SearchType type );
+
+        /**
          * Resets the search for the given @p searchID.
          */
         void resetSearch( int searchID );

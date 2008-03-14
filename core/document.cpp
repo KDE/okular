@@ -2240,6 +2240,23 @@ void Document::continueSearch( int searchID )
                 p->cachedNoDialogs );
 }
 
+void Document::continueSearch( int searchID, SearchType type )
+{
+    // check if searchID is present in runningSearches
+    QMap< int, RunningSearch * >::const_iterator it = d->m_searches.constFind( searchID );
+    if ( it == d->m_searches.constEnd() )
+    {
+        emit searchFinished( searchID, NoMatchFound );
+        return;
+    }
+
+    // start search with cached parameters from last search by searchID
+    RunningSearch * p = *it;
+    searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
+                type, p->cachedViewportMove, p->cachedColor,
+                p->cachedNoDialogs );
+}
+
 void Document::resetSearch( int searchID )
 {
     // check if searchID is present in runningSearches

@@ -33,6 +33,10 @@ class TextPagePrivate
                                                    Qt::CaseSensitivity caseSensitivity,
                                                    const TextEntity::List::ConstIterator &start,
                                                    const TextEntity::List::ConstIterator &end );
+        RegularAreaRect * findTextInternalBackward( int searchID, const QString &query,
+                                                    Qt::CaseSensitivity caseSensitivity,
+                                                    const TextEntity::List::ConstIterator &start,
+                                                    const TextEntity::List::ConstIterator &end );
 
         TextEntity::List m_words;
         QMap< int, SearchPoint* > m_searchPoints;

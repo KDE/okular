@@ -831,6 +831,107 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
     delete pagesToNotify;
 }
 
+void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
+{
+    RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
+    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
+    QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
+
+    if (m_searchCancelled && !match)
+    {
+        // if the user cancelled but he just got a match, give him the match!
+        QApplication::restoreOverrideCursor();
+        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
+        delete pagesToNotify;
+        return;
+    }
+
+
+    // if no match found, loop through the whole doc, starting from currentPage
+    if ( !match )
+    {
+        int pageCount = m_pagesVector.count();
+        if (donePages < pageCount)
+        {
+            bool doContinue = true;
+            if ( currentPage < 0 )
+            {
+                if ( noDialogs || KMessageBox::questionYesNo(m_parent->widget(), i18n("Beginning of document reached.\nContinue from the bottom?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                    currentPage = pageCount - 1;
+                else
+                    doContinue = false;
+            }
+            if (doContinue)
+            {
+                // get page
+                Page * page = m_pagesVector[ currentPage ];
+                // request search page if needed
+                if ( !page->hasTextPage() )
+                    m_parent->requestTextPage( page->number() );
+                // if found a match on the current page, end the loop
+                match = page->findText( searchID, text, FromBottom, caseSensitivity );
+
+                if ( !match )
+                {
+                    currentPage--;
+                    donePages++;
+                }
+                else
+                {
+                    donePages = 1;
+                }
+
+                QMetaObject::invokeMethod(m_parent, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
+                return;
+            }
+        }
+    }
+
+    // reset cursor to previous shape
+    QApplication::restoreOverrideCursor();
+
+    bool foundAMatch = false;
+
+    // if a match has been found..
+    if ( match )
+    {
+        // update the RunningSearch structure adding this match..
+        RunningSearch * s = m_searches[searchID];
+        foundAMatch = true;
+        s->continueOnPage = currentPage;
+        s->continueOnMatch = *match;
+        s->highlightedPages.insert( currentPage );
+        // ..add highlight to the page..
+        m_pagesVector[ currentPage ]->d->setHighlight( searchID, match, color );
+
+        // ..queue page for notifying changes..
+        pagesToNotify->insert( currentPage );
+
+        // ..move the viewport to show the first of the searched word sequence centered
+        if ( moveViewport )
+        {
+            DocumentViewport searchViewport( currentPage );
+            searchViewport.rePos.enabled = true;
+            searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
+            searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
+            m_parent->setViewport( searchViewport, -1, true );
+        }
+        delete match;
+    }
+    else if ( !noDialogs )
+        KMessageBox::information( m_parent->widget(), i18n( "No matches found for '%1'.", text ) );
+
+    // notify observers about highlights changes
+    foreach(int pageNumber, *pagesToNotify)
+        foreach(DocumentObserver *observer, m_observers)
+            observer->notifyPageChanged( pageNumber, DocumentObserver::Highlights );
+
+    if (foundAMatch) emit m_parent->searchFinished( searchID, Document::MatchFound );
+    else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
+
+    delete pagesToNotify;
+}
+
 void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color)
 {
     QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = static_cast< QMap< Page *, QVector<RegularAreaRect *> > * >(pageMatchesMap);
@@ -2207,9 +2308,27 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
 
         QMetaObject::invokeMethod(this, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, 1));
     }
-    // 3. PREVMATCH //TODO
+    // 3. PREVMATCH - find previous matching item (or start from bottom)
     else if ( type == PreviousMatch )
     {
+        // find out from where to start/resume search from
+        int viewportPage = (*d->m_viewportIterator).pageNumber;
+        int currentPage = fromStart ? d->m_pagesVector.count() - 1 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
+
+        // continue checking last TextPage first (if it is the current page)
+        RegularAreaRect * match = 0;
+        if ( lastPage && lastPage->number() == s->continueOnPage )
+        {
+            if ( newText )
+                match = lastPage->findText( searchID, text, FromBottom, caseSensitivity );
+            else
+                match = lastPage->findText( searchID, text, PreviousResult, caseSensitivity, &s->continueOnMatch );
+            if ( !match )
+                currentPage--;
+        }
+
+        QMetaObject::invokeMethod(this, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, 1));
     }
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )

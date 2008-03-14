@@ -269,10 +269,10 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
         case FromBottom:
             start = d->m_words.end();
             end = d->m_words.begin();
-            if ( !d->m_words.isEmpty() )
-            {
-                --start;
-            }
+            Q_ASSERT( start != end );
+            // we can safely go one step back, as we already checked
+            // that the list is not empty
+            --start;
             forward = false;
             break;
         case NextResult:
@@ -290,13 +290,10 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     {
         ret = d->findTextInternalForward( searchID, query, caseSensitivity, start, end );
     }
-    // TODO implement backward search
-#if 0
     else
     {
-        ret = findTextInternalBackward( searchID, query, caseSensitivity, start, end );
+        ret = d->findTextInternalBackward( searchID, query, caseSensitivity, start, end );
     }
-#endif
     return ret;
 }
 
@@ -414,6 +411,130 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         SearchPoint* sp = m_searchPoints[ searchID ];
         m_searchPoints.remove( searchID );
+        delete sp;
+    }
+    delete ret;
+    return 0;
+}
+
+RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
+                                                            Qt::CaseSensitivity caseSensitivity,
+                                                            const TextEntity::List::ConstIterator &start,
+                                                            const TextEntity::List::ConstIterator &end )
+{
+    QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+
+    RegularAreaRect* ret=new RegularAreaRect;
+    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
+
+    // j is the current position in our query
+    // len is the length of the string in TextEntity
+    // queryLeft is the length of the query we have left
+    const TextEntity* curEntity = 0;
+    int j=query.length() - 1, len=0, queryLeft=query.length();
+    int offset = 0;
+    bool haveMatch=false;
+    bool dontIncrement=false;
+    bool offsetMoved = false;
+    TextEntity::List::ConstIterator it = start;
+    while ( true )
+    {
+        curEntity = *it;
+        const QString &str = curEntity->text();
+        if ( !offsetMoved && ( it == start ) )
+        {
+            if ( m_searchPoints.contains( searchID ) )
+            {
+                offset = qMax( m_searchPoints[ searchID ]->offset_begin, 0 );
+            }
+            offsetMoved = true;
+        }
+        if ( query.at(j).isSpace() )
+        {
+            // lets match newline as a space
+#ifdef DEBUG_TEXTPAGE
+            kDebug(OkularDebug) << "newline or space";
+#endif
+            j--;
+            queryLeft--;
+            // since we do not really need to increment this after this
+            // run of the loop finishes because we are not comparing it 
+            // to any entity, rather we are deducing a situation in a document
+            dontIncrement=true;
+        }
+        else
+        {
+            dontIncrement=false;
+            len=str.length();
+            int min=qMin(queryLeft,len);
+#ifdef DEBUG_TEXTPAGE
+            kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
+#endif
+            // we have equal (or less then) area of the query left as the lengt of the current 
+            // entity
+
+            if ((caseSensitivity == Qt::CaseSensitive)
+                ? (str.right(min) != query.mid(j-min+1,min))
+                : (str.right(min).toLower() != query.mid(j-min+1,min))
+                )
+            {
+                    // we not have matched
+                    // this means we do not have a complete match
+                    // we need to get back to query start
+                    // and continue the search from this place
+                    haveMatch=false;
+                    ret->clear();
+#ifdef DEBUG_TEXTPAGE
+                    kDebug(OkularDebug) << "\tnot matched";
+#endif
+                    j=query.length() - 1;
+                    offset = 0;
+                    queryLeft=query.length();
+            }
+            else
+            {
+                    // we have a match
+                    // move the current position in the query
+                    // to the position after the length of this string
+                    // we matched
+                    // substract the length of the current entity from 
+                    // the left length of the query
+#ifdef DEBUG_TEXTPAGE
+                    kDebug(OkularDebug) << "\tmatched";
+#endif
+                    haveMatch=true;
+                    ret->append( curEntity->transformedArea( matrix ) );
+                    j-=min;
+                    queryLeft-=min;
+            }
+        }
+
+        if (haveMatch && queryLeft==0 && j<0)
+        {
+            // save or update the search point for the current searchID
+            QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+            if ( sIt == m_searchPoints.end() )
+            {
+                sIt = m_searchPoints.insert( searchID, new SearchPoint );
+            }
+            SearchPoint* sp = *sIt;
+            sp->theIt = it;
+            sp->offset_begin = j;
+            sp->offset_end = j + qMin( queryLeft, len );
+            ret->simplify();
+            return ret;
+        }
+        if ( it == end )
+            break;
+        else
+            --it;
+    }
+    // end of loop - it means that we've ended the textentities
+    QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+    if ( sIt != m_searchPoints.end() )
+    {
+        SearchPoint* sp = *sIt;
+        m_searchPoints.erase( sIt );
         delete sp;
     }
     delete ret;

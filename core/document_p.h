@@ -109,6 +109,7 @@ class DocumentPrivate
         void slotGeneratorConfigChanged( const QString& );
         void refreshPixmaps( int );
         void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
+        void doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color, bool matchAll);
 

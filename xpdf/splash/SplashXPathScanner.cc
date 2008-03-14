@@ -397,7 +397,7 @@ void SplashXPathScanner::clipAALine(SplashBitmap *aaBuf,
 	for (; xx + 7 <= xx0; xx += 8) {
 	  *p++ = 0x00;
 	}
-	if (xx <= xx0) {
+	if (xx < xx0) {
 	  *p &= 0xff >> (xx0 & 7);
 	}
       }
@@ -406,6 +406,7 @@ void SplashXPathScanner::clipAALine(SplashBitmap *aaBuf,
       }
     }
     xx0 = (*x1 + 1) * splashAASize;
+    if (xx0 > aaBuf->getWidth()) xx0 = aaBuf->getWidth();
     // set [xx, xx0) to 0
     if (xx < xx0) {
       p = aaBuf->getDataPtr() + yy * aaBuf->getRowSize() + (xx >> 3);
@@ -420,7 +421,7 @@ void SplashXPathScanner::clipAALine(SplashBitmap *aaBuf,
       for (; xx + 7 <= xx0; xx += 8) {
 	*p++ = 0x00;
       }
-      if (xx <= xx0) {
+      if (xx < xx0) {
 	*p &= 0xff >> (xx0 & 7);
       }
     }

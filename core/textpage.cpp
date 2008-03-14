@@ -24,11 +24,12 @@ class SearchPoint
 {
     public:
         SearchPoint()
-            : theIt( 0 ), offset_begin( -1 ), offset_end( -1 )
+            : offset_begin( -1 ), offset_end( -1 )
         {
         }
 
-        TextEntity::List::ConstIterator theIt;
+        TextEntity::List::ConstIterator it_begin;
+        TextEntity::List::ConstIterator it_end;
         int offset_begin;
         int offset_end;
 };
@@ -250,7 +251,8 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
         return 0;
     TextEntity::List::ConstIterator start;
     TextEntity::List::ConstIterator end;
-    if ( !d->m_searchPoints.contains( searchID ) )
+    QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.find( searchID );
+    if ( sIt == d->m_searchPoints.end() )
     {
         // if no previous run of this search is found, then set it to start
         // from the beginning (respecting the search direction)
@@ -276,12 +278,16 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
             forward = false;
             break;
         case NextResult:
-            start = d->m_searchPoints[ searchID ]->theIt;
+            start = (*sIt)->it_end;
             end = d->m_words.end();
+            if ( ( start + 1 ) != end )
+                ++start;
             break;
         case PreviousResult:
-            start = d->m_searchPoints[ searchID ]->theIt;
+            start = (*sIt)->it_begin;
             end = d->m_words.begin();
+            if ( start != end )
+                --start;
             forward = false;
             break;
     };
@@ -318,6 +324,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     bool dontIncrement=false;
     bool offsetMoved = false;
     TextEntity::List::ConstIterator it = start;
+    TextEntity::List::ConstIterator it_begin;
     for ( ; it != end; ++it )
     {
         curEntity = *it;
@@ -371,6 +378,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     j=0;
                     offset = 0;
                     queryLeft=query.length();
+                    it_begin = TextEntity::List::ConstIterator();
             }
             else
             {
@@ -387,6 +395,10 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     ret->append( curEntity->transformedArea( matrix ) );
                     j+=min;
                     queryLeft-=min;
+                    if ( it_begin == TextEntity::List::ConstIterator() )
+                    {
+                        it_begin = it;
+                    }
             }
         }
 
@@ -399,7 +411,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                 m_searchPoints.insert( searchID, newsp );
             }
             SearchPoint* sp = m_searchPoints[ searchID ];
-            sp->theIt = it;
+            sp->it_begin = it_begin;
+            sp->it_end = it;
             sp->offset_begin = j;
             sp->offset_end = j + qMin( queryLeft, len );
             ret->simplify();
@@ -437,6 +450,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     bool dontIncrement=false;
     bool offsetMoved = false;
     TextEntity::List::ConstIterator it = start;
+    TextEntity::List::ConstIterator it_begin;
     while ( true )
     {
         curEntity = *it;
@@ -490,6 +504,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     j=query.length() - 1;
                     offset = 0;
                     queryLeft=query.length();
+                    it_begin = TextEntity::List::ConstIterator();
             }
             else
             {
@@ -506,6 +521,10 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     ret->append( curEntity->transformedArea( matrix ) );
                     j-=min;
                     queryLeft-=min;
+                    if ( it_begin == TextEntity::List::ConstIterator() )
+                    {
+                        it_begin = it;
+                    }
             }
         }
 
@@ -518,7 +537,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                 sIt = m_searchPoints.insert( searchID, new SearchPoint );
             }
             SearchPoint* sp = *sIt;
-            sp->theIt = it;
+            sp->it_begin = it;
+            sp->it_end = it_begin;
             sp->offset_begin = j;
             sp->offset_end = j + qMin( queryLeft, len );
             ret->simplify();

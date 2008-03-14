@@ -1717,12 +1717,14 @@ void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) 
 	  p += glyph->w;
 	}
       } else {
+	const int widthEight = (int)ceil(glyph->w / 8.0);
+
 	pipeInit(&pipe, xStart, yStart,
 		 state->fillPattern, NULL, state->fillAlpha, gFalse, gFalse);
 	for (yy = 0, y1 = yStart; yy < yyLimit; ++yy, ++y1) {
 	  pipeSetXY(&pipe, xStart, y1);
 	  for (xx = 0, x1 = xStart; xx < xxLimit; xx += 8) {
-	    alpha0 = p[xx];
+	    alpha0 = p[xx / 8];
 	    for (xx1 = 0; xx1 < 8 && xx + xx1 < xxLimit; ++xx1, ++x1) {
 	      if (alpha0 & 0x80) {
 		pipeRun(&pipe);
@@ -1758,15 +1760,17 @@ void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) 
 	      pipeIncX(&pipe);
 	    }
 	  }
-	  p += glyph->w;
+	  p += widthEight;
 	}
       } else {
+	const int widthEight = (int)ceil(glyph->w / 8.0);
+
 	pipeInit(&pipe, xStart, yStart,
 		 state->fillPattern, NULL, state->fillAlpha, gFalse, gFalse);
 	for (yy = 0, y1 = yStart; yy < yyLimit; ++yy, ++y1) {
 	  pipeSetXY(&pipe, xStart, y1);
 	  for (xx = 0, x1 = xStart; xx < xxLimit; xx += 8) {
-	    alpha0 = p[xx];
+	    alpha0 = p[xx / 8];
 	    for (xx1 = 0; xx1 < 8 && xx + xx1 < xxLimit; ++xx1, ++x1) {
 	      if (state->clip->test(x1, y1)) {
 		if (alpha0 & 0x80) {
@@ -1782,7 +1786,7 @@ void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) 
 	      alpha0 <<= 1;
 	    }
 	  }
-	  p += glyph->w;
+	  p += widthEight;
 	}
       }
     }

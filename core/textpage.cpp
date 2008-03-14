@@ -246,7 +246,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 {
     SearchDirection dir=direct;
     // invalid search request
-    if ( query.isEmpty() || area->isNull() )
+    if ( d->m_words.isEmpty() || query.isEmpty() || ( area && area->isNull() ) )
         return 0;
     TextEntity::List::ConstIterator start;
     TextEntity::List::ConstIterator end;

@@ -55,8 +55,11 @@ void SearchLineEdit::setSearchMinimumLength( int length )
 
 void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
 {
+    if ( type == m_searchType )
+        return;
+
     m_searchType = type;
-    m_changed = true;
+    m_changed = ( m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch );
 }
 
 void SearchLineEdit::setSearchId( int id )
@@ -111,7 +114,7 @@ void SearchLineEdit::startSearch()
     if ( m_id == -1 || !m_color.isValid() )
         return;
 
-    if ( m_changed && m_searchType == Okular::Document::NextMatch )
+    if ( m_changed && ( m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch ) )
     {
         m_document->resetSearch( m_id );
     }

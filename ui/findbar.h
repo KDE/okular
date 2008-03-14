@@ -35,6 +35,7 @@ class FindBar
 
     public slots:
         void findNext();
+        void findPrev();
 
     private slots:
         void caseSensitivityChanged();

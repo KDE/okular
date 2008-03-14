@@ -53,6 +53,10 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 
+    QPushButton * findPrevBtn = new QPushButton( KIcon( "go-up-search" ), i18nc( "Find and go to the previous search match", "Previous" ), this );
+    findPrevBtn->setToolTip( i18n( "Jump to previous match" ) );
+    lay->addWidget( findPrevBtn );
+
     QPushButton * optionsBtn = new QPushButton( this );
     optionsBtn->setText( i18n( "Options" ) );
     optionsBtn->setToolTip( i18n( "Modify search behaviour" ) );
@@ -64,6 +68,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
 
     connect( closeBtn, SIGNAL( clicked() ), this, SLOT( close() ) );
     connect( findNextBtn, SIGNAL( clicked() ), this, SLOT( findNext() ) );
+    connect( findPrevBtn, SIGNAL( clicked() ), this, SLOT( findPrev() ) );
     connect( m_caseSensitiveAct, SIGNAL( toggled( bool ) ), this, SLOT( caseSensitivityChanged() ) );
 
     hide();
@@ -91,7 +96,14 @@ void FindBar::focusAndSetCursor()
 
 void FindBar::findNext()
 {
+    m_text->setSearchType( Okular::Document::NextMatch );
     m_text->findNext();
+}
+
+void FindBar::findPrev()
+{
+    m_text->setSearchType( Okular::Document::PreviousMatch );
+    m_text->findPrev();
 }
 
 void FindBar::caseSensitivityChanged()

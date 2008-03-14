@@ -38,6 +38,7 @@ class SearchLineEdit : public KLineEdit
     public slots:
         void restartSearch();
         void findNext();
+        void findPrev();
 
     private:
         Okular::Document * m_document;

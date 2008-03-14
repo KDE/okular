@@ -92,7 +92,18 @@ void SearchLineEdit::findNext()
         return;
 
     if ( !m_changed )
-        m_document->continueSearch( m_id );
+        m_document->continueSearch( m_id, m_searchType );
+    else
+        startSearch();
+}
+
+void SearchLineEdit::findPrev()
+{
+    if ( m_id == -1 || m_searchType != Okular::Document::PreviousMatch )
+        return;
+
+    if ( !m_changed )
+        m_document->continueSearch( m_id, m_searchType );
     else
         startSearch();
 }

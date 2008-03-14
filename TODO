@@ -35,6 +35,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 145345: goto page: update slider while editing page number
 
 In progress [working on]:
+-> search: backward text search (BR117045)
 -> various backends: fill about data information
 -> gui: add config for gfx (yes/no) and text (yes/no/kde) antialias
 -> core: provide a binary compatible okularcore library to extend the format capabilities

@@ -770,9 +770,17 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
                 // if found a match on the current page, end the loop
                 match = page->findText( searchID, text, FromTop, caseSensitivity );
 
-                if ( !match ) currentPage++;
+                if ( !match )
+                {
+                    currentPage++;
+                    donePages++;
+                }
+                else
+                {
+                    donePages = 1;
+                }
 
-                QMetaObject::invokeMethod(m_parent, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages +1));
+                QMetaObject::invokeMethod(m_parent, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
                 return;
             }
         }

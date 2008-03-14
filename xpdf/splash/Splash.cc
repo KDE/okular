@@ -1736,7 +1736,7 @@ void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) 
 	      alpha0 <<= 1;
 	    }
 	  }
-	  p += glyph->w;
+	  p += widthEight;
 	}
       }
     } else {
@@ -1760,7 +1760,7 @@ void Splash::fillGlyph2(int x0, int y0, SplashGlyphBitmap *glyph, GBool noClip) 
 	      pipeIncX(&pipe);
 	    }
 	  }
-	  p += widthEight;
+	  p += glyph->w;
 	}
       } else {
 	const int widthEight = (int)ceil(glyph->w / 8.0);

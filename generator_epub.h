@@ -14,7 +14,7 @@ class EPubGenerator : public Okular::TextDocumentGenerator
 {
  public:
   EPubGenerator( QObject *parent, const QVariantList &args );
-  ~EPubGenerator() {};
+  ~EPubGenerator() {}
 };
 
 #endif

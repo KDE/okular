@@ -103,11 +103,13 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
 
 QTextDocument* Converter::convert( const QString &fileName )
 {
-  mTextDocument = new EpubDocument(fileName);
-  if (!mTextDocument->isValid()) {
+  EpubDocument *newDocument = new EpubDocument(fileName);
+  if (!newDocument->isValid()) {
     emit error(i18n("Error while opening the EPub document."), -1);
+    delete newDocument;
     return NULL;
   }
+  mTextDocument = newDocument;
 
   mTextDocument->setPageSize(QSizeF(600, 800));
 

@@ -360,6 +360,16 @@ const Okular::DocumentSynopsis* TextDocumentGenerator::generateDocumentSynopsis(
         return &d->mDocumentSynopsis;
 }
 
+QVariant TextDocumentGeneratorPrivate::metaData( const QString &key, const QVariant &option ) const
+{
+    Q_UNUSED( option )
+    if ( key == "DocumentTitle" )
+    {
+        return mDocumentInfo.get( "title" );
+    }
+    return QVariant();
+}
+
 Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
 {
     static Okular::ExportFormat::List formats;

@@ -122,6 +122,8 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
 
         Q_DECLARE_PUBLIC( TextDocumentGenerator )
 
+        /* reimp */ QVariant metaData( const QString &key, const QVariant &option ) const;
+
         void calculateBoundingRect( int startPosition, int endPosition, QRectF &rect, int &page ) const;
         void calculatePositions( int page, int &start, int &end ) const;
         Okular::TextPage* createTextPage( int ) const;

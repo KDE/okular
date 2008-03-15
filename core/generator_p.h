@@ -46,6 +46,8 @@ class GeneratorPrivate
 
         QMutex* threadsLock();
 
+        virtual QVariant metaData( const QString &key, const QVariant &option ) const;
+
         DocumentPrivate *m_document;
         // NOTE: the following should be a QSet< GeneratorFeature >,
         // but it is not to avoid #include'ing generator.h

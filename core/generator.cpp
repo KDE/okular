@@ -131,6 +131,11 @@ QMutex* GeneratorPrivate::threadsLock()
     return m_threadsMutex;
 }
 
+QVariant GeneratorPrivate::metaData( const QString &, const QVariant & ) const
+{
+    return QVariant();
+}
+
 
 Generator::Generator( QObject *parent, const QVariantList &args )
     : QObject( parent ), d_ptr( new GeneratorPrivate() )
@@ -291,9 +296,10 @@ bool Generator::print( QPrinter& )
     return false;
 }
 
-QVariant Generator::metaData( const QString&, const QVariant& ) const
+QVariant Generator::metaData( const QString &key, const QVariant &option ) const
 {
-    return QVariant();
+    Q_D( const Generator );
+    return d->metaData( key, option );
 }
 
 ExportFormat::List Generator::exportFormats() const

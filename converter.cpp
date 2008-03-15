@@ -105,7 +105,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 {
   mTextDocument = new EpubDocument(fileName);
   if (!mTextDocument->isValid()) {
-    emit error("Error opening document", -1);
+    emit error(i18n("Error while opening the EPub document."), -1);
     return NULL;
   }
 

@@ -1,1 +1,1 @@
-SKIP /generators/spectre/libspectre/\|/generators/dvi/\|/generators/chm/\|/generators/plucker/unpluck/
+SKIP /generators/chm/kio-msits\|/generators/chm/lib\|/generators/dvi/\|/generators/plucker/unpluck/

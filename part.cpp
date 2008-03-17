@@ -12,7 +12,7 @@
  *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
  *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
  *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
- *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -124,7 +124,7 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args )
 : KParts::ReadOnlyPart(parent),
-m_tempfile( 0 ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
+m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_generatorGuiClient(0)
 {
     // first necessary step: copy the configuration from kpdf, if available
@@ -793,6 +793,8 @@ bool Part::openFile()
 
     // update viewing actions
     updateViewActions();
+    
+    m_fileWasRemoved = false;
 
     if ( !ok )
     {
@@ -803,8 +805,12 @@ bool Part::openFile()
     }
 
     // set the file to the fileWatcher
-    if ( url().isLocalFile() && !m_watcher->contains( localFilePath() ) )
-        m_watcher->addFile(localFilePath());
+    if ( url().isLocalFile() )
+    {
+        if ( !m_watcher->contains( localFilePath() ) ) m_watcher->addFile(localFilePath());
+        QFileInfo fi(localFilePath());
+        if ( !m_watcher->contains( fi.absolutePath() ) ) m_watcher->addDir(fi.absolutePath());
+    }
 
     // if the 'OpenTOC' flag is set, open the TOC
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) )
@@ -886,7 +892,12 @@ bool Part::closeUrl()
     emit enablePrintAction(false);
     m_realUrl = KUrl();
     if ( url().isLocalFile() )
+    {
         m_watcher->removeFile( localFilePath() );
+        QFileInfo fi(localFilePath());
+        m_watcher->removeDir( fi.absolutePath() );
+    }
+    m_fileWasRemoved = false;
     if ( m_generatorGuiClient )
         factory()->removeClient( m_generatorGuiClient );
     m_generatorGuiClient = 0;
@@ -926,16 +937,35 @@ void Part::slotShowLeftPanel()
 }
 
 
-void Part::slotFileDirty( const QString& fileName )
+void Part::slotFileDirty( const QString& path )
 {
     // The beauty of this is that each start cancels the previous one.
     // This means that timeout() is only fired when there have
     // no changes to the file for the last 750 milisecs.
     // This ensures that we don't update on every other byte that gets
     // written to the file.
-    if ( fileName == localFilePath() )
+    if ( path == localFilePath() )
     {
         m_dirtyHandler->start( 750 );
+    }
+    else
+    {
+        QFileInfo fi(localFilePath());
+        if ( fi.absolutePath() == path )
+        {
+            // Our parent has been dirtified
+            if (!QFile::exists(localFilePath()))
+            {
+                m_fileWasRemoved = true;
+            }
+            else if (m_fileWasRemoved && QFile::exists(localFilePath()))
+            {
+                // we need to watch the new file
+                m_watcher->removeFile(localFilePath());
+                m_watcher->addFile(localFilePath());
+                m_dirtyHandler->start( 750 );
+            }
+        }
     }
 }
 
@@ -1882,3 +1912,5 @@ void BrowserExtension::print()
 
 
 #include "part.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

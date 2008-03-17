@@ -200,6 +200,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool m_wasPresentationOpen;
         int m_dirtyToolboxIndex;
         bool m_wasSidebarVisible;
+        bool m_fileWasRemoved;
 
         // Remember the search history
         QStringList m_searchHistory;
@@ -268,4 +269,4 @@ class BrowserExtension : public KParts::BrowserExtension
 };
 #endif
 
-// vim:ts=2:sw=2:tw=78:et
+/* kate: replace-tabs on; indent-width 4; */

@@ -184,6 +184,36 @@ QTextDocument* Converter::convert( const QString &fileName )
       qDebug() << "Error: no block found for "<< hit.key() << "\n";
     }
   }
+  
+  struct titerator *tit;
+  
+  tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_NAVMAP, 0);
+  if (! tit) 
+    tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_GUIDE, 0);
+
+  if (tit) {
+    do {
+      if (epub_tit_curr_valid(tit)) {
+        char *link = epub_tit_get_curr_link(tit);
+        const QTextBlock &block = mSectionMap[link];
+        if (link)
+          free(link);
+        if (block.isValid()) { // be sure we actually got a block
+          char *label = epub_tit_get_curr_label(tit);
+          emit addTitle(epub_tit_get_curr_depth(tit), 
+                        label,
+                        block);
+          if (label)
+            free(label);
+          
+        } else {
+          qDebug() << "Error: no block found for "<< hit.key() << "\n";
+        }
+      }   
+    } while (epub_tit_next(tit));
+
+    epub_free_titerator(tit);
+  }
 
   delete _cursor;
 

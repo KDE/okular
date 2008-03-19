@@ -345,6 +345,7 @@ Sidebar::Sidebar( QWidget *parent )
 {
     QHBoxLayout *mainlay = new QHBoxLayout( this );
     mainlay->setMargin( 0 );
+    mainlay->setSpacing( 0 );
 
     d->list = new SidebarListWidget( this );
     mainlay->addWidget( d->list );

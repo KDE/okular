@@ -34,16 +34,17 @@
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_ghostview",
          "okular_ghostview",
-         KLocalizedString(),
+         ki18n( "PS Backend" ),
          "0.1",
-         KLocalizedString(),
+         ki18n( "A PostScript file renderer." ),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n( "© 2007-2008 Albert Astals Cid" ),
+         ki18n( "Bbased on the Spectre library." )
     );
+    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
     return aboutData;
 }
 

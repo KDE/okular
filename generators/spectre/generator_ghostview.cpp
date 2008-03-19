@@ -42,7 +42,7 @@ static KAboutData createAboutData()
          ki18n( "A PostScript file renderer." ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Albert Astals Cid" ),
-         ki18n( "Bbased on the Spectre library." )
+         ki18n( "Based on the Spectre library." )
     );
     aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
     return aboutData;

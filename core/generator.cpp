@@ -326,7 +326,11 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
 const Document * Generator::document() const
 {
     Q_D( const Generator );
-    return d->m_document->m_parent;
+    if ( d->m_document )
+    {
+        return d->m_document->m_parent;
+    }
+    return 0;
 }
 
 void Generator::setFeature( GeneratorFeature feature, bool on )

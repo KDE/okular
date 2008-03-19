@@ -275,5 +275,16 @@ Okular::Rotation GSGenerator::orientation(SpectreOrientation pageOrientation) co
     return Okular::Rotation0;
 }
 
+QVariant GSGenerator::metaData(const QString &key, const QVariant &option) const
+{
+    Q_UNUSED(option)
+    if (key == "DocumentTitle")
+    {
+        const char *title = spectre_document_get_title(m_internalDocument);
+        if (title)
+            return QString::fromAscii(title);
+    }
+    return QVariant();
+}
 
 #include "generator_ghostview.moc"

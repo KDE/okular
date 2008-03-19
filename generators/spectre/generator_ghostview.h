@@ -36,6 +36,8 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, pu
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest * request );
 
+        QVariant metaData(const QString &key, const QVariant &option) const;
+
         // print document using already configured kprinter
         bool print( QPrinter& /*printer*/ );
         QString fileName() const;

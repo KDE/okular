@@ -13,15 +13,18 @@
 // qt includes
 #include <QtCore/QVariant>
 
+#include "action.h"
+
 using namespace Okular;
 
 FormFieldPrivate::FormFieldPrivate( FormField::FieldType type )
-    : m_type( type )
+    : m_type( type ), m_activateAction( 0 )
 {
 }
 
 FormFieldPrivate::~FormFieldPrivate()
 {
+    delete m_activateAction;
 }
 
 void FormFieldPrivate::setDefault()
@@ -55,6 +58,19 @@ bool FormField::isReadOnly() const
 bool FormField::isVisible() const
 {
     return true;
+}
+
+Action* FormField::activationAction() const
+{
+    Q_D( const FormField );
+    return d->m_activateAction;
+}
+
+void FormField::setActivationAction( Action *action )
+{
+    Q_D( FormField );
+    delete d->m_activateAction;
+    d->m_activateAction = action;
 }
 
 

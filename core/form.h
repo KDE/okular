@@ -17,6 +17,7 @@
 
 namespace Okular {
 
+class Action;
 class Page;
 class PagePrivate;
 class FormFieldPrivate;
@@ -90,12 +91,16 @@ class OKULAR_EXPORT FormField
          */
         virtual bool isVisible() const;
 
+        Action* activationAction() const;
+
     protected:
         /// @cond PRIVATE
         FormField( FormFieldPrivate &dd );
         Q_DECLARE_PRIVATE( FormField )
         FormFieldPrivate *d_ptr;
         /// @endcond
+
+        void setActivationAction( Action *action );
 
     private:
         Q_DISABLE_COPY( FormField )

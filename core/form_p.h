@@ -16,6 +16,7 @@
 
 namespace Okular {
 
+class Action;
 class FormField;
 
 class FormFieldPrivate
@@ -31,6 +32,7 @@ class FormFieldPrivate
 
         FormField::FieldType m_type;
         QString m_default;
+        Action *m_activateAction;
 
         Q_DECLARE_PUBLIC( FormField )
         FormField *q_ptr;

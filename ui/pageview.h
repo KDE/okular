@@ -31,6 +31,7 @@ class KActionCollection;
 class KUrl;
 
 namespace Okular {
+class Action;
 class Document;
 class Annotation;
 }
@@ -200,6 +201,7 @@ Q_OBJECT
         void slotSpeakDocument();
         void slotSpeakCurrentPage();
         void slotStopSpeaks();
+        void slotAction( Okular::Action *action );
 };
 
 #endif

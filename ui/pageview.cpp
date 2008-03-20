@@ -172,6 +172,8 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
         formsWidgetController = new FormWidgetsController();
         QObject::connect( formsWidgetController, SIGNAL( changed( FormWidgetIface* ) ),
                           q, SLOT( slotFormWidgetChanged( FormWidgetIface * ) ) );
+        QObject::connect( formsWidgetController, SIGNAL( action( Okular::Action* ) ),
+                          q, SLOT( slotAction( Okular::Action* ) ) );
     }
 
     return formsWidgetController;
@@ -3209,6 +3211,11 @@ void PageView::slotStopSpeaks()
         return;
 
     d->m_tts->stopAllSpeechs();
+}
+
+void PageView::slotAction( Okular::Action *action )
+{
+    d->document->processAction( action );
 }
 //END private SLOTS
 

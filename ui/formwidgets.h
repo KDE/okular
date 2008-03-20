@@ -27,6 +27,7 @@ class PageViewItem;
 class RadioButtonEdit;
 
 namespace Okular {
+class Action;
 class FormField;
 class FormFieldButton;
 class FormFieldChoice;
@@ -50,12 +51,14 @@ class FormWidgetsController : public QObject
         virtual ~FormWidgetsController();
 
         void signalChanged( FormWidgetIface *w );
+        void signalAction( Okular::Action *action );
 
         QButtonGroup* registerRadioButton( FormWidgetIface* widget, const QList< int >& siblings );
         void dropRadioButtons();
 
     signals:
         void changed( FormWidgetIface *w );
+        void action( Okular::Action *action );
 
     private slots:
         void slotButtonClicked( QAbstractButton *button );
@@ -107,6 +110,9 @@ class PushButtonEdit : public QPushButton, public FormWidgetIface
 
     public:
         PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+
+    private slots:
+        void slotClicked();
 
     private:
         Okular::FormFieldButton * m_form;

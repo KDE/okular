@@ -30,6 +30,11 @@ void FormWidgetsController::signalChanged( FormWidgetIface *w )
     emit changed( w );
 }
 
+void FormWidgetsController::signalAction( Okular::Action *a )
+{
+    emit action( a );
+}
+
 QButtonGroup* FormWidgetsController::registerRadioButton( FormWidgetIface* widget, const QList< int >& siblings )
 {
     if ( !widget->button() )
@@ -212,6 +217,14 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     setText( m_form->caption() );
     setEnabled( !m_form->isReadOnly() );
     setVisible( m_form->isVisible() );
+
+    connect( this, SIGNAL( clicked() ), this, SLOT( slotClicked() ) );
+}
+
+void PushButtonEdit::slotClicked()
+{
+    if ( m_form->activationAction() )
+        m_controller->signalAction( m_form->activationAction() );
 }
 
 

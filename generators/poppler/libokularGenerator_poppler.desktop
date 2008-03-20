@@ -2,6 +2,7 @@
 Type=Service
 Name=Poppler
 Name[hi]=पॉपलर
+Name[hu]=Poppler-beolvasó
 Name[ne]=पप्प्लर
 Name[pa]=ਪੋਪੱਲਰ
 Name[x-test]=xxPopplerxx
@@ -19,6 +20,7 @@ Comment[fr]=Interface d'okular pour les PDf (utilise poppler)
 Comment[ga]=Inneall PDF a úsáideann poppler le haghaidh okular
 Comment[gl]=Infraestrutura de PDF mediante poppler para okular
 Comment[hi]=ऑकुलर के लिए पॉपलर का प्रयोग करता हुआ पीडीएफ बैकएण्ड
+Comment[hu]=Poppler-alapú PDF-beolvasó az Okularhoz
 Comment[is]=PDF stuðningur fyrir Okular í gegnum Poppler
 Comment[it]=Backend PDF per okular che utilizza poppler
 Comment[ja]=okular の PDF バックエンド (poppler を使用)

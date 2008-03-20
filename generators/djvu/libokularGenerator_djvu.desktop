@@ -2,6 +2,7 @@
 Type=Service
 Name=djvu
 Name[hi]=डीजेवीयू
+Name[hu]=DjVu
 Name[x-test]=xxdjvuxx
 Comment=DjVu backend for okular
 Comment[bg]=DjVu backend за okular
@@ -17,6 +18,7 @@ Comment[fr]=Interface d'okular pour DjVu
 Comment[ga]=Inneall DjVu le haghaidh okular
 Comment[gl]=Infraestrutura de DjVu para okular
 Comment[hi]=ऑकुलर के लिए डीजेवीयू बैकएण्ड
+Comment[hu]=DjVu-beolvasó az Okularhoz
 Comment[is]=DjVu stuðningur fyrir Okular
 Comment[it]=Backend DjVu per okular
 Comment[ja]=okular の DjVu バックエンド

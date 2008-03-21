@@ -9,6 +9,7 @@ defaultMimetype=text/html
 Description=A kioslave for displaying WinHelp files
 Description[bg]=kioslave за показване на помощни файлове за Уиндоус
 Description[ca]=Un kioslave per visualitzar els fitxers WinHelp
+Description[da]=En kioslave til visning af WinHelp-filer
 Description[de]=Ein-/Ausgabemodul zur Anzeige von Windows-Hilfe-Dateien
 Description[el]=Ένα kioslave για την εμφάνιση αρχείων WinHelp
 Description[eo]=Kio-sklavo por montri la WinHelp dosierojn

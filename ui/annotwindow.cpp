@@ -163,7 +163,9 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
 
-    textEdit = new KTextEdit( GuiUtils::contents( m_annot ), this );
+    textEdit = new KTextEdit( this );
+    textEdit->setAcceptRichText( false );
+    textEdit->setPlainText( GuiUtils::contents( m_annot ) );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     

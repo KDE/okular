@@ -1,16 +1,9 @@
 [Desktop Entry]
 Type=Service
 Name=EPub document
-Name[ga]=Cáipéis EPub
-Name[km]=ឯកសារ​ EPub
-Name[pt]=Documento EPub
-Name[pt_BR]=Documento EPub
-Name[uk]=Документ EPub
+Name[sv]=Epub-dokument
 Comment=Epub backend for Okular
-Comment[km]=ផ្នែក​ខា​ងក្រោយ​របស់ Epub សម្រាប់ Okular
-Comment[pt]=Infra-estrutura do Epub para o Okular
-Comment[pt_BR]=Infra-estrutura do Epub para o Okular
-Comment[uk]=Сервер Epub для Okular
+Comment[sv]=Epub-gränssnitt för Okular
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/epub+zip;
 X-KDE-Library=okularGenerator_epub

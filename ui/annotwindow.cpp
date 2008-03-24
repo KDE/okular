@@ -182,7 +182,6 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     lowerlay->addWidget( sb );
 
     m_title->setTitle( m_annot->window().summary() );
-    m_title->setAuthor( m_annot->author() );
     m_title->connectOptionButton( this, SLOT( slotOptionBtn() ) );
 
     setGeometry(10,10,300,300 );
@@ -201,6 +200,7 @@ void AnnotWindow::reloadInfo()
         pl.setColor( QPalette::Base, m_color );
         textEdit->setPalette( pl );
     }
+    m_title->setAuthor( m_annot->author() );
     m_title->setDate( m_annot->modificationDate() );
 }
 

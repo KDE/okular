@@ -11,6 +11,7 @@
 #ifndef _ANNOTWINDOW_H_
 #define _ANNOTWINDOW_H_
 
+#include <qcolor.h>
 #include <qframe.h>
 
 namespace Okular {
@@ -25,10 +26,13 @@ class AnnotWindow : public QFrame
     Q_OBJECT
     public:
         AnnotWindow( QWidget * parent, Okular::Annotation * annot);
+
+        void reloadInfo();
         
     private:
         MovableTitle * m_title;
         QTextEdit *textEdit;
+        QColor m_color;
     public:
         Okular::Annotation* m_annot;
 

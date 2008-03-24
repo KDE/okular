@@ -169,12 +169,6 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     
-    QColor col = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
-    setPalette( QPalette( col ) );
-    QPalette pl=textEdit->palette();
-    pl.setColor( QPalette::Base, col );
-    textEdit->setPalette(pl);
-
     QVBoxLayout * mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 2 );
     mainlay->setSpacing( 0 );
@@ -188,11 +182,26 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     lowerlay->addWidget( sb );
 
     m_title->setTitle( m_annot->window().summary() );
-    m_title->setDate( m_annot->modificationDate() );
     m_title->setAuthor( m_annot->author() );
     m_title->connectOptionButton( this, SLOT( slotOptionBtn() ) );
 
     setGeometry(10,10,300,300 );
+
+    reloadInfo();
+}
+
+void AnnotWindow::reloadInfo()
+{
+    const QColor newcolor = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
+    if ( newcolor != m_color )
+    {
+        m_color = newcolor;
+        setPalette( QPalette( m_color ) );
+        QPalette pl = textEdit->palette();
+        pl.setColor( QPalette::Base, m_color );
+        textEdit->setPalette( pl );
+    }
+    m_title->setDate( m_annot->modificationDate() );
 }
 
 void AnnotWindow::slotOptionBtn()

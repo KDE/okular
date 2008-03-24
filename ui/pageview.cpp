@@ -936,6 +936,14 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     if ( changedFlags & DocumentObserver::Bookmark )
         return;
 
+    if ( changedFlags & DocumentObserver::Annotations )
+    {
+        Q_FOREACH ( AnnotWindow* win, d->m_annowindows )
+        {
+            win->reloadInfo();
+        }
+    }
+
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )

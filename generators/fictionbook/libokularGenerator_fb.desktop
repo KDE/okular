@@ -52,6 +52,7 @@ Comment[pt_BR]=Backend FictionBook para Okular
 Comment[th]=แบ็คเอนต์เอกสาร FictionBook สำหรับ Okular
 Comment[tr]=Okular için FictionBook arka ucu
 Comment[uk]=Втулка FictionBook для Okular
+Comment[x-test]=xxFictionBook backend for Okularxx
 Comment[zh_CN]=Okular 的 FictionBook 格式后端
 Comment[zh_TW]=Okular FictionBook 後端
 X-KDE-ServiceTypes=okular/Generator

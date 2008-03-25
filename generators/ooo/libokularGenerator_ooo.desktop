@@ -53,6 +53,7 @@ Comment[pt_BR]=Backend OpenDocument para Okular
 Comment[th]=แบ็คเอนต์แฟ้มแบบ OpenDocument สำหรับ Okular
 Comment[tr]=Okular için OpenDocument arka ucu
 Comment[uk]=Втулка OpenDocument для Okular
+Comment[x-test]=xxOpenDocument backend for Okularxx
 Comment[zh_CN]=Okular 的开放文档格式后端
 Comment[zh_TW]=Okular 的 OpenDocument 後端
 X-KDE-ServiceTypes=okular/Generator

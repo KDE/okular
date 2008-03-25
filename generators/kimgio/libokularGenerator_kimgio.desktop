@@ -53,6 +53,7 @@ Comment[pt_BR]=Backend de Imagens para Okular
 Comment[th]=แบ็คเอนต์จัดการภาพสำหรับ Okular
 Comment[tr]=Okular için resim arka ucu
 Comment[uk]=Втулка зображень для Okular
+Comment[x-test]=xxImage backend for Okularxx
 Comment[zh_CN]=Okular 的图像格式后端
 Comment[zh_TW]=Okular 影像後端
 X-KDE-ServiceTypes=okular/Generator

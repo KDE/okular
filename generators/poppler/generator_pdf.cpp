@@ -41,9 +41,7 @@
 
 #include <config-okular-poppler.h>
 
-#ifdef HAVE_POPPLER_0_6
 #include "formfields.h"
-#endif
 
 static const int PDFDebug = 4710;
 
@@ -71,12 +69,8 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
         
         int size() const
         {
-#ifndef HAVE_POPPLER_0_6
-            return -1;
-#else
             int s = ef->size();
             return s <= 0 ? -1 : s;
-#endif
         }
         
         QDateTime modificationDate() const
@@ -124,9 +118,6 @@ class PDFOptionsPage : public QWidget
 
 static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
 {
-#ifdef HAVE_POPPLER_0_6
-    Q_UNUSED( pdfdoc )
-#endif
     viewport.pageNumber = destination.pageNumber() - 1;
 
     if (!viewport.isValid()) return;
@@ -143,16 +134,8 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
                 left = destination.left();
                 top = destination.top();
 
-#ifndef HAVE_POPPLER_0_6
-                Poppler::Page *page = pdfdoc->page( viewport.pageNumber );
-                QSize pageSize = page->pageSize();
-                delete page;
-                viewport.rePos.normalizedX = (double)left / (double)pageSize.width();
-                viewport.rePos.normalizedY = (double)top / (double)pageSize.height();
-#else
                 viewport.rePos.normalizedX = left;
                 viewport.rePos.normalizedY = top;
-#endif
                 viewport.rePos.enabled = true;
                 viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
             }
@@ -174,9 +157,7 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 	const Poppler::LinkExecute *popplerLinkExecute;
 	const Poppler::LinkBrowse *popplerLinkBrowse;
 	const Poppler::LinkAction *popplerLinkAction;
-#ifdef HAVE_POPPLER_0_6
 	const Poppler::LinkSound *popplerLinkSound;
-#endif
 	Okular::DocumentViewport viewport;
 	
 	switch(popplerLink->linkType())
@@ -205,7 +186,6 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 			link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
 		break;
 		
-#ifdef HAVE_POPPLER_0_6
 		case Poppler::Link::Sound:
 		{
 			popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
@@ -232,7 +212,6 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
 		}
 		break;
-#endif
 		
 		case Poppler::Link::Movie:
 			// not implemented
@@ -244,25 +223,14 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks, int width, int height, const Poppler::Document *pdfdoc )
 {
-#ifdef HAVE_POPPLER_0_6
-	Q_UNUSED( width )
-	Q_UNUSED( height )
-#endif
 	QLinkedList<Okular::ObjectRect*> links;
 	foreach(const Poppler::Link *popplerLink, popplerLinks)
 	{
 		QRectF linkArea = popplerLink->linkArea();
-#ifdef HAVE_POPPLER_0_6
 		double nl = linkArea.left(),
 		       nt = linkArea.top(),
 		       nr = linkArea.right(),
 		       nb = linkArea.bottom();
-#else
-		double nl = linkArea.left() / (double)width,
-		       nt = linkArea.top() / (double)height,
-		       nr = linkArea.right() / (double)width,
-		       nb = linkArea.bottom() / (double)height;
-#endif
 		// create the rect using normalized coords and attach the Okular::Link to it
 		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink, pdfdoc) );
 		// add the ObjectRect to the container
@@ -312,10 +280,8 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     setFeature( TextExtraction );
     setFeature( FontInfo );
     setFeature( PrintPostscript );
-#ifdef HAVE_POPPLER_0_6
     setFeature( ReadRawData );
     pdfOptionsPage = new PDFOptionsPage();
-#endif
     // update the configuration
     reparseConfig();
     // generate the pixmapGeneratorThread
@@ -357,7 +323,6 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
 
 bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-#ifdef HAVE_POPPLER_0_6
 #ifndef NDEBUG
     if ( pdfdoc )
     {
@@ -368,11 +333,6 @@ bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Ok
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
     return init(pagesVector, QString());
-#else
-    Q_UNUSED(fileData)
-    Q_UNUSED(pagesVector)
-    return false;
-#endif
 }
 
 bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &walletKey)
@@ -503,7 +463,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         addTransition( p, page );
         if ( true ) //TODO real check
           addAnnotations( p, page );
-#ifdef HAVE_POPPLER_0_6
         Poppler::Link * tmplink = p->action( Poppler::Page::Opening );
         if ( tmplink )
         {
@@ -520,7 +479,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         page->setLabel( p->label() );
 
         addFormFields( p, page );
-#endif
 //        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
@@ -639,7 +597,6 @@ static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType
         case Poppler::FontInfo::CIDTrueType:
             return Okular::FontInfo::CIDTrueType;
             break;
-#ifdef HAVE_POPPLER_0_6
         case Poppler::FontInfo::Type1COT:
             return Okular::FontInfo::Type1COT;
             break;
@@ -652,7 +609,6 @@ static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType
         case Poppler::FontInfo::CIDTrueTypeOT:
             return Okular::FontInfo::CIDTrueTypeOT;
             break;
-#endif
         case Poppler::FontInfo::unknown:
         default: ;
      }
@@ -801,11 +757,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-#ifdef HAVE_POPPLER_0_6
     page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) ) ) );
-#else
-    page->setPixmap( request->id(), p->splashRenderToPixmap(fakeDpiX, fakeDpiY, -1, -1, request->width(), request->height(), genObjectRects, Poppler::Page::Rotate0 ) );
-#endif
     
     if ( genObjectRects )
     {
@@ -886,8 +838,6 @@ bool PDFGenerator::print( QPrinter& printer )
 
     // TODO rotation
 
-#ifdef HAVE_POPPLER_0_6
-
 #if HAVE_POPPLER_0_7
     tf.setAutoRemove(false);
 #else
@@ -938,28 +888,6 @@ bool PDFGenerator::print( QPrinter& printer )
         userMutex()->unlock();
         return false;
     }
-
-#else // Not HAVE_POPPLER_0_6
-
-    userMutex()->lock();
-
-    if ( pdfdoc->print( tempfilename, pageList, 72, 72, 0, width, height ) )
-    {
-        userMutex()->unlock();
-        tf.setAutoRemove( false );
-        int ret = Okular::FilePrinter::printFile( printer, tempfilename,
-                                                  Okular::FilePrinter::SystemDeletesFiles,
-                                                  Okular::FilePrinter::ApplicationSelectsPages,
-                                                  document()->bookmarkedPageRange() );
-        if ( ret >= 0 ) return true;
-    }
-    else
-    {
-        userMutex()->unlock();
-        return false;
-    }
-
-#endif // HAVE_POPPLER_0_6
 
     tf.close();
 
@@ -1035,7 +963,6 @@ void PDFGenerator::addPages( KConfigDialog * )
 bool PDFGenerator::setAAOptions()
 {
     bool changed = false;
-#ifdef HAVE_POPPLER_0_6
     static Poppler::Document::RenderHints oldhints = 0;
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
@@ -1053,7 +980,6 @@ bool PDFGenerator::setAAOptions()
     SET_HINT("GraphicsAntialias", true, Poppler::Document::Antialiasing)
     SET_HINT("TextAntialias", true, Poppler::Document::TextAntialiasing)
 #undef SET_HINT
-#endif
     return changed;
 }
 
@@ -1425,7 +1351,6 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
 
 void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * page )
 {
-#ifdef HAVE_POPPLER_0_6
     QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
     QLinkedList<Okular::FormField*> okularFormFields;
     foreach( Poppler::FormField *f, popplerFormFields )
@@ -1455,10 +1380,6 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
     }
     if ( !okularFormFields.isEmpty() )
         page->setFormFields( okularFormFields );
-#else
-    Q_UNUSED( popplerPage )
-    Q_UNUSED( page )
-#endif
 }
 
 struct pdfsyncpoint
@@ -1846,11 +1767,7 @@ void PDFPixmapGeneratorThread::run()
     if ( !d->m_textList.isEmpty() )
         kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
 #endif
-#ifdef HAVE_POPPLER_0_6
     d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
-#else
-    d->m_image = new QImage( pp->splashRenderToImage( fakeDpiX, fakeDpiY, -1, -1, width, height, genObjectRects, Poppler::Page::Rotate0 ) );
-#endif
     
     if ( genObjectRects )
     {

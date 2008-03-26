@@ -33,15 +33,8 @@ include_directories(
 
 set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
+   formfields.cpp
 )
-
-if (HAVE_POPPLER_0_6)
-   set(okularGenerator_poppler_PART_SRCS
-      ${okularGenerator_poppler_PART_SRCS}
-      formfields.cpp
-   )
-endif (HAVE_POPPLER_0_6)
-
 
 kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 

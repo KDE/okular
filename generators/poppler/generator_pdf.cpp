@@ -116,7 +116,7 @@ class PDFOptionsPage : public QWidget
 };
 
 
-static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination, const Poppler::Document *pdfdoc )
+static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport, const Poppler::LinkDestination &destination )
 {
     viewport.pageNumber = destination.pageNumber() - 1;
 
@@ -150,7 +150,7 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
 //     }
 }
 
-static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, const Poppler::Document *pdfdoc)
+static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
 	Okular::Action *link = 0;
 	const Poppler::LinkGoto *popplerLinkGoto;
@@ -167,7 +167,7 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 	
 		case Poppler::Link::Goto:
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
-			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination(), pdfdoc );
+			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination() );
 			link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
 		break;
 		
@@ -221,7 +221,7 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 	return link;
 }
 
-static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks, int width, int height, const Poppler::Document *pdfdoc )
+static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks )
 {
 	QLinkedList<Okular::ObjectRect*> links;
 	foreach(const Poppler::Link *popplerLink, popplerLinks)
@@ -232,7 +232,7 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 		       nr = linkArea.right(),
 		       nb = linkArea.bottom();
 		// create the rect using normalized coords and attach the Okular::Link to it
-		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink, pdfdoc) );
+		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink) );
 		// add the ObjectRect to the container
 		links.push_front( rect );
 	}
@@ -466,13 +466,13 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         Poppler::Link * tmplink = p->action( Poppler::Page::Opening );
         if ( tmplink )
         {
-            page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink, pdfdoc ) );
+            page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink ) );
             delete tmplink;
         }
         tmplink = p->action( Poppler::Page::Closing );
         if ( tmplink )
         {
-            page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink, pdfdoc ) );
+            page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink ) );
             delete tmplink;
         }
         page->setDuration( p->duration() );
@@ -764,7 +764,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     	// TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
-        page->setObjectRects( generateLinks(p->links(), request->width(), request->height(), pdfdoc) );
+        page->setObjectRects( generateLinks(p->links()) );
         rectsGenerated[ request->page()->number() ] = true;
     }
 
@@ -912,7 +912,7 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         userMutex()->unlock();
         if ( ld )
         {
-            fillViewportFromLinkDestination( viewport, *ld, pdfdoc );
+            fillViewportFromLinkDestination( viewport, *ld );
         }
         delete ld;
         if ( viewport.pageNumber >= 0 )
@@ -1205,7 +1205,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
         if (!e.attribute("Destination").isNull())
         {
             Okular::DocumentViewport vp;
-            fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute("Destination")), pdfdoc );
+            fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute("Destination")) );
             item.setAttribute( "Viewport", vp.toString() );
         }
         if (!e.attribute("Open").isNull()) item.setAttribute("Open", e.attribute("Open"));
@@ -1771,7 +1771,7 @@ void PDFPixmapGeneratorThread::run()
     
     if ( genObjectRects )
     {
-    	d->m_rects = generateLinks(pp->links(), width, height, d->generator->pdfdoc);
+    	d->m_rects = generateLinks(pp->links());
     }
     else d->m_rectsTaken = false;
 

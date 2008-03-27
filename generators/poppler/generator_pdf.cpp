@@ -294,7 +294,7 @@ static KAboutData createAboutData()
          "okular_poppler",
          "okular_poppler",
          KLocalizedString(),
-         "0.1",
+         "0.1.1",
          KLocalizedString(),
          KAboutData::License_GPL,
          KLocalizedString()

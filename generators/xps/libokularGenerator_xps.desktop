@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Okular XPS Plugin
+Name[da]=XPS-plugin til Okular
 Name[el]=Πρόσθετο XPS του Okular
 Name[es]=Complemento XPS de Okular
 Name[fi]=XPS-liitännäinen ohjelmaa Okular varten
@@ -18,6 +19,7 @@ Name[x-test]=xxOkular XPS Pluginxx
 Name[zh_CN]=Okular XPS 插件
 Name[zh_TW]=Okular XPS 外掛程式
 Comment=XPS backend for Okular
+Comment[da]=XPS-motor til Okular
 Comment[el]=Σύστημα υποστήριξης XPS για το Okular
 Comment[es]=Motor XPS para Okular
 Comment[fi]=XPS-taustaosa ohjelmaa Okular varten

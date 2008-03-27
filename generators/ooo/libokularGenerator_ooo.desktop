@@ -40,6 +40,7 @@ Name[x-test]=xxOpenDocument formatxx
 Name[zh_CN]=开放文档格式
 Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for Okular
+Comment[da]=OpenDocument-motor til Okular
 Comment[el]=Σύστημα υποστήριξης OpenDocument για το Okular
 Comment[es]=Motor OpenDocument para Okular
 Comment[fi]=OpenDocument-taustaosa ohjelmaa Okular varten

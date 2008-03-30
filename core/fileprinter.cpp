@@ -32,7 +32,7 @@
 
 using namespace Okular;
 
-int FilePrinter::printFile( QPrinter &printer, QString file, FileDeletePolicy fileDeletePolicy,
+int FilePrinter::printFile( QPrinter &printer, const QString file, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
     FilePrinter fp;

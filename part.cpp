@@ -760,6 +760,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_saveAs->setEnabled( ok );
+    emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
@@ -833,7 +834,6 @@ bool Part::openUrl(const KUrl &url)
         setWindowTitleFromDocument();
     }
 
-    emit enablePrintAction(openOk && m_document->printingSupport() != Okular::Document::NoPrinting);
     return openOk;
 }
 

@@ -42,9 +42,18 @@ class BookmarkItem : public QTreeWidgetItem
             m_viewport = Okular::DocumentViewport( m_url.htmlRef() );
             m_url.setHTMLRef( QString() );
             setText( 0, m_bookmark.fullText() );
-            setToolTip( 0, m_bookmark.fullText() );
             if ( m_viewport.isValid() )
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
+        }
+
+        virtual QVariant data( int column, int role ) const
+        {
+            switch ( role )
+            {
+                case Qt::ToolTipRole:
+                    return m_bookmark.fullText();
+            }
+            return QTreeWidgetItem::data( column, role );
         }
 
         KBookmark& bookmark()

@@ -226,6 +226,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
     KUrl newurl = referurl;
     newurl.setHTMLRef( vp.toString() );
     it.value().addBookmark( newtitle, newurl, QString() );
+    d->urlBookmarks.insert( vp.pageNumber );
     foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
     return true;
 }
@@ -253,6 +254,7 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
         return -1;
 
     it.value().deleteBookmark( bm );
+    d->urlBookmarks.remove( vp.pageNumber );
 
     foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
 

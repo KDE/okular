@@ -16,7 +16,6 @@
 #ifndef _PART_H_
 #define _PART_H_
 
-#include <kparts/browserextension.h>
 #include <kparts/part.h>
 #include <qicon.h>
 #include <qlist.h>

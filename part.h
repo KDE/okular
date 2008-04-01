@@ -253,42 +253,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotGeneratorPreferences();
 };
 
-class BrowserExtension : public KParts::BrowserExtension
-{
-    Q_OBJECT
-
-    public:
-        BrowserExtension(Part*);
-
-    public slots:
-        // Automatically detected by the host.
-        void print();
-
-    private:
-        Part *m_part;
-};
-
-class OkularLiveConnectExtension : public KParts::LiveConnectExtension
-{
-    Q_OBJECT
-
-    public:
-        OkularLiveConnectExtension( Part *parent );
-
-        // from LiveConnectExtension
-        virtual bool get( const unsigned long objid, const QString &field, Type &type,
-                          unsigned long &retobjid, QString &value );
-        virtual bool put( const unsigned long objid, const QString &field, const QString &value );
-        virtual bool call( const unsigned long objid, const QString &func, const QStringList &args,
-                           Type &type, unsigned long &retobjid, QString &value );
-
-    private:
-        QString eval( const QString &script );
-        void postMessage( const QStringList &args );
-
-        bool m_inEval;
-        QString m_evalRes;
-};
 #endif
 
 /* kate: replace-tabs on; indent-width 4; */

@@ -1,7 +1,6 @@
 [Desktop Entry]
 Icon=graphics-viewer-document
 Name=Okular
-Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service

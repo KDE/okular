@@ -1,7 +1,7 @@
 This is a libepub based backend to watch epub books using okular
 The epub library can be obtained using:
 
-svn co https://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools ebook-tools
+svn co https://ebook-tools.svn.sourceforge.net/svnroot/ebook-tools/trunk ebook-tools
 
 The library uses standard cmake (ccmake .;make install)
 

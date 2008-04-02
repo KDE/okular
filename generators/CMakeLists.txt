@@ -24,6 +24,9 @@ macro_log_feature(FREETYPE_FOUND "FreeType" "A font rendering engine" "http://ww
 #macro_optional_find_package(JPEG)
 #macro_log_feature(JPEG_FOUND "JPEG" "A library for reading and writing JPEG image files." "http://www.ijg.org" FALSE "" "Support fof PalmDB documents in okular.")
 
+macro_optional_find_package(EPub)
+macro_log_feature(EPUB_FOUND "libepub" "A library for reading EPub documents" "http://sourceforge.net/projects/ebook-tools" FALSE "" "Support for EPub documents in Okular.")
+
 # let's enable the generators properly configured
 
 if(POPPLER_FOUND AND HAVE_POPPLER_0_6)
@@ -61,3 +64,7 @@ add_subdirectory(comicbook)
 if(JPEG_FOUND)
   add_subdirectory(plucker)
 endif(JPEG_FOUND)
+
+if(EPUB_FOUND)
+  add_subdirectory(epub)
+endif(EPUB_FOUND)

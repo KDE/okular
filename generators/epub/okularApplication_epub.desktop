@@ -1,0 +1,13 @@
+[Desktop Entry]
+MimeType=application/epub+zip;
+Terminal=false
+Name=Okular
+GenericName=Document Viewer
+GenericName[et]=Dokumentide näitaja
+GenericName[sv]=Dokumentvisning
+Exec=okular %U %i -caption "%c"
+Icon=graphics-viewer-document
+Type=Application
+InitialPreference=1
+Categories=Qt;KDE;Graphics;Viewer;
+NoDisplay=true

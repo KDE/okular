@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Service
+Name=EPub document
+Name[et]=EPubi dokument
+Name[sv]=Epub-dokument
+Comment=Epub backend for Okular
+Comment[et]=Okulari Epubi taustaprogramm
+Comment[sv]=Epub-gränssnitt för Okular
+X-KDE-ServiceTypes=okular/Generator
+MimeType=application/epub+zip;
+X-KDE-Library=okularGenerator_epub
+X-KDE-Priority=1
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

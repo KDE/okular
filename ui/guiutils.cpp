@@ -10,6 +10,7 @@
 #include "guiutils.h"
 
 // qt/kde includes
+#include <qtextdocument.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -100,7 +101,9 @@ QString contents( const Okular::Annotation * ann )
 
 QString contentsHtml( const Okular::Annotation * ann )
 {
-    return contents( ann ).replace( "\n", "<br>" );
+    QString text = Qt::escape( contents( ann ) );
+    text.replace( "\n", "<br>" );
+    return text;
 }
 
 QString prettyToolTip( const Okular::Annotation * ann )

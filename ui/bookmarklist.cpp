@@ -148,6 +148,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
     }
     else
     {
+        disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
         if ( m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()  )
         {
             m_currentDocumentItem->setIcon( 0, QIcon() );
@@ -158,6 +159,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
             m_currentDocumentItem->setIcon( 0, KIcon( "bookmarks" ) );
             m_currentDocumentItem->setExpanded( true );
         }
+        connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
     }
 }
 
@@ -316,6 +318,8 @@ void BookmarkList::goTo( BookmarkItem * item )
 
 void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
 {
+    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+
     const KBookmark::List urlbookmarks = m_document->bookmarkManager()->bookmarks( url );
     if ( urlbookmarks.isEmpty() )
     {
@@ -355,6 +359,8 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
             item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, item->childCount() ) );
         }
     }
+
+    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 }
 
 QTreeWidgetItem* BookmarkList::itemForUrl( const KUrl& url ) const

@@ -18,6 +18,7 @@ class QAction;
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
+class KUrl;
 class BookmarkItem;
 
 namespace Okular {
@@ -35,22 +36,24 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         // inherited from DocumentObserver
         uint observerId() const;
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyPageChanged( int pageNumber, int changedFlags );
 
     private slots:
         void slotFilterBookmarks( bool );
         void slotExecuted( QTreeWidgetItem * item );
         void slotChanged( QTreeWidgetItem * item );
         void slotContextMenu( const QPoint& p );
+        void slotBookmarksChanged( const KUrl& url );
 
     private:
         void rebuildTree( bool filter );
         void goTo( BookmarkItem * item );
+        void selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item );
 
         Okular::Document * m_document;
         QTreeWidget * m_tree;
         KTreeWidgetSearchLine * m_searchLine;
         QAction * m_showBoomarkOnlyAction;
+        QTreeWidgetItem * m_currentDocumentItem;
 };
 
 #endif

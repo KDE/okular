@@ -142,7 +142,23 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
     // clear contents
     m_searchLine->clear();
 
-    rebuildTree( m_showBoomarkOnlyAction->isChecked() );
+    if ( m_showBoomarkOnlyAction->isChecked() )
+    {
+        rebuildTree( m_showBoomarkOnlyAction->isChecked() );
+    }
+    else
+    {
+        if ( m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()  )
+        {
+            m_currentDocumentItem->setIcon( 0, QIcon() );
+        }
+        m_currentDocumentItem = itemForUrl( m_document->currentDocument() );
+        if ( m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()  )
+        {
+            m_currentDocumentItem->setIcon( 0, KIcon( "bookmarks" ) );
+            m_currentDocumentItem->setExpanded( true );
+        }
+    }
 }
 
 void BookmarkList::slotFilterBookmarks( bool on )

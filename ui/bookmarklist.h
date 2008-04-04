@@ -48,6 +48,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         void rebuildTree( bool filter );
         void goTo( BookmarkItem * item );
         void selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item );
+        QTreeWidgetItem* itemForUrl( const KUrl& url ) const;
 
         Okular::Document * m_document;
         QTreeWidget * m_tree;

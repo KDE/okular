@@ -206,16 +206,10 @@ void BookmarkList::slotBookmarksChanged( const KUrl& url )
     if ( m_showBoomarkOnlyAction->isChecked() )
         return;
 
-    const int count = m_tree->topLevelItemCount();
-    for ( int i = 0; i < count; ++i )
+    QTreeWidgetItem *item = itemForUrl( url );
+    if ( item )
     {
-        QTreeWidgetItem *item = m_tree->topLevelItem( i );
-        const KUrl itemurl = item->data( 0, UrlRole ).value< KUrl >();
-        if ( itemurl.isValid() && itemurl == url )
-        {
-            selectiveUrlUpdate( url, item );
-            break;
-        }
+        selectiveUrlUpdate( url, item );
     }
 }
 
@@ -345,6 +339,21 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
             item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, item->childCount() ) );
         }
     }
+}
+
+QTreeWidgetItem* BookmarkList::itemForUrl( const KUrl& url ) const
+{
+    const int count = m_tree->topLevelItemCount();
+    for ( int i = 0; i < count; ++i )
+    {
+        QTreeWidgetItem *item = m_tree->topLevelItem( i );
+        const KUrl itemurl = item->data( 0, UrlRole ).value< KUrl >();
+        if ( itemurl.isValid() && itemurl == url )
+        {
+            return item;
+        }
+    }
+    return 0;
 }
 
 #include "bookmarklist.moc"

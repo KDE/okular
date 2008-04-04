@@ -226,8 +226,12 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
     KUrl newurl = referurl;
     newurl.setHTMLRef( vp.toString() );
     it.value().addBookmark( newtitle, newurl, QString() );
-    d->urlBookmarks.insert( vp.pageNumber );
-    foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+    if ( referurl == d->document->m_url )
+    {
+        d->urlBookmarks.insert( vp.pageNumber );
+        foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+    }
+    emit bookmarksChanged( referurl );
     return true;
 }
 
@@ -254,9 +258,12 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
         return -1;
 
     it.value().deleteBookmark( bm );
-    d->urlBookmarks.remove( vp.pageNumber );
-
-    foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+    if ( referurl == d->document->m_url )
+    {
+        d->urlBookmarks.remove( vp.pageNumber );
+        foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
+    }
+    emit bookmarksChanged( referurl );
 
     return vp.pageNumber;
 }
@@ -330,6 +337,7 @@ bool BookmarkManager::setPageBookmark( int page )
         newurl.setHTMLRef( vp.toString() );
         it.value().addBookmark( QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
         added = true;
+        emit bookmarksChanged( d->url );
     }
     return added;
 }
@@ -352,6 +360,7 @@ bool BookmarkManager::removePageBookmark( int page )
             found = true;
             it.value().deleteBookmark( bm );
             d->urlBookmarks.remove( page );
+            emit bookmarksChanged( d->url );
         }
     }
     return found;

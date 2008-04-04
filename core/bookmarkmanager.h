@@ -97,6 +97,13 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          */
         void saved();
 
+        /**
+         * The bookmarks for specified @p url were changed.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void bookmarksChanged( const KUrl& url );
+
     private:
         class Private;
         Private * const d;

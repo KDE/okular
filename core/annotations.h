@@ -35,6 +35,7 @@ class GeomAnnotationPrivate;
 class HighlightAnnotationPrivate;
 class StampAnnotationPrivate;
 class InkAnnotationPrivate;
+class CaretAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -101,6 +102,7 @@ class OKULAR_EXPORT Annotation
             AHighlight = 4, ///< A highlight annotation
             AStamp = 5,     ///< A stamp annotation
             AInk = 6,       ///< An ink annotation
+            ACaret = 8,     ///< A caret annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -1189,6 +1191,50 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( InkAnnotation )
         Q_DISABLE_COPY( InkAnnotation )
+};
+
+class OKULAR_EXPORT CaretAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new caret annotation.
+         */
+        CaretAnnotation();
+
+        /**
+         * Creates a new caret annotation from the xml @p description
+         */
+        explicit CaretAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the caret annotation.
+         */
+        ~CaretAnnotation();
+
+        /**
+         * Sets the @p symbol for the caret annotation.
+         */
+        void setCaretSymbol( const QString &symbol );
+
+        /**
+         * Returns the symbol of the annotation.
+         */
+        QString caretSymbol() const;
+
+        /**
+         * Returns the sub type of the caret annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the caret annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( CaretAnnotation )
+        Q_DISABLE_COPY( CaretAnnotation )
 };
 
 }

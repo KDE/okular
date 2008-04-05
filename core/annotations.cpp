@@ -49,6 +49,9 @@ Annotation * AnnotationUtils::createAnnotation( const QDomElement & annElement )
         case Annotation::AInk:
             annotation = new InkAnnotation( annElement );
             break;
+        case Annotation::ACaret:
+            annotation = new CaretAnnotation( annElement );
+            break;
     }
 
     // return created annotation
@@ -2026,4 +2029,80 @@ void InkAnnotationPrivate::translate( const NormalizedPoint &coord )
             p.y = p.y + coord.y;
         }
     }
+}
+
+/** CaretAnnotation [Annotation] */
+
+class Okular::CaretAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        CaretAnnotationPrivate()
+            : AnnotationPrivate(), m_symbol( "None" )
+        {
+        }
+
+        QString m_symbol;
+};
+
+CaretAnnotation::CaretAnnotation()
+    : Annotation( *new CaretAnnotationPrivate() )
+{
+}
+
+CaretAnnotation::CaretAnnotation( const QDomNode & node )
+    : Annotation( *new CaretAnnotationPrivate(), node )
+{
+    Q_D( CaretAnnotation );
+    // loop through the whole children looking for a 'caret' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "caret" )
+            continue;
+
+        // parse the attributes
+        if ( e.hasAttribute( "symbol" ) )
+            d->m_symbol = e.attribute( "symbol" );
+
+        // loading complete
+        break;
+    }
+}
+
+CaretAnnotation::~CaretAnnotation()
+{
+}
+
+void CaretAnnotation::setCaretSymbol( const QString &symbol )
+{
+    Q_D( CaretAnnotation );
+    d->m_symbol = symbol;
+}
+
+QString CaretAnnotation::caretSymbol() const
+{
+    Q_D( const CaretAnnotation );
+    return d->m_symbol;
+}
+
+Annotation::SubType CaretAnnotation::subType() const
+{
+    return ACaret;
+}
+
+void CaretAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    Q_D( const CaretAnnotation );
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [caret] element
+    QDomElement caretElement = document.createElement( "caret" );
+    node.appendChild( caretElement );
+
+    // append the optional attributes
+    if ( d->m_symbol != "None" )
+        caretElement.setAttribute( "symbol", d->m_symbol );
 }

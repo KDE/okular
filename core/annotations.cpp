@@ -2037,12 +2037,33 @@ class Okular::CaretAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         CaretAnnotationPrivate()
-            : AnnotationPrivate(), m_symbol( "None" )
+            : AnnotationPrivate(), m_symbol( CaretAnnotation::None )
         {
         }
 
-        QString m_symbol;
+        CaretAnnotation::CaretSymbol m_symbol;
 };
+
+static QString caretSymbolToString( CaretAnnotation::CaretSymbol symbol )
+{
+    switch ( symbol )
+    {
+        case CaretAnnotation::None:
+            return QString::fromLatin1( "None" );
+        case CaretAnnotation::P:
+            return QString::fromLatin1( "P" );
+    }
+    return QString();
+}
+
+static CaretAnnotation::CaretSymbol caretSymbolFromString( const QString &symbol )
+{
+    if ( symbol == QLatin1String( "None" ) )
+        return CaretAnnotation::None;
+    else if ( symbol == QLatin1String( "P" ) )
+        return CaretAnnotation::P;
+    return CaretAnnotation::None;
+}
 
 CaretAnnotation::CaretAnnotation()
     : Annotation( *new CaretAnnotationPrivate() )
@@ -2064,7 +2085,7 @@ CaretAnnotation::CaretAnnotation( const QDomNode & node )
 
         // parse the attributes
         if ( e.hasAttribute( "symbol" ) )
-            d->m_symbol = e.attribute( "symbol" );
+            d->m_symbol = caretSymbolFromString( e.attribute( "symbol" ) );
 
         // loading complete
         break;
@@ -2075,13 +2096,13 @@ CaretAnnotation::~CaretAnnotation()
 {
 }
 
-void CaretAnnotation::setCaretSymbol( const QString &symbol )
+void CaretAnnotation::setCaretSymbol( CaretAnnotation::CaretSymbol symbol )
 {
     Q_D( CaretAnnotation );
     d->m_symbol = symbol;
 }
 
-QString CaretAnnotation::caretSymbol() const
+CaretAnnotation::CaretSymbol CaretAnnotation::caretSymbol() const
 {
     Q_D( const CaretAnnotation );
     return d->m_symbol;
@@ -2103,6 +2124,6 @@ void CaretAnnotation::store( QDomNode & node, QDomDocument & document ) const
     node.appendChild( caretElement );
 
     // append the optional attributes
-    if ( d->m_symbol != "None" )
-        caretElement.setAttribute( "symbol", d->m_symbol );
+    if ( d->m_symbol != None )
+        caretElement.setAttribute( "symbol", caretSymbolToString( d->m_symbol ) );
 }

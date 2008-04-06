@@ -1197,6 +1197,15 @@ class OKULAR_EXPORT CaretAnnotation : public Annotation
 {
     public:
         /**
+         * Describes the highlighting style of the annotation.
+         */
+        enum CaretSymbol
+        {
+            None,       ///< No symbol to be associated with the text
+            P           ///< A 'paragraph' symbol
+        };
+
+        /**
          * Creates a new caret annotation.
          */
         CaretAnnotation();
@@ -1214,12 +1223,12 @@ class OKULAR_EXPORT CaretAnnotation : public Annotation
         /**
          * Sets the @p symbol for the caret annotation.
          */
-        void setCaretSymbol( const QString &symbol );
+        void setCaretSymbol( CaretAnnotation::CaretSymbol symbol );
 
         /**
          * Returns the symbol of the annotation.
          */
-        QString caretSymbol() const;
+        CaretAnnotation::CaretSymbol caretSymbol() const;
 
         /**
          * Returns the sub type of the caret annotation.

@@ -228,7 +228,7 @@ class PickPointEngine : public AnnotatorEngine
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
                 else
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
-                ga->setGeometricalPointWidth( 18 );
+                ga->style().setWidth( 5 );
                 //set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );

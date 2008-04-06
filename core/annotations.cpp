@@ -1418,14 +1418,12 @@ class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         GeomAnnotationPrivate()
-            : AnnotationPrivate(), m_geomType( GeomAnnotation::InscribedSquare ),
-              m_geomWidthPt( 18 )
+            : AnnotationPrivate(), m_geomType( GeomAnnotation::InscribedSquare )
         {
         }
 
         GeomAnnotation::GeomType m_geomType;
         QColor m_geomInnerColor;
-        int m_geomWidthPt;
 };
 
 GeomAnnotation::GeomAnnotation()
@@ -1451,8 +1449,9 @@ GeomAnnotation::GeomAnnotation( const QDomNode & node )
             d->m_geomType = (GeomAnnotation::GeomType)e.attribute( "type" ).toInt();
         if ( e.hasAttribute( "color" ) )
             d->m_geomInnerColor = QColor( e.attribute( "color" ) );
+        // compatibility
         if ( e.hasAttribute( "width" ) )
-            d->m_geomWidthPt = e.attribute( "width" ).toInt();
+            d->m_style.setWidth( e.attribute( "width" ).toInt() );
 
         // loading complete
         break;
@@ -1490,13 +1489,13 @@ QColor GeomAnnotation::geometricalInnerColor() const
 void GeomAnnotation::setGeometricalPointWidth( int width )
 {
     Q_D( GeomAnnotation );
-    d->m_geomWidthPt = width;
+    d->m_style.setWidth( width );
 }
 
 int GeomAnnotation::geometricalPointWidth() const
 {
     Q_D( const GeomAnnotation );
-    return d->m_geomWidthPt;
+    return static_cast< int >( d->m_style.width() );
 }
 
 Annotation::SubType GeomAnnotation::subType() const
@@ -1519,8 +1518,6 @@ void GeomAnnotation::store( QDomNode & node, QDomDocument & document ) const
         geomElement.setAttribute( "type", (int)d->m_geomType );
     if ( d->m_geomInnerColor.isValid() )
         geomElement.setAttribute( "color", d->m_geomInnerColor.name() );
-    if ( d->m_geomWidthPt != 18 )
-        geomElement.setAttribute( "width", d->m_geomWidthPt );
 }
 
 /** HighlightAnnotation [Annotation] */

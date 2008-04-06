@@ -417,6 +417,11 @@ QWidget * GeomAnnotationWidget::widget()
     lay->addWidget( m_useColor, 1, 0 );
     m_innerColor = new KColorButton( m_widget );
     lay->addWidget( m_innerColor, 1, 1 );
+    tmplabel = new QLabel( i18n( "&Size:" ), m_widget );
+    lay->addWidget( tmplabel, 2, 0 );
+    m_spinSize = new QDoubleSpinBox( m_widget );
+    lay->addWidget( m_spinSize, 2, 1 );
+    tmplabel->setBuddy( m_spinSize );
 
     m_typeCombo->addItem( i18n( "Rectangle" ) );
     m_typeCombo->addItem( i18n( "Ellipse" ) );
@@ -430,11 +435,14 @@ QWidget * GeomAnnotationWidget::widget()
     {
         m_innerColor->setEnabled( false );
     }
+    m_spinSize->setRange( 1, 100 );
+    m_spinSize->setValue( m_geomAnn->style().width() );
 
     connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
     connect( m_innerColor, SIGNAL( changed( const QColor & ) ), this, SIGNAL( dataChanged() ) );
     connect( m_useColor, SIGNAL( toggled( bool ) ), this, SIGNAL( dataChanged() ) );
     connect( m_useColor, SIGNAL( toggled( bool ) ), m_innerColor, SLOT( setEnabled( bool ) ) );
+    connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
 
     return m_widget;
 }
@@ -450,6 +458,7 @@ void GeomAnnotationWidget::applyChanges()
     {
         m_geomAnn->setGeometricalInnerColor( m_innerColor->color() );
     }
+    m_geomAnn->style().setWidth( m_spinSize->value() );
 }
 
 

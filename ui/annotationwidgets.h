@@ -182,6 +182,7 @@ private:
     QComboBox * m_typeCombo;
     QCheckBox * m_useColor;
     KColorButton * m_innerColor;
+    QDoubleSpinBox * m_spinSize;
 };
 
 #endif

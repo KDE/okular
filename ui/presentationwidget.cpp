@@ -900,8 +900,8 @@ void PresentationWidget::generateOverlay()
     m_lastRenderedOverlay = QPixmap::fromImage( image );
 
     // start the autohide timer
-    repaint( m_overlayGeometry ); // toggle with next line
-    //update( m_overlayGeometry );
+    //repaint( m_overlayGeometry ); // toggle with next line
+    update( m_overlayGeometry );
     m_overlayHideTimer->start( 2500 );
 #endif
 }

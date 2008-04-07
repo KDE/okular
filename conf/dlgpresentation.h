@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Pino Toscano <toscano.pino@tiscali.it>          *
+ *   Copyright (C) 2006,2008 by Pino Toscano <pino@kde.org>                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,10 +12,21 @@
 
 #include <qwidget.h>
 
+class Ui_DlgPresentationBase;
+
 class DlgPresentation : public QWidget
 {
+    Q_OBJECT
+
     public:
         DlgPresentation( QWidget * parent = 0 );
+        virtual ~DlgPresentation();
+
+    protected slots:
+        void screenComboChanged( int which );
+
+    protected:
+        Ui_DlgPresentationBase * m_dlg;
 };
 
 #endif

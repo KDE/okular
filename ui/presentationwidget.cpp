@@ -28,7 +28,6 @@
 #include <qtoolbar.h>
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kglobalsettings.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -104,9 +103,47 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setWindowTitle( KDialog::makeStandardCaption( caption ) );
 
     m_width = -1;
+    m_screen = -2;
 
-    // show widget and take control
-    showFullScreen();
+    // create top toolbar
+    m_topBar = new PresentationToolBar( this );
+    m_topBar->setObjectName( "presentationBar" );
+    m_topBar->setIconSize( QSize( 32, 32 ) );
+    m_topBar->setMovable( false );
+    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT( slotPrevPage() ) );
+    m_pagesEdit = new KLineEdit( m_topBar );
+    QSizePolicy sp = m_pagesEdit->sizePolicy();
+    sp.setHorizontalPolicy( QSizePolicy::Minimum );
+    m_pagesEdit->setSizePolicy( sp );
+    QFontMetrics fm( m_pagesEdit->font() );
+    QStyleOptionFrame option;
+    option.initFrom( m_pagesEdit );
+    m_pagesEdit->setMaximumWidth( fm.width( QString::number( m_document->pages() ) ) + 2 * style()->pixelMetric( QStyle::PM_DefaultFrameWidth, &option, m_pagesEdit ) + 4 ); // the 4 comes from 2*horizontalMargin, horizontalMargin being a define in qlineedit.cpp
+    QIntValidator *validator = new QIntValidator( 1, m_document->pages(), m_pagesEdit );
+    m_pagesEdit->setValidator( validator );
+    m_topBar->addWidget( m_pagesEdit );
+    QLabel *pagesLabel = new QLabel( m_topBar );
+    pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
+    m_topBar->addWidget( pagesLabel );
+    connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
+    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT( slotNextPage() ) );
+    m_topBar->addSeparator();
+    QAction * drawingAct = m_topBar->addAction( KIcon( "draw-freehand" ), i18n( "Toggle Drawing Mode" ) );
+    drawingAct->setCheckable( true );
+    connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
+    QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );
+    connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
+    QWidget *spacer = new QWidget( m_topBar );
+    spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
+    m_topBar->addWidget( spacer );
+    m_topBar->addAction( KIcon( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT( close() ) );
+    m_topBar->setAutoFillBackground( true );
+    m_topBar->hide();
+    // change topbar background color
+    QPalette p = m_topBar->palette();
+    p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
+    p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
+    m_topBar->setPalette( p );
 
     // misc stuff
     setMouseTracking( true );
@@ -409,7 +446,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         else
         {
             // show the bar if reaching top 2 pixels
-            if ( e->y() <= (geometry().top() + 1) )
+            if ( e->y() <= 1 )
                 m_topBar->show();
             // handle "dragging the wheel" if clicking on its geometry
             else if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && m_overlayGeometry.contains( e->pos() ) )
@@ -422,50 +459,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 {
     if (m_width == -1)
     {
-        QRect d = KGlobalSettings::desktopGeometry(this);
-        m_width = d.width();
-        m_height = d.height();
-
-        // create top toolbar
-        m_topBar = new PresentationToolBar( this );
-        m_topBar->setObjectName( "presentationBar" );
-        m_topBar->setIconSize( QSize( 32, 32 ) );
-        m_topBar->setMovable( false );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n("Previous Page"), this, SLOT( slotPrevPage() ) );
-        m_pagesEdit = new KLineEdit( m_topBar );
-        QSizePolicy sp = m_pagesEdit->sizePolicy();
-        sp.setHorizontalPolicy( QSizePolicy::Minimum );
-        m_pagesEdit->setSizePolicy( sp );
-        QFontMetrics fm( m_pagesEdit->font() );
-        QStyleOptionFrame option;
-        option.initFrom(m_pagesEdit);
-        m_pagesEdit->setMaximumWidth( fm.width( QString::number( m_document->pages() ) ) + 2 * style()->pixelMetric(QStyle::PM_DefaultFrameWidth, &option, m_pagesEdit) + 4 ); // the 4 comes from 2*horizontalMargin, horizontalMargin being a define in qlineedit.cpp
-        QIntValidator *validator = new QIntValidator( 1, m_document->pages(), m_pagesEdit );
-        m_pagesEdit->setValidator( validator );
-        m_topBar->addWidget( m_pagesEdit );
-        QLabel *pagesLabel = new QLabel( m_topBar );
-        pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
-        m_topBar->addWidget( pagesLabel );
-        connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
-        m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n("Next Page"), this, SLOT( slotNextPage() ) );
-        m_topBar->addSeparator();
-        QAction * drawingAct = m_topBar->addAction( KIcon( "draw-freehand" ), i18n( "Toggle Drawing Mode" ) );
-        drawingAct->setCheckable( true );
-        connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
-        QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );
-        connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
-        QWidget *spacer = new QWidget(m_topBar);
-        spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
-        m_topBar->addWidget( spacer );
-        m_topBar->addAction( KIcon("application-exit"), i18n("Exit Presentation Mode"), this, SLOT( close() ) );
-        m_topBar->setGeometry( 0, 0, m_width, 32 + 10 );
-        m_topBar->setAutoFillBackground( true );
-        m_topBar->hide();
-        // change topbar background color
-        QPalette p = m_topBar->palette();
-        p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
-        p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
-        m_topBar->setPalette( p );
+        m_width = width();
+        m_height = height();
 
         connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
 
@@ -478,7 +473,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     }
 
     // check painting rect consistancy
-    QRect r = pe->rect().intersect( geometry() );
+    QRect r = pe->rect().intersect( QRect( QPoint( 0, 0 ), geometry().size() ) );
     if ( r.isNull() || m_lastRenderedPixmap.isNull() )
         return;
 
@@ -550,7 +545,7 @@ const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geomet
         return 0;
 
     // check if 1) there is an object and 2) it's a link
-    QRect d = KGlobalSettings::desktopGeometry( const_cast< PresentationWidget * >( this ) );
+    const QRect d = QApplication::desktop()->screenGeometry( m_screen );
     const Okular::ObjectRect * object = page->objectRect( Okular::ObjectRect::Action, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
@@ -958,6 +953,32 @@ void PresentationWidget::startAutoChangeTimer()
     }
 }
 
+void PresentationWidget::recalcGeometry()
+{
+    QDesktopWidget *desktop = QApplication::desktop();
+    const int preferenceScreen = Okular::Settings::slidesScreen();
+    int screen = -1;
+    if ( preferenceScreen >= -1 && preferenceScreen < desktop->numScreens() )
+    {
+        screen = preferenceScreen;
+    }
+    else
+    {
+        screen = -1;
+        Okular::Settings::setSlidesScreen( -1 );
+    }
+    const QRect screenGeom = desktop->screenGeometry( screen );
+    // kDebug() << screen << "=>" << screenGeom;
+    m_screen = screen;
+    setGeometry( screenGeom );
+}
+
+void PresentationWidget::repositionContent()
+{
+    const QRect ourGeom = geometry();
+
+    m_topBar->setGeometry( 0, 0, ourGeom.width(), 32 + 10 );
+}
 
 
 void PresentationWidget::slotNextPage()
@@ -1050,6 +1071,15 @@ void PresentationWidget::slotTransitionStep()
 
 void PresentationWidget::slotDelayedEvents()
 {
+    recalcGeometry();
+    repositionContent();
+
+    // show widget and take control
+    show();
+    setWindowState( windowState() | Qt::WindowFullScreen );
+
+    connect( QApplication::desktop(), SIGNAL( resized( int ) ), this, SLOT( screenResized( int ) ) );
+
   // inform user on how to exit from presentation mode
   KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString(), "presentationInfo" );
 }
@@ -1095,6 +1125,21 @@ void PresentationWidget::clearDrawings()
 {
     m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     m_currentPageDrawings.clear();
+}
+
+void PresentationWidget::screenResized( int screen )
+{
+    // we can ignore if a screen was resized in the case the screen is not
+    // where we are on
+    if ( screen != m_screen 
+         || ( m_screen == -1 && screen == QApplication::desktop()->primaryScreen() ) )
+        return;
+
+    recalcGeometry();
+    repositionContent();
+
+    m_width = width();
+    m_height = height();
 }
 
 void PresentationWidget::slotFind()

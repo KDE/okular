@@ -6,13 +6,10 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>396</height>
+    <height>446</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="spacing" >
-    <number>6</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
    <property name="margin" >
     <number>0</number>
    </property>
@@ -73,21 +70,9 @@
      <property name="title" >
       <string>Appearance</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <property name="margin" >
-       <number>9</number>
-      </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
       <item>
-       <layout class="QGridLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
+       <layout class="QGridLayout" name="gridLayout_3" >
         <item row="0" column="0" >
          <widget class="QLabel" name="textLabel3" >
           <property name="text" >
@@ -102,6 +87,19 @@
          <widget class="KColorButton" name="kcfg_SlidesBackgroundColor" />
         </item>
         <item row="1" column="0" >
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Pencil color:</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="KColorButton" name="kcfg_SlidesPencilColor" />
+        </item>
+        <item row="2" column="0" >
          <widget class="QLabel" name="textLabel2" >
           <property name="text" >
            <string>Mouse cursor:</string>
@@ -111,7 +109,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1" >
+        <item row="2" column="1" >
          <widget class="QComboBox" name="kcfg_SlidesCursor" >
           <item>
            <property name="text" >
@@ -269,39 +267,23 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_3" >
+    <widget class="QGroupBox" name="groupBox_4" >
      <property name="title" >
-      <string>Drawing</string>
+      <string>Placement</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" >
-        <property name="spacing" >
-         <number>6</number>
+     <layout class="QGridLayout" name="gridLayout_2" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_2" >
+        <property name="text" >
+         <string>Screen:</string>
         </property>
-        <property name="margin" >
-         <number>0</number>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
-        <item>
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>Pencil color:</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KColorButton" name="kcfg_SlidesPencilColor" />
-        </item>
-       </layout>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QComboBox" name="screenCombo" />
       </item>
      </layout>
     </widget>
@@ -316,8 +298,8 @@
      </property>
      <property name="sizeHint" stdset="0" >
       <size>
-       <width>318</width>
-       <height>16</height>
+       <width>20</width>
+       <height>4</height>
       </size>
      </property>
     </spacer>

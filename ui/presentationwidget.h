@@ -81,6 +81,8 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         const Okular::PageTransition defaultTransition( int ) const;
         QRect routeMouseDrawingEvent( QMouseEvent * );
         void startAutoChangeTimer();
+        void recalcGeometry();
+        void repositionContent();
 
         // cache stuff
         int m_width;
@@ -93,6 +95,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         QList< Okular::Annotation * > m_currentPageDrawings;
         AnnotatorEngine * m_drawingEngine;
         QRect m_drawingRect;
+        int m_screen;
 
         // transition related
         QTimer * m_transitionTimer;
@@ -123,6 +126,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void slotPageChanged();
         void togglePencilMode( bool );
         void clearDrawings();
+        void screenResized( int );
 };
 
 #endif

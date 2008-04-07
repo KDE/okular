@@ -435,7 +435,7 @@ QWidget * GeomAnnotationWidget::widget()
     {
         m_innerColor->setEnabled( false );
     }
-    m_spinSize->setRange( 1, 100 );
+    m_spinSize->setRange( 0, 100 );
     m_spinSize->setValue( m_geomAnn->style().width() );
 
     connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );

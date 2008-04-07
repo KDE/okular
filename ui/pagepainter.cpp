@@ -585,31 +585,37 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             else if ( type == Okular::Annotation::AGeom )
             {
                 Okular::GeomAnnotation * geom = (Okular::GeomAnnotation *)a;
-                QImage shape( annotBoundary.size(), QImage::Format_ARGB32 );
-                shape.fill( qRgba( 0, 0, 0, 0 ) );
-                // width is already divided by two
-                double width = geom->style().width() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
-                QPainter p( &shape );
-                p.setPen( QPen( QBrush( acolor ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
-                QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
-                r.adjust( width, width, -width, -width );
-                if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
-                    p.drawRect( r );
-                else
-                    p.drawEllipse( r );
-                if ( geom->geometricalInnerColor().isValid() )
+                // check whether there's anything to draw
+                if ( geom->style().width() || geom->geometricalInnerColor().isValid() )
                 {
-                    p.setPen( Qt::NoPen );
-                    const QColor color = geom->geometricalInnerColor();
-                    p.setBrush( QColor( color.red(), color.green(), color.blue(), opacity ) );
+                    mixedPainter->save();
+                    const double width = geom->style().width() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                    QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                     r.adjust( width, width, -width, -width );
-                    if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
-                        p.drawRect( r );
-                    else
-                        p.drawEllipse( r );
+                    r.translate( annotBoundary.topLeft() );
+                    if ( geom->geometricalInnerColor().isValid() )
+                    {
+                        r.adjust( width, width, -width, -width );
+                        const QColor color = geom->geometricalInnerColor();
+                        mixedPainter->setPen( Qt::NoPen );
+                        mixedPainter->setBrush( QColor( color.red(), color.green(), color.blue(), opacity ) );
+                        if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
+                            mixedPainter->drawRect( r );
+                        else
+                            mixedPainter->drawEllipse( r );
+                        r.adjust( -width, -width, width, width );
+                    }
+                    if ( geom->style().width() ) // need to check the original size here..
+                    {
+                        mixedPainter->setPen( QPen( QBrush( acolor ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+                        mixedPainter->setBrush( Qt::NoBrush );
+                        if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
+                            mixedPainter->drawRect( r );
+                        else
+                            mixedPainter->drawEllipse( r );
+                    }
+                    mixedPainter->restore();
                 }
-                p.end();
-                mixedPainter->drawImage( annotBoundary.topLeft(), shape );
             }
 
             // draw extents rectangle

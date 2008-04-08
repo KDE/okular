@@ -477,6 +477,10 @@ class TextSelectorEngine : public AnnotatorEngine
                         rect |= newrect;
                         selection = newselection;
                     }
+                    else
+                    {
+                        delete newselection;
+                    }
                 }
             }
             else if ( type == Release && selection )

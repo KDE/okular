@@ -59,6 +59,21 @@
 // transition effect to the next frame
 struct PresentationFrame
 {
+    void recalcGeometry( int width, int height, float screenRatio )
+    {
+        // calculate frame geometry keeping constant aspect ratio
+        float pageRatio = page->ratio();
+        int pageWidth = width,
+            pageHeight = height;
+        if ( pageRatio > screenRatio )
+            pageWidth = (int)( (float)pageHeight / pageRatio );
+        else
+            pageHeight = (int)( (float)pageWidth * pageRatio );
+        geometry.setRect( ( width - pageWidth ) / 2,
+                          ( height - pageHeight ) / 2,
+                          pageWidth, pageHeight );
+    }
+
     const Okular::Page * page;
     QRect geometry;
 };
@@ -218,17 +233,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     {
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
-        // calculate frame geometry keeping constant aspect ratio
-        float pageRatio = frame->page->ratio();
-        int pageWidth = m_width,
-            pageHeight = m_height;
-        if ( pageRatio > screenRatio )
-            pageWidth = (int)( (float)pageHeight / pageRatio );
-        else
-            pageHeight = (int)( (float)pageWidth * pageRatio );
-        frame->geometry.setRect( (m_width - pageWidth) / 2,
-                                 (m_height - pageHeight) / 2,
-                                 pageWidth, pageHeight );
+        frame->recalcGeometry( m_width, m_height, screenRatio );
         // add the frame to the vector
         m_frames.push_back( frame );
     }
@@ -610,33 +615,7 @@ void PresentationWidget::changePage( int newPage )
     // notifyPixmapChanged call or else we can proceed to pixmap generation
     if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
     {
-        // operation will take long: set busy cursor
-        QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
-        // request the pixmap
-        QLinkedList< Okular::PixmapRequest * > requests;
-        requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, false ) );
-        // restore cursor
-        QApplication::restoreOverrideCursor();
-        // ask for next and previous page if not in low memory usage setting
-        if (Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading()) {
-            if (newPage + 1 < (int)m_document->pages())
-            {
-                PresentationFrame *nextFrame = m_frames[ newPage + 1 ];
-                pixW = nextFrame->geometry.width();
-                pixH = nextFrame->geometry.height();
-                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-            }
-            if (newPage - 1 >= 0)
-            {
-                PresentationFrame *prevFrame = m_frames[ newPage - 1 ];
-                pixW = prevFrame->geometry.width();
-                pixH = prevFrame->geometry.height();
-                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, newPage - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-            }
-        }
-        m_document->requestPixmaps( requests );
+        requestPixmaps();
     }
     else
     {
@@ -980,6 +959,42 @@ void PresentationWidget::repositionContent()
     m_topBar->setGeometry( 0, 0, ourGeom.width(), 32 + 10 );
 }
 
+void PresentationWidget::requestPixmaps()
+{
+    PresentationFrame * frame = m_frames[ m_frameIndex ];
+    int pixW = frame->geometry.width();
+    int pixH = frame->geometry.height();
+
+    // operation will take long: set busy cursor
+    QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
+    // request the pixmap
+    QLinkedList< Okular::PixmapRequest * > requests;
+    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, false ) );
+    // restore cursor
+    QApplication::restoreOverrideCursor();
+    // ask for next and previous page if not in low memory usage setting
+    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading() )
+    {
+        if ( m_frameIndex + 1 < (int)m_document->pages() )
+        {
+            PresentationFrame *nextFrame = m_frames[ m_frameIndex + 1 ];
+            pixW = nextFrame->geometry.width();
+            pixH = nextFrame->geometry.height();
+            if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+        }
+        if ( m_frameIndex - 1 >= 0 )
+        {
+            PresentationFrame *prevFrame = m_frames[ m_frameIndex - 1 ];
+            pixW = prevFrame->geometry.width();
+            pixH = prevFrame->geometry.height();
+            if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+        }
+    }
+    m_document->requestPixmaps( requests );
+}
+
 
 void PresentationWidget::slotNextPage()
 {
@@ -1140,6 +1155,19 @@ void PresentationWidget::screenResized( int screen )
 
     m_width = width();
     m_height = height();
+
+    // update the frames
+    QVector< PresentationFrame * >::const_iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    const float screenRatio = (float)m_height / (float)m_width;
+    for ( ; fIt != fEnd; ++fIt )
+    {
+        (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
+    }
+
+    // uglyness alarm!
+    const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
+    requestPixmaps();
+    generatePage( true /* no transitions */ );
 }
 
 void PresentationWidget::slotFind()

@@ -83,6 +83,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void startAutoChangeTimer();
         void recalcGeometry();
         void repositionContent();
+        void requestPixmaps();
 
         // cache stuff
         int m_width;

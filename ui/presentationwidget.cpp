@@ -32,6 +32,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
+#include <kselectaction.h>
 #include <kshortcut.h>
 #include <kdialog.h>
 
@@ -106,7 +107,8 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
-    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 )
+    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
+    m_screenSelect( 0 )
 {
     setModal( true );
     setAttribute( Qt::WA_DeleteOnClose );
@@ -148,6 +150,21 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
     QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );
     connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
+    QDesktopWidget *desktop = QApplication::desktop();
+    if ( desktop->numScreens() > 1 )
+    {
+        m_topBar->addSeparator();
+        m_screenSelect = new KSelectAction( KIcon( "video-display" ), i18n( "Switch Screen" ), m_topBar );
+        m_screenSelect->setToolBarMode( KSelectAction::MenuMode );
+        m_screenSelect->setToolButtonPopupMode( QToolButton::InstantPopup );
+        m_topBar->addAction( m_screenSelect );
+        const int screenCount = desktop->numScreens();
+        for ( int i = 0; i < screenCount; ++i )
+        {
+            QAction *act = m_screenSelect->addAction( i18nc( "%1 is the screen number (0, 1, ...)", "Screen %1", i ) );
+            act->setData( qVariantFromValue( i ) );
+        }
+    }
     QWidget *spacer = new QWidget( m_topBar );
     spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
     m_topBar->addWidget( spacer );
@@ -1089,6 +1106,16 @@ void PresentationWidget::slotDelayedEvents()
     recalcGeometry();
     repositionContent();
 
+    if ( m_screenSelect )
+    {
+        int screen = m_screen;
+        if ( screen == -1 )
+            screen = QApplication::desktop()->primaryScreen();
+        m_screenSelect->setCurrentItem( screen );
+        connect( m_screenSelect->selectableActionGroup(), SIGNAL( triggered( QAction * ) ),
+                 this, SLOT( chooseScreen( QAction * ) ) );
+    }
+
     // show widget and take control
     show();
     setWindowState( windowState() | Qt::WindowFullScreen );
@@ -1169,6 +1196,44 @@ void PresentationWidget::screenResized( int screen )
     requestPixmaps();
     generatePage( true /* no transitions */ );
 }
+
+void PresentationWidget::chooseScreen( QAction *act )
+{
+    if ( !act || act->data().type() != QVariant::Int )
+        return;
+
+    const int newScreen = act->data().toInt();
+
+    const QRect screenGeom = QApplication::desktop()->screenGeometry( newScreen );
+    const QSize oldSize = size();
+    // kDebug() << newScreen << "=>" << screenGeom;
+    m_screen = newScreen;
+    setGeometry( screenGeom );
+
+    repositionContent();
+
+    // if by chance the new screen has the same resolution of the previous,
+    // do not invalidate pixmaps and such..
+    if ( size() == oldSize )
+        return;
+
+    m_width = width();
+    m_height = height();
+
+    // update the frames
+    QVector< PresentationFrame * >::const_iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    const float screenRatio = (float)m_height / (float)m_width;
+    for ( ; fIt != fEnd; ++fIt )
+    {
+        (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
+    }
+
+    // uglyness alarm!
+    const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
+    requestPixmaps();
+    generatePage( true /* no transitions */ );
+}
+
 
 void PresentationWidget::slotFind()
 {

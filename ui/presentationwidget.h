@@ -21,6 +21,7 @@ class QLineEdit;
 class QToolBar;
 class QTimer;
 class KActionCollection;
+class KSelectAction;
 class AnnotatorEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
@@ -115,6 +116,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         QLineEdit *m_pagesEdit;
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
+        KSelectAction * m_screenSelect;
 
     private slots:
         void slotNextPage();
@@ -128,6 +130,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void togglePencilMode( bool );
         void clearDrawings();
         void screenResized( int );
+        void chooseScreen( QAction * );
 };
 
 #endif

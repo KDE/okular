@@ -167,12 +167,81 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   epub_free_iterator(it);
 
+  
+  // handle toc
+  struct titerator *tit;
+  
+  // FIXME: support other method beside NAVMAP and GUIDE
+  tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_NAVMAP, 0);
+  if (! tit) 
+    tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_GUIDE, 0);
+
+  if (tit) {
+    do {
+      if (epub_tit_curr_valid(tit)) {
+        char *link = epub_tit_get_curr_link(tit);
+        char *label = epub_tit_get_curr_label(tit);
+        QTextBlock block = mTextDocument->begin(); // must point somewhere
+        
+        if(mSectionMap.contains(link)) {
+          block = mSectionMap.value(link);
+        } else { // load missing resource
+          char *data;
+          int size = epub_get_data(mTextDocument->getEpub(), link, &data);
+          if (size > 0) {
+            _cursor->insertBlock();
+
+            // try to load as image and if not load as html
+            block = _cursor->block();
+            QImage image;
+            mSectionMap.insert(link, block);
+            if (image.loadFromData((unsigned char *)data, size)) {
+              mTextDocument->addResource(QTextDocument::ImageResource, 
+                                         QUrl(link), image); 
+              _cursor->insertImage(link);
+            } else {
+              _cursor->insertHtml(data);
+              // Add anchors to hashes
+              _handle_anchors(block, link);
+            }
+
+            // Start new file in a new page 
+            int page = mTextDocument->pageCount();
+            while(mTextDocument->pageCount() == page)
+              _cursor->insertText("\n");
+          }
+            
+          free(data);
+        }
+        
+        if (block.isValid()) { // be sure we actually got a block
+          emit addTitle(epub_tit_get_curr_depth(tit), 
+                        label,
+                        block);
+          
+        } else {
+          qDebug() << "Error: no block found for "<< link << "\n";
+        }
+                 
+        if (link)
+          free(link);
+        
+        if (label)
+          free(label);
+      }
+    } while (epub_tit_next(tit));
+
+    epub_free_titerator(tit);
+  } else {
+    qDebug() << "no toc found\n";
+  }
+
   // adding link actions
   QHashIterator<QString, QPair<int, int> > hit(mLocalLinks);
   while (hit.hasNext()) {
     hit.next();
 
-    const QTextBlock &block = mSectionMap[hit.key()];
+    const QTextBlock block = mSectionMap.value(hit.key());
     if (block.isValid()) { // be sure we actually got a block
       Okular::DocumentViewport viewport = 
         calculateViewport(mTextDocument, block);
@@ -185,36 +254,6 @@ QTextDocument* Converter::convert( const QString &fileName )
     }
   }
   
-  struct titerator *tit;
-  
-  tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_NAVMAP, 0);
-  if (! tit) 
-    tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_GUIDE, 0);
-
-  if (tit) {
-    do {
-      if (epub_tit_curr_valid(tit)) {
-        char *link = epub_tit_get_curr_link(tit);
-        const QTextBlock &block = mSectionMap[link];
-        if (link)
-          free(link);
-        if (block.isValid()) { // be sure we actually got a block
-          char *label = epub_tit_get_curr_label(tit);
-          emit addTitle(epub_tit_get_curr_depth(tit), 
-                        label,
-                        block);
-          if (label)
-            free(label);
-          
-        } else {
-          qDebug() << "Error: no block found for "<< hit.key() << "\n";
-        }
-      }   
-    } while (epub_tit_next(tit));
-
-    epub_free_titerator(tit);
-  }
-
   delete _cursor;
 
   return mTextDocument;

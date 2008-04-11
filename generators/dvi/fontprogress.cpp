@@ -40,7 +40,7 @@ fontProgressDialog::fontProgressDialog(const QString& helpIndex, const QString& 
 
   if (helpIndex.isEmpty() == false) {
     setHelp(helpIndex, "okular");
-    setHelpLinkText( i18n( "What's going on here?") );
+    setHelpLinkText( i18n( "What is happening here?") );
     enableLinkedHelp(true);
   } else
     enableLinkedHelp(false);

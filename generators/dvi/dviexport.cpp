@@ -310,8 +310,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                             "you require is therefore unavailable in this version of Okular.</p>"
                             "<p>As a workaround, you can use the <strong>File/Export As</strong>-Menu to save this file in PDF format, and then use "
                             "a PDF viewer.</p>"
-                            "<p>The author of Okular apologizes for the inconvenience. If enough users complain, the missing functionality might later "
-                            "be added.</p></qt>") ,
+                            "<p>It is planned to add this functionality at a later date.</p></qt>") ,
                        i18n("Functionality Unavailable"));
     return;
   }

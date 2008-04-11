@@ -2647,6 +2647,14 @@ void PageView::slotRelayoutPages()
         else
             fullHeight = rowHeight[ pageRowIdx ];
 
+        if (!horizontalScrollBar()->isVisible() && !verticalScrollBar()->isVisible() && fullWidth == viewportWidth &&
+            fullHeight - viewportHeight == 1 && d->zoomMode == ZoomFitWidth)
+        {
+            // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
+            // see bug 160628
+            fullHeight = viewportHeight;
+        }
+
         // 3) arrange widgets inside cells (and refine fullHeight if needed)
         int insertX = 0,
             insertY = fullHeight < viewportHeight ? ( viewportHeight - fullHeight ) / 2 : 0;

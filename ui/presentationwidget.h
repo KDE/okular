@@ -117,6 +117,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
+        bool m_blockNotifications;
 
     private slots:
         void slotNextPage();

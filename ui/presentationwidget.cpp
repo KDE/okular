@@ -108,7 +108,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     : QDialog( parent, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
     m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 )
+    m_screenSelect( 0 ), m_blockNotifications( false )
 {
     setModal( true );
     setAttribute( Qt::WA_DeleteOnClose );
@@ -284,6 +284,10 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
+    // if we are blocking the notifications, do nothing
+    if ( m_blockNotifications )
+        return;
+
     // check if it's the last requested pixmap. if so update the widget.
     if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations | DocumentObserver::Highlights ) ) && pageNumber == m_frameIndex )
         generatePage( changedFlags & ( DocumentObserver::Annotations | DocumentObserver::Highlights ) );
@@ -1197,7 +1201,11 @@ void PresentationWidget::screenResized( int screen )
 
     // uglyness alarm!
     const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
+    // force the regeneration of the pixmap
+    m_lastRenderedPixmap = QPixmap();
+    m_blockNotifications = true;
     requestPixmaps();
+    m_blockNotifications = false;
     generatePage( true /* no transitions */ );
 }
 
@@ -1234,7 +1242,11 @@ void PresentationWidget::chooseScreen( QAction *act )
 
     // uglyness alarm!
     const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
+    // force the regeneration of the pixmap
+    m_lastRenderedPixmap = QPixmap();
+    m_blockNotifications = true;
     requestPixmaps();
+    m_blockNotifications = false;
     generatePage( true /* no transitions */ );
 }
 

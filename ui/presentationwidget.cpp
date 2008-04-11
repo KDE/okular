@@ -953,15 +953,23 @@ void PresentationWidget::recalcGeometry()
 {
     QDesktopWidget *desktop = QApplication::desktop();
     const int preferenceScreen = Okular::Settings::slidesScreen();
-    int screen = -1;
-    if ( preferenceScreen >= -1 && preferenceScreen < desktop->numScreens() )
+    int screen = 0;
+    if ( preferenceScreen == -2 )
+    {
+        screen = desktop->screenNumber( parentWidget() );
+    }
+    else if ( preferenceScreen == -1 )
+    {
+        screen = desktop->primaryScreen();
+    }
+    else if ( preferenceScreen >= 0 && preferenceScreen < desktop->numScreens() )
     {
         screen = preferenceScreen;
     }
     else
     {
-        screen = -1;
-        Okular::Settings::setSlidesScreen( -1 );
+        screen = desktop->screenNumber( parentWidget() );
+        Okular::Settings::setSlidesScreen( -2 );
     }
     const QRect screenGeom = desktop->screenGeometry( screen );
     // kDebug() << screen << "=>" << screenGeom;
@@ -1108,10 +1116,7 @@ void PresentationWidget::slotDelayedEvents()
 
     if ( m_screenSelect )
     {
-        int screen = m_screen;
-        if ( screen == -1 )
-            screen = QApplication::desktop()->primaryScreen();
-        m_screenSelect->setCurrentItem( screen );
+        m_screenSelect->setCurrentItem( m_screen );
         connect( m_screenSelect->selectableActionGroup(), SIGNAL( triggered( QAction * ) ),
                  this, SLOT( chooseScreen( QAction * ) ) );
     }
@@ -1173,8 +1178,7 @@ void PresentationWidget::screenResized( int screen )
 {
     // we can ignore if a screen was resized in the case the screen is not
     // where we are on
-    if ( screen != m_screen 
-         || ( m_screen == -1 && screen == QApplication::desktop()->primaryScreen() ) )
+    if ( screen != m_screen )
         return;
 
     recalcGeometry();

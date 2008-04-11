@@ -141,8 +141,8 @@
    <default>true</default>
   </entry>
   <entry key="SlidesScreen" type="Int" >
-   <default>-1</default>
-   <min>-1</min>
+   <default>-2</default>
+   <min>-2</min>
    <max>20</max>
   </entry>
  </group>

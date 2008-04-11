@@ -25,6 +25,7 @@ DlgPresentation::DlgPresentation( QWidget * parent )
     m_dlg->setupUi( this );
 
     QStringList choices;
+    choices.append( i18nc( "@label:listbox The current screen, for the presentation mode", "Current Screen" ) );
     choices.append( i18nc( "@label:listbox The default screen for the presentation mode", "Default Screen" ) );
     const int screenCount = QApplication::desktop()->numScreens();
     for ( int i = 0; i < screenCount; ++i )
@@ -34,14 +35,14 @@ DlgPresentation::DlgPresentation( QWidget * parent )
     m_dlg->screenCombo->addItems( choices );
 
     const int screen = Okular::Settings::slidesScreen();
-    if ( screen >= -1 && screen < screenCount )
+    if ( screen >= -2 && screen < screenCount )
     {
-        m_dlg->screenCombo->setCurrentIndex( screen + 1 );
+        m_dlg->screenCombo->setCurrentIndex( screen + 2 );
     }
     else
     {
         m_dlg->screenCombo->setCurrentIndex( 0 );
-        Okular::Settings::setSlidesScreen( -1 );
+        Okular::Settings::setSlidesScreen( -2 );
     }
 
     connect( m_dlg->screenCombo, SIGNAL( activated( int ) ), this, SLOT( screenComboChanged( int ) ) );
@@ -54,7 +55,7 @@ DlgPresentation::~DlgPresentation()
 
 void DlgPresentation::screenComboChanged( int which )
 {
-    Okular::Settings::setSlidesScreen( which - 1 );
+    Okular::Settings::setSlidesScreen( which - 2 );
 }
 
 #include "dlgpresentation.moc"

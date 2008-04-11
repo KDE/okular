@@ -592,7 +592,7 @@ void Sidebar::listContextMenu( const QPoint &pos )
 }
     ADD_SIZE_ACTION( i18n( "Small Icons" ), 22 )
     ADD_SIZE_ACTION( i18n( "Normal Icons" ), 32 )
-    ADD_SIZE_ACTION( i18n( "Big Icons" ), 48 )
+    ADD_SIZE_ACTION( i18n( "Large Icons" ), 48 )
 #undef ADD_SIZE_ACTION
     connect( sizeGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( iconSizeChanged( QAction* ) ) );
     menu.exec( mapToGlobal( pos ) );

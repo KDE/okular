@@ -828,7 +828,7 @@ bool Part::openFile()
         bool goAheadWithPresentationMode = true;
         if ( !m_cliPresentation )
         {
-            const QString text = i18n( "The document requested to be launched on presentation mode.\n"
+            const QString text = i18n( "The document requested to be launched in presentation mode.\n"
                                        "Do you want to allow it?" );
             const QString caption = i18n( "Presentation Mode" );
             const KGuiItem yesItem = KGuiItem( i18n( "Allow" ), "dialog-ok", i18n( "Allow the presentation mode" ) );

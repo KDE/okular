@@ -3087,7 +3087,7 @@ void PageView::slotSetMouseTextSelect()
 {
     d->mouseMode = MouseTextSelect;
     // change the text in messageWindow (and show it if hidden)
-    d->messageWindow->display( i18n( "Select text." ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Select text" ), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );

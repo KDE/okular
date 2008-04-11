@@ -37,7 +37,7 @@ bool fontPoolTimerFlag;
 fontPool::fontPool()
   :  progress("fontgen",  // Chapter in the documentation for help.
               i18n("Okular is currently generating bitmap fonts..."),
-              i18n("Aborts the font generation. Don't do this."),
+              i18n("Aborts the font generation. Do not do this."),
               i18n("Okular is currently generating bitmap fonts which are needed to display your document. "
                    "For this, Okular uses a number of external programs, such as MetaFont. You can find "
                    "the output of these programs later in the document info dialog."),
@@ -342,7 +342,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
   const QString importanceOfKPSEWHICH =
     i18n("<p>Okular relies on the <b>kpsewhich</b> program to locate font files "
-         "on your hard disc and to generate PK fonts, if necessary.</p>");
+         "on your hard disk and to generate PK fonts, if necessary.</p>");
 
   kpsewhich_.start(kpsewhich_exe, kpsewhich_args,
                    QIODevice::ReadOnly|QIODevice::Text);

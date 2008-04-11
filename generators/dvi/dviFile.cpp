@@ -386,12 +386,12 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
       *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
                           "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"
-                          "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> is perhaps not installed "
-                          "on your system, or it cannot be found in the current search path.</p>"
-                          "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> program is normally "
+                          "<p><b>Possible reason:</b> The program <strong>pdf2ps</strong> may not be installed "
+                          "on your system, or cannot be found in the current search path.</p>"
+                          "<p><b>What you can do:</b> The program <strong>pdf2ps</strong> is normally "
                           "contained in distributions of the ghostscript PostScript interpreter system. If "
                           "ghostscipt is not installed on your system, you could install it now. "
-                          "If you are sure that ghostscript is installed, please try to use <strong>pdf2ps</strong> "
+                          "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
                           "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>", PDFFilename, getenv("PATH"));
       have_complainedAboutMissingPDF2PS = true;
     }

@@ -231,10 +231,10 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
   if (!find_exe("dvipdfm")) {
     KMessageBox::sorry(parent_widget,
-                               i18n("Okular could not locate the program 'dvipdfm' on your computer. That program is "
+                               i18n("Okular could not locate the program 'dvipdfm' on your computer. This program is "
                                "essential for the export function to work. You can, however, convert "
                                "the DVI-file to PDF using the print function of Okular, but that will often "
-                               "produce documents which print ok, but are of inferior quality if viewed in the "
+                               "produce documents which print okay, but are of inferior quality if viewed in "
                                "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
                                "TeX distribution which includes the 'dvipdfm' program.\n"
                                "Hint to the perplexed system administrator: Okular uses the PATH environment variable "
@@ -252,7 +252,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
   if (!output.exists()) {
     const int result =
       KMessageBox::warningContinueCancel(parent_widget,
-                                         i18n("The file %1\nexists. Do you want to overwrite that file?", output_name),
+                                         i18n("The file %1\nexists. Do you want to overwrite it?", output_name),
                                          i18n("Overwrite File"),
                                          KGuiItem( i18n("Overwrite") ));
     if (result == KMessageBox::Cancel)
@@ -339,7 +339,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     if (!output.exists()) {
       const int result =
         KMessageBox::warningContinueCancel(parent_widget,
-                                           i18n("The file %1\nexists. Do you want to overwrite that file?", output_name_),
+                                           i18n("The file %1\nexists. Do you want to overwrite it?", output_name_),
                                            i18n("Overwrite File"),
                                            KGuiItem( i18n("Overwrite") ));
       if (result == KMessageBox::Cancel)

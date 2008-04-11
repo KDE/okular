@@ -1289,7 +1289,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
     if (offers.isEmpty())
     {
-        emit error( i18n( "Can not find a plugin which is able to handle the passed document." ), -1 );
+        emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
         kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime->name() << "'.";
         return false;
     }
@@ -2535,7 +2535,7 @@ void Document::processAction( const Action * action )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( widget(), i18n("The document is trying to execute an external application and for your safety Okular does not allow that.") );
+                        KMessageBox::information( widget(), i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
                         return;
                     }
                 }
@@ -2543,7 +2543,7 @@ void Document::processAction( const Action * action )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( widget(), i18n("The document is trying to execute an external application and for your safety Okular does not allow that.") );
+                    KMessageBox::information( widget(), i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
                     return;
                 }
             }

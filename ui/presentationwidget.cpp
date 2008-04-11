@@ -1185,28 +1185,7 @@ void PresentationWidget::screenResized( int screen )
     if ( screen != m_screen )
         return;
 
-    recalcGeometry();
-    repositionContent();
-
-    m_width = width();
-    m_height = height();
-
-    // update the frames
-    QVector< PresentationFrame * >::const_iterator fIt = m_frames.begin(), fEnd = m_frames.end();
-    const float screenRatio = (float)m_height / (float)m_width;
-    for ( ; fIt != fEnd; ++fIt )
-    {
-        (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
-    }
-
-    // uglyness alarm!
-    const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
-    // force the regeneration of the pixmap
-    m_lastRenderedPixmap = QPixmap();
-    m_blockNotifications = true;
-    requestPixmaps();
-    m_blockNotifications = false;
-    generatePage( true /* no transitions */ );
+    setScreen( screen );
 }
 
 void PresentationWidget::chooseScreen( QAction *act )
@@ -1216,6 +1195,11 @@ void PresentationWidget::chooseScreen( QAction *act )
 
     const int newScreen = act->data().toInt();
 
+    setScreen( newScreen );
+}
+
+void PresentationWidget::setScreen( int newScreen )
+{
     const QRect screenGeom = QApplication::desktop()->screenGeometry( newScreen );
     const QSize oldSize = size();
     // kDebug() << newScreen << "=>" << screenGeom;

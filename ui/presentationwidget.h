@@ -85,6 +85,7 @@ class PresentationWidget : public QDialog, public Okular::DocumentObserver
         void recalcGeometry();
         void repositionContent();
         void requestPixmaps();
+        void setScreen( int );
 
         // cache stuff
         int m_width;

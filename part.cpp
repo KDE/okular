@@ -1816,8 +1816,8 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             i18n("<qt>This error typically occurs if you do "
             "not have enough permissions to read the file. "
             "You can check ownership and permissions if you "
-            "right-click on the file in the Konqueror "
-            "file manager and then choose the 'Properties' menu.</qt>"));
+            "right-click on the file in the Dolphin "
+            "file manager and then choose the 'Properties' tab.</qt>"));
 
         delete filterDev;
         delete newtempfile;

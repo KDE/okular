@@ -1689,7 +1689,7 @@ const DocumentInfo * Document::documentInfo() const
         }
         if (!pagesSize.isEmpty())
         {
-            info->set( "pagesSize", pagesSize, i18n("Pages Size") );
+            info->set( "pagesSize", pagesSize, i18n("Page Size") );
         }
         return info;
     }

@@ -169,6 +169,9 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
         case Okular::Annotation::AFileAttachment:
             captiontext = i18n( "File Attachment Properties" );
             break;
+        case Okular::Annotation::ASound:
+            captiontext = i18n( "Sound Properties" );
+            break;
         default:
             captiontext = i18n( "Annotation Properties" );
             break;

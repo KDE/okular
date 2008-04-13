@@ -66,6 +66,9 @@ QString captionForAnnotation( const Okular::Annotation * ann )
         case Okular::Annotation::AFileAttachment:
             ret = i18n( "File Attachment" );
             break;
+        case Okular::Annotation::ASound:
+            ret = i18n( "Sound" );
+            break;
         case Okular::Annotation::A_BASE:
             break;
     }

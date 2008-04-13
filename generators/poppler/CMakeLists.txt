@@ -12,6 +12,15 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_7)
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::Document * doc = 0;
+  (void)doc->scripts();
+  return 0;
+}
+" HAVE_POPPLER_0_9)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

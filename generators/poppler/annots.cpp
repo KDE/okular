@@ -9,12 +9,24 @@
 
 #include <poppler-annotation.h>
 
+// qt/kde includes
+#include <qvariant.h>
+
 #include <okular/core/annotations.h>
+
+Q_DECLARE_METATYPE( Poppler::Annotation* )
+
+static void disposeAnnotation( const Okular::Annotation *ann )
+{
+    Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( ann->nativeId() );
+    delete popplerAnn;
+}
 
 Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool *doDelete )
 {
     Okular::Annotation *annotation = 0;
     *doDelete = true;
+    bool tieToOkularAnn = false;
     switch ( ann->subType() )
     {
         default:
@@ -40,6 +52,11 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         // TODO clone style
         // TODO clone window
         // TODO clone revisions
+        if ( tieToOkularAnn )
+        {
+            annotation->setNativeId( qVariantFromValue( ann ) );
+            annotation->setDisposeDataFunction( disposeAnnotation );
+        }
     }
     return annotation;
 }

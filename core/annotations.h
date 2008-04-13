@@ -30,6 +30,7 @@ class Document;
 class EmbeddedFile;
 class Page;
 class PagePrivate;
+class Sound;
 class TextAnnotationPrivate;
 class LineAnnotationPrivate;
 class GeomAnnotationPrivate;
@@ -38,6 +39,7 @@ class StampAnnotationPrivate;
 class InkAnnotationPrivate;
 class CaretAnnotationPrivate;
 class FileAttachmentAnnotationPrivate;
+class SoundAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -106,6 +108,7 @@ class OKULAR_EXPORT Annotation
             AInk = 6,       ///< An ink annotation
             ACaret = 8,     ///< A caret annotation
             AFileAttachment = 9, ///< A file attachment annotation
+            ASound = 10,    ///< A sound annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -1322,6 +1325,46 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( FileAttachmentAnnotation )
         Q_DISABLE_COPY( FileAttachmentAnnotation )
+};
+
+/**
+ * \short Sound annotation.
+ *
+ * The sound annotation represents a sound to be played when activated.
+ */
+class OKULAR_EXPORT SoundAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new sound annotation.
+         */
+        SoundAnnotation();
+        SoundAnnotation( const QDomNode &node );
+        /**
+         * Destroys the sound annotation.
+         */
+        virtual ~SoundAnnotation();
+
+        QString soundIconName() const;
+        void setSoundIconName( const QString &icon );
+
+        Sound* sound() const;
+        void setSound( Sound *sound );
+
+        /**
+         * Returns the sub type of the sound annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the sound annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( SoundAnnotation )
+        Q_DISABLE_COPY( SoundAnnotation )
 };
 
 }

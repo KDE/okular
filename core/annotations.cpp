@@ -17,6 +17,7 @@
 // local includes
 #include "document.h"
 #include "page_p.h"
+#include "sound.h"
 
 using namespace Okular;
 
@@ -2229,4 +2230,88 @@ void FileAttachmentAnnotation::setEmbeddedFile( EmbeddedFile *ef )
 {
     Q_D( FileAttachmentAnnotation );
     d->embfile = ef;
+}
+
+/** SoundAnnotation [Annotation] */
+
+class Okular::SoundAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        SoundAnnotationPrivate()
+            : AnnotationPrivate(), icon( "Speaker" ), sound( 0 )
+        {
+        }
+        ~SoundAnnotationPrivate()
+        {
+            delete sound;
+        }
+
+        // data fields
+        QString icon;
+        Sound *sound;
+};
+
+SoundAnnotation::SoundAnnotation()
+    : Annotation( *new SoundAnnotationPrivate() )
+{
+}
+
+SoundAnnotation::SoundAnnotation( const QDomNode & node )
+    : Annotation( *new SoundAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'sound' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "sound" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+SoundAnnotation::~SoundAnnotation()
+{
+}
+
+void SoundAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [sound] element
+    QDomElement soundElement = document.createElement( "sound" );
+    node.appendChild( soundElement );
+}
+
+Annotation::SubType SoundAnnotation::subType() const
+{
+    return ASound;
+}
+
+QString SoundAnnotation::soundIconName() const
+{
+    Q_D( const SoundAnnotation );
+    return d->icon;
+}
+
+void SoundAnnotation::setSoundIconName( const QString &icon )
+{
+    Q_D( SoundAnnotation );
+    d->icon = icon;
+}
+
+Sound* SoundAnnotation::sound() const
+{
+    Q_D( const SoundAnnotation );
+    return d->sound;
+}
+
+void SoundAnnotation::setSound( Sound *s )
+{
+    Q_D( SoundAnnotation );
+    d->sound = s;
 }

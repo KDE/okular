@@ -240,6 +240,8 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 	return links;
 }
 
+extern Okular::Annotation* createAnnotationFromPopplerAnnotation( const Poppler::Annotation *ann, bool * doDelete );
+
 /** NOTES on threading:
  * internal: thread race prevention is done via the 'docLock' mutex. the
  *           mutex is needed only because we have the asynchronous thread; else
@@ -1254,13 +1256,9 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
                 <<", window.summary:"<<a->window.summary
                 <<", window.text:"<<a->window.text;
         kDebug(PDFDebug) << "astario:    " << szanno; */
-        // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
         //TODO add annotations after poppler write feather is full suported
-        QDomDocument doc;
-        QDomElement root = doc.createElement("root");
-        doc.appendChild(root);
-        Poppler::AnnotationUtils::storeAnnotation(a, root, doc);
-        Okular::Annotation * newann = Okular::AnnotationUtils::createAnnotation(root);
+        bool doDelete = true;
+        Okular::Annotation * newann = createAnnotationFromPopplerAnnotation( a, &doDelete );
         if (newann)
         {
             // the Contents field has lines separated by \r
@@ -1271,8 +1269,9 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
             newann->setFlags( newann->flags() | Okular::Annotation::External );
             page->addAnnotation(newann);
         }
+        if ( doDelete )
+            delete a;
     }
-    qDeleteAll(popplerAnnotations);
 }
 
 void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )

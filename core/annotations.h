@@ -27,6 +27,7 @@ class Annotation;
 class AnnotationObjectRect;
 class AnnotationPrivate;
 class Document;
+class EmbeddedFile;
 class Page;
 class PagePrivate;
 class TextAnnotationPrivate;
@@ -36,6 +37,7 @@ class HighlightAnnotationPrivate;
 class StampAnnotationPrivate;
 class InkAnnotationPrivate;
 class CaretAnnotationPrivate;
+class FileAttachmentAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -103,6 +105,7 @@ class OKULAR_EXPORT Annotation
             AStamp = 5,     ///< A stamp annotation
             AInk = 6,       ///< An ink annotation
             ACaret = 8,     ///< A caret annotation
+            AFileAttachment = 9, ///< A file attachment annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -1284,6 +1287,41 @@ class OKULAR_EXPORT CaretAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( CaretAnnotation )
         Q_DISABLE_COPY( CaretAnnotation )
+};
+
+class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new file attachment annotation.
+         */
+        FileAttachmentAnnotation();
+        explicit FileAttachmentAnnotation( const QDomNode &node );
+        /**
+         * Destroys the file attachment annotation.
+         */
+        virtual ~FileAttachmentAnnotation();
+
+        QString fileIconName() const;
+        void setFileIconName( const QString &icon );
+
+        EmbeddedFile* embeddedFile() const;
+        void setEmbeddedFile( EmbeddedFile *ef );
+
+        /**
+         * Returns the sub type of the caret annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the caret annotation as xml in @p document
+         * under the given parent @p node.
+         */
+        void store( QDomNode &node, QDomDocument &document ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( FileAttachmentAnnotation )
+        Q_DISABLE_COPY( FileAttachmentAnnotation )
 };
 
 }

@@ -42,50 +42,9 @@
 #include <config-okular-poppler.h>
 
 #include "formfields.h"
+#include "popplerembeddedfile.h"
 
 static const int PDFDebug = 4710;
-
-class PDFEmbeddedFile : public Okular::EmbeddedFile
-{
-    public:
-        PDFEmbeddedFile(Poppler::EmbeddedFile *f) : ef(f)
-        {
-        }
-        
-        QString name() const
-        {
-            return ef->name();
-        }
-        
-        QString description() const
-        {
-            return ef->description();
-        }
-        
-        QByteArray data() const
-        {
-            return ef->data();
-        }
-        
-        int size() const
-        {
-            int s = ef->size();
-            return s <= 0 ? -1 : s;
-        }
-        
-        QDateTime modificationDate() const
-        {
-            return ef->modDate();
-        }
-        
-        QDateTime creationDate() const
-        {
-            return ef->createDate();
-        }
-    
-    private:
-        Poppler::EmbeddedFile *ef;
-};
 
 class PDFOptionsPage : public QWidget
 {

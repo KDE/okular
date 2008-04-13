@@ -14,6 +14,9 @@
 
 #include <okular/core/annotations.h>
 
+#include "popplerembeddedfile.h"
+#include "config-okular-poppler.h"
+
 Q_DECLARE_METATYPE( Poppler::Annotation* )
 
 static void disposeAnnotation( const Okular::Annotation *ann )
@@ -29,6 +32,21 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
     bool tieToOkularAnn = false;
     switch ( ann->subType() )
     {
+#ifdef HAVE_POPPLER_0_9
+        case Poppler::Annotation::AFileAttachment:
+        {
+            Poppler::FileAttachmentAnnotation * attachann = static_cast< Poppler::FileAttachmentAnnotation * >( ann );
+            Okular::FileAttachmentAnnotation * f = new Okular::FileAttachmentAnnotation();
+            annotation = f;
+            tieToOkularAnn = true;
+            *doDelete = false;
+
+            f->setFileIconName( attachann->fileIconName() );
+            f->setEmbeddedFile( new PDFEmbeddedFile( attachann->embeddedFile() ) );
+
+            break;
+        }
+#endif
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core

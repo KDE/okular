@@ -17,9 +17,9 @@ static KAboutData createAboutData()
   KAboutData aboutData(
                        "okular_epub",
                        "okular_epub",
-                       ki18n("EPUB Backend"),
+                       ki18n("EPub Backend"),
                        "0.1",
-                       ki18n("A EPUB backend"),
+                       ki18n("An EPub backend"),
                        KAboutData::License_GPL,
                        ki18n("© 2008 Ely Levy")
                        );

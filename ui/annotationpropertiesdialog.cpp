@@ -163,6 +163,12 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
         case Okular::Annotation::AInk:
             captiontext = i18n( "Ink Properties" );
             break;
+        case Okular::Annotation::ACaret:
+            captiontext = i18n( "Caret Properties" );
+            break;
+        case Okular::Annotation::AFileAttachment:
+            captiontext = i18n( "File Attachment Properties" );
+            break;
         default:
             captiontext = i18n( "Annotation Properties" );
             break;

@@ -60,6 +60,12 @@ QString captionForAnnotation( const Okular::Annotation * ann )
         case Okular::Annotation::AInk:
             ret = i18n( "Ink" );
             break;
+        case Okular::Annotation::ACaret:
+            ret = i18n( "Caret" );
+            break;
+        case Okular::Annotation::AFileAttachment:
+            ret = i18n( "File Attachment" );
+            break;
         case Okular::Annotation::A_BASE:
             break;
     }

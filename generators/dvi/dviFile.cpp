@@ -288,13 +288,13 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   // whole memory buffer is readable
   end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
-    kError(kvs::dvi) << i18n("Not enough memory to load the DVI-file.");
+    kError(kvs::dvi) << "Not enough memory to load the DVI-file.";
     return;
   }
   file.read((char *)dvi_Data(), size_of_file);
   file.close();
   if (file.error() != QFile::NoError) {
-    kError(kvs::dvi) << i18n("Could not load the DVI-file.");
+    kError(kvs::dvi) << "Could not load the DVI-file.";
     return;
   }
 

@@ -85,8 +85,8 @@ void TeXFontDefinition::read_VF_index()
   quint32 const file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
-    kError(kvs::dvi) << i18n("Checksum mismatch") << "(dvi = " << checksum << "u, vf = " << file_checksum <<
-      "u)" << i18n(" in font file ") << filename << endl;
+    kError(kvs::dvi) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum <<
+      "u) in font file" << filename << endl;
   (void) four(VF_file);                /* skip design size */
 
   // Read the fonts.
@@ -131,7 +131,7 @@ void TeXFontDefinition::read_VF_index()
   // Prepare macro array.
   macrotable = new macro[max_num_of_chars_in_font];
   if (macrotable == 0) {
-    kError(kvs::dvi) << i18n("Could not allocate memory for a macro table.") << endl;
+    kError(kvs::dvi) << "Could not allocate memory for a macro table.";
     exit(0);
   }
 
@@ -148,8 +148,8 @@ void TeXFontDefinition::read_VF_index()
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-        kError(kvs::dvi) << i18n("Virtual character ") << cc << i18n(" in font ")
-                  << fontname << i18n(" ignored.") << endl;
+        kError(kvs::dvi) << "Virtual character" << cc << "in font"
+                  << fontname << "ignored.";
         fseek(VF_file, (long) len, 1);
         continue;
       }

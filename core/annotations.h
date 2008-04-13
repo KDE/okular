@@ -1299,25 +1299,43 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
          * Creates a new file attachment annotation.
          */
         FileAttachmentAnnotation();
-        explicit FileAttachmentAnnotation( const QDomNode &node );
+        /**
+         * Creates a new file attachment annotation from the xml @p description
+         */
+        explicit FileAttachmentAnnotation( const QDomNode &description );
         /**
          * Destroys the file attachment annotation.
          */
         virtual ~FileAttachmentAnnotation();
 
+        /**
+         * Gets the name of the icon.
+         */
         QString fileIconName() const;
-        void setFileIconName( const QString &icon );
-
-        EmbeddedFile* embeddedFile() const;
-        void setEmbeddedFile( EmbeddedFile *ef );
 
         /**
-         * Returns the sub type of the caret annotation.
+         * Sets the @p name of the icon for the file attachment annotation.
+         */
+        void setFileIconName( const QString &name );
+
+        /**
+         * Gets the embedded file object.
+         */
+        EmbeddedFile* embeddedFile() const;
+
+        /**
+         * Sets the @p object representing the embedded file of the file
+         * attachment annotation.
+         */
+        void setEmbeddedFile( EmbeddedFile *object );
+
+        /**
+         * Returns the sub type of the file attachment annotation.
          */
         SubType subType() const;
 
         /**
-         * Stores the caret annotation as xml in @p document
+         * Stores the file attachment annotation as xml in @p document
          * under the given parent @p node.
          */
         void store( QDomNode &node, QDomDocument &document ) const;
@@ -1331,6 +1349,8 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
  * \short Sound annotation.
  *
  * The sound annotation represents a sound to be played when activated.
+ *
+ * @since 0.7 (KDE 4.1)
  */
 class OKULAR_EXPORT SoundAnnotation : public Annotation
 {
@@ -1339,17 +1359,35 @@ class OKULAR_EXPORT SoundAnnotation : public Annotation
          * Creates a new sound annotation.
          */
         SoundAnnotation();
-        SoundAnnotation( const QDomNode &node );
+        /**
+         * Creates a new sound annotation from the xml @p description
+         */
+        SoundAnnotation( const QDomNode &description );
         /**
          * Destroys the sound annotation.
          */
         virtual ~SoundAnnotation();
 
+        /**
+         * Gets the name of the icon.
+         */
         QString soundIconName() const;
-        void setSoundIconName( const QString &icon );
 
+        /**
+         * Sets the @p name of the icon for the sound annotation.
+         */
+        void setSoundIconName( const QString &name );
+
+        /**
+         * Gets the sound object.
+         */
         Sound* sound() const;
-        void setSound( Sound *sound );
+
+        /**
+         * Sets the @p object representing the sound of the file
+         * attachment annotation.
+         */
+        void setSound( Sound *object );
 
         /**
          * Returns the sub type of the sound annotation.

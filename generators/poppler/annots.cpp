@@ -11,7 +11,7 @@
 
 #include <okular/core/annotations.h>
 
-Okular::Annotation* createAnnotationFromPopplerAnnotation( const Poppler::Annotation *ann, bool *doDelete )
+Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool *doDelete )
 {
     Okular::Annotation *annotation = 0;
     *doDelete = true;

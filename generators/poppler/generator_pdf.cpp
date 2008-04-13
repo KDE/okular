@@ -199,7 +199,7 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 	return links;
 }
 
-extern Okular::Annotation* createAnnotationFromPopplerAnnotation( const Poppler::Annotation *ann, bool * doDelete );
+extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool * doDelete );
 
 /** NOTES on threading:
  * internal: thread race prevention is done via the 'docLock' mutex. the

@@ -1369,7 +1369,7 @@ void Part::slotPreferences()
 
 void Part::slotNewConfig()
 {
-    // Apply settings here. A good policy is to check wether the setting has
+    // Apply settings here. A good policy is to check whether the setting has
     // changed before applying changes.
 
     // Watch File
@@ -1400,7 +1400,7 @@ void Part::slotNewConfig()
 
 void Part::slotNewGeneratorConfig()
 {
-    // Apply settings here. A good policy is to check wether the setting has
+    // Apply settings here. A good policy is to check whether the setting has
     // changed before applying changes.
 
     // NOTE: it's not needed to reload the configuration of the Document,

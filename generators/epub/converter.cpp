@@ -92,7 +92,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
         if (!names.empty()) {
           for (QStringList::const_iterator lit = names.constBegin(); 
                lit != names.constEnd(); ++lit) {
-            mSectionMap.insert(name + "#" + *lit, bit);
+            mSectionMap.insert(name + '#' + *lit, bit);
           }
         }
         

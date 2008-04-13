@@ -109,7 +109,7 @@ void OkularLiveConnectExtension::postMessage( const QStringList &args )
         newarg.replace( '\'', "\\'" );
         arrayargs.append( "\"" + newarg + "\"" );
     }
-    const QString arrayarg = "[" + arrayargs.join( ", " ) + "]";
+    const QString arrayarg = '[' + arrayargs.join( ", " ) + ']';
     eval( "if (this.messageHandler && typeof this.messageHandler.onMessage == 'function') "
           "{ this.messageHandler.onMessage(" + arrayarg + ") }" );
 }

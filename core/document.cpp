@@ -62,6 +62,7 @@
 #include "page.h"
 #include "page_p.h"
 #include "pagecontroller_p.h"
+#include "scripter.h"
 #include "settings.h"
 #include "sourcereference.h"
 
@@ -1434,6 +1435,16 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
     d->m_docSize = document_size;
 
+    const QStringList docScripts = d->m_generator->metaData( "DocumentScripts", "JavaScript" ).toStringList();
+    if ( !docScripts.isEmpty() )
+    {
+        d->m_scripter = new Scripter( d );
+        Q_FOREACH ( const QString &docscript, docScripts )
+        {
+            d->m_scripter->execute( JavaScript, docscript );
+        }
+    }
+
     return true;
 }
 
@@ -1454,6 +1465,9 @@ void Document::closeDocument()
     // check if there's anything to close...
     if ( !d->m_generator )
         return;
+
+    delete d->m_scripter;
+    d->m_scripter = 0;
 
     QEventLoop loop;
     bool startEventLoop = false;
@@ -2628,6 +2642,13 @@ void Document::processAction( const Action * action )
         case Action::Sound: {
             const SoundAction * linksound = static_cast< const SoundAction * >( action );
             AudioPlayer::instance()->playSound( linksound->sound(), linksound );
+            } break;
+
+        case Action::Script: {
+            const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
+            if ( !d->m_scripter )
+                d->m_scripter = new Scripter( d );
+            d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
             } break;
 
         case Action::Movie:

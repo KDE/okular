@@ -36,6 +36,7 @@ struct RunningSearch;
 namespace Okular {
 class ConfigInterface;
 class SaveInterface;
+class Scripter;
 }
 
 struct GeneratorInfo
@@ -77,6 +78,7 @@ class DocumentPrivate
             m_generator( 0 ),
             m_generatorsLoaded( false ),
             m_closingLoop( 0 ),
+            m_scripter( 0 ),
             m_fontsCached( false )
         {
         }
@@ -188,6 +190,8 @@ class DocumentPrivate
         QStringList m_supportedMimeTypes;
 
         QEventLoop *m_closingLoop;
+
+        Scripter *m_scripter;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;

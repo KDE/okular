@@ -38,6 +38,7 @@ set(okularcore_SRCS
    core/pagesize.cpp
    core/pagetransition.cpp
    core/rotationjob.cpp
+   core/scripter.cpp
    core/sound.cpp
    core/sourcereference.cpp
    core/textdocumentgenerator.cpp

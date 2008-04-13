@@ -10,6 +10,7 @@
 #ifndef _OKULAR_ACTION_H_
 #define _OKULAR_ACTION_H_
 
+#include <okular/core/global.h>
 #include <okular/core/okular_export.h>
 
 #include <QtCore/QString>
@@ -22,6 +23,7 @@ class ExecuteActionPrivate;
 class BrowseActionPrivate;
 class DocumentActionPrivate;
 class SoundActionPrivate;
+class ScriptActionPrivate;
 class MovieActionPrivate;
 class Sound;
 class DocumentViewport;
@@ -45,7 +47,8 @@ class OKULAR_EXPORT Action
             Browse,     ///< Browse a given website
             DocAction,  ///< Start a custom action
             Sound,      ///< Play a sound
-            Movie       ///< Play a movie
+            Movie,      ///< Play a movie
+            Script,     ///< Executes a Script code
         };
 
         /**
@@ -331,6 +334,51 @@ class OKULAR_EXPORT SoundAction : public Action
     private:
         Q_DECLARE_PRIVATE( SoundAction )
         Q_DISABLE_COPY( SoundAction )
+};
+
+/**
+ * The Script action executes a Script code.
+ *
+ * @since 0.7 (KDE 4.1)
+ */
+class OKULAR_EXPORT ScriptAction : public Action
+{
+    public:
+        /**
+         * Creates a new Script action.
+         *
+         * @param script The code to execute.
+         */
+        ScriptAction( enum ScriptType type, const QString &script );
+
+        /**
+         * Destroys the browse action.
+         */
+        virtual ~ScriptAction();
+
+        /**
+         * Returns the action type.
+         */
+        ActionType actionType() const;
+
+        /**
+         * Returns the action tip.
+         */
+        QString actionTip() const;
+
+        /**
+         * Returns the type of action.
+         */
+        ScriptType scriptType() const;
+
+        /**
+         * Returns the code.
+         */
+        QString script() const;
+
+    private:
+        Q_DECLARE_PRIVATE( ScriptAction )
+        Q_DISABLE_COPY( ScriptAction )
 };
 
 #if 0

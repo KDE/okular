@@ -322,6 +322,58 @@ Okular::Sound *SoundAction::sound() const
     return d->m_sound;
 }
 
+// ScriptAction
+
+class Okular::ScriptActionPrivate : public Okular::ActionPrivate
+{
+    public:
+        ScriptActionPrivate( enum ScriptType type, const QString &script )
+            : ActionPrivate(), m_scriptType( type ), m_script( script )
+        {
+        }
+
+        ScriptType m_scriptType;
+        QString m_script;
+};
+
+ScriptAction::ScriptAction( enum ScriptType type, const QString &script )
+    : Action( *new ScriptActionPrivate( type, script ) )
+{
+}
+
+ScriptAction::~ScriptAction()
+{
+}
+
+Action::ActionType ScriptAction::actionType() const
+{
+    return Script;
+}
+
+QString ScriptAction::actionTip() const
+{
+    Q_D( const Okular::ScriptAction );
+    switch ( d->m_scriptType )
+    {
+        case JavaScript:
+            return i18n( "JavaScript Script" );
+    }
+
+    return QString();
+}
+
+ScriptType ScriptAction::scriptType() const
+{
+    Q_D( const Okular::ScriptAction );
+    return d->m_scriptType;
+}
+
+QString ScriptAction::script() const
+{
+    Q_D( const Okular::ScriptAction );
+    return d->m_script;
+}
+
 // MovieAction
 
 #if 0

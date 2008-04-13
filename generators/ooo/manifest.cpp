@@ -379,7 +379,7 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
 
     checkPassword( entry, fileData, &decryptedData );
     if ( !m_haveGoodPassword ) {
-      QMessageBox::information( 0,  i18n("Incorrect password"), i18n("The password is not correct.") );
+      KMessageBox::information( 0,  i18n("The password is not correct."), i18n("Incorrect password") );
     } else {
       // kDebug(OooDebug) << "Have good password";
     }

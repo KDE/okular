@@ -428,7 +428,7 @@ Annotation::RevisionType Annotation::Revision::type() const
 
 
 AnnotationPrivate::AnnotationPrivate()
-    : m_page( 0 ), m_flags( 0 )
+    : m_page( 0 ), m_flags( 0 ), m_disposeFunc( 0 )
 {
 }
 
@@ -554,6 +554,9 @@ Annotation::Annotation( AnnotationPrivate &dd, const QDomNode & annNode )
 
 Annotation::~Annotation()
 {
+    if ( d_ptr->m_disposeFunc )
+        d_ptr->m_disposeFunc( this );
+
     delete d_ptr;
 }
 
@@ -697,6 +700,24 @@ const QLinkedList< Annotation::Revision > & Annotation::revisions() const
 {
     Q_D( const Annotation );
     return d->m_revisions;
+}
+
+void Annotation::setNativeId( const QVariant &id )
+{
+    Q_D( Annotation );
+    d->m_nativeId = id;
+}
+
+QVariant Annotation::nativeId() const
+{
+    Q_D( const Annotation );
+    return d->m_nativeId;
+}
+
+void Annotation::setDisposeDataFunction( DisposeDataFunction func )
+{
+    Q_D( Annotation );
+    d->m_disposeFunc = func;
 }
 
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const

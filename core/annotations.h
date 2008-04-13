@@ -167,6 +167,16 @@ class OKULAR_EXPORT Annotation
         };
 
         /**
+         * A function to be called when the annotation is destroyed.
+         *
+         * @warning the function must *not* call any virtual function,
+         *          nor subcast.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        typedef void ( * DisposeDataFunction )( const Okular::Annotation * );
+
+        /**
          * Destroys the annotation.
          */
         virtual ~Annotation();
@@ -566,6 +576,36 @@ class OKULAR_EXPORT Annotation
          * Returns a reference to the revision list of the annotation.
          */
         const QLinkedList< Revision > & revisions() const;
+
+        /**
+         * Sets the "native" @p id of the annotation.
+         *
+         * This is for use of the Generator, that can optionally store an
+         * handle (a pointer, an identifier, etc) of the "native" annotation
+         * object, if any.
+         *
+         * @note Okular makes no use of this
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void setNativeId( const QVariant &id );
+
+        /**
+         * Returns the "native" id of the annotation.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        QVariant nativeId() const;
+
+        /**
+         * Sets a function to be called when the annotation is destroyed.
+         *
+         * @warning the function must *not* call any virtual function,
+         *          nor subcast.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void setDisposeDataFunction( DisposeDataFunction func );
 
         /**
          * Returns the sub type of the annotation.

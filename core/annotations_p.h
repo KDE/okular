@@ -16,6 +16,7 @@
 // qt/kde includes
 #include <QtCore/QDateTime>
 #include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <QtGui/QColor>
 
 class QMatrix;
@@ -57,6 +58,9 @@ class AnnotationPrivate
         Okular::Annotation::Style m_style;
         Okular::Annotation::Window m_window;
         QLinkedList< Okular::Annotation::Revision > m_revisions;
+
+        Annotation::DisposeDataFunction m_disposeFunc;
+        QVariant m_nativeId;
 };
 
 }

@@ -19,6 +19,8 @@
 
 Q_DECLARE_METATYPE( Poppler::Annotation* )
 
+extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
+
 static void disposeAnnotation( const Okular::Annotation *ann )
 {
     Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( ann->nativeId() );
@@ -43,6 +45,17 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             f->setFileIconName( attachann->fileIconName() );
             f->setEmbeddedFile( new PDFEmbeddedFile( attachann->embeddedFile() ) );
+
+            break;
+        }
+        case Poppler::Annotation::ASound:
+        {
+            Poppler::SoundAnnotation * soundann = static_cast< Poppler::SoundAnnotation * >( ann );
+            Okular::SoundAnnotation * s = new Okular::SoundAnnotation();
+            annotation = s;
+
+            s->setSoundIconName( soundann->soundIconName() );
+            s->setSound( createSoundFromPopplerSound( soundann->sound() ) );
 
             break;
         }

@@ -141,6 +141,9 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 	const Poppler::LinkBrowse *popplerLinkBrowse;
 	const Poppler::LinkAction *popplerLinkAction;
 	const Poppler::LinkSound *popplerLinkSound;
+#ifdef HAVE_POPPLER_0_9
+	const Poppler::LinkJavaScript *popplerLinkJS;
+#endif
 	Okular::DocumentViewport viewport;
 	
 	switch(popplerLink->linkType())
@@ -177,6 +180,15 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
 		}
 		break;
+		
+#ifdef HAVE_POPPLER_0_9
+		case Poppler::Link::JavaScript:
+		{
+			popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
+			link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
+		}
+		break;
+#endif
 		
 		case Poppler::Link::Movie:
 			// not implemented
@@ -897,6 +909,12 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
             return true;
     }
+#ifdef HAVE_POPPLER_0_9
+    else if ( key == "DocumentScripts" && option.toString() == "JavaScript" )
+    {
+        return pdfdoc->scripts();
+    }
+#endif
     return QVariant();
 }
 

@@ -109,6 +109,30 @@ static void fillViewportFromLinkDestination( Okular::DocumentViewport &viewport,
 //     }
 }
 
+Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound )
+{
+    Okular::Sound *sound = popplerSound->soundType() == Poppler::SoundObject::Embedded ? new Okular::Sound( popplerSound->data() ) : new Okular::Sound( popplerSound->url() );
+    sound->setSamplingRate( popplerSound->samplingRate() );
+    sound->setChannels( popplerSound->channels() );
+    sound->setBitsPerSample( popplerSound->bitsPerSample() );
+    switch ( popplerSound->soundEncoding() )
+    {
+        case Poppler::SoundObject::Raw:
+            sound->setSoundEncoding( Okular::Sound::Raw );
+            break;
+        case Poppler::SoundObject::Signed:
+            sound->setSoundEncoding( Okular::Sound::Signed );
+            break;
+        case Poppler::SoundObject::muLaw:
+            sound->setSoundEncoding( Okular::Sound::muLaw );
+            break;
+        case Poppler::SoundObject::ALaw:
+            sound->setSoundEncoding( Okular::Sound::ALaw );
+            break;
+    }
+    return sound;
+}
+
 static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
 	Okular::Action *link = 0;
@@ -149,25 +173,7 @@ static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 		{
 			popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
 			Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
-			Okular::Sound *sound = popplerSound->soundType() == Poppler::SoundObject::Embedded ? new Okular::Sound( popplerSound->data() ) : new Okular::Sound( popplerSound->url() );
-			sound->setSamplingRate( popplerSound->samplingRate() );
-			sound->setChannels( popplerSound->channels() );
-			sound->setBitsPerSample( popplerSound->bitsPerSample() );
-			switch ( popplerSound->soundEncoding() )
-			{
-				case Poppler::SoundObject::Raw:
-					sound->setSoundEncoding( Okular::Sound::Raw );
-					break;
-				case Poppler::SoundObject::Signed:
-					sound->setSoundEncoding( Okular::Sound::Signed );
-					break;
-				case Poppler::SoundObject::muLaw:
-					sound->setSoundEncoding( Okular::Sound::muLaw );
-					break;
-				case Poppler::SoundObject::ALaw:
-					sound->setSoundEncoding( Okular::Sound::ALaw );
-					break;
-			}
+			Okular::Sound *sound = createSoundFromPopplerSound( popplerSound );
 			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
 		}
 		break;

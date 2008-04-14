@@ -16,6 +16,7 @@
 
 #include "core/annotations.h"
 #include "core/document.h"
+#include "guiutils.h"
 
 AnnotationPopup::AnnotationPopup( Okular::Document *document,
                                   QWidget *parent )
@@ -38,6 +39,8 @@ void AnnotationPopup::exec( const QPoint &point )
     QAction *popoutWindow = 0;
     QAction *deleteNote = 0;
     QAction *showProperties = 0;
+    QAction *saveAttachment = 0;
+    Okular::FileAttachmentAnnotation *fileAttachAnnot = 0;
 
     const bool onlyOne = mAnnotations.count() == 1;
 
@@ -52,6 +55,14 @@ void AnnotationPopup::exec( const QPoint &point )
 
     showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
     showProperties->setEnabled( onlyOne );
+
+    if ( onlyOne && mAnnotations.first().first->subType() == Okular::Annotation::AFileAttachment )
+    {
+        menu.addSeparator();
+        fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( mAnnotations.first().first );
+        const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
+        saveAttachment = menu.addAction( KIcon( "document-save" ), saveText );
+    }
 
     QAction *choice = menu.exec( point.isNull() ? QCursor::pos() : point );
 
@@ -72,6 +83,9 @@ void AnnotationPopup::exec( const QPoint &point )
                 AnnotsPropertiesDialog propdialog( mParent, mDocument, mAnnotations.first().second, mAnnotations.first().first );
                 propdialog.exec();
             }
+        } else if( choice == saveAttachment ) {
+            Q_ASSERT( fileAttachAnnot );
+            GuiUtils::saveEmbeddedFile( fileAttachAnnot->embeddedFile(), mParent );
         }
     }
 }

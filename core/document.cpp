@@ -1206,9 +1206,6 @@ Document::Document( QWidget *widget )
 
 Document::~Document()
 {
-    // stop any audio playback
-    AudioPlayer::instance()->stopPlaybacks();
-
     // delete generator, pages, and related stuff
     closeDocument();
 
@@ -1492,6 +1489,9 @@ void Document::closeDocument()
         d->m_fontThread->wait();
         d->m_fontThread = 0;
     }
+
+    // stop any audio playback
+    AudioPlayer::instance()->stopPlaybacks();
 
     // close the current document and save document info if a document is still opened
     if ( d->m_generator && d->m_pagesVector.size() > 0 )

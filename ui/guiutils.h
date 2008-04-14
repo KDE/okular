@@ -12,10 +12,12 @@
 
 #include <QtCore/QString>
 
+class QWidget;
 class KIconLoader;
 
 namespace Okular {
 class Annotation;
+class EmbeddedFile;
 }
 
 namespace GuiUtils
@@ -35,6 +37,8 @@ namespace GuiUtils
 
     void setIconLoader( KIconLoader * loader );
     KIconLoader* iconLoader();
+
+    void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent );
 }
 
 

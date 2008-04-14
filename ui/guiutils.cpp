@@ -11,12 +11,15 @@
 
 // qt/kde includes
 #include <qtextdocument.h>
+#include <kfiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 // local includes
 #include "core/annotations.h"
+#include "core/document.h"
 
 struct GuiUtilsHelper
 {
@@ -158,6 +161,28 @@ void setIconLoader( KIconLoader * loader )
 KIconLoader* iconLoader()
 {
     return s_data->il ? s_data->il : KIconLoader::global();
+}
+
+void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
+{
+    const QString caption = i18n( "Where do you want to save %1?", ef->name() );
+    const QString path = KFileDialog::getSaveFileName( ef->name(), QString(), parent, caption );
+    if ( path.isEmpty() )
+        return;
+
+    QFile f( path );
+    if ( !f.exists() || KMessageBox::warningContinueCancel( parent, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18n( "Overwrite" ) ) ) == KMessageBox::Continue )
+    {
+        if ( f.open( QIODevice::WriteOnly ) )
+        {
+            f.write( ef->data() );
+            f.close();
+        }
+        else
+        {
+            KMessageBox::error( parent, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
+        }
+    }
 }
 
 }

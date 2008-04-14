@@ -15,14 +15,14 @@
 #include <QMenu>
 #include <QTreeWidget>
 
-#include <kfiledialog.h>
 #include <kglobal.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kmimetype.h>
+#include <kstandardguiitem.h>
 
 #include "core/document.h"
+#include "guiutils.h"
 
 Q_DECLARE_METATYPE( Okular::EmbeddedFile* )
 
@@ -118,23 +118,7 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
 
 void EmbeddedFilesDialog::saveFile( Okular::EmbeddedFile* ef )
 {
-    QString path = KFileDialog::getSaveFileName( ef->name(), QString(), this, i18n( "Where do you want to save %1?", ef->name() ) );
-    if ( path.isEmpty() )
-        return;
-
-    QFile f(path);
-    if ( !f.exists() || KMessageBox::warningContinueCancel( this, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18n( "Overwrite" ) ) ) == KMessageBox::Continue )
-    {
-        if (f.open( QIODevice::WriteOnly ))
-        {
-            f.write( ef->data() );
-            f.close();
-        }
-        else
-        {
-            KMessageBox::error( this, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
-        }
-    }
+    GuiUtils::saveEmbeddedFile( ef, this );
 }
 
 #include "embeddedfilesdialog.moc"

@@ -48,7 +48,7 @@ class OKULAR_EXPORT Action
             DocAction,  ///< Start a custom action
             Sound,      ///< Play a sound
             Movie,      ///< Play a movie
-            Script,     ///< Executes a Script code
+            Script      ///< Executes a Script code
         };
 
         /**

@@ -607,7 +607,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     }
                     if ( geom->style().width() ) // need to check the original size here..
                     {
-                        mixedPainter->setPen( QPen( QBrush( acolor ), width * 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+                        mixedPainter->setPen( QPen( QBrush( acolor ), width * 2, a->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine ) );
                         mixedPainter->setBrush( Qt::NoBrush );
                         if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
                             mixedPainter->drawRect( r );

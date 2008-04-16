@@ -165,7 +165,7 @@ Q_OBJECT
         // activated either directly or via QTimer on the viewportResizeEvent
         void slotRelayoutPages();
         // activated either directly or via the contentsMoving(int,int) signal
-        void slotRequestVisiblePixmaps();
+        void slotRequestVisiblePixmaps( int newValue = -1 );
         // activated by the viewport move timer
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)

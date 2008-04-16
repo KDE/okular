@@ -356,8 +356,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     setWidgetResizable(true);
 
     // conntect the padding of the viewport to pixmaps requests
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps()));
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
     connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
 
     // set a corner button to resize the view to the page size
@@ -2799,7 +2799,7 @@ void PageView::slotRelayoutPages()
         widget()->update();
 }
 
-void PageView::slotRequestVisiblePixmaps()
+void PageView::slotRequestVisiblePixmaps( int newValue )
 {
     // if requests are blocked (because raised by an unwanted event), exit
     if ( d->blockPixmapsRequest || d->viewportMoveActive ||
@@ -2807,7 +2807,7 @@ void PageView::slotRequestVisiblePixmaps()
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
-    bool isEvent = !d->blockViewport;
+    bool isEvent = newValue != -1 && !d->blockViewport;
     QRect viewportRect( horizontalScrollBar()->value(),
                         verticalScrollBar()->value(),
                         viewport()->width(), viewport()->height() );

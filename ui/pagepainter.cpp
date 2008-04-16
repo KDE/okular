@@ -35,6 +35,18 @@ K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIco
 
 #define TEXTANNOTATION_ICONSIZE 24
 
+inline QPen buildPen( const Okular::Annotation *ann, double width, const QColor &color )
+{
+    QPen p(
+        QBrush( color ),
+        width,
+        ann->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine,
+        Qt::SquareCap,
+        Qt::MiterJoin
+    );
+    return p;
+}
+
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
@@ -336,9 +348,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                         path.append( point );
                     }
 
+                    const QPen linePen = buildPen( a, a->style().width(), a->style().color() );
+
                     // draw the line as normalized path into image
                     drawShapeOnImage( backImage, path, la->lineClosed(),
-                                      QPen( a->style().color(), a->style().width() ),
+                                      linePen,
                                       QBrush(), pageScale ,Multiply);
 
                     if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
@@ -380,8 +394,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path3.append( path[1] );
                         }
 
-                        drawShapeOnImage( backImage, path2, false, QPen( a->style().color(), a->style().width() ), QBrush(), pageScale, Multiply );
-                        drawShapeOnImage( backImage, path3, false, QPen( a->style().color(), a->style().width() ), QBrush(), pageScale, Multiply );
+                        drawShapeOnImage( backImage, path2, false, linePen, QBrush(), pageScale, Multiply );
+                        drawShapeOnImage( backImage, path3, false, linePen, QBrush(), pageScale, Multiply );
                     }
                 }
                 // draw HighlightAnnotation MISSING: under/strike width, feather, capping
@@ -452,6 +466,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     // draw each ink path
                     const QList< QLinkedList<Okular::NormalizedPoint> > transformedInkPaths = ia->transformedInkPaths();
 
+                    const QPen inkPen = buildPen( a, a->style().width(), acolor );
+
                     int paths = transformedInkPaths.size();
                     for ( int p = 0; p < paths; p++ )
                     {
@@ -469,7 +485,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                             path.append( point );
                         }
                         // draw the normalized path into image
-                        drawShapeOnImage( backImage, path, false, QPen( acolor, a->style().width() ), QBrush(), pageScale );
+                        drawShapeOnImage( backImage, path, false, inkPen, QBrush(), pageScale );
                     }
                 }
             } // end current annotation drawing
@@ -607,7 +623,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
                     }
                     if ( geom->style().width() ) // need to check the original size here..
                     {
-                        mixedPainter->setPen( QPen( QBrush( acolor ), width * 2, a->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine ) );
+                        mixedPainter->setPen( buildPen( a, width * 2, acolor ) );
                         mixedPainter->setBrush( Qt::NoBrush );
                         if ( geom->geometricalType() == Okular::GeomAnnotation::InscribedSquare )
                             mixedPainter->drawRect( r );

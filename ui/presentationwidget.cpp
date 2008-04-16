@@ -500,8 +500,15 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
     // check painting rect consistancy
     QRect r = pe->rect().intersect( QRect( QPoint( 0, 0 ), geometry().size() ) );
-    if ( r.isNull() || m_lastRenderedPixmap.isNull() )
+    if ( r.isNull() )
         return;
+
+    if ( m_lastRenderedPixmap.isNull() )
+    {
+        QPainter painter( this );
+        painter.fillRect( pe->rect(), Okular::Settings::slidesBackgroundColor() );
+        return;
+    }
 
     // blit the pixmap to the screen
     QVector<QRect> allRects = pe->region().rects();

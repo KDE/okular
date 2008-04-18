@@ -323,12 +323,12 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     gb->setTitle( i18n( "Line Extensions" ) );
     QGridLayout * gridlay = new QGridLayout( gb );
     QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
-    gridlay->addWidget( tmplabel, 0, 0 );
+    gridlay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     m_spinLL = new QDoubleSpinBox( gb );
     gridlay->addWidget( m_spinLL, 0, 1 );
     tmplabel->setBuddy( m_spinLL );
     tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
-    gridlay->addWidget( tmplabel, 1, 0 );
+    gridlay->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     m_spinLLE = new QDoubleSpinBox( gb );
     gridlay->addWidget( m_spinLLE, 1, 1 );
     tmplabel->setBuddy( m_spinLLE );
@@ -339,7 +339,7 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     gb2->setTitle( i18n( "Style" ) );
     QGridLayout * gridlay2 = new QGridLayout( gb2 );
     QLabel * tmplabel2 = new QLabel( i18n( "&Size:" ), gb2 );
-    gridlay2->addWidget( tmplabel2, 0, 0 );
+    gridlay2->addWidget( tmplabel2, 0, 0, Qt::AlignRight );
     m_spinSize = new QDoubleSpinBox( gb2 );
     gridlay2->addWidget( m_spinSize, 0, 1 );
     tmplabel2->setBuddy( m_spinSize );
@@ -390,7 +390,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
     QHBoxLayout * typelay = new QHBoxLayout();
     lay->addLayout( typelay );
     QLabel * tmplabel = new QLabel( i18n( "Type:" ), widget );
-    typelay->addWidget( tmplabel );
+    typelay->addWidget( tmplabel, 0, Qt::AlignRight );
     m_typeCombo = new KComboBox( widget );
     tmplabel->setBuddy( m_typeCombo );
     typelay->addWidget( m_typeCombo );
@@ -425,7 +425,7 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
     QGridLayout * lay = new QGridLayout( widget );
     lay->setMargin( 0 );
     QLabel * tmplabel = new QLabel( i18n( "Type:" ), widget );
-    lay->addWidget( tmplabel, 0, 0 );
+    lay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     m_typeCombo = new KComboBox( widget );
     tmplabel->setBuddy( m_typeCombo );
     lay->addWidget( m_typeCombo, 0, 1 );
@@ -434,7 +434,7 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
     m_innerColor = new KColorButton( widget );
     lay->addWidget( m_innerColor, 1, 1 );
     tmplabel = new QLabel( i18n( "&Size:" ), widget );
-    lay->addWidget( tmplabel, 2, 0 );
+    lay->addWidget( tmplabel, 2, 0, Qt::AlignRight );
     m_spinSize = new QDoubleSpinBox( widget );
     lay->addWidget( m_spinSize, 2, 1 );
     tmplabel->setBuddy( m_spinSize );

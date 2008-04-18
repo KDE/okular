@@ -62,6 +62,11 @@ NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
 }
 
 
+TextPagePrivate::TextPagePrivate()
+    : m_page( 0 )
+{
+}
+
 TextPagePrivate::TextPagePrivate( const TextEntity::List &words )
     : m_words( words ), m_page( 0 )
 {
@@ -75,7 +80,7 @@ TextPagePrivate::~TextPagePrivate()
 
 
 TextPage::TextPage()
-    : d( new TextPagePrivate( TextEntity::List() ) )
+    : d( new TextPagePrivate() )
 {
 }
 

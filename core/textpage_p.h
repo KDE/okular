@@ -26,6 +26,7 @@ class PagePrivate;
 class TextPagePrivate
 {
     public:
+        TextPagePrivate();
         TextPagePrivate( const TextEntity::List &words );
         ~TextPagePrivate();
 

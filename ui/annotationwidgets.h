@@ -76,6 +76,7 @@ public:
     virtual Okular::Annotation::SubType annotationType() const;
 
     QWidget * styleWidget();
+    QWidget * extraWidget();
 
     virtual void applyChanges() = 0;
 
@@ -86,9 +87,11 @@ protected:
     AnnotationWidget( Okular::Annotation * ann );
 
     virtual QWidget * createStyleWidget() = 0;
+    virtual QWidget * createExtraWidget();
 
     Okular::Annotation * m_ann;
     QWidget * m_styleWidget;
+    QWidget * m_extraWidget;
 };
 
 class TextAnnotationWidget
@@ -186,6 +189,24 @@ private:
     QCheckBox * m_useColor;
     KColorButton * m_innerColor;
     QDoubleSpinBox * m_spinSize;
+};
+
+class FileAttachmentAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    FileAttachmentAnnotationWidget( Okular::Annotation * ann );
+
+    virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
+    virtual QWidget * createExtraWidget();
+
+private:
+    Okular::FileAttachmentAnnotation * m_attachAnn;
 };
 
 #endif

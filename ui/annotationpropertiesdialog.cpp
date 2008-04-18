@@ -112,6 +112,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
 
+    QWidget * extraWidget = 0;
+    if ( m_annotWidget && ( extraWidget = m_annotWidget->extraWidget() ) )
+    {
+        addPage( extraWidget, extraWidget->windowTitle() );
+    }
+
     //BEGIN connections
     connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );
     connect( m_opacity, SIGNAL( valueChanged( int ) ), this, SLOT( setModified() ) );

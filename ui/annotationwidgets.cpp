@@ -19,11 +19,16 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kfontrequester.h>
+#include <kicon.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <ksqueezedtextlabel.h>
 
+#include "core/document.h"
 #include "guiutils.h"
+
+#define FILEATTACH_ICONSIZE 48
 
 PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
   : QWidget( parent )
@@ -132,6 +137,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         case Okular::Annotation::AGeom:
             return new GeomAnnotationWidget( ann );
             break;
+        case Okular::Annotation::AFileAttachment:
+            return new FileAttachmentAnnotationWidget( ann );
+            break;
         // shut up gcc
         default:
             ;
@@ -142,7 +150,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann ), m_styleWidget( 0 )
+    : QObject(), m_ann( ann ), m_styleWidget( 0 ), m_extraWidget( 0 )
 {
 }
 
@@ -162,6 +170,20 @@ QWidget * AnnotationWidget::styleWidget()
 
     m_styleWidget = createStyleWidget();
     return m_styleWidget;
+}
+
+QWidget * AnnotationWidget::extraWidget()
+{
+    if ( m_extraWidget )
+        return m_extraWidget;
+
+    m_extraWidget = createExtraWidget();
+    return m_extraWidget;
+}
+
+QWidget * AnnotationWidget::createExtraWidget()
+{
+    return 0;
 }
 
 
@@ -454,5 +476,62 @@ void GeomAnnotationWidget::applyChanges()
     }
     m_geomAnn->style().setWidth( m_spinSize->value() );
 }
+
+
+
+FileAttachmentAnnotationWidget::FileAttachmentAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann )
+{
+    m_attachAnn = static_cast< Okular::FileAttachmentAnnotation * >( ann );
+}
+
+QWidget * FileAttachmentAnnotationWidget::createStyleWidget()
+{
+    return 0;
+}
+
+QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
+{
+    QWidget * widget = new QWidget();
+    widget->setWindowTitle( i18nc( "'File' as normal file, that can be opened, saved, etc..", "File" ) );
+
+    Okular::EmbeddedFile *ef = m_attachAnn->embeddedFile();
+    const int size = ef->size();
+    const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KGlobal::locale()->formatByteSize( size );
+
+    QGridLayout * lay = new QGridLayout( widget );
+    lay->setMargin( 0 );
+    QLabel * tmplabel = new QLabel( i18n( "Name: %1", ef->name() ), widget );
+    tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
+    lay->addWidget( tmplabel, 0, 0 );
+
+    tmplabel = new QLabel( i18n( "Size: %1", sizeString ), widget );
+    tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
+    lay->addWidget( tmplabel, 1, 0 );
+
+    tmplabel = new QLabel( i18n( "Description:" ), widget );
+    lay->addWidget( tmplabel, 2, 0 );
+    tmplabel = new KSqueezedTextLabel( ef->description(), widget );
+    tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
+    lay->addWidget( tmplabel, 3, 0, 1, 2 );
+
+    KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
+    if ( mime )
+    {
+        tmplabel = new QLabel( widget );
+        tmplabel->setPixmap( KIcon( mime->iconName() ).pixmap( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE ) );
+        tmplabel->setFixedSize( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE );
+        lay->addWidget( tmplabel, 0, 1, 3, 1, Qt::AlignTop );
+    }
+
+    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 4, 0 );
+
+    return widget;
+}
+
+void FileAttachmentAnnotationWidget::applyChanges()
+{
+}
+
 
 #include "annotationwidgets.moc"

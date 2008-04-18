@@ -59,8 +59,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     QGridLayout * gridlayout = new QGridLayout( page );
 
     tmplabel = new QLabel( i18n( "&Color:" ), page );
-    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
-    gridlayout->addWidget( tmplabel, 0, 0 );
+    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     colorBn = new KColorButton( page );
     colorBn->setColor( ann->style().color() );
     colorBn->setEnabled( canEditAnnotations );
@@ -68,8 +67,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addWidget( colorBn, 0, 1 );
 
     tmplabel = new QLabel( i18n( "&Opacity:" ), page );
-    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
-    gridlayout->addWidget( tmplabel, 1, 0 );
+    gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     m_opacity = new KIntNumInput( page );
     m_opacity->setRange( 0, 100 );
     m_opacity->setValue( (int)( ann->style().opacity() * 100 ) );
@@ -94,11 +92,10 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 //    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
     gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
-    tmplabel->setAlignment( ( tmplabel->alignment() & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight );
     AuthorEdit = new QLineEdit( ann->author(), page );
     AuthorEdit->setEnabled( canEditAnnotations );
     tmplabel->setBuddy( AuthorEdit );
-    gridlayout->addWidget( tmplabel, 0, 0 );
+    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     gridlayout->addWidget( AuthorEdit, 0, 1 );
     
     tmplabel = new QLabel( page );

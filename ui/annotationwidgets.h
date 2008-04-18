@@ -75,7 +75,7 @@ public:
 
     virtual Okular::Annotation::SubType annotationType() const;
 
-    virtual QWidget * widget() = 0;
+    QWidget * styleWidget();
 
     virtual void applyChanges() = 0;
 
@@ -85,7 +85,10 @@ signals:
 protected:
     AnnotationWidget( Okular::Annotation * ann );
 
+    virtual QWidget * createStyleWidget() = 0;
+
     Okular::Annotation * m_ann;
+    QWidget * m_styleWidget;
 };
 
 class TextAnnotationWidget
@@ -96,13 +99,13 @@ class TextAnnotationWidget
 public:
     TextAnnotationWidget( Okular::Annotation * ann );
 
-    virtual QWidget * widget();
-
     virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
 
 private:
     Okular::TextAnnotation * m_textAnn;
-    QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
     KFontRequester * m_fontReq;
 };
@@ -115,13 +118,13 @@ class StampAnnotationWidget
 public:
     StampAnnotationWidget( Okular::Annotation * ann );
 
-    virtual QWidget * widget();
-
     virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
 
 private:
     Okular::StampAnnotation * m_stampAnn;
-    QWidget * m_widget;
     PixmapPreviewSelector * m_pixmapSelector;
 };
 
@@ -133,14 +136,14 @@ class LineAnnotationWidget
 public:
     LineAnnotationWidget( Okular::Annotation * ann );
 
-    virtual QWidget * widget();
-
     virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
 
 private:
     Okular::LineAnnotation * m_lineAnn;
     int m_lineType;
-    QWidget * m_widget;
     QDoubleSpinBox * m_spinLL;
     QDoubleSpinBox * m_spinLLE;
     QDoubleSpinBox * m_spinSize;
@@ -154,13 +157,13 @@ class HighlightAnnotationWidget
 public:
     HighlightAnnotationWidget( Okular::Annotation * ann );
 
-    virtual QWidget * widget();
-
     virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
 
 private:
     Okular::HighlightAnnotation * m_hlAnn;
-    QWidget * m_widget;
     QComboBox * m_typeCombo;
 };
 
@@ -172,13 +175,13 @@ class GeomAnnotationWidget
 public:
     GeomAnnotationWidget( Okular::Annotation * ann );
 
-    virtual QWidget * widget();
-
     virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
 
 private:
     Okular::GeomAnnotation * m_geomAnn;
-    QWidget * m_widget;
     QComboBox * m_typeCombo;
     QCheckBox * m_useColor;
     KColorButton * m_innerColor;

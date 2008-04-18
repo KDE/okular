@@ -142,7 +142,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann )
+    : QObject(), m_ann( ann ), m_styleWidget( 0 )
 {
 }
 
@@ -155,25 +155,31 @@ Okular::Annotation::SubType AnnotationWidget::annotationType() const
     return m_ann->subType();
 }
 
+QWidget * AnnotationWidget::styleWidget()
+{
+    if ( m_styleWidget )
+        return m_styleWidget;
+
+    m_styleWidget = createStyleWidget();
+    return m_styleWidget;
+}
+
 
 TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
 {
     m_textAnn = static_cast< Okular::TextAnnotation * >( ann );
 }
 
-QWidget * TextAnnotationWidget::widget()
+QWidget * TextAnnotationWidget::createStyleWidget()
 {
-    if ( m_widget )
-        return m_widget;
-
-    m_widget = new QWidget();
-    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
     lay->setMargin( 0 );
 
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
-    QGroupBox * gb = new QGroupBox( m_widget );
+    QGroupBox * gb = new QGroupBox( widget );
     lay->addWidget( gb );
     gb->setTitle( i18n( "Icon" ) );
     QHBoxLayout * gblay = new QHBoxLayout( gb );
@@ -193,9 +199,9 @@ QWidget * TextAnnotationWidget::widget()
     }
 
     QHBoxLayout * fontlay = new QHBoxLayout();
-    QLabel * tmplabel = new QLabel( i18n( "Font:" ), m_widget );
+    QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
     fontlay->addWidget( tmplabel );
-    m_fontReq = new KFontRequester( m_widget );
+    m_fontReq = new KFontRequester( widget );
     fontlay->addWidget( m_fontReq );
     lay->addLayout( fontlay );
 
@@ -203,7 +209,7 @@ QWidget * TextAnnotationWidget::widget()
 
     connect( m_fontReq, SIGNAL( fontSelected( const QFont& ) ), this, SIGNAL( dataChanged() ) );
 
-    return m_widget;
+    return widget;
 }
 
 void TextAnnotationWidget::applyChanges()
@@ -217,20 +223,17 @@ void TextAnnotationWidget::applyChanges()
 
 
 StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
 {
     m_stampAnn = static_cast< Okular::StampAnnotation * >( ann );
 }
 
-QWidget * StampAnnotationWidget::widget()
+QWidget * StampAnnotationWidget::createStyleWidget()
 {
-    if ( m_widget )
-        return m_widget;
-
-    m_widget = new QWidget();
-    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
     lay->setMargin( 0 );
-    QGroupBox * gb = new QGroupBox( m_widget );
+    QGroupBox * gb = new QGroupBox( widget );
     lay->addWidget( gb );
     gb->setTitle( i18n( "Stamp Symbol" ) );
     QHBoxLayout * gblay = new QHBoxLayout( gb );
@@ -264,7 +267,7 @@ QWidget * StampAnnotationWidget::widget()
 
     connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
 
-    return m_widget;
+    return widget;
 }
 
 void StampAnnotationWidget::applyChanges()
@@ -275,7 +278,7 @@ void StampAnnotationWidget::applyChanges()
 
 
 LineAnnotationWidget::LineAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 )
+    : AnnotationWidget( ann )
 {
     m_lineAnn = static_cast< Okular::LineAnnotation * >( ann );
     if ( m_lineAnn->linePoints().count() == 2 )
@@ -286,17 +289,14 @@ LineAnnotationWidget::LineAnnotationWidget( Okular::Annotation * ann )
         m_lineType = 2; // polyline
 }
 
-QWidget * LineAnnotationWidget::widget()
+QWidget * LineAnnotationWidget::createStyleWidget()
 {
-    if ( m_widget )
-        return m_widget;
-
-    m_widget = new QWidget();
-    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
     lay->setMargin( 0 );
     if ( m_lineType == 0 )
     {
-    QGroupBox * gb = new QGroupBox( m_widget );
+    QGroupBox * gb = new QGroupBox( widget );
     lay->addWidget( gb );
     gb->setTitle( i18n( "Line Extensions" ) );
     QGridLayout * gridlay = new QGridLayout( gb );
@@ -312,7 +312,7 @@ QWidget * LineAnnotationWidget::widget()
     tmplabel->setBuddy( m_spinLLE );
     }
 
-    QGroupBox * gb2 = new QGroupBox( m_widget );
+    QGroupBox * gb2 = new QGroupBox( widget );
     lay->addWidget( gb2 );
     gb2->setTitle( i18n( "Style" ) );
     QGridLayout * gridlay2 = new QGridLayout( gb2 );
@@ -339,7 +339,7 @@ QWidget * LineAnnotationWidget::widget()
     }
     connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
 
-    return m_widget;
+    return widget;
 }
 
 void LineAnnotationWidget::applyChanges()
@@ -355,24 +355,21 @@ void LineAnnotationWidget::applyChanges()
 
 
 HighlightAnnotationWidget::HighlightAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 )
+    : AnnotationWidget( ann )
 {
     m_hlAnn = static_cast< Okular::HighlightAnnotation * >( ann );
 }
 
-QWidget * HighlightAnnotationWidget::widget()
+QWidget * HighlightAnnotationWidget::createStyleWidget()
 {
-    if ( m_widget )
-        return m_widget;
-
-    m_widget = new QWidget();
-    QVBoxLayout * lay = new QVBoxLayout( m_widget );
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
     lay->setMargin( 0 );
     QHBoxLayout * typelay = new QHBoxLayout();
     lay->addLayout( typelay );
-    QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
+    QLabel * tmplabel = new QLabel( i18n( "Type:" ), widget );
     typelay->addWidget( tmplabel );
-    m_typeCombo = new KComboBox( m_widget );
+    m_typeCombo = new KComboBox( widget );
     tmplabel->setBuddy( m_typeCombo );
     typelay->addWidget( m_typeCombo );
 
@@ -384,7 +381,7 @@ QWidget * HighlightAnnotationWidget::widget()
 
     connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
 
-    return m_widget;
+    return widget;
 }
 
 void HighlightAnnotationWidget::applyChanges()
@@ -395,31 +392,28 @@ void HighlightAnnotationWidget::applyChanges()
 
 
 GeomAnnotationWidget::GeomAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_widget( 0 )
+    : AnnotationWidget( ann )
 {
     m_geomAnn = static_cast< Okular::GeomAnnotation * >( ann );
 }
 
-QWidget * GeomAnnotationWidget::widget()
+QWidget * GeomAnnotationWidget::createStyleWidget()
 {
-    if ( m_widget )
-        return m_widget;
-
-    m_widget = new QWidget();
-    QGridLayout * lay = new QGridLayout( m_widget );
+    QWidget * widget = new QWidget();
+    QGridLayout * lay = new QGridLayout( widget );
     lay->setMargin( 0 );
-    QLabel * tmplabel = new QLabel( i18n( "Type:" ), m_widget );
+    QLabel * tmplabel = new QLabel( i18n( "Type:" ), widget );
     lay->addWidget( tmplabel, 0, 0 );
-    m_typeCombo = new KComboBox( m_widget );
+    m_typeCombo = new KComboBox( widget );
     tmplabel->setBuddy( m_typeCombo );
     lay->addWidget( m_typeCombo, 0, 1 );
-    m_useColor = new QCheckBox( i18n( "Inner color:" ), m_widget );
+    m_useColor = new QCheckBox( i18n( "Inner color:" ), widget );
     lay->addWidget( m_useColor, 1, 0 );
-    m_innerColor = new KColorButton( m_widget );
+    m_innerColor = new KColorButton( widget );
     lay->addWidget( m_innerColor, 1, 1 );
-    tmplabel = new QLabel( i18n( "&Size:" ), m_widget );
+    tmplabel = new QLabel( i18n( "&Size:" ), widget );
     lay->addWidget( tmplabel, 2, 0 );
-    m_spinSize = new QDoubleSpinBox( m_widget );
+    m_spinSize = new QDoubleSpinBox( widget );
     lay->addWidget( m_spinSize, 2, 1 );
     tmplabel->setBuddy( m_spinSize );
 
@@ -444,7 +438,7 @@ QWidget * GeomAnnotationWidget::widget()
     connect( m_useColor, SIGNAL( toggled( bool ) ), m_innerColor, SLOT( setEnabled( bool ) ) );
     connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
 
-    return m_widget;
+    return widget;
 }
 
 void GeomAnnotationWidget::applyChanges()
@@ -460,8 +454,5 @@ void GeomAnnotationWidget::applyChanges()
     }
     m_geomAnn->style().setWidth( m_spinSize->value() );
 }
-
-
-
 
 #include "annotationwidgets.moc"

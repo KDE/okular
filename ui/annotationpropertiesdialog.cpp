@@ -79,7 +79,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addWidget( m_opacity, 1, 1 );
 
     QWidget * configWidget = 0;
-    if ( m_annotWidget && ( configWidget = m_annotWidget->widget() ) )
+    if ( m_annotWidget && ( configWidget = m_annotWidget->styleWidget() ) )
     {
         gridlayout->addWidget( configWidget, 2, 0, 1, 2 );
         configWidget->setEnabled( canEditAnnotations );

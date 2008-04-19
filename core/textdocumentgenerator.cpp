@@ -275,6 +275,9 @@ bool TextDocumentGenerator::doCloseDocument()
     d->mLinkPositions.clear();
     d->mLinkInfos.clear();
     d->mAnnotationInfos.clear();
+    // do not use clear() for the following two, otherwise they change type
+    d->mDocumentInfo = Okular::DocumentInfo();
+    d->mDocumentSynopsis = Okular::DocumentSynopsis();
 
     return true;
 }

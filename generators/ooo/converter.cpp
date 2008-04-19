@@ -62,14 +62,12 @@ QTextCharFormat Style::textFormat() const
 
 Converter::Converter()
   : mTextDocument( 0 ), mCursor( 0 ),
-    mStyleInformation( new StyleInformation )
+    mStyleInformation( 0 )
 {
 }
 
 Converter::~Converter()
 {
-  delete mStyleInformation;
-  mStyleInformation = 0;
 }
 
 QTextDocument* Converter::convert( const QString &fileName )
@@ -98,6 +96,8 @@ QTextDocument* Converter::convert( const QString &fileName )
     delete mCursor;
     return false;
   }
+
+  mStyleInformation = new StyleInformation();
 
   /**
    * Read the style properties, so the are available when
@@ -160,6 +160,8 @@ QTextDocument* Converter::convert( const QString &fileName )
   }
 
   delete mCursor;
+  delete mStyleInformation;
+  mStyleInformation = 0;
 
   return mTextDocument;
 }

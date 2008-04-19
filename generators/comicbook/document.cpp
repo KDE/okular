@@ -25,15 +25,11 @@ Document::Document()
 
 Document::~Document()
 {
-    delete mUnrar;
-    delete mZip;
 }
 
 bool Document::open( const QString &fileName )
 {
-    delete mZip;
-    delete mUnrar;
-    mPageMap.clear();
+    close();
 
     /**
      * We have a zip archive
@@ -91,6 +87,18 @@ bool Document::open( const QString &fileName )
     }
 
     return true;
+}
+
+void Document::close()
+{
+    if ( !( mZip || mUnrar ) )
+        return;
+
+    delete mZip;
+    mZip = 0;
+    delete mUnrar;
+    mUnrar = 0;
+    mPageMap.clear();
 }
 
 void Document::extractImageFiles( const QStringList &list )

@@ -26,6 +26,7 @@ class Document
         ~Document();
 
         bool open( const QString &fileName );
+        void close();
 
         int pages() const;
         QStringList pageTitles() const;

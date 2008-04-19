@@ -119,6 +119,9 @@ bool PluckerGenerator::doCloseDocument()
     qDeleteAll( mPages );
     mPages.clear();
 
+    // do not use clear() for the following, otherwise its type is changed
+    mDocumentInfo = Okular::DocumentInfo();
+
     return true;
 }
 

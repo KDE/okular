@@ -207,6 +207,7 @@ protected:
 
 private:
     Okular::FileAttachmentAnnotation * m_attachAnn;
+    PixmapPreviewSelector * m_pixmapSelector;
 };
 
 #endif

@@ -480,14 +480,33 @@ void GeomAnnotationWidget::applyChanges()
 
 
 FileAttachmentAnnotationWidget::FileAttachmentAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann )
+    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
 {
     m_attachAnn = static_cast< Okular::FileAttachmentAnnotation * >( ann );
 }
 
 QWidget * FileAttachmentAnnotationWidget::createStyleWidget()
 {
-    return 0;
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
+    lay->setMargin( 0 );
+    QGroupBox * gb = new QGroupBox( widget );
+    lay->addWidget( gb );
+    gb->setTitle( i18n( "File Attachment Symbol" ) );
+    QHBoxLayout * gblay = new QHBoxLayout( gb );
+    m_pixmapSelector = new PixmapPreviewSelector( gb );
+    gblay->addWidget( m_pixmapSelector );
+    m_pixmapSelector->setEditable( true );
+
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Graph" ), "graph" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Push Pin" ), "pushpin" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Paperclip" ), "paperclip" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Tag" ), "tag" );
+    m_pixmapSelector->setIcon( m_attachAnn->fileIconName() );
+
+    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+
+    return widget;
 }
 
 QWidget * FileAttachmentAnnotationWidget::createExtraWidget()

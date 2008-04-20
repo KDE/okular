@@ -23,6 +23,8 @@ macro_log_feature(FREETYPE_FOUND "FreeType" "A font rendering engine" "http://ww
 #we look for JPEG in kdegraphics/CMakeLists.txt
 #macro_optional_find_package(JPEG)
 #macro_log_feature(JPEG_FOUND "JPEG" "A library for reading and writing JPEG image files." "http://www.ijg.org" FALSE "" "Support fof PalmDB documents in okular.")
+macro_optional_find_package(ZLIB)
+macro_log_feature(ZLIB_FOUND "zlib" "The zlib library" "http://www.zlib.net" FALSE "" "Support for Plucker files in Okular.")
 
 macro_optional_find_package(EPub)
 macro_log_feature(EPUB_FOUND "libepub" "A library for reading EPub documents" "http://sourceforge.net/projects/ebook-tools" FALSE "" "Support for EPub documents in Okular.")
@@ -61,9 +63,9 @@ add_subdirectory(fictionbook)
 
 add_subdirectory(comicbook)
 
-if(JPEG_FOUND)
+if(JPEG_FOUND AND ZLIB_FOUND)
   add_subdirectory(plucker)
-endif(JPEG_FOUND)
+endif(JPEG_FOUND AND ZLIB_FOUND)
 
 if(EPUB_FOUND)
   add_subdirectory(epub)

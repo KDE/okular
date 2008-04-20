@@ -235,7 +235,22 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     d->mDocument = d->mConverter->convert( fileName );
 
     if ( !d->mDocument )
+    {
+        // loading failed, cleanup all the stuff eventually gathered from the converter
+        d->mTitlePositions.clear();
+        Q_FOREACH ( const TextDocumentGeneratorPrivate::LinkPosition &linkPos, d->mLinkPositions )
+        {
+            delete linkPos.link;
+        }
+        d->mLinkPositions.clear();
+        Q_FOREACH ( const TextDocumentGeneratorPrivate::AnnotationPosition &annPos, d->mAnnotationPositions )
+        {
+            delete annPos.annotation;
+        }
+        d->mAnnotationPositions.clear();
+
         return false;
+    }
 
     d->generateTitleInfos();
     d->generateLinkInfos();
@@ -288,6 +303,7 @@ bool TextDocumentGenerator::doCloseDocument()
     d->mTitlePositions.clear();
     d->mLinkPositions.clear();
     d->mLinkInfos.clear();
+    d->mAnnotationPositions.clear();
     d->mAnnotationInfos.clear();
     // do not use clear() for the following two, otherwise they change type
     d->mDocumentInfo = Okular::DocumentInfo();

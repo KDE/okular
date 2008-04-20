@@ -23,7 +23,6 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <ksqueezedtextlabel.h>
 
 #include "core/document.h"
 #include "guiutils.h"
@@ -531,7 +530,10 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
     tmplabel = new QLabel( i18n( "Description:" ), widget );
     lay->addWidget( tmplabel, 2, 0 );
-    tmplabel = new KSqueezedTextLabel( descString, widget );
+    tmplabel = new QLabel( widget );
+    tmplabel->setTextFormat( Qt::PlainText );
+    tmplabel->setWordWrap( true );
+    tmplabel->setText( descString );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     lay->addWidget( tmplabel, 3, 0, 1, 2 );
 

@@ -517,6 +517,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
     Okular::EmbeddedFile *ef = m_attachAnn->embeddedFile();
     const int size = ef->size();
     const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KGlobal::locale()->formatByteSize( size );
+    const QString descString = ef->description().isEmpty() ? i18n( "No description available." ) : ef->description();
 
     QGridLayout * lay = new QGridLayout( widget );
     lay->setMargin( 0 );
@@ -530,7 +531,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
     tmplabel = new QLabel( i18n( "Description:" ), widget );
     lay->addWidget( tmplabel, 2, 0 );
-    tmplabel = new KSqueezedTextLabel( ef->description(), widget );
+    tmplabel = new KSqueezedTextLabel( descString, widget );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     lay->addWidget( tmplabel, 3, 0, 1, 2 );
 

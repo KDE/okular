@@ -15,6 +15,7 @@ install(FILES
    tool_ellipse_okular.png
    tool-note.png
    tool-note-inline.png
+   tool-stamp.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation page images
 install(FILES
@@ -27,7 +28,9 @@ install(FILES
    key.png
    newparagraph.png
    note.png
+   paperclip.png
    paragraph.png
+   pushpin.png
    rightarrow.png
    rightpointer.png
    star.png

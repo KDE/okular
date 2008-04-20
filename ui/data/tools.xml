@@ -59,7 +59,7 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>7</shortcut>
     </tool>
-    <tool id="8" name="Stamp" pixmap="stamp">
+    <tool id="8" name="Stamp" pixmap="tool-stamp">
         <tooltip>Put a stamp symbol</tooltip>
         <engine type="PickPoint" hoverIcon="graphics-viewer-document" center="true" size="64">
             <annotation type="Stamp" icon="graphics-viewer-document"/>

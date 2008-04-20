@@ -26,12 +26,12 @@
 /*!
  * Represents a text encoding of CHM file; also has some useful routines.
  */
-typedef struct LCHMTextEncoding
+typedef struct
 {
 	const char	*	family;			//! Cyrillic, Western, Greek... NULL pointer represents the end of table.
 	const char	*	qtcodec;		//! Qt text codec to use
 	const short	*	lcids;			//! List of LCIDs to use for this codepage. Ends with LCID 0.
-};
+} LCHMTextEncoding;
 
 
 #endif /* LIBCHMTEXTENCODING_H */

@@ -1163,7 +1163,7 @@ QString LCHMFileImpl::getTopicByUrl( const QString & url ) const
 }
 
 
-extern "C" static int chm_enumerator_callback( struct chmFile*, struct chmUnitInfo *ui, void *context )
+extern "C" int chm_enumerator_callback( struct chmFile*, struct chmUnitInfo *ui, void *context )
 {
 	((QStringList*) context)->push_back( ui->path );
 	return CHM_ENUMERATOR_CONTINUE;

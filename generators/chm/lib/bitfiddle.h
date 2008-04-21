@@ -21,6 +21,7 @@
 
 */
 
+#include <stdint.h>
 
 #define UINT16ARRAY(x) ((unsigned char)(x)[0] | ((uint16_t)(x)[1] << 8))
 #define UINT32ARRAY(x) (UINT16ARRAY(x) | ((uint32_t)(x)[2] << 16) \

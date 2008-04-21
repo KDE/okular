@@ -434,18 +434,18 @@ bool LCHMFileImpl::searchWord (const QString& text,
 	}
 
 	unsigned char* cursor32 = header + 0x14;
-	u_int32_t node_offset = UINT32ARRAY(cursor32);
+	uint32_t node_offset = UINT32ARRAY(cursor32);
 
 	cursor32 = header + 0x2e;
-	u_int32_t node_len = UINT32ARRAY(cursor32);
+	uint32_t node_len = UINT32ARRAY(cursor32);
 
 	unsigned char* cursor16 = header + 0x18;
-	u_int16_t tree_depth = UINT16ARRAY(cursor16);
+	uint16_t tree_depth = UINT16ARRAY(cursor16);
 
 	unsigned char word_len, pos;
 	QString word;
-	u_int32_t i = sizeof(u_int16_t);
-	u_int16_t free_space;
+	uint32_t i = sizeof(uint16_t);
+	uint16_t free_space;
 
 	QVector<unsigned char> buffer(node_len);
 
@@ -463,9 +463,9 @@ bool LCHMFileImpl::searchWord (const QString& text,
 		cursor16 = buffer.data() + 6;
 		free_space = UINT16ARRAY(cursor16);
 
-		i = sizeof(u_int32_t) + sizeof(u_int16_t) + sizeof(u_int16_t);
-		u_int64_t wlc_count, wlc_size;
-		u_int32_t wlc_offset;
+		i = sizeof(uint32_t) + sizeof(uint16_t) + sizeof(uint16_t);
+		uint64_t wlc_count, wlc_size;
+		uint32_t wlc_offset;
 
 		while (i < node_len - free_space)
 		{
@@ -493,7 +493,7 @@ bool LCHMFileImpl::searchWord (const QString& text,
 			cursor32 = buffer.data() + i;
 			wlc_offset = UINT32ARRAY(cursor32);
 
-			i += sizeof(u_int32_t) + sizeof(u_int16_t);
+			i += sizeof(uint32_t) + sizeof(uint16_t);
 			wlc_size =  be_encint (buffer.data() + i, encsz);
 			i += encsz;
 
@@ -550,15 +550,15 @@ size_t LCHMFileImpl::RetrieveObject(const chmUnitInfo *ui, unsigned char *buffer
 }
 
 
-inline u_int32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
-											 u_int32_t initialOffset,
-			u_int32_t buffSize,
-   u_int16_t treeDepth)
+inline uint32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
+											 uint32_t initialOffset,
+			uint32_t buffSize,
+   uint16_t treeDepth)
 {
-	u_int32_t test_offset = 0;
+	uint32_t test_offset = 0;
 	unsigned char* cursor16, *cursor32;
 	unsigned char word_len, pos;
-	u_int32_t i = sizeof(u_int16_t);
+	uint32_t i = sizeof(uint16_t);
 	QVector<unsigned char> buffer(buffSize);
 	QString word;
 	
@@ -572,7 +572,7 @@ inline u_int32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
 			return 0;
 
 		cursor16 = buffer.data();
-		u_int16_t free_space = UINT16ARRAY(cursor16);
+		uint16_t free_space = UINT16ARRAY(cursor16);
 
 		while (i < buffSize - free_space )
 		{
@@ -598,7 +598,7 @@ inline u_int32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
 			}
 
 			i += word_len + sizeof(unsigned char) +
-					sizeof(u_int32_t) + sizeof(u_int16_t);
+					sizeof(uint32_t) + sizeof(uint16_t);
 		}
 	}
 
@@ -609,8 +609,8 @@ inline u_int32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
 }
 
 
-inline bool LCHMFileImpl::ProcessWLC (u_int64_t wlc_count, u_int64_t wlc_size,
-								    u_int32_t wlc_offset, unsigned char ds,
+inline bool LCHMFileImpl::ProcessWLC (uint64_t wlc_count, uint64_t wlc_size,
+								    uint32_t wlc_offset, unsigned char ds,
 		  							unsigned char dr, unsigned char cs,
 									unsigned char cr, unsigned char ls,
  									unsigned char lr,
@@ -618,7 +618,7 @@ inline bool LCHMFileImpl::ProcessWLC (u_int64_t wlc_count, u_int64_t wlc_size,
  									bool phrase_search)
 {
 	int wlc_bit = 7;
-	u_int64_t index = 0, count;
+	uint64_t index = 0, count;
 	size_t length, off = 0;
 	QVector<unsigned char> buffer (wlc_size);
 	unsigned char *cursor32;
@@ -629,7 +629,7 @@ inline bool LCHMFileImpl::ProcessWLC (u_int64_t wlc_count, u_int64_t wlc_size,
 	if ( RetrieveObject (&m_chmFIftiMain, buffer.data(), wlc_offset, wlc_size) == 0 )
 		return false;
 
-	for ( u_int64_t i = 0; i < wlc_count; ++i )
+	for ( uint64_t i = 0; i < wlc_count; ++i )
 	{
 		if ( wlc_bit != 7 )
 		{
@@ -663,9 +663,9 @@ inline bool LCHMFileImpl::ProcessWLC (u_int64_t wlc_count, u_int64_t wlc_size,
 		if ( phrase_search )
 			progres.offsets.reserve (count);
 		
-		for (u_int64_t j = 0; j < count; ++j)
+		for (uint64_t j = 0; j < count; ++j)
 		{
-			u_int64_t lcode = sr_int (buffer.data() + off, &wlc_bit, ls, lr, length);
+			uint64_t lcode = sr_int (buffer.data() + off, &wlc_bit, ls, lr, length);
 			off += length;
 			
 			if ( phrase_search )
@@ -692,8 +692,8 @@ bool LCHMFileImpl::getInfoFromWindows()
 		if ( !RetrieveObject(&ui, buffer, 0, WIN_HEADER_LEN) )
 			return false;
 
-		u_int32_t entries = get_int32_le( (u_int32_t *)(buffer) );
-		u_int32_t entry_size = get_int32_le( (u_int32_t *)(buffer + 0x04) );
+		uint32_t entries = get_int32_le( (uint32_t *)(buffer) );
+		uint32_t entry_size = get_int32_le( (uint32_t *)(buffer + 0x04) );
 		
 		QVector<unsigned char> uptr(entries * entry_size);
 		unsigned char* raw = (unsigned char*) uptr.data();
@@ -704,14 +704,14 @@ bool LCHMFileImpl::getInfoFromWindows()
 		if( !ResolveObject ("/#STRINGS", &ui) )
 			return false;
 
-		for ( u_int32_t i = 0; i < entries; ++i )
+		for ( uint32_t i = 0; i < entries; ++i )
 		{
-			u_int32_t offset = i * entry_size;
+			uint32_t offset = i * entry_size;
 			
-			u_int32_t off_title = get_int32_le( (u_int32_t *)(raw + offset + 0x14) );
-			u_int32_t off_home = get_int32_le( (u_int32_t *)(raw + offset + 0x68) );
-			u_int32_t off_hhc = get_int32_le( (u_int32_t *)(raw + offset + 0x60) );
-			u_int32_t off_hhk = get_int32_le( (u_int32_t *)(raw + offset + 0x64) );
+			uint32_t off_title = get_int32_le( (uint32_t *)(raw + offset + 0x14) );
+			uint32_t off_home = get_int32_le( (uint32_t *)(raw + offset + 0x68) );
+			uint32_t off_hhc = get_int32_le( (uint32_t *)(raw + offset + 0x60) );
+			uint32_t off_hhk = get_int32_le( (uint32_t *)(raw + offset + 0x64) );
 
 			factor = off_title / 4096;
 
@@ -761,7 +761,7 @@ bool LCHMFileImpl::getInfoFromSystem()
 	
 	int index = 0;
 	unsigned char* cursor = NULL, *p;
-	u_int16_t value = 0;
+	uint16_t value = 0;
 	long size = 0;
 
 	// Run the first loop to detect the encoding. We need this, because title could be
@@ -776,7 +776,7 @@ bool LCHMFileImpl::getInfoFromSystem()
 	buffer[size - 1] = 0;
 
 	// First loop to detect the encoding
-	for ( index = 0; index < (size - 1 - (long)sizeof(u_int16_t)) ;)
+	for ( index = 0; index < (size - 1 - (long)sizeof(uint16_t)) ;)
 	{
 		cursor = buffer + index;
 		value = UINT16ARRAY(cursor);
@@ -905,7 +905,7 @@ void LCHMFileImpl::getSearchResults( const LCHMSearchProgressResults& tempres,
 		  							 unsigned int limit_results )
 {
 	unsigned char combuf [COMMON_BUF_LEN];
-	QMap<u_int32_t, u_int32_t> urlsmap;  // used to prevent duplicated urls
+	QMap<uint32_t, uint32_t> urlsmap;  // used to prevent duplicated urls
 	
 	for ( int i = 0; i < tempres.size(); i++ )
 	{
@@ -1262,13 +1262,13 @@ void LCHMFileImpl::fillTopicsUrlMap()
 	
 	for ( unsigned int i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )
 	{
-		u_int32_t off_title = get_int32_le( (u_int32_t *)(topics.data() + i + 4) );
-		u_int32_t off_url = get_int32_le( (u_int32_t *)(topics.data() + i + 8) );
-		off_url = get_int32_le( (u_int32_t *)( urltbl.data() + off_url + 8) ) + 8;
+		uint32_t off_title = get_int32_le( (uint32_t *)(topics.data() + i + 4) );
+		uint32_t off_url = get_int32_le( (uint32_t *)(topics.data() + i + 8) );
+		off_url = get_int32_le( (uint32_t *)( urltbl.data() + off_url + 8) ) + 8;
 
 		QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( (const char*) urlstr.data() + off_url );
 
-		if ( off_title < (u_int32_t)strings.size() )
+		if ( off_title < (uint32_t)strings.size() )
 			m_url2topics[url] = encodeWithCurrentCodec ( (const char*) strings.data() + off_title );
 		else
 			m_url2topics[url] = "Untitled";

@@ -34,11 +34,11 @@ class LCHMSearchProgressResult
 {
 	public:
 		inline LCHMSearchProgressResult() {}
-		inline LCHMSearchProgressResult( u_int32_t t, u_int32_t u ) : titleoff(t),urloff(u) {}
+		inline LCHMSearchProgressResult( uint32_t t, uint32_t u ) : titleoff(t),urloff(u) {}
 		
-		QVector<u_int64_t>		offsets;
-		u_int32_t				titleoff;
-		u_int32_t				urloff;
+		QVector<uint64_t>		offsets;
+		uint32_t				titleoff;
+		uint32_t				urloff;
 };
 
 //! An array to keeps the intermediate search results
@@ -136,15 +136,15 @@ class LCHMFileImpl
 		const char * GetFontEncFromCharSet (const QString& font) const;
 
 		//! Helper. Returns the $FIftiMain offset of leaf node or 0.
-		u_int32_t GetLeafNodeOffset(const QString& text,
-									u_int32_t initalOffset,
-		 							u_int32_t buffSize,
-   									u_int16_t treeDepth );
+		uint32_t GetLeafNodeOffset(const QString& text,
+									uint32_t initalOffset,
+		 							uint32_t buffSize,
+   									uint16_t treeDepth );
 
 		//! Helper. Processes the word location code entries while searching.
-		bool ProcessWLC(u_int64_t wlc_count, 
-						u_int64_t wlc_size,
-						u_int32_t wlc_offset,
+		bool ProcessWLC(uint64_t wlc_count, 
+						uint64_t wlc_size,
+						uint32_t wlc_offset,
 						unsigned char ds,
 						unsigned char dr, 
 						unsigned char cs,

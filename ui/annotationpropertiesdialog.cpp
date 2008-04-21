@@ -100,10 +100,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     
     tmplabel = new QLabel( page );
     tmplabel->setText( i18n( "Created: %1", KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ) ) );
+    tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
     
     m_modifyDateLabel = new QLabel( page );
     m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ) ) );
+    m_modifyDateLabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( m_modifyDateLabel, 2, 0, 1, 2 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );

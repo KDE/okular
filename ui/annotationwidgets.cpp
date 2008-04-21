@@ -553,6 +553,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
 void FileAttachmentAnnotationWidget::applyChanges()
 {
+    m_attachAnn->setFileIconName( m_pixmapSelector->icon() );
 }
 
 

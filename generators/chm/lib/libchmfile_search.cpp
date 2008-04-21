@@ -80,12 +80,12 @@ inline static void mergeResults ( LCHMSearchProgressResults & results, const LCH
 }
 
 
-static inline void findNextWords ( QVector<u_int64_t> & src, const QVector<u_int64_t> & needle )
+static inline void findNextWords ( QVector<uint64_t> & src, const QVector<uint64_t> & needle )
 {
 	for ( int s1 = 0; s1 < src.size(); s1++ )
 	{
 		bool found = false;
-		u_int64_t target_offset = src[s1] + 1;
+		uint64_t target_offset = src[s1] + 1;
 		
 		DEBUG_SEARCH (("Offset loop: offset at %u is %u, target %u", (unsigned int) s1,
 					   (unsigned int) src[s1], (unsigned int) target_offset));

@@ -139,6 +139,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         case Okular::Annotation::AFileAttachment:
             return new FileAttachmentAnnotationWidget( ann );
             break;
+        case Okular::Annotation::ACaret:
+            return new CaretAnnotationWidget( ann );
+            break;
         // shut up gcc
         default:
             ;
@@ -555,6 +558,62 @@ void FileAttachmentAnnotationWidget::applyChanges()
 {
     m_attachAnn->setFileIconName( m_pixmapSelector->icon() );
 }
+
+
+
+static QString caretSymbolToIcon( Okular::CaretAnnotation::CaretSymbol symbol )
+{
+    switch ( symbol )
+    {
+        case Okular::CaretAnnotation::None:
+            return QString::fromLatin1( "caret-none" );
+        case Okular::CaretAnnotation::P:
+            return QString::fromLatin1( "caret-p" );
+    }
+    return QString();
+}
+
+static Okular::CaretAnnotation::CaretSymbol caretSymbolFromIcon( const QString &icon )
+{
+    if ( icon == QLatin1String( "caret-none" ) )
+        return Okular::CaretAnnotation::None;
+    else if ( icon == QLatin1String( "caret-p" ) )
+        return Okular::CaretAnnotation::P;
+    return Okular::CaretAnnotation::None;
+}
+
+CaretAnnotationWidget::CaretAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
+{
+    m_caretAnn = static_cast< Okular::CaretAnnotation * >( ann );
+}
+
+QWidget * CaretAnnotationWidget::createStyleWidget()
+{
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
+    lay->setMargin( 0 );
+    QGroupBox * gb = new QGroupBox( widget );
+    lay->addWidget( gb );
+    gb->setTitle( i18n( "Caret Symbol" ) );
+    QHBoxLayout * gblay = new QHBoxLayout( gb );
+    m_pixmapSelector = new PixmapPreviewSelector( gb );
+    gblay->addWidget( m_pixmapSelector );
+
+    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "None" ), "caret-none" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "P" ), "caret-p" );
+    m_pixmapSelector->setIcon( caretSymbolToIcon( m_caretAnn->caretSymbol() ) );
+
+    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+
+    return widget;
+}
+
+void CaretAnnotationWidget::applyChanges()
+{
+    m_caretAnn->setCaretSymbol( caretSymbolFromIcon( m_pixmapSelector->icon() ) );
+}
+
 
 
 #include "annotationwidgets.moc"

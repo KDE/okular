@@ -210,4 +210,22 @@ private:
     PixmapPreviewSelector * m_pixmapSelector;
 };
 
+class CaretAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    CaretAnnotationWidget( Okular::Annotation * ann );
+
+    virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
+
+private:
+    Okular::CaretAnnotation * m_caretAnn;
+    PixmapPreviewSelector * m_pixmapSelector;
+};
+
 #endif

@@ -21,7 +21,6 @@
 int main(int argc, char** argv)
 {
     KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
-    about.setProgramIconName( "graphics-viewer-document" );
 
     KCmdLineArgs::init(argc, argv, &about);
 

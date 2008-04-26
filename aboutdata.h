@@ -31,6 +31,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         KLocalizedString(),
         "http://okular.kde.org"
     );
+    about.setProgramIconName( "graphics-viewer-document" );
 
     about.addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
     about.addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");

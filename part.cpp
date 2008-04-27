@@ -276,6 +276,7 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_document->addObserver( this );
     m_document->addObserver( m_thumbnailList );
     m_document->addObserver( m_pageView );
+    m_document->registerView( m_pageView );
     m_document->addObserver( m_toc );
     m_document->addObserver( m_miniBar );
 #ifdef OKULAR_ENABLE_MINIBAR

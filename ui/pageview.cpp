@@ -286,6 +286,7 @@ private:
  */
 PageView::PageView( QWidget *parent, Okular::Document *document )
     : QScrollArea( parent )
+    , Okular::View( QString::fromLatin1( "PageView" ) )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate( this );
@@ -1001,6 +1002,57 @@ bool PageView::canUnloadPixmap( int pageNumber ) const
     return true;
 }
 //END DocumentObserver inherited methods
+
+//BEGIN View inherited methods
+bool PageView::supportsCapability( ViewCapability capability ) const
+{
+    switch ( capability )
+    {
+        case Zoom:
+            return true;
+    }
+    return false;
+}
+
+Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capability ) const
+{
+    switch ( capability )
+    {
+        case Zoom:
+            return CapabilityRead | CapabilityWrite;
+    }
+    return 0;
+}
+
+QVariant PageView::capability( ViewCapability capability ) const
+{
+    switch ( capability )
+    {
+        case Zoom:
+            return d->zoomFactor;
+    }
+    return QVariant();
+}
+
+void PageView::setCapability( ViewCapability capability, const QVariant &option )
+{
+    switch ( capability )
+    {
+        case Zoom:
+        {
+            bool ok = true;
+            double factor = option.toDouble( &ok );
+            if ( ok && factor > 0.0 )
+            {
+                d->zoomFactor = static_cast< float >( factor );
+                updateZoom( ZoomRefreshCurrent );
+            }
+            break;
+        }
+    }
+}
+
+//END View inherited methods
 
 //BEGIN widget events
 void PageView::contentsPaintEvent(QPaintEvent *pe)

@@ -25,6 +25,7 @@
 #include "ui/pageviewutils.h"
 #include "core/area.h"
 #include "core/observer.h"
+#include "core/view.h"
 
 class KAction;
 class KActionCollection;
@@ -45,7 +46,7 @@ class PageViewWidget;
  * @short display of course :-)
  * ...
  */
-class PageView : public QScrollArea, public Okular::DocumentObserver
+class PageView : public QScrollArea, public Okular::DocumentObserver, public Okular::View
 {
 Q_OBJECT
 
@@ -78,6 +79,12 @@ Q_OBJECT
         void notifyContentsCleared( int changedFlags );
         void notifyZoom(int factor);
         bool canUnloadPixmap( int pageNum ) const;
+
+        // inherited from View
+        bool supportsCapability( ViewCapability capability ) const;
+        CapabilityFlags capabilityFlags( ViewCapability capability ) const;
+        QVariant capability( ViewCapability capability ) const;
+        void setCapability( ViewCapability capability, const QVariant &option );
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );

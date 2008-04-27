@@ -148,8 +148,8 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
 void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
 {
     // [MEM] choose memory parameters based on configuration profile
-    qulonglong clipValue = ~0U;
-    qulonglong memoryToFree = ~0U;
+    qulonglong clipValue = 0;
+    qulonglong memoryToFree = 0;
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:
@@ -157,13 +157,20 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
             break;
 
         case Settings::EnumMemoryLevel::Normal:
-            memoryToFree = m_allocatedPixmapsTotalMemory - getTotalMemory() / 3;
-            clipValue = (m_allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
-            break;
+        {
+            qulonglong thirdTotalMemory = getTotalMemory() / 3;
+            qulonglong freeMemory = getFreeMemory();
+            if (m_allocatedPixmapsTotalMemory > thirdTotalMemory) memoryToFree = m_allocatedPixmapsTotalMemory - thirdTotalMemory;
+            if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
+        }
+        break;
 
         case Settings::EnumMemoryLevel::Aggressive:
-            clipValue = (m_allocatedPixmapsTotalMemory - getFreeMemory()) / 2;
-            break;
+        {
+            qulonglong freeMemory = getFreeMemory();
+            if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
+        }
+        break;
     }
 
     if ( clipValue > memoryToFree )

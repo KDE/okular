@@ -37,6 +37,7 @@ namespace Okular {
 class ConfigInterface;
 class SaveInterface;
 class Scripter;
+class View;
 }
 
 struct GeneratorInfo
@@ -196,6 +197,8 @@ class DocumentPrivate
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
         FontInfo::List m_fontsCache;
+
+        QSet< View * > m_views;
 };
 
 }

@@ -48,6 +48,7 @@ class Action;
 class Page;
 class PixmapRequest;
 class SourceReference;
+class View;
 class VisiblePageRect;
 
 /** IDs for seaches. Globally defined here. **/
@@ -533,6 +534,22 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.7 (KDE 4.1)
          */
         bool saveChanges( const QString &fileName );
+
+        /**
+         * Register the specified @p view for the current document.
+         *
+         * It is unregistered from the previous document, if any.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void registerView( View *view );
+
+        /**
+         * Unregister the specified @p view from the current document.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void unregisterView( View *view );
 
     public Q_SLOTS:
         /**

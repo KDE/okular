@@ -65,6 +65,8 @@
 #include "scripter.h"
 #include "settings.h"
 #include "sourcereference.h"
+#include "view.h"
+#include "view_p.h"
 
 #include <config-okular.h>
 
@@ -1208,6 +1210,13 @@ Document::~Document()
 {
     // delete generator, pages, and related stuff
     closeDocument();
+
+    QSet< View * >::const_iterator viewIt = d->m_views.begin(), viewEnd = d->m_views.end();
+    for ( ; viewIt != viewEnd; ++viewIt )
+    {
+        View *v = *viewIt;
+        v->d_func()->document = 0;
+    }
 
     // delete the bookmark manager
     delete d->m_bookmarkManager;
@@ -2850,6 +2859,38 @@ bool Document::saveChanges( const QString &fileName )
         return false;
 
     return saveIface->save( fileName, SaveInterface::SaveChanges );
+}
+
+void Document::registerView( View *view )
+{
+    if ( !view )
+        return;
+
+    Document *viewDoc = view->viewDocument();
+    if ( viewDoc )
+    {
+        // check if already registered for this document
+        if ( viewDoc == this )
+            return;
+
+        viewDoc->unregisterView( view );
+    }
+
+    d->m_views.insert( view );
+    view->d_func()->document = d;
+}
+
+void Document::unregisterView( View *view )
+{
+    if ( !view )
+        return;
+
+    Document *viewDoc = view->viewDocument();
+    if ( !viewDoc || viewDoc != this )
+        return;
+
+    view->d_func()->document = 0;
+    d->m_views.remove( view );
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

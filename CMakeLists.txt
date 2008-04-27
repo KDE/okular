@@ -44,6 +44,7 @@ set(okularcore_SRCS
    core/textdocumentgenerator.cpp
    core/textpage.cpp
    core/utils.cpp
+   core/view.cpp
    core/fileprinter.cpp
 )
 

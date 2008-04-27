@@ -488,18 +488,17 @@ void AuthorGroupProxyModel::rebuildIndexes()
             if ( !author.isEmpty() ) {
                 // We have the annotations as top-level, so introduce authors as new
                 // top-levels and append the annotations
-                if ( !authorMap.contains( author ) ) {
-                    AuthorGroupItem *item = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Author );
-                    item->setAuthor( author );
+                AuthorGroupItem *authorItem = authorMap.value( author, 0 );
+                if ( !authorItem ) {
+                    authorItem = new AuthorGroupItem( d->mRoot, AuthorGroupItem::Author );
+                    authorItem->setAuthor( author );
 
                     // Add item to tree
-                    d->mRoot->appendChild( item );
+                    d->mRoot->appendChild( authorItem );
 
                     // Insert to lookup list
-                    authorMap.insert( author, item );
+                    authorMap.insert( author, authorItem );
                 }
-
-                AuthorGroupItem *authorItem = authorMap.value( author );
 
                 AuthorGroupItem *item = new AuthorGroupItem( authorItem, AuthorGroupItem::Annotation, idx );
                 authorItem->appendChild( item );
@@ -515,18 +514,17 @@ void AuthorGroupProxyModel::rebuildIndexes()
                     const QModelIndex annIdx = sourceModel()->index( subRow, 0, idx );
                     const QString author = sourceModel()->data( annIdx, AnnotationModel::AuthorRole ).toString();
 
-                    if ( !pageAuthorMap.contains( author ) ) {
-                        AuthorGroupItem *item = new AuthorGroupItem( pageItem, AuthorGroupItem::Author );
-                        item->setAuthor( author );
+                    AuthorGroupItem *authorItem = pageAuthorMap.value( author, 0 );
+                    if ( !authorItem ) {
+                        authorItem = new AuthorGroupItem( pageItem, AuthorGroupItem::Author );
+                        authorItem->setAuthor( author );
 
                         // Add item to tree
-                        pageItem->appendChild( item );
+                        pageItem->appendChild( authorItem );
 
                         // Insert to lookup list
-                        pageAuthorMap.insert( author, item );
+                        pageAuthorMap.insert( author, authorItem );
                     }
-        
-                    AuthorGroupItem *authorItem = pageAuthorMap.value( author );
 
                     AuthorGroupItem *item = new AuthorGroupItem( authorItem, AuthorGroupItem::Annotation, annIdx );
                     authorItem->appendChild( item );

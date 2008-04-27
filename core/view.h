@@ -70,6 +70,11 @@ class OKULAR_EXPORT View
         QString name() const;
 
         /**
+         * Must return an unique ID for each view.
+         */
+        virtual uint viewId() const = 0;
+
+        /**
          * Query whether the view support the specified @p capability.
          */
         virtual bool supportsCapability( ViewCapability capability ) const;

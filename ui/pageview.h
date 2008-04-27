@@ -81,6 +81,7 @@ Q_OBJECT
         bool canUnloadPixmap( int pageNum ) const;
 
         // inherited from View
+        uint viewId() const { return observerId(); }
         bool supportsCapability( ViewCapability capability ) const;
         CapabilityFlags capabilityFlags( ViewCapability capability ) const;
         QVariant capability( ViewCapability capability ) const;

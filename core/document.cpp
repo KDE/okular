@@ -99,11 +99,11 @@ struct RunningSearch
 };
 
 #define foreachObserver( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.begin(), end=d->m_observers.end();\
+    QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.constBegin(), end=d->m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define foreachObserverD( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it = m_observers.begin(), end = m_observers.end();\
+    QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define OKULAR_HISTORY_MAXSTEPS 100

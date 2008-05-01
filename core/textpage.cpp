@@ -18,6 +18,8 @@
 #include "page.h"
 #include "page_p.h"
 
+#include <cstring>
+
 using namespace Okular;
 
 class SearchPoint
@@ -28,11 +30,59 @@ class SearchPoint
         {
         }
 
-        TextEntity::List::ConstIterator it_begin;
-        TextEntity::List::ConstIterator it_end;
+        TextList::ConstIterator it_begin;
+        TextList::ConstIterator it_end;
         int offset_begin;
         int offset_end;
 };
+
+
+/*
+  Rationale behind TinyTextEntity:
+
+  instead of storing directly a QString for the text of an entity,
+  we store the UTF-16 data and their length. This way, we save about
+  4 int's wrt a QString, and we can create a new string from that
+  raw data (that's the only penalty of that).
+ */
+class TinyTextEntity
+{
+    public:
+        TinyTextEntity( const QString &text, const NormalizedRect &rect )
+            : area( rect )
+        {
+            Q_ASSERT_X( !text.isEmpty(), "TinyTextEntity", "empty string" );
+            length = text.length();
+            data = new QChar[ length ];
+            std::memcpy( data, text.constData(), length * sizeof( QChar ) );
+        }
+
+        ~TinyTextEntity()
+        {
+            delete [] data;
+        }
+
+        inline QString text() const
+        {
+            return QString::fromRawData( data, length );
+        }
+
+        inline NormalizedRect transformedArea( const QMatrix &matrix ) const
+        {
+            NormalizedRect transformed_area = area;
+            transformed_area.transform( matrix );
+            return transformed_area;
+        }
+
+        NormalizedRect area;
+
+    private:
+        Q_DISABLE_COPY( TinyTextEntity )
+
+        QChar *data;
+        int length;
+};
+
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
     : m_text( text ), m_area( area ), d( 0 )
@@ -67,11 +117,6 @@ TextPagePrivate::TextPagePrivate()
 {
 }
 
-TextPagePrivate::TextPagePrivate( const TextEntity::List &words )
-    : m_words( words ), m_page( 0 )
-{
-}
-
 TextPagePrivate::~TextPagePrivate()
 {
     qDeleteAll( m_searchPoints );
@@ -85,8 +130,16 @@ TextPage::TextPage()
 }
 
 TextPage::TextPage( const TextEntity::List &words )
-    : d( new TextPagePrivate( words ) )
+    : d( new TextPagePrivate() )
 {
+    TextEntity::List::ConstIterator it = words.begin(), itEnd = words.end();
+    for ( ; it != itEnd; ++it )
+    {
+        TextEntity *e = *it;
+        if ( !e->text().isEmpty() )
+            d->m_words.append( new TinyTextEntity( e->text(), *e->area() ) );
+        delete e;
+    }
 }
 
 TextPage::~TextPage()
@@ -96,7 +149,9 @@ TextPage::~TextPage()
 
 void TextPage::append( const QString &text, NormalizedRect *area )
 {
-    d->m_words.append( new TextEntity( text, area ) );
+    if ( !text.isEmpty() )
+        d->m_words.append( new TinyTextEntity( text, *area ) );
+    delete area;
 }
 
 RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
@@ -230,11 +285,11 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     double endCx = endC.x;
     double endCy = endC.y;
 
-    TextEntity::List::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    TextList::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
     MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
     for ( ; it != itEnd; ++it )
     {
-        tmp = *(*it)->area();
+        tmp = (*it)->area;
         if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
              && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
         {
@@ -254,8 +309,8 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     // invalid search request
     if ( d->m_words.isEmpty() || query.isEmpty() || ( area && area->isNull() ) )
         return 0;
-    TextEntity::List::ConstIterator start;
-    TextEntity::List::ConstIterator end;
+    TextList::ConstIterator start;
+    TextList::ConstIterator end;
     QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.find( searchID );
     if ( sIt == d->m_searchPoints.end() )
     {
@@ -311,8 +366,8 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 
 RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
                                                              Qt::CaseSensitivity caseSensitivity,
-                                                             const TextEntity::List::ConstIterator &start,
-                                                             const TextEntity::List::ConstIterator &end )
+                                                             const TextList::ConstIterator &start,
+                                                             const TextList::ConstIterator &end )
 {
     QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
@@ -322,14 +377,14 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
-    const TextEntity* curEntity = 0;
+    const TinyTextEntity* curEntity = 0;
     int j=0, len=0, queryLeft=query.length();
     int offset = 0;
     bool haveMatch=false;
     bool dontIncrement=false;
     bool offsetMoved = false;
-    TextEntity::List::ConstIterator it = start;
-    TextEntity::List::ConstIterator it_begin;
+    TextList::ConstIterator it = start;
+    TextList::ConstIterator it_begin;
     for ( ; it != end; ++it )
     {
         curEntity = *it;
@@ -383,7 +438,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     j=0;
                     offset = 0;
                     queryLeft=query.length();
-                    it_begin = TextEntity::List::ConstIterator();
+                    it_begin = TextList::ConstIterator();
             }
             else
             {
@@ -400,7 +455,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     ret->append( curEntity->transformedArea( matrix ) );
                     j+=min;
                     queryLeft-=min;
-                    if ( it_begin == TextEntity::List::ConstIterator() )
+                    if ( it_begin == TextList::ConstIterator() )
                     {
                         it_begin = it;
                     }
@@ -437,8 +492,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
                                                             Qt::CaseSensitivity caseSensitivity,
-                                                            const TextEntity::List::ConstIterator &start,
-                                                            const TextEntity::List::ConstIterator &end )
+                                                            const TextList::ConstIterator &start,
+                                                            const TextList::ConstIterator &end )
 {
     QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
@@ -448,14 +503,14 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
-    const TextEntity* curEntity = 0;
+    const TinyTextEntity* curEntity = 0;
     int j=query.length() - 1, len=0, queryLeft=query.length();
     int offset = 0;
     bool haveMatch=false;
     bool dontIncrement=false;
     bool offsetMoved = false;
-    TextEntity::List::ConstIterator it = start;
-    TextEntity::List::ConstIterator it_begin;
+    TextList::ConstIterator it = start;
+    TextList::ConstIterator it_begin;
     while ( true )
     {
         curEntity = *it;
@@ -509,7 +564,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     j=query.length() - 1;
                     offset = 0;
                     queryLeft=query.length();
-                    it_begin = TextEntity::List::ConstIterator();
+                    it_begin = TextList::ConstIterator();
             }
             else
             {
@@ -526,7 +581,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     ret->append( curEntity->transformedArea( matrix ) );
                     j-=min;
                     queryLeft-=min;
-                    if ( it_begin == TextEntity::List::ConstIterator() )
+                    if ( it_begin == TextList::ConstIterator() )
                     {
                         it_begin = it;
                     }
@@ -571,13 +626,13 @@ QString TextPage::text(const RegularAreaRect *area) const
     if ( area && area->isNull() )
         return QString();
 
-    TextEntity::List::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    TextList::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
     QString ret;
     if ( area )
     {
         for ( ; it != itEnd; ++it )
         {
-            if ( area->intersects( *(*it)->area() ) )
+            if ( area->intersects( (*it)->area ) )
             {
                 ret += (*it)->text();
             }

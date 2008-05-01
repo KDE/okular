@@ -11,35 +11,35 @@
 #ifndef _OKULAR_TEXTPAGE_P_H_
 #define _OKULAR_TEXTPAGE_P_H_
 
+#include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtGui/QMatrix>
 
-#include "textpage.h"
-
 class SearchPoint;
+class TinyTextEntity;
 
 namespace Okular
 {
 
 class PagePrivate;
+typedef QList< TinyTextEntity* > TextList;
 
 class TextPagePrivate
 {
     public:
         TextPagePrivate();
-        TextPagePrivate( const TextEntity::List &words );
         ~TextPagePrivate();
 
         RegularAreaRect * findTextInternalForward( int searchID, const QString &query,
                                                    Qt::CaseSensitivity caseSensitivity,
-                                                   const TextEntity::List::ConstIterator &start,
-                                                   const TextEntity::List::ConstIterator &end );
+                                                   const TextList::ConstIterator &start,
+                                                   const TextList::ConstIterator &end );
         RegularAreaRect * findTextInternalBackward( int searchID, const QString &query,
                                                     Qt::CaseSensitivity caseSensitivity,
-                                                    const TextEntity::List::ConstIterator &start,
-                                                    const TextEntity::List::ConstIterator &end );
+                                                    const TextList::ConstIterator &start,
+                                                    const TextList::ConstIterator &end );
 
-        TextEntity::List m_words;
+        TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
 };

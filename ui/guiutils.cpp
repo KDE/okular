@@ -134,25 +134,6 @@ QString prettyToolTip( const Okular::Annotation * ann )
     return tooltip;
 }
 
-bool canBeMoved( const Okular::Annotation * ann )
-{
-    Q_ASSERT( ann );
-
-    switch( ann->subType() )
-    {
-        case Okular::Annotation::ALine:
-        case Okular::Annotation::AStamp:
-        case Okular::Annotation::AGeom:
-        case Okular::Annotation::AInk:
-        case Okular::Annotation::AText:
-            return true;
-            break;
-        default:
-            break;
-    }
-    return false;
-}
-
 void setIconLoader( KIconLoader * loader )
 {
     s_data->il = loader;

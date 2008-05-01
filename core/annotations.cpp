@@ -722,6 +722,21 @@ void Annotation::setDisposeDataFunction( DisposeDataFunction func )
     d->m_disposeFunc = func;
 }
 
+bool Annotation::canBeMoved() const
+{
+    Q_D( const Annotation );
+    // for now, it is pointless moving external annotations
+    // as we cannot change them anyway
+    if ( d->m_flags & External )
+        return false;
+
+    // highlight "requires" to be "bounded" to text, and that's tricky for now
+    if ( subType() == AHighlight )
+        return false;
+
+    return true;
+}
+
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 {
     Q_D( const Annotation );

@@ -33,8 +33,6 @@ namespace GuiUtils
 
     QString prettyToolTip( const Okular::Annotation * annotation );
 
-    bool canBeMoved( const Okular::Annotation * annotation );
-
     void setIconLoader( KIconLoader * loader );
     KIconLoader* iconLoader();
 

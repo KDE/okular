@@ -273,6 +273,8 @@ class OKULAR_EXPORT Annotation
 
         /**
          * Move the annotation by the specified coordinates.
+         *
+         * @see canBeMoved()
          */
         void translate( const NormalizedPoint &coord );
 
@@ -612,6 +614,13 @@ class OKULAR_EXPORT Annotation
          * @since 0.7 (KDE 4.1)
          */
         void setDisposeDataFunction( DisposeDataFunction func );
+
+        /**
+         * Returns whether the annotation can be moved.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        bool canBeMoved() const;
 
         /**
          * Returns the sub type of the annotation.

@@ -1593,7 +1593,7 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                     if ( orect )
                         d->mouseAnn = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     // consider no annotation caught if its type is not movable
-                    if ( d->mouseAnn && !GuiUtils::canBeMoved( d->mouseAnn ) )
+                    if ( d->mouseAnn && !d->mouseAnn->canBeMoved() )
                         d->mouseAnn = 0;
                 }
                 if ( !d->mouseAnn )
@@ -2583,7 +2583,7 @@ void PageView::updateCursor( const QPoint &p )
                 d->mouseOnRect = false;
                 if ( annotobj
                      && ( QApplication::keyboardModifiers() & Qt::ControlModifier )
-                     && GuiUtils::canBeMoved( static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation() ) )
+                     && static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation()->canBeMoved() )
                 {
                     setCursor( Qt::OpenHandCursor );
                 }

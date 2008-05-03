@@ -295,8 +295,16 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 {
-    // can unload all pixmaps except for the currently visible one
-    return pageNumber != m_frameIndex;
+    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Aggressive )
+    {
+        // can unload all pixmaps except for the currently visible one
+        return pageNumber != m_frameIndex;
+    }
+    else
+    {
+        // can unload all pixmaps except for the currently visible one, previous and next
+        return qAbs(pageNumber - m_frameIndex) <= 1;
+    }
 }
 
 void PresentationWidget::setupActions( KActionCollection * collection )

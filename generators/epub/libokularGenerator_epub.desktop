@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=EPub document
+Name[el]=Έγγραφο EPub
 Name[es]=Documento EPub
 Name[fi]=EPub-asiakirja
 Name[ga]=Cáipéis EPub
@@ -14,6 +15,7 @@ Name[uk]=Документ EPub
 Name[zh_CN]=EPub 文档
 Name[zh_TW]=EPub 文件
 Comment=EPub backend for Okular
+Comment[el]=Σύστημα υποστήριξης EPub για το Okular
 Comment[es]=Motor EPub para Okular
 Comment[ga]=Inneall EPub le haghaidh Okular
 Comment[ja]=Okular の EPub バックエンド

@@ -756,8 +756,12 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 #else
         QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->orientation());
 #endif
-        page->setTextPage( abstractTextPage(textList, page->height(), page->width(), request->page()->orientation()) );
+        Okular::TextPage *tp = abstractTextPage(textList, page->height(), page->width(), request->page()->orientation());
+        page->setTextPage( tp );
         qDeleteAll(textList);
+        
+        // notify the new generation
+        signalTextGenerationDone( page, tp );
     }
     delete p;
     
@@ -1573,9 +1577,13 @@ void PDFGenerator::threadFinished()
     delete outImage;
     if ( !outText.isEmpty() )
     {
-        request->page()->setTextPage( abstractTextPage( outText , 
-            request->page()->height(), request->page()->width(),request->page()->orientation()));
+        Okular::TextPage *tp = abstractTextPage( outText, request->page()->height(), 
+                                                 request->page()->width(),request->page()->orientation());
+        request->page()->setTextPage( tp );
         qDeleteAll(outText);
+        
+        // notify the new generation
+        signalTextGenerationDone( request->page(), tp );
     }
     bool genObjectRects = !rectsGenerated.at( request->page()->number() );
     if (genObjectRects)
@@ -1772,5 +1780,7 @@ void PDFPixmapGeneratorThread::run()
 
     // by ending the thread notifies the GUI thread that data is pending and can be read
 }
+
 #include "generator_pdf.moc"
 
+/* kate: replace-tabs on; indent-width 4; */

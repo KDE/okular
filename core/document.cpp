@@ -743,6 +743,13 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
 
 void DocumentPrivate::_o_configChanged()
 {
+    // free text pages if needed
+    calculateMaxTextPages();
+    while (m_allocatedTextPagesFifo.count() > m_maxAllocatedTextPages)
+    {
+        int pageToKick = m_allocatedTextPagesFifo.takeFirst();
+        m_pagesVector.at(pageToKick)->setTextPage( 0 ); // deletes the textpage
+    }
 }
 
 void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
@@ -2970,6 +2977,43 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
         sendGeneratorRequest();
 }
 
+void DocumentPrivate::calculateMaxTextPages()
+{
+    int multipliers = qMax(1, qRound(getTotalMemory() / 536870912.0)); // 512 MB
+    switch (Settings::memoryLevel())
+    {
+        case Settings::EnumMemoryLevel::Low:
+            m_maxAllocatedTextPages = multipliers * 2;
+        break;
+
+        case Settings::EnumMemoryLevel::Normal:
+            m_maxAllocatedTextPages = multipliers * 50;
+        break;
+
+        case Settings::EnumMemoryLevel::Aggressive:
+            m_maxAllocatedTextPages = multipliers * 250;
+        break;
+    }
+}
+
+void DocumentPrivate::textGenerationDone( Page *page )
+{
+    if ( !m_generator || m_closingLoop ) return;
+
+    // 1. If we reached the cache limit, delete the first text page from the fifo
+    if (m_allocatedTextPagesFifo.size() == m_maxAllocatedTextPages)
+    {
+        int pageToKick = m_allocatedTextPagesFifo.takeFirst();
+        if (pageToKick != page->number()) // this should never happen but better be safe than sorry
+        {
+            m_pagesVector.at(pageToKick)->setTextPage( 0 ); // deletes the textpage
+        }
+    }
+
+    // 2. Add the page to the fifo of generated text pages
+    m_allocatedTextPagesFifo.append( page->number() );
+}
+
 void Document::setRotation( int r )
 {
     d->setRotationInternal( r, true );
@@ -3267,3 +3311,5 @@ VisiblePageRect::VisiblePageRect( int page, const NormalizedRect &rectangle )
 }
 
 #include "document.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

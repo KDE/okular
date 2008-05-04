@@ -103,6 +103,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
 
 void GeneratorPrivate::textpageGenerationFinished()
 {
+    Q_Q( Generator );
     Page *page = mTextPageGenerationThread->page();
     mTextPageGenerationThread->endGeneration();
 
@@ -121,7 +122,11 @@ void GeneratorPrivate::textpageGenerationFinished()
     }
 
     if ( mTextPageGenerationThread->textPage() )
-        page->setTextPage( mTextPageGenerationThread->textPage() );
+    {
+        TextPage *tp = mTextPageGenerationThread->textPage();
+        page->setTextPage( tp );
+        q->signalTextGenerationDone( page, tp );
+    }
 }
 
 QMutex* GeneratorPrivate::threadsLock()
@@ -234,8 +239,10 @@ bool Generator::canGenerateTextPage() const
 void Generator::generateTextPage( Page *page )
 {
     Q_D( Generator );
-    page->setTextPage( textPage( page ) );
+    TextPage *tp = textPage( page );
+    page->setTextPage( tp );
     d->mTextPageReady = true;
+    signalTextGenerationDone( page, tp );
 }
 
 QImage Generator::image( PixmapRequest * )
@@ -327,6 +334,15 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
     {
         delete request;
     }
+}
+
+void Generator::signalTextGenerationDone( Page *page, TextPage *textPage )
+{
+    Q_D( Generator );
+    if ( d->m_document )
+        d->m_document->textGenerationDone( page );
+    else
+        delete textPage;
 }
 
 const Document * Generator::document() const

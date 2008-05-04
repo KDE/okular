@@ -388,6 +388,11 @@ class OKULAR_EXPORT Generator : public QObject
         void signalPixmapRequestDone( PixmapRequest * request );
 
         /**
+         * This method must be called when a text generation has been finished.
+         */
+        void signalTextGenerationDone( Page *page, TextPage *textPage );
+
+        /**
          * This method is called when the document is closed and not used
          * any longer.
          *

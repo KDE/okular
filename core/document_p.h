@@ -82,12 +82,14 @@ class DocumentPrivate
             m_scripter( 0 ),
             m_fontsCached( false )
         {
+            calculateMaxTextPages();
         }
 
         // private methods
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
         void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory();
         void loadDocumentInfo();
@@ -123,6 +125,7 @@ class DocumentPrivate
          * the pixmap generation @p request.
          */
         void requestDone( PixmapRequest * request );
+        void textGenerationDone( Page *page );
         /**
          * Request a particular metadata of the Document itself (ie, not something
          * depending on the document type/backend).
@@ -159,6 +162,8 @@ class DocumentPrivate
         QMutex m_pixmapRequestsMutex;
         QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
         qulonglong m_allocatedPixmapsTotalMemory;
+        QList< int > m_allocatedTextPagesFifo;
+        int m_maxAllocatedTextPages;
         bool m_warnedOutOfMemory;
 
         // the rotation applied to the document

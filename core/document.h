@@ -676,6 +676,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
         Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )
+        Q_PRIVATE_SLOT( d, void _o_configChanged() )
 
         // search thread simulators
         Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )

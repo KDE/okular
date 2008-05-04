@@ -741,6 +741,10 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
 }
 
+void DocumentPrivate::_o_configChanged()
+{
+}
+
 void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
 {
     RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
@@ -1209,6 +1213,7 @@ Document::Document( QWidget *widget )
 
     connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
              this, SLOT( rotationFinished( int ) ) );
+    connect( Settings::self(), SIGNAL( configChanged() ), this, SLOT( _o_configChanged() ) );
 
     qRegisterMetaType<Okular::FontInfo>();
 }

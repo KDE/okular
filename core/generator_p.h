@@ -47,6 +47,7 @@ class GeneratorPrivate
         QMutex* threadsLock();
 
         virtual QVariant metaData( const QString &key, const QVariant &option ) const;
+        virtual QImage image( PixmapRequest * );
 
         DocumentPrivate *m_document;
         // NOTE: the following should be a QSet< GeneratorFeature >,

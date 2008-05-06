@@ -11,11 +11,13 @@
 #include "textdocumentgenerator_p.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QMutex>
 #include <QtCore/QStack>
 #include <QtCore/QTextStream>
 #include <QtCore/QVector>
+#include <QtGui/QFontDatabase>
+#include <QtGui/QImage>
 #include <QtGui/QPainter>
-#include <QtGui/QPixmap>
 #include <QtGui/QPrinter>
 
 #include <okular/core/action.h>
@@ -55,10 +57,15 @@ TextDocumentGenerator* TextDocumentConverter::generator() const
  */
 Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber ) const
 {
+    Q_Q( const TextDocumentGenerator );
+
     Okular::TextPage *textPage = new Okular::TextPage;
 
     int start, end;
 
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    q->userMutex()->lock();
+#endif
     Utils::calculatePositions( mDocument, pageNumber, start, end );
 
     QTextCursor cursor( mDocument );
@@ -76,6 +83,9 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
             textPage->append( text, new Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         }
     }
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    q->userMutex()->unlock();
+#endif
 
     return textPage;
 }
@@ -205,6 +215,10 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, 
     setFeature( TextExtraction );
     setFeature( PrintNative );
     setFeature( PrintToFile );
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    if ( QFontDatabase::supportsThreadedFontRendering() )
+        setFeature( Threaded );
+#endif
 
     connect( converter, SIGNAL( addAction( Action*, int, int ) ),
              this, SLOT( addAction( Action*, int, int ) ) );
@@ -314,37 +328,47 @@ bool TextDocumentGenerator::doCloseDocument()
 
 bool TextDocumentGenerator::canGeneratePixmap() const
 {
-    return true;
+    return Generator::canGeneratePixmap();
 }
 
 void TextDocumentGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
-    Q_D( TextDocumentGenerator );
-    if ( !d->mDocument )
-        return;
+    Generator::generatePixmap( request );
+}
 
-    const QSize size = d->mDocument->pageSize().toSize();
+QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
+{
+    if ( !mDocument )
+        return QImage();
 
-    QPixmap *pixmap = new QPixmap( request->width(), request->height() );
-    pixmap->fill( Qt::white );
+    Q_Q( TextDocumentGenerator );
+
+    QImage image( request->width(), request->height(), QImage::Format_ARGB32 );
+    image.fill( Qt::white );
 
     QPainter p;
-    p.begin( pixmap );
+    p.begin( &image );
 
     qreal width = request->width();
     qreal height = request->height();
+
+    const QSize size = mDocument->pageSize().toSize();
 
     p.scale( width / (qreal)size.width(), height / (qreal)size.height() );
 
     QRect rect;
     rect = QRect( 0, request->pageNumber() * size.height(), size.width(), size.height() );
     p.translate( QPoint( 0, request->pageNumber() * size.height() * -1 ) );
-    d->mDocument->drawContents( &p, rect );
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    q->userMutex()->lock();
+#endif
+    mDocument->drawContents( &p, rect );
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    q->userMutex()->unlock();
+#endif
     p.end();
 
-    request->page()->setPixmap( request->id(), pixmap );
-
-    signalPixmapRequestDone( request );
+    return image;
 }
 
 Okular::TextPage* TextDocumentGenerator::textPage( Okular::Page * page )

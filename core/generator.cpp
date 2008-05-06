@@ -141,6 +141,11 @@ QVariant GeneratorPrivate::metaData( const QString &, const QVariant & ) const
     return QVariant();
 }
 
+QImage GeneratorPrivate::image( PixmapRequest * )
+{
+    return QImage();
+}
+
 
 Generator::Generator( QObject *parent, const QVariantList &args )
     : QObject( parent ), d_ptr( new GeneratorPrivate() )
@@ -245,9 +250,10 @@ void Generator::generateTextPage( Page *page )
     signalTextGenerationDone( page, tp );
 }
 
-QImage Generator::image( PixmapRequest * )
+QImage Generator::image( PixmapRequest *request )
 {
-    return QImage();
+    Q_D( Generator );
+    return d->image( request );
 }
 
 TextPage* Generator::textPage( Page* )

@@ -420,7 +420,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
             firstInput = false;
 
             // if the user presses cancel, abort opening
-            KPasswordDialog dlg( 0, wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
+            KPasswordDialog dlg( document()->widget(), wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
             dlg.setCaption( i18n( "Document Password" ) );
             dlg.setPrompt( prompt );
             if( !dlg.exec() )

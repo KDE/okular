@@ -68,6 +68,7 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
 #endif
     Utils::calculatePositions( mDocument, pageNumber, start, end );
 
+    {
     QTextCursor cursor( mDocument );
     for ( int i = start; i < end - 1; ++i ) {
         cursor.setPosition( i );
@@ -82,6 +83,7 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
 
             textPage->append( text, new Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         }
+    }
     }
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->unlock();

@@ -331,7 +331,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
             QString walletName = KWallet::Wallet::NetworkWallet();
             WId parentwid = 0;
             if ( document() && document()->widget() )
-                parentwid = document()->widget()->winId();
+                parentwid = document()->widget()->effectiveWinId();
             wallet = KWallet::Wallet::openWallet( walletName, parentwid );
             if ( wallet )
             {

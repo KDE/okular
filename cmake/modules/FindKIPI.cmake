@@ -19,7 +19,7 @@ else (KIPI_INCLUDE_DIR AND KIPI_LIBRARIES)
 
   if(_kipiIncDir)
     find_path(KIPI_INCLUDE_DIR libkipi/interface.h
-      ${_ddjvuIncDir}
+      ${_kipiIncDir}
       ${KDE4_INCLUDE_DIR}
       ${INCLUDE_INSTALL_DIR}
       ${GNUWIN32_DIR}/include

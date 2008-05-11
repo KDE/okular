@@ -821,7 +821,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     // TODO rotation
 
-#if HAVE_POPPLER_0_7
+#ifdef HAVE_POPPLER_0_7
     tf.setAutoRemove(false);
 #else
     tf.close();
@@ -837,7 +837,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
 
-#if HAVE_POPPLER_0_7
+#ifdef HAVE_POPPLER_0_7
     psConverter->setOutputDevice(&tf);
 #else
     psConverter->setOutputFileName(tempfilename);
@@ -1509,7 +1509,7 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
 {
     switch ( option )
     {
-#if HAVE_POPPLER_0_7
+#ifdef HAVE_POPPLER_0_7
         case SaveChanges:
             return true;
 #endif
@@ -1520,7 +1520,7 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
 
 bool PDFGenerator::save( const QString &fileName, SaveOptions options )
 {
-#if HAVE_POPPLER_0_7
+#ifdef HAVE_POPPLER_0_7
     Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
 
     pdfConv->setOutputFileName( fileName );

@@ -363,7 +363,8 @@ bool Converter::convertList( const QDomElement &element )
             return false;
         }
 
-        list->add( prevBlock );
+        if( prevBlock.isValid() )
+            list->add( prevBlock );
 
         childElement = childElement.nextSiblingElement();
       }

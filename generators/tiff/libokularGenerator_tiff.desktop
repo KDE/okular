@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Okular TIFF Library
+Name[ca]=Biblioteca TIFF de l'Okular
 Name[da]=TIFF-bibliotek til Okular
 Name[el]=Βιβλιοθήκη TIFF του Okular
 Name[es]=Biblioteca TIFF de Okular
@@ -20,6 +21,7 @@ Name[x-test]=xxOkular TIFF Libraryxx
 Name[zh_CN]=Okular TIFF 库
 Name[zh_TW]=Okular TIFF 函式庫
 Comment=TIFF backend for Okular
+Comment[ca]=Dorsal de TIFF per l'Okular
 Comment[da]=TIFF-motor til Okular
 Comment[el]=Σύστημα υποστήριξης TIFF για το Okular
 Comment[es]=Motor TIFF para Okular

@@ -39,6 +39,7 @@ Name[x-test]=xxFictionBook documentxx
 Name[zh_CN]=FictionBook 文档
 Name[zh_TW]=FictionBook 文件
 Comment=FictionBook backend for Okular
+Comment[ca]=Dorsal de FictionBook per l'Okular
 Comment[da]=FictionBook-motor til Okular
 Comment[el]=Σύστημα υποστήριξης FictionBook για το Okular
 Comment[es]=Motor FictionBook para Okular

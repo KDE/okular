@@ -406,11 +406,11 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          this, SLOT( slotPageSizes( int ) ) );
 
-    d->aZoomFitWidth  = new KToggleAction(KIcon( "view-fit-width" ), i18n("Fit &Width"), this);
+    d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
     ac->addAction("view_fit_to_width", d->aZoomFitWidth );
     connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
 
-    d->aZoomFitPage  = new KToggleAction(KIcon( "view-fit-window" ), i18n("Fit &Page"), this);
+    d->aZoomFitPage  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Page"), this);
     ac->addAction("view_fit_to_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
 

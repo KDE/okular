@@ -1775,6 +1775,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 for ( ; iIt != iEnd; ++iIt )
                 {
                     PageViewItem * item = *iIt;
+                    if ( !item->isVisible() )
+                        continue;
+
                     const QRect & itemRect = item->geometry();
                     if ( selectionRect.intersects( itemRect ) )
                     {

@@ -2,6 +2,7 @@
 Type=Service
 Name=djvu
 Name[hi]=डीजेवीयू
+Name[hu]=DjVu
 Name[th]=เอกสาร djvu
 Name[x-test]=xxdjvuxx
 Comment=DjVu backend for Okular

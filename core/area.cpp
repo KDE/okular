@@ -122,6 +122,19 @@ NormalizedRect& NormalizedRect::operator|= (const NormalizedRect & r)
     return *this;
 }
 
+NormalizedRect NormalizedRect::operator&( const NormalizedRect & r ) const
+{
+    if ( isNull() || r.isNull() )
+        return NormalizedRect();
+
+    NormalizedRect ret;
+    ret.left = qMax( left, r.left );
+    ret.top = qMax( top, r.top );
+    ret.bottom = qMin( bottom, r.bottom );
+    ret.right = qMin( right, r.right );
+    return ret;
+}
+
 NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r )
 {
     left = r.left;

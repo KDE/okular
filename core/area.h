@@ -178,6 +178,14 @@ class OKULAR_EXPORT NormalizedRect
         NormalizedRect& operator|=( const NormalizedRect &other );
 
         /**
+         * Returns the intersection of this normalized rectangle with the specified
+         * @p other. If the rects do not intersect then the result is null.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        NormalizedRect operator&( const NormalizedRect &other ) const;
+
+        /**
          * Returns whether the normalized rectangle is equal to the @p other
          * normalized rectangle.
          */

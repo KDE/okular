@@ -48,6 +48,7 @@ class Page;
 class PixmapRequest;
 class PixmapRequestPrivate;
 class TextPage;
+class NormalizedRect;
 
 /* Note: on contents generation and asynchronous queries.
  * Many observers may want to request data syncronously or asynchronously.
@@ -437,6 +438,15 @@ class OKULAR_EXPORT Generator : public QObject
          * Return the pointer to a mutex the generator can use freely.
          */
         QMutex* userMutex() const;
+
+        /**
+         * Set the bounding box of a page after the page has already been handed
+         * to the Document. Call this instead of Page::setBoundingBox() to ensure
+         * that all observers are notified.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void updatePageBoundingBox( int page, const NormalizedRect & boundingBox );
 
     protected:
         /// @cond PRIVATE

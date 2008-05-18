@@ -21,6 +21,7 @@
 #include "document_p.h"
 #include "page.h"
 #include "textpage.h"
+#include "utils.h"
 
 using namespace Okular;
 
@@ -96,7 +97,10 @@ void GeneratorPrivate::pixmapGenerationFinished()
         return;
     }
 
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( mPixmapGenerationThread->image() ) ) );
+    const QImage& img = mPixmapGenerationThread->image();
+    if ( !request->page()->isBoundingBoxKnown() )
+        q->updatePageBoundingBox( request->page()->number(), Utils::imageBoundingBox( &img ) );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     q->signalPixmapRequestDone( request );
 }
@@ -228,7 +232,10 @@ void Generator::generatePixmap( PixmapRequest *request )
         return;
     }
 
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( image( request ) ) ) );
+    const QImage& img = image( request );
+    if ( !request->page()->isBoundingBoxKnown() )
+        updatePageBoundingBox( request->page()->number(), Utils::imageBoundingBox( &img ) );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     d->mPixmapReady = true;
 
@@ -387,6 +394,13 @@ QMutex* Generator::userMutex() const
         d->m_mutex = new QMutex();
     }
     return d->m_mutex;
+}
+
+void Generator::updatePageBoundingBox( int page, const NormalizedRect & boundingBox )
+{
+    Q_D( Generator );
+    if ( d->m_document ) // still connected to document?
+        d->m_document->setPageBoundingBox( page, boundingBox );
 }
 
 

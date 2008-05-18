@@ -2977,6 +2977,26 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
         sendGeneratorRequest();
 }
 
+void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundingBox )
+{
+    Page * kp = m_pagesVector[ page ];
+    if ( !m_generator || !kp )
+        return;
+
+    if ( kp->boundingBox() == boundingBox )
+        return;
+    kp->setBoundingBox( boundingBox );
+
+    // notify observers about the change
+    foreachObserverD( notifyPageChanged( page, DocumentObserver::BoundingBox ) );
+
+    // TODO: For generators that generate the bbox by pixmap scanning, if the first generated pixmap is very small, the bounding box will forever be inaccurate.
+    // TODO: Crop computation should also consider annotations, actions, etc. to make sure they're not cropped away.
+    // TODO: Help compute bounding box for generators that create a QPixmap without a QImage, like text and plucker.
+    // TODO: Don't compute the bounding box if no one needs it (e.g., Trim Borders is off).
+
+}
+
 void DocumentPrivate::calculateMaxTextPages()
 {
     int multipliers = qMax(1, qRound(getTotalMemory() / 536870912.0)); // 512 MB

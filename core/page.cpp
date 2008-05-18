@@ -56,10 +56,11 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
-      m_width( w ), m_height( h ),
+      m_width( w ), m_height( h ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
-      m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 )
+      m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),
+      m_isBoundingBoxKnown( false )
 {
     // avoid Division-By-Zero problems in the program
     if ( m_width <= 0 )
@@ -170,6 +171,29 @@ double Page::height() const
 double Page::ratio() const
 {
     return d->m_height / d->m_width;
+}
+
+NormalizedRect Page::boundingBox() const
+{
+    return d->m_boundingBox;
+}
+
+bool Page::isBoundingBoxKnown() const
+{
+    return d->m_isBoundingBoxKnown;
+}
+
+void Page::setBoundingBox( const NormalizedRect& bbox )
+{
+    if ( d->m_isBoundingBoxKnown && d->m_boundingBox == bbox )
+        return;
+
+    // Allow tiny rounding errors (happens during rotation)
+    static const double epsilon = 0.00001;
+    Q_ASSERT( bbox.left >= -epsilon && bbox.top >= -epsilon && bbox.right <= 1 + epsilon && bbox.bottom <= 1 + epsilon );
+
+    d->m_boundingBox = bbox & NormalizedRect( 0., 0., 1., 1. );
+    d->m_isBoundingBoxKnown = true;
 }
 
 bool Page::hasPixmap( int id, int width, int height ) const

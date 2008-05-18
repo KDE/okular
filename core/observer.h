@@ -72,7 +72,8 @@ class OKULAR_EXPORT DocumentObserver
             Bookmark = 2,         ///< Bookmarks has been changed
             Highlights = 4,       ///< Highlighting information has been changed
             TextSelection = 8,    ///< Text selection has been changed
-            Annotations = 16      ///< Annotations has been changed
+            Annotations = 16,     ///< Annotations has been changed
+            BoundingBox = 32      ///< Bounding boxes have been changed
         };
 
         /**

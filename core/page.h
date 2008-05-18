@@ -108,6 +108,34 @@ class OKULAR_EXPORT Page
         double ratio() const;
 
         /**
+         * Returns the bounding box of the page content in normalized [0,1] coordinates,
+         * in terms of the upright orientation (Rotation0).
+         * If it has not been computed yet, returns the full page (i.e., (0, 0, 1, 1)).
+         * Note that the bounding box may be null if the page is blank.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        NormalizedRect boundingBox() const;
+
+        /**
+         * Returns whether the bounding box of the page has been computed.
+         * Note that even if the bounding box is computed, it may be null if the page is blank.
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        bool isBoundingBoxKnown() const;
+
+        /**
+         * Sets the bounding box of the page content in normalized [0,1] coordinates,
+         * in terms of the upright orientation (Rotation0).
+         * (This does not inform the document's observers, call Document::SetPageBoundingBox
+         * instead if you want that.)
+         *
+         * @since 0.7 (KDE 4.1)
+         */
+        void setBoundingBox( const NormalizedRect& bbox );
+
+        /**
          * Returns whether the page has a pixmap of size @p width x @p height
          * for the observer with given @p id.
          */

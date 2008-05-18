@@ -127,6 +127,10 @@ class DocumentPrivate
         void requestDone( PixmapRequest * request );
         void textGenerationDone( Page *page );
         /**
+         * Sets the bounding box of the given @p page (in terms of upright orientation, i.e., Rotation0).
+         */
+        void setPageBoundingBox( int page, const NormalizedRect& boundingBox );
+        /**
          * Request a particular metadata of the Document itself (ie, not something
          * depending on the document type/backend).
          */

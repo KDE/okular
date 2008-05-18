@@ -108,6 +108,7 @@ class PagePrivate
         int m_number;
         Rotation m_orientation;
         double m_width, m_height;
+        NormalizedRect m_boundingBox;
         Rotation m_rotation;
         int m_maxuniqueNum;
 
@@ -119,6 +120,8 @@ class PagePrivate
         Action * m_closingAction;
         double m_duration;
         QString m_label;
+
+        bool m_isBoundingBoxKnown : 1;
 };
 
 }

@@ -47,6 +47,7 @@ set(okularcore_SRCS
    core/view.cpp
    core/fileprinter.cpp
    core/script/executor_kjs.cpp
+   core/script/kjs_app.cpp
    core/script/kjs_console.cpp
    core/script/kjs_data.cpp
    core/script/kjs_document.cpp

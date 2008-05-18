@@ -20,6 +20,7 @@
 #include "../debug_p.h"
 #include "../document_p.h"
 
+#include "kjs_app_p.h"
 #include "kjs_console_p.h"
 #include "kjs_data_p.h"
 #include "kjs_document_p.h"
@@ -59,6 +60,7 @@ void ExecutorKJSPrivate::initTypes()
 
     KJSContext *ctx = m_interpreter->globalContext();
 
+    JSApp::initType( ctx );
     JSFullscreen::initType( ctx );
     JSConsole::initType( ctx );
     JSData::initType( ctx );
@@ -67,6 +69,7 @@ void ExecutorKJSPrivate::initTypes()
     JSSpell::initType( ctx );
     JSUtil::initType( ctx );
 
+    m_docObject.setProperty( ctx, "app", JSApp::object( ctx, m_doc ) );
     m_docObject.setProperty( ctx, "console", JSConsole::object( ctx ) );
     m_docObject.setProperty( ctx, "Doc", m_docObject );
     m_docObject.setProperty( ctx, "spell", JSSpell::object( ctx ) );

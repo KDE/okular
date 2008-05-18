@@ -12,6 +12,7 @@
 #include <kdebug.h>
 
 #include "debug_p.h"
+#include "script/executor_kjs_p.h"
 
 using namespace Okular;
 
@@ -19,15 +20,17 @@ class Okular::ScripterPrivate
 {
     public:
         ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc )
+            : m_doc( doc ), m_kjs( 0 )
         {
         }
 
         ~ScripterPrivate()
         {
+            delete m_kjs;
         }
 
         DocumentPrivate *m_doc;
+        ExecutorKJS *m_kjs;
 };
 
 Scripter::Scripter( DocumentPrivate *doc )
@@ -52,6 +55,11 @@ QString Scripter::execute( ScriptType type, const QString &script )
     switch ( type )
     {
         case JavaScript:
+            if ( !d->m_kjs )
+            {
+                d->m_kjs = new ExecutorKJS( d->m_doc );
+            }
+            d->m_kjs->execute( script );
             break;
     }
     return QString();

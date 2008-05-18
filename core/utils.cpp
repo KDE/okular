@@ -10,6 +10,7 @@
 #include "utils.h"
 
 #include <QtCore/QRect>
+#include <QImage>
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -149,3 +150,63 @@ double Utils::dpiY()
     return QDesktopWidget().physicalDpiY();
 }
 #endif
+
+inline static bool isWhite( QRgb argb ) {
+    return ( argb & 0xFFFFFF ) == 0xFFFFFF; // ignore alpha
+}
+
+NormalizedRect Utils::imageBoundingBox( const QImage * image )
+{
+    if ( !image )
+        return NormalizedRect();
+
+    int width = image->width();
+    int height = image->height();
+    int left, top, bottom, right, x, y;
+
+#ifdef BBOX_DEBUG
+    QTime time;
+    time.start();
+#endif
+
+    // Scan pixels for top non-white
+    for ( top = 0; top < height; ++top )
+        for ( x = 0; x < width; ++x )
+            if ( !isWhite( image->pixel( x, top ) ) )
+                goto got_top;
+    return NormalizedRect( 0, 0, 0, 0 ); // the image is blank
+got_top:
+    left = right = x;
+
+    // Scan pixels for bottom non-white
+    for ( bottom = height-1; bottom >= top; --bottom )
+        for ( x = width-1; x >= 0; --x )
+            if ( !isWhite( image->pixel( x, bottom ) ) )
+                goto got_bottom;
+    Q_ASSERT( 0 ); // image changed?!
+got_bottom:
+    if ( x < left )
+        left = x;
+    if ( x > right )
+        right = x;
+
+    // Scan for leftmost and rightmost (we already found some bounds on these):
+    for ( y = top; y <= bottom && ( left > 0 || right < width-1 ); ++y )
+    {
+        for ( x = 0; x < left; ++x )
+            if ( !isWhite( image->pixel( x, y ) ) )
+                left = x;
+        for ( x = width-1; x > right+1; --x )
+            if ( !isWhite( image->pixel( x, y ) ) )
+                right = x;
+    }
+
+    NormalizedRect bbox( QRect( left, top, ( right - left + 1), ( bottom - top + 1 ) ),
+                         image->width(), image->height() );
+
+#ifdef BBOX_DEBUG
+    kDebug() << "Computed bounding box" << bbox << "in" << time.elapsed() << "ms";
+#endif
+
+    return bbox;
+}

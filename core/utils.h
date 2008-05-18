@@ -11,8 +11,10 @@
 #define _OKULAR_UTILS_H_
 
 #include <okular/core/okular_export.h>
+#include <okular/core/area.h>
 
 class QRect;
+class QImage;
 
 namespace Okular
 {
@@ -40,6 +42,14 @@ class OKULAR_EXPORT Utils
      * Return the vertical DPI of the main display
      */
     static double dpiY();
+
+    /**
+     * Compute the smallest rectangle that contains all non-white pixels in image),
+     * in normalized [0,1] coordinates.
+     *
+     * @since 0.7 (KDE 4.1)
+     */
+    static NormalizedRect imageBoundingBox( const QImage* image );
 };
 
 }

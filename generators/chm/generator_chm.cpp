@@ -28,6 +28,7 @@
 #include <okular/core/observer.h> //for PAGEVIEW_ID
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
+#include <okular/core/utils.h>
 
 static KAboutData createAboutData()
 {
@@ -182,6 +183,8 @@ void CHMGenerator::slotCompleted()
     Okular::PixmapRequest *req = m_request;
     m_request = 0;
 
+    if ( !req->page()->isBoundingBoxKnown() )
+        updatePageBoundingBox( req->page()->number(), Okular::Utils::imageBoundingBox( &image ) );
     req->page()->setPixmap( req->id(), new QPixmap( QPixmap::fromImage( image ) ) );
     signalPixmapRequestDone( req );
 }

@@ -26,6 +26,7 @@
 #include <okular/core/document.h>
 #include <okular/core/page.h>
 #include <okular/core/fileprinter.h>
+#include <okular/core/utils.h>
 
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"
@@ -179,6 +180,9 @@ void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request
     // This can happen as GSInterpreterCMD is a singleton and on creation signals all the slots
     // of all the generators attached to it
     if (request != m_request) return;
+
+    if ( !request->page()->isBoundingBoxKnown() )
+        updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( img ) );
 
     m_request = 0;
     QPixmap *pix = new QPixmap(QPixmap::fromImage(*img));

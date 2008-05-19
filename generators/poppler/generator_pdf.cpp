@@ -38,6 +38,7 @@
 #include <okular/core/sourcereference.h>
 #include <okular/core/textpage.h>
 #include <okular/core/fileprinter.h>
+#include <okular/core/utils.h>
 
 #include <config-okular-poppler.h>
 
@@ -736,8 +737,14 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
-    page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) ) ) );
-    
+    {
+        QImage img( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
+        if ( !page->isBoundingBoxKnown() )
+            updatePageBoundingBox( page->number(), Okular::Utils::imageBoundingBox( &img ) );
+
+        page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
+    }
+
     if ( genObjectRects )
     {
     	// TODO previously we extracted Image type rects too, but that needed porting to poppler
@@ -1573,6 +1580,8 @@ void PDFGenerator::threadFinished()
     QList<Poppler::TextBox*> outText = generatorThread->takeText();
     QLinkedList< Okular::ObjectRect * > outRects = generatorThread->takeObjectRects();
 
+    if ( !request->page()->isBoundingBoxKnown() )
+        updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( outImage ) );
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( *outImage ) ) );
     delete outImage;
     if ( !outText.isEmpty() )

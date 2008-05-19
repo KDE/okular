@@ -203,6 +203,9 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
         {
             kDebug(DviDebug) << "Image OK";
 
+            if ( !request->page()->isBoundingBoxKnown() )
+                updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( &(pageInfo->img) ) );
+
             request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( pageInfo->img ) ) );
 
             request->page()->setObjectRects( generateDviLinks( pageInfo ) );

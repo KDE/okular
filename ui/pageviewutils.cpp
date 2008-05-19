@@ -41,7 +41,7 @@
 
 PageViewItem::PageViewItem( const Okular::Page * page )
     : m_page( page ), m_zoomFactor( 1.0 ), m_visible( true ),
-    m_formsVisible( false )
+    m_formsVisible( false ), m_crop( 0., 0., 1., 1. )
 {
 }
 
@@ -62,24 +62,54 @@ int PageViewItem::pageNumber() const
     return m_page->number();
 }
 
-const QRect& PageViewItem::geometry() const
+const QRect& PageViewItem::croppedGeometry() const
 {
-    return m_geometry;
+    return m_croppedGeometry;
 }
 
-int PageViewItem::width() const
+int PageViewItem::croppedWidth() const
 {
-    return m_geometry.width();
+    return m_croppedGeometry.width();
 }
 
-int PageViewItem::height() const
+int PageViewItem::croppedHeight() const
 {
-    return m_geometry.height();
+    return m_croppedGeometry.height();
+}
+
+const QRect& PageViewItem::uncroppedGeometry() const
+{
+    return m_uncroppedGeometry;
+}
+
+int PageViewItem::uncroppedWidth() const
+{
+    return m_uncroppedGeometry.width();
+}
+
+int PageViewItem::uncroppedHeight() const
+{
+    return m_uncroppedGeometry.height();
+}
+
+const Okular::NormalizedRect & PageViewItem::crop() const
+{
+    return m_crop;
 }
 
 double PageViewItem::zoomFactor() const
 {
     return m_zoomFactor;
+}
+
+qreal PageViewItem::absToPageX( qreal absX ) const
+{
+    return ( absX - m_uncroppedGeometry.left() ) / m_uncroppedGeometry.width();
+}
+
+qreal PageViewItem::absToPageY( qreal absY ) const
+{
+    return ( absY - m_uncroppedGeometry.top() ) / m_uncroppedGeometry.height();
 }
 
 bool PageViewItem::isVisible() const
@@ -92,32 +122,38 @@ QHash<int, FormWidgetIface*>& PageViewItem::formWidgets()
     return m_formWidgets;
 }
 
-void PageViewItem::setGeometry( int x, int y, int width, int height )
+void PageViewItem::setWHZC( int w, int h, double z, const Okular:: NormalizedRect & c )
 {
-    m_geometry.setRect( x, y, width, height );
-}
-
-void PageViewItem::setWHZ( int w, int h, double z )
-{
-    m_geometry.setWidth( w );
-    m_geometry.setHeight( h );
+    m_croppedGeometry.setWidth( w );
+    m_croppedGeometry.setHeight( h );
     m_zoomFactor = z;
+    m_crop = c;
+    QRect scaledCrop = c.geometry( w, h );
+    m_uncroppedGeometry.setWidth( qRound( w / ( c.right - c.left ) ) );
+    m_uncroppedGeometry.setHeight( qRound( h / ( c.bottom - c.top ) ) );
     foreach(FormWidgetIface *fwi, m_formWidgets)
     {
         Okular::NormalizedRect r = fwi->rect();
-        fwi->setWidthHeight( qRound( fabs( r.right - r.left ) * w ), qRound( fabs( r.bottom - r.top ) * h ) );
+        fwi->setWidthHeight(
+            qRound( fabs( r.right - r.left ) * m_uncroppedGeometry.width() ),
+            qRound( fabs( r.bottom - r.top ) * m_uncroppedGeometry.height() ) );
     }
 }
 
 void PageViewItem::moveTo( int x, int y )
+// Assumes setWHZC() has already been called
 {
-    m_geometry.moveLeft( x );
-    m_geometry.moveTop( y );
+    m_croppedGeometry.moveLeft( x );
+    m_croppedGeometry.moveTop( y );
+    m_uncroppedGeometry.moveLeft( qRound( x - m_crop.left * m_uncroppedGeometry.width() ) );
+    m_uncroppedGeometry.moveTop( qRound( y - m_crop.top * m_uncroppedGeometry.height() ) );
     QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
         Okular::NormalizedRect r = (*it)->rect();
-        (*it)->moveTo( qRound( x + m_geometry.width() * r.left ) + 1, qRound( y + m_geometry.height() * r.top ) + 1 );
+        (*it)->moveTo(
+            qRound( x + m_uncroppedGeometry.width() * r.left ) + 1,
+            qRound( y + m_uncroppedGeometry.height() * r.top ) + 1 );
     }
 }
 
@@ -129,7 +165,8 @@ void PageViewItem::setVisible( bool visible )
 
 void PageViewItem::invalidate()
 {
-    m_geometry.setRect( 0, 0, 0, 0 );
+    m_croppedGeometry.setRect( 0, 0, 0, 0 );
+    m_uncroppedGeometry.setRect( 0, 0, 0, 0 );
 }
 
 bool PageViewItem::setFormWidgetsVisible( bool visible )

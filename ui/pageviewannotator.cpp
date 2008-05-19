@@ -458,8 +458,8 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 if ( item() )
                 {
-                    QPoint start( (int)( lastPoint.x * item()->width() ), (int)( lastPoint.y * item()->height() ) );
-                    QPoint end( (int)( nX * item()->width() ), (int)( nY * item()->height() ) );
+                    QPoint start( (int)( lastPoint.x * item()->uncroppedWidth() ), (int)( lastPoint.y * item()->uncroppedHeight() ) );
+                    QPoint end( (int)( nX * item()->uncroppedWidth() ), (int)( nY * item()->uncroppedHeight() ) );
                     delete selection;
                     selection = 0;
                     Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
@@ -544,7 +544,7 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->setHighlightType( type );
-                ha->setBoundingRectangle( Okular::NormalizedRect( rect, (int)item()->width(), (int)item()->height() ) );
+                ha->setBoundingRectangle( Okular::NormalizedRect( rect, item()->uncroppedWidth(), item()->uncroppedHeight() ) );
                 foreach ( const Okular::NormalizedRect & r, *selection )
                 {
                     Okular::HighlightAnnotation::Quad q;
@@ -736,11 +736,9 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
         button = AnnotatorEngine::Right;
 
     // find out normalized mouse coords inside current item
-    const QRect & itemRect = item->geometry();
-    double itemWidth = (double)itemRect.width();
-    double itemHeight = (double)itemRect.height();
-    double nX = (double)(e->x() - itemRect.left()) / itemWidth;
-    double nY = (double)(e->y() - itemRect.top()) / itemHeight;
+    const QRect & itemRect = item->uncroppedGeometry();
+    double nX = item->absToPageX(e->x());
+    double nY = item->absToPageY(e->y());
 
     QRect modifiedRect;
 
@@ -754,7 +752,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     }
 
     // 2. use engine to perform operations
-    QRect paintRect = m_engine->event( eventType, button, nX, nY, itemWidth, itemHeight, item->page() );
+    QRect paintRect = m_engine->event( eventType, button, nX, nY, itemRect.width(), itemRect.height(), item->page() );
 
     // 3. update absolute extents rect and send paint event(s)
     if ( paintRect.isValid() )
@@ -823,16 +821,17 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
         painter->drawRect( paintRect );
 #endif
     // move painter to current itemGeometry rect
-    const QRect & itemGeometry = m_lockedItem->geometry();
+    const QRect & itemRect = m_lockedItem->uncroppedGeometry();
     painter->save();
-    painter->translate( itemGeometry.left(), itemGeometry.top() );
+    painter->translate( itemRect.topLeft() );
+    // TODO: Clip annotation painting to cropped page.
 
     // transform cliprect from absolute to item relative coords
     QRect annotRect = paintRect.intersect( m_lastDrawnRect );
-    annotRect.translate( itemGeometry.left(), itemGeometry.top() );
+    annotRect.translate( -itemRect.topLeft() );
 
-    // use current engine for painting
-    m_engine->paint( painter, m_lockedItem->width(), m_lockedItem->height(), annotRect );
+    // use current engine for painting (in virtual page coordinates)
+    m_engine->paint( painter, m_lockedItem->uncroppedWidth(), m_lockedItem->uncroppedHeight(), annotRect );
     painter->restore();
 }
 

@@ -40,6 +40,17 @@ class PagePainter
         static void paintPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
+        // draw (using painter 'p') the 'page' requested by 'id' using features
+        // in 'flags'.
+        // 'pageLimits' is the bounding rect of the paint operation relative to the
+        // top left of the (cropped) page.
+        // 'scaledWidth' and 'scaledHeight' the size of the page pixmap (before cropping).
+        // 'crop' is the (normalized) cropped rectangle within the page.
+        // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
+        static void paintCroppedPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
+            int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits,
+            const Okular::NormalizedRect & crop );
+
     private:
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );
 

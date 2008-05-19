@@ -18,6 +18,8 @@
 
 #include <KIcon>
 
+#include "core/area.h"
+
 class QAction;
 class QLabel;
 class QTimer;
@@ -41,15 +43,33 @@ class PageViewItem
 
         const Okular::Page * page() const;
         int pageNumber() const;
-        const QRect& geometry() const;
-        int width() const;
-        int height() const;
         double zoomFactor() const;
         bool isVisible() const;
         QHash<int, FormWidgetIface*>& formWidgets();
 
-        void setGeometry( int x, int y, int width, int height );
-        void setWHZ( int w, int h, double zoom );
+        /* The page is cropped as follows: */
+        const Okular::NormalizedRect & crop() const;
+
+        /* Real geometry into which the cropped page is rendered: */
+        const QRect& croppedGeometry() const;
+        int croppedWidth() const;
+        int croppedHeight() const;
+
+        /* "Uncropped" geometry:
+         * If the whole page was rendered into the uncropped geometry then the
+         * cropped page would be rendered into the real geometry.
+         * (Hence, uncropped always contains cropped, and they are equal only if
+         * the page is uncropped.) This is just for convenience in calculations.
+         */
+        const QRect& uncroppedGeometry() const;
+        int uncroppedWidth() const;
+        int uncroppedHeight() const;
+
+        /* Convert absolute geometry coordinates to normalized [0,1] page coordinates: */
+        double absToPageX(double absX) const;
+        double absToPageY(double absY) const;
+
+        void setWHZC( int w, int h, double zoom, const Okular::NormalizedRect & c );
         void moveTo( int x, int y );
         void setVisible( bool visible );
         void invalidate();
@@ -58,9 +78,11 @@ class PageViewItem
     private:
         const Okular::Page * m_page;
         double m_zoomFactor;
-        QRect m_geometry;
         bool m_visible;
         bool m_formsVisible;
+        QRect m_croppedGeometry;
+        QRect m_uncroppedGeometry;
+        Okular::NormalizedRect m_crop;
         QHash<int, FormWidgetIface*> m_formWidgets;
 };
 

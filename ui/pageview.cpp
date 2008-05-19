@@ -138,6 +138,7 @@ public:
     KAction * aRotateCounterClockwise;
     KAction * aRotateOriginal;
     KSelectAction * aPageSizes;
+    KToggleAction * aTrimBorders;
     QAction * aMouseNormal;
     QAction * aMouseSelect;
     QAction * aMouseTextSelect;
@@ -212,14 +213,14 @@ protected:
             const Okular::Annotation * ann = 0;
             if ( pageItem )
             {
-                double nX = (double)( he->x() - pageItem->geometry().left() ) / (double)pageItem->width();
-                double nY = (double)( he->y() - pageItem->geometry().top() ) / (double)pageItem->height();
-                rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+                double nX = pageItem->absToPageX( he->x() );
+                double nY = pageItem->absToPageY( he->y() );
+                rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                 if ( rect )
                     ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
                 else
                 {
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                     if ( rect )
                         link = static_cast< const Okular::Action * >( rect->object() );
                 }
@@ -227,15 +228,15 @@ protected:
 
             if ( ann )
             {
-                QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
-                r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
+                QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                r.translate( pageItem->uncroppedGeometry().topLeft() );
                 QString tip = GuiUtils::prettyToolTip( ann );
                 QToolTip::showText( he->globalPos(), tip, this, r );
             }
             else if ( link )
             {
-                QRect r = rect->boundingRect( pageItem->width(), pageItem->height() );
-                r.translate( pageItem->geometry().left(), pageItem->geometry().top() );
+                QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                r.translate( pageItem->uncroppedGeometry().topLeft() );
                 QString tip = link->actionTip();
                 if ( !tip.isEmpty() )
                     QToolTip::showText( he->globalPos(), tip, this, r );
@@ -322,6 +323,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aPageSizes = 0;
+    d->aTrimBorders = 0;
     d->aMouseNormal = 0;
     d->aMouseSelect = 0;
     d->aMouseTextSelect = 0;
@@ -432,6 +434,11 @@ void PageView::setupActions( KActionCollection * ac )
 
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          this, SLOT( slotPageSizes( int ) ) );
+
+    d->aTrimBorders  = new KToggleAction( i18n( "&Trim Borders" ), this );
+    ac->addAction("view_trim_borders", d->aTrimBorders );
+    connect( d->aTrimBorders, SIGNAL( toggled( bool ) ), SLOT( slotTrimBordersToggled( bool ) ) );
+    d->aTrimBorders->setChecked( Okular::Settings::trimBorders() );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
     ac->addAction("view_fit_to_width", d->aZoomFitWidth );
@@ -753,7 +760,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
-        kDebug().nospace() << "geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->geometry();
+        kDebug().nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
         const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.begin(), ffEnd = pageFields.end();
@@ -873,7 +880,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
-    const QRect & r = item->geometry();
+    const QRect & r = item->croppedGeometry();
     int newCenterX = r.left(),
         newCenterY = r.top();
     if ( vp.rePos.enabled )
@@ -945,13 +952,25 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
         }
     }
 
+    if ( changedFlags & DocumentObserver::BoundingBox )
+    {
+#ifdef PAGEVIEW_DEBUG
+        kDebug() << "BoundingBox change on page" << pageNumber;
+#endif
+        slotRelayoutPages();
+        slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
+        // Repaint the whole widget since layout may have changed
+        widget()->update();
+        return;
+    }
+
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
     QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.begin(), iEnd = d->visibleItems.end();
     for ( ; iIt != iEnd; ++iIt )
         if ( (*iIt)->pageNumber() == pageNumber && (*iIt)->isVisible() )
         {
             // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->geometry();
+            QRect expandedRect = (*iIt)->croppedGeometry();
             expandedRect.adjust( -1, -1, 3, 3 );
             widget()->update( expandedRect );
 
@@ -1421,20 +1440,20 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                     PageViewItem * pageItem = pickItemOnPoint( e->x(), e->y() );
                     if ( pageItem )
                     {
-                        const QRect & itemRect = pageItem->geometry();
-                        QPoint newpos( e->x() - itemRect.left(), e->y() - itemRect.top() );
+                        const QRect & itemRect = pageItem->uncroppedGeometry();
+                        QPoint newpos = QPoint( e->x(), e->y() ) - itemRect.topLeft();
                         Okular::NormalizedRect r = d->mouseAnn->boundingRectangle();
                         QPoint p( newpos - d->mouseAnnPos );
                         QPointF pf( rotateInRect( p, pageItem->page()->totalOrientation() ) );
                         if ( pageItem->page()->totalOrientation() % 2 == 0 )
                         {
-                            pf.rx() /= pageItem->width();
-                            pf.ry() /= pageItem->height();
+                            pf.rx() /= pageItem->uncroppedWidth();
+                            pf.ry() /= pageItem->uncroppedHeight();
                         }
                         else
                         {
-                            pf.rx() /= pageItem->height();
-                            pf.ry() /= pageItem->width();
+                            pf.rx() /= pageItem->uncroppedHeight();
+                            pf.ry() /= pageItem->uncroppedWidth();
                         }
                         d->mouseAnn->translate( Okular::NormalizedPoint( pf.x(), pf.y() ) );
                         d->mouseAnnPos = newpos;
@@ -1585,11 +1604,11 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                 if ( ( e->modifiers() & Qt::ControlModifier ) && ( pageItem = pickItemOnPoint( e->x(), e->y() ) ) )
                 {
                     // find out normalized mouse coords inside current item
-                    const QRect & itemRect = pageItem->geometry();
-                    double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
-                    double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
+                    const QRect & itemRect = pageItem->uncroppedGeometry();
+                    double nX = pageItem->absToPageX(e->x());
+                    double nY = pageItem->absToPageY(e->y());
                     const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
-                    d->mouseAnnPos = QPoint( e->x() - itemRect.left(), e->y() - itemRect.top() );
+                    d->mouseAnnPos = QPoint( e->x(), e->y() ) - itemRect.topLeft();
                     if ( orect )
                         d->mouseAnn = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                     // consider no annotation caught if its type is not movable
@@ -1609,9 +1628,9 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
                 if ( pageItem )
                 {
                     // find out normalized mouse coords inside current item
-                    const QRect & itemRect = pageItem->geometry();
-                    double nX = (double)(e->x() - itemRect.left()) / itemRect.width();
-                    double nY = (double)(e->y() - itemRect.top()) / itemRect.height();
+                    const QRect & itemRect = pageItem->uncroppedGeometry();
+                    double nX = pageItem->absToPageX(e->x());
+                    double nY = pageItem->absToPageY(e->y());
                     Okular::Annotation * ann = 0;
                     const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
                     if ( orect )
@@ -1713,10 +1732,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             // if the mouse has not moved since the press, that's a -click-
             if ( leftButton && pageItem && d->mousePressPos == e->globalPos())
             {
-                double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
-                       nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
+                double nX = pageItem->absToPageX(e->x());
+                double nY = pageItem->absToPageY(e->y());
                 const Okular::ObjectRect * rect;
-                rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
+                rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                 if ( rect )
                 {
                     // handle click over a link
@@ -1727,7 +1746,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 {
                     // TODO: find a better way to activate the source reference "links"
                     // for the moment they are activated with Shift + left click
-                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->width(), pageItem->height() ) : 0;
+                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() ) : 0;
                     if ( rect )
                     {
                         const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->object() );
@@ -1755,10 +1774,10 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
             {
                 if ( pageItem && d->mousePressPos == e->globalPos() )
                 {
-                    double nX = (double)(e->x() - pageItem->geometry().left()) / (double)pageItem->width(),
-                           nY = (double)(e->y() - pageItem->geometry().top()) / (double)pageItem->height();
+                    double nX = pageItem->absToPageX(e->x());
+                    double nY = pageItem->absToPageY(e->y());
                     const Okular::ObjectRect * rect;
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                     if ( rect )
                     {
                         // handle right click over a link
@@ -1790,7 +1809,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         // a link can move us to another page or even to another document, there's no point in trying to
                         //  process the click on the image once we have processes the click on the link
-                        rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
+                        rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                         if ( rect )
                         {
                             // handle right click over a image
@@ -1887,7 +1906,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     if ( !item->isVisible() )
                         continue;
 
-                    const QRect & itemRect = item->geometry();
+                    const QRect & itemRect = item->croppedGeometry();
                     if ( selectionRect.intersects( itemRect ) )
                     {
                         // request the textpage if there isn't one
@@ -1897,9 +1916,9 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
                         QRect relativeRect = selectionRect.intersect( itemRect );
-                        relativeRect.translate( -itemRect.left(), -itemRect.top() );
+                        relativeRect.translate( -item->uncroppedGeometry().topLeft() );
                         Okular::RegularAreaRect rects;
-                        rects.append( Okular::NormalizedRect( relativeRect, item->width(), item->height() ) );
+                        rects.append( Okular::NormalizedRect( relativeRect, item->uncroppedWidth(), item->uncroppedHeight() ) );
                         selectedText += okularPage->text( &rects );
                     }
                 }
@@ -2124,7 +2143,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
     QRect selectionRect = QRect( start, end ).normalized();
     foreach( PageViewItem * item, d->items )
     {
-        if ( item->isVisible() && selectionRect.intersects( item->geometry() ) )
+        if ( item->isVisible() && selectionRect.intersects( item->croppedGeometry() ) )
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
@@ -2160,7 +2179,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         if ( affectedItemsIds.count() == 1 )
         {
             PageViewItem * item = d->items[ affectedItemsIds.first() ];
-            selectionRect.translate( -item->geometry().topLeft() );
+            selectionRect.translate( -item->uncroppedGeometry().topLeft() );
             ret.append( textSelectionForItem( item,
                 direction_ne_sw ? selectionRect.topRight() : selectionRect.topLeft(),
                 direction_ne_sw ? selectionRect.bottomLeft() : selectionRect.bottomRight() ) );
@@ -2169,13 +2188,13 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         {
             // first item
             PageViewItem * first = d->items[ affectedItemsIds.first() ];
-            QRect geom = first->geometry().intersect( selectionRect ).translated( -first->geometry().topLeft() );
+            QRect geom = first->croppedGeometry().intersect( selectionRect ).translated( -first->uncroppedGeometry().topLeft() );
             ret.append( textSelectionForItem( first,
                 selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
                 QPoint() ) );
             // last item
             PageViewItem * last = d->items[ affectedItemsIds.last() ];
-            geom = last->geometry().intersect( selectionRect ).translated( -last->geometry().topLeft() );
+            geom = last->croppedGeometry().intersect( selectionRect ).translated( -last->uncroppedGeometry().topLeft() );
             // the last item needs to appended at last...
             Okular::RegularAreaRect * lastArea = textSelectionForItem( last,
                 QPoint(),
@@ -2210,16 +2229,16 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     for ( ; iIt != iEnd; ++iIt )
     {
         // check if a piece of the page intersects the contents rect
-        if ( !(*iIt)->isVisible() || !(*iIt)->geometry().intersects( checkRect ) )
+        if ( !(*iIt)->isVisible() || !(*iIt)->croppedGeometry().intersects( checkRect ) )
             continue;
 
         // get item and item's outline geometries
         PageViewItem * item = *iIt;
-        QRect itemGeometry = item->geometry(),
+        QRect itemGeometry = item->croppedGeometry(),
               outlineGeometry = itemGeometry;
         outlineGeometry.adjust( -1, -1, 3, 3 );
 
-        // move the painter to the top-left corner of the page
+        // move the painter to the top-left corner of the real page
         p->save();
         p->translate( itemGeometry.left(), itemGeometry.top() );
 
@@ -2251,9 +2270,10 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         if ( contentsRect.intersects( itemGeometry ) )
         {
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
-            pixmapRect.translate( -itemGeometry.left(), -itemGeometry.top() );
-            PagePainter::paintPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
-                itemGeometry.width(), itemGeometry.height(), pixmapRect );
+            pixmapRect.translate( -item->croppedGeometry().topLeft() );
+            PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
+                item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
+                item->crop() );
         }
 
         // remove painted area from 'remainingArea' and restore painter
@@ -2276,25 +2296,78 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     double width = okularPage->width(),
            height = okularPage->height(),
            zoom = d->zoomFactor;
+    Okular::NormalizedRect crop( 0., 0., 1., 1. );
+
+    // Handle cropping
+    if ( Okular::Settings::trimBorders() && okularPage->isBoundingBoxKnown()
+         && !okularPage->boundingBox().isNull() )
+    {
+        crop = okularPage->boundingBox();
+
+        // Rotate the bounding box from upright Rotation0 to current page orientation:
+        for ( int i = okularPage->totalOrientation(); i > 0; --i )
+        {
+            Okular::NormalizedRect rot = crop;
+            crop.left   = 1 - rot.bottom;
+            crop.top    = rot.left;
+            crop.right  = 1 - rot.top;
+            crop.bottom = rot.right;
+        }
+
+        // Expand the crop slightly beyond the bounding box
+        static const double cropExpandRatio = 0.04;
+        double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
+        crop = Okular::NormalizedRect(
+            crop.left - cropExpand,
+            crop.top - cropExpand,
+            crop.right + cropExpand,
+            crop.bottom + cropExpand ) & Okular::NormalizedRect( 0, 0, 1, 1 );
+
+        // We currently generate a larger image and then crop it, so if the
+        // crop rect is very small the generated image is huge. Hence, we shouldn't
+        // let the crop rect become too small.
+        // Make sure we crop by at most 50% in either dimension:
+        static const double minCropRatio = 0.5;
+        if ( ( crop.right - crop.left ) < minCropRatio )
+        {
+            double newLeft = ( crop.left + crop.right ) / 2 - minCropRatio/2;
+            crop.left = qMax( 0.0, qMin( 1.0 - minCropRatio, newLeft ) );
+            crop.right = crop.left + minCropRatio;
+        }
+        if ( ( crop.bottom - crop.top ) < minCropRatio )
+        {
+            double newTop = ( crop.top + crop.bottom ) / 2 - minCropRatio/2;
+            crop.top = qMax( 0.0, qMin( 1.0 - minCropRatio, newTop ) );
+            crop.bottom = crop.top + minCropRatio;
+        }
+
+        width *= ( crop.right - crop.left );
+        height *= ( crop.bottom - crop.top );
+#ifdef PAGEVIEW_DEBUG
+        kDebug() << "Cropped page" << okularPage->number() << "to" << crop
+                 << "width" << width << "height" << height << "by bbox" << okularPage->boundingBox();
+#endif
+    }
 
     if ( d->zoomMode == ZoomFixed )
     {
         width *= zoom;
         height *= zoom;
-        item->setWHZ( (int)width, (int)height, d->zoomFactor );
+        item->setWHZC( (int)width, (int)height, d->zoomFactor, crop );
     }
     else if ( d->zoomMode == ZoomFitWidth )
     {
-        height = okularPage->ratio() * colWidth;
-        item->setWHZ( colWidth, (int)height, (double)colWidth / width );
-        d->zoomFactor = (double)colWidth / width;
+        height = ( height / width ) * colWidth;
+        zoom = (double)colWidth / width;
+        item->setWHZC( colWidth, (int)height, zoom, crop );
+        d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
         double scaleW = (double)colWidth / (double)width;
         double scaleH = (double)rowHeight / (double)height;
         zoom = qMin( scaleW, scaleH );
-        item->setWHZ( (int)(zoom * width), (int)(zoom * height), zoom );
+        item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
         d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
@@ -2310,7 +2383,7 @@ PageViewItem * PageView::pickItemOnPoint( int x, int y )
     for ( ; iIt != iEnd; ++iIt )
     {
         PageViewItem * i = *iIt;
-        const QRect & r = i->geometry();
+        const QRect & r = i->croppedGeometry();
         if ( x < r.right() && x > r.left() && y < r.bottom() )
         {
             if ( y > r.top() )
@@ -2398,7 +2471,7 @@ static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QR
 
 Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
 {
-    const QRect & geometry = item->geometry();
+    const QRect & geometry = item->uncroppedGeometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
     if ( !startPoint.isNull() )
     {
@@ -2564,8 +2637,8 @@ void PageView::updateCursor( const QPoint &p )
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
     if ( pageItem )
     {
-        double nX = (double)(p.x() - pageItem->geometry().left()) / (double)pageItem->width(),
-               nY = (double)(p.y() - pageItem->geometry().top()) / (double)pageItem->height();
+        double nX = pageItem->absToPageX(p.x());
+        double nY = pageItem->absToPageY(p.y());
 
         // if over a ObjectRect (of type Link) change cursor to hand
         if ( d->mouseMode == MouseTextSelect )
@@ -2574,8 +2647,8 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::ClosedHandCursor );
         else
         {
-            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->width(), pageItem->height() );
-            const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->width(), pageItem->height() );
+            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+            const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
             if ( linkobj && !annotobj )
             {
                 d->mouseOnRect = true;
@@ -2726,10 +2799,10 @@ void PageView::slotRelayoutPages()
             // update internal page size (leaving a little margin in case of Fit* modes)
             updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 12 );
             // find row's maximum height and column's max width
-            if ( item->width() + 6 > colWidth[ cIdx ] )
-                colWidth[ cIdx ] = item->width() + 6;
-            if ( item->height() + 12 > rowHeight[ rIdx ] )
-                rowHeight[ rIdx ] = item->height() + 12;
+            if ( item->croppedWidth() + 6 > colWidth[ cIdx ] )
+                colWidth[ cIdx ] = item->croppedWidth() + 6;
+            if ( item->croppedHeight() + 12 > rowHeight[ rIdx ] )
+                rowHeight[ rIdx ] = item->croppedHeight() + 12;
             // handle the 'centering on first row' stuff
             // update col/row indices
             if ( ++cIdx == nCols )
@@ -2780,8 +2853,8 @@ void PageView::slotRelayoutPages()
             if ( continuousView || rIdx == pageRowIdx )
             {
                 const bool reallyDoCenterFirst = item->pageNumber() == 0 && centerFirstPage;
-                item->moveTo( (reallyDoCenterFirst ? 0 : insertX) + ( (reallyDoCenterFirst ? fullWidth : cWidth) - item->width()) / 2,
-                              (continuousView ? insertY : origInsertY) + (rHeight - item->height()) / 2 );
+                item->moveTo( (reallyDoCenterFirst ? 0 : insertX) + ( (reallyDoCenterFirst ? fullWidth : cWidth) - item->croppedWidth()) / 2,
+                              (continuousView ? insertY : origInsertY) + (rHeight - item->croppedHeight()) / 2 );
                 item->setVisible( true );
             }
             else
@@ -2800,7 +2873,7 @@ void PageView::slotRelayoutPages()
                 insertY += rHeight;
             }
 #ifdef PAGEVIEW_DEBUG
-            kWarning() << "updating size for pageno" << item->pageNumber() << "to" << item->geometry();
+            kWarning() << "updating size for pageno" << item->pageNumber() << "cropped" << item->croppedGeometry() << "uncropped" << item->uncroppedGeometry();
 #endif
         }
 
@@ -2832,7 +2905,7 @@ void PageView::slotRelayoutPages()
             {
                 int prevX = horizontalScrollBar()->value(),
                     prevY = verticalScrollBar()->value();
-                const QRect & geometry = d->items[ vp.pageNumber ]->geometry();
+                const QRect & geometry = d->items[ vp.pageNumber ]->croppedGeometry();
                 double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
                        nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
                 center( geometry.left() + qRound( nX * (double)geometry.width() ),
@@ -2887,29 +2960,30 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             continue;
 #ifdef PAGEVIEW_DEBUG
         kWarning() << "checking page" << i->pageNumber();
-        kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->geometry() << " intersect : " << viewportRect.intersects( i->geometry() );
+        kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects( i->croppedGeometry() );
 #endif
         // if the item doesn't intersect the viewport, skip it
-        QRect intersectionRect = viewportRect.intersect( i->geometry() );
+        QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
         if ( intersectionRect.isEmpty() )
             continue;
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
-        Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->geometry().topLeft() ), i->geometry().width(), i->geometry().height() ) );
+        Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() );
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() );
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
         // if the item has not the right pixmap, add a request for it
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) )
+        // TODO: We presently request a pixmap for the full page, and then render just the crop part. This waste memory and cycles.
+        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRIO, true );
+                    PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
         }
 
@@ -2917,7 +2991,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         // position between the item and the viewport center
         if ( isEvent )
         {
-            const QRect & geometry = i->geometry();
+            const QRect & geometry = i->croppedGeometry();
             // compute distance between item center and viewport center (slightly moved left)
             double distance = hypot( (geometry.left() + geometry.right()) / 2 - (viewportCenterX - 4),
                                      (geometry.top() + geometry.bottom()) / 2 - viewportCenterY );
@@ -2947,9 +3021,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         {
             PageViewItem * i = d->items[ tailRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) && i->uncroppedWidth() > 0 )
                 requestedPixmaps.push_back( new Okular::PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
 
         // add the page before the 'visible series' in preload
@@ -2958,9 +3032,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         {
             PageViewItem * i = d->items[ headRequest ];
             // request the pixmap if not already present
-            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->width(), i->height() ) && i->width() > 0 )
+            if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) && i->uncroppedWidth() > 0 )
                 requestedPixmaps.push_back( new Okular::PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->width(), i->height(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                        PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
         }
     }
 
@@ -3219,6 +3293,20 @@ void PageView::slotPageSizes( int newsize )
         return;
 
     d->document->setPageSize( d->document->pageSizes().at( newsize ) );
+}
+
+void PageView::slotTrimBordersToggled( bool on )
+{
+    if ( Okular::Settings::trimBorders() != on )
+    {
+        Okular::Settings::setTrimBorders( on );
+        Okular::Settings::self()->writeConfig();
+        if ( d->document->pages() > 0 )
+        {
+            slotRelayoutPages();
+            slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
+        }
+    }
 }
 
 void PageView::slotToggleForms()

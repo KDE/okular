@@ -224,6 +224,9 @@
    <min>1</min>
    <max>5</max>
   </entry>
+  <entry key="TrimBorders" type="Bool" >
+   <default>false</default>
+  </entry>
   <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
   </entry>

@@ -50,6 +50,19 @@ inline QPen buildPen( const Okular::Annotation *ann, double width, const QColor 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
+        paintCroppedPageOnPainter( destPainter, page, pixID, flags, scaledWidth, scaledHeight, limits,
+                                   Okular::NormalizedRect( 0, 0, 1, 1 ) );
+}
+
+void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
+    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
+    const Okular::NormalizedRect &crop )
+{
+	/* Calculate the cropped geometry of the page */
+	QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
+	int croppedWidth = scaledCrop.width();
+	int croppedHeight = scaledCrop.height();
+
     /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
     const QPixmap * pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
 
@@ -86,8 +99,8 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
         else
         {
             destPainter->setPen( Qt::gray );
-            destPainter->drawLine( 0, 0, scaledWidth-1, scaledHeight-1 );
-            destPainter->drawLine( 0, scaledHeight-1, scaledWidth-1, 0 );
+            destPainter->drawLine( 0, 0, croppedWidth-1, croppedHeight-1 );
+            destPainter->drawLine( 0, croppedHeight-1, croppedWidth-1, 0 );
         }
         return;
     }
@@ -108,10 +121,10 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = (double)limits.left() / (double)scaledWidth,
-               nXMax = (double)limits.right() / (double)scaledWidth,
-               nYMin = (double)limits.top() / (double)scaledHeight,
-               nYMax = (double)limits.bottom() / (double)scaledHeight;
+        double nXMin = ( (double)limits.left() / (double)scaledWidth ) + crop.left,
+               nXMax = ( (double)limits.right() / (double)scaledWidth )  + crop.left,
+               nYMin = ( (double)limits.top() / (double)scaledHeight ) + crop.top,
+               nYMax = ( (double)limits.bottom() / (double)scaledHeight ) + crop.top;
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {
@@ -199,19 +212,21 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
+    QRect limitsInPixmap = limits.translated( crop.geometry( scaledWidth, scaledHeight ).topLeft() );
+        // limits within full (scaled but uncropped) pixmap
 
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
         // 4A.1. if size is ok, draw the page pixmap using painter
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            destPainter->drawPixmap( limits.topLeft(), *pixmap, limits );
+            destPainter->drawPixmap( limits.topLeft(), *pixmap, limitsInPixmap );
 
         // else draw a scaled portion of the magnified pixmap
         else
         {
             QImage destImage;
-            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
             destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
                                      limits.width(),limits.height() );
         }
@@ -227,9 +242,9 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
 
         // 4B.1. draw the page pixmap: normal or scaled
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            cropPixmapOnImage( backImage, pixmap, limits );
+            cropPixmapOnImage( backImage, pixmap, limitsInPixmap );
         else
-            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limits );
+            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
@@ -278,7 +293,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
                 // find out the rect to highlight on pixmap
-                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).intersect( limits );
+                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
                 // highlight composition (product: highlight color * destcolor)
@@ -311,11 +326,11 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             // backImage = backImage.convertToFormat(QImage::Format_ARGB32_Premultiplied)
             // that would be almost a noop, but we'll leave the assert for now
             Q_ASSERT(backImage.format() == QImage::Format_ARGB32_Premultiplied);
-            // precalc costants for normalizing the quads to the image
-            double pageScale = (double)scaledWidth / page->width();
-            double xOffset = (double)limits.left() / (double)scaledWidth,
+            // precalc constants for normalizing [0,1] page coordinates into normalized [0,1] limit rect coordinates
+            double pageScale = (double)croppedWidth / page->width();
+            double xOffset = (double)limits.left() / (double)scaledWidth + crop.left,
                    xScale = (double)scaledWidth / (double)limits.width(),
-                   yOffset = (double)limits.top() / (double)scaledHeight,
+                   yOffset = (double)limits.top() / (double)scaledHeight + crop.top,
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
@@ -521,7 +536,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             acolor.setAlpha( opacity );
 
             // get annotation boundary and drawn rect
-            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight );
+            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
             QRect annotRect = annotBoundary.intersect( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
@@ -648,6 +663,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     {
         mixedPainter->save();
         mixedPainter->scale( scaledWidth, scaledHeight );
+        mixedPainter->translate( -crop.left, -crop.top );
 
         QColor normalColor = QApplication::palette().color( QPalette::Active, QPalette::Highlight );
         QColor lightColor = normalColor.light( 140 );
@@ -662,7 +678,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
             if ( (enhanceLinks && rect->objectType() == Okular::ObjectRect::Action) ||
                  (enhanceImages && rect->objectType() == Okular::ObjectRect::Image) )
             {
-                if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ) ) )
+                if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ) ) )
                 {
                     mixedPainter->strokePath( rect->region(), QPen( normalColor ) );
                 }

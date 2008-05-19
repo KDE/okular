@@ -279,9 +279,9 @@ void JSDocument::initType( KJSContext *ctx )
     g_docProto->defineFunction( ctx, "syncAnnotScan", docSyncAnnotScan );
 }
 
-KJSObject JSDocument::wrapDocument( DocumentPrivate *doc )
+KJSGlobalObject JSDocument::wrapDocument( DocumentPrivate *doc )
 {
     if ( !g_docProto )
         g_docProto = new KJSPrototype();
-    return g_docProto->constructObject( 0, doc );
+    return g_docProto->constructGlobalObject( doc );
 }

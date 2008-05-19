@@ -50,7 +50,7 @@ class Okular::ExecutorKJSPrivate
 
         DocumentPrivate *m_doc;
         KJSInterpreter *m_interpreter;
-        KJSObject m_docObject;
+        KJSGlobalObject m_docObject;
 };
 
 void ExecutorKJSPrivate::initTypes()

@@ -12,7 +12,7 @@
 #define OKULAR_SCRIPT_KJS_DOCUMENT_P_H
 
 class KJSContext;
-class KJSObject;
+class KJSGlobalObject;
 
 namespace Okular {
 
@@ -22,7 +22,7 @@ class JSDocument
 {
     public:
         static void initType( KJSContext *ctx );
-        static KJSObject wrapDocument( DocumentPrivate *doc );
+        static KJSGlobalObject wrapDocument( DocumentPrivate *doc );
 };
 
 }

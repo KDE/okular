@@ -33,6 +33,8 @@ class Document
 
         QImage pageImage( int page ) const;
 
+        QString lastErrorString() const;
+
     private:
         void extractImageFiles( const QStringList& );
 
@@ -40,6 +42,7 @@ class Document
         Unrar *mUnrar;
         KZip *mZip;
         KArchiveDirectory *mZipDir;
+        QString mLastErrorString;
 };
 
 }

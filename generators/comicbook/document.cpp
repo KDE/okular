@@ -11,6 +11,7 @@
 
 #include <QtGui/QImage>
 
+#include <klocale.h>
 #include <kzip.h>
 
 #include "unrar.h"
@@ -67,7 +68,12 @@ bool Document::open( const QString &fileName )
 
     } else {
         if ( !Unrar::isAvailable() ) {
-            // TODO emit a visible error
+            mLastErrorString = i18n( "Cannot open document, unrar was not found." );
+            return false;
+        }
+
+        if ( !Unrar::isSuitableVersionAvailable() ) {
+            mLastErrorString = i18n( "The version of unrar on your system is not suitable for opening comicbooks." );
             return false;
         }
 
@@ -91,6 +97,8 @@ bool Document::open( const QString &fileName )
 
 void Document::close()
 {
+    mLastErrorString.clear();
+
     if ( !( mZip || mUnrar ) )
         return;
 
@@ -140,4 +148,9 @@ QImage Document::pageImage( int page ) const
     }
 
     return QImage();
+}
+
+QString Document::lastErrorString() const
+{
+    return mLastErrorString;
 }

@@ -52,7 +52,12 @@ ComicBookGenerator::~ComicBookGenerator()
 bool ComicBookGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
     if ( !mDocument.open( fileName ) )
+    {
+        const QString errString = mDocument.lastErrorString();
+        if ( !errString.isEmpty() )
+            emit error( errString, -1 );
         return false;
+    }
 
     int pages = mDocument.pages();
     pagesVector.resize( pages );

@@ -61,7 +61,7 @@ UnrarHelper::UnrarHelper()
 
     if ( !kind )
     {
-        // no luck so far, assume unrar-nonfree
+        // no luck, print that
         kDebug() << "No unrar detected.";
     }
     else

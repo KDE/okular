@@ -15,6 +15,7 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
+#include <kstandarddirs.h>
 #include <ktempdir.h>
 
 #include "unrarflavours.h"
@@ -25,15 +26,16 @@ struct UnrarHelper
     ~UnrarHelper();
 
     UnrarFlavour *kind;
+    QString unrarPath;
 };
 
 K_GLOBAL_STATIC( UnrarHelper, helper )
 
-UnrarHelper::UnrarHelper()
-   : kind( 0 )
+static UnrarFlavour* detectUnrar( const QString &unrarPath )
 {
+    UnrarFlavour* kind = 0;
     QProcess proc;
-    proc.start( "unrar", QStringList() << "--version" );
+    proc.start( unrarPath, QStringList() << "--version" );
     bool ok = proc.waitForFinished( -1 );
     Q_UNUSED( ok )
     const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( "\n", QString::SkipEmptyParts );
@@ -44,6 +46,18 @@ UnrarHelper::UnrarHelper()
         else if ( lines.first().startsWith( "unrar " ) )
             kind = new FreeUnrarFlavour();
     }
+    return kind;
+}
+
+UnrarHelper::UnrarHelper()
+   : kind( 0 )
+{
+    QString path = KStandardDirs::findExe( "unrar-nonfree" );
+    if ( path.isEmpty() )
+        path = KStandardDirs::findExe( "unrar" );
+
+    if ( !path.isEmpty() )
+        kind = detectUnrar( path );
 
     if ( !kind )
     {
@@ -52,7 +66,8 @@ UnrarHelper::UnrarHelper()
     }
     else
     {
-        kDebug() << "detected:" << kind->name();
+        unrarPath = path;
+        kDebug() << "detected:" << path << "(" << kind->name() << ")";
     }
 }
 

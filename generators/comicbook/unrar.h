@@ -47,6 +47,7 @@ class Unrar : public QObject
         QByteArray contentOf( const QString &fileName ) const;
 
         static bool isAvailable();
+        static bool isSuitableVersionAvailable();
 
     private Q_SLOTS:
         void readFromStdout();

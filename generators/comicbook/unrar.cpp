@@ -48,9 +48,12 @@ UnrarHelper::UnrarHelper()
     if ( !kind )
     {
         // no luck so far, assume unrar-nonfree
-        kind = new NonFreeUnrarFlavour();
+        kDebug() << "No unrar detected.";
     }
-    kDebug() << "detected:" << kind->name();
+    else
+    {
+        kDebug() << "detected:" << kind->name();
+    }
 }
 
 UnrarHelper::~UnrarHelper()
@@ -71,6 +74,9 @@ Unrar::~Unrar()
 
 bool Unrar::open( const QString &fileName )
 {
+    if ( !isSuitableVersionAvailable() )
+        return false;
+
     delete mTempDir;
     mTempDir = new KTempDir();
 
@@ -101,6 +107,9 @@ QStringList Unrar::list()
     mStdOutData.clear();
     mStdErrData.clear();
 
+    if ( !isSuitableVersionAvailable() )
+        return QStringList();
+
     mProcess = new QProcess( this );
 
     connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
@@ -117,6 +126,9 @@ QStringList Unrar::list()
 
 QByteArray Unrar::contentOf( const QString &fileName ) const
 {
+    if ( !isSuitableVersionAvailable() )
+        return QByteArray();
+
     QFile file( mTempDir->name() + fileName );
     if ( !file.open( QIODevice::ReadOnly ) )
         return QByteArray();
@@ -126,6 +138,14 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
 
 bool Unrar::isAvailable()
 {
+    return helper->kind;
+}
+
+bool Unrar::isSuitableVersionAvailable()
+{
+    if ( !isAvailable() )
+        return false;
+
     return dynamic_cast< NonFreeUnrarFlavour * >( helper->kind );
 }
 

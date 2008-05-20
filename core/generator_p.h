@@ -10,6 +10,8 @@
 #ifndef OKULAR_THREADEDGENERATOR_P_H
 #define OKULAR_THREADEDGENERATOR_P_H
 
+#include "area.h"
+
 #include <QtCore/QSet>
 #include <QtCore/QThread>
 #include <QtGui/QImage>
@@ -87,13 +89,15 @@ class PixmapGenerationThread : public QThread
     public:
         PixmapGenerationThread( Generator *generator );
 
-        void startGeneration( PixmapRequest *request );
+        void startGeneration( PixmapRequest *request, bool calcBoundingRect );
 
         void endGeneration();
 
         PixmapRequest *request() const;
 
         QImage image() const;
+        bool calcBoundingBox() const;
+        NormalizedRect boundingBox() const;
 
     protected:
         virtual void run();
@@ -102,6 +106,8 @@ class PixmapGenerationThread : public QThread
         Generator *mGenerator;
         PixmapRequest *mRequest;
         QImage mImage;
+        NormalizedRect mBoundingBox;
+        bool mCalcBoundingBox : 1;
 };
 
 

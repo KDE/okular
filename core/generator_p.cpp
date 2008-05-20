@@ -13,17 +13,19 @@
 
 #include "fontinfo.h"
 #include "generator.h"
+#include "utils.h"
 
 using namespace Okular;
 
 PixmapGenerationThread::PixmapGenerationThread( Generator *generator )
-    : mGenerator( generator ), mRequest( 0 )
+    : mGenerator( generator ), mRequest( 0 ), mCalcBoundingBox( false )
 {
 }
 
-void PixmapGenerationThread::startGeneration( PixmapRequest *request )
+void PixmapGenerationThread::startGeneration( PixmapRequest *request, bool calcBoundingBox )
 {
     mRequest = request;
+    mCalcBoundingBox = calcBoundingBox;
 
     start( QThread::InheritPriority );
 }
@@ -43,12 +45,26 @@ QImage PixmapGenerationThread::image() const
     return mImage;
 }
 
+bool PixmapGenerationThread::calcBoundingBox() const
+{
+    return mCalcBoundingBox;
+}
+
+NormalizedRect PixmapGenerationThread::boundingBox() const
+{
+    return mBoundingBox;
+}
+
 void PixmapGenerationThread::run()
 {
     mImage = QImage();
 
     if ( mRequest )
+    {
         mImage = mGenerator->image( mRequest );
+        if ( mCalcBoundingBox )
+            mBoundingBox = Utils::imageBoundingBox( &mImage );
+    }
 }
 
 

@@ -98,8 +98,8 @@ void GeneratorPrivate::pixmapGenerationFinished()
     }
 
     const QImage& img = mPixmapGenerationThread->image();
-    if ( !request->page()->isBoundingBoxKnown() )
-        q->updatePageBoundingBox( request->page()->number(), Utils::imageBoundingBox( &img ) );
+    if ( mPixmapGenerationThread->calcBoundingBox() )
+        q->updatePageBoundingBox( request->page()->number(), mPixmapGenerationThread->boundingBox() );
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
 
     q->signalPixmapRequestDone( request );
@@ -218,7 +218,7 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     if ( hasFeature( Threaded ) )
     {
-        d->pixmapGenerationThread()->startGeneration( request );
+        d->pixmapGenerationThread()->startGeneration( request, !request->page()->isBoundingBoxKnown() );
 
         /**
          * We create the text page for every page that is visible to the

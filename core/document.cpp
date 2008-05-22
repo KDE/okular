@@ -390,11 +390,11 @@ void DocumentPrivate::loadDocumentInfo()
 
 QString DocumentPrivate::giveAbsolutePath( const QString & fileName ) const
 {
-    if ( !m_url.isValid() )
-        return QString();
-
     if ( !QDir::isRelativePath( fileName ) )
         return fileName;
+
+    if ( !m_url.isValid() )
+        return QString();
 
     return m_url.upUrl().url() + fileName;
 }

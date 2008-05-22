@@ -108,7 +108,7 @@ bool Unrar::open( const QString &fileName )
     connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
     connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
 
-    mProcess->start( "unrar", QStringList() << "e" << mFileName << mTempDir->name(), QIODevice::ReadOnly );
+    mProcess->start( helper->unrarPath, QStringList() << "e" << mFileName << mTempDir->name(), QIODevice::ReadOnly );
     bool ok = mProcess->waitForFinished( -1 );
 
     delete mProcess;
@@ -130,7 +130,7 @@ QStringList Unrar::list()
     connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
     connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
 
-    mProcess->start( "unrar", QStringList() << "lb" << mFileName, QIODevice::ReadOnly );
+    mProcess->start( helper->unrarPath, QStringList() << "lb" << mFileName, QIODevice::ReadOnly );
     mProcess->waitForFinished( -1 );
 
     delete mProcess;

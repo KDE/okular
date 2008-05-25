@@ -198,8 +198,6 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     widgetPal.setColor( widget()->backgroundRole(), pal.color( QPalette::Base ) );
     widget()->setPalette( widgetPal );
 
-    setFrameStyle( StyledPanel | Raised );
-
     connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
 }
 

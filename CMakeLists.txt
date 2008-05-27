@@ -1,5 +1,7 @@
 project(okular)
 
+find_package(Phonon REQUIRED)
+
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
@@ -14,6 +16,7 @@ endif(NOT WIN32)
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${BLITZ_INCLUDES}
+   ${PHONON_INCLUDES}
 )
 
 
@@ -99,7 +102,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
+target_link_libraries(okularcore ${OKULAR_IOKIT} ${PHONON_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY})
 
 set_target_properties(okularcore PROPERTIES VERSION 1.1.0 SOVERSION 1 )
 

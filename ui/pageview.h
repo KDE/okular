@@ -203,7 +203,7 @@ Q_OBJECT
         void slotRotateCounterClockwise();
         void slotRotateOriginal();
         void slotPageSizes( int );
-        void slotTrimBordersToggled( bool );
+        void slotTrimMarginsToggled( bool );
         void slotToggleForms();
         void slotFormWidgetChanged( FormWidgetIface *w );
         void slotRefreshPage();

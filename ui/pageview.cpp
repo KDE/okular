@@ -138,7 +138,7 @@ public:
     KAction * aRotateCounterClockwise;
     KAction * aRotateOriginal;
     KSelectAction * aPageSizes;
-    KToggleAction * aTrimBorders;
+    KToggleAction * aTrimMargins;
     QAction * aMouseNormal;
     QAction * aMouseSelect;
     QAction * aMouseTextSelect;
@@ -323,7 +323,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aPageSizes = 0;
-    d->aTrimBorders = 0;
+    d->aTrimMargins = 0;
     d->aMouseNormal = 0;
     d->aMouseSelect = 0;
     d->aMouseTextSelect = 0;
@@ -435,10 +435,10 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          this, SLOT( slotPageSizes( int ) ) );
 
-    d->aTrimBorders  = new KToggleAction( i18n( "&Trim Borders" ), this );
-    ac->addAction("view_trim_borders", d->aTrimBorders );
-    connect( d->aTrimBorders, SIGNAL( toggled( bool ) ), SLOT( slotTrimBordersToggled( bool ) ) );
-    d->aTrimBorders->setChecked( Okular::Settings::trimBorders() );
+    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Borders" ), this ); // ### TODO KDE 4.2: rename to "margins"
+    ac->addAction("view_trim_margins", d->aTrimMargins );
+    connect( d->aTrimMargins, SIGNAL( toggled( bool ) ), SLOT( slotTrimMarginsToggled( bool ) ) );
+    d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
     ac->addAction("view_fit_to_width", d->aZoomFitWidth );
@@ -2299,7 +2299,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     Okular::NormalizedRect crop( 0., 0., 1., 1. );
 
     // Handle cropping
-    if ( Okular::Settings::trimBorders() && okularPage->isBoundingBoxKnown()
+    if ( Okular::Settings::trimMargins() && okularPage->isBoundingBoxKnown()
          && !okularPage->boundingBox().isNull() )
     {
         crop = okularPage->boundingBox();
@@ -3295,11 +3295,11 @@ void PageView::slotPageSizes( int newsize )
     d->document->setPageSize( d->document->pageSizes().at( newsize ) );
 }
 
-void PageView::slotTrimBordersToggled( bool on )
+void PageView::slotTrimMarginsToggled( bool on )
 {
-    if ( Okular::Settings::trimBorders() != on )
+    if ( Okular::Settings::trimMargins() != on )
     {
-        Okular::Settings::setTrimBorders( on );
+        Okular::Settings::setTrimMargins( on );
         Okular::Settings::self()->writeConfig();
         if ( d->document->pages() > 0 )
         {

@@ -15,7 +15,7 @@ kde4_add_executable(okular ${okular_SRCS})
 
 target_link_libraries(okular  ${KDE4_KPARTS_LIBS} )
 
-install(TARGETS okular DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 # okular shell data files

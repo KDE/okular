@@ -116,7 +116,7 @@ public:
     // annotations
     PageViewAnnotator * annotator;
     //text annotation dialogs list
-    QList<AnnotWindow *> m_annowindows;
+    QHash< Okular::Annotation *, AnnotWindow * > m_annowindows;
     // other stuff
     QTimer * delayResizeTimer;
     bool dirtyLayout;
@@ -584,23 +584,17 @@ void PageView::setAnnotationWindow( Okular::Annotation * annotation )
 
     // find the annot window
     AnnotWindow* existWindow = 0;
-    foreach ( AnnotWindow* tempwnd, d->m_annowindows )
+    QHash< Okular::Annotation *, AnnotWindow * >::ConstIterator it = d->m_annowindows.find( annotation );
+    if ( it != d->m_annowindows.end() )
     {
-        if ( tempwnd )
-        {
-            if ( tempwnd->m_annot == annotation )
-            {
-                existWindow = tempwnd;
-                break;
-            }
-        }
+        existWindow = *it;
     }
 
     if ( existWindow == 0 )
     {
         existWindow = new AnnotWindow( this, annotation );
 
-        d->m_annowindows << existWindow;
+        d->m_annowindows.insert( annotation, existWindow );
     }
 
     existWindow->show();
@@ -608,17 +602,11 @@ void PageView::setAnnotationWindow( Okular::Annotation * annotation )
 
 void PageView::removeAnnotationWindow( Okular::Annotation *annotation )
 {
-    QList<AnnotWindow *>::Iterator it = d->m_annowindows.begin();
-    QList<AnnotWindow *>::Iterator itEnd = d->m_annowindows.end();
-    for ( ; it != itEnd; ++it )
+    QHash< Okular::Annotation *, AnnotWindow * >::Iterator it = d->m_annowindows.find( annotation );
+    if ( it != d->m_annowindows.end() )
     {
-        if ( annotation == (*it)->m_annot )
-        {
-            delete *it;
-            d->m_annowindows.erase( it );
-
-            return;
-        }
+        delete *it;
+        d->m_annowindows.erase( it );
     }
 }
 
@@ -946,9 +934,22 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
 
     if ( changedFlags & DocumentObserver::Annotations )
     {
-        Q_FOREACH ( AnnotWindow* win, d->m_annowindows )
+        const QLinkedList< Okular::Annotation * > annots = d->document->page( pageNumber )->annotations();
+        const QLinkedList< Okular::Annotation * >::ConstIterator annItEnd = annots.end();
+        QHash< Okular::Annotation*, AnnotWindow * >::Iterator it = d->m_annowindows.begin();
+        for ( ; it != d->m_annowindows.end(); )
         {
-            win->reloadInfo();
+            QLinkedList< Okular::Annotation * >::ConstIterator annIt = qFind( annots, it.key() );
+            if ( annIt != annItEnd )
+            {
+                (*it)->reloadInfo();
+                ++it;
+            }
+            else
+            {
+                delete *it;
+                it = d->m_annowindows.erase( it );
+            }
         }
     }
 

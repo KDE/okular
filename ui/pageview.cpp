@@ -1041,7 +1041,7 @@ Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capabili
     {
         case Zoom:
         case ZoomModality:
-            return CapabilityRead | CapabilityWrite;
+            return CapabilityRead | CapabilityWrite | CapabilitySerializable;
     }
     return 0;
 }

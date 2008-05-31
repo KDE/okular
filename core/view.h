@@ -53,7 +53,8 @@ class OKULAR_EXPORT View
         {
             NoFlag = 0,
             CapabilityRead = 0x01,      ///< Possibility to read a capability
-            CapabilityWrite = 0x02      ///< Possibility to write a capability
+            CapabilityWrite = 0x02,     ///< Possibility to write a capability
+            CapabilitySerializable = 0x04  ///< The capability is suitable for being serialized/deserialized
         };
         Q_DECLARE_FLAGS( CapabilityFlags, CapabilityFlag )
 

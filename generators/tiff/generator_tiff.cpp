@@ -24,6 +24,7 @@
 #include <okular/core/document.h>
 #include <okular/core/page.h>
 #include <okular/core/fileprinter.h>
+#include <okular/core/utils.h>
 
 #include <tiff.h>
 #include <tiffio.h>
@@ -45,6 +46,28 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
         return QDateTime();
 
     return QDateTime::fromString( QString::fromLatin1( tiffdate ), "yyyy:MM:dd HH:mm:ss" );
+}
+
+static void adaptSizeToResolution( TIFF *tiff, ttag_t whichres, double dpi, uint32 *size )
+{
+    float resvalue = 1.0;
+    uint16 resunit = 0;
+    if ( !TIFFGetField( tiff, whichres, &resvalue )
+         || !TIFFGetField( tiff, TIFFTAG_RESOLUTIONUNIT, &resunit ) )
+        return;
+
+    float newsize = *size / resvalue;
+    switch ( resunit )
+    {
+        case RESUNIT_INCH:
+            *size = (uint32)( newsize * dpi );
+            break;
+        case RESUNIT_CENTIMETER:
+            *size = (uint32)( newsize * 10.0 / 25.4 * dpi );
+            break;
+        case RESUNIT_NONE:
+            break;
+    }
 }
 
 static KAboutData createAboutData()
@@ -119,8 +142,10 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
     if ( TIFFSetDirectory( d->tiff, mapPage( request->page()->number() ) ) )
     {
         int rotation = request->page()->rotation();
-        uint32 width = (uint32)request->page()->width();
-        uint32 height = (uint32)request->page()->height();
+        uint32 width = 1;
+        uint32 height = 1;
+        TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width );
+        TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height );
         if ( rotation % 2 == 1 )
             qSwap( width, height );
 
@@ -214,6 +239,9 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
         if ( TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width ) != 1 ||
              TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             continue;
+
+        adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, Okular::Utils::dpiX(), &width );
+        adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, Okular::Utils::dpiY(), &height );
 
         Okular::Page * page = new Okular::Page( realdirs, width, height, Okular::Rotation0 );
         pagesVector[ realdirs ] = page;

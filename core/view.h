@@ -42,7 +42,8 @@ class OKULAR_EXPORT View
          */
         enum ViewCapability
         {
-            Zoom                 ///< Possibility to get/set the zoom of the view
+            Zoom,                ///< Possibility to get/set the zoom of the view
+            ZoomModality         ///< Possibility to get/set the zoom mode of the view
         };
 
         /**

@@ -93,6 +93,8 @@ class DocumentPrivate
         qulonglong getTotalMemory();
         qulonglong getFreeMemory();
         void loadDocumentInfo();
+        void loadViewsInfo( View *view, const QDomElement &e );
+        void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
         Generator * loadGeneratorLibrary( const KService::Ptr &service );

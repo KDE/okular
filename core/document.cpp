@@ -384,12 +384,89 @@ void DocumentPrivate::loadDocumentInfo()
                         setRotationInternal( newrotation, false );
                     }
                 }
+                else if ( infoElement.tagName() == "views" )
+                {
+                    QDomNode viewNode = infoNode.firstChild();
+                    while ( viewNode.isElement() )
+                    {
+                        QDomElement viewElement = viewNode.toElement();
+                        if ( viewElement.tagName() == "view" )
+                        {
+                            const QString viewName = viewElement.attribute( "name" );
+                            Q_FOREACH ( View * view, m_views )
+                            {
+                                if ( view->name() == viewName )
+                                {
+                                    loadViewsInfo( view, viewElement );
+                                    break;
+                                }
+                            }
+                        }
+                        viewNode = viewNode.nextSibling();
+                    }
+                }
                 infoNode = infoNode.nextSibling();
             }
         }
 
         topLevelNode = topLevelNode.nextSibling();
     } // </documentInfo>
+}
+
+void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
+{
+    QDomNode viewNode = e.firstChild();
+    while ( viewNode.isElement() )
+    {
+        QDomElement viewElement = viewNode.toElement();
+
+        if ( viewElement.tagName() == "zoom" )
+        {
+            const QString valueString = viewElement.attribute( "value" );
+            bool newzoom_ok = true;
+            const double newzoom = !valueString.isEmpty() ? valueString.toDouble( &newzoom_ok ) : 1.0;
+            if ( newzoom_ok && newzoom != 0
+                 && view->supportsCapability( View::Zoom )
+                 && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+            {
+                view->setCapability( View::Zoom, newzoom );
+            }
+            const QString modeString = viewElement.attribute( "mode" );
+            bool newmode_ok = true;
+            const int newmode = !modeString.isEmpty() ? modeString.toInt( &newmode_ok ) : 2;
+            if ( newmode_ok
+                 && view->supportsCapability( View::ZoomModality )
+                 && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+            {
+                view->setCapability( View::ZoomModality, newmode );
+            }
+        }
+
+        viewNode = viewNode.nextSibling();
+    }
+}
+
+void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
+{
+    if ( view->supportsCapability( View::Zoom )
+         && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead & View::CapabilitySerializable ) )
+         && view->supportsCapability( View::ZoomModality )
+         && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+    {
+        QDomElement zoomEl = e.ownerDocument().createElement( "zoom" );
+        e.appendChild( zoomEl );
+        bool ok = true;
+        const double zoom = view->capability( View::Zoom ).toDouble( &ok );
+        if ( ok && zoom != 0 )
+        {
+            zoomEl.setAttribute( "value", zoom );
+        }
+        const int mode = view->capability( View::ZoomModality ).toInt( &ok );
+        if ( ok )
+        {
+            zoomEl.setAttribute( "mode", mode );
+        }
+    }
 }
 
 QString DocumentPrivate::giveAbsolutePath( const QString & fileName ) const
@@ -561,6 +638,16 @@ void DocumentPrivate::saveDocumentInfo() const
                 historyNode.appendChild( historyEntry );
                 ++backIterator;
             }
+        }
+        // create views root node
+        QDomElement viewsNode = doc.createElement( "views" );
+        generalInfo.appendChild( viewsNode );
+        Q_FOREACH ( View * view, m_views )
+        {
+            QDomElement viewEntry = doc.createElement( "view" );
+            viewEntry.setAttribute( "name", view->name() );
+            viewsNode.appendChild( viewEntry );
+            saveViewsInfo( view, viewEntry );
         }
 
         // 3. Save DOM to XML file

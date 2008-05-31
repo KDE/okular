@@ -296,8 +296,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aViewMode = 0;
-    d->zoomMode = (PageView::ZoomMode) Okular::Settings::zoomMode();
-    d->zoomFactor = Okular::Settings::zoomFactor();
+    d->zoomMode = PageView::ZoomFitPage;
+    d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;
     d->mouseSelecting = false;
@@ -1029,6 +1029,7 @@ bool PageView::supportsCapability( ViewCapability capability ) const
     switch ( capability )
     {
         case Zoom:
+        case ZoomModality:
             return true;
     }
     return false;
@@ -1039,6 +1040,7 @@ Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capabili
     switch ( capability )
     {
         case Zoom:
+        case ZoomModality:
             return CapabilityRead | CapabilityWrite;
     }
     return 0;
@@ -1050,6 +1052,8 @@ QVariant PageView::capability( ViewCapability capability ) const
     {
         case Zoom:
             return d->zoomFactor;
+        case ZoomModality:
+            return d->zoomMode;
     }
     return QVariant();
 }
@@ -1066,6 +1070,17 @@ void PageView::setCapability( ViewCapability capability, const QVariant &option 
             {
                 d->zoomFactor = static_cast< float >( factor );
                 updateZoom( ZoomRefreshCurrent );
+            }
+            break;
+        }
+        case ZoomModality:
+        {
+            bool ok = true;
+            int mode = option.toInt( &ok );
+            if ( ok )
+            {
+                if ( mode >= 0 && mode < 3 )
+                    updateZoom( (ZoomMode)mode );
             }
             break;
         }
@@ -2574,10 +2589,6 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
 //        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         }
-        // store zoom settings
-        Okular::Settings::setZoomMode( newZoomMode );
-        Okular::Settings::setZoomFactor( newFactor );
-        Okular::Settings::self()->writeConfig();
     }
 
     d->aZoomIn->setEnabled( d->zoomFactor < 3.9 );

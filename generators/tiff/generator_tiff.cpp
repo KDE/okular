@@ -353,8 +353,6 @@ bool TIFFGenerator::print( QPrinter& printer )
     uint32 width = 0;
     uint32 height = 0;
 
-    tdir_t dirs = TIFFNumberOfDirectories( d->tiff );
-
     QPainter p( &printer );
 
     QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),

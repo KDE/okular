@@ -31,13 +31,68 @@
 
 #define TiffDebug 4714
 
+tsize_t okular_tiffReadProc( thandle_t handle, tdata_t buf, tsize_t size )
+{
+    QIODevice * device = static_cast< QIODevice * >( handle );
+    return device->isReadable() ? device->read( static_cast< char * >( buf ), size ) : -1;
+}
+
+tsize_t okular_tiffWriteProc( thandle_t handle, tdata_t buf, tsize_t size )
+{
+    QIODevice * device = static_cast< QIODevice * >( handle );
+    return device->write( static_cast< char * >( buf ), size );
+}
+
+toff_t okular_tiffSeekProc( thandle_t handle, toff_t offset, int whence )
+{
+    QIODevice * device = static_cast< QIODevice * >( handle );
+    switch ( whence )
+    {
+        case SEEK_SET:
+            device->seek( offset );
+            break;
+        case SEEK_CUR:
+            device->seek( device->pos() + offset );
+            break;
+        case SEEK_END:
+            device->seek( device->size() + offset );
+            break;
+    }
+
+    return device->pos();
+}
+
+int okular_tiffCloseProc( thandle_t handle )
+{
+    Q_UNUSED( handle )
+    return 0;
+}
+
+toff_t okular_tiffSizeProc( thandle_t handle )
+{
+    QIODevice * device = static_cast< QIODevice * >( handle );
+    return device->size();
+}
+
+int okular_tiffMapProc( thandle_t, tdata_t *, toff_t * )
+{
+    return 0;
+}
+
+void okular_tiffUnmapProc( thandle_t, tdata_t, toff_t )
+{
+}
+
+
 class TIFFGenerator::Private
 {
     public:
         Private()
-          : tiff( 0 ) {}
+          : tiff( 0 ), dev( 0 ) {}
 
         TIFF* tiff;
+        QByteArray data;
+        QIODevice* dev;
 };
 
 static QDateTime convertTIFFDateTime( const char* tiffdate )
@@ -111,9 +166,19 @@ TIFFGenerator::~TIFFGenerator()
 
 bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    d->tiff = TIFFOpen( QFile::encodeName( fileName ), "r" );
+    QFile* qfile = new QFile( fileName );
+    qfile->open( QIODevice::ReadOnly );
+    d->dev = qfile;
+    d->tiff = TIFFClientOpen( "okular.tiff", "r", d->dev,
+                  okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
+                  okular_tiffCloseProc, okular_tiffSizeProc,
+                  okular_tiffMapProc, okular_tiffUnmapProc );
     if ( !d->tiff )
+    {
+        delete d->dev;
+        d->dev = 0;
         return false;
+    }
 
     loadPages( pagesVector );
 
@@ -127,6 +192,9 @@ bool TIFFGenerator::doCloseDocument()
     {
         TIFFClose( d->tiff );
         d->tiff = 0;
+        delete d->dev;
+        d->dev = 0;
+        d->data.clear();
         delete m_docInfo;
         m_docInfo = 0;
         m_pageMapping.clear();

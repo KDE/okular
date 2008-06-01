@@ -132,7 +132,7 @@ static KAboutData createAboutData()
          "okular_tiff",
          "okular_tiff",
          ki18n( "TIFF Backend" ),
-         "0.1.1",
+         "0.2",
          ki18n( "A TIFF backend" ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2008 Pino Toscano" ),

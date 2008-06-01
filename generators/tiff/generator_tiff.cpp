@@ -9,6 +9,7 @@
 
 #include "generator_tiff.h"
 
+#include <qbuffer.h>
 #include <qdatetime.h>
 #include <qfile.h>
 #include <qimage.h>
@@ -150,6 +151,7 @@ TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     setFeature( Threaded );
     setFeature( PrintNative );
     setFeature( PrintToFile );
+    setFeature( ReadRawData );
 }
 
 TIFFGenerator::~TIFFGenerator()
@@ -177,6 +179,29 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     {
         delete d->dev;
         d->dev = 0;
+        return false;
+    }
+
+    loadPages( pagesVector );
+
+    return true;
+}
+
+bool TIFFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector )
+{
+    d->data = fileData;
+    QBuffer* qbuffer = new QBuffer( &d->data );
+    qbuffer->open( QIODevice::ReadOnly );
+    d->dev = qbuffer;
+    d->tiff = TIFFClientOpen( "okular.tiff", "r", d->dev,
+                  okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
+                  okular_tiffCloseProc, okular_tiffSizeProc,
+                  okular_tiffMapProc, okular_tiffUnmapProc );
+    if ( !d->tiff )
+    {
+        delete d->dev;
+        d->dev = 0;
+        d->data.clear();
         return false;
     }
 

@@ -22,6 +22,7 @@ class TIFFGenerator : public Okular::Generator
         virtual ~TIFFGenerator();
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector );
 
         const Okular::DocumentInfo * generateDocumentInfo();
 

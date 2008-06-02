@@ -11,6 +11,7 @@
 
 #include <qabstractitemdelegate.h>
 #include <qaction.h>
+#include <qapplication.h>
 #include <qevent.h>
 #include <qfont.h>
 #include <qfontmetrics.h>
@@ -102,6 +103,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     QBrush backBrush;
     QColor foreColor;
     bool disabled = false;
+    bool hover = false;
     if ( !( option.state & QStyle::State_Enabled ) )
     {
         backBrush = option.palette.brush( QPalette::Disabled, QPalette::Base );
@@ -117,13 +119,28 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     {
         backBrush = option.palette.color( QPalette::Highlight ).light( 115 );
         foreColor = option.palette.color( QPalette::HighlightedText );
+        hover = true;
     }
     else /*if ( option.state & QStyle::State_Enabled )*/
     {
         backBrush = option.palette.brush( QPalette::Base );
         foreColor = option.palette.color( QPalette::Text );
     }
-    painter->fillRect( option.rect, backBrush );
+    QStyle *style = QApplication::style();
+    QStyleOptionViewItemV4 opt( option );
+    // KStyle provides an "hover highlight" effect for free;
+    // but we want that for non-KStyle-based styles too
+    if ( !style->inherits( "KStyle" ) && hover )
+    {
+        Qt::BrushStyle bs = opt.backgroundBrush.style();
+        if ( bs > Qt::NoBrush && bs < Qt::TexturePattern )
+            opt.backgroundBrush = opt.backgroundBrush.color().light( 115 );
+        else
+            opt.backgroundBrush = backBrush;
+    }
+    painter->save();
+    style->drawPrimitive( QStyle::PE_PanelItemViewItem, &opt, painter, 0 );
+    painter->restore();
     QIcon icon = index.data( Qt::DecorationRole ).value< QIcon >();
     if ( !icon.isNull() )
     {

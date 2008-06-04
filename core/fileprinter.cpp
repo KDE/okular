@@ -48,13 +48,20 @@ int FilePrinter::printFiles( QPrinter &printer, const QStringList &fileList, Fil
 int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
-    QString exe("lpr");
+    //Decide what executable to use to print with, need the CUPS version of lpr if available
+    //Some distros name the CUPS version of lpr as lpr-cups or lpr.cups so try those first 
+    //before default to lpr, or failing that to lp
+    QString exe;
 
-    if ( KStandardDirs::findExe(exe).isEmpty() ) {
+    if ( !KStandardDirs::findExe("lpr-cups").isEmpty() ) {
+        exe = "lpr-cups";
+    } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
+        exe = "lpr.cups";
+    } else if ( !KStandardDirs::findExe("lpr").isEmpty() ) {
+        exe = "lpr";
+    } else if ( !KStandardDirs::findExe("lp").isEmpty() ) {
         exe = "lp";
-    }
-
-    if ( KStandardDirs::findExe(exe).isEmpty() ) {
+    } else {
         return -9;
     }
 
@@ -302,7 +309,7 @@ QStringList FilePrinter::destination( QPrinter &printer, const QString &version 
         return QStringList("-d") << printer.printerName();
     }
 
-    if ( version == "lpr" ) {
+    if ( version.startsWith( "lpr" ) ) {
         return QStringList("-P") << printer.printerName();
     }
 
@@ -318,7 +325,7 @@ QStringList FilePrinter::copies( QPrinter &printer, const QString &version )
         return QStringList("-n") << QString("%1").arg( cp );
     }
 
-    if ( version == "lpr" ) {
+    if ( version.startsWith( "lpr" ) ) {
         return QStringList() << QString("-#%1").arg( cp );
     }
 
@@ -333,7 +340,7 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
             return QStringList("-t") << printer.docName();
         }
 
-        if ( version == "lpr" ) {
+        if ( version.startsWith( "lpr" ) ) {
             return QStringList("-J") << printer.docName();
         }
     }
@@ -343,7 +350,7 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
 
 QStringList FilePrinter::deleteFile( QPrinter &printer, FileDeletePolicy fileDeletePolicy, const QString &version )
 {
-    if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles && version == "lpr" ) {
+    if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles && version.startsWith( "lpr" ) ) {
         return QStringList("-r");
     }
 
@@ -361,7 +368,7 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
                 return QStringList("-P") << pageRange ;
             }
 
-            if ( version == "lpr" && useCupsOptions ) {
+            if ( version.startsWith( "lpr" ) && useCupsOptions ) {
                 return QStringList("-o") << QString("page-ranges=%1").arg( pageRange );
             }
 
@@ -374,7 +381,7 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
                                                             .arg( printer.toPage() );
             }
 
-            if ( version == "lpr" && useCupsOptions ) {
+            if ( version.startsWith( "lpr" ) && useCupsOptions ) {
                 return QStringList("-o") << QString("page-ranges=%1-%2").arg( printer.fromPage() )
                                                                         .arg( printer.toPage() );
             }

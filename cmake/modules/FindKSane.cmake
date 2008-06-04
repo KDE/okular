@@ -9,10 +9,10 @@ if (KSANE_INCLUDE_DIR)
   set(KSANE_FIND_QUIETLY TRUE)
 endif (KSANE_INCLUDE_DIR)
 
-FIND_FILE(KSANE_LOCAL_FOUND libksane/version.h.cmake ${CMAKE_SOURCE_DIR}/libksane NO_DEFAULT_PATH)
+FIND_FILE(KSANE_LOCAL_FOUND libksane/version.h.cmake ${CMAKE_SOURCE_DIR}/libs/libksane NO_DEFAULT_PATH)
 
 if (KSANE_LOCAL_FOUND)
-    set(KSANE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libksane)
+    set(KSANE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libs/libksane)
     set(KSANE_DEFINITIONS -I${KSANE_INCLUDE_DIR})
     set(KSANE_LIBRARY ksane)
     message(STATUS "Found KSane library in local sub-folder: ${KSANE_LIBRARY}")

@@ -541,4 +541,3 @@ QStringList FilePrinter::optionCollateCopies( QPrinter &printer )
     return QStringList("-o") << "Collate=False";
 }
 
-#include "fileprinter.moc"

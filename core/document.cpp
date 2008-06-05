@@ -2749,6 +2749,17 @@ void Document::processAction( const Action * action )
                     return;
                 }
 
+                // handle documents with relative path
+                if ( d->m_url.isValid() )
+                {
+                    KUrl completeUrl = KUrl( d->m_url.upUrl(), url );
+                    if ( completeUrl.isLocalFile() )
+                    {
+                        d->openRelativeFile( completeUrl.url() );
+                        return;
+                    }
+                }
+
                 // Albert: this is not a leak!
                 new KRun( KUrl( url ), widget() );
             }

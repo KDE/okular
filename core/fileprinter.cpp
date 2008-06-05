@@ -417,6 +417,8 @@ QStringList FilePrinter::cupsOptions( QPrinter &printer )
         optionList << optionCollateCopies( printer );
     }
 
+    optionList << optionCupsProperties( printer );
+
     return optionList;
 }
 
@@ -539,5 +541,21 @@ QStringList FilePrinter::optionCollateCopies( QPrinter &printer )
         return QStringList("-o") << "Collate=True";
     }
     return QStringList("-o") << "Collate=False";
+}
+
+QStringList FilePrinter::optionCupsProperties( QPrinter &printer )
+{
+    QStringList dialogOptions = printer.printEngine()->property(QPrintEngine::PrintEnginePropertyKey(0xfe00)).toStringList();
+    QStringList cupsOptions;
+
+    for ( int i = 0; i < dialogOptions.count(); i = i + 2 ) {
+        if ( dialogOptions[i+1].isEmpty() ) {
+            cupsOptions << "-o" << dialogOptions[i];
+        } else {
+            cupsOptions << "-o" << dialogOptions[i] + "=" + dialogOptions[i+1];
+        }
+    }
+
+    return cupsOptions;
 }
 

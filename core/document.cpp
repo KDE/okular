@@ -2749,19 +2749,16 @@ void Document::processAction( const Action * action )
                     return;
                 }
 
+                KUrl realUrl = KUrl( url );
+
                 // handle documents with relative path
                 if ( d->m_url.isValid() )
                 {
-                    KUrl completeUrl = KUrl( d->m_url.upUrl(), url );
-                    if ( completeUrl.isLocalFile() )
-                    {
-                        d->openRelativeFile( completeUrl.url() );
-                        return;
-                    }
+                    realUrl = KUrl( d->m_url.upUrl(), url );
                 }
 
                 // Albert: this is not a leak!
-                new KRun( KUrl( url ), widget() );
+                new KRun( realUrl, widget() );
             }
             } break;
 

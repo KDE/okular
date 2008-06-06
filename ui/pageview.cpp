@@ -1178,6 +1178,7 @@ void PageView::contentsPaintEvent(QPaintEvent *pe)
                         QColor blCol = selBlendColor.dark( 140 );
                         blCol.setAlphaF( 0.2 );
                         p.fillRect( blendedPixmap.rect(), blCol );
+                        p.end();
                         // copy the blended pixmap back to its place
                         pixmapPainter.drawPixmap( blendRect.left(), blendRect.top(), blendedPixmap );
                     }
@@ -1970,6 +1971,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 QPainter copyPainter( &copyPix );
                 copyPainter.translate( -selectionRect.left(), -selectionRect.top() );
                 drawDocumentOnPainter( selectionRect, &copyPainter );
+                copyPainter.end();
 
                 if ( choice == imageToClipboard )
                 {

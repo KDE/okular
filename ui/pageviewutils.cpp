@@ -735,6 +735,7 @@ void ToolBarPrivate::buildToolBar()
         bufferPainter.drawLine( 7, dy + 1, 7, dy + myHeight - 7 );
         bufferPainter.drawLine( 10, dy + 1, 10, dy + myHeight - 7 );
     }
+    bufferPainter.end();
 
     // 6. reposition buttons (in rows/col grid)
     int gridX = 0,

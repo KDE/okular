@@ -717,6 +717,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
         QImage croppedImage( r.width(), r.height(), QImage::Format_ARGB32_Premultiplied );
         QPainter p( &croppedImage );
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
+        p.end();
         dest = croppedImage;
     }
 }

@@ -10,10 +10,10 @@
 #ifndef _OKULAR_PRESENTATIONWIDGET_H_
 #define _OKULAR_PRESENTATIONWIDGET_H_
 
-#include <qdialog.h>
 #include <qlist.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
+#include <qwidget.h>
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
@@ -37,7 +37,7 @@ class Page;
  *
  * This is a fullscreen widget that displays 
  */
-class PresentationWidget : public QDialog, public Okular::DocumentObserver
+class PresentationWidget : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:

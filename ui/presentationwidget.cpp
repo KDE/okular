@@ -90,11 +90,11 @@ class PresentationToolBar : public QToolBar
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
-    : QDialog( parent, Qt::FramelessWindowHint ),
+    : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
     m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 )
 {
-    setModal( true );
+    Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
     setAttribute( Qt::WA_OpaquePaintEvent );
     setObjectName( "presentationWidget" );
@@ -267,7 +267,7 @@ bool PresentationWidget::event( QEvent * e )
     }
     else
         // do not stop the event
-        return QDialog::event( e );
+        return QWidget::event( e );
 }
 
 void PresentationWidget::keyPressEvent( QKeyEvent * e )

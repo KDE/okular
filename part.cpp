@@ -910,6 +910,8 @@ bool Part::closeUrl()
     m_searchWidget->clearText();
     delete m_tempfile;
     m_tempfile = 0;
+    m_topMessage->setVisible( false );
+    m_formsMessage->setVisible( false );
     return KParts::ReadOnlyPart::closeUrl();
 }
 

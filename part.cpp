@@ -884,8 +884,9 @@ bool Part::closeUrl()
 
 void Part::close()
 {
-    // NOTE: don't know why, but the correct object name should be "okular::Shell"
-    if (parent() && (parent()->objectName() == QLatin1String("okular/okular__Shell")))
+    if (parent()
+        && (parent()->objectName() == QLatin1String("okular::Shell")
+            || parent()->objectName() == QLatin1String("okular/okular__Shell")))
     {
         closeUrl();
     }

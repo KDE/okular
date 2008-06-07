@@ -85,6 +85,64 @@
 #include "core/page.h"
 #include "core/fileprinter.h"
 
+#include <cstdio>
+
+class FileKeeper
+{
+    public:
+        FileKeeper()
+            : m_handle( NULL )
+        {
+        }
+
+        ~FileKeeper()
+        {
+        }
+
+        void open( const QString & path )
+        {
+            if ( !m_handle )
+                m_handle = std::fopen( QFile::encodeName( path ), "r" );
+        }
+
+        void close()
+        {
+            if ( m_handle )
+            {
+                int ret = std::fclose( m_handle );
+                Q_UNUSED( ret )
+                m_handle = NULL;
+            }
+        }
+
+        KTemporaryFile* copyToTemporary() const
+        {
+            if ( !m_handle )
+                return 0;
+
+            KTemporaryFile * retFile = new KTemporaryFile;
+            retFile->open();
+
+            std::rewind( m_handle );
+            int c = -1;
+            do
+            {
+                c = std::fgetc( m_handle );
+                if ( c == EOF )
+                    break;
+                if ( !retFile->putChar( (char)c ) )
+                    break;
+            } while ( !feof( m_handle ) );
+
+            retFile->flush();
+
+            return retFile;
+        }
+
+    private:
+        std::FILE * m_handle;
+};
+
 K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
 K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "Okular" ) ) ) )
 
@@ -121,12 +179,25 @@ static QString compressedMimeFor( const QString& mime_to_check )
     return QString();
 }
 
+#undef OKULAR_KEEP_FILE_OPEN
+#if defined(Q_OS_UNIX)
+#  define OKULAR_KEEP_FILE_OPEN
+#endif
+
+#ifdef OKULAR_KEEP_FILE_OPEN
+static bool keepFileOpen()
+{
+    static bool keep_file_open = !qgetenv("OKULAR_NO_KEEP_FILE_OPEN").toInt();
+    return keep_file_open;
+}
+#endif
+
 Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args )
 : KParts::ReadOnlyPart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_generatorGuiClient(0)
+m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
@@ -488,6 +559,10 @@ m_cliPresentation(false), m_generatorGuiClient(0)
     m_dummyMode = true;
     m_sidebar->setSidebarVisibility( false );
     if ( !args.contains( QVariant( "Print/Preview" ) ) ) unsetDummyMode();
+
+#ifdef OKULAR_KEEP_FILE_OPEN
+    m_keeper = new FileKeeper();
+#endif
 }
 
 
@@ -510,6 +585,10 @@ Part::~Part()
     delete m_tempfile;
 
     qDeleteAll( m_bookmarkActions );
+
+#ifdef OKULAR_KEEP_FILE_OPEN
+    delete m_keeper;
+#endif
 }
 
 
@@ -792,6 +871,10 @@ bool Part::openFile()
         {
             m_realUrl = url();
         }
+#ifdef OKULAR_KEEP_FILE_OPEN
+        if ( keepFileOpen() )
+            m_keeper->open( fileNameToOpen );
+#endif
     }
     m_exportAsText->setEnabled( ok && m_document->canExportToText() );
     m_exportAs->setEnabled( ok );
@@ -912,6 +995,9 @@ bool Part::closeUrl()
     m_tempfile = 0;
     m_topMessage->setVisible( false );
     m_formsMessage->setVisible( false );
+#ifdef OKULAR_KEEP_FILE_OPEN
+    m_keeper->close();
+#endif
     return KParts::ReadOnlyPart::closeUrl();
 }
 
@@ -1338,9 +1424,34 @@ void Part::slotSaveCopyAs()
                 return;
         }
 
-        KIO::Job *copyJob = KIO::file_copy( localFilePath(), saveUrl, -1, KIO::Overwrite );
+        // make use of the already downloaded (in case of remote URLs) file,
+        // no point in downloading that again
+        KUrl srcUrl = KUrl::fromPath( localFilePath() );
+        KTemporaryFile * tempFile = 0;
+        // duh, our local file disappeared...
+        if ( !QFile::exists( localFilePath() ) )
+        {
+            if ( url().isLocalFile() )
+            {
+#ifdef OKULAR_KEEP_FILE_OPEN
+                // local file: try to get it back from the open handle on it
+                if ( ( tempFile = m_keeper->copyToTemporary() ) )
+                    srcUrl = KUrl::fromPath( tempFile->fileName() );
+#endif
+            }
+            else
+            {
+                // we still have the original remote URL of the document,
+                // so copy the document from there
+                srcUrl = url();
+            }
+        }
+
+        KIO::Job *copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
         if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
+
+        delete tempFile;
     }
 }
 

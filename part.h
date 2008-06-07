@@ -51,6 +51,7 @@ class SearchWidget;
 class Sidebar;
 class TOC;
 class MiniBar;
+class FileKeeper;
 
 namespace Okular
 {
@@ -247,6 +248,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KUrl m_realUrl;
 
         KXMLGUIClient *m_generatorGuiClient;
+        FileKeeper *m_keeper;
 
     private slots:
         void slotGeneratorPreferences();

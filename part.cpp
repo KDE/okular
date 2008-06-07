@@ -180,9 +180,6 @@ static QString compressedMimeFor( const QString& mime_to_check )
 }
 
 #undef OKULAR_KEEP_FILE_OPEN
-#if defined(Q_OS_UNIX)
-#  define OKULAR_KEEP_FILE_OPEN
-#endif
 
 #ifdef OKULAR_KEEP_FILE_OPEN
 static bool keepFileOpen()

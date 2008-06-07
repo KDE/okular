@@ -24,6 +24,7 @@
 #include <qsplitter.h>
 #include <qstackedwidget.h>
 
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kmenu.h>
 
@@ -599,17 +600,18 @@ void Sidebar::listContextMenu( const QPoint &pos )
     menu.addSeparator();
     QActionGroup *sizeGroup = new QActionGroup( &menu );
     int curSize = d->list->iconSize().width();
-#define ADD_SIZE_ACTION( text, itssize ) \
+#define ADD_SIZE_ACTION( text, _itssize ) \
 { \
+    const int itssize = static_cast< int >( _itssize ); \
     QAction *sizeAct = menu.addAction( text ); \
     sizeAct->setCheckable( true ); \
     sizeAct->setData( qVariantFromValue( itssize ) ); \
     sizeAct->setChecked( itssize == curSize ); \
     sizeGroup->addAction( sizeAct ); \
 }
-    ADD_SIZE_ACTION( i18n( "Small Icons" ), 22 )
-    ADD_SIZE_ACTION( i18n( "Normal Icons" ), 32 )
-    ADD_SIZE_ACTION( i18n( "Large Icons" ), 48 )
+    ADD_SIZE_ACTION( i18n( "Small Icons" ), KIconLoader::SizeSmallMedium )
+    ADD_SIZE_ACTION( i18n( "Normal Icons" ), KIconLoader::SizeMedium )
+    ADD_SIZE_ACTION( i18n( "Large Icons" ), KIconLoader::SizeLarge )
 #undef ADD_SIZE_ACTION
     connect( sizeGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( iconSizeChanged( QAction* ) ) );
     menu.exec( mapToGlobal( pos ) );

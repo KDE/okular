@@ -16,6 +16,11 @@
 
 #include "annotationmodel.h"
 
+static quint32 mixIndex( int row, int column )
+{
+    return ( row << 4 ) | column;
+}
+
 PageFilterProxyModel::PageFilterProxyModel( QObject *parent )
   : QSortFilterProxyModel( parent ),
     mGroupByCurrentPage( false ),
@@ -66,9 +71,25 @@ PageGroupProxyModel::PageGroupProxyModel( QObject *parent )
 {
 }
 
-int PageGroupProxyModel::columnCount( const QModelIndex& ) const
+int PageGroupProxyModel::columnCount( const QModelIndex &parentIndex ) const
 {
   // For top-level and second level we have always only one column
+  if ( mGroupByPage ) {
+    if ( parentIndex.isValid() ) {
+      if ( parentIndex.parent().isValid() )
+        return 0;
+      else {
+        return 1; // second-level
+      }
+    } else {
+      return 1; // top-level
+    }
+  } else {
+    if ( !parentIndex.isValid() ) // top-level
+      return 1;
+    else
+      return 0;
+  }
   return 1;
 }
 
@@ -94,13 +115,27 @@ int PageGroupProxyModel::rowCount( const QModelIndex &parentIndex ) const
 
 QModelIndex PageGroupProxyModel::index( int row, int column, const QModelIndex &parentIndex ) const
 {
+  if ( row < 0 || column != 0 )
+    return QModelIndex();
+
   if ( mGroupByPage ) {
-    if ( parentIndex.isValid() )
-      return createIndex( row, column, qint32( parentIndex.row() + 1 ) );
-    else
-      return createIndex( row, column, 0 );
+    if ( parentIndex.isValid() ) {
+      if ( parentIndex.row() >= 0 && parentIndex.row() < mTreeIndexes.count()
+           && row < mTreeIndexes[ parentIndex.row() ].second.count() )
+        return createIndex( row, column, qint32( parentIndex.row() + 1 ) );
+      else
+        return QModelIndex();
+    } else {
+      if ( row < mTreeIndexes.count() )
+        return createIndex( row, column, 0 );
+      else
+        return QModelIndex();
+    }
   } else {
-    return createIndex( row, column, 0 );
+    if ( row < mIndexes.count() )
+      return createIndex( row, column, mixIndex( parentIndex.row(), parentIndex.column() ) );
+    else
+      return QModelIndex();
   }
 }
 
@@ -110,7 +145,7 @@ QModelIndex PageGroupProxyModel::parent( const QModelIndex &idx ) const
     if ( idx.internalId() == 0 ) // top-level
       return QModelIndex();
     else
-      return index( idx.internalId() - 1, 0 );
+      return index( idx.internalId() - 1, idx.column() );
   } else {
     // We have only top-level items
     return QModelIndex();
@@ -143,7 +178,7 @@ QModelIndex PageGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) co
   if ( mGroupByPage ) {
     if ( proxyIndex.internalId() == 0 ) {
 
-      if ( proxyIndex.row() >= mTreeIndexes.count() )
+      if ( proxyIndex.row() >= mTreeIndexes.count() || proxyIndex.row() < 0 )
         return QModelIndex();
 
       return mTreeIndexes[ proxyIndex.row() ].first;
@@ -184,8 +219,6 @@ void PageGroupProxyModel::setSourceModel( QAbstractItemModel *model )
 
 void PageGroupProxyModel::rebuildIndexes()
 {
-  emit layoutAboutToBeChanged();
-
   if ( mGroupByPage ) {
     mTreeIndexes.clear();
 
@@ -210,7 +243,7 @@ void PageGroupProxyModel::rebuildIndexes()
     }
   }
 
-  emit layoutChanged();
+  reset();
 }
 
 void PageGroupProxyModel::groupByPage( bool value )
@@ -335,7 +368,7 @@ int AuthorGroupProxyModel::rowCount( const QModelIndex &parentIndex ) const
     else
         item = static_cast<AuthorGroupItem*>( parentIndex.internalPointer() );
 
-    return item->childCount();
+    return item ? item->childCount() : 0;
 }
 
 QModelIndex AuthorGroupProxyModel::index( int row, int column, const QModelIndex &parentIndex ) const
@@ -410,6 +443,10 @@ void AuthorGroupProxyModel::setSourceModel( QAbstractItemModel *model )
 
 static bool isAuthorItem( const QModelIndex &index )
 {
+    if ( !index.isValid() ) {
+        return false;
+    }
+
     AuthorGroupItem *item = static_cast<AuthorGroupItem*>( index.internalPointer() );
     return (item->type() == AuthorGroupItem::Author);
 }

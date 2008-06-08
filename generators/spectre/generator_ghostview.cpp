@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Albert Astals Cid <aacid@kde.org>               *
+ *   Copyright (C) 2007-2008 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,7 +39,7 @@ static KAboutData createAboutData()
          "okular_ghostview",
          "okular_ghostview",
          ki18n( "PS Backend" ),
-         "0.1",
+         "0.1.1",
          ki18n( "A PostScript file renderer." ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Albert Astals Cid" ),
@@ -214,7 +214,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 
 void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
-    kWarning(4711) << "receiving" << *req;
+    kDebug(4711) << "receiving" << *req;
 
     SpectrePage *page = spectre_document_get_page(m_internalDocument, req->pageNumber());
 
@@ -227,8 +227,17 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     renderer->setAABits(graphicsAA, textAA);
 
     renderer->setRotation( req->page()->orientation() * 90 );
-    renderer->setMagnify( qMax( (double)req->width() / req->page()->width(),
-                                (double)req->height() / req->page()->height() ) );
+    if (req->page()->rotation() == Okular::Rotation90 ||
+        req->page()->rotation() == Okular::Rotation270)
+    {
+      renderer->setMagnify( qMax( (double)req->height() / req->page()->width(),
+                                  (double)req->width() / req->page()->height() ) );
+    }
+    else
+    {
+      renderer->setMagnify( qMax( (double)req->width() / req->page()->width(),
+                                  (double)req->height() / req->page()->height() ) );
+    }
     m_request = req;
     renderer->startRequest(req, page);
 }
@@ -269,11 +278,11 @@ Okular::Rotation GSGenerator::orientation(SpectreOrientation pageOrientation) co
         case SPECTRE_ORIENTATION_PORTRAIT:
             return Okular::Rotation0;
         case SPECTRE_ORIENTATION_LANDSCAPE:
-            return Okular::Rotation270;
+            return Okular::Rotation90;
         case SPECTRE_ORIENTATION_REVERSE_PORTRAIT:
             return Okular::Rotation180;
         case SPECTRE_ORIENTATION_REVERSE_LANDSCAPE:
-            return Okular::Rotation90;
+            return Okular::Rotation270;
     }
 // get rid of warnings, should never happen
     return Okular::Rotation0;

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=dvi
+Name[fr]=DVI
 Name[hi]=डीवीआई
 Name[th]=เอกสาร dvi
 Name[x-test]=xxdvixx
@@ -11,6 +12,7 @@ Comment[el]=Σύστημα υποστήριξης DVI για το Okular
 Comment[es]=Motor DVI para Okular
 Comment[et]=Okulari DVI taustaprogramm
 Comment[fi]=DVI-taustaosa Okular-lukijalle
+Comment[fr]=Interface d'Okular pour le DVI
 Comment[ga]=Inneall DVI le haghaidh Okular
 Comment[gl]=Infraestrutura de DVI para Okular
 Comment[is]=DVI stuðningur fyrir Okular

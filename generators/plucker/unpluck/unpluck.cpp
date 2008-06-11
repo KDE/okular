@@ -906,7 +906,7 @@ static int FpSeek
 
     result = lseek (handle->dbprivate, offset, SEEK_SET);
     if (result != offset) {
-        _plkr_message ("Unable to seek fp %d to offset %d -- %d instead\n",
+        _plkr_message ("Unable to seek fp %d to offset %lu -- %lu instead\n",
                        handle->dbprivate, offset, result);
     }
     return (result == offset);

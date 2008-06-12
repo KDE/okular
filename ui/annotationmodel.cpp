@@ -308,7 +308,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
             return GuiUtils::captionForAnnotation( item->annotation );
             break;
         case Qt::DecorationRole:
-            return KIcon( "graphics-viewer-document" );
+            return KIcon( "okular" );
             break;
         case Qt::ToolTipRole:
             return GuiUtils::prettyToolTip( item->annotation );

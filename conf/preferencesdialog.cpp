@@ -32,7 +32,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_debug = new DlgDebug( this );
 #endif
 
-    addPage( m_general, i18n("General"), "graphics-viewer-document", i18n("General Options") );
+    addPage( m_general, i18n("General"), "okular", i18n("General Options") );
     addPage( m_accessibility, i18n("Accessibility"), "preferences-desktop-accessibility", i18n("Accessibility Reading Aids") );
     addPage( m_performance, i18n("Performance"), "preferences-system-performance", i18n("Performance Tuning") );
     addPage( m_presentation, i18n("Presentation"), "view-presentation",

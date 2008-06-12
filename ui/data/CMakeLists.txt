@@ -1,3 +1,6 @@
+# an own directory for multi-size icons retrieved by KIconLoader
+add_subdirectory(icons)
+
 # install annotator xml tools description
 install(FILES
    tools.xml

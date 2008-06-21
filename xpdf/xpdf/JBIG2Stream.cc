@@ -507,7 +507,7 @@ int JBIG2MMRDecoder::getWhiteCode() {
     ++nBytesRead;
   }
   while (1) {
-    if (bufLen >= 7 && ((buf >> (bufLen - 7)) & 0x7f) == 0) {
+    if (bufLen >= 11 && ((buf >> (bufLen - 7)) & 0x7f) == 0) {
       if (bufLen <= 12) {
 	code = buf << (12 - bufLen);
       } else {
@@ -550,14 +550,15 @@ int JBIG2MMRDecoder::getBlackCode() {
     ++nBytesRead;
   }
   while (1) {
-    if (bufLen >= 6 && ((buf >> (bufLen - 6)) & 0x3f) == 0) {
+    if (bufLen >= 10 && ((buf >> (bufLen - 6)) & 0x3f) == 0) {
       if (bufLen <= 13) {
 	code = buf << (13 - bufLen);
       } else {
 	code = buf >> (bufLen - 13);
       }
       p = &blackTab1[code & 0x7f];
-    } else if (bufLen >= 4 && ((buf >> (bufLen - 4)) & 0x0f) == 0) {
+    } else if (bufLen >= 7 && ((buf >> (bufLen - 4)) & 0x0f) == 0 &&
+	       ((buf >> (bufLen - 6)) & 0x03) != 0) {
       if (bufLen <= 12) {
 	code = buf << (12 - bufLen);
       } else {

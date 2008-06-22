@@ -1435,7 +1435,7 @@ void Part::slotSaveCopyAs()
                 if ( ( tempFile = m_keeper->copyToTemporary() ) )
                     srcUrl = KUrl::fromPath( tempFile->fileName() );
 #else
-                const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore." );
+                const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
                 KMessageBox::sorry( widget(), msg );
                 return;
 #endif

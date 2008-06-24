@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 MimeType=application/pdf;
 Terminal=false
 Name=KPDF
@@ -74,10 +73,10 @@ GenericName[zh_CN]=PDF 查看器
 GenericName[zh_HK]=PDF 檢視器
 GenericName[zh_TW]=PDF 檢視器
 GenericName[zu]=Umboniseli we PDF
-Exec=kpdf %U %i %m -caption "%c"
+Exec=kpdf %U %i -caption "%c"
 Icon=kpdf
 Type=Application
 DocPath=kpdf/index.html
 InitialPreference=7
-Categories=Qt;KDE;Graphics;PDFViewer;
+Categories=Qt;KDE;Graphics;Viewer;
 

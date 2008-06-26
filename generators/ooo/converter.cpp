@@ -9,6 +9,7 @@
 
 #include "converter.h"
 
+#include <QtCore/QQueue>
 #include <QtCore/QUrl>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
@@ -376,21 +377,32 @@ bool Converter::convertList( const QDomElement &element )
   return true;
 }
 
+static void enqueueNodeList( QQueue<QDomNode> &queue, const QDomNodeList &list )
+{
+  for ( int i = 0; i < list.count(); ++i ) {
+    queue.enqueue( list.at( i ) );
+  }
+}
+
 bool Converter::convertTable( const QDomElement &element )
 {
   /**
    * Find out dimension of the table
    */
-  QDomElement rowElement = element.firstChildElement();
-
   int rowCounter = 0;
   int columnCounter = 0;
-  while ( !rowElement.isNull() ) {
-    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+  QQueue<QDomNode> nodeQueue;
+  enqueueNodeList( nodeQueue, element.childNodes() );
+  while ( !nodeQueue.isEmpty() ) {
+    QDomElement el = nodeQueue.dequeue().toElement();
+    if ( el.isNull() )
+      continue;
+
+    if ( el.tagName() == QLatin1String( "table-row" ) ) {
       rowCounter++;
 
       int counter = 0;
-      QDomElement columnElement = rowElement.firstChildElement();
+      QDomElement columnElement = el.firstChildElement();
       while ( !columnElement.isNull() ) {
         if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
           counter++;
@@ -399,9 +411,9 @@ bool Converter::convertTable( const QDomElement &element )
       }
 
       columnCounter = qMax( columnCounter, counter );
+    } else if ( el.tagName() == QLatin1String( "table-header-rows" ) ) {
+      enqueueNodeList( nodeQueue, el.childNodes() );
     }
-
-    rowElement = rowElement.nextSiblingElement();
   }
 
   /**
@@ -412,16 +424,21 @@ bool Converter::convertTable( const QDomElement &element )
   /**
    * Fill table
    */
-  rowElement = element.firstChildElement();
+  nodeQueue.clear();
+  enqueueNodeList( nodeQueue, element.childNodes() );
 
   QTextTableFormat tableFormat;
 
   rowCounter = 0;
-  while ( !rowElement.isNull() ) {
-    if ( rowElement.tagName() == QLatin1String( "table-row" ) ) {
+  while ( !nodeQueue.isEmpty() ) {
+    QDomElement el = nodeQueue.dequeue().toElement();
+    if ( el.isNull() )
+      continue;
+
+    if ( el.tagName() == QLatin1String( "table-row" ) ) {
 
       int columnCounter = 0;
-      QDomElement columnElement = rowElement.firstChildElement();
+      QDomElement columnElement = el.firstChildElement();
       while ( !columnElement.isNull() ) {
         if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
           const StyleFormatProperty property = mStyleInformation->styleProperty( columnElement.attribute( "style-name" ) );
@@ -448,14 +465,10 @@ bool Converter::convertTable( const QDomElement &element )
       }
 
       rowCounter++;
-    }
-
-    if ( rowElement.tagName() == QLatin1String( "table-column" ) ) {
-      const StyleFormatProperty property = mStyleInformation->styleProperty( rowElement.attribute( "style-name" ) );
+    } else if ( el.tagName() == QLatin1String( "table-column" ) ) {
+      const StyleFormatProperty property = mStyleInformation->styleProperty( el.attribute( "style-name" ) );
       property.applyTableColumn( &tableFormat );
     }
-
-    rowElement = rowElement.nextSiblingElement();
   }
 
   table->setFormat( tableFormat );

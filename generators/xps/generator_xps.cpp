@@ -631,6 +631,20 @@ static void addXpsGradientsToQGradient( const QList<XpsGradient> &gradients, QGr
     }
 }
 
+static void applySpreadStyleToQGradient( const QString &style, QGradient *qgrad )
+{
+    if ( style.isEmpty() )
+        return;
+
+    if ( style == QLatin1String( "Pad" ) ) {
+        qgrad->setSpread( QGradient::PadSpread );
+    } else if ( style == QLatin1String( "Reflect" ) ) {
+        qgrad->setSpread( QGradient::ReflectSpread );
+    } else if ( style == QLatin1String( "Repeat" ) ) {
+        qgrad->setSpread( QGradient::RepeatSpread );
+    }
+}
+
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
     m_painter = NULL;
@@ -975,6 +989,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             QLinearGradient * qgrad = static_cast< QLinearGradient * >( gradients->data );
             qgrad->setStart( start );
             qgrad->setFinalStop( end );
+            applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
             node.data = new QBrush( *qgrad );
             delete qgrad;
         }
@@ -990,6 +1005,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             qgrad->setFocalPoint( origin );
             // TODO what in case of different radii?
             qgrad->setRadius( qMin( radiusX, radiusY ) );
+            applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
             node.data = new QBrush( *qgrad );
             delete qgrad;
         }

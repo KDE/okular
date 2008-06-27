@@ -693,7 +693,7 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
 void XpsHandler::processGlyph( XpsRenderNode &node )
 {
-    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, StyleSimulation, Clip, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
+    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, Clip, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
     //TODO Currently ignored child elements: Clip, OpacityMask
     //Handled separately: RenderTransform
 
@@ -705,6 +705,17 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
     // kDebug(XpsDebug) << "Font Rendering EmSize: " << node.attributes.value("FontRenderingEmSize").toFloat();
     QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"),  node.attributes.value("FontRenderingEmSize").toFloat());
+    att = node.attributes.value( "StyleSimulations" );
+    if  ( !att.isEmpty() ) {
+        if ( att == QLatin1String( "ItalicSimulation" ) ) {
+            font.setItalic( true );
+        } else if ( att == QLatin1String( "BoldSimulation" ) ) {
+            font.setBold( true );
+        } else if ( att == QLatin1String( "BoldItalicSimulation" ) ) {
+            font.setItalic( true );
+            font.setBold( true );
+        }
+    }
     m_painter->setFont(font);
 
     //Origin

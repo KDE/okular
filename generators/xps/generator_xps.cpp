@@ -578,7 +578,7 @@ static void preprocessXpsGradients( QList<XpsGradient> &gradients )
             gradients.prepend( XpsGradient( 0.0, gradients.first().color ) );
         }
         // case 2.b: some gradients with stop more than 0.0
-        if ( firstGreaterThanZero != gradients.count() ) {
+        else if ( firstGreaterThanZero != gradients.count() ) {
             QColor col1 = gradients.at( firstGreaterThanZero - 1 ).color;
             QColor col2 = gradients.at( firstGreaterThanZero ).color;
             for ( int i = 0; i < firstGreaterThanZero; ++i ) {
@@ -607,7 +607,7 @@ static void preprocessXpsGradients( QList<XpsGradient> &gradients )
             gradients.append( XpsGradient( 1.0, gradients.last().color ) );
         }
         // case 2.b: some gradients with stop more than 1.0
-        if ( firstLessThanOne != -1 ) {
+        else if ( firstLessThanOne != -1 ) {
             QColor col1 = gradients.at( firstLessThanOne ).color;
             QColor col2 = gradients.at( firstLessThanOne + 1 ).color;
             for ( int i = firstLessThanOne + 1; i < gradients.count(); ++i ) {

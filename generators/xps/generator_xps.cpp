@@ -799,7 +799,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 
 void XpsHandler::processPath( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Clip, OpacityMask, StrokeDashArray, StrokeDashCap, StrokeDashOffset, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMiterLimit, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
+    //TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMiterLimit, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
     //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Stroke, Data
     // Handled separately: RenderTransform
     m_painter->save();
@@ -844,6 +844,43 @@ void XpsHandler::processPath( XpsRenderNode &node )
         int thickness = att.toInt( &ok );
         if (ok)
             pen.setWidth( thickness );
+    }
+    att = node.attributes.value( "StrokeDashArray" );
+    if  ( !att.isEmpty() ) {
+        const QStringList pieces = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
+        QVector<qreal> dashPattern( pieces.count() );
+        bool ok = false;
+        for ( int i = 0; i < pieces.count(); ++i ) {
+            double value = pieces.at( i ).toInt( &ok );
+            if ( ok ) {
+                dashPattern[i] = value;
+            } else {
+                break;
+            }
+        }
+        if ( ok ) {
+            pen.setDashPattern( dashPattern );
+        }
+    }
+    att = node.attributes.value( "StrokeDashOffset" );
+    if  ( !att.isEmpty() ) {
+        bool ok = false;
+        int offset = att.toInt( &ok );
+        if ( ok )
+            pen.setDashOffset( offset );
+    }
+    att = node.attributes.value( "StrokeDashCap" );
+    if  ( !att.isEmpty() ) {
+        Qt::PenCapStyle cap = Qt::FlatCap;
+        if ( att == QLatin1String( "Flat" ) ) {
+            cap = Qt::FlatCap;
+        } else if ( att == QLatin1String( "Round" ) ) {
+            cap = Qt::RoundCap;
+        } else if ( att == QLatin1String( "Square" ) ) {
+            cap = Qt::SquareCap;
+        }
+        // ### missing "Triangle"
+        pen.setCapStyle( cap );
     }
     m_painter->setPen( pen );
 

@@ -77,13 +77,13 @@ install( FILES
            core/utils.h
            core/version.h
            core/fileprinter.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core )
+         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
 
 install( FILES
            interfaces/configinterface.h
            interfaces/guiinterface.h
            interfaces/printinterface.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces )
+         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
 
 kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui

@@ -113,7 +113,7 @@ public:
     XpsPage(XpsFile *file, const QString &fileName);
     ~XpsPage();
 
-    QSize size() const;
+    QSizeF size() const;
     bool renderToImage( QImage *p );
     Okular::TextPage* textPage();
 
@@ -123,7 +123,7 @@ private:
     XpsFile *m_file;
     const QString m_fileName;
 
-    QSize m_pageSize;
+    QSizeF m_pageSize;
 
 
     QString m_thumbnailFileName;

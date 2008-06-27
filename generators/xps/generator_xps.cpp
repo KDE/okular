@@ -788,8 +788,8 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
         if ( xml.isStartElement() && ( xml.name() == "FixedPage" ) )
         {
             QXmlStreamAttributes attributes = xml.attributes();
-            m_pageSize.setWidth( attributes.value( "Width" ).toString().toInt() );
-            m_pageSize.setHeight( attributes.value( "Height" ).toString().toInt() );
+            m_pageSize.setWidth( attributes.value( "Width" ).toString().toDouble() );
+            m_pageSize.setHeight( attributes.value( "Height" ).toString().toDouble() );
             break;
         }
     }
@@ -841,7 +841,7 @@ bool XpsPage::renderToImage( QImage *p )
     return true;
 }
 
-QSize XpsPage::size() const
+QSizeF XpsPage::size() const
 {
     return m_pageSize;
 }
@@ -1456,7 +1456,7 @@ bool XpsGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*
         XpsDocument *doc = m_xpsFile->document( docNum );
         for (int pageNum = 0; pageNum < doc->numPages(); ++pageNum )
         {
-            QSize pageSize = doc->page( pageNum )->size();
+            QSizeF pageSize = doc->page( pageNum )->size();
             pagesVector[pagesVectorOffset] = new Okular::Page( pagesVectorOffset, pageSize.width(), pageSize.height(), Okular::Rotation0 );
             ++pagesVectorOffset;
         }

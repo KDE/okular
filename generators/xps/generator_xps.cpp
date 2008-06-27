@@ -656,7 +656,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     } else {
         viewportMatrix = parseRscRefMatrix( att );
     }
-    viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewbox.y() );
+    viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewport.y() );
 
 
     // TODO Brush should work also for QImage, not only QPixmap. But for some images it doesn't work

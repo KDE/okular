@@ -460,14 +460,21 @@ static QString entryPath( const KZipFileEntry* entry )
 */
 static QString absolutePath( const QString &path, const QString &location )
 {
+    QString retPath;
     if ( location.at( 0 ) == QLatin1Char( '/' ) ) {
         // already absolute
-        return location;
+        retPath = location;
+    } else {
+        KUrl url = KUrl::fromPath( path );
+        url.setFileName( location );
+        retPath = url.toLocalFile();
     }
-
-    KUrl url = KUrl::fromPath( path );
-    url.setFileName( location );
-    return url.toLocalFile();
+    // it seems paths & file names can also be percent-encoded
+    // (XPS won't ever finish surprising me)
+    if ( retPath.contains( QLatin1Char( '%' ) ) ) {
+        retPath = QUrl::fromPercentEncoding( retPath.toUtf8() );
+    }
+    return retPath;
 }
 
 /**

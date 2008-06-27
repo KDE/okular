@@ -526,6 +526,111 @@ static QString resourceName( const QString &fileName )
     return resource;
 }
 
+static QColor interpolatedColor( const QColor &c1, const QColor &c2 )
+{
+    QColor res;
+    res.setAlpha( ( c1.alpha() + c2.alpha() ) / 2 );
+    res.setRed( ( c1.red() + c2.red() ) / 2 );
+    res.setGreen( ( c1.green() + c2.green() ) / 2 );
+    res.setBlue( ( c1.blue() + c2.blue() ) / 2 );
+    return res;
+}
+
+static bool xpsGradientLessThan( const XpsGradient &g1, const XpsGradient &g2 )
+{
+    return qFuzzyCompare( g1.offset, g2.offset )
+        ? g1.color.name() < g2.color.name()
+        : g1.offset < g2.offset;
+}
+
+static int xpsGradientWithOffset( const QList<XpsGradient> &gradients, double offset )
+{
+    int i = 0;
+    Q_FOREACH ( const XpsGradient &grad, gradients ) {
+        if ( grad.offset == offset ) {
+            return i;
+        }
+        ++i;
+    }
+    return -1;
+}
+
+/**
+   Preprocess a list of gradients.
+
+   \see XPS specification 11.3.1.1
+*/
+static void preprocessXpsGradients( QList<XpsGradient> &gradients )
+{
+    if ( gradients.isEmpty() )
+        return;
+
+    // sort the gradients (case 1.)
+    qStableSort( gradients.begin(), gradients.end(), xpsGradientLessThan );
+
+    // no gradient with stop 0.0 (case 2.)
+    if ( xpsGradientWithOffset( gradients, 0.0 ) == -1 ) {
+        int firstGreaterThanZero = 0;
+        while ( firstGreaterThanZero < gradients.count() && gradients.at( firstGreaterThanZero ).offset < 0.0 )
+            ++firstGreaterThanZero;
+        // case 2.a: no gradients with stop less than 0.0
+        if ( firstGreaterThanZero == 0 ) {
+            gradients.prepend( XpsGradient( 0.0, gradients.first().color ) );
+        }
+        // case 2.b: some gradients with stop more than 0.0
+        if ( firstGreaterThanZero != gradients.count() ) {
+            QColor col1 = gradients.at( firstGreaterThanZero - 1 ).color;
+            QColor col2 = gradients.at( firstGreaterThanZero ).color;
+            for ( int i = 0; i < firstGreaterThanZero; ++i ) {
+                gradients.removeFirst();
+            }
+            gradients.prepend( XpsGradient( 0.0, interpolatedColor( col1, col2 ) ) );
+        }
+        // case 2.c: no gradients with stop more than 0.0
+        else {
+            XpsGradient newGrad( 0.0, gradients.last().color );
+            gradients.clear();
+            gradients.append( newGrad );
+        }
+    }
+
+    if ( gradients.isEmpty() )
+        return;
+
+    // no gradient with stop 1.0 (case 3.)
+    if ( xpsGradientWithOffset( gradients, 1.0 ) == -1 ) {
+        int firstLessThanOne = gradients.count() - 1;
+        while ( firstLessThanOne >= 0 && gradients.at( firstLessThanOne ).offset > 1.0 )
+            --firstLessThanOne;
+        // case 2.a: no gradients with stop greater than 1.0
+        if ( firstLessThanOne == gradients.count() - 1 ) {
+            gradients.append( XpsGradient( 1.0, gradients.last().color ) );
+        }
+        // case 2.b: some gradients with stop more than 1.0
+        if ( firstLessThanOne != -1 ) {
+            QColor col1 = gradients.at( firstLessThanOne ).color;
+            QColor col2 = gradients.at( firstLessThanOne + 1 ).color;
+            for ( int i = firstLessThanOne + 1; i < gradients.count(); ++i ) {
+                gradients.removeLast();
+            }
+            gradients.append( XpsGradient( 1.0, interpolatedColor( col1, col2 ) ) );
+        }
+        // case 2.c: no gradients with stop less than 1.0
+        else {
+            XpsGradient newGrad( 1.0, gradients.first().color );
+            gradients.clear();
+            gradients.append( newGrad );
+        }
+    }
+}
+
+static void addXpsGradientsToQGradient( const QList<XpsGradient> &gradients, QGradient *qgrad )
+{
+    Q_FOREACH ( const XpsGradient &grad, gradients ) {
+        qgrad->setColorAt( grad.offset, grad.color );
+    }
+}
+
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
     m_painter = NULL;
@@ -803,14 +908,47 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             node.data = new QBrush( *qgrad );
             delete qgrad;
         }
+    } else if (node.name == "RadialGradientBrush") {
+        XpsRenderNode * gradients = node.findChild( "RadialGradientBrush.GradientStops" );
+        if ( gradients && gradients->data ) {
+            QPointF center = getPointFromString( node.attributes.value( "Center" ) );
+            QPointF origin = getPointFromString( node.attributes.value( "GradientOrigin" ) );
+            double radiusX = node.attributes.value( "RadiusX" ).toDouble();
+            double radiusY = node.attributes.value( "RadiusY" ).toDouble();
+            QRadialGradient * qgrad = static_cast< QRadialGradient * >( gradients->data );
+            qgrad->setCenter( center );
+            qgrad->setFocalPoint( origin );
+            // TODO what in case of different radii?
+            qgrad->setRadius( qMin( radiusX, radiusY ) );
+            node.data = new QBrush( *qgrad );
+            delete qgrad;
+        }
     } else if (node.name == "LinearGradientBrush.GradientStops") {
-        QLinearGradient * qgrad = new QLinearGradient();
+        QList<XpsGradient> gradients;
         Q_FOREACH ( const XpsRenderNode &child, node.children ) {
             double offset = child.attributes.value( "Offset" ).toDouble();
             QColor color = hexToRgba( child.attributes.value( "Color" ).toLatin1() );
-            qgrad->setColorAt( offset, color );
+            gradients.append( XpsGradient( offset, color ) );
         }
-        node.data = qgrad;
+        preprocessXpsGradients( gradients );
+        if ( !gradients.isEmpty() ) {
+            QLinearGradient * qgrad = new QLinearGradient();
+            addXpsGradientsToQGradient( gradients, qgrad );
+            node.data = qgrad;
+        }
+    } else if (node.name == "RadialGradientBrush.GradientStops") {
+        QList<XpsGradient> gradients;
+        Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+            double offset = child.attributes.value( "Offset" ).toDouble();
+            QColor color = hexToRgba( child.attributes.value( "Color" ).toLatin1() );
+            gradients.append( XpsGradient( offset, color ) );
+        }
+        preprocessXpsGradients( gradients );
+        if ( !gradients.isEmpty() ) {
+            QRadialGradient * qgrad = new QRadialGradient();
+            addXpsGradientsToQGradient( gradients, qgrad );
+            node.data = qgrad;
+        }
     } else {
         //kDebug(XpsDebug) << "Unknown element: " << node->name;
     }

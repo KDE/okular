@@ -23,6 +23,7 @@
 #include <okular/core/generator.h>
 #include <okular/core/textpage.h>
 
+#include <QColor>
 #include <QDomDocument>
 #include <QFontDatabase>
 #include <QImage>
@@ -58,6 +59,16 @@ public:
     XpsRenderNode * findChild( const QString &name );
     void * getRequiredChildData( const QString &name );
     void * getChildData( const QString &name );
+};
+
+struct XpsGradient
+{
+    XpsGradient( double o, const QColor &c )
+        : offset( o ), color( c )
+    {}
+
+    double offset;
+    QColor color;
 };
 
 /**

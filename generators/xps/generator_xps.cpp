@@ -204,6 +204,30 @@ static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPoi
 }
 
 /**
+    Read point (two reals delimited by comma) from string
+*/
+static QPointF getPointFromString(const QString &string)
+{
+    const int commaPos = string.indexOf(QLatin1Char(','));
+    if (commaPos == -1 || string.indexOf(QLatin1Char(','), commaPos + 1) != -1)
+        return QPointF();
+
+    QPointF result;
+    bool ok = false;
+    QStringRef ref = string.midRef(0, commaPos);
+    result.setX(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
+    if (!ok)
+        return QPointF();
+
+    ref = string.midRef(commaPos + 1);
+    result.setY(QString::fromRawData(ref.constData(), ref.count()).toDouble(&ok));
+    if (!ok)
+        return QPointF();
+
+    return result;
+}
+
+/**
     Parse an abbreviated path "Data" description
     \param data the string containing the whitespace separated values
 
@@ -617,7 +641,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
 void XpsHandler::processFill( XpsRenderNode &node )
 {
-    //TODO Ignored child elements: LinearGradientBrush, RadialGradientBrush, VirtualBrush
+    //TODO Ignored child elements: RadialGradientBrush, VirtualBrush
 
     if (node.children.size() != 1) {
         kDebug(XpsDebug) << "Fill element should have exactly one child";
@@ -766,6 +790,25 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processImageBrush( node );
     } else if (node.name == "ImageBrush.Transform") {
         node.data = node.getRequiredChildData( "MatrixTransform" );
+    } else if (node.name == "LinearGradientBrush") {
+        XpsRenderNode * gradients = node.findChild( "LinearGradientBrush.GradientStops" );
+        if ( gradients && gradients->data ) {
+            QPointF start = getPointFromString( node.attributes.value( "StartPoint" ) );
+            QPointF end = getPointFromString( node.attributes.value( "EndPoint" ) );
+            QLinearGradient * qgrad = static_cast< QLinearGradient * >( gradients->data );
+            qgrad->setStart( start );
+            qgrad->setFinalStop( end );
+            node.data = new QBrush( *qgrad );
+            delete qgrad;
+        }
+    } else if (node.name == "LinearGradientBrush.GradientStops") {
+        QLinearGradient * qgrad = new QLinearGradient();
+        Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+            double offset = child.attributes.value( "Offset" ).toDouble();
+            QColor color = hexToRgba( child.attributes.value( "Color" ).toLatin1() );
+            qgrad->setColorAt( offset, color );
+        }
+        node.data = qgrad;
     } else {
         //kDebug(XpsDebug) << "Unknown element: " << node->name;
     }

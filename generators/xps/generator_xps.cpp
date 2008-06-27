@@ -295,7 +295,9 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
             case 'h': // Horizontal line
                 while (token.type == abtNumber)
                 {
-                    double x = token.number + isRelative?path.currentPosition().x():0;
+                    double x = token.number;
+                    if ( isRelative )
+                        x += path.currentPosition().x();
                     path.lineTo(x, path.currentPosition().y());
                     nextAbbPathToken(&token);
                 }
@@ -303,7 +305,9 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
             case 'v': // Vertical line
                 while (token.type == abtNumber)
                 {
-                    double y = token.number + isRelative?path.currentPosition().y():0;
+                    double y = token.number;
+                    if ( isRelative )
+                        y += path.currentPosition().y();
                     path.lineTo(path.currentPosition().x(), y);
                     nextAbbPathToken(&token);
                 }

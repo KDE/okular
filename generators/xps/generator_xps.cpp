@@ -799,7 +799,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 
 void XpsHandler::processPath( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, StrokeLineJoin, StrokeMiterLimit, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
+    //TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
     //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Stroke, Data
     // Handled separately: RenderTransform
     m_painter->save();
@@ -881,6 +881,28 @@ void XpsHandler::processPath( XpsRenderNode &node )
         }
         // ### missing "Triangle"
         pen.setCapStyle( cap );
+    }
+    att = node.attributes.value( "StrokeLineJoin" );
+    if  ( !att.isEmpty() ) {
+        Qt::PenJoinStyle joinStyle = Qt::MiterJoin;
+        if ( att == QLatin1String( "Miter" ) ) {
+            joinStyle = Qt::MiterJoin;
+        } else if ( att == QLatin1String( "Bevel" ) ) {
+            joinStyle = Qt::BevelJoin;
+        } else if ( att == QLatin1String( "Round" ) ) {
+            joinStyle = Qt::RoundJoin;
+        }
+        pen.setJoinStyle( joinStyle );
+    }
+    att = node.attributes.value( "StrokeMiterLimit" );
+    if  ( !att.isEmpty() ) {
+        bool ok = false;
+        double limit = att.toDouble( &ok );
+        if ( ok ) {
+            // we have to divide it by two, as XPS consider half of the stroke width,
+            // while Qt the whole of it
+            pen.setMiterLimit( limit / 2 );
+        }
     }
     m_painter->setPen( pen );
 

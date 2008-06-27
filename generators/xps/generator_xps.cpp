@@ -23,7 +23,6 @@
 #include <qfile.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <qpixmap.h>
 #include <qthread.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
@@ -683,8 +682,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewport.y() );
 
 
-    // TODO Brush should work also for QImage, not only QPixmap. But for some images it doesn't work
-    brush = QBrush( QPixmap::fromImage( image) );
+    brush = QBrush( image );
     brush.setMatrix( viewboxMatrix.inverted() * viewportMatrix );
 
     node.data = new QBrush( brush );
@@ -1479,6 +1477,14 @@ XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
   : Okular::Generator( parent, args ), m_xpsFile( 0 )
 {
     setFeature( TextExtraction );
+    // activate the threaded rendering iif:
+    // 1) QFontDatabase says so
+    // 2) Qt >= 4.4.0 (see Trolltech task ID: 169502)
+    // 3) Qt >= 4.4.2 (see Trolltech task ID: 215090)
+#if QT_VERSION >= 0x040402
+    if ( QFontDatabase::supportsThreadedFontRendering() )
+        setFeature( Threaded );
+#endif
 }
 
 XpsGenerator::~XpsGenerator()

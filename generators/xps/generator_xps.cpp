@@ -717,8 +717,14 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
     // Get font (doesn't work well because qt doesn't allow to load font from file)
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
-    // kDebug(XpsDebug) << "Font Rendering EmSize: " << node.attributes.value("FontRenderingEmSize").toFloat();
-    QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"),  node.attributes.value("FontRenderingEmSize").toFloat());
+    float fontSize = node.attributes.value("FontRenderingEmSize").toFloat();
+    // kDebug(XpsDebug) << "Font Rendering EmSize:" << fontSize;
+    // a value of 0.0 means the text is not visible (see XPS specs, chapter 12, "Glyphs")
+    if ( fontSize < 0.1 ) {
+        m_painter->restore();
+        return;
+    }
+    QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"), fontSize );
     att = node.attributes.value( "StyleSimulations" );
     if  ( !att.isEmpty() ) {
         if ( att == QLatin1String( "ItalicSimulation" ) ) {

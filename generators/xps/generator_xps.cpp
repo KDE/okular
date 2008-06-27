@@ -964,7 +964,7 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
     QXmlStreamReader xml;
-    xml.addData( pageFile->data() );
+    xml.addData( readFileOrDirectoryParts( pageFile ) );
     while ( !xml.atEnd() )
     {
         xml.readNext();
@@ -1007,7 +1007,7 @@ bool XpsPage::renderToImage( QImage *p )
         parser->setContentHandler( handler );
         parser->setErrorHandler( handler );
         const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
-        QByteArray data = pageFile->data();
+        QByteArray data = readFileOrDirectoryParts( pageFile );
         QBuffer * buffer = new QBuffer(&data);
         QXmlInputSource *source = new QXmlInputSource(buffer);
         bool ok = parser->parse( source );

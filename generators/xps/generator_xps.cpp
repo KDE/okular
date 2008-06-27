@@ -23,12 +23,10 @@
 #include <qfile.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <qthread.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <QFileInfo>
 #include <QBuffer>
 #include <QImageReader>
 

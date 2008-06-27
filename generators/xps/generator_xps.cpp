@@ -1477,7 +1477,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
     QString documentStructureFile;
     if ( relFile ) {
         QXmlStreamReader xml;
-        xml.addData( relFile->data() );
+        xml.addData( readFileOrDirectoryParts( relFile ) );
         while ( !xml.atEnd() )
         {
             xml.readNext();

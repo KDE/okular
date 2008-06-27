@@ -962,8 +962,13 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
         return QImage();
     }
 
+    // TODO: consider case-insensitiveness (eg image.png vs existing image.PNG)
     const QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
     const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( absoluteFileName ));
+    if ( !imageFile ) {
+        // image not found
+        return QImage();
+    }
 
     /* WORKAROUND:
         XPS standard requires to use 96dpi for images which doesn't have dpi specified (in file). When Qt loads such an image,

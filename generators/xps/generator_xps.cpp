@@ -1039,6 +1039,10 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
         index = loadFontByName(fileName);
         m_fontCache[fileName] = index;
     }
+    if ( index == -1 ) {
+        kWarning(XpsDebug) << "Requesting uknown font:" << fileName;
+        return QFont();
+    }
 
     QString fontFamily = m_fontDatabase.applicationFontFamilies( index ).at(0);
     QString fontStyle =  m_fontDatabase.styles( fontFamily ).at(0);
@@ -1051,7 +1055,11 @@ int XpsFile::loadFontByName( const QString &fileName )
 {
     // kDebug(XpsDebug) << "font file name: " << fileName;
 
+    // TODO: think about case-insensitivity
     const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fileName ));
+    if ( !fontFile ) {
+        return -1;
+    }
 
     QByteArray fontData = fontFile->data(); // once per file, according to the docs
 

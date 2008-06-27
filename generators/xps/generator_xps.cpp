@@ -1104,12 +1104,23 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
         return QImage();
     }
 
-    // TODO: consider case-insensitiveness (eg image.png vs existing image.PNG)
-    const QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
-    const KZipFileEntry* imageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( absoluteFileName ));
+    QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
+    const KZipFileEntry* imageFile = static_cast< const KZipFileEntry * >( m_file->xpsArchive()->directory()->entry( absoluteFileName ) );
     if ( !imageFile ) {
-        // image not found
-        return QImage();
+        // image not found, try uppercasing the extension
+        const int dotPos = absoluteFileName.lastIndexOf( QLatin1Char( '.' ) );
+        const QChar lastChar = absoluteFileName.at( absoluteFileName.count() - 1 );
+        if ( dotPos != -1 ) {
+            for ( int i = dotPos + 1; i < absoluteFileName.count(); ++i ) {
+                absoluteFileName[i] = absoluteFileName[i].toUpper();
+            }
+
+            imageFile = static_cast< const KZipFileEntry * >( m_file->xpsArchive()->directory()->entry( absoluteFileName ) );
+        }
+        if ( !imageFile ) {
+            // image not found
+            return QImage();
+        }
     }
 
     /* WORKAROUND:

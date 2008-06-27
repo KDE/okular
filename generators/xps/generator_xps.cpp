@@ -757,10 +757,18 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
             brush = * data;
         delete data;
         } else {
-            brush = QBrush();
+            // no "Fill" attribute and no "Glyphs.Fill" child, so show nothing
+            // (see XPS specs, 5.10)
+            m_painter->restore();
+            return;
         }
     } else {
         brush = parseRscRefColorForBrush( att );
+        if ( brush.style() > Qt::NoBrush && brush.style() < Qt::LinearGradientPattern
+             && brush.color().alpha() == 0 ) {
+            m_painter->restore();
+            return;
+        }
     }
     m_painter->setBrush( brush );
     m_painter->setPen( QPen( brush, 0 ) );
@@ -768,7 +776,14 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     // Opacity
     att = node.attributes.value("Opacity");
     if (! att.isEmpty()) {
-        m_painter->setOpacity(att.toDouble());
+        bool ok = true;
+        double value = att.toDouble( &ok );
+        if ( ok && value >= 0.1 ) {
+            m_painter->setOpacity( value );
+        } else {
+            m_painter->restore();
+            return;
+        }
     }
 
     //RenderTransform

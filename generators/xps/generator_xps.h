@@ -107,6 +107,7 @@ protected:
     void processGlyph( XpsRenderNode &node );
     void processPath( XpsRenderNode &node );
     void processFill( XpsRenderNode &node );
+    void processStroke( XpsRenderNode &node );
     void processImageBrush (XpsRenderNode &node );
 
     QPainter *m_painter;

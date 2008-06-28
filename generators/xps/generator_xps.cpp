@@ -847,6 +847,17 @@ void XpsHandler::processFill( XpsRenderNode &node )
     }
 }
 
+void XpsHandler::processStroke( XpsRenderNode &node )
+{
+    //TODO Ignored child elements: RadialGradientBrush, VirtualBrush
+
+    if (node.children.size() != 1) {
+        kDebug(XpsDebug) << "Stroke element should have exactly one child";
+    } else {
+        node.data = node.children[0].data;
+    }
+}
+
 void XpsHandler::processImageBrush( XpsRenderNode &node )
 {
     //TODO Ignored attributes: Opacity, x:key, TileMode, ViewBoxUnits, ViewPortUnits
@@ -889,7 +900,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 void XpsHandler::processPath( XpsRenderNode &node )
 {
     //TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
-    //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Stroke, Data
+    //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Data
     // Handled separately: RenderTransform
     m_painter->save();
 
@@ -926,6 +937,12 @@ void XpsHandler::processPath( XpsRenderNode &node )
     QPen pen( Qt::transparent );
     if  (! att.isEmpty() ) {
         pen = parseRscRefColorForPen( att );
+    } else {
+        XpsFill * data = (XpsFill *)node.getChildData( "Path.Stroke" );
+        if (data != NULL) {
+            pen.setBrush( *data );
+            delete data;
+        }
     }
     att = node.attributes.value( "StrokeThickness" );
     if  (! att.isEmpty() ) {
@@ -1038,6 +1055,8 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         m_painter->restore();
     } else if ((node.name == "Path.Fill") || (node.name == "Glyphs.Fill")) {
         processFill( node );
+    } else if (node.name == "Path.Stroke") {
+        processStroke( node );
     } else if (node.name == "SolidColorBrush") {
         //TODO Ignoring opacity, x:key
         node.data = new QBrush( QColor (hexToRgba( node.attributes.value( "Color" ).toLatin1() ) ) );

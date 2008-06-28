@@ -514,6 +514,44 @@ static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString 
 }
 
 /**
+   Load the resource \p fileName from the specified \p archive using the case sensitivity \p cs
+*/
+static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt::CaseSensitivity cs )
+{
+    // first attempt: loading the entry straight as requested
+    const KZipFileEntry* entry = static_cast< const KZipFileEntry * >( archive->directory()->entry( fileName ) );
+    // in case sensitive mode, or if we actually found something, return what we found
+    if ( cs == Qt::CaseSensitive || entry ) {
+        return entry;
+    }
+
+    QString path;
+    QString entryName;
+    const int index = fileName.lastIndexOf( QChar::fromLatin1( '/' ) );
+    QString ret;
+    if ( index > 0 ) {
+        path = fileName.left( index );
+        entryName = fileName.mid( index + 1 );
+    } else {
+        path = "/";
+        entryName = fileName;
+    }
+    const KArchiveEntry * newEntry = archive->directory()->entry( path );
+    if ( newEntry->isDirectory() ) {
+        const KArchiveDirectory* relDir = static_cast< const KArchiveDirectory * >( newEntry );
+        QStringList relEntries = relDir->entries();
+        qSort( relEntries );
+        Q_FOREACH ( const QString &relEntry, relEntries ) {
+            if ( relEntry.compare( entryName, Qt::CaseInsensitive ) == 0 ) {
+                const KArchiveEntry* ee = relDir->entry( relEntry );
+                return ee->isFile() ? static_cast< const KZipFileEntry * >( ee ) : 0;
+            }
+        }
+    }
+    return 0;
+}
+
+/**
    \return The name of a resource from the \p fileName
 */
 static QString resourceName( const QString &fileName )
@@ -1167,8 +1205,7 @@ int XpsFile::loadFontByName( const QString &fileName )
 {
     // kDebug(XpsDebug) << "font file name: " << fileName;
 
-    // TODO: think about case-insensitivity
-    const KZipFileEntry* fontFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry( fileName ));
+    const KZipFileEntry* fontFile = loadFile( m_xpsArchive, fileName, Qt::CaseInsensitive );
     if ( !fontFile ) {
         return -1;
     }
@@ -1225,22 +1262,10 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
     }
 
     QString absoluteFileName = absolutePath( entryPath( m_fileName ), fileName );
-    const KZipFileEntry* imageFile = static_cast< const KZipFileEntry * >( m_file->xpsArchive()->directory()->entry( absoluteFileName ) );
+    const KZipFileEntry* imageFile = loadFile( m_file->xpsArchive(), absoluteFileName, Qt::CaseInsensitive );
     if ( !imageFile ) {
-        // image not found, try uppercasing the extension
-        const int dotPos = absoluteFileName.lastIndexOf( QLatin1Char( '.' ) );
-        const QChar lastChar = absoluteFileName.at( absoluteFileName.count() - 1 );
-        if ( dotPos != -1 ) {
-            for ( int i = dotPos + 1; i < absoluteFileName.count(); ++i ) {
-                absoluteFileName[i] = absoluteFileName[i].toUpper();
-            }
-
-            imageFile = static_cast< const KZipFileEntry * >( m_file->xpsArchive()->directory()->entry( absoluteFileName ) );
-        }
-        if ( !imageFile ) {
-            // image not found
-            return QImage();
-        }
+        // image not found
+        return QImage();
     }
 
     /* WORKAROUND:

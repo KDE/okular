@@ -838,7 +838,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
 void XpsHandler::processFill( XpsRenderNode &node )
 {
-    //TODO Ignored child elements: RadialGradientBrush, VirtualBrush
+    //TODO Ignored child elements: VirtualBrush
 
     if (node.children.size() != 1) {
         kDebug(XpsDebug) << "Fill element should have exactly one child";
@@ -849,7 +849,7 @@ void XpsHandler::processFill( XpsRenderNode &node )
 
 void XpsHandler::processStroke( XpsRenderNode &node )
 {
-    //TODO Ignored child elements: RadialGradientBrush, VirtualBrush
+    //TODO Ignored child elements: VirtualBrush
 
     if (node.children.size() != 1) {
         kDebug(XpsDebug) << "Stroke element should have exactly one child";
@@ -932,7 +932,6 @@ void XpsHandler::processPath( XpsRenderNode &node )
     m_painter->setBrush( brush );
 
     // Stroke (pen)
-    // We don't handle the child elements (Path.Stroke) yet.
     att = node.attributes.value( "Stroke" );
     QPen pen( Qt::transparent );
     if  (! att.isEmpty() ) {

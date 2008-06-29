@@ -224,6 +224,16 @@ static QPointF getPointFromString(const QString &string)
     return result;
 }
 
+static Qt::FillRule fillRuleFromString( const QString &data, Qt::FillRule def = Qt::OddEvenFill )
+{
+    if ( data == QLatin1String( "EvenOdd" ) ) {
+        return Qt::OddEvenFill;
+    } else if ( data == QLatin1String( "NonZero" ) ) {
+        return Qt::WindingFill;
+    }
+    return def;
+}
+
 /**
     Parse an abbreviated path "Data" description
     \param data the string containing the whitespace separated values
@@ -900,19 +910,25 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
 void XpsHandler::processPath( XpsRenderNode &node )
 {
     //TODO Ignored attributes: Clip, OpacityMask, StrokeEndLineCap, StorkeStartLineCap, Name, FixedPage.NavigateURI, xml:lang, x:key, AutomationProperties.Name, AutomationProperties.HelpText, SnapsToDevicePixels
-    //TODO Ignored child elements: RenderTransform, Clip, OpacityMask, Data
+    //TODO Ignored child elements: RenderTransform, Clip, OpacityMask
     // Handled separately: RenderTransform
     m_painter->save();
 
     QString att;
-    QPainterPath path;
 
     // Get path
+    XpsPathGeometry * pathdata = (XpsPathGeometry *)node.getChildData( "Path.Data" );
     att = node.attributes.value( "Data" );
     if (! att.isEmpty() ) {
-        path = parseAbbreviatedPathData( att );
-    } else {
-        path = QPainterPath(); //TODO
+        QPainterPath path = parseAbbreviatedPathData( att );
+        delete pathdata;
+        pathdata = new XpsPathGeometry();
+        pathdata->paths.append( new XpsPathFigure( path, true ) );
+    }
+    if ( !pathdata ) {
+        // nothing to draw
+        m_painter->restore();
+        return;
     }
 
     // Set Fill
@@ -1023,9 +1039,135 @@ void XpsHandler::processPath( XpsRenderNode &node )
         m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
     }
 
-    m_painter->drawPath( path ); //TODO Valgrind sometimes say that path drawing depends on uninitialized value in blend_texture
+    Q_FOREACH ( XpsPathFigure *figure, pathdata->paths ) {
+        m_painter->setBrush( figure->isFilled ? brush : QBrush() );
+        m_painter->drawPath( figure->path );
+    }
+
+    delete pathdata;
 
     m_painter->restore();
+}
+
+void XpsHandler::processPathData( XpsRenderNode &node )
+{
+    if (node.children.size() != 1) {
+        kDebug(XpsDebug) << "Path.Data element should have exactly one child";
+    } else {
+        node.data = node.children[0].data;
+    }
+}
+
+void XpsHandler::processPathGeometry( XpsRenderNode &node )
+{
+    //TODO Ignored attributes: Transform
+
+    XpsPathGeometry * geom = new XpsPathGeometry();
+
+    node.data = 0;
+
+    Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+        if ( child.data ) {
+            XpsPathFigure *figure = (XpsPathFigure *)child.data;
+            geom->paths.append( figure );
+        }
+    }
+
+    QString att;
+
+    att = node.attributes.value( "Figures" );
+    if ( !att.isEmpty() ) {
+        QPainterPath path = parseAbbreviatedPathData( att );
+        qDeleteAll( geom->paths );
+        geom->paths.clear();
+        geom->paths.append( new XpsPathFigure( path, true ) );
+    }
+
+    att = node.attributes.value( "FillRule" );
+    if ( !att.isEmpty() ) {
+        geom->fillRule = fillRuleFromString( att );
+    }
+
+    if ( !geom->paths.isEmpty() ) {
+        node.data = geom;
+    } else {
+        delete geom;
+    }
+}
+
+void XpsHandler::processPathFigure( XpsRenderNode &node )
+{
+    //TODO Ignored child elements: ArcSegment, PolyQuadraticBezierSegment
+
+    QString att;
+    QPainterPath path;
+
+    node.data = 0;
+
+    att = node.attributes.value( "StartPoint" );
+    if ( !att.isEmpty() ) {
+        QPointF point = getPointFromString( att );
+        path.moveTo( point );
+    } else {
+        return;
+    }
+
+    Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+        bool isStroked = true;
+        att = node.attributes.value( "IsStroked" );
+        if ( !att.isEmpty() ) {
+            isStroked = att == QLatin1String( "true" );
+        }
+        if ( !isStroked ) {
+            continue;
+        }
+
+        // PolyLineSegment
+        if ( child.name == QLatin1String( "PolyLineSegment" ) ) {
+            att = child.attributes.value( "Points" );
+            if ( !att.isEmpty() ) {
+                const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
+                Q_FOREACH ( const QString &p, points ) {
+                    QPointF point = getPointFromString( p );
+                    path.lineTo( point );
+                }
+            }
+        }
+        // PolyBezierSegment
+        else if ( child.name == QLatin1String( "PolyBezierSegment" ) ) {
+            att = child.attributes.value( "Points" );
+            if ( !att.isEmpty() ) {
+                const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
+                if ( points.count() % 3 == 0 ) {
+                    for ( int i = 0; i < points.count(); ) {
+                        QPointF firstControl = getPointFromString( points.at( i++ ) );
+                        QPointF secondControl = getPointFromString( points.at( i++ ) );
+                        QPointF endPoint = getPointFromString( points.at( i++ ) );
+                        path.cubicTo(firstControl, secondControl, endPoint);
+                    }
+                }
+            }
+        }
+    }
+
+    bool closePath = false;
+    att = node.attributes.value( "IsClosed" );
+    if ( !att.isEmpty() ) {
+        closePath = att == QLatin1String( "true" );
+    }
+    if ( closePath ) {
+        path.closeSubpath();
+    }
+
+    bool isFilled = true;
+    att = node.attributes.value( "IsFilled" );
+    if ( !att.isEmpty() ) {
+        isFilled = att == QLatin1String( "true" );
+    }
+
+    if ( !path.isEmpty() ) {
+        node.data = new XpsPathFigure( path, isFilled );
+    }
 }
 
 void XpsHandler::processStartElement( XpsRenderNode &node )
@@ -1117,6 +1259,12 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             addXpsGradientsToQGradient( gradients, qgrad );
             node.data = qgrad;
         }
+    } else if (node.name == "PathFigure") {
+        processPathFigure( node );
+    } else if (node.name == "PathGeometry") {
+        processPathGeometry( node );
+    } else if (node.name == "Path.Data") {
+        processPathData( node );
     } else {
         //kDebug(XpsDebug) << "Unknown element: " << node->name;
     }

@@ -78,6 +78,29 @@ struct XpsGradient
 typedef QMatrix XpsMatrixTransform;
 typedef QMatrix XpsRenderTransform;
 typedef QBrush XpsFill;
+struct XpsPathFigure
+{
+    XpsPathFigure( const QPainterPath &_path, bool filled )
+        : path( _path ), isFilled( filled )
+    {}
+
+    QPainterPath path;
+    bool isFilled;
+};
+struct XpsPathGeometry
+{
+    XpsPathGeometry()
+        : fillRule( Qt::OddEvenFill )
+    {}
+    ~XpsPathGeometry()
+    {
+        qDeleteAll( paths );
+    }
+
+    QList< XpsPathFigure* > paths;
+    Qt::FillRule fillRule;
+    XpsMatrixTransform transform;
+};
 
 class XpsPage;
 class XpsFile;
@@ -106,9 +129,12 @@ protected:
     // Methods for processing of diferent xml elements
     void processGlyph( XpsRenderNode &node );
     void processPath( XpsRenderNode &node );
+    void processPathData( XpsRenderNode &node );
     void processFill( XpsRenderNode &node );
     void processStroke( XpsRenderNode &node );
     void processImageBrush (XpsRenderNode &node );
+    void processPathGeometry( XpsRenderNode &node );
+    void processPathFigure( XpsRenderNode &node );
 
     QPainter *m_painter;
 

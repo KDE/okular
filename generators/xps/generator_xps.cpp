@@ -1038,6 +1038,9 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if (! att.isEmpty() ) {
         m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
     }
+    if ( !pathdata->transform.isIdentity() ) {
+        m_painter->setWorldMatrix( pathdata->transform, true );
+    }
 
     Q_FOREACH ( XpsPathFigure *figure, pathdata->paths ) {
         m_painter->setBrush( figure->isFilled ? brush : QBrush() );
@@ -1060,8 +1063,6 @@ void XpsHandler::processPathData( XpsRenderNode &node )
 
 void XpsHandler::processPathGeometry( XpsRenderNode &node )
 {
-    //TODO Ignored attributes: Transform
-
     XpsPathGeometry * geom = new XpsPathGeometry();
 
     node.data = 0;
@@ -1086,6 +1087,12 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
     att = node.attributes.value( "FillRule" );
     if ( !att.isEmpty() ) {
         geom->fillRule = fillRuleFromString( att );
+    }
+
+    // Transform
+    att = node.attributes.value( "Transform" );
+    if ( !att.isEmpty() ) {
+        geom->transform = parseRscRefMatrix( att );
     }
 
     if ( !geom->paths.isEmpty() ) {
@@ -1174,6 +1181,10 @@ void XpsHandler::processStartElement( XpsRenderNode &node )
 {
     if (node.name == "Canvas") {
         m_painter->save();
+        QString att = node.attributes.value( "RenderTransform" );
+        if ( !att.isEmpty() ) {
+            m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
+        }
     }
 }
 

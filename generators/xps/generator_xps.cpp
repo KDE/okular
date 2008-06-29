@@ -1194,6 +1194,17 @@ void XpsHandler::processStartElement( XpsRenderNode &node )
         if ( !att.isEmpty() ) {
             m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
         }
+        att = node.attributes.value( "Opacity" );
+        if ( !att.isEmpty() ) {
+            double value = att.toDouble();
+            if ( value > 0.0 && value <= 1.0 ) {
+                m_painter->setOpacity( m_painter->opacity() * value );
+            } else {
+                // setting manually to 0 is necessary to "disable"
+                // all the stuff inside
+                m_painter->setOpacity( 0.0 );
+            }
+        }
     }
 }
 

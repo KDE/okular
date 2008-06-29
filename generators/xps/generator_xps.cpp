@@ -1113,7 +1113,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
 
 void XpsHandler::processPathFigure( XpsRenderNode &node )
 {
-    //TODO Ignored child elements: ArcSegment, PolyQuadraticBezierSegment
+    //TODO Ignored child elements: ArcSegment
 
     QString att;
     QPainterPath path;
@@ -1160,6 +1160,20 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
                         QPointF secondControl = getPointFromString( points.at( i++ ) );
                         QPointF endPoint = getPointFromString( points.at( i++ ) );
                         path.cubicTo(firstControl, secondControl, endPoint);
+                    }
+                }
+            }
+        }
+        // PolyQuadraticBezierSegment
+        else if ( child.name == QLatin1String( "PolyQuadraticBezierSegment" ) ) {
+            att = child.attributes.value( "Points" );
+            if ( !att.isEmpty() ) {
+                const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
+                if ( points.count() % 2 == 0 ) {
+                    for ( int i = 0; i < points.count(); ) {
+                        QPointF point1 = getPointFromString( points.at( i++ ) );
+                        QPointF point2 = getPointFromString( points.at( i++ ) );
+                        path.quadTo( point1, point2 );
                     }
                 }
             }

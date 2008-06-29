@@ -760,7 +760,7 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
 void XpsHandler::processGlyph( XpsRenderNode &node )
 {
-    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, Clip, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
+    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
     //TODO Currently ignored child elements: Clip, OpacityMask
     //Handled separately: RenderTransform
 
@@ -836,6 +836,15 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     att = node.attributes.value("RenderTransform");
     if (!att.isEmpty()) {
         m_painter->setWorldMatrix( parseRscRefMatrix( att ), true);
+    }
+
+    // Clip
+    att = node.attributes.value( "Clip" );
+    if ( !att.isEmpty() ) {
+        QPainterPath clipPath = parseAbbreviatedPathData( att );
+        if ( !clipPath.isEmpty() ) {
+            m_painter->setClipPath( clipPath );
+        }
     }
 
     m_painter->drawText( origin, node.attributes.value("UnicodeString") );

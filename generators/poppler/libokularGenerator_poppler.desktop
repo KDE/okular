@@ -9,6 +9,7 @@ Name[x-test]=xxPopplerxx
 Comment=PDF backend for okular using poppler
 Comment[bg]=PDF backend за okular, използва се poppler
 Comment[ca]=Dorsal de PDF per l'okular emprant el poppler
+Comment[cs]=Backend aplikace okular pro PDF užívající poppler
 Comment[da]=PDF-motor til Okular som bruger poppler
 Comment[de]=Unterstützung für PDF (mittels Poppler) in Okular
 Comment[el]=Σύστημα υποστήριξης PDF για το okular με χρήση του poppler

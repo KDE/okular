@@ -11,10 +11,12 @@
 #define UNRAR_H
 
 #include <QtCore/QObject>
+#include <QtCore/QProcess>
 #include <QtCore/QStringList>
 
-class QProcess;
+class QEventLoop;
 class KTempDir;
+class KPtyProcess;
 
 class Unrar : public QObject
 {
@@ -52,9 +54,18 @@ class Unrar : public QObject
     private Q_SLOTS:
         void readFromStdout();
         void readFromStderr();
+        void finished( int exitCode, QProcess::ExitStatus exitStatus );
 
     private:
+        int startSyncProcess( const QStringList &args );
+        void writeToProcess( const QByteArray &data );
+
+#if defined(Q_OS_WIN)
         QProcess *mProcess;
+#else
+        KPtyProcess *mProcess;
+#endif
+        QEventLoop *mLoop;
         QString mFileName;
         QByteArray mStdOutData;
         QByteArray mStdErrData;

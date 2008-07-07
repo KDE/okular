@@ -9,14 +9,20 @@
 
 #include "unrar.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QFile>
-#include <QtCore/QProcess>
 #include <QtCore/QRegExp>
 
 #include <kdebug.h>
 #include <kglobal.h>
+#include <klocale.h>
+#include <kpassworddialog.h>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
+#if !defined(Q_OS_WIN)
+#include <kptyprocess.h>
+#include <kptydevice.h>
+#endif
 
 #include "unrarflavours.h"
 
@@ -78,7 +84,7 @@ UnrarHelper::~UnrarHelper()
 
 
 Unrar::Unrar()
-    : QObject( 0 ), mTempDir( 0 )
+    : QObject( 0 ), mLoop( 0 ), mTempDir( 0 )
 {
 }
 
@@ -103,16 +109,8 @@ bool Unrar::open( const QString &fileName )
     mStdOutData.clear();
     mStdErrData.clear();
 
-    mProcess = new QProcess( this );
-
-    connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
-    connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
-
-    mProcess->start( helper->unrarPath, QStringList() << "e" << mFileName << mTempDir->name(), QIODevice::ReadOnly );
-    bool ok = mProcess->waitForFinished( -1 );
-
-    delete mProcess;
-    mProcess = 0;
+    int ret = startSyncProcess( QStringList() << "e" << mFileName << mTempDir->name() );
+    bool ok = ret == 0;
 
     return ok;
 }
@@ -125,16 +123,7 @@ QStringList Unrar::list()
     if ( !isSuitableVersionAvailable() )
         return QStringList();
 
-    mProcess = new QProcess( this );
-
-    connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
-    connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
-
-    mProcess->start( helper->unrarPath, QStringList() << "lb" << mFileName, QIODevice::ReadOnly );
-    mProcess->waitForFinished( -1 );
-
-    delete mProcess;
-    mProcess = 0;
+    startSyncProcess( QStringList() << "lb" << mFileName );
 
     return helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts ) );
 }
@@ -166,12 +155,78 @@ bool Unrar::isSuitableVersionAvailable()
 
 void Unrar::readFromStdout()
 {
+    if ( !mProcess )
+        return;
+
     mStdOutData += mProcess->readAllStandardOutput();
 }
 
 void Unrar::readFromStderr()
 {
+    if ( !mProcess )
+        return;
+
     mStdErrData += mProcess->readAllStandardError();
+    if ( !mStdErrData.isEmpty() )
+    {
+        mProcess->kill();
+        return;
+    }
+}
+
+void Unrar::finished( int exitCode, QProcess::ExitStatus exitStatus )
+{
+    Q_UNUSED( exitCode )
+    if ( mLoop )
+    {
+        mLoop->exit( exitStatus == QProcess::CrashExit ? 1 : 0 );
+    }
+}
+
+int Unrar::startSyncProcess( const QStringList &args )
+{
+    int ret = 0;
+
+#if defined(Q_OS_WIN)
+    mProcess = new QProcess( this );
+#else
+    mProcess = new KPtyProcess( this );
+    mProcess->setOutputChannelMode( KProcess::SeparateChannels );
+#endif
+
+    connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
+    connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
+    connect( mProcess, SIGNAL( finished( int, QProcess::ExitStatus ) ), SLOT( finished( int, QProcess::ExitStatus ) ) );
+
+#if defined(Q_OS_WIN)
+    mProcess->start( helper->unrarPath, args, QIODevice::ReadWrite | QIODevice::Unbuffered );
+    ret = mProcess->waitForFinished( -1 ) ? 0 : 1;
+#else
+    mProcess->setProgram( helper->unrarPath, args );
+    mProcess->setNextOpenMode( QIODevice::ReadWrite | QIODevice::Unbuffered );
+    mProcess->start();
+    QEventLoop loop;
+    mLoop = &loop;
+    ret = loop.exec( QEventLoop::WaitForMoreEvents );
+    mLoop = 0;
+#endif
+
+    delete mProcess;
+    mProcess = 0;
+
+    return ret;
+}
+
+void Unrar::writeToProcess( const QByteArray &data )
+{
+    if ( !mProcess || data.isNull() )
+        return;
+
+#if defined(Q_OS_WIN)
+    mProcess->write( data );
+#else
+    mProcess->pty()->write( data );
+#endif
 }
 
 #include "unrar.moc"

@@ -1777,7 +1777,7 @@ void Part::slotPrint()
 
         if ( printDialog->exec() )
             doPrint( printer );
-
+        delete printDialog;
     }
 }
 

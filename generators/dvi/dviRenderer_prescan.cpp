@@ -291,6 +291,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
     // Otherwise, use kpsewhich to find the eps file.
     KProcess proc;
     proc << "kpsewhich" << cp;
+    proc.setOutputChannelMode(KProcess::SeparateChannels);
     proc.execute();
     _file = QString::fromLocal8Bit(proc.readLine().trimmed());
   }

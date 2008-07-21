@@ -905,7 +905,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current the selected area to the clipboard, speak a text or to save an image to a file.</para>
+						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current selected area to the clipboard, speak a text or to save an image to a file.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

@@ -427,7 +427,7 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
             const double newzoom = !valueString.isEmpty() ? valueString.toDouble( &newzoom_ok ) : 1.0;
             if ( newzoom_ok && newzoom != 0
                  && view->supportsCapability( View::Zoom )
-                 && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+                 && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
             {
                 view->setCapability( View::Zoom, newzoom );
             }
@@ -436,7 +436,7 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
             const int newmode = !modeString.isEmpty() ? modeString.toInt( &newmode_ok ) : 2;
             if ( newmode_ok
                  && view->supportsCapability( View::ZoomModality )
-                 && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+                 && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
             {
                 view->setCapability( View::ZoomModality, newmode );
             }
@@ -449,9 +449,9 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
 void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
 {
     if ( view->supportsCapability( View::Zoom )
-         && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead & View::CapabilitySerializable ) )
+         && ( view->capabilityFlags( View::Zoom ) & ( View::CapabilityRead | View::CapabilitySerializable ) )
          && view->supportsCapability( View::ZoomModality )
-         && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead & View::CapabilitySerializable ) ) )
+         && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
     {
         QDomElement zoomEl = e.ownerDocument().createElement( "zoom" );
         e.appendChild( zoomEl );

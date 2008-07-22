@@ -380,12 +380,13 @@ void PDFGenerator::putFontInfo(KListView *list)
 
     fonts = NULL;
     fontsLen = fontsSize = 0;
+    QValueVector<Ref> visitedXObjects;
     for (pg = 1; pg <= pdfdoc->getNumPages(); ++pg)
     {
         page = pdfdoc->getCatalog()->getPage(pg);
         if ((resDict = page->getResourceDict()))
         {
-            scanFonts(resDict, list, &fonts, fontsLen, fontsSize);
+            scanFonts(resDict, list, &fonts, fontsLen, fontsSize, &visitedXObjects);
         }
         annots = new Annots(pdfdoc->getXRef(), pdfdoc->getCatalog(), page->getAnnots(&obj1));
         obj1.free();
@@ -396,7 +397,7 @@ void PDFGenerator::putFontInfo(KListView *list)
                 obj1.streamGetDict()->lookup("Resources", &obj2);
                 if (obj2.isDict())
                 {
-                    scanFonts(obj2.getDict(), list, &fonts, fontsLen, fontsSize);
+                    scanFonts(obj2.getDict(), list, &fonts, fontsLen, fontsSize, &visitedXObjects);
                 }
                 obj2.free();
             }
@@ -632,9 +633,9 @@ bool PDFGenerator::reparseConfig()
 }
 //END Generator inherited functions
 
-void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize)
+void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize, QValueVector<Ref> *visitedXObjects)
 {
-    Object obj1, obj2, xObjDict, xObj, resObj;
+    Object obj1, obj2, xObjDict, xObj, xObj2, resObj;
     Ref r;
     GfxFontDict *gfxFontDict;
     GfxFont *font;
@@ -670,18 +671,38 @@ void PDFGenerator::scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &f
     // recursively scan any resource dictionaries in objects in this
     // resource dictionary
     resDict->lookup("XObject", &xObjDict);
-    if (xObjDict.isDict())
-    {
-        for (i = 0; i < xObjDict.dictGetLength(); ++i)
-        {
-            xObjDict.dictGetVal(i, &xObj);
-            if (xObj.isStream())
-            {
-                xObj.streamGetDict()->lookup("Resources", &resObj);
-                if (resObj.isDict()) scanFonts(resObj.getDict(), list, fonts, fontsLen, fontsSize);
+    if (xObjDict.isDict()) {
+        for (i = 0; i < xObjDict.dictGetLength(); ++i) {
+            xObjDict.dictGetValNF(i, &xObj);
+            if (xObj.isRef()) {
+                bool alreadySeen = false;
+                // check for an already-seen XObject
+                for (int k = 0; k < visitedXObjects->count(); ++k) {
+                    if (xObj.getRef().num == visitedXObjects->at(k).num &&
+                        xObj.getRef().gen == visitedXObjects->at(k).gen) {
+                            alreadySeen = true;
+                    }
+                }
+
+                if (alreadySeen) {
+                    xObj.free();
+                    continue;
+                }
+
+                visitedXObjects->append(xObj.getRef());
+            }
+
+            xObj.fetch(pdfdoc->getXRef(), &xObj2);
+
+            if (xObj2.isStream()) {
+                xObj2.streamGetDict()->lookup("Resources", &resObj);
+                if (resObj.isDict() && resObj.getDict() != resDict) {
+                    scanFonts(resObj.getDict(), list, fonts, fontsLen, fontsSize, visitedXObjects);
+                }
                 resObj.free();
             }
             xObj.free();
+            xObj2.free();
         }
     }
     xObjDict.free();

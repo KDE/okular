@@ -86,7 +86,7 @@ class PDFGenerator : public Generator
         // friend class to access private document related variables
         friend class PDFPixmapGeneratorThread;
 
-        void scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
+        void scanFonts(Dict *resDict, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize, QValueVector<Ref> *visitedXObjects);
         void scanFont(GfxFont *font, KListView *list, Ref **fonts, int &fontsLen, int &fontsSize);
 
         void fillViewportFromLink( DocumentViewport &viewport, LinkDest *destination );

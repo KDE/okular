@@ -15,6 +15,7 @@
 
 #include <poppler-qt4.h>
 
+#include <qpointer.h>
 #include <qthread.h>
 
 #include <okular/core/document.h>
@@ -142,7 +143,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         QVector<bool> rectsGenerated;
 
-        PDFOptionsPage * pdfOptionsPage;
+        QPointer<PDFOptionsPage> pdfOptionsPage;
 };
 
 

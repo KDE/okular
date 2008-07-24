@@ -255,13 +255,12 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docEmbeddedFilesDirty( true ), nextFontPage( 0 ), pdfOptionsPage( 0 )
+    docEmbeddedFilesDirty( true ), nextFontPage( 0 )
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );
     setFeature( PrintPostscript );
     setFeature( ReadRawData );
-    pdfOptionsPage = new PDFOptionsPage();
     // update the configuration
     reparseConfig();
     // generate the pixmapGeneratorThread
@@ -1509,6 +1508,10 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
 
 QWidget* PDFGenerator::printConfigurationWidget() const
 {
+    if ( !pdfOptionsPage )
+    {
+        const_cast<PDFGenerator*>(this)->pdfOptionsPage = new PDFOptionsPage();
+    }
     return pdfOptionsPage;
 }
 

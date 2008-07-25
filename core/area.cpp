@@ -42,7 +42,11 @@ NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p )
 
 void NormalizedPoint::transform( const QMatrix &matrix )
 {
-    matrix.map( x, y, &x, &y );
+    qreal tmp_x = (qreal)x;
+    qreal tmp_y = (qreal)y;
+    matrix.map( tmp_x, tmp_y, &tmp_x, &tmp_y );
+    x = tmp_x;
+    y = tmp_y;
 }
 
 QDebug operator<<( QDebug str, const Okular::NormalizedPoint& p )

@@ -1538,7 +1538,9 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options )
         pdfConv->setPDFOptions( pdfConv->pdfOptions() | Poppler::PDFConverter::WithChanges );
 
     QMutexLocker locker( userMutex() );
-    return pdfConv->convert();
+    bool success = pdfConv->convert();
+    delete pdfConv;
+    return success;
 #else
     Q_UNUSED( fileName )
     Q_UNUSED( options )

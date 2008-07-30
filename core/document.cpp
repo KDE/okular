@@ -592,6 +592,9 @@ void DocumentPrivate::saveDocumentInfo() const
     {
         // 1. Create DOM
         QDomDocument doc( "documentInfo" );
+        QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
+                QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+        doc.appendChild( xmlPi );
         QDomElement root = doc.createElement( "documentInfo" );
         root.setAttribute( "url", m_url.pathOrUrl() );
         doc.appendChild( root );
@@ -653,6 +656,7 @@ void DocumentPrivate::saveDocumentInfo() const
         // 3. Save DOM to XML file
         QString xml = doc.toString();
         QTextStream os( &infoFile );
+        os.setCodec( "UTF-8" );
         os << xml;
     }
     infoFile.close();

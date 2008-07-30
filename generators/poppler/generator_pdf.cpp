@@ -839,7 +839,11 @@ bool PDFGenerator::print( QPrinter& printer )
         pstitle = document()->currentDocument().fileName();
     }
 
-    bool forceRasterize = pdfOptionsPage->printForceRaster();
+    bool forceRasterize = false;
+    if ( pdfOptionsPage )
+    {
+        forceRasterize = pdfOptionsPage->printForceRaster();
+    }
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
 

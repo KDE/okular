@@ -981,7 +981,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         QVector<qreal> dashPattern( pieces.count() );
         bool ok = false;
         for ( int i = 0; i < pieces.count(); ++i ) {
-            double value = pieces.at( i ).toInt( &ok );
+            qreal value = pieces.at( i ).toInt( &ok );
             if ( ok ) {
                 dashPattern[i] = value;
             } else {

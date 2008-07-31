@@ -102,12 +102,12 @@ double PageViewItem::zoomFactor() const
     return m_zoomFactor;
 }
 
-qreal PageViewItem::absToPageX( qreal absX ) const
+double PageViewItem::absToPageX( double absX ) const
 {
     return ( absX - m_uncroppedGeometry.left() ) / m_uncroppedGeometry.width();
 }
 
-qreal PageViewItem::absToPageY( qreal absY ) const
+double PageViewItem::absToPageY( double absY ) const
 {
     return ( absY - m_uncroppedGeometry.top() ) / m_uncroppedGeometry.height();
 }

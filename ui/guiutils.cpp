@@ -152,7 +152,7 @@ void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
         return;
 
     QFile f( path );
-    if ( !f.exists() || KMessageBox::warningContinueCancel( parent, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18n( "Overwrite" ) ) ) == KMessageBox::Continue )
+    if ( !f.exists() || KMessageBox::warningContinueCancel( parent, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18nc( "@action:button", "&Overwrite" ) ) ) == KMessageBox::Continue )
     {
         if ( f.open( QIODevice::WriteOnly ) )
         {

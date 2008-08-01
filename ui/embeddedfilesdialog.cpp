@@ -37,7 +37,7 @@ static QString dateToString( const QDateTime & date )
 
 EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : KDialog(parent)
 {
-	setCaption(i18n("Embedded Files"));
+	setCaption(i18nc("@title:window", "Embedded Files"));
 	setButtons(Close | User1);
 	setDefaultButton(Close);
 	setButtonGuiItem(User1, KStandardGuiItem::save());
@@ -45,11 +45,11 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);
 	QStringList header;
-	header.append(i18n("Name"));
-	header.append(i18n("Description"));
-	header.append(i18n("Size"));
-	header.append(i18n("Created"));
-	header.append(i18n("Modified"));
+	header.append(i18nc("@title:column", "Name"));
+	header.append(i18nc("@title:column", "Description"));
+	header.append(i18nc("@title:column", "Size"));
+	header.append(i18nc("@title:column", "Created"));
+	header.append(i18nc("@title:column", "Modified"));
 	m_tw->setHeaderLabels(header);
 	m_tw->setRootIsDecorated(false);
 	m_tw->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -103,7 +103,7 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
         return;
 
     QMenu menu( this );
-    QAction* saveAsAct = menu.addAction( KIcon( "document-save-as" ), i18n( "Save As..." ) );
+    QAction* saveAsAct = menu.addAction( KIcon( "document-save-as" ), i18nc( "@action:inmenu", "&Save As..." ) );
 
     QAction* act = menu.exec( QCursor::pos() );
     if ( !act )

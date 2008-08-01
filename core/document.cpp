@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
- *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -3009,6 +3009,18 @@ void Document::unregisterView( View *view )
 
     view->d_func()->document = 0;
     d->m_views.remove( view );
+}
+
+QByteArray Document::fontData(const FontInfo &font) const
+{
+    QByteArray result;
+    
+    if (d->m_generator)
+    {
+        QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray *, &result));
+    }
+    
+    return result;
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

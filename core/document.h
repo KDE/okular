@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
- *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -550,6 +550,13 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.7 (KDE 4.1)
          */
         void unregisterView( View *view );
+
+        /**
+         * Gets the font data for the given font
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        QByteArray fontData(const FontInfo &font) const;
 
     public Q_SLOTS:
         /**

@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2004-5 by Enrico Ros <eros.kde@email.it>                *
  *   Copyright (C) 2005   by Piotr Szymanski <niedakh@gmail.com>           *
+ *   Copyright (C) 2008   by Albert Astals Cid <aacid@kde.org>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,6 +31,7 @@
     K_PLUGIN_FACTORY( classname ## Factory, registerPlugin< classname >(); ) \
     K_EXPORT_PLUGIN( classname ## Factory( aboutdata ) )
 
+class QByteArray;
 class QMutex;
 class QPrinter;
 class QPrintDialog;
@@ -43,6 +45,7 @@ class DocumentInfo;
 class DocumentSynopsis;
 class EmbeddedFile;
 class ExportFormatPrivate;
+class FontInfo;
 class GeneratorPrivate;
 class Page;
 class PixmapRequest;
@@ -447,6 +450,14 @@ class OKULAR_EXPORT Generator : public QObject
          * @since 0.7 (KDE 4.1)
          */
         void updatePageBoundingBox( int page, const NormalizedRect & boundingBox );
+
+    protected Q_SLOTS:
+        /**
+         * Gets the font data for the given font
+         *
+         * @since 0.8 (KDE 4.1)
+         */
+        void requestFontData(const Okular::FontInfo &font, QByteArray *data);
 
     protected:
         /// @cond PRIVATE

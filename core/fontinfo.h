@@ -105,6 +105,36 @@ class OKULAR_EXPORT FontInfo
         QString file() const;
         void setFile( const QString& file );
 
+        /**
+         * In case of embedded fonts, returns if the font can be extracted into a QByteArray
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        bool canBeExtracted() const;
+
+        /**
+         * Sets if a font can be extracted or not. False by default
+         */
+        void setCanBeExtracted( bool extractable );
+     
+        /**
+         * Sets the "native" @p id of the font info.
+         *
+         * This is for use of the Generator, that can optionally store an
+         * handle (a pointer, an identifier, etc) of the "native" font
+         * object, if any.
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        void setNativeId( const QVariant &id );
+
+        /**
+         * Returns the "native" id of the font info.
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        QVariant nativeId() const;
+
         FontInfo& operator=( const FontInfo &fi );
 
         /**

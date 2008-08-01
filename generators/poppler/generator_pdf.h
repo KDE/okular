@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -99,6 +99,9 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool doCloseDocument();
         Okular::TextPage* textPage( Okular::Page *page );
 
+    protected slots:
+        void requestFontData(const Okular::FontInfo &font, QByteArray *data);
+
     private slots:
         // (async related) receive data from the generator thread
         void threadFinished();
@@ -177,3 +180,5 @@ class PDFPixmapGeneratorThread : public QThread
 };
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

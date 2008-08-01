@@ -10,6 +10,8 @@
 // local includes
 #include "fontinfo.h"
 
+#include <qvariant.h>
+
 using namespace Okular;
 
 class Okular::FontInfoPrivate
@@ -17,7 +19,8 @@ class Okular::FontInfoPrivate
 {
     public:
         FontInfoPrivate()
-          : type( FontInfo::Unknown ), embedType( FontInfo::NotEmbedded )
+          : type( FontInfo::Unknown ), embedType( FontInfo::NotEmbedded ),
+            canBeExtracted( false )
         {
         }
 
@@ -26,13 +29,17 @@ class Okular::FontInfoPrivate
             return name == rhs.name &&
                    type == rhs.type &&
                    embedType == rhs.embedType &&
-                   file == rhs.file;
+                   file == rhs.file &&
+                   canBeExtracted == rhs.canBeExtracted &&
+                   nativeId == rhs.nativeId;
         }
 
         QString name;
         FontInfo::FontType type;
         FontInfo::EmbedType embedType;
+        bool canBeExtracted;
         QString file;
+        QVariant nativeId;
 };
 
 
@@ -88,6 +95,26 @@ QString FontInfo::file() const
 void FontInfo::setFile( const QString& file )
 {
     d->file = file;
+}
+
+bool FontInfo::canBeExtracted() const
+{
+    return d->canBeExtracted;
+}
+
+void FontInfo::setCanBeExtracted(bool extractable)
+{
+    d->canBeExtracted = extractable;
+}
+
+void FontInfo::setNativeId( const QVariant &id )
+{
+    d->nativeId = id;
+}
+
+QVariant FontInfo::nativeId() const
+{
+    return d->nativeId;
 }
 
 bool FontInfo::operator==( const FontInfo &fi ) const

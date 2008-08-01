@@ -10,21 +10,28 @@
 #include "propertiesdialog.h"
 
 // qt/kde includes
+#include <qfile.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
+#include <qmenu.h>
 #include <qprogressbar.h>
 #include <qsortfilterproxymodel.h>
 #include <qtreeview.h>
 #include <qtimer.h>
+#include <kfiledialog.h>
 #include <kicon.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
 
 // local includes
 #include "core/document.h"
 #include "core/fontinfo.h"
+
+static const int IsExtractableRole = Qt::UserRole;
+static const int FontInfoRole = Qt::UserRole + 1;
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     : KPageDialog( parent ), m_document( doc ), m_fontPage( 0 ),
@@ -101,6 +108,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     page2Layout->setSpacing(spacingHint());
     // add a tree view
     QTreeView *view = new QTreeView(page2);
+    view->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(view, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showFontsMenu(const QPoint &)));
     page2Layout->addWidget(view);
     view->setRootIsDecorated(false);
     view->setAlternatingRowColors(true);
@@ -171,6 +180,40 @@ void PropertiesDialog::reallyStartFontReading()
     m_fontInfo->show();
     m_fontProgressBar->show();
     m_document->startFontReading();
+}
+
+void PropertiesDialog::showFontsMenu(const QPoint &pos)
+{
+    QTreeView *view = static_cast<QTreeView*>(sender());
+    QModelIndex index = view->indexAt(pos);
+    if (index.data(IsExtractableRole).toBool())
+    {
+        QMenu *menu = new QMenu(this);
+        menu->addAction( i18nc("@action:inmenu", "&Extract Font") );
+        QAction *result = menu->exec(view->viewport()->mapToGlobal(pos));
+        if (result)
+        {
+            Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
+            const QString caption = i18n( "Where do you want to save %1?", fi.name() );
+            const QString path = KFileDialog::getSaveFileName( fi.name(), QString(), this, caption );
+            if ( path.isEmpty() )
+                return;
+            
+            QFile f( path );
+            if ( !f.exists() || KMessageBox::warningContinueCancel( this, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18nc( "@action:button", "&Overwrite" ) ) ) == KMessageBox::Continue )
+            {
+                if ( f.open( QIODevice::WriteOnly ) )
+                {
+                    f.write( m_document->fontData(fi) );
+                    f.close();
+                }
+                else
+                {
+                    KMessageBox::error( this, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
+                }
+            }
+        }
+    }
 }
 
 FontsListModel::FontsListModel( QObject * parent )
@@ -311,6 +354,16 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
             return tooltip;
             break;
         }
+        case IsExtractableRole:
+        {
+            return m_fonts.at( index.row() ).canBeExtracted();
+        }
+        case FontInfoRole:
+        {
+            QVariant v;
+            v.setValue( m_fonts.at( index.row() ) );
+            return v;
+        }
     }
 
   return QVariant();
@@ -343,3 +396,5 @@ int FontsListModel::rowCount( const QModelIndex &parent ) const
 }
 
 #include "propertiesdialog.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

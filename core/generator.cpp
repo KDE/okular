@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005   by Piotr Szymanski <niedakh@gmail.com>           *
+ *   Copyright (C) 2008   by Albert Astals Cid <aacid@kde.org>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -406,6 +407,10 @@ void Generator::updatePageBoundingBox( int page, const NormalizedRect & bounding
         d->m_document->setPageBoundingBox( page, boundingBox );
 }
 
+void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * /*data*/)
+{
+
+}
 
 PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous )
   : d( new PixmapRequestPrivate )

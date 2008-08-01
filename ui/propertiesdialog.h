@@ -30,7 +30,7 @@ class PropertiesDialog : public KPageDialog
     Q_OBJECT
 
   public:
-  	PropertiesDialog( QWidget *parent, Okular::Document *doc );
+        PropertiesDialog( QWidget *parent, Okular::Document *doc );
         virtual ~PropertiesDialog();
 
     private slots:
@@ -38,6 +38,7 @@ class PropertiesDialog : public KPageDialog
         void slotFontReadingProgress( int page );
         void slotFontReadingEnded();
         void reallyStartFontReading();
+        void showFontsMenu(const QPoint &pos);
 
     private:
         Okular::Document * m_document;
@@ -71,3 +72,5 @@ class FontsListModel
 };
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

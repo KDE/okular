@@ -45,6 +45,10 @@
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
+#ifdef HAVE_POPPLER_0_9
+Q_DECLARE_METATYPE(Poppler::FontInfo)
+#endif
+
 static const int PDFDebug = 4710;
 
 class PDFOptionsPage : public QWidget
@@ -630,6 +634,13 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
         of.setType( convertPopplerFontInfoTypeToOkularFontInfoType( font.type() ) );
         of.setEmbedType( embedTypeForPopplerFontInfo( font) );
         of.setFile( font.file() );
+#ifdef HAVE_POPPLER_0_9
+        of.setCanBeExtracted( of.embedType() != Okular::FontInfo::NotEmbedded );
+        
+        QVariant nativeId;
+        nativeId.setValue( font );
+        of.setNativeId( nativeId );
+#endif
 
         list.append( of );
     }
@@ -803,6 +814,14 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
     return tp;
+}
+
+void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *data)
+{
+#ifdef HAVE_POPPLER_0_9
+    Poppler::FontInfo fi = font.nativeId().value<Poppler::FontInfo>();
+    *data = pdfdoc->fontData(fi);
+#endif
 }
 
 bool PDFGenerator::print( QPrinter& printer )

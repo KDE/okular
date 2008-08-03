@@ -265,8 +265,6 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     setFeature( FontInfo );
     setFeature( PrintPostscript );
     setFeature( ReadRawData );
-    // update the configuration
-    reparseConfig();
     // generate the pixmapGeneratorThread
     generatorThread = new PDFPixmapGeneratorThread( this );
     connect(generatorThread, SIGNAL(finished()), this, SLOT(threadFinished()), Qt::QueuedConnection);
@@ -396,7 +394,8 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
 
     loadPages(pagesVector, 0, false);
 
-    setAAOptions();
+    // update the configuration
+    reparseConfig();
 
     // the file has been loaded correctly
     return true;

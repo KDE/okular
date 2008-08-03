@@ -48,10 +48,12 @@ static KAboutData createAboutData()
          ki18n( "An XPS backend" ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2007 Brad Hards\n"
-                "© 2007 Jiri Klement" )
+                "© 2007 Jiri Klement\n"
+                "© 2008 Pino Toscano" )
     );
     aboutData.addAuthor( ki18n( "Brad Hards" ), KLocalizedString(), "bradh@frogmouth.net" );
     aboutData.addAuthor( ki18n( "Jiri Klement" ), KLocalizedString(), "jiri.klement@gmail.com" );
+    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
     return aboutData;
 }
 

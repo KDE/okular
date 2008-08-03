@@ -23,6 +23,7 @@
 #include <qfile.h>
 #include <qlist.h>
 #include <qpainter.h>
+#include <qprinter.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -33,6 +34,7 @@
 #include <okular/core/document.h>
 #include <okular/core/page.h>
 #include <okular/core/area.h>
+#include <okular/core/fileprinter.h>
 
 const int XpsDebug = 4712;
 
@@ -705,7 +707,6 @@ XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 
 XpsHandler::~XpsHandler()
 {
-    delete m_painter;
 }
 
 bool XpsHandler::startDocument()
@@ -1361,26 +1362,30 @@ bool XpsPage::renderToImage( QImage *p )
         m_pageIsRendered = false;
     }
     if (! m_pageIsRendered) {
-        XpsHandler *handler = new XpsHandler( this );
-        handler->m_painter = new QPainter( m_pageImage );
-        handler->m_painter->setWorldMatrix(QMatrix().scale((qreal)p->size().width() / size().width(), (qreal)p->size().height() / size().height()));
-        QXmlSimpleReader *parser = new QXmlSimpleReader();
-        parser->setContentHandler( handler );
-        parser->setErrorHandler( handler );
-        const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
-        QByteArray data = readFileOrDirectoryParts( pageFile );
-        QBuffer * buffer = new QBuffer(&data);
-        QXmlInputSource *source = new QXmlInputSource(buffer);
-        bool ok = parser->parse( source );
-        kDebug(XpsDebug) << "Parse result: " << ok;
-        delete source;
-        delete parser;
-        delete handler;
-        delete buffer;
+        QPainter painter( m_pageImage );
+        renderToPainter( &painter );
         m_pageIsRendered = true;
     }
 
     *p = *m_pageImage;
+
+    return true;
+}
+
+bool XpsPage::renderToPainter( QPainter *painter )
+{
+    XpsHandler handler( this );
+    handler.m_painter = painter;
+    handler.m_painter->setWorldMatrix(QMatrix().scale((qreal)painter->device()->width() / size().width(), (qreal)painter->device()->height() / size().height()));
+    QXmlSimpleReader parser;
+    parser.setContentHandler( &handler );
+    parser.setErrorHandler( &handler );
+    const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
+    QByteArray data = readFileOrDirectoryParts( pageFile );
+    QBuffer buffer( &data );
+    QXmlInputSource source( &buffer );
+    bool ok = parser.parse( source );
+    kDebug(XpsDebug) << "Parse result: " << ok;
 
     return true;
 }
@@ -1991,6 +1996,8 @@ XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
   : Okular::Generator( parent, args ), m_xpsFile( 0 )
 {
     setFeature( TextExtraction );
+    setFeature( PrintNative );
+    setFeature( PrintToFile );
     // activate the threaded rendering iif:
     // 1) QFontDatabase says so
     // 2) Qt >= 4.4.0 (see Trolltech task ID: 169502)
@@ -2105,6 +2112,26 @@ bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
     }
 
     return false;
+}
+
+bool XpsGenerator::print( QPrinter &printer )
+{
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->bookmarkedPageList() );
+
+    QPainter painter( &printer );
+
+    for ( int i = 0; i < pageList.count(); ++i )
+    {
+        if ( i != 0 )
+            printer.newPage();
+
+        const int page = pageList.at( i ) - 1;
+        XpsPage *pageToRender = m_xpsFile->page( page );
+        pageToRender->renderToPainter( &painter );
+    }
+
+    return true;
 }
 
 XpsRenderNode * XpsRenderNode::findChild( const QString &name )

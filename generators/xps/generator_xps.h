@@ -153,6 +153,7 @@ public:
 
     QSizeF size() const;
     bool renderToImage( QImage *p );
+    bool renderToPainter( QPainter *painter );
     Okular::TextPage* textPage();
 
     QImage loadImageFromFile( const QString &filename );
@@ -310,6 +311,8 @@ class XpsGenerator : public Okular::Generator
 
         Okular::ExportFormat::List exportFormats() const;
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
+        bool print( QPrinter &printer );
 
     protected:
         bool doCloseDocument();

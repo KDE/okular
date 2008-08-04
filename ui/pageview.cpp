@@ -153,6 +153,8 @@ public:
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
     KAction * aToggleForms;
+    KAction * aSpeakDoc;
+    KAction * aSpeakPage;
     KAction * aSpeakStop;
     KActionCollection * actionCollection;
 
@@ -335,6 +337,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aViewContinuous = 0;
     d->aPrevAction = 0;
     d->aToggleForms = 0;
+    d->aSpeakDoc = 0;
+    d->aSpeakPage = 0;
     d->aSpeakStop = 0;
     d->actionCollection = 0;
     d->aPageSizes=0;
@@ -519,16 +523,15 @@ void PageView::setupActions( KActionCollection * ac )
     ta->addAction( d->aMouseTextSelect );
 
     // speak actions
-    const bool hasTTS = Okular::Settings::useKTTSD();
-    KAction *speakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );
-    ac->addAction( "speak_document", speakDoc );
-    speakDoc->setEnabled( hasTTS );
-    connect( speakDoc, SIGNAL( triggered() ), SLOT( slotSpeakDocument() ) );
+    d->aSpeakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );
+    ac->addAction( "speak_document", d->aSpeakDoc );
+    d->aSpeakDoc->setEnabled( false );
+    connect( d->aSpeakDoc, SIGNAL( triggered() ), SLOT( slotSpeakDocument() ) );
 
-    KAction *speakPage = new KAction( KIcon( "text-speak" ), i18n( "Speak Current Page" ), this );
-    ac->addAction( "speak_current_page", speakPage );
-    speakPage->setEnabled( hasTTS );
-    connect( speakPage, SIGNAL( triggered() ), SLOT( slotSpeakCurrentPage() ) );
+    d->aSpeakPage = new KAction( KIcon( "text-speak" ), i18n( "Speak Current Page" ), this );
+    ac->addAction( "speak_current_page", d->aSpeakPage );
+    d->aSpeakPage->setEnabled( false );
+    connect( d->aSpeakPage, SIGNAL( triggered() ), SLOT( slotSpeakCurrentPage() ) );
 
     d->aSpeakStop = new KAction( KIcon( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
     ac->addAction( "speak_stop_all", d->aSpeakStop );
@@ -831,6 +834,12 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             d->aToggleAnnotator->trigger();
         }
         d->aToggleAnnotator->setEnabled( allowAnnotations );
+    }
+    if ( d->aSpeakDoc )
+    {
+        const bool enablettsactions = haspages ? Okular::Settings::useKTTSD() : false;
+        d->aSpeakDoc->setEnabled( enablettsactions );
+        d->aSpeakPage->setEnabled( enablettsactions );
     }
 }
 

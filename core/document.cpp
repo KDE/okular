@@ -1369,7 +1369,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_docFileName = docFile;
         if ( url.isLocalFile() )
         {
-        QString fn = docFile.contains('/') ? docFile.section('/', -1, -1) : docFile;
+        QString fn = url.fileName();
         document_size = fileReadTest.size();
         fn = QString::number( document_size ) + '.' + fn + ".xml";
         fileReadTest.close();

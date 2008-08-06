@@ -481,23 +481,16 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     kDebug() << "pagerect:" << pagerect;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
-    char* imagebuffer = new char[ realwidth * realheight * 4 + 1 ];
+    QImage res_img( realwidth, realheight, QImage::Format_RGB32 );
     // the following line workarounds a rare crash in djvulibre;
     // it should be fixed with >= 3.5.21
     ddjvu_page_get_width( djvupage );
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
-                  &pagerect, &renderrect, m_format, realwidth * 4, imagebuffer );
+                  &pagerect, &renderrect, m_format, res_img.bytesPerLine(), (char *)res_img.bits() );
 #ifdef KDJVU_DEBUG
     kDebug() << "rendering result:" << res;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
-    QImage res_img;
-    if ( res )
-    {
-        QImage img( (uchar*)imagebuffer, realwidth, realheight, QImage::Format_RGB32 );
-        res_img = img.copy();
-    }
-    delete [] imagebuffer;
 
     return res_img;
 }
@@ -897,7 +890,7 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
     int xparts = width / xdelta + 1;
     int yparts = height / ydelta + 1;
 
-    QImage newimg( width, height, QImage::Format_RGB32 );
+    QImage newimg;
 
     int res = 10000;
     if ( ( xparts == 1 ) && ( yparts == 1 ) )
@@ -910,6 +903,7 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
     {
         // more than one part -- need to render piece-by-piece and to compose
         // the results
+        newimg = QImage( width, height, QImage::Format_RGB32 );
         QPainter p;
         p.begin( &newimg );
         int parts = xparts * yparts;

@@ -445,7 +445,6 @@ class KDjVu::Private
         ddjvu_context_t *m_djvu_cxt;
         ddjvu_document_t *m_djvu_document;
         ddjvu_format_t *m_format;
-        unsigned int* m_formatmask;
 
         QVector<KDjVu::Page*> m_pages;
         QVector<ddjvu_page_t *> m_pages_cache;
@@ -454,7 +453,11 @@ class KDjVu::Private
 
         QHash<QString, QVariant> m_metaData;
         QDomDocument * m_docBookmarks;
+
+        static unsigned int s_formatmask[4];
 };
+
+unsigned int KDjVu::Private::s_formatmask[4] = { 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 };
 
 QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     int width, int row, int xdelta, int height, int col, int ydelta )
@@ -588,18 +591,9 @@ KDjVu::KDjVu() : d( new Private )
     d->m_djvu_cxt = ddjvu_context_create( "KDjVu" );
     // creating the rendering format
 #if DDJVUAPI_VERSION >= 18
-    d->m_formatmask = new unsigned int[4];
-    d->m_formatmask[0] = 0x00ff0000;
-    d->m_formatmask[1] = 0x0000ff00;
-    d->m_formatmask[2] = 0x000000ff;
-    d->m_formatmask[3] = 0xff000000;
-    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 4, d->m_formatmask );
+    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 4, Private::s_formatmask );
 #else
-    d->m_formatmask = new unsigned int[3];
-    d->m_formatmask[0] = 0x00ff0000;
-    d->m_formatmask[1] = 0x0000ff00;
-    d->m_formatmask[2] = 0x000000ff;
-    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 3, d->m_formatmask );
+    d->m_format = ddjvu_format_create( DDJVU_FORMAT_RGBMASK32, 3, Private::s_formatmask );
 #endif
     ddjvu_format_set_row_order( d->m_format, 1 );
     ddjvu_format_set_y_direction( d->m_format, 1 );
@@ -611,7 +605,6 @@ KDjVu::~KDjVu()
     closeFile();
 
     ddjvu_format_release( d->m_format );
-    delete [] d->m_formatmask;
     ddjvu_context_release( d->m_djvu_cxt );
 
     delete d;

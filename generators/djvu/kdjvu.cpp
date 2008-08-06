@@ -479,6 +479,9 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     char* imagebuffer = new char[ realwidth * realheight * 4 + 1 ];
+    // the following line workarounds a rare crash in djvulibre;
+    // it should be fixed with >= 3.5.21
+    ddjvu_page_get_width( djvupage );
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, realwidth * 4, imagebuffer );
 #ifdef KDJVU_DEBUG

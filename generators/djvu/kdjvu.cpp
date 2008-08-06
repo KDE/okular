@@ -429,7 +429,8 @@ class KDjVu::Private
 {
     public:
         Private()
-          : m_djvu_cxt( 0 ), m_djvu_document( 0 ), m_format( 0 ), m_docBookmarks( 0 )
+          : m_djvu_cxt( 0 ), m_djvu_document( 0 ), m_format( 0 ), m_docBookmarks( 0 ),
+            m_cacheEnabled( true )
         {
         }
 
@@ -453,6 +454,8 @@ class KDjVu::Private
 
         QHash<QString, QVariant> m_metaData;
         QDomDocument * m_docBookmarks;
+
+        bool m_cacheEnabled;
 
         static unsigned int s_formatmask[4];
 };
@@ -842,6 +845,8 @@ const QVector<KDjVu::Page*> &KDjVu::pages() const
 
 QImage KDjVu::image( int page, int width, int height, int rotation )
 {
+    if ( d->m_cacheEnabled )
+    {
     bool found = false;
     QList<ImageCacheItem*>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
     for ( ; ( it != itEnd ) && !found; ++it )
@@ -862,6 +867,7 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
         d->mImgCache.push_front( cur2 );
 
         return cur2->img;
+    }
     }
 
     if ( !d->m_pages_cache.at( page ) )
@@ -923,7 +929,7 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
         p.end();
     }
 
-    if ( res )
+    if ( res && d->m_cacheEnabled )
     {
         // delete all the cached pixmaps for the current page with a size that
         // differs no more than 35% of the new pixmap size
@@ -1061,4 +1067,22 @@ QList<KDjVu::TextEntity> KDjVu::textEntities( int page, const QString & granular
     }
 
     return ret;
+}
+
+void KDjVu::setCacheEnabled( bool enable )
+{
+    if ( enable == d->m_cacheEnabled )
+        return;
+
+    d->m_cacheEnabled = enable;
+    if ( !d->m_cacheEnabled )
+    {
+        qDeleteAll( d->mImgCache );
+        d->mImgCache.clear();
+    }
+}
+
+bool KDjVu::isCacheEnabled() const
+{
+    return d->m_cacheEnabled;
 }

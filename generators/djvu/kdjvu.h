@@ -275,6 +275,15 @@ class KDjVu
          */
         QList<KDjVu::TextEntity> textEntities( int page, const QString & granularity ) const;
 
+        /**
+         * Enable or disable the internal rendered pages cache.
+         */
+        void setCacheEnabled( bool enable );
+        /**
+         * \returns whether the internal rendered pages cache is enabled
+         */
+        bool isCacheEnabled() const;
+
     private:
         class Private;
         Private * const d;

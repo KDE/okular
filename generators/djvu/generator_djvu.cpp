@@ -85,6 +85,7 @@ DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
     setFeature( PrintPostscript );
 
     m_djvu = new KDjVu();
+    m_djvu->setCacheEnabled( false );
 }
 
 DjVuGenerator::~DjVuGenerator()

@@ -143,7 +143,8 @@ class OKULAR_EXPORT ExportFormat
         enum StandardExportFormat
         {
             PlainText,         ///< Plain text
-            PDF                ///< PDF, aka Portable Document Format
+            PDF,               ///< PDF, aka Portable Document Format
+            OpenDocumentText   ///< OpenDocument Text format @since 0.8 (KDE 4.2)
         };
 
         /**

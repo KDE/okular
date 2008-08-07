@@ -549,6 +549,12 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
         case PDF:
             return ExportFormat( KIcon( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
             break;
+        case OpenDocumentText:
+            return ExportFormat(
+                KIcon( "application-vnd.oasis.opendocument.text" ),
+                i18nc( "This is the document format", "OpenDocument Text" ),
+                KMimeType::mimeType( "application/vnd.oasis.opendocument.text" ) );
+            break;
     }
     return ExportFormat();
 }

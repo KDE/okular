@@ -2763,6 +2763,7 @@ void PageView::slotRelayoutPages()
     // if viewport was auto-moving, stop it
     if ( d->viewportMoveActive )
     {
+        center( d->viewportMoveDest.x(), d->viewportMoveDest.y() );
         d->viewportMoveActive = false;
         d->viewportMoveTimer->stop();
         verticalScrollBar()->setEnabled( true );

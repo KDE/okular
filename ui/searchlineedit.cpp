@@ -21,7 +21,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
       m_caseSensitivity( Qt::CaseInsensitive ),
       m_searchType( Okular::Document::AllDocument ), m_id( -1 ),
-      m_moveViewport( false ), m_changed( false )
+      m_moveViewport( false ), m_changed( false ), m_fromStart( true )
 {
     setObjectName( "SearchLineEdit" );
     setClearButtonShown( true );
@@ -79,6 +79,11 @@ void SearchLineEdit::setSearchMoveViewport( bool move )
     m_moveViewport = move;
 }
 
+void SearchLineEdit::setSearchFromStart( bool fromStart )
+{
+    m_fromStart = fromStart;
+}
+
 void SearchLineEdit::restartSearch()
 {
     m_inputDelayTimer->stop();
@@ -134,7 +139,7 @@ void SearchLineEdit::startSearch()
     QString thistext = text();
     if ( thistext.length() >= qMax( m_minLength, 1 ) )
     {
-        m_document->searchText( m_id, thistext, true, m_caseSensitivity,
+        m_document->searchText( m_id, thistext, m_fromStart, m_caseSensitivity,
                                 m_searchType, m_moveViewport, m_color );
     }
     else

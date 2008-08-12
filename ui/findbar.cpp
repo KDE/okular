@@ -63,6 +63,8 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     QMenu * optionsMenu = new QMenu( optionsBtn );
     m_caseSensitiveAct = optionsMenu->addAction( i18n( "Case sensitive" ) );
     m_caseSensitiveAct->setCheckable( true );
+    m_fromCurrentPageAct = optionsMenu->addAction( i18n( "From current page" ) );
+    m_fromCurrentPageAct->setCheckable( true );
     optionsBtn->setMenu( optionsMenu );
     lay->addWidget( optionsBtn );
 
@@ -70,6 +72,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     connect( findNextBtn, SIGNAL( clicked() ), this, SLOT( findNext() ) );
     connect( findPrevBtn, SIGNAL( clicked() ), this, SLOT( findPrev() ) );
     connect( m_caseSensitiveAct, SIGNAL( toggled( bool ) ), this, SLOT( caseSensitivityChanged() ) );
+    connect( m_fromCurrentPageAct, SIGNAL( toggled( bool ) ), this, SLOT( fromCurrentPageChanged() ) );
 
     hide();
 }
@@ -110,6 +113,11 @@ void FindBar::caseSensitivityChanged()
 {
     m_text->setSearchCaseSensitivity( m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_text->restartSearch();
+}
+
+void FindBar::fromCurrentPageChanged()
+{
+    m_text->setSearchFromStart( !m_fromCurrentPageAct->isChecked() );
 }
 
 #include "findbar.moc"

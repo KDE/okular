@@ -39,10 +39,12 @@ class FindBar
 
     private slots:
         void caseSensitivityChanged();
+        void fromCurrentPageChanged();
 
     private:
         SearchLineEdit * m_text;
         QAction * m_caseSensitiveAct;
+        QAction * m_fromCurrentPageAct;
 };
 
 

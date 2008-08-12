@@ -138,7 +138,7 @@ Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerS
     return sound;
 }
 
-static Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
+Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
 	Okular::Action *link = 0;
 	const Poppler::LinkGoto *popplerLinkGoto;

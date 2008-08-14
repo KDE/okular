@@ -10,6 +10,7 @@
 #ifndef _OKULAR_SIDE_REVIEWS_H_
 #define _OKULAR_SIDE_REVIEWS_H_
 
+#include <QtCore/QModelIndexList>
 #include <QtCore/QVector>
 #include <QtGui/QWidget>
 
@@ -55,6 +56,8 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void contextMenuRequested( const QPoint& );
 
     private:
+        QModelIndexList retrieveAnnotations(const QModelIndex& idx);
+        
         // data fields (GUI)
         TreeView * m_view;
         // internal storage

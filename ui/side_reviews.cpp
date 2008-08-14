@@ -212,6 +212,28 @@ void Reviews::activated( const QModelIndex &index )
     m_document->setViewport( vp, -1, true );
 }
 
+QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx)
+{
+    QModelIndexList ret;
+    if ( idx.isValid() )
+    {
+        if ( idx.model()->hasChildren( idx ) )
+        {
+            int rowCount = idx.model()->rowCount( idx );
+            for ( int i = 0; i < rowCount; i++ )
+            {
+                ret += retrieveAnnotations( idx.child( i, idx.column() ) );
+            }
+        }
+        else
+        {
+            ret += idx;
+        }
+    }
+    
+    return ret;
+}
+
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
     AnnotationPopup popup( m_document, this );
@@ -223,13 +245,18 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
     Q_FOREACH ( const QModelIndex &index, indexes )
     {
-        const QModelIndex authorIndex = m_authorProxy->mapToSource( index );
-        const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
-        const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
-        Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );
-        if ( annotation ) {
-            const int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
-            popup.addAnnotation( annotation, pageNumber );
+        QModelIndexList annotations = retrieveAnnotations(index);
+        Q_FOREACH ( const QModelIndex &idx, annotations )
+        {
+            const QModelIndex authorIndex = m_authorProxy->mapToSource( idx );
+            const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
+            const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
+            Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );
+            if ( annotation )
+            {
+                const int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
+                popup.addAnnotation( annotation, pageNumber );
+            }
         }
     }
 

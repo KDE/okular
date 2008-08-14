@@ -26,7 +26,9 @@ AnnotationPopup::AnnotationPopup( Okular::Document *document,
 
 void AnnotationPopup::addAnnotation( Okular::Annotation* annotation, int pageNumber )
 {
-    mAnnotations.append( qMakePair( annotation, pageNumber ) );
+    AnnotPagePair pair = qMakePair( annotation, pageNumber );
+    if ( !mAnnotations.contains( pair ) )
+      mAnnotations.append( pair );
 }
 
 void AnnotationPopup::exec( const QPoint &point )

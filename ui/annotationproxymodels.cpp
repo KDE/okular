@@ -495,7 +495,7 @@ QMap<int, QVariant> AuthorGroupProxyModel::itemData( const QModelIndex &index ) 
 Qt::ItemFlags AuthorGroupProxyModel::flags( const QModelIndex &index ) const
 {
     if ( isAuthorItem( index ) ) {
-        return Qt::ItemIsEnabled;
+        return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     } else {
         return QAbstractProxyModel::flags( index );
     }

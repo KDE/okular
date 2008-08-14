@@ -212,23 +212,19 @@ void Reviews::activated( const QModelIndex &index )
     m_document->setViewport( vp, -1, true );
 }
 
-QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx)
+QList<QModelIndex> Reviews::retrieveAnnotations(const QModelIndex& idx) const
 {
-    QModelIndexList ret;
-    if ( idx.isValid() )
+    QList<QModelIndex> ret;
+    if(idx.isValid() && idx.model()->hasChildren(idx))
     {
-        if ( idx.model()->hasChildren( idx ) )
+        for(int i=0; i<idx.model()->rowCount(idx); i++)
         {
-            int rowCount = idx.model()->rowCount( idx );
-            for ( int i = 0; i < rowCount; i++ )
-            {
-                ret += retrieveAnnotations( idx.child( i, idx.column() ) );
-            }
+            ret += retrieveAnnotations(idx.child(i, idx.column()));
         }
-        else
-        {
-            ret += idx;
-        }
+    }
+    else if(idx.isValid())
+    {
+        ret += idx;
     }
     
     return ret;
@@ -245,14 +241,14 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
     Q_FOREACH ( const QModelIndex &index, indexes )
     {
-        QModelIndexList annotations = retrieveAnnotations(index);
-        Q_FOREACH ( const QModelIndex &idx, annotations )
+        QList<QModelIndex> annotations = retrieveAnnotations(index);
+        Q_FOREACH(const QModelIndex &idx, annotations)
         {
             const QModelIndex authorIndex = m_authorProxy->mapToSource( idx );
             const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );
             const QModelIndex annotIndex = m_filterProxy->mapToSource( filterIndex );
             Okular::Annotation *annotation = m_model->annotationForIndex( annotIndex );
-            if ( annotation )
+            if(annotation)
             {
                 const int pageNumber = m_model->data( annotIndex, AnnotationModel::PageRole ).toInt();
                 popup.addAnnotation( annotation, pageNumber );

@@ -56,7 +56,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void contextMenuRequested( const QPoint& );
 
     private:
-        QModelIndexList retrieveAnnotations(const QModelIndex& idx);
+        QModelIndexList retrieveAnnotations(const QModelIndex& idx) const;
         
         // data fields (GUI)
         TreeView * m_view;

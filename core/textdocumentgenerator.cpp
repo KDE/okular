@@ -57,7 +57,9 @@ TextDocumentGenerator* TextDocumentConverter::generator() const
  */
 Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber ) const
 {
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     Q_Q( const TextDocumentGenerator );
+#endif
 
     Okular::TextPage *textPage = new Okular::TextPage;
 
@@ -343,7 +345,9 @@ QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
     if ( !mDocument )
         return QImage();
 
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     Q_Q( TextDocumentGenerator );
+#endif
 
     QImage image( request->width(), request->height(), QImage::Format_ARGB32 );
     image.fill( Qt::white );

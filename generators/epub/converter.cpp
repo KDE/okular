@@ -75,7 +75,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
       if (frag.isValid() && frag.charFormat().isAnchor()) {
         QUrl href(frag.charFormat().anchorHref());
 
-        if (href.isValid() && ! href.isEmpty())
+        if (href.isValid() && !href.isEmpty()) {
           if (href.isRelative()) { // Inside document link
             mLocalLinks.insert(href.toString(), 
                                QPair<int, int>(frag.position(), 
@@ -87,6 +87,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
             emit addAction(action, frag.position(), 
                            frag.position() + frag.length());
           }
+        }
         
         const QStringList &names = frag.charFormat().anchorNames();
         if (!names.empty()) {

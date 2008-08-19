@@ -1147,8 +1147,8 @@
 				<varlistentry>
 					<term><guilabel>Center first page</guilabel></term>
 					<listitem>
-						<para>Whether the first page should be centered or aligned to the right when
-							displaying the pages in facing mode.</para>
+						<para>Whether the first page should be centered or aligned to the left when
+							displaying the pages in facing and overview mode.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

@@ -887,6 +887,9 @@ bool PDFGenerator::print( QPrinter& printer )
     {
         userMutex()->unlock();
         delete psConverter;
+#ifdef HAVE_POPPLER_0_7
+        tf.close();
+#endif
         int ret = Okular::FilePrinter::printFile( printer, tempfilename,
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,

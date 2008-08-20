@@ -36,7 +36,6 @@ class CHMGenerator : public Okular::Generator
 
         const Okular::DocumentInfo * generateDocumentInfo();
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
-        const Okular::DocumentFonts * generateDocumentFonts();
 
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest * request );

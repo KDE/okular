@@ -225,11 +225,6 @@ const Okular::DocumentSynopsis * CHMGenerator::generateDocumentSynopsis()
     return &m_docSyn;
 }
 
-const Okular::DocumentFonts * CHMGenerator::generateDocumentFonts() 
-{
-    return 0L;
-}
-
 bool CHMGenerator::canGeneratePixmap () const
 {
     bool isLocked = true;

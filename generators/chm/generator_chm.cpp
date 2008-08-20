@@ -48,6 +48,23 @@ static KAboutData createAboutData()
 
 OKULAR_EXPORT_PLUGIN( CHMGenerator, createAboutData() )
 
+static QString absolutePath( const QString &baseUrl, const QString &path )
+{
+    QString absPath;
+    if ( path.at( 0 ) == QLatin1Char( '/' ) )
+    {
+        // already absolute
+        absPath = path;
+    }
+    else
+    {
+        KUrl url = KUrl::fromPath( baseUrl );
+        url.setFileName( path );
+        absPath = url.toLocalFile();
+    }
+    return absPath;
+}
+
 CHMGenerator::CHMGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args )
 {
@@ -143,6 +160,7 @@ bool CHMGenerator::doCloseDocument()
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
+    m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->openUrl(pAddress);
     m_syncGen->view()->layout();
@@ -177,6 +195,7 @@ void CHMGenerator::slotCompleted()
     }
 
     m_syncGen->closeUrl();
+    m_chmUrl = QString();
 
     userMutex()->unlock();
 
@@ -240,6 +259,7 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         ) ) * 100;
 
     KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
+    m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);
     m_request=request;
@@ -346,7 +366,7 @@ void CHMGenerator::additionalRequestData()
                         }
                         else
                         {
-                            Okular::DocumentViewport viewport( metaData( "NamedViewport", '/' + url ).toString() );
+                            Okular::DocumentViewport viewport( metaData( "NamedViewport", absolutePath( m_chmUrl, url ) ).toString() );
                             objRects.push_back(
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,

@@ -60,6 +60,7 @@ class CHMGenerator : public Okular::Generator
         LCHMFile* m_file;
         KHTMLPart *m_syncGen;
         QString m_fileName;
+        QString m_chmUrl;
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
         Okular::DocumentInfo* m_docInfo;

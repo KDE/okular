@@ -709,6 +709,9 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
         return e->ignore();
 
     ThumbnailWidget* theItem = item ? item : mouseGrabItem;
+    // no item under the mouse or previously selected
+    if ( !theItem )
+        return e->ignore();
     QRect r = theItem->rect();
     int margin = ThumbnailWidget::margin();
     QPoint p = e->pos() - theItem->pos();

@@ -714,7 +714,6 @@ XpsHandler::~XpsHandler()
 bool XpsHandler::startDocument()
 {
     kDebug(XpsDebug) << "start document" << m_page->m_fileName ;
-    m_page->m_pageImage->fill( qRgba( 255, 255, 255, 255 ) );
 
     XpsRenderNode node;
     node.name = "document";
@@ -1364,6 +1363,7 @@ bool XpsPage::renderToImage( QImage *p )
         m_pageIsRendered = false;
     }
     if (! m_pageIsRendered) {
+        m_pageImage->fill( qRgba( 255, 255, 255, 255 ) );
         QPainter painter( m_pageImage );
         renderToPainter( &painter );
         m_pageIsRendered = true;

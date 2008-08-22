@@ -58,7 +58,7 @@ class ThumbnailListPrivate : public QWidget
         // called by ThumbnailWidgets to get the overlay bookmark pixmap
         const QPixmap * getBookmarkOverlay() const;
         // called by ThumbnailWidgets to send (forward) the mouse move signals
-        void forwardTrack( const Okular::Page *, const QPoint &, const QPoint & );
+        void forwardTrack( const Okular::Page *, const QPoint &, const QSize & );
 
         ThumbnailWidget* itemFor( const QPoint & p ) const;
         void delayedRequestVisiblePixmaps( int delayMs = 0 );
@@ -225,6 +225,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     d->m_thumbnails.clear();
     d->m_visibleThumbnails.clear();
     d->m_selected = 0;
+    d->mouseGrabItem = 0;
 
     if ( pages.count() < 1 )
     {
@@ -387,7 +388,7 @@ void ThumbnailList::updateWidgets()
     }
 }
 
-void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &point, const QPoint &s )
+void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &point, const QSize &s )
 {
     Okular::DocumentViewport vp=m_document->viewport();
 
@@ -402,8 +403,8 @@ void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &p
         {
             double w = vpr->rect.right - vpr->rect.left,
             h = vpr->rect.bottom - vpr->rect.top,
-            deltaX = point.x()*w/s.x(),
-            deltaY = point.y()*h/s.y();
+            deltaX = (double)point.x() / s.width(),
+            deltaY = (double)point.y() / s.height();
 
             vp.rePos.normalizedX -= deltaX;
             vp.rePos.normalizedY -= deltaY;
@@ -414,6 +415,7 @@ void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &p
                 vp.rePos.normalizedY += h/2;
             }
             m_document->setViewport( vp );
+            break;
         }
     }
 }
@@ -675,6 +677,7 @@ void ThumbnailListPrivate::mousePressEvent( QMouseEvent * e )
 void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
 {
     ThumbnailWidget* item = itemFor( e->pos() );
+    mouseGrabItem = item;
     if ( !item ) // mouse on the spacing between items
         return e->ignore();
 
@@ -697,29 +700,31 @@ void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
     }
     mouseGrabPos.setX( 0 );
     mouseGrabPos.setY( 0 );
-    mouseGrabItem = item;
 }
 
 void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
 {
     ThumbnailWidget* item = itemFor( e->pos() );
-    if ( !item ) // mouse on the spacing between items
+    if ( e->buttons() == Qt::NoButton )
         return e->ignore();
 
-    QRect r = item->visibleRect();
+    ThumbnailWidget* theItem = item ? item : mouseGrabItem;
+    QRect r = theItem->rect();
     int margin = ThumbnailWidget::margin();
-    QPoint p = e->pos() - item->pos();
+    QPoint p = e->pos() - theItem->pos();
 
-    if ( r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
+    if ( true /*r.contains( p - QPoint( margin / 2, margin / 2 ) )*/ )
     {
-        if ( !mouseGrabPos.isNull() && mouseGrabItem == item )
+        if ( !mouseGrabPos.isNull() )
         {
             setCursor( Qt::ClosedHandCursor );
             QPoint mousePos = e->pos();
             QPoint delta = mouseGrabPos - mousePos;
-            // don't handle the mouse move, forward it to the thumbnail list
-            forwardTrack( item->page(), delta, QPoint( r.width(), r.height() ) );
             mouseGrabPos = e->pos();
+            if ( item )
+                mouseGrabItem = item;
+            // don't handle the mouse move, forward it to the thumbnail list
+            forwardTrack( mouseGrabItem->page(), delta, r.size() );
         }
         else
         {

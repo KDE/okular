@@ -16,6 +16,7 @@
 
 // local includes
 #include "document.h"
+#include "movie.h"
 #include "page_p.h"
 #include "sound.h"
 
@@ -2329,4 +2330,75 @@ void SoundAnnotation::setSound( Sound *s )
 {
     Q_D( SoundAnnotation );
     d->sound = s;
+}
+
+/** MovieAnnotation [Annotation] */
+
+class Okular::MovieAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        MovieAnnotationPrivate()
+            : AnnotationPrivate(), movie( 0 )
+        {
+        }
+        ~MovieAnnotationPrivate()
+        {
+            delete movie;
+        }
+
+        // data fields
+        Movie *movie;
+};
+
+MovieAnnotation::MovieAnnotation()
+    : Annotation( *new MovieAnnotationPrivate() )
+{
+}
+
+MovieAnnotation::MovieAnnotation( const QDomNode & node )
+    : Annotation( *new MovieAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'movie' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "movie" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+MovieAnnotation::~MovieAnnotation()
+{
+}
+
+void MovieAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [movie] element
+    QDomElement movieElement = document.createElement( "movie" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType MovieAnnotation::subType() const
+{
+    return AMovie;
+}
+
+Movie* MovieAnnotation::movie() const
+{
+    Q_D( const MovieAnnotation );
+    return d->movie;
+}
+
+void MovieAnnotation::setMovie( Movie *movie )
+{
+    Q_D( MovieAnnotation );
+    d->movie = movie;
 }

@@ -32,6 +32,7 @@ set(okularcore_SRCS
    core/generator.cpp
    core/generator_p.cpp
    core/misc.cpp
+   core/movie.cpp
    core/observer.cpp
    core/page.cpp
    core/pagecontroller.cpp

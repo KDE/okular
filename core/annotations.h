@@ -31,6 +31,7 @@ class EmbeddedFile;
 class Page;
 class PagePrivate;
 class Sound;
+class Movie;
 class TextAnnotationPrivate;
 class LineAnnotationPrivate;
 class GeomAnnotationPrivate;
@@ -40,6 +41,7 @@ class InkAnnotationPrivate;
 class CaretAnnotationPrivate;
 class FileAttachmentAnnotationPrivate;
 class SoundAnnotationPrivate;
+class MovieAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -109,6 +111,7 @@ class OKULAR_EXPORT Annotation
             ACaret = 8,     ///< A caret annotation
             AFileAttachment = 9, ///< A file attachment annotation
             ASound = 10,    ///< A sound annotation
+            AMovie = 11,    ///< A movie annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -1412,6 +1415,51 @@ class OKULAR_EXPORT SoundAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( SoundAnnotation )
         Q_DISABLE_COPY( SoundAnnotation )
+};
+
+/**
+ * \short Movie annotation.
+ *
+ * The movie annotation represents a movie to be played when activated.
+ *
+ * @since 0.8 (KDE 4.2)
+ */
+class OKULAR_EXPORT MovieAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new movie annotation.
+         */
+        MovieAnnotation();
+        /**
+         * Creates a new movie annotation from the xml @p description
+         */
+        MovieAnnotation( const QDomNode &description );
+        /**
+         * Destroys the movie annotation.
+         */
+        virtual ~MovieAnnotation();
+        /**
+         * Gets the movie object.
+         */
+        Movie* movie() const;
+        /**
+         * Sets the new @p movie object.
+         */
+        void setMovie( Movie *movie );
+        /**
+         * Returns the sub type of the movie annotation.
+         */
+        SubType subType() const;
+        /**
+         * Stores the movie annotation as xml in @p document
+         * under the given @p parentNode.
+         */
+        void store( QDomNode &parentNode, QDomDocument &document ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( MovieAnnotation )
+        Q_DISABLE_COPY( MovieAnnotation )
 };
 
 }

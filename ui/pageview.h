@@ -95,17 +95,17 @@ Q_OBJECT
         KAction *toggleFormsAction() const;
 
     public slots:
-        void errorMessage( const QString & message, int duration )
+        void errorMessage( const QString & message, int duration = -1 )
         {
             displayMessage( message, PageViewMessage::Error, duration );
         }
 
-        void noticeMessage( const QString & message, int duration )
+        void noticeMessage( const QString & message, int duration = -1 )
         {
             displayMessage( message, PageViewMessage::Info, duration );
         }
 
-        void warningMessage( const QString & message, int duration )
+        void warningMessage( const QString & message, int duration = -1 )
         {
             displayMessage( message, PageViewMessage::Warning, duration );
         }

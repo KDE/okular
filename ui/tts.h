@@ -12,13 +12,11 @@
 
 #include <qobject.h>
 
-class PageViewMessage;
-
 class OkularTTS : public QObject
 {
     Q_OBJECT
     public:
-        OkularTTS( PageViewMessage *messageWindow, QObject *parent = 0 );
+        OkularTTS( QObject *parent = 0 );
         ~OkularTTS();
 
         void say( const QString &text );
@@ -26,6 +24,7 @@ class OkularTTS : public QObject
 
     signals:
         void hasSpeechs( bool has );
+        void errorMessage( const QString &message );
 
     private slots:
         void slotServiceUnregistered( const QString& );

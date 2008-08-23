@@ -186,11 +186,13 @@ OkularTTS* PageViewPrivate::tts()
 {
     if ( !m_tts )
     {
-        m_tts = new OkularTTS( messageWindow, q );
+        m_tts = new OkularTTS( q );
         if ( aSpeakStop )
         {
             QObject::connect( m_tts, SIGNAL( hasSpeechs( bool ) ),
                               aSpeakStop, SLOT( setEnabled( bool ) ) );
+            QObject::connect( m_tts, SIGNAL( errorMessage( const QString & ) ),
+                              q, SLOT( errorMessage( const QString & ) ) );
         }
     }
 

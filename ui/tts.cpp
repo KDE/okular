@@ -15,7 +15,6 @@
 #include <kspeech.h>
 #include <ktoolinvocation.h>
 
-#include "pageviewutils.h"
 #include "kspeechinterface.h"
 
 /* Private storage. */
@@ -31,7 +30,6 @@ public:
     void teardownIface();
 
     OkularTTS *q;
-    PageViewMessage *messageWindow;
     org::kde::KSpeech* kspeech;
     QSet< int > jobs;
 };
@@ -51,7 +49,7 @@ void OkularTTS::Private::setupIface()
         QString error;
         if ( KToolInvocation::startServiceByDesktopName( "kttsd", QStringList(), &error ) )
         {
-            messageWindow->display( i18n( "Starting KTTSD Failed: %1", error ) );
+            emit q->errorMessage( i18n( "Starting KTTSD Failed: %1", error ) );
         }
         else
         {
@@ -82,10 +80,9 @@ void OkularTTS::Private::teardownIface()
 }
 
 
-OkularTTS::OkularTTS( PageViewMessage *messageWindow, QObject *parent )
+OkularTTS::OkularTTS( QObject *parent )
     : QObject( parent ), d( new Private( this ) )
 {
-    d->messageWindow = messageWindow;
 }
 
 OkularTTS::~OkularTTS()

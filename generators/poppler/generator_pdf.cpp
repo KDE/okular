@@ -33,6 +33,7 @@
 #include <okular/core/action.h>
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
+#include <okular/core/movie.h>
 #include <okular/core/pagetransition.h>
 #include <okular/core/sound.h>
 #include <okular/core/sourcereference.h>
@@ -137,6 +138,16 @@ Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerS
     }
     return sound;
 }
+
+#ifdef HAVE_POPPLER_0_9
+Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie )
+{
+    Okular::Movie *movie = new Okular::Movie( popplerMovie->url() );
+    movie->setSize( popplerMovie->size() );
+    movie->setRotation( (Okular::Rotation)( popplerMovie->rotation() / 90 ) );
+    return movie;
+}
+#endif
 
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {

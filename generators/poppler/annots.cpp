@@ -20,6 +20,9 @@
 Q_DECLARE_METATYPE( Poppler::Annotation* )
 
 extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
+#ifdef HAVE_POPPLER_0_9
+extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie );
+#endif
 
 static void disposeAnnotation( const Okular::Annotation *ann )
 {
@@ -56,6 +59,16 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             s->setSoundIconName( soundann->soundIconName() );
             s->setSound( createSoundFromPopplerSound( soundann->sound() ) );
+
+            break;
+        }
+        case Poppler::Annotation::AMovie:
+        {
+            Poppler::MovieAnnotation * movieann = static_cast< Poppler::MovieAnnotation * >( ann );
+            Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
+            annotation = m;
+
+            m->setMovie( createMovieFromPopplerMovie( movieann->movie() ) );
 
             break;
         }

@@ -177,6 +177,9 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
         case Okular::Annotation::ASound:
             captiontext = i18n( "Sound Properties" );
             break;
+        case Okular::Annotation::AMovie:
+            captiontext = i18n( "Movie Properties" );
+            break;
         default:
             captiontext = i18n( "Annotation Properties" );
             break;

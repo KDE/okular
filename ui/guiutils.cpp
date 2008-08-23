@@ -72,6 +72,9 @@ QString captionForAnnotation( const Okular::Annotation * ann )
         case Okular::Annotation::ASound:
             ret = i18n( "Sound" );
             break;
+        case Okular::Annotation::AMovie:
+            ret = i18n( "Movie" );
+            break;
         case Okular::Annotation::A_BASE:
             break;
     }

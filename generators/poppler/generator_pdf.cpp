@@ -145,6 +145,8 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     Okular::Movie *movie = new Okular::Movie( popplerMovie->url() );
     movie->setSize( popplerMovie->size() );
     movie->setRotation( (Okular::Rotation)( popplerMovie->rotation() / 90 ) );
+    movie->setShowControls( popplerMovie->showControls() );
+    movie->setPlayMode( (Okular::Movie::PlayMode)popplerMovie->playMode() );
     return movie;
 }
 #endif

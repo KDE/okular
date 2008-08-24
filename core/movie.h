@@ -26,6 +26,17 @@ class OKULAR_EXPORT Movie
 {
     public:
         /**
+         * The play mode for playing the movie
+         */
+        enum PlayMode
+        {
+            PlayOnce,         ///< Play the movie once, closing the movie controls at the end
+            PlayOpen,         ///< Like PlayOnce, but leaving the controls open
+            PlayRepeat,       ///< Play continuously until stopped
+            PlayPalindrome    ///< Play forward, then backward, then again foward and so on until stopped
+        };
+
+        /**
          * Creates a new movie object with the given external @p fileName.
          */
         explicit Movie( const QString& fileName );
@@ -59,6 +70,26 @@ class OKULAR_EXPORT Movie
          * Returns the rotation of the movie.
          */
         Rotation rotation() const;
+
+        /**
+         * Sets whether show a bar with movie controls
+         */
+        void setShowControls( bool show );
+
+        /**
+         * Whether show a bar with movie controls
+         */
+        bool showControls() const;
+
+        /**
+         * Sets the way the movie should be played
+         */
+        void setPlayMode( PlayMode mode );
+
+        /**
+         * How to play the movie
+         */
+        PlayMode playMode() const;
 
     private:
         class Private;

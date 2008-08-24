@@ -19,13 +19,17 @@ class Movie::Private
     public:
         Private( const QString &url )
             : m_url( url ),
-              m_rotation( Rotation0 )
+              m_rotation( Rotation0 ),
+              m_playMode( PlayOnce ),
+              m_showControls( false )
         {
         }
 
         QString m_url;
         QSize m_aspect;
         Rotation m_rotation;
+        PlayMode m_playMode;
+        bool m_showControls : 1;
 };
 
 Movie::Movie( const QString& fileName )
@@ -61,4 +65,24 @@ void Movie::setRotation( Rotation rotation )
 Rotation Movie::rotation() const
 {
     return d->m_rotation;
+}
+
+void Movie::setShowControls( bool show )
+{
+    d->m_showControls = show;
+}
+
+bool Movie::showControls() const
+{
+    return d->m_showControls;
+}
+
+void Movie::setPlayMode( Movie::PlayMode mode )
+{
+    d->m_playMode = mode;
+}
+
+Movie::PlayMode Movie::playMode() const
+{
+    return d->m_playMode;
 }

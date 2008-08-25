@@ -833,6 +833,9 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 #ifdef HAVE_POPPLER_0_9
     Poppler::FontInfo fi = font.nativeId().value<Poppler::FontInfo>();
     *data = pdfdoc->fontData(fi);
+#else
+    Q_UNUSED( font )
+    Q_UNUSED( data )
 #endif
 }
 

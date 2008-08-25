@@ -169,7 +169,7 @@ qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpe
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${BLITZ_LIBRARIES})
+target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${BLITZ_LIBRARIES} ${KDE4_PHONON_LIBRARY})
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

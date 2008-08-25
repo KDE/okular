@@ -32,6 +32,8 @@
 // local includes
 #include "formwidgets.h"
 #include "guiutils.h"
+#include "videowidget.h"
+#include "core/movie.h"
 #include "core/page.h"
 #include "settings.h"
 
@@ -50,6 +52,7 @@ PageViewItem::~PageViewItem()
     QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
         delete *it;
+    qDeleteAll( m_videoWidgets );
 }
 
 const Okular::Page * PageViewItem::page() const
@@ -122,6 +125,11 @@ QHash<int, FormWidgetIface*>& PageViewItem::formWidgets()
     return m_formWidgets;
 }
 
+QHash< Okular::Movie *, VideoWidget* >& PageViewItem::videoWidgets()
+{
+    return m_videoWidgets;
+}
+
 void PageViewItem::setWHZC( int w, int h, double z, const Okular:: NormalizedRect & c )
 {
     m_croppedGeometry.setWidth( w );
@@ -135,6 +143,13 @@ void PageViewItem::setWHZC( int w, int h, double z, const Okular:: NormalizedRec
     {
         Okular::NormalizedRect r = fwi->rect();
         fwi->setWidthHeight(
+            qRound( fabs( r.right - r.left ) * m_uncroppedGeometry.width() ),
+            qRound( fabs( r.bottom - r.top ) * m_uncroppedGeometry.height() ) );
+    }
+    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
+    {
+        const Okular::NormalizedRect r = vw->normGeometry();
+        vw->resize(
             qRound( fabs( r.right - r.left ) * m_uncroppedGeometry.width() ),
             qRound( fabs( r.bottom - r.top ) * m_uncroppedGeometry.height() ) );
     }
@@ -155,12 +170,23 @@ void PageViewItem::moveTo( int x, int y )
             qRound( x + m_uncroppedGeometry.width() * r.left ) + 1,
             qRound( y + m_uncroppedGeometry.height() * r.top ) + 1 );
     }
+    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
+    {
+        const Okular::NormalizedRect r = vw->normGeometry();
+        vw->move(
+            qRound( x + m_uncroppedGeometry.width() * r.left ) + 1,
+            qRound( y + m_uncroppedGeometry.height() * r.top ) + 1 );
+    }
 }
 
 void PageViewItem::setVisible( bool visible )
 {
     setFormWidgetsVisible( visible && m_formsVisible );
     m_visible = visible;
+    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
+    {
+        vw->setVisible( m_visible );
+    }
 }
 
 void PageViewItem::invalidate()

@@ -59,12 +59,14 @@
 #include "pageviewannotator.h"
 #include "toolaction.h"
 #include "tts.h"
+#include "videowidget.h"
 #include "core/action.h"
 #include "core/document.h"
 #include "core/form.h"
 #include "core/page.h"
 #include "core/misc.h"
 #include "core/generator.h"
+#include "core/movie.h"
 #include "settings.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
@@ -769,6 +771,19 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 w->setCanBeFilled( d->document->isAllowed( Okular::AllowFillForms ) );
                 item->formWidgets().insert( ff->id(), w );
                 hasformwidgets = true;
+            }
+        }
+        const QLinkedList< Okular::Annotation * > annotations = (*setIt)->annotations();
+        QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.begin(), aEnd = annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
+        {
+            Okular::Annotation * a = *aIt;
+            if ( a->subType() == Okular::Annotation::AMovie )
+            {
+                Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
+                VideoWidget * vw = new VideoWidget( movieAnn, d->document, widget() );
+                item->videoWidgets().insert( movieAnn->movie(), vw );
+                vw->show();
             }
         }
     }

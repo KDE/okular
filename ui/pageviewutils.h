@@ -24,8 +24,10 @@ class QAction;
 class QLabel;
 class QTimer;
 class FormWidgetIface;
+class VideoWidget;
 
 namespace Okular {
+class Movie;
 class Page;
 }
 
@@ -46,6 +48,7 @@ class PageViewItem
         double zoomFactor() const;
         bool isVisible() const;
         QHash<int, FormWidgetIface*>& formWidgets();
+        QHash< Okular::Movie *, VideoWidget * >& videoWidgets();
 
         /* The page is cropped as follows: */
         const Okular::NormalizedRect & crop() const;
@@ -84,6 +87,7 @@ class PageViewItem
         QRect m_uncroppedGeometry;
         Okular::NormalizedRect m_crop;
         QHash<int, FormWidgetIface*> m_formWidgets;
+        QHash< Okular::Movie *, VideoWidget * > m_videoWidgets;
 };
 
 

@@ -44,10 +44,13 @@
 #include "annotationtools.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
+#include "videowidget.h"
 #include "core/action.h"
+#include "core/annotations.h"
 #include "core/audioplayer.h"
 #include "core/document.h"
 #include "core/generator.h"
+#include "core/movie.h"
 #include "core/page.h"
 #include "settings.h"
 
@@ -60,6 +63,11 @@
 // transition effect to the next frame
 struct PresentationFrame
 {
+    ~PresentationFrame()
+    {
+        qDeleteAll( videoWidgets );
+    }
+
     void recalcGeometry( int width, int height, float screenRatio )
     {
         // calculate frame geometry keeping constant aspect ratio
@@ -73,10 +81,18 @@ struct PresentationFrame
         geometry.setRect( ( width - pageWidth ) / 2,
                           ( height - pageHeight ) / 2,
                           pageWidth, pageHeight );
+        Q_FOREACH ( VideoWidget *vw, videoWidgets )
+        {
+            const Okular::NormalizedRect r = vw->normGeometry();
+            QRect vwgeom = r.geometry( width, height );
+            vw->resize( vwgeom.size() );
+            vw->move( geometry.topLeft() + vwgeom.topLeft() );
+        }
     }
 
     const Okular::Page * page;
     QRect geometry;
+    QHash< Okular::Movie *, VideoWidget * > videoWidgets;
 };
 
 
@@ -250,6 +266,19 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     {
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
+        const QLinkedList< Okular::Annotation * > annotations = (*setIt)->annotations();
+        QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.begin(), aEnd = annotations.end();
+        for ( ; aIt != aEnd; ++aIt )
+        {
+            Okular::Annotation * a = *aIt;
+            if ( a->subType() == Okular::Annotation::AMovie )
+            {
+                Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
+                VideoWidget * vw = new VideoWidget( movieAnn, m_document, this );
+                frame->videoWidgets.insert( movieAnn->movie(), vw );
+                vw->hide();
+            }
+        }
         frame->recalcGeometry( m_width, m_height, screenRatio );
         // add the frame to the vector
         m_frames.push_back( frame );
@@ -636,6 +665,7 @@ void PresentationWidget::changePage( int newPage )
     if ( m_frameIndex == newPage )
         return;
 
+    const int oldIndex = m_frameIndex;
     // check if pixmap exists or else request it
     m_frameIndex = newPage;
     PresentationFrame * frame = m_frames[ m_frameIndex ];
@@ -675,6 +705,25 @@ void PresentationWidget::changePage( int newPage )
         // perform the page opening action, if any
         if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
             m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
+    }
+
+    if ( oldIndex != m_frameIndex )
+    {
+        if ( oldIndex != -1 )
+        {
+            Q_FOREACH ( VideoWidget *vw, m_frames[ oldIndex ]->videoWidgets )
+            {
+                vw->stop();
+                vw->hide();
+            }
+        }
+
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        {
+            vw->show();
+            vw->raise();
+        }
 
     }
 }

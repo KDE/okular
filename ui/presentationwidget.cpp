@@ -84,7 +84,7 @@ struct PresentationFrame
         Q_FOREACH ( VideoWidget *vw, videoWidgets )
         {
             const Okular::NormalizedRect r = vw->normGeometry();
-            QRect vwgeom = r.geometry( width, height );
+            QRect vwgeom = r.geometry( geometry.width(), geometry.height() );
             vw->resize( vwgeom.size() );
             vw->move( geometry.topLeft() + vwgeom.topLeft() );
         }

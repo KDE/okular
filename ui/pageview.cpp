@@ -443,7 +443,7 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aPageSizes , SIGNAL( triggered( int ) ),
          this, SLOT( slotPageSizes( int ) ) );
 
-    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Borders" ), this ); // ### TODO KDE 4.2: rename to "margins"
+    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), this );
     ac->addAction("view_trim_margins", d->aTrimMargins );
     connect( d->aTrimMargins, SIGNAL( toggled( bool ) ), SLOT( slotTrimMarginsToggled( bool ) ) );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );

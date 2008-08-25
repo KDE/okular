@@ -138,6 +138,7 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
 
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
+    mainlay->setSpacing( 0 );
 
     d->player = new Phonon::VideoPlayer( Phonon::NoCategory, this );
     d->player->installEventFilter( this );

@@ -154,6 +154,7 @@ set(okularpart_SRCS
    ui/tocmodel.cpp
    ui/toolaction.cpp
    ui/tts.cpp
+   ui/videowidget.cpp
 )
 
 kde4_add_ui_files(okularpart_SRCS

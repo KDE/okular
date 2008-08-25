@@ -34,10 +34,11 @@ class VideoWidget : public QWidget
         void stop();
 
     protected:
-        /* reimp */ void mousePressEvent( QMouseEvent * event );
+        /* reimp */ bool eventFilter( QObject * object, QEvent * event );
 
     private:
         Q_PRIVATE_SLOT( d, void finished() )
+        Q_PRIVATE_SLOT( d, void playOrPause() )
 
         // private storage
         class Private;

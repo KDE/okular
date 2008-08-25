@@ -91,6 +91,10 @@ void VideoWidget::Private::finished()
 VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *document, QWidget *parent )
     : QWidget( parent ), d( new Private( movieann, document, this ) )
 {
+    // do not propagate the mouse events to the parent widget;
+    // they should be tied to this widget, not spread around...
+    setAttribute( Qt::WA_NoMousePropagation );
+
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
 

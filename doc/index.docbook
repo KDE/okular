@@ -29,8 +29,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2008-01-10</date>
-		<releaseinfo>0.6.80</releaseinfo>
+		<date>2008-08-21</date>
+		<releaseinfo>0.7</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -67,8 +67,8 @@
 		<sect1 id="opening">
 			<title>Opening Files</title>
 			<para>
-				To view any supported file in &okular;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...
-				</guimenuitem></menuchoice>, choose a supported file in the dialogue and click <guibutton>Open</guibutton>.
+				To view any supported file in &okular;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...</guimenuitem>
+				</menuchoice>, choose a supported file in the dialogue and click <guibutton>Open</guibutton>.
 				Your file should now be displayed in the main window.
 			</para>
 			<para>
@@ -206,8 +206,13 @@
 				another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
 			</para>
 			<para>
+				The presentation mode has support for more than one screen in a multi-monitor configuration. 
+				With more than one screen a new button will appear in the top bar, with the icon of a screen: 
+				this is a drop down box that allows you to move the presentation to any of the other available screens.
+			</para>
+			<para>
 				Presentation mode has some configuration options, you can find their
-				description at <link linkend="configpresentation">Configuring &okular;</link>.
+				description in the chapter <link linkend="configpresentation">Configuring &okular;</link>.
 			</para>
 		</sect1>
 	</chapter>
@@ -275,8 +280,8 @@
 				</para>
 				<para>
 					The newly constructed annotation will have as author the author you set in the
-					<guilabel>Identity</guilabel> section in the
-					<link linkend="configure">settings</link>.
+					<guilabel>Identity</guilabel> page in &okular;s
+					<link linkend="configure">configuration</link> dialog.
 				</para>
 			</sect2>
 			<sect2 id="annotations-remove">
@@ -299,7 +304,7 @@
 				<title>Editing annotations</title>
 				<para>
 					To edit an annotation, click on it with the &RMB; and select
-					<guimenuitem>Properties...</guimenuitem>. A dialog will appear with the general
+					<guimenuitem>Properties...</guimenuitem> A dialog will appear with the general
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
 				</para>
@@ -393,7 +398,20 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Save</action> the currently open file under a different name.</para>
+						<para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>File</guimenu>
+							<guimenuitem>Save Copy As...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Save</action> a copy the currently open file under a different name 
+						without using the current document backend.</para>
 					</listitem>
 				</varlistentry>
 
@@ -476,7 +494,7 @@
 					</term>
 					<listitem>
 						<para>This item contains the export formats the current document can be exported to.
-						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem>.</para>
+						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem></para>
 					</listitem>
 				</varlistentry>
 
@@ -699,6 +717,19 @@
 								supports different page sizes.
 							</para>
 						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>View</guimenu>
+							<guimenuitem>Trim Borders</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+							Remove the white border of pages when viewing pages.
+						</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -936,6 +967,29 @@
 							section about <link linkend="annotations">Annotations</link>.</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Speak Whole Document</guimenuitem>
+						</menuchoice>
+					</term>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Speak Current Page</guimenuitem>
+						</menuchoice>
+					</term>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Stop Speaking</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>KTTS</application>.</para>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</sect1>
 
@@ -1058,7 +1112,7 @@
 			<para>
 				You can configure &okular; by choosing <menuchoice><guimenu>Settings</guimenu>
 				<guimenuitem>Configure &okular;...</guimenuitem></menuchoice>.
-				The configuration dialogue is split into four sections. This chapter describes the available
+				The configuration dialogue is split into five sections. This chapter describes the available
 				options in detail.
 			</para>
 			<itemizedlist>
@@ -1189,7 +1243,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Change dark and light colors</guilabel></term>
+					<term><guilabel>Change Dark &amp; Light Colors</guilabel></term>
 					<listitem>
 						<para><action>Changes</action> the dark and light color to your preference, that means 
 							black will not be rendered as black but as the selected dark color and white
@@ -1197,7 +1251,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Convert to black and white</guilabel></term>
+					<term><guilabel>Convert to Black &amp; White</guilabel></term>
 					<listitem>
 						<para><action>Converts</action> the document to black and white. You can set the
 							threshold and the contrast. Setting the threshold to a higher value
@@ -1258,10 +1312,9 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Default transition</guilabel></term>
+					<term><guilabel>Pencil color</guilabel></term>
 					<listitem>
-						<para>The transition effect between page and page if the document does not specify one. Set this to <guilabel>Random
-							Transition</guilabel> to make &okular; randomly choose one of the available effects.</para>
+						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1284,9 +1337,19 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Pencil color</guilabel></term>
+					<term><guilabel>Default transition</guilabel></term>
 					<listitem>
-						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
+						<para>The transition effect between page and page if the document does not specify one. Set this to <guilabel>Random
+							Transition</guilabel> to make &okular; randomly choose one of the available effects.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Placement</guilabel></term>
+					<listitem>
+						<para>In this section you can select the <guilabel>Screen</guilabel> used to display the presentation.</para> 
+						<para><guilabel>Current Screen</guilabel> is same screen of the &okular; window that starts the presentation mode.</para>
+						<para><guilabel>Default Screen</guilabel> is the screen marked as default in the xinerama configuration.</para>
+						<para><guilabel>Screen 0</guilabel>, <guilabel>Screen 1</guilabel> &etc; are the available screens.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

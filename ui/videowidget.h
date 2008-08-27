@@ -35,6 +35,8 @@ class VideoWidget : public QWidget
 
     protected:
         /* reimp */ bool eventFilter( QObject * object, QEvent * event );
+        /* reimp */ bool event( QEvent * event );
+        /* reimp */ void resizeEvent( QResizeEvent * event );
 
     private:
         Q_PRIVATE_SLOT( d, void finished() )

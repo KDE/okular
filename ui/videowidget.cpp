@@ -191,7 +191,6 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
     d->seekSlider->setEnabled( false );
 
     Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), 0 );
-    verticalSeekSlider->setOrientation( Qt::Vertical );
     verticalSeekSlider->setMaximumHeight( 100 );
     d->seekSliderMenuAction = createToolBarButtonWithWidgetPopup(
         d->controlBar, verticalSeekSlider, KIcon( "player-time" ) );

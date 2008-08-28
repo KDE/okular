@@ -36,6 +36,13 @@ if(NOT WIN32)
         set(LIBSPECTRE_FOUND TRUE)
      endif(_return_VALUE STREQUAL "0")
    endif(_SpectreLinkFlags)
+else(NOT WIN32)
+    # do not use pkg-config on windows
+    find_library(_SpectreLinkFlags NAMES libspectre spectre PATHS ${CMAKE_LIBRARY_PATH})
+    
+    find_path(LIBSPECTRE_INCLUDE_DIR spectre.h PATH_SUFFIXES libspectre )
+    
+    set(LIBSPECTRE_FOUND TRUE)
 endif(NOT WIN32)
 
 if (LIBSPECTRE_FOUND)

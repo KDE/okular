@@ -20,7 +20,7 @@ if (EPUB_INCLUDE_DIR AND EPUB_LIBRARIES)
 else (EPUB_INCLUDE_DIR AND EPUB_LIBRARIES)
 
   find_library (EPUB_LIBRARIES
-    NAMES epub
+    NAMES epub libepub
   )
 
   find_path (EPUB_INCLUDE_DIR

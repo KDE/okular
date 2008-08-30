@@ -86,6 +86,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void repositionContent();
         void requestPixmaps();
         void setScreen( int );
+        void inhibitScreenSaver();
+        void allowScreenSaver();
 
         // cache stuff
         int m_width;
@@ -99,6 +101,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         AnnotatorEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
+        int m_screenSaverCookie;
 
         // transition related
         QTimer * m_transitionTimer;

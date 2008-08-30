@@ -10,6 +10,10 @@
 #include "presentationwidget.h"
 
 // qt/kde includes
+#include <QtDBus/QDBusConnection>
+#include <QtDBus/QDBusMessage>
+#include <QtDBus/QDBusReply>
+
 #include <qevent.h>
 #include <qfontmetrics.h>
 #include <kicon.h>
@@ -122,8 +126,8 @@ class PresentationToolBar : public QToolBar
 
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
-    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_document( doc ),
-    m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
+    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
+    m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_screenSelect( 0 ), m_blockNotifications( false )
 {
     Q_UNUSED( parent )
@@ -217,11 +221,17 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
         setCursor( QCursor( Qt::BlankCursor ) );
     }
 
+    // inhibit the screen saver
+    inhibitScreenSaver();
+
     QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
 }
 
 PresentationWidget::~PresentationWidget()
 {
+    // allow the screen saver again
+    allowScreenSaver();
+
     // stop the audio playbacks
     Okular::AudioPlayer::instance()->stopPlaybacks();
 
@@ -1298,6 +1308,28 @@ void PresentationWidget::setScreen( int newScreen )
     generatePage( true /* no transitions */ );
 }
 
+void PresentationWidget::inhibitScreenSaver()
+{
+    QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
+                                                           "org.freedesktop.ScreenSaver", "Inhibit" );
+    message << QString( "Okular" );
+    message << i18n( "Giving a presentation" );
+
+    QDBusReply<uint> reply = QDBusConnection::sessionBus().call( message );
+    if ( reply.isValid() )
+        m_screenSaverCookie = reply.value();
+}
+
+void PresentationWidget::allowScreenSaver()
+{
+    if ( m_screenSaverCookie != -1 )
+    {
+        QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
+                                                               "org.freedesktop.ScreenSaver", "UnInhibit" );
+        message << (uint)m_screenSaverCookie;
+        QDBusConnection::sessionBus().send( message );
+    }
+}
 
 void PresentationWidget::slotFind()
 {

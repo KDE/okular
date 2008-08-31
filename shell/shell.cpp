@@ -76,8 +76,8 @@ void Shell::init()
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
       // and integrate the part's GUI with the shell's
-      createGUI(m_part);
       setupGUI(Keys | Save);
+      createGUI(m_part);
       m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
       m_doc = qobject_cast<KDocumentViewer*>(m_part);
     }

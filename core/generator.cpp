@@ -554,6 +554,9 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
                 KIcon( "application-vnd.oasis.opendocument.text" ),
                 i18nc( "This is the document format", "OpenDocument Text" ),
                 KMimeType::mimeType( "application/vnd.oasis.opendocument.text" ) );
+	    break;
+        case HTML:
+            return ExportFormat( KIcon( "text-html" ), i18nc( "This is the document format", "HTML" ), KMimeType::mimeType( "text/html" ) );
             break;
     }
     return ExportFormat();

@@ -9,6 +9,7 @@
 
 #include "generator_tiff.h"
 
+#include <qabstractfileengine.h>
 #include <qbuffer.h>
 #include <qdatetime.h>
 #include <qfile.h>
@@ -202,7 +203,17 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     QFile* qfile = new QFile( fileName );
     qfile->open( QIODevice::ReadOnly );
     d->dev = qfile;
-    d->tiff = TIFFClientOpen( "okular.tiff", "r", d->dev,
+    QAbstractFileEngine *fileEngine = QAbstractFileEngine::create( fileName );
+    if ( fileEngine )
+    {
+        d->data = QFile::encodeName( fileEngine->fileName( QAbstractFileEngine::BaseName ) );
+        delete fileEngine;
+    }
+    else
+    {
+        d->data = QByteArray( "okular.tiff" );
+    }
+    d->tiff = TIFFClientOpen( d->data.constData(), "r", d->dev,
                   okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
                   okular_tiffCloseProc, okular_tiffSizeProc,
                   okular_tiffMapProc, okular_tiffUnmapProc );
@@ -210,6 +221,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     {
         delete d->dev;
         d->dev = 0;
+        d->data.clear();
         return false;
     }
 
@@ -224,7 +236,7 @@ bool TIFFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector< 
     QBuffer* qbuffer = new QBuffer( &d->data );
     qbuffer->open( QIODevice::ReadOnly );
     d->dev = qbuffer;
-    d->tiff = TIFFClientOpen( "okular.tiff", "r", d->dev,
+    d->tiff = TIFFClientOpen( "<stdin>", "r", d->dev,
                   okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
                   okular_tiffCloseProc, okular_tiffSizeProc,
                   okular_tiffMapProc, okular_tiffUnmapProc );

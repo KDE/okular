@@ -476,8 +476,8 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
 	QTextDocumentWriter odfWriter( fileName, "html" );
 
 	return odfWriter.write( d->mDocument );
-    }	
 #endif
+    }
     return false;
 }
 

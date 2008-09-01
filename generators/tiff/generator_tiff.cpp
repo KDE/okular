@@ -126,6 +126,37 @@ static void adaptSizeToResolution( TIFF *tiff, ttag_t whichres, double dpi, uint
     }
 }
 
+static Okular::Rotation readTiffRotation( TIFF *tiff )
+{
+    uint32 tiffOrientation = 0;
+
+    if ( !TIFFGetField( tiff, TIFFTAG_ORIENTATION, &tiffOrientation ) )
+        return Okular::Rotation0;
+
+    Okular::Rotation ret = Okular::Rotation0;
+    switch ( tiffOrientation )
+    {
+        case ORIENTATION_TOPLEFT:
+        case ORIENTATION_TOPRIGHT:
+            ret = Okular::Rotation0;
+            break;
+        case ORIENTATION_BOTRIGHT:
+        case ORIENTATION_BOTLEFT:
+            ret = Okular::Rotation180;
+            break;
+        case ORIENTATION_LEFTTOP:
+        case ORIENTATION_LEFTBOT:
+            ret = Okular::Rotation270;
+            break;
+        case ORIENTATION_RIGHTTOP:
+        case ORIENTATION_RIGHTBOT:
+            ret = Okular::Rotation90;
+            break;
+    }
+
+    return ret;
+}
+
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
@@ -238,16 +269,20 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
         int rotation = request->page()->rotation();
         uint32 width = 1;
         uint32 height = 1;
+        uint32 orientation = 0;
         TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width );
         TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height );
         if ( rotation % 2 == 1 )
             qSwap( width, height );
 
+        if ( !TIFFGetField( d->tiff, TIFFTAG_ORIENTATION, &orientation ) )
+            orientation = ORIENTATION_TOPLEFT;
+
         QImage image( width, height, QImage::Format_RGB32 );
         uint32 * data = (uint32 *)image.bits();
 
         // read data
-        if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, ORIENTATION_TOPLEFT ) != 0 )
+        if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, orientation ) != 0 )
         {
             // an image read by ReadRGBAImage is ABGR, we need ARGB, so swap red and blue
             uint32 size = width * height;
@@ -337,7 +372,7 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
         adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, Okular::Utils::dpiX(), &width );
         adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, Okular::Utils::dpiY(), &height );
 
-        Okular::Page * page = new Okular::Page( realdirs, width, height, Okular::Rotation0 );
+        Okular::Page * page = new Okular::Page( realdirs, width, height, readTiffRotation( d->tiff ) );
         pagesVector[ realdirs ] = page;
 
         m_pageMapping[ realdirs ] = i;

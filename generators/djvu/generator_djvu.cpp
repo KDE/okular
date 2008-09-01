@@ -141,32 +141,32 @@ const Okular::DocumentInfo * DjVuGenerator::generateDocumentInfo()
     {
         // compile internal structure reading properties from KDjVu
         QString title = m_djvu->metaData( "title" ).toString();
-        m_docInfo->set( Okular::DocumentInfo::Title, title.isEmpty() ? i18n( "Unknown" ) : title );
+        m_docInfo->set( Okular::DocumentInfo::Title, title.isEmpty() ? i18nc( "Unknown title", "Unknown" ) : title );
         QString author = m_djvu->metaData( "author" ).toString();
-        m_docInfo->set( Okular::DocumentInfo::Author, author.isEmpty() ? i18n( "Unknown" ) : author );
+        m_docInfo->set( Okular::DocumentInfo::Author, author.isEmpty() ? i18nc( "Unknown author", "Unknown" ) : author );
         QString editor = m_djvu->metaData( "editor" ).toString();
-        m_docInfo->set( "editor", editor.isEmpty() ? i18n( "Unknown" ) : editor, i18n( "Editor" ) );
+        m_docInfo->set( "editor", editor.isEmpty() ? i18nc( "Unknown editor", "Unknown" ) : editor, i18n( "Editor" ) );
         QString publisher = m_djvu->metaData( "publisher" ).toString();
-        m_docInfo->set( "publisher", publisher.isEmpty() ? i18n( "Unknown" ) : publisher, i18n( "Publisher" ) );
+        m_docInfo->set( "publisher", publisher.isEmpty() ? i18nc( "Unknown publisher", "Unknown" ) : publisher, i18n( "Publisher" ) );
         QString year = m_djvu->metaData( "year" ).toString();
-        m_docInfo->set( Okular::DocumentInfo::CreationDate, year.isEmpty() ? i18n( "Unknown" ) : year );
+        m_docInfo->set( Okular::DocumentInfo::CreationDate, year.isEmpty() ? i18nc( "Unknown creation date", "Unknown" ) : year );
         QString volume = m_djvu->metaData( "volume" ).toString();
-        m_docInfo->set( "volume", volume.isEmpty() ? i18n( "Unknown" ) : volume, i18n( "Volume" ) );
+        m_docInfo->set( "volume", volume.isEmpty() ? i18nc( "Unknown volume information", "Unknown" ) : volume, i18n( "Volume" ) );
         QString doctype = m_djvu->metaData( "documentType" ).toString();
-        m_docInfo->set( "documentType", doctype.isEmpty() ? i18n( "Unknown" ) : doctype, i18n( "Type of document" ) );
+        m_docInfo->set( "documentType", doctype.isEmpty() ? i18nc( "Unknown type of document", "Unknown" ) : doctype, i18n( "Type of document" ) );
         QVariant numcomponents = m_djvu->metaData( "componentFile" );
-        m_docInfo->set( "componentFile", numcomponents.type() != QVariant::Int ? i18n( "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
+        m_docInfo->set( "componentFile", numcomponents.type() != QVariant::Int ? i18nc( "Unknown number of component files", "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
     }
     else
     {
-        m_docInfo->set( Okular::DocumentInfo::Title, i18n( "Unknown" ) );
-        m_docInfo->set( Okular::DocumentInfo::Author, i18n( "Unknown" ) );
-        m_docInfo->set( "editor", i18n( "Unknown" ), i18n( "Editor" ) );
-        m_docInfo->set( "publisher", i18n( "Unknown" ), i18n( "Publisher" ) );
-        m_docInfo->set( Okular::DocumentInfo::CreationDate, i18n( "Unknown" ) );
-        m_docInfo->set( "volume", i18n( "Unknown" ), i18n( "Volume" ) );
-        m_docInfo->set( "documentType", i18n( "Unknown" ), i18n( "Type of document" ) );
-        m_docInfo->set( "componentFile", i18n( "Unknown" ), i18n( "Component Files" ) );
+        m_docInfo->set( Okular::DocumentInfo::Title, i18nc( "Unknown title", "Unknown" ) );
+        m_docInfo->set( Okular::DocumentInfo::Author, i18nc( "Unknown author", "Unknown" ) );
+        m_docInfo->set( "editor", i18nc( "Unknown editor", "Unknown" ), i18n( "Editor" ) );
+        m_docInfo->set( "publisher", i18nc( "Unknown publisher", "Unknown" ), i18n( "Publisher" ) );
+        m_docInfo->set( Okular::DocumentInfo::CreationDate, i18nc( "Unknown creation date", "Unknown" ) );
+        m_docInfo->set( "volume", i18nc( "Unknown volume information", "Unknown" ), i18n( "Volume" ) );
+        m_docInfo->set( "documentType", i18nc( "Unknown type of document", "Unknown" ), i18n( "Type of document" ) );
+        m_docInfo->set( "componentFile", i18nc( "Unknown number of component files", "Unknown" ), i18n( "Component Files" ) );
     }
 
     return m_docInfo;

@@ -7,6 +7,9 @@ Legend:
 
 Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH  91146: Add capability to extract plain text from a pdf file.
+-> WISH  91251: "Magic marker" tool for higlighting text
+-> WISH  91809: kpdf cant fill in formulars
+-> WISH  93416: support for pdf sticky notes
 -> BUG   97869: kpdf fails to properly hide the context menu
 -> WISH  99352: Cannot change orientation of pdf file
 -> WISH  99787: kpdf needs to have a bookmark list
@@ -14,15 +17,20 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 102523: wish: if opening second file, file/open dir should be dirname($current_file)
 -> WISH 102704: Handle gzipped and bzipped PDFs
 -> WISH 102788: Current page number visible
+-> WISH 103051: make notes on pdf files
 -> BUG  106546: Search with "/" and ALT+TAB
 -> WISH 107998: kpdf horizontal scroll bar
 -> WISH 109346: ability to select everything on page(s) and use ctrl+a to select all (text)
 -> BUG  110440: Almost all options in Find dialog are always disabled
 -> WISH 111651: Usability: Make find-as-you-type widget more distinguishable
 -> WISH 114648: An option to deny documents' fullscreen requests is desirable.
+-> WISH 115557: Automatically detect and remove white page borders
+-> WISH 117045: text search: continue backwards
 -> WISH 117449: kpdf should read files from stdin with the - option
 -> WISH 117805: Wish: Select pages like kghostview
+-> WISH 118872: An option to read all the document with Kttsd
 -> WISH 118938: No way to find out the page size(s)
+-> WISH 119084: pdf attachment support: saving/opening attachments in pdf...
 -> WISH 119455: use poppler library for kpdf
 -> WISH 119919: make it possible to disable transition in presentation mode
 -> WISH 122863: Show page numbers of chapters/bookmarks in contents tab
@@ -30,6 +38,7 @@ Bugs and wishes to close when moving okular to kdegraphics:
 -> WISH 131045: Add context menu for URLs
 -> WISH 132152: Usability: contents / pdfbookmarks panel is not accessible via keyboard only
 -> WISH 134115: specifing to kpdf the first-opened page from command line
+-> WISH 134646: remember (and restore) zoom per file not per app
 -> WISH 136820: would like a reload button or menu item in KPDF
 -> WISH 137905: command-line option for presentation mode
 -> WISH 145345: goto page: update slider while editing page number

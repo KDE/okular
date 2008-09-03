@@ -702,6 +702,22 @@ static void applySpreadStyleToQGradient( const QString &style, QGradient *qgrad 
     }
 }
 
+/**
+    Read an UnicodeString
+    \param string the raw value of UnicodeString
+
+    \see XPS specification 5.1.4
+*/
+static QString unicodeString( const QString &raw )
+{
+    QString ret;
+    if ( raw.startsWith( QLatin1String( "{}" ) ) ) {
+        ret = raw.mid( 2 );
+    }
+    return ret;
+}
+
+
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
     m_painter = NULL;
@@ -849,7 +865,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
         }
     }
 
-    m_painter->drawText( origin, node.attributes.value("UnicodeString") );
+    m_painter->drawText( origin, unicodeString( node.attributes.value( "UnicodeString" ) ) );
     // kDebug(XpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri");
     // kDebug(XpsDebug) << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY");
     // kDebug(XpsDebug) << "    Unicode: " << atts.value("UnicodeString");
@@ -1572,7 +1588,7 @@ Okular::TextPage* XpsPage::textPage()
                 if (!att.isEmpty()) {
                     matrix = parseRscRefMatrix( att ) * matrix;
                 }
-                QString text =  glyphsAtts.value( "UnicodeString" ).toString();
+                QString text = unicodeString( glyphsAtts.value( "UnicodeString" ).toString() );
 
                 // Get font (doesn't work well because qt doesn't allow to load font from file)
                 QFont font = m_file->getFontByName( glyphsAtts.value( "FontUri" ).toString(),

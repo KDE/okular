@@ -713,6 +713,8 @@ static QString unicodeString( const QString &raw )
     QString ret;
     if ( raw.startsWith( QLatin1String( "{}" ) ) ) {
         ret = raw.mid( 2 );
+    } else {
+        ret = raw;
     }
     return ret;
 }

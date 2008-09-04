@@ -30,6 +30,7 @@
 #include <QXmlStreamReader>
 #include <QXmlDefaultHandler>
 #include <QStack>
+#include <QVariant>
 
 #include <kzip.h>
 
@@ -54,11 +55,11 @@ public:
     QString name;
     QVector<XpsRenderNode> children;
     QXmlAttributes attributes;
-    void * data;
+    QVariant data;
 
     XpsRenderNode * findChild( const QString &name );
-    void * getRequiredChildData( const QString &name );
-    void * getChildData( const QString &name );
+    QVariant getRequiredChildData( const QString &name );
+    QVariant getChildData( const QString &name );
 };
 
 struct XpsGradient

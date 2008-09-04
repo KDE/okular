@@ -59,6 +59,10 @@ static KAboutData createAboutData()
 
 OKULAR_EXPORT_PLUGIN( XpsGenerator, createAboutData() )
 
+Q_DECLARE_METATYPE( QGradient* )
+Q_DECLARE_METATYPE( XpsPathFigure* )
+Q_DECLARE_METATYPE( XpsPathGeometry* )
+
 // From Qt4
 static int hex2int(char hex)
 {
@@ -751,7 +755,6 @@ bool XpsHandler::startElement( const QString &nameSpace,
     XpsRenderNode node;
     node.name = localName;
     node.attributes = atts;
-    node.data = NULL;
     processStartElement( node );
     m_nodes.push(node);
 
@@ -818,10 +821,9 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     QBrush brush;
     att = node.attributes.value("Fill");
     if (att.isEmpty()) {
-        XpsFill * data = (XpsFill *)node.getChildData( "Glyphs.Fill" );
-        if (data != NULL) {
-            brush = * data;
-        delete data;
+        QVariant data = node.getChildData( "Glyphs.Fill" );
+        if (data.canConvert<QBrush>()) {
+            brush = data.value<QBrush>();
         } else {
             // no "Fill" attribute and no "Glyphs.Fill" child, so show nothing
             // (see XPS specs, 5.10)
@@ -917,10 +919,9 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     QMatrix viewportMatrix;
     att = node.attributes.value( "Transform" );
     if ( att.isEmpty() ) {
-        XpsMatrixTransform * data = (XpsMatrixTransform *)node.getChildData( "ImageBrush.Transform" );
-        if (data != NULL) {
-            viewportMatrix = *data;
-            delete data;
+        QVariant data = node.getChildData( "ImageBrush.Transform" );
+        if (data.canConvert<QMatrix>()) {
+            viewportMatrix = data.value<QMatrix>();
         } else {
             viewportMatrix = QMatrix();
         }
@@ -933,7 +934,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     brush = QBrush( image );
     brush.setMatrix( viewboxMatrix.inverted() * viewportMatrix );
 
-    node.data = new QBrush( brush );
+    node.data = qVariantFromValue( brush );
 }
 
 void XpsHandler::processPath( XpsRenderNode &node )
@@ -944,9 +945,10 @@ void XpsHandler::processPath( XpsRenderNode &node )
     m_painter->save();
 
     QString att;
+    QVariant data;
 
     // Get path
-    XpsPathGeometry * pathdata = (XpsPathGeometry *)node.getChildData( "Path.Data" );
+    XpsPathGeometry * pathdata = node.getChildData( "Path.Data" ).value< XpsPathGeometry * >();
     att = node.attributes.value( "Data" );
     if (! att.isEmpty() ) {
         QPainterPath path = parseAbbreviatedPathData( att );
@@ -966,12 +968,9 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if (! att.isEmpty() ) {
         brush = parseRscRefColorForBrush( att );
     } else {
-        XpsFill * data = (XpsFill *)node.getChildData( "Path.Fill" );
-        if (data != NULL) {
-            brush = *data;
-        delete data;
-        } else {
-            brush = QBrush();
+        data = node.getChildData( "Path.Fill" );
+        if (data.canConvert<QBrush>()) {
+            brush = data.value<QBrush>();
         }
     }
     m_painter->setBrush( brush );
@@ -982,10 +981,9 @@ void XpsHandler::processPath( XpsRenderNode &node )
     if  (! att.isEmpty() ) {
         pen = parseRscRefColorForPen( att );
     } else {
-        XpsFill * data = (XpsFill *)node.getChildData( "Path.Stroke" );
-        if (data != NULL) {
-            pen.setBrush( *data );
-            delete data;
+        data = node.getChildData( "Path.Stroke" );
+        if (data.canConvert<QBrush>()) {
+            pen.setBrush( data.value<QBrush>() );
         }
     }
     att = node.attributes.value( "StrokeThickness" );
@@ -1094,11 +1092,9 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
 {
     XpsPathGeometry * geom = new XpsPathGeometry();
 
-    node.data = 0;
-
     Q_FOREACH ( const XpsRenderNode &child, node.children ) {
-        if ( child.data ) {
-            XpsPathFigure *figure = (XpsPathFigure *)child.data;
+        if ( child.data.canConvert<XpsPathFigure *>() ) {
+            XpsPathFigure *figure = child.data.value<XpsPathFigure *>();
             geom->paths.append( figure );
         }
     }
@@ -1125,7 +1121,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
     }
 
     if ( !geom->paths.isEmpty() ) {
-        node.data = geom;
+        node.data = qVariantFromValue( geom );
     } else {
         delete geom;
     }
@@ -1137,8 +1133,6 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
 
     QString att;
     QPainterPath path;
-
-    node.data = 0;
 
     att = node.attributes.value( "StartPoint" );
     if ( !att.isEmpty() ) {
@@ -1216,7 +1210,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
     }
 
     if ( !path.isEmpty() ) {
-        node.data = new XpsPathFigure( path, isFilled );
+        node.data = qVariantFromValue( new XpsPathFigure( path, isFilled ) );
     }
 }
 
@@ -1250,12 +1244,11 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processPath( node );
     } else if (node.name == "MatrixTransform") {
         //TODO Ignoring x:key
-        node.data = new QMatrix ( attsToMatrix( node.attributes.value( "Matrix" ) ) );
+        node.data = qVariantFromValue( QMatrix( attsToMatrix( node.attributes.value( "Matrix" ) ) ) );
     } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
-        XpsMatrixTransform * data = (XpsMatrixTransform *)node.getRequiredChildData( "MatrixTransform" );
-        if (data != NULL) {
-            m_painter->setWorldMatrix( *data, true );
-        delete data;
+        QVariant data = node.getRequiredChildData( "MatrixTransform" );
+        if (data.canConvert<QMatrix>()) {
+            m_painter->setWorldMatrix( data.value<QMatrix>(), true );
         }
     } else if (node.name == "Canvas") {
         m_painter->restore();
@@ -1265,37 +1258,37 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processStroke( node );
     } else if (node.name == "SolidColorBrush") {
         //TODO Ignoring opacity, x:key
-        node.data = new QBrush( QColor (hexToRgba( node.attributes.value( "Color" ).toLatin1() ) ) );
+        node.data = qVariantFromValue( QBrush( QColor( hexToRgba( node.attributes.value( "Color" ).toLatin1() ) ) ) );
     } else if (node.name == "ImageBrush") {
         processImageBrush( node );
     } else if (node.name == "ImageBrush.Transform") {
         node.data = node.getRequiredChildData( "MatrixTransform" );
     } else if (node.name == "LinearGradientBrush") {
         XpsRenderNode * gradients = node.findChild( "LinearGradientBrush.GradientStops" );
-        if ( gradients && gradients->data ) {
+        if ( gradients && gradients->data.canConvert< QGradient * >() ) {
             QPointF start = getPointFromString( node.attributes.value( "StartPoint" ) );
             QPointF end = getPointFromString( node.attributes.value( "EndPoint" ) );
-            QLinearGradient * qgrad = static_cast< QLinearGradient * >( gradients->data );
+            QLinearGradient * qgrad = static_cast< QLinearGradient * >( gradients->data.value< QGradient * >() );
             qgrad->setStart( start );
             qgrad->setFinalStop( end );
             applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
-            node.data = new QBrush( *qgrad );
+            node.data = qVariantFromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
     } else if (node.name == "RadialGradientBrush") {
         XpsRenderNode * gradients = node.findChild( "RadialGradientBrush.GradientStops" );
-        if ( gradients && gradients->data ) {
+        if ( gradients && gradients->data.canConvert< QGradient * >() ) {
             QPointF center = getPointFromString( node.attributes.value( "Center" ) );
             QPointF origin = getPointFromString( node.attributes.value( "GradientOrigin" ) );
             double radiusX = node.attributes.value( "RadiusX" ).toDouble();
             double radiusY = node.attributes.value( "RadiusY" ).toDouble();
-            QRadialGradient * qgrad = static_cast< QRadialGradient * >( gradients->data );
+            QRadialGradient * qgrad = static_cast< QRadialGradient * >( gradients->data.value< QGradient * >() );
             qgrad->setCenter( center );
             qgrad->setFocalPoint( origin );
             // TODO what in case of different radii?
             qgrad->setRadius( qMin( radiusX, radiusY ) );
             applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
-            node.data = new QBrush( *qgrad );
+            node.data = qVariantFromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
     } else if (node.name == "LinearGradientBrush.GradientStops") {
@@ -1309,7 +1302,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         if ( !gradients.isEmpty() ) {
             QLinearGradient * qgrad = new QLinearGradient();
             addXpsGradientsToQGradient( gradients, qgrad );
-            node.data = qgrad;
+            node.data = qVariantFromValue< QGradient * >( qgrad );
         }
     } else if (node.name == "RadialGradientBrush.GradientStops") {
         QList<XpsGradient> gradients;
@@ -1322,7 +1315,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         if ( !gradients.isEmpty() ) {
             QRadialGradient * qgrad = new QRadialGradient();
             addXpsGradientsToQGradient( gradients, qgrad );
-            node.data = qgrad;
+            node.data = qVariantFromValue< QGradient * >( qgrad );
         }
     } else if (node.name == "PathFigure") {
         processPathFigure( node );
@@ -2165,22 +2158,22 @@ XpsRenderNode * XpsRenderNode::findChild( const QString &name )
     return NULL;
 }
 
-void * XpsRenderNode::getRequiredChildData( const QString &name )
+QVariant XpsRenderNode::getRequiredChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
     if (child == NULL) {
         kDebug(XpsDebug) << "Required element " << name << " is missing in " << this->name;
-        return NULL;
+        return QVariant();
     }
 
     return child->data;
 }
 
-void * XpsRenderNode::getChildData( const QString &name )
+QVariant XpsRenderNode::getChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
     if (child == NULL) {
-        return NULL;
+        return QVariant();
     } else {
         return child->data;
     }

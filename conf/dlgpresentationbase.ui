@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>628</height>
+    <height>446</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" >
@@ -70,10 +70,9 @@
      <property name="title" >
       <string>Appearance</string>
      </property>
-       <layout class="QFormLayout" name="formLayout" >
-        <property name="fieldGrowthPolicy" >
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-        </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <layout class="QGridLayout" name="gridLayout_3" >
         <item row="0" column="0" >
          <widget class="QLabel" name="textLabel3" >
           <property name="text" >
@@ -129,122 +128,142 @@
           </item>
          </widget>
         </item>
-        <item row="3" column="0" >
-         <widget class="QCheckBox" name="kcfg_SlidesShowProgress" >
-          <property name="text" >
-           <string>Show &amp;progress indicator</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0" >
-         <widget class="QCheckBox" name="kcfg_SlidesShowSummary" >
-          <property name="text" >
-           <string>Show s&amp;ummary page</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0" >
-         <widget class="QCheckBox" name="kcfg_SlidesTransitionsEnabled" >
-          <property name="text" >
-           <string>Enable transitions</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1" >
-         <widget class="QComboBox" name="kcfg_SlidesTransition" >
-          <item>
-           <property name="text" >
-            <string>Blinds Vertical</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Blinds Horizontal</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Box In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Box Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Dissolve</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Right</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Glitter Right-Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Random Transition</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Replace</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Horizontal In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Horizontal Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Vertical In</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Split Vertical Out</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Down</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Right</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Left</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Wipe Up</string>
-           </property>
-          </item>
-         </widget>
-        </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_SlidesShowProgress" >
+        <property name="text" >
+         <string>Show &amp;progress indicator</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_SlidesShowSummary" >
+        <property name="text" >
+         <string>Show s&amp;ummary page</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="kcfg_SlidesTransitionsEnabled" >
+     <property name="title" >
+      <string>Enable transitions</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="textLabel1" >
+        <property name="text" >
+         <string>Default transition:</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QComboBox" name="kcfg_SlidesTransition" >
+        <item>
+         <property name="text" >
+          <string>Blinds Vertical</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Blinds Horizontal</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Box In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Box Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Dissolve</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Right</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Glitter Right-Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Random Transition</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Replace</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Horizontal In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Horizontal Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Vertical In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Split Vertical Out</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Down</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Right</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Left</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Wipe Up</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -269,19 +288,22 @@
      </layout>
     </widget>
    </item>
-      <item>
-       <spacer name="verticalSpacer" >
-        <property name="orientation" >
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>4</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />

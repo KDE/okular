@@ -302,7 +302,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aViewMode = 0;
-    d->zoomMode = PageView::ZoomFitPage;
+    d->zoomMode = PageView::ZoomFitWidth;
     d->zoomFactor = 1.0;
     d->mouseMode = MouseNormal;
     d->mouseMidZooming = false;

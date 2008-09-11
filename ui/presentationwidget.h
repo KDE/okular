@@ -122,6 +122,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
         bool m_blockNotifications;
+        bool m_inBlackScreenMode;
 
     private slots:
         void slotNextPage();
@@ -136,6 +137,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void clearDrawings();
         void screenResized( int );
         void chooseScreen( QAction * );
+        void toggleBlackScreenMode( bool );
 };
 
 #endif

@@ -529,6 +529,11 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
     widget()->addAction(closeFindBar);
 
+    KToggleAction *blackscreenAction = new KToggleAction( i18n( "Switch Blackscreen Mode" ), ac );
+    ac->addAction( "switch_blackscreen_mode", blackscreenAction );
+    blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
+    blackscreenAction->setIcon( KIcon( "view-presentation" ) );
+
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
     connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );

@@ -128,7 +128,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 ), m_blockNotifications( false )
+    m_screenSelect( 0 ), m_blockNotifications( false ), m_inBlackScreenMode( false )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -353,6 +353,10 @@ void PresentationWidget::setupActions( KActionCollection * collection )
     addAction( m_ac->action( "go_next" ) );
     addAction( m_ac->action( "first_page" ) );
     addAction( m_ac->action( "last_page" ) );
+
+    QAction *action = m_ac->action( "switch_blackscreen_mode" );
+    connect( action, SIGNAL( toggled( bool ) ), SLOT( toggleBlackScreenMode( bool ) ) );
+    addAction( action );
 }
 
 
@@ -530,6 +534,13 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
 {
+    if ( m_inBlackScreenMode )
+    {
+        QPainter painter( this );
+        painter.fillRect( pe->rect(), Qt::black );
+        return;
+    }
+
     if (m_width == -1)
     {
         m_width = width();
@@ -1270,6 +1281,13 @@ void PresentationWidget::chooseScreen( QAction *act )
     const int newScreen = act->data().toInt();
 
     setScreen( newScreen );
+}
+
+void PresentationWidget::toggleBlackScreenMode( bool )
+{
+    m_inBlackScreenMode = !m_inBlackScreenMode;
+
+    update();
 }
 
 void PresentationWidget::setScreen( int newScreen )

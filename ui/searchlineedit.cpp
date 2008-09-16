@@ -16,6 +16,7 @@
 // qt/kde includes
 #include <qapplication.h>
 #include <qtimer.h>
+#include <kcolorscheme.h>
 
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
@@ -115,12 +116,20 @@ void SearchLineEdit::findPrev()
 
 void SearchLineEdit::slotTextChanged( const QString & text )
 {
-    QPalette qAppPalette = QApplication::palette();
-    // if 0<length<minLength set 'red' text and send a blank string to document
-    QColor color = text.length() < m_minLength && text.length() > 0 ? Qt::darkRed : qAppPalette.color( QPalette::Text );
     QPalette pal = palette();
-    pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
-    pal.setColor( QPalette::Text, color );
+    const int textLength = text.length();
+    if ( textLength > 0 && textLength < m_minLength )
+    {
+        const KColorScheme scheme( QPalette::Active, KColorScheme::View );
+        pal.setBrush( QPalette::Base, scheme.background( KColorScheme::NegativeBackground ) );
+        pal.setBrush( QPalette::Text, scheme.foreground( KColorScheme::NegativeText ) );
+    }
+    else
+    {
+        const QPalette qAppPalette = QApplication::palette();
+        pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
+        pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
+    }
     setPalette( pal );
     restartSearch();
 }
@@ -156,8 +165,9 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
     if ( endStatus == Okular::Document::NoMatchFound )
     {
         QPalette pal = palette();
-        pal.setColor( QPalette::Base, Qt::red );
-        pal.setColor( QPalette::Text, Qt::white );
+        const KColorScheme scheme( QPalette::Active, KColorScheme::View );
+        pal.setBrush( QPalette::Base, scheme.background( KColorScheme::NegativeBackground ) );
+        pal.setBrush( QPalette::Text, scheme.foreground( KColorScheme::NegativeText ) );
         setPalette( pal );
     }
 }

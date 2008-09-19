@@ -107,7 +107,10 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
         m_icon = icon;
     }
 
-    QPixmap pixmap = GuiUtils::loadStamp( m_icon, QSize( m_previewSize, m_previewSize ) );
+    QPixmap pixmap = GuiUtils::loadStamp( m_icon, QSize(), m_previewSize );
+    const QRect cr = m_iconLabel->contentsRect();
+    if ( pixmap.width() > cr.width() || pixmap.height() > cr.height() )
+        pixmap = pixmap.scaled( cr.size(), Qt::KeepAspectRatio );
     m_iconLabel->setPixmap( pixmap );
 
     emit iconChanged( m_icon );

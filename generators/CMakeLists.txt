@@ -63,6 +63,8 @@ add_subdirectory(fictionbook)
 
 add_subdirectory(comicbook)
 
+add_subdirectory(fax)
+
 if(JPEG_FOUND AND ZLIB_FOUND)
   add_subdirectory(plucker)
 endif(JPEG_FOUND AND ZLIB_FOUND)

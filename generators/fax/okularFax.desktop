@@ -1,0 +1,7 @@
+[Desktop Entry]
+Icon=okular
+Name=Okular
+X-KDE-ServiceTypes=KParts/ReadOnlyPart
+X-KDE-Library=okularpart
+Type=Service
+MimeType=image/fax-g3;image/g3fax;

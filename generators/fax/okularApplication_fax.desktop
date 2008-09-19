@@ -1,0 +1,11 @@
+[Desktop Entry]
+MimeType=image/fax-g3;image/g3fax;
+Terminal=false
+Name=Okular
+GenericName=Document Viewer
+Exec=okular %U %i -caption "%c"
+Icon=okular
+Type=Application
+InitialPreference=1
+Categories=Qt;KDE;Graphics;Viewer;
+NoDisplay=true

@@ -10,6 +10,7 @@
 #include "pageviewannotator.h"
 
 // qt / kde includes
+#include <qapplication.h>
 #include <qfile.h>
 #include <qcolor.h>
 #include <qevent.h>
@@ -202,20 +203,30 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::StampAnnotation * sa = new Okular::StampAnnotation();
                 ann = sa;
                 sa->setStampIconName( pixmapName );
-                double stampxscale = size / xscale;
-                double stampyscale = size / yscale;
-                if ( center )
+                // set boundary
+                rect.left = qMin( startpoint.x, point.x );
+                rect.top = qMin( startpoint.y, point.y );
+                rect.right = qMax( startpoint.x, point.x );
+                rect.bottom = qMax( startpoint.y, point.y );
+                QRectF rcf = rect.geometry( (int)xscale, (int)yscale );
+                const int ml = ( rcf.bottomRight() - rcf.topLeft() ).toPoint().manhattanLength();
+                if ( ml <= QApplication::startDragDistance() )
                 {
-                    rect.left = point.x - stampxscale / 2;
-                    rect.top = point.y - stampyscale / 2;
+                    double stampxscale = size / xscale;
+                    double stampyscale = size / yscale;
+                    if ( center )
+                    {
+                        rect.left = point.x - stampxscale / 2;
+                        rect.top = point.y - stampyscale / 2;
+                    }
+                    else
+                    {
+                        rect.left = point.x;
+                        rect.top = point.y;
+                    }
+                    rect.right = rect.left + stampxscale;
+                    rect.bottom = rect.top + stampyscale;
                 }
-                else
-                {
-                    rect.left = point.x;
-                    rect.top = point.y;
-                }
-                rect.right = rect.left + stampxscale;
-                rect.bottom = rect.top + stampyscale;
                 sa->setBoundingRectangle( rect );
             }
             // create GeomAnnotation

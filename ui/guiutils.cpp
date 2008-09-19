@@ -137,6 +137,19 @@ QString prettyToolTip( const Okular::Annotation * ann )
     return tooltip;
 }
 
+QPixmap loadStamp( const QString& _name, const QSize& size )
+{
+    const QString name = _name.toLower();
+    QPixmap pixmap;
+    const KIconLoader * il = iconLoader();
+    QString path;
+    const int minSize = qMin( size.width(), size.height() );
+    pixmap = il->loadIcon( name, KIconLoader::User, minSize, KIconLoader::DefaultState, QStringList(), &path, true );
+    if ( path.isEmpty() )
+        pixmap = il->loadIcon( name, KIconLoader::NoGroup, minSize );
+    return pixmap;
+}
+
 void setIconLoader( KIconLoader * loader )
 {
     s_data->il = loader;

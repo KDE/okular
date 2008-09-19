@@ -598,10 +598,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 Okular::StampAnnotation * stamp = (Okular::StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QString path;
-                QPixmap pixmap = GuiUtils::iconLoader()->loadIcon( stamp->stampIconName().toLower(), KIconLoader::User, qMin( annotBoundary.width(), annotBoundary.height() ), KIconLoader::DefaultState, QStringList(), &path, true );
-                if ( path.isEmpty() )
-                    pixmap = GuiUtils::iconLoader()->loadIcon( stamp->stampIconName().toLower(), KIconLoader::NoGroup, qMin( annotBoundary.width(), annotBoundary.height() ) );
+                QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.size() );
                 QImage scaledImage;
                 scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
                                     annotBoundary.height(), innerRect, QImage::Format_ARGB32 );

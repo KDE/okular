@@ -12,6 +12,8 @@
 
 #include <QtCore/QString>
 
+class QPixmap;
+class QSize;
 class QWidget;
 class KIconLoader;
 
@@ -32,6 +34,8 @@ namespace GuiUtils
     QString contentsHtml( const Okular::Annotation * annotation );
 
     QString prettyToolTip( const Okular::Annotation * annotation );
+
+    QPixmap loadStamp( const QString& name, const QSize& size );
 
     void setIconLoader( KIconLoader * loader );
     KIconLoader* iconLoader();

@@ -10,12 +10,15 @@
 #include "guiutils.h"
 
 // qt/kde includes
+#include <qpainter.h>
+#include <qsvgrenderer.h>
 #include <qtextdocument.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 // local includes
 #include "core/annotations.h"
@@ -137,13 +140,26 @@ QString prettyToolTip( const Okular::Annotation * ann )
     return tooltip;
 }
 
-QPixmap loadStamp( const QString& _name, const QSize& size )
+QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
 {
     const QString name = _name.toLower();
+    if ( name.startsWith( QLatin1String( "stamp-" ) ) )
+    {
+        QSvgRenderer r( KStandardDirs::locate( "data", QString::fromLatin1( "okular/pics/" ) + name + ".svg" ) );
+        if ( r.isValid() )
+        {
+            QPixmap pixmap( size.isValid() ? size : r.defaultSize() );
+            pixmap.fill( Qt::transparent );
+            QPainter p( &pixmap );
+            r.render( &p );
+            p.end();
+            return pixmap;
+        }
+    }
     QPixmap pixmap;
     const KIconLoader * il = iconLoader();
     QString path;
-    const int minSize = qMin( size.width(), size.height() );
+    const int minSize = iconSize > 0 ? iconSize : qMin( size.width(), size.height() );
     pixmap = il->loadIcon( name, KIconLoader::User, minSize, KIconLoader::DefaultState, QStringList(), &path, true );
     if ( path.isEmpty() )
         pixmap = il->loadIcon( name, KIconLoader::NoGroup, minSize );

@@ -35,7 +35,7 @@ namespace GuiUtils
 
     QString prettyToolTip( const Okular::Annotation * annotation );
 
-    QPixmap loadStamp( const QString& name, const QSize& size );
+    QPixmap loadStamp( const QString& name, const QSize& size, int iconSize = 0 );
 
     void setIconLoader( KIconLoader * loader );
     KIconLoader* iconLoader();

@@ -40,6 +40,10 @@ install(FILES
    uparrow.png
    upleftarrow.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
+# install annotation stamps
+install(FILES
+   stamp-approved.svg
+   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install misc images
 
 # newstuff

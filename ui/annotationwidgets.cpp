@@ -270,8 +270,8 @@ QWidget * StampAnnotationWidget::createStyleWidget()
     m_pixmapSelector->addItem( i18n( "Bookmark" ), "bookmarks" );
     m_pixmapSelector->addItem( i18n( "KDE" ), "kde" );
     m_pixmapSelector->addItem( i18n( "Information" ), "help-about" );
+    m_pixmapSelector->addItem( i18n( "Approved" ), "stamp-approved" );
 #if 0
-    m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
     m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );
     m_pixmapSelector->addItem( i18n( "Confidential" ), "Confidential" );
     m_pixmapSelector->addItem( i18n( "Departmental" ), "Departmental" );

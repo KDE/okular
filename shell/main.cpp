@@ -16,7 +16,22 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
+#include <QtDBus/qdbusinterface.h>
 #include "aboutdata.h"
+
+static bool attachUniqueInstance(KCmdLineArgs* args)
+{
+    if (!args->isSet("unique") || args->count() != 1)
+        return false;
+
+    QDBusInterface iface("org.kde.okular", "/okular", "org.kde.okular");
+    if (!iface.isValid())
+        return false;
+
+    iface.call("openDocument", args->url(0).pathOrUrl());
+
+    return true;
+}
 
 int main(int argc, char** argv)
 {
@@ -28,6 +43,7 @@ int main(int argc, char** argv)
     options.add("p");
     options.add("page <number>", ki18n("Page of the document to be shown"));
     options.add("presentation", ki18n("Start the document in presentation mode"));
+    options.add("unique", ki18n("\"Unique session\" control"));
     options.add("+[URL]", ki18n("Document to open"));
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
@@ -39,6 +55,13 @@ int main(int argc, char** argv)
     } else {
         // no session.. just start up normally
         KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+
+        // try to attach the "unique" session: if we succeed, do nothing more and exit
+        if (attachUniqueInstance(args))
+        {
+            args->clear();
+            return 0;
+        }
 
         if (args->count() == 0)
         {

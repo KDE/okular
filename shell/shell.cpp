@@ -21,6 +21,7 @@
 
 // qt/kde includes
 #include <qtimer.h>
+#include <QtDBus/qdbusconnection.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -101,6 +102,11 @@ void Shell::init()
     showMaximized();
   }
   setAutoSaveSettings();
+
+  if (m_args && m_args->isSet("unique") && m_args->count() == 1)
+  {
+    QDBusConnection::sessionBus().registerService("org.kde.okular");
+  }
 
   if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
 }

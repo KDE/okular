@@ -1304,8 +1304,9 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
 
 
 Document::Document( QWidget *widget )
-    : QObject( widget ), d( new DocumentPrivate( this ) )
+    : QObject( 0 ), d( new DocumentPrivate( this ) )
 {
+    d->m_widget = widget;
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
 
@@ -1786,7 +1787,7 @@ void Document::reparseConfig()
 
 QWidget *Document::widget() const
 {
-    return parent() ? static_cast< QWidget * >( parent() ) : 0;
+    return d->m_widget;
 }
 
 bool Document::isOpened() const

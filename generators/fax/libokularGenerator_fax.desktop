@@ -1,7 +1,13 @@
 [Desktop Entry]
 Type=Service
 Name=Fax documents
+Name[pt]=Documentos de fax
+Name[pt_BR]=Documentos de fax
+Name[uk]=Документи факсів
 Comment=G3/G4 Fax backend for Okular
+Comment[pt]=Infra-estrutura de Fax G3/G4 para o Okular
+Comment[pt_BR]=Infra-estrutura de Fax G3/G4 para o Okular
+Comment[uk]=Втулка факсів G3/G4 для Okular
 X-KDE-ServiceTypes=okular/Generator
 MimeType=image/fax-g3;image/g3fax;
 X-KDE-Library=okularGenerator_fax

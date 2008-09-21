@@ -308,7 +308,7 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
     setText( m_form->text() );
     if ( m_form->isPassword() )
         setEchoMode( QLineEdit::Password );
-    setEnabled( !m_form->isReadOnly() );
+    setReadOnly( m_form->isReadOnly() );
 
     connect( this, SIGNAL( textEdited( const QString& ) ), this, SLOT( textEdited( const QString& ) ) );
     setVisible( m_form->isVisible() );
@@ -329,7 +329,7 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
     setCheckSpellingEnabled( m_form->canBeSpellChecked() );
     setAlignment( m_form->textAlignment() );
     setPlainText( m_form->text() );
-    setEnabled( !m_form->isReadOnly() );
+    setReadOnly( m_form->isReadOnly() );
 
     connect( this, SIGNAL( textChanged() ), this, SLOT( slotChanged() ) );
     setVisible( m_form->isVisible() );

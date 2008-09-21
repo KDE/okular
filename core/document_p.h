@@ -18,6 +18,7 @@
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
+#include <QtCore/QPointer>
 
 #include <kcomponentdata.h>
 #include <kservicetypetrader.h>
@@ -140,6 +141,7 @@ class DocumentPrivate
 
         // member variables
         Document *m_parent;
+        QPointer<QWidget> m_widget;
 
         // find descriptors, mapped by ID (we handle multiple searches)
         QMap< int, RunningSearch * > m_searches;

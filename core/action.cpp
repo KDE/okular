@@ -14,6 +14,7 @@
 
 // local includes
 #include "document.h"
+#include "sourcereference_p.h"
 #include "sound.h"
 
 using namespace Okular;
@@ -174,6 +175,12 @@ Action::ActionType BrowseAction::actionType() const
 QString BrowseAction::actionTip() const
 {
     Q_D( const Okular::BrowseAction );
+    QString source;
+    int row = 0, col = 0;
+    if ( extractLilyPondSourceReference( d->m_url, &source, &row, &col ) )
+    {
+        return sourceReferenceToolTip( source, row, col );
+    }
     return d->m_url;
 }
 

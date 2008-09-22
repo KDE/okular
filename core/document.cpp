@@ -65,6 +65,7 @@
 #include "scripter.h"
 #include "settings.h"
 #include "sourcereference.h"
+#include "sourcereference_p.h"
 #include "view.h"
 #include "view_p.h"
 
@@ -2740,9 +2741,16 @@ void Document::processAction( const Action * action )
 
         case Action::Browse: {
             const BrowseAction * browse = static_cast< const BrowseAction * >( action );
+            QString lilySource;
+            int lilyRow = 0, lilyCol = 0;
             // if the url is a mailto one, invoke mailer
             if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
                 KToolInvocation::invokeMailer( browse->url() );
+            else if ( extractLilyPondSourceReference( browse->url(), &lilySource, &lilyRow, &lilyCol ) )
+            {
+                const SourceReference ref( lilySource, lilyRow, lilyCol );
+                processSourceReference( &ref );
+            }
             else
             {
                 QString url = browse->url();

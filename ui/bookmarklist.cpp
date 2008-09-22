@@ -127,6 +127,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
 
 BookmarkList::~BookmarkList()
 {
+    m_document->removeObserver( this );
 }
 
 uint BookmarkList::observerId() const

@@ -268,13 +268,13 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_sidebar->setCurrentIndex( tbIndex );
 
     // [left toolbox: Reviews] | []
-    Reviews * reviewsWidget = new Reviews( 0, m_document );
-    m_sidebar->addItem( reviewsWidget, KIcon("draw-freehand"), i18n("Reviews") );
+    m_reviewsWidget = new Reviews( 0, m_document );
+    m_sidebar->addItem( m_reviewsWidget, KIcon("draw-freehand"), i18n("Reviews") );
     m_sidebar->setItemEnabled( 2, false );
 
     // [left toolbox: Bookmarks] | []
-    BookmarkList * bookmarkList = new BookmarkList( m_document, 0 );
-    m_sidebar->addItem( bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
+    m_bookmarkList = new BookmarkList( m_document, 0 );
+    m_sidebar->addItem( m_bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( 3, false );
 
     // widgets: [../miniBarContainer] | []
@@ -335,9 +335,9 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( bottomBar );
 
-    connect( reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
+    connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
-    connect( reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
+    connect( m_reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
 
     // add document observers
@@ -350,9 +350,9 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
 #ifdef OKULAR_ENABLE_MINIBAR
     m_document->addObserver( m_progressWidget );
 #endif
-    m_document->addObserver( reviewsWidget );
+    m_document->addObserver( m_reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
-    m_document->addObserver( bookmarkList );
+    m_document->addObserver( m_bookmarkList );
 
     connect( m_document->bookmarkManager(), SIGNAL( saved() ),
         this, SLOT( slotRebuildBookmarkMenu() ) );
@@ -502,11 +502,11 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_exportAs = ac->addAction("file_export_as");
     m_exportAs->setText(i18n("E&xport As"));
     m_exportAs->setIcon( KIcon( "document-export" ) );
-    QMenu *menu = new QMenu(widget());
-    connect(menu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
-    m_exportAs->setMenu( menu );
-    m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), menu );
-    menu->addAction( m_exportAsText );
+    m_exportAsMenu = new QMenu();
+    connect(m_exportAsMenu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
+    m_exportAs->setMenu( m_exportAsMenu );
+    m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), m_exportAsMenu );
+    m_exportAsMenu->addAction( m_exportAsText );
     m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
 
@@ -570,6 +570,8 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
 
 Part::~Part()
 {
+    m_document->removeObserver( this );
+
     if ( m_document->isOpened() )
         Part::closeUrl();
 
@@ -581,12 +583,16 @@ Part::~Part()
     delete m_progressWidget;
 #endif
     delete m_pageSizeLabel;
+    delete m_reviewsWidget;
+    delete m_bookmarkList;
 
     delete m_document;
 
     delete m_tempfile;
 
     qDeleteAll( m_bookmarkActions );
+
+    delete m_exportAsMenu;
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     delete m_keeper;
@@ -992,11 +998,14 @@ bool Part::closeUrl()
     m_generatorGuiClient = 0;
     m_document->closeDocument();
     updateViewActions();
-    m_searchWidget->clearText();
     delete m_tempfile;
     m_tempfile = 0;
-    m_topMessage->setVisible( false );
-    m_formsMessage->setVisible( false );
+    if ( widget() )
+    {
+        m_searchWidget->clearText();
+        m_topMessage->setVisible( false );
+        m_formsMessage->setVisible( false );
+    }
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
 #endif

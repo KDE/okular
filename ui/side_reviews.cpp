@@ -148,6 +148,11 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 
 }
 
+Reviews::~Reviews()
+{
+    m_document->removeObserver( this );
+}
+
 //BEGIN DocumentObserver Notifies 
 void Reviews::notifyViewportChanged( bool )
 {

@@ -30,6 +30,7 @@
 class QAction;
 class QWidget;
 class QPrinter;
+class QMenu;
 
 class KUrl;
 class KConfigGroup;
@@ -52,6 +53,8 @@ class Sidebar;
 class TOC;
 class MiniBar;
 class FileKeeper;
+class Reviews;
+class BookmarkList;
 
 namespace Okular
 {
@@ -193,6 +196,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QPointer<PresentationWidget> m_presentationWidget;
         QPointer<ProgressWidget> m_progressWidget;
         QPointer<PageSizeLabel> m_pageSizeLabel;
+        QPointer<Reviews> m_reviewsWidget;
+        QPointer<BookmarkList> m_bookmarkList;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
@@ -234,6 +239,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KToggleFullScreenAction* m_showFullScreenAction;
         QAction *m_aboutBackend;
         QAction *m_reload;
+        QMenu *m_exportAsMenu;
 
         bool m_actionsSearched;
         BrowserExtension *m_bExtension;

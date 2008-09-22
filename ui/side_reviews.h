@@ -36,6 +36,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
     public:
         Reviews( QWidget * parent, Okular::Document * document );
+        ~Reviews();
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return REVIEWS_ID; }

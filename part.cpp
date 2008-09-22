@@ -1696,6 +1696,15 @@ void Part::slotTogglePresentation()
 }
 
 
+void Part::reload()
+{
+    if ( m_document->isOpened() )
+    {
+        slotReload();
+    }
+}
+
+
 void Part::slotAboutBackend()
 {
     const KComponentData *data = m_document->componentData();

@@ -178,7 +178,7 @@ class OKULAR_EXPORT Page
          * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
          *                        the search is case insensitive.
          * @param lastRect If 0 (default) the search starts at the beginning of the page, otherwise
-         *                 right/below the coordinates of the the given rect.
+         *                 right/below the coordinates of the given rect.
          */
         RegularAreaRect* findText( int id, const QString & text, SearchDirection direction,
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=0) const;

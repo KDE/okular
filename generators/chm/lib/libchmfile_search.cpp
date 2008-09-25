@@ -144,7 +144,7 @@ inline bool searchPhrase( LCHMFileImpl * impl, const QStringList & phrase, LCHMS
 			
 			for ( int p2 = 0; p2 < srchtmp.size(); p2++ )
 			{
-				// look up for words on the the same page
+				// look up for words on the same page
 				if ( srchtmp[p2].urloff != phrasekeeper[p1].urloff )
 					continue;
 				

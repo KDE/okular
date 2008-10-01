@@ -2018,7 +2018,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     {
                         KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
                         QString type;
-                        if ( !mime )
+                        if ( !mime || mime == KMimeType::defaultMimeTypePtr() )
                             type = "PNG";
                         else
                             type = mime->name().section( '/', -1 ).toUpper();

@@ -71,6 +71,7 @@ class DocumentPrivate
             m_tempFile( 0 ),
             m_docSize( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
+            m_maxAllocatedTextPages( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
             m_exportCached( false ),

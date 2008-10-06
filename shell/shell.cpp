@@ -65,25 +65,7 @@ void Shell::init()
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
   KPluginFactory *factory = KPluginLoader("okularpart").factory();
-  if (factory)
-  {
-    // now that the Part is loaded, we cast it to a Part to get
-    // our hands on it
-    m_part = factory->create< KParts::ReadOnlyPart >( this );
-    if (m_part)
-    {
-      // then, setup our actions
-      setupActions();
-      // tell the KParts::MainWindow that this is indeed the main widget
-      setCentralWidget(m_part->widget());
-      // and integrate the part's GUI with the shell's
-      setupGUI(Keys | Save);
-      createGUI(m_part);
-      m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
-      m_doc = qobject_cast<KDocumentViewer*>(m_part);
-    }
-  }
-  else
+  if (!factory)
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
@@ -91,6 +73,23 @@ void Shell::init()
     m_part = 0;
     return;
   }
+
+  // now that the Part is loaded, we cast it to a Part to get
+  // our hands on it
+  m_part = factory->create< KParts::ReadOnlyPart >( this );
+  if (m_part)
+  {
+    // then, setup our actions
+    setupActions();
+    // tell the KParts::MainWindow that this is indeed the main widget
+    setCentralWidget(m_part->widget());
+    // and integrate the part's GUI with the shell's
+    createGUI(m_part);
+    setupGUI(Keys | Save);
+    m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
+    m_doc = qobject_cast<KDocumentViewer*>(m_part);
+  }
+
   connect( this, SIGNAL( restoreDocument(const KConfigGroup&) ),m_part, SLOT( restoreDocument(const KConfigGroup&)));
   connect( this, SIGNAL( saveDocumentRestoreInfo(KConfigGroup&) ), m_part, SLOT( saveDocumentRestoreInfo(KConfigGroup&)));
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
@@ -101,7 +100,6 @@ void Shell::init()
   {
     showMaximized();
   }
-  setAutoSaveSettings();
 
   if (m_args && m_args->isSet("unique") && m_args->count() == 1)
   {

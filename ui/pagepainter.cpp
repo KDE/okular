@@ -536,7 +536,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             acolor.setAlpha( opacity );
 
             // get annotation boundary and drawn rect
-            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
+            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
             QRect annotRect = annotBoundary.intersect( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );

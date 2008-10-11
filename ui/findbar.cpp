@@ -91,6 +91,7 @@ Qt::CaseSensitivity FindBar::caseSensitivity() const
 void FindBar::focusAndSetCursor()
 {
     setFocus();
+    m_text->selectAll();
     m_text->setFocus();
 }
 

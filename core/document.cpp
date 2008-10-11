@@ -930,8 +930,10 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
         }
         delete match;
     }
+#if 0
     else if ( !noDialogs )
         KMessageBox::information( m_parent->widget(), i18n( "No matches found for '%1'.", text ) );
+#endif
 
     // notify observers about highlights changes
     foreach(int pageNumber, *pagesToNotify)
@@ -1031,8 +1033,10 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
         }
         delete match;
     }
+#if 0
     else if ( !noDialogs )
         KMessageBox::information( m_parent->widget(), i18n( "No matches found for '%1'.", text ) );
+#endif
 
     // notify observers about highlights changes
     foreach(int pageNumber, *pagesToNotify)

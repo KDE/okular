@@ -70,8 +70,6 @@ protected:
 private slots:
   void fileOpen();
 
-  void optionsConfigureToolbars();
-  void applyNewToolbarConfig();
   void slotUpdateFullScreen();
   void slotShowMenubar();
 

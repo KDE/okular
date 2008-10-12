@@ -190,7 +190,7 @@ Q_OBJECT
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
         void slotFitToTextToggled( bool );
-        void slotViewMode( int );
+        void slotViewMode( QAction *action );
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();

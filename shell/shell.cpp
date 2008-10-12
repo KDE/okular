@@ -24,7 +24,6 @@
 #include <kaction.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kedittoolbar.h>
 #include <kfiledialog.h>
 #include <kpluginloader.h>
 #include <kmessagebox.h>
@@ -76,7 +75,7 @@ void Shell::init()
       // tell the KParts::MainWindow that this is indeed the main widget
       setCentralWidget(m_part->widget());
       // and integrate the part's GUI with the shell's
-      setupGUI(Keys | Save);
+      setupGUI(Keys | ToolBar | Save);
       createGUI(m_part);
       m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
       m_doc = qobject_cast<KDocumentViewer*>(m_part);
@@ -171,7 +170,6 @@ void Shell::setupActions()
   setStandardToolBarMenuEnabled(true);
 
   m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
-  KStandardAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
   m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), this,actionCollection() );
 }
 
@@ -246,20 +244,6 @@ void Shell::fileOpen()
     KUrl url = dlg.selectedUrl();
     if ( !url.isEmpty() )
         openUrl( url );
-}
-
-  void
-Shell::optionsConfigureToolbars()
-{
-  KEditToolBar dlg(factory(), this);
-  connect(&dlg, SIGNAL(newToolBarConfig()), this, SLOT(applyNewToolbarConfig()));
-  dlg.exec();
-}
-
-  void
-Shell::applyNewToolbarConfig()
-{
-  applyMainWindowSettings(KGlobal::config()->group("MainWindow"));
 }
 
 void Shell::slotQuit()

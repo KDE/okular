@@ -31,6 +31,7 @@
 #include <qclipboard.h>
 
 #include <kaction.h>
+#include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kmenu.h>
@@ -149,7 +150,7 @@ public:
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;
-    KSelectAction * aViewMode;
+    KActionMenu * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
     KAction * aToggleForms;
@@ -459,16 +460,25 @@ void PageView::setupActions( KActionCollection * ac )
 */
 
     // View-Layout actions
-    QStringList viewModes;
-    viewModes.append( i18n( "Single Page" ) );
-    viewModes.append( i18n( "Facing Pages" ) );
-    viewModes.append( i18n( "Overview" ) );
-
-    d->aViewMode  = new KSelectAction(KIcon( "view-split-left-right" ), i18n("&View Mode"), this);
+    d->aViewMode = new KActionMenu( KIcon( "view-split-left-right" ), i18n( "&View Mode" ), this );
+    d->aViewMode->setDelayed( false );
+#define ADD_VIEWMODE_ACTION( text, name, id ) \
+do { \
+    KAction *vm = new KAction( text, d->aViewMode->menu() ); \
+    vm->setCheckable( true ); \
+    vm->setData( qVariantFromValue( id ) ); \
+    d->aViewMode->addAction( vm ); \
+    ac->addAction( name, vm ); \
+    vmGroup->addAction( vm ); \
+} while( 0 )
     ac->addAction("view_render_mode", d->aViewMode );
-    connect( d->aViewMode, SIGNAL( triggered( int ) ), SLOT( slotViewMode( int ) ) );
-    d->aViewMode->setItems( viewModes );
-    d->aViewMode->setCurrentItem( Okular::Settings::viewMode() );
+    QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
+    ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", 0 );
+    ADD_VIEWMODE_ACTION( i18n( "Facing Page" ), "view_render_mode_facing", 1 );
+    ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", 2 );
+    d->aViewMode->menu()->actions().at( Okular::Settings::viewMode() )->setChecked( true );
+    connect( vmGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( slotViewMode( QAction* ) ) );
+#undef ADD_VIEWMODE_ACTION
 
     d->aViewContinuous  = new KToggleAction(KIcon( "view-list-text" ), i18n("&Continuous"), this);
     ac->addAction("view_continuous", d->aViewContinuous );
@@ -571,7 +581,7 @@ void PageView::fitPageWidth( int page )
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
 //    d->aZoomFitText->setChecked( false );
-    d->aViewMode->setCurrentItem( 0 );
+    d->aViewMode->menu()->actions().at( 0 )->setChecked( true );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
@@ -3178,8 +3188,9 @@ void PageView::slotFitToTextToggled( bool on )
     if ( on ) updateZoom( ZoomFitText );
 }
 
-void PageView::slotViewMode( int nr )
+void PageView::slotViewMode( QAction *action )
 {
+    const int nr = action->data().toInt();
     if ( (int)Okular::Settings::viewMode() != nr )
     {
         Okular::Settings::setViewMode( nr );

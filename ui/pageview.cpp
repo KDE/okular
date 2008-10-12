@@ -141,13 +141,13 @@ public:
     KAction * aRotateOriginal;
     KSelectAction * aPageSizes;
     KToggleAction * aTrimMargins;
-    QAction * aMouseNormal;
-    QAction * aMouseSelect;
-    QAction * aMouseTextSelect;
+    KAction * aMouseNormal;
+    KAction * aMouseSelect;
+    KAction * aMouseTextSelect;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
-    QAction * aZoomIn;
-    QAction * aZoomOut;
+    KAction * aZoomIn;
+    KAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomFitText;

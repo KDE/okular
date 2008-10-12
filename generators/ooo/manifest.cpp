@@ -184,10 +184,10 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData )
 	  delete currentEntry;
 	} else {
 	  mEntries.insert( currentEntry->fileName(), currentEntry);
-	  currentEntry = 0;
 	}
+        currentEntry = 0;
       }
-    }      
+    }
   }
   if (xml.hasError()) {
     kWarning(OooDebug) << "error: " << xml.errorString() << xml.lineNumber() << xml.columnNumber();

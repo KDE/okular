@@ -40,13 +40,13 @@
  */
 
 /**
- * Returns whether the @p left string is lesser then the @p right string
+ * Returns whether the @p left string is lesser than the @p right string
  * in natural order.
  */
 bool caseSensitiveNaturalOrderLessThen( const QString &left, const QString &right );
 
 /**
- * Returns whether the @p left string is lesser then the @p right string
+ * Returns whether the @p left string is lesser than the @p right string
  * in natural order and case insensitive.
  */
 bool caseInsensitiveNaturalOrderLessThen( const QString &left, const QString &right );

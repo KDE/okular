@@ -181,7 +181,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     int itB = -1;
     int itE = -1;
 
-    // ending cursor is higher then start cursor, we need to find positions in reverse
+    // ending cursor is higher than start cursor, we need to find positions in reverse
     NormalizedRect tmp;
     NormalizedRect start;
     NormalizedRect end;
@@ -418,7 +418,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
-            // we have equal (or less then) area of the query left as the lengt of the current 
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             if ((caseSensitivity == Qt::CaseSensitive)
@@ -544,7 +544,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
 #endif
-            // we have equal (or less then) area of the query left as the lengt of the current 
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             if ((caseSensitivity == Qt::CaseSensitive)

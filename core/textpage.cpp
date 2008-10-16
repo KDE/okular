@@ -257,7 +257,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         end = *d->m_words[ sel->itE() ]->area();
 
         NormalizedRect first, second, third;
-        /// finding out if there are more then one baseline between them is a hard and discussable task
+        /// finding out if there is more than one baseline between them is a hard and discussable task
         /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
         /// areas, if more than one -> we have a three or over line selection
         first = start;

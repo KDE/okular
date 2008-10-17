@@ -474,7 +474,7 @@ do { \
     ac->addAction("view_render_mode", d->aViewMode );
     QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
     ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", 0 );
-    ADD_VIEWMODE_ACTION( i18n( "Facing Page" ), "view_render_mode_facing", 1 );
+    ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", 1 );
     ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", 2 );
     d->aViewMode->menu()->actions().at( Okular::Settings::viewMode() )->setChecked( true );
     connect( vmGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( slotViewMode( QAction* ) ) );

@@ -1133,7 +1133,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     }
 }
 
-void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color, bool matchAll)
+void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int theCaseSensitivity, const QColor & color, bool matchAll)
 {
     typedef QPair<RegularAreaRect *, QColor> MatchColor;
     QMap< Page *, QVector<MatchColor> > *pageMatches = static_cast< QMap< Page *, QVector<MatchColor> > * >(pageMatchesMap);
@@ -1156,7 +1156,6 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         return;
     }
 
-    QStringList words = text.split( " ", QString::SkipEmptyParts );
     const int wordCount = words.count();
     const int hueStep = (wordCount > 1) ? (60 / (wordCount - 1)) : 60;
     int baseHue, baseSat, baseVal;
@@ -1211,7 +1210,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             pageMatches->remove(page);
         }
 
-        QMetaObject::invokeMethod(m_parent, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
+        QMetaObject::invokeMethod(m_parent, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QStringList, words), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
     }
     else
     {
@@ -2475,9 +2474,10 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         bool matchAll = type == GoogleAll;
 
         QMap< Page *, QVector< QPair<RegularAreaRect *, QColor> > > *pageMatches = new QMap< Page *, QVector<QPair<RegularAreaRect *, QColor> > >;
+        const QStringList words = text.split( ' ', QString::SkipEmptyParts );
 
         // search and highlight every word in 'text' on all pages
-        QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
+        QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QStringList, words), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
     }
 }
 

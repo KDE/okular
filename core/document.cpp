@@ -22,7 +22,6 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMap>
-#include <QtCore/QProcess>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtGui/QApplication>
@@ -37,9 +36,12 @@
 #include <kdebug.h>
 #include <klibloader.h>
 #include <klocale.h>
+#include <kmacroexpander.h>
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
+#include <kprocess.h>
 #include <krun.h>
+#include <kshell.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
@@ -2827,19 +2829,23 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( p.isEmpty() )
         return;
 
-    // replacing the placeholders
-    p.replace( QLatin1String( "%l" ), QString::number( ref->row() ) );
-    p.replace( QLatin1String( "%c" ), QString::number( ref->column() ) );
-    if ( p.indexOf( QLatin1String( "%f" ) ) > -1 )
-      p.replace( QLatin1String( "%f" ), ref->fileName() );
-    else
-      p.append( QLatin1String( " " ) + ref->fileName() );
+    // manually append the %f placeholder if not specified
+    if ( p.indexOf( QLatin1String( "%f" ) ) == -1 )
+        p.append( QLatin1String( " %f" ) );
 
-    // paranoic checks
-    if ( p.isEmpty() || p.trimmed() == ref->fileName() )
+    // replacing the placeholders
+    QHash< QChar, QString > map;
+    map.insert( 'f', ref->fileName() );
+    map.insert( 'c', QString::number( ref->column() ) );
+    map.insert( 'l', QString::number( ref->row() ) );
+    const QString cmd = KMacroExpander::expandMacrosShellQuote( p, map );
+    if ( cmd.isEmpty() )
+        return;
+    const QStringList args = KShell::splitArgs( cmd );
+    if ( args.isEmpty() )
         return;
 
-    QProcess::startDetached( p );
+    KProcess::startDetached( args );
 }
 
 Document::PrintingType Document::printingSupport() const

@@ -66,6 +66,7 @@
 #include "settings.h"
 #include "sourcereference.h"
 #include "sourcereference_p.h"
+#include "texteditors_p.h"
 #include "view.h"
 #include "view_p.h"
 
@@ -2813,10 +2814,7 @@ void Document::processSourceReference( const SourceReference * ref )
     // init the editors table if empty (on first run, usually)
     if ( editors.isEmpty() )
     {
-        editors[ Settings::EnumExternalEditor::Kate ] =
-            QLatin1String( "kate --use --line %l --column %c" );
-        editors[ Settings::EnumExternalEditor::Scite ] =
-            QLatin1String( "scite %f \"-goto:%l,%c\"" );
+        editors = buildEditorsMap();
     }
 
     QHash< int, QString >::const_iterator it = editors.constFind( Settings::externalEditor() );

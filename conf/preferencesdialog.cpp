@@ -18,6 +18,7 @@
 #include "dlgaccessibility.h"
 #include "dlgpresentation.h"
 #include "dlgidentity.h"
+#include "dlgeditor.h"
 #include "dlgdebug.h"
 
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton )
@@ -28,6 +29,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_accessibility = new DlgAccessibility( this );
     m_presentation = new DlgPresentation( this );
     m_identity = new DlgIdentity( this );
+    m_editor = new DlgEditor( this );
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     m_debug = new DlgDebug( this );
 #endif
@@ -39,6 +41,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
              i18n("Options for Presentation Mode") );
     addPage( m_identity, i18n("Identity"), "preferences-desktop-personal",
              i18n("Identity Settings") );
+    addPage( m_editor, i18n("Editor"), "accessories-text-editor", i18n("Editor Options") );
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage( m_debug, "Debug", "system-run", "Debug options" );
 #endif

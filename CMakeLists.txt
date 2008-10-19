@@ -117,6 +117,7 @@ set(okularpart_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlgdebug.cpp
+   conf/dlgeditor.cpp
    conf/dlggeneral.cpp
    conf/dlgidentity.cpp
    conf/dlgperformance.cpp
@@ -159,6 +160,7 @@ set(okularpart_SRCS
 
 kde4_add_ui_files(okularpart_SRCS
    conf/dlgaccessibilitybase.ui
+   conf/dlgeditorbase.ui
    conf/dlggeneralbase.ui
    conf/dlgidentitybase.ui
    conf/dlgperformancebase.ui

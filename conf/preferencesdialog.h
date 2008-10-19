@@ -21,6 +21,7 @@ class DlgPerformance;
 class DlgAccessibility;
 class DlgPresentation;
 class DlgIdentity;
+class DlgEditor;
 class DlgDebug;
 
 class PreferencesDialog : public KConfigDialog
@@ -42,6 +43,7 @@ class PreferencesDialog : public KConfigDialog
         DlgAccessibility * m_accessibility;
         DlgPresentation * m_presentation;
         DlgIdentity * m_identity;
+        DlgEditor * m_editor;
         DlgDebug * m_debug;
 };
 

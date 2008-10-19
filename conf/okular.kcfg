@@ -163,9 +163,9 @@
   <entry key="ExternalEditor" type="Enum" >
    <default>Kate</default>
    <choices>
+    <choice name="Custom" />
     <choice name="Kate" />
     <choice name="Scite" />
-    <choice name="Custom" />
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

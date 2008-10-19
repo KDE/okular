@@ -381,7 +381,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     int j=0, len=0, queryLeft=query.length();
     int offset = 0;
     bool haveMatch=false;
-    bool dontIncrement=false;
     bool offsetMoved = false;
     TextList::ConstIterator it = start;
     TextList::ConstIterator it_begin;
@@ -397,22 +396,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             }
             offsetMoved = true;
         }
-        if ( query.at(j).isSpace() )
         {
-            // lets match newline as a space
-#ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "newline or space";
-#endif
-            j++;
-            queryLeft--;
-            // since we do not really need to increment this after this
-            // run of the loop finishes because we are not comparing it 
-            // to any entity, rather we are deducing a situation in a document
-            dontIncrement=true;
-        }
-        else
-        {
-            dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE

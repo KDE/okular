@@ -27,7 +27,8 @@ DlgEditor::DlgEditor( QWidget * parent )
 
     m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "Custom Text Editor" ) );
     m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "Kate" ), 1 );
-    m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "SciTE" ), 2 );
+    m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "Kile" ), 2 );
+    m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "SciTE" ), 3 );
 
     m_dlg->kcfg_ExternalEditorCommand->setWhatsThis( i18nc( "@info:whatsthis",
         "<qt>Set the command of a custom text editor to be launched.<br />\n"

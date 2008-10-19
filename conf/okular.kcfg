@@ -165,6 +165,7 @@
    <choices>
     <choice name="Custom" />
     <choice name="Kate" />
+    <choice name="Kile" />
     <choice name="Scite" />
    </choices>
   </entry>

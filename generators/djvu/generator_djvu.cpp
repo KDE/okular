@@ -206,14 +206,14 @@ bool DjVuGenerator::print( QPrinter& printer )
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
         tf.setAutoRemove( false );
-        int ret = Okular::FilePrinter::printFile( printer, tf.fileName(),
+        const QString fileName = tf.fileName();
+        tf.close();
+        int ret = Okular::FilePrinter::printFile( printer, fileName,
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );
         result = ( ret >=0 );
     }
-
-    tf.close();
 
     return result;
 }

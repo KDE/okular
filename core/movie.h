@@ -33,7 +33,7 @@ class OKULAR_EXPORT Movie
             PlayOnce,         ///< Play the movie once, closing the movie controls at the end
             PlayOpen,         ///< Like PlayOnce, but leaving the controls open
             PlayRepeat,       ///< Play continuously until stopped
-            PlayPalindrome    ///< Play forward, then backward, then again foward and so on until stopped
+            PlayPalindrome    ///< Play forward, then backward, then again forward and so on until stopped
         };
 
         /**

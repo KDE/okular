@@ -1316,7 +1316,7 @@ void PresentationWidget::setScreen( int newScreen )
         (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
     }
 
-    // uglyness alarm!
+    // ugliness alarm!
     const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
     // force the regeneration of the pixmap
     m_lastRenderedPixmap = QPixmap();

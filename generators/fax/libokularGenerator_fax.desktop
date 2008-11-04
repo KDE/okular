@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Fax documents
+Name[de]=Fax-Dokumente
 Name[el]=Έγγραφα φαξ
 Name[es]=Documentos de fax
 Name[gl]=Documentos de fax
@@ -19,6 +20,7 @@ Name[x-test]=xxFax documentsxx
 Name[zh_CN]=Fax 文档
 Name[zh_TW]=傳真文件
 Comment=G3/G4 Fax backend for Okular
+Comment[de]=Anzeigemodul für G3/G4 Faxe in Okular
 Comment[el]=Σύστημα υποστήριξης φαξ G3/G4 για το Okular
 Comment[es]=Motor de fax G3/G4 para Okular
 Comment[gl]=Infraestrutura de fax G3/G4 para Okular

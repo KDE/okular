@@ -130,8 +130,14 @@ void Shell::openUrl( const KUrl & url, uint page )
         if ( m_doc && m_args && m_args->isSet( "presentation" ) )
             m_doc->startPresentation();
         bool openOk = page > 0 && m_doc ? m_doc->openDocument( url, page ) : m_part->openUrl( url );
-        if ( openOk ) m_recent->addUrl( url );
-        else m_recent->removeUrl( url );
+        const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+        if ( !isstdin )
+        {
+            if ( openOk )
+                m_recent->addUrl( url );
+            else
+                m_recent->removeUrl( url );
+        }
     }
 }
 

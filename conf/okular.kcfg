@@ -167,6 +167,7 @@
     <choice name="Kate" />
     <choice name="Kile" />
     <choice name="Scite" />
+    <choice name="Emacsclient" />
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

@@ -27,6 +27,8 @@ static inline QHash< int, QString > buildEditorsMap()
         QString::fromLatin1( "kile --line %l" ) );
     editors.insert( Settings::EnumExternalEditor::Scite,
         QString::fromLatin1( "scite %f \"-goto:%l,%c\"" ) );
+    editors.insert( Settings::EnumExternalEditor::Emacsclient,
+        QString::fromLatin1( "emacsclient -a emacs --no-wait +%l %f" ) );
     return editors;
 }
 

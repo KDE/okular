@@ -14,6 +14,7 @@
 #include <QtCore/QIODevice>
 #include <QtCore/QtEndian>
 #include <QtCore/QBuffer>
+#include <QtGui/QImageReader>
 #include <kdebug.h>
 
 static unsigned char TOKEN_CODE[256] = {
@@ -172,11 +173,12 @@ int PDB::recordCount() const
 ////////////////////////////////////////////
 struct DocumentPrivate 
 {
-    DocumentPrivate(QIODevice* d) : pdb(d), valid(true) {}
+    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0) {}
     PDB pdb;
     Decompressor* dec;
     quint16 ntextrecords;
     bool valid;
+    quint16 firstImageRecord;
     
     void init() {
         valid=pdb.isValid();
@@ -192,6 +194,18 @@ struct DocumentPrivate
         ntextrecords=(unsigned char)mhead[8];
         ntextrecords<<=8;
         ntextrecords+=(unsigned char)mhead[9];
+    }
+    void findFirstImage() {
+        firstImageRecord=ntextrecords+1;
+        while (firstImageRecord<pdb.recordCount()) {
+            QByteArray rec=pdb.getRecord(firstImageRecord);
+            if (rec.isNull()) return;
+            QBuffer buf(&rec);
+            buf.open(QIODevice::ReadOnly);
+            QImageReader r(&buf);
+            if (r.canRead()) return;
+            firstImageRecord++;
+        }
     }
 };
 
@@ -221,9 +235,8 @@ bool Document::isValid() const
 
 QImage Document::getImage(int i) const 
 {
-    QByteArray rec=d->pdb.getRecord(d->ntextrecords+i);
-    kDebug() << "Want IMG " << i;
-    kDebug() << rec[0] << rec[1] << rec[2] << rec[3];
+    if (!d->firstImageRecord) d->findFirstImage();
+    QByteArray rec=d->pdb.getRecord(d->firstImageRecord+i-1);
     //FIXME: check if i is in range
     return QImage::fromData(rec);
 }

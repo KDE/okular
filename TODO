@@ -1,7 +1,6 @@
-- images are broken in some files
 - better error handling
 - tests for Mobipocket classes
 - anchors (a filepos=)
 - handle files compression with Huffman encoding
 - decryption for DRMed files
-
+- metadata

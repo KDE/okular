@@ -586,6 +586,86 @@ SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
     return info.save;
 }
 
+bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata )
+{
+    QString propName = offer->name();
+    QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
+    QString catalogName;
+    if ( genIt != m_loadedGenerators.constEnd() )
+    {
+        m_generator = genIt.value().generator;
+        catalogName = genIt.value().catalogName;
+    }
+    else
+    {
+        m_generator = loadGeneratorLibrary( offer );
+        if ( !m_generator )
+            return false;
+        genIt = m_loadedGenerators.constFind( propName );
+        Q_ASSERT( genIt != m_loadedGenerators.constEnd() );
+        catalogName = genIt.value().catalogName;
+    }
+    Q_ASSERT_X( m_generator, "Document::load()", "null generator?!" );
+
+    if ( !catalogName.isEmpty() )
+        KGlobal::locale()->insertCatalog( catalogName );
+
+    m_generator->d_func()->m_document = this;
+
+    // connect error reporting signals
+    QObject::connect( m_generator, SIGNAL( error( const QString&, int ) ), m_parent, SIGNAL( error( const QString&, int ) ) );
+    QObject::connect( m_generator, SIGNAL( warning( const QString&, int ) ), m_parent, SIGNAL( warning( const QString&, int ) ) );
+    QObject::connect( m_generator, SIGNAL( notice( const QString&, int ) ), m_parent, SIGNAL( notice( const QString&, int ) ) );
+
+    QApplication::setOverrideCursor( Qt::WaitCursor );
+    bool openOk = false;
+    if ( !isstdin )
+    {
+        openOk = m_generator->loadDocument( docFile, m_pagesVector );
+    }
+    else if ( !filedata.isEmpty() )
+    {
+        if ( m_generator->hasFeature( Generator::ReadRawData ) )
+        {
+            openOk = m_generator->loadDocumentFromData( filedata, m_pagesVector );
+        }
+        else
+        {
+            m_tempFile = new KTemporaryFile();
+            if ( !m_tempFile->open() )
+            {
+                delete m_tempFile;
+                m_tempFile = 0;
+            }
+            else
+            {
+                m_tempFile->write( filedata );
+                QString tmpFileName = m_tempFile->fileName();
+                m_tempFile->close();
+                openOk = m_generator->loadDocument( tmpFileName, m_pagesVector );
+            }
+        }
+    }
+
+    QApplication::restoreOverrideCursor();
+    if ( !openOk || m_pagesVector.size() <= 0 )
+    {
+        if ( !catalogName.isEmpty() )
+            KGlobal::locale()->removeCatalog( catalogName );
+
+        m_generator->d_func()->m_document = 0;
+        QObject::disconnect( m_generator, 0, m_parent, 0 );
+        m_generator = 0;
+
+        qDeleteAll( m_pagesVector );
+        m_pagesVector.clear();
+        delete m_tempFile;
+        m_tempFile = 0;
+    }
+
+    return openOk;
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_xmlFileName.isEmpty() )
@@ -1360,6 +1440,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QByteArray filedata;
     qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+    bool loadingMimeByContent = false;
     if ( !isstdin )
     {
         if ( mime.count() <= 0 )
@@ -1406,12 +1487,23 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
             return false;
         document_size = filedata.size();
+        loadingMimeByContent = true;
     }
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
+    if ( offers.isEmpty() && !isstdin )
+    {
+        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        loadingMimeByContent = true;
+        if ( newmime != mime )
+        {
+            mime = newmime;
+            offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+        }
+    }
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
@@ -1443,77 +1535,30 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         }
     }
 
-    QString propName = offers.at(hRank)->name();
-    QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( propName );
-    QString catalogName;
-    if ( genIt != d->m_loadedGenerators.constEnd() )
+    KService::Ptr offer = offers.at( hRank );
+    // 1. load Document
+    bool openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
+    if ( !openOk && !loadingMimeByContent )
     {
-        d->m_generator = genIt.value().generator;
-        catalogName = genIt.value().catalogName;
-    }
-    else
-    {
-        d->m_generator = d->loadGeneratorLibrary( offers.at(hRank) );
-        if ( !d->m_generator )
-            return false;
-        genIt = d->m_loadedGenerators.constFind( propName );
-        Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-        catalogName = genIt.value().catalogName;
-    }
-    Q_ASSERT_X( d->m_generator, "Document::load()", "null generator?!" );
-
-    if ( !catalogName.isEmpty() )
-        KGlobal::locale()->insertCatalog( catalogName );
-
-    d->m_generator->d_func()->m_document = d;
-
-    // connect error reporting signals
-    connect( d->m_generator, SIGNAL( error( const QString&, int ) ), this, SIGNAL( error( const QString&, int ) ) );
-    connect( d->m_generator, SIGNAL( warning( const QString&, int ) ), this, SIGNAL( warning( const QString&, int ) ) );
-    connect( d->m_generator, SIGNAL( notice( const QString&, int ) ), this, SIGNAL( notice( const QString&, int ) ) );
-
-    // 1. load Document (and set busy cursor while loading)
-    QApplication::setOverrideCursor( Qt::WaitCursor );
-    bool openOk = false;
-    if ( !isstdin )
-    {
-        openOk = d->m_generator->loadDocument( docFile, d->m_pagesVector );
-    }
-    else if ( !filedata.isEmpty() )
-    {
-        if ( d->m_generator->hasFeature( Generator::ReadRawData ) )
+        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        loadingMimeByContent = true;
+        if ( newmime != mime )
         {
-            openOk = d->m_generator->loadDocumentFromData( filedata, d->m_pagesVector );
-        }
-        else
-        {
-            d->m_tempFile = new KTemporaryFile();
-            if ( !d->m_tempFile->open() )
+            mime = newmime;
+            offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            if ( !offers.isEmpty() )
             {
-                delete d->m_tempFile;
-                d->m_tempFile = 0;
-            }
-            else
-            {
-                d->m_tempFile->write( filedata );
-                QString tmpFileName = d->m_tempFile->fileName();
-                d->m_tempFile->close();
-                openOk = d->m_generator->loadDocument( tmpFileName, d->m_pagesVector );
+                offer = offers.first();
+                openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
             }
         }
     }
-
-    QApplication::restoreOverrideCursor();
-    if ( !openOk || d->m_pagesVector.size() <= 0 )
+    if ( !openOk )
     {
-        if ( !catalogName.isEmpty() )
-            KGlobal::locale()->removeCatalog( catalogName );
-
-        d->m_generator = 0;
-        return openOk;
+        return false;
     }
 
-    d->m_generatorName = propName;
+    d->m_generatorName = offer->name();
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     d->loadDocumentInfo();

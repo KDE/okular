@@ -107,6 +107,7 @@ class DocumentPrivate
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
+        bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
 
         // private slots
         void saveDocumentInfo() const;

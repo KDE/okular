@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+Name=Mobipocket document
+Comment=Mobipocket backend for Okular
+X-KDE-ServiceTypes=okular/Generator
+MimeType=application/x-mobipocket;
+X-KDE-Library=okularGenerator_mobi
+X-KDE-Priority=1
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

@@ -25,8 +25,6 @@ INCLUDE(UsePkgConfig)
 PKGCONFIG(poppler-qt4 _PopplerIncDir _PopplerLinkDir _PopplerLinkFlags _PopplerCflags)
 
 if(_PopplerLinkFlags)
-  # find again pkg-config, to query it about poppler version
-  FIND_PROGRAM(PKGCONFIG_EXECUTABLE NAMES pkg-config PATHS /usr/bin/ /usr/local/bin )
 
   # query pkg-config asking for a poppler-qt4 >= 0.5.4
   EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.5.4 poppler-qt4 RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
@@ -77,7 +75,6 @@ int main()
   else (HAVE_POPPLER_0_6)
     set(poppler06Message "no")
   endif (HAVE_POPPLER_0_6)
-
   if (NOT Poppler_FIND_QUIETLY)
     message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, 0.6.x? ${poppler06Message}")
   endif (NOT Poppler_FIND_QUIETLY)

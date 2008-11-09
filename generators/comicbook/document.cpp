@@ -12,6 +12,7 @@
 #include <QtGui/QImage>
 
 #include <klocale.h>
+#include <kmimetype.h>
 #include <kzip.h>
 
 #include "unrar.h"
@@ -32,10 +33,12 @@ bool Document::open( const QString &fileName )
 {
     close();
 
+    const KMimeType::Ptr mime = KMimeType::findByFileContent( fileName );
+
     /**
      * We have a zip archive
      */
-    if ( fileName.toLower().endsWith( ".cbz" ) ) {
+    if ( mime->is( "application/x-cbz" ) || mime->name() == "application/zip" ) {
         mZip = new KZip( fileName );
 
         if ( !mZip->open( QIODevice::ReadOnly ) ) {
@@ -66,7 +69,7 @@ bool Document::open( const QString &fileName )
 
         extractImageFiles( entries );
 
-    } else {
+    } if ( mime->is( "application/x-cbr" ) || mime->name() == "application/x-rar" ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
             return false;
@@ -90,6 +93,9 @@ bool Document::open( const QString &fileName )
         }
 
         extractImageFiles( mUnrar->list() );
+    } else {
+        mLastErrorString = i18n( "Unknown ComickBook format." );
+        return false;
     }
 
     return true;

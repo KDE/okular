@@ -468,6 +468,7 @@ class OKULAR_EXPORT Generator : public QObject
         GeneratorPrivate *d_ptr;
 
         friend class Document;
+        friend class DocumentPrivate;
         /// @endcond PRIVATE
 
     private:

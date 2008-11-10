@@ -13,6 +13,7 @@
 #include <okular/core/document.h>
 
 #include "mobidocument.h"
+#include "mobipocket.h"
 
 class QTextCursor;
 
@@ -24,6 +25,8 @@ namespace Mobi {
       ~Converter();
       
       virtual QTextDocument *convert( const QString &fileName );
+    private:
+      void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> metadata);
     };
 }
 

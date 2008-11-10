@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#ifndef MOBIPOCKET_H
+#define MOBIPOCKET_H
+
 #include <QtCore/QString>
 #include <QtCore/QByteArray>
 #include <QtCore/QMap>
@@ -33,8 +36,9 @@ private:
 struct DocumentPrivate;
 class Document {
 public:
+    enum MetaKey { Title, Author, Copyright, Description, Subject };
     Document(QIODevice* dev);
-    QMap<QString,QString> metadata() const;
+    QMap<MetaKey,QString> metadata() const;
     QString text() const; 
     int imageCount() const;
     QImage getImage(int i) const;
@@ -43,3 +47,4 @@ private:
     DocumentPrivate* const d;
 };
 }
+#endif

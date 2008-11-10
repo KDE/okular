@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 #include "mobidocument.h"
-#include "qmobi.h"
+#include "mobipocket.h"
 #include <QFile>
 #include <QRegExp>
 #include <kdebug.h>

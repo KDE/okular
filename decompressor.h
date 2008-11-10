@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#ifndef MOBI_DECOMPRESSOR_H
+#define MOBI_DECOMPRESSOR_H
+
 #include <QtCore/QByteArray>
 namespace Mobipocket {
 
@@ -25,5 +28,6 @@ protected:
     bool valid;
 };
 
-
+quint32 readBELong(const QByteArray& data, int offset);
 }
+#endif

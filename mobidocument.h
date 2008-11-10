@@ -27,6 +27,8 @@ namespace Mobi {
     bool isValid() const;
     ~MobiDocument();   
     
+    Mobipocket::Document* mobi() const { return doc; }
+    
   protected:
     virtual QVariant loadResource(int type, const QUrl &name);
     

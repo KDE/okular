@@ -31,6 +31,20 @@ Converter::~Converter()
 {    
 }
 
+void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey,QString> metadata)
+{
+  QMapIterator<Mobipocket::Document::MetaKey,QString> it(metadata);
+  while (it.hasNext()) {
+    it.next();
+    switch (it.key()) {
+        case Mobipocket::Document::Title: addMetaData(Okular::DocumentInfo::Title, it.value()); break;
+        case Mobipocket::Document::Author: addMetaData(Okular::DocumentInfo::Author, it.value()); break;
+        case Mobipocket::Document::Description: addMetaData(Okular::DocumentInfo::Description, it.value()); break;
+        case Mobipocket::Document::Subject: addMetaData(Okular::DocumentInfo::Subject, it.value()); break;
+        case Mobipocket::Document::Copyright: addMetaData(Okular::DocumentInfo::Copyright, it.value()); break;
+    }
+  }
+}
 
 QTextDocument* Converter::convert( const QString &fileName )
 {
@@ -40,6 +54,8 @@ QTextDocument* Converter::convert( const QString &fileName )
     delete newDocument;
     return NULL;
   }
+  
+  handleMetadata(newDocument->mobi()->metadata());
   newDocument->setPageSize(QSizeF(600, 800));
 
   QTextFrameFormat frameFormat;

@@ -92,38 +92,78 @@ struct DocumentPrivate
     quint16 ntextrecords;
     bool valid;
     quint16 firstImageRecord;
+    QMap<Document::MetaKey, QString> metadata;
     
-    void init() {
-        valid=pdb.isValid();
-        if (!valid) return;
-        QByteArray mhead=pdb.getRecord(0);
-        kDebug() << "MHEAD" << (int)mhead[0];
-//        if (mhead[0]!=(char)0) goto fail;
+    void init();
+    void findFirstImage();
+    void parseEXTH(const QByteArray& data);
+    QString readEXTHRecord(const QByteArray& data, quint32& offset);
+    
+}; 
 
-        kDebug() << "MHEAD" << (int)mhead[1];
-        dec = Decompressor::create(mhead[1], pdb);
-        if (!dec) goto fail;
-        ntextrecords=(unsigned char)mhead[8];
-        ntextrecords<<=8;
-        ntextrecords+=(unsigned char)mhead[9];
-        return;
-    fail:
-        valid=false;
+void DocumentPrivate::init()
+{
+    valid=pdb.isValid();
+    if (!valid) return;
+    QByteArray mhead=pdb.getRecord(0);
+    dec = Decompressor::create(mhead[1], pdb);
+    if (!dec) goto fail;
+    ntextrecords=(unsigned char)mhead[8];
+    ntextrecords<<=8;
+    ntextrecords+=(unsigned char)mhead[9];
+    if (mhead.size()>176) parseEXTH(mhead);
+    return;
+fail:
+    valid=false;
+}
 
+void DocumentPrivate::findFirstImage() {
+    firstImageRecord=ntextrecords+1;
+    while (firstImageRecord<pdb.recordCount()) {
+        QByteArray rec=pdb.getRecord(firstImageRecord);
+        if (rec.isNull()) return;
+        QBuffer buf(&rec);
+        buf.open(QIODevice::ReadOnly);
+        QImageReader r(&buf);
+        if (r.canRead()) return;
+        firstImageRecord++;
     }
-    void findFirstImage() {
-        firstImageRecord=ntextrecords+1;
-        while (firstImageRecord<pdb.recordCount()) {
-            QByteArray rec=pdb.getRecord(firstImageRecord);
-            if (rec.isNull()) return;
-            QBuffer buf(&rec);
-            buf.open(QIODevice::ReadOnly);
-            QImageReader r(&buf);
-            if (r.canRead()) return;
-            firstImageRecord++;
+}
+
+QString DocumentPrivate::readEXTHRecord(const QByteArray& data, quint32& offset)
+{
+    quint32 len=readBELong(data,offset);
+    offset+=4;
+    len-=8;
+    QString ret=QString::fromUtf8(data.mid(offset,len));
+    offset+=len;
+    return ret;
+}
+
+void DocumentPrivate::parseEXTH(const QByteArray& data) 
+{
+    quint32 nameoffset=readBELong(data,84);
+    quint32 namelen=readBELong(data,88);
+    metadata[Document::Title]=QString::fromUtf8(data.mid(nameoffset, namelen));
+    quint32 exthoffs=readBELong(data,20)+16;
+
+    if (data.mid(exthoffs,4)!="EXTH") return;
+    quint32 records=readBELong(data,exthoffs+8);
+    quint32 offset=exthoffs+12;
+    for (unsigned int i=0;i<records;i++) {
+        quint32 type=readBELong(data,offset);
+        offset+=4;
+        switch (type) {
+            case 100: metadata[Document::Author]=readEXTHRecord(data,offset); break;
+            case 103: metadata[Document::Description]=readEXTHRecord(data,offset); break;
+            case 105: metadata[Document::Subject]=readEXTHRecord(data,offset); break;
+            case 109: metadata[Document::Copyright]=readEXTHRecord(data,offset); break;
+            default: readEXTHRecord(data,offset);
         }
     }
-};
+            
+    
+}
 
 Document::Document(QIODevice* dev) : d(new DocumentPrivate(dev))
 {
@@ -161,4 +201,10 @@ QImage Document::getImage(int i) const
     //FIXME: check if i is in range
     return QImage::fromData(rec);
 }
+
+QMap<Document::MetaKey,QString> Document::metadata() const
+{
+    return d->metadata;
+}
+
 }

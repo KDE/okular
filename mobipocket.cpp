@@ -86,20 +86,27 @@ int PDB::recordCount() const
 ////////////////////////////////////////////
 struct DocumentPrivate 
 {
-    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0) {}
+    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false) {}
     PDB pdb;
     Decompressor* dec;
     quint16 ntextrecords;
     bool valid;
     quint16 firstImageRecord;
     QMap<Document::MetaKey, QString> metadata;
+    bool isUtf;
     
     void init();
     void findFirstImage();
     void parseEXTH(const QByteArray& data);
     QString readEXTHRecord(const QByteArray& data, quint32& offset);
+    QString decodeString(const QByteArray& data) const;
     
 }; 
+
+QString DocumentPrivate::decodeString(const QByteArray& data) const
+{
+    return isUtf ? QString::fromUtf8(data) : QString::fromLatin1(data);
+}
 
 void DocumentPrivate::init()
 {
@@ -107,14 +114,16 @@ void DocumentPrivate::init()
     if (!valid) return;
     QByteArray mhead=pdb.getRecord(0);
     dec = Decompressor::create(mhead[1], pdb);
-    if (!dec) goto fail;
+    if (!dec) {
+        valid=false;
+        return;
+    }
     ntextrecords=(unsigned char)mhead[8];
     ntextrecords<<=8;
     ntextrecords+=(unsigned char)mhead[9];
+    quint32 encoding=readBELong(mhead, 28);
+    if (encoding==65001) isUtf=true;
     if (mhead.size()>176) parseEXTH(mhead);
-    return;
-fail:
-    valid=false;
 }
 
 void DocumentPrivate::findFirstImage() {
@@ -135,7 +144,7 @@ QString DocumentPrivate::readEXTHRecord(const QByteArray& data, quint32& offset)
     quint32 len=readBELong(data,offset);
     offset+=4;
     len-=8;
-    QString ret=QString::fromUtf8(data.mid(offset,len));
+    QString ret=decodeString(data.mid(offset,len));
     offset+=len;
     return ret;
 }
@@ -144,7 +153,7 @@ void DocumentPrivate::parseEXTH(const QByteArray& data)
 {
     quint32 nameoffset=readBELong(data,84);
     quint32 namelen=readBELong(data,88);
-    metadata[Document::Title]=QString::fromUtf8(data.mid(nameoffset, namelen));
+    metadata[Document::Title]=decodeString(data.mid(nameoffset, namelen));
     quint32 exthoffs=readBELong(data,20)+16;
 
     if (data.mid(exthoffs,4)!="EXTH") return;
@@ -180,7 +189,7 @@ QString Document::text() const
             return QString::null;
         }
     }
-    return QString::fromUtf8(whole);
+    return d->decodeString(whole);
 }
 
 int Document::imageCount() const 

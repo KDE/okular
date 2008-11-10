@@ -86,7 +86,7 @@ int PDB::recordCount() const
 ////////////////////////////////////////////
 struct DocumentPrivate 
 {
-    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false) {}
+    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false), drm(false) {}
     PDB pdb;
     Decompressor* dec;
     quint16 ntextrecords;
@@ -94,6 +94,7 @@ struct DocumentPrivate
     quint16 firstImageRecord;
     QMap<Document::MetaKey, QString> metadata;
     bool isUtf;
+    bool drm;
     
     void init();
     void findFirstImage();
@@ -137,7 +138,8 @@ void DocumentPrivate::init()
     if (!valid) return;
     QByteArray mhead=pdb.getRecord(0);
     dec = Decompressor::create(mhead[1], pdb);
-    if (!dec) {
+    if ((int)mhead[12]!=0 || (int)mhead[13]!=0) drm=true;
+    if (!dec || drm) {
         valid=false;
         return;
     }
@@ -232,7 +234,7 @@ int Document::imageCount() const
 
 bool Document::isValid() const
 {
-    return d->pdb.isValid();
+    return d->valid;
 }
 
 QImage Document::getImage(int i) const 
@@ -246,6 +248,11 @@ QImage Document::getImage(int i) const
 QMap<Document::MetaKey,QString> Document::metadata() const
 {
     return d->metadata;
+}
+
+bool Document::hasDRM() const
+{
+    return d->drm;
 }
 
 }

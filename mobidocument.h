@@ -24,7 +24,6 @@ namespace Mobi {
       
   public:
     MobiDocument(const QString &fileName);  
-    bool isValid() const;
     ~MobiDocument();   
     
     Mobipocket::Document* mobi() const { return doc; }

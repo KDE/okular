@@ -49,8 +49,9 @@ void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey,QString>
 QTextDocument* Converter::convert( const QString &fileName )
 {
   MobiDocument* newDocument=new MobiDocument(fileName);
-  if (!newDocument->isValid()) {
-    emit error(i18n("Error while opening the Mobipocket document."), -1);
+  if (!newDocument->mobi()->isValid()) {
+    if (newDocument->mobi()->hasDRM()) emit error(i18n("This book is protected by DRM and can be displayed only on designated device"), -1);
+    else emit error(i18n("Error while opening the Mobipocket document."), -1);
     delete newDocument;
     return NULL;
   }

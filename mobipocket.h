@@ -43,6 +43,9 @@ public:
     int imageCount() const;
     QImage getImage(int i) const;
     bool isValid() const;
+
+    // if true then isValid() will return false
+    bool hasDRM() const;
 private:
     DocumentPrivate* const d;
 };

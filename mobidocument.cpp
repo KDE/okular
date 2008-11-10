@@ -22,11 +22,6 @@ MobiDocument::MobiDocument(const QString &fileName) : QTextDocument()
   if (doc->isValid()) setHtml(fixMobiMarkup(doc->text()));
 }
 
-bool MobiDocument::isValid() const
-{
-  return doc->isValid(); 
-}
-
 MobiDocument::~MobiDocument() 
 {
     delete doc;

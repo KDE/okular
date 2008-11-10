@@ -94,7 +94,7 @@ bool Document::open( const QString &fileName )
 
         extractImageFiles( mUnrar->list() );
     } else {
-        mLastErrorString = i18n( "Unknown ComickBook format." );
+        mLastErrorString = i18n( "Unknown ComicBook format." );
         return false;
     }
 

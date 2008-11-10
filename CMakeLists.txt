@@ -18,6 +18,7 @@ find_package(SharedMimeInfo REQUIRED)
 set(okularGenerator_mobi_PART_SRCS
   converter.cpp
   mobipocket.cpp
+  decompressor.cpp
   mobidocument.cpp
   generator_mobi.cpp
 )
@@ -27,7 +28,6 @@ kde4_add_plugin(okularGenerator_mobi ${okularGenerator_mobi_PART_SRCS})
 target_link_libraries(okularGenerator_mobi okularcore ${mobi_LIBRARIES} ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY})
 
 install(TARGETS okularGenerator_mobi DESTINATION ${PLUGIN_INSTALL_DIR})
-
 
 ########### install files ###############
 

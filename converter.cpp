@@ -15,7 +15,7 @@
 #include <QTextDocumentFragment>
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
-#include <qmobi.h>
+#include <mobipocket.h>
 
 #include <klocale.h>
 #include <okular/core/action.h>
@@ -36,7 +36,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 {
   MobiDocument* newDocument=new MobiDocument(fileName);
   if (!newDocument->isValid()) {
-    emit error(i18n("Error while opening the EPub document."), -1);
+    emit error(i18n("Error while opening the Mobipocket document."), -1);
     delete newDocument;
     return NULL;
   }

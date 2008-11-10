@@ -1,109 +1,22 @@
 /***************************************************************************
  *   Copyright (C) 2008 by Jakub Stachowski <qbast@go2.pl>                 *
  *                                                                         *
- *   RLE decompressor based on FBReader                                    *
- *   Copyright (C) 2004-2008 Geometer Plus <contact@geometerplus.com>      *
- *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <mobipocket.h>
+#include "mobipocket.h"
+#include "decompressor.h"
+
 #include <QtCore/QIODevice>
 #include <QtCore/QtEndian>
 #include <QtCore/QBuffer>
 #include <QtGui/QImageReader>
 #include <kdebug.h>
 
-static unsigned char TOKEN_CODE[256] = {
-	0, 1, 1, 1,		1, 1, 1, 1,		1, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,		0, 0, 0, 0,
-	3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,
-	3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,
-	3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,
-	3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,		3, 3, 3, 3,
-	2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,
-	2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,
-	2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,
-	2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,		2, 2, 2, 2,
-};
-
 namespace Mobipocket {
-
-class NOOPDecompressor : public Decompressor
-{
-public:
-    QByteArray decompress(const QByteArray& data) { return data; }
-};
-
-
-class RLEDecompressor : public Decompressor
-{
-public:
-    QByteArray decompress(const QByteArray& data);
-};
-
-QByteArray RLEDecompressor::decompress(const QByteArray& data)
-{
-        QByteArray ret;
-        ret.reserve(8192);
-
-		unsigned char token;
-		unsigned short copyLength, N, shift;
-		unsigned short shifted;
-        int i=0;
-        int maxIndex=data.size()-1;
-
-		while (i<data.size()) {
-			token = data.at(i++);
-			switch (TOKEN_CODE[token]) {
-				case 0:
-				        ret.append(token);
-					break;
-				case 1:
-					if ((i + token > maxIndex) ) {
-						goto endOfLoop;
-					}
-					ret.append(data.mid(i,token));
-					i+=token;
-					break;
-				case 2:
-				        ret.append(' ');
-				        ret.append(token ^ 0x80);
-					break;
-				case 3:
-					if (i + 1 > maxIndex) {
-						goto endOfLoop;
-					}
-//					N = (token << 8) + data.at(i++);
-                                        N = token;
-                                        N<<=8;
-                                        N+=(unsigned char)data.at(i++);
-					copyLength = (N & 7) + 3;
-					shift = (N & 0x3fff) / 8;
-					shifted = ret.size()-shift;
-					if (shifted>(ret.size()-1)) goto endOfLoop;
-					for (int i=0;i<copyLength;i++) ret.append(ret.at(shifted+i));
-					break;
-			}
-		}
-endOfLoop:
-    return ret;
-
-}
-
-
-
-/////////////////////////////////////////////
-
 
 struct PDBPrivate {
     QList<quint32> recordOffsets;
@@ -184,16 +97,19 @@ struct DocumentPrivate
         valid=pdb.isValid();
         if (!valid) return;
         QByteArray mhead=pdb.getRecord(0);
-        if (mhead[0]!=(char)0) {}
-        
-        switch (mhead[1]) {
-            case 1 : dec = new NOOPDecompressor(); break;
-            case 2 : dec = new RLEDecompressor(); break;
-            default : dec=0; {}
-        }
+        kDebug() << "MHEAD" << (int)mhead[0];
+//        if (mhead[0]!=(char)0) goto fail;
+
+        kDebug() << "MHEAD" << (int)mhead[1];
+        dec = Decompressor::create(mhead[1], pdb);
+        if (!dec) goto fail;
         ntextrecords=(unsigned char)mhead[8];
         ntextrecords<<=8;
         ntextrecords+=(unsigned char)mhead[9];
+        return;
+    fail:
+        valid=false;
+
     }
     void findFirstImage() {
         firstImageRecord=ntextrecords+1;
@@ -217,8 +133,13 @@ Document::Document(QIODevice* dev) : d(new DocumentPrivate(dev))
 QString Document::text() const 
 {
     QByteArray whole;
-    for (int i=1;i<d->ntextrecords;i++) 
+    for (int i=1;i<d->ntextrecords+1;i++) { 
         whole+=d->dec->decompress(d->pdb.getRecord(i));
+        if (!d->dec->isValid()) {
+            d->valid=false;
+            return QString::null;
+        }
+    }
     return QString::fromUtf8(whole);
 }
 

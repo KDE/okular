@@ -1,5 +1,4 @@
 - better error handling
 - tests for Mobipocket classes
 - anchors (a filepos=)
-- decryption for DRMed files
-- metadata
+- decryption for DRMed files (may be impossible and/or illegal)

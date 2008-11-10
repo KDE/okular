@@ -98,6 +98,7 @@ struct DocumentPrivate
     void init();
     void findFirstImage();
     void parseEXTH(const QByteArray& data);
+    void parseHtmlHead(const QString& data);
     QString readEXTHRecord(const QByteArray& data, quint32& offset);
     QString decodeString(const QByteArray& data) const;
     
@@ -106,6 +107,28 @@ struct DocumentPrivate
 QString DocumentPrivate::decodeString(const QByteArray& data) const
 {
     return isUtf ? QString::fromUtf8(data) : QString::fromLatin1(data);
+}
+
+void DocumentPrivate::parseHtmlHead(const QString& data)
+{
+    static QRegExp title("<dc:title.*>(.*)</dc:title>", Qt::CaseInsensitive);
+    static QRegExp author("<dc:creator.*>(.*)</dc:creator>", Qt::CaseInsensitive);
+    static QRegExp copyright("<dc:rights.*>(.*)</dc:rights>", Qt::CaseInsensitive);
+    static QRegExp subject("<dc:subject.*>(.*)</dc:subject>", Qt::CaseInsensitive);
+    static QRegExp description("<dc:description.*>(.*)</dc:description>", Qt::CaseInsensitive);
+    title.setMinimal(true);
+    author.setMinimal(true);
+    copyright.setMinimal(true);
+    subject.setMinimal(true);
+    description.setMinimal(true);
+    
+    // title could have been already taken from MOBI record
+    if (!metadata.contains(Document::Title) && title.indexIn(data)!=-1) metadata[Document::Title]=title.capturedTexts()[1];
+    if (author.indexIn(data)!=-1) metadata[Document::Author]=author.capturedTexts()[1];
+    if (copyright.indexIn(data)!=-1) metadata[Document::Copyright]=copyright.capturedTexts()[1];
+    if (subject.indexIn(data)!=-1) metadata[Document::Subject]=subject.capturedTexts()[1];
+    if (description.indexIn(data)!=-1) metadata[Document::Description]=description.capturedTexts()[1];
+    
 }
 
 void DocumentPrivate::init()
@@ -124,6 +147,9 @@ void DocumentPrivate::init()
     quint32 encoding=readBELong(mhead, 28);
     if (encoding==65001) isUtf=true;
     if (mhead.size()>176) parseEXTH(mhead);
+    
+    // try getting metadata from HTML if nothing or only title was recovered from MOBI and EXTH records
+    if (metadata.size()<2) parseHtmlHead(decodeString(dec->decompress(pdb.getRecord(1))));
 }
 
 void DocumentPrivate::findFirstImage() {
@@ -151,9 +177,15 @@ QString DocumentPrivate::readEXTHRecord(const QByteArray& data, quint32& offset)
 
 void DocumentPrivate::parseEXTH(const QByteArray& data) 
 {
-    quint32 nameoffset=readBELong(data,84);
-    quint32 namelen=readBELong(data,88);
-    metadata[Document::Title]=decodeString(data.mid(nameoffset, namelen));
+    // try to get name 
+    if (data.size()>=92) {
+        quint32 nameoffset=readBELong(data,84);
+        quint32 namelen=readBELong(data,88);
+        if ( (nameoffset + namelen) < data.size() ) {
+            metadata[Document::Title]=decodeString(data.mid(nameoffset, namelen));
+        }
+    }
+
     quint32 exthoffs=readBELong(data,20)+16;
 
     if (data.mid(exthoffs,4)!="EXTH") return;

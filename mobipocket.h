@@ -42,9 +42,10 @@ public:
     QString text() const; 
     int imageCount() const;
     QImage getImage(int i) const;
+    QImage thumbnail() const;
     bool isValid() const;
-
-    // if true then isValid() will return false
+    
+    // if true then it is impossible to get text of book. Images should still be readable
     bool hasDRM() const;
 private:
     DocumentPrivate* const d;

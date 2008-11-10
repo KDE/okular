@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+Name=Mobipocket thumbnailer
+X-KDE-ServiceTypes=ThumbCreator
+MimeType=application/x-mobipocket;
+X-KDE-Library=mobithumbnail
+CacheThumbnail=true
+

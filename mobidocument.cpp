@@ -40,7 +40,7 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
   if (!ok || recnum>=doc->imageCount()) return QVariant();
    
   QVariant resource;
-  resource.setValue(doc->getImage(recnum));
+  resource.setValue(doc->getImage(recnum-1));
   addResource(type, name, resource); 
     
   return resource;

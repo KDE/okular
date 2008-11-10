@@ -86,15 +86,22 @@ int PDB::recordCount() const
 ////////////////////////////////////////////
 struct DocumentPrivate 
 {
-    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false), drm(false) {}
+    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false), 
+        drm(false), thumbnailIndex(0) {}
     PDB pdb;
     Decompressor* dec;
     quint16 ntextrecords;
     bool valid;
+    
+    // number of first record holding image. Usually it is directly after end of text, but not always
     quint16 firstImageRecord;
     QMap<Document::MetaKey, QString> metadata;
     bool isUtf;
     bool drm;
+    
+    // index of thumbnail in image list. May be specified in EXTH. 
+    // If not then just use first image and hope for the best
+    int thumbnailIndex;
     
     void init();
     void findFirstImage();
@@ -102,7 +109,7 @@ struct DocumentPrivate
     void parseHtmlHead(const QString& data);
     QString readEXTHRecord(const QByteArray& data, quint32& offset);
     QString decodeString(const QByteArray& data) const;
-    
+    QImage getImageFromRecord(int recnum);
 }; 
 
 QString DocumentPrivate::decodeString(const QByteArray& data) const
@@ -139,7 +146,7 @@ void DocumentPrivate::init()
     QByteArray mhead=pdb.getRecord(0);
     dec = Decompressor::create(mhead[1], pdb);
     if ((int)mhead[12]!=0 || (int)mhead[13]!=0) drm=true;
-    if (!dec || drm) {
+    if (!dec) {
         valid=false;
         return;
     }
@@ -151,7 +158,7 @@ void DocumentPrivate::init()
     if (mhead.size()>176) parseEXTH(mhead);
     
     // try getting metadata from HTML if nothing or only title was recovered from MOBI and EXTH records
-    if (metadata.size()<2) parseHtmlHead(decodeString(dec->decompress(pdb.getRecord(1))));
+    if (metadata.size()<2 && !drm) parseHtmlHead(decodeString(dec->decompress(pdb.getRecord(1))));
 }
 
 void DocumentPrivate::findFirstImage() {
@@ -177,6 +184,14 @@ QString DocumentPrivate::readEXTHRecord(const QByteArray& data, quint32& offset)
     return ret;
 }
 
+QImage DocumentPrivate::getImageFromRecord(int i) 
+{
+    QByteArray rec=pdb.getRecord(i);
+    QByteArray rec2=pdb.getRecord(i-2);
+    return QImage::fromData(rec);
+}
+
+
 void DocumentPrivate::parseEXTH(const QByteArray& data) 
 {
     // try to get name 
@@ -201,6 +216,7 @@ void DocumentPrivate::parseEXTH(const QByteArray& data)
             case 103: metadata[Document::Description]=readEXTHRecord(data,offset); break;
             case 105: metadata[Document::Subject]=readEXTHRecord(data,offset); break;
             case 109: metadata[Document::Copyright]=readEXTHRecord(data,offset); break;
+            case 202: thumbnailIndex = readBELong(data,offset); offset+=4; break;
             default: readEXTHRecord(data,offset);
         }
     }
@@ -240,9 +256,7 @@ bool Document::isValid() const
 QImage Document::getImage(int i) const 
 {
     if (!d->firstImageRecord) d->findFirstImage();
-    QByteArray rec=d->pdb.getRecord(d->firstImageRecord+i-1);
-    //FIXME: check if i is in range
-    return QImage::fromData(rec);
+    return d->getImageFromRecord(d->firstImageRecord+i);
 }
 
 QMap<Document::MetaKey,QString> Document::metadata() const
@@ -253,6 +267,12 @@ QMap<Document::MetaKey,QString> Document::metadata() const
 bool Document::hasDRM() const
 {
     return d->drm;
+}
+
+QImage Document::thumbnail() const 
+{
+    if (!d->firstImageRecord) d->findFirstImage();
+    return d->getImageFromRecord(d->thumbnailIndex+d->firstImageRecord);
 }
 
 }

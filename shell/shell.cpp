@@ -210,7 +210,7 @@ QStringList Shell::fileFormats() const
     QString constraint( "(Library == 'okularpart')" );
     QLatin1String basePartService( "KParts/ReadOnlyPart" );
     KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
-    KService::List::ConstIterator it = offers.begin(), itEnd = offers.end();
+    KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
     for ( ; it != itEnd; ++it )
     {
         KService::Ptr service = *it;

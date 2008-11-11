@@ -9,7 +9,6 @@ macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture (QCA)" "http:/
 if ( QCA2_FOUND )
    include_directories( ${QCA2_INCLUDE_DIR} )
    add_definitions( -DQCA2 )
-endif( QCA2_FOUND )
 
 ########### next target ###############
 
@@ -26,11 +25,9 @@ set(okularGenerator_ooo_PART_SRCS
 
 kde4_add_plugin(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
-if (QCA2_FOUND)
   target_link_libraries(okularGenerator_ooo okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${QCA2_LIBRARIES} ${QT_QTXML_LIBRARY})
 else (QCA2_FOUND)
   target_link_libraries(okularGenerator_ooo okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${QT_QTXML_LIBRARY})
-endif (QCA2_FOUND)
 
 install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -40,3 +37,4 @@ install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES okularApplication_ooo.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 
+endif (QCA2_FOUND)

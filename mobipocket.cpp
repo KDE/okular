@@ -272,7 +272,13 @@ bool Document::hasDRM() const
 QImage Document::thumbnail() const 
 {
     if (!d->firstImageRecord) d->findFirstImage();
-    return d->getImageFromRecord(d->thumbnailIndex+d->firstImageRecord);
+    QImage img=d->getImageFromRecord(d->thumbnailIndex+d->firstImageRecord);
+    // does not work, try first image
+    if (img.isNull() && d->thumbnailIndex) {
+        d->thumbnailIndex=0;
+        img=d->getImageFromRecord(d->firstImageRecord);
+    }
+    return img;
 }
 
 }

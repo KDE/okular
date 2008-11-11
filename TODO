@@ -3,4 +3,3 @@
 - anchors (a filepos=)
 - decryption for DRMed files (may be impossible and/or illegal)
 - strigi analyzer
-- thumbnail generator does not for some files (DRMed i think)

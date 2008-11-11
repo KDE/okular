@@ -67,8 +67,8 @@ void FilePrinterPreviewPrivate::getPart()
     KService::List offers =
         KMimeTypeTrader::self()->query("application/postscript", "KParts/ReadOnlyPart");
 
-    KService::List::ConstIterator it = offers.begin();
-    while (!factory && it != offers.end()) {
+    KService::List::ConstIterator it = offers.constBegin();
+    while (!factory && it != offers.constEnd()) {
         KPluginLoader loader(**it);
         factory = loader.factory();
         if (!factory) {

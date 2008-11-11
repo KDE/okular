@@ -336,9 +336,9 @@ QString LCHMFileImpl::decodeEntity( const QString & entity )
 	}
 	else
 	{
-		QMap<QString, QString>::const_iterator it = m_entityDecodeMap.find( entity );
+		QMap<QString, QString>::const_iterator it = m_entityDecodeMap.constFind( entity );
 
-		if ( it == m_entityDecodeMap.end() )
+		if ( it == m_entityDecodeMap.constEnd() )
 		{
 			qWarning ("LCHMFileImpl::decodeEntity: could not decode HTML entity '%s'", qPrintable( entity ));
 			return QString::null;

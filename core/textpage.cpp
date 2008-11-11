@@ -132,7 +132,7 @@ TextPage::TextPage()
 TextPage::TextPage( const TextEntity::List &words )
     : d( new TextPagePrivate() )
 {
-    TextEntity::List::ConstIterator it = words.begin(), itEnd = words.end();
+    TextEntity::List::ConstIterator it = words.constBegin(), itEnd = words.constEnd();
     for ( ; it != itEnd; ++it )
     {
         TextEntity *e = *it;
@@ -285,7 +285,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     double endCx = endC.x;
     double endCy = endC.y;
 
-    TextList::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
     for ( ; it != itEnd; ++it )
     {
@@ -311,8 +311,8 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
         return 0;
     TextList::ConstIterator start;
     TextList::ConstIterator end;
-    QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.find( searchID );
-    if ( sIt == d->m_searchPoints.end() )
+    QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.constFind( searchID );
+    if ( sIt == d->m_searchPoints.constEnd() )
     {
         // if no previous run of this search is found, then set it to start
         // from the beginning (respecting the search direction)
@@ -325,12 +325,12 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     switch ( dir )
     {
         case FromTop:
-            start = d->m_words.begin();
-            end = d->m_words.end();
+            start = d->m_words.constBegin();
+            end = d->m_words.constEnd();
             break;
         case FromBottom:
-            start = d->m_words.end();
-            end = d->m_words.begin();
+            start = d->m_words.constEnd();
+            end = d->m_words.constBegin();
             Q_ASSERT( start != end );
             // we can safely go one step back, as we already checked
             // that the list is not empty
@@ -339,13 +339,13 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
             break;
         case NextResult:
             start = (*sIt)->it_end;
-            end = d->m_words.end();
+            end = d->m_words.constEnd();
             if ( ( start + 1 ) != end )
                 ++start;
             break;
         case PreviousResult:
             start = (*sIt)->it_begin;
-            end = d->m_words.begin();
+            end = d->m_words.constBegin();
             if ( start != end )
                 --start;
             forward = false;
@@ -610,7 +610,7 @@ QString TextPage::text(const RegularAreaRect *area) const
     if ( area && area->isNull() )
         return QString();
 
-    TextList::ConstIterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     QString ret;
     if ( area )
     {

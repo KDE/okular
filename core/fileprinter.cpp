@@ -69,7 +69,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         return -8;
     }
 
-    for (QStringList::ConstIterator it = fileList.begin(); it != fileList.end(); ++it) {
+    for (QStringList::ConstIterator it = fileList.constBegin(); it != fileList.constEnd(); ++it) {
         if (!QFile::exists(*it)) {
             return -7;
         }

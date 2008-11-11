@@ -25,7 +25,7 @@
 using namespace Okular;
 
 #define foreachObserver( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it = d->document->m_observers.begin(), end = d->document->m_observers.end();\
+    QMap< int, DocumentObserver * >::const_iterator it = d->document->m_observers.constBegin(), end = d->document->m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 class OkularBookmarkAction : public KBookmarkAction

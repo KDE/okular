@@ -759,8 +759,8 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( !ok )
                     continue;
 
-                QHash<int, FormField*>::const_iterator wantedIt = hashedforms.find( index );
-                if ( wantedIt == hashedforms.end() )
+                QHash<int, FormField*>::const_iterator wantedIt = hashedforms.constFind( index );
+                if ( wantedIt == hashedforms.constEnd() )
                     continue;
 
                 QString value = formElement.attribute( "value" );
@@ -800,7 +800,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         QDomElement annotListElement = document.createElement( "annotationList" );
 
         // add every annotation to the annotationList
-        QLinkedList< Annotation * >::const_iterator aIt = m_page->m_annotations.begin(), aEnd = m_page->m_annotations.end();
+        QLinkedList< Annotation * >::const_iterator aIt = m_page->m_annotations.constBegin(), aEnd = m_page->m_annotations.constEnd();
         for ( ; aIt != aEnd; ++aIt )
         {
             // get annotation
@@ -828,7 +828,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         QDomElement formListElement = document.createElement( "forms" );
 
         // add every form data to the formList
-        QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
+        QLinkedList< FormField * >::const_iterator fIt = formfields.constBegin(), fItEnd = formfields.constEnd();
         for ( ; fIt != fItEnd; ++fIt )
         {
             // get the form field
@@ -862,14 +862,14 @@ const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
     const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
-    QMap< int, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.find( pixID );
-    if ( itPixmap != d->m_pixmaps.end() )
+    QMap< int, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( pixID );
+    if ( itPixmap != d->m_pixmaps.constEnd() )
         pixmap = itPixmap.value().m_pixmap;
     // else find the closest match using pixmaps of other IDs (great optim!)
     else if ( !d->m_pixmaps.isEmpty() )
     {
         int minDistance = -1;
-        QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.begin(), end = d->m_pixmaps.end();
+        QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
         for ( ; it != end; ++it )
         {
             int pixWidth = (*it).m_pixmap->width(),

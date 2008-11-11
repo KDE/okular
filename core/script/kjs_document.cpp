@@ -184,11 +184,11 @@ static KJSObject docGetField( KJSContext *context, void *object,
 
     QString cName = arguments.at( 0 ).toString( context );
 
-    QVector< Page * >::const_iterator pIt = doc->m_pagesVector.begin(), pEnd = doc->m_pagesVector.end();
+    QVector< Page * >::const_iterator pIt = doc->m_pagesVector.constBegin(), pEnd = doc->m_pagesVector.constEnd();
     for ( ; pIt != pEnd; ++pIt )
     {
         const QLinkedList< Okular::FormField * > pageFields = (*pIt)->formFields();
-        QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.begin(), ffEnd = pageFields.end();
+        QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
         for ( ; ffIt != ffEnd; ++ffIt )
         {
             if ( (*ffIt)->name() == cName )

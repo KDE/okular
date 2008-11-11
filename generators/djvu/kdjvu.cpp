@@ -711,8 +711,8 @@ void KDjVu::closeFile()
 
 QVariant KDjVu::metaData( const QString & key ) const
 {
-    QHash<QString, QVariant>::ConstIterator it = d->m_metaData.find( key );
-    return it != d->m_metaData.end() ? it.value() : QVariant();
+    QHash<QString, QVariant>::ConstIterator it = d->m_metaData.constFind( key );
+    return it != d->m_metaData.constEnd() ? it.value() : QVariant();
 }
 
 const QDomDocument * KDjVu::documentBookmarks() const

@@ -1309,7 +1309,7 @@ void PresentationWidget::setScreen( int newScreen )
     m_height = height();
 
     // update the frames
-    QVector< PresentationFrame * >::const_iterator fIt = m_frames.begin(), fEnd = m_frames.end();
+    QVector< PresentationFrame * >::const_iterator fIt = m_frames.constBegin(), fEnd = m_frames.constEnd();
     const float screenRatio = (float)m_height / (float)m_width;
     for ( ; fIt != fEnd; ++fIt )
     {

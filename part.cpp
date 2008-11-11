@@ -172,8 +172,8 @@ static QString compressedMimeFor( const QString& mime_to_check )
         compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] =
             QString::fromLatin1( "application/x-bzip" );
     }
-    QHash< QString, QString >::const_iterator it = compressedMimeMap.find( mime_to_check );
-    if ( it != compressedMimeMap.end() )
+    QHash< QString, QString >::const_iterator it = compressedMimeMap.constFind( mime_to_check );
+    if ( it != compressedMimeMap.constEnd() )
         return it.value();
 
     return QString();

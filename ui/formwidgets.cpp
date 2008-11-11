@@ -45,7 +45,7 @@ QButtonGroup* FormWidgetsController::registerRadioButton( FormWidgetIface* widge
     for ( ; it != itEnd; ++it )
     {
         const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
-        if ( idsIt != (*it).ids.end() )
+        if ( idsIt != (*it).ids.constEnd() )
         {
             (*it).group->addButton( widget->button() );
             return (*it).group;

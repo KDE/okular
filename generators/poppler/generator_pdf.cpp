@@ -1457,8 +1457,8 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         if ( line.startsWith( QLatin1Char( 'l' ) ) && linere.exactMatch( line ) )
         {
             int id = linere.cap( 1 ).toInt();
-            QHash<int, pdfsyncpoint>::const_iterator it = points.find( id );
-            if ( it == points.end() )
+            QHash<int, pdfsyncpoint>::const_iterator it = points.constFind( id );
+            if ( it == points.constEnd() )
             {
                 pdfsyncpoint pt;
                 pt.x = 0;

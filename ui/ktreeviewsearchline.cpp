@@ -392,8 +392,8 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &index, int row, const 
 
   const int columncount = index.model()->columnCount( index );
   if ( !d->searchColumns.isEmpty() ) {
-    QList<int>::ConstIterator it = d->searchColumns.begin();
-    for ( ; it != d->searchColumns.end(); ++it ) {
+    QList<int>::ConstIterator it = d->searchColumns.constBegin();
+    for ( ; it != d->searchColumns.constEnd(); ++it ) {
       if ( *it < columncount &&
            index.child( row, *it ).data( Qt::DisplayRole ).toString().indexOf( pattern, 0, d->caseSensitive ) >= 0 )
         return true;

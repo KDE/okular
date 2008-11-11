@@ -312,8 +312,8 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 
     QStack<QDomElement> stack;
 
-    QVector<PreBookmark>::ConstIterator it = prebookmarks.begin();
-    QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.end();
+    QVector<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
+    QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
     for( ; it != itEnd; ++it ) 
     {
         QDomElement domel = m_docSynopsis->createElement( (*it).title );

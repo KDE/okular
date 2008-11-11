@@ -134,10 +134,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {*/
                 
                 Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
-                QLinkedList< Okular::HighlightAreaRect * >::const_iterator h2It = page->m_highlights.begin(), hEnd = page->m_highlights.end();
+                QLinkedList< Okular::HighlightAreaRect * >::const_iterator h2It = page->m_highlights.constBegin(), hEnd = page->m_highlights.constEnd();
                 Okular::HighlightAreaRect::const_iterator hIt;
                 for ( ; h2It != hEnd; ++h2It )
-                    for (hIt=(*h2It)->begin(); hIt!=(*h2It)->end(); ++hIt)
+                    for (hIt=(*h2It)->constBegin(); hIt!=(*h2It)->constEnd(); ++hIt)
                     {
                         if ((*hIt).intersects(limitRect))
                             bufferedHighlights->append( qMakePair((*h2It)->color,*hIt) );
@@ -153,7 +153,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {*/
                 Okular::NormalizedRect* limitRect = new Okular::NormalizedRect(nXMin, nYMin, nXMax, nYMax );
                 const Okular::RegularAreaRect *textSelection = page->textSelection();
-                Okular::HighlightAreaRect::const_iterator hIt = textSelection->begin(), hEnd = textSelection->end();
+                Okular::HighlightAreaRect::const_iterator hIt = textSelection->constBegin(), hEnd = textSelection->constEnd();
                 for ( ; hIt != hEnd; ++hIt )
                 {
                     if ( (*hIt).intersects( limitRect ) )
@@ -165,7 +165,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         // append annotations inside limits to the un/buffered list
         if ( canDrawAnnotations )
         {
-            QLinkedList< Okular::Annotation * >::const_iterator aIt = page->m_annotations.begin(), aEnd = page->m_annotations.end();
+            QLinkedList< Okular::Annotation * >::const_iterator aIt = page->m_annotations.constBegin(), aEnd = page->m_annotations.constEnd();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Okular::Annotation * ann = *aIt;
@@ -288,7 +288,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->begin(), hEnd = bufferedHighlights->end();
+            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->constBegin(), hEnd = bufferedHighlights->constEnd();
             for ( ; hIt != hEnd; ++hIt )
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
@@ -334,7 +334,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
-            QList< Okular::Annotation * >::const_iterator aIt = bufferedAnnotations->begin(), aEnd = bufferedAnnotations->end();
+            QList< Okular::Annotation * >::const_iterator aIt = bufferedAnnotations->constBegin(), aEnd = bufferedAnnotations->constEnd();
             for ( ; aIt != aEnd; ++aIt )
             {
                 Okular::Annotation * a = *aIt;
@@ -353,8 +353,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     NormalizedPath path;
                     // normalize page point to image
                     const QLinkedList<Okular::NormalizedPoint> points = la->transformedLinePoints();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = points.begin();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = points.end();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = points.constBegin();
+                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = points.constEnd();
                     for ( ; it != itEnd; ++it )
                     {
                         Okular::NormalizedPoint point;
@@ -490,7 +490,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                         const QLinkedList<Okular::NormalizedPoint> & inkPath = transformedInkPaths[ p ];
 
                         // normalize page point to image
-                        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.begin(), pEnd = inkPath.end();
+                        QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = inkPath.constBegin(), pEnd = inkPath.constEnd();
                         for ( ; pIt != pEnd; ++pIt )
                         {
                             const Okular::NormalizedPoint & inkPoint = *pIt;
@@ -518,7 +518,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( unbufferedAnnotations )
     {
         // iterate over annotations and paint AText, AGeom, AStamp
-        QList< Okular::Annotation * >::const_iterator aIt = unbufferedAnnotations->begin(), aEnd = unbufferedAnnotations->end();
+        QList< Okular::Annotation * >::const_iterator aIt = unbufferedAnnotations->constBegin(), aEnd = unbufferedAnnotations->constEnd();
         for ( ; aIt != aEnd; ++aIt )
         {
             Okular::Annotation * a = *aIt;
@@ -668,7 +668,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         QRect limitsEnlarged = limits;
         limitsEnlarged.adjust( -2, -2, 2, 2 );
         // draw rects that are inside the 'limits' paint region as opaque rects
-        QLinkedList< Okular::ObjectRect * >::const_iterator lIt = page->m_rects.begin(), lEnd = page->m_rects.end();
+        QLinkedList< Okular::ObjectRect * >::const_iterator lIt = page->m_rects.constBegin(), lEnd = page->m_rects.constEnd();
         for ( ; lIt != lEnd; ++lIt )
         {
             Okular::ObjectRect * rect = *lIt;

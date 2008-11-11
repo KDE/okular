@@ -141,7 +141,7 @@ ThumbnailListPrivate::~ThumbnailListPrivate()
 
 ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint & p ) const
 {
-    QVector< ThumbnailWidget * >::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector< ThumbnailWidget * >::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
     {
         if ( (*tIt)->rect().contains( p ) )
@@ -153,7 +153,7 @@ ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint & p ) const
 void ThumbnailListPrivate::paintEvent( QPaintEvent * e )
 {
     QPainter painter( this );
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
     {
         QRect rect = e->rect().intersected( (*tIt)->rect() );
@@ -219,7 +219,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     }
 
     // delete all the Thumbnails
-    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.begin(), tEnd = d->m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
         delete *tIt;
     d->m_thumbnails.clear();
@@ -237,7 +237,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     //RESTORE THIS int flags = Okular::Settings::filterBookmarks() ? Okular::Page::Bookmark : Okular::Page::Highlight;
 
     // if no page matches filter rule, then display all pages
-    QVector< Okular::Page * >::const_iterator pIt = pages.begin(), pEnd = pages.end();
+    QVector< Okular::Page * >::const_iterator pIt = pages.constBegin(), pEnd = pages.constEnd();
     bool skipCheck = true;
     for ( ; pIt != pEnd ; ++pIt )
         //if ( (*pIt)->attributes() & flags )
@@ -247,7 +247,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     // generate Thumbnails for the given set of pages
     int width = viewport()->width();
     int height = 0;
-    for ( pIt = pages.begin(); pIt != pEnd ; ++pIt )
+    for ( pIt = pages.constBegin(); pIt != pEnd ; ++pIt )
         //if ( skipCheck || (*pIt)->attributes() & flags )
         if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
         {
@@ -291,7 +291,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
 
     // select the page with viewport and ensure it's centered in the view
     d->m_vectorIndex = 0;
-    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.begin(), tEnd = d->m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
     {
         if ( (*tIt)->pageNumber() == newPage )
@@ -317,7 +317,7 @@ void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
         return;
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
         {
@@ -361,7 +361,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
 bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 {
     // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
-    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
             return false;
@@ -375,7 +375,7 @@ void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
     QRect viewportRect = viewport()->rect().translated( viewport()->pos() );
-    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.begin(), vEnd = d->m_visibleThumbnails.end();
+    QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
@@ -394,8 +394,8 @@ void ThumbnailListPrivate::forwardTrack( const Okular::Page * p, const QPoint &p
 
     QVector< Okular::VisiblePageRect * > vVpr = m_document->visiblePageRects();
 
-    QVector< Okular::VisiblePageRect * >::const_iterator vIt = vVpr.begin();
-    QVector< Okular::VisiblePageRect * >::const_iterator vEnd = vVpr.end();
+    QVector< Okular::VisiblePageRect * >::const_iterator vIt = vVpr.constBegin();
+    QVector< Okular::VisiblePageRect * >::const_iterator vEnd = vVpr.constEnd();
     for ( ; vIt != vEnd; ++vIt )
     {
         Okular::VisiblePageRect *vpr = ( *vIt );
@@ -507,7 +507,7 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
         // resize and reposition items
         int newWidth = q->viewport()->width();
         int newHeight = 0;
-        QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+        QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
         for ( ; tIt != tEnd; ++tIt )
         {
             ThumbnailWidget *t = *tIt;
@@ -563,7 +563,7 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
     // scroll from the top to the last visible thumbnail
     m_visibleThumbnails.clear();
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.begin(), tEnd = m_thumbnails.end();
+    QVector<ThumbnailWidget *>::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     QRect viewportRect = q->viewport()->rect().translated( q->horizontalScrollBar()->value(), q->verticalScrollBar()->value() );
     for ( ; tIt != tEnd; ++tIt )
     {

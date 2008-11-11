@@ -8,8 +8,8 @@
  ***************************************************************************/
 #include "mobidocument.h"
 #include "mobipocket.h"
-#include <QFile>
-#include <QRegExp>
+#include <QtCore/QFile>
+#include <QtCore/QRegExp>
 #include <kdebug.h>
 
 using namespace Mobi;
@@ -30,13 +30,9 @@ MobiDocument::~MobiDocument()
   
 QVariant MobiDocument::loadResource(int type, const QUrl &name) 
 {
-   
-  kDebug() << "Requested resource: " << type << " URL " << name;
-  
   if (type!=QTextDocument::ImageResource || name.scheme()!=QString("pdbrec")) return QVariant();
   bool ok;
   quint16 recnum=name.path().mid(1).toUShort(&ok);
-  kDebug() << "Path" << name.path().mid(1) << " Img " << recnum << " all imgs " << doc->imageCount();
   if (!ok || recnum>=doc->imageCount()) return QVariant();
    
   QVariant resource;
@@ -46,15 +42,46 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
   return resource;
 }
 
+// starting from 'pos', find position in the string that is not inside a tag
+int outsideTag(const QString& data, int pos)
+{
+  for (int i=pos-1;i>=0;i--) {
+    if (data[i]=='>') return pos;
+    if (data[i]=='<') return i;
+  }
+  return pos;
+}
 
 QString MobiDocument::fixMobiMarkup(const QString& data) 
 {
-    QRegExp imgs("<[iI][mM][gG].*recindex=\"([0-9]*)\".*>");
+    static QRegExp imgs("<img.*recindex=\"([\\d]*)\".*>", Qt::CaseInsensitive);
     
     imgs.setMinimal(true);
     QString ret=data;
     ret.replace(imgs,"<img src=\"pdbrec:/\\1\">");
-    ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
-    //FIXME: anchors
+    //ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
+    QMap<int,QString> anchorPositions;
+    static QRegExp anchors("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}", Qt::CaseInsensitive);
+    int pos=0;
+
+    // find all link destinations
+    while ( (pos=anchors.indexIn( data, pos ))!=-1) {
+	int filepos=anchors.cap( 1 ).toUInt(  );
+	if (filepos) anchorPositions[filepos]=anchors.cap(1);
+	pos+=anchors.matchedLength();
+    }
+
+    // put anchors in all link destinations
+    int offset=0;
+    QMapIterator<int,QString> it(anchorPositions);
+    while (it.hasNext()) {
+      it.next();
+      int fixedpos=outsideTag(ret, it.key()+offset);
+      ret.insert(fixedpos,QString("<a name=\"")+it.value()+QString("\"/>"));
+      offset+=12+it.value().size();
+    }
+
+    // replace links referencing filepos with normal internal links
+    ret.replace(anchors,"<a href=\"#\\1\"");
     return ret;
 }

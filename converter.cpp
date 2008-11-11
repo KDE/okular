@@ -11,8 +11,9 @@
 
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QTextDocument>
+#include <QtGui/QTextBlock>
 #include <QtGui/QTextFrame>
-#include <QTextDocumentFragment>
+#include <QtGui/QTextDocumentFragment>
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
 #include <mobipocket.h>
@@ -67,5 +68,40 @@ QTextDocument* Converter::convert( const QString &fileName )
   frameFormat.setMargin( 20 );
   QTextFrame *rootFrame = newDocument->rootFrame();
   rootFrame->setFrameFormat( frameFormat ); 
+  QMap<QString,QPair<int,int> > links;
+  QMap<QString,QTextBlock> targets;
+
+  // go over whole document and add all <a> tags to links or targets map
+  for (QTextBlock it = newDocument->begin(); it != newDocument->end(); it = it.next()) 
+   for (QTextBlock::iterator fit=it.begin(); !fit.atEnd(); ++fit) {
+    QTextFragment frag=fit.fragment();
+    QTextCharFormat format=frag.charFormat();
+    if (!format.isAnchor()) continue;
+    //link
+    if (!format.anchorHref().isEmpty()) links[format.anchorHref()]=
+      QPair<int,int>(frag.position(), frag.position()+frag.length());
+    if (!format.anchorNames().isEmpty()) {
+      // link targets
+      Q_FOREACH(QString name, format.anchorNames()) 
+	targets["#"+name]=it;
+    }
+  }
+
+  // create link actions
+  QMapIterator<QString,QPair<int,int> > it(links);
+  while (it.hasNext()) {
+    it.next();
+    QUrl u(it.key());
+    // external or internal link
+    if (!u.isRelative()) emit addAction(new Okular::BrowseAction(it.key()), it.value().first, it.value().second);
+    else {
+      // is there valid target?
+      if (!targets.contains( it.key() ) || !targets[it.key()].isValid()) continue;
+      emit addAction(new Okular::GotoAction(QString(), calculateViewport( newDocument, targets[it.key()] )),
+	    it.value().first, it.value().second);
+    }
+    
+  }
+
   return newDocument;
 }

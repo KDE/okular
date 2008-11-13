@@ -18,11 +18,29 @@
 
 namespace Mobipocket {
 
+QByteArray Stream::read(int len)
+{
+    QByteArray ret;
+    ret.resize(len);
+    len=read(ret.data(),len);
+    if (len<0) len=0;
+    ret.resize(len);
+    return ret;
+}
+
+QByteArray Stream::readAll() 
+{
+    QByteArray ret, bit;
+    while (!(bit=read(4096)).isEmpty()) ret+=bit;
+    return ret;
+}
+
+
+
 struct PDBPrivate {
     QList<quint32> recordOffsets;
-    QIODevice* device;
+    Stream* device;
     QString fileType;
-    QString name;
     quint16 nrecords;
     bool valid;
     
@@ -34,8 +52,6 @@ void PDBPrivate::init()
         valid=true;
         quint16 word;
         quint32 dword;
-        device->seek(0);
-        name=QString::fromLatin1(device->read(32));
         device->seek(0x3c);
         fileType=QString::fromLatin1(device->read(8));
         
@@ -50,7 +66,7 @@ void PDBPrivate::init()
         }
 }
 
-PDB::PDB(QIODevice* dev) : d(new PDBPrivate)
+PDB::PDB(Stream* dev) : d(new PDBPrivate)
 {
     d->device=dev;
     d->init();
@@ -61,16 +77,9 @@ QByteArray PDB::getRecord(int i) const
     if (i>=d->nrecords) return QByteArray();
     quint32 offset=d->recordOffsets[i];
     bool last=(i==(d->nrecords-1));
-    quint32 size=0;
-    if (last) size=d->device->size()-offset;
-    else size=d->recordOffsets[i+1]-offset;
     d->device->seek(offset);
-    return d->device->read(size);
-}
-
-QString PDB::name() const 
-{
-    return d->name;
+    if (last) return d->device->readAll();
+    return d->device->read(d->recordOffsets[i+1]-offset);
 }
 
 bool PDB::isValid() const
@@ -86,7 +95,7 @@ int PDB::recordCount() const
 ////////////////////////////////////////////
 struct DocumentPrivate 
 {
-    DocumentPrivate(QIODevice* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false), 
+    DocumentPrivate(Stream* d) : pdb(d), valid(true), firstImageRecord(0), isUtf(false), 
         drm(false), thumbnailIndex(0) {}
     PDB pdb;
     Decompressor* dec;
@@ -224,7 +233,7 @@ void DocumentPrivate::parseEXTH(const QByteArray& data)
     
 }
 
-Document::Document(QIODevice* dev) : d(new DocumentPrivate(dev))
+Document::Document(Stream* dev) : d(new DocumentPrivate(dev))
 {
     d->init();
 }

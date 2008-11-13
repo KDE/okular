@@ -9,6 +9,7 @@
 
 #include "mobithumbnail.h"
 #include "mobipocket.h"
+#include "qfilestream.h"
 
 #include <QtCore/QFile>
 
@@ -22,8 +23,7 @@ extern "C"
 
 bool MobiThumbnail::create(const QString &path, int width, int height, QImage &img)
 {
-    QFile f(path);
-    f.open(QIODevice::ReadOnly);
+    Mobipocket::QFileStream f(path);
     Mobipocket::Document doc(&f);
     if (!doc.isValid()) return false;
     img=doc.thumbnail();

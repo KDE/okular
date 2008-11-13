@@ -6,37 +6,24 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-#ifndef MOBI_DOCUMENT_H
-#define MOBI_DOCUMENT_H
 
-#include <QTextDocument>
-#include <QUrl>
-#include <QVariant>
+#ifndef QFILESTREAM_H
+#define QFILESTREAM_H
 
-class QFile;
+#include <QtCore/QFile>
+#include "mobipocket.h"
+
 namespace Mobipocket {
-class Document;
-class QFileStream;
-}
 
-namespace Mobi {
-
-  class MobiDocument : public QTextDocument {
-      
-  public:
-    MobiDocument(const QString &fileName);  
-    ~MobiDocument();   
-    
-    Mobipocket::Document* mobi() const { return doc; }
-    
-  protected:
-    virtual QVariant loadResource(int type, const QUrl &name);
-    
-  private:
-    QString fixMobiMarkup(const QString& data);
-    Mobipocket::Document *doc;
-    Mobipocket::QFileStream* file;
-  };
+class QFileStream : public Stream
+{
+public:
+    QFileStream(const QString& name) : d(name) { d.open(QIODevice::ReadOnly); } 
+    int read(char* buf, int size) { return d.read(buf,size); }
+    void seek(int pos) { d.seek(pos); }
+private:
+    QFile d;
+};
 
 }
 #endif

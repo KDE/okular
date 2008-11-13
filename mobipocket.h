@@ -19,15 +19,27 @@ class QIODevice;
 
 namespace Mobipocket {
 
-struct PDBPrivate;
+/** 
+Minimalistic stream abstraction. It is supposed to allow mobipocket document classes to be
+used with both QIODevice (for Okular generator) and InputStream for Strigi analyzer.
+*/
+class Stream {
+public:
+    virtual int read(char* buf, int size)=0;
+    virtual void seek(int pos)=0;
 
+    QByteArray readAll();
+    QByteArray read(int len);
+    virtual ~Stream() {}
+};
+
+struct PDBPrivate;
 class PDB {
 public:
-    PDB(QIODevice* dev);
+    PDB(Stream* s);
     QString fileType() const;
     int recordCount() const;
     QByteArray getRecord(int i) const;
-    QString name() const;
     bool isValid() const;
 private:
     PDBPrivate* const d;
@@ -37,7 +49,7 @@ struct DocumentPrivate;
 class Document {
 public:
     enum MetaKey { Title, Author, Copyright, Description, Subject };
-    Document(QIODevice* dev);
+    Document(Stream* s);
     QMap<MetaKey,QString> metadata() const;
     QString text() const; 
     int imageCount() const;

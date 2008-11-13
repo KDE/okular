@@ -82,7 +82,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       QPair<int,int>(frag.position(), frag.position()+frag.length());
     if (!format.anchorNames().isEmpty()) {
       // link targets
-      Q_FOREACH(QString name, format.anchorNames()) 
+      Q_FOREACH(const QString& name, format.anchorNames()) 
 	targets["#"+name]=it;
     }
   }

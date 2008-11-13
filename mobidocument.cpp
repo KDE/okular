@@ -8,6 +8,7 @@
  ***************************************************************************/
 #include "mobidocument.h"
 #include "mobipocket.h"
+#include "qfilestream.h"
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
 #include <kdebug.h>
@@ -16,8 +17,7 @@ using namespace Mobi;
 
 MobiDocument::MobiDocument(const QString &fileName) : QTextDocument() 
 {
-  file = new QFile(fileName);
-  file->open(QIODevice::ReadOnly);
+  file = new Mobipocket::QFileStream(fileName);
   doc = new Mobipocket::Document(file);
   if (doc->isValid()) setHtml(fixMobiMarkup(doc->text()));
 }

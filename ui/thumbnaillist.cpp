@@ -216,7 +216,8 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) && d->m_selected )
     {
         prevPage = d->m_selected->page()->number();
-    }
+    } else 
+        prevPage = d->m_document->viewport().pageNumber;
 
     // delete all the Thumbnails
     QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
@@ -247,6 +248,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     // generate Thumbnails for the given set of pages
     int width = viewport()->width();
     int height = 0;
+    int centerHeight = 0;
     for ( pIt = pages.constBegin(); pIt != pEnd ; ++pIt )
         //if ( skipCheck || (*pIt)->attributes() & flags )
         if ( skipCheck || (*pIt)->hasHighlights( SW_SEARCH_ID ) )
@@ -258,10 +260,15 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
             // update total height (asking widget its own height)
             t->resizeFitWidth( width );
             // restoring the previous selected page, if any
+            if ( (*pIt)->number() < prevPage )
+            {
+                centerHeight = height + t->height() + KDialog::spacingHint()/2;
+            }
             if ( (*pIt)->number() == prevPage )
             {
                 d->m_selected = t;
                 d->m_selected->setSelected( true );
+                centerHeight = height + t->height() / 2;
             }
             height += t->height() + KDialog::spacingHint();
         }
@@ -272,6 +279,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
 
     // enable scrollbar when there's something to scroll
     verticalScrollBar()->setEnabled( viewport()->height() < height );
+    verticalScrollBar()->setValue(centerHeight - viewport()->height() / 2);
 
     // request for thumbnail generation
     d->delayedRequestVisiblePixmaps( 200 );

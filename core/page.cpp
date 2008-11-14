@@ -770,7 +770,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
     }
 }
 
-void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const
+void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
 {
     // only add a node if there is some stuff to write into
     if ( m_page->m_annotations.isEmpty() && formfields.isEmpty() )
@@ -794,7 +794,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
 #endif
 
     // add annotations info if has got any
-    if ( !m_page->m_annotations.isEmpty() )
+    if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );
@@ -822,7 +822,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     }
 
     // add forms info if has got any
-    if ( !formfields.isEmpty() )
+    if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
     {
         // create the formList
         QDomElement formListElement = document.createElement( "forms" );

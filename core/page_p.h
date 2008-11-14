@@ -37,6 +37,15 @@ class PageTransition;
 class RotationJob;
 class TextPage;
 
+enum PageItem
+{
+    None = 0,
+    AnnotationPageItems = 0x01,
+    FormFieldPageItems = 0x02,
+    AllPageItems = 0xff
+};
+Q_DECLARE_FLAGS(PageItems, PageItem)
+
 class PagePrivate
 {
     public:
@@ -54,7 +63,7 @@ class PagePrivate
         /**
          * Saves the local contents (e.g. annotations) of the page.
          */
-        void saveLocalContents( QDomNode & parentNode, QDomDocument & document ) const;
+        void saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what = AllPageItems ) const;
 
         /**
          * Modifies an existing annotation by replacing it with a new @p annotation.
@@ -125,5 +134,7 @@ class PagePrivate
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Okular::PageItems)
 
 #endif

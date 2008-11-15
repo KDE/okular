@@ -24,6 +24,8 @@
 #include "core/annotations.h"
 #include "core/document.h"
 
+#include <memory>
+
 struct GuiUtilsHelper
 {
     GuiUtilsHelper()
@@ -31,8 +33,28 @@ struct GuiUtilsHelper
     {
     }
 
+    QSvgRenderer* svgStamps();
+
     KIconLoader * il;
+    std::auto_ptr< QSvgRenderer > svgStampFile;
 };
+
+QSvgRenderer* GuiUtilsHelper::svgStamps()
+{
+    if ( !svgStampFile.get() )
+    {
+        const QString stampFile = KStandardDirs::locate( "data", "okular/pics/stamps.svg" );
+        if ( !stampFile.isEmpty() )
+        {
+            svgStampFile.reset( new QSvgRenderer( stampFile ) );
+            if ( !svgStampFile->isValid() )
+            {
+                svgStampFile.reset();
+            }
+        }
+    }
+    return svgStampFile.get();
+}
 
 K_GLOBAL_STATIC( GuiUtilsHelper, s_data )
 
@@ -145,13 +167,16 @@ QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
     const QString name = _name.toLower();
     if ( name.startsWith( QLatin1String( "stamp-" ) ) )
     {
-        QSvgRenderer r( KStandardDirs::locate( "data", QString::fromLatin1( "okular/pics/" ) + name + ".svg" ) );
-        if ( r.isValid() )
+        const QString stampName = name.mid( 6 );
+        QSvgRenderer * r = 0;
+        if ( ( r = s_data->svgStamps() ) && r->elementExists( stampName ) )
         {
-            QPixmap pixmap( size.isValid() ? size : r.defaultSize() );
+            const QRectF stampElemRect = r->boundsOnElement( stampName );
+            const QRectF stampRect( size.isValid() ? QRectF( QPointF( 0, 0 ), size ) : stampElemRect );
+            QPixmap pixmap( stampRect.size().toSize() );
             pixmap.fill( Qt::transparent );
             QPainter p( &pixmap );
-            r.render( &p );
+            r->render( &p, stampName );
             p.end();
             return pixmap;
         }

@@ -558,6 +558,20 @@ class OKULAR_EXPORT Document : public QObject
          */
         QByteArray fontData(const FontInfo &font) const;
 
+        /**
+         * Opens a document archive.
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        bool openDocumentArchive( const QString & docFile, const KUrl & url );
+
+        /**
+         * Saves a document archive.
+         *
+         * @since 0.8 (KDE 4.2)
+         */
+        bool saveDocumentArchive( const QString &fileName );
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

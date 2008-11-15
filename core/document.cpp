@@ -45,6 +45,7 @@
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
+#include <kzip.h>
 
 // local includes
 #include "action.h"
@@ -69,8 +70,11 @@
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 #include "texteditors_p.h"
+#include "utils_p.h"
 #include "view.h"
 #include "view_p.h"
+
+#include <memory>
 
 #include <config-okular.h>
 
@@ -84,6 +88,16 @@ struct AllocatedPixmap
     qulonglong memory;
     // public constructor: initialize data
     AllocatedPixmap( int i, int p, qulonglong m ) : id( i ), page( p ), memory( m ) {}
+};
+
+struct ArchiveData
+{
+    ArchiveData()
+    {
+    }
+
+    KTemporaryFile document;
+    QString metadataFileName;
 };
 
 struct RunningSearch
@@ -669,6 +683,36 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
     }
 
     return openOk;
+}
+
+bool DocumentPrivate::savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const
+{
+    if ( infoFile->open() )
+    {
+        // 1. Create DOM
+        QDomDocument doc( "documentInfo" );
+        QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
+                QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+        doc.appendChild( xmlPi );
+        QDomElement root = doc.createElement( "documentInfo" );
+        doc.appendChild( root );
+
+        // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
+        QDomElement pageList = doc.createElement( "pageList" );
+        root.appendChild( pageList );
+        // <page list><page number='x'>.... </page> save pages that hold data
+        QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
+        for ( ; pIt != pEnd; ++pIt )
+            (*pIt)->d->saveLocalContents( pageList, doc, PageItems( what ) );
+
+        // 3. Save DOM to XML file
+        QString xml = doc.toString();
+        QTextStream os( infoFile );
+        os.setCodec( "UTF-8" );
+        os << xml;
+        return true;
+    }
+    return false;
 }
 
 void DocumentPrivate::saveDocumentInfo() const
@@ -1461,7 +1505,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         // determine the related "xml document-info" filename
         d->m_url = url;
         d->m_docFileName = docFile;
-        if ( url.isLocalFile() )
+        if ( url.isLocalFile() && !d->m_archiveData )
         {
         QString fn = url.fileName();
         document_size = fileReadTest.size();
@@ -1566,7 +1610,14 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     d->m_generatorName = offer->name();
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
-    d->loadDocumentInfo();
+    if ( d->m_archiveData )
+    {
+        d->loadDocumentInfo( d->m_archiveData->metadataFileName );
+    }
+    else
+    {
+        d->loadDocumentInfo();
+    }
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
@@ -1702,6 +1753,8 @@ void Document::closeDocument()
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
     d->m_tempFile = 0;
+    delete d->m_archiveData;
+    d->m_archiveData = 0;
     d->m_docSize = -1;
     d->m_exportCached = false;
     d->m_exportFormats.clear();
@@ -3088,6 +3141,152 @@ QByteArray Document::fontData(const FontInfo &font) const
     }
     
     return result;
+}
+
+bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
+{
+    const KMimeType::Ptr mime = KMimeType::findByPath( docFile, 0, false /* content too */ );
+    if ( !mime->is( "application/zip" ) ) // ### use correct mimetype
+        return false;
+
+    KZip okularArchive( docFile );
+    if ( !okularArchive.open( QIODevice::ReadOnly ) )
+       return false;
+
+    const KArchiveDirectory * mainDir = okularArchive.directory();
+    const KArchiveEntry * mainEntry = mainDir->entry( "content.xml" );
+    if ( !mainEntry || !mainEntry->isFile() )
+        return false;
+
+    std::auto_ptr< QIODevice > mainEntryDevice( static_cast< const KZipFileEntry * >( mainEntry )->createDevice() );
+    QDomDocument doc;
+    if ( !doc.setContent( mainEntryDevice.get() ) )
+        return false;
+    mainEntryDevice.reset();
+
+    QDomElement root = doc.documentElement();
+    if ( root.tagName() != "OkularArchive" )
+        return false;
+
+    QString documentFileName;
+    QString metadataFileName;
+    QDomElement el = root.firstChild().toElement();
+    for ( ; !el.isNull(); el = el.nextSibling().toElement() )
+    {
+        if ( el.tagName() == "Files" )
+        {
+            QDomElement fileEl = el.firstChild().toElement();
+            for ( ; !fileEl.isNull(); fileEl = fileEl.nextSibling().toElement() )
+            {
+                if ( fileEl.tagName() == "DocumentFileName" )
+                    documentFileName = fileEl.text();
+                else if ( fileEl.tagName() == "MetadataFileName" )
+                    metadataFileName = fileEl.text();
+            }
+        }
+    }
+    if ( documentFileName.isEmpty() )
+        return false;
+
+    const KArchiveEntry * docEntry = mainDir->entry( documentFileName );
+    if ( !docEntry || !docEntry->isFile() )
+        return false;
+
+    std::auto_ptr< ArchiveData > archiveData( new ArchiveData() );
+    const int dotPos = documentFileName.indexOf( '.' );
+    if ( dotPos != -1 )
+        archiveData->document.setSuffix( documentFileName.mid( dotPos ) );
+    if ( !archiveData->document.open() )
+        return false;
+
+    QString tempFileName = archiveData->document.fileName();
+    {
+    std::auto_ptr< QIODevice > docEntryDevice( static_cast< const KZipFileEntry * >( docEntry )->createDevice() );
+    copyQIODevice( docEntryDevice.get(), &archiveData->document );
+    archiveData->document.close();
+    }
+
+    std::auto_ptr< KTemporaryFile > tempMetadataFileName;
+    const KArchiveEntry * metadataEntry = mainDir->entry( metadataFileName );
+    if ( metadataEntry && metadataEntry->isFile() )
+    {
+        std::auto_ptr< QIODevice > metadataEntryDevice( static_cast< const KZipFileEntry * >( metadataEntry )->createDevice() );
+        tempMetadataFileName.reset( new KTemporaryFile() );
+        tempMetadataFileName->setSuffix( ".xml" );
+        tempMetadataFileName->setAutoRemove( false );
+        if ( tempMetadataFileName->open() )
+        {
+            copyQIODevice( metadataEntryDevice.get(), tempMetadataFileName.get() );
+            archiveData->metadataFileName = tempMetadataFileName->fileName();
+            tempMetadataFileName->close();
+        }
+    }
+
+    const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
+    d->m_archiveData = archiveData.get();
+    bool ret = openDocument( tempFileName, url, docMime );
+
+    if ( ret )
+    {
+        archiveData.release();
+    }
+    else
+    {
+        d->m_archiveData = 0;
+    }
+
+    return ret;
+}
+
+bool Document::saveDocumentArchive( const QString &fileName )
+{
+    if ( !d->m_generator )
+        return false;
+
+    QString docFileName = d->m_url.fileName();
+    if ( docFileName == QLatin1String( "-" ) )
+        return false;
+
+    KZip okularArchive( fileName );
+    if ( !okularArchive.open( QIODevice::WriteOnly ) )
+        return false;
+
+    const KUser user;
+    const KUserGroup userGroup( user.gid() );
+
+    QDomDocument contentDoc( "OkularArchive" );
+    QDomProcessingInstruction xmlPi = contentDoc.createProcessingInstruction(
+            QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+    contentDoc.appendChild( xmlPi );
+    QDomElement root = contentDoc.createElement( "OkularArchive" );
+    contentDoc.appendChild( root );
+
+    QDomElement filesNode = contentDoc.createElement( "Files" );
+    root.appendChild( filesNode );
+
+    QDomElement fileNameNode = contentDoc.createElement( "DocumentFileName" );
+    filesNode.appendChild( fileNameNode );
+    fileNameNode.appendChild( contentDoc.createTextNode( docFileName ) );
+
+    QDomElement metadataFileNameNode = contentDoc.createElement( "MetadataFileName" );
+    filesNode.appendChild( metadataFileNameNode );
+    metadataFileNameNode.appendChild( contentDoc.createTextNode( "metadata.xml" ) );
+
+    KTemporaryFile metadataFile;
+    if ( !d->savePageDocumentInfo( &metadataFile, AnnotationPageItems ) )
+        return false;
+
+    const QByteArray contentDocXml = contentDoc.toByteArray();
+    okularArchive.writeFile( "content.xml", user.loginName(), userGroup.name(),
+                             contentDocXml.constData(), contentDocXml.length() );
+
+    okularArchive.addLocalFile( d->m_docFileName, docFileName );
+    okularArchive.addLocalFile( metadataFile.fileName(), "metadata.xml" );
+
+    if ( !okularArchive.close() )
+        return false;
+
+    return true;
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

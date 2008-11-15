@@ -32,6 +32,7 @@ class QTimer;
 class KTemporaryFile;
 
 struct AllocatedPixmap;
+struct ArchiveData;
 struct RunningSearch;
 
 namespace Okular {
@@ -82,6 +83,7 @@ class DocumentPrivate
             m_generatorsLoaded( false ),
             m_closingLoop( 0 ),
             m_scripter( 0 ),
+            m_archiveData( 0 ),
             m_fontsCached( false )
         {
             calculateMaxTextPages();
@@ -109,6 +111,7 @@ class DocumentPrivate
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
         bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
+        bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
 
         // private slots
         void saveDocumentInfo() const;
@@ -210,6 +213,8 @@ class DocumentPrivate
         QEventLoop *m_closingLoop;
 
         Scripter *m_scripter;
+
+        ArchiveData *m_archiveData;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;

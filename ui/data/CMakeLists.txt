@@ -42,7 +42,6 @@ install(FILES
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation stamps
 install(FILES
-   stamp-approved.svg
    stamps.svg
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install misc images

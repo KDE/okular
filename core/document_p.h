@@ -95,6 +95,7 @@ class DocumentPrivate
         qulonglong getTotalMemory();
         qulonglong getFreeMemory();
         void loadDocumentInfo();
+        void loadDocumentInfo( const QString &fileName );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;

@@ -301,7 +301,12 @@ void DocumentPrivate::loadDocumentInfo()
     if ( m_xmlFileName.isEmpty() )
         return;
 
-    QFile infoFile( m_xmlFileName );
+    loadDocumentInfo( m_xmlFileName );
+}
+
+void DocumentPrivate::loadDocumentInfo( const QString &fileName )
+{
+    QFile infoFile( fileName );
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
 

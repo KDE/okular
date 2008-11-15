@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Luigi Toscano <luigi.toscano@tiscali.it>        *
+ *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -8,9 +9,11 @@
  ***************************************************************************/
 
 #include "utils.h"
+#include "utils_p.h"
 
 #include <QtCore/QRect>
 #include <QImage>
+#include <QIODevice>
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -209,4 +212,17 @@ got_bottom:
 #endif
 
     return bbox;
+}
+
+void Okular::copyQIODevice( QIODevice *from, QIODevice *to )
+{
+    QByteArray buffer( 65536, '\0' );
+    qint64 read = 0;
+    qint64 written = 0;
+    while ( ( read = from->read( buffer.data(), buffer.size() ) ) > 0 )
+    {
+        written = to->write( buffer.constData(), read );
+        if ( read != written )
+            break;
+    }
 }

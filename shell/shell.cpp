@@ -220,6 +220,8 @@ QStringList Shell::fileFormats() const
                 supportedPatterns.append( mimeType );
     }
 
+    supportedPatterns.append( "application/vnd.kde.okular-archive" );
+
     return supportedPatterns;
 }
 

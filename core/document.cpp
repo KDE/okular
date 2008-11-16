@@ -3050,6 +3050,8 @@ QStringList Document::supportedMimeTypes() const
                 d->m_supportedMimeTypes.append( mimeType );
     }
 
+    d->m_supportedMimeTypes.append( "application/vnd.kde.okular-archive" );
+
     return d->m_supportedMimeTypes;
 }
 
@@ -3146,7 +3148,7 @@ QByteArray Document::fontData(const FontInfo &font) const
 bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
 {
     const KMimeType::Ptr mime = KMimeType::findByPath( docFile, 0, false /* content too */ );
-    if ( !mime->is( "application/zip" ) ) // ### use correct mimetype
+    if ( !mime->is( "application/vnd.kde.okular-archive" ) )
         return false;
 
     KZip okularArchive( docFile );

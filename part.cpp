@@ -509,6 +509,11 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_exportAsMenu->addAction( m_exportAsText );
     m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
+    m_exportAsDocArchive = actionForExportFormat( Okular::ExportFormat(
+            i18nc( "A document format, Okular-specific", "Document Archive" ),
+            KMimeType::mimeType( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
+    m_exportAsMenu->addAction( m_exportAsDocArchive );
+    m_exportAsDocArchive->setEnabled( false );
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About Backend"));
@@ -847,7 +852,10 @@ bool Part::openFile()
     bool ok = false;
     if ( uncompressOk )
     {
-        ok = m_document->openDocument( fileNameToOpen, url(), mime );
+        if ( mime->is( "application/vnd.kde.okular-archive" ) )
+            ok = m_document->openDocumentArchive( fileNameToOpen, url() );
+        else
+            ok = m_document->openDocument( fileNameToOpen, url(), mime );
     }
     bool canSearch = m_document->supportsSearching();
 
@@ -885,6 +893,7 @@ bool Part::openFile()
 #endif
     }
     m_exportAsText->setEnabled( ok && m_document->canExportToText() );
+    m_exportAsDocArchive->setEnabled( ok );
     m_exportAs->setEnabled( ok );
 
     // update viewing actions
@@ -973,11 +982,12 @@ bool Part::closeUrl()
     m_showEmbeddedFiles->setEnabled( false );
     m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
+    m_exportAsDocArchive->setEnabled( false );
     m_exportFormats.clear();
     QMenu *menu = m_exportAs->menu();
     QList<QAction*> acts = menu->actions();
     int num = acts.count();
-    for ( int i = 1; i < num; ++i )
+    for ( int i = 2; i < num; ++i )
     {
         menu->removeAction( acts.at(i) );
         delete acts.at(i);
@@ -1732,11 +1742,35 @@ void Part::slotExportAs(QAction * act)
     if ( ( id < 0 ) || ( id >= acts.count() ) )
         return;
 
-    QString filter = id == 0 ? "text/plain" : m_exportFormats.at( id - 1 ).mimeType()->name();
+    QString filter;
+    switch ( id )
+    {
+        case 0:
+            filter = "text/plain";
+            break;
+        case 1:
+            filter = "application/vnd.kde.okular-archive";
+            break;
+        default:
+            filter = m_exportFormats.at( id - 2 ).mimeType()->name();
+            break;
+    }
     QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(), filter, widget() );
     if ( !fileName.isEmpty() )
     {
-        bool saved = id == 0 ? m_document->exportToText( fileName ) : m_document->exportTo( fileName, m_exportFormats.at( id - 1 ) );
+        bool saved = false;
+        switch ( id )
+        {
+            case 0:
+                saved = m_document->exportToText( fileName );
+                break;
+            case 1:
+                saved = m_document->saveDocumentArchive( fileName );
+                break;
+            default:
+                saved = m_document->exportTo( fileName, m_exportFormats.at( id - 2 ) );
+                break;
+        }
         if ( !saved )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
     }

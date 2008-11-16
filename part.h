@@ -234,6 +234,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_showEmbeddedFiles;
         KAction *m_exportAs;
         QAction *m_exportAsText;
+        QAction *m_exportAsDocArchive;
         KAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;

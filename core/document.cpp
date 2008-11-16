@@ -3050,8 +3050,6 @@ QStringList Document::supportedMimeTypes() const
                 d->m_supportedMimeTypes.append( mimeType );
     }
 
-    d->m_supportedMimeTypes.append( "application/vnd.kde.okular-archive" );
-
     return d->m_supportedMimeTypes;
 }
 

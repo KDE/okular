@@ -5,3 +5,4 @@ Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
+MimeType=application/vnd.kde.okular-archive;

@@ -2,6 +2,7 @@
 Type=Service
 Name=Mobipocket document
 Name[el]=Έγγραφο Mobipocket
+Name[fr]=Document Mobipocket
 Name[gl]=Documento Mobipocket
 Name[pt]=Documento Mobipocket
 Name[pt_BR]=Documento Mobipocket
@@ -9,6 +10,7 @@ Name[sv]=Mobipocket-dokument
 Name[uk]=Документ Mobipocket
 Comment=Mobipocket backend for Okular
 Comment[el]=Σύστημα υποστήριξης Mobipocket για το Okular
+Comment[fr]=Moteur Mobipocket pour Okular
 Comment[gl]=Infrastrutura de Mobipocket para Okular
 Comment[pt]=Infra-estrutura do Mobipocket para o Okular
 Comment[pt_BR]=Infra-estrutura do Mobipocket para o Okular

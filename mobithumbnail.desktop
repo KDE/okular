@@ -2,6 +2,7 @@
 Type=Service
 Name=Mobipocket thumbnailer
 Name[el]=Εικόνες επισκόπησης Mobipocket
+Name[fr]=Afficheur d'aperçus Mobipocket
 Name[pt]=Miniaturas do Mobipocket
 Name[pt_BR]=Miniaturas do Mobipocket
 Name[sv]=Skapa Mobipocket-miniatyrbilder

@@ -165,21 +165,17 @@ QString prettyToolTip( const Okular::Annotation * ann )
 QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
 {
     const QString name = _name.toLower();
-    if ( name.startsWith( QLatin1String( "stamp-" ) ) )
+    QSvgRenderer * r = 0;
+    if ( ( r = s_data->svgStamps() ) && r->elementExists( name ) )
     {
-        const QString stampName = name.mid( 6 );
-        QSvgRenderer * r = 0;
-        if ( ( r = s_data->svgStamps() ) && r->elementExists( stampName ) )
-        {
-            const QRectF stampElemRect = r->boundsOnElement( stampName );
-            const QRectF stampRect( size.isValid() ? QRectF( QPointF( 0, 0 ), size ) : stampElemRect );
-            QPixmap pixmap( stampRect.size().toSize() );
-            pixmap.fill( Qt::transparent );
-            QPainter p( &pixmap );
-            r->render( &p, stampName );
-            p.end();
-            return pixmap;
-        }
+        const QRectF stampElemRect = r->boundsOnElement( name );
+        const QRectF stampRect( size.isValid() ? QRectF( QPointF( 0, 0 ), size ) : stampElemRect );
+        QPixmap pixmap( stampRect.size().toSize() );
+        pixmap.fill( Qt::transparent );
+        QPainter p( &pixmap );
+        r->render( &p, name );
+        p.end();
+        return pixmap;
     }
     QPixmap pixmap;
     const KIconLoader * il = iconLoader();

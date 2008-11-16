@@ -7,7 +7,6 @@ macro_optional_find_package(QCA2)
 macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture (QCA)" "http://delta.affinix.com/qca/" FALSE "2.0.0" "Support for encrypted OpenDocument Text documents in Okular.")
 
 if ( QCA2_FOUND )
-   link_directories( ${QCA2_LIBRARY_DIRS} )
    include_directories( ${QCA2_INCLUDE_DIR} )
    add_definitions( -DQCA2 )
 endif( QCA2_FOUND )

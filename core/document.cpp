@@ -3252,7 +3252,11 @@ bool Document::saveDocumentArchive( const QString &fileName )
         return false;
 
     const KUser user;
+#ifndef Q_OS_WIN
     const KUserGroup userGroup( user.gid() );
+#else
+    const KUserGroup userGroup( QString( "" ) );
+#endif
 
     QDomDocument contentDoc( "OkularArchive" );
     QDomProcessingInstruction xmlPi = contentDoc.createProcessingInstruction(

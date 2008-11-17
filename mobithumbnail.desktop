@@ -7,6 +7,7 @@ Name[pt]=Miniaturas do Mobipocket
 Name[pt_BR]=Miniaturas do Mobipocket
 Name[sv]=Skapa Mobipocket-miniatyrbilder
 Name[uk]=Інструмент створення мініатюр Mobipocket
+Name[x-test]=xxMobipocket thumbnailerxx
 X-KDE-ServiceTypes=ThumbCreator
 MimeType=application/x-mobipocket;
 X-KDE-Library=mobithumbnail

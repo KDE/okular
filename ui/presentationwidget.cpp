@@ -1331,7 +1331,7 @@ void PresentationWidget::inhibitScreenSaver()
     QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
                                                            "org.freedesktop.ScreenSaver", "Inhibit" );
     message << QString( "Okular" );
-    message << i18n( "Giving a presentation" );
+    message << i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
 
     QDBusReply<uint> reply = QDBusConnection::sessionBus().call( message );
     if ( reply.isValid() )

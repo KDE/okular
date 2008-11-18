@@ -27,7 +27,7 @@ static KAboutData createAboutData()
          "okular_fax",
          ki18n( "Fax Backend" ),
          "0.1",
-         ki18n( "A G3/G4 fax backend" ),
+         ki18n( "A G3/G4 fax document backend" ),
          KAboutData::License_GPL,
          ki18n( "© 2008 Tobias Koenig" )
     );

@@ -31,6 +31,8 @@
 #include <tiff.h>
 #include <tiffio.h>
 
+#include "mstifftags.h"
+
 #define TiffDebug 4714
 
 tsize_t okular_tiffReadProc( thandle_t handle, tdata_t buf, tsize_t size )
@@ -95,6 +97,7 @@ class TIFFGenerator::Private
         TIFF* tiff;
         QByteArray data;
         QIODevice* dev;
+        Okular::ExportFormat::List exportFormats;
 };
 
 static QDateTime convertTIFFDateTime( const char* tiffdate )
@@ -184,6 +187,8 @@ TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     setFeature( PrintNative );
     setFeature( PrintToFile );
     setFeature( ReadRawData );
+
+    TIFFSetTagExtender(_MsTiffTagExtender);
 }
 
 TIFFGenerator::~TIFFGenerator()
@@ -372,6 +377,8 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
     uint32 width = 0;
     uint32 height = 0;
 
+    bool haveTextTag = false;
+
     for ( tdir_t i = 0; i < dirs; ++i )
     {
         if ( !TIFFSetDirectory( d->tiff, i ) )
@@ -389,10 +396,21 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
 
         m_pageMapping[ realdirs ] = i;
 
+        // Test if we have any text in this directory's tags.                               
+        uint16 count = 0;                                                                   
+        void *data;                                                                         
+        haveTextTag |= (1 == TIFFGetField( d->tiff, MSTIFFTAG_TEXT, &count, &data ) ); 
+
         ++realdirs;
     }
 
     pagesVector.resize( realdirs );
+                                                                                            
+    if ( haveTextTag == true ) {                                                            
+        d->exportFormats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ) );
+    } else {                                                                                               
+        d->exportFormats.clear();                                                                          
+    }  
 }
 
 bool TIFFGenerator::print( QPrinter& printer )
@@ -437,6 +455,43 @@ bool TIFFGenerator::print( QPrinter& printer )
     }
 
     return true;
+}
+
+Okular::ExportFormat::List TIFFGenerator::exportFormats() const                                            
+{
+    return d->exportFormats;
+}
+
+bool TIFFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
+{
+    if ( !d->tiff )
+        return false;
+
+    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+        QFile f( fileName );
+        if ( !f.open( QIODevice::WriteOnly ) )
+            return false;
+
+        QTextStream ts( &f );
+
+        tdir_t dirs = TIFFNumberOfDirectories( d->tiff );
+
+        for ( tdir_t i = 0; i < dirs; ++i ) {
+            if ( !TIFFSetDirectory( d->tiff, i ) )
+                continue;
+
+            uint16 count = 0;
+            void *data;
+            if (1 == TIFFGetField( d->tiff, MSTIFFTAG_TEXT, &count, &data ) ) {
+                ts << QString::fromUtf8( (char*)(data)+6, count-6 );
+            }
+        }
+        f.close();
+
+        return true;
+    }
+
+    return false;
 }
 
 int TIFFGenerator::mapPage( int page ) const

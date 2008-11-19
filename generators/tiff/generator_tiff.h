@@ -27,6 +27,8 @@ class TIFFGenerator : public Okular::Generator
         const Okular::DocumentInfo * generateDocumentInfo();
 
         bool print( QPrinter& printer );
+        Okular::ExportFormat::List exportFormats() const;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
 
     protected:
         bool doCloseDocument();

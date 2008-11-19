@@ -1,5 +1,12 @@
+CMAKE_MINIMUM_REQUIRED( VERSION 2.6 )
+
+find_package(KDE4 REQUIRED)
+
+macro_optional_find_package(TIFF)
+
 include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
+   ${KDE4_INCLUDES} ${QT_INCLUDES}
+   ${CMAKE_CURRENT_BINARY_DIR}
    ${TIFF_INCLUDE_DIR}
 )
 

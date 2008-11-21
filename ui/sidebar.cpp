@@ -203,7 +203,6 @@ class SidebarListWidget : public QListWidget
 SidebarListWidget::SidebarListWidget( QWidget *parent )
     : QListWidget( parent )
 {
-    setFrameStyle( NoFrame );
 }
 
 SidebarListWidget::~SidebarListWidget()

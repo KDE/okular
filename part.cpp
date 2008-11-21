@@ -224,14 +224,8 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
 
     GuiUtils::setIconLoader( iconLoader() );
 
-    QWidget* mainWidget = new QWidget( parentWidget );
-    QVBoxLayout* mainWidgetLayout = new QVBoxLayout( mainWidget );
-    mainWidgetLayout->setMargin( 0 );
-    mainWidgetLayout->setSpacing( 0 );
-
-    m_sidebar = new Sidebar( mainWidget );
-    mainWidgetLayout->addWidget( m_sidebar );
-    setWidget( mainWidget );
+    m_sidebar = new Sidebar( parentWidget );
+    setWidget( m_sidebar );
 
     // build the document
     m_document = new Okular::Document(widget());
@@ -328,8 +322,7 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
-    QWidget * bottomBar = new QWidget( mainWidget );
-    mainWidgetLayout->addWidget( bottomBar );
+    QWidget * bottomBar = new QWidget( rightContainer );
     QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
     m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
     bottomBarLayout->setMargin( 0 );
@@ -340,6 +333,7 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     bottomBarLayout->addWidget( m_miniBar );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
+    rightLayout->addWidget( bottomBar );
 
     connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );

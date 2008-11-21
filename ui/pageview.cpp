@@ -744,7 +744,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         if ( !documentChanged )
             return;
     }
- 
+
     // delete all widgets (one for each page in pageSet)
     QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
     for ( ; dIt != dEnd; ++dIt )
@@ -1643,11 +1643,11 @@ void PageView::contentsMousePressEvent( QMouseEvent * e )
     // handle mode dependant mouse press actions
     bool leftButton = e->button() == Qt::LeftButton,
          rightButton = e->button() == Qt::RightButton;
-        
+
 //   Not sure we should erase the selection when clicking with left.
      if ( d->mouseMode != MouseTextSelect )
        textSelectionClear();
-    
+
     switch ( d->mouseMode )
     {
         case MouseNormal:   // drag start / click / link following
@@ -1946,7 +1946,7 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                 break;
             }
 
-            // if we support text generation 
+            // if we support text generation
             QString selectedText;
             if (d->document->supportsSearching())
             {

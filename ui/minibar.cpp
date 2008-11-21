@@ -19,6 +19,7 @@
 #include <qlayout.h>
 #include <QStyleOptionButton>
 #include <QStylePainter>
+#include <QtGui/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kicon.h>
@@ -52,24 +53,10 @@ class PagesEdit : public KLineEdit
 };
 
 // [private widget] a flat qpushbutton that enlights on hover
-class HoverButton : public QPushButton
+class HoverButton : public QToolButton
 {
     public:
         HoverButton( QWidget * parent );
-
-        void setWidthScaleFactor(double widthScale)
-        {
-            m_widthScale = widthScale;
-        }
-
-    protected:
-        QSize sizeHint() const;
-        QSize minimumSizeHint() const;
-
-        void paintEvent( QPaintEvent * e );
-
-    private:
-        double m_widthScale;
 };
 
 
@@ -82,7 +69,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     setObjectName( "miniBar" );
 
     QHBoxLayout * horLayout = new QHBoxLayout( this );
-    
+
     horLayout->setMargin( 0 );
     horLayout->setSpacing( 3 );
 
@@ -100,14 +87,13 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     horLayout->addWidget( new QLabel( i18nc( "Layouted like: '5 [pages] of 10'", "of" ), this ) );
     // bottom: right button
     m_pagesButton = new HoverButton( this );
-    m_pagesButton->setWidthScaleFactor(1.0);
     horLayout->addWidget( m_pagesButton );
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
     m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
     m_nextButton->setIconSize( buttonSize );
     horLayout->addWidget( m_nextButton );
-    
+
     QSizePolicy sp = sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Fixed );
     sp.setVerticalPolicy( QSizePolicy::Fixed );
@@ -401,43 +387,12 @@ void PagesEdit::wheelEvent( QWheelEvent * e )
 /** HoverButton **/
 
 HoverButton::HoverButton( QWidget * parent )
-    : QPushButton( parent )
-    , m_widthScale( 1.5 )
+    : QToolButton( parent )
 {
-    setMouseTracking( true );
-    setAttribute( Qt::WA_Hover );
-    KAcceleratorManager::setNoAccel( this );
+    setAutoRaise(true);
     setFocusPolicy(Qt::NoFocus);
-}
-
-QSize HoverButton::sizeHint() const
-{
-	QSize base = QPushButton::sizeHint();
-	base.setWidth( (int)(base.width() * m_widthScale) );
-	return base;
-}
-
-QSize HoverButton::minimumSizeHint() const
-{
-	QSize base = QPushButton::minimumSizeHint();
-	base.setWidth( (int)(base.width() * m_widthScale) );
-	return base;
-}
-
-void HoverButton::paintEvent( QPaintEvent * e )
-{
-    if ( testAttribute( Qt::WA_UnderMouse ) && isEnabled() )
-    {
-        QPushButton::paintEvent( e );
-    }
-    else
-    {
-        QStylePainter p( this );
-        QStyleOptionButton opt;
-        initStyleOption( &opt );
-        opt.features |= QStyleOptionButton::Flat;
-        p.drawControl( QStyle::CE_PushButton, opt );
-    }
+    setToolButtonStyle(Qt::ToolButtonIconOnly);
+    KAcceleratorManager::setNoAccel( this );
 }
 
 #include "minibar.moc"

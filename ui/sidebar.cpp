@@ -203,6 +203,7 @@ class SidebarListWidget : public QListWidget
 SidebarListWidget::SidebarListWidget( QWidget *parent )
     : QListWidget( parent )
 {
+    setFrameStyle( NoFrame );
 }
 
 SidebarListWidget::~SidebarListWidget()
@@ -379,9 +380,7 @@ Sidebar::Sidebar( QWidget *parent )
     d->list->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setContextMenuPolicy( Qt::CustomContextMenu );
-    QPalette pal = d->list->palette();
-    pal.setBrush( QPalette::Base, pal.brush( QPalette::Window ) );
-    d->list->setPalette( pal );
+    d->list->viewport()->setAutoFillBackground( false );
 
     d->splitter = new QSplitter( this );
     mainlay->addWidget( d->splitter );

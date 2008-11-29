@@ -42,7 +42,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        PresentationWidget( QWidget * parent, Okular::Document * doc );
+        PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection );
         ~PresentationWidget();
 
         // inherited from DocumentObserver
@@ -51,9 +51,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber ) const;
-
-        // create actions that interact with this widget
-        void setupActions( KActionCollection * collection );
 
     public slots:
         void slotFind();
@@ -88,6 +85,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void setScreen( int );
         void inhibitScreenSaver();
         void allowScreenSaver();
+        // create actions that interact with this widget
+        void setupActions( KActionCollection * collection );
 
         // cache stuff
         int m_width;

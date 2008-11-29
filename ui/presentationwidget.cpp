@@ -124,7 +124,7 @@ class PresentationToolBar : public QToolBar
 };
 
 
-PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc )
+PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
@@ -165,11 +165,14 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
     m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT( slotNextPage() ) );
     m_topBar->addSeparator();
-    QAction * drawingAct = m_topBar->addAction( KIcon( "draw-freehand" ), i18n( "Toggle Drawing Mode" ) );
-    drawingAct->setCheckable( true );
-    connect( drawingAct, SIGNAL( toggled( bool ) ), this, SLOT( togglePencilMode( bool ) ) );
-    QAction * eraseDrawingAct = m_topBar->addAction( KIcon( "draw-eraser" ), i18n( "Erase Drawings" ) );
-    connect( eraseDrawingAct, SIGNAL( triggered() ), this, SLOT( clearDrawings() ) );
+    QAction *drawingAct = collection->action( "presentation_drawing_mode" );
+    connect( drawingAct, SIGNAL( toggled( bool ) ), SLOT( togglePencilMode( bool ) ) );
+    m_topBar->addAction( drawingAct );
+    addAction( drawingAct );
+    QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
+    connect( eraseDrawingAct, SIGNAL( triggered() ), SLOT( clearDrawings() ) );
+    m_topBar->addAction( eraseDrawingAct );
+    addAction( eraseDrawingAct );
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
     {
@@ -220,6 +223,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     {
         setCursor( QCursor( Qt::BlankCursor ) );
     }
+
+    setupActions( collection );
 
     // inhibit the screen saver
     inhibitScreenSaver();

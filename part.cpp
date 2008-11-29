@@ -539,6 +539,14 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
     blackscreenAction->setIcon( KIcon( "view-presentation" ) );
 
+    KToggleAction *drawingAction = new KToggleAction( i18n( "Toggle Drawing Mode" ), ac );
+    ac->addAction( "presentation_drawing_mode", drawingAction );
+    drawingAction->setIcon( KIcon( "draw-freehand" ) );
+
+    KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
+    ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
+    eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
+
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
     connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
@@ -1691,8 +1699,7 @@ void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
     {
-        m_presentationWidget = new PresentationWidget( widget(), m_document );
-        m_presentationWidget->setupActions( actionCollection() );
+        m_presentationWidget = new PresentationWidget( widget(), m_document, actionCollection() );
     }
 }
 
@@ -1709,7 +1716,7 @@ void Part::slotTogglePresentation()
     if ( m_document->isOpened() )
     {
         if ( !m_presentationWidget )
-            m_presentationWidget = new PresentationWidget( widget(), m_document );
+            m_presentationWidget = new PresentationWidget( widget(), m_document, actionCollection() );
         else delete (PresentationWidget*) m_presentationWidget;
     }
 }

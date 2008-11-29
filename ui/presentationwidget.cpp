@@ -249,6 +249,10 @@ PresentationWidget::~PresentationWidget()
     // remove this widget from document observer
     m_document->removeObserver( this );
 
+    QAction *drawingAct = m_ac->action( "presentation_drawing_mode" );
+    disconnect( drawingAct, 0, this, 0 );
+    if ( drawingAct->isChecked() )
+        drawingAct->toggle();
     m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     delete m_drawingEngine;
 

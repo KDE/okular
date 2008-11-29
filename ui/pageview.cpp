@@ -1293,6 +1293,8 @@ void PageView::keyPressEvent( QKeyEvent * e )
     // move/scroll page by using keys
     switch ( e->key() )
     {
+        case Qt::Key_J:
+        case Qt::Key_K:
         case Qt::Key_Down:
         case Qt::Key_PageDown:
         case Qt::Key_Space:
@@ -1301,12 +1303,13 @@ void PageView::keyPressEvent( QKeyEvent * e )
         case Qt::Key_Backspace:
             if ( e->key() == Qt::Key_Down
                  || e->key() == Qt::Key_PageDown
+                 || e->key() == Qt::Key_J
                  || ( e->key() == Qt::Key_Space && ( e->modifiers() & Qt::ShiftModifier ) != Qt::ShiftModifier ) )
             {
                 // if in single page mode and at the bottom of the screen, go to next page
                 if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
                 {
-                    if ( e->key() == Qt::Key_Down )
+                    if ( e->key() == Qt::Key_Down || e->key() == Qt::Key_J )
                         verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
                     else
                         verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepAdd );
@@ -1328,7 +1331,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 // if in single page mode and at the top of the screen, go to \ page
                 if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
                 {
-                   if ( e->key() == Qt::Key_Up )
+                   if ( e->key() == Qt::Key_Up || e->key() == Qt::Key_K )
                         verticalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
                    else
                        verticalScrollBar()->triggerAction( QScrollBar::SliderPageStepSub );
@@ -1347,9 +1350,11 @@ void PageView::keyPressEvent( QKeyEvent * e )
             }
             break;
         case Qt::Key_Left:
+        case Qt::Key_H:
             horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
             break;
         case Qt::Key_Right:
+        case Qt::Key_L:
             horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Escape:

@@ -179,13 +179,11 @@ void TextDocumentGeneratorPrivate::generateAnnotationInfos()
 
 void TextDocumentGeneratorPrivate::generateTitleInfos()
 {
-    QStack<QDomNode> parentNodeStack;
+    QStack< QPair<int,QDomNode> > parentNodeStack;
 
     QDomNode parentNode = mDocumentSynopsis;
 
-    int level = 1000;
-    for ( int i = 0; i < mTitlePositions.count(); ++i )
-        level = qMin( level, mTitlePositions[ i ].level );
+    parentNodeStack.push( qMakePair( 0, parentNode ) );
 
     for ( int i = 0; i < mTitlePositions.count(); ++i ) {
         const TitlePosition &position = mTitlePositions[ i ];
@@ -195,27 +193,23 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
         QDomElement item = mDocumentSynopsis.createElement( position.title );
         item.setAttribute( "Viewport", viewport.toString() );
 
-        int newLevel = position.level;
-        if ( newLevel == level ) {
-            parentNode.appendChild( item );
-        } else if ( newLevel > level ) {
-            parentNodeStack.push( parentNode );
-            parentNode = parentNode.lastChildElement();
-            if ( ! parentNode.isNull() ) {
-                parentNode.appendChild( item );
-            }
-            level = newLevel;
-        } else {
-            for ( int i = level; i > newLevel; i-- ) {
-                level--;
-                if ( ! parentNodeStack.isEmpty() ) {
-                    parentNode = parentNodeStack.pop();
-                }
-            }
-            if ( ! parentNode.isNull() ) {
-                parentNode.appendChild( item );
+        int headingLevel = position.level;
+
+        // we need a parent, which has to be at a higher heading level than this heading level
+        // so we just work through the stack
+        while ( ! parentNodeStack.isEmpty() ) {
+            int parentLevel = parentNodeStack.top().first;
+            if ( parentLevel < headingLevel ) {
+                // this is OK as a parent
+                parentNode = parentNodeStack.top().second;
+                break;
+            } else {
+                // we'll need to be further into the stack
+                parentNodeStack.pop();
             }
         }
+        parentNode.appendChild( item );
+        parentNodeStack.push( qMakePair( headingLevel, QDomNode(item) ) );
     }
 }
 

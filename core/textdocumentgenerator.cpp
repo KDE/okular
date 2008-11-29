@@ -201,15 +201,20 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
         } else if ( newLevel > level ) {
             parentNodeStack.push( parentNode );
             parentNode = parentNode.lastChildElement();
-            parentNode.appendChild( item );
+            if ( ! parentNode.isNull() ) {
+                parentNode.appendChild( item );
+            }
             level = newLevel;
         } else {
             for ( int i = level; i > newLevel; i-- ) {
                 level--;
-                parentNode = parentNodeStack.pop();
+                if ( ! parentNodeStack.isEmpty() ) {
+                    parentNode = parentNodeStack.pop();
+                }
             }
-
-            parentNode.appendChild( item );
+            if ( ! parentNode.isNull() ) {
+                parentNode.appendChild( item );
+            }
         }
     }
 }

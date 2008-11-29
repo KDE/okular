@@ -620,6 +620,17 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     }
     painter.end();
 }
+
+void PresentationWidget::resizeEvent( QResizeEvent *re )
+{
+    // kDebug() << re->oldSize() << "=>" << re->size();
+    if ( re->oldSize() == QSize( -1, -1 ) )
+        return;
+
+    m_screen = QApplication::desktop()->screenNumber( this );
+
+    applyNewScreenSize( re->oldSize() );
+}
 // </widget events>
 
 
@@ -1307,6 +1318,11 @@ void PresentationWidget::setScreen( int newScreen )
     m_screen = newScreen;
     setGeometry( screenGeom );
 
+    applyNewScreenSize( oldSize );
+}
+
+void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
+{
     repositionContent();
 
     // if by chance the new screen has the same resolution of the previous,
@@ -1325,6 +1341,8 @@ void PresentationWidget::setScreen( int newScreen )
         (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
     }
 
+    if ( m_frameIndex != -1 )
+    {
     // ugliness alarm!
     const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
     // force the regeneration of the pixmap
@@ -1332,6 +1350,7 @@ void PresentationWidget::setScreen( int newScreen )
     m_blockNotifications = true;
     requestPixmaps();
     m_blockNotifications = false;
+    }
     generatePage( true /* no transitions */ );
 }
 

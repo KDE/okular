@@ -156,6 +156,9 @@
   <entry key="ShowOSD" type="Bool" >
    <default>true</default>
   </entry>
+  <entry key="DisplayDocumentTitle" type="Bool" >
+   <default>true</default>
+  </entry>
   <entry key="UseKTTSD" type="Bool" />
   <entry key="WatchFile" type="Bool" >
    <default>true</default>

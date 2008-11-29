@@ -703,16 +703,20 @@ void Part::loadCancelled(const QString &reason)
 
 void Part::setWindowTitleFromDocument()
 {
-    // if the document have a 'DocumentTitle' flag set (and it is not empty), set it as title
-    QString title = m_document->metaData( "DocumentTitle" ).toString();
-    if ( !title.isEmpty() && !title.trimmed().isEmpty() )
+    // If 'DocumentTitle' should be used, check if the document has one. If
+    // either case is false, use the file name.
+    QString title = realUrl().fileName();
+
+    if ( Okular::Settings::displayDocumentTitle() )
     {
-        emit setWindowCaption( title );
+        const QString docTitle = m_document->metaData( "DocumentTitle" ).toString();
+        if ( !docTitle.isEmpty() && !docTitle.trimmed().isEmpty() )
+        {
+             title = docTitle;
+        }
     }
-    else
-    {
-        emit setWindowCaption( realUrl().fileName() );
-    }
+
+    emit setWindowCaption( title );
 }
 
 void Part::slotGeneratorPreferences( )

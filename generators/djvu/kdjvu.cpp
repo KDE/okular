@@ -534,14 +534,30 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
         {
             QString title = QString::fromUtf8( miniexp_to_str( miniexp_nth( 0, cur ) ) );
             QString dest = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            QDomElement el;
-            if ( dest.isEmpty() || ( ( dest.at( 0 ) == QLatin1Char( '#' ) ) && ( dest.remove( 0, 1 ) != title ) ) )
+            QDomElement el = maindoc.createElement( "item" );
+            el.setAttribute( "title", title );
+            if ( !dest.isEmpty() )
             {
-                el = maindoc.createElement( "item" );
-                el.setAttribute( "title", title );
-                el.setAttribute( "destination", dest );
-                curnode.appendChild( el );
+                if ( dest.at( 0 ) == QLatin1Char( '#' ) )
+                {
+                    dest.remove( 0, 1 );
+                    bool isNumber = false;
+                    dest.toInt( &isNumber );
+                    if ( isNumber )
+                    {
+                       el.setAttribute( "PageNumber", dest );
+                    }
+                    else
+                    {
+                       el.setAttribute( "PageName", dest );
+                    }
+                }
+                else
+                {
+                    el.setAttribute( "URL", dest );
+                }
             }
+            curnode.appendChild( el );
             if ( !el.isNull() && ( miniexp_length( cur ) > 2 ) )
             {
                 fillBookmarksRecurse( maindoc, el, cur, 2 );

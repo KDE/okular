@@ -40,16 +40,12 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
         QDomElement newel = maindoc.createElement( el.attribute( "title" ) );
         parentDestination.appendChild( newel );
 
-        if ( !el.attribute( "destination" ).isEmpty() )
+        QString dest;
+        if ( !( dest = el.attribute( "PageNumber" ) ).isEmpty() )
         {
-            bool ok = true;
-            int page = el.attribute( "destination" ).toInt( &ok );
-            if ( ok && ( page > 0 ) )
-            {
-                Okular::DocumentViewport vp;
-                vp.pageNumber = page - 1;
-                newel.setAttribute( "Viewport", vp.toString() );
-            }
+            Okular::DocumentViewport vp;
+            vp.pageNumber = dest.toInt() - 1;
+            newel.setAttribute( "Viewport", vp.toString() );
         }
 
         if ( el.hasChildNodes() )

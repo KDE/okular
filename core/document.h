@@ -834,15 +834,19 @@ class OKULAR_EXPORT DocumentInfo : public QDomDocument
  * @short A DOM tree that describes the Table of Contents.
  *
  * The Synopsis (TOC or Table Of Contents for friends) is represented via
- * a dom tree where each node has an internal name (displayed in the listview)
+ * a dom tree where each node has an internal name (displayed in the TOC)
  * and one or more attributes.
  *
  * In the tree the tag name is the 'screen' name of the entry. A tag can have
  * attributes. Here follows the list of tag attributes with meaning:
- * - Icon: An icon to be set in the Lisview for the node
- * - Viewport: A string description of the referred viewport
- * - ViewportName: A 'named reference' to the viewport that must be converted
- *      using metaData( "NamedViewport", *viewport_name* )
+ * - Destination: A string description of the referred viewport
+ * - DestinationName: A 'named reference' to the viewport that must be converted
+ *      using metaData( "NamedViewport", viewport_name )
+ * - ExternalFileName: A document to be opened, whose destination is specified
+ *      with Destination or DestinationName
+ * - Open: a boolean saying whether its TOC branch is open or not (default: false)
+ * - URL: a URL to be open as destination; if set, no other Destination* or
+ *      ExternalFileName entry is used
  */
 class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
 {

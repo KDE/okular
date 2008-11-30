@@ -45,6 +45,7 @@ class TOCModel : public QAbstractItemModel
 
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
+        QString urlForIndex( const QModelIndex &index ) const;
 
     private:
         // storage

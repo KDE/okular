@@ -30,6 +30,7 @@ struct TOCItem
     QString text;
     Okular::DocumentViewport viewport;
     QString extFileName;
+    QString url;
     bool highlight : 1;
     TOCItem *parent;
     QList< TOCItem* > children;
@@ -84,6 +85,7 @@ TOCItem::TOCItem( TOCItem *_parent, const QDomElement &e )
     }
 
     extFileName = e.attribute( "ExternalFileName" );
+    url = e.attribute( "URL" );
 }
 
 TOCItem::~TOCItem()
@@ -335,6 +337,15 @@ Okular::DocumentViewport TOCModel::viewportForIndex( const QModelIndex &index ) 
 
     TOCItem *item = static_cast< TOCItem* >( index.internalPointer() );
     return item->viewport;
+}
+
+QString TOCModel::urlForIndex( const QModelIndex &index ) const
+{
+    if ( !index.isValid() )
+        return QString();
+
+    TOCItem *item = static_cast< TOCItem* >( index.internalPointer() );
+    return item->url;
 }
 
 #include "tocmodel.moc"

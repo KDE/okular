@@ -105,6 +105,14 @@ void TOC::slotExecuted( const QModelIndex &index )
     if ( !index.isValid() )
         return;
 
+    QString url = m_model->urlForIndex( index );
+    if ( !url.isEmpty() )
+    {
+        Okular::BrowseAction action( url );
+        m_document->processAction( &action );
+        return;
+    }
+
     QString externalFileName = m_model->externalFileNameForIndex( index );
     Okular::DocumentViewport viewport = m_model->viewportForIndex( index );
     if ( !externalFileName.isEmpty() )

@@ -112,7 +112,7 @@ void TOC::slotExecuted( const QModelIndex &index )
         Okular::GotoAction action( externalFileName, viewport );
         m_document->processAction( &action );
     }
-    else
+    else if ( viewport.isValid() )
     {
         m_document->setViewport( viewport );
     }

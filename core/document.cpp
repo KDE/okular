@@ -2427,6 +2427,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         int viewportPage = (*d->m_viewportIterator).pageNumber;
         int currentPage = fromStart ? 0 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
         Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
+        int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)
         RegularAreaRect * match = 0;
@@ -2437,10 +2438,13 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
             else
                 match = lastPage->findText( searchID, text, NextResult, caseSensitivity, &s->continueOnMatch );
             if ( !match )
+            {
                 currentPage++;
+                pagesDone++;
+            }
         }
 
-        QMetaObject::invokeMethod(this, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, 1));
+        QMetaObject::invokeMethod(this, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
     }
     // 3. PREVMATCH - find previous matching item (or start from bottom)
     else if ( type == PreviousMatch )
@@ -2449,6 +2453,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         int viewportPage = (*d->m_viewportIterator).pageNumber;
         int currentPage = fromStart ? d->m_pagesVector.count() - 1 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
         Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
+        int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)
         RegularAreaRect * match = 0;
@@ -2459,10 +2464,13 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
             else
                 match = lastPage->findText( searchID, text, PreviousResult, caseSensitivity, &s->continueOnMatch );
             if ( !match )
+            {
                 currentPage--;
+                pagesDone++;
+            }
         }
 
-        QMetaObject::invokeMethod(this, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, 1));
+        QMetaObject::invokeMethod(this, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
     }
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )

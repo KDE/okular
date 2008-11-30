@@ -36,6 +36,7 @@ class TIFFGenerator : public Okular::Generator
         class Private;
         Private * const d;
 
+        bool loadTiff( QVector< Okular::Page * > & pagesVector, const char *name );
         void loadPages( QVector<Okular::Page*> & pagesVector );
         int mapPage( int page ) const;
 

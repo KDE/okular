@@ -204,21 +204,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     qfile->open( QIODevice::ReadOnly );
     d->dev = qfile;
     d->data = QFile::encodeName( QFileInfo( *qfile ).fileName() );
-    d->tiff = TIFFClientOpen( d->data.constData(), "r", d->dev,
-                  okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
-                  okular_tiffCloseProc, okular_tiffSizeProc,
-                  okular_tiffMapProc, okular_tiffUnmapProc );
-    if ( !d->tiff )
-    {
-        delete d->dev;
-        d->dev = 0;
-        d->data.clear();
-        return false;
-    }
-
-    loadPages( pagesVector );
-
-    return true;
+    return loadTiff( pagesVector, d->data.constData() );
 }
 
 bool TIFFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector )
@@ -227,7 +213,12 @@ bool TIFFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector< 
     QBuffer* qbuffer = new QBuffer( &d->data );
     qbuffer->open( QIODevice::ReadOnly );
     d->dev = qbuffer;
-    d->tiff = TIFFClientOpen( "<stdin>", "r", d->dev,
+    return loadTiff( pagesVector, "<stdin>" );
+}
+
+bool TIFFGenerator::loadTiff( QVector< Okular::Page * > & pagesVector, const char *name )
+{
+    d->tiff = TIFFClientOpen( name, "r", d->dev,
                   okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
                   okular_tiffCloseProc, okular_tiffSizeProc,
                   okular_tiffMapProc, okular_tiffUnmapProc );

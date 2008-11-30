@@ -9,10 +9,10 @@
 
 #include "generator_tiff.h"
 
-#include <qabstractfileengine.h>
 #include <qbuffer.h>
 #include <qdatetime.h>
 #include <qfile.h>
+#include <qfileinfo.h>
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
@@ -203,16 +203,7 @@ bool TIFFGenerator::loadDocument( const QString & fileName, QVector<Okular::Page
     QFile* qfile = new QFile( fileName );
     qfile->open( QIODevice::ReadOnly );
     d->dev = qfile;
-    QAbstractFileEngine *fileEngine = QAbstractFileEngine::create( fileName );
-    if ( fileEngine )
-    {
-        d->data = QFile::encodeName( fileEngine->fileName( QAbstractFileEngine::BaseName ) );
-        delete fileEngine;
-    }
-    else
-    {
-        d->data = QByteArray( "okular.tiff" );
-    }
+    d->data = QFile::encodeName( QFileInfo( *qfile ).fileName() );
     d->tiff = TIFFClientOpen( d->data.constData(), "r", d->dev,
                   okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc,
                   okular_tiffCloseProc, okular_tiffSizeProc,

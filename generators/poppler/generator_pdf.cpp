@@ -1246,6 +1246,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
             item.setAttribute( "Viewport", vp.toString() );
         }
         if (!e.attribute("Open").isNull()) item.setAttribute("Open", e.attribute("Open"));
+        if (!e.attribute("DestinationURI").isNull()) item.setAttribute("URL", e.attribute("DestinationURI"));
 
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() ) addSynopsisChildren( &n, &	item );

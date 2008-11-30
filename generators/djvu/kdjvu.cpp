@@ -443,6 +443,8 @@ class KDjVu::Private
 
         void readMetaData( int page );
 
+        int pageWithName( const QString & name );
+
         ddjvu_context_t *m_djvu_cxt;
         ddjvu_document_t *m_djvu_document;
         ddjvu_format_t *m_format;
@@ -454,6 +456,8 @@ class KDjVu::Private
 
         QHash<QString, QVariant> m_metaData;
         QDomDocument * m_docBookmarks;
+
+        QHash<QString, int> m_pageNamesCache;
 
         bool m_cacheEnabled;
 
@@ -596,6 +600,23 @@ void KDjVu::Private::readMetaData( int page )
     }
 }
 
+int KDjVu::Private::pageWithName( const QString & name )
+{
+    const QByteArray utfName = name.toUtf8();
+    const int fileNum = ddjvu_document_get_filenum( m_djvu_document );
+    ddjvu_fileinfo_t info;
+    for ( int i = 0; i < fileNum; ++i )
+    {
+        if ( DDJVU_JOB_OK != ddjvu_document_get_fileinfo( m_djvu_document, i, &info ) )
+            continue;
+        if ( info.type != 'P' )
+            continue;
+        if ( ( utfName == info.id ) || ( utfName == info.name ) || ( utfName == info.title ) )
+            return info.pageno;
+    }
+    return -1;
+}
+
 
 KDjVu::KDjVu() : d( new Private )
 {
@@ -719,6 +740,8 @@ void KDjVu::closeFile()
     d->mImgCache.clear();
     // clearing the old metadata
     d->m_metaData.clear();
+    // cleaing the page names mapping
+    d->m_pageNamesCache.clear();
     // releasing the old document
     if ( d->m_djvu_document )
         ddjvu_document_release( d->m_djvu_document );
@@ -1101,4 +1124,17 @@ void KDjVu::setCacheEnabled( bool enable )
 bool KDjVu::isCacheEnabled() const
 {
     return d->m_cacheEnabled;
+}
+
+int KDjVu::pageNumber( const QString & name ) const
+{
+    if ( !d->m_djvu_document )
+        return -1;
+
+    QHash< QString, int >::iterator it = d->m_pageNamesCache.find( name );
+    if ( it == d->m_pageNamesCache.end() )
+    {
+        it = d->m_pageNamesCache.insert( name, d->pageWithName( name ) );
+    }
+    return it.value();
 }

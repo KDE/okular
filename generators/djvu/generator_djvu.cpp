@@ -30,7 +30,7 @@
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
-static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination )
+static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )
 {
     QDomNode n = parent.firstChild();
     while( !n.isNull() )
@@ -47,6 +47,12 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
             vp.pageNumber = dest.toInt() - 1;
             newel.setAttribute( "Viewport", vp.toString() );
         }
+        else if ( !( dest = el.attribute( "PageName" ) ).isEmpty() )
+        {
+            Okular::DocumentViewport vp;
+            vp.pageNumber = djvu->pageNumber( dest );
+            newel.setAttribute( "Viewport", vp.toString() );
+        }
         else if ( !( dest = el.attribute( "URL" ) ).isEmpty() )
         {
             newel.setAttribute( "URL", dest );
@@ -54,7 +60,7 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
 
         if ( el.hasChildNodes() )
         {
-            recurseCreateTOC( maindoc, n, newel );
+            recurseCreateTOC( maindoc, n, newel, djvu );
         }
         n = n.nextSibling();
     }
@@ -182,7 +188,7 @@ const Okular::DocumentSynopsis * DjVuGenerator::generateDocumentSynopsis()
     if ( doc )
     {
         m_docSyn = new Okular::DocumentSynopsis();
-        recurseCreateTOC( *m_docSyn, *doc, *m_docSyn );
+        recurseCreateTOC( *m_docSyn, *doc, *m_docSyn, m_djvu );
     }
     locker.unlock();
 

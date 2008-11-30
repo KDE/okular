@@ -284,6 +284,11 @@ class KDjVu
          */
         bool isCacheEnabled() const;
 
+        /**
+         * Return the page number of the page whose title is \p name.
+         */
+        int pageNumber( const QString & name ) const;
+
     private:
         class Private;
         Private * const d;

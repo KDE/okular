@@ -155,6 +155,14 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
         pal.setColor( QPalette::Text, Qt::white );
         setPalette( pal );
     }
+    else
+    {
+        QPalette pal = palette();
+        const QPalette qAppPalette = QApplication::palette();
+        pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
+        pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
+        setPalette( pal );
+    }
 }
 
 #include "searchlineedit.moc"

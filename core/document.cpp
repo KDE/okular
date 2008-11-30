@@ -2260,6 +2260,12 @@ void Document::setViewportPage( int page, int excludeId, bool smoothMove )
 
 void Document::setViewport( const DocumentViewport & viewport, int excludeId, bool smoothMove )
 {
+    if ( !viewport.isValid() )
+    {
+        kDebug(OkularDebug) << "invalid viewport:" << viewport.toString();
+        return;
+    }
+
     // if already broadcasted, don't redo it
     DocumentViewport & oldViewport = *d->m_viewportIterator;
     // disabled by enrico on 2005-03-18 (less debug output)

@@ -47,6 +47,10 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
             vp.pageNumber = dest.toInt() - 1;
             newel.setAttribute( "Viewport", vp.toString() );
         }
+        else if ( !( dest = el.attribute( "URL" ) ).isEmpty() )
+        {
+            newel.setAttribute( "URL", dest );
+        }
 
         if ( el.hasChildNodes() )
         {

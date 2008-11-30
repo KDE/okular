@@ -421,7 +421,16 @@ bool TIFFGenerator::print( QPrinter& printer )
         if ( i != 0 )
             printer.newPage();
 
-        p.drawImage( 0, 0, image );
+        QSize targetSize = printer.pageRect().size();
+
+        if ( (image.width() < targetSize.width()) && (image.height() < targetSize.height()) )
+        {
+            // draw small images at 100% (don't scale up)
+            p.drawImage( 0, 0, image );
+        } else {
+            // fit to page
+            p.drawImage( 0, 0, image.scaled( targetSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+        }
     }
 
     return true;

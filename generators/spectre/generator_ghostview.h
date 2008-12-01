@@ -11,16 +11,14 @@
 #define _OKULAR_GENERATOR_GHOSTVIEW_H_
 
 #include <okular/core/generator.h>
-#include <okular/interfaces/guiinterface.h>
 #include <okular/interfaces/configinterface.h>
 
 #include <libspectre/spectre.h>
 
-class GSGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::GuiInterface
+class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 {
     Q_OBJECT
     Q_INTERFACES( Okular::ConfigInterface )
-    Q_INTERFACES( Okular::GuiInterface )
 
     public:
         /** virtual methods to reimplement **/

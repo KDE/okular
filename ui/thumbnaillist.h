@@ -25,7 +25,7 @@ class Document;
 }
 
 /**
- * @short A scrollview that displays pages pixmaps previews (aka thumbnails).
+ * @short A scrollview that displays page pixmap previews (aka thumbnails).
  *
  * ...
  */
@@ -92,9 +92,9 @@ class ThumbnailsBox : public KVBox
 };
 
 /**
- * @short A toolbar thar set ThumbnailList properties when clicking on items
+ * @short A toolbar that sets ThumbnailList properties when clicking on items
  *
- * This class is the small tolbar that resides in the bottom of the
+ * This class is the small toolbar that resides in the bottom of the
  * ThumbnailsBox container (below ThumbnailList and the SearchLine) and
  * emits signals whenever a button is pressed. A click action results
  * in invoking some method (or slot) in ThumbnailList.

@@ -51,7 +51,7 @@ public:
     enum MetaKey { Title, Author, Copyright, Description, Subject };
     Document(Stream* s);
     QMap<MetaKey,QString> metadata() const;
-    QString text() const; 
+    QString text(int size=-1) const;
     int imageCount() const;
     QImage getImage(int i) const;
     QImage thumbnail() const;

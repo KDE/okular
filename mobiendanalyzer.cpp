@@ -91,6 +91,8 @@ MobiEndAnalyzer::analyze(AnalysisResult& as, InputStream* in) {
             case Mobipocket::Document::Copyright: as.addValue(factory->copyrightField, it.value().toUtf8().data() ); break;
         }
     }
+    QByteArray text=doc.text(20480).toUtf8();
+    as.addText(text.data(), text.size());
     return 0;
 }
 

@@ -238,7 +238,7 @@ Document::Document(Stream* dev) : d(new DocumentPrivate(dev))
     d->init();
 }
 
-QString Document::text() const 
+QString Document::text(int size) const 
 {
     QByteArray whole;
     for (int i=1;i<d->ntextrecords+1;i++) { 
@@ -247,6 +247,7 @@ QString Document::text() const
             d->valid=false;
             return QString::null;
         }
+        if (size!=-1 && whole.size()>size) break;
     }
     return d->decodeString(whole);
 }

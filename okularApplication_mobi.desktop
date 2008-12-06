@@ -5,6 +5,7 @@ Name=Okular
 Name[hi]=ऑकुलर
 Name[x-test]=xxOkularxx
 GenericName=Document Viewer
+GenericName[de]=Dokumentenbetrachter
 GenericName[el]=Προβολέας εγγράφου
 GenericName[es]=Visor de documentos
 GenericName[et]=Dokumendinäitaja

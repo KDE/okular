@@ -79,6 +79,7 @@ void Shell::init()
       createGUI(m_part);
       m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
       m_doc = qobject_cast<KDocumentViewer*>(m_part);
+      m_showMenuBarAction->setChecked( menuBar()->isVisible() );
     }
   }
   else

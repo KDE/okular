@@ -132,6 +132,9 @@ public:
     QTimer * refreshTimer;
     int refreshPage;
 
+    // infinite resizing loop prevention
+    bool bothScrollbarsVisible;
+
     // drag scroll
     QPoint dragScrollVector;
     QTimer dragScrollTimer;
@@ -1268,6 +1271,17 @@ void PageView::resizeEvent( QResizeEvent *e )
         return;
     }
 
+    if ( d->zoomMode == ZoomFitWidth && d->bothScrollbarsVisible && !horizontalScrollBar()->isVisible() && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < horizontalScrollBar()->height() * 1.25 )
+    {
+        // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
+        // see bug 160628 for more info
+        // TODO looks are still a bit ugly because things are left uncentered 
+        // but better a bit ugly than unusable
+        d->bothScrollbarsVisible = false;
+        widget()->resize( e->size() );
+        return;
+    }
+
     // start a timer that will refresh the pixmap after 0.2s
     if ( !d->delayResizeTimer )
     {
@@ -1276,6 +1290,8 @@ void PageView::resizeEvent( QResizeEvent *e )
         connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
     }
     d->delayResizeTimer->start( 200 );
+
+    d->bothScrollbarsVisible = horizontalScrollBar()->isVisible() && verticalScrollBar()->isVisible();
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -2880,14 +2896,6 @@ void PageView::slotRelayoutPages()
         }
         else
             fullHeight = rowHeight[ pageRowIdx ];
-
-        if (!horizontalScrollBar()->isVisible() && !verticalScrollBar()->isVisible() && fullWidth == viewportWidth &&
-            fullHeight - viewportHeight == 1 && d->zoomMode == ZoomFitWidth)
-        {
-            // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
-            // see bug 160628
-            fullHeight = viewportHeight;
-        }
 
         // 3) arrange widgets inside cells (and refine fullHeight if needed)
         int insertX = 0,

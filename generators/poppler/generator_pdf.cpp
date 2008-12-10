@@ -241,7 +241,7 @@ static KAboutData createAboutData()
          "okular_poppler",
          "okular_poppler",
          ki18n( "PDF Backend" ),
-         "0.1.1",
+         "0.1.2",
          ki18n( "A PDF file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2005-2008 Albert Astals Cid" )

@@ -161,6 +161,7 @@ protected:
     QStringList optionDoubleSidedPrinting( QPrinter &printer );
     QStringList optionPageOrder( QPrinter &printer );
     QStringList optionCollateCopies( QPrinter &printer );
+    QStringList optionPageMargins( QPrinter &printer );
     QStringList optionCupsProperties( QPrinter &printer );
 };
 

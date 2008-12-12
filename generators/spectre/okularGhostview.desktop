@@ -5,4 +5,4 @@ Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
-MimeType=application/postscript;image/x-eps;application/x-gzpostscript;application/x-bzpostscript;
+MimeType=application/postscript;image/x-eps;application/x-gzpostscript;application/x-bzpostscript;image/x-gzeps;image/x-bzeps;

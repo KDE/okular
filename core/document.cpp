@@ -523,7 +523,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service 
         kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
         return 0;
     }
-    Generator * generator = factory->create< Okular::Generator >( 0 );
+    Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
     GeneratorInfo info( factory->componentData() );
     info.generator = generator;
     if ( info.data.isValid() && info.data.aboutData() )

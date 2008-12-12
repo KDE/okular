@@ -60,7 +60,7 @@ install( FILES okularApplication_mobi.desktop  DESTINATION  ${XDG_APPS_INSTALL_D
 install(TARGETS mobi LIBRARY DESTINATION ${LIB_INSTALL_DIR}/strigi)
 
 install(
-  FILES x-mobipocket.xml
+  FILES x-mobipocket-ebook.xml
   DESTINATION ${XDG_MIME_INSTALL_DIR}
 )
 update_xdg_mimetypes(${XDG_MIME_INSTALL_DIR})

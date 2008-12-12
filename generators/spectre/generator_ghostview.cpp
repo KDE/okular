@@ -159,6 +159,14 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
 
     m_internalDocument = spectre_document_new();
     spectre_document_load(m_internalDocument, QFile::encodeName(fileName));
+    const SpectreStatus loadStatus = spectre_document_status(m_internalDocument);
+    if (loadStatus != SPECTRE_STATUS_SUCCESS)
+    {
+        kDebug(4711) << "ERR:" << spectre_status_to_string(loadStatus);
+        spectre_document_free(m_internalDocument);
+        m_internalDocument = 0;
+        return false;
+    }
     pagesVector.resize( spectre_document_get_n_pages(m_internalDocument) );
     kDebug(4711) << "Page count:" << pagesVector.count();
     return loadPages(pagesVector);

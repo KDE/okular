@@ -20,6 +20,7 @@
 #include <QtCore/QFile>
 #include <QtGui/QLabel>
 #include <QtGui/QShowEvent>
+#include <QtNetwork/QTcpSocket>
 
 #include <KProcess>
 #include <KShell>
@@ -190,20 +191,16 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
 bool FilePrinter::cupsAvailable()
 {
     FilePrinter fp;
-    return ( fp.detectCupsConfig() /*&& fp.detectCupsService()*/ );
+    return ( fp.detectCupsConfig() && fp.detectCupsService() );
 }
 
 bool FilePrinter::detectCupsService()
 {
-    // copied from KdeprintChecker::checkService()
-    // Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
-    // original license LGPL
-    KLocalSocket sock;
-    sock.connectToPath("/ipp");
-    kDebug(OkularDebug) << "socket wait =" << sock.waitForConnected();
-    kDebug(OkularDebug) << "socket error =" << sock.error();
-    kDebug(OkularDebug) << "socket isOpen() =" << sock.isOpen();
-    return sock.isOpen();
+    QTcpSocket qsock;
+    qsock.connectToHost("localhost", 631);
+    bool rtn = qsock.waitForConnected() && qsock.isValid();
+    qsock.abort();
+    return rtn;
 }
 
 bool FilePrinter::detectCupsConfig()
@@ -318,8 +315,8 @@ QStringList FilePrinter::destination( QPrinter &printer, const QString &version 
 
 QStringList FilePrinter::copies( QPrinter &printer, const QString &version )
 {
-    // Can't use QPrinter::numCopies(), as if CUPS will always return 1, not sure if this behaves same way as well?
-    int cp = printer.printEngine()->property( QPrintEngine::PPK_NumberOfCopies ).toInt();
+    // If CUPS will always return 1 regardless what the user chooses.
+    int cp = printer.numCopies();
 
     if ( version == "lp" ) {
         return QStringList("-n") << QString("%1").arg( cp );
@@ -517,14 +514,17 @@ QStringList FilePrinter::optionOrientation( QPrinter &printer )
 
 QStringList FilePrinter::optionDoubleSidedPrinting( QPrinter &printer )
 {
-    if ( printer.doubleSidedPrinting() ) {
-        if ( printer.orientation() == QPrinter::Landscape ) {
-            return QStringList("-o") << "sides=two-sided-short-edge";
-        } else {
-            return QStringList("-o") << "sides=two-sided-long-edge";
-        }
+    switch ( printer.duplex() ) {
+    case QPrinter::DuplexNone:       return QStringList("-o") << "sides=one-sided";
+    case QPrinter::DuplexAuto:       if ( printer.orientation() == QPrinter::Landscape ) {
+                                         return QStringList("-o") << "sides=two-sided-short-edge";
+                                     } else {
+                                         return QStringList("-o") << "sides=two-sided-long-edge";
+                                     }
+    case QPrinter::DuplexLongSide:   return QStringList("-o") << "sides=two-sided-long-edge";
+    case QPrinter::DuplexShortSide:  return QStringList("-o") << "sides=two-sided-short-edge";
+    default:                         return QStringList();  //Use printer default
     }
-    return QStringList("-o") << "sides=one-sided";
 }
 
 QStringList FilePrinter::optionPageOrder( QPrinter &printer )
@@ -541,6 +541,20 @@ QStringList FilePrinter::optionCollateCopies( QPrinter &printer )
         return QStringList("-o") << "Collate=True";
     }
     return QStringList("-o") << "Collate=False";
+}
+
+QStringList FilePrinter::optionPageMargins( QPrinter &printer )
+{
+    if (printer.printEngine()->property(QPrintEngine::PPK_PageMargins).isNull()) {
+        return QStringList();
+    } else {
+        qreal l, t, r, b;
+        printer.getPageMargins( &l, &t, &r, &b, QPrinter::Point );
+        return QStringList("-o") << QString("page-left=%1").arg(l)
+                       <<  "-o"  << QString("page-top=%1").arg(t)
+                       <<  "-o"  << QString("page-right=%1").arg(r)
+                       <<  "-o"  << QString("page-bottom=%1").arg(b);
+    }
 }
 
 QStringList FilePrinter::optionCupsProperties( QPrinter &printer )

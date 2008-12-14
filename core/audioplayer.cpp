@@ -198,6 +198,7 @@ void AudioPlayerPrivate::finished( int id )
     }
     else
     {
+        m_mapper.removeMappings( it.value()->m_mediaobject );
         delete it.value();
         m_playing.erase( it );
     }

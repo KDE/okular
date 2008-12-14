@@ -15,9 +15,9 @@
 #include <QtGui/QPrinter>
 #include <QPrintEngine>
 #include <QStringList>
-#include <QFile>
 #include <QSize>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtGui/QLabel>
 #include <QtGui/QShowEvent>
 #include <QtNetwork/QTcpSocket>
@@ -49,22 +49,6 @@ int FilePrinter::printFiles( QPrinter &printer, const QStringList &fileList, Fil
 int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
-    //Decide what executable to use to print with, need the CUPS version of lpr if available
-    //Some distros name the CUPS version of lpr as lpr-cups or lpr.cups so try those first 
-    //before default to lpr, or failing that to lp
-    QString exe;
-
-    if ( !KStandardDirs::findExe("lpr-cups").isEmpty() ) {
-        exe = "lpr-cups";
-    } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
-        exe = "lpr.cups";
-    } else if ( !KStandardDirs::findExe("lpr").isEmpty() ) {
-        exe = "lpr";
-    } else if ( !KStandardDirs::findExe("lp").isEmpty() ) {
-        exe = "lp";
-    } else {
-        return -9;
-    }
 
     if ( fileList.size() < 1 ) {
         return -8;
@@ -80,6 +64,10 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         return -6;
     }
 
+    QString exe;
+    QStringList argList;
+    int ret;
+
     // Print to File if a filename set, assumes there must be only 1 file
     if ( !printer.outputFileName().isEmpty() ) {
 
@@ -87,33 +75,56 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             QFile::remove( printer.outputFileName() );
         }
 
-        int res = QFile::copy( fileList[0], printer.outputFileName() );
+        QFileInfo inputFileInfo = QFileInfo( fileList[0] );
+        QFileInfo outputFileInfo = QFileInfo( printer.outputFileName() );
+
+        if ( inputFileInfo.suffix() == outputFileInfo.suffix() ) {
+            int res = QFile::copy( fileList[0], printer.outputFileName() );
+            if ( res ) ret = 0;
+        } else if ( inputFileInfo.suffix() == "ps" && outputFileInfo.suffix() == "pdf" && ps2pdfAvailable() ) {
+            exe = "ps2pdf";
+            argList << fileList[0] << printer.outputFileName();
+            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+            ret = KProcess::execute( exe, argList );
+        } else if ( inputFileInfo.suffix() == "pdf" && outputFileInfo.suffix() == "ps" && pdf2psAvailable() ) {
+            exe = "pdf2ps";
+            argList << fileList[0] << printer.outputFileName();
+            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+            ret = KProcess::execute( exe, argList );
+        } else {
+            ret = -5;
+        }
 
         if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles ) {
             QFile::remove( fileList[0] );
         }
 
-        if ( res ) return 0;
 
-    }
+    } else {  // Print to a printer via lpr command
 
-    bool useCupsOptions = cupsAvailable();
-    QStringList argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, exe )
-                          << fileList;
-    kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+        //Decide what executable to use to print with, need the CUPS version of lpr if available
+        //Some distros name the CUPS version of lpr as lpr-cups or lpr.cups so try those first 
+        //before default to lpr, or failing that to lp
 
-    int ret = KProcess::execute( exe, argList );
+        if ( !KStandardDirs::findExe("lpr-cups").isEmpty() ) {
+            exe = "lpr-cups";
+        } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
+            exe = "lpr.cups";
+        } else if ( !KStandardDirs::findExe("lpr").isEmpty() ) {
+            exe = "lpr";
+        } else if ( !KStandardDirs::findExe("lp").isEmpty() ) {
+            exe = "lp";
+        } else {
+            return -9;
+        }
 
-    // If we used the Cups options and the command failed, try again without them in case Cups lpr/lp not installed.
-    // I'm not convinced this will work, I don't think KProcess returns the result of the command, but rather
-    // that it was able to be executed?
-    if ( useCupsOptions && ret < 0 ) {
-
-        argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions, pageRange, exe )
-                  << fileList;
-        kDebug(OkularDebug) << "Retrying" << exe << "without CUPS arguments" << argList;
+        bool useCupsOptions = cupsAvailable();
+        argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, 
+                                  useCupsOptions, pageRange, exe ) << fileList;
+        kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
+
     }
 
     return ret;
@@ -186,6 +197,16 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
     }
 
     return pageRange;
+}
+
+bool FilePrinter::ps2pdfAvailable()
+{
+    return ( !KStandardDirs::findExe("ps2pdf").isEmpty() );
+}
+
+bool FilePrinter::pdf2psAvailable()
+{
+    return ( !KStandardDirs::findExe("pdf2ps").isEmpty() );
 }
 
 bool FilePrinter::cupsAvailable()

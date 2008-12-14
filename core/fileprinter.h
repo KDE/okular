@@ -120,6 +120,18 @@ public:
      */
     static QString pageListToPageRange( const QList<int> &pageList );
 
+    /** Return if Ghostscript ps2pdf is available on this system
+     *
+     * @returns Returns true if Ghostscript ps2pdf available
+     */
+     static bool ps2pdfAvailable();
+
+    /** Return if Ghostscript pdf2ps is available on this system
+     *
+     * @returns Returns true if Ghostscript pdf2ps available
+     */
+     static bool pdf2psAvailable();
+
     /** Return if CUPS Print System is available on this system
      *
      * @returns Returns true if CUPS available

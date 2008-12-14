@@ -277,6 +277,8 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     setFeature( TextExtraction );
     setFeature( FontInfo );
     setFeature( PrintPostscript );
+    if ( Okular::FilePrinter::ps2pdfAvailable() )
+        setFeature( PrintToFile );
     setFeature( ReadRawData );
     // generate the pixmapGeneratorThread
     generatorThread = new PDFPixmapGeneratorThread( this );

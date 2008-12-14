@@ -89,6 +89,8 @@ DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
     setFeature( TextExtraction );
     setFeature( Threaded );
     setFeature( PrintPostscript );
+    if ( Okular::FilePrinter::ps2pdfAvailable() )
+        setFeature( PrintToFile );
 
     m_djvu = new KDjVu();
     m_djvu->setCacheEnabled( false );

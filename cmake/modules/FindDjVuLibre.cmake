@@ -12,23 +12,24 @@ if (DJVULIBRE_INCLUDE_DIR AND DJVULIBRE_LIBRARY)
 
 else (DJVULIBRE_INCLUDE_DIR AND DJVULIBRE_LIBRARY)
   IF (NOT WIN32)
-  	include(UsePkgConfig)
+        find_package(PkgConfig)
 
-  	pkgconfig(ddjvuapi _ddjvuIncDir _ddjvuLinkDir ddjvuLinkFlags _ddjvuCflags)
+        pkg_check_modules(PC_DJVULIBRE ddjvuapi)
   endif(NOT WIN32)
 
-  if(_ddjvuIncDir)
     find_path(DJVULIBRE_INCLUDE_DIR libdjvu/ddjvuapi.h
-      ${_ddjvuIncDir}
+      PATHS
+      ${PC_DJVULIBRE_INCLUDEDIR}
+      ${PC_DJVULIBRE_INCLUDE_DIRS}
       ${GNUWIN32_DIR}/include
     )
 
     find_library(DJVULIBRE_LIBRARY NAMES djvulibre
       PATHS
-      ${_ddjvuLinkDir}
+      ${PC_DJVULIBRE_LIBDIR}
+      ${PC_DJVULIBRE_LIBRARY_DIRS}
       ${GNUWIN32_DIR}/lib
     )
-  endif(_ddjvuIncDir)
 
   include(FindPackageHandleStandardArgs)
   FIND_PACKAGE_HANDLE_STANDARD_ARGS(DjVuLibre DEFAULT_MSG DJVULIBRE_INCLUDE_DIR DJVULIBRE_LIBRARY )

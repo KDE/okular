@@ -1501,8 +1501,8 @@ void PageView::contentsMouseMoveEvent( QMouseEvent * e )
                         QPoint newpos = QPoint( e->x(), e->y() ) - itemRect.topLeft();
                         Okular::NormalizedRect r = d->mouseAnn->boundingRectangle();
                         QPoint p( newpos - d->mouseAnnPos );
-                        QPointF pf( rotateInRect( p, pageItem->page()->totalOrientation() ) );
-                        if ( pageItem->page()->totalOrientation() % 2 == 0 )
+                        QPointF pf( rotateInRect( p, pageItem->page()->rotation() ) );
+                        if ( pageItem->page()->rotation() % 2 == 0 )
                         {
                             pf.rx() /= pageItem->uncroppedWidth();
                             pf.ry() /= pageItem->uncroppedHeight();

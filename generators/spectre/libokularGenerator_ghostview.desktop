@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Ghostscript
+Name[ar]=غوست سكريبت
 Name[hi]=घोस्ट-स्क्रिप्ट
 Name[ne]=घोस्टस्क्रिप्ट
 Name[pa]=ਗੋਸਟ-ਸਕ੍ਰਿਪਟ
@@ -9,6 +10,7 @@ Name[th]=เอกสาร Ghostscript
 Name[x-test]=xxGhostscriptxx
 Name[zh_CN]=GhostScript 信息
 Comment=Ghostscript PS/PDF backend for Okular
+Comment[ar]=المنتهى الخلفي Ghostscript PS/PDF لأوكلار
 Comment[ca]=Dorsal de Ghostscript PS/PDF per a l'Okular
 Comment[da]=Ghostscript PS/PDF-motor til Okular
 Comment[de]=Anzeigemodul für Ghostscript PS/PDF in Okular

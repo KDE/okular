@@ -2,8 +2,10 @@
 MimeType=application/postscript;image/x-eps;application/x-gzpostscript;application/x-bzpostscript;image/x-gzeps;image/x-bzeps;
 Terminal=false
 Name=Okular
+Name[ar]=اوكلار
 Name[x-test]=xxOkularxx
 GenericName=Document Viewer
+GenericName[ar]=عارض المستندات
 GenericName[bg]=Визуализатор
 GenericName[ca]=Visualitzador de documents
 GenericName[cs]=Prohlížeč dokumentů

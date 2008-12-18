@@ -7,6 +7,7 @@ reading=true
 listing=Name,Type,Size
 defaultMimetype=text/html
 Description=A kioslave for displaying WinHelp files
+Description[ar]=خاصية كِييُوسليْف لعرض ملفات WinHelp
 Description[bg]=kioslave за показване на помощни файлове за Уиндоус
 Description[ca]=Un kioslave per visualitzar els fitxers WinHelp
 Description[da]=En kioslave til visning af WinHelp-filer

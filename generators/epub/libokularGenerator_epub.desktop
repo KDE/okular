@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=EPub document
+Name[ar]=مستند إيباب
 Name[ca]=Document EPub
 Name[da]=EPub-dokument
 Name[de]=EPub-Dokument
@@ -34,6 +35,7 @@ Name[x-test]=xxEPub documentxx
 Name[zh_CN]=EPub 文档
 Name[zh_TW]=EPub 文件
 Comment=EPub backend for Okular
+Comment[ar]=المنتهى الخلفي EPub لأوكلار
 Comment[ca]=Dorsal d'EPub per a l'Okular
 Comment[da]=EPub-motor til Okular
 Comment[de]=Anzeigemodul für EPub in Okular

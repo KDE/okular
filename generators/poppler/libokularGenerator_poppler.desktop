@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Service
 Name=Poppler
+Name[ar]=بوبلِر
 Name[hi]=पॉपलर
 Name[hu]=Poppler-beolvasó
 Name[ne]=पप्प्लर
 Name[pa]=ਪੋਪੱਲਰ
 Name[x-test]=xxPopplerxx
 Comment=PDF backend for Okular using poppler
+Comment[ar]=المنتهى الخلفي PDF لأوكلار
 Comment[ca]=Dorsal de PDF per a l'Okular emprant el poppler
 Comment[da]=PDF-motor til Okular som bruger poppler
 Comment[de]=Anzeigemodul für PDF (mittels Poppler) in Okular

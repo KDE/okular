@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=OpenDocument format
+Name[ar]=نسق OpenDocument
 Name[bg]=Формат OpenDocument
 Name[ca]=Format OpenDocument
 Name[cs]=OpenDocument formát
@@ -43,6 +44,7 @@ Name[x-test]=xxOpenDocument formatxx
 Name[zh_CN]=开放文档格式
 Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for Okular
+Comment[ar]=المنتهى الخلفي OpenDocument لأوكلار
 Comment[ca]=Dorsal d'OpenDocument per a l'Okular
 Comment[da]=OpenDocument-motor til Okular
 Comment[de]=Anzeigemodul für OpenDocument in Okular

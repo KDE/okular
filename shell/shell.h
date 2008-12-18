@@ -67,6 +67,8 @@ protected:
   void writeSettings();
   void setFullScreen( bool );
 
+  void showEvent(QShowEvent *event);
+
 private slots:
   void fileOpen();
 

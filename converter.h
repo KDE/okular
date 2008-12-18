@@ -15,7 +15,6 @@
 #include "mobidocument.h"
 #include "mobipocket.h"
 
-class QTextCursor;
 
 namespace Mobi {
   class Converter : public Okular::TextDocumentConverter

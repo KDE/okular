@@ -79,7 +79,6 @@ void Shell::init()
       createGUI(m_part);
       m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
       m_doc = qobject_cast<KDocumentViewer*>(m_part);
-      m_showMenuBarAction->setChecked( menuBar()->isVisible() );
     }
   }
   else
@@ -265,6 +264,13 @@ void Shell::setFullScreen( bool useFullScreen )
         setWindowState( windowState() | Qt::WindowFullScreen ); // set
     else
         setWindowState( windowState() & ~Qt::WindowFullScreen ); // reset
+}
+
+void Shell::showEvent(QShowEvent *e)
+{
+    m_showMenuBarAction->setChecked( menuBar()->isVisible() );
+
+    KParts::MainWindow::showEvent(e);
 }
 
 void Shell::slotUpdateFullScreen()

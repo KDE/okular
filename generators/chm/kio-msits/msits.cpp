@@ -24,6 +24,7 @@
 #include <kmimetype.h>
 
 #include <qfile.h>
+#include <qdir.h>
 #include <qbitarray.h>
 #include <qvector.h>
 
@@ -162,12 +163,12 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 	if ( m_chmFile && filename == m_openedFile )
 		return true;
 
-    kDebug() << "Opening a new CHM file " << filename;
+    kDebug() << "Opening a new CHM file " << QFile::encodeName( QDir::toNativeSeparators( filename ) );
 
 	// First try to open a temporary file
 	chmFile * tmpchm;
 
-	if ( (tmpchm = chm_open ( QFile::encodeName (filename))) == 0 )
+	if( (tmpchm = chm_open ( QFile::encodeName( QDir::toNativeSeparators( filename) ) ) ) == 0 )
 	{
 		error( KIO::ERR_COULD_NOT_READ, url.prettyUrl() );
         return false;

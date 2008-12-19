@@ -20,6 +20,19 @@
 
 using namespace ComicBook;
 
+static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir, QStringList *entries )
+{
+    Q_FOREACH ( const QString &entry, dir->entries() ) {
+        const KArchiveEntry *e = dir->entry( entry );
+        if ( e->isDirectory() ) {
+            imagesInArchive( prefix + entry + "/", static_cast<const KArchiveDirectory*>( e ), entries );
+        } else if ( e->isFile() ) {
+            entries->append( prefix + entry );
+        }
+    }
+}
+
+
 Document::Document()
     : mUnrar( 0 ), mZip( 0 )
 {
@@ -57,15 +70,9 @@ bool Document::open( const QString &fileName )
         }
 
         mZipDir = const_cast<KArchiveDirectory*>( directory );
-        QStringList entries = directory->entries();
-        if ( entries.count() == 1 ) {
-            // seems to be a nested directory
-            const KArchiveEntry *entry = directory->entry( entries[ 0 ] );
-            if ( entry->isDirectory() ) {
-                entries = static_cast<const KArchiveDirectory*>( entry )->entries();
-                mZipDir = const_cast<KArchiveDirectory*>( static_cast<const KArchiveDirectory*>( entry ) );
-            }
-        }
+
+        QStringList entries;
+        imagesInArchive( QString(), mZipDir, &entries );
 
         extractImageFiles( entries );
 

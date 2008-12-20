@@ -107,8 +107,6 @@ bool GSGenerator::print( QPrinter& printer )
     // Create tempfile to write to
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
-    if ( !tf.open() )
-        return false;
 
     // Get list of pages to print
     QList<int> pageList = Okular::FilePrinter::pageList( printer,
@@ -122,6 +120,9 @@ bool GSGenerator::print( QPrinter& printer )
         exportFormat = SPECTRE_EXPORTER_FORMAT_PDF;
         tf.setSuffix(".pdf");
     }
+
+    if ( !tf.open() )
+        return false;
 
     SpectreExporter *exporter = spectre_exporter_new( m_internalDocument, exportFormat );
     SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toAscii() );
@@ -137,17 +138,18 @@ bool GSGenerator::print( QPrinter& printer )
 
     spectre_exporter_free( exporter );
 
+    const QString fileName = tf.fileName();
+    tf.close();
+
     if ( exportStatus == SPECTRE_STATUS_SUCCESS && endStatus == SPECTRE_STATUS_SUCCESS )
     {
         tf.setAutoRemove( false );
-        int ret = Okular::FilePrinter::printFile( printer, tf.fileName(),
+        int ret = Okular::FilePrinter::printFile( printer, fileName,
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );
         if ( ret >= 0 ) result = true;
     }
-
-    tf.close();
 
     return result;
 }

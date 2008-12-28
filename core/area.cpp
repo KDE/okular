@@ -73,11 +73,12 @@ NormalizedRect::NormalizedRect( const NormalizedRect & rect )
 
 NormalizedRect NormalizedRect::fromQRectF( const QRectF &rect )
 {
+    QRectF nrect = rect.normalized();
     NormalizedRect ret;
-    ret.left = rect.left();
-    ret.top = rect.top();
-    ret.right = rect.right();
-    ret.bottom = rect.bottom();
+    ret.left = nrect.left();
+    ret.top = nrect.top();
+    ret.right = nrect.right();
+    ret.bottom = nrect.bottom();
     return ret;
 }
 

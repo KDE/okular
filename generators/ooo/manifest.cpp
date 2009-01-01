@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Brad Hards <bradh@frogmouth.net>                *
+ *   Copyright (C) 2007, 2009 by Brad Hards <bradh@frogmouth.net>                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -158,14 +158,26 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData )
 	currentEntry->setMimeType( attributes.value("manifest:media-type").toString() );
 	currentEntry->setSize( attributes.value("manifest:size").toString() );
       } else if ( xml.name().toString() == "encryption-data" ) {
+	if (currentEntry == 0) {
+	  kWarning(OooDebug) << "Got encryption-data without valid file-entry at line" << xml.lineNumber();
+	  continue;
+	}
 	QXmlStreamAttributes encryptionAttributes = xml.attributes();
 	currentEntry->setChecksumType( encryptionAttributes.value("manifest:checksum-type").toString() );
 	currentEntry->setChecksum( encryptionAttributes.value("manifest:checksum").toString() );
       } else if ( xml.name().toString() == "algorithm" ) {
+	if (currentEntry == 0) {
+	  kWarning(OooDebug) << "Got algorithm without valid file-entry at line" << xml.lineNumber();
+	  continue;
+	}
 	QXmlStreamAttributes algorithmAttributes = xml.attributes();
 	currentEntry->setAlgorithm( algorithmAttributes.value("manifest:algorithm-name").toString() );
 	currentEntry->setInitialisationVector( algorithmAttributes.value("manifest:initialisation-vector").toString() );
       } else if ( xml.name().toString() == "key-derivation" ) {
+	if (currentEntry == 0) {
+	  kWarning(OooDebug) << "Got key-derivation without valid file-entry at line" << xml.lineNumber();
+	  continue;
+	}
 	QXmlStreamAttributes kdfAttributes = xml.attributes();
 	currentEntry->setKeyDerivationName( kdfAttributes.value("manifest:key-derivation-name").toString() );
 	currentEntry->setIterationCount( kdfAttributes.value("manifest:iteration-count").toString() );
@@ -178,6 +190,10 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData )
       if ( xml.name().toString() == "manifest" ) {
 	continue;
       } else if ( xml.name().toString() == "file-entry") {
+	if (currentEntry == 0) {
+	  kWarning(OooDebug) << "Got EndElement for file-entry without valid StartElement at line" << xml.lineNumber();
+	  continue;
+	}
 	// we're finished processing that file entry
 	if ( mEntries.contains( currentEntry->fileName() ) ) {
 	  kWarning(OooDebug) << "Can't insert entry because of duplicate name:" << currentEntry->fileName();

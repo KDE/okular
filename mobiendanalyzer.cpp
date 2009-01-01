@@ -32,7 +32,7 @@ public:
          memcpy(buf,b2,len);
          return l;
     }
-    void seek(int pos) { d->reset(pos); }
+    bool seek(int pos) { d->reset(pos); return (pos==d->position()); }
 private:
     InputStream *d;
 };

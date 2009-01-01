@@ -52,10 +52,10 @@ void PDBPrivate::init()
         valid=true;
         quint16 word;
         quint32 dword;
-        device->seek(0x3c);
+        if (!device->seek(0x3c)) goto fail;
         fileType=QString::fromLatin1(device->read(8));
         
-        device->seek(0x4c);
+        if (!device->seek(0x4c)) goto fail;
         device->read((char*)&word,2);
         nrecords=qFromBigEndian(word);
         
@@ -64,6 +64,9 @@ void PDBPrivate::init()
             recordOffsets.append(qFromBigEndian(dword)); 
             device->read((char*)&dword,4);
         }
+        return;
+    fail:
+        valid=false;
 }
 
 PDB::PDB(Stream* dev) : d(new PDBPrivate)
@@ -77,7 +80,7 @@ QByteArray PDB::getRecord(int i) const
     if (i>=d->nrecords) return QByteArray();
     quint32 offset=d->recordOffsets[i];
     bool last=(i==(d->nrecords-1));
-    d->device->seek(offset);
+    if (!d->device->seek(offset)) return QByteArray();
     if (last) return d->device->readAll();
     return d->device->read(d->recordOffsets[i+1]-offset);
 }
@@ -150,24 +153,28 @@ void DocumentPrivate::parseHtmlHead(const QString& data)
 
 void DocumentPrivate::init()
 {
+    quint32 encoding;
+
     valid=pdb.isValid();
     if (!valid) return;
     QByteArray mhead=pdb.getRecord(0);
+    if (mhead.isNull()) goto fail;
     dec = Decompressor::create(mhead[1], pdb);
     if ((int)mhead[12]!=0 || (int)mhead[13]!=0) drm=true;
-    if (!dec) {
-        valid=false;
-        return;
-    }
+    if (!dec) goto fail;
+
     ntextrecords=(unsigned char)mhead[8];
     ntextrecords<<=8;
     ntextrecords+=(unsigned char)mhead[9];
-    quint32 encoding=readBELong(mhead, 28);
+    encoding=readBELong(mhead, 28);
     if (encoding==65001) isUtf=true;
     if (mhead.size()>176) parseEXTH(mhead);
     
     // try getting metadata from HTML if nothing or only title was recovered from MOBI and EXTH records
     if (metadata.size()<2 && !drm) parseHtmlHead(decodeString(dec->decompress(pdb.getRecord(1))));
+    return;
+fail:
+    valid=false;
 }
 
 void DocumentPrivate::findFirstImage() {
@@ -196,8 +203,7 @@ QString DocumentPrivate::readEXTHRecord(const QByteArray& data, quint32& offset)
 QImage DocumentPrivate::getImageFromRecord(int i) 
 {
     QByteArray rec=pdb.getRecord(i);
-    QByteArray rec2=pdb.getRecord(i-2);
-    return QImage::fromData(rec);
+    return (rec.isNull()) ? QImage() : QImage::fromData(rec);
 }
 
 
@@ -205,8 +211,8 @@ void DocumentPrivate::parseEXTH(const QByteArray& data)
 {
     // try to get name 
     if (data.size()>=92) {
-        quint32 nameoffset=readBELong(data,84);
-        quint32 namelen=readBELong(data,88);
+        qint32 nameoffset=readBELong(data,84);
+        qint32 namelen=readBELong(data,88);
         if ( (nameoffset + namelen) < data.size() ) {
             metadata[Document::Title]=decodeString(data.mid(nameoffset, namelen));
         }

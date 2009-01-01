@@ -20,7 +20,7 @@ class QFileStream : public Stream
 public:
     QFileStream(const QString& name) : d(name) { d.open(QIODevice::ReadOnly); } 
     int read(char* buf, int size) { return d.read(buf,size); }
-    void seek(int pos) { d.seek(pos); }
+    bool seek(int pos) { return d.seek(pos); }
 private:
     QFile d;
 };

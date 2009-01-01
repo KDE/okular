@@ -23,6 +23,9 @@ extern "C"
 
 bool MobiThumbnail::create(const QString &path, int width, int height, QImage &img)
 {
+    Q_UNUSED(width);
+    Q_UNUSED(height);
+    
     Mobipocket::QFileStream f(path);
     Mobipocket::Document doc(&f);
     if (!doc.isValid()) return false;

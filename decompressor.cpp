@@ -163,12 +163,18 @@ HuffdicDecompressor::HuffdicDecompressor(const PDB& p) : Decompressor(p)
     QByteArray header=p.getRecord(0);
     quint32 huff_ofs=readBELong(header,0x70);
     quint32 huff_num=readBELong(header,0x74);
+    quint32 off1,off2;
 
-    for (unsigned int i=1;i<huff_num;i++) dicts.append(p.getRecord(huff_ofs+i));
     QByteArray huff1=p.getRecord(huff_ofs);
+    if (huff1.isNull()) goto fail;
+    for (unsigned int i=1;i<huff_num;i++) {
+        QByteArray h=p.getRecord(huff_ofs+i);
+        if (h.isNull()) goto fail;
+        dicts.append(h);
+    }
 
-    quint32 off1=readBELong(huff1,16);
-    quint32 off2=readBELong(huff1,20);
+    off1=readBELong(huff1,16);
+    off2=readBELong(huff1,20);
 
     if (!huff1.startsWith("HUFF")) goto fail;
     if (!dicts[0].startsWith("CDIC")) goto fail;

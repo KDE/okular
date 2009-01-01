@@ -26,7 +26,7 @@ used with both QIODevice (for Okular generator) and InputStream for Strigi analy
 class Stream {
 public:
     virtual int read(char* buf, int size)=0;
-    virtual void seek(int pos)=0;
+    virtual bool seek(int pos)=0;
 
     QByteArray readAll();
     QByteArray read(int len);

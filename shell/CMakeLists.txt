@@ -10,6 +10,7 @@ set(okular_SRCS
    shell.cpp
 )
 
+kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-apps-okular.png")
 
 kde4_add_executable(okular ${okular_SRCS})
 

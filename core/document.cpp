@@ -680,6 +680,10 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
         m_pagesVector.clear();
         delete m_tempFile;
         m_tempFile = 0;
+
+        // TODO: emit a message telling the document is empty
+
+        openOk = false;
     }
 
     return openOk;

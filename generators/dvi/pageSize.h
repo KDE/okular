@@ -142,6 +142,7 @@ public:
   @param height_in_mm page height in mm
   */
   virtual void setPageSize(double width_in_mm, double height_in_mm);
+  using SimplePageSize::setPageSize;
 
   /** \brief Copy operator.
 

@@ -64,6 +64,11 @@ void ParagraphFormatProperty::setWritingMode( WritingMode mode )
   mWritingMode = mode;
 }
 
+bool ParagraphFormatProperty::writingModeIsRightToLeft() const
+{
+  return ( ( mWritingMode == RLTB ) || ( mWritingMode == TBRL ) || ( mWritingMode == RL ) );
+}
+
 void ParagraphFormatProperty::setTextAlignment( Qt::Alignment alignment )
 {
   mHasAlignment = true;

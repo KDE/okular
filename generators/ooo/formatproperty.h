@@ -60,6 +60,8 @@ class ParagraphFormatProperty
     void setTextAlignment( Qt::Alignment alignment );
     void setBackgroundColor( const QColor &color );
 
+    bool writingModeIsRightToLeft() const;
+
   private:
     int mPageNumber;
     WritingMode mWritingMode;

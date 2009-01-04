@@ -291,6 +291,15 @@ ParagraphFormatProperty StyleParser::parseParagraphProperty( QDomElement &parent
     alignMap.insert( "center", Qt::AlignCenter );
     alignMap.insert( "left", Qt::AlignLeft );
     alignMap.insert( "right", Qt::AlignRight );
+    alignMap.insert( "justify", Qt::AlignJustify );
+    if ( property.writingModeIsRightToLeft() ) {
+      alignMap.insert( "start", Qt::AlignRight );
+      alignMap.insert( "end", Qt::AlignLeft );
+    } else {
+      // not right to left
+      alignMap.insert( "start", Qt::AlignLeft );
+      alignMap.insert( "end", Qt::AlignRight );
+    }
   }
   if ( parent.hasAttribute( "text-align" ) ) {
     property.setTextAlignment( alignMap[ parent.attribute( "text-align", "left" ) ] );

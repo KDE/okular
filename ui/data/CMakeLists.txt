@@ -8,17 +8,17 @@ install(FILES
 
 # install annotation tool images
 install(FILES
-#   tool_hl_orange.png
-#   tool_hl_pink.png
-   tool_hl_yellow.png
-   tool_ink_green.png
-   tool_note.png
-   tool_line_okular.png
-   tool_polygon_okular.png
-   tool_ellipse_okular.png
+   tool-ellipse-okular.png
+   tool-highlighter-okular.png
+   tool-ink-okular.png
+   tool-line-okular.png
    tool-note.png
+   tool-note-okular.png
    tool-note-inline.png
-   tool-stamp.png
+   tool-note-inline-okular.png
+   tool-polygon-okular.png
+   tool-stamp-okular.png
+   tool-underline-okular.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation page images
 install(FILES

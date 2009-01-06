@@ -40,7 +40,7 @@ class Converter : public Okular::TextDocumentConverter
     bool convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format );
     bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
     bool convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
-    bool convertList( const QDomElement &element );
+    bool convertList( QTextCursor *cursor, const QDomElement &element );
     bool convertTable( const QDomElement &element );
     bool convertFrame( const QDomElement &element );
     bool convertAnnotation( QTextCursor *cursor, const QDomElement &element );

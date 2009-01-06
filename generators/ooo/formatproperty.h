@@ -173,6 +173,7 @@ class TableColumnFormatProperty
 
   private:
     double mWidth;
+    bool isValid;
 };
 
 class TableCellFormatProperty

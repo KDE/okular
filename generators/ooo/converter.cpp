@@ -195,7 +195,7 @@ bool Converter::convertText( const QDomElement &element )
       if ( !convertHeader( mCursor, child ) )
         return false;
     } else if ( child.tagName() == QLatin1String( "list" ) ) {
-      if ( !convertList( child ) )
+      if ( !convertList( mCursor, child ) )
         return false;
     } else if ( child.tagName() == QLatin1String( "table" ) ) {
       if ( !convertTable( child ) )
@@ -321,21 +321,21 @@ bool Converter::convertSpan( QTextCursor *cursor, const QDomElement &element, co
   return true;
 }
 
-bool Converter::convertList( const QDomElement &element )
+bool Converter::convertList( QTextCursor *cursor, const QDomElement &element )
 {
   const QString styleName = element.attribute( "style-name" );
   const ListFormatProperty property = mStyleInformation->listProperty( styleName );
 
   QTextListFormat format;
 
-  if ( mCursor->currentList() ) { // we are in a nested list
-    format = mCursor->currentList()->format();
+  if ( cursor->currentList() ) { // we are in a nested list
+    format = cursor->currentList()->format();
     format.setIndent( format.indent() + 1 );
   }
 
   property.apply( &format, 0 );
 
-  QTextList *list = mCursor->insertList( format );
+  QTextList *list = cursor->insertList( format );
 
   QDomElement itemChild = element.firstChildElement();
   int loop = 0;
@@ -350,17 +350,17 @@ bool Converter::convertList( const QDomElement &element )
 
         if ( childElement.tagName() == QLatin1String( "p" ) ) {
           if ( loop > 1 )
-            mCursor->insertBlock();
+            cursor->insertBlock();
 
-          prevBlock = mCursor->block();
+          prevBlock = cursor->block();
 
-          if ( !convertParagraph( mCursor, childElement, QTextBlockFormat(), true ) )
+          if ( !convertParagraph( cursor, childElement, QTextBlockFormat(), true ) )
             return false;
 
         } else if ( childElement.tagName() == QLatin1String( "list" ) ) {
-          prevBlock = mCursor->block();
+          prevBlock = cursor->block();
 
-          if ( !convertList( childElement ) )
+          if ( !convertList( cursor, childElement ) )
             return false;
         }
 
@@ -391,6 +391,7 @@ bool Converter::convertTable( const QDomElement &element )
    */
   int rowCounter = 0;
   int columnCounter = 0;
+
   QQueue<QDomNode> nodeQueue;
   enqueueNodeList( nodeQueue, element.childNodes() );
   while ( !nodeQueue.isEmpty() ) {
@@ -420,6 +421,7 @@ bool Converter::convertTable( const QDomElement &element )
    * Create table
    */
   QTextTable *table = mCursor->insertTable( rowCounter, columnCounter );
+  mCursor->movePosition( QTextCursor::End );
 
   /**
    * Fill table
@@ -450,11 +452,24 @@ bool Converter::convertTable( const QDomElement &element )
           while ( !paragraphElement.isNull() ) {
             if ( paragraphElement.tagName() == QLatin1String( "p" ) ) {
               QTextTableCell cell = table->cellAt( rowCounter, columnCounter );
-              QTextCursor cursor = cell.firstCursorPosition();
-              cursor.setBlockFormat( format );
+              // Insert a frame into the cell and work on that, so we can handle
+              // different parts of the cell having different block formatting
+              QTextCursor cellCursor = cell.lastCursorPosition();
+              QTextFrameFormat frameFormat;
+              frameFormat.setMargin( 1 ); // TODO: this shouldn't be hard coded
+              QTextFrame *frame = cellCursor.insertFrame( frameFormat );
+              QTextCursor frameCursor = frame->firstCursorPosition();
+              frameCursor.setBlockFormat( format );
 
-              if ( !convertParagraph( &cursor, paragraphElement, format ) )
+              if ( !convertParagraph( &frameCursor, paragraphElement, format ) )
                 return false;
+            } else if ( paragraphElement.tagName() == QLatin1String( "list" ) ) {
+              QTextTableCell cell = table->cellAt( rowCounter, columnCounter );
+              // insert a list into the cell
+              QTextCursor cellCursor = cell.lastCursorPosition();
+              if ( !convertList( &cellCursor, paragraphElement ) ) {
+                return false;
+              }
             }
 
             paragraphElement = paragraphElement.nextSiblingElement();
@@ -467,7 +482,11 @@ bool Converter::convertTable( const QDomElement &element )
       rowCounter++;
     } else if ( el.tagName() == QLatin1String( "table-column" ) ) {
       const StyleFormatProperty property = mStyleInformation->styleProperty( el.attribute( "style-name" ) );
-      property.applyTableColumn( &tableFormat );
+      const QString tableColumnNumColumnsRepeated = el.attribute( "number-columns-repeated", "1" );
+      int numColumnsToApplyTo = tableColumnNumColumnsRepeated.toInt();
+      for (int i = 0; i < numColumnsToApplyTo; ++i) {
+        property.applyTableColumn( &tableFormat );
+      }
     }
   }
 

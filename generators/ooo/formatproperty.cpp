@@ -370,12 +370,15 @@ void ListFormatProperty::addItem( int level, double indent )
 }
 
 TableColumnFormatProperty::TableColumnFormatProperty()
-  : mWidth( 0 )
+  : mWidth( 0 ), isValid( false )
 {
 }
 
 void TableColumnFormatProperty::apply( QTextTableFormat *format ) const
 {
+  if ( ! isValid ) {
+    return;
+  }
   QVector<QTextLength> lengths = format->columnWidthConstraints();
   lengths.append( QTextLength( QTextLength::FixedLength, mWidth ) );
 
@@ -385,6 +388,7 @@ void TableColumnFormatProperty::apply( QTextTableFormat *format ) const
 void TableColumnFormatProperty::setWidth( double width )
 {
   mWidth = width;
+  isValid = true;
 }
 
 TableCellFormatProperty::TableCellFormatProperty()

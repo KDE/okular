@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     options.add("page <number>", ki18n("Page of the document to be shown"));
     options.add("presentation", ki18n("Start the document in presentation mode"));
     options.add("unique", ki18n("\"Unique instance\" control"));
-    options.add("+[URL]", ki18n("Document to open"));
+    options.add("+[URL]", ki18n("Document to open. Specify '-' to read from stdin."));
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;
 

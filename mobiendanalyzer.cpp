@@ -67,7 +67,7 @@ MobiEndAnalyzerFactory::registerFields(FieldRegister& reg) {
 MobiEndAnalyzer::MobiEndAnalyzer(const MobiEndAnalyzerFactory* f) :factory(f) {
 }
 bool
-MobiEndAnalyzer::checkHeader(const char* header, int32_t headersize) const {
+MobiEndAnalyzer::checkHeader(const char* header, int32_t headersize) const { //krazy:exclude=typedefs
     static const char magic1[] = "TEXtREAd";
     static const char magic2[] = "BOOKMOBI";
     return headersize >= 67 && (!memcmp(header+60, magic1, 8) || !memcmp(header+60, magic2, 8));

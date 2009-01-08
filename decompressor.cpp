@@ -12,8 +12,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "mobipocket.h"
 #include "decompressor.h"
+#include "mobipocket.h"
 
 #include <QtCore/QList>
 
@@ -58,7 +58,7 @@ class BitReader
 public:
     BitReader(const QByteArray& d) : pos(0), data(d)
     {
-        data.append("\000\000\000\000");
+        data.append("\000\000\000\000");    //krazy:exclude=strings
         len=data.size()*8;
     }
     
@@ -176,8 +176,8 @@ HuffdicDecompressor::HuffdicDecompressor(const PDB& p) : Decompressor(p)
     off1=readBELong(huff1,16);
     off2=readBELong(huff1,20);
 
-    if (!huff1.startsWith("HUFF")) goto fail;
-    if (!dicts[0].startsWith("CDIC")) goto fail;
+    if (!huff1.startsWith("HUFF")) goto fail;           //krazy:exclude=strings
+    if (!dicts[0].startsWith("CDIC")) goto fail;        //krazy:exclude=strings
 
     entry_bits=readBELong(dicts[0],12);
 

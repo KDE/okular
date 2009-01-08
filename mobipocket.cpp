@@ -251,7 +251,7 @@ QString Document::text(int size) const
         whole+=d->dec->decompress(d->pdb.getRecord(i));
         if (!d->dec->isValid()) {
             d->valid=false;
-            return QString::null;
+            return QString();
         }
         if (size!=-1 && whole.size()>size) break;
     }

@@ -44,7 +44,7 @@ static KAboutData createAboutData()
          "okular_xps",
          "okular_xps",
          ki18n( "XPS Backend" ),
-         "0.2",
+         "0.3",
          ki18n( "An XPS backend" ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2007 Brad Hards\n"

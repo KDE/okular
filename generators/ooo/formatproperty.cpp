@@ -50,6 +50,8 @@ void ParagraphFormatProperty::apply( QTextFormat *format ) const
 
   format->setProperty( QTextFormat::FrameWidth, 595 );
 
+  static_cast<QTextBlockFormat*>( format )->setLeftMargin( mLeftMargin );
+
   if ( mBackgroundColor.isValid() )
     format->setBackground( mBackgroundColor );
 }
@@ -78,6 +80,11 @@ void ParagraphFormatProperty::setTextAlignment( Qt::Alignment alignment )
 void ParagraphFormatProperty::setBackgroundColor( const QColor &color )
 {
   mBackgroundColor = color;
+}
+
+void ParagraphFormatProperty::setLeftMargin( const qreal margin )
+{
+  mLeftMargin = margin;
 }
 
 TextFormatProperty::TextFormatProperty()

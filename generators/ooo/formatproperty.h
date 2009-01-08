@@ -59,6 +59,7 @@ class ParagraphFormatProperty
     void setWritingMode( WritingMode mode );
     void setTextAlignment( Qt::Alignment alignment );
     void setBackgroundColor( const QColor &color );
+    void setLeftMargin( const qreal margin );
 
     bool writingModeIsRightToLeft() const;
 
@@ -68,6 +69,7 @@ class ParagraphFormatProperty
     Qt::Alignment mAlignment;
     bool mHasAlignment;
     QColor mBackgroundColor;
+    qreal mLeftMargin;
 };
 
 class TextFormatProperty

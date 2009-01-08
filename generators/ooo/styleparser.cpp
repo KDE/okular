@@ -305,6 +305,12 @@ ParagraphFormatProperty StyleParser::parseParagraphProperty( QDomElement &parent
     property.setTextAlignment( alignMap[ parent.attribute( "text-align", "left" ) ] );
   }
 
+  const QString marginLeft = parent.attribute( "margin-left" );
+  if ( !marginLeft.isEmpty() ) {
+    qreal leftMargin = qRound( convertUnit( marginLeft ) );
+    property.setLeftMargin( leftMargin );
+  }
+
   const QString colorText = parent.attribute( "background-color" );
   if ( !colorText.isEmpty() && colorText != QLatin1String( "transparent" ) ) {
     property.setBackgroundColor( QColor( colorText ) );

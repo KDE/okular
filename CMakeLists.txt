@@ -1,5 +1,5 @@
 project(okular)
-
+KDE4_NO_ENABLE_FINAL(okular)
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )

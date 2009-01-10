@@ -90,7 +90,7 @@ namespace TextDocumentUtils {
 
             return viewport;
         }
-};
+}
 
 class TextDocumentConverterPrivate
 {

@@ -19,7 +19,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  */
-
+#ifndef UNPLUGINT_H
+#define UNPLUGINT_H 
 /*
  * This header file should be included after an #include of glib.h
  */
@@ -166,3 +167,5 @@ int _plkr_AddToTable (
 /* Add the specified "obj" to the table with key "key".  Returns
    0 if key is already in table (and doesn't add "obj"), and returns
    1 if key was added to table. */
+
+#endif

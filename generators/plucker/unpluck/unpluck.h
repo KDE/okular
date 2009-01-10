@@ -19,7 +19,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  */
-
+#ifndef UNPLUCK_H
+#define UNPLUCK_H
 /*
  * This header file should be included after an #include of glib.h
  */
@@ -409,3 +410,4 @@ int plkr_GetConfigBoolean (
     char *option_name,
     int default_value
 );
+#endif

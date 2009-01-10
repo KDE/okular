@@ -1,3 +1,6 @@
+
+#ifndef LCHMTOCIMAGEKEEPER_H
+#define LCHMTOCIMAGEKEEPER_H
 //Added by qt3to4:
 #include <QPixmap>
 /***************************************************************************
@@ -33,3 +36,4 @@ class LCHMTocImageKeeper
 	private:
 		QPixmap	m_images[LCHMBookIcons::MAX_BUILTIN_ICONS];
 };
+#endif

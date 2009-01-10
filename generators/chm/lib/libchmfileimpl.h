@@ -19,7 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.         *
  ***************************************************************************/
-
+#ifndef LCHMSEARCHPROGRESSRESULT_H
+#define LCHMSEARCHPROGRESSRESULT_H
 #include <sys/types.h>
 #include <stdint.h>
 
@@ -296,3 +297,4 @@ class LCHMFileImpl
 		//! Map url->topic
 		QMap< QString, QString >	m_url2topics;
 };
+#endif

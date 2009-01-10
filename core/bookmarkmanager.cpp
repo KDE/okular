@@ -371,4 +371,6 @@ bool BookmarkManager::isBookmarked( int page ) const
     return d->urlBookmarks.contains( page );
 }
 
+#undef foreachObserver
+
 #include "bookmarkmanager.moc"

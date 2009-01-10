@@ -47,7 +47,7 @@ TextDocumentConverter::~TextDocumentConverter()
 
 DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *document, const QTextBlock &block )
 {
-    return Utils::calculateViewport( document, block );
+    return TextDocumentUtils::calculateViewport( document, block );
 }
 
 TextDocumentGenerator* TextDocumentConverter::generator() const
@@ -71,7 +71,7 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->lock();
 #endif
-    Utils::calculatePositions( mDocument, pageNumber, start, end );
+    TextDocumentUtils::calculatePositions( mDocument, pageNumber, start, end );
 
     {
     QTextCursor cursor( mDocument );
@@ -82,7 +82,7 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
         QString text = cursor.selectedText();
         if ( text.length() == 1 ) {
             QRectF rect;
-            Utils::calculateBoundingRect( mDocument, i, i + 1, rect, pageNumber );
+            TextDocumentUtils::calculateBoundingRect( mDocument, i, i + 1, rect, pageNumber );
             if ( pageNumber == -1 )
                 text = "\n";
 
@@ -153,8 +153,8 @@ void TextDocumentGeneratorPrivate::generateLinkInfos()
         LinkInfo info;
         info.link = linkPosition.link;
 
-        Utils::calculateBoundingRect( mDocument, linkPosition.startPosition, linkPosition.endPosition,
-                                      info.boundingRect, info.page );
+        TextDocumentUtils::calculateBoundingRect( mDocument, linkPosition.startPosition, linkPosition.endPosition,
+                                                  info.boundingRect, info.page );
 
         if ( info.page >= 0 )
             mLinkInfos.append( info );
@@ -169,8 +169,8 @@ void TextDocumentGeneratorPrivate::generateAnnotationInfos()
         AnnotationInfo info;
         info.annotation = annotationPosition.annotation;
 
-        Utils::calculateBoundingRect( mDocument, annotationPosition.startPosition, annotationPosition.endPosition,
-                                      info.boundingRect, info.page );
+        TextDocumentUtils::calculateBoundingRect( mDocument, annotationPosition.startPosition, annotationPosition.endPosition,
+                                                  info.boundingRect, info.page );
 
         if ( info.page >= 0 )
             mAnnotationInfos.append( info );
@@ -188,7 +188,7 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
     for ( int i = 0; i < mTitlePositions.count(); ++i ) {
         const TitlePosition &position = mTitlePositions[ i ];
 
-        Okular::DocumentViewport viewport = Utils::calculateViewport( mDocument, position.block );
+        Okular::DocumentViewport viewport = TextDocumentUtils::calculateViewport( mDocument, position.block );
 
         QDomElement item = mDocumentSynopsis.createElement( position.title );
         item.setAttribute( "Viewport", viewport.toString() );

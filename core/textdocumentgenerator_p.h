@@ -21,9 +21,8 @@
 
 namespace Okular {
 
-class Utils
-{
-    public:
+namespace TextDocumentUtils {
+
         static void calculateBoundingRect( QTextDocument *document, int startPosition, int endPosition,
                                            QRectF &rect, int &page )
         {

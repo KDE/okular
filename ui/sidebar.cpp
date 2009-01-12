@@ -388,7 +388,7 @@ Sidebar::Sidebar( QWidget *parent )
 
     d->sideContainer = new QWidget( d->splitter );
     d->sideContainer->setMinimumWidth( 90 );
-    d->sideContainer->setMaximumWidth( 300 );
+    d->sideContainer->setMaximumWidth( 600 );
     d->vlay = new QVBoxLayout( d->sideContainer );
     d->vlay->setMargin( 0 );
 

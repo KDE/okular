@@ -416,6 +416,8 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 
 void PresentationWidget::wheelEvent( QWheelEvent * e )
 {
+    if (m_width == -1) return;
+
     // performance note: don't remove the clipping
     int div = e->delta() / 120;
     if ( div > 0 )
@@ -436,6 +438,8 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
 
 void PresentationWidget::mousePressEvent( QMouseEvent * e )
 {
+    if (m_width == -1) return;
+
     if ( m_drawingEngine )
     {
         QRect r = routeMouseDrawingEvent( e );

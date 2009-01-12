@@ -76,7 +76,7 @@ fontMap::fontMap()
     QString line;
     while ( !stream.atEnd() ) {
       line = stream.readLine().simplified();
-      if (line.at(0) == '%')
+      if (line.isEmpty() || (line.at(0) == '%'))
         continue;
 
       QString TeXName  = line.section(' ', 0, 0);

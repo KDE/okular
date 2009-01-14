@@ -125,7 +125,14 @@ QStringList Unrar::list()
 
     startSyncProcess( QStringList() << "lb" << mFileName );
 
-    return helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts ) );
+    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts ) );
+    QStringList newList;
+    Q_FOREACH ( const QString &f, listFiles ) {
+        if ( QFile::exists( mTempDir->name() + f ) ) {
+            newList.append( f );
+        }
+    }
+    return newList;
 }
 
 QByteArray Unrar::contentOf( const QString &fileName ) const

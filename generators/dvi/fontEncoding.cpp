@@ -72,10 +72,10 @@ fontEncoding::fontEncoding(const QString &encName)
 #endif
 
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
-    QStringList glyphNameList = fileContent.split('/', QString::SkipEmptyParts);
+    const QStringList glyphNameList = fileContent.split('/', QString::SkipEmptyParts);
 
     int i = 0;
-    for ( QStringList::Iterator it = glyphNameList.begin(); (it != glyphNameList.end())&&(i<256); ++it ) {
+    for ( QStringList::ConstIterator it = glyphNameList.constBegin(); (it != glyphNameList.constEnd())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplified();
 #ifdef DEBUG_FONTENC
       kDebug(kvs::dvi) << i << ": " << glyphNameVector[i];

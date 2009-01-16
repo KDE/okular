@@ -813,6 +813,7 @@ bool PDFGenerator::print( QPrinter& printer )
     dummy.setFullPage( true );
     dummy.setOrientation( printer.orientation() );
     dummy.setPageSize( printer.pageSize() );
+    dummy.setPaperSize( printer.paperSize( QPrinter::Millimeter ), QPrinter::Millimeter );
     int width = dummy.width();
     int height = dummy.height();
 

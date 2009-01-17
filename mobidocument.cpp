@@ -76,6 +76,8 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
     QMapIterator<int,QString> it(anchorPositions);
     while (it.hasNext()) {
       it.next();
+      // link pointing outside the document
+      if ( (it.key()+offset) >= ret.size()) continue;
       int fixedpos=outsideTag(ret, it.key()+offset);
       ret.insert(fixedpos,QString("<a name=\"")+it.value()+QString("\"/>"));
       offset+=12+it.value().size();

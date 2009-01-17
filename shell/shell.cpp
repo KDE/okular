@@ -20,6 +20,7 @@
 #include "shell.h"
 
 // qt/kde includes
+#include <qdesktopwidget.h>
 #include <qtimer.h>
 #include <QtDBus/qdbusconnection.h>
 #include <kaction.h>
@@ -94,11 +95,6 @@ void Shell::init()
   connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
 
   readSettings();
-
-  if (!KGlobal::config()->hasGroup("MainWindow"))
-  {
-    showMaximized();
-  }
 
   if (m_args && m_args->isSet("unique") && m_args->count() == 1)
   {
@@ -313,6 +309,11 @@ void Shell::slotShowMenubar()
         menuBar()->show();
     else
         menuBar()->hide();
+}
+
+QSize Shell::sizeHint() const
+{
+    return QApplication::desktop()->availableGeometry( this ).size() * 0.75;
 }
 
 #include "shell.moc"

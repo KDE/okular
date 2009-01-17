@@ -47,6 +47,8 @@ public:
    * Default Destructor
    */
   virtual ~Shell();
+
+  QSize sizeHint() const;
 public slots:
   void slotQuit();
 

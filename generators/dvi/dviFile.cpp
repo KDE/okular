@@ -235,6 +235,8 @@ void dvifile::prepare_pages()
 #ifdef DEBUG_DVIFILE
   kDebug(kvs::dvi) << "prepare_pages";
 #endif
+  if (total_pages == 0)
+    return;
 
   if (page_offset.resize(total_pages+1) == false) {
     kError(kvs::dvi) << "No memory for page list!" << endl;
@@ -300,6 +302,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
 
   tn_table.clear();
 
+  total_pages = 0;
   process_preamble();
   find_postamble();
   read_postamble();

@@ -86,7 +86,6 @@ void Shell::init()
     // and integrate the part's GUI with the shell's
     setupGUI(Keys | ToolBar | Save);
     createGUI(m_part);
-    m_showToolBarAction = static_cast<KToggleAction*>(toolBarMenuAction());
     m_doc = qobject_cast<KDocumentViewer*>(m_part);
   }
 
@@ -277,12 +276,10 @@ void Shell::slotUpdateFullScreen()
 {
     if(m_fullScreenAction->isChecked())
     {
-      m_menuBarWasShown = m_showMenuBarAction->isChecked();
-      m_showMenuBarAction->setChecked(false);
+      m_menuBarWasShown = !menuBar()->isHidden();
       menuBar()->hide();
       
-      m_toolBarWasShown = m_showToolBarAction->isChecked();
-      m_showToolBarAction->setChecked(false);
+      m_toolBarWasShown = !toolBar()->isHidden();
       toolBar()->hide();
 
       KToggleFullScreenAction::setFullScreen(this, true);      
@@ -291,12 +288,10 @@ void Shell::slotUpdateFullScreen()
     {
       if (m_menuBarWasShown)
       {
-        m_showMenuBarAction->setChecked(true);
         menuBar()->show();
       }
       if (m_toolBarWasShown)
       {
-        m_showToolBarAction->setChecked(true);
         toolBar()->show();
       }
       KToggleFullScreenAction::setFullScreen(this, false);      
@@ -305,7 +300,7 @@ void Shell::slotUpdateFullScreen()
 
 void Shell::slotShowMenubar()
 {
-    if ( m_showMenuBarAction->isChecked() )
+    if ( menuBar()->isHidden() )
         menuBar()->show();
     else
         menuBar()->hide();

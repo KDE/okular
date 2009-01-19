@@ -100,7 +100,6 @@ private:
   KAction* m_printAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
-  KToggleAction* m_showToolBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   KUrl m_openUrl;
 };

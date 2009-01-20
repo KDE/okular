@@ -218,7 +218,7 @@ void Generator::generatePixmap( PixmapRequest *request )
     Q_D( Generator );
     d->mPixmapReady = false;
 
-    if ( hasFeature( Threaded ) )
+    if ( request->asynchronous() && hasFeature( Threaded ) )
     {
         d->pixmapGenerationThread()->startGeneration( request, !request->page()->isBoundingBoxKnown() );
 

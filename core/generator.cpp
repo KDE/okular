@@ -574,8 +574,8 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
 
 QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
-    QString s = QString( "%1 PixmapRequest (id: %2) (%3x%4), prio %5, pageNo %6" )
-        .arg( QString( req.asynchronous() ? "Async" : "Sync" ) )
+    QString s = QString( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
+        .arg( QString( req.asynchronous() ? "async" : "sync" ) )
         .arg( req.id() )
         .arg( req.width() )
         .arg( req.height() )

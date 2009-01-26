@@ -26,6 +26,8 @@
 
 #include "unrarflavours.h"
 
+#include <memory>
+
 struct UnrarHelper
 {
     UnrarHelper();
@@ -145,6 +147,18 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
         return QByteArray();
 
     return file.readAll();
+}
+
+QIODevice* Unrar::createDevice( const QString &fileName ) const
+{
+    if ( !isSuitableVersionAvailable() )
+        return 0;
+
+    std::auto_ptr< QFile> file( new QFile( mTempDir->name() + fileName ) );
+    if ( !file->open( QIODevice::ReadOnly ) )
+        return 0;
+
+    return file.release();
 }
 
 bool Unrar::isAvailable()

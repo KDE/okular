@@ -48,6 +48,11 @@ class Unrar : public QObject
          */
         QByteArray contentOf( const QString &fileName ) const;
 
+        /**
+         * Returns a new device for reading the file with the given name.
+         */
+        QIODevice* createDevice( const QString &fileName ) const;
+
         static bool isAvailable();
         static bool isSuitableVersionAvailable();
 

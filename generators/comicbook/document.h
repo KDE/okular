@@ -15,6 +15,7 @@
 class KArchiveDirectory;
 class KZip;
 class QImage;
+class QSize;
 class Unrar;
 
 namespace ComicBook {
@@ -32,6 +33,7 @@ class Document
         QStringList pageTitles() const;
 
         QImage pageImage( int page ) const;
+        QSize pageSize( int page ) const;
 
         QString lastErrorString() const;
 

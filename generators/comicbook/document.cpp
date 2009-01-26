@@ -10,10 +10,13 @@
 #include "document.h"
 
 #include <QtGui/QImage>
+#include <QtGui/QImageReader>
 
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kzip.h>
+
+#include <memory>
 
 #include "unrar.h"
 #include "qnatsort.h"
@@ -161,6 +164,34 @@ QImage Document::pageImage( int page ) const
     }
 
     return QImage();
+}
+
+QSize Document::pageSize( int page ) const
+{
+    std::auto_ptr< QIODevice > dev;
+
+    if ( mZip ) {
+        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mZipDir->entry( mPageMap[ page ] ) );
+        if ( entry ) {
+            dev.reset( entry->createDevice() );
+        }
+
+    } else {
+        dev.reset( mUnrar->createDevice( mPageMap[ page ] ) );
+    }
+
+    if ( dev.get() ) {
+        QImageReader reader( dev.get() );
+        if ( reader.canRead() ) {
+            QSize s = reader.size();
+            if ( s.isNull() ) {
+                s = reader.read().size();
+            }
+            return s;
+        }
+    }
+
+    return QSize();
 }
 
 QString Document::lastErrorString() const

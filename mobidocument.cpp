@@ -6,9 +6,9 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-#include "mobidocument.h"
-#include "mobipocket.h"
-#include "qfilestream.h"
+#include "okular/mobidocument.h"
+#include "lib/mobipocket.h"
+#include "lib/qfilestream.h"
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
 #include <kdebug.h>
@@ -54,12 +54,7 @@ int outsideTag(const QString& data, int pos)
 
 QString MobiDocument::fixMobiMarkup(const QString& data) 
 {
-    static QRegExp imgs("<img.*recindex=\"([\\d]*)\".*>", Qt::CaseInsensitive);
-    
-    imgs.setMinimal(true);
     QString ret=data;
-    ret.replace(imgs,"<img src=\"pdbrec:/\\1\">");
-    //ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
     QMap<int,QString> anchorPositions;
     static QRegExp anchors("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}", Qt::CaseInsensitive);
     int pos=0;
@@ -71,19 +66,27 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
 	pos+=anchors.matchedLength();
     }
 
-    // put anchors in all link destinations
+    // put HTML anchors in all link destinations
     int offset=0;
     QMapIterator<int,QString> it(anchorPositions);
     while (it.hasNext()) {
       it.next();
-      // link pointing outside the document
+      // link pointing outside the document, ignore
       if ( (it.key()+offset) >= ret.size()) continue;
       int fixedpos=outsideTag(ret, it.key()+offset);
-      ret.insert(fixedpos,QString("<a name=\"")+it.value()+QString("\"/>"));
-      offset+=12+it.value().size();
+      ret.insert(fixedpos,QString("<a name=\"")+it.value()+QString("\">&nbsp;</a>"));
+      // inserting anchor shifts all offsets after the anchor
+      offset+=21+it.value().size();
     }
 
     // replace links referencing filepos with normal internal links
     ret.replace(anchors,"<a href=\"#\\1\"");
+    // Mobipocket uses strange variang of IMG tags: <img recindex="3232"> where recindex is number of 
+    // record containing image
+    static QRegExp imgs("<img.*recindex=\"([\\d]*)\".*>", Qt::CaseInsensitive);
+    
+    imgs.setMinimal(true);
+    ret.replace(imgs,"<img src=\"pdbrec:/\\1\">");
+    ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
     return ret;
 }

@@ -12,8 +12,8 @@
 #include <okular/core/textdocumentgenerator.h>
 #include <okular/core/document.h>
 
-#include "mobidocument.h"
-#include "mobipocket.h"
+#include "okular/mobidocument.h"
+#include "lib/mobipocket.h"
 
 
 namespace Mobi {

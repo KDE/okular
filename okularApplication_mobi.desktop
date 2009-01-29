@@ -4,6 +4,7 @@ Terminal=false
 Name=Okular
 GenericName=Document Viewer
 GenericName[ga]=Amharcán Cáipéisí
+GenericName[nl]=Documentviewer
 Exec=okular %U %i -caption "%c"
 Icon=okular
 Type=Application

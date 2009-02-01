@@ -26,8 +26,8 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Enrico Ros\n"
               "(C) 2005 Piotr Szymanski\n"
-              "(C) 2004-2008 Albert Astals Cid\n"
-              "(C) 2006-2008 Pino Toscano"),
+              "(C) 2004-2009 Albert Astals Cid\n"
+              "(C) 2006-2009 Pino Toscano"),
         KLocalizedString(),
         "http://okular.kde.org"
     );

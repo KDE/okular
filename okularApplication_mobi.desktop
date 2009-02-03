@@ -3,6 +3,7 @@ MimeType=application/x-mobipocket-ebook;
 Terminal=false
 Name=Okular
 GenericName=Document Viewer
+GenericName[et]=Dokumentide näitaja
 GenericName[fr]=Visonneuse de document
 GenericName[ga]=Amharcán Cáipéisí
 GenericName[nl]=Documentviewer

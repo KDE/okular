@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Mobipocket document
+Name[et]=Mobipocketi dokument
 Name[fr]=Document mobipocket
 Name[ga]=Cáipéis Mobipocket
 Name[nl]=Mobipocket-document
@@ -10,6 +11,7 @@ Name[sv]=Mobipocket-dokument
 Name[tr]=Mobipocket belgesi
 Name[uk]=Документ Mobipocket
 Comment=Mobipocket backend for Okular
+Comment[et]=Okulari Mobipocketi taustaprogramm
 Comment[fr]=Moteur Mobipocket pour Okular
 Comment[ga]=Inneall Mobipocket le haghaidh Okular
 Comment[nl]=Mobipocket-backend voor Okular

@@ -125,8 +125,8 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     if (!m_syncGen)
     {
         m_syncGen = new KHTMLPart();
-        connect (m_syncGen,SIGNAL(completed()),this,SLOT(slotCompleted()));
     }
+    disconnect( m_syncGen, 0, this, 0 );
 
     for (int i = 0; i < m_pageUrl.count(); ++i)
     {
@@ -134,6 +134,8 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
     }
+
+    connect( m_syncGen, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
 
     return true;
 }
@@ -167,7 +169,9 @@ void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 
     QEventLoop loop;
     connect( m_syncGen, SIGNAL( completed() ), &loop, SLOT( quit() ) );
-    loop.exec();
+    // discard any user input, otherwise it breaks the "synchronicity" of this
+    // function
+    loop.exec( QEventLoop::ExcludeUserInputEvents );
 }
 
 void CHMGenerator::slotCompleted()

@@ -654,6 +654,12 @@ bool KDjVu::openFile( const QString & fileName )
     if ( !d->m_djvu_document ) return false;
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );
+    if ( ddjvu_document_decoding_error( d->m_djvu_document ) )
+    {
+        ddjvu_document_release( d->m_djvu_document );
+        d->m_djvu_document = 0;
+        return false;
+    }
 
     kDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
     int numofpages = ddjvu_document_get_pagenum( d->m_djvu_document );

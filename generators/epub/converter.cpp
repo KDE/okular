@@ -149,12 +149,12 @@ QTextDocument* Converter::convert( const QString &fileName )
       // insert block for links
       _cursor->insertBlock();
 
-      QString link(epub_it_get_curr_url(it));
+      QString link = QString::fromUtf8(epub_it_get_curr_url(it));
 
       // Pass on all the anchor since last block
       const QTextBlock &before = _cursor->block();
       mSectionMap.insert(link, before);
-      _cursor->insertHtml(epub_it_get_curr(it));
+      _cursor->insertHtml(QString::fromUtf8(epub_it_get_curr(it)));
 
       // Add anchors to hashes
       _handle_anchors(before, link);
@@ -180,7 +180,8 @@ QTextDocument* Converter::convert( const QString &fileName )
   if (tit) {
     do {
       if (epub_tit_curr_valid(tit)) {
-        char *link = epub_tit_get_curr_link(tit);
+        char *clink = epub_tit_get_curr_link(tit);
+        QString link = QString::fromUtf8(clink);
         char *label = epub_tit_get_curr_label(tit);
         QTextBlock block = mTextDocument->begin(); // must point somewhere
         
@@ -188,7 +189,7 @@ QTextDocument* Converter::convert( const QString &fileName )
           block = mSectionMap.value(link);
         } else { // load missing resource
           char *data;
-          int size = epub_get_data(mTextDocument->getEpub(), link, &data);
+          int size = epub_get_data(mTextDocument->getEpub(), clink, &data);
           if (size > 0) {
             _cursor->insertBlock();
 
@@ -201,7 +202,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                                          QUrl(link), image); 
               _cursor->insertImage(link);
             } else {
-              _cursor->insertHtml(data);
+              _cursor->insertHtml(QString::fromUtf8(data));
               // Add anchors to hashes
               _handle_anchors(block, link);
             }
@@ -216,16 +217,16 @@ QTextDocument* Converter::convert( const QString &fileName )
         }
         
         if (block.isValid()) { // be sure we actually got a block
-          emit addTitle(epub_tit_get_curr_depth(tit), 
-                        label,
+          emit addTitle(epub_tit_get_curr_depth(tit),
+                        QString::fromUtf8(label),
                         block);
           
         } else {
           qDebug() << "Error: no block found for "<< link << "\n";
         }
                  
-        if (link)
-          free(link);
+        if (clink)
+          free(clink);
         
         if (label)
           free(label);

@@ -169,6 +169,7 @@ void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 
     QEventLoop loop;
     connect( m_syncGen, SIGNAL( completed() ), &loop, SLOT( quit() ) );
+    connect( m_syncGen, SIGNAL( canceled( QString ) ), &loop, SLOT( quit() ) );
     // discard any user input, otherwise it breaks the "synchronicity" of this
     // function
     loop.exec( QEventLoop::ExcludeUserInputEvents );

@@ -4,6 +4,7 @@ Terminal=false
 Name=Okular
 Name[x-test]=xxOkularxx
 GenericName=Document Viewer
+GenericName[es]=Visor de documentos
 GenericName[et]=Dokumentide näitaja
 GenericName[fr]=Visonneuse de document
 GenericName[ga]=Amharcán Cáipéisí

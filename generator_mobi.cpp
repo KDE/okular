@@ -15,13 +15,13 @@
 static KAboutData createAboutData()
 {
   KAboutData aboutData(
-                       "okular_epub",
-                       "okular_epub",
+                       "okular_mobi",
+                       "okular_mobi",
                        ki18n("Mobipocket Backend"),
                        "0.1",
-                       ki18n("An mobipocket backend"),
+                       ki18n("A mobipocket backend"),
                        KAboutData::License_GPL,
-                       ki18n("© 2008 Jakub Stachowski")
+                       ki18n("© 2008-2009 Jakub Stachowski")
                        );
   aboutData.addAuthor(ki18n("Jakub Stachowski"), KLocalizedString(),
                       "qbast@go2.pl");

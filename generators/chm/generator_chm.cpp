@@ -95,7 +95,8 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     foreach(const LCHMParsedEntry &e, topics)
     {
         QDomElement item = m_docSyn.createElement(e.name);
-        item.setAttribute("ViewportName", e.urls.first());
+        if (!e.urls.isEmpty())
+             item.setAttribute("ViewportName", e.urls.first());
         item.setAttribute("Icon", e.imageid);
         if (e.indent == 0) m_docSyn.appendChild(item);
         else lastIndentElement[e.indent - 1].appendChild(item);
@@ -106,6 +107,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     int pageNum = 0;
     foreach(const LCHMParsedEntry &e, topics)
     {
+        if (e.urls.isEmpty())
+            continue;
+
         const QString &url = e.urls.first();
         int pos = url.indexOf ('#');
         QString tmpUrl = pos == -1 ? url : url.left(pos);

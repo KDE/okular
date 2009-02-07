@@ -526,14 +526,15 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
 
         // update scrollview's contents size (sets scrollbars limits)
         newHeight -= KDialog::spacingHint();
+        const int oldHeight = q->widget()->height();
+        const int oldYCenter = q->verticalScrollBar()->value() + q->viewport()->height() / 2;
         q->widget()->resize( newWidth, newHeight );
 
         // enable scrollbar when there's something to scroll
         q->verticalScrollBar()->setEnabled( q->viewport()->height() < newHeight );
 
-        // ensure selected item remains visible
-        if ( m_selected )
-            q->ensureVisible( 0, m_selected->pos().y() + m_selected->height() / 2, 0, q->viewport()->height() / 2 );
+        // ensure that what was visibile before remains visible now
+        q->ensureVisible( 0, int( (qreal)oldYCenter * q->widget()->height() / oldHeight ), 0, q->viewport()->height() / 2 );
     }
     else if ( e->size().height() <= e->oldSize().height() )
         return;

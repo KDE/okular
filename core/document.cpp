@@ -1813,6 +1813,7 @@ void Document::closeDocument()
     d->m_viewportHistory.append( DocumentViewport() );
     d->m_viewportIterator = d->m_viewportHistory.begin();
     d->m_allocatedPixmapsTotalMemory = 0;
+    d->m_allocatedTextPagesFifo.clear();
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
     AudioPlayer::instance()->d->m_currentDocument = KUrl();

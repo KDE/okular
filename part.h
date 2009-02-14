@@ -133,6 +133,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
+        void slotFindPrev();
         void slotSaveFileAs();
         void slotSaveCopyAs();
         void slotGetNewStuff();
@@ -227,6 +228,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_selectAll;
         KAction *m_find;
         KAction *m_findNext;
+        KAction *m_findPrev;
         KAction *m_saveAs;
         KAction *m_saveCopyAs;
         KAction *m_printPreview;

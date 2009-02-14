@@ -434,6 +434,9 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
     m_findNext->setEnabled( false );
 
+    m_findPrev = KStandardAction::findPrev( this, SLOT( slotFindPrev() ), ac );
+    m_findPrev->setEnabled( false );
+
     m_saveCopyAs = KStandardAction::saveAs( this, SLOT( slotSaveCopyAs() ), ac );
     m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
     ac->addAction( "file_save_copy", m_saveCopyAs );
@@ -878,6 +881,7 @@ bool Part::openFile()
     // update one-time actions
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
+    m_findPrev->setEnabled( ok && canSearch );
     m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
     m_saveCopyAs->setEnabled( ok );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
@@ -991,6 +995,7 @@ bool Part::closeUrl()
     slotHidePresentation();
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
+    m_findPrev->setEnabled( false );
     m_saveAs->setEnabled( false );
     m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );
@@ -1391,6 +1396,15 @@ void Part::slotFindNext()
         slotShowFindBar();
     else
         m_findBar->findNext();
+}
+
+
+void Part::slotFindPrev()
+{
+    if (m_findBar->isHidden())
+        slotShowFindBar();
+    else
+        m_findBar->findPrev();
 }
 
 

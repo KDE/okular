@@ -134,7 +134,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QTime *m_presentationTimer;
         QList<Okular::RecordedPresentationSlide> m_recording;
         void saveRecordedPresentation();
-        void saveAsKate(QFile &filename);
         void saveAsOggKate(QFile &filename);
 
         // misc stuff

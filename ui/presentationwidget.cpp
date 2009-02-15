@@ -402,58 +402,10 @@ static QString elapsedTimeToKateTime(int msec)
 
 void PresentationWidget::saveRecordedPresentation()
 {
-    QString filename = KFileDialog::getSaveFileName(KUrl(), "*.kate *.ogg" , this, QString(i18n("Save recording as")));
+    QString filename = KFileDialog::getSaveFileName(KUrl(), "*.ogg" , this, QString(i18n("Save recording as")));
     if (filename != "") {
-        if (filename.endsWith(".kate")) {
-            QFile kateFile(filename, this);
-            saveAsKate(kateFile);
-        } else if (filename.endsWith(".ogg")) {
-            QFile kateFile(filename, this);
-            saveAsOggKate(kateFile);
-        }
-        else {
-            KMessageBox::error( this, i18n( "Could not determine format to save to from filename, saving as Ogg/Kate") );
-            QFile kateFile(filename, this);
-            saveAsOggKate(kateFile);
-        }
-    }
-}
-
-
-void PresentationWidget::saveAsKate(QFile &kateFile)
-{
-    if (!kateFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        KMessageBox::error( this, i18n( "Failed to open file for writing") );
-        return;
-    }
-    bool ok = kateFile.write(QByteArray("kate {\n\n"));
-    ok &= kateFile.write(QByteArray("  defs {\n"));
-    ok &= kateFile.write(QByteArray("      define region \"fullscreen\" { percent position 0 0 size 100 100 }\n"));
-    ok &= kateFile.write(QByteArray("  }\n\n"));
-
-    // the last slide display is faked - its really the time the last real slide disappeared.
-    for(int i = 0; i < m_recording.size() -1; ++i) {
-        const Okular::RecordedPresentationSlide *slide = &(m_recording.at(i));
-        QByteArray slideFileName = QDir::tempPath().toUtf8() + "/slide" + QByteArray::number(slide->slideNumber) + ".png";
-        ok &= slide->pixmap.save(slideFileName);
-        ok &= kateFile.write(QByteArray("  event {\n"));
-        const Okular::RecordedPresentationSlide *nextSlide = &(m_recording.at(i+1));
-        // 0:00:05 --> 0:00:10
-        QString timeLine = QString("    %1 --> ").arg(elapsedTimeToKateTime(slide->timeDisplayed));
-        timeLine += QString("%1\n").arg(elapsedTimeToKateTime(nextSlide->timeDisplayed));
-        ok &= kateFile.write(timeLine.toUtf8());
-        ok &= kateFile.write(QByteArray("    region \"fullscreen\"\n"));
-        QByteArray bitmapLine("    bitmap { source \"");
-        bitmapLine += slideFileName;
-        bitmapLine += "\" }\n";
-        ok &= kateFile.write(bitmapLine);
-        ok &= kateFile.write(QByteArray("  }\n\n"));
-    }
-
-    ok &= kateFile.write(QByteArray("}"));
-    kateFile.close();
-    if (!ok) {
-        KMessageBox::error( this, i18n( "Failed to write to file") );
+        QFile kateFile(filename, this);
+        saveAsOggKate(kateFile);
     }
 }
 

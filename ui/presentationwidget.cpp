@@ -402,8 +402,7 @@ static QString elapsedTimeToKateTime(int msec)
 
 void PresentationWidget::saveRecordedPresentation()
 {
-    // TODO: why does the glob patterns string need i18n ?
-    QString filename = KFileDialog::getSaveFileName(KUrl(), i18n("*.kate *.ogg") , this, QString(i18n("Save recording as")));
+    QString filename = KFileDialog::getSaveFileName(KUrl(), "*.kate *.ogg" , this, QString(i18n("Save recording as")));
     if (filename != "") {
         if (filename.endsWith(".kate")) {
             QFile kateFile(filename, this);

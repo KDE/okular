@@ -38,16 +38,16 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     QLabel * label = new QLabel( i18nc( "Find text", "F&ind:" ), this );
     lay->addWidget( label );
 
-    m_text = new SearchLineEdit( this, document );
-    m_text->setSearchCaseSensitivity( Qt::CaseInsensitive );
-    m_text->setSearchMinimumLength( 0 );
-    m_text->setSearchType( Okular::Document::NextMatch );
-    m_text->setSearchId( PART_SEARCH_ID );
-    m_text->setSearchColor( qRgb( 255, 255, 64 ) );
-    m_text->setSearchMoveViewport( true );
-    m_text->setToolTip( i18n( "Text to search for" ) );
-    label->setBuddy( m_text );
-    lay->addWidget( m_text );
+    m_search = new SearchLineWidget( this, document );
+    m_search->lineEdit()->setSearchCaseSensitivity( Qt::CaseInsensitive );
+    m_search->lineEdit()->setSearchMinimumLength( 0 );
+    m_search->lineEdit()->setSearchType( Okular::Document::NextMatch );
+    m_search->lineEdit()->setSearchId( PART_SEARCH_ID );
+    m_search->lineEdit()->setSearchColor( qRgb( 255, 255, 64 ) );
+    m_search->lineEdit()->setSearchMoveViewport( true );
+    m_search->lineEdit()->setToolTip( i18n( "Text to search for" ) );
+    label->setBuddy( m_search );
+    lay->addWidget( m_search );
 
     QPushButton * findNextBtn = new QPushButton( KIcon( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
@@ -83,7 +83,7 @@ FindBar::~FindBar()
 
 QString FindBar::text() const
 {
-    return m_text->text();
+    return m_search->lineEdit()->text();
 }
 
 Qt::CaseSensitivity FindBar::caseSensitivity() const
@@ -94,31 +94,31 @@ Qt::CaseSensitivity FindBar::caseSensitivity() const
 void FindBar::focusAndSetCursor()
 {
     setFocus();
-    m_text->selectAll();
-    m_text->setFocus();
+    m_search->lineEdit()->selectAll();
+    m_search->lineEdit()->setFocus();
 }
 
 void FindBar::findNext()
 {
-    m_text->setSearchType( Okular::Document::NextMatch );
-    m_text->findNext();
+    m_search->lineEdit()->setSearchType( Okular::Document::NextMatch );
+    m_search->lineEdit()->findNext();
 }
 
 void FindBar::findPrev()
 {
-    m_text->setSearchType( Okular::Document::PreviousMatch );
-    m_text->findPrev();
+    m_search->lineEdit()->setSearchType( Okular::Document::PreviousMatch );
+    m_search->lineEdit()->findPrev();
 }
 
 void FindBar::caseSensitivityChanged()
 {
-    m_text->setSearchCaseSensitivity( m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );
-    m_text->restartSearch();
+    m_search->lineEdit()->setSearchCaseSensitivity( m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    m_search->lineEdit()->restartSearch();
 }
 
 void FindBar::fromCurrentPageChanged()
 {
-    m_text->setSearchFromStart( !m_fromCurrentPageAct->isChecked() );
+    m_search->lineEdit()->setSearchFromStart( !m_fromCurrentPageAct->isChecked() );
 }
 
 #include "findbar.moc"

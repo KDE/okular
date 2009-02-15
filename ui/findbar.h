@@ -13,7 +13,7 @@
 #include <qwidget.h>
 
 class QAction;
-class SearchLineEdit;
+class SearchLineWidget;
 
 namespace Okular {
 class Document;
@@ -42,7 +42,7 @@ class FindBar
         void fromCurrentPageChanged();
 
     private:
-        SearchLineEdit * m_text;
+        SearchLineWidget * m_search;
         QAction * m_caseSensitiveAct;
         QAction * m_fromCurrentPageAct;
 };

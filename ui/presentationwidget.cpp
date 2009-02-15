@@ -384,22 +384,6 @@ void PresentationWidget::recordPresentation()
 }
 
 
-static QString elapsedTimeToKateTime(int msec)
-{
-    int allSecs = msec / 1000;
-    int hours = allSecs / 3600;
-    int minutes = (allSecs / 60) - (hours * 60);
-    int seconds = allSecs - ( (hours * 3600) + (minutes * 60) );
-    int frac = msec % 1000;
-    QString kateTime = QString("%1:").arg(QString::number(hours), 2, QChar('0'));
-    kateTime += QString("%1:").arg(QString::number(minutes), 2, QChar('0'));
-    kateTime += QString("%1").arg(QString::number(seconds), 2, QChar('0'));
-    kateTime += ".";
-    kateTime += QString("%1").arg(QString::number(frac), 3, QChar('0'));
-    return kateTime;
-}
-
-
 void PresentationWidget::saveRecordedPresentation()
 {
     QString filename = KFileDialog::getSaveFileName(KUrl(), "*.ogg" , this, QString(i18n("Save recording as")));
@@ -487,7 +471,9 @@ void PresentationWidget::saveAsOggKate(QFile &kateFile)
 
     // init state, info, etc
     kate_info_init(&ki);
-    kate_info_set_language(&ki, "en"); // TODO
+    QString lang, dummy;
+    KLocale::splitLocale( KGlobal::locale()->language(), lang, dummy, dummy, dummy );
+    kate_info_set_language(&ki, lang.toUtf8().constData());
     kate_info_set_category(&ki, "K-SLD-I");
     kate_comment_init(&kc);
     kate_encode_init(&k,&ki);

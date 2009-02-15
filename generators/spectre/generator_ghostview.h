@@ -10,8 +10,8 @@
 #ifndef _OKULAR_GENERATOR_GHOSTVIEW_H_
 #define _OKULAR_GENERATOR_GHOSTVIEW_H_
 
-#include <okular/core/generator.h>
-#include <okular/interfaces/configinterface.h>
+#include "core/generator.h"
+#include "interfaces/configinterface.h"
 
 #include <libspectre/spectre.h>
 

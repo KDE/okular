@@ -25,7 +25,7 @@
 #include <dom/dom_html.h>
 
 #include <okular/core/action.h>
-#include <okular/core/observer.h> //for PAGEVIEW_ID
+#include "core/observer.h" //for PAGEVIEW_ID
 #include <okular/core/page.h>
 #include <okular/core/textpage.h>
 #include <okular/core/utils.h>

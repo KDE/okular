@@ -21,6 +21,7 @@
 #include <qimage.h>
 #include <qlabel.h>
 #include <qpainter.h>
+#include <qprocess.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
 #include <qtooltip.h>
@@ -39,6 +40,12 @@
 #include <kselectaction.h>
 #include <kshortcut.h>
 #include <kdialog.h>
+#include <kfiledialog.h>
+#include <qtemporaryfile.h>
+
+#ifdef HAVE_KATE
+#include <kate/oggkate.h>
+#endif
 
 // system includes
 #include <stdlib.h>
@@ -127,6 +134,7 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
+    m_presentationIsBeingRecorded( false ), m_presentationTimer( 0 ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_screenSelect( 0 ), m_blockNotifications( false ), m_inBlackScreenMode( false )
 {
@@ -239,6 +247,18 @@ PresentationWidget::~PresentationWidget()
 
     // stop the audio playbacks
     Okular::AudioPlayer::instance()->stopPlaybacks();
+
+    // finish up the recording
+    if ( m_presentationTimer ) {
+        Okular::RecordedPresentationSlide slide;
+        slide.slideNumber = 0;
+        slide.timeDisplayed = m_presentationTimer->elapsed();
+        slide.pixmap = QPixmap();
+        m_recording.append(slide);
+        delete m_presentationTimer;
+        saveRecordedPresentation();
+    }
+
 
     // remove our highlights
     if ( m_searchBar )
@@ -354,6 +374,269 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
         return qAbs(pageNumber - m_frameIndex) <= 1;
     }
 }
+
+
+void PresentationWidget::recordPresentation()
+{
+    m_presentationIsBeingRecorded = true;
+    m_presentationTimer = new QTime;
+    m_presentationTimer->start();
+}
+
+
+static QString elapsedTimeToKateTime(int msec)
+{
+    int allSecs = msec / 1000;
+    int hours = allSecs / 3600;
+    int minutes = (allSecs / 60) - (hours * 60);
+    int seconds = allSecs - ( (hours * 3600) + (minutes * 60) );
+    int frac = msec % 1000;
+    QString kateTime = QString("%1:").arg(QString::number(hours), 2, QChar('0'));
+    kateTime += QString("%1:").arg(QString::number(minutes), 2, QChar('0'));
+    kateTime += QString("%1").arg(QString::number(seconds), 2, QChar('0'));
+    kateTime += ".";
+    kateTime += QString("%1").arg(QString::number(frac), 3, QChar('0'));
+    return kateTime;
+}
+
+
+void PresentationWidget::saveRecordedPresentation()
+{
+    // TODO: why does the glob patterns string need i18n ?
+    QString filename = KFileDialog::getSaveFileName(KUrl(), i18n("*.kate *.ogg") , this, QString(i18n("Save recording as")));
+    if (filename != "") {
+        if (filename.endsWith(".kate")) {
+            QFile kateFile(filename, this);
+            saveAsKate(kateFile);
+        } else if (filename.endsWith(".ogg")) {
+            QFile kateFile(filename, this);
+            saveAsOggKate(kateFile);
+        }
+        else {
+            KMessageBox::error( this, i18n( "Could not determine format to save to from filename, saving as Ogg/Kate") );
+            QFile kateFile(filename, this);
+            saveAsOggKate(kateFile);
+        }
+    }
+}
+
+
+void PresentationWidget::saveAsKate(QFile &kateFile)
+{
+    if (!kateFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        KMessageBox::error( this, i18n( "Failed to open file for writing") );
+        return;
+    }
+    bool ok = kateFile.write(QByteArray("kate {\n\n"));
+    ok &= kateFile.write(QByteArray("  defs {\n"));
+    ok &= kateFile.write(QByteArray("      define region \"fullscreen\" { percent position 0 0 size 100 100 }\n"));
+    ok &= kateFile.write(QByteArray("  }\n\n"));
+
+    // the last slide display is faked - its really the time the last real slide disappeared.
+    for(int i = 0; i < m_recording.size() -1; ++i) {
+        const Okular::RecordedPresentationSlide *slide = &(m_recording.at(i));
+        QByteArray slideFileName = QDir::tempPath().toUtf8() + "/slide" + QByteArray::number(slide->slideNumber) + ".png";
+        ok &= slide->pixmap.save(slideFileName);
+        ok &= kateFile.write(QByteArray("  event {\n"));
+        const Okular::RecordedPresentationSlide *nextSlide = &(m_recording.at(i+1));
+        // 0:00:05 --> 0:00:10
+        QString timeLine = QString("    %1 --> ").arg(elapsedTimeToKateTime(slide->timeDisplayed));
+        timeLine += QString("%1\n").arg(elapsedTimeToKateTime(nextSlide->timeDisplayed));
+        ok &= kateFile.write(timeLine.toUtf8());
+        ok &= kateFile.write(QByteArray("    region \"fullscreen\"\n"));
+        QByteArray bitmapLine("    bitmap { source \"");
+        bitmapLine += slideFileName;
+        bitmapLine += "\" }\n";
+        ok &= kateFile.write(bitmapLine);
+        ok &= kateFile.write(QByteArray("  }\n\n"));
+    }
+
+    ok &= kateFile.write(QByteArray("}"));
+    kateFile.close();
+    if (!ok) {
+        KMessageBox::error( this, i18n( "Failed to write to file") );
+    }
+}
+
+
+static int write_kate_pages(QFile &kateFile, ogg_stream_state *os, bool flush)
+{
+    ogg_page og;
+    int (*pager)(ogg_stream_state*, ogg_page*) = flush ? &ogg_stream_flush : &ogg_stream_pageout;
+    int ret;
+
+    while ((ret = (*pager)(os, &og))) {
+        if (ret < 0) {
+            return ret;
+        }
+        if ((kateFile.write((const char*)og.header, og.header_len) != og.header_len)
+          || (kateFile.write((const char*)og.body, og.body_len) != og.body_len)) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+
+static kate_bitmap *loadKatePNG(const QPixmap *pixmap)
+{
+    ssize_t bytes;
+    QByteArray slideFileName = QDir::tempPath().toUtf8() + "/kate-slide.png";
+    if (!pixmap->save(slideFileName)) {
+        return NULL;
+    }
+    QFile *png = new QFile(slideFileName);
+    if (!png->open(QIODevice::ReadOnly)) {
+        delete png;
+        return NULL;
+    }
+    bytes = png->size();
+    unsigned char *block = (unsigned char*) malloc(bytes);
+    if (!block) {
+        png->close();
+        delete png;
+        return NULL;
+    }
+    if (png->read((char*)block, bytes) != bytes) {
+        png->close();
+        delete png;
+        return NULL;
+    }
+    png->close();
+    delete png;
+
+    kate_bitmap *kb = new kate_bitmap;
+    kate_bitmap_init(kb);
+    kb->width = pixmap->width();
+    kb->height = pixmap->height();
+    kb->bpp = 0;
+    kb->type = kate_bitmap_type_png;
+    kb->pixels = block;
+    kb->size = bytes;
+
+    return kb;
+}
+
+void PresentationWidget::saveAsOggKate(QFile &kateFile)
+{
+    ogg_stream_state os;
+    kate_info ki;
+    kate_comment kc;
+    kate_state k;
+    kate_region kr;
+    ogg_packet op;
+
+    if (!kateFile.open(QIODevice::WriteOnly)) {
+        KMessageBox::error( this, i18n( "Failed to write to file, Kate stream will be corrupted\n" ) );
+        return;
+    }
+
+    ogg_stream_init(&os, rand());
+
+    // init state, info, etc
+    kate_info_init(&ki);
+    kate_info_set_language(&ki, "en"); // TODO
+    kate_info_set_category(&ki, "K-SLD-I");
+    kate_comment_init(&kc);
+    kate_encode_init(&k,&ki);
+
+    // add a single full screen region
+    kate_region_init(&kr);
+    kr.metric = kate_pixel;
+    kr.x = kr .y = 0;
+    kr.w = kr .h = 0;
+    for(int i = 0; i < m_recording.size() -1; ++i) {
+        const Okular::RecordedPresentationSlide *slide = &(m_recording.at(i));
+        int w = slide->pixmap.width();
+        if (w > kr.w)
+            kr.w = w;
+        int h = slide->pixmap.height();
+        if (h > kr.h)
+            kr.h = h;
+    }
+    kate_info_add_region(&ki, &kr);
+
+    // fill original canvas size
+    ki.original_canvas_width = kr.w;
+    ki.original_canvas_height = kr.h;
+
+    // BOS header
+    kate_ogg_encode_headers(&k, &kc, &op);
+    ogg_stream_packetin(&os,&op);
+    ogg_packet_clear(&op);
+    if (write_kate_pages(kateFile, &os, true) < 0) {
+        KMessageBox::error( this, i18n( "Failed to write to file, file will likely be corrupted\n" ) );
+    }
+
+    // secondary headers
+    while (kate_ogg_encode_headers(&k, &kc, &op) == 0) {
+        ogg_stream_packetin(&os,&op);
+        ogg_packet_clear(&op);
+    }
+    if (write_kate_pages(kateFile, &os, true) < 0) {
+        KMessageBox::error( this, i18n( "Failed to write to file, file will likely be corrupted\n" ) );
+    }
+
+    // the last slide display is faked - its really the time the last real slide disappeared.
+    for(int i = 0; i < m_recording.size() -1; ++i) {
+        const Okular::RecordedPresentationSlide *slide = &(m_recording.at(i));
+        const Okular::RecordedPresentationSlide *nextSlide = &(m_recording.at(i+1));
+        kate_bitmap *kb = loadKatePNG(&slide->pixmap);
+        if (!kb) {
+            KMessageBox::error( this, i18n( "Failed to create PNG image, Kate stream will be incomplete\n" ) );
+            continue;
+        }
+        kate_float t0 = slide->timeDisplayed / 1000.0f;
+        kate_float t1 = nextSlide->timeDisplayed / 1000.0f;
+
+        // add a single full screen region
+        kate_region_init(&kr);
+        kr.metric = kate_percentage;
+        kr.w = 100*slide->pixmap.width()/ki.original_canvas_width;
+        kr.h = 100*slide->pixmap.height()/ki.original_canvas_width;
+        kr.x = (100-kr.w)/2;
+        kr.y = (100-kr.h)/2;
+        kate_encode_set_region(&k, &kr);
+
+        kate_encode_set_bitmap(&k, kb);
+
+        if (kate_ogg_encode_text(&k, t0, t1, "", 0, &op) < 0) {
+            KMessageBox::error( this, i18n( "Failed encoding presentation image, file will likely be corrupted\n" ) );
+        }
+        else {
+            ogg_stream_packetin(&os,&op);
+            if (write_kate_pages(kateFile, &os, true) < 0) {
+                KMessageBox::error( this, i18n( "Failed to write to file, file will likely be corrupted\n" ) );
+            }
+        }
+
+        free(kb->pixels);
+        delete kb;
+
+        // encode keepalives at regular intervals, but no repeats, as these packets can be huge
+        const kate_float keepalive_delay = 2.0f;
+        for (kate_float t = t0+keepalive_delay; t < t1; t += keepalive_delay) {
+            if (kate_ogg_encode_keepalive(&k, t, &op) >= 0) {
+                ogg_stream_packetin(&os,&op);
+                if (write_kate_pages(kateFile, &os, true) < 0) {
+                    KMessageBox::error( this, i18n( "Failed to write to file, file will likely be corrupted\n" ) );
+                }
+            }
+        }
+
+    }
+
+
+    kate_ogg_encode_finish(&k, (kate_float)-1, &op);
+    ogg_stream_packetin(&os,&op);
+    if (write_kate_pages(kateFile, &os, true) < 0) {
+        KMessageBox::error( this, i18n( "Failed to write to file, file will likely be corrupted\n" ) );
+    }
+
+    kateFile.close();
+}
+
 
 void PresentationWidget::setupActions( KActionCollection * collection )
 {
@@ -751,6 +1034,14 @@ void PresentationWidget::changePage( int newPage )
         if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
             m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
+    }
+
+    if ( m_presentationTimer ) {
+        Okular::RecordedPresentationSlide slide;
+        slide.slideNumber = newPage + 1;
+        slide.timeDisplayed = m_presentationTimer->elapsed();
+        slide.pixmap = m_lastRenderedPixmap;
+        m_recording.append(slide);
     }
 
     if ( oldIndex != m_frameIndex )

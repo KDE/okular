@@ -2,6 +2,7 @@ include_directories(
    ${DJVULIBRE_INCLUDE_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
    ${CMAKE_BINARY_DIR}/okular
+   ${KDE4_INCLUDES}
 )
 
 

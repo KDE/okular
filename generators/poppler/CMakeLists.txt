@@ -36,6 +36,7 @@ endforeach(_include_dir ${POPPLER_INCLUDE_DIR})
 include_directories(
    ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
+   ${KDE4_INCLUDES}
 )
 
 ########### next target ###############

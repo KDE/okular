@@ -1,4 +1,15 @@
 project(okular)
+cmake_minimum_required(VERSION 2.4)
+
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
+
+# search packages used by KDE
+find_package(KDE4 REQUIRED)
+find_package(Strigi REQUIRED)
+include(KDE4Defaults)
+include(MacroLibrary)
+include(MacroOptionalAddSubdirectory)
+
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
@@ -13,6 +24,7 @@ endif(NOT WIN32)
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${QIMAGEBLITZ_INCLUDES}
+   ${KDE4_INCLUDES}
 )
 
 
@@ -171,7 +183,7 @@ qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpe
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} ${KDE4_PHONON_LIBRARY})
+target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} ${KDE4_PHONON_LIBRARY} ${LIBKATE_LIBRARY})
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

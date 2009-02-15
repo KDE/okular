@@ -506,6 +506,13 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
     m_showPresentation->setEnabled( false );
 
+    m_recordPresentation = ac->addAction("record_presentation");
+    m_recordPresentation->setText(i18n("Record Presentation"));
+    // m_recordPresentation->setIcon( KIcon( "view-presentation" ) );
+    connect(m_recordPresentation, SIGNAL(triggered()), this, SLOT(slotRecordPresentation()));
+    // m_recordPresentation->setShortcut( QKeySequence( TBA ) );
+    m_recordPresentation->setEnabled( false );
+
     m_exportAs = ac->addAction("file_export_as");
     m_exportAs->setText(i18n("E&xport As"));
     m_exportAs->setIcon( KIcon( "document-export" ) );
@@ -893,6 +900,7 @@ bool Part::openFile()
     // m_pageView->toggleFormsAction() may be null on dummy mode
     m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() );
     m_showPresentation->setEnabled( ok );
+    m_recordPresentation->setEnabled( ok );
     if ( ok )
     {
         m_exportFormats = m_document->exportFormats();
@@ -1014,6 +1022,7 @@ bool Part::closeUrl()
         delete acts.at(i);
     }
     m_showPresentation->setEnabled( false );
+    m_recordPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
     m_realUrl = KUrl();
@@ -1723,6 +1732,13 @@ void Part::slotShowPresentation()
     {
         m_presentationWidget = new PresentationWidget( widget(), m_document, actionCollection() );
     }
+}
+
+
+void Part::slotRecordPresentation()
+{
+    slotShowPresentation();
+    m_presentationWidget->recordPresentation();
 }
 
 

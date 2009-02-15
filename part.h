@@ -143,6 +143,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotShowProperties();
         void slotShowEmbeddedFiles();
         void slotShowLeftPanel();
+        void slotRecordPresentation();
         void slotShowPresentation();
         void slotHidePresentation();
         void slotExportAs(QAction *);
@@ -237,6 +238,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_exportAs;
         QAction *m_exportAsText;
         QAction *m_exportAsDocArchive;
+        KAction *m_recordPresentation;
         KAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;

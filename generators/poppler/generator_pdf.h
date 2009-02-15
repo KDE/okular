@@ -20,9 +20,9 @@
 
 #include <okular/core/document.h>
 #include <okular/core/generator.h>
-#include <okular/interfaces/configinterface.h>
-#include <okular/interfaces/printinterface.h>
-#include <okular/interfaces/saveinterface.h>
+#include "interfaces/configinterface.h"
+#include "interfaces/printinterface.h"
+#include "interfaces/saveinterface.h"
 
 namespace Okular {
 class ObjectRect;

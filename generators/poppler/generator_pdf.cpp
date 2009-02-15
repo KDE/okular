@@ -33,7 +33,7 @@
 #include <okular/core/action.h>
 #include <okular/core/page.h>
 #include <okular/core/annotations.h>
-#include <okular/core/movie.h>
+#include "core/movie.h"
 #include <okular/core/pagetransition.h>
 #include <okular/core/sound.h>
 #include <okular/core/sourcereference.h>

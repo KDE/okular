@@ -14,6 +14,7 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qwidget.h>
+#include <qfile.h>
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
@@ -31,6 +32,20 @@ class Action;
 class Annotation;
 class Document;
 class Page;
+
+/**
+ * @short A structure to represent a single slide of a presentation
+ *
+ * This class represents a single slide / page of a presentation being
+ * recorded.
+ */
+struct RecordedPresentationSlide
+{
+    int slideNumber;
+    int timeDisplayed; // when we started showing this slide (in milliseconds from the start of the recording)
+    QPixmap pixmap; // the pixmap of the slide
+};
+
 }
 
 /**
@@ -51,6 +66,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber ) const;
+
+        void recordPresentation();
 
     public slots:
         void slotFind();
@@ -111,6 +128,14 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         int m_transitionDelay;
         int m_transitionMul;
         QList< QRect > m_transitionRects;
+
+        // presentation recording
+        bool m_presentationIsBeingRecorded;
+        QTime *m_presentationTimer;
+        QList<Okular::RecordedPresentationSlide> m_recording;
+        void saveRecordedPresentation();
+        void saveAsKate(QFile &filename);
+        void saveAsOggKate(QFile &filename);
 
         // misc stuff
         Okular::Document * m_document;

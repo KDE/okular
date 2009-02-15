@@ -11,10 +11,12 @@
 #include "searchlineedit.h"
 
 // local includes
+#include "animatedwidget.h"
 #include "core/document.h"
 
 // qt/kde includes
 #include <qapplication.h>
+#include <qlayout.h>
 #include <qtimer.h>
 #include <kcolorscheme.h>
 
@@ -187,6 +189,44 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
     }
 
     emit searchStopped();
+}
+
+
+SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * document )
+    : QWidget( parent )
+{
+    QHBoxLayout *layout = new QHBoxLayout( this );
+    layout->setMargin( 0 );
+
+    m_edit = new SearchLineEdit( this, document );
+    layout->addWidget( m_edit );
+
+    m_anim = new AnimatedWidget( "process-working", this );
+    m_anim->setFixedSize( 22, 22 );
+    layout->addWidget( m_anim );
+
+    m_timer = new QTimer( this );
+    m_timer->setSingleShot( true );
+    connect( m_timer, SIGNAL( timeout() ), m_anim, SLOT( start() ) );
+
+    connect( m_edit, SIGNAL( searchStarted() ), this, SLOT( slotSearchStarted() ) );
+    connect( m_edit, SIGNAL( searchStopped() ), this, SLOT( slotSearchStopped() ) );
+}
+
+SearchLineEdit* SearchLineWidget::lineEdit() const
+{
+    return m_edit;
+}
+
+void SearchLineWidget::slotSearchStarted()
+{
+    m_timer->start( 100 );
+}
+
+void SearchLineWidget::slotSearchStopped()
+{
+    m_timer->stop();
+    m_anim->stop();
 }
 
 #include "searchlineedit.moc"

@@ -16,6 +16,7 @@
 #include <klineedit.h>
 
 class QTimer;
+class AnimatedWidget;
 
 /**
  * @short A line edit for find-as-you-type search. Outputs to the Document.
@@ -61,6 +62,24 @@ class SearchLineEdit : public KLineEdit
         void slotTextChanged( const QString & text );
         void startSearch();
         void searchFinished( int id, Okular::Document::SearchStatus endStatus );
+};
+
+class SearchLineWidget : public QWidget
+{
+    Q_OBJECT
+    public:
+        SearchLineWidget( QWidget *parent, Okular::Document *document );
+
+        SearchLineEdit* lineEdit() const;
+
+    private slots:
+        void slotSearchStarted();
+        void slotSearchStopped();
+
+    private:
+        SearchLineEdit *m_edit;
+        AnimatedWidget* m_anim;
+        QTimer *m_timer;
 };
 
 #endif

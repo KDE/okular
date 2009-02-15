@@ -122,6 +122,7 @@ set(okularpart_SRCS
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
    ui/embeddedfilesdialog.cpp
+   ui/animatedwidget.cpp
    ui/annotwindow.cpp
    ui/annotationmodel.cpp
    ui/annotationpopup.cpp

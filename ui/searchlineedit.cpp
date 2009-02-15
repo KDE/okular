@@ -98,7 +98,10 @@ void SearchLineEdit::findNext()
         return;
 
     if ( !m_changed )
+    {
+        emit searchStarted();
         m_document->continueSearch( m_id, m_searchType );
+    }
     else
         startSearch();
 }
@@ -109,7 +112,10 @@ void SearchLineEdit::findPrev()
         return;
 
     if ( !m_changed )
+    {
+        emit searchStarted();
         m_document->continueSearch( m_id, m_searchType );
+    }
     else
         startSearch();
 }
@@ -148,6 +154,7 @@ void SearchLineEdit::startSearch()
     QString thistext = text();
     if ( thistext.length() >= qMax( m_minLength, 1 ) )
     {
+        emit searchStarted();
         m_document->searchText( m_id, thistext, m_fromStart, m_caseSensitivity,
                                 m_searchType, m_moveViewport, m_color );
     }
@@ -178,6 +185,8 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
         pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
         setPalette( pal );
     }
+
+    emit searchStopped();
 }
 
 #include "searchlineedit.moc"

@@ -36,6 +36,10 @@ class SearchLineEdit : public KLineEdit
         void setSearchMoveViewport( bool move );
         void setSearchFromStart( bool fromStart );
 
+    signals:
+        void searchStarted();
+        void searchStopped();
+
     public slots:
         void restartSearch();
         void findNext();

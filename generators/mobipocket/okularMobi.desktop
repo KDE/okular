@@ -1,6 +1,8 @@
 [Desktop Entry]
 Icon=okular
 Name=Okular
+Name[ar]=اوكلار
+Name[pa]=ਓਕੁਲਾਰ
 Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart

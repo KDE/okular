@@ -113,6 +113,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QList< QRect > m_transitionRects;
 
         // misc stuff
+        QWidget * m_parentWidget;
         Okular::Document * m_document;
         QVector< PresentationFrame * > m_frames;
         int m_frameIndex;

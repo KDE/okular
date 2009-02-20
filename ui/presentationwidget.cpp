@@ -127,6 +127,7 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
+    m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_screenSelect( 0 ), m_blockNotifications( false ), m_inBlackScreenMode( false )
 {
@@ -1069,7 +1070,7 @@ void PresentationWidget::recalcGeometry()
     int screen = 0;
     if ( preferenceScreen == -2 )
     {
-        screen = desktop->screenNumber( parentWidget() );
+        screen = desktop->screenNumber( m_parentWidget );
     }
     else if ( preferenceScreen == -1 )
     {
@@ -1081,7 +1082,7 @@ void PresentationWidget::recalcGeometry()
     }
     else
     {
-        screen = desktop->screenNumber( parentWidget() );
+        screen = desktop->screenNumber( m_parentWidget );
         Okular::Settings::setSlidesScreen( -2 );
     }
     const QRect screenGeom = desktop->screenGeometry( screen );

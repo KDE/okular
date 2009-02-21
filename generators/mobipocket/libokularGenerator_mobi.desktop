@@ -1,7 +1,17 @@
 [Desktop Entry]
 Type=Service
 Name=Mobipocket document
+Name[es]=Documento Mobipocket
+Name[ga]=Cáipéis Mobipocket
+Name[pt_BR]=Documento Mobipocket
+Name[sv]=Mobipocket-dokument
+Name[uk]=Документ Mobipocket
 Comment=Mobipocket backend for Okular
+Comment[es]=Motor Mobipocket para Okular
+Comment[ga]=Inneall Mobipocket le haghaidh Okular
+Comment[pt_BR]=Infraestrutura Mobipocket para o Okular
+Comment[sv]=Mobipocket-gränssnitt för Okular
+Comment[uk]=Сервер Mobipocket для Okular
 X-KDE-ServiceTypes=okular/Generator
 MimeType=application/x-mobipocket-ebook;
 X-KDE-Library=okularGenerator_mobi

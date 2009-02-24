@@ -2,6 +2,7 @@
 Type=Service
 Name=Mobipocket document
 Name[es]=Documento Mobipocket
+Name[et]=Mobipocketi dokument
 Name[ga]=Cáipéis Mobipocket
 Name[nds]=Mobipocket-Dokment
 Name[pt]=Documento do Mobipocket
@@ -11,6 +12,7 @@ Name[uk]=Документ Mobipocket
 Name[zh_TW]=Mobipocket 文件
 Comment=Mobipocket backend for Okular
 Comment[es]=Motor Mobipocket para Okular
+Comment[et]=Okulari Mobipocketi taustaprogramm
 Comment[ga]=Inneall Mobipocket le haghaidh Okular
 Comment[nds]=Mobipocket-Hülppropgramm för Okular
 Comment[pt]=Infra-estrutura do Mobipocket para o Okular

@@ -107,9 +107,13 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     int pageNum = 0;
     QStringList pageList;
     m_file->enumerateFiles(&pageList);
+    const QString home = m_file->homeUrl();
+    if (home != QLatin1String("/"))
+        pageList.prepend(home);
     foreach (const QString &url, pageList)
     {
-        if (!url.toLower().endsWith(QLatin1String(".html")))
+        const QString urlLower = url.toLower();
+        if (!urlLower.endsWith(QLatin1String(".html")) && !urlLower.endsWith(QLatin1String(".htm")))
             continue;
 
         int pos = url.indexOf ('#');
@@ -141,6 +145,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     }
 
     connect( m_syncGen, SIGNAL( completed() ), this, SLOT( slotCompleted() ) );
+    connect( m_syncGen, SIGNAL( canceled( QString ) ), this, SLOT( slotCompleted() ) );
 
     return true;
 }

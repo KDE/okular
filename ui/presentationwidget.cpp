@@ -398,20 +398,32 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if (m_width == -1) return;
 
-    if ( e->key() == Qt::Key_Left || e->key() == Qt::Key_Backspace || e->key() == Qt::Key_PageUp )
-        slotPrevPage();
-    else if ( e->key() == Qt::Key_Right || e->key() == Qt::Key_Space || e->key() == Qt::Key_PageDown )
-        slotNextPage();
-    else if ( e->key() == Qt::Key_Home )
-        slotFirstPage();
-    else if ( e->key() == Qt::Key_End )
-        slotLastPage();
-    else if ( e->key() == Qt::Key_Escape )
+    switch ( e->key() )
     {
-        if ( !m_topBar->isHidden() )
-            m_topBar->hide();
-        else
-            close();
+        case Qt::Key_Left:
+        case Qt::Key_Backspace:
+        case Qt::Key_PageUp:
+        case Qt::Key_Up:
+            slotPrevPage();
+            break;
+        case Qt::Key_Right:
+        case Qt::Key_Space:
+        case Qt::Key_PageDown:
+        case Qt::Key_Down:
+            slotNextPage();
+            break;
+        case Qt::Key_Home:
+            slotFirstPage();
+            break;
+        case Qt::Key_End:
+            slotLastPage();
+            break;
+        case Qt::Key_Escape:
+            if ( !m_topBar->isHidden() )
+                m_topBar->hide();
+            else
+                close();
+            break;
     }
 }
 

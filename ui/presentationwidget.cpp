@@ -403,11 +403,13 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
         case Qt::Key_Left:
         case Qt::Key_Backspace:
         case Qt::Key_PageUp:
+        case Qt::Key_Up:
             slotPrevPage();
             break;
         case Qt::Key_Right:
         case Qt::Key_Space:
         case Qt::Key_PageDown:
+        case Qt::Key_Down:
             slotNextPage();
             break;
         case Qt::Key_Home:

@@ -105,12 +105,13 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     
     // fill m_urlPage and m_pageUrl
     int pageNum = 0;
-    foreach(const LCHMParsedEntry &e, topics)
+    QStringList pageList;
+    m_file->enumerateFiles(&pageList);
+    foreach (const QString &url, pageList)
     {
-        if (e.urls.isEmpty())
+        if (!url.toLower().endsWith(QLatin1String(".html")))
             continue;
 
-        const QString &url = e.urls.first();
         int pos = url.indexOf ('#');
         QString tmpUrl = pos == -1 ? url : url.left(pos);
 

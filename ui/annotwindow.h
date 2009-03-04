@@ -36,6 +36,9 @@ class AnnotWindow : public QFrame
     public:
         Okular::Annotation* m_annot;
 
+    protected:
+        virtual void showEvent( QShowEvent * event );
+
     private slots:
         void slotOptionBtn();
         void slotsaveWindowText();

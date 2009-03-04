@@ -204,6 +204,14 @@ void AnnotWindow::reloadInfo()
     m_title->setDate( m_annot->modificationDate() );
 }
 
+void AnnotWindow::showEvent( QShowEvent * event )
+{
+    QFrame::showEvent( event );
+
+    // focus the content area by default
+    textEdit->setFocus();
+}
+
 void AnnotWindow::slotOptionBtn()
 {
     //TODO: call context menu in pageview

@@ -2,6 +2,7 @@
 Type=Service
 Name=chmlib
 Name[hi]=सीएचएमलिब
+Name[hne]=सीएचएमलिब
 Name[th]=ไลบรารี chmlib
 Name[x-test]=xxchmlibxx
 Comment=Windows HTMLHelp backend for Okular
@@ -16,6 +17,7 @@ Comment[fi]=Windows HTMLHelp -taustaosa Okular-lukijalle
 Comment[fr]=Interface d'Okular pour les fichiers d'aide Windows HTMLHelp
 Comment[ga]=Inneall HTMLHelp Windows le haghaidh Okular
 Comment[gl]=Infraestrutura de ficheiros Windows HTMLHelp para Okular
+Comment[hne]=ओकुलर बर विंडोज एचटीएमएलहेल्प बैकएन्ड
 Comment[is]=Windows HTMLHelp stuðningur fyrir Okular
 Comment[it]=Backend guida di Windows in HTML per Okular
 Comment[ja]=Okular の Windows HTML ヘルプ用バックエンド

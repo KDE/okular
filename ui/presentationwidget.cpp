@@ -129,7 +129,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 ), m_blockNotifications( false ), m_inBlackScreenMode( false )
+    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -230,6 +230,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     // inhibit the screen saver
     inhibitScreenSaver();
 
+    show();
+
     QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
 }
 
@@ -316,6 +318,8 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     }
     m_metaStrings += i18n( "Pages: %1", m_document->pages() );
     m_metaStrings += i18n( "Click to begin" );
+
+    m_isSetup = true;
 }
 
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
@@ -396,7 +400,8 @@ bool PresentationWidget::event( QEvent * e )
 
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
-    if (m_width == -1) return;
+    if ( !m_isSetup )
+        return;
 
     switch ( e->key() )
     {
@@ -429,7 +434,8 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
 
 void PresentationWidget::wheelEvent( QWheelEvent * e )
 {
-    if (m_width == -1) return;
+    if ( !m_isSetup )
+        return;
 
     // performance note: don't remove the clipping
     int div = e->delta() / 120;
@@ -451,7 +457,8 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
 
 void PresentationWidget::mousePressEvent( QMouseEvent * e )
 {
-    if (m_width == -1) return;
+    if ( !m_isSetup )
+        return;
 
     if ( m_drawingEngine )
     {
@@ -520,7 +527,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 {
     // safety check
-    if ( m_width == -1 )
+    if ( !m_isSetup )
         return;
 
     // update cursor and tooltip if hovering a link
@@ -567,7 +574,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         return;
     }
 
-    if (m_width == -1)
+    if ( !m_isSetup )
     {
         m_width = width();
         m_height = height();

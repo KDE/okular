@@ -123,6 +123,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
+        bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
 

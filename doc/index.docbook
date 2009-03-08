@@ -29,8 +29,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2008-08-21</date>
-		<releaseinfo>0.7</releaseinfo>
+		<date>2009-01-25</date>
+		<releaseinfo>0.8</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -148,24 +148,24 @@
 				</listitem>
 				<listitem>
 					<para>
-						You can go to the next page of the document using 
-						<keycap>Space</keycap>, <keycap>Page Down</keycap>, the <guibutton>Next Page</guibutton> Toolbar
-						button or	using 
+						You can go forward in the document using <keycap>Space</keycap> or <keycap>Page Down</keycap>.
+						To go to the next page of the document use the <guibutton>Next Page</guibutton> Toolbar
+						button or 
 						<menuchoice>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Next Page</guimenuitem>
-						</menuchoice>.
+						</menuchoice> in the menubar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You can go to the previous page of the document using 
-						<keycap>Backspace</keycap>, <keycap>Page Up</keycap>, the <guibutton>Previous Page</guibutton> Toolbar
-						button or	using 
+						You can go back in the document using <keycap>Backspace</keycap> or <keycap>Page Up</keycap>.
+						To go to the previous page of the document use <guibutton>Previous Page</guibutton> Toolbar
+						button or 
 						<menuchoice>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem>
-						</menuchoice>.
+						</menuchoice> in the menubar.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -246,7 +246,10 @@
 		<sect1 id="annotations">
 			<title>Annotations</title>
 			<para>
-				&okular; allows you to review and annotate your documents. 
+				&okular; allows you to review and annotate your documents. Annotations created in &okular; are saved internally in the local data folder for each user.
+			</para>
+			<para>
+				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
 				<note>
 					<para>
@@ -304,7 +307,7 @@
 				<title>Editing annotations</title>
 				<para>
 					To edit an annotation, click on it with the &RMB; and select
-					<guimenuitem>Properties...</guimenuitem> A dialog will appear with the general
+					<guimenuitem>Properties</guimenuitem>. A dialog will appear with the general
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
 				</para>
@@ -340,8 +343,7 @@
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a supported file. If there is already an opened file it will be closed.
-							For more information, see the section about <link linkend="opening">Opening Files</link>.
+							<action>Open</action> a supported file or okular archive. If there is already an opened file it will be closed. For more information, see the section about <link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -380,7 +382,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>File</guimenu>
-							<guimenuitem>Import PostScript as PDF...</guimenuitem>
+							<guimenuitem>Import PostScript as &PDF;...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -410,7 +412,7 @@
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Save</action> a copy the currently open file under a different name 
+						<para><action>Save</action> a copy of the currently open file under a different name 
 						without using the current document backend.</para>
 					</listitem>
 				</varlistentry>
@@ -495,6 +497,7 @@
 					<listitem>
 						<para>This item contains the export formats the current document can be exported to.
 						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem></para>
+						<para>The second entry is <guimenuitem>Document Archive</guimenuitem>, which allows you to save the document with your annotations into an &okular;-specific archive format. Thus it is easily possible to share the original document and your annotations with other &okular; users or work with them collaboratively.</para>
 					</listitem>
 				</varlistentry>
 
@@ -723,7 +726,7 @@
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Trim Borders</guimenuitem>
+							<guimenuitem>Trim Margins</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1225,19 +1228,19 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Change Colors</guilabel></term>
+					<term><guilabel>Change colors</guilabel></term>
 					<listitem>
 						<para><action>Enables</action> the color changing options.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Invert colors</guilabel></term>
+					<term><guilabel>Invert Colors</guilabel></term>
 					<listitem>
 						<para><action>Inverts</action> colors on the view, &ie; black objects will be shown white.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Change paper color</guilabel></term>
+					<term><guilabel>Change Paper Color</guilabel></term>
 					<listitem>
 						<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
 					</listitem>
@@ -1280,7 +1283,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Memory usage profiles</guilabel></term>
+					<term><guilabel>Memory Usage</guilabel></term>
 					<listitem>
 						<para>&okular; can achieve best performance by tuning the memory usage, based on your system and your tastes.
 							The more memory you let it to use, the faster the program will behave. The Default profile is good
@@ -1361,6 +1364,25 @@
 					<term><guilabel>Author</guilabel></term>
 					<listitem>
 						<para>The author of the contents added on a document.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title>Editor</title>
+			<variablelist>
+				<varlistentry>
+					<term><guilabel>Editor</guilabel></term>
+					<listitem>
+						<para>Choose the editor you want to launch when &okular; wants to open a source file. 
+						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).	
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Command</guilabel></term>
+					<listitem>
+						<para>This is the command and its parameters to invoke the selected editor with the source file of the actual document.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

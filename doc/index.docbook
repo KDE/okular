@@ -40,11 +40,17 @@
 			<keyword>okular</keyword>
 			<keyword>pdf</keyword>
 			<keyword>ps</keyword>
+			<keyword>postscript</keyword>
 			<keyword>tiff</keyword>
 			<keyword>djvu</keyword>
 			<keyword>dvi</keyword>
 			<keyword>chm</keyword>
 			<keyword>xps</keyword>
+			<keyword>comicbook</keyword>
+			<keyword>fictionbook</keyword>
+			<keyword>mobipocket</keyword>
+			<keyword>plucker</keyword>
+			<keyword>annnotation</keyword>
 		</keywordset>
 	</bookinfo>
 	<chapter id="introduction">
@@ -118,6 +124,8 @@
 				Some documents have links. In this case you can click on them and the view will
 				change to the page it links to. If the link is to a web page or some
 				other document the default &kde; handler for that format will be invoked.
+				For example, clicking on a link pointing to <quote>http://www.kde.org</quote>
+				will open the web page in the default &kde;'s web browser.
 			</para>
 			<para>
 				Additionally, you may use the following functionality to quickly move to specific places
@@ -246,7 +254,10 @@
 		<sect1 id="annotations">
 			<title>Annotations</title>
 			<para>
-				&okular; allows you to review and annotate your documents. Annotations created in &okular; are saved internally in the local data folder for each user.
+				&okular; allows you to review and annotate your documents.
+				Annotations created in &okular; are automatically saved in the internal local data folder
+				for each user.
+				&okular; does not implicitely change any document it opens.
 			</para>
 			<para>
 				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
@@ -279,7 +290,7 @@
 				</note>
 				<para>
 					You can stop the construction any time by pressing again on the button of the
-					annotation you are constructing.
+					annotation you are constructing, or by pressing the <keycap>ESC</keycap> key.
 				</para>
 				<para>
 					The newly constructed annotation will have as author the author you set in the
@@ -577,6 +588,19 @@
 					</term>
 					<listitem>
 						<para>Try to <action>find the previous searched string again</action> in the document.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Shift;<keycap>F3</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Find Previous</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Goes to the previous occurrence of the search string</action> in the document.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -991,6 +1015,7 @@
 					</term>
 					<listitem>
 						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>KTTS</application>.</para>
+						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if <application>KTTS</application> is availabled in the system.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

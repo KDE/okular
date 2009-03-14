@@ -50,7 +50,7 @@
 			<keyword>fictionbook</keyword>
 			<keyword>mobipocket</keyword>
 			<keyword>plucker</keyword>
-			<keyword>annnotation</keyword>
+			<keyword>annotation</keyword>
 		</keywordset>
 	</bookinfo>
 	<chapter id="introduction">
@@ -257,7 +257,7 @@
 				&okular; allows you to review and annotate your documents.
 				Annotations created in &okular; are automatically saved in the internal local data folder
 				for each user.
-				&okular; does not implicitely change any document it opens.
+				&okular; does not implicitly change any document it opens.
 			</para>
 			<para>
 				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
@@ -1015,7 +1015,7 @@
 					</term>
 					<listitem>
 						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>KTTS</application>.</para>
-						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if <application>KTTS</application> is availabled in the system.</para>
+						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if <application>KTTS</application> is available in the system.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -1355,7 +1355,7 @@
 					<term><guilabel>Show progress indicator</guilabel></term>
 					<listitem>
 						<para>Whether to show a progress circle that shows the current page and the total number of pages on the upper
-							right corner of the presentation screen everytime you change the page.</para>
+							right corner of the presentation screen every time you change the page.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

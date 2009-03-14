@@ -11,14 +11,12 @@
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
 #include <core/generator.h>
-#include <interfaces/guiinterface.h>
 
 #include <QtGui/QImage>
 
-class KIMGIOGenerator : public Okular::Generator, public Okular::GuiInterface
+class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::GuiInterface )
     public:
         KIMGIOGenerator( QObject *parent, const QVariantList &args );
         virtual ~KIMGIOGenerator();

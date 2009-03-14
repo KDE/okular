@@ -20,6 +20,7 @@
 #include <qtimer.h>
 #include <qimage.h>
 #include <qlabel.h>
+#include <qlayout.h>
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
@@ -148,6 +149,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->setObjectName( "presentationBar" );
     m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
+    m_topBar->layout()->setMargin(0);
     m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT( slotPrevPage() ) );
     m_pagesEdit = new KLineEdit( m_topBar );
     QSizePolicy sp = m_pagesEdit->sizePolicy();

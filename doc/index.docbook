@@ -1034,7 +1034,8 @@
 					</term>
 					<listitem>
 						<para><action>Toggle the Menubar display</action> on and off. Once
-						hidden it can be made visible using the &RMB; menu.</para>
+						hidden it can be made visible using the shortcut 
+                                                <keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo> again.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

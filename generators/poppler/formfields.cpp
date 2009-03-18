@@ -17,7 +17,6 @@
 
 extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink);
 
-#ifdef HAVE_POPPLER_0_7
 PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field )
     : Okular::FormFieldButton(), m_field( field )
 {
@@ -100,7 +99,6 @@ QList< int > PopplerFormFieldButton::siblings() const
 {
     return m_field->siblings();
 }
-#endif
 
 
 PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )

@@ -782,11 +782,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     userMutex()->unlock();
     if ( genTextPage )
     {
-#ifdef HAVE_POPPLER_0_7
         QList<Poppler::TextBox*> textList = p->textList();
-#else
-        QList<Poppler::TextBox*> textList = p->textList((Poppler::Page::Rotation)request->page()->orientation());
-#endif
         Okular::TextPage *tp = abstractTextPage(textList, page->height(), page->width(), request->page()->orientation());
         page->setTextPage( tp );
         qDeleteAll(textList);
@@ -809,21 +805,12 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     userMutex()->lock();
-#ifdef HAVE_POPPLER_0_7
     QList<Poppler::TextBox*> textList = pp->textList();
-#else
-    QList<Poppler::TextBox*> textList = pp->textList((Poppler::Page::Rotation)page->orientation());
-#endif
     userMutex()->unlock();
     delete pp;
 
-#ifdef HAVE_POPPLER_0_7
     const double pageWidth = page->width();
     const double pageHeight = page->height();
-#else
-    const double pageWidth = ( page->rotation() % 2 ? page->height() : page->width() );
-    const double pageHeight = ( page->rotation() % 2 ? page->width() : page->height() );
-#endif
 
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
@@ -865,11 +852,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     // TODO rotation
 
-#ifdef HAVE_POPPLER_0_7
     tf.setAutoRemove(false);
-#else
-    tf.close();
-#endif
 
     QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
     if ( pstitle.trimmed().isEmpty() )
@@ -885,11 +868,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
 
-#ifdef HAVE_POPPLER_0_7
     psConverter->setOutputDevice(&tf);
-#else
-    psConverter->setOutputFileName(tempfilename);
-#endif
 
     psConverter->setPageList(pageList);
     psConverter->setPaperWidth(width);
@@ -907,9 +886,7 @@ bool PDFGenerator::print( QPrinter& printer )
     {
         userMutex()->unlock();
         delete psConverter;
-#ifdef HAVE_POPPLER_0_7
         tf.close();
-#endif
         int ret = Okular::FilePrinter::printFile( printer, tempfilename,
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
@@ -1082,7 +1059,6 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
     int charCount=0;
     int j;
     QString s;
-#ifdef HAVE_POPPLER_0_7
     foreach (Poppler::TextBox *word, text)
     {
         charCount=word->text().length();
@@ -1113,117 +1089,6 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
                      wordBBox.top()/height);
         }
     }
-#else
-    Okular::NormalizedRect * wordRect = new Okular::NormalizedRect;
-    
-    rot = rot % 4;
-    
-    foreach (Poppler::TextBox *word, text)
-    {
-        wordRect->left = word->boundingBox().left();
-        wordRect->bottom = word->boundingBox().bottom();
-        wordRect->right = word->boundingBox().right();
-        wordRect->top = word->boundingBox().top();
-        charCount=word->text().length();
-        next=word->nextWord();
-        switch (rot)
-        {
-            case 0:
-            // 0 degrees, normal word boundaries are top and bottom
-            // only x boundaries change the order of letters is normal not reversed
-            for (j = 0; j < charCount; j++)
-            {
-                s = word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
-                    // this letters boundary
-                    word->edge(j)/width,
-                    wordRect->bottom/height,
-                    // next letters boundary
-                    word->edge(j+1)/width,
-                    wordRect->top/height);
-            }
-            
-            if ( word->hasSpaceAfter() && next )
-              append(ktp, " ",
-                    // this letters boundary
-                     word->edge(charCount)/width,
-                     wordRect->bottom/height,
-                    // next letters boundary
-                     next->edge(0)/width,
-                     wordRect->top/height);
-            break;
-
-            case 1:
-            // 90 degrees, x boundaries not changed
-            // y ones change, the order of letters is normal not reversed
-            for (j=0;j<charCount;j++)
-            {
-                s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
-                    wordRect->left/width,
-                    word->edge(j)/height,
-                    wordRect->right/width,
-                    word->edge(j+1)/height);
-            }
-            
-            if ( word->hasSpaceAfter() && next )
-              append(ktp, " ",
-                    // this letters boundary
-                     wordRect->left/width,
-                     word->edge(charCount)/height,
-                    // next letters boundary
-                     wordRect->right/width,
-                     next->edge(0)/height);
-            break;
-
-            case 2:
-            // same as case 0 but reversed order of letters
-            for (j=0;j<charCount;j++)
-            {
-                s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
-                    word->edge(j+1)/width,
-                    wordRect->bottom/height,
-                    word->edge(j)/width,
-                    wordRect->top/height);
-
-            }
-            
-            if ( word->hasSpaceAfter() && next )
-              append(ktp, " ",
-                    // this letters boundary
-                     next->edge(0)/width,
-                     wordRect->bottom/height,
-                    // next letters boundary
-                     word->edge(charCount)/width,
-                     wordRect->top/height);
-           
-            break;
-
-            case 3:
-            for (j=0;j<charCount;j++)
-            {
-                s=word->text().at(j);
-                append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
-                    wordRect->left/width,
-                    word->edge(j+1)/height,
-                    wordRect->right/width,
-                    word->edge(j)/height);
-            }
-            
-            if ( word->hasSpaceAfter() && next )
-              append(ktp, " ",
-                    // this letters boundary
-                     wordRect->left/width,
-                     next->edge(0)/height,
-                    // next letters boundary
-                     wordRect->right/width,
-                     word->edge(charCount)/height);
-            break;
-        }
-    }
-    delete wordRect;
-#endif
     return ktp;
 }
 
@@ -1396,11 +1261,9 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
         Okular::FormField * of = 0;
         switch ( f->type() )
         {
-#ifdef HAVE_POPPLER_0_7
             case Poppler::FormField::FormButton:
                 of = new PopplerFormFieldButton( static_cast<Poppler::FormFieldButton*>( f ) );
                 break;
-#endif
             case Poppler::FormField::FormText:
                 of = new PopplerFormFieldText( static_cast<Poppler::FormFieldText*>( f ) );
                 break;
@@ -1565,10 +1428,8 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
 {
     switch ( option )
     {
-#ifdef HAVE_POPPLER_0_7
         case SaveChanges:
             return true;
-#endif
         default: ;
     }
     return false;
@@ -1576,7 +1437,6 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
 
 bool PDFGenerator::save( const QString &fileName, SaveOptions options )
 {
-#ifdef HAVE_POPPLER_0_7
     Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
 
     pdfConv->setOutputFileName( fileName );
@@ -1587,11 +1447,6 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options )
     bool success = pdfConv->convert();
     delete pdfConv;
     return success;
-#else
-    Q_UNUSED( fileName )
-    Q_UNUSED( options )
-    return false;
-#endif
 }
 
 void PDFGenerator::threadFinished()
@@ -1827,11 +1682,7 @@ void PDFPixmapGeneratorThread::run()
 
     if ( genTextPage )
     {
-#ifdef HAVE_POPPLER_0_7
         d->m_textList = pp->textList();
-#else
-        d->m_textList = pp->textList((Poppler::Page::Rotation)d->currentRequest->page()->orientation());
-#endif
     }
     delete pp;
     

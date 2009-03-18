@@ -13,9 +13,6 @@
 #include <poppler-form.h>
 #include "core/form.h"
 
-#include <config-okular-poppler.h>
-
-#ifdef HAVE_POPPLER_0_7
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {
     public:
@@ -42,7 +39,6 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         Okular::NormalizedRect m_rect;
 
 };
-#endif
 
 class PopplerFormFieldText : public Okular::FormFieldText
 {

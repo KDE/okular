@@ -6,7 +6,7 @@
 #  POPPLER_LIBRARY - Link this to use poppler
 #
 
-# Copyright (c) 2006-2007, Pino Toscano, <pino@kde.org>
+# Copyright (c) 2006-2009, Pino Toscano, <pino@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -68,15 +68,27 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_6 )
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+#include <poppler-form.h>
+int main()
+{
+  Poppler::FormFieldButton * button = 0;
+  button->buttonType();
+  return 0;
+}
+" HAVE_POPPLER_0_8)
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_0_6)
-    set(poppler06Message "yes")
-  else (HAVE_POPPLER_0_6)
-    set(poppler06Message "no")
-  endif (HAVE_POPPLER_0_6)
+  if (HAVE_POPPLER_0_8)
+    set(popplerVersionMessage "0.8")
+  elseif (HAVE_POPPLER_0_6)
+    set(popplerVersionMessage "0.6")
+  else (HAVE_POPPLER_0_8)
+    set(popplerVersionMessage "0.5.4")
+  endif (HAVE_POPPLER_0_8)
   if (NOT Poppler_FIND_QUIETLY)
-    message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, 0.6.x? ${poppler06Message}")
+    message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, (>= ${popplerVersionMessage})")
   endif (NOT Poppler_FIND_QUIETLY)
 else (POPPLER_FOUND)
   if (Poppler_FIND_REQUIRED)
@@ -88,6 +100,7 @@ endif (POPPLER_FOUND)
 # ensure that they are cached
 set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} CACHE INTERNAL "The Poppler-Qt4 include path")
 set(POPPLER_LIBRARY ${POPPLER_LIBRARY} CACHE INTERNAL "The Poppler-Qt4 library")
-set(HAVE_POPPLER_0_6 ${HAVE_POPPLER_0_6} CACHE INTERNAL "Whether the version of Poppler-Qt4 is 0.6")
+set(HAVE_POPPLER_0_6 ${HAVE_POPPLER_0_6} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.6")
+set(HAVE_POPPLER_0_8 ${HAVE_POPPLER_0_8} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.8")
 
 endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

@@ -79,6 +79,13 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     Q_INTERFACES(KDocumentViewer)
 
     public:
+        enum EmbedMode
+        {
+            UnknownEmbedMode,
+            NativeShellMode,         // embedded in the native Okular' shell
+            PrintPreviewMode         // embedded to show the print preview of a document
+        };
+
         // Default constructor
         Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
@@ -254,7 +261,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QString m_addBookmarkText;
         QIcon m_addBookmarkIcon;
 
-        bool m_dummyMode;
+        EmbedMode m_embedMode;
 
         KUrl m_realUrl;
 

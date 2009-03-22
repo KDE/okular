@@ -183,6 +183,27 @@ static QString compressedMimeFor( const QString& mime_to_check )
     return QString();
 }
 
+static Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
+{
+    Q_UNUSED( parentWidget );
+
+    if ( parent
+         && ( parent->objectName() == QLatin1String( "okular::Shell" )
+              || parent->objectName() == QLatin1String( "okular/okular__Shell" ) ) )
+        return Part::NativeShellMode;
+
+    Q_FOREACH ( const QVariant &arg, args )
+    {
+        if ( arg.type() == QVariant::String )
+        {
+            if ( arg.toString() == QLatin1String( "Print/Preview" ) )
+                return Part::PrintPreviewMode;
+        }
+    }
+
+    return Part::UnknownEmbedMode;
+}
+
 #undef OKULAR_KEEP_FILE_OPEN
 
 #ifdef OKULAR_KEEP_FILE_OPEN
@@ -198,7 +219,7 @@ QObject *parent,
 const QVariantList &args )
 : KParts::ReadOnlyPart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
+m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
@@ -446,7 +467,7 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     m_saveAs->setEnabled( false );
 
     QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
-    if ( parent && ( parent->objectName() == QLatin1String( "okular::Shell" ) ) )
+    if ( m_embedMode == NativeShellMode )
     {
         prefs->setText( i18n( "Configure Okular..." ) );
     }
@@ -578,9 +599,9 @@ m_cliPresentation(false), m_generatorGuiClient(0), m_keeper( 0 )
     // ensure history actions are in the correct state
     updateViewActions();
 
-    m_dummyMode = true;
     m_sidebar->setSidebarVisibility( false );
-    if ( !args.contains( QVariant( "Print/Preview" ) ) ) unsetDummyMode();
+    if ( m_embedMode != PrintPreviewMode )
+        unsetDummyMode();
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper = new FileKeeper();
@@ -656,7 +677,8 @@ KUrl Part::realUrl() const
 
 void Part::openUrlFromDocument(const KUrl &url)
 {
-    if (m_dummyMode) return;
+    if ( m_embedMode == PrintPreviewMode )
+       return;
 
     m_bExtension->openUrlNotify();
     m_bExtension->setLocationBarUrl(url.prettyUrl());
@@ -1046,9 +1068,7 @@ bool Part::closeUrl()
 
 void Part::close()
 {
-    if (parent()
-        && (parent()->objectName() == QLatin1String("okular::Shell")
-            || parent()->objectName() == QLatin1String("okular/okular__Shell")))
+    if ( m_embedMode == NativeShellMode )
     {
         closeUrl();
     }
@@ -1410,7 +1430,8 @@ void Part::slotFindPrev()
 
 void Part::slotSaveFileAs()
 {
-    if (m_dummyMode) return;
+    if ( m_embedMode == PrintPreviewMode )
+       return;
 
     KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
@@ -1464,7 +1485,8 @@ void Part::slotSaveFileAs()
 
 void Part::slotSaveCopyAs()
 {
-    if (m_dummyMode) return;
+    if ( m_embedMode == PrintPreviewMode )
+       return;
 
     KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
@@ -1625,7 +1647,8 @@ void Part::slotPrintPreview()
 
 void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 {
-    if (m_dummyMode) return;
+    if ( m_embedMode == PrintPreviewMode )
+       return;
 
     bool reallyShow = false;
     if (!m_actionsSearched)
@@ -1957,9 +1980,8 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
 
 void Part::unsetDummyMode()
 {
-    if (!m_dummyMode) return;
-
-    m_dummyMode = false;
+    if ( m_embedMode == PrintPreviewMode )
+       return;
 
     m_sidebar->setItemEnabled( 2, true );
     m_sidebar->setItemEnabled( 3, true );

@@ -306,6 +306,15 @@ class OKULAR_EXPORT ObjectRect
          */
         virtual void transform( const QMatrix &matrix );
 
+        /**
+         * Returns the square of the distance between the object and the point @p x, @p y
+         * for the scaling factor @p xScale and @p yScale.
+         *
+         * @since 0.8.2 (KDE 4.2.2)
+         */
+        // FIXME this should most probably be a virtual method
+        double distanceSqr( double x, double y, double xScale, double yScale ) const;
+
     protected:
         ObjectType m_objectType;
         void * m_object;
@@ -361,6 +370,8 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
  */
 class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
 {
+    friend class ObjectRect;
+
     public:
         /**
          * Creates a new source reference object rectangle.

@@ -295,6 +295,39 @@ void ObjectRect::transform( const QMatrix &matrix )
     m_transformedPath = matrix.map( m_path );
 }
 
+double ObjectRect::distanceSqr( double x, double y, double xScale, double yScale ) const
+{
+    switch ( m_objectType )
+    {
+        case Action:
+        case Image:
+        case OAnnotation:
+        {
+            const QPointF center = m_transformedPath.boundingRect().center();
+            return pow( ( x - center.x() ), 2 ) + pow( ( y - center.y() ) * xScale / yScale, 2 );
+        }
+        case SourceRef:
+        {
+            const double ratio = yScale / xScale;
+            const SourceRefObjectRect * sr = static_cast< const SourceRefObjectRect * >( this );
+            const NormalizedPoint& point = sr->m_point;
+            if ( point.x == -1.0 )
+            {
+                return pow( ( y - point.y ) / ratio, 2 );
+            }
+            else if ( point.y == -1.0 )
+            {
+                return pow( ( x - point.x ), 2 );
+            }
+            else
+            {
+                return pow( ( x - point.x ), 2 ) + pow( ( y - point.y ) / ratio, 2 );
+            }
+        }
+    }
+    return 0.0;
+}
+
 ObjectRect::~ObjectRect()
 {
     if ( !m_object )
@@ -347,14 +380,23 @@ void AnnotationObjectRect::transform( const QMatrix &matrix )
 SourceRefObjectRect::SourceRefObjectRect( const NormalizedPoint& point, void * srcRef )
     : ObjectRect( point.x, point.y, .0, .0, false, SourceRef, srcRef ), m_point( point )
 {
+    const double x = m_point.x < 0.0 ? 0.5 : m_point.x;
+    const double y = m_point.y < 0.0 ? 0.5 : m_point.y;
+    const QRectF rect( x - 2, y - 2, 5, 5 );
+    m_path.addRect( rect );
+
+    m_transformedPath = m_path;
 }
 
-QRect SourceRefObjectRect::boundingRect( double /*xScale*/, double /*yScale*/ ) const
+QRect SourceRefObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    return QRect();
+    const double x = m_point.x < 0.0 ? 0.5 : m_point.x;
+    const double y = m_point.y < 0.0 ? 0.5 : m_point.y;
+
+    return QRect( x * xScale, y * yScale, 1, 1 );
 }
 
 bool SourceRefObjectRect::contains( double x, double y, double xScale, double yScale ) const
 {
-    return ( pow( x - m_point.x, 2 ) + pow( y - m_point.y, 2 ) ) < ( pow( (double)7/xScale, 2 ) + pow( (double)7/yScale, 2 ) );
+    return distanceSqr( x, y, xScale, yScale ) < ( pow( 7.0 / xScale, 2 ) + pow( 7.0 / yScale, 2 ) );
 }

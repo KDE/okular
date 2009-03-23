@@ -35,6 +35,8 @@
 #include "textpage.h"
 #include "textpage_p.h"
 
+#include <limits>
+
 #ifdef PAGE_PROFILE
 #include <QtCore/QTime>
 #endif
@@ -358,6 +360,30 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
         if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
             return *it;
     return 0;
+}
+
+const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
+{
+    ObjectRect * res = 0;
+    double minDistance = std::numeric_limits<double>::max();
+
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.constBegin(), end = m_rects.constEnd();
+    for ( ; it != end; ++it )
+    {
+        if ( (*it)->objectType() == type )
+        {
+            double d = (*it)->distanceSqr( x, y, xScale, yScale );
+            if ( d < minDistance )
+            {
+                res = (*it);
+                minDistance = d;
+            }
+        }
+    }
+
+    if ( distance )
+        *distance = minDistance;
+    return res;
 }
 
 const PageTransition * Page::transition() const

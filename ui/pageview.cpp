@@ -1816,16 +1816,28 @@ void PageView::contentsMouseReleaseEvent( QMouseEvent * e )
                     const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
                     d->document->processAction( action );
                 }
-                else
+                else if ( e->modifiers() == Qt::ShiftModifier )
                 {
                     // TODO: find a better way to activate the source reference "links"
                     // for the moment they are activated with Shift + left click
-                    rect = e->modifiers() == Qt::ShiftModifier ? pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() ) : 0;
+                    // Search the nearest source reference.
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                    if ( !rect )
+                    {
+                        static const double s_minDistance = 0.025 * 0.025; // FIXME?: empirical value?
+                        double distance = 0.0;
+                        rect = pageItem->page()->nearestObjectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight(), &distance );
+                        if ( rect && ( distance > s_minDistance ) )
+                            rect = 0;
+                    }
                     if ( rect )
                     {
                         const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->object() );
                         d->document->processSourceReference( ref );
                     }
+                }
+                else
+                {
 #if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link

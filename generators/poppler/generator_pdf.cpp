@@ -1437,8 +1437,8 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         return;
 
     QTextStream ts( &f );
-    // first row: core name of the pdf output - we skip it
-    ts.readLine();
+    // first row: core name of the pdf output
+    const QString coreName = ts.readLine();
     // second row: version string, in the form 'Version %u'
     QString versionstr = ts.readLine();
     QRegExp versionre( "Version (\\d+)" );
@@ -1542,7 +1542,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         }
         else
         {
-            file = filePath;
+            file = coreName + QLatin1String( ".tex" );
         }
         Okular::SourceReference * sourceRef = new Okular::SourceReference( file, pt.row, pt.column );
         refRects[ pt.page ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );

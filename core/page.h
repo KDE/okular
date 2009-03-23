@@ -200,6 +200,13 @@ class OKULAR_EXPORT Page
         const ObjectRect * objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const;
 
         /**
+         * Returns the object rect of the given @p type which is nearest to the point (@p x, @p y) at scale (@p xScale, @p yScale).
+         *
+         * @since 0.8.2 (KDE 4.2.2)
+         */
+        const ObjectRect * nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const;
+
+        /**
          * Returns the transition effect of the page or 0 if no transition
          * effect is set (see hasTransition()).
          */

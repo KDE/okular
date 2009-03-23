@@ -390,7 +390,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
         if ( sfa.page < 1 || (int)sfa.page > numofpages )
             continue;
 
-        Okular::NormalizedPoint p( 0.5, (double)sfa.distance_from_top.getLength_in_pixel( Okular::Utils::dpiY() ) / (double)pageRequiredSize.height() );
+        Okular::NormalizedPoint p( -1.0, (double)sfa.distance_from_top.getLength_in_pixel( Okular::Utils::dpiY() ) / (double)pageRequiredSize.height() );
         Okular::SourceReference * sourceRef = new Okular::SourceReference( sfa.fileName, sfa.line );
         refRects[ sfa.page - 1 ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
     }

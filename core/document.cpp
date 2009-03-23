@@ -2930,9 +2930,17 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !ref )
         return;
 
-    if ( !QFile::exists( ref->fileName() ) )
+    const KUrl url( d->giveAbsolutePath( ref->fileName() ) );
+    if ( !url.isLocalFile() )
     {
-        kDebug(OkularDebug).nospace() << "No such file: '" << ref->fileName() << "'";
+        kDebug(OkularDebug) << url.url() << "is not a local file.";
+        return;
+    }
+
+    const QString absFileName = url.toLocalFile();
+    if ( !QFile::exists( absFileName ) )
+    {
+        kDebug(OkularDebug) << "No such file:" << absFileName;
         return;
     }
 
@@ -2959,7 +2967,7 @@ void Document::processSourceReference( const SourceReference * ref )
 
     // replacing the placeholders
     QHash< QChar, QString > map;
-    map.insert( 'f', ref->fileName() );
+    map.insert( 'f', absFileName );
     map.insert( 'c', QString::number( ref->column() ) );
     map.insert( 'l', QString::number( ref->row() ) );
     const QString cmd = KMacroExpander::expandMacrosShellQuote( p, map );

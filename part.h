@@ -83,7 +83,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         {
             UnknownEmbedMode,
             NativeShellMode,         // embedded in the native Okular' shell
-            PrintPreviewMode         // embedded to show the print preview of a document
+            PrintPreviewMode,        // embedded to show the print preview of a document
+            KHTMLPartMode            // embedded in KHTML
         };
 
         // Default constructor

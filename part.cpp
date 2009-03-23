@@ -192,6 +192,10 @@ static Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, 
               || parent->objectName() == QLatin1String( "okular/okular__Shell" ) ) )
         return Part::NativeShellMode;
 
+    if ( parent
+         && ( QByteArray( "KHTMLPart" ) == parent->metaObject()->className() ) )
+        return Part::KHTMLPartMode;
+
     Q_FOREACH ( const QVariant &arg, args )
     {
         if ( arg.type() == QVariant::String )

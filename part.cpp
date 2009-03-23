@@ -1759,7 +1759,22 @@ void Part::slotAboutBackend()
     if ( !data )
         return;
 
-    KAboutApplicationDialog dlg( data->aboutData(), widget() );
+    KAboutData aboutData( *data->aboutData() );
+
+    if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
+    {
+        if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
+        {
+            const QString mimeTypeName = documentInfo->get("mimeType");
+            if ( !mimeTypeName.isEmpty() )
+            {
+                if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
+                    aboutData.setProgramIconName( type->iconName() );
+            }
+        }
+    }
+
+    KAboutApplicationDialog dlg( &aboutData, widget() );
     dlg.exec();
 }
 

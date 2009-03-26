@@ -35,6 +35,8 @@ public:
     explicit FilePrinterPreview( const QString &filename, QWidget *parent = 0 );
     virtual ~FilePrinterPreview();
 
+    QSize sizeHint() const;
+
 protected:
     void showEvent( QShowEvent *event );
 

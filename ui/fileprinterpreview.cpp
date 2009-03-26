@@ -37,6 +37,8 @@ public:
         , mainWidget(new QWidget(host))
         , previewPart(0)
         , failMessage(0)
+        , config(KSharedConfig::openConfig(QString::fromLatin1("okularrc")))
+
     {
         filename = _filename;
     }
@@ -53,6 +55,8 @@ public:
 
     KParts::ReadOnlyPart *previewPart;
     QWidget *failMessage;
+
+    KSharedConfig::Ptr config;
 };
 
 void FilePrinterPreviewPrivate::getPart()
@@ -124,11 +128,22 @@ FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent
     // Set up the dialog
     setCaption(i18n("Print Preview"));
     setButtons(KDialog::Close);
+
+    restoreDialogSize(d->config->group("Print Preview"));
 }
 
 FilePrinterPreview::~FilePrinterPreview()
 {
+    KConfigGroup group(d->config->group("Print Preview"));
+    saveDialogSize(group);
+
     delete d;
+}
+
+QSize FilePrinterPreview::sizeHint() const
+{
+    // return a more or less useful window size, if not saved already
+    return QSize(600, 500);
 }
 
 void FilePrinterPreview::showEvent(QShowEvent *event)

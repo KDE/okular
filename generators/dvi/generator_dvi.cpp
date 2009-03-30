@@ -37,15 +37,14 @@ static const int DviDebug = 4713;
 
 static KAboutData createAboutData()
 {
-    // ### TODO fill after the KDE 4.0 unfreeze
     KAboutData aboutData(
          "okular_dvi",
          "okular_dvi",
-         KLocalizedString(),
+         ki18n( "DVI Backend" ),
          "0.1",
-         KLocalizedString(),
+         ki18n( "A DVI file renderer" ),
          KAboutData::License_GPL,
-         KLocalizedString()
+         ki18n( "© 2006 Luigi Toscano" )
     );
     return aboutData;
 }

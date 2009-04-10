@@ -1437,7 +1437,7 @@ void Part::slotSaveFileAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
+    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()), QString(), widget() );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
         return;
 
@@ -1492,7 +1492,7 @@ void Part::slotSaveCopyAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( url().isLocalFile() ? url().url() : url().fileName(), QString(), widget() );
+    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()), QString(), widget() );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
         if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )

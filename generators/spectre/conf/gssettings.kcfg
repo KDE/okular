@@ -7,7 +7,7 @@
 	<group name="General">
 		<entry name="PlatformFonts" type="Bool">
 			<label>Use Platform Fonts</label>
-			<whatsthis>Determines whether Ghostscript should be allowed to use platform fonts, if false only usage of fonts embedded in the document will be allowed</whatsthis>
+			<whatsthis>Determines whether Ghostscript should be allowed to use platform fonts, if false only usage of fonts embedded in the document will be allowed.</whatsthis>
 			<default>true</default>
 		</entry>
 	</group>

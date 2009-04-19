@@ -31,9 +31,9 @@ macro_log_feature(EPUB_FOUND "libepub" "A library for reading EPub documents" "h
 
 # let's enable the generators properly configured
 
-if(POPPLER_FOUND)
+if(POPPLER_FOUND AND HAVE_POPPLER_0_8)
   add_subdirectory(poppler)
-endif(POPPLER_FOUND)
+endif(POPPLER_FOUND AND HAVE_POPPLER_0_8)
 
 if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)

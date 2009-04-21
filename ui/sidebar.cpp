@@ -366,6 +366,8 @@ Sidebar::Sidebar( QWidget *parent )
     mainlay->setMargin( 0 );
     mainlay->setSpacing( 0 );
 
+    setAutoFillBackground( true );
+
     d->list = new SidebarListWidget( this );
     mainlay->addWidget( d->list );
     d->list->setMouseTracking( true );

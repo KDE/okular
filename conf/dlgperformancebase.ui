@@ -1,7 +1,4 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>DlgPerformanceBase</class>
  <widget class="QWidget" name="DlgPerformanceBase" >
   <property name="geometry" >
@@ -240,8 +237,6 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <pixmapfunction>DesktopIcon</pixmapfunction>
  <customwidgets>
   <customwidget>
    <class>KButtonGroup</class>

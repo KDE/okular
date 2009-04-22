@@ -30,6 +30,7 @@
 #include <kurl.h>
 #include <QBuffer>
 #include <QImageReader>
+#include <QMutex>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>
@@ -2019,6 +2020,7 @@ XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
     if ( QFontDatabase::supportsThreadedFontRendering() )
         setFeature( Threaded );
 #endif
+    userMutex();
 }
 
 XpsGenerator::~XpsGenerator()
@@ -2059,6 +2061,7 @@ bool XpsGenerator::doCloseDocument()
 
 QImage XpsGenerator::image( Okular::PixmapRequest * request )
 {
+    QMutexLocker lock( userMutex() );
     QSize size( (int)request->width(), (int)request->height() );
     QImage image( size, QImage::Format_RGB32 );
     XpsPage *pageToRender = m_xpsFile->page( request->page()->number() );
@@ -2068,6 +2071,7 @@ QImage XpsGenerator::image( Okular::PixmapRequest * request )
 
 Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
 {
+    QMutexLocker lock( userMutex() );
     XpsPage * xpsPage = m_xpsFile->page( page->number() );
     return xpsPage->textPage();
 }

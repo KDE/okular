@@ -382,8 +382,8 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   int const kpsewhich_exit_code = kpsewhich_.exitCode();
   if (kpsewhich_exit_code < 0) {
     KMessageBox::sorry(0,
-                       QString("<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, error %2). As a result, "
-                               "some font files could not be located, and your document might be unreadable.</p></qt>").arg(kpsewhich_exit_code).arg(kpsewhich_.errorString()),
+                       i18n("<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, error %2). As a result, "
+                               "some font files could not be located, and your document might be unreadable.</p></qt>",kpsewhich_exit_code,kpsewhich_.errorString()),
                        i18n("Font generation aborted") );
 
     // This makes sure the we don't try to run kpsewhich again

@@ -130,7 +130,7 @@ bool GSGenerator::print( QPrinter& printer )
     int i = 0;
     while ( i < pageList.count() && exportStatus == SPECTRE_STATUS_SUCCESS )
     {
-        exportStatus = spectre_exporter_do_page( exporter, i );
+        exportStatus = spectre_exporter_do_page( exporter, pageList.at( i ) - 1 );
         i++;
     }
 

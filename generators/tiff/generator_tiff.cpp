@@ -354,6 +354,9 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
     uint32 width = 0;
     uint32 height = 0;
 
+    const double dpiX = Okular::Utils::dpiX();
+    const double dpiY = Okular::Utils::dpiY();
+
     for ( tdir_t i = 0; i < dirs; ++i )
     {
         if ( !TIFFSetDirectory( d->tiff, i ) )
@@ -363,8 +366,8 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
              TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             continue;
 
-        adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, Okular::Utils::dpiX(), &width );
-        adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, Okular::Utils::dpiY(), &height );
+        adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, dpiX, &width );
+        adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, dpiY, &height );
 
         Okular::Page * page = new Okular::Page( realdirs, width, height, readTiffRotation( d->tiff ) );
         pagesVector[ realdirs ] = page;

@@ -19,7 +19,12 @@ MobiDocument::MobiDocument(const QString &fileName) : QTextDocument()
 {
   file = new Mobipocket::QFileStream(fileName);
   doc = new Mobipocket::Document(file);
-  if (doc->isValid()) setHtml(fixMobiMarkup(doc->text()));
+  if (doc->isValid()) {
+      QString text=doc->text();
+      QString header=text.left(1024);
+      if (header.contains("<html>") || header.contains("<HTML>")) setHtml(fixMobiMarkup(text));
+      else setPlainText(text);
+  }
 }
 
 MobiDocument::~MobiDocument() 

@@ -90,7 +90,7 @@ void SearchLineEdit::setSearchFromStart( bool fromStart )
 void SearchLineEdit::restartSearch()
 {
     m_inputDelayTimer->stop();
-    m_inputDelayTimer->start( 500 );
+    m_inputDelayTimer->start( 700 );
     m_changed = true;
 }
 

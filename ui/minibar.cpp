@@ -320,7 +320,6 @@ PagesEdit::PagesEdit( MiniBar * parent )
 
     // customize text properties
     setAlignment( Qt::AlignCenter );
-    setMaxLength( 4 );
 
     // send a focus out event
     QFocusEvent fe( QEvent::FocusOut );

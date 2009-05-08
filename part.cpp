@@ -1255,8 +1255,10 @@ void Part::slotShowFindBar()
 
 void Part::slotHideFindBar()
 {
-    m_findBar->hide();
-    m_pageView->setFocus();
+    if ( m_findBar->maybeHide() )
+    {
+        m_pageView->setFocus();
+    }
 }
 
 //BEGIN go to page dialog

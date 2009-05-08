@@ -106,6 +106,20 @@ void FindBar::focusAndSetCursor()
     m_search->lineEdit()->setFocus();
 }
 
+bool FindBar::maybeHide()
+{
+    if ( m_search->lineEdit()->isSearchRunning() )
+    {
+        m_search->lineEdit()->stopSearch();
+        return false;
+    }
+    else
+    {
+        hide();
+        return true;
+    }
+}
+
 void FindBar::findNext()
 {
     m_search->lineEdit()->setSearchType( Okular::Document::NextMatch );

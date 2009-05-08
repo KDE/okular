@@ -32,6 +32,7 @@ class FindBar
         Qt::CaseSensitivity caseSensitivity() const;
 
         void focusAndSetCursor();
+        bool maybeHide();
 
     public slots:
         void findNext();

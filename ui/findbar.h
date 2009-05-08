@@ -45,6 +45,7 @@ class FindBar
         SearchLineWidget * m_search;
         QAction * m_caseSensitiveAct;
         QAction * m_fromCurrentPageAct;
+        bool m_active;
 };
 
 

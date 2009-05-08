@@ -262,4 +262,12 @@
     <default code="true">userString</default>
   </entry>
  </group>
+ <group name="Search" >
+  <entry key="SearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="SearchFromCurrentPage" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
 </kcfg>

@@ -21,9 +21,11 @@
 // local includes
 #include "searchlineedit.h"
 #include "core/document.h"
+#include "settings.h"
 
 FindBar::FindBar( Okular::Document * document, QWidget * parent )
   : QWidget( parent )
+  , m_active( false )
 {
     QHBoxLayout * lay = new QHBoxLayout( this );
     lay->setMargin( 2 );
@@ -74,7 +76,13 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     connect( m_caseSensitiveAct, SIGNAL( toggled( bool ) ), this, SLOT( caseSensitivityChanged() ) );
     connect( m_fromCurrentPageAct, SIGNAL( toggled( bool ) ), this, SLOT( fromCurrentPageChanged() ) );
 
+    m_caseSensitiveAct->setChecked( Okular::Settings::searchCaseSensitive() );
+    m_fromCurrentPageAct->setChecked( Okular::Settings::searchFromCurrentPage() );
+
     hide();
+
+    // "activate" it only at th very end
+    m_active = true;
 }
 
 FindBar::~FindBar()
@@ -113,12 +121,20 @@ void FindBar::findPrev()
 void FindBar::caseSensitivityChanged()
 {
     m_search->lineEdit()->setSearchCaseSensitivity( m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    if ( !m_active )
+        return;
+    Okular::Settings::setSearchCaseSensitive( m_caseSensitiveAct->isChecked() );
+    Okular::Settings::self()->writeConfig();
     m_search->lineEdit()->restartSearch();
 }
 
 void FindBar::fromCurrentPageChanged()
 {
     m_search->lineEdit()->setSearchFromStart( !m_fromCurrentPageAct->isChecked() );
+    if ( !m_active )
+        return;
+    Okular::Settings::setSearchFromCurrentPage( m_fromCurrentPageAct->isChecked() );
+    Okular::Settings::self()->writeConfig();
 }
 
 #include "findbar.moc"

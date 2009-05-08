@@ -37,12 +37,15 @@ class SearchLineEdit : public KLineEdit
         void setSearchMoveViewport( bool move );
         void setSearchFromStart( bool fromStart );
 
+        bool isSearchRunning() const;
+
     signals:
         void searchStarted();
         void searchStopped();
 
     public slots:
         void restartSearch();
+        void stopSearch();
         void findNext();
         void findPrev();
 
@@ -57,6 +60,7 @@ class SearchLineEdit : public KLineEdit
         bool m_moveViewport;
         bool m_changed;
         bool m_fromStart;
+        bool m_searchRunning;
 
     private slots:
         void slotTextChanged( const QString & text );

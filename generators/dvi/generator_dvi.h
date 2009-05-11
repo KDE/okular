@@ -30,9 +30,6 @@ class DviGenerator : public Okular::Generator
         DviGenerator( QObject *parent, const QVariantList &args );
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
-
         // document information
         const Okular::DocumentInfo *generateDocumentInfo();
 
@@ -43,6 +40,7 @@ class DviGenerator : public Okular::Generator
 
     protected:
         bool doCloseDocument();
+        QImage image( Okular::PixmapRequest * request );
         Okular::TextPage* textPage( Okular::Page *page );
 
    private:
@@ -51,7 +49,6 @@ class DviGenerator : public Okular::Generator
         Okular::DocumentInfo *m_docInfo;
         Okular::DocumentSynopsis *m_docSynopsis;
 
-        bool ready;
         dviRenderer *m_dviRenderer;
         QBitArray m_linkGenerated;
 

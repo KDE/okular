@@ -27,6 +27,7 @@
 #include <qurl.h>
 #include <qvector.h>
 #include <qstack.h>
+#include <qmutex.h>
 
 #include <kaboutdata.h>
 #include <kdebug.h>
@@ -52,8 +53,9 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
-  m_docInfo( 0 ), m_docSynopsis( 0 ), ready( false ), m_dviRenderer( 0 )
+  m_docInfo( 0 ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
 {
+    setFeature( Threaded );
     setFeature( TextExtraction );
     setFeature( PrintPostscript );
     if ( Okular::FilePrinter::ps2pdfAvailable() )
@@ -64,6 +66,8 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 {
     //kDebug(DviDebug) << "file:" << fileName;
     KUrl base( fileName );
+
+    (void)userMutex();
 
     m_dviRenderer = new dviRenderer();
     if ( ! m_dviRenderer->setFile( fileName, base ) )
@@ -80,7 +84,6 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     m_resolution = Okular::Utils::dpiY();
     loadPages( pagesVector );
 
-    ready = true;
     return true;
 }
 
@@ -93,15 +96,9 @@ bool DviGenerator::doCloseDocument()
     delete m_dviRenderer;
     m_dviRenderer = 0;
 
-    ready = false;
     m_linkGenerated.clear();
 
     return true;
-}
-
-bool DviGenerator::canGeneratePixmap () const
-{
-    return ready;
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
@@ -168,11 +165,12 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
     return dviLinks; 
 }
 
-void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
+QImage DviGenerator::image( Okular::PixmapRequest *request )
 {
 
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
+    QImage ret;
 
     pageInfo->width = request->width();
     pageInfo->height = request->height();
@@ -180,6 +178,8 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
     pageInfo->pageNumber = request->pageNumber() + 1;
 
 //  pageInfo->resolution = m_resolution;
+
+    QMutexLocker lock( userMutex() );
 
     SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
 
@@ -209,10 +209,7 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
         {
             kDebug(DviDebug) << "Image OK";
 
-            if ( !request->page()->isBoundingBoxKnown() )
-                updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( &(pageInfo->img) ) );
-
-            request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( pageInfo->img ) ) );
+            ret = pageInfo->img;
 
             if ( !m_linkGenerated[ request->pageNumber() ] )
             {
@@ -222,11 +219,11 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
         }
     }
 
-    ready = true;
+    lock.unlock();
 
     delete pageInfo;
 
-    signalPixmapRequestDone( request );
+    return ret;
 }
 
 Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
@@ -241,6 +238,9 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
     pageInfo->pageNumber = page->number() + 1;
 
     pageInfo->resolution = m_resolution;
+
+    QMutexLocker lock( userMutex() );
+
     SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
     pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
 
@@ -249,6 +249,7 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
     if ( m_dviRenderer )
     {
         m_dviRenderer->getText( pageInfo );
+        lock.unlock();
 
         ktp = extractTextFromPage( pageInfo );
     }
@@ -295,6 +296,8 @@ const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
 
     m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
 
+    QMutexLocker lock( userMutex() );
+
     if ( m_dviRenderer && m_dviRenderer->dviFile )
     {
         dvifile *dvif = m_dviRenderer->dviFile;
@@ -315,7 +318,11 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 
     m_docSynopsis = new Okular::DocumentSynopsis();
 
+    userMutex()->lock();
+
     QVector<PreBookmark> prebookmarks = m_dviRenderer->getPrebookmarks();
+
+    userMutex()->unlock();
 
     if ( prebookmarks.isEmpty() ) 
         return m_docSynopsis;

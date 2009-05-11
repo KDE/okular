@@ -15,6 +15,7 @@
 
 #include <poppler-qt4.h>
 
+#include <qbitarray.h>
 #include <qpointer.h>
 #include <qthread.h>
 
@@ -144,7 +145,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
         int nextFontPage;
 
-        QVector<bool> rectsGenerated;
+        QBitArray rectsGenerated;
 
         QPointer<PDFOptionsPage> pdfOptionsPage;
 };

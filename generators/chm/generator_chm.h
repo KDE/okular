@@ -16,6 +16,8 @@
 
 #include "lib/libchmfile.h"
 
+#include <qbitarray.h>
+
 class KHTMLPart;
 
 namespace Okular {
@@ -63,7 +65,7 @@ class CHMGenerator : public Okular::Generator
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
         Okular::DocumentInfo* m_docInfo;
-        QVector<bool> m_textpageAddedList;
+        QBitArray m_textpageAddedList;
 };
 
 #endif

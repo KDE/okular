@@ -430,6 +430,7 @@ bool PDFGenerator::doCloseDocument()
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
     nextFontPage = 0;
+    rectsGenerated.clear();
 
     return true;
 }

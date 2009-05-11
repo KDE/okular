@@ -280,12 +280,12 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
 {
-    if (node.nodeType() == DOM::Node::TEXT_NODE)
+    if (node.nodeType() == DOM::Node::TEXT_NODE && !node.getRect().isNull())
     {
         QString nodeText=node.nodeValue().string();
         QRect r=node.getRect();
-        int vWidth=m_syncGen->view()->contentsWidth();
-        int vHeight=m_syncGen->view()->contentsHeight();
+        int vWidth=m_syncGen->view()->width();
+        int vHeight=m_syncGen->view()->height();
         Okular::NormalizedRect *nodeNormRect;
 #define NOEXP
 #ifndef NOEXP

@@ -94,6 +94,7 @@ bool DviGenerator::doCloseDocument()
     m_dviRenderer = 0;
 
     ready = false;
+    m_linkGenerated.clear();
 
     return true;
 }
@@ -213,7 +214,11 @@ void DviGenerator::generatePixmap( Okular::PixmapRequest *request )
 
             request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( pageInfo->img ) ) );
 
-            request->page()->setObjectRects( generateDviLinks( pageInfo ) );
+            if ( !m_linkGenerated[ request->pageNumber() ] )
+            {
+                request->page()->setObjectRects( generateDviLinks( pageInfo ) );
+                m_linkGenerated[ request->pageNumber() ] = true;
+            }
         }
     }
 
@@ -352,6 +357,8 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
     int numofpages = m_dviRenderer->dviFile->total_pages;
     pagesVector.resize( numofpages );
+
+    m_linkGenerated.fill( false, numofpages );
 
     //kDebug(DviDebug) << "resolution:" << m_resolution << ", dviFile->preferred?";
 

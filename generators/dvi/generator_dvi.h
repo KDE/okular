@@ -12,6 +12,8 @@
 
 #include <okular/core/generator.h>
 
+#include <qbitarray.h>
+
 class dviRenderer;
 class dviPageInfo;
 class Anchor;
@@ -51,6 +53,7 @@ class DviGenerator : public Okular::Generator
 
         bool ready;
         dviRenderer *m_dviRenderer;
+        QBitArray m_linkGenerated;
 
         void loadPages( QVector< Okular::Page * > & pagesVector );
         Okular::TextPage *extractTextFromPage( dviPageInfo *pageInfo );

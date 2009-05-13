@@ -170,9 +170,25 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 		break;
 	
 		case Poppler::Link::Goto:
+		{
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
+#ifdef HAVE_POPPLER_0_11
+			const Poppler::LinkDestination dest = popplerLinkGoto->destination();
+			const QString destName = dest.destinationName();
+			if (destName.isEmpty())
+			{
+				fillViewportFromLinkDestination( viewport, dest );
+				link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
+			}
+			else
+			{
+				link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
+			}
+#else
 			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination() );
 			link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
+#endif
+		}
 		break;
 		
 		case Poppler::Link::Execute:

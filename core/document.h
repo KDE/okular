@@ -317,6 +317,13 @@ class OKULAR_EXPORT Document : public QObject
         void setNextDocumentViewport( const DocumentViewport &viewport );
 
         /**
+         * Sets the next @p namedDestination in the viewport history.
+         *
+         * @since 0.9 (KDE 4.3)
+         */
+        void setNextDocumentDestination( const QString &namedDestination );
+
+        /**
          * Sets the zoom for the current document.
          *
          * @param excludeId The observer ids which shouldn't be effected by this change.

@@ -112,6 +112,7 @@ class DocumentPrivate
         SaveInterface* generatorSave( GeneratorInfo& info );
         bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
+        DocumentViewport nextDocumentViewport() const;
 
         // private slots
         void saveDocumentInfo() const;
@@ -168,6 +169,7 @@ class DocumentPrivate
         QLinkedList< DocumentViewport > m_viewportHistory;
         QLinkedList< DocumentViewport >::iterator m_viewportIterator;
         DocumentViewport m_nextDocumentViewport; // see Link::Goto for an explanation
+        QString m_nextDocumentDestination;
 
         // observers / requests / allocator stuff
         QMap< int, DocumentObserver * > m_observers;

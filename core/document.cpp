@@ -719,6 +719,20 @@ bool DocumentPrivate::savePageDocumentInfo( KTemporaryFile *infoFile, int what )
     return false;
 }
 
+DocumentViewport DocumentPrivate::nextDocumentViewport() const
+{
+    DocumentViewport ret = m_nextDocumentViewport;
+    if ( !m_nextDocumentDestination.isEmpty() && m_generator )
+    {
+        DocumentViewport vp( m_generator->metaData( "NamedViewport", m_nextDocumentDestination ).toString() );
+        if ( vp.isValid() )
+        {
+            ret = vp;
+        }
+    }
+    return ret;
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_xmlFileName.isEmpty() )
@@ -1655,10 +1669,12 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
     d->m_memCheckTimer->start( 2000 );
 
-    if (d->m_nextDocumentViewport.isValid())
+    const DocumentViewport nextViewport = d->nextDocumentViewport();
+    if ( nextViewport.isValid() )
     {
-        setViewport(d->m_nextDocumentViewport);
+        setViewport( nextViewport );
         d->m_nextDocumentViewport = DocumentViewport();
+        d->m_nextDocumentDestination = QString();
     }
 
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
@@ -2472,6 +2488,11 @@ void Document::setNextDocumentViewport( const DocumentViewport & viewport )
     d->m_nextDocumentViewport = viewport;
 }
 
+void Document::setNextDocumentDestination( const QString &namedDestination )
+{
+    d->m_nextDocumentDestination = namedDestination;
+}
+
 void Document::searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
                                SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
 {
@@ -2749,6 +2770,7 @@ void Document::processAction( const Action * action )
         case Action::Goto: {
             const GotoAction * go = static_cast< const GotoAction * >( action );
             d->m_nextDocumentViewport = go->destViewport();
+            d->m_nextDocumentDestination = go->destinationName();
 
             // Explanation of why d->m_nextDocumentViewport is needed:
             // all openRelativeFile does is launch a signal telling we
@@ -2766,12 +2788,14 @@ void Document::processAction( const Action * action )
             }
             else
             {
+                const DocumentViewport nextViewport = d->nextDocumentViewport();
                 // skip local links that point to nowhere (broken ones)
-                if (!d->m_nextDocumentViewport.isValid())
+                if ( !nextViewport.isValid() )
                     return;
 
-                setViewport( d->m_nextDocumentViewport, -1, true );
+                setViewport( nextViewport, -1, true );
                 d->m_nextDocumentViewport = DocumentViewport();
+                d->m_nextDocumentDestination = QString();
             }
 
             } break;

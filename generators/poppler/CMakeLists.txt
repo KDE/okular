@@ -10,6 +10,15 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_9)
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::LinkDestination * dest = 0;
+  const QString foo = dest->destinationName();
+  return 0;
+}
+" HAVE_POPPLER_0_11)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

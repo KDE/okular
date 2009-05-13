@@ -56,12 +56,23 @@ class Okular::GotoActionPrivate : public Okular::ActionPrivate
         {
         }
 
+        GotoActionPrivate( const QString &fileName, const QString &namedDestination )
+            : ActionPrivate(), m_extFileName( fileName ), m_dest( namedDestination )
+        {
+        }
+
         QString m_extFileName;
         DocumentViewport m_vp;
+        QString m_dest;
 };
 
 GotoAction::GotoAction( const QString& fileName, const DocumentViewport & viewport )
     : Action( *new GotoActionPrivate( fileName, viewport ) )
+{
+}
+
+GotoAction::GotoAction( const QString& fileName, const QString& namedDestination )
+    : Action( *new GotoActionPrivate( fileName, namedDestination ) )
 {
 }
 
@@ -97,6 +108,12 @@ DocumentViewport GotoAction::destViewport() const
 {
     Q_D( const GotoAction );
     return d->m_vp;
+}
+
+QString GotoAction::destinationName() const
+{
+    Q_D( const GotoAction );
+    return d->m_dest;
 }
 
 // ExecuteAction

@@ -98,6 +98,16 @@ class OKULAR_EXPORT GotoAction : public Action
         GotoAction( const QString& fileName, const DocumentViewport & viewport );
 
         /**
+         * Creates a new goto action.
+         *
+         * @p fileName The name of an external file that shall be loaded.
+         * @p namedDestination The target named destination for the target document.
+         *
+         * @since 0.9 (KDE 4.3)
+         */
+        GotoAction( const QString& fileName, const QString& namedDestination );
+
+        /**
          * Destroys the goto action.
          */
         virtual ~GotoAction();
@@ -126,6 +136,13 @@ class OKULAR_EXPORT GotoAction : public Action
          * Returns the document viewport the goto action points to.
          */
         DocumentViewport destViewport() const;
+
+        /**
+         * Returns the document named destination the goto action points to.
+         *
+         * @since 0.9 (KDE 4.3)
+         */
+        QString destinationName() const;
 
     private:
         Q_DECLARE_PRIVATE( GotoAction )

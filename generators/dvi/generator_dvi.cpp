@@ -102,6 +102,12 @@ bool DviGenerator::doCloseDocument()
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
+                                           const Anchor &anch, const Okular::Page *page )
+{
+    fillViewportFromAnchor( vp, anch, page->width(), page->height() );
+}
+
+void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
                                            const Anchor &anch, int pW, int pH ) 
 {
     vp.pageNumber = anch.page - 1;
@@ -447,5 +453,24 @@ bool DviGenerator::print( QPrinter& printer )
     return true; 
 }
 
+QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) const
+{
+    if ( key == "NamedViewport" && !option.toString().isEmpty() )
+    {
+        const Anchor anchor = m_dviRenderer->parseReference( option.toString() );
+        if ( anchor.isValid() )
+        {
+            const Okular::Page *page = document()->page( anchor.page - 1 );
+            Q_ASSERT_X( page, "DviGenerator::metaData()", "NULL page as result of valid Anchor" );
+            Okular::DocumentViewport viewport;
+            const_cast< DviGenerator * >( this )->fillViewportFromAnchor( viewport, anchor, page );
+            if ( viewport.isValid() )
+            {
+                return viewport.toString();
+            }
+        }
+    }
+    return QVariant();
+}
 
 #include "generator_dvi.moc"

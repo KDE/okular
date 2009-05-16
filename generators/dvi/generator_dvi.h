@@ -38,6 +38,8 @@ class DviGenerator : public Okular::Generator
 
         bool print( QPrinter &printer );
 
+        QVariant metaData( const QString & key, const QVariant & option ) const;
+
     protected:
         bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
@@ -56,6 +58,8 @@ class DviGenerator : public Okular::Generator
         Okular::TextPage *extractTextFromPage( dviPageInfo *pageInfo );
         void fillViewportFromAnchor( Okular::DocumentViewport &vp, const Anchor &anch, 
                                      int pW, int pH ); 
+        void fillViewportFromAnchor( Okular::DocumentViewport &vp, const Anchor &anch,
+                                     const Okular::Page *page );
         QLinkedList<Okular::ObjectRect*> generateDviLinks( const dviPageInfo *pageInfo );
 };
 

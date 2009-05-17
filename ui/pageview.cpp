@@ -74,6 +74,11 @@ static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
+static inline double normClamp( double value, double def )
+{
+    return ( value < 0.0 || value > 1.0 ) ? def : value;
+}
+
 // structure used internally by PageView for data storage
 class PageViewPrivate
 {
@@ -914,14 +919,14 @@ void PageView::notifyViewportChanged( bool smoothMove )
     {
         if ( vp.rePos.pos == Okular::DocumentViewport::Center )
         {
-            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() );
-            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() );
+            newCenterX += (int)( normClamp( vp.rePos.normalizedX, 0.5 ) * (double)r.width() );
+            newCenterY += (int)( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() );
         }
         else
         {
             // TopLeft
-            newCenterX += (int)( vp.rePos.normalizedX * (double)r.width() + viewport()->width() / 2 );
-            newCenterY += (int)( vp.rePos.normalizedY * (double)r.height() + viewport()->height() / 2 );
+            newCenterX += (int)( normClamp( vp.rePos.normalizedX, 0.0 ) * (double)r.width() + viewport()->width() / 2 );
+            newCenterY += (int)( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() + viewport()->height() / 2 );
         }
     }
     else
@@ -2982,8 +2987,8 @@ void PageView::slotRelayoutPages()
                 int prevX = horizontalScrollBar()->value(),
                     prevY = verticalScrollBar()->value();
                 const QRect & geometry = d->items[ vp.pageNumber ]->croppedGeometry();
-                double nX = vp.rePos.enabled ? vp.rePos.normalizedX : 0.5,
-                       nY = vp.rePos.enabled ? vp.rePos.normalizedY : 0.0;
+                double nX = vp.rePos.enabled ? normClamp( vp.rePos.normalizedX, 0.5 ) : 0.5,
+                       nY = vp.rePos.enabled ? normClamp( vp.rePos.normalizedY, 0.0 ) : 0.0;
                 center( geometry.left() + qRound( nX * (double)geometry.width() ),
                         geometry.top() + qRound( nY * (double)geometry.height() ) );
                 // center() usually moves the viewport, that requests pixmaps too.

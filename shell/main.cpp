@@ -72,7 +72,7 @@ int main(int argc, char** argv)
         {
             for (int i = 0; i < args->count(); ++i)
             {
-                Shell* widget = new Shell(args, args->url(i));
+                Shell* widget = new Shell(args, i);
                 widget->show();
             }
         }

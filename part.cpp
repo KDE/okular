@@ -994,8 +994,30 @@ bool Part::openFile()
     return true;
 }
 
-bool Part::openUrl(const KUrl &url)
+bool Part::openUrl(const KUrl &_url)
 {
+    KUrl url( _url );
+    if ( url.hasHTMLRef() )
+    {
+        const QString dest = url.htmlRef();
+        bool ok = true;
+        const int page = dest.toInt( &ok );
+        if ( ok )
+        {
+            Okular::DocumentViewport vp( page - 1 );
+            vp.rePos.enabled = true;
+            vp.rePos.normalizedX = 0;
+            vp.rePos.normalizedY = 0;
+            vp.rePos.pos = Okular::DocumentViewport::TopLeft;
+            m_document->setNextDocumentViewport( vp );
+        }
+        else
+        {
+            m_document->setNextDocumentDestination( dest );
+        }
+        url.setHTMLRef( QString() );
+    }
+
     // this calls in sequence the 'closeUrl' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openUrl( url );
 

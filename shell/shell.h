@@ -41,7 +41,7 @@ public:
   /**
    * Constructor
    */
-  explicit Shell(KCmdLineArgs* args = 0, const KUrl &url = KUrl());
+  explicit Shell(KCmdLineArgs* args = 0, int argIndex = -1);
 
   /**
    * Default Destructor
@@ -77,7 +77,7 @@ private slots:
   void slotUpdateFullScreen();
   void slotShowMenubar();
 
-  void openUrl( const KUrl & url, uint page = 0 );
+  void openUrl( const KUrl & url );
   void delayedOpen();
 
 signals:

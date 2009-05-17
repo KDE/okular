@@ -46,10 +46,31 @@
 // local includes
 #include "kdocumentviewer.h"
 
-Shell::Shell(KCmdLineArgs* args, const KUrl &url)
+Shell::Shell(KCmdLineArgs* args, int argIndex)
   : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
-  m_openUrl = url;
+  if (m_args && argIndex != -1)
+  {
+    /*
+     Rationale for the small "cut-and-paste" work being done below:
+     KCmdLineArgs::makeURL() (used by ::url() encodes any # into the URL itself,
+     so we have to find it manually and build up the URL by taking its ref,
+     if any.
+     */
+    KUrl url = m_args->url(argIndex);
+    const QString arg = m_args->arg(argIndex);
+    const int sharpPos = arg.lastIndexOf(QLatin1Char('#'));
+    if (sharpPos != -1)
+    {
+      url = KCmdLineArgs::makeURL(arg.left(sharpPos).toUtf8());
+      url.setHTMLRef(arg.mid(sharpPos + 1));
+    }
+    else if (!m_args->getOption("page").isEmpty())
+    {
+      url.setHTMLRef(m_args->getOption("page"));
+    }
+    m_openUrl = url;
+  }
   init();
 }
 
@@ -105,13 +126,7 @@ void Shell::init()
 
 void Shell::delayedOpen()
 {
-   uint page = 0;
-   if (m_args && m_doc)
-   {
-       QString pageopt = m_args->getOption("page");
-       page = pageopt.toUInt();
-   }
-   openUrl(m_openUrl, page);
+   openUrl( m_openUrl );
 }
 
 Shell::~Shell()
@@ -122,13 +137,13 @@ Shell::~Shell()
         m_args->clear();
 }
 
-void Shell::openUrl( const KUrl & url, uint page )
+void Shell::openUrl( const KUrl & url )
 {
     if ( m_part )
     {
         if ( m_doc && m_args && m_args->isSet( "presentation" ) )
             m_doc->startPresentation();
-        bool openOk = page > 0 && m_doc ? m_doc->openDocument( url, page ) : m_part->openUrl( url );
+        bool openOk = m_part->openUrl( url );
         const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
         if ( !isstdin )
         {

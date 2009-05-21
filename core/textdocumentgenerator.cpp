@@ -428,12 +428,12 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
         formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ) );
         formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PDF ) );
 #if QT_VERSION >= 0x040500
-	if ( QTextDocumentWriter::supportedDocumentFormats().contains( "ODF" ) ) {
-	    formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::OpenDocumentText ) );
-	}
-	if ( QTextDocumentWriter::supportedDocumentFormats().contains( "HTML" ) ) {
-	    formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::HTML ) );
-	}
+        if ( QTextDocumentWriter::supportedDocumentFormats().contains( "ODF" ) ) {
+            formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::OpenDocumentText ) );
+        }
+        if ( QTextDocumentWriter::supportedDocumentFormats().contains( "HTML" ) ) {
+            formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::HTML ) );
+        }
 #endif
     }
 
@@ -468,13 +468,13 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
         return true;
 #if QT_VERSION >= 0x040500
     } else if ( format.mimeType()->name() == QLatin1String( "application/vnd.oasis.opendocument.text" ) ) {
-	QTextDocumentWriter odfWriter( fileName, "odf" );
+        QTextDocumentWriter odfWriter( fileName, "odf" );
 
-	return odfWriter.write( d->mDocument );
+        return odfWriter.write( d->mDocument );
     } else if ( format.mimeType()->name() == QLatin1String( "text/html" ) ) {
-	QTextDocumentWriter odfWriter( fileName, "html" );
+        QTextDocumentWriter odfWriter( fileName, "html" );
 
-	return odfWriter.write( d->mDocument );
+        return odfWriter.write( d->mDocument );
 #endif
     }
     return false;

@@ -30,7 +30,7 @@
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
 		<date>2009-05-22</date>
-		<releaseinfo>0.8.80</releaseinfo>
+		<releaseinfo>0.9</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>

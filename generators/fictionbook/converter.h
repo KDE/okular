@@ -42,6 +42,7 @@ class Converter : public Okular::TextDocumentConverter
         bool convertLink( const QDomElement &element );
         bool convertEmphasis( const QDomElement &element );
         bool convertStrong( const QDomElement &element );
+        bool convertStrikethrough( const QDomElement &element );
         bool convertStyle( const QDomElement &element );
 
 

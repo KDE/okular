@@ -57,6 +57,18 @@ class BookmarkItem : public QTreeWidgetItem
             return QTreeWidgetItem::data( column, role );
         }
 
+        virtual bool operator<( const QTreeWidgetItem& other ) const
+        {
+            if ( other.type() == BookmarkItemType )
+            {
+                const BookmarkItem *cmp = static_cast< const BookmarkItem* >( &other );
+                const int v = m_viewport.pageNumber - cmp->m_viewport.pageNumber;
+                if ( v != 0 )
+                    return v < 0;
+            }
+            return QTreeWidgetItem::operator<( other );
+        }
+
         KBookmark& bookmark()
         {
             return m_bookmark;
@@ -300,6 +312,8 @@ void BookmarkList::rebuildTree( bool filter )
             m_currentDocumentItem = currenturlitem;
         }
     }
+
+    m_tree->sortItems( 0, Qt::AscendingOrder );
 
     connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
 }

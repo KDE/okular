@@ -4,6 +4,7 @@ Name=Okular
 Name[ar]=اوكلار
 Name[hne]=ओकुलर
 Name[pa]=ਓਕੁਲਾਰ
+Name[sr]=Окулар
 Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart

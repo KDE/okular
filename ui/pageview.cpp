@@ -413,7 +413,7 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom  = new KSelectAction(KIcon( "zoom-original" ), i18n("Zoom"), this);
+    d->aZoom  = new KSelectAction(KIcon( "page-zoom" ), i18n("Zoom"), this);
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 13 );
@@ -509,7 +509,7 @@ do { \
     d->aMouseNormal->setActionGroup( actGroup );
     d->aMouseNormal->setChecked( true );
 
-    KAction * mz  = new KAction(KIcon( "zoom-original" ), i18n("&Zoom Tool"), this);
+    KAction * mz  = new KAction(KIcon( "page-zoom" ), i18n("&Zoom Tool"), this);
     ac->addAction("mouse_zoom", mz );
     connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );

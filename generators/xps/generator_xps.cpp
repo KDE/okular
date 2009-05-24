@@ -1,5 +1,5 @@
 /*
-  Copyright (C)  2006  Brad Hards <bradh@frogmouth.net>
+  Copyright (C)  2006, 2009  Brad Hards <bradh@frogmouth.net>
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -784,7 +784,8 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
 void XpsHandler::processGlyph( XpsRenderNode &node )
 {
-    //TODO Currently ignored attributes: BidiLevel, CaretStops, DeviceFontName, IsSideways, Indices, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
+    //TODO Currently ignored attributes: CaretStops, DeviceFontName, IsSideways, OpacityMask, Name, FixedPage.NavigateURI, xml:lang, x:key
+    //TODO Indices is only partially implemented
     //TODO Currently ignored child elements: Clip, OpacityMask
     //Handled separately: RenderTransform
 
@@ -870,7 +871,58 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
         }
     }
 
-    m_painter->drawText( origin, unicodeString( node.attributes.value( "UnicodeString" ) ) );
+    // BiDiLevel - default Left-to-Right
+    m_painter->setLayoutDirection( Qt::LeftToRight );
+    att = node.attributes.value( "BiDiLevel" );
+    if ( !att.isEmpty() ) {
+        if ( (att.toInt() % 2) == 1 ) {
+            // odd BiDiLevel, so Right-to-Left
+            m_painter->setLayoutDirection( Qt::RightToLeft );
+        }
+    }
+
+    // Indices - partial handling only
+    att = node.attributes.value( "Indices" );
+    QList<qreal> advanceWidths;
+    if ( ! att.isEmpty() ) {
+        QStringList indicesElements = att.split( ";" );
+        for( int i = 0; i < indicesElements.size(); ++i ) {
+            if ( indicesElements.at(i).contains( "," ) ) {
+                QStringList parts = indicesElements.at(i).split( "," );
+                if (parts.size() == 2 ) {
+                    // regular advance case, no offsets
+                    advanceWidths.append( parts.at(1).toDouble() * fontSize / 100.0 );
+                } else if (parts.size() == 3 ) {
+                    // regular advance case, with uOffset
+                    qreal AdvanceWidth = parts.at(1).toDouble() * fontSize / 100.0 ;
+                    qreal uOffset = parts.at(2).toDouble() / 100.0;
+                    advanceWidths.append( AdvanceWidth + uOffset );
+                } else {
+                    // has vertical offset, but don't know how to handle that yet
+                    kDebug(XpsDebug) << "Unhandled Indices element: " << indicesElements.at(i);
+                    advanceWidths.append( -1.0 );
+                }
+            } else {
+                // no special advance case
+                advanceWidths.append( -1.0 );
+            }
+        }
+    }
+
+    // UnicodeString
+    QString stringToDraw( unicodeString( node.attributes.value( "UnicodeString" ) ) );
+    QPointF originAdvance(0, 0);
+    QFontMetrics metrics = m_painter->fontMetrics();
+    for ( int i = 0; i < stringToDraw.size(); ++i ) {
+        QChar thisChar = stringToDraw.at( i );
+        m_painter->drawText( origin + originAdvance, QString( thisChar ) );
+	const qreal advanceWidth = advanceWidths.value( i, qreal(-1.0) );
+        if ( advanceWidth > 0.0 ) {
+            originAdvance.rx() += advanceWidth;
+        } else {
+            originAdvance.rx() += metrics.width( thisChar );
+        }
+    }
     // kDebug(XpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri");
     // kDebug(XpsDebug) << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY");
     // kDebug(XpsDebug) << "    Unicode: " << atts.value("UnicodeString");

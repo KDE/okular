@@ -17,7 +17,7 @@
 #include "core/annotations.h"
 
 AnnotatorEngine::AnnotatorEngine( const QDomElement & engineElement )
-    : m_engineElement( engineElement ), m_creationCompleted( false )
+    : m_engineElement( engineElement ), m_creationCompleted( false ), m_item( 0 )
 {
     // parse common engine attributes
     if ( engineElement.hasAttribute( "color" ) )

@@ -23,6 +23,7 @@
 #include <okular/core/action.h>
 #include <okular/core/annotations.h>
 #include <okular/core/document.h>
+#include <okular/core/utils.h>
 
 #include <klocale.h>
 
@@ -127,7 +128,8 @@ QTextDocument* Converter::convert( const QString &fileName )
    */
   const QString masterLayout = mStyleInformation->masterPageName();
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
-  mTextDocument->setPageSize( QSize( qRound( property.width() ), qRound( property.height() ) ) );
+  mTextDocument->setPageSize( QSize( qRound( property.width() / 72.0 * Okular::Utils::dpiX() ),
+                                     qRound( property.height() / 72.0 * Okular::Utils::dpiY() ) ) );
 
   QTextFrameFormat frameFormat;
   frameFormat.setMargin( qRound( property.margin() ) );

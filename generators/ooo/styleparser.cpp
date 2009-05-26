@@ -461,8 +461,10 @@ double StyleParser::convertUnit( const QString &data )
     double value = data.left( data.length() - 4 ).toDouble();
     points = CC_TO_POINT( value );
   } else {
+    if ( !data.isEmpty() ) {
+      qDebug( "unknown unit for '%s'", qPrintable( data ) );
+    }
     points = 12;
-    qDebug( "unknown unit %s", qPrintable( data ) );
   }
 
   return points;

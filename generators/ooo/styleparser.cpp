@@ -337,6 +337,17 @@ TextFormatProperty StyleParser::parseTextProperty( QDomElement &parent )
   if ( !fontWeight.isEmpty() )
     property.setFontWeight( weightMap[ fontWeight ] );
 
+  static QMap<QString, QFont::Style> fontStyleMap;
+  if ( fontStyleMap.isEmpty() ) {
+    fontStyleMap.insert( "normal", QFont::StyleNormal );
+    fontStyleMap.insert( "italic", QFont::StyleItalic );
+    fontStyleMap.insert( "oblique", QFont::StyleOblique );
+  }
+
+  const QString fontStyle = parent.attribute( "font-style" );
+  if ( !fontStyle.isEmpty() )
+    property.setFontStyle( fontStyleMap.value( fontStyle, QFont::StyleNormal ) );
+
   const QColor color( parent.attribute( "color" ) );
   if ( color.isValid() ) {
     property.setColor( color );

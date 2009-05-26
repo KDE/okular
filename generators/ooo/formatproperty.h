@@ -83,6 +83,7 @@ class TextFormatProperty
     void setFontSize( int size );
     void setFontName( const QString &name );
     void setFontWeight( int weight );
+    void setFontStyle( int style );
     void setTextPosition( int position );
     void setColor( const QColor &color );
     void setBackgroundColor( const QColor &color );
@@ -93,6 +94,7 @@ class TextFormatProperty
     bool mHasFontSize;
     int mFontWeight;
     QString mFontName;
+    int mFontStyle;
     int mTextPosition;
     QColor mColor;
     QColor mBackgroundColor;

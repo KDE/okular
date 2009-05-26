@@ -805,7 +805,9 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
-    kDebug(PDFDebug) << "calling" ;
+#ifdef PDFGENERATOR_DEBUG
+    kDebug(PDFDebug) << "page" << page->number();
+#endif
     // build a TextList...
     Poppler::Page *pp = pdfdoc->page( page->number() );
     userMutex()->lock();
@@ -1078,7 +1080,9 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
 {    
     Okular::TextPage* ktp=new Okular::TextPage;
     Poppler::TextBox *next; 
-    kWarning(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
+#ifdef PDFGENERATOR_DEBUG
+    kDebug(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
+#endif
     int charCount=0;
     int j;
     QString s;

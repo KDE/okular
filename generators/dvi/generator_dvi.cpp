@@ -68,7 +68,11 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     m_dviRenderer = new dviRenderer();
     if ( ! m_dviRenderer->setFile( fileName, base ) )
+    {
+        delete m_dviRenderer;
+        m_dviRenderer = 0;
         return false;
+    }
 
     m_dviRenderer->setParentWidget( document()->widget() );
 

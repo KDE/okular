@@ -82,13 +82,13 @@ void ParagraphFormatProperty::setBackgroundColor( const QColor &color )
 
 TextFormatProperty::TextFormatProperty()
   : mStyleInformation( 0 ), mHasFontSize( false ),
-    mFontWeight( -1 ), mFontStyle( 0 ), mTextPosition( 0 )
+    mFontWeight( -1 ), mFontStyle( -1 ), mTextPosition( 0 )
 {
 }
 
 TextFormatProperty::TextFormatProperty( const StyleInformation *information )
   : mStyleInformation( information ), mHasFontSize( false ),
-    mFontWeight( -1 ), mFontStyle( 0 ), mTextPosition( 0 )
+    mFontWeight( -1 ), mFontStyle( -1 ), mTextPosition( 0 )
 {
 }
 
@@ -113,7 +113,7 @@ void TextFormatProperty::apply( QTextCharFormat *format ) const
     format->setFont( font );
   }
 
-  if ( mFontStyle != 0 ) {
+  if ( mFontStyle != -1 ) {
     QFont font = format->font();
     font.setStyle( (QFont::Style)mFontStyle );
     format->setFont( font );

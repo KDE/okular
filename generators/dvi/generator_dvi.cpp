@@ -34,11 +34,13 @@
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
+#ifdef DVI_OPEN_BUSYLOOP
 #ifdef Q_OS_UNIX
 #include <ctime>
 #endif
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep
+#endif
 #endif
 
 static const int DviDebug = 4713;
@@ -77,6 +79,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     (void)userMutex();
 
     m_dviRenderer = new dviRenderer();
+#ifdef DVI_OPEN_BUSYLOOP
     static const ushort s_waitTime = 800; // milliseconds
     static const int s_maxIterations = 10;
     int iter = 0;
@@ -97,6 +100,14 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         m_dviRenderer = 0;
         return false;
     }
+#else
+    if ( !m_dviRenderer->isValidFile( fileName ) )
+    {
+        delete m_dviRenderer;
+        m_dviRenderer = 0;
+        return false;
+    }
+#endif
     if ( ! m_dviRenderer->setFile( fileName, base ) )
     {
         delete m_dviRenderer;

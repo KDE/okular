@@ -501,6 +501,9 @@ bool Converter::convertParagraph( const QDomElement &element )
             } else if ( childElement.tagName() == QLatin1String( "image" ) ) {
                 if ( !convertImage( childElement ) )
                     return false;
+            } else if ( childElement.tagName() == QLatin1String( "strikethrough" ) ) {
+                if ( !convertStrikethrough( childElement ) )
+                    return false;
             }
         } else if ( child.isText() ) {
             const QDomText childText = child.toText();
@@ -520,6 +523,22 @@ bool Converter::convertEmphasis( const QDomElement &element )
     QTextCharFormat italicFormat( origFormat );
     italicFormat.setFontItalic( true );
     mCursor->setCharFormat( italicFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
+
+    return true;
+}
+
+bool Converter::convertStrikethrough( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat strikeoutFormat( origFormat );
+    strikeoutFormat.setFontStrikeOut( true );
+    mCursor->setCharFormat( strikeoutFormat );
 
     if ( !convertParagraph( element ) )
         return false;

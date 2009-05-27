@@ -2140,10 +2140,6 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         a->setEnabled( false );
         m_bookmarkActions.append( a );
     }
-    for ( int i = 0; i < m_bookmarkActions.count(); ++i )
-    {
-        actionCollection()->addAction( QString( "bookmark_action_%1" ).arg( i ), m_bookmarkActions.at(i) );
-    }
     plugActionList( "bookmarks_currentdocument", m_bookmarkActions );
 
     m_prevBookmark->setEnabled( havebookmarks );

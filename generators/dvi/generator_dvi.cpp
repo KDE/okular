@@ -42,7 +42,7 @@ static KAboutData createAboutData()
          "okular_dvi",
          "okular_dvi",
          KLocalizedString(),
-         "0.1",
+         "0.1.1",
          KLocalizedString(),
          KAboutData::License_GPL,
          KLocalizedString()

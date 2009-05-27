@@ -39,7 +39,7 @@ static KAboutData createAboutData()
          "okular_ghostview",
          "okular_ghostview",
          ki18n( "PS Backend" ),
-         "0.1.1",
+         "0.1.2",
          ki18n( "A PostScript file renderer." ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Albert Astals Cid" ),

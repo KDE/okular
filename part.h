@@ -111,6 +111,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         Q_SCRIPTABLE uint pages();
         Q_SCRIPTABLE uint currentPage();
         Q_SCRIPTABLE QString currentDocument();
+        Q_SCRIPTABLE QString documentMetaData( const QString &metaData ) const;
         Q_SCRIPTABLE void slotPreferences();
         Q_SCRIPTABLE void slotFind();
         Q_SCRIPTABLE void slotPrintPreview();

@@ -835,6 +835,24 @@ QString Part::currentDocument()
 }
 
 
+QString Part::documentMetaData( const QString &metaData ) const
+{
+    const Okular::DocumentInfo * info = m_document->documentInfo();
+    if ( info )
+    {
+        QDomElement docElement = info->documentElement();
+        for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() )
+        {
+            const QDomElement element = node.toElement();
+            if ( metaData.compare( element.tagName(), Qt::CaseInsensitive ) == 0 )
+                return element.attribute( "value" );
+        }
+    }
+
+    return QString();
+}
+
+
 bool Part::slotImportPSFile()
 {
     QString app = KStandardDirs::findExe( "ps2pdf" );

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=Mobipocket document
+Name[ca]=Document Mobipocket
 Name[da]=Mobipocket-dokument
 Name[de]=Mobipocket-Dokument
 Name[el]=Έγγραφο Mobipocket
@@ -26,6 +27,7 @@ Name[x-test]=xxMobipocket documentxx
 Name[zh_CN]=Mobipocket 文档
 Name[zh_TW]=Mobipocket 文件
 Comment=Mobipocket backend for Okular
+Comment[ca]=Dorsal de Mobipocket per a l'Okular
 Comment[da]=Mobipocket-motor til Okular
 Comment[de]=Ein Anzeigemodul für Mobipocket-Dateien in Okular
 Comment[el]=Σύστημα υποστήριξης Mobipocket για το Okular

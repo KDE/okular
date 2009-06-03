@@ -849,6 +849,7 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 
 bool PDFGenerator::print( QPrinter& printer )
 {
+#if DUMMY_QPRINTER_COPY
     // Get the real page size to pass to the ps generator
     QPrinter dummy( QPrinter::PrinterResolution );
     dummy.setFullPage( true );
@@ -857,6 +858,10 @@ bool PDFGenerator::print( QPrinter& printer )
     dummy.setPaperSize( printer.paperSize( QPrinter::Millimeter ), QPrinter::Millimeter );
     int width = dummy.width();
     int height = dummy.height();
+#else
+    int width = printer.width();
+    int height = printer.height();
+#endif
 
     // Create the tempfile to send to FilePrinter, which will manage the deletion
     KTemporaryFile tf;

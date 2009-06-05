@@ -187,6 +187,10 @@ bool StyleParser::parseMasterStyles( QDomElement &parent )
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "master-page" ) ) {
       mStyleInformation->addMasterLayout( element.attribute( "name" ), element.attribute( "page-layout-name" ) );
+      if ( !mMasterPageNameSet ) {
+        mStyleInformation->setMasterPageName( element.attribute( "name" ) );
+        mMasterPageNameSet = true;
+      }
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -237,10 +241,12 @@ StyleFormatProperty StyleParser::parseStyleProperty( QDomElement &parent )
 
   property.setParentStyleName( parent.attribute( "parent-style-name" ) );
   property.setFamily( parent.attribute( "family" ) );
-  property.setMasterPageName( parent.attribute( "master-page-name" ) );
-  if ( !mMasterPageNameSet ) {
-    mStyleInformation->setMasterPageName( parent.attribute( "master-page-name" ) );
-    mMasterPageNameSet = true;
+  if ( parent.hasAttribute( "master-page-name" ) ) {
+    property.setMasterPageName( parent.attribute( "master-page-name" ) );
+    if ( !mMasterPageNameSet ) {
+      mStyleInformation->setMasterPageName( parent.attribute( "master-page-name" ) );
+      mMasterPageNameSet = true;
+    }
   }
 
   QDomElement element = parent.firstChildElement();

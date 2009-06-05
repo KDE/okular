@@ -52,7 +52,7 @@ bool Document::open()
 
   // we should really get the file names from the manifest, but for now, we only care
   // if the manifest says the files are encrypted.
-  
+
   if ( !entries.contains( "content.xml" ) ) {
     setError( i18n( "Invalid document structure (content.xml is missing)" ) );
     return false;
@@ -97,9 +97,9 @@ bool Document::open()
       file = static_cast<const KArchiveFile*>( imagesDirectory->entry( imagesEntries[ i ] ) );
       QString fullPath = QString( "Pictures/%1" ).arg( imagesEntries[ i ] );
       if ( mManifest->testIfEncrypted( fullPath ) ) {
-	mImages.insert( fullPath, mManifest->decryptFile( fullPath, file->data() ) );
+        mImages.insert( fullPath, mManifest->decryptFile( fullPath, file->data() ) );
       } else {
-	mImages.insert( fullPath, file->data() );
+        mImages.insert( fullPath, file->data() );
       }
     }
   }

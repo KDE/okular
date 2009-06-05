@@ -128,8 +128,16 @@ QTextDocument* Converter::convert( const QString &fileName )
    */
   const QString masterLayout = mStyleInformation->masterPageName();
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
-  mTextDocument->setPageSize( QSize( qRound( property.width() / 72.0 * Okular::Utils::dpiX() ),
-                                     qRound( property.height() / 72.0 * Okular::Utils::dpiY() ) ) );
+
+  int pageWidth = qRound(property.width() / 72.0 * Okular::Utils::dpiX());
+  int pageHeight = qRound(property.height() / 72.0 * Okular::Utils::dpiY());
+
+  if ( pageWidth == 0 )
+      pageWidth = 600;
+  if ( pageHeight == 0 )
+      pageHeight = 800;
+
+  mTextDocument->setPageSize( QSize( pageWidth, pageHeight ) );
 
   QTextFrameFormat frameFormat;
   frameFormat.setMargin( qRound( property.margin() ) );

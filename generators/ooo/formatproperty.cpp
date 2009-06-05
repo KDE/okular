@@ -288,6 +288,7 @@ void StyleFormatProperty::setTableCellFormat( const TableCellFormatProperty &for
 }
 
 PageFormatProperty::PageFormatProperty()
+  : mHeight( 0.0 ), mWidth( 0.0 )
 {
 }
 

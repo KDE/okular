@@ -288,7 +288,8 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
-    docEmbeddedFilesDirty( true ), nextFontPage( 0 )
+    docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
+    dpiX( Okular::Utils::realDpiX() ), dpiY( Okular::Utils::realDpiY() ) // we want real DPI values for page sizes
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );
@@ -454,14 +455,15 @@ bool PDFGenerator::doCloseDocument()
 void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, bool clear)
 {
     // TODO XPDF 3.01 check
-    int count=pagesVector.count(),w=0,h=0;
+    const int count = pagesVector.count();
+    double w = 0, h = 0;
     for ( int i = 0; i < count ; i++ )
     {
         // get xpdf page
         Poppler::Page * p = pdfdoc->page( i );
-        QSize pSize = p->pageSize();
-        w = pSize.width();
-        h = pSize.height();
+        const QSizeF pSize = p->pageSizeF();
+        w = pSize.width() / 72.0 * dpiX;
+        h = pSize.height() / 72.0 * dpiY;
         Okular::Rotation orientation = Okular::Rotation0;
         switch (p->orientation())
         {
@@ -760,8 +762,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     if ( page->rotation() % 2 )
         qSwap( pageWidth, pageHeight );
 
-    double fakeDpiX = request->width() * 72.0 / pageWidth,
-           fakeDpiY = request->height() * 72.0 / pageHeight;
+    double fakeDpiX = request->width() * dpiX / pageWidth,
+           fakeDpiY = request->height() * dpiY / pageHeight;
 
     // setup Okular:: output device: text page is generated only if we are at 72dpi.
     // since we can pre-generate the TextPage at the right res.. why not?
@@ -800,7 +802,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     if ( genTextPage )
     {
         QList<Poppler::TextBox*> textList = p->textList();
-        Okular::TextPage *tp = abstractTextPage(textList, page->height(), page->width(), request->page()->orientation());
+        const QSizeF s = p->pageSizeF();
+        Okular::TextPage *tp = abstractTextPage(textList, s.height(), s.width(), request->page()->orientation());
         page->setTextPage( tp );
         qDeleteAll(textList);
         
@@ -826,10 +829,12 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     userMutex()->lock();
     QList<Poppler::TextBox*> textList = pp->textList();
     userMutex()->unlock();
-    delete pp;
 
-    const double pageWidth = page->width();
-    const double pageHeight = page->height();
+    QSizeF s = pp->pageSizeF();
+    const double pageWidth = s.width();
+    const double pageHeight = s.height();
+
+    delete pp;
 
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
@@ -1417,8 +1422,8 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
 
         // maginc numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
         Okular::NormalizedPoint p(
-            ( pt.x * 72.0 ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
-            ( pt.y * 72.0 ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
+            ( pt.x * dpiX ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
+            ( pt.y * dpiY ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
             );
         QString file;
         if ( !pt.file.isEmpty() )
@@ -1518,10 +1523,13 @@ void PDFGenerator::threadFinished()
     delete outImage;
     if ( !outText.isEmpty() )
     {
-        Okular::TextPage *tp = abstractTextPage( outText, request->page()->height(), 
-                                                 request->page()->width(),request->page()->orientation());
+        Poppler::Page *pp = pdfdoc->page( request->page()->number() );
+        const QSizeF s = pp->pageSizeF();
+        Okular::TextPage *tp = abstractTextPage( outText, s.height(), 
+                                                 s.width(),request->page()->orientation());
         request->page()->setTextPage( tp );
         qDeleteAll(outText);
+        delete pp;
         
         // notify the new generation
         signalTextGenerationDone( request->page(), tp );
@@ -1686,10 +1694,9 @@ void PDFPixmapGeneratorThread::run()
 
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
-    const QSizeF &pageSizeF = pp->pageSizeF();
     
-    double fakeDpiX = width * 72.0 / pageSizeF.width(),
-           fakeDpiY = height * 72.0 / pageSizeF.height();
+    double fakeDpiX = width * d->generator->dpiX / page->width(),
+           fakeDpiY = height * d->generator->dpiY / page->height();
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG

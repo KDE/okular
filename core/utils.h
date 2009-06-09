@@ -49,7 +49,7 @@ class OKULAR_EXPORT Utils
      * On X11, it can indicate the real horizontal DPI value without any Xrdb
      * setting. Otherwise, returns the same as dpiX(),
      *
-     * since 0.9 (KDE 4.3)
+     * @since 0.9 (KDE 4.3)
      */
     static double realDpiX();
 
@@ -59,7 +59,7 @@ class OKULAR_EXPORT Utils
      * On X11, it can indicate the real horizontal DPI value without any Xrdb
      * setting. Otherwise, returns the same as dpiX(),
      *
-     * since 0.9 (KDE 4.3)
+     * @since 0.9 (KDE 4.3)
      */
     static double realDpiY();
 

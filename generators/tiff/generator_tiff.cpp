@@ -266,8 +266,6 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
         uint32 orientation = 0;
         TIFFGetField( d->tiff, TIFFTAG_IMAGEWIDTH, &width );
         TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height );
-        if ( rotation % 2 == 1 )
-            qSwap( width, height );
 
         if ( !TIFFGetField( d->tiff, TIFFTAG_ORIENTATION, &orientation ) )
             orientation = ORIENTATION_TOPLEFT;

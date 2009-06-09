@@ -12,6 +12,8 @@
 #include "utils_p.h"
 
 #include <QtCore/QRect>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QImage>
 #include <QIODevice>
 
@@ -65,6 +67,18 @@ double Utils::dpiX()
 double Utils::dpiY()
 {
     return QX11Info::appDpiY();
+}
+
+double Utils::realDpiX()
+{
+    const QDesktopWidget* w = QApplication::desktop();
+    return (double(w->width()) * 25.4) / double(w->widthMM());
+}
+
+double Utils::realDpiY()
+{
+    const QDesktopWidget* w = QApplication::desktop();
+    return (double(w->height()) * 25.4) / double(w->heightMM());
 }
 
 #elif defined(Q_WS_MAC)
@@ -140,8 +154,17 @@ double Utils::dpiY()
 
     return err == CGDisplayNoErr ? y : 72.0;
 }
+
+double Utils::realDpiX()
+{
+    return dpiX();
+}
+
+double Utils::realDpiY()
+{
+    return dpiY();
+}
 #else
-#include <QDesktopWidget>
 
 double Utils::dpiX()
 {
@@ -151,6 +174,16 @@ double Utils::dpiX()
 double Utils::dpiY()
 {
     return QDesktopWidget().physicalDpiY();
+}
+
+double Utils::realDpiX()
+{
+    return dpiX();
+}
+
+double Utils::realDpiY()
+{
+    return dpiY();
 }
 #endif
 

@@ -44,6 +44,26 @@ class OKULAR_EXPORT Utils
     static double dpiY();
 
     /**
+     * Return the real horizontal DPI of the main display.
+     *
+     * On X11, it can indicate the real horizontal DPI value without any Xrdb
+     * setting. Otherwise, returns the same as dpiX(),
+     *
+     * since 0.9 (KDE 4.3)
+     */
+    static double realDpiX();
+
+    /**
+     * Return the real vertical DPI of the main display
+     *
+     * On X11, it can indicate the real horizontal DPI value without any Xrdb
+     * setting. Otherwise, returns the same as dpiX(),
+     *
+     * since 0.9 (KDE 4.3)
+     */
+    static double realDpiY();
+
+    /**
      * Compute the smallest rectangle that contains all non-white pixels in image),
      * in normalized [0,1] coordinates.
      *

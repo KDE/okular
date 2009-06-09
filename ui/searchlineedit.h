@@ -50,6 +50,8 @@ class SearchLineEdit : public KLineEdit
         void findPrev();
 
     private:
+        void prepareLineEditForSearch();
+
         Okular::Document * m_document;
         QTimer * m_inputDelayTimer;
         int m_minLength;
@@ -64,6 +66,7 @@ class SearchLineEdit : public KLineEdit
 
     private slots:
         void slotTextChanged( const QString & text );
+        void slotReturnPressed( const QString &text );
         void startSearch();
         void searchFinished( int id, Okular::Document::SearchStatus endStatus );
 };

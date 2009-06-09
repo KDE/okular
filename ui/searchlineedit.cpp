@@ -37,6 +37,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
              this, SLOT( startSearch() ) );
 
     connect(this, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
+    connect(this, SIGNAL( returnPressed(const QString &) ), this, SLOT( slotReturnPressed(const QString &) ));
     connect(document, SIGNAL( searchFinished(int, Okular::Document::SearchStatus) ), this, SLOT( searchFinished(int, Okular::Document::SearchStatus) ));
 }
 
@@ -144,8 +145,14 @@ void SearchLineEdit::findPrev()
 
 void SearchLineEdit::slotTextChanged( const QString & text )
 {
+    prepareLineEditForSearch();
+    restartSearch();
+}
+
+void SearchLineEdit::prepareLineEditForSearch()
+{
     QPalette pal = palette();
-    const int textLength = text.length();
+    const int textLength = text().length();
     if ( textLength > 0 && textLength < m_minLength )
     {
         const KColorScheme scheme( QPalette::Active, KColorScheme::View );
@@ -159,7 +166,13 @@ void SearchLineEdit::slotTextChanged( const QString & text )
         pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
     }
     setPalette( pal );
-    restartSearch();
+}
+
+void SearchLineEdit::slotReturnPressed( const QString &text )
+{
+    m_inputDelayTimer->stop();
+    prepareLineEditForSearch();
+    findNext();
 }
 
 void SearchLineEdit::startSearch()

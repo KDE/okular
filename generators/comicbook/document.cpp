@@ -184,7 +184,7 @@ QSize Document::pageSize( int page ) const
         QImageReader reader( dev.get() );
         if ( reader.canRead() ) {
             QSize s = reader.size();
-            if ( s.isNull() ) {
+            if ( !s.isValid() ) {
                 s = reader.read().size();
             }
             return s;

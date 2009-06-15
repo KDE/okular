@@ -110,7 +110,7 @@ static void adaptSizeToResolution( TIFF *tiff, ttag_t whichres, double dpi, uint
     float resvalue = 1.0;
     uint16 resunit = 0;
     if ( !TIFFGetField( tiff, whichres, &resvalue )
-         || !TIFFGetField( tiff, TIFFTAG_RESOLUTIONUNIT, &resunit ) )
+         || !TIFFGetFieldDefaulted( tiff, TIFFTAG_RESOLUTIONUNIT, &resunit ) )
         return;
 
     float newsize = *size / resvalue;

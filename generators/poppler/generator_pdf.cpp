@@ -852,9 +852,10 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 #endif
 }
 
+#define DUMMY_QPRINTER_COPY
 bool PDFGenerator::print( QPrinter& printer )
 {
-#if DUMMY_QPRINTER_COPY
+#ifdef DUMMY_QPRINTER_COPY
     // Get the real page size to pass to the ps generator
     QPrinter dummy( QPrinter::PrinterResolution );
     dummy.setFullPage( true );

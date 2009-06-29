@@ -968,7 +968,7 @@ bool Part::openFile()
     if ( !ok )
     {
         // if can't open document, update windows so they display blank contents
-        m_pageView->widget()->update();
+        m_pageView->viewport()->update();
         m_thumbnailList->update();
         return false;
     }

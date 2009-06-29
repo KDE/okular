@@ -748,8 +748,9 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
 
     // find out normalized mouse coords inside current item
     const QRect & itemRect = item->uncroppedGeometry();
-    double nX = item->absToPageX(e->x());
-    double nY = item->absToPageY(e->y());
+    const QPoint eventPos = m_pageView->contentAreaPoint( e->pos() );
+    double nX = item->absToPageX( eventPos.x() );
+    double nY = item->absToPageY( eventPos.y() );
 
     QRect modifiedRect;
 
@@ -774,8 +775,9 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
         m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
         QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
+        const QPoint areaPos = m_pageView->contentAreaPosition();
         for ( int i = 0; i < rects.count(); i++ )
-            m_pageView->widget()->update( rects[i] );
+            m_pageView->viewport()->update( rects[i].translated( -areaPos ) );
         modifiedRect = compoundRegion.boundingRect() | m_lastDrawnRect;
     }
 
@@ -857,7 +859,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
     m_lockedItem = 0;
     if ( m_lastDrawnRect.isValid() )
     {
-        m_pageView->widget()->update( m_lastDrawnRect );
+        m_pageView->viewport()->update( m_lastDrawnRect.translated( -m_pageView->contentAreaPosition() ) );
         m_lastDrawnRect = QRect();
     }
 

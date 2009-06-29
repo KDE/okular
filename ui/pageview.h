@@ -19,7 +19,7 @@
 #ifndef _OKULAR_PAGEVIEW_H_
 #define _OKULAR_PAGEVIEW_H_
 
-#include <qscrollarea.h>
+#include <qabstractscrollarea.h>
 #include <qlist.h>
 #include <qvector.h>
 #include "ui/pageviewutils.h"
@@ -39,18 +39,15 @@ class Annotation;
 
 class FormWidgetIface;
 class PageViewPrivate;
-class PageViewWidget;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
  * ...
  */
-class PageView : public QScrollArea, public Okular::DocumentObserver, public Okular::View
+class PageView : public QAbstractScrollArea, public Okular::DocumentObserver, public Okular::View
 {
 Q_OBJECT
-
-    friend class PageViewWidget;
 
     public:
         PageView( QWidget *parent, Okular::Document *document );
@@ -94,6 +91,11 @@ Q_OBJECT
 
         KAction *toggleFormsAction() const;
 
+        int contentAreaWidth() const;
+        int contentAreaHeight() const;
+        QPoint contentAreaPosition() const;
+        QPoint contentAreaPoint( const QPoint & pos ) const;
+
     public slots:
         void errorMessage( const QString & message, int duration = -1 )
         {
@@ -135,12 +137,14 @@ Q_OBJECT
         void dragMoveEvent( QDragMoveEvent* );
         void dropEvent( QDropEvent* );
 
-    private:
-        void contentsPaintEvent( QPaintEvent *e );
-        void contentsMouseMoveEvent( QMouseEvent *e );
-        void contentsMousePressEvent( QMouseEvent *e );
-        void contentsMouseReleaseEvent( QMouseEvent *e );
+        void paintEvent( QPaintEvent *e );
+        void mouseMoveEvent( QMouseEvent *e );
+        void mousePressEvent( QMouseEvent *e );
+        void mouseReleaseEvent( QMouseEvent *e );
 
+        bool viewportEvent( QEvent *e );
+
+    private:
         // draw background and items on the opened qpainter
         void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );
         // update item width and height using current zoom parameters
@@ -165,6 +169,8 @@ Q_OBJECT
         void center(int cx, int cy);
 
         void toggleFormWidgets( bool on );
+
+        void resizeContentArea( const QSize & newSize );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

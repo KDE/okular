@@ -890,8 +890,12 @@ void DocumentPrivate::sendGeneratorRequest()
     }
 }
 
-void DocumentPrivate::rotationFinished( int page )
+void DocumentPrivate::rotationFinished( int page, Okular::Page *okularPage )
 {
+    Okular::Page *wantedPage = m_pagesVector.value( page, 0 );
+    if ( !wantedPage || wantedPage != okularPage )
+        return;
+
     QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();
     for ( ; it != end ; ++ it ) {
         (*it)->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );

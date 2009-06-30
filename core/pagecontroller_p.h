@@ -38,7 +38,7 @@ class PageController : public QObject
         void addRotationJob( RotationJob *job );
 
     signals:
-        void rotationFinished( int page );
+        void rotationFinished( int page, Okular::Page *okularPage );
 
     private slots:
         void imageRotationDone(ThreadWeaver::Job*);

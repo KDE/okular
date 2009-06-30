@@ -52,7 +52,7 @@ void PageController::imageRotationDone(ThreadWeaver::Job *j)
     {
         job->page()->imageRotationDone( job );
 
-        emit rotationFinished( job->page()->m_number );
+        emit rotationFinished( job->page()->m_number, job->page()->m_page );
     }
 
     job->deleteLater();

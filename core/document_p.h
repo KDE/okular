@@ -118,7 +118,7 @@ class DocumentPrivate
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
         void sendGeneratorRequest();
-        void rotationFinished( int page );
+        void rotationFinished( int page, Okular::Page *okularPage );
         void fontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
         void slotGeneratorConfigChanged( const QString& );

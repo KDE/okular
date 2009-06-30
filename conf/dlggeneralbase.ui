@@ -278,7 +278,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_ViewColumns" >
+         <widget class="KIntSpinBox" name="kcfg_ViewColumns" >
           <property name="minimum" >
            <number>3</number>
           </property>
@@ -310,6 +310,13 @@
  <includes>
   <include location="global" >kiconloader.h</include>
  </includes>
+ <customwidgets>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

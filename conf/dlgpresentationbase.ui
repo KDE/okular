@@ -41,7 +41,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_SlidesAdvanceTime" >
+         <widget class="KIntSpinBox" name="kcfg_SlidesAdvanceTime" >
           <property name="enabled" >
            <bool>false</bool>
           </property>
@@ -311,6 +311,11 @@
    <class>KColorButton</class>
    <extends>QPushButton</extends>
    <header>kcolorbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>KIntSpinBox</extends>
+   <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

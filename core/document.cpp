@@ -1468,8 +1468,8 @@ Document::Document( QWidget *widget )
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
 
-    connect( PageController::self(), SIGNAL( rotationFinished( int ) ),
-             this, SLOT( rotationFinished( int ) ) );
+    connect( PageController::self(), SIGNAL( rotationFinished( int, Okular::Page * ) ),
+             this, SLOT( rotationFinished( int, Okular::Page * ) ) );
     connect( Settings::self(), SIGNAL( configChanged() ), this, SLOT( _o_configChanged() ) );
 
     qRegisterMetaType<Okular::FontInfo>();

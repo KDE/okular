@@ -96,7 +96,12 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     {
         QDomElement item = m_docSyn.createElement(e.name);
         if (!e.urls.isEmpty())
-             item.setAttribute("ViewportName", e.urls.first());
+        {
+            QString url = e.urls.first();
+            if (url.contains(QChar::fromLatin1('%')))
+                url = QString::fromUtf8(QByteArray::fromPercentEncoding(url.toUtf8()));
+            item.setAttribute("ViewportName", url);
+        }
         item.setAttribute("Icon", e.imageid);
         if (e.indent == 0) m_docSyn.appendChild(item);
         else lastIndentElement[e.indent - 1].appendChild(item);
@@ -436,8 +441,10 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
 {
     if ( key == "NamedViewport" && !option.toString().isEmpty() )
     {
+        const int pos = option.toString().indexOf('#');
+        QString tmpUrl = pos == -1 ? option.toString() : option.toString().left(pos);
         Okular::DocumentViewport viewport;
-        QMap<QString,int>::const_iterator it = m_urlPage.find(option.toString());
+        QMap<QString,int>::const_iterator it = m_urlPage.find(tmpUrl);
         if (it != m_urlPage.end())
         {
             viewport.pageNumber = it.value();

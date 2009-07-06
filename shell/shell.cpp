@@ -57,9 +57,14 @@ Shell::Shell(KCmdLineArgs* args, int argIndex)
      so we have to find it manually and build up the URL by taking its ref,
      if any.
      */
-    KUrl url = m_args->url(argIndex);
-    const QString arg = m_args->arg(argIndex);
-    const int sharpPos = arg.lastIndexOf(QLatin1Char('#'));
+    QString arg = m_args->arg(argIndex);
+    arg.replace(QRegExp("^file:/{1,3}"), "/");
+    KUrl url = KCmdLineArgs::makeURL(arg.toUtf8());
+    int sharpPos = -1;
+    if (!url.isLocalFile() || !QFile::exists(url.toLocalFile()))
+    {
+        sharpPos = arg.lastIndexOf(QLatin1Char('#'));
+    }
     if (sharpPos != -1)
     {
       url = KCmdLineArgs::makeURL(arg.left(sharpPos).toUtf8());

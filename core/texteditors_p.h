@@ -29,6 +29,8 @@ static inline QHash< int, QString > buildEditorsMap()
         QString::fromLatin1( "scite %f \"-goto:%l,%c\"" ) );
     editors.insert( Settings::EnumExternalEditor::Emacsclient,
         QString::fromLatin1( "emacsclient -a emacs --no-wait +%l %f" ) );
+    editors.insert( Settings::EnumExternalEditor::Lyxclient,
+        QString::fromLatin1( "lyxclient -g %f %l" ) );
     return editors;
 }
 

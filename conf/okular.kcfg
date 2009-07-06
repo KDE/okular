@@ -171,6 +171,7 @@
     <choice name="Kile" />
     <choice name="Scite" />
     <choice name="Emacsclient" />
+    <choice name="Lyxclient" />
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

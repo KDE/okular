@@ -144,6 +144,8 @@ Q_OBJECT
 
         bool viewportEvent( QEvent *e );
 
+        void scrollContentsBy( int dx, int dy );
+
     private:
         // draw background and items on the opened qpainter
         void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );

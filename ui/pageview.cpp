@@ -293,6 +293,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     viewport()->setAttribute( Qt::WA_NoSystemBackground );
     setAcceptDrops( true );
     viewport()->setMouseTracking( true );
+    viewport()->setAutoFillBackground( false );
     // the apparently "magic" value of 20 is the same used internally in QScrollArea
     verticalScrollBar()->setSingleStep( 20 );
     horizontalScrollBar()->setSingleStep( 20 );
@@ -2227,6 +2228,18 @@ bool PageView::viewportEvent( QEvent * e )
     else
         // do not stop the event
         return QAbstractScrollArea::viewportEvent( e );
+}
+
+void PageView::scrollContentsBy( int dx, int dy )
+{
+    const QRect r = viewport()->rect();
+    viewport()->scroll( dx, dy, r );
+    // HACK manually repaint the damaged regions, as it seems some updates are missed
+    // thus leaving artifacts around
+    QRegion rgn( r );
+    rgn -= rgn & r.translated( dx, dy );
+    foreach ( const QRect &rect, rgn.rects() )
+        viewport()->repaint( rect );
 }
 //END widget events
 

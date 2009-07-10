@@ -289,7 +289,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    dpiX( Okular::Utils::realDpiX() ), dpiY( Okular::Utils::realDpiY() ) // we want real DPI values for page sizes
+    dpiX( Okular::Utils::dpiX() ), dpiY( Okular::Utils::dpiY() )
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );

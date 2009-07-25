@@ -18,6 +18,7 @@
 #include <qlayout.h>
 #include <qmutex.h>
 #include <qregexp.h>
+#include <qstack.h>
 #include <qtextstream.h>
 #include <QtGui/QPrinter>
 
@@ -1342,13 +1343,16 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         return;
 
     QHash<int, pdfsyncpoint> points;
-    QString currentfile;
+    QStack<QString> fileStack;
     int currentpage = -1;
     QRegExp newfilere( "\\(\\s*([^\\s]+)" );
     QRegExp linere( "l\\s+(\\d+)\\s+(\\d+)(\\s+(\\d+))?" );
     QRegExp pagere( "s\\s+(\\d+)" );
     QRegExp locre( "p\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
     QRegExp locstarre( "p\\*\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
+    const QLatin1String texStr( ".tex" );
+
+    fileStack.push( coreName + texStr );
 
     QString line;
     while ( !ts.atEnd() )
@@ -1366,7 +1370,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
                 pt.row = linere.cap( 2 ).toInt();
                 pt.column = 0; // TODO
                 pt.page = -1;
-                pt.file = currentfile;
+                pt.file = fileStack.top();
                 points[ id ] = pt;
             }
         }
@@ -1393,21 +1397,20 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         else if ( line.startsWith( QLatin1Char( '(' ) ) && newfilere.exactMatch( line ) )
         {
             QString newfile = newfilere.cap( 1 );
-            if ( currentfile.isEmpty() )
+            if ( !newfile.endsWith( texStr ) )
             {
-                currentfile = newfile;
+                newfile += texStr;
             }
-            else
-                kDebug(PDFDebug) << "PdfSync: more than one file level:" << newfile;
+            fileStack.push( newfile );
         }
         else if ( line == QLatin1String( ")" ) )
         {
-            if ( !currentfile.isEmpty() )
+            if ( !fileStack.isEmpty() )
             {
-                currentfile.clear();
+                fileStack.pop();
             }
             else
-                kDebug(PDFDebug) << "PdfSync: going one level down:" << currentfile;
+                kDebug(PDFDebug) << "PdfSync: going one level down too much";
         }
         else
             kDebug(PDFDebug).nospace() << "PdfSync: unknown line format: '" << line << "'";
@@ -1426,19 +1429,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
             ( pt.x * dpiX ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
             ( pt.y * dpiY ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
             );
-        QString file;
-        if ( !pt.file.isEmpty() )
-        {
-            file = pt.file;
-            int dotpos = file.lastIndexOf( QLatin1Char( '.' ) );
-            QString ext;
-            if ( dotpos == -1 )
-                file += QString::fromLatin1( ".tex" );
-        }
-        else
-        {
-            file = coreName + QLatin1String( ".tex" );
-        }
+        QString file = pt.file;
         Okular::SourceReference * sourceRef = new Okular::SourceReference( file, pt.row, pt.column );
         refRects[ pt.page ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
     }

@@ -1424,7 +1424,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         if ( pt.page < 0 || pt.page >= pagesVector.size() )
             continue;
 
-        // maginc numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
+        // magic numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
         Okular::NormalizedPoint p(
             ( pt.x * dpiX ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
             ( pt.y * dpiY ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )

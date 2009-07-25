@@ -43,7 +43,6 @@
 
 //#define DEBUG_DVIRENDERER
 
-QPainter *foreGroundPainter; // QPainter used for text
 
 
 //------ now comes the dviRenderer class implementation ----------
@@ -66,7 +65,8 @@ dviRenderer::dviRenderer()
     penWidth_in_mInch(0),
     number_of_elements_in_path(0),
     currentlyDrawnPage(0),
-    m_eventLoop(0)
+    m_eventLoop(0),
+    foreGroundPainter(0)
 {
 #ifdef DEBUG_DVIRENDERER
   //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";

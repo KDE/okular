@@ -69,7 +69,6 @@
 
 #include <QPainter>
 
-extern QPainter *foreGroundPainter;
 
 
 /** Routine to print characters.  */

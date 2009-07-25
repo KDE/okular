@@ -341,6 +341,8 @@ private:
   QWidget* parentWidget;
 
   QEventLoop* m_eventLoop;
+
+  QPainter* foreGroundPainter;
 };
 
 #endif

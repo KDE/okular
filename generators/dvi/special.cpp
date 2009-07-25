@@ -25,7 +25,6 @@
 
 //#define DEBUG_SPECIAL
 
-extern QPainter *foreGroundPainter;
 
 
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)

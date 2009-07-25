@@ -139,6 +139,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QString caption = doc->metaData( "DocumentTitle" ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
+    caption = i18nc( "[document title/filename] – Presentation", "%1 – Presentation", caption );
     setWindowTitle( KDialog::makeStandardCaption( caption ) );
 
     m_width = -1;

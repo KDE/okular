@@ -412,6 +412,11 @@ void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * 
 
 }
 
+const SourceReference * Generator::dynamicSourceReference( int /*pageNr*/, double /*absX*/, double /*absY*/)
+{
+  return 0;
+}
+
 PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous )
   : d( new PixmapRequestPrivate )
 {

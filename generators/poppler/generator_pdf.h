@@ -13,6 +13,8 @@
 
 #define UNSTABLE_POPPLER_QT4
 
+#include "synctex/synctex_parser.h"
+
 #include <poppler-qt4.h>
 
 #include <qbitarray.h>
@@ -27,6 +29,7 @@
 
 namespace Okular {
 class ObjectRect;
+class SourceReference;
 }
 
 class PDFOptionsPage;
@@ -102,6 +105,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
     protected slots:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
+        const Okular::SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
 
     private slots:
         // (async related) receive data from the generator thread
@@ -123,6 +127,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
         // load the source references from a pdfsync file
         void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        // init the synctex parser if a synctex file exists
+        void initSynctexParser( const QString& filePath );
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
@@ -150,6 +156,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         QBitArray rectsGenerated;
 
         QPointer<PDFOptionsPage> pdfOptionsPage;
+        
+        synctex_scanner_t synctex_scanner;
 };
 
 

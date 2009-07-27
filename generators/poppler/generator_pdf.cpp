@@ -290,7 +290,8 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    dpiX( Okular::Utils::dpiX() ), dpiY( Okular::Utils::dpiY() )
+    dpiX( Okular::Utils::dpiX() ), dpiY( Okular::Utils::dpiY() ),
+    synctex_scanner(0)
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );
@@ -328,9 +329,15 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
     bool success = init(pagesVector, filePath.section('/', -1, -1));
-    if (success && QFile::exists(filePath + QLatin1String( "sync" )))
+    if (success)
     {
-        loadPdfSync(filePath, pagesVector);
+        // no need to check for the existence of a synctex file, no parser will be
+        // created if none exists
+        initSynctexParser(filePath);
+        if ( !synctex_scanner && QFile::exists(filePath + QLatin1String( "sync" ) ) )
+        {
+            loadPdfSync(filePath, pagesVector);
+        }
     }
     return success;
 }
@@ -449,6 +456,11 @@ bool PDFGenerator::doCloseDocument()
     docEmbeddedFiles.clear();
     nextFontPage = 0;
     rectsGenerated.clear();
+    if ( synctex_scanner )
+    {
+        synctex_scanner_free( synctex_scanner );
+        synctex_scanner = 0;
+    }
 
     return true;
 }
@@ -1436,6 +1448,38 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
     for ( int i = 0; i < refRects.size(); ++i )
         if ( !refRects.at(i).isEmpty() )
             pagesVector[i]->setSourceReferences( refRects.at(i) );
+}
+
+void PDFGenerator::initSynctexParser( const QString& filePath )
+{
+    synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( filePath ), 0, 1);
+}
+
+const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr, double absX, double absY )
+{
+    if  ( !synctex_scanner )
+        return 0;
+
+    if (synctex_edit_query(synctex_scanner, pageNr + 1, absX * 72. / dpiX, absY * 72. / dpiY) > 0)
+    {
+        synctex_node_t node;
+        // TODO what should we do if there is really more than one node?
+        while (( node = synctex_next_result( synctex_scanner ) ))
+        {
+            int line = synctex_node_line(node);
+            int col = synctex_node_column(node);
+            // column extraction does not seem to be implemented in synctex so far. set the SourceReference default value.
+            if ( col == -1 )
+            {
+                col = 0;
+            }
+            const char *name = synctex_scanner_get_name( synctex_scanner, synctex_node_tag( node ) );
+
+            Okular::SourceReference * sourceRef = new Okular::SourceReference( name, line, col );
+            return sourceRef;
+        }
+    }
+    return 0;
 }
 
 QWidget* PDFGenerator::printConfigurationWidget() const

@@ -68,6 +68,7 @@
 #include "core/misc.h"
 #include "core/generator.h"
 #include "core/movie.h"
+#include "core/sourcereference.h"
 #include "settings.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
@@ -1794,6 +1795,15 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->object() );
                         d->document->processSourceReference( ref );
+                    }
+                    else
+                    {
+                        const Okular::SourceReference * ref = d->document->dynamicSourceReference( pageItem->  pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height() );
+                        if ( ref )
+                        {
+                            d->document->processSourceReference( ref );
+                            delete ref;
+                        }
                     }
                 }
                 else

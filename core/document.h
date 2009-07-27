@@ -579,6 +579,18 @@ class OKULAR_EXPORT Document : public QObject
          */
         bool saveDocumentArchive( const QString &fileName );
 
+        /**
+         * Asks the generator to dynamically generate a SoureReference for a given
+         * page number and absolute X and Y position on this page.
+         *
+         * @attention Ownership of the returned SourceReference is transferred to the caller.
+         * @note This method does not call processSourceReference( const SourceReference * )
+         *
+         * @since 0.10 (KDE 4.4)
+        */
+        const SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
+
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

@@ -38,15 +38,24 @@ include_directories(
 
 ########### next target ###############
 
+find_package(ZLIB REQUIRED)
+
+include_directories(
+  synctex
+  ${ZLIB_INCLUDE_DIR}
+)
+
 set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
    formfields.cpp
    annots.cpp
+   synctex/synctex_parser.c
+   synctex/synctex_parser_utils.c
 )
 
 kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
+target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY} ${ZLIB_LIBRARIES})
 
 install(TARGETS okularGenerator_poppler DESTINATION ${PLUGIN_INSTALL_DIR})
 

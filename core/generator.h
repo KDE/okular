@@ -52,6 +52,7 @@ class PixmapRequest;
 class PixmapRequestPrivate;
 class TextPage;
 class NormalizedRect;
+class SourceReference;
 
 /* Note: on contents generation and asynchronous queries.
  * Many observers may want to request data syncronously or asynchronously.
@@ -460,6 +461,15 @@ class OKULAR_EXPORT Generator : public QObject
          * @since 0.8 (KDE 4.1)
          */
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
+
+        /**
+        * Asks the generator to dynamically generate a SoureReference for a given
+        * page number and absolute X and Y position on this page.
+        *
+        * @attention Ownership of the returned SourceReference is transferred to the caller.
+        * @since 0.10 (KDE 4.4)
+        */
+        const SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
 
     protected:
         /// @cond PRIVATE

@@ -3008,6 +3008,16 @@ void Document::processSourceReference( const SourceReference * ref )
     KProcess::startDetached( args );
 }
 
+const SourceReference * Document::dynamicSourceReference( int pageNr, double absX, double absY )
+{
+    const SourceReference * ref = 0;
+    if ( d->m_generator )
+    {
+        QMetaObject::invokeMethod( d->m_generator, "dynamicSourceReference", Qt::DirectConnection, Q_RETURN_ARG(const Okular::SourceReference*, ref), Q_ARG(int, pageNr), Q_ARG(double, absX), Q_ARG(double, absY) );
+    }
+    return ref;
+}
+
 Document::PrintingType Document::printingSupport() const
 {
     if ( d->m_generator )

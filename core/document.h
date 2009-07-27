@@ -580,7 +580,7 @@ class OKULAR_EXPORT Document : public QObject
         bool saveDocumentArchive( const QString &fileName );
 
         /**
-         * Asks the generator to dynamically generate a SoureReference for a given
+         * Asks the generator to dynamically generate a SourceReference for a given
          * page number and absolute X and Y position on this page.
          *
          * @attention Ownership of the returned SourceReference is transferred to the caller.

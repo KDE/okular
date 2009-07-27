@@ -1493,7 +1493,7 @@ synctex_status_t _synctex_scan_input(synctex_scanner_t scanner) {
 
 typedef synctex_status_t (*synctex_decoder_t)(synctex_scanner_t,void *);
 
-synctex_status_t _synctex_scan_named(synctex_scanner_t scanner,char *  name,void *  value_ref,synctex_decoder_t decoder);
+synctex_status_t _synctex_scan_named(synctex_scanner_t scanner,const char *  name,void *  value_ref,synctex_decoder_t decoder);
 
 /*  Used when parsing the synctex file.
  *  Read one of the settings.
@@ -1503,7 +1503,7 @@ synctex_status_t _synctex_scan_named(synctex_scanner_t scanner,char *  name,void
  *  On return, the scanner points to the next character after the decoded object whatever it is.
  *  It is the responsibility of the caller to prepare the scanner for the next line.
  */
-synctex_status_t _synctex_scan_named(synctex_scanner_t scanner,char *  name,void *  value_ref,synctex_decoder_t decoder) {
+synctex_status_t _synctex_scan_named(synctex_scanner_t scanner,const char *  name,void *  value_ref,synctex_decoder_t decoder) {
 	synctex_status_t status = 0;
 	if(NULL == scanner || NULL == name || NULL == value_ref || NULL == decoder) {
 		return SYNCTEX_STATUS_BAD_ARGUMENT;

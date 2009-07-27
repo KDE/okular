@@ -1,2 +1,3 @@
 01-fix-win32-define.diff
 02-fix-_synctex_error.diff
+03-fix-_synctex_scan_named.diff

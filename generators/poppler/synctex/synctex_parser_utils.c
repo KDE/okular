@@ -124,7 +124,7 @@ void _synctex_strip_last_path_extension(char * string) {
 
 /*  Compare two file names, windows is sometimes case insensitive... */
 synctex_bool_t _synctex_is_equivalent_file_name(const char *lhs, const char *rhs) {
-#	if _WIN32
+#	ifdef _WIN32
     /*  On Windows, filename should be compared case insensitive.
 	 *  The characters '/' and '\' are both valid path separators.
 	 *  There will be a very serious problem concerning UTF8 because
@@ -156,7 +156,7 @@ synctex_bool_t _synctex_path_is_absolute(const char * name) {
 	if(!strlen(name)) {
 		return synctex_NO;
 	}
-#	if _WIN32
+#	ifdef _WIN32
 	if(strlen(name)>2) {
 		return (name[1]==':' && SYNCTEX_IS_PATH_SEPARATOR(name[2]))?synctex_YES:synctex_NO;
 	}

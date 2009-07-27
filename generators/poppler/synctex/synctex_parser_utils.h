@@ -52,7 +52,7 @@ authorization from the copyright holder.
 extern "C" {
 #endif
 
-#	if _WIN32
+#	ifdef _WIN32
 #		define SYNCTEX_IS_PATH_SEPARATOR(c) ('/' == c || '\\' == c)
 #	else
 #		define SYNCTEX_IS_PATH_SEPARATOR(c) ('/' == c)

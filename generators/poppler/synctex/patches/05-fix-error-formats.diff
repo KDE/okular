@@ -1,13 +1,13 @@
 Index: synctex/synctex_parser.c
 ===================================================================
---- synctex.orig/synctex_parser.c	2009-07-27 19:21:55.000000000 +0200
-+++ synctex/synctex_parser.c	2009-07-27 19:22:47.000000000 +0200
+--- synctex.orig/synctex_parser.c	2009-07-27 21:00:58.000000000 +0200
++++ synctex/synctex_parser.c	2009-07-27 21:07:01.000000000 +0200
 @@ -1418,7 +1418,7 @@
  		len = SYNCTEX_END - SYNCTEX_CUR;
  		if(current_size>UINT_MAX-len-1) {
  			/*  We have reached the limit. */
 -			_synctex_error("!  limit reached (missing %i).",current_size-(UINT_MAX-len-1));
-+			_synctex_error("!  limit reached (missing %zd).",current_size-(UINT_MAX-len-1));
++			_synctex_error("!  limit reached (missing %lu).",current_size-(UINT_MAX-len-1));
  			return SYNCTEX_STATUS_ERROR;
  		}
  		new_size = current_size+len;

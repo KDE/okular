@@ -1,0 +1,26 @@
+Index: synctex/synctex_parser_utils.c
+===================================================================
+--- synctex.orig/synctex_parser_utils.c	2009-07-27 17:41:24.000000000 +0200
++++ synctex/synctex_parser_utils.c	2009-07-27 17:41:43.000000000 +0200
+@@ -62,7 +62,7 @@
+ 	return (void *)ptr;
+ }
+ 
+-int _synctex_error(char * reason,...) {
++int _synctex_error(const char * reason,...) {
+ 	va_list arg;
+ 	int result;
+ 	va_start (arg, reason);
+Index: synctex/synctex_parser_utils.h
+===================================================================
+--- synctex.orig/synctex_parser_utils.h	2009-07-27 17:41:24.000000000 +0200
++++ synctex/synctex_parser_utils.h	2009-07-27 17:41:47.000000000 +0200
+@@ -65,7 +65,7 @@
+ /*  This is used to log some informational message to the standard error stream.
+  *  On Windows, the stderr stream is not exposed and another method is used.
+  *	The return value is the number of characters printed.	*/
+-int _synctex_error(char * reason,...);
++int _synctex_error(const char * reason,...);
+ 
+ /*  strip the last extension of the given string, this string is modified!
+  *  This function depends on the OS because the path separator may differ.

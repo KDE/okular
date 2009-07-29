@@ -1357,12 +1357,8 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
     QHash<int, pdfsyncpoint> points;
     QStack<QString> fileStack;
     int currentpage = -1;
-    QRegExp newfilere( "\\(\\s*([^\\s]+)" );
-    QRegExp linere( "l\\s+(\\d+)\\s+(\\d+)(\\s+(\\d+))?" );
-    QRegExp pagere( "s\\s+(\\d+)" );
-    QRegExp locre( "p\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
-    QRegExp locstarre( "p\\*\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)" );
     const QLatin1String texStr( ".tex" );
+    const QChar spaceChar = QChar::fromLatin1( ' ' );
 
     fileStack.push( coreName + texStr );
 
@@ -1370,45 +1366,51 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
     while ( !ts.atEnd() )
     {
         line = ts.readLine();
-        if ( line.startsWith( QLatin1Char( 'l' ) ) && linere.exactMatch( line ) )
+        const QStringList tokens = line.split( spaceChar, QString::SkipEmptyParts );
+        const int tokenSize = tokens.count();
+        if ( tokenSize < 1 )
+            continue;
+        if ( tokens.first() == QLatin1String( "l" ) && tokenSize >= 3 )
         {
-            int id = linere.cap( 1 ).toInt();
+            int id = tokens.at( 1 ).toInt();
             QHash<int, pdfsyncpoint>::const_iterator it = points.constFind( id );
             if ( it == points.constEnd() )
             {
                 pdfsyncpoint pt;
                 pt.x = 0;
                 pt.y = 0;
-                pt.row = linere.cap( 2 ).toInt();
+                pt.row = tokens.at( 2 ).toInt();
                 pt.column = 0; // TODO
                 pt.page = -1;
                 pt.file = fileStack.top();
                 points[ id ] = pt;
             }
         }
-        else if ( line.startsWith( QLatin1Char( 's' ) ) && pagere.exactMatch( line ) )
+        else if ( tokens.first() == QLatin1String( "s" ) && tokenSize >= 2 )
         {
-            currentpage = pagere.cap( 1 ).toInt() - 1;
+            currentpage = tokens.at( 1 ).toInt() - 1;
         }
-        else if ( line.startsWith( QLatin1String( "p*" ) ) && locstarre.exactMatch( line ) )
+        else if ( tokens.first() == QLatin1String( "p*" ) && tokenSize >= 4 )
         {
             // TODO
             kDebug(PDFDebug) << "PdfSync: 'p*' line ignored";
         }
-        else if ( line.startsWith( QLatin1Char( 'p' ) ) && locre.exactMatch( line ) )
+        else if ( tokens.first() == QLatin1String( "p" ) && tokenSize >= 4 )
         {
-            int id = locre.cap( 1 ).toInt();
+            int id = tokens.at( 1 ).toInt();
             QHash<int, pdfsyncpoint>::iterator it = points.find( id );
             if ( it != points.end() )
             {
-                it->x = locre.cap( 2 ).toInt();
-                it->y = locre.cap( 3 ).toInt();
+                it->x = tokens.at( 2 ).toInt();
+                it->y = tokens.at( 3 ).toInt();
                 it->page = currentpage;
             }
         }
-        else if ( line.startsWith( QLatin1Char( '(' ) ) && newfilere.exactMatch( line ) )
+        else if ( line.startsWith( QLatin1Char( '(' ) ) && tokenSize == 1 )
         {
-            QString newfile = newfilere.cap( 1 );
+            QString newfile = line;
+            // chop the leading '('
+            newfile.remove( 0, 1 );
             if ( !newfile.endsWith( texStr ) )
             {
                 newfile += texStr;

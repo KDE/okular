@@ -215,6 +215,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   // Step 2: Call GS with the File
   QFile::remove(filename.toAscii());
   KProcess proc;
+  proc.setOutputChannelMode(KProcess::SeparateChannels);
   QStringList argus;
   argus << "gs";
   argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
@@ -259,6 +260,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 	gsDevice = knownDevices.begin();
 	if (knownDevices.isEmpty())
 	  // TODO: show a requestor of some sort.
+#if 0
 	  KMessageBox::detailedError(0, 
 				     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
 					  "any of the Ghostview device drivers that are known to Okular. PostScript "
@@ -279,6 +281,9 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 					  "Ghostview. Among others, Okular can use the 'png256', 'jpeg' and 'pnm' "
 					  "drivers. Note that Okular needs to be restarted to re-enable PostScript support."
 					  "</p></qt>"));
+#else
+	{}
+#endif
 	else {
 	  kDebug(kvs::dvi) << QString("Okular will now try to use the '%1' device driver.").arg(*gsDevice);
 	  gs_generate_graphics_file(page, filename, magnification);

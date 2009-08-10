@@ -113,6 +113,7 @@ struct RunningSearch
     Qt::CaseSensitivity cachedCaseSensitivity;
     bool cachedViewportMove : 1;
     bool cachedNoDialogs : 1;
+    bool isCurrentlySearching : 1;
     QColor cachedColor;
 };
 
@@ -1008,6 +1009,10 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
+
+        RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
+
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         delete pagesToNotify;
         return;
@@ -1058,11 +1063,13 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
 
     bool foundAMatch = false;
 
+    RunningSearch * s = m_searches[searchID];
+    s->isCurrentlySearching = false;
+
     // if a match has been found..
     if ( match )
     {
         // update the RunningSearch structure adding this match..
-        RunningSearch * s = m_searches[searchID];
         foundAMatch = true;
         s->continueOnPage = currentPage;
         s->continueOnMatch = *match;
@@ -1110,6 +1117,10 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
+
+        RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
+
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         delete pagesToNotify;
         return;
@@ -1159,13 +1170,15 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
     // reset cursor to previous shape
     QApplication::restoreOverrideCursor();
 
+    RunningSearch * s = m_searches[searchID];
+    s->isCurrentlySearching = false;
+
     bool foundAMatch = false;
 
     // if a match has been found..
     if ( match )
     {
         // update the RunningSearch structure adding this match..
-        RunningSearch * s = m_searches[searchID];
         foundAMatch = true;
         s->continueOnPage = currentPage;
         s->continueOnMatch = *match;
@@ -1214,6 +1227,10 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         typedef QVector<RegularAreaRect *> MatchesVector;
 
         QApplication::restoreOverrideCursor();
+
+        RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
+
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         foreach(const MatchesVector &mv, *pageMatches) qDeleteAll(mv);
         delete pageMatches;
@@ -1256,6 +1273,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         QApplication::restoreOverrideCursor();
 
         RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
         QMap< Page *, QVector<RegularAreaRect *> >::const_iterator it, itEnd;
         it = pageMatches->constBegin();
@@ -1299,6 +1317,10 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         typedef QVector<MatchColor> MatchesVector;
 
         QApplication::restoreOverrideCursor();
+
+        RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
+
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
 
         foreach(const MatchesVector &mv, *pageMatches)
@@ -1372,6 +1394,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         QApplication::restoreOverrideCursor();
 
         RunningSearch * s = m_searches[searchID];
+        s->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
         QMap< Page *, QVector<MatchColor> >::const_iterator it, itEnd;
         it = pageMatches->constBegin();
@@ -2547,6 +2570,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     s->cachedViewportMove = moveViewport;
     s->cachedNoDialogs = noDialogs;
     s->cachedColor = color;
+    s->isCurrentlySearching = true;
 
     // global data for search
     QSet< int > *pagesToNotify = new QSet< int >;
@@ -2645,9 +2669,10 @@ void Document::continueSearch( int searchID )
 
     // start search with cached parameters from last search by searchID
     RunningSearch * p = *it;
-    searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
-                p->cachedType, p->cachedViewportMove, p->cachedColor,
-                p->cachedNoDialogs );
+    if ( !p->isCurrentlySearching )
+        searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
+                    p->cachedType, p->cachedViewportMove, p->cachedColor,
+                    p->cachedNoDialogs );
 }
 
 void Document::continueSearch( int searchID, SearchType type )
@@ -2662,9 +2687,10 @@ void Document::continueSearch( int searchID, SearchType type )
 
     // start search with cached parameters from last search by searchID
     RunningSearch * p = *it;
-    searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
-                type, p->cachedViewportMove, p->cachedColor,
-                p->cachedNoDialogs );
+    if ( !p->isCurrentlySearching )
+        searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
+                    type, p->cachedViewportMove, p->cachedColor,
+                    p->cachedNoDialogs );
 }
 
 void Document::resetSearch( int searchID )

@@ -917,7 +917,9 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 
         // consistancy warning
         if ( !m_engine )
+        {
             kWarning() << "tools.xml: couldn't find good engine description. check xml.";
+        }
 
         // stop after parsing selected tool's node
         break;
@@ -931,3 +933,5 @@ void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 }
 
 #include "pageviewannotator.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

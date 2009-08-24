@@ -8,5 +8,6 @@ Name[sr]=Окулар
 Name[x-test]=xxOkularxx
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
+InitialPreference=6
 Type=Service
 MimeType=application/postscript;image/x-eps;application/x-gzpostscript;application/x-bzpostscript;image/x-gzeps;image/x-bzeps;

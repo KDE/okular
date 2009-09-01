@@ -89,6 +89,14 @@
 		<sect1 id="navigating">
 			<title>Navigating</title>
 			<para>This section describes how you can navigate through a document in &okular;.</para>
+<!-- auto scrolling SHIFT-Arrow down SHIFT[arrow] to increase and decrease the speed
+drag the page down, continue to drag even while reaching the bottom of the screen and lo and behold!
+Once you cross the bottom of the page, the mouse cursor appears on top of the screen and you can just continue to drag!
+
+Presentation mode: add Up (previous page) and Down (next page) keys
+Add a 'Find Previous' entry
+
+-->
 			<para>
 				There are multiple ways of scrolling the viewing area. One is to use the 
 				<keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys. You may also use

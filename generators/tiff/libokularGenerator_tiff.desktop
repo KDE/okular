@@ -2,6 +2,7 @@
 Type=Service
 Name=Okular TIFF Library
 Name[ar]=مكتبة TIFF لأوكلار
+Name[bg]=Библиотека на Okular за TIFF
 Name[ca]=Biblioteca TIFF de l'Okular
 Name[cs]=Knihovna TIFF pro Okular
 Name[da]=TIFF-bibliotek til Okular
@@ -47,6 +48,7 @@ Name[zh_CN]=Okular TIFF 库
 Name[zh_TW]=Okular TIFF 函式庫
 Comment=TIFF backend for Okular
 Comment[ar]=المنتهى الخلفي TIFF لأوكلار
+Comment[bg]=Ядро на Okular за TIFF
 Comment[ca]=Dorsal de TIFF per a l'Okular
 Comment[da]=TIFF-motor til Okular
 Comment[de]=Anzeigemodul für TIFF in Okular

@@ -2,6 +2,7 @@
 Type=Service
 Name=Comic Book
 Name[ar]=كوميك بوك
+Name[bg]=Комикс
 Name[cs]=Kniha komixů
 Name[de]=Comicbook
 Name[el]=Βιβλίο κόμικ
@@ -35,6 +36,7 @@ Name[vi]=Truyện Tranh
 Name[x-test]=xxComic Bookxx
 Comment=Comic book backend for Okular
 Comment[ar]=المنتهى الخلفي Comic book لأوكلار
+Comment[bg]=Ядро на Okular за комикси
 Comment[ca]=Dorsal de Comic book per a l'Okular
 Comment[da]=Comic book-motor til Okular
 Comment[de]=Anzeigemodul für Comicbook in Okular

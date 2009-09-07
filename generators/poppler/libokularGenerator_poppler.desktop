@@ -11,6 +11,7 @@ Name[sr]=Поплер
 Name[x-test]=xxPopplerxx
 Comment=PDF backend for Okular using poppler
 Comment[ar]=المنتهى الخلفي PDF لأوكلار
+Comment[bg]=Ядро на Okular за PDF, използващо poppler
 Comment[ca]=Dorsal de PDF per a l'Okular emprant el poppler
 Comment[da]=PDF-motor til Okular som bruger poppler
 Comment[de]=Anzeigemodul für PDF (mittels Poppler) in Okular

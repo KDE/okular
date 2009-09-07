@@ -14,6 +14,7 @@ Name[x-test]=xxGhostscriptxx
 Name[zh_CN]=GhostScript 信息
 Comment=Ghostscript PS/PDF backend for Okular
 Comment[ar]=المنتهى الخلفي Ghostscript PS/PDF لأوكلار
+Comment[bg]=Ядро на Okular за Ghostscript PS/PDF
 Comment[ca]=Dorsal de Ghostscript PS/PDF per a l'Okular
 Comment[da]=Ghostscript PS/PDF-motor til Okular
 Comment[de]=Anzeigemodul für Ghostscript PS/PDF in Okular

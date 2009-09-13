@@ -133,6 +133,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     m_fontProgressBar->hide();
   }
 
+  layout->setRowStretch(layout->rowCount(), 1);
+
   // current width: left columnt + right column + dialog borders
   int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
   if ( page2Layout )

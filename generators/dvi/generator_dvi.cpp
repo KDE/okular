@@ -225,28 +225,28 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
     QMutexLocker lock( userMutex() );
 
-    SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
-
-/*   if ( s.width() != pageInfo->width) */
-    //   if (!useDocumentSpecifiedSize)
-    //    s = userPreferredSize;
-
-    if (s.isValid())
-    {
-        ps = s; /* it should be the user specified size, if any, instead */
-    }
-
-    pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
-
-#if 0
-    kDebug(DviDebug) << *request
-    << ", res:" << pageInfo->resolution << " - (" << pageInfo->width << ","
-    << ps.width().getLength_in_inch() << ")," << ps.width().getLength_in_mm()
-    << endl;
-#endif
-
     if ( m_dviRenderer )
     {
+        SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
+
+/*       if ( s.width() != pageInfo->width) */
+        //   if (!useDocumentSpecifiedSize)
+        //    s = userPreferredSize;
+
+        if (s.isValid())
+        {
+            ps = s; /* it should be the user specified size, if any, instead */
+        }
+
+        pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
+
+#if 0
+        kDebug(DviDebug) << *request
+        << ", res:" << pageInfo->resolution << " - (" << pageInfo->width << ","
+        << ps.width().getLength_in_inch() << ")," << ps.width().getLength_in_mm()
+        << endl;
+#endif
+
         m_dviRenderer->drawPage( pageInfo );
 
         if ( ! pageInfo->img.isNull() )
@@ -285,13 +285,13 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
 
     QMutexLocker lock( userMutex() );
 
-    SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
-    pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
-
     // get page text from m_dviRenderer
     Okular::TextPage *ktp = 0;
     if ( m_dviRenderer )
     {
+        SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
+        pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
+
         m_dviRenderer->getText( pageInfo );
         lock.unlock();
 

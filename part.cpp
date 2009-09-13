@@ -1483,49 +1483,31 @@ void Part::slotSaveFileAs()
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
         return;
 
-    if ( saveUrl.isLocalFile() )
+    if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
     {
-        const QString fileName = saveUrl.toLocalFile();
-        if ( QFile::exists( fileName ) )
-        {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
-                return;
-        }
-
-        if ( !m_document->saveChanges( fileName ) )
-        {
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+        if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
             return;
-        }
     }
-    else
+
+    KTemporaryFile tf;
+    QString fileName;
+    if ( !tf.open() )
     {
-        if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
-        {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
-                return;
-        }
-
-        KTemporaryFile tf;
-        QString fileName;
-        if ( !tf.open() )
-        {
-            KMessageBox::information( widget(), i18n("Could not open the temporary file for saving." ) );
-                return;
-        }
-        fileName = tf.fileName();
-        tf.close();
-
-        if ( !m_document->saveChanges( fileName ) )
-        {
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+        KMessageBox::information( widget(), i18n("Could not open the temporary file for saving." ) );
             return;
-        }
-
-        KIO::Job *copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
-        if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
     }
+    fileName = tf.fileName();
+    tf.close();
+
+    if ( !m_document->saveChanges( fileName ) )
+    {
+        KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+        return;
+    }
+
+    KIO::Job *copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
+    if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
+        KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
 }
 
 

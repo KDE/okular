@@ -45,6 +45,8 @@ else(_PopplerLinkFlags)
 endif(_PopplerLinkFlags)
 
 if (POPPLER_FOUND)
+  INCLUDE(CheckCXXSourceCompiles)
+
   set(POPPLER_LIBRARY ${_PopplerLinkFlags})
 
   # the cflags for poppler-qt4 can contain more than one include path

@@ -111,9 +111,6 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="pixmap" >
-           <pixmap/>
-          </property>
          </widget>
         </item>
         <item>
@@ -222,9 +219,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="pixmap" >
-           <pixmap/>
           </property>
          </widget>
         </item>

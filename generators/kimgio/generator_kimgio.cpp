@@ -30,10 +30,10 @@ static KAboutData createAboutData()
          "okular_kimgio",
          "okular_kimgio",
          ki18n( "Image Backend" ),
-         "0.1",
+         "0.1.1",
          ki18n( "A simple image backend" ),
          KAboutData::License_GPL,
-         ki18n( "© 2005 Albert Astals Cid\n"
+         ki18n( "© 2005, 2009 Albert Astals Cid\n"
                 "© 2006-2007 Pino Toscano\n"
                 "© 2006-2007 Tobias Koenig" )
     );
@@ -76,6 +76,7 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
+    docInfo.set( Okular::DocumentInfo::MimeType, KMimeType::findByPath(fileName)->name() );
 
     pagesVector.resize( 1 );
 
@@ -96,6 +97,7 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
+    docInfo.set( Okular::DocumentInfo::MimeType, KMimeType::findByContent(fileData)->name() );
 
     pagesVector.resize( 1 );
 
@@ -142,6 +144,11 @@ bool KIMGIOGenerator::print( QPrinter& printer )
 void KIMGIOGenerator::slotTest()
 {
     kDebug() << "Test";
+}
+
+const Okular::DocumentInfo * KIMGIOGenerator::generateDocumentInfo()
+{
+    return &docInfo;
 }
 
 #include "generator_kimgio.moc"

@@ -11,6 +11,7 @@
 #define _OKULAR_GENERATOR_KIMGIO_H_
 
 #include <core/generator.h>
+#include <core/document.h>
 
 #include <QtGui/QImage>
 
@@ -28,6 +29,9 @@ class KIMGIOGenerator : public Okular::Generator
         // [INHERITED] print document using already configured kprinter
         bool print( QPrinter& printer );
 
+        // [INHERITED] document information
+        const Okular::DocumentInfo * generateDocumentInfo();
+
     protected:
         bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
@@ -37,6 +41,7 @@ class KIMGIOGenerator : public Okular::Generator
 
     private:
         QImage m_img;
+        Okular::DocumentInfo docInfo;
 };
 
 #endif

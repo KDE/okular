@@ -74,7 +74,7 @@
 			<title>Opening Files</title>
 			<para>
 				To view any supported file in &okular;, select <menuchoice><guimenu>File</guimenu><guimenuitem>Open...</guimenuitem>
-				</menuchoice>, choose a supported file in the dialogue and click <guibutton>Open</guibutton>.
+				</menuchoice>, choose a supported file in the dialog and click <guibutton>Open</guibutton>.
 				Your file should now be displayed in the main window.
 			</para>
 			<para>
@@ -175,7 +175,7 @@ Add a 'Find Previous' entry
 				</listitem>
 				<listitem>
 					<para>
-						You can go back in the document using <keycap>Backspace</keycap> or <keycap>Page Up</keycap>.
+						You can go back in the document using &Backspace; or <keycap>Page Up</keycap>.
 						To go to the previous page of the document use <guibutton>Previous Page</guibutton> Toolbar
 						button or 
 						<menuchoice>
@@ -212,7 +212,7 @@ Add a 'Find Previous' entry
 				section.
 			</para>
 			<para>
-				You can exit presentation mode at any time by pressing the <keycap>ESC</keycap> key or clicking
+				You can exit presentation mode at any time by pressing the &Esc; key or clicking
 				the <guiicon>Quit</guiicon> icon in the top bar.
 			</para>
 			<para>
@@ -298,7 +298,7 @@ Add a 'Find Previous' entry
 				</note>
 				<para>
 					You can stop the construction any time by pressing again on the button of the
-					annotation you are constructing, or by pressing the <keycap>ESC</keycap> key.
+					annotation you are constructing, or by pressing the &Esc; key.
 				</para>
 				<para>
 					The newly constructed annotation will have as author the author you set in the
@@ -362,7 +362,7 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a supported file or okular archive. If there is already an opened file it will be closed. For more information, see the section about <link linkend="opening">Opening Files</link>.
+							<action>Open</action> a supported file or &okular; archive. If there is already an opened file it will be closed. For more information, see the section about <link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -796,7 +796,7 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycap>Backspace</keycap></shortcut>
+							<shortcut>&Backspace;</shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem>
 						</menuchoice>
@@ -947,7 +947,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>The mouse will have its normal behaviour, &LMB; for dragging the document and following links and &RMB; for adding bookmarks and fit to width.</para>
+						<para>The mouse will have its normal behavior, &LMB; for dragging the document and following links and &RMB; for adding bookmarks and fit to width.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1149,7 +1149,7 @@ Add a 'Find Previous' entry
 			<para>
 				You can configure &okular; by choosing <menuchoice><guimenu>Settings</guimenu>
 				<guimenuitem>Configure &okular;...</guimenuitem></menuchoice>.
-				The configuration dialogue is split into five sections. This chapter describes the available
+				The configuration dialog is split into six sections. This chapter describes the available
 				options in detail.
 			</para>
 			<itemizedlist>
@@ -1173,20 +1173,20 @@ Add a 'Find Previous' entry
 				</listitem>
 			</itemizedlist>
 			<screenshot>
-				<screeninfo>The configuration dialogue</screeninfo>
+				<screeninfo>The configuration dialog</screeninfo>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="configure.png" format="PNG" />
 					</imageobject>
 					<textobject>
-						<phrase>The configuration dialogue</phrase>
+						<phrase>The configuration dialog</phrase>
 					</textobject>
 				</mediaobject>
 			</screenshot>
 			<para>
 				Depending on the currently installed backends, the <menuchoice><guimenu>Settings</guimenu>
 				<guimenuitem>Configure Backends...</guimenuitem></menuchoice> menu item could be enabled.
-				This particular configuration dialogue holds the configurations of the backends that can
+				This particular configuration dialog holds the configurations of the backends that can
 				actually be configured.
 			</para>
 		</sect1>

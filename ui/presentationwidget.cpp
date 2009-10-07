@@ -658,6 +658,16 @@ void PresentationWidget::resizeEvent( QResizeEvent *re )
 
     applyNewScreenSize( re->oldSize() );
 }
+
+void PresentationWidget::leaveEvent( QEvent * e )
+{
+    Q_UNUSED( e )
+
+    if ( !m_topBar->isHidden() )
+    {
+        m_topBar->hide();
+    }
+}
 // </widget events>
 
 

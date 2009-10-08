@@ -287,7 +287,8 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                              QWidget* parent_widget,
                              const QString& output_name,
                              const QStringList& options,
-                             QPrinter* printer)
+                             QPrinter* printer,
+                             bool useFontHinting)
   : DVIExport(parent, parent_widget),
     printer_(printer)
 {
@@ -379,7 +380,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
 
     input_name = tmpfile_name_;
 
-    fontPool fp;
+    fontPool fp(useFontHinting);
     dvifile newFile(&dvi, &fp);
 
     // Renumber pages

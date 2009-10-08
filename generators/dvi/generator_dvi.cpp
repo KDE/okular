@@ -78,7 +78,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     (void)userMutex();
 
-    m_dviRenderer = new dviRenderer();
+    m_dviRenderer = new dviRenderer(documentMetaData("TextHinting", QVariant()).toBool());
 #ifdef DVI_OPEN_BUSYLOOP
     static const ushort s_waitTime = 800; // milliseconds
     static const int s_maxIterations = 10;

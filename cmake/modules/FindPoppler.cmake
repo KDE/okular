@@ -80,15 +80,25 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_8)
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::Document::RenderHint hint = Poppler::Document::TextHinting;
+  return 0;
+}
+" HAVE_POPPLER_0_12_1)
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_0_8)
+  if (HAVE_POPPLER_0_12_1)
+    set(popplerVersionMessage "0.12.1")
+  elseif (HAVE_POPPLER_0_8)
     set(popplerVersionMessage "0.8")
   elseif (HAVE_POPPLER_0_6)
     set(popplerVersionMessage "0.6")
-  else (HAVE_POPPLER_0_8)
+  else (HAVE_POPPLER_0_12_1)
     set(popplerVersionMessage "0.5.4")
-  endif (HAVE_POPPLER_0_8)
+  endif (HAVE_POPPLER_0_12_1)
   if (NOT Poppler_FIND_QUIETLY)
     message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, (>= ${popplerVersionMessage})")
   endif (NOT Poppler_FIND_QUIETLY)
@@ -104,5 +114,6 @@ set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} CACHE INTERNAL "The Poppler-Qt4 i
 set(POPPLER_LIBRARY ${POPPLER_LIBRARY} CACHE INTERNAL "The Poppler-Qt4 library")
 set(HAVE_POPPLER_0_6 ${HAVE_POPPLER_0_6} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.6")
 set(HAVE_POPPLER_0_8 ${HAVE_POPPLER_0_8} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.8")
+set(HAVE_POPPLER_0_12_1 ${HAVE_POPPLER_0_12_1} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.12.1")
 
 endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

@@ -1011,7 +1011,7 @@ bool PDFGenerator::reparseConfig()
         userMutex()->unlock();
         somethingchanged = true;
     }
-    bool aaChanged = setAAOptions();
+    bool aaChanged = setDocumentRenderHints();
     somethingchanged = somethingchanged || aaChanged;
     return somethingchanged;
 }
@@ -1020,7 +1020,7 @@ void PDFGenerator::addPages( KConfigDialog * )
 {
 }
 
-bool PDFGenerator::setAAOptions()
+bool PDFGenerator::setDocumentRenderHints()
 {
     bool changed = false;
     static Poppler::Document::RenderHints oldhints = 0;
@@ -1039,6 +1039,9 @@ bool PDFGenerator::setAAOptions()
 }
     SET_HINT("GraphicsAntialias", true, Poppler::Document::Antialiasing)
     SET_HINT("TextAntialias", true, Poppler::Document::TextAntialiasing)
+#ifdef HAVE_POPPLER_0_12_1
+    SET_HINT("TextHinting", false, Poppler::Document::TextHinting)
+#endif
 #undef SET_HINT
     return changed;
 }

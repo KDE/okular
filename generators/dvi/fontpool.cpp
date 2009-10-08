@@ -34,7 +34,7 @@ QTime fontPoolTimer;
 bool fontPoolTimerFlag;
 #endif
 
-fontPool::fontPool()
+fontPool::fontPool(bool useFontHinting)
   :  progress("fontgen",  // Chapter in the documentation for help.
               i18n("Okular is currently generating bitmap fonts..."),
               i18n("Aborts the font generation. Do not do this."),
@@ -51,7 +51,7 @@ fontPool::fontPool()
   setObjectName("Font Pool");
 
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
-  useFontHints             = true;
+  useFontHints             = useFontHinting;
   CMperDVIunit             = 0;
   extraSearchPath.clear();
   fontList.setAutoDelete(true);

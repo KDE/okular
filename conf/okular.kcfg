@@ -81,6 +81,13 @@
     <choice name="Disabled" />
    </choices>
   </entry>
+  <entry key="TextHinting" type="Enum" >
+   <default>Disabled</default>
+   <choices>
+    <choice name="Enabled" />
+    <choice name="Disabled" />
+   </choices>
+  </entry>
  </group>
  <group name="Dlg Presentation" >
   <entry key="SlidesAdvance" type="Bool" >

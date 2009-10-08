@@ -132,7 +132,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
-        bool setAAOptions();
+        bool setDocumentRenderHints();
 
         // poppler dependant stuff
         Poppler::Document *pdfdoc;

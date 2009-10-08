@@ -129,7 +129,8 @@ public:
                 QWidget* parent_widget,
                 const QString& output_name,
                 const QStringList& options,
-                QPrinter* printer);
+                QPrinter* printer,
+                bool useFontHinting);
 
 private:
   virtual void abort_process_impl();

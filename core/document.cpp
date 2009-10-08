@@ -1480,6 +1480,18 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
                 break;
         }
     }
+    else if ( key == QLatin1String( "TextHinting" ) )
+    {
+        switch ( Settings::textHinting() )
+        {
+            case Settings::EnumTextHinting::Enabled:
+                return true;
+                break;
+            case Settings::EnumTextHinting::Disabled:
+                return false;
+                break;
+        }
+    }
     return QVariant();
 }
 

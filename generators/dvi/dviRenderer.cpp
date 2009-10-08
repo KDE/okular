@@ -47,8 +47,9 @@
 
 //------ now comes the dviRenderer class implementation ----------
 
-dviRenderer::dviRenderer()
+dviRenderer::dviRenderer(bool useFontHinting)
   : dviFile(0),
+    font_pool(useFontHinting),
     resolutionInDPI(0),
     embedPS_progress(0),
     embedPS_numOfProgressedFiles(0),
@@ -768,7 +769,7 @@ void dviRenderer::exportPDF()
 
 void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer)
 {
-  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer));
+  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer, font_pool.getUseFontHints()));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 }

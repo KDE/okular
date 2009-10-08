@@ -58,7 +58,12 @@ Shell::Shell(KCmdLineArgs* args, int argIndex)
      if any.
      */
     QString arg = m_args->arg(argIndex);
+    const QString origArg = arg;
     arg.replace(QRegExp("^file:/{1,3}"), "/");
+    if (arg != origArg)
+    {
+        arg = QString::fromUtf8(QByteArray::fromPercentEncoding(arg.toUtf8()));
+    }
     KUrl url = KCmdLineArgs::makeURL(arg.toUtf8());
     int sharpPos = -1;
     if (!url.isLocalFile() || !QFile::exists(url.toLocalFile()))

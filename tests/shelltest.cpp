@@ -11,6 +11,8 @@
 #include <qdir.h>
 #include <kurl.h>
 
+#include "../shell/shellutils.h"
+
 namespace QTest
 {
 template<>
@@ -27,6 +29,16 @@ static const KUrl makeUrlFromCwd( const QString& u, const QString& ref = QString
         url.setRef( ref );
     url.cleanPath();
     return url;
+}
+
+static bool fileExist_always_Func( const QString& )
+{
+    return true;
+}
+
+static bool fileExist_never_Func( const QString& )
+{
+    return false;
 }
 
 class ShellTest
@@ -100,24 +112,7 @@ void ShellTest::testUrlArgs()
     QFETCH( bool, exists );
     QFETCH( KUrl, resUrl );
 
-    // note: below is a snippet taken from the Shell ctor
-    const QString origArg = arg;
-    arg.replace(QRegExp("^file:/{1,3}"), "/");
-    if (arg != origArg)
-    {
-        arg = QString::fromUtf8(QByteArray::fromPercentEncoding(arg.toUtf8()));
-    }
-    KUrl url = KCmdLineArgs::makeURL(arg.toUtf8());
-    int sharpPos = -1;
-    if (!url.isLocalFile() || !exists)
-    {
-        sharpPos = arg.lastIndexOf(QLatin1Char('#'));
-    }
-    if (sharpPos != -1)
-    {
-      url = KCmdLineArgs::makeURL(arg.left(sharpPos).toUtf8());
-      url.setHTMLRef(arg.mid(sharpPos + 1));
-    }
+    KUrl url = ShellUtils::urlFromArg( arg, exists ? fileExist_always_Func : fileExist_never_Func );
     QCOMPARE( url, resUrl );
 }
 

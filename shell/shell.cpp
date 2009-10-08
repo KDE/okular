@@ -45,41 +45,15 @@
 
 // local includes
 #include "kdocumentviewer.h"
+#include "shellutils.h"
 
 Shell::Shell(KCmdLineArgs* args, int argIndex)
   : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
   if (m_args && argIndex != -1)
   {
-    /*
-     Rationale for the small "cut-and-paste" work being done below:
-     KCmdLineArgs::makeURL() (used by ::url() encodes any # into the URL itself,
-     so we have to find it manually and build up the URL by taking its ref,
-     if any.
-     */
-    QString arg = m_args->arg(argIndex);
-    const QString origArg = arg;
-    arg.replace(QRegExp("^file:/{1,3}"), "/");
-    if (arg != origArg)
-    {
-        arg = QString::fromUtf8(QByteArray::fromPercentEncoding(arg.toUtf8()));
-    }
-    KUrl url = KCmdLineArgs::makeURL(arg.toUtf8());
-    int sharpPos = -1;
-    if (!url.isLocalFile() || !QFile::exists(url.toLocalFile()))
-    {
-        sharpPos = arg.lastIndexOf(QLatin1Char('#'));
-    }
-    if (sharpPos != -1)
-    {
-      url = KCmdLineArgs::makeURL(arg.left(sharpPos).toUtf8());
-      url.setHTMLRef(arg.mid(sharpPos + 1));
-    }
-    else if (!m_args->getOption("page").isEmpty())
-    {
-      url.setHTMLRef(m_args->getOption("page"));
-    }
-    m_openUrl = url;
+    m_openUrl = ShellUtils::urlFromArg(m_args->arg(argIndex),
+        ShellUtils::qfileExistFunc(), m_args->getOption("page"));
   }
   init();
 }

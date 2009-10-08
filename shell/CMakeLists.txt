@@ -8,6 +8,7 @@ include_directories(
 set(okular_SRCS
    main.cpp
    shell.cpp
+   shellutils.cpp
 )
 
 kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-apps-okular.png")

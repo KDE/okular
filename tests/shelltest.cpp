@@ -70,6 +70,10 @@ void ShellTest::testUrlArgs_data()
         << "foo.pdf#anchor"
         << false
         << makeUrlFromCwd( "foo.pdf", "anchor" );
+    QTest::newRow( "#207461" )
+        << "file:///tmp/file%20with%20spaces.pdf"
+        << true
+        << KUrl( "file:///tmp/file%20with%20spaces.pdf" );
 
     // non-local files
     QTest::newRow( "http://kde.org/foo.pdf" )
@@ -84,6 +88,10 @@ void ShellTest::testUrlArgs_data()
         << "http://kde.org/foo.pdf#anchor"
         << true
         << makeUrlFromCwd( "http://kde.org/foo.pdf", "anchor" );
+    QTest::newRow( "#207461" )
+        << "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf"
+        << true
+        << KUrl( "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf" );
 }
 
 void ShellTest::testUrlArgs()
@@ -93,7 +101,12 @@ void ShellTest::testUrlArgs()
     QFETCH( KUrl, resUrl );
 
     // note: below is a snippet taken from the Shell ctor
+    const QString origArg = arg;
     arg.replace(QRegExp("^file:/{1,3}"), "/");
+    if (arg != origArg)
+    {
+        arg = QString::fromUtf8(QByteArray::fromPercentEncoding(arg.toUtf8()));
+    }
     KUrl url = KCmdLineArgs::makeURL(arg.toUtf8());
     int sharpPos = -1;
     if (!url.isLocalFile() || !exists)

@@ -54,18 +54,22 @@ void ShellTest::testUrlArgs_data()
     QTest::addColumn<KUrl>( "resUrl" );
 
     // local files
-    QTest::newRow( "foo.pdf" )
+    QTest::newRow( "foo.pdf, exist" )
         << "foo.pdf"
         << true
         << makeUrlFromCwd( "foo.pdf" );
-    QTest::newRow( "foo.pdf" )
+    QTest::newRow( "foo.pdf, !exist" )
         << "foo.pdf"
         << false
         << makeUrlFromCwd( "foo.pdf" );
-    QTest::newRow( "foo#bar.pdf" )
+    QTest::newRow( "foo#bar.pdf, !exist" )
         << "foo#bar.pdf"
         << false
         << makeUrlFromCwd( "foo#bar.pdf" );
+    QTest::newRow( "foo.pdf#anchor, !exist" )
+        << "foo.pdf#anchor"
+        << false
+        << makeUrlFromCwd( "foo.pdf", "anchor" );
 
     // non-local files
     QTest::newRow( "http://kde.org/foo.pdf" )
@@ -76,6 +80,10 @@ void ShellTest::testUrlArgs_data()
         << "http://kde.org/foo#bar.pdf"
         << true
         << makeUrlFromCwd( "http://kde.org/foo#bar.pdf" );
+    QTest::newRow( "http://kde.org/foo.pdf#anchor" )
+        << "http://kde.org/foo.pdf#anchor"
+        << true
+        << makeUrlFromCwd( "http://kde.org/foo.pdf", "anchor" );
 }
 
 void ShellTest::testUrlArgs()

@@ -84,9 +84,14 @@ CHMGenerator::~CHMGenerator()
 
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
+    m_file = new LCHMFile();
+    if (!m_file->loadFile(fileName))
+    {
+        delete m_file;
+        m_file = 0;
+        return false;
+    }
     m_fileName=fileName;
-    m_file=new LCHMFile ();
-    m_file->loadFile(fileName);
     QVector< LCHMParsedEntry > topics;
     m_file->parseTableOfContents(&topics);
     

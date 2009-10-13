@@ -188,8 +188,6 @@ QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QMode
 /* A custom list widget that ignores the events for disabled items */
 class SidebarListWidget : public QListWidget
 {
-
-
     public:
         SidebarListWidget( QWidget *parent = 0 );
         ~SidebarListWidget();

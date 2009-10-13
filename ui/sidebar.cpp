@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2009 by Eike Hein <hein@kde.org>                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -187,6 +188,8 @@ QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QMode
 /* A custom list widget that ignores the events for disabled items */
 class SidebarListWidget : public QListWidget
 {
+
+
     public:
         SidebarListWidget( QWidget *parent = 0 );
         ~SidebarListWidget();
@@ -199,11 +202,26 @@ class SidebarListWidget : public QListWidget
         void mouseReleaseEvent( QMouseEvent *event );
 
         QModelIndex moveCursor( QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers );
+
+    private:
+        // These two are used to keep track of the row an initial mousePress-
+        // Event() occurs on and the row the cursor moves over while the left
+        // mouse button is pressed, respectively, as well as for event compre-
+        // ssion, to avoid calling SideBar::itemClicked() multiple times for
+        // the same item in a row on mouseMoveEvent()'s. This code is written
+        // under the assumption that the number and positions of items in the
+        // list won't change while the user interacts with it using the mouse.
+        // Future work here must see to that this assumption continues to hold
+        // up, or achieve calling SideBar::itemClicked() differently.
+        int mousePressedRow;
+        int rowUnderMouse;
 };
 
 SidebarListWidget::SidebarListWidget( QWidget *parent )
     : QListWidget( parent )
 {
+    mousePressedRow = -1;
+    rowUnderMouse = -1;
 }
 
 SidebarListWidget::~SidebarListWidget()
@@ -222,8 +240,25 @@ void SidebarListWidget::mouseDoubleClickEvent( QMouseEvent *event )
 void SidebarListWidget::mouseMoveEvent( QMouseEvent *event )
 {
     QModelIndex index = indexAt( event->pos() );
-    if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
-        return;
+
+    if ( index.isValid() )
+    {
+        if ( index.flags() & Qt::ItemIsSelectable )
+        {
+            if ( event->buttons() & Qt::LeftButton
+                 && index.row() != mousePressedRow
+                 && index.row() != rowUnderMouse )
+            {
+                mousePressedRow = -1;
+                rowUnderMouse = index.row();
+
+                QMetaObject::invokeMethod(parent(), "itemClicked", Qt::DirectConnection,
+                    Q_ARG(QListWidgetItem*, item(index.row())));
+            }
+        }
+        else
+            return;
+    }
 
     QListWidget::mouseMoveEvent( event );
 }
@@ -231,8 +266,17 @@ void SidebarListWidget::mouseMoveEvent( QMouseEvent *event )
 void SidebarListWidget::mousePressEvent( QMouseEvent *event )
 {
     QModelIndex index = indexAt( event->pos() );
-    if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
-        return;
+
+    if ( index.isValid() )
+    {
+        if ( index.flags() & Qt::ItemIsSelectable )
+        {
+            if ( event->buttons() & Qt::LeftButton )
+                mousePressedRow = index.row();
+        }
+        else
+            return;
+    }
 
     QListWidget::mousePressEvent( event );
 }
@@ -240,8 +284,29 @@ void SidebarListWidget::mousePressEvent( QMouseEvent *event )
 void SidebarListWidget::mouseReleaseEvent( QMouseEvent *event )
 {
     QModelIndex index = indexAt( event->pos() );
-    if ( index.isValid() && !( index.flags() & Qt::ItemIsSelectable ) )
-        return;
+
+    if ( index.isValid() )
+    {
+        if ( index.flags() & Qt::ItemIsSelectable )
+        {
+            if ( event->button() == Qt::LeftButton
+                 && index.row() != rowUnderMouse )
+            {
+                QMetaObject::invokeMethod(parent(), "itemClicked", Qt::DirectConnection,
+                    Q_ARG(QListWidgetItem*, item(index.row())));
+            }
+        }
+        else
+        {
+            mousePressedRow = -1;
+            rowUnderMouse = -1;
+
+            return;
+        }
+    }
+
+    mousePressedRow = -1;
+    rowUnderMouse = -1;
 
     QListWidget::mouseReleaseEvent( event );
 }
@@ -408,7 +473,6 @@ Sidebar::Sidebar( QWidget *parent )
     d->vlay->addWidget( d->stack );
     d->sideContainer->hide();
 
-    connect( d->list, SIGNAL( itemClicked( QListWidgetItem* ) ), this, SLOT( itemClicked( QListWidgetItem* ) ) );
     connect( d->list, SIGNAL( customContextMenuRequested( const QPoint & ) ),
              this, SLOT( listContextMenu( const QPoint & ) ) );
     connect( d->splitter, SIGNAL( splitterMoved( int, int ) ), this, SLOT( splitterMoved( int, int ) ) );

@@ -23,6 +23,7 @@
 
 #include <QtCore/QList>
 #include <QtCore/QTimer>
+#include <QtCore/QRegExp>
 #include <QtGui/QApplication>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QHBoxLayout>
@@ -43,6 +44,7 @@ class KTreeViewSearchLine::Private
     Private( KTreeViewSearchLine *_parent )
       : parent( _parent ),
         caseSensitive( Qt::CaseInsensitive ),
+        regularExpression( false ),
         activeSearch( false ),
         keepParentsVisible( true ),
         canChooseColumns( true ),
@@ -53,6 +55,7 @@ class KTreeViewSearchLine::Private
     KTreeViewSearchLine *parent;
     QList<QTreeView *> treeViews;
     Qt::CaseSensitivity caseSensitive;
+    bool regularExpression;
     bool activeSearch;
     bool keepParentsVisible;
     bool canChooseColumns;
@@ -64,6 +67,8 @@ class KTreeViewSearchLine::Private
     void treeViewDeleted( QObject *treeView );
     void slotColumnActivated(QAction* action);
     void slotAllVisibleColumns();
+    void slotCaseSensitive();
+    void slotRegularExpression();
 
     void checkColumns();
     void checkItemParentsNotVisible(QTreeView *treeView);
@@ -146,6 +151,26 @@ void KTreeViewSearchLine::Private::slotAllVisibleColumns()
     searchColumns.append( 0 );
   else
     searchColumns.clear();
+
+  parent->updateSearch();
+}
+
+void KTreeViewSearchLine::Private::slotCaseSensitive()
+{
+  if ( caseSensitive == Qt::CaseSensitive)
+    parent->setCaseSensitivity( Qt::CaseInsensitive );
+  else
+    parent->setCaseSensitivity( Qt::CaseSensitive );
+
+  parent->updateSearch();
+}
+
+void KTreeViewSearchLine::Private::slotRegularExpression()
+{
+  if ( regularExpression )
+    parent->setRegularExpression( false );
+  else
+    parent->setRegularExpression( true );
 
   parent->updateSearch();
 }
@@ -239,6 +264,11 @@ KTreeViewSearchLine::~KTreeViewSearchLine()
 Qt::CaseSensitivity KTreeViewSearchLine::caseSensitivity() const
 {
   return d->caseSensitive;
+}
+
+bool KTreeViewSearchLine::regularExpression() const
+{
+  return d->regularExpression;
 }
 
 QList<int> KTreeViewSearchLine::searchColumns() const
@@ -337,6 +367,16 @@ void KTreeViewSearchLine::setCaseSensitivity( Qt::CaseSensitivity caseSensitive 
   if ( d->caseSensitive != caseSensitive ) {
     d->caseSensitive = caseSensitive;
     updateSearch();
+    emit searchOptionsChanged();
+  }
+}
+
+void KTreeViewSearchLine::setRegularExpression( bool value )
+{
+  if ( d->regularExpression != value ) {
+    d->regularExpression = value;
+    updateSearch();
+    emit searchOptionsChanged();
   }
 }
 
@@ -387,6 +427,11 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &index, int row, const 
   if ( !index.isValid() )
     return false;
 
+  // Contruct a regular expression object with the right options.
+  QRegExp expression = QRegExp( pattern,
+      d->caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
+      d->regularExpression ? QRegExp::RegExp : QRegExp::FixedString );
+
   // If the search column list is populated, search just the columns
   // specifified.  If it is empty default to searching all of the columns.
 
@@ -395,12 +440,12 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &index, int row, const 
     QList<int>::ConstIterator it = d->searchColumns.constBegin();
     for ( ; it != d->searchColumns.constEnd(); ++it ) {
       if ( *it < columncount &&
-           index.child( row, *it ).data( Qt::DisplayRole ).toString().indexOf( pattern, 0, d->caseSensitive ) >= 0 )
+          expression.indexIn( index.child( row, *it ).data( Qt::DisplayRole ).toString() ) >= 0 )
         return true;
     }
   } else {
     for ( int i = 0; i < columncount; ++i) {
-      if ( index.child( row, i ).data( Qt::DisplayRole ).toString().indexOf( pattern, 0, d->caseSensitive ) >= 0 )
+      if ( expression.indexIn( index.child( row, i ).data( Qt::DisplayRole ).toString() ) >= 0 )
         return true;
     }
   }
@@ -411,6 +456,15 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &index, int row, const 
 void KTreeViewSearchLine::contextMenuEvent( QContextMenuEvent *event )
 {
   QMenu *popup = KLineEdit::createStandardContextMenu();
+
+  popup->addSeparator();
+  QMenu *optionsSubMenu = popup->addMenu( i18n("Search Options") );
+  QAction* caseSensitiveAction = optionsSubMenu->addAction( i18nc("Enable case sensitive search in the side navigation panels", "Case Sensitive"), this, SLOT( slotCaseSensitive() ) );
+  caseSensitiveAction->setCheckable( true );
+  caseSensitiveAction->setChecked( d->caseSensitive );
+  QAction* regularExpressionAction = optionsSubMenu->addAction( i18nc("Enable regular expression search in the side navigation panels", "Regular Expression"), this, SLOT( slotRegularExpression() ) );
+  regularExpressionAction->setCheckable( true );
+  regularExpressionAction->setChecked( d->regularExpression );
 
   if ( d->canChooseColumns ) {
     popup->addSeparator();

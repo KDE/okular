@@ -76,6 +76,13 @@ class KTreeViewSearchLine : public KLineEdit
     Qt::CaseSensitivity caseSensitivity() const;
 
     /**
+     * Returns true if the search is a regular expression search.  This defaults to false.
+     *
+     * @see setRegularExpression()
+     */
+    bool regularExpression() const;
+
+    /**
      * Returns the current list of columns that will be searched.  If the
      * returned list is empty all visible columns will be searched.
      *
@@ -139,6 +146,13 @@ class KTreeViewSearchLine : public KLineEdit
     void setCaseSensitivity( Qt::CaseSensitivity caseSensitivity );
 
     /**
+     * Make the search a regular expression search or not.
+     *
+     * @see regularExpression()
+     */
+    void setRegularExpression( bool value );
+
+    /**
      * When a search is active on a list that's organized into a tree view if
      * a parent or ancesestor of an item is does not match the search then it
      * will be hidden and as such so too will any children that match.
@@ -179,6 +193,12 @@ class KTreeViewSearchLine : public KLineEdit
      */
     void setTreeViews( const QList<QTreeView *> &treeViews );
 
+  Q_SIGNALS:
+    /**
+     * This signal is emitted when search options have been changed. It is emitted so
+     * that users of this class can choose to save the search options to the settings.
+     */
+    void searchOptionsChanged();
 
   protected:
     /**
@@ -260,6 +280,8 @@ class KTreeViewSearchLine : public KLineEdit
     Q_PRIVATE_SLOT( d, void treeViewDeleted( QObject* ) )
     Q_PRIVATE_SLOT( d, void slotColumnActivated( QAction* ) )
     Q_PRIVATE_SLOT( d, void slotAllVisibleColumns() )
+    Q_PRIVATE_SLOT( d, void slotCaseSensitive() )
+    Q_PRIVATE_SLOT( d, void slotRegularExpression() )
 };
 
 /**

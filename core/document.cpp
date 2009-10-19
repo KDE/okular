@@ -1592,7 +1592,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
         loadingMimeByContent = true;
-        if ( newmime != mime )
+        if ( newmime->name() != mime->name() )
         {
             mime = newmime;
             offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
@@ -1636,7 +1636,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
         loadingMimeByContent = true;
-        if ( newmime != mime )
+        if ( newmime->name() != mime->name() )
         {
             mime = newmime;
             offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );

@@ -31,7 +31,7 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>2</shortcut>
     </tool>
-    <tool id="3" name="Green Highlighter" pixmap="tool-ink-okular">
+    <tool id="3" name="Green Freehand Line" pixmap="tool-ink-okular">
         <tooltip>Green Ink</tooltip>
         <engine type="SmoothLine" color="#00FF00">
             <annotation type="Ink" color="#00FF00" width="2" />

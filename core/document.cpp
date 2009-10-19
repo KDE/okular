@@ -3191,6 +3191,12 @@ bool Document::canSaveChanges() const
 
 bool Document::saveChanges( const QString &fileName )
 {
+    QString errorText;
+    return saveChanges( fileName, &errorText );
+}
+
+bool Document::saveChanges( const QString &fileName, QString *errorText )
+{
     if ( !d->m_generator || fileName.isEmpty() )
         return false;
     Q_ASSERT( !d->m_generatorName.isEmpty() );
@@ -3201,7 +3207,7 @@ bool Document::saveChanges( const QString &fileName )
     if ( !saveIface || !saveIface->supportsOption( SaveInterface::SaveChanges ) )
         return false;
 
-    return saveIface->save( fileName, SaveInterface::SaveChanges );
+    return saveIface->save( fileName, SaveInterface::SaveChanges, errorText );
 }
 
 void Document::registerView( View *view )

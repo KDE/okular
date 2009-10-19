@@ -543,6 +543,14 @@ class OKULAR_EXPORT Document : public QObject
         bool saveChanges( const QString &fileName );
 
         /**
+         * Save the document and the optional changes to it to the specified
+         * @p fileName and returns a @p errorText if fails.
+         *
+         * @since 0.10 (KDE 4.4)
+         */
+        bool saveChanges( const QString &fileName, QString *errorText );
+
+        /**
          * Register the specified @p view for the current document.
          *
          * It is unregistered from the previous document, if any.

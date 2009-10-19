@@ -1499,9 +1499,17 @@ void Part::slotSaveFileAs()
     fileName = tf.fileName();
     tf.close();
 
-    if ( !m_document->saveChanges( fileName ) )
+    QString errorText;
+    if ( !m_document->saveChanges( fileName, &errorText ) )
     {
-        KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+        if (errorText.isEmpty())
+        {
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+        }
+        else
+        {
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. %2", fileName, errorText ) );
+        }
         return;
     }
 

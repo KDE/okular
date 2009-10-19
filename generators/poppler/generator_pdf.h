@@ -97,7 +97,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         // [INHERITED] save interface
         bool supportsOption( SaveOption ) const;
-        bool save( const QString &fileName, SaveOptions options );
+        bool save( const QString &fileName, SaveOptions options, QString *errorText );
 
     protected:
         bool doCloseDocument();

@@ -1507,7 +1507,7 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     return false;
 }
 
-bool PDFGenerator::save( const QString &fileName, SaveOptions options )
+bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *errorText )
 {
     Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
 
@@ -1517,6 +1517,26 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options )
 
     QMutexLocker locker( userMutex() );
     bool success = pdfConv->convert();
+#ifdef HAVE_POPPLER_0_12_1
+    if (!success)
+    {
+        switch (pdfConv->lastError())
+        {
+            case Poppler::BaseConverter::NotSupportedInputFileError:
+                *errorText = i18n("Saving files with /Encrypt is not supported.");
+            break;
+
+            case Poppler::BaseConverter::NoError:
+            case Poppler::BaseConverter::FileLockedError:
+                // we can't get here
+            break;
+
+            case Poppler::BaseConverter::OpenOutputError:
+                // the default text message is good for this case
+            break;
+        }
+    }
+#endif
     delete pdfConv;
     return success;
 }

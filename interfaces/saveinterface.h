@@ -64,12 +64,12 @@ class OKULAR_EXPORT SaveInterface
         /**
          * Save to the specified @p fileName with the specified @p options.
          */
-        virtual bool save( const QString &fileName, SaveOptions options ) = 0;
+        virtual bool save( const QString &fileName, SaveOptions options, QString *errorText ) = 0;
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::SaveInterface, "org.kde.okular.SaveInterface/0.1" )
+Q_DECLARE_INTERFACE( Okular::SaveInterface, "org.kde.okular.SaveInterface/0.2" )
 Q_DECLARE_OPERATORS_FOR_FLAGS( Okular::SaveInterface::SaveOptions )
 
 #endif

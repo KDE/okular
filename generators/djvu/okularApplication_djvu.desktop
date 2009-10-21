@@ -106,3 +106,4 @@ Type=Application
 InitialPreference=7
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
+X-KDE-Keywords=djvu

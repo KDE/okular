@@ -105,4 +105,5 @@ Icon=okular
 Type=Application
 InitialPreference=8
 Categories=Qt;KDE;Graphics;Viewer;
+X-KDE-Keywords=PDF, Portable Document Format
 NoDisplay=true

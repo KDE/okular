@@ -106,3 +106,4 @@ Type=Application
 InitialPreference=1
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
+X-KDE-Keywords=mobipocket

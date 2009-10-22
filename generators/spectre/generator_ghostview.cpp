@@ -229,27 +229,32 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     SpectrePage *page = spectre_document_get_page(m_internalDocument, req->pageNumber());
 
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
-    renderer->setPlatformFonts(GSSettings::platformFonts());
+
+    GSRendererThreadRequest gsreq(this);
+    gsreq.spectrePage = page;
+    gsreq.platformFonts = GSSettings::platformFonts();
     int graphicsAA = 1;
     int textAA = 1;
     if (cache_AAgfx) graphicsAA = 4;
     if (cache_AAtext) textAA = 2;
-    renderer->setAABits(graphicsAA, textAA);
+    gsreq.textAAbits = textAA;
+    gsreq.graphicsAAbits = graphicsAA;
 
-    renderer->setRotation( req->page()->orientation() * 90 );
+    gsreq.rotation = req->page()->orientation() * 90;
     if (req->page()->rotation() == Okular::Rotation90 ||
         req->page()->rotation() == Okular::Rotation270)
     {
-      renderer->setMagnify( qMax( (double)req->height() / req->page()->width(),
-                                  (double)req->width() / req->page()->height() ) );
+        gsreq.magnify = qMax( (double)req->height() / req->page()->width(),
+                              (double)req->width() / req->page()->height() );
     }
     else
     {
-      renderer->setMagnify( qMax( (double)req->width() / req->page()->width(),
-                                  (double)req->height() / req->page()->height() ) );
+        gsreq.magnify = qMax( (double)req->width() / req->page()->width(),
+                              (double)req->height() / req->page()->height() );
     }
+    gsreq.request = req;
     m_request = req;
-    renderer->startRequest(req, page);
+    renderer->addRequest(gsreq);
 }
 
 bool GSGenerator::canGeneratePixmap() const

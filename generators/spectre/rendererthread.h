@@ -10,6 +10,8 @@
 #ifndef _OKULAR_GSRENDERERTHREAD_H_
 #define _OKULAR_GSRENDERERTHREAD_H_
 
+#include <qmutex.h>
+#include <qqueue.h>
 #include <qsemaphore.h>
 #include <qstring.h>
 #include <qthread.h>
@@ -17,11 +19,36 @@
 #include <libspectre/spectre.h>
 
 class QImage;
+class GSGenerator;
 
 namespace Okular
 {
    class PixmapRequest;
 }
+
+struct GSRendererThreadRequest
+{
+    GSRendererThreadRequest(GSGenerator *_owner)
+        : owner(_owner)
+        , request(0)
+        , spectrePage(0)
+        , textAAbits(1)
+        , graphicsAAbits(1)
+        , magnify(1.0)
+        , rotation(0)
+        , platformFonts(true)
+    {}
+
+    GSGenerator *owner;
+    Okular::PixmapRequest *request;
+    SpectrePage *spectrePage;
+    int textAAbits;
+    int graphicsAAbits;
+    double magnify;
+    int rotation;
+    bool platformFonts;
+};
+Q_DECLARE_TYPEINFO(GSRendererThreadRequest, Q_MOVABLE_TYPE);
 
 class GSRendererThread : public QThread
 {
@@ -31,12 +58,7 @@ Q_OBJECT
 
         ~GSRendererThread();
 
-        void setPlatformFonts(bool pfonts);
-        void setAABits(int text, int graphics);
-        void setMagnify(double magnify);
-        void setRotation(int rotation);
-
-        void startRequest(Okular::PixmapRequest *request, SpectrePage *page);
+        void addRequest(const GSRendererThreadRequest &req);
 
     signals:
         void imageDone(QImage *image, Okular::PixmapRequest *request);
@@ -51,8 +73,8 @@ Q_OBJECT
         void run();
 
         SpectreRenderContext *m_renderContext;
-        Okular::PixmapRequest *m_currentRequest, *m_nextRequest;
-        SpectrePage *m_currentPage, *m_nextPage;
+        QQueue<GSRendererThreadRequest> m_queue;
+        QMutex m_queueMutex;
 };
 
 #endif

@@ -2422,8 +2422,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     {
         crop = okularPage->boundingBox();
 
-        // Rotate the bounding box from upright Rotation0 to current page orientation:
-        for ( int i = okularPage->totalOrientation(); i > 0; --i )
+        // Rotate the bounding box
+        for ( int i = okularPage->rotation(); i > 0; --i )
         {
             Okular::NormalizedRect rot = crop;
             crop.left   = 1 - rot.bottom;

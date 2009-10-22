@@ -48,12 +48,9 @@ void GSRendererThread::run()
     while(1)
     {
         m_semaphore.acquire();
-        bool goAhead = true;
-        do
         {
             m_queueMutex.lock();
             GSRendererThreadRequest req = m_queue.dequeue();
-            goAhead = !m_queue.isEmpty();
             m_queueMutex.unlock();
 
             spectre_render_context_set_scale(m_renderContext, req.magnify, req.magnify);
@@ -94,8 +91,7 @@ void GSRendererThread::run()
             emit imageDone(image, req.request);
 
             spectre_page_free(req.spectrePage);
-
-        } while (goAhead);
+        }
     }
 }
 

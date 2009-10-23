@@ -35,7 +35,7 @@ struct GSRendererThreadRequest
         , textAAbits(1)
         , graphicsAAbits(1)
         , magnify(1.0)
-        , rotation(0)
+        , orientation(0)
         , platformFonts(true)
     {}
 
@@ -45,7 +45,7 @@ struct GSRendererThreadRequest
     int textAAbits;
     int graphicsAAbits;
     double magnify;
-    int rotation;
+    int orientation;
     bool platformFonts;
 };
 Q_DECLARE_TYPEINFO(GSRendererThreadRequest, Q_MOVABLE_TYPE);

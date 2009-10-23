@@ -240,7 +240,7 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     gsreq.textAAbits = textAA;
     gsreq.graphicsAAbits = graphicsAA;
 
-    gsreq.rotation = req->page()->orientation() * 90;
+    gsreq.orientation = req->page()->orientation();
     if (req->page()->rotation() == Okular::Rotation90 ||
         req->page()->rotation() == Okular::Rotation270)
     {

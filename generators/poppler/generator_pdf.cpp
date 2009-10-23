@@ -1687,8 +1687,8 @@ void PDFPixmapGeneratorThread::run()
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
     
-    double fakeDpiX = width * d->generator->dpiX / page->width(),
-           fakeDpiY = height * d->generator->dpiY / page->height();
+    double fakeDpiX = width * d->generator->dpiX / pageWidth,
+           fakeDpiY = height * d->generator->dpiY / pageHeight;
 
     // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG

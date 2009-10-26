@@ -143,7 +143,7 @@ class FileKeeper
         std::FILE * m_handle;
 };
 
-K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Part >(); )
+K_PLUGIN_FACTORY( okularPartFactory, registerPlugin< Okular::Part >(); )
 K_EXPORT_PLUGIN( okularPartFactory( okularAboutData( "okular", I18N_NOOP( "Okular" ) ) ) )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
@@ -183,29 +183,29 @@ static QString compressedMimeFor( const QString& mime_to_check )
     return QString();
 }
 
-static Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
+static Okular::Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
 {
     Q_UNUSED( parentWidget );
 
     if ( parent
          && ( parent->objectName() == QLatin1String( "okular::Shell" )
               || parent->objectName() == QLatin1String( "okular/okular__Shell" ) ) )
-        return Part::NativeShellMode;
+        return Okular::Part::NativeShellMode;
 
     if ( parent
          && ( QByteArray( "KHTMLPart" ) == parent->metaObject()->className() ) )
-        return Part::KHTMLPartMode;
+        return Okular::Part::KHTMLPartMode;
 
     Q_FOREACH ( const QVariant &arg, args )
     {
         if ( arg.type() == QVariant::String )
         {
             if ( arg.toString() == QLatin1String( "Print/Preview" ) )
-                return Part::PrintPreviewMode;
+                return Okular::Part::PrintPreviewMode;
         }
     }
 
-    return Part::UnknownEmbedMode;
+    return Okular::Part::UnknownEmbedMode;
 }
 
 #undef OKULAR_KEEP_FILE_OPEN
@@ -217,6 +217,9 @@ static bool keepFileOpen()
     return keep_file_open;
 }
 #endif
+
+namespace Okular
+{
 
 Part::Part(QWidget *parentWidget,
 QObject *parent,
@@ -2167,6 +2170,7 @@ void Part::updateAboutBackendAction()
     }
 }
 
+} // namespace Okular
 
 #include "part.moc"
 

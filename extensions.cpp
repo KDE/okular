@@ -13,6 +13,9 @@
 // local includes
 #include "part.h"
 
+namespace Okular
+{
+
 /*
  * BrowserExtension class
  */
@@ -114,6 +117,7 @@ void OkularLiveConnectExtension::postMessage( const QStringList &args )
           "{ this.messageHandler.onMessage(" + arrayarg + ") }" );
 }
 
+}
 
 #include "extensions.moc"
 

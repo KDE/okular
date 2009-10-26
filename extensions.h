@@ -13,6 +13,9 @@
 
 #include <kparts/browserextension.h>
 
+namespace Okular
+{
+
 class Part;
 
 class BrowserExtension : public KParts::BrowserExtension
@@ -51,6 +54,9 @@ class OkularLiveConnectExtension : public KParts::LiveConnectExtension
         bool m_inEval;
         QString m_evalRes;
 };
+
+}
+
 #endif
 
 /* kate: replace-tabs on; indent-width 4; */

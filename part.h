@@ -59,10 +59,9 @@ class BookmarkList;
 
 namespace Okular
 {
-class ExportFormat;
-}
 
 class BrowserExtension;
+class ExportFormat;
 
 /**
  * This is a "Part".  It that does all the real work in a KPart
@@ -273,6 +272,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     private slots:
         void slotGeneratorPreferences();
 };
+
+}
 
 #endif
 

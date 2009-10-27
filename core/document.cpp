@@ -2222,7 +2222,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     if ( requests.isEmpty() )
         return;
 
-    if ( !d->m_generator )
+    if ( !d->m_generator || d->m_closingLoop )
     {
         // delete requests..
         QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();

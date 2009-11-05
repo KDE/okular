@@ -41,6 +41,7 @@ class FindBar
     private slots:
         void caseSensitivityChanged();
         void fromCurrentPageChanged();
+        void closeAndStopSearch();
 
     private:
         SearchLineWidget * m_search;

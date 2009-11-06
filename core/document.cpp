@@ -1004,14 +1004,14 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
     RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
     Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
+    RunningSearch *search = m_searches.value(searchID);
 
-    if (m_searchCancelled && !match)
+    if ((m_searchCancelled && !match) || !search)
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        if (search) search->isCurrentlySearching = false;
 
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         delete pagesToNotify;
@@ -1063,17 +1063,16 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
 
     bool foundAMatch = false;
 
-    RunningSearch * s = m_searches[searchID];
-    s->isCurrentlySearching = false;
+    search->isCurrentlySearching = false;
 
     // if a match has been found..
     if ( match )
     {
         // update the RunningSearch structure adding this match..
         foundAMatch = true;
-        s->continueOnPage = currentPage;
-        s->continueOnMatch = *match;
-        s->highlightedPages.insert( currentPage );
+        search->continueOnPage = currentPage;
+        search->continueOnMatch = *match;
+        search->highlightedPages.insert( currentPage );
         // ..add highlight to the page..
         m_pagesVector[ currentPage ]->d->setHighlight( searchID, match, color );
 
@@ -1112,14 +1111,14 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
     RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
     Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
+    RunningSearch *search = m_searches.value(searchID);
 
-    if (m_searchCancelled && !match)
+    if ((m_searchCancelled && !match) || !search)
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        if (search) search->isCurrentlySearching = false;
 
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         delete pagesToNotify;
@@ -1170,8 +1169,7 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
     // reset cursor to previous shape
     QApplication::restoreOverrideCursor();
 
-    RunningSearch * s = m_searches[searchID];
-    s->isCurrentlySearching = false;
+    search->isCurrentlySearching = false;
 
     bool foundAMatch = false;
 
@@ -1180,9 +1178,9 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
     {
         // update the RunningSearch structure adding this match..
         foundAMatch = true;
-        s->continueOnPage = currentPage;
-        s->continueOnMatch = *match;
-        s->highlightedPages.insert( currentPage );
+        search->continueOnPage = currentPage;
+        search->continueOnMatch = *match;
+        search->highlightedPages.insert( currentPage );
         // ..add highlight to the page..
         m_pagesVector[ currentPage ]->d->setHighlight( searchID, match, color );
 
@@ -1221,15 +1219,15 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = static_cast< QMap< Page *, QVector<RegularAreaRect *> > * >(pageMatchesMap);
     Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
+    RunningSearch *search = m_searches.value(searchID);
 
-    if (m_searchCancelled)
+    if (m_searchCancelled || !search)
     {
         typedef QVector<RegularAreaRect *> MatchesVector;
 
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        if (search) search->isCurrentlySearching = false;
 
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
         foreach(const MatchesVector &mv, *pageMatches) qDeleteAll(mv);
@@ -1272,8 +1270,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
         QMap< Page *, QVector<RegularAreaRect *> >::const_iterator it, itEnd;
         it = pageMatches->constBegin();
@@ -1285,7 +1282,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
                 it.key()->d->setHighlight( searchID, match, color );
                 delete match;
             }
-            s->highlightedPages.insert( it.key()->number() );
+            search->highlightedPages.insert( it.key()->number() );
             pagesToNotify->insert( it.key()->number() );
         }
 
@@ -1311,15 +1308,15 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     QMap< Page *, QVector<MatchColor> > *pageMatches = static_cast< QMap< Page *, QVector<MatchColor> > * >(pageMatchesMap);
     Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
+    RunningSearch *search = m_searches.value(searchID);
 
-    if (m_searchCancelled)
+    if (m_searchCancelled || !search)
     {
         typedef QVector<MatchColor> MatchesVector;
 
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        if (search) search->isCurrentlySearching = false;
 
         emit m_parent->searchFinished( searchID, Document::SearchCancelled );
 
@@ -1393,8 +1390,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         // reset cursor to previous shape
         QApplication::restoreOverrideCursor();
 
-        RunningSearch * s = m_searches[searchID];
-        s->isCurrentlySearching = false;
+        search->isCurrentlySearching = false;
         bool foundAMatch = pageMatches->count() != 0;
         QMap< Page *, QVector<MatchColor> >::const_iterator it, itEnd;
         it = pageMatches->constBegin();
@@ -1406,7 +1402,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
                 it.key()->d->setHighlight( searchID, mc.first, mc.second );
                 delete mc.first;
             }
-            s->highlightedPages.insert( it.key()->number() );
+            search->highlightedPages.insert( it.key()->number() );
             pagesToNotify->insert( it.key()->number() );
         }
 

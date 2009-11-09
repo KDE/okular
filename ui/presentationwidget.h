@@ -14,6 +14,7 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qwidget.h>
+#include <kicon.h>
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
@@ -25,6 +26,8 @@ class KSelectAction;
 class AnnotatorEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
+class QCheckBox;
+class QSpinBox;
 
 namespace Okular {
 class Action;
@@ -121,12 +124,18 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QStringList m_metaStrings;
         QToolBar * m_topBar;
         QLineEdit *m_pagesEdit;
+        QCheckBox *m_overWriteCheckBox;
+        QSpinBox *m_speedBox;
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
+        QAction *m_playPauseAction;
+        KIcon m_playIcon;
+        KIcon m_pauseIcon;
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
+        bool m_nextPageTimerIsActive;
 
     private slots:
         void slotNextPage();
@@ -142,6 +151,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void screenResized( int );
         void chooseScreen( QAction * );
         void toggleBlackScreenMode( bool );
+        void changeSpeed( int );
+        void playPause();
 };
 
 #endif

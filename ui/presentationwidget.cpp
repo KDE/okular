@@ -27,9 +27,7 @@
 #include <qtooltip.h>
 #include <qvalidator.h>
 #include <qapplication.h>
-#include <qcheckbox.h>
 #include <qdesktopwidget.h>
-#include <qspinbox.h>
 #include <kcursor.h>
 #include <krandom.h>
 #include <qtoolbar.h>
@@ -42,7 +40,6 @@
 #include <kselectaction.h>
 #include <kshortcut.h>
 #include <kdialog.h>
-#include <kicon.h>
 
 // system includes
 #include <stdlib.h>
@@ -131,10 +128,9 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
-    m_parentWidget( parent ), m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ),
-    m_overWriteCheckBox( 0 ), m_speedBox( 0 ), m_searchBar( 0 ), m_screenSelect( 0 ),
-    m_playPauseAction( 0 ), m_playIcon( "media-playback-start" ), m_pauseIcon( "media-playback-pause" ),
-    m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ), m_nextPageTimerIsActive(false)
+    m_parentWidget( parent ),
+    m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
+    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -160,20 +156,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QSizePolicy sp = m_pagesEdit->sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Minimum );
     m_pagesEdit->setSizePolicy( sp );
-    m_overWriteCheckBox = new QCheckBox( m_topBar );
-    m_overWriteCheckBox->setToolTip( i18n( "Activate to ignore file-specific page-durations" ) );
-    m_overWriteCheckBox->setVisible( false );
-    m_speedBox = new QSpinBox( m_topBar );
-    if(Okular::Settings::slidesAdvance())
-        m_playPauseAction = new QAction( m_pauseIcon, i18n( "Pause" ), m_topBar );
-    else
-    {
-        m_playPauseAction = new QAction( m_playIcon, i18n( "Continue" ), m_topBar );
-        m_playPauseAction->setDisabled(true);
-    }
-    sp = m_speedBox->sizePolicy();
-    sp.setHorizontalPolicy( QSizePolicy::Minimum );
-    m_speedBox->setSizePolicy(sp);
     QFontMetrics fm( m_pagesEdit->font() );
     QStyleOptionFrame option;
     option.initFrom( m_pagesEdit );
@@ -195,10 +177,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( eraseDrawingAct, SIGNAL( triggered() ), SLOT( clearDrawings() ) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
-    m_topBar->addSeparator();
-    m_topBar->addWidget( m_overWriteCheckBox );
-    m_topBar->addWidget( m_speedBox );
-    m_topBar->addAction( m_playPauseAction );
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
     {
@@ -238,12 +216,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_nextPageTimer = new QTimer( this ); 
     m_nextPageTimer->setSingleShot( true );
     connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) ); 
-    m_speedBox->setSuffix( i18n( "s" ) );
-    m_speedBox->setValue( Okular::Settings::slidesAdvance() ? Okular::Settings::slidesAdvanceTime() : 0 );
-    m_speedBox->setMinimum(0);
-    connect( m_speedBox, SIGNAL( valueChanged( int ) ), this, SLOT( changeSpeed( int ) ) );
-    connect( m_playPauseAction, SIGNAL( triggered() ), this, SLOT( playPause() ) );
-    
+
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
     {
@@ -288,6 +261,7 @@ PresentationWidget::~PresentationWidget()
         drawingAct->toggle();
     m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     delete m_drawingEngine;
+
     // delete frames
     QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
     for ( ; fIt != fEnd; ++fIt )
@@ -313,11 +287,8 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     // create the new frames
     QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     float screenRatio = (float)m_height / (float)m_width;
-    bool hasFrameTimes = false;
     for ( ; setIt != setEnd; ++setIt )
     {
-        if ( (*setIt)->duration() >= 0. )
-            hasFrameTimes = true;
         PresentationFrame * frame = new PresentationFrame();
         frame->page = *setIt;
         const QLinkedList< Okular::Annotation * > annotations = (*setIt)->annotations();
@@ -337,8 +308,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
         // add the frame to the vector
         m_frames.push_back( frame );
     }
-    // against confusion
-    m_overWriteCheckBox->setVisible ( hasFrameTimes );
+
     // get metadata from the document
     m_metaStrings.clear();
     const Okular::DocumentInfo * info = m_document->documentInfo();
@@ -461,11 +431,6 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
                 m_topBar->hide();
             else
                 close();
-            break;
-        case Qt::Key_Enter:
-        case Qt::Key_P:            
-            //if( Okular::Settings::slidesAdvance() )
-            playPause();
             break;
     }
 }
@@ -1120,25 +1085,14 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 
 void PresentationWidget::startAutoChangeTimer()
 {
-    if ( m_frameIndex < 0 || m_frameIndex >= m_frames.count() )
+    double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
+    if ( Okular::Settings::slidesAdvance() || pageDuration >= 0.0 )
     {
-        m_nextPageTimerIsActive = false;
-        return;
+        double secs = pageDuration < 0.0
+                   ? Okular::Settings::slidesAdvanceTime()
+                   : qMin<double>( pageDuration, Okular::Settings::slidesAdvanceTime() );
+        m_nextPageTimer->start( (int)( secs * 1000 ) );
     }
-    double pageDuration = m_frames[ m_frameIndex ]->page->duration();
-    bool hasUserDuration = Okular::Settings::slidesAdvance();
-    qDebug() << "Page: " << pageDuration << " User: " << hasUserDuration;
-    if ( pageDuration >= 0 && !( hasUserDuration && m_overWriteCheckBox->isChecked() ) )
-    {
-        m_nextPageTimerIsActive = true;
-        m_nextPageTimer->start( (int)( pageDuration * 1000 ) );
-    }
-    else if ( hasUserDuration )
-    {
-        m_nextPageTimerIsActive = true;
-        m_nextPageTimer->start( (int)( Okular::Settings::slidesAdvanceTime() * 1000 ) );
-    }
-    m_nextPageTimerIsActive = false;
 }
 
 void PresentationWidget::recalcGeometry()
@@ -1225,9 +1179,6 @@ void PresentationWidget::slotNextPage()
         changePage( m_frameIndex + 1 );
         // auto advance to the next page if set
         startAutoChangeTimer();
-        
-        // if you wouldn't call update pages would sometimes be skipped (because they are never drawn)
-        update();
     }
     else
     {
@@ -1254,8 +1205,6 @@ void PresentationWidget::slotPrevPage()
 
         // auto advance to the next page if set
         startAutoChangeTimer();
-
-        update();
     }
     else
     {
@@ -1980,34 +1929,5 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
     m_transitionTimer->start( 0 );
 }
 
-void PresentationWidget::changeSpeed( int seconds )
-{
-    Okular::Settings::setSlidesAdvanceTime( seconds );
-    Okular::Settings::setSlidesAdvance( seconds != 0 );
-    m_nextPageTimer->stop();
-    m_playPauseAction->setDisabled( seconds == 0 );
-    m_playPauseAction->setIcon( m_playIcon );
-    m_playPauseAction->setText( i18n( "Continue" ) );
-}
-
-void PresentationWidget::playPause()
-{
-    if(m_nextPageTimerIsActive)
-    {
-        m_nextPageTimerIsActive = false;
-        qDebug() << "Stop";
-        m_nextPageTimer->stop();
-        m_playPauseAction->setIcon( m_playIcon );
-        m_playPauseAction->setText( i18n( "Continue" ) );
-    }
-    else
-    {
-        qDebug() << "Continue";
-        // When you press continue, you usually want to see the next page
-        slotNextPage();
-        m_playPauseAction->setIcon( m_pauseIcon );
-        m_playPauseAction->setText( i18n( "Pause" ) );
-    }
-}
 
 #include "presentationwidget.moc"

@@ -1749,6 +1749,15 @@ void Document::closeDocument()
     delete d->m_scripter;
     d->m_scripter = 0;
 
+     // remove requests left in queue
+    d->m_pixmapRequestsMutex.lock();
+    QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.constBegin();
+    QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.constEnd();
+    for ( ; sIt != sEnd; ++sIt )
+        delete *sIt;
+    d->m_pixmapRequestsStack.clear();
+    d->m_pixmapRequestsMutex.unlock();
+
     QEventLoop loop;
     bool startEventLoop = false;
     do
@@ -1817,14 +1826,6 @@ void Document::closeDocument()
     d->m_fontsCached = false;
     d->m_fontsCache.clear();
     d->m_rotation = Rotation0;
-    // remove requests left in queue
-    d->m_pixmapRequestsMutex.lock();
-    QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.constBegin();
-    QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.constEnd();
-    for ( ; sIt != sEnd; ++sIt )
-        delete *sIt;
-    d->m_pixmapRequestsStack.clear();
-    d->m_pixmapRequestsMutex.unlock();
 
     // send an empty list to observers (to free their data)
     foreachObserver( notifySetup( QVector< Page * >(), DocumentObserver::DocumentChanged ) );

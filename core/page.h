@@ -15,6 +15,7 @@
 #include <okular/core/okular_export.h>
 #include <okular/core/area.h>
 #include <okular/core/global.h>
+#include <okular/core/textpage.h>
 
 class QPixmap;
 
@@ -29,7 +30,6 @@ class FormField;
 class PagePrivate;
 class PageTransition;
 class SourceReference;
-class TextPage;
 class TextSelection;
 
 /**
@@ -188,6 +188,13 @@ class OKULAR_EXPORT Page
          * @see TextPage::text()
          */
         QString text( const RegularAreaRect * rect = 0 ) const;
+
+        /**
+         * Returns the page text (or part of it).
+         * @see TextPage::text()
+         * @since 0.10 (KDE 4.4)
+         */
+        QString text( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

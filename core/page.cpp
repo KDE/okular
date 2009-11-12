@@ -277,6 +277,11 @@ RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection 
 
 QString Page::text( const RegularAreaRect * area ) const
 {
+    return text( area, TextPage::AnyPixelTextAreaInclusionBehaviour );
+}
+
+QString Page::text( const RegularAreaRect * area, TextPage::TextAreaInclusionBehaviour b ) const
+{
     QString ret;
 
     if ( !d->m_text )
@@ -287,10 +292,10 @@ QString Page::text( const RegularAreaRect * area ) const
         RegularAreaRect rotatedArea = *area;
         rotatedArea.transform( d->rotationMatrix().inverted() );
 
-        ret = d->m_text->text( &rotatedArea );
+        ret = d->m_text->text( &rotatedArea, b );
     }
     else
-        ret = d->m_text->text();
+        ret = d->m_text->text( 0, b );
 
     return ret;
 }

@@ -607,6 +607,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
 QString TextPage::text(const RegularAreaRect *area) const
 {
+    return text(area, AnyPixelTextAreaInclusionBehaviour);
+}
+
+QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const
+{
     if ( area && area->isNull() )
         return QString();
 
@@ -616,9 +621,20 @@ QString TextPage::text(const RegularAreaRect *area) const
     {
         for ( ; it != itEnd; ++it )
         {
-            if ( area->intersects( (*it)->area ) )
+            if (b == AnyPixelTextAreaInclusionBehaviour)
             {
-                ret += (*it)->text();
+                if ( area->intersects( (*it)->area ) )
+                {
+                    ret += (*it)->text();
+                }
+            }
+            else
+            {
+                NormalizedPoint center = (*it)->area.center();
+                if ( area->contains( center.x, center.y ) )
+                {
+                    ret += (*it)->text();
+                }
             }
         }
     }

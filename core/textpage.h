@@ -95,6 +95,16 @@ class OKULAR_EXPORT TextPage
 
     public:
         /**
+         * Defines the behaviour of adding characters to text() result
+         * @since 0.10 (KDE 4.4)
+         */
+        enum TextAreaInclusionBehaviour
+        {
+            AnyPixelTextAreaInclusionBehaviour,      ///< A character is included into text() result if any pixel of his bounding box is in the given area
+            CentralPixelTextAreaInclusionBehaviour  ///< A character is included into text() result if the central pixel of his bounding box is in the given area
+        };
+
+        /**
          * Creates a new text page.
          */
         TextPage();
@@ -137,8 +147,20 @@ class OKULAR_EXPORT TextPage
          * - a null string if @p rect is a valid pointer to a null area
          * - the whole page text if @p rect is a null pointer
          * - the text which is included by rectangular area @p rect otherwise
+         * Uses AnyPixelTextAreaInclusionBehaviour
          */
         QString text( const RegularAreaRect *rect = 0 ) const;
+
+        /**
+         * Text extraction function.
+         *
+         * Returns:
+         * - a null string if @p rect is a valid pointer to a null area
+         * - the whole page text if @p rect is a null pointer
+         * - the text which is included by rectangular area @p rect otherwise
+         * @since 0.10 (KDE 4.4)
+         */
+        QString text( const RegularAreaRect * rect, TextAreaInclusionBehaviour b ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

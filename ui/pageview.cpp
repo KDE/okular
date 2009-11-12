@@ -640,20 +640,20 @@ QString PageViewPrivate::selectedText() const
     if ( selpages.count() == 1 )
     {
         pg = document->page( selpages.first() );
-        text.append( pg->text( pg->textSelection() ) );
+        text.append( pg->text( pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
     }
     else
     {
         pg = document->page( selpages.first() );
-        text.append( pg->text( pg->textSelection() ) );
+        text.append( pg->text( pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
         int end = selpages.count() - 1;
         for( int i = 1; i < end; ++i )
         {
             pg = document->page( selpages.at( i ) );
-            text.append( pg->text() );
+            text.append( pg->text( 0, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
         }
         pg = document->page( selpages.last() );
-        text.append( pg->text( pg->textSelection() ) );
+        text.append( pg->text( pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
     }
     return text;
 }

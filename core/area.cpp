@@ -158,6 +158,11 @@ bool NormalizedRect::operator==( const NormalizedRect & r ) const
          fabs( bottom - r.bottom ) < 1e-4 );
 }
 
+NormalizedPoint NormalizedRect::center() const
+{
+    return NormalizedPoint((left+right)/2.0, (top+bottom)/2.0);
+}
+
 /*
 QDebug operator << (QDebug str , const NormalizedRect &r)
 {

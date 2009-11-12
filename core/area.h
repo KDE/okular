@@ -192,6 +192,12 @@ class OKULAR_EXPORT NormalizedRect
         bool operator==( const NormalizedRect &other ) const;
 
         /**
+         * Returns the center of the rectangle
+         * @since 0.10 (KDE 4.4)
+         */
+        NormalizedPoint center() const;
+
+        /**
          * Transforms the normalized rectangle with the operations defined by @p matrix.
          */
         void transform( const QMatrix &matrix );

@@ -1868,6 +1868,10 @@ void Document::closeDocument()
     d->m_allocatedTextPagesFifo.clear();
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
+    
+    delete d->m_documentInfo;
+    d->m_documentInfo = 0;
+
     AudioPlayer::instance()->d->m_currentDocument = KUrl();
 }
 
@@ -1975,23 +1979,37 @@ bool Document::canConfigurePrinter( ) const
 
 const DocumentInfo * Document::documentInfo() const
 {
+    if ( d->m_documentInfo )
+        return d->m_documentInfo;
+
     if ( d->m_generator )
     {
-        const DocumentInfo *infoConst = d->m_generator->generateDocumentInfo();
-        if ( !infoConst )
-            return 0;
+        DocumentInfo *info = new DocumentInfo();
+        const DocumentInfo *tmp = d->m_generator->generateDocumentInfo();
+        if ( tmp )
+            *info = *tmp;
 
-        DocumentInfo *info = const_cast< DocumentInfo * >( infoConst );
-        QString pagesSize = d->pagesSizeString();
+        info->set( DocumentInfo::FilePath, currentDocument().url() );
+        const QString pagesSize = d->pagesSizeString();
         if ( d->m_docSize != -1 )
         {
-            QString sizeString = KGlobal::locale()->formatByteSize( d->m_docSize );
-            info->set( "documentSize", sizeString, i18n( "File Size" ) );
+            const QString sizeString = KGlobal::locale()->formatByteSize( d->m_docSize );
+            info->set( DocumentInfo::DocumentSize, sizeString );
         }
         if (!pagesSize.isEmpty())
         {
-            info->set( "pagesSize", pagesSize, i18n("Page Size") );
+            info->set( DocumentInfo::PagesSize, pagesSize );
         }
+
+        const DocumentInfo::Key keyPages = DocumentInfo::Pages;
+        const QString keyString = DocumentInfo::getKeyString( keyPages );
+ 
+        if ( info->get( keyString ).isEmpty() ) {
+            info->set( keyString, QString::number( this->pages() ), 
+                       DocumentInfo::getKeyTitle( keyPages ) );
+        }
+
+        d->m_documentInfo = info;
         return info;
     }
     else return NULL;
@@ -3729,65 +3747,139 @@ void DocumentInfo::set( const QString &key, const QString &value,
         docElement.appendChild( element );
 }
 
-void DocumentInfo::set( enum Key key, const QString &value )
+void DocumentInfo::set( Key key, const QString &value )
 {
-    switch ( key ) {
-        case Title:
-            set( "title", value, i18n( "Title" ) );
-            break;
-        case Subject:
-            set( "subject", value, i18n( "Subject" ) );
-            break;
-        case Description:
-            set( "description", value, i18n( "Description" ) );
-            break;
-        case Author:
-            set( "author", value, i18n( "Author" ) );
-            break;
-        case Creator:
-            set( "creator", value, i18n( "Creator" ) );
-            break;
-        case Producer:
-            set( "producer", value, i18n( "Producer" ) );
-            break;
-        case Copyright:
-            set( "copyright", value, i18n( "Copyright" ) );
-            break;
-        case Pages:
-            set( "pages", value, i18n( "Pages" ) );
-            break;
-        case CreationDate:
-            set( "creationDate", value, i18n( "Created" ) );
-            break;
-        case ModificationDate:
-            set( "modificationDate", value, i18n( "Modified" ) );
-            break;
-        case MimeType:
-            set( "mimeType", value, i18n( "Mime Type" ) );
-            break;
-        case Category:
-            set( "category", value, i18n( "Category" ) );
-            break;
-        case Keywords:
-            set( "keywords", value, i18n( "Keywords" ) );
-            break;
-        default:
-            kWarning(OkularDebug) << "Invalid key passed";
-            break;
-    }
+    const QString keyString = getKeyString( key );
+    if ( !keyString.isEmpty() )
+        set( keyString, value, getKeyTitle( key ) );
+    else
+        kWarning(OkularDebug) << "Invalid key passed";
 }
 
 QString DocumentInfo::get( const QString &key ) const
 {
-    QDomElement docElement = documentElement();
-    QDomElement element;
+    const QDomElement docElement = documentElement();
 
     // check whether key already exists
-    QDomNodeList list = docElement.elementsByTagName( key );
+    const QDomNodeList list = docElement.elementsByTagName( key );
     if ( list.count() > 0 )
         return list.item( 0 ).toElement().attribute( "value" );
     else
         return QString();
+}
+
+QString DocumentInfo::getKeyString( Key key ) //const
+{
+    switch ( key ) {
+        case Title:
+            return "title";
+            break;
+        case Subject:
+            return "subject";
+            break;
+        case Description:
+            return "description";
+            break;
+        case Author:
+            return "author";
+            break;
+        case Creator:
+            return "creator";
+            break;
+        case Producer:
+            return "producer";
+            break;
+        case Copyright:
+            return "copyright";
+            break;
+        case Pages:
+            return "pages";
+            break;
+        case CreationDate:
+            return "creationDate";
+            break;
+        case ModificationDate:
+            return "modificationDate";
+            break;
+        case MimeType:
+            return "mimeType";
+            break;
+        case Category:
+            return "category";
+            break;
+        case Keywords:
+            return "keywords";
+            break;
+        case FilePath:
+            return "filePath";
+            break;
+        case DocumentSize:
+            return "documentSize";
+            break;
+        case PagesSize:
+            return "pageSize";
+            break;
+        default:
+            return QString();
+            break;
+    }
+}
+
+QString DocumentInfo::getKeyTitle( Key key ) //const
+{
+    switch ( key ) {
+        case Title:
+            return i18n( "Title" );
+            break;
+        case Subject:
+            return i18n( "Subject" );
+            break;
+        case Description:
+            return i18n( "Description" );
+            break;
+        case Author:
+            return i18n( "Author" );
+            break;
+        case Creator:
+            return i18n( "Creator" );
+            break;
+        case Producer:
+            return i18n( "Producer" );
+            break;
+        case Copyright:
+            return i18n( "Copyright" );
+            break;
+        case Pages:
+            return i18n( "Pages" );
+            break;
+        case CreationDate:
+            return i18n( "Created" );
+            break;
+        case ModificationDate:
+            return i18n( "Modified" );
+            break;
+        case MimeType:
+            return i18n( "Mime Type" );
+            break;
+        case Category:
+            return i18n( "Category" );
+            break;
+        case Keywords:
+            return i18n( "Keywords" );
+            break;
+        case FilePath:
+            return i18n( "File Path" );
+            break;
+        case DocumentSize:
+            return i18n( "File Size" );
+            break;
+        case PagesSize:
+            return i18n("Page Size");
+            break;
+        default:
+            return QString();
+            break;
+    }
 }
 
 

@@ -84,7 +84,8 @@ class DocumentPrivate
             m_closingLoop( 0 ),
             m_scripter( 0 ),
             m_archiveData( 0 ),
-            m_fontsCached( false )
+            m_fontsCached( false ),
+            m_documentInfo( 0 )
         {
             calculateMaxTextPages();
         }
@@ -220,6 +221,7 @@ class DocumentPrivate
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
+        DocumentInfo *m_documentInfo;
         FontInfo::List m_fontsCache;
 
         QSet< View * > m_views;

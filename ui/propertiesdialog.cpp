@@ -16,6 +16,7 @@
 #include <qheaderview.h>
 #include <qmenu.h>
 #include <qprogressbar.h>
+#include <qpushbutton.h>
 #include <qsortfilterproxymodel.h>
 #include <qtreeview.h>
 #include <qtimer.h>
@@ -25,6 +26,7 @@
 #include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
 #include <kglobalsettings.h>
+#include <kurl.h>
 
 // local includes
 #include "core/document.h"
@@ -57,6 +59,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     return;
   }
 
+  m_showingTitle = true;
+
   // mime name based on mimetype id
   QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
   setCaption( i18n( "%1 Properties", mimeName ) );
@@ -65,35 +69,69 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 
   int row = 0;
   int valMaxWidth = 100;
-  for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() ) {
-    QDomElement element = node.toElement();
 
-    QString titleString = element.attribute( "title" );
-    QString valueString = element.attribute( "value" );
+  const QString filePathKey = Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath );
+
+  /* obtains the properties list, conveniently ordered */
+  QStringList orderedProperties;
+  orderedProperties << filePathKey
+                    << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::PagesSize )
+                    << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::DocumentSize );
+  for (Okular::DocumentInfo::Key ks = Okular::DocumentInfo::Title; 
+          ks <= Okular::DocumentInfo::Keywords; 
+          ks = Okular::DocumentInfo::Key( ks+1 ) ) {
+      orderedProperties << Okular::DocumentInfo::getKeyString( ks );
+  }
+  for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() ) {
+    const QDomElement element = node.toElement();
+
+    const QString titleString = element.attribute( "title" );
+    const QString valueString = element.attribute( "value" );
     if ( titleString.isEmpty() || valueString.isEmpty() )
         continue;
-
-    // create labels and layout them
-    QLabel *key = new QLabel( i18n( "%1:", titleString ), page );
-    QLabel *value = new KSqueezedTextLabel( valueString, page );
-    value->setTextInteractionFlags( Qt::TextSelectableByMouse );
-    layout->addWidget( key, row, 0, Qt::AlignRight );
-    layout->addWidget( value, row, 1 );
-    row++;
-
-    // refine maximum width of 'value' labels
-    valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
+    if ( !orderedProperties.contains( titleString ) )
+        orderedProperties << titleString;
   }
 
-  // add the number of pages if the generator hasn't done it already
-  QDomNodeList list = docElement.elementsByTagName( "pages" );
-  if ( list.count() == 0 ) {
-    QLabel *key = new QLabel( i18n( "Pages:" ), page );
-    QLabel *value = new QLabel( QString::number( doc->pages() ), page );
-    value->setTextInteractionFlags( Qt::TextSelectableByMouse );
+  QDomNodeList list;
+  
+  for ( QStringList::Iterator it = orderedProperties.begin(); 
+          it != orderedProperties.end(); ++it ) {
+      list = docElement.elementsByTagName( (*it) );
+      if ( list.count() == 1 ) {
 
-    layout->addWidget( key, row, 0, Qt::AlignRight );
-    layout->addWidget( value, row, 1 );
+        QDomElement element = list.at(0).toElement();
+        const QString titleString = element.attribute( "title" );
+        const QString valueString = element.attribute( "value" );
+        if ( titleString.isEmpty() || valueString.isEmpty() )
+            continue;
+
+        // create labels and layout them
+        KSqueezedTextLabel *value = new KSqueezedTextLabel( valueString, page );
+        QWidget *key;
+        if ( element.tagName() == filePathKey ) {
+            m_toggleTitlePath = new QPushButton( page );
+            setToggleTitlePathText();
+
+            m_toggleTitlePath->setFlat( true );
+            connect( m_toggleTitlePath, SIGNAL( clicked() ), this, SLOT( filePathViewChanged() ) );
+            key = m_toggleTitlePath;
+            m_filePathNameLabel = value;
+            m_filePathName = valueString;
+
+            KUrl vurl( valueString );
+            value->setText( vurl.fileName() );
+        } else {
+            key = new QLabel( i18n( "%1:", titleString ), page );
+        }
+        value->setTextInteractionFlags( Qt::TextSelectableByMouse );
+        layout->addWidget( key, row, 0, Qt::AlignRight );
+        layout->addWidget( value, row, 1 );
+        row++;
+
+        // refine maximum width of 'value' labels
+        valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
+    }
   }
 
   // FONTS
@@ -164,6 +202,29 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 
         m_fontScanStarted = true;
     }
+}
+
+void PropertiesDialog::setToggleTitlePathText()
+{
+    QString text;
+    if (m_showingTitle)
+    {
+        text = i18nc( "%1 is \"Title\"", "%1:", Okular::DocumentInfo::getKeyTitle( Okular::DocumentInfo::Title ) );
+    }
+    else
+    {
+        text = i18nc( "%1 is \"File Path\"", "%1:", Okular::DocumentInfo::getKeyTitle( Okular::DocumentInfo::FilePath ) );
+    }
+    m_toggleTitlePath->setText( text );
+}
+
+void PropertiesDialog::filePathViewChanged()
+{
+   m_showingTitle = !m_showingTitle;
+   setToggleTitlePathText();
+   QString tmp(m_filePathName);
+   m_filePathName = m_filePathNameLabel->text();
+   m_filePathNameLabel->setText( tmp );
 }
 
 void PropertiesDialog::slotFontReadingProgress( int page )

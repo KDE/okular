@@ -111,6 +111,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         QWidget *key;
         if ( element.tagName() == filePathKey ) {
             m_toggleTitlePath = new QPushButton( page );
+            m_toggleTitlePath->setToolTip( i18n("Toggles between File Path and Title") );
             setToggleTitlePathText();
 
             m_toggleTitlePath->setFlat( true );

@@ -763,15 +763,15 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     if ( d->m_style.color().isValid() )
         e.setAttribute( "color", d->m_style.color().name() );
     if ( d->m_style.opacity() != 1.0 )
-        e.setAttribute( "opacity", d->m_style.opacity() );
+        e.setAttribute( "opacity", QString::number( d->m_style.opacity() ) );
 
     // Sub-Node-1 - boundary
     QDomElement bE = document.createElement( "boundary" );
     e.appendChild( bE );
-    bE.setAttribute( "l", (double)d->m_boundary.left );
-    bE.setAttribute( "t", (double)d->m_boundary.top );
-    bE.setAttribute( "r", (double)d->m_boundary.right );
-    bE.setAttribute( "b", (double)d->m_boundary.bottom );
+    bE.setAttribute( "l", QString::number( d->m_boundary.left ) );
+    bE.setAttribute( "t", QString::number( d->m_boundary.top ) );
+    bE.setAttribute( "r", QString::number( d->m_boundary.right ) );
+    bE.setAttribute( "b", QString::number( d->m_boundary.bottom ) );
 
     // Sub-Node-2 - penStyle
     if ( d->m_style.width() != 1 || d->m_style.lineStyle() != Solid || d->m_style.xCorners() != 0 ||
@@ -779,10 +779,10 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     {
         QDomElement psE = document.createElement( "penStyle" );
         e.appendChild( psE );
-        psE.setAttribute( "width", d->m_style.width() );
+        psE.setAttribute( "width", QString::number( d->m_style.width() ) );
         psE.setAttribute( "style", (int)d->m_style.lineStyle() );
-        psE.setAttribute( "xcr", d->m_style.xCorners() );
-        psE.setAttribute( "ycr", d->m_style.yCorners() );
+        psE.setAttribute( "xcr", QString::number( d->m_style.xCorners() ) );
+        psE.setAttribute( "ycr", QString::number( d->m_style.yCorners() ) );
         psE.setAttribute( "marks", d->m_style.marks() );
         psE.setAttribute( "spaces", d->m_style.spaces() );
     }
@@ -793,7 +793,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         QDomElement peE = document.createElement( "penEffect" );
         e.appendChild( peE );
         peE.setAttribute( "effect", (int)d->m_style.lineEffect() );
-        peE.setAttribute( "intensity", d->m_style.effectIntensity() );
+        peE.setAttribute( "intensity", QString::number( d->m_style.effectIntensity() ) );
     }
 
     // Sub-Node-4 - window
@@ -803,8 +803,8 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         QDomElement wE = document.createElement( "window" );
         e.appendChild( wE );
         wE.setAttribute( "flags", d->m_window.flags() );
-        wE.setAttribute( "top", d->m_window.topLeft().x );
-        wE.setAttribute( "left", d->m_window.topLeft().y );
+        wE.setAttribute( "top", QString::number( d->m_window.topLeft().x ) );
+        wE.setAttribute( "left", QString::number( d->m_window.topLeft().y ) );
         wE.setAttribute( "width", d->m_window.width() );
         wE.setAttribute( "height", d->m_window.height() );
         wE.setAttribute( "title", d->m_window.title() );
@@ -1105,12 +1105,12 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     {
         QDomElement calloutElement = document.createElement( "callout" );
         textElement.appendChild( calloutElement );
-        calloutElement.setAttribute( "ax", d->m_inplaceCallout[0].x );
-        calloutElement.setAttribute( "ay", d->m_inplaceCallout[0].y );
-        calloutElement.setAttribute( "bx", d->m_inplaceCallout[1].x );
-        calloutElement.setAttribute( "by", d->m_inplaceCallout[1].y );
-        calloutElement.setAttribute( "cx", d->m_inplaceCallout[2].x );
-        calloutElement.setAttribute( "cy", d->m_inplaceCallout[2].y );
+        calloutElement.setAttribute( "ax", QString::number( d->m_inplaceCallout[0].x ) );
+        calloutElement.setAttribute( "ay", QString::number( d->m_inplaceCallout[0].y ) );
+        calloutElement.setAttribute( "bx", QString::number( d->m_inplaceCallout[1].x ) );
+        calloutElement.setAttribute( "by", QString::number( d->m_inplaceCallout[1].y ) );
+        calloutElement.setAttribute( "cx", QString::number( d->m_inplaceCallout[2].x ) );
+        calloutElement.setAttribute( "cy", QString::number( d->m_inplaceCallout[2].y ) );
     }
 }
 
@@ -1388,9 +1388,9 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     if ( d->m_lineInnerColor.isValid() )
         lineElement.setAttribute( "innerColor", d->m_lineInnerColor.name() );
     if ( d->m_lineLeadingFwdPt != 0.0 )
-        lineElement.setAttribute( "leadFwd", d->m_lineLeadingFwdPt );
+        lineElement.setAttribute( "leadFwd", QString::number( d->m_lineLeadingFwdPt ) );
     if ( d->m_lineLeadingBackPt != 0.0 )
-        lineElement.setAttribute( "leadBack", d->m_lineLeadingBackPt );
+        lineElement.setAttribute( "leadBack", QString::number( d->m_lineLeadingBackPt ) );
     if ( d->m_lineShowCaption )
         lineElement.setAttribute( "showCaption", d->m_lineShowCaption );
     if ( d->m_lineIntent != Unknown )
@@ -1406,8 +1406,8 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
             const NormalizedPoint & p = *it;
             QDomElement pElement = document.createElement( "point" );
             lineElement.appendChild( pElement );
-            pElement.setAttribute( "x", p.x );
-            pElement.setAttribute( "y", p.y );
+            pElement.setAttribute( "x", QString::number( p.x ) );
+            pElement.setAttribute( "y", QString::number( p.y ) );
             it++; //to avoid loop
         }
     }
@@ -1770,19 +1770,19 @@ void HighlightAnnotation::store( QDomNode & node, QDomDocument & document ) cons
         QDomElement quadElement = document.createElement( "quad" );
         hlElement.appendChild( quadElement );
         const Quad & q = *it;
-        quadElement.setAttribute( "ax", q.point( 0 ).x );
-        quadElement.setAttribute( "ay", q.point( 0 ).y );
-        quadElement.setAttribute( "bx", q.point( 1 ).x );
-        quadElement.setAttribute( "by", q.point( 1 ).y );
-        quadElement.setAttribute( "cx", q.point( 2 ).x );
-        quadElement.setAttribute( "cy", q.point( 2 ).y );
-        quadElement.setAttribute( "dx", q.point( 3 ).x );
-        quadElement.setAttribute( "dy", q.point( 3 ).y );
+        quadElement.setAttribute( "ax", QString::number( q.point( 0 ).x ) );
+        quadElement.setAttribute( "ay", QString::number( q.point( 0 ).y ) );
+        quadElement.setAttribute( "bx", QString::number( q.point( 1 ).x ) );
+        quadElement.setAttribute( "by", QString::number( q.point( 1 ).y ) );
+        quadElement.setAttribute( "cx", QString::number( q.point( 2 ).x ) );
+        quadElement.setAttribute( "cy", QString::number( q.point( 2 ).y ) );
+        quadElement.setAttribute( "dx", QString::number( q.point( 3 ).x ) );
+        quadElement.setAttribute( "dy", QString::number( q.point( 3 ).y ) );
         if ( q.capStart() )
             quadElement.setAttribute( "start", 1 );
         if ( q.capEnd() )
             quadElement.setAttribute( "end", 1 );
-        quadElement.setAttribute( "feather", q.feather() );
+        quadElement.setAttribute( "feather", QString::number( q.feather() ) );
     }
 }
 
@@ -2014,8 +2014,8 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
             const NormalizedPoint & point = *iIt;
             QDomElement pointElement = document.createElement( "point" );
             pathElement.appendChild( pointElement );
-            pointElement.setAttribute( "x", point.x );
-            pointElement.setAttribute( "y", point.y );
+            pointElement.setAttribute( "x", QString::number( point.x ) );
+            pointElement.setAttribute( "y", QString::number( point.y ) );
         }
     }
 }

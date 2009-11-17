@@ -483,7 +483,7 @@ void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
         const double zoom = view->capability( View::Zoom ).toDouble( &ok );
         if ( ok && zoom != 0 )
         {
-            zoomEl.setAttribute( "value", zoom );
+            zoomEl.setAttribute( "value", QString::number(zoom) );
         }
         const int mode = view->capability( View::ZoomModality ).toInt( &ok );
         if ( ok )

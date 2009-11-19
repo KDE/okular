@@ -114,7 +114,11 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 
     m_view->setModel( m_authorProxy );
 
-    vLayout->addWidget( new KTreeViewSearchLine( this, m_view ) );
+    m_searchLine = new KTreeViewSearchLine( this, m_view );
+    m_searchLine->setCaseSensitivity( Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    m_searchLine->setRegularExpression( Okular::Settings::self()->reviewsSearchRegularExpression() );
+    connect( m_searchLine, SIGNAL( searchOptionsChanged() ), this, SLOT( saveSearchOptions() ) );
+    vLayout->addWidget( m_searchLine );
     vLayout->addWidget( m_view );
     vLayout->addWidget( toolBar );
 
@@ -159,6 +163,13 @@ void Reviews::notifyViewportChanged( bool )
     m_filterProxy->setCurrentPage( m_document->currentPage() );
 }
 //END DocumentObserver Notifies 
+
+void Reviews::reparseConfig()
+{
+    m_searchLine->setCaseSensitivity( Okular::Settings::reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    m_searchLine->setRegularExpression( Okular::Settings::reviewsSearchRegularExpression() );
+    m_view->update();
+}
 
 //BEGIN GUI Slots -> requestListViewUpdate
 void Reviews::slotPageEnabled( bool on )
@@ -266,6 +277,13 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     }
 
     popup.exec( m_view->viewport()->mapToGlobal( pos ) );
+}
+
+void Reviews::saveSearchOptions()
+{
+    Okular::Settings::setReviewsSearchRegularExpression( m_searchLine->regularExpression() );
+    Okular::Settings::setReviewsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
+    Okular::Settings::self()->writeConfig();
 }
 
 #include "side_reviews.moc"

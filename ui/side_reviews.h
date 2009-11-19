@@ -27,6 +27,7 @@ class AnnotationModel;
 class AuthorGroupProxyModel;
 class PageFilterProxyModel;
 class PageGroupProxyModel;
+class KTreeViewSearchLine;
 class TreeView;
 
 /**
@@ -43,6 +44,8 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         uint observerId() const { return REVIEWS_ID; }
         void notifyViewportChanged( bool smoothMove );
 
+        void reparseConfig();
+
     public Q_SLOTS:
         void slotPageEnabled( bool );
         void slotAuthorEnabled( bool );
@@ -55,11 +58,13 @@ class Reviews : public QWidget, public Okular::DocumentObserver
     private Q_SLOTS:
         void activated( const QModelIndex& );
         void contextMenuRequested( const QPoint& );
+        void saveSearchOptions();
 
     private:
         QModelIndexList retrieveAnnotations(const QModelIndex& idx) const;
         
         // data fields (GUI)
+        KTreeViewSearchLine *m_searchLine;
         TreeView * m_view;
         // internal storage
         Okular::Document * m_document;

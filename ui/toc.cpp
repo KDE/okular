@@ -23,6 +23,7 @@
 #include "tocmodel.h"
 #include "core/action.h"
 #include "core/document.h"
+#include "settings.h"
 
 TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_currentPage(-1)
 {
@@ -32,6 +33,9 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
 
     m_searchLine = new KTreeViewSearchLine( this );
     mainlay->addWidget( m_searchLine );
+    m_searchLine->setCaseSensitivity( Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    m_searchLine->setRegularExpression( Okular::Settings::self()->contentsSearchRegularExpression() );
+    connect( m_searchLine, SIGNAL( searchOptionsChanged() ), this, SLOT( saveSearchOptions() ) );
 
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
@@ -96,6 +100,8 @@ void TOC::notifyViewportChanged( bool /*smoothMove*/ )
 
 void TOC::reparseConfig()
 {
+    m_searchLine->setCaseSensitivity( Okular::Settings::contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
+    m_searchLine->setRegularExpression( Okular::Settings::contentsSearchRegularExpression() );
     m_treeView->update();
 }
 
@@ -124,6 +130,13 @@ void TOC::slotExecuted( const QModelIndex &index )
     {
         m_document->setViewport( viewport );
     }
+}
+
+void TOC::saveSearchOptions()
+{
+    Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
+    Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
+    Okular::Settings::self()->writeConfig();
 }
 
 #include "toc.moc"

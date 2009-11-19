@@ -278,4 +278,20 @@
    <default>false</default>
   </entry>
  </group>
+ <group name="Contents" >
+  <entry key="ContentsSearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="ContentsSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Reviews" >
+  <entry key="ReviewsSearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="ReviewsSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
 </kcfg>

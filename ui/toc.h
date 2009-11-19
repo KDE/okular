@@ -42,6 +42,7 @@ Q_OBJECT
 
     private slots:
         void slotExecuted( const QModelIndex & );
+        void saveSearchOptions();
 
     private:
         Okular::Document *m_document;

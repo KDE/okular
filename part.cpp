@@ -1626,6 +1626,10 @@ void Part::slotNewConfig()
     // update ThumbnailList contents
     if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
+
+    // update Reviews settings
+    if ( m_sidebar->isItemEnabled(2) )
+        m_reviewsWidget->reparseConfig();
 }
 
 
@@ -1647,6 +1651,10 @@ void Part::slotNewGeneratorConfig()
     // update ThumbnailList contents
     if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
         m_thumbnailList->updateWidgets();
+
+    // update Reviews settings
+    if ( m_sidebar->isItemEnabled(2) )
+        m_reviewsWidget->reparseConfig();
 }
 
 

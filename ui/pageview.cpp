@@ -3004,6 +3004,7 @@ void PageView::slotRelayoutPages()
     bool wasUpdatesEnabled = viewport()->updatesEnabled();
     if ( fullWidth != contentAreaWidth() || fullHeight != contentAreaHeight() )
     {
+        const Okular::DocumentViewport vp = d->document->viewport();
         // disable updates and resize the viewportContents
         if ( wasUpdatesEnabled )
             viewport()->setUpdatesEnabled( false );
@@ -3011,7 +3012,6 @@ void PageView::slotRelayoutPages()
         // restore previous viewport if defined and updates enabled
         if ( wasUpdatesEnabled )
         {
-            const Okular::DocumentViewport & vp = d->document->viewport();
             if ( vp.pageNumber >= 0 )
             {
                 int prevX = horizontalScrollBar()->value(),

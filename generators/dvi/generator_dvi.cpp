@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Luigi Toscano <luigi.toscano@tiscali.it>        *
+ *   Copyright (C) 2006-2009 by Luigi Toscano <luigi.toscano@tiscali.it>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +21,7 @@
 #include "dviRenderer.h"
 #include "pageSize.h"
 #include "dviexport.h"
+#include "TeXFont.h"
 
 #include <qapplication.h>
 #include <qstring.h>
@@ -62,10 +63,11 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
-  m_docInfo( 0 ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
+  m_fontExtracted( false ), m_docInfo( 0 ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
+    setFeature( FontInfo );
     setFeature( PrintPostscript );
     if ( Okular::FilePrinter::ps2pdfAvailable() )
         setFeature( PrintToFile );
@@ -135,6 +137,7 @@ bool DviGenerator::doCloseDocument()
     m_dviRenderer = 0;
 
     m_linkGenerated.clear();
+    m_fontExtracted = false;
 
     return true;
 }
@@ -400,6 +403,86 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     }
 
     return m_docSynopsis;
+}
+
+Okular::FontInfo::List DviGenerator::fontsForPage( int page )
+{
+    Q_UNUSED( page );
+
+    Okular::FontInfo::List list;
+
+    // the list of the fonts is extracted once 
+    if ( m_fontExtracted )
+        return list;
+
+    if ( m_dviRenderer && m_dviRenderer->dviFile &&
+         m_dviRenderer->dviFile->font_pool )
+    {
+        QList<TeXFontDefinition*> fonts = m_dviRenderer->dviFile->font_pool->fontList;
+
+        foreach (const TeXFontDefinition* font, fonts)
+        {
+            Okular::FontInfo of;
+            QString name;
+            int zoom = (int)(font->enlargement*100 + 0.5);
+            if ( font->getFullFontName().isEmpty() ) 
+            {
+                name = QString( "%1, %2%" )
+                        .arg( font->fontname )
+                        .arg( zoom );
+            }
+            else
+            {
+                name = QString( "%1 (%2), %3%" ) 
+                        .arg( font->fontname )
+                        .arg( font->getFullFontName() ) 
+                        .arg( zoom ); 
+            }
+            of.setName( name );
+
+            QString fontFileName;
+            if (!(font->flags & TeXFontDefinition::FONT_VIRTUAL)) {
+                if ( font->font != 0 )
+                    fontFileName = font->font->errorMessage;
+                else
+                    fontFileName = i18n("Font file not found");
+
+                if ( fontFileName.isEmpty() )
+                    fontFileName = font->filename;
+            }
+
+            of.setFile( fontFileName );
+
+            Okular::FontInfo::FontType ft;
+            switch ( font->getFontType() )
+            {
+                case TeXFontDefinition::TEX_PK:
+                    ft = Okular::FontInfo::TeXPK;
+                    break;
+                case TeXFontDefinition::TEX_VIRTUAL:
+                    ft = Okular::FontInfo::TeXVirtual;
+                    break;
+                case TeXFontDefinition::TEX_FONTMETRIC:
+                    ft = Okular::FontInfo::TeXFontMetric;
+                    break;
+                case TeXFontDefinition::FREETYPE:
+                    ft = Okular::FontInfo::TeXFreeTypeHandled;
+                    break;
+            }
+            of.setType( ft );
+
+            // DVI has not the concept of "font embedding"
+            of.setEmbedType( Okular::FontInfo::NotEmbedded );
+            of.setCanBeExtracted( false );
+
+            list.append( of );
+        }
+
+        m_fontExtracted = true;
+
+    }
+
+    return list;
 }
 
 void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )

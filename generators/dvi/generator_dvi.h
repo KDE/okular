@@ -36,6 +36,9 @@ class DviGenerator : public Okular::Generator
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
 
+        // list of fonts
+        Okular::FontInfo::List fontsForPage( int page );
+
         bool print( QPrinter &printer );
 
         QVariant metaData( const QString & key, const QVariant & option ) const;
@@ -45,8 +48,9 @@ class DviGenerator : public Okular::Generator
         QImage image( Okular::PixmapRequest * request );
         Okular::TextPage* textPage( Okular::Page *page );
 
-   private:
+    private:
         double m_resolution;
+        bool m_fontExtracted;
 
         Okular::DocumentInfo *m_docInfo;
         Okular::DocumentSynopsis *m_docSynopsis;

@@ -54,7 +54,6 @@ fontPool::fontPool(bool useFontHinting)
   useFontHints             = useFontHinting;
   CMperDVIunit             = 0;
   extraSearchPath.clear();
-  fontList.setAutoDelete(true);
 
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
@@ -109,6 +108,7 @@ fontPool::~fontPool()
 #endif
 
   // need to manually clear the fonts _before_ freetype gets unloaded
+  qDeleteAll(fontList);
   fontList.clear();
 
 #ifdef HAVE_FREETYPE
@@ -123,10 +123,10 @@ void fontPool::setParameters( bool _useFontHints )
   // Check if glyphs need to be cleared
   if (_useFontHints != useFontHints) {
     double displayResolution = displayResolution_in_dpi;
-    TeXFontDefinition *fontp = fontList.first();
-    while(fontp != 0 ) {
+    QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+    for (; it_fontp != fontList.end(); ++it_fontp) {
+      TeXFontDefinition *fontp = *it_fontp;
       fontp->setDisplayResolution(displayResolution * fontp->enlargement);
-      fontp=fontList.next();
     }
   }
 
@@ -139,21 +139,21 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
   // Reuse font if possible: check if a font with that name and
   // natural resolution is already in the fontpool, and use that, if
   // possible.
-  TeXFontDefinition *fontp = fontList.first();
-  while( fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
     if ((fontname == fontp->fontname) && ( (int)(enlargement*1000.0+0.5)) == (int)(fontp->enlargement*1000.0+0.5)) {
       // if font is already in the list
       fontp->mark_as_used();
       return fontp;
     }
-    fontp=fontList.next();
   }
 
   // If font doesn't exist yet, we have to generate a new font.
 
   double displayResolution = displayResolution_in_dpi;
 
-  fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
+  TeXFontDefinition *fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
   if (fontp == 0) {
     kError(kvs::dvi) << "Could not allocate memory for a font structure";
     exit(0);
@@ -170,62 +170,6 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
 }
 
 
-QString fontPool::status()
-{
-#ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::status() called";
-#endif
-
-  QString       text;
-  QStringList   tmp;
-
-  if (fontList.isEmpty())
-    return i18n("The fontlist is currently empty.");
-
-  text.append("<table WIDTH=\"100%\" NOSAVE >");
-  text.append( QString("<tr><td><b>%1</b></td> <td><b>%2</b></td> <td><b>%3</b></td> <td><b>%4</b> <td><b>%5</b></td> <td><b>%6</b></td></tr>")
-               .arg(i18n("TeX Name"))
-               .arg(i18n("Family"))
-               .arg(i18n("Zoom"))
-               .arg(i18n("Type"))
-               .arg(i18n("Encoding"))
-               .arg(i18n("Comment")) );
-
- TeXFontDefinition *fontp = fontList.first();
-  while ( fontp != 0 ) {
-    QString errMsg, encoding;
-
-    if (!(fontp->flags & TeXFontDefinition::FONT_VIRTUAL)) {
-#ifdef HAVE_FREETYPE
-      encoding = fontp->getFullEncodingName();
-#endif
-      if (fontp->font != 0)
-        errMsg = fontp->font->errorMessage;
-      else
-        errMsg = i18n("Font file not found");
-    }
-
-#ifdef HAVE_FREETYPE
-    tmp << QString ("<tr><td>%1</td> <td>%2</td> <td>%3%</td> <td>%4</td> <td>%5</td> <td>%6</td></tr>")
-      .arg(fontp->fontname)
-      .arg(fontp->getFullFontName())
-      .arg((int)(fontp->enlargement*100 + 0.5))
-      .arg(fontp->getFontTypeName())
-      .arg(encoding)
-      .arg(errMsg);
-#endif
-
-    fontp=fontList.next();
-  }
-
-  tmp.sort();
-  text.append(tmp.join("\n"));
-  text.append("</table>");
-
-  return text;
-}
-
-
 bool fontPool::areFontsLocated()
 {
 #ifdef DEBUG_FONTPOOL
@@ -233,11 +177,11 @@ bool fontPool::areFontsLocated()
 #endif
 
   // Is there a font whose name we did not try to find out yet?
-  TeXFontDefinition *fontp = fontList.first();
-  while( fontp != 0 ) {
+  QList<TeXFontDefinition*>::const_iterator cit_fontp = fontList.constBegin();
+  for (; cit_fontp != fontList.constEnd(); ++cit_fontp) {
+    TeXFontDefinition *fontp = *cit_fontp;
     if ( !fontp->isLocated() )
       return false;
-    fontp=fontList.next();
   }
 
 #ifdef DEBUG_FONTPOOL
@@ -306,8 +250,9 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
   // Names of fonts that shall be located
   quint16 numFontsInJob = 0;
-  TeXFontDefinition *fontp = fontList.first();
-  while ( fontp != 0 ) {
+  QList<TeXFontDefinition*>::const_iterator cit_fontp = fontList.constBegin();
+  for (; cit_fontp != fontList.constEnd(); ++cit_fontp) {
+    TeXFontDefinition *fontp = *cit_fontp;
     if (!fontp->isLocated()) {
       numFontsInJob++;
 
@@ -325,7 +270,6 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                        << QString("%1.1200pk").arg(fontp->fontname);
       }
     }
-    fontp=fontList.next();
   }
 
   if (numFontsInJob == 0)
@@ -396,8 +340,10 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
     QString(kpsewhich_.readAll()).split('\n', QString::SkipEmptyParts);
 
   // Now associate the file names found with the fonts
-  fontp=fontList.first();
-  while ( fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
+
     if (fontp->filename.isEmpty() == true) {
       QStringList matchingFiles;
 #ifdef HAVE_FREETYPE
@@ -421,12 +367,11 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
           // Constructing a virtual font will most likely insert other
           // fonts into the fontList. After that, fontList.next() will
           // no longer work. It is therefore safer to start over.
-          fontp=fontList.first();
+          it_fontp=fontList.begin();
           continue;
         }
       }
     } // of if (fontp->filename.isEmpty() == true)
-    fontp = fontList.next();
   }
 }
 
@@ -442,10 +387,10 @@ void fontPool::setCMperDVIunit( double _CMperDVI )
 
   CMperDVIunit = _CMperDVI;
 
-  TeXFontDefinition *fontp = fontList.first();
-  while(fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
     fontp->setDisplayResolution(displayResolution_in_dpi * fontp->enlargement);
-    fontp=fontList.next();
   }
 }
 
@@ -470,10 +415,10 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
   displayResolution_in_dpi = _displayResolution_in_dpi;
   double displayResolution = displayResolution_in_dpi;
 
-  TeXFontDefinition *fontp = fontList.first();
-  while(fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
     fontp->setDisplayResolution(displayResolution * fontp->enlargement);
-    fontp=fontList.next();
   }
 
   // Do something that causes re-rendering of the dvi-window
@@ -485,10 +430,10 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 
 void fontPool::markFontsAsLocated()
 {
-  TeXFontDefinition *fontp=fontList.first();
-  while ( fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
     fontp->markAsLocated();
-    fontp = fontList.next();
   }
 }
 
@@ -500,10 +445,10 @@ void fontPool::mark_fonts_as_unused()
   kDebug(kvs::dvi) << "fontPool::mark_fonts_as_unused() called";
 #endif
 
-  TeXFontDefinition  *fontp = fontList.first();
-  while ( fontp != 0 ) {
+  QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
+  for (; it_fontp != fontList.end(); ++it_fontp) {
+    TeXFontDefinition *fontp = *it_fontp;
     fontp->flags &= ~TeXFontDefinition::FONT_IN_USE;
-    fontp=fontList.next();
   }
 }
 
@@ -514,13 +459,13 @@ void fontPool::release_fonts()
   kDebug(kvs::dvi) << "Release_fonts";
 #endif
 
-  TeXFontDefinition  *fontp = fontList.first();
-  while(fontp != 0) {
+  QMutableListIterator<TeXFontDefinition*> it_fontp(fontList);
+  while (it_fontp.hasNext()) {
+    TeXFontDefinition *fontp = it_fontp.next();
     if ((fontp->flags & TeXFontDefinition::FONT_IN_USE) != TeXFontDefinition::FONT_IN_USE) {
-      fontList.removeRef(fontp);
-      fontp = fontList.first();
-    } else
-      fontp = fontList.next();
+      delete fontp;
+      it_fontp.remove();
+    }
   }
 }
 

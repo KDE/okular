@@ -12,7 +12,7 @@
 #include "fontprogress.h"
 #include "TeXFontDefinition.h"
 
-#include <Q3PtrList>
+#include <QList>
 #include <QObject>
 #include <QProcess>
 
@@ -78,12 +78,8 @@ public:
  // the method returns.
  TeXFontDefinition* appendx(const QString& fontname, quint32 checksum, quint32 scale, double enlargement);
 
- // Returns a string in a very basic HTML format which describes the
- // fonts in the pool.
- QString status();
-
   // This is the list which actually holds pointers to the fonts
-  Q3PtrList<TeXFontDefinition> fontList;
+  QList<TeXFontDefinition*> fontList;
 
   // This method marks all fonts in the fontpool as "not in use". The
   // fonts are, however, not removed from memory until the method

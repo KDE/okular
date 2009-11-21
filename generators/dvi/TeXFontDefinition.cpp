@@ -121,7 +121,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum))
         kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1", filename) ;
-      fontTypeName = "TeX PK";
+      fontType = TEX_PK;
       return;
     }
 
@@ -129,7 +129,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
     if (magic == VF_MAGIC) {
       read_VF_index();
       set_char_p = &dviRenderer::set_vf_char;
-      fontTypeName = i18n("TeX virtual");
+      fontType = TEX_VIRTUAL;
       return;
     }
 
@@ -138,7 +138,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       file = 0;
       font = new TeXFont_TFM(this);
       set_char_p = &dviRenderer::set_char;
-      fontTypeName = i18n("TeX Font Metric");
+      fontType = TEX_FONTMETRIC;
       return;
   }
 
@@ -163,7 +163,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   }
 
   set_char_p = &dviRenderer::set_char;
-  fontTypeName = i18n("FreeType");
+  fontType = FREETYPE;
   return;
 #else
   // If we don't have the FreeType library, we should never have
@@ -231,7 +231,6 @@ void TeXFontDefinition::mark_as_used()
     }
   }
 }
-
 
 macro::macro()
 {

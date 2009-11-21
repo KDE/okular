@@ -45,7 +45,11 @@ class OKULAR_EXPORT FontInfo
             CIDType0C,
             CIDType0COT,
             CIDTrueType,
-            CIDTrueTypeOT
+            CIDTrueTypeOT,
+            TeXPK,               ///< @since 0.10 (KDE 4.4)
+            TeXVirtual,          ///< @since 0.10 (KDE 4.4)
+            TeXFontMetric,       ///< @since 0.10 (KDE 4.4)
+            TeXFreeTypeHandled   ///< @since 0.10 (KDE 4.4)
         };
 
         /**

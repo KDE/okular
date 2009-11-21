@@ -340,6 +340,18 @@ static QString descriptionForFontType( Okular::FontInfo::FontType type )
         case Okular::FontInfo::CIDTrueTypeOT:
             return i18nc("OT means OpenType", "CID TrueType (OT)");
             break;
+        case Okular::FontInfo::TeXPK:
+            return i18n("TeX PK");
+            break;
+        case Okular::FontInfo::TeXVirtual:
+            return i18n("TeX virtual");
+            break;
+        case Okular::FontInfo::TeXFontMetric:
+            return i18n("TeX Font Metric");
+            break;
+        case Okular::FontInfo::TeXFreeTypeHandled:
+            return i18n("TeX FreeType-handled");
+            break;
         case Okular::FontInfo::Unknown:
             return i18nc("Unknown font type", "Unknown");
             break;

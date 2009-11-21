@@ -64,6 +64,12 @@ class TeXFontDefinition {
     FONT_KPSE_NAME = 8
   };
 
+  enum font_type { 
+    TEX_PK,
+    TEX_VIRTUAL,
+    TEX_FONTMETRIC,
+    FREETYPE
+  };
 
   TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
        class fontPool *pool, double _enlargement);
@@ -113,7 +119,8 @@ class TeXFontDefinition {
   const QString &getFullFontName() const {return fullFontName;}
   const QString &getFullEncodingName() const {return fullEncodingName;}
 #endif
-  const QString &getFontTypeName() const {return fontTypeName;}
+
+  const font_type &getFontType() const {return fontType;};
 
 #ifdef HAVE_FREETYPE
   /** For FREETYPE fonts, which use a map file, this field will
@@ -134,9 +141,7 @@ class TeXFontDefinition {
  private:
   quint32       checksum;
 
-  /** This will be set to a human-readable description of the font,
-      e.g. "virtual" or "TeX PK", or "Type 1" */
-  QString        fontTypeName;
+  font_type     fontType;
 
   // Functions related to virtual fonts
   void          read_VF_index(void );

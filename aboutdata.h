@@ -32,7 +32,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         "http://okular.kde.org"
     );
 
-    about.addAuthor(ki18n("Pino Toscano"), ki18n("Current maintainer"), "pino@kde.org");
+    about.addAuthor(ki18n("Pino Toscano"), ki18n("Former maintainer"), "pino@kde.org");
     about.addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
     about.addAuthor(ki18n("Albert Astals Cid"), ki18n("Former maintainer"), "aacid@kde.org");
     about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created Okular from KPDF codebase"), "djurban@pld-dc.org");

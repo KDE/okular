@@ -2,6 +2,7 @@
 Type=Service
 Name=Fax documents
 Name[ar]=مستندات الفاكس
+Name[ast]=Documentos de fax
 Name[bg]=Факс
 Name[ca]=Documents de fax
 Name[cs]=Faxové dokumenty
@@ -47,6 +48,7 @@ Name[zh_CN]=Fax 文档
 Name[zh_TW]=傳真文件
 Comment=G3/G4 Fax backend for Okular
 Comment[ar]=المنتهى الخلفي G3/G4 Fax لأوكلار
+Comment[ast]=Motor de fax G3/G4 pa Okular
 Comment[bg]=Ядро на Okular за факс G3/G4
 Comment[ca]=Dorsal de fax G3/G4 per a l'Okular
 Comment[da]=G3/G4 fax-motor til Okular

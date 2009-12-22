@@ -2,6 +2,7 @@
 Type=Service
 Name=Plucker document
 Name[ar]=مستند Plucker
+Name[ast]=Documentu Plucker
 Name[bg]=Докумет Plucker
 Name[ca]=Document Plucker
 Name[cs]=Plucker dokument
@@ -53,6 +54,7 @@ Name[zh_CN]=Plucker 文档
 Name[zh_TW]=Plucker 文件
 Comment=Plucker backend for Okular
 Comment[ar]=المنتهى الخلفي Plucker لأوكلار
+Comment[ast]=Motor Plucker pa Okular
 Comment[bg]=Ядро на Okular за Plucker
 Comment[ca]=Dorsal de Plucker per a l'Okular
 Comment[da]=Plucker-motor til Okular

@@ -2,6 +2,7 @@
 Type=Service
 Name=Mobipocket document
 Name[ar]=مستند Mobipocket
+Name[ast]=Documentu Mobipocket
 Name[bg]=Документ Mobipocket
 Name[ca]=Document Mobipocket
 Name[cs]=Mobipocket dokument
@@ -43,6 +44,7 @@ Name[zh_CN]=Mobipocket 文档
 Name[zh_TW]=Mobipocket 文件
 Comment=Mobipocket backend for Okular
 Comment[ar]=خلفية Mobipocket لأوكلار
+Comment[ast]=Motor Mobipocket pa Okular
 Comment[bg]=Ядро на Okular за Mobipocket
 Comment[ca]=Dorsal de Mobipocket per a l'Okular
 Comment[da]=Mobipocket-motor til Okular

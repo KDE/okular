@@ -2,6 +2,7 @@
 Type=Service
 Name=FictionBook document
 Name[ar]=مستند فيكشن بوك
+Name[ast]=Documentu FictionBook
 Name[bg]=Документ FictionBook
 Name[ca]=Document FictionBook
 Name[da]=FictionBook-dokument
@@ -51,6 +52,7 @@ Name[zh_CN]=FictionBook 文档
 Name[zh_TW]=FictionBook 文件
 Comment=FictionBook backend for Okular
 Comment[ar]=المنتهى الخلفي FictionBook لأوكلار
+Comment[ast]=Motor FictionBook pa Okular
 Comment[bg]=Ядро на Okular за FictionBook
 Comment[ca]=Dorsal de FictionBook per a l'Okular
 Comment[da]=FictionBook-motor til Okular

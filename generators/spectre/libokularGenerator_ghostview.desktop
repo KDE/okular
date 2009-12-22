@@ -2,6 +2,7 @@
 Type=Service
 Name=Ghostscript
 Name[ar]=غوست سكريبت
+Name[ast]=Ghostscript
 Name[bg]=Ghostscript
 Name[ca]=Ghostscript
 Name[cs]=Ghostscript
@@ -54,6 +55,7 @@ Name[zh_CN]=GhostScript 信息
 Name[zh_TW]=Ghostscript
 Comment=Ghostscript PS/PDF backend for Okular
 Comment[ar]=المنتهى الخلفي Ghostscript PS/PDF لأوكلار
+Comment[ast]=Motor PS/PDF de Ghostscript pa Okular
 Comment[bg]=Ядро на Okular за Ghostscript PS/PDF
 Comment[ca]=Dorsal de Ghostscript PS/PDF per a l'Okular
 Comment[da]=Ghostscript PS/PDF-motor til Okular

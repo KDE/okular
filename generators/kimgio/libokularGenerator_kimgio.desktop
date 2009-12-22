@@ -2,6 +2,7 @@
 Type=Service
 Name=KDE Image libraries
 Name[ar]=مكتبات الصورة لكدي
+Name[ast]=Biblioteques d'imáxenes de KDE
 Name[bg]=Библиотеки на KDE за изображения
 Name[ca]=Biblioteques d'imatges del KDE
 Name[cs]=Knihovny obrázků KDE
@@ -54,6 +55,7 @@ Name[zh_CN]=KDE 图像库
 Name[zh_TW]=KDE 影像函式庫
 Comment=Image backend for Okular
 Comment[ar]=المنتهى الخلفي للصورة لأوكلار
+Comment[ast]=Motor d'imáxenes pa Okular
 Comment[bg]=Ядро на Okular за изображения
 Comment[ca]=Dorsal d'imatges per a l'Okular
 Comment[da]=Billedmotor til Okular

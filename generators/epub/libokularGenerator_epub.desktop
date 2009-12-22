@@ -2,6 +2,7 @@
 Type=Service
 Name=EPub document
 Name[ar]=مستند إيباب
+Name[ast]=Documentu EPub
 Name[bg]=Документ EPub
 Name[ca]=Document EPub
 Name[cs]=EPub dokument
@@ -49,6 +50,7 @@ Name[zh_CN]=EPub 文档
 Name[zh_TW]=EPub 文件
 Comment=EPub backend for Okular
 Comment[ar]=المنتهى الخلفي EPub لأوكلار
+Comment[ast]=Motor EPub pa Okular
 Comment[bg]=Ядро на Okular за EPub
 Comment[ca]=Dorsal d'EPub per a l'Okular
 Comment[da]=EPub-motor til Okular

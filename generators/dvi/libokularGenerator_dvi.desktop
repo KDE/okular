@@ -2,6 +2,7 @@
 Type=Service
 Name=dvi
 Name[ar]=dvi
+Name[ast]=dvi
 Name[bg]=dvi
 Name[ca]=dvi
 Name[cs]=dvi
@@ -54,6 +55,7 @@ Name[zh_CN]=dvi
 Name[zh_TW]=dvi
 Comment=DVI backend for Okular
 Comment[ar]=المنتهى الخلفي DVI لأوكلار
+Comment[ast]=Motor DVI pa Okular
 Comment[bg]=Ядро на Okular за DVI
 Comment[ca]=Dorsal de DVI per a l'Okular
 Comment[da]=DVI-motor til Okular

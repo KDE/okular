@@ -2,6 +2,7 @@
 Type=Service
 Name=Poppler
 Name[ar]=بوبلِر
+Name[ast]=Poppler
 Name[bg]=Poppler
 Name[ca]=Poppler
 Name[cs]=Poppler
@@ -53,6 +54,7 @@ Name[zh_CN]=Poppler
 Name[zh_TW]=Poppler
 Comment=PDF backend for Okular using poppler
 Comment[ar]=المنتهى الخلفي PDF لأوكلار
+Comment[ast]=Motor PDF pa Okular qu'usa Poppler
 Comment[bg]=Ядро на Okular за PDF, използващо poppler
 Comment[ca]=Dorsal de PDF per a l'Okular emprant el poppler
 Comment[da]=PDF-motor til Okular som bruger poppler

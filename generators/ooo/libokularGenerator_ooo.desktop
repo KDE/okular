@@ -2,6 +2,7 @@
 Type=Service
 Name=OpenDocument format
 Name[ar]=نسق OpenDocument
+Name[ast]=Formatu OpenDocument
 Name[bg]=Формат OpenDocument
 Name[ca]=Format OpenDocument
 Name[cs]=OpenDocument formát
@@ -53,6 +54,7 @@ Name[zh_CN]=开放文档格式
 Name[zh_TW]=OpenDocument 格式
 Comment=OpenDocument backend for Okular
 Comment[ar]=المنتهى الخلفي OpenDocument لأوكلار
+Comment[ast]=Motor OpenDocument pa Okular
 Comment[bg]=Ядро на Okular за OpenDocument
 Comment[ca]=Dorsal d'OpenDocument per a l'Okular
 Comment[da]=OpenDocument-motor til Okular

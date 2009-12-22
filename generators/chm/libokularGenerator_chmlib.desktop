@@ -2,6 +2,7 @@
 Type=Service
 Name=chmlib
 Name[ar]=chmlib
+Name[ast]=chmlib
 Name[bg]=chmlib
 Name[ca]=chmlib
 Name[cs]=chmlib
@@ -53,6 +54,7 @@ Name[zh_CN]=chmlib
 Name[zh_TW]=chmlib
 Comment=Windows HTMLHelp backend for Okular
 Comment[ar]=المنتهى الخلفي Windows HTMLHelp لأوكلار
+Comment[ast]=Motor de ficheros d'aida en HTML de Windows pa Okular
 Comment[bg]=Ядро на Okular за помощни файлове на Windows
 Comment[ca]=Dorsal dels HTMLHelp de Windows per a l'Okular
 Comment[da]=Windows HTML Help-motor til Okular

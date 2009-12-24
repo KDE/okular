@@ -63,6 +63,7 @@ public:
      *          -8 if empty file name
      *          -7 if unable to find file
      *          -6 if invalid printer state
+     *          -5 if print to file copy failed
      *          -2 if the KProcess could not be started
      *          -1 if the KProcess crashed
      *          otherwise the KProcess exit code
@@ -87,6 +88,7 @@ public:
      *          -8 if empty file list
      *          -7 if unable to find a file
      *          -6 if invalid printer state
+     *          -5 if print to file copy failed
      *          -2 if the KProcess could not be started
      *          -1 if the KProcess crashed
      *          otherwise the KProcess exit code

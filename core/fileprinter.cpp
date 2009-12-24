@@ -80,7 +80,11 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
 
         if ( inputFileInfo.suffix() == outputFileInfo.suffix() ) {
             int res = QFile::copy( fileList[0], printer.outputFileName() );
-            if ( res ) ret = 0;
+            if ( res ) {
+                ret = 0;
+            } else {
+                ret = -5;
+            }
         } else if ( inputFileInfo.suffix() == "ps" && outputFileInfo.suffix() == "pdf" && ps2pdfAvailable() ) {
             exe = "ps2pdf";
             argList << fileList[0] << printer.outputFileName();
@@ -150,6 +154,7 @@ QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage, const QList<i
     for (int i = startPage; i <= endPage; i++ ) {
         list << i;
     }
+
     return list;
 }
 
@@ -336,8 +341,7 @@ QStringList FilePrinter::destination( QPrinter &printer, const QString &version 
 
 QStringList FilePrinter::copies( QPrinter &printer, const QString &version )
 {
-    // If CUPS will always return 1 regardless what the user chooses.
-    int cp = printer.numCopies();
+    int cp = printer.actualNumCopies();
 
     if ( version == "lp" ) {
         return QStringList("-n") << QString("%1").arg( cp );

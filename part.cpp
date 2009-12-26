@@ -1484,15 +1484,11 @@ void Part::slotSaveFileAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()), QString(), widget() );
+    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
+                                            QString(), widget(), QString(),
+                                            KFileDialog::ConfirmOverwrite );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
         return;
-
-    if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
-    {
-        if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
-            return;
-    }
 
     KTemporaryFile tf;
     QString fileName;
@@ -1529,15 +1525,11 @@ void Part::slotSaveCopyAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()), QString(), widget() );
+    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
+                                            QString(), widget(), QString(),
+                                            KFileDialog::ConfirmOverwrite );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
-        if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, widget() ) )
-        {
-            if (KMessageBox::warningContinueCancel( widget(), i18n("A file named \"%1\" already exists. Are you sure you want to overwrite it?", saveUrl.fileName()), QString(), KGuiItem(i18n("Overwrite"))) != KMessageBox::Continue)
-                return;
-        }
-
         // make use of the already downloaded (in case of remote URLs) file,
         // no point in downloading that again
         KUrl srcUrl = KUrl::fromPath( localFilePath() );
@@ -1873,7 +1865,9 @@ void Part::slotExportAs(QAction * act)
             filter = m_exportFormats.at( id - 2 ).mimeType()->name();
             break;
     }
-    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(), filter, widget() );
+    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(),
+                                                     filter, widget(), QString(),
+                                                     KFileDialog::ConfirmOverwrite );
     if ( !fileName.isEmpty() )
     {
         bool saved = false;

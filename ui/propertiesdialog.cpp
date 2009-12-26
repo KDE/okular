@@ -259,22 +259,19 @@ void PropertiesDialog::showFontsMenu(const QPoint &pos)
         {
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n( "Where do you want to save %1?", fi.name() );
-            const QString path = KFileDialog::getSaveFileName( fi.name(), QString(), this, caption );
+            const QString path = KFileDialog::getSaveFileName( fi.name(), QString(), this, caption, KFileDialog::ConfirmOverwrite );
             if ( path.isEmpty() )
                 return;
             
             QFile f( path );
-            if ( !f.exists() || KMessageBox::warningContinueCancel( this, i18n( "A file named \"%1\" already exists. Are you sure you want to overwrite it?", path ), QString(), KGuiItem( i18nc( "@action:button", "&Overwrite" ) ) ) == KMessageBox::Continue )
+            if ( f.open( QIODevice::WriteOnly ) )
             {
-                if ( f.open( QIODevice::WriteOnly ) )
-                {
-                    f.write( m_document->fontData(fi) );
-                    f.close();
-                }
-                else
-                {
-                    KMessageBox::error( this, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
-                }
+                f.write( m_document->fontData(fi) );
+                f.close();
+            }
+            else
+            {
+                KMessageBox::error( this, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
             }
         }
     }

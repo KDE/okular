@@ -238,10 +238,7 @@ void BookmarkList::slotBookmarksChanged( const KUrl& url )
         return;
 
     QTreeWidgetItem *item = itemForUrl( url );
-    if ( item )
-    {
-        selectiveUrlUpdate( url, item );
-    }
+    selectiveUrlUpdate( url, item );
 }
 
 QList<QTreeWidgetItem*> createItems( const KUrl& baseurl, const KBookmark::List& bmlist )
@@ -356,7 +353,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         const QString fileString = url.isLocalFile() ? url.path() : url.prettyUrl();
         if ( item )
         {
-            for ( int i = item->childCount(); i >= 0; --i )
+            for ( int i = item->childCount() - 1; i >= 0; --i )
             {
                 item->removeChild( item->child( i ) );
             }
@@ -364,9 +361,13 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         else
         {
             item = new QTreeWidgetItem( m_tree, FileItemType );
+            item->setText( 0, fileString );
+            item->setData( 0, UrlRole, qVariantFromValue( url ) );
+        }
+        if ( m_document->isOpened() && url == m_document->currentDocument() )
+        {
             item->setIcon( 0, KIcon( "bookmarks" ) );
             item->setExpanded( true );
-            item->setText( 0, fileString );
         }
         item->addChildren( createItems( url, urlbookmarks ) );
         if ( item != m_tree->invisibleRootItem() )

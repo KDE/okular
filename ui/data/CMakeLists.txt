@@ -47,7 +47,9 @@ install(FILES
 # install misc images
 
 # newstuff
+if (FALSE)
 install(FILES
    okular.knsrc
    DESTINATION ${CONFIG_INSTALL_DIR})
+endif (FALSE)
 

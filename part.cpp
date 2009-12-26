@@ -55,7 +55,9 @@
 #include <kio/job.h>
 #include <kicon.h>
 #include <kfilterdev.h>
+#if 0
 #include <knewstuff2/engine.h>
+#endif
 #include <kdeprintdialog.h>
 #include <kprintpreview.h>
 
@@ -1574,11 +1576,13 @@ void Part::slotSaveCopyAs()
 
 void Part::slotGetNewStuff()
 {
+#if 0
     KNS::Engine engine(widget());
     engine.init( "okular.knsrc" );
     // show the modal dialog over pageview and execute it
     KNS::Entry::List entries = engine.downloadDialogModal( m_pageView );
     Q_UNUSED( entries )
+#endif
 }
 
 

@@ -120,6 +120,8 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         bool removePageBookmark( int page );
 
         Q_DISABLE_COPY( BookmarkManager )
+
+        Q_PRIVATE_SLOT( d, void _o_changed( const QString &, const QString & ) )
 };
 
 }

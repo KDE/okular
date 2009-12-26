@@ -2,6 +2,7 @@ project(okular)
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
+add_subdirectory( tests )
 
 include(OkularConfigureChecks.cmake)
 

@@ -24,6 +24,9 @@ namespace Okular
 class PagePrivate;
 typedef QList< TinyTextEntity* > TextList;
 
+typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
+                                          int *fromLength, int *toLength );
+
 class TextPagePrivate
 {
     public:
@@ -32,10 +35,12 @@ class TextPagePrivate
 
         RegularAreaRect * findTextInternalForward( int searchID, const QString &query,
                                                    Qt::CaseSensitivity caseSensitivity,
+                                                   TextComparisonFunction comparer,
                                                    const TextList::ConstIterator &start,
                                                    const TextList::ConstIterator &end );
         RegularAreaRect * findTextInternalBackward( int searchID, const QString &query,
                                                     Qt::CaseSensitivity caseSensitivity,
+                                                    TextComparisonFunction comparer,
                                                     const TextList::ConstIterator &start,
                                                     const TextList::ConstIterator &end );
 

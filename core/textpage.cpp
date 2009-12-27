@@ -36,6 +36,24 @@ class SearchPoint
         int offset_end;
 };
 
+/* text comparison functions */
+
+bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
+                           int *fromLength, int *toLength )
+{
+    *fromLength = from.length();
+    *toLength = to.length();
+    return from.compare( to, Qt::CaseInsensitive ) == 0;
+}
+
+bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to,
+                           int *fromLength, int *toLength )
+{
+    *fromLength = from.length();
+    *toLength = to.length();
+    return from.compare( to, Qt::CaseSensitive ) == 0;
+}
+
 
 /*
   Rationale behind TinyTextEntity:
@@ -352,13 +370,15 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
             break;
     };
     RegularAreaRect* ret = 0;
+    const TextComparisonFunction cmpFn = caseSensitivity == Qt::CaseSensitive
+                                       ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
     if ( forward )
     {
-        ret = d->findTextInternalForward( searchID, query, caseSensitivity, start, end );
+        ret = d->findTextInternalForward( searchID, query, caseSensitivity, cmpFn, start, end );
     }
     else
     {
-        ret = d->findTextInternalBackward( searchID, query, caseSensitivity, start, end );
+        ret = d->findTextInternalBackward( searchID, query, caseSensitivity, cmpFn, start, end );
     }
     return ret;
 }
@@ -366,6 +386,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 
 RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
                                                              Qt::CaseSensitivity caseSensitivity,
+                                                             TextComparisonFunction comparer,
                                                              const TextList::ConstIterator &start,
                                                              const TextList::ConstIterator &end )
 {
@@ -405,10 +426,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
-            if ((caseSensitivity == Qt::CaseSensitive)
-                ? (str.mid(offset,min) != query.mid(j,min))
-                : (str.mid(offset,min).toLower() != query.mid(j,min))
-                )
+            int resStrLen = 0, resQueryLen = 0;
+            if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),
+                            &resStrLen, &resQueryLen ) )
             {
                     // we not have matched
                     // this means we do not have a complete match
@@ -437,8 +457,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #endif
                     haveMatch=true;
                     ret->append( curEntity->transformedArea( matrix ) );
-                    j+=min;
-                    queryLeft-=min;
+                    j += resStrLen;
+                    queryLeft -= resQueryLen;
                     if ( it_begin == TextList::ConstIterator() )
                     {
                         it_begin = it;
@@ -476,6 +496,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
                                                             Qt::CaseSensitivity caseSensitivity,
+                                                            TextComparisonFunction comparer,
                                                             const TextList::ConstIterator &start,
                                                             const TextList::ConstIterator &end )
 {
@@ -531,10 +552,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
-            if ((caseSensitivity == Qt::CaseSensitive)
-                ? (str.right(min) != query.mid(j-min+1,min))
-                : (str.right(min).toLower() != query.mid(j-min+1,min))
-                )
+            int resStrLen = 0, resQueryLen = 0;
+            if ( !comparer( str.rightRef( min ), query.midRef( j - min + 1, min ),
+                            &resStrLen, &resQueryLen ) )
             {
                     // we not have matched
                     // this means we do not have a complete match
@@ -563,8 +583,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #endif
                     haveMatch=true;
                     ret->append( curEntity->transformedArea( matrix ) );
-                    j-=min;
-                    queryLeft-=min;
+                    j -= resStrLen;
+                    queryLeft -= resQueryLen;
                     if ( it_begin == TextList::ConstIterator() )
                     {
                         it_begin = it;

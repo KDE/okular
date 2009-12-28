@@ -62,27 +62,56 @@ bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to,
   we store the UTF-16 data and their length. This way, we save about
   4 int's wrt a QString, and we can create a new string from that
   raw data (that's the only penalty of that).
+  Even better, if the string we need to store has at most
+  MaxStaticChars characters, then we store those in place of the QChar*
+  that would be used (with new[] + free[]) for the data.
  */
 class TinyTextEntity
 {
+    static const int MaxStaticChars = sizeof( QChar * ) / sizeof( QChar );
+
     public:
         TinyTextEntity( const QString &text, const NormalizedRect &rect )
             : area( rect )
         {
             Q_ASSERT_X( !text.isEmpty(), "TinyTextEntity", "empty string" );
+            Q_ASSERT_X( sizeof( d ) == sizeof( QChar * ), "TinyTextEntity",
+                        "internal storage is wider than QChar*, fix it!" );
             length = text.length();
-            data = new QChar[ length ];
-            std::memcpy( data, text.constData(), length * sizeof( QChar ) );
+            switch ( length )
+            {
+#if QT_POINTER_SIZE >= 8
+                case 4:
+                    d.qc[3] = text.at( 3 ).unicode();
+                    // fall through
+                case 3:
+                    d.qc[2] = text.at( 2 ).unicode();
+                    // fall through
+#endif
+                case 2:
+                    d.qc[1] = text.at( 1 ).unicode();
+                    // fall through
+                case 1:
+                    d.qc[0] = text.at( 0 ).unicode();
+                    break;
+                default:
+                    d.data = new QChar[ length ];
+                    std::memcpy( d.data, text.constData(), length * sizeof( QChar ) );
+            }
         }
 
         ~TinyTextEntity()
         {
-            delete [] data;
+            if ( length > MaxStaticChars )
+            {
+                delete [] d.data;
+            }
         }
 
         inline QString text() const
         {
-            return QString::fromRawData( data, length );
+            return length <= MaxStaticChars ? QString::fromRawData( ( const QChar * )&d.qc[0], length )
+                                            : QString::fromRawData( d.data, length );
         }
 
         inline NormalizedRect transformedArea( const QMatrix &matrix ) const
@@ -97,7 +126,11 @@ class TinyTextEntity
     private:
         Q_DISABLE_COPY( TinyTextEntity )
 
-        QChar *data;
+        union
+        {
+            QChar *data;
+            ushort qc[MaxStaticChars];
+        } d;
         int length;
 };
 

@@ -129,6 +129,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         // init the synctex parser if a synctex file exists
         void initSynctexParser( const QString& filePath );
+        // search document for source reference
+        void fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const;
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

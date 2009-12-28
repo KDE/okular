@@ -958,17 +958,28 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     else if ( key == "NamedViewport" && !option.toString().isEmpty() )
     {
-        // asking for the page related to a 'named link destination'. the
-        // option is the link name. @see addSynopsisChildren.
         Okular::DocumentViewport viewport;
-        userMutex()->lock();
-        Poppler::LinkDestination *ld = pdfdoc->linkDestination( option.toString() );
-        userMutex()->unlock();
-        if ( ld )
+        QString optionString = option.toString();
+
+        // if option starts with "src:" assume that we are handling a 
+        // source reference
+        if ( optionString.startsWith( "src:", Qt::CaseInsensitive ) )
         {
-            fillViewportFromLinkDestination( viewport, *ld );
+            fillViewportFromSourceReference( viewport, optionString );
         }
-        delete ld;
+        else
+        {
+            // asking for the page related to a 'named link destination'. the
+            // option is the link name. @see addSynopsisChildren.
+            userMutex()->lock();
+            Poppler::LinkDestination *ld = pdfdoc->linkDestination( optionString );
+            userMutex()->unlock();
+            if ( ld )
+            {
+                fillViewportFromLinkDestination( viewport, *ld );
+            }
+            delete ld;
+        }
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
@@ -1485,6 +1496,60 @@ const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr
         }
     }
     return 0;
+}
+
+void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const
+{
+    if ( !synctex_scanner )
+        return;
+
+    // The reference is of form "src:1111Filename", where "1111"
+    // points to line number 1111 in the file "Filename".
+    // Extract the file name and the numeral part from the reference string.
+    // This will fail if Filename starts with a digit.
+    QString name, lineString;
+    // Remove "src:". Presence of substring has been checked before this 
+    // function is called.
+    name = reference.mid( 4 );
+    // split
+    int nameLength = name.length();
+    int i = 0;
+    for( i = 0; i < nameLength; ++i )
+    {
+        if ( !name[i].isDigit() ) break;
+    }
+    lineString = name.left( i );
+    name = name.mid( i );
+    // Remove spaces.
+    name = name.trimmed();
+    lineString = lineString.trimmed();
+    // Convert line to integer. 
+    bool ok;
+    int line = lineString.toInt( &ok );
+    if (!ok) line = -1;
+    
+    // Use column == -1 for now.
+    if( synctex_display_query( synctex_scanner, name.toLatin1(), line, -1 ) > 0 )
+    {
+        synctex_node_t node;
+        // For now use the first hit. Could possibly be made smarter
+        // in case there are multiple hits.
+        while( ( node = synctex_next_result( synctex_scanner ) ) ) 
+        {
+            // TeX pages start at 1.
+            viewport.pageNumber = synctex_node_page( node ) - 1;
+
+            if ( !viewport.isValid() ) return;
+
+            // TeX small points ...
+            viewport.rePos.normalizedX = (synctex_node_h( node ) * dpiX) / (72.27 * 65536.0 * document()->page(viewport.pageNumber)->width());
+            viewport.rePos.normalizedY = (synctex_node_v( node ) * dpiY) / (72.27 * 65536.0 * document()->page(viewport.pageNumber)->height());
+            viewport.rePos.enabled = true;
+            viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
+           
+            return;
+        }
+    }
 }
 
 QWidget* PDFGenerator::printConfigurationWidget() const

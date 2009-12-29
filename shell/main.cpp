@@ -18,6 +18,7 @@
 #include <klocale.h>
 #include <QtDBus/qdbusinterface.h>
 #include "aboutdata.h"
+#include "shellutils.h"
 
 static bool attachUniqueInstance(KCmdLineArgs* args)
 {
@@ -28,7 +29,7 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
     if (!iface.isValid())
         return false;
 
-    iface.call("openDocument", args->url(0).pathOrUrl());
+    iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
 
     return true;
 }

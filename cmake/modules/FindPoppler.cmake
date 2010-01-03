@@ -6,7 +6,7 @@
 #  POPPLER_LIBRARY - Link this to use poppler
 #
 
-# Copyright (c) 2006-2009, Pino Toscano, <pino@kde.org>
+# Copyright (c) 2006-2010, Pino Toscano, <pino@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -18,43 +18,44 @@ if(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
 else(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
+if(NOT WIN32)
 # use pkg-config to get the directories and then use these values
 # in the FIND_PATH() and FIND_LIBRARY() calls
-INCLUDE(UsePkgConfig)
-
-PKGCONFIG(poppler-qt4 _PopplerIncDir _PopplerLinkDir _PopplerLinkFlags _PopplerCflags)
-
-if(_PopplerLinkFlags)
-
-  # query pkg-config asking for a poppler-qt4 >= 0.5.4
-  EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=0.5.4 poppler-qt4 RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
-  if(_return_VALUE STREQUAL "0")
+  include(FindPkgConfig)
+  pkg_check_modules(_pc_poppler poppler-qt4)
+  if(_pc_poppler_FOUND AND _pc_poppler_VERSION VERSION_GREATER 0.5.3)
     set(POPPLER_FOUND TRUE)
-  endif(_return_VALUE STREQUAL "0")
-else(_PopplerLinkFlags)
-  # try to find poppler without pkgconfig
-  find_library( LIBPOPPLER poppler )
-  find_library( LIBPOPPLER_QT4 poppler-qt4 )
-  find_path( INCLUDEPOPPLER_QT4 poppler/qt4/poppler-qt4.h )
-  find_path( INCLUDEPOPPLER poppler-qt4.h PATHS ${INCLUDEPOPPLER_QT4}/poppler/qt4 )
-  if( LIBPOPPLER_QT4 AND LIBPOPPLER AND INCLUDEPOPPLER )
-    set( POPPLER_FOUND TRUE )
-    set(_PopplerLinkFlags ${LIBPOPPLER} ${LIBPOPPLER_QT4})
-    set(POPPLER_INCLUDE_DIR ${INCLUDEPOPPLER})
-  endif( LIBPOPPLER_QT4 AND LIBPOPPLER AND INCLUDEPOPPLER )
-endif(_PopplerLinkFlags)
+  endif(_pc_poppler_FOUND AND _pc_poppler_VERSION VERSION_GREATER 0.5.3)
+else(NOT WIN32)
+  # assume so, for now
+  set(POPPLER_FOUND TRUE)
+endif(NOT WIN32)
+
+if(POPPLER_FOUND)
+  # set it back as false
+  set(POPPLER_FOUND FALSE)
+
+  find_library(POPPLER_LIBRARY poppler-qt4
+               HINTS ${_pc_poppler_LIBRARY_DIRS}
+  )
+
+  find_path(POPPLER_INCLUDE_DIR poppler-qt4.h
+            HINTS ${_pc_poppler_INCLUDE_DIRS}
+            PATH_SUFFIXES poppler/qt4
+  )
+  find_path(POPPLER_INCLUDE_DIR_core qt4/poppler-qt4.h
+            HINTS ${_pc_poppler_INCLUDE_DIRS}
+            PATH_SUFFIXES poppler
+  )
+
+  if(POPPLER_LIBRARY AND POPPLER_INCLUDE_DIR AND POPPLER_INCLUDE_DIR_core)
+    list(APPEND POPPLER_INCLUDE_DIR "${POPPLER_INCLUDE_DIR_core}")
+    set(POPPLER_FOUND TRUE)
+  endif(POPPLER_LIBRARY AND POPPLER_INCLUDE_DIR AND POPPLER_INCLUDE_DIR_core)
+endif(POPPLER_FOUND)
 
 if (POPPLER_FOUND)
   INCLUDE(CheckCXXSourceCompiles)
-
-  set(POPPLER_LIBRARY ${_PopplerLinkFlags})
-
-  # the cflags for poppler-qt4 can contain more than one include path
-  separate_arguments(_PopplerCflags)
-  foreach(_includedir ${_PopplerCflags})
-    string(REGEX REPLACE "-I(.+)" "\\1" _includedir "${_includedir}")
-    set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} ${_includedir})
-  endforeach(_includedir)
 
   # check whether we're using poppler 0.6
   set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})

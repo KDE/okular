@@ -236,7 +236,7 @@ void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
     int graphicsAA = 1;
     int textAA = 1;
     if (cache_AAgfx) graphicsAA = 4;
-    if (cache_AAtext) textAA = 2;
+    if (cache_AAtext) textAA = 4;
     gsreq.textAAbits = textAA;
     gsreq.graphicsAAbits = graphicsAA;
 

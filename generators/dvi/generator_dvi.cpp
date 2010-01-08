@@ -143,13 +143,13 @@ bool DviGenerator::doCloseDocument()
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
-                                           const Anchor &anch, const Okular::Page *page )
+                                           const Anchor &anch, const Okular::Page *page ) const
 {
     fillViewportFromAnchor( vp, anch, page->width(), page->height() );
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
-                                           const Anchor &anch, int pW, int pH ) 
+                                           const Anchor &anch, int pW, int pH ) const
 {
     vp.pageNumber = anch.page - 1;
 
@@ -584,7 +584,7 @@ QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) 
             const Okular::Page *page = document()->page( anchor.page - 1 );
             Q_ASSERT_X( page, "DviGenerator::metaData()", "NULL page as result of valid Anchor" );
             Okular::DocumentViewport viewport;
-            const_cast< DviGenerator * >( this )->fillViewportFromAnchor( viewport, anchor, page );
+            fillViewportFromAnchor( viewport, anchor, page );
             if ( viewport.isValid() )
             {
                 return viewport.toString();

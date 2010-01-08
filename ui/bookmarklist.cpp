@@ -290,7 +290,7 @@ void BookmarkList::rebuildTree( bool filter )
             if ( !subitems.isEmpty() )
             {
                 QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
-                QString fileString = url.isLocalFile() ? url.path() : url.prettyUrl();
+                QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
                 item->setText( 0, fileString );
                 item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, subitems.count() ) );
                 item->setData( 0, UrlRole, qVariantFromValue( url ) );
@@ -350,7 +350,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
     }
     else
     {
-        const QString fileString = url.isLocalFile() ? url.path() : url.prettyUrl();
+        const QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
         if ( item )
         {
             for ( int i = item->childCount() - 1; i >= 0; --i )

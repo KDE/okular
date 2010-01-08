@@ -879,7 +879,7 @@ bool Part::slotImportPSFile()
         m_temporaryLocalFile = tf.fileName();
         tf.close();
 
-        setLocalFilePath( url.path() );
+        setLocalFilePath( url.toLocalFile() );
         QStringList args;
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;

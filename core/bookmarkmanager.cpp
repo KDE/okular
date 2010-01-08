@@ -106,7 +106,7 @@ QString BookmarkManager::Private::currentUrl() const
 
 QString BookmarkManager::Private::currentTitle() const
 {
-    return url.isLocalFile() ? url.path() : url.prettyUrl();
+    return url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
 }
 
 bool BookmarkManager::Private::enableOption(BookmarkOption option) const
@@ -241,7 +241,7 @@ QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUr
         {
             // folder not found :(
             // then, in a single step create a new folder and add it in our cache :)
-            QString purl = url.isLocalFile() ? url.path() : url.prettyUrl();
+            QString purl = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
             KBookmarkGroup newbg = root.createNewFolder( purl );
             it = knownFiles.insert( url, newbg.address() );
             if ( result )

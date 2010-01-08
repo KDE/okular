@@ -358,7 +358,7 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 
 void FileEdit::slotChanged( const QString& )
 {
-    m_form->setText( url().path() );
+    m_form->setText( url().toLocalFile() );
 
     m_controller->signalChanged( this );
 }

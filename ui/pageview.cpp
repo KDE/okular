@@ -127,7 +127,7 @@ public:
     //text annotation dialogs list
     QHash< Okular::Annotation *, AnnotWindow * > m_annowindows;
     // other stuff
-    QTimer * delayResizeTimer;
+    QTimer * delayRelayoutTimer;
     bool dirtyLayout;
     bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
@@ -246,7 +246,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->scrollIncrement = 0;
     d->autoScrollTimer = 0;
     d->annotator = 0;
-    d->delayResizeTimer = 0;
     d->dirtyLayout = false;
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
@@ -280,6 +279,10 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->setting_centerFirst = Okular::Settings::centerFirstPageInRow();
+    
+    d->delayRelayoutTimer = new QTimer( this );
+    d->delayRelayoutTimer->setSingleShot( true );
+    connect( d->delayRelayoutTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
 
     setFrameStyle(QFrame::NoFrame);
 
@@ -752,12 +755,13 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
 
     // invalidate layout so relayout/repaint will happen on next viewport change
     if ( haspages )
-        // TODO for Enrico: Check if doing always the slotRelayoutPages() is not
-        // suboptimal in some cases, i'd say it is not but a recheck will not hurt
-        // Need slotRelayoutPages() here instead of d->dirtyLayout = true
-        // because opening a document from another document will not trigger a viewportchange
-        // so pages are never relayouted
-        QMetaObject::invokeMethod(this, "slotRelayoutPages", Qt::QueuedConnection);
+    {
+        // We do a delayed call to slotRelayoutPages but also set the dirtyLayout
+        // because we might end up in notifyViewportChanged while slotRelayoutPages
+        // has not been done and we don't want that to happen
+        d->dirtyLayout = true;
+        d->delayRelayoutTimer->start(0);
+    }
     else
     {
         // update the mouse cursor when closing because we may have close through a link and
@@ -1238,13 +1242,7 @@ void PageView::resizeEvent( QResizeEvent *e )
     }
 
     // start a timer that will refresh the pixmap after 0.2s
-    if ( !d->delayResizeTimer )
-    {
-        d->delayResizeTimer = new QTimer( this );
-        d->delayResizeTimer->setSingleShot( true );
-        connect( d->delayResizeTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
-    }
-    d->delayResizeTimer->start( 200 );
+    d->delayRelayoutTimer->start( 200 );
 
     d->bothScrollbarsVisible = horizontalScrollBar()->isVisible() && verticalScrollBar()->isVisible();
 }
@@ -2855,6 +2853,9 @@ void PageView::resizeContentArea( const QSize & newSize )
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
 {
+    // If we already got here we don't need to execute the timer slot again
+    d->delayRelayoutTimer->stop();
+    
     // set an empty container if we have no pages
     int pageCount = d->items.count();
     if ( pageCount < 1 )

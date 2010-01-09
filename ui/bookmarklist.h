@@ -20,6 +20,7 @@ class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
 class KUrl;
 class BookmarkItem;
+class FileItem;
 
 namespace Okular {
 class Document;
@@ -50,6 +51,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         void selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item );
         QTreeWidgetItem* itemForUrl( const KUrl& url ) const;
         void contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem );
+        void contextMenuForFileItem( const QPoint& p, FileItem* fItem );
 
         Okular::Document * m_document;
         QTreeWidget * m_tree;

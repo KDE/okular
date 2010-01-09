@@ -231,6 +231,8 @@ void BookmarkList::slotContextMenu( const QPoint& p )
     BookmarkItem* bmItem = item ? dynamic_cast<BookmarkItem*>( item ) : 0;
     if ( bmItem )
         contextMenuForBookmarkItem( p, bmItem );
+    else if ( FileItem* fItem = dynamic_cast< FileItem * >( item ) )
+        contextMenuForFileItem( p, fItem );
 }
 
 void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem )
@@ -252,6 +254,39 @@ void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bm
         m_tree->editItem( bmItem, 0 );
     else if ( res == removebm )
         m_document->bookmarkManager()->removeBookmark( bmItem->url(), bmItem->bookmark() );
+}
+
+void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
+{
+    if ( !fItem )
+        return;
+
+    const KUrl itemurl = fItem->data( 0, UrlRole ).value< KUrl >();
+    const bool thisdoc = itemurl == m_document->currentDocument();
+
+    KMenu menu( this );
+    QAction * open = 0;
+    if ( !thisdoc )
+        open = menu.addAction( i18nc( "Opens the selected document", "Open Document" ) );
+    QAction * removebm = menu.addAction( KIcon( "list-remove" ), i18n( "Remove Bookmarks" ) );
+    QAction * res = menu.exec( QCursor::pos() );
+    if ( !res )
+        return;
+
+    if ( res == open )
+    {
+        Okular::GotoAction action( itemurl.pathOrUrl(), Okular::DocumentViewport() );
+        m_document->processAction( &action );
+    }
+    else if ( res == removebm )
+    {
+        KBookmark::List list;
+        for ( int i = 0; i < fItem->childCount(); ++i )
+        {
+            list.append( static_cast<BookmarkItem*>( fItem->child( i ) )->bookmark() );
+        }
+        m_document->bookmarkManager()->removeBookmarks( itemurl, list );
+    }
 }
 
 void BookmarkList::slotBookmarksChanged( const KUrl& url )

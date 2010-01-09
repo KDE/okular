@@ -337,6 +337,42 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
     return vp.pageNumber;
 }
 
+void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::List& list )
+{
+    if ( !referurl.isValid() || list.isEmpty() )
+        return;
+
+    KBookmarkGroup thebg;
+    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    if ( it == d->knownFiles.end() )
+        return;
+
+    const QSet<int> oldUrlBookmarks = d->urlBookmarks;
+    bool deletedAny = false;
+    foreach ( const KBookmark & bm, list )
+    {
+        if ( bm.parentGroup() == thebg )
+        {
+            thebg.deleteBookmark( bm );
+            deletedAny = true;
+            if ( referurl == d->document->m_url )
+            {
+                d->urlBookmarks.remove( DocumentViewport( bm.url().htmlRef() ).pageNumber );
+            }
+        }
+    }
+
+    if ( referurl == d->document->m_url )
+    {
+        foreach ( int p, oldUrlBookmarks - d->urlBookmarks )
+        {
+            foreachObserver( notifyPageChanged( p, DocumentObserver::Bookmark ) );
+        }
+    }
+    if ( deletedAny )
+        d->manager->emitChanged( thebg );
+}
+
 QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
 {
     QList< QAction * > ret;

@@ -74,6 +74,15 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         int removeBookmark( const KUrl& referurl, const KBookmark& bm );
 
         /**
+         * Removes the bookmarks in @p list for the @p referurl specified.
+         *
+         * @note it will remove only the bookmarks which belong to @p referurl
+         *
+         * @since 0.11 (KDE 4.5)
+         */
+        void removeBookmarks( const KUrl& referurl, const KBookmark::List& list );
+
+        /**
          * Returns whether the given @p page is bookmarked.
          */
         bool isBookmarked( int page ) const;

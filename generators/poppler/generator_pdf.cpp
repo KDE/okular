@@ -1542,10 +1542,12 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
             if ( !viewport.isValid() ) return;
 
             // TeX small points ...
-            viewport.rePos.normalizedX = (synctex_node_h( node ) * dpiX) / (72.27 * 65536.0 * document()->page(viewport.pageNumber)->width());
-            viewport.rePos.normalizedY = (synctex_node_v( node ) * dpiY) / (72.27 * 65536.0 * document()->page(viewport.pageNumber)->height());
+            double px = (synctex_node_visible_h( node ) * dpiX) / 72.27;
+            double py = (synctex_node_visible_v( node ) * dpiY) / 72.27;
+            viewport.rePos.normalizedX = px / document()->page(viewport.pageNumber)->width();
+            viewport.rePos.normalizedY = ( py + 0.5 ) / document()->page(viewport.pageNumber)->height();
             viewport.rePos.enabled = true;
-            viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
+            viewport.rePos.pos = Okular::DocumentViewport::Center;
            
             return;
         }

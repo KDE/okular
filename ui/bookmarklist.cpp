@@ -204,6 +204,12 @@ void BookmarkList::slotContextMenu( const QPoint& p )
 {
     QTreeWidgetItem * item = m_tree->itemAt( p );
     BookmarkItem* bmItem = item ? dynamic_cast<BookmarkItem*>( item ) : 0;
+    if ( bmItem )
+        contextMenuForBookmarkItem( p, bmItem );
+}
+
+void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem )
+{
     if ( !bmItem || !bmItem->viewport().isValid() )
         return;
 
@@ -218,7 +224,7 @@ void BookmarkList::slotContextMenu( const QPoint& p )
     if ( res == gotobm )
         goTo( bmItem );
     else if ( res == editbm )
-        m_tree->editItem( item, 0 );
+        m_tree->editItem( bmItem, 0 );
     else if ( res == removebm )
         m_document->bookmarkManager()->removeBookmark( bmItem->url(), bmItem->bookmark() );
 }

@@ -156,8 +156,8 @@ void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
 
     SimplePageSize ps = m_dviRenderer->sizeOfPage( vp.pageNumber );
     double resolution = 0;
-
-    resolution = (double)(pW)/ps.width().getLength_in_inch();
+    if (ps.isValid()) resolution = (double)(pW)/ps.width().getLength_in_inch();
+    else resolution = m_resolution;
 
     double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5; 
  

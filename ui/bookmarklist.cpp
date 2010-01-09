@@ -91,6 +91,31 @@ class BookmarkItem : public QTreeWidgetItem
 };
 
 
+class FileItem : public QTreeWidgetItem
+{
+    public:
+        FileItem( const KUrl & url, QTreeWidget *tree  )
+            : QTreeWidgetItem( tree, FileItemType )
+        {
+            const QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
+            setText( 0, fileString );
+            setData( 0, UrlRole, qVariantFromValue( url ) );
+        }
+
+        virtual QVariant data( int column, int role ) const
+        {
+            switch ( role )
+            {
+                case Qt::ToolTipRole:
+                    return i18ncp( "%1 is the file name",
+                                   "%1\n\nOne bookmark", "%1\n\n%2 bookmarks",
+                                   text( 0 ), childCount() );
+            }
+            return QTreeWidgetItem::data( column, role );
+        }
+};
+
+
 BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     : QWidget( parent ), m_document( document ), m_currentDocumentItem( 0 )
 {
@@ -295,11 +320,7 @@ void BookmarkList::rebuildTree( bool filter )
             QList<QTreeWidgetItem*> subitems = createItems( url, m_document->bookmarkManager()->bookmarks( url ) );
             if ( !subitems.isEmpty() )
             {
-                QTreeWidgetItem * item = new QTreeWidgetItem( m_tree, FileItemType );
-                QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
-                item->setText( 0, fileString );
-                item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, subitems.count() ) );
-                item->setData( 0, UrlRole, qVariantFromValue( url ) );
+                FileItem * item = new FileItem( url, m_tree );
                 item->addChildren( subitems );
                 if ( !currenturlitem && url == m_document->currentDocument() )
                 {
@@ -356,7 +377,6 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
     }
     else
     {
-        const QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
         if ( item )
         {
             for ( int i = item->childCount() - 1; i >= 0; --i )
@@ -366,9 +386,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         }
         else
         {
-            item = new QTreeWidgetItem( m_tree, FileItemType );
-            item->setText( 0, fileString );
-            item->setData( 0, UrlRole, qVariantFromValue( url ) );
+            item = new FileItem( url, m_tree );
         }
         if ( m_document->isOpened() && url == m_document->currentDocument() )
         {
@@ -376,10 +394,6 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
             item->setExpanded( true );
         }
         item->addChildren( createItems( url, urlbookmarks ) );
-        if ( item != m_tree->invisibleRootItem() )
-        {
-            item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, item->childCount() ) );
-        }
     }
 
     connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );

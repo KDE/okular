@@ -174,6 +174,7 @@ uint BookmarkList::observerId() const
 
 void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
+    Q_UNUSED( pages );
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
@@ -237,6 +238,7 @@ void BookmarkList::slotContextMenu( const QPoint& p )
 
 void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem )
 {
+    Q_UNUSED( p );
     if ( !bmItem || !bmItem->viewport().isValid() )
         return;
 
@@ -258,6 +260,7 @@ void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bm
 
 void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
 {
+    Q_UNUSED( p );
     if ( !fItem )
         return;
 

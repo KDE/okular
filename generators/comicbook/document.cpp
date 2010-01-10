@@ -15,6 +15,7 @@
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kzip.h>
+#include <ktar.h>
 
 #include <memory>
 
@@ -56,6 +57,16 @@ bool Document::open( const QString &fileName )
      */
     if ( mime->is( "application/x-cbz" ) || mime->name() == "application/zip" ) {
         mArchive = new KZip( fileName );
+
+        if ( !processArchive() ) {
+            return false;
+        }
+    /**
+     * We have a TAR archive
+     */
+    } else if ( mime->is( "application/x-cbt" ) || mime->name() == "application/x-gzip" ||
+                mime->name() == "application/x-tar" || mime->name() == "application/x-bzip" ) {
+        mArchive = new KTar( fileName );
 
         if ( !processArchive() ) {
             return false;

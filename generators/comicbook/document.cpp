@@ -37,7 +37,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
 
 
 Document::Document()
-    : mUnrar( 0 ), mZip( 0 )
+    : mUnrar( 0 ), mArchive( 0 )
 {
 }
 
@@ -55,30 +55,11 @@ bool Document::open( const QString &fileName )
      * We have a zip archive
      */
     if ( mime->is( "application/x-cbz" ) || mime->name() == "application/zip" ) {
-        mZip = new KZip( fileName );
+        mArchive = new KZip( fileName );
 
-        if ( !mZip->open( QIODevice::ReadOnly ) ) {
-            delete mZip;
-            mZip = 0;
-
+        if ( !processArchive() ) {
             return false;
         }
-
-        const KArchiveDirectory *directory = mZip->directory();
-        if ( !directory ) {
-            delete mZip;
-            mZip = 0;
-
-            return false;
-        }
-
-        mZipDir = const_cast<KArchiveDirectory*>( directory );
-
-        QStringList entries;
-        imagesInArchive( QString(), mZipDir, &entries );
-
-        extractImageFiles( entries );
-
     } else if ( mime->is( "application/x-cbr" ) || mime->name() == "application/x-rar" ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
@@ -115,14 +96,39 @@ void Document::close()
 {
     mLastErrorString.clear();
 
-    if ( !( mZip || mUnrar ) )
+    if ( !( mArchive || mUnrar ) )
         return;
 
-    delete mZip;
-    mZip = 0;
+    delete mArchive;
+    mArchive = 0;
     delete mUnrar;
     mUnrar = 0;
     mPageMap.clear();
+}
+
+bool Document::processArchive() {
+    if ( !mArchive->open( QIODevice::ReadOnly ) ) {
+        delete mArchive;
+        mArchive = 0;
+
+        return false;
+    }
+
+    const KArchiveDirectory *directory = mArchive->directory();
+    if ( !directory ) {
+        delete mArchive;
+        mArchive = 0;
+
+        return false;
+    }
+
+    mArchiveDir = const_cast<KArchiveDirectory*>( directory );
+
+    QStringList entries;
+    imagesInArchive( QString(), mArchiveDir, &entries );
+
+    extractImageFiles( entries );
+    return true;
 }
 
 void Document::extractImageFiles( const QStringList &list )
@@ -154,8 +160,8 @@ QStringList Document::pageTitles() const
 
 QImage Document::pageImage( int page ) const
 {
-    if ( mZip ) {
-        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mZipDir->entry( mPageMap[ page ] ) );
+    if ( mArchive ) {
+        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( mPageMap[ page ] ) );
         if ( entry )
             return QImage::fromData( entry->data() );
 
@@ -170,8 +176,8 @@ QSize Document::pageSize( int page ) const
 {
     std::auto_ptr< QIODevice > dev;
 
-    if ( mZip ) {
-        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mZipDir->entry( mPageMap[ page ] ) );
+    if ( mArchive ) {
+        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( mPageMap[ page ] ) );
         if ( entry ) {
             dev.reset( entry->createDevice() );
         }

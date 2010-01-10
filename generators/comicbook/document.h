@@ -13,7 +13,7 @@
 #include <QtCore/QStringList>
 
 class KArchiveDirectory;
-class KZip;
+class KArchive;
 class QImage;
 class QSize;
 class Unrar;
@@ -39,11 +39,12 @@ class Document
 
     private:
         void extractImageFiles( const QStringList& );
+        bool processArchive();
 
         QStringList mPageMap;
         Unrar *mUnrar;
-        KZip *mZip;
-        KArchiveDirectory *mZipDir;
+        KArchive *mArchive;
+        KArchiveDirectory *mArchiveDir;
         QString mLastErrorString;
 };
 

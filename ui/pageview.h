@@ -166,7 +166,6 @@ Q_OBJECT
         void updateCursor( const QPoint &p );
 
         int viewColumns() const;
-        int viewRows() const;
 
         void center(int cx, int cy);
 

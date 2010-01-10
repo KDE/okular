@@ -170,9 +170,7 @@ public:
     KAction * aSpeakStop;
     KActionCollection * actionCollection;
 
-    int setting_viewMode;
     int setting_viewCols;
-    bool setting_centerFirst;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -276,9 +274,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aSpeakStop = 0;
     d->actionCollection = 0;
     d->aPageSizes=0;
-    d->setting_viewMode = Okular::Settings::viewMode();
     d->setting_viewCols = Okular::Settings::viewColumns();
-    d->setting_centerFirst = Okular::Settings::centerFirstPageInRow();
     
     d->delayRelayoutTimer = new QTimer( this );
     d->delayRelayoutTimer->setSingleShot( true );
@@ -412,10 +408,18 @@ do { \
 } while( 0 )
     ac->addAction("view_render_mode", d->aViewMode );
     QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
-    ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", 0 );
-    ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", 1 );
-    ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", 2 );
-    d->aViewMode->menu()->actions().at( Okular::Settings::viewMode() )->setChecked( true );
+    ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
+    ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
+    ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
+    ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", (int)Okular::Settings::EnumViewMode::Summary );
+    const QList<QAction *> viewModeActions = d->aViewMode->menu()->actions();
+    foreach(QAction *viewModeAction, viewModeActions)
+    {
+        if (viewModeAction->data().toInt() == Okular::Settings::viewMode())
+        {
+            viewModeAction->setChecked( true );
+        }
+    }
     connect( vmGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( slotViewMode( QAction* ) ) );
 #undef ADD_VIEWMODE_ACTION
 
@@ -509,7 +513,7 @@ do { \
 
 bool PageView::canFitPageWidth() const
 {
-    return Okular::Settings::viewMode() != 0 || d->zoomMode != ZoomFitWidth;
+    return Okular::Settings::viewMode() != Okular::Settings::EnumViewMode::Single || d->zoomMode != ZoomFitWidth;
 }
 
 void PageView::fitPageWidth( int page )
@@ -593,14 +597,10 @@ void PageView::reparseConfig()
         setVerticalScrollBarPolicy( scrollBarMode );
     }
 
-    const int viewMode = Okular::Settings::viewMode();
-    if ( ( viewMode == 2 && ( (int)Okular::Settings::viewColumns() != d->setting_viewCols ) )
-         || ( viewMode > 0 && ( Okular::Settings::centerFirstPageInRow() != d->setting_centerFirst ) )
-       )
+    if ( Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Summary &&
+         ( (int)Okular::Settings::viewColumns() != d->setting_viewCols ) )
     {
-        d->setting_viewMode = Okular::Settings::viewMode();
         d->setting_viewCols = Okular::Settings::viewColumns();
-        d->setting_centerFirst = Okular::Settings::centerFirstPageInRow();
 
         slotRelayoutPages();
     }
@@ -2796,17 +2796,11 @@ void PageView::updateCursor( const QPoint &p )
 
 int PageView::viewColumns() const
 {
-    int nr = Okular::Settings::viewMode();
-    if (nr<2)
-	return nr+1;
-    return Okular::Settings::viewColumns();
-}
-
-int PageView::viewRows() const
-{
-    if ( Okular::Settings::viewMode() < 2 )
-	return 1;
-    return Okular::Settings::viewRows();
+    int vm = Okular::Settings::viewMode();
+    if (vm == Okular::Settings::EnumViewMode::Single) return 1;
+    else if (vm == Okular::Settings::EnumViewMode::Facing ||
+             vm == Okular::Settings::EnumViewMode::FacingFirstCentered) return 2;
+    else return Okular::Settings::viewColumns();
 }
 
 void PageView::center(int cx, int cy)
@@ -2883,7 +2877,7 @@ void PageView::slotRelayoutPages()
 
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
-    bool centerFirstPage = Okular::Settings::centerFirstPageInRow() && nCols > 1;
+    bool centerFirstPage = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
     const bool continuousView = Okular::Settings::viewContinuous();
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
@@ -2895,13 +2889,7 @@ void PageView::slotRelayoutPages()
             pageCount += nCols - 1;
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
-	int nRows;
-
-// 	if ( Okular::Settings::viewMode() < 2 )
-        	nRows = (int)ceil( (float)pageCount / (float)nCols );
-// 		nRows=(int)ceil( (float)pageCount / (float) Okular::Settings::viewRows() );
-// 	else
-// 		nRows = Okular::Settings::viewRows();
+	int nRows = (int)ceil( (float)pageCount / (float)nCols );
 
         int * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],

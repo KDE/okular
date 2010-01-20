@@ -224,10 +224,10 @@ void TeXFontDefinition::mark_as_used()
 
   // For virtual fonts, also go through the list of referred fonts
   if (flags & TeXFontDefinition::FONT_VIRTUAL) {
-    Q3IntDictIterator<TeXFontDefinition> it(vf_table);
-    while( it.current() ) {
-      it.current()->flags |= TeXFontDefinition::FONT_IN_USE;
-      ++it;
+    QHashIterator<int,TeXFontDefinition*> it(vf_table);
+    while( it.hasNext() ) {
+      it.next();
+      it.value()->flags |= TeXFontDefinition::FONT_IN_USE;
     }
   }
 }

@@ -207,10 +207,10 @@ void dvifile::read_postamble()
 
       // Insert font in dictionary and make sure the dictionary is big
       // enough.
-      if (tn_table.size()-2 <= tn_table.count())
+      if (tn_table.capacity()-2 <= tn_table.count())
         // Not quite optimal. The size of the dictionary should be a
         // prime for optimal performance. I don't care.
-        tn_table.resize(tn_table.size()*2);
+        tn_table.reserve(tn_table.capacity()*2);
       tn_table.insert(TeXnumber, fontp);
     }
 

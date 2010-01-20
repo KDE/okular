@@ -118,10 +118,10 @@ void TeXFontDefinition::read_VF_index()
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
-    if (vf_table.size()-2 <= vf_table.count())
+    if (vf_table.capacity()-2 <= vf_table.count())
       // Not quite optimal. The size of the dictionary should be a
       // prime. I don't care.
-      vf_table.resize(vf_table.size()*2);
+      vf_table.reserve(vf_table.capacity()*2);
     vf_table.insert(TeXnumber, newfontp);
 
     if (first_font == NULL)

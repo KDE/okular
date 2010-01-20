@@ -13,7 +13,7 @@
 
 #include "bigEndianByteReader.h"
 
-#include <Q3IntDict>
+#include <QHash>
 #include <QIODevice>
 #include <QMap>
 #include <QVector>
@@ -69,7 +69,7 @@ class dvifile : public bigEndianByteReader
       KDVI ensures that the user is only informed once. */
   bool           sourceSpecialMarker;
 
-  Q3IntDict<TeXFontDefinition> tn_table;
+  QHash<int,TeXFontDefinition*> tn_table;
 
   /** Returns the number of centimeters per DVI unit in this DVI
       file. */

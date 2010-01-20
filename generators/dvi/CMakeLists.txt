@@ -3,7 +3,6 @@ include_directories(
    ${CMAKE_BINARY_DIR}/okular
 )
 
-add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 #add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN -DDEBUG_PSGS -DDEBUG_FONTPOOL)
 
 if (FREETYPE_FOUND)
@@ -50,7 +49,7 @@ set(okularGenerator_dvi_SRCS
 
 kde4_add_plugin(okularGenerator_dvi ${okularGenerator_dvi_SRCS})
 
-target_link_libraries(okularGenerator_dvi okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${QT_QT3SUPPORT_LIBRARY})
+target_link_libraries(okularGenerator_dvi okularcore ${KDE4_KIO_LIBS} ${MATH_LIB})
 if (FREETYPE_FOUND)
    target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
 endif (FREETYPE_FOUND)

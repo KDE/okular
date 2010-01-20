@@ -71,14 +71,14 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
 {
   errorMsg.clear();
   errorCounter = 0;
-  page_offset  = 0;
+  page_offset.clear();
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
   numberOfExternalNONPSFiles = 0;
   sourceSpecialMarker = old->sourceSpecialMarker;
   have_complainedAboutMissingPDF2PS = false;
 
-  dviData = old->dviData.copy();
+  dviData = old->dviData;
 
   filename = old->filename;
   size_of_file = old->size_of_file;
@@ -238,7 +238,8 @@ void dvifile::prepare_pages()
   if (total_pages == 0)
     return;
 
-  if (page_offset.resize(total_pages+1) == false) {
+  page_offset.resize(total_pages+1);
+  if (page_offset.size() < (total_pages+1)) {
     kError(kvs::dvi) << "No memory for page list!" << endl;
     return;
   }
@@ -273,7 +274,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
 
   errorMsg.clear();
   errorCounter = 0;
-  page_offset  = 0;
+  page_offset.clear();
   suggestedPageSize = 0;
   numberOfExternalPSFiles = 0;
   numberOfExternalNONPSFiles = 0;

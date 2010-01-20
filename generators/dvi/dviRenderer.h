@@ -23,7 +23,7 @@
 #include <ksharedptr.h>
 #include <kurl.h>
 #include <kprogressdialog.h>
-#include <Q3IntDict>
+#include <QHash>
 #include <QPolygon>
 #include <QStack>
 #include <QVector>
@@ -82,7 +82,7 @@ struct drawinf {
   TeXFontDefinition* fontp;
   set_char_proc set_char_p;
 
-  Q3IntDict<TeXFontDefinition>* fonttable;
+  QHash<int,TeXFontDefinition*>* fonttable;
   TeXFontDefinition* _virtual;
 };
 

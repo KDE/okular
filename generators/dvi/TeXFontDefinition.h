@@ -15,7 +15,7 @@
 #ifndef _FONT_H
 #define _FONT_H
 
-#include <Q3IntDict>
+#include <QHash>
 
 
 #include <cstdio>
@@ -110,7 +110,7 @@ class TeXFontDefinition {
   // used by (loaded) virtual fonts
   macro* macrotable;
   // used by (loaded) virtual fonts, list of fonts used by this vf,
-  Q3IntDict<TeXFontDefinition> vf_table;
+  QHash<int,TeXFontDefinition*> vf_table;
   // acessible by number
   // used by (loaded) virtual fonts, list of fonts used by this vf
   TeXFontDefinition* first_font;

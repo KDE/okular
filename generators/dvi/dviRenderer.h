@@ -24,7 +24,7 @@
 #include <kurl.h>
 #include <kprogressdialog.h>
 #include <Q3IntDict>
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QStack>
 #include <QVector>
 #include <QTimer>
@@ -307,7 +307,7 @@ private:
 
   /** Data required for handling TPIC specials */
   float       penWidth_in_mInch;
-  Q3PointArray TPIC_path;
+  QPolygon TPIC_path;
   quint16    number_of_elements_in_path;
 
   drawinf currinf;

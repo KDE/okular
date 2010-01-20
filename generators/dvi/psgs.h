@@ -10,10 +10,10 @@
 #ifndef _PSGS_H_
 #define _PSGS_H_
 
-#include <Q3IntDict>
 #include <QApplication>
 #include <QColor>
 #include <QCustomEvent>
+#include <QHash>
 #include <QObject>
 
 #include <QThread>
@@ -82,7 +82,7 @@ public:
 
 private:
   void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
-  Q3IntDict<pageInfo>   pageList;
+  QHash<quint16,pageInfo*>   pageList;
 
   double                resolution;   // in dots per inch
   int                   pixel_page_w; // in pixels

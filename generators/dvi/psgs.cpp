@@ -47,7 +47,6 @@ pageInfo::~pageInfo() {
 // ======================================================
 
 ghostscript_interface::ghostscript_interface() {
-  pageList.setAutoDelete(true);
 
   PostScriptHeaderString = new QString();
 
@@ -61,6 +60,7 @@ ghostscript_interface::ghostscript_interface() {
 ghostscript_interface::~ghostscript_interface() {
   if (PostScriptHeaderString != 0L)
     delete PostScriptHeaderString;
+  qDeleteAll(pageList);
 }
 
 
@@ -69,14 +69,14 @@ void ghostscript_interface::setPostScript(const PageNumber& page, const QString&
   kDebug(kvs::dvi) << "ghostscript_interface::setPostScript( " << page << ", ... )";
 #endif
 
-  if (pageList.find(page) == 0) {
+  if (pageList.value(page) == 0) {
     pageInfo *info = new pageInfo(PostScript);
     // Check if dict is big enough
-    if (pageList.count() > pageList.size() -2)
-      pageList.resize(pageList.size()*2);
+    if (pageList.count() > pageList.capacity() -2)
+      pageList.reserve(pageList.capacity()*2);
     pageList.insert(page, info);
   } else
-    *(pageList.find(page)->PostScriptString) = PostScript;
+    *(pageList.value(page)->PostScriptString) = PostScript;
 }
 
 
@@ -93,19 +93,19 @@ void ghostscript_interface::setBackgroundColor(const PageNumber& page, const QCo
   kDebug(kvs::dvi) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )";
 #endif
 
-  if (pageList.find(page) == 0) {
+  if (pageList.value(page) == 0) {
     pageInfo *info = new pageInfo(QString::null);	//krazy:exclude=nullstrassign for old broken gcc
     info->background = background_color;
     if (permanent)
       info->permanentBackground = background_color;
     // Check if dict is big enough
-    if (pageList.count() > pageList.size() -2)
-      pageList.resize(pageList.size()*2);
+    if (pageList.count() > pageList.capacity() -2)
+      pageList.reserve(pageList.capacity()*2);
     pageList.insert(page, info);
   } else {
-    pageList.find(page)->background = background_color;
+    pageList.value(page)->background = background_color;
     if (permanent)
-      pageList.find(page)->permanentBackground = background_color;
+      pageList.value(page)->permanentBackground = background_color;
   }
 }
 
@@ -114,10 +114,10 @@ void ghostscript_interface::restoreBackgroundColor(const PageNumber& page)
 #ifdef DEBUG_PSGS
   kDebug(kvs::dvi) << "ghostscript_interface::restoreBackgroundColor( " << page << " )";
 #endif
-  if (pageList.find(page) == 0)
+  if (pageList.value(page) == 0)
     return;
 
-  pageInfo *info = pageList.find(page);
+  pageInfo *info = pageList.value(page);
   info->background = info->permanentBackground;
 }
 
@@ -129,10 +129,10 @@ QColor ghostscript_interface::getBackgroundColor(const PageNumber& page) const {
   kDebug(kvs::dvi) << "ghostscript_interface::getBackgroundColor( " << page << " )";
 #endif
 
-  if (pageList.find(page) == 0)
+  if (pageList.value(page) == 0)
     return Qt::white;
   else
-    return pageList.find(page)->background;
+    return pageList.value(page)->background;
 }
 
 
@@ -140,6 +140,7 @@ void ghostscript_interface::clear() {
   PostScriptHeaderString->truncate(0);
 
   // Deletes all items, removes temporary files, etc.
+  qDeleteAll(pageList);
   pageList.clear();
 }
 
@@ -154,7 +155,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     return;
   }
 
-  pageInfo *info = pageList.find(page);
+  pageInfo *info = pageList.value(page);
 
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
@@ -310,7 +311,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
   pixel_page_w = paint->viewport().width();
   pixel_page_h = paint->viewport().height();
 
-  pageInfo *info = pageList.find(page);
+  pageInfo *info = pageList.value(page);
 
   // No PostScript? Then return immediately.
   if ((info == 0) || (info->PostScriptString->isEmpty())) {

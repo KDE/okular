@@ -14,9 +14,9 @@
 #include "bigEndianByteReader.h"
 
 #include <Q3IntDict>
-#include <Q3MemArray>
 #include <QIODevice>
 #include <QMap>
+#include <QVector>
 
 
 class fontPool;
@@ -37,7 +37,7 @@ class dvifile : public bigEndianByteReader
   QString        filename;
   QString        generatorString;
   quint16       total_pages;
-  Q3MemArray<quint32> page_offset;
+  QVector<quint32> page_offset;
 
   /** Saves the DVI file. Returns true on success. */
   bool           saveAs(const QString &filename);
@@ -90,7 +90,7 @@ class dvifile : public bigEndianByteReader
 
   /** Sets new DVI data; all old data is erased. EXPERIMENTAL, use
       with care. */
-  void           setNewData(const Q3MemArray<quint8>& newData) {dviData = newData;}
+  void           setNewData(const QVector<quint8>& newData) {dviData = newData;}
 
   /** Page numbers that appear in a DVI document need not be
       ordered. Worse, page numbers need not be unique. This method
@@ -135,7 +135,7 @@ class dvifile : public bigEndianByteReader
 
   double         cmPerDVIunit;
 
-  Q3MemArray<quint8>  dviData;
+  QVector<quint8>  dviData;
 
   /** Map of filenames for converted PDF files
 

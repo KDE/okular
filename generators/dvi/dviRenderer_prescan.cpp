@@ -21,7 +21,6 @@
 #include <kmimetype.h>
 #include <kprocess.h>
 
-#include <Q3MemArray>
 #include <QApplication>
 #include <QDir>
 #include <QFileInfo>
@@ -159,7 +158,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   quint32 lengthOfOldSpecial = command_pointer - beginningOfSpecialCommand;
   quint32 lengthOfNewSpecial = PS.length()+5;
 
-  Q3MemArray<quint8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
+  QVector<quint8> newDVI(dviFile->size_of_file + lengthOfNewSpecial-lengthOfOldSpecial);
 
   quint8 *commandPtrSav = command_pointer;
   quint8 *endPtrSav = end_pointer;

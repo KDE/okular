@@ -14,7 +14,6 @@
 #include "bigEndianByteReader.h"
 
 #include <QHash>
-#include <QIODevice>
 #include <QMap>
 #include <QVector>
 
@@ -46,7 +45,7 @@ class dvifile : public bigEndianByteReader
   // been allocated.
   quint8      * dvi_Data() {return dviData.data();}
 
-  QIODevice::Offset size_of_file;
+  qint64         size_of_file;
   QString        errorMsg;
 
   /** This field is set to zero when the DVI file is constructed, and

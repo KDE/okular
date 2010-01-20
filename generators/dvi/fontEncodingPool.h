@@ -11,7 +11,7 @@
 
 #include "fontEncoding.h"
 
-#include <Q3Dict>
+#include <QHash>
 
 class QString;
 
@@ -19,11 +19,12 @@ class QString;
 class fontEncodingPool {
  public:
   fontEncodingPool();
+  ~fontEncodingPool();
 
   fontEncoding *findByName(const QString &name);
 
  private:
-  Q3Dict<fontEncoding> dictionary;
+  QHash<QString,fontEncoding*> dictionary;
 };
 
 #endif

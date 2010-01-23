@@ -12,6 +12,17 @@
 #include "glyph.h"
 #include "kvs_debug.h"
 
+bitmap::bitmap()
+{
+  bits = 0; 
+}
+
+bitmap::~bitmap()
+{
+  if (bits != 0) {
+    delete bits;
+  } 
+}
 
 glyph::glyph()
 {

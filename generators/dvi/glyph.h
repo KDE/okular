@@ -8,6 +8,9 @@
 
 
 struct bitmap {
+  bitmap();
+  ~bitmap();
+  
   // width and height in pixels
   quint16 w, h;
   // scan-line width in bytes

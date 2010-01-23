@@ -104,11 +104,10 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
 TeXFont_PK::~TeXFont_PK()
 {
   //@@@ Release bitmaps
-  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
-    if (characterBitmaps[i] != 0) {
-       delete characterBitmaps[i];
-       characterBitmaps[i] = 0;
-    }
+  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++) {
+    delete characterBitmaps[i];
+    characterBitmaps[i] = 0;
+  }
 
   if (file != 0) {
     fclose(file);

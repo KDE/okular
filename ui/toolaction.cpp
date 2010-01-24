@@ -14,6 +14,7 @@
 #include <qtoolbutton.h>
 
 #include <klocale.h>
+#include <kdeversion.h>
 
 ToolAction::ToolAction( QObject *parent )
     : KAction( parent )

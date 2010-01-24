@@ -14,7 +14,6 @@
 #include <qtoolbutton.h>
 
 #include <klocale.h>
-#include <kdeversion.h>
 
 ToolAction::ToolAction( QObject *parent )
     : KAction( parent )
@@ -72,11 +71,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
         button->setToolTip( i18n("Click to use the current selection tool\nClick and hold to choose another selection tool") );
     }
 
-#if KDE_IS_VERSION( 4, 4, 60 )
-    return proxyWidget(button);
-#else
     return button;
-#endif
 }
 
 void ToolAction::slotNewDefaultAction( QAction *action )

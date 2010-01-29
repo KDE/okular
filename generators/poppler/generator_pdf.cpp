@@ -290,7 +290,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    dpiX( Okular::Utils::dpiX() ), dpiY( Okular::Utils::dpiY() ),
+    dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ )
     synctex_scanner(0)
 {
     setFeature( TextExtraction );

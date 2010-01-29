@@ -36,7 +36,7 @@ static KAboutData createAboutData()
          "okular_chm",
          "okular_chm",
          ki18n( "CHM Backend" ),
-         "0.1.3",
+         "0.1.4",
          ki18n( "A Microsoft Windows help file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )

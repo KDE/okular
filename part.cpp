@@ -612,6 +612,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     if ( m_embedMode != PrintPreviewMode )
         unsetDummyMode();
 
+    if ( m_embedMode == NativeShellMode )
+        m_sidebar->setAutoFillBackground( false );
+
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper = new FileKeeper();
 #endif

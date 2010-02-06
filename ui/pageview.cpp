@@ -1529,7 +1529,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     d->aMouseSelect->trigger();
                     QPoint newPos = eventPos + QPoint( deltaX, deltaY );
                     selectionStart( newPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
-                    selectionEndPoint( e->pos() );
+                    selectionEndPoint( eventPos );
                     break;
                 }
             }

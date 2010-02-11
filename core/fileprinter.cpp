@@ -216,8 +216,18 @@ bool FilePrinter::pdf2psAvailable()
 
 bool FilePrinter::cupsAvailable()
 {
-    FilePrinter fp;
-    return ( fp.detectCupsConfig() && fp.detectCupsService() );
+#ifdef Q_WS_X11
+    // Ideally we would have access to the private Qt method
+    // QCUPSSupport::cupsAvailable() to do this as it is very complex routine.
+    // However, if CUPS is available then QPrinter::numCopies() will always return 1
+    // whereas if CUPS is not available it will return the real number of copies.
+    // This behaviour is guaranteed never to change, so we can use it as a reliable substitute.
+    QPrinter testPrinter;
+    testPrinter.setNumCopies( 2 );
+    return ( testPrinter.numCopies() == 1 );
+#else
+    return false;
+#endif
 }
 
 bool FilePrinter::detectCupsService()

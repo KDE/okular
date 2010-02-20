@@ -823,6 +823,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
+    qDeleteAll( d->m_annowindows );
+    d->m_annowindows.clear();
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

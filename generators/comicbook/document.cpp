@@ -154,7 +154,9 @@ void Document::extractImageFiles( const QStringList &list )
         if ( lowerFile.endsWith( ".gif" ) ||
              lowerFile.endsWith( ".jpg" ) ||
              lowerFile.endsWith( ".jpeg" ) ||
-             lowerFile.endsWith( ".png" ) )
+             lowerFile.endsWith( ".png" ) ||
+             lowerFile.endsWith( ".tif" ) ||
+             lowerFile.endsWith( ".tiff" ) )
             mPageMap.append( files[ i ] );
     }
 }

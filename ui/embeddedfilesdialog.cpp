@@ -41,6 +41,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	setButtons(Close | User1);
 	setDefaultButton(Close);
 	setButtonGuiItem(User1, KStandardGuiItem::save());
+	enableButton(User1, false);
 
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);
@@ -81,6 +82,13 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 
 	connect(this, SIGNAL(user1Clicked()), this, SLOT(saveFile()));
 	connect(m_tw, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(attachViewContextMenu(QPoint)));
+	connect(m_tw, SIGNAL(itemSelectionChanged()), this, SLOT(updateSaveButton()));
+}
+
+void EmbeddedFilesDialog::updateSaveButton()
+{
+	bool enable = (m_tw->selectedItems().count() > 0);
+	enableButton(User1, enable);
 }
 
 void EmbeddedFilesDialog::saveFile()

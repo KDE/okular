@@ -24,11 +24,12 @@ class EmbeddedFilesDialog : public KDialog
 Q_OBJECT
 	public:
 		EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document);
-	
+
 	private slots:
 		void saveFile();
 		void attachViewContextMenu( const QPoint& pos );
-	
+		void updateSaveButton();
+
 	private:
 		void saveFile( Okular::EmbeddedFile* );
 

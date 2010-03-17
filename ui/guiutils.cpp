@@ -29,13 +29,12 @@
 struct GuiUtilsHelper
 {
     GuiUtilsHelper()
-        : il( 0 )
     {
     }
 
     QSvgRenderer* svgStamps();
 
-    KIconLoader * il;
+    QList<KIconLoader *> il;
     std::auto_ptr< QSvgRenderer > svgStampFile;
 };
 
@@ -187,14 +186,19 @@ QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
     return pixmap;
 }
 
-void setIconLoader( KIconLoader * loader )
+void addIconLoader( KIconLoader * loader )
 {
-    s_data->il = loader;
+    s_data->il.append( loader );
+}
+
+void removeIconLoader( KIconLoader * loader )
+{
+    s_data->il.removeAll( loader );
 }
 
 KIconLoader* iconLoader()
 {
-    return s_data->il ? s_data->il : KIconLoader::global();
+    return s_data->il.isEmpty() ? KIconLoader::global() : s_data->il.back();
 }
 
 void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )

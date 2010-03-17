@@ -256,7 +256,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     // we need an instance
     setComponentData(okularPartFactory::componentData());
 
-    GuiUtils::setIconLoader( iconLoader() );
+    GuiUtils::addIconLoader( iconLoader() );
 
     m_sidebar = new Sidebar( parentWidget );
     setWidget( m_sidebar );
@@ -623,6 +623,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
 Part::~Part()
 {
+    GuiUtils::removeIconLoader( iconLoader() );
     m_document->removeObserver( this );
 
     if ( m_document->isOpened() )

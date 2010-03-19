@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2007, 2009-2010 by Pino Toscano <pino@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -11,7 +11,6 @@
 #include "searchlineedit.h"
 
 // local includes
-#include "animatedwidget.h"
 #include "core/document.h"
 
 // qt/kde includes
@@ -19,6 +18,8 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <kcolorscheme.h>
+#include <kpixmapsequence.h>
+#include <kpixmapsequencewidget.h>
 
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
@@ -236,13 +237,14 @@ SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * documen
     m_edit = new SearchLineEdit( this, document );
     layout->addWidget( m_edit );
 
-    m_anim = new AnimatedWidget( "process-working", this );
+    m_anim = new KPixmapSequenceWidget( this );
     m_anim->setFixedSize( 22, 22 );
     layout->addWidget( m_anim );
+    m_anim->hide();
 
     m_timer = new QTimer( this );
     m_timer->setSingleShot( true );
-    connect( m_timer, SIGNAL( timeout() ), m_anim, SLOT( start() ) );
+    connect( m_timer, SIGNAL( timeout() ), this, SLOT( slotTimedout() ) );
 
     connect( m_edit, SIGNAL( searchStarted() ), this, SLOT( slotSearchStarted() ) );
     connect( m_edit, SIGNAL( searchStopped() ), this, SLOT( slotSearchStopped() ) );
@@ -261,7 +263,21 @@ void SearchLineWidget::slotSearchStarted()
 void SearchLineWidget::slotSearchStopped()
 {
     m_timer->stop();
-    m_anim->stop();
+    m_anim->hide();
+}
+
+void SearchLineWidget::slotTimedout()
+{
+    if ( m_anim->sequence().isEmpty() )
+    {
+        const KPixmapSequence seq( "process-working", 22 );
+        if ( seq.frameCount() > 0 )
+        {
+            m_anim->setInterval( 1000 / seq.frameCount() );
+            m_anim->setSequence( seq );
+        }
+    }
+    m_anim->show();
 }
 
 #include "searchlineedit.moc"

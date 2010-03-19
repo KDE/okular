@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2007, 2009-2010 by Pino Toscano <pino@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,7 +16,7 @@
 #include <klineedit.h>
 
 class QTimer;
-class AnimatedWidget;
+class KPixmapSequenceWidget;
 
 /**
  * @short A line edit for find-as-you-type search. Outputs to the Document.
@@ -82,10 +82,11 @@ class SearchLineWidget : public QWidget
     private slots:
         void slotSearchStarted();
         void slotSearchStopped();
+        void slotTimedout();
 
     private:
         SearchLineEdit *m_edit;
-        AnimatedWidget* m_anim;
+        KPixmapSequenceWidget* m_anim;
         QTimer *m_timer;
 };
 

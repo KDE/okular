@@ -263,7 +263,7 @@ qulonglong DocumentPrivate::getFreeMemory()
     static QTime lastUpdate = QTime::currentTime();
     static qulonglong cachedValue = 0;
 
-    if ( lastUpdate.secsTo( QTime::currentTime() ) <= 2 )
+    if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
         return cachedValue;
 
 #if defined(Q_OS_LINUX)

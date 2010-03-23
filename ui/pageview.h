@@ -141,6 +141,7 @@ Q_OBJECT
         void mouseMoveEvent( QMouseEvent *e );
         void mousePressEvent( QMouseEvent *e );
         void mouseReleaseEvent( QMouseEvent *e );
+        void mouseDoubleClickEvent( QMouseEvent *e );
 
         bool viewportEvent( QEvent *e );
 

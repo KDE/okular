@@ -2118,6 +2118,30 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     d->mousePressPos = QPoint();
 }
 
+void PageView::mouseDoubleClickEvent( QMouseEvent * e )
+{
+    if ( e->button() == Qt::LeftButton )
+    {
+        const QPoint eventPos = contentAreaPoint( e->pos() );
+        PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
+        if ( pageItem )
+        {
+            // find out normalized mouse coords inside current item
+            const QRect & itemRect = pageItem->uncroppedGeometry();
+            double nX = pageItem->absToPageX(eventPos.x());
+            double nY = pageItem->absToPageY(eventPos.y());
+            Okular::Annotation * ann = 0;
+            const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+            if ( orect )
+                ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
+            if ( ann )
+            {
+                setAnnotationWindow( ann );
+            }
+        }
+    }
+}
+
 void PageView::wheelEvent( QWheelEvent *e )
 {
     // don't perform any mouse action when viewport is autoscrolling

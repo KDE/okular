@@ -599,15 +599,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
                 // get pixmap and alpha blend it if needed
                 QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.size() );
-                QImage scaledImage;
-                scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
-                                    annotBoundary.height(), innerRect, QImage::Format_ARGB32 );
-                if ( opacity < 255 )
-                    changeImageAlpha( scaledImage, opacity );
-                pixmap = QPixmap::fromImage( scaledImage );
+                if ( !pixmap.isNull() ) // should never happen but can happen on huge sizes
+                {
+                    QImage scaledImage;
+                    scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
+                                        annotBoundary.height(), innerRect, QImage::Format_ARGB32 );
+                    if ( opacity < 255 )
+                        changeImageAlpha( scaledImage, opacity );
+                    pixmap = QPixmap::fromImage( scaledImage );
 
-                // draw the scaled and al
-                mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                    // draw the scaled and al
+                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                }
             }
             // draw GeomAnnotation
             else if ( type == Okular::Annotation::AGeom )
@@ -876,3 +879,6 @@ void PagePainter::drawShapeOnImage(
         painter.drawPath( path );
     }
 }
+
+/* kate: replace-tabs on; indent-width 4; */
+

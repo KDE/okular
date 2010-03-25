@@ -145,6 +145,9 @@ public:
     QPoint dragScrollVector;
     QTimer dragScrollTimer;
 
+    // left click depress
+    QTimer leftClickTimer;
+
     // actions
     KAction * aRotateClockwise;
     KAction * aRotateCounterClockwise;
@@ -302,6 +305,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
     connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
+
+    d->leftClickTimer.setSingleShot( true );
+    connect( &d->leftClickTimer, SIGNAL(timeout()), this, SLOT(slotShowSizeAllCursor()) );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -1466,6 +1472,8 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         case MouseNormal:
             if ( leftButton )
             {
+                d->leftClickTimer.stop();
+
                 if ( d->mouseAnn )
                 {
                     PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
@@ -1494,6 +1502,8 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                 // drag page
                 else if ( !d->mouseGrabPos.isNull() )
                 {
+                    setCursor( Qt::SizeAllCursor );
+
                     QPoint mousePos = e->globalPos();
                     QPoint delta = d->mouseGrabPos - mousePos;
 
@@ -1652,7 +1662,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                 {
                 d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
                 if ( !d->mouseOnRect )
-                    setCursor( Qt::SizeAllCursor );
+                    d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
             else if ( rightButton )
@@ -1712,6 +1722,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 {
     // stop the drag scrolling
     d->dragScrollTimer.stop();
+
+    d->leftClickTimer.stop();
 
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
@@ -3270,6 +3282,11 @@ void PageView::slotShowWelcome()
 {
     // show initial welcome text
     d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
+}
+
+void PageView::slotShowSizeAllCursor()
+{
+    setCursor( Qt::SizeAllCursor );
 }
 
 void PageView::slotZoom()

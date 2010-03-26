@@ -51,6 +51,8 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath )
     {
         if ( lines.first().startsWith( "UNRAR " ) )
             kind = new NonFreeUnrarFlavour();
+        else if ( lines.first().startsWith( "RAR " ) )
+            kind = new NonFreeUnrarFlavour();
         else if ( lines.first().startsWith( "unrar " ) )
             kind = new FreeUnrarFlavour();
     }
@@ -63,6 +65,8 @@ UnrarHelper::UnrarHelper()
     QString path = KStandardDirs::findExe( "unrar-nonfree" );
     if ( path.isEmpty() )
         path = KStandardDirs::findExe( "unrar" );
+    if ( path.isEmpty() )
+        path = KStandardDirs::findExe( "rar" );
 
     if ( !path.isEmpty() )
         kind = detectUnrar( path );

@@ -205,8 +205,8 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     os << colorCommand.toLatin1();
   }
 
-  if (!info->PostScriptString->toLatin1().isNull())
-    os << info->PostScriptString->toLatin1();
+  if (!info->PostScriptString->isNull())
+    os << *(info->PostScriptString);
 
   os << "end\n"
      << "showpage \n";

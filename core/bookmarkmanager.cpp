@@ -77,6 +77,12 @@ class BookmarkManager::Private : public KBookmarkOwner
         QHash<KUrl, QString> knownFiles;
 };
 
+static inline KUrl urlForGroup(const KBookmark &group)
+{
+    if ( group.url().isValid() ) return group.url();
+    else return KUrl( group.fullText() );
+}
+
 BookmarkManager::BookmarkManager( DocumentPrivate * document )
     : QObject( document->m_parent ), d( new Private( this ) )
 {
@@ -146,7 +152,7 @@ void BookmarkManager::Private::_o_changed( const QString & groupAddress, const Q
         if ( bm.isNull() )
             return;
         Q_ASSERT( bm.isGroup() );
-        referurl = KUrl( bm.fullText() );
+        referurl = urlForGroup( bm );
     }
     Q_ASSERT( referurl.isValid() );
     emit q->bookmarksChanged( referurl );
@@ -177,7 +183,7 @@ KUrl::List BookmarkManager::files() const
         if ( bm.isSeparator() || !bm.isGroup() )
             continue;
 
-        ret.append( KUrl( bm.fullText() ) );
+        ret.append( urlForGroup( bm ) );
     }
     return ret;
 }
@@ -188,7 +194,7 @@ KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
     KBookmarkGroup group = d->manager->root();
     for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
     {
-        if ( !bm.isGroup() || KUrl( bm.fullText() ) != url )
+        if ( !bm.isGroup() || urlForGroup( bm ) != url )
             continue;
 
         KBookmarkGroup group = bm.toGroup();
@@ -225,7 +231,7 @@ QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUr
             if ( bm.isSeparator() || !bm.isGroup() )
                 continue;
 
-            KUrl tmpurl( bm.fullText() );
+            KUrl tmpurl( urlForGroup( bm ) );
             if ( tmpurl == url )
             {
                 // got it! place it the hash of known files
@@ -243,6 +249,7 @@ QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUr
             // then, in a single step create a new folder and add it in our cache :)
             QString purl = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
             KBookmarkGroup newbg = root.createNewFolder( purl );
+            newbg.setUrl( url );
             it = knownFiles.insert( url, newbg.address() );
             if ( result )
                 *result = newbg;
@@ -379,7 +386,7 @@ QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
     KBookmarkGroup group = d->manager->root();
     for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
     {
-        if ( !bm.isGroup() || KUrl( bm.fullText() ) != url )
+        if ( !bm.isGroup() || urlForGroup( bm ) != url )
             continue;
 
         KBookmarkGroup group = bm.toGroup();
@@ -483,3 +490,5 @@ bool BookmarkManager::isBookmarked( int page ) const
 #undef foreachObserverD
 
 #include "bookmarkmanager.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

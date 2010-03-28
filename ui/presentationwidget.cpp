@@ -236,6 +236,9 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     show();
 
     QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
+
+    // setFocus() so KCursor::setAutoHideCursor() goes into effect if it's enabled
+    setFocus( Qt::OtherFocusReason );
 }
 
 PresentationWidget::~PresentationWidget()

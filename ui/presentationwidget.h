@@ -65,7 +65,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void mouseMoveEvent( QMouseEvent * e );
         void paintEvent( QPaintEvent * e );
         void resizeEvent( QResizeEvent * e );
-        void leaveEvent( QEvent * e );
 
     private:
         const Okular::Action * getLink( int x, int y, QRect * geometry = 0 ) const;
@@ -88,6 +87,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void applyNewScreenSize( const QSize & oldSize );
         void inhibitScreenSaver();
         void allowScreenSaver();
+        void showTopBar( bool );
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
 

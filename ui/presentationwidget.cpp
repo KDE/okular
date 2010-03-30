@@ -197,7 +197,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->addWidget( spacer );
     m_topBar->addAction( KIcon( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT( close() ) );
     m_topBar->setAutoFillBackground( true );
-    m_topBar->hide();
+    showTopBar( false );
     // change topbar background color
     QPalette p = m_topBar->palette();
     p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
@@ -431,7 +431,7 @@ void PresentationWidget::keyPressEvent( QKeyEvent * e )
             break;
         case Qt::Key_Escape:
             if ( !m_topBar->isHidden() )
-                m_topBar->hide();
+                showTopBar( false );
             else
                 close();
             break;
@@ -545,7 +545,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         // hide a shown bar when exiting the area
         if ( e->y() > ( m_topBar->height() + 1 ) )
         {
-            m_topBar->hide();
+            showTopBar( false );
             setFocus( Qt::OtherFocusReason );
         }
     }
@@ -563,7 +563,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         {
             // show the bar if reaching top 2 pixels
             if ( e->y() <= 1 )
-                m_topBar->show();
+                showTopBar( true );
             // handle "dragging the wheel" if clicking on its geometry
             else if ( ( QApplication::mouseButtons() & Qt::LeftButton ) && m_overlayGeometry.contains( e->pos() ) )
                 overlayClick( e->pos() );
@@ -662,15 +662,6 @@ void PresentationWidget::resizeEvent( QResizeEvent *re )
     applyNewScreenSize( re->oldSize() );
 }
 
-void PresentationWidget::leaveEvent( QEvent * e )
-{
-    Q_UNUSED( e )
-
-    if ( !m_topBar->isHidden() )
-    {
-        m_topBar->hide();
-    }
-}
 // </widget events>
 
 
@@ -850,7 +841,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     }
 
     // update cursor + tooltip
-    if ( Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
+    if ( !m_drawingEngine && Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
     {
         QPoint p = mapFromGlobal( QCursor::pos() );
         testCursorOnLink( p.x(), p.y() );
@@ -1416,6 +1407,50 @@ void PresentationWidget::allowScreenSaver()
         QDBusConnection::sessionBus().send( message );
     }
 }
+
+void PresentationWidget::showTopBar( bool show )
+{
+    if ( show )
+    {
+        m_topBar->show();
+
+        // Don't autohide the mouse cursor if it's over the toolbar
+        if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
+        {
+            KCursor::setAutoHideCursor( this, false );
+        }
+
+        // Always show a cursor when topBar is visible
+        if ( !m_drawingEngine )
+        {
+                setCursor( QCursor( Qt::ArrowCursor ) );
+        }
+    }
+    else
+    {
+        m_topBar->hide();
+
+        // Reenable autohide if need be when leaving the toolbar
+        if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
+        {
+            KCursor::setAutoHideCursor( this, true );
+        }
+
+        // Or hide the cursor again if hidden cursor is enabled
+        else if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden )
+        {
+            // Dont hide the cursor if drawing mode is on
+            if ( !m_drawingEngine )
+            {
+                setCursor( QCursor( Qt::BlankCursor ) );
+            }
+        }
+    }
+
+    // Make sure mouse tracking isn't off after the KCursor::setAutoHideCursor() calls
+    setMouseTracking( true );
+}
+
 
 void PresentationWidget::slotFind()
 {

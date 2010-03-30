@@ -850,7 +850,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     }
 
     // update cursor + tooltip
-    if ( Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
+    if ( !m_drawingEngine && Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden )
     {
         QPoint p = mapFromGlobal( QCursor::pos() );
         testCursorOnLink( p.x(), p.y() );

@@ -662,6 +662,15 @@ void PresentationWidget::resizeEvent( QResizeEvent *re )
     applyNewScreenSize( re->oldSize() );
 }
 
+void PresentationWidget::leaveEvent( QEvent * e )
+{
+    Q_UNUSED( e )
+
+    if ( !m_topBar->isHidden() )
+    {
+        showTopBar( false );
+    }
+}
 // </widget events>
 
 const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geometry ) const

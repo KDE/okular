@@ -1421,19 +1421,38 @@ void PresentationWidget::showTopBar( bool show )
 {
     if ( show )
     {
-        // Don't hide the mouse cursor if it's over the toolbar
+        m_topBar->show();
+
+        // Don't autohide the mouse cursor if it's over the toolbar
         if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
         {
             KCursor::setAutoHideCursor( this, false );
         }
-        m_topBar->show();
+
+        // Always show a cursor when topBar is visible
+        if ( !m_drawingEngine )
+        {
+                setCursor( QCursor( Qt::ArrowCursor ) );
+        }
     }
     else
     {
         m_topBar->hide();
+
+        // Reenable autohide if need be when leaving the toolbar
         if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
         {
             KCursor::setAutoHideCursor( this, true );
+        }
+
+        // Or hide the cursor again if hidden cursor is enabled
+        else if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden )
+        {
+            // Dont hide the cursor if drawing mode is on
+            if ( !m_drawingEngine )
+            {
+                setCursor( QCursor( Qt::BlankCursor ) );
+            }
         }
     }
 

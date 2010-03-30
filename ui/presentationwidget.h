@@ -88,6 +88,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void applyNewScreenSize( const QSize & oldSize );
         void inhibitScreenSaver();
         void allowScreenSaver();
+        void showTopBar( bool );
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
 

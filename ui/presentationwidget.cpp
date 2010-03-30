@@ -662,6 +662,7 @@ void PresentationWidget::resizeEvent( QResizeEvent *re )
     applyNewScreenSize( re->oldSize() );
 }
 
+// </widget events>
 
 const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
 {

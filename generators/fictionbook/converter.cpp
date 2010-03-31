@@ -197,6 +197,9 @@ QTextDocument* Converter::convert( const QString &fileName )
         it.next();
 
         const QTextBlock block = mSectionMap[ it.key() ];
+        if ( !block.isValid() ) // local link without existing target
+          continue;
+
         Okular::DocumentViewport viewport = calculateViewport( mTextDocument, block );
 
         Okular::GotoAction *action = new Okular::GotoAction( QString(), viewport );

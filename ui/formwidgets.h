@@ -109,7 +109,7 @@ class PushButtonEdit : public QPushButton, public FormWidgetIface
     Q_OBJECT
 
     public:
-        PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+        explicit PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
 
     private slots:
         void slotClicked();
@@ -123,7 +123,7 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
     Q_OBJECT
 
     public:
-        CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+        explicit CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller );
@@ -141,7 +141,7 @@ class RadioButtonEdit : public QRadioButton, public FormWidgetIface
     Q_OBJECT
 
     public:
-        RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
+        explicit RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent = 0 );
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller );

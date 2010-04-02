@@ -25,8 +25,8 @@ class AnnotationPopup : public QObject
     Q_OBJECT
 
     public:
-        AnnotationPopup( Okular::Document *document,
-                         QWidget *parent = 0 );
+        explicit AnnotationPopup( Okular::Document *document,
+                                  QWidget *parent = 0 );
 
         void addAnnotation( Okular::Annotation* annotation, int pageNumber );
 

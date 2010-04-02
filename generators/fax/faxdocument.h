@@ -33,7 +33,7 @@ class FaxDocument
      *
      * @param type The type of the fax document.
      */
-    FaxDocument( const QString &fileName, DocumentType type = G3 );
+    explicit FaxDocument( const QString &fileName, DocumentType type = G3 );
 
     /**
      * Destroys the fax document.

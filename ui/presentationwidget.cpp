@@ -485,7 +485,8 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             return;
 
         // handle clicking on top-right overlay
-        if ( m_overlayGeometry.contains( e->pos() ) )
+        if ( !( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden ) &&
+             m_overlayGeometry.contains( e->pos() ) )
         {
             overlayClick( e->pos() );
             return;

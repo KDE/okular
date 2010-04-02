@@ -24,7 +24,7 @@ char* toString( const KUrl& url )
 
 static const KUrl makeUrlFromCwd( const QString& u, const QString& ref = QString() )
 {
-    KUrl url( KUrl( QDir::currentPath() + "/" ), u );
+    KUrl url( KUrl( QDir::currentPath() + '/' ), u );
     if ( !ref.isEmpty() )
         url.setRef( ref );
     url.cleanPath();

@@ -46,7 +46,7 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath )
     proc.start( unrarPath, QStringList() << "--version" );
     bool ok = proc.waitForFinished( -1 );
     Q_UNUSED( ok )
-    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( "\n", QString::SkipEmptyParts );
+    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( '\n', QString::SkipEmptyParts );
     if ( !lines.isEmpty() )
     {
         if ( lines.first().startsWith( "UNRAR " ) )
@@ -131,7 +131,7 @@ QStringList Unrar::list()
 
     startSyncProcess( QStringList() << "lb" << mFileName );
 
-    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( "\n", QString::SkipEmptyParts ) );
+    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( '\n', QString::SkipEmptyParts ) );
     QStringList newList;
     Q_FOREACH ( const QString &f, listFiles ) {
         if ( QFile::exists( mTempDir->name() + f ) ) {

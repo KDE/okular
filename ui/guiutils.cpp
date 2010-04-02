@@ -141,7 +141,7 @@ QString contents( const Okular::Annotation * ann )
 QString contentsHtml( const Okular::Annotation * ann )
 {
     QString text = Qt::escape( contents( ann ) );
-    text.replace( "\n", "<br>" );
+    text.replace( '\n', "<br>" );
     return text;
 }
 

@@ -601,7 +601,7 @@ QStringList FilePrinter::optionCupsProperties( QPrinter &printer )
         if ( dialogOptions[i+1].isEmpty() ) {
             cupsOptions << "-o" << dialogOptions[i];
         } else {
-            cupsOptions << "-o" << dialogOptions[i] + "=" + dialogOptions[i+1];
+            cupsOptions << "-o" << dialogOptions[i] + '=' + dialogOptions[i+1];
         }
     }
 

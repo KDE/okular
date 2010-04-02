@@ -552,7 +552,7 @@ static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt
         path = fileName.left( index );
         entryName = fileName.mid( index + 1 );
     } else {
-        path = "/";
+        path = '/';
         entryName = fileName;
     }
     const KArchiveEntry * newEntry = archive->directory()->entry( path );
@@ -885,10 +885,10 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     att = node.attributes.value( "Indices" );
     QList<qreal> advanceWidths;
     if ( ! att.isEmpty() ) {
-        QStringList indicesElements = att.split( ";" );
+        QStringList indicesElements = att.split( ';' );
         for( int i = 0; i < indicesElements.size(); ++i ) {
             if ( indicesElements.at(i).contains( "," ) ) {
-                QStringList parts = indicesElements.at(i).split( "," );
+                QStringList parts = indicesElements.at(i).split( ',' );
                 if (parts.size() == 2 ) {
                     // regular advance case, no offsets
                     advanceWidths.append( parts.at(1).toDouble() * fontSize / 100.0 );

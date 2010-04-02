@@ -483,7 +483,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // substract the length of the current entity from 
+                    // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << "\tmatched";
@@ -609,7 +609,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // substract the length of the current entity from 
+                    // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
                     kDebug(OkularDebug) << "\tmatched";

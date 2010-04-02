@@ -2589,7 +2589,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     d->m_lastSearchID = searchID;
     RunningSearch * s = *searchIt;
 
-    // update search stucture
+    // update search structure
     bool newText = text != s->cachedString;
     s->cachedString = text;
     s->cachedType = type;

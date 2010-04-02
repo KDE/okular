@@ -173,7 +173,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     }
 
     /**
-     * Add document infos.
+     * Add document info.
      */
     if ( mTitleInfo ) {
         if ( !mTitleInfo->mTitle.isEmpty() )

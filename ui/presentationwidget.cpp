@@ -1447,7 +1447,7 @@ void PresentationWidget::showTopBar( bool show )
         // Or hide the cursor again if hidden cursor is enabled
         else if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden )
         {
-            // Dont hide the cursor if drawing mode is on
+            // Don't hide the cursor if drawing mode is on
             if ( !m_drawingEngine )
             {
                 setCursor( QCursor( Qt::BlankCursor ) );

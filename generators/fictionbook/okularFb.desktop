@@ -56,4 +56,4 @@ Name[zh_TW]=Okular
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
-MimeType=application/x-fictionbook;
+MimeType=application/x-fictionbook+xml;

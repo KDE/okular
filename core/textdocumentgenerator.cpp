@@ -284,6 +284,10 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     for ( int i = 0; i < d->mLinkInfos.count(); ++i ) {
         const TextDocumentGeneratorPrivate::LinkInfo &info = d->mLinkInfos.at( i );
 
+        // in case that the converter report bogus link info data, do not assert here
+        if ( info.page >= objects.count() )
+          continue;
+
         const QRectF rect = info.boundingRect;
         objects[ info.page ].append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
                                                              Okular::ObjectRect::Action, info.link ) );

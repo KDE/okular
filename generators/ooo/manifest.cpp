@@ -238,7 +238,7 @@ void Manifest::getPasswordFromUser()
   // TODO: This should have a proper parent
   KPasswordDialog dlg( 0, KPasswordDialog::KPasswordDialogFlags() );
   dlg.setCaption( i18n( "Document Password" ) );
-  dlg.setPrompt( i18n( "Please insert the password to read the document:" ) );
+  dlg.setPrompt( i18n( "Please enter the password to read the document:" ) );
   if( ! dlg.exec() ) {
     // user cancel
     m_userCancelled = true;

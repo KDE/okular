@@ -395,7 +395,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
         {
             QString prompt;
             if ( firstInput )
-                prompt = i18n( "Please insert the password to read the document:" );
+                prompt = i18n( "Please enter the password to read the document:" );
             else
                 prompt = i18n( "Incorrect password. Try again:" );
             firstInput = false;

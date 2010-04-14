@@ -940,7 +940,6 @@ bool PDFGenerator::print( QPrinter& printer )
     {
         delete psConverter;
         userMutex()->unlock();
-        return false;
     }
 
     tf.close();

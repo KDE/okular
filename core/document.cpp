@@ -3105,7 +3105,11 @@ bool Document::print( QPrinter &printer )
 
 QString Document::printError() const
 {
-    Generator::PrintError err = d->m_generator ? d->m_generator->printError() : Generator::UnknownPrintError;
+    Okular::Generator::PrintError err = Generator::UnknownPrintError;
+    if ( d->m_generator )
+    {
+        QMetaObject::invokeMethod( d->m_generator, "printError", Qt::DirectConnection, Q_RETURN_ARG(Okular::Generator::PrintError, err) );
+    }
     Q_ASSERT( err != Generator::NoPrintError );
     switch ( err )
     {

@@ -106,6 +106,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
     protected slots:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
         const Okular::SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
+        Okular::Generator::PrintError printError() const;
 
     private slots:
         // (async related) receive data from the generator thread

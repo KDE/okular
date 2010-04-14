@@ -360,12 +360,6 @@ class OKULAR_EXPORT Generator : public QObject
         };
         
         /**
-         * Returns the last print error in case print() failed
-         * @since 0.11 (KDE 4.5)
-         */
-        virtual PrintError printError() const;
-
-        /**
          * This method returns the meta data of the given @p key with the given @p option
          * of the document.
          */
@@ -495,6 +489,12 @@ class OKULAR_EXPORT Generator : public QObject
         * @since 0.10 (KDE 4.4)
         */
         const SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
+        
+        /**
+         * Returns the last print error in case print() failed
+         * @since 0.11 (KDE 4.5)
+         */
+        Okular::Generator::PrintError printError() const;
 
     protected:
         /// @cond PRIVATE
@@ -587,6 +587,8 @@ class OKULAR_EXPORT PixmapRequest
 };
 
 }
+
+Q_DECLARE_METATYPE(Okular::Generator::PrintError)
 
 #ifndef QT_NO_DEBUG_STREAM
 OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );

@@ -1513,6 +1513,11 @@ const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr
     return 0;
 }
 
+PDFGenerator::PrintError PDFGenerator::printError() const
+{
+    return lastPrintError;
+}
+
 void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const
 {
     if ( !synctex_scanner )

@@ -341,6 +341,31 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool print( QPrinter &printer );
 
         /**
+         * Possible print errors
+         * @since 0.11 (KDE 4.5)
+         */
+        enum PrintError
+        {
+            NoPrintError,                       ///< There was no print error
+            UnknownPrintError,
+            TemporaryFileOpenPrintError,
+            FileConversionPrintError,
+            PrintingProcessCrashPrintError,
+            PrintingProcessStartPrintError,
+            PrintToFilePrintError,
+            InvalidPrinterStatePrintError,
+            UnableToFindFilePrintError,
+            NoFileToPrintError,
+            NoBinaryToPrintError
+        };
+        
+        /**
+         * Returns the last print error in case print() failed
+         * @since 0.11 (KDE 4.5)
+         */
+        virtual PrintError printError() const;
+
+        /**
          * This method returns the meta data of the given @p key with the given @p option
          * of the document.
          */
@@ -568,3 +593,5 @@ OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
 #endif
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

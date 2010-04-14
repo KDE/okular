@@ -1999,7 +1999,15 @@ void Part::doPrint(QPrinter &printer)
 
     if (!m_document->print(printer))
     {
-        KMessageBox::error(widget(), i18n("Could not print the document. Please report to bugs.kde.org"));
+        const QString error = m_document->printError();
+        if (error.isEmpty())
+        {
+            KMessageBox::error(widget(), i18n("Could not print the document. Unknown error. Please report to bugs.kde.org"));
+        }
+        else
+        {
+            KMessageBox::error(widget(), i18n("Could not print the document. Detailed error is %1. Please report to bugs.kde.org"), error);
+        }
     }
 }
 

@@ -886,7 +886,10 @@ bool PDFGenerator::print( QPrinter& printer )
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
     if ( !tf.open() )
+    {
+        lastPrintError = TemporaryFileOpenPrintError;
         return false;
+    }
     QString tempfilename = tf.fileName();
 
     // Generate the list of pages to be printed as selected in the print dialog
@@ -934,10 +937,23 @@ bool PDFGenerator::print( QPrinter& printer )
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );
-        if ( ret >= 0 ) return true;
+        if ( ret >= 0 )
+        {
+            lastPrintError = NoPrintError;
+            return true;
+        }
+        else if (ret == -1) lastPrintError = PrintingProcessCrashPrintError;
+        else if (ret == -2) lastPrintError = PrintingProcessStartPrintError;
+        else if (ret == -5) lastPrintError = PrintToFilePrintError;
+        else if (ret == -6) lastPrintError = InvalidPrinterStatePrintError;
+        else if (ret == -7) lastPrintError = UnableToFindFilePrintError;
+        else if (ret == -8) lastPrintError = NoFileToPrintError;
+        else if (ret == -9) lastPrintError = NoBinaryToPrintError;
+        else lastPrintError = UnknownPrintError;
     }
     else
     {
+        lastPrintError = FileConversionPrintError;
         delete psConverter;
         userMutex()->unlock();
     }

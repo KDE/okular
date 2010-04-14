@@ -320,6 +320,11 @@ bool Generator::print( QPrinter& )
     return false;
 }
 
+Generator::PrintError Generator::printError() const
+{
+    return UnknownPrintError;
+}
+
 QVariant Generator::metaData( const QString &key, const QVariant &option ) const
 {
     Q_D( const Generator );
@@ -591,3 +596,5 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 }
 
 #include "generator.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

@@ -160,6 +160,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         QPointer<PDFOptionsPage> pdfOptionsPage;
         
         synctex_scanner_t synctex_scanner;
+        
+        PrintError lastPrintError;
 };
 
 

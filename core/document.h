@@ -498,6 +498,12 @@ class OKULAR_EXPORT Document : public QObject
          * Prints the document to the given @p printer.
          */
         bool print( QPrinter &printer );
+        
+        /**
+         * Returns the last print error in case print() failed
+         * @since 0.11 (KDE 4.5)
+         */
+        QString printError() const;
 
         /**
          * Returns a custom printer configuration page or 0 if no

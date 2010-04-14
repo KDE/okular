@@ -3103,6 +3103,39 @@ bool Document::print( QPrinter &printer )
     return d->m_generator ? d->m_generator->print( printer ) : false;
 }
 
+QString Document::printError() const
+{
+    Generator::PrintError err = d->m_generator ? d->m_generator->printError() : Generator::UnknownPrintError;
+    Q_ASSERT( err != Generator::NoPrintError );
+    switch ( err )
+    {
+        case Generator::TemporaryFileOpenPrintError:
+            return i18n( "Could not open a temporary file" );
+        case Generator::FileConversionPrintError:
+            return i18n( "Print conversion failed" );
+        case Generator::PrintingProcessCrashPrintError:
+            return i18n( "Printing process crashed" );
+        case Generator::PrintingProcessStartPrintError:
+            return i18n( "Printing process could not start" );
+        case Generator::PrintToFilePrintError:
+            return i18n( "Printing to file failed" );
+        case Generator::InvalidPrinterStatePrintError:
+            return i18n( "Printer was in invalid state" );
+        case Generator::UnableToFindFilePrintError:
+            return i18n( "Unable to find file to print" );
+        case Generator::NoFileToPrintError:
+            return i18n( "There was no file to print" );
+        case Generator::NoBinaryToPrintError:
+            return i18n( "Could not find a suitable binary for printing" );
+        case Generator::NoPrintError:
+            return QString();
+        case Generator::UnknownPrintError:
+            return QString();
+    }
+    
+    return QString();
+}
+
 QWidget* Document::printConfigurationWidget() const
 {
     if ( d->m_generator )

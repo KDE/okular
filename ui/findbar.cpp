@@ -32,7 +32,6 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
 
     QToolButton * closeBtn = new QToolButton( this );
     closeBtn->setIcon( KIcon( "dialog-close" ) );
-    closeBtn->setIconSize( QSize( 24, 24 ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
     lay->addWidget( closeBtn );

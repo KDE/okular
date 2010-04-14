@@ -78,12 +78,23 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         QFileInfo inputFileInfo = QFileInfo( fileList[0] );
         QFileInfo outputFileInfo = QFileInfo( printer.outputFileName() );
 
+        bool doDeleteFile = (fileDeletePolicy == FilePrinter::SystemDeletesFiles);
         if ( inputFileInfo.suffix() == outputFileInfo.suffix() ) {
-            int res = QFile::copy( fileList[0], printer.outputFileName() );
-            if ( res ) {
-                ret = 0;
+            if ( doDeleteFile ) {
+                bool res = QFile::rename( fileList[0], printer.outputFileName() );
+                if ( res ) {
+                    doDeleteFile = false;
+                    ret = 0;
+                } else {
+                    ret = -5;
+                }
             } else {
-                ret = -5;
+                bool res = QFile::copy( fileList[0], printer.outputFileName() );
+                if ( res ) {
+                    ret = 0;
+                } else {
+                    ret = -5;
+                }
             }
         } else if ( inputFileInfo.suffix() == "ps" && outputFileInfo.suffix() == "pdf" && ps2pdfAvailable() ) {
             exe = "ps2pdf";
@@ -99,7 +110,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             ret = -5;
         }
 
-        if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles ) {
+        if ( doDeleteFile ) {
             QFile::remove( fileList[0] );
         }
 
@@ -608,3 +619,4 @@ QStringList FilePrinter::optionCupsProperties( QPrinter &printer )
     return cupsOptions;
 }
 
+/* kate: replace-tabs on; indent-width 4; */

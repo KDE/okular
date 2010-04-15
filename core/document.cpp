@@ -1058,6 +1058,11 @@ void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * t
         }
     }
 
+    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
+}
+
+void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color )
+{
     // reset cursor to previous shape
     QApplication::restoreOverrideCursor();
 
@@ -1166,52 +1171,7 @@ void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * t
         }
     }
 
-    // reset cursor to previous shape
-    QApplication::restoreOverrideCursor();
-
-    search->isCurrentlySearching = false;
-
-    bool foundAMatch = false;
-
-    // if a match has been found..
-    if ( match )
-    {
-        // update the RunningSearch structure adding this match..
-        foundAMatch = true;
-        search->continueOnPage = currentPage;
-        search->continueOnMatch = *match;
-        search->highlightedPages.insert( currentPage );
-        // ..add highlight to the page..
-        m_pagesVector[ currentPage ]->d->setHighlight( searchID, match, color );
-
-        // ..queue page for notifying changes..
-        pagesToNotify->insert( currentPage );
-
-        // ..move the viewport to show the first of the searched word sequence centered
-        if ( moveViewport )
-        {
-            DocumentViewport searchViewport( currentPage );
-            searchViewport.rePos.enabled = true;
-            searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
-            searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
-            m_parent->setViewport( searchViewport, -1, true );
-        }
-        delete match;
-    }
-#if 0
-    else if ( !noDialogs )
-        KMessageBox::information( m_parent->widget(), i18n( "No matches found for '%1'.", text ) );
-#endif
-
-    // notify observers about highlights changes
-    foreach(int pageNumber, *pagesToNotify)
-        foreach(DocumentObserver *observer, m_observers)
-            observer->notifyPageChanged( pageNumber, DocumentObserver::Highlights );
-
-    if (foundAMatch) emit m_parent->searchFinished( searchID, Document::MatchFound );
-    else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
-
-    delete pagesToNotify;
+    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
 }
 
 void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color)

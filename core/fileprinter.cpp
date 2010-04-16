@@ -307,6 +307,43 @@ QSize FilePrinter::psPaperSize( QPrinter &printer )
     return size;
 }
 
+Generator::PrintError FilePrinter::printError( int c )
+{
+    Generator::PrintError pe;
+    if ( c >= 0 )
+    {
+        pe = Generator::NoPrintError;
+    } 
+    else {
+        switch ( c )
+        {
+            case -1:
+                pe = Generator::PrintingProcessCrashPrintError;
+                break;
+            case -2:
+                pe = Generator::PrintingProcessStartPrintError;
+                break;
+            case -5:
+                pe = Generator::PrintToFilePrintError;
+                break;
+            case -6:
+                pe = Generator::InvalidPrinterStatePrintError;
+                break;
+            case -7:
+                pe = Generator::UnableToFindFilePrintError;
+                break;
+            case -8:
+                pe = Generator::NoFileToPrintError;
+                break;
+            case -9:
+                pe = Generator::NoBinaryToPrintError;
+                break;
+            default:
+                pe = Generator::UnknownPrintError;
+        }
+    }
+    return pe;
+}
 
 
 

@@ -937,19 +937,10 @@ bool PDFGenerator::print( QPrinter& printer )
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );
-        if ( ret >= 0 )
-        {
-            lastPrintError = NoPrintError;
-            return true;
-        }
-        else if (ret == -1) lastPrintError = PrintingProcessCrashPrintError;
-        else if (ret == -2) lastPrintError = PrintingProcessStartPrintError;
-        else if (ret == -5) lastPrintError = PrintToFilePrintError;
-        else if (ret == -6) lastPrintError = InvalidPrinterStatePrintError;
-        else if (ret == -7) lastPrintError = UnableToFindFilePrintError;
-        else if (ret == -8) lastPrintError = NoFileToPrintError;
-        else if (ret == -9) lastPrintError = NoBinaryToPrintError;
-        else lastPrintError = UnknownPrintError;
+
+        lastPrintError = Okular::FilePrinter::printError( ret );
+
+        return (lastPrintError == NoPrintError);
     }
     else
     {

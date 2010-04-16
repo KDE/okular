@@ -18,6 +18,7 @@
 #include <QtCore/QString>
 
 #include <okular/core/okular_export.h>
+#include <okular/core/generator.h>
 
 class QPrinter;
 class QSize;
@@ -145,6 +146,12 @@ public:
      * @returns Returns paper size in ps points
      */
     static QSize psPaperSize( QPrinter &printer );
+
+    /**
+     * Convert the code returned by printFile* to PrintError
+     * @since 0.11 (KDE 4.5)
+     */
+    static Generator::PrintError printError( int c );
 
 protected:
 

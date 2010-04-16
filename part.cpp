@@ -2006,7 +2006,7 @@ void Part::doPrint(QPrinter &printer)
         }
         else
         {
-            KMessageBox::error(widget(), i18n("Could not print the document. Detailed error is %1. Please report to bugs.kde.org"), error);
+            KMessageBox::error(widget(), i18n("Could not print the document. Detailed error is \"%1\". Please report to bugs.kde.org", error));
         }
     }
 }

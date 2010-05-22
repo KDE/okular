@@ -415,6 +415,8 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
     }
     else
     {
+        bool fileitem_created = false;
+
         if ( item )
         {
             for ( int i = item->childCount() - 1; i >= 0; --i )
@@ -425,6 +427,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         else
         {
             item = new FileItem( url, m_tree );
+            fileitem_created = true;
         }
         if ( m_document->isOpened() && url == m_document->currentDocument() )
         {
@@ -432,6 +435,14 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
             item->setExpanded( true );
         }
         item->addChildren( createItems( url, urlbookmarks ) );
+
+        if ( fileitem_created )
+        {
+            // we need to sort also the parent of the new file item,
+            // so it can be properly shown in the correct place
+            m_tree->invisibleRootItem()->sortChildren( 0, Qt::AscendingOrder );
+        }
+        item->sortChildren( 0, Qt::AscendingOrder );
     }
 
     connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );

@@ -351,6 +351,8 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
     else
     {
         const QString fileString = url.isLocalFile() ? url.path() : url.prettyUrl();
+        bool fileitem_created = false;
+
         if ( item )
         {
             for ( int i = item->childCount() - 1; i >= 0; --i )
@@ -363,6 +365,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
             item = new QTreeWidgetItem( m_tree, FileItemType );
             item->setText( 0, fileString );
             item->setData( 0, UrlRole, qVariantFromValue( url ) );
+            fileitem_created = true;
         }
         if ( m_document->isOpened() && url == m_document->currentDocument() )
         {
@@ -374,6 +377,13 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         {
             item->setToolTip( 0, i18ncp( "%1 is the file name", "%1\n\nOne bookmark", "%1\n\n%2 bookmarks", fileString, item->childCount() ) );
         }
+        if ( fileitem_created )
+        {
+            // we need to sort also the parent of the new file item,
+            // so it can be properly shown in the correct place
+            m_tree->invisibleRootItem()->sortChildren( 0, Qt::AscendingOrder );
+        }
+        item->sortChildren( 0, Qt::AscendingOrder );
     }
 
     connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );

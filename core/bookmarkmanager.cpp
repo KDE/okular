@@ -37,11 +37,26 @@ class OkularBookmarkAction : public KBookmarkAction
     public:
         OkularBookmarkAction( const Okular::DocumentViewport& vp, const KBookmark& bk, KBookmarkOwner* owner, QObject *parent )
             : KBookmarkAction( bk, owner, parent )
+            , m_pageNumber( vp.pageNumber + 1 )
         {
             if ( vp.isValid() )
                 setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
         }
+
+        inline int pageNumber() const
+        {
+            return m_pageNumber;
+        }
+
+    private:
+        const int m_pageNumber;
 };
+
+inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
+{
+    return static_cast< OkularBookmarkAction * >( a1 )->pageNumber()
+           < static_cast< OkularBookmarkAction * >( a2 )->pageNumber();
+}
 
 class BookmarkManager::Private : public KBookmarkOwner
 {
@@ -399,6 +414,7 @@ QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
         }
         break;
     }
+    qSort( ret.begin(), ret.end(), okularBookmarkActionLessThan );
     return ret;
 }
 

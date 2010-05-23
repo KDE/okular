@@ -11,6 +11,7 @@
 #include "sourcereference_p.h"
 
 #include <QtCore/QString>
+#include <QtCore/QUrl>
 #include <klocale.h>
 
 using namespace Okular;
@@ -80,7 +81,7 @@ bool Okular::extractLilyPondSourceReference( const QString &url, QString *file, 
         --int_index;
     }
     // NOTE: 11 is the length of "textedit://"
-    *file = url.mid( 11, index_last != -1 ? index_last - 11 : -1 );
+    *file = QUrl::fromPercentEncoding( url.mid( 11, index_last != -1 ? index_last - 11 : -1 ).toUtf8() );
     return true;
 }
 

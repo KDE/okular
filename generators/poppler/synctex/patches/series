@@ -1,5 +1,6 @@
+00-fix-__synctex_open-declaration.diff
+00-disable-SYNCTEX_INLINE.diff
 01-fix-win32-define.diff
-02-fix-_synctex_error.diff
 03-fix-_synctex_scan_named.diff
 04-gcc-specify-printf-format.diff
 05-fix-error-formats.diff

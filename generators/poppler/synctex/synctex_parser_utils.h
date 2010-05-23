@@ -1,9 +1,10 @@
 /* 
-Copyright (c) 2008 jerome DOT laurens AT u-bourgogne DOT fr
+Copyright (c) 2008, 2009 jerome DOT laurens AT u-bourgogne DOT fr
 
 This file is part of the SyncTeX package.
 
-Version: 1.5
+Version: 1.8
+Latest Revision: Wed Jul  1 11:16:01 UTC 2009
 See synctex_parser_readme.txt for more details
 
 License:
@@ -37,11 +38,13 @@ authorization from the copyright holder.
 */
 
 /*  The utilities declared here are subject to conditional implementation.
- *  All the operating system special stuff goes here. */
+ *  All the operating system special stuff goes here.
+ *  The problem mainly comes from file name management: path separator, encoding...
+ */
 
-#   define synctex_bool_t int
-#   define synctex_YES -1
-#   define synctex_NO 0
+#	define synctex_bool_t int
+#	define synctex_YES -1
+#	define synctex_NO 0
 
 #ifndef __SYNCTEX_PARSER_UTILS__
 #   define __SYNCTEX_PARSER_UTILS__
@@ -101,6 +104,24 @@ char * _synctex_last_path_component(const char * name);
  *  is responsible of freeing the memory when done.
  *	The size argument is the size of the src buffer. On return the dest_ref points to a buffer sized size+2.*/
 int _synctex_copy_with_quoting_last_path_component(const char * src, char ** dest_ref, size_t size);
+
+/*  These are the possible extensions of the synctex file */
+static const char * synctex_suffix = ".synctex";
+static const char * synctex_suffix_gz = ".gz";
+
+typedef enum {
+	synctex_io_mode_read = 0,
+	synctex_io_mode_append = 2
+} synctex_io_mode_t;
+
+typedef enum {
+	synctex_compress_mode_none = 0,
+	synctex_compress_mode_gz = 1
+} synctex_compress_mode_t;
+
+static const char * synctex_io_modes[synctex_io_mode_append+2] = {"r","rb","a","ab"};
+
+int _synctex_get_name(const char * output, const char * build_directory, char ** synctex_name_ref, synctex_compress_mode_t * compress_mode_ref);
 
 
 #ifdef __cplusplus

@@ -1,30 +1,30 @@
 Index: synctex/synctex_parser_utils.c
 ===================================================================
---- synctex.orig/synctex_parser_utils.c	2009-07-27 17:37:03.000000000 +0200
-+++ synctex/synctex_parser_utils.c	2009-07-27 17:37:22.000000000 +0200
-@@ -124,7 +124,7 @@
+--- synctex.orig/synctex_parser_utils.c	2010-05-23 18:49:35.000000000 +0200
++++ synctex/synctex_parser_utils.c	2010-05-23 19:04:27.000000000 +0200
+@@ -142,7 +142,7 @@
  
  /*  Compare two file names, windows is sometimes case insensitive... */
  synctex_bool_t _synctex_is_equivalent_file_name(const char *lhs, const char *rhs) {
--#	if _WIN32
-+#	ifdef _WIN32
+-#	if SYNCTEX_WINDOWS
++#	ifdef SYNCTEX_WINDOWS
      /*  On Windows, filename should be compared case insensitive.
  	 *  The characters '/' and '\' are both valid path separators.
  	 *  There will be a very serious problem concerning UTF8 because
-@@ -156,7 +156,7 @@
+@@ -174,7 +174,7 @@
  	if(!strlen(name)) {
  		return synctex_NO;
  	}
--#	if _WIN32
-+#	ifdef _WIN32
+-#	if SYNCTEX_WINDOWS
++#	ifdef SYNCTEX_WINDOWS
  	if(strlen(name)>2) {
  		return (name[1]==':' && SYNCTEX_IS_PATH_SEPARATOR(name[2]))?synctex_YES:synctex_NO;
  	}
 Index: synctex/synctex_parser_utils.h
 ===================================================================
---- synctex.orig/synctex_parser_utils.h	2009-07-27 17:36:31.000000000 +0200
-+++ synctex/synctex_parser_utils.h	2009-07-27 17:36:46.000000000 +0200
-@@ -52,7 +52,7 @@
+--- synctex.orig/synctex_parser_utils.h	2010-05-23 18:49:35.000000000 +0200
++++ synctex/synctex_parser_utils.h	2010-05-23 19:03:30.000000000 +0200
+@@ -55,7 +55,7 @@
  extern "C" {
  #endif
  

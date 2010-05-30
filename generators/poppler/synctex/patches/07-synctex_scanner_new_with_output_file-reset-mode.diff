@@ -1,0 +1,21 @@
+Description: synctex_scanner_new_with_output_file: reset the io_mode to read before trying to read again
+ synctex_scanner_new_with_output_file() tries first to open the file in an
+ "unquoted mode"; if it fails, it tries again quoting the file name.
+ During the first attempt, the synctex_io_mode_t is passed as pointer and it
+ can be incremented, making the second attempt start from "rb" instead of "r".
+ The easiest solution is to reset the io_mode before doing the second open
+ attempt.
+Author: Albert Astals Cid <aacid@kde.org>
+Index: synctex/synctex_parser.c
+===================================================================
+--- synctex.orig/synctex_parser.c	2010-05-31 00:27:21.000000000 +0200
++++ synctex/synctex_parser.c	2010-05-31 00:27:56.000000000 +0200
+@@ -2506,6 +2506,8 @@
+ 	}
+ 	/*  now open the synctex file */
+ 	if(_synctex_open(output,build_directory,&synctex,&file,synctex_NO,&io_mode) || !file) {
++		/* reset the io_mode to the default, ie read */
++		io_mode = synctex_io_mode_read;
+ 		if(_synctex_open(output,build_directory,&synctex,&file,synctex_YES,&io_mode) || !file) {
+ 			return NULL;
+ 		}

@@ -5,3 +5,4 @@
 04-gcc-specify-printf-format.diff
 05-fix-error-formats.diff
 06-mingw-_synctex_error.diff
+07-synctex_scanner_new_with_output_file-reset-mode.diff

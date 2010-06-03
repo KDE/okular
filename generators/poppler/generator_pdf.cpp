@@ -952,6 +952,7 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
 {
     if ( key == "StartFullScreen" )
     {
+        QMutexLocker ml(userMutex());
         // asking for the 'start in fullscreen mode' (pdf property)
         if ( pdfdoc->pageMode() == Poppler::Document::FullScreen )
             return true;
@@ -992,12 +993,14 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     else if ( key == "OpenTOC" )
     {
+        QMutexLocker ml(userMutex());
         if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
             return true;
     }
 #ifdef HAVE_POPPLER_0_9
     else if ( key == "DocumentScripts" && option.toString() == "JavaScript" )
     {
+        QMutexLocker ml(userMutex());
         return pdfdoc->scripts();
     }
 #endif

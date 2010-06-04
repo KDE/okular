@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by John Layt <john@layt.net>                       *
+ *   Copyright (C) 2007, 2010 by John Layt <john@layt.net>                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -105,7 +105,8 @@ public:
      * @param selectedPageList list of pages to use if Selection option is selected
      * @returns Returns list of pages to print
      */
-    static QList<int> pageList( QPrinter &printer, int lastPage, const QList<int> &selectedPageList );
+    static QList<int> pageList( QPrinter &printer, int lastPage,
+                                int currentPage, const QList<int> &selectedPageList );
 
     /** Return the range of pages selected by the user in the Print Dialog
      *

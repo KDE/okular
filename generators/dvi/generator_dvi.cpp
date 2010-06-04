@@ -553,6 +553,7 @@ bool DviGenerator::print( QPrinter& printer )
 
     QList<int> pageList = Okular::FilePrinter::pageList( printer, 
                                  m_dviRenderer->totalPages(),
+                                 document()->currentPage() + 1,
                                  document()->bookmarkedPageList() );
     QString pages;
     QStringList printOptions;

@@ -95,6 +95,7 @@ bool ComicBookGenerator::print( QPrinter& printer )
     QPainter p( &printer );
 
     QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
     for ( int i = 0; i < pageList.count(); ++i ) {

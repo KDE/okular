@@ -2186,6 +2186,7 @@ bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
 bool XpsGenerator::print( QPrinter &printer )
 {
     QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
     QPainter painter( &printer );

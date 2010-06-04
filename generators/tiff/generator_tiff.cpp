@@ -386,6 +386,7 @@ bool TIFFGenerator::print( QPrinter& printer )
     QPainter p( &printer );
 
     QList<int> pageList = Okular::FilePrinter::pageList( printer, document()->pages(),
+                                                         document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
     for ( tdir_t i = 0; i < pageList.count(); ++i )

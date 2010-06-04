@@ -111,6 +111,7 @@ bool GSGenerator::print( QPrinter& printer )
     // Get list of pages to print
     QList<int> pageList = Okular::FilePrinter::pageList( printer,
                                                spectre_document_get_n_pages( m_internalDocument ),
+                                               document()->currentPage() + 1,
                                                document()->bookmarkedPageList() );
 
     // Default to Postscript export, but if printing to PDF use that instead

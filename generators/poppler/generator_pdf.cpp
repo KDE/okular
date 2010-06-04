@@ -894,6 +894,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     // Generate the list of pages to be printed as selected in the print dialog
     QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
+                                                         document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
     // TODO rotation

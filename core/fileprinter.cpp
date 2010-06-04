@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by John Layt <john@layt.net>                       *
+ *   Copyright (C) 2007,2010 by John Layt <john@layt.net>                  *
  *                                                                         *
  *   FilePrinterPreview based on KPrintPreview (originally LGPL)           *
  *   Copyright (c) 2007 Alex Merry <huntedhacker@tiscali.co.uk>            *
@@ -145,7 +145,8 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
     return ret;
 }
 
-QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage, const QList<int> &selectedPageList )
+QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage,
+                                  int currentPage, const QList<int> &selectedPageList )
 {
     if ( printer.printRange() == QPrinter::Selection) {
         return selectedPageList;
@@ -157,6 +158,11 @@ QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage, const QList<i
     if ( printer.printRange() == QPrinter::PageRange ) {
         startPage = printer.fromPage();
         endPage = printer.toPage();
+#if QT_VERSION >= KDE_MAKE_VERSION(4,7,0)
+    } else if ( printer.printRange() == QPrinter::CurrentPage) {
+        startPage = currentPage;
+        endPage = currentPage;
+#endif
     } else { //AllPages
         startPage = 1;
         endPage = lastPage;

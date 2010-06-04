@@ -209,6 +209,7 @@ bool DjVuGenerator::print( QPrinter& printer )
 
     QMutexLocker locker( userMutex() );
     QList<int> pageList = Okular::FilePrinter::pageList( printer, m_djvu->pages().count(),
+                                                         document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )

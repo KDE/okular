@@ -102,11 +102,21 @@ public:
      *
      * @param printer the print settings to use
      * @param lastPage the last page number, needed if AllPages option is selected
+     * @param currentPage the current page number, needed if CurrentPage option is selected
      * @param selectedPageList list of pages to use if Selection option is selected
      * @returns Returns list of pages to print
      */
     static QList<int> pageList( QPrinter &printer, int lastPage,
                                 int currentPage, const QList<int> &selectedPageList );
+
+    /** Return the list of pages selected by the user in the Print Dialog
+     *
+     * @param printer the print settings to use
+     * @param lastPage the last page number, needed if AllPages option is selected
+     * @param selectedPageList list of pages to use if Selection option is selected
+     * @returns Returns list of pages to print
+     */
+    static QList<int> pageList( QPrinter &printer, int lastPage, const QList<int> &selectedPageList );
 
     /** Return the range of pages selected by the user in the Print Dialog
      *

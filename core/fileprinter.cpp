@@ -145,6 +145,11 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
     return ret;
 }
 
+QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage, const QList<int> &selectedPageList )
+{
+    return pageList( printer, lastPage, 0, selectedPageList );
+}
+
 QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage,
                                   int currentPage, const QList<int> &selectedPageList )
 {

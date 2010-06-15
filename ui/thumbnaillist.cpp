@@ -129,7 +129,7 @@ class ThumbnailWidget
 
 ThumbnailListPrivate::ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document )
     : QWidget(), q( qq ), m_document( document ), m_selected( 0 ),
-    m_delayTimer( 0 ), m_bookmarkOverlay( 0 )
+    m_delayTimer( 0 ), m_bookmarkOverlay( 0 ), m_vectorIndex( 0 )
 {
     setMouseTracking( true );
     mouseGrabItem = 0;

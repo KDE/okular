@@ -594,7 +594,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     slotNewConfig();
 
     // [SPEECH] check for KTTSD presence and usability
-    KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'Jovie'");
+    KService::List offers = KServiceTypeTrader::self()->query("DBUS/Text-to-Speech", "Name == 'KTTSD'");
     Okular::Settings::setUseKTTSD( !offers.isEmpty() );
     Okular::Settings::self()->writeConfig();
 

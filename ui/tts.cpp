@@ -39,27 +39,27 @@ void OkularTTS::Private::setupIface()
     if ( kspeech )
         return;
 
-    // If KTTSD not running, start it.
-    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered( "org.kde.kttsd" );
-    bool kttsdactive = false;
+    // If Jovie not running, start it.
+    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered( "org.kde.KSpeech" );
+    bool jovieactive = false;
     if ( reply.isValid() )
-        kttsdactive = reply.value();
-    if ( !kttsdactive )
+        jovieactive = reply.value();
+    if ( !jovieactive )
     {
         QString error;
-        if ( KToolInvocation::startServiceByDesktopName( "kttsd", QStringList(), &error ) )
+        if ( KToolInvocation::startServiceByDesktopName( "jovie", QStringList(), &error ) )
         {
-            emit q->errorMessage( i18n( "Starting KTTSD Failed: %1", error ) );
+            emit q->errorMessage( i18n( "Starting Jovie Failed: %1", error ) );
         }
         else
         {
-            kttsdactive = true;
+            jovieactive = true;
         }
     }
-    if ( kttsdactive )
+    if ( jovieactive )
     {
         // creating the connection to the kspeech interface
-        kspeech = new org::kde::KSpeech( "org.kde.kttsd", "/KSpeech", QDBusConnection::sessionBus() );
+        kspeech = new org::kde::KSpeech( "org.kde.KSpeech", "/KSpeech", QDBusConnection::sessionBus() );
         kspeech->setParent( q );
         kspeech->setApplicationName( "Okular" );
         connect( kspeech, SIGNAL( jobStateChanged( const QString &, int, int ) ),
@@ -117,7 +117,7 @@ void OkularTTS::stopAllSpeechs()
 
 void OkularTTS::slotServiceUnregistered( const QString &service )
 {
-    if ( service == QLatin1String( "org.kde.kttsd" ) )
+    if ( service == QLatin1String( "org.kde.KSpeech" ) )
     {
         d->teardownIface();
     }
@@ -125,7 +125,7 @@ void OkularTTS::slotServiceUnregistered( const QString &service )
 
 void OkularTTS::slotServiceOwnerChanged( const QString &service, const QString &, const QString &newOwner )
 {
-    if ( service == QLatin1String( "org.kde.kttsd" ) && newOwner.isEmpty() )
+    if ( service == QLatin1String( "org.kde.KSpeech" ) && newOwner.isEmpty() )
     {
         d->teardownIface();
     }

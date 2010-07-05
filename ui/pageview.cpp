@@ -1295,7 +1295,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 {
                    // more optimized than document->setNextPage and then move view to top
                     Okular::DocumentViewport newViewport = d->document->viewport();
-                    newViewport.pageNumber += d->document->currentPage() ? viewColumns() : 1;
+                    newViewport.pageNumber += viewColumns();
                     if ( newViewport.pageNumber >= (int)d->items.count() )
                         newViewport.pageNumber = d->items.count() - 1;
                     newViewport.rePos.enabled = true;

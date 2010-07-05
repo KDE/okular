@@ -1154,7 +1154,11 @@ void Part::slotFileDirty( const QString& path )
     // written to the file.
     if ( path == localFilePath() )
     {
-        m_dirtyHandler->start( 750 );
+        // Only start watching the file in case if it wasn't removed, thus was modified
+        if (QFile::exists(localFilePath()))
+            m_dirtyHandler->start( 750 );
+	else
+            m_fileWasRemoved = true;
     }
     else
     {

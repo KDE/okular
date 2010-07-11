@@ -3090,7 +3090,7 @@ QString Document::printError() const
         case Generator::NoFileToPrintError:
             return i18n( "There was no file to print" );
         case Generator::NoBinaryToPrintError:
-            return i18n( "Could not find a suitable binary for printing" );
+            return i18n( "Could not find a suitable binary for printing. Make sure CUPS lpr binary is available" );
         case Generator::NoPrintError:
             return QString();
         case Generator::UnknownPrintError:

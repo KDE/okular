@@ -517,7 +517,7 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
 
 void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
 {
-  QString special_command(cp);
+  QString special_command = QString::fromUtf8(cp);
 
   // Now to those specials which are only interpreted during the
   // prescan phase, and NOT during rendering.

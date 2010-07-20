@@ -139,7 +139,7 @@ public:
     int refreshPage;
 
     // infinite resizing loop prevention
-    bool bothScrollbarsVisible;
+    bool verticalScrollBarVisible;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -1238,21 +1238,20 @@ void PageView::resizeEvent( QResizeEvent *e )
         return;
     }
 
-    if ( d->zoomMode == ZoomFitWidth && d->bothScrollbarsVisible && !horizontalScrollBar()->isVisible() && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < horizontalScrollBar()->height() * 1.25 )
+    if ( d->zoomMode == ZoomFitWidth && d->verticalScrollBarVisible && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // see bug 160628 for more info
         // TODO looks are still a bit ugly because things are left uncentered 
         // but better a bit ugly than unusable
-        d->bothScrollbarsVisible = false;
+        d->verticalScrollBarVisible = false;
         resizeContentArea( e->size() );
         return;
     }
 
     // start a timer that will refresh the pixmap after 0.2s
     d->delayRelayoutTimer->start( 200 );
-
-    d->bothScrollbarsVisible = horizontalScrollBar()->isVisible() && verticalScrollBar()->isVisible();
+    d->verticalScrollBarVisible = verticalScrollBar()->isVisible();
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )

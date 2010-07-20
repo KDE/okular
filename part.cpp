@@ -993,7 +993,9 @@ bool Part::openFile()
     // if the 'OpenTOC' flag is set, open the TOC
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) )
     {
+        const bool sidebarVisible = m_sidebar->isSidebarVisible();
         m_sidebar->setCurrentIndex( 0 );
+        m_sidebar->setSidebarVisibility( sidebarVisible );
     }
     // if the 'StartFullScreen' flag is set, or the command line flag was
     // specified, start presentation

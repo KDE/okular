@@ -607,7 +607,7 @@ void Sidebar::setSidebarVisibility( bool visible )
 
 bool Sidebar::isSidebarVisible() const
 {
-    return !d->sideContainer->isHidden();
+    return !d->list->isHidden();
 }
 
 void Sidebar::itemClicked( QListWidgetItem *item )
@@ -634,7 +634,10 @@ void Sidebar::itemClicked( QListWidgetItem *item )
     else
     {
         if ( d->sideContainer->isHidden() )
+        {
             d->sideContainer->show();
+            d->list->show();
+        }
         d->stack->setCurrentWidget( sbItem->widget() );
         d->sideTitle->setText( sbItem->toolTip() );
     }

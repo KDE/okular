@@ -36,25 +36,18 @@ class PropertiesDialog : public KPageDialog
 
     private slots:
         void pageChanged( KPageWidgetItem *, KPageWidgetItem * );
-        void filePathViewChanged();
         void slotFontReadingProgress( int page );
         void slotFontReadingEnded();
         void reallyStartFontReading();
         void showFontsMenu(const QPoint &pos);
 
     private:
-        void setToggleTitlePathText();
-
         Okular::Document * m_document;
         KPageWidgetItem * m_fontPage;
         FontsListModel * m_fontModel;
         QLabel * m_fontInfo;
         QProgressBar * m_fontProgressBar;
         bool m_fontScanStarted;
-        bool m_showingTitle;
-        QString m_filePathName;
-        KSqueezedTextLabel *m_filePathNameLabel;
-        QPushButton *m_toggleTitlePath;
 };
 
 class FontsListModel

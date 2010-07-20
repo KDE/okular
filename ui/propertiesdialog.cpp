@@ -59,8 +59,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     return;
   }
 
-  m_showingTitle = true;
-
   // mime name based on mimetype id
   QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
   setCaption( i18n( "%1 Properties", mimeName ) );
@@ -70,11 +68,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   int row = 0;
   int valMaxWidth = 100;
 
-  const QString filePathKey = Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath );
-
   /* obtains the properties list, conveniently ordered */
   QStringList orderedProperties;
-  orderedProperties << filePathKey
+  orderedProperties << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath )
                     << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::PagesSize )
                     << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::DocumentSize );
   for (Okular::DocumentInfo::Key ks = Okular::DocumentInfo::Title; 
@@ -108,23 +104,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 
         // create labels and layout them
         KSqueezedTextLabel *value = new KSqueezedTextLabel( valueString, page );
-        QWidget *key;
-        if ( element.tagName() == filePathKey ) {
-            m_toggleTitlePath = new QPushButton( page );
-            m_toggleTitlePath->setToolTip( i18n("Toggles between File Path and Title") );
-            setToggleTitlePathText();
-
-            m_toggleTitlePath->setFlat( true );
-            connect( m_toggleTitlePath, SIGNAL( clicked() ), this, SLOT( filePathViewChanged() ) );
-            key = m_toggleTitlePath;
-            m_filePathNameLabel = value;
-            m_filePathName = valueString;
-
-            KUrl vurl( valueString );
-            value->setText( vurl.fileName() );
-        } else {
-            key = new QLabel( i18n( "%1:", titleString ), page );
-        }
+        QWidget *key = new QLabel( i18n( "%1:", titleString ), page );
         value->setTextInteractionFlags( Qt::TextSelectableByMouse );
         layout->addWidget( key, row, 0, Qt::AlignRight );
         layout->addWidget( value, row, 1 );
@@ -203,29 +183,6 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 
         m_fontScanStarted = true;
     }
-}
-
-void PropertiesDialog::setToggleTitlePathText()
-{
-    QString text;
-    if (m_showingTitle)
-    {
-        text = i18nc( "%1 is \"Title\"", "%1:", Okular::DocumentInfo::getKeyTitle( Okular::DocumentInfo::Title ) );
-    }
-    else
-    {
-        text = i18nc( "%1 is \"File Path\"", "%1:", Okular::DocumentInfo::getKeyTitle( Okular::DocumentInfo::FilePath ) );
-    }
-    m_toggleTitlePath->setText( text );
-}
-
-void PropertiesDialog::filePathViewChanged()
-{
-   m_showingTitle = !m_showingTitle;
-   setToggleTitlePathText();
-   QString tmp(m_filePathName);
-   m_filePathName = m_filePathNameLabel->text();
-   m_filePathNameLabel->setText( tmp );
 }
 
 void PropertiesDialog::slotFontReadingProgress( int page )

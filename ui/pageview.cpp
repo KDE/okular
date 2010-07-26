@@ -2730,6 +2730,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
 //        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         }
     }
+    else if ( newZoomMode == ZoomFixed && newFactor == d->zoomFactor )
+        updateZoomText();
 
     d->aZoomIn->setEnabled( d->zoomFactor < 3.9 );
     d->aZoomOut->setEnabled( d->zoomFactor > 0.2 );

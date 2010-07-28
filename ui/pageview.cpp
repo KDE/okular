@@ -1507,7 +1507,17 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     QPoint delta = d->mouseGrabPos - mousePos;
 
                     // wrap mouse from top to bottom
-                    QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+                    const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+                    // If the delta is huge it probably means we just wrapped in that direction
+                    const QPoint absDelta(abs(delta.x()), abs(delta.y()));
+                    if ( absDelta.y() > mouseContainer.height() / 2 )
+                    {
+                        delta.setY(mouseContainer.height() - absDelta.y());
+                    }
+                    if ( absDelta.x() > mouseContainer.width() / 2 )
+                    {
+                        delta.setX(mouseContainer.width() - absDelta.x());
+                    }
                     if ( mousePos.y() <= mouseContainer.top() + 4 &&
                          verticalScrollBar()->value() < verticalScrollBar()->maximum() - 10 )
                     {

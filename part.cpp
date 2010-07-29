@@ -901,17 +901,21 @@ bool Part::slotImportPSFile()
 bool Part::openFile()
 {
     KMimeType::Ptr mime;
+    QString fileNameToOpen = localFilePath();
+    const bool isstdin = url().isLocalFile() && url().fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+    const QFileInfo fileInfo( fileNameToOpen );
+    if ( !isstdin && !fileInfo.exists() )
+        return false;
     if ( !arguments().mimeType().isEmpty() )
     {
         mime = KMimeType::mimeType( arguments().mimeType() );
     }
     if ( !mime )
     {
-        mime = KMimeType::findByPath( localFilePath() );
+        mime = KMimeType::findByPath( fileNameToOpen );
     }
     bool isCompressedFile = false;
     bool uncompressOk = true;
-    QString fileNameToOpen = localFilePath();
     QString compressedMime = compressedMimeFor( mime->name() );
     if ( compressedMime.isEmpty() )
         compressedMime = compressedMimeFor( mime->parentMimeType() );

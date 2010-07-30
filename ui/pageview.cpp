@@ -416,7 +416,7 @@ do { \
     QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
     ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
-    ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
+    ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing_center_first", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
     ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", (int)Okular::Settings::EnumViewMode::Summary );
     const QList<QAction *> viewModeActions = d->aViewMode->menu()->actions();
     foreach(QAction *viewModeAction, viewModeActions)

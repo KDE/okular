@@ -1295,7 +1295,7 @@ Add a 'Find Previous' entry
 					<listitem>
 						<para><action>Converts</action> the document to black and white. You can set the
 							threshold and the contrast. Setting the threshold to a higher value
-							will result in darker grays used.</para>
+							by moving it to the right will result in lighter grays used.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

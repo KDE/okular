@@ -232,7 +232,7 @@ int Unrar::startSyncProcess( const QStringList &args )
     mProcess->start();
     QEventLoop loop;
     mLoop = &loop;
-    ret = loop.exec( QEventLoop::WaitForMoreEvents );
+    ret = loop.exec( QEventLoop::WaitForMoreEvents | QEventLoop::ExcludeUserInputEvents );
     mLoop = 0;
 #endif
 

@@ -686,26 +686,6 @@ void PageViewAnnotator::setEnabled( bool on )
 
     // show the toolBar
     m_toolBar->showAndAnimate();
-
-    // ask for Author's name if not already set
-    if ( Okular::Settings::identityAuthor().isEmpty() )
-    {
-        // get default username from the kdelibs/kdecore/KUser
-        KUser currentUser;
-        QString userName = currentUser.property( KUser::FullName ).toString();
-        // ask the user for confirmation/change
-        bool firstTry = true;
-        while ( firstTry || userName.isEmpty()  )
-        {
-            QString prompt = firstTry ? i18n( "Please insert your name or initials:" ) :
-                i18n( "You must set this name:" );
-            userName = KInputDialog::getText( i18n("Annotations author"), prompt, userName );
-            firstTry = false;
-        }
-        // save the name
-        Okular::Settings::setIdentityAuthor( userName );
-        Okular::Settings::self()->writeConfig();
-    }
 }
 
 void PageViewAnnotator::setTextToolsEnabled( bool enabled )

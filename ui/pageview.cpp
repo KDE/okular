@@ -39,6 +39,7 @@
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
+#include <kinputdialog.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
 #include <kdebug.h>
@@ -3414,6 +3415,33 @@ void PageView::slotToggleAnnotator( bool on )
     // switch to normal mode
     if ( on && d->mouseMode != MouseNormal )
         d->aMouseNormal->trigger();
+
+    // ask for Author's name if not already set
+    if ( Okular::Settings::identityAuthor().isEmpty() )
+    {
+        // get default username from the kdelibs/kdecore/KUser
+        KUser currentUser;
+        QString userName = currentUser.property( KUser::FullName ).toString();
+        // ask the user for confirmation/change
+        if ( userName.isEmpty() )
+        {
+            bool ok = false;
+            userName = KInputDialog::getText(
+                           i18n( "Annotations author" ),
+                           i18n( "Please insert your name or initials:" ),
+                           QString(),
+                           &ok );
+            if ( !ok )
+            {
+                d->aToggleAnnotator->trigger();
+                inHere = false;
+                return;
+            }
+        }
+        // save the name
+        Okular::Settings::setIdentityAuthor( userName );
+        Okular::Settings::self()->writeConfig();
+    }
 
     // create the annotator object if not present
     if ( !d->annotator )

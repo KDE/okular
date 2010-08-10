@@ -136,6 +136,8 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     if ( pn->strips == 0 )
         pn->rowsperstrip = pn->size.height();
 
+    pn->dataOrig = (t16bits *)data;
+
     return data;
 }
 
@@ -241,6 +243,7 @@ FaxDocument::FaxDocument( const QString &fileName, DocumentType type )
     d->mPageNode.vres = 1;
     d->mPageNode.inverse = 0;
     d->mPageNode.data = 0;
+    d->mPageNode.dataOrig = 0;
     d->mPageNode.imageData = 0;
     d->mType = type;
 
@@ -252,7 +255,7 @@ FaxDocument::FaxDocument( const QString &fileName, DocumentType type )
 
 FaxDocument::~FaxDocument()
 {
-    delete [] d->mPageNode.data;
+    delete [] d->mPageNode.dataOrig;
     delete [] d->mPageNode.imageData;
     delete d;
 }

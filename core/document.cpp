@@ -3370,6 +3370,11 @@ bool Document::saveDocumentArchive( const QString &fileName )
     if ( docFileName == QLatin1String( "-" ) )
         return false;
 
+    QString docPath = d->m_docFileName;
+    const QFileInfo fi( docPath );
+    if ( fi.isSymLink() )
+        docPath = fi.symLinkTarget();
+
     KZip okularArchive( fileName );
     if ( !okularArchive.open( QIODevice::WriteOnly ) )
         return false;
@@ -3407,7 +3412,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
     okularArchive.writeFile( "content.xml", user.loginName(), userGroup.name(),
                              contentDocXml.constData(), contentDocXml.length() );
 
-    okularArchive.addLocalFile( d->m_docFileName, docFileName );
+    okularArchive.addLocalFile( docPath, docFileName );
     okularArchive.addLocalFile( metadataFile.fileName(), "metadata.xml" );
 
     if ( !okularArchive.close() )

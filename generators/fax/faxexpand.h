@@ -59,6 +59,7 @@ class pagenode {		/* compressed page descriptor */
     int stripnum;		/* current strip while expanding */
     struct strip *strips;	/* array of strips containing fax data in file */
     t16bits *data;		/* in-memory copy of strip */
+    t16bits *dataOrig;		/* copy of `data', in case we shift it */
     size_t length;		/* length of data */
     QSize size;			/* width & height of page in pixels */
     int inverse;		/* black <=> white */

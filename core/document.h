@@ -791,7 +791,7 @@ class OKULAR_EXPORT DocumentViewport
 
         /**
          * If 'rePos.enabled == true' then this structure contains the
-         * viewport center.
+         * viewport center or top left depending on the value of pos.
          */
         struct {
             bool enabled;

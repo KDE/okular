@@ -24,7 +24,7 @@ class Page;
 }
 
 /**
- * @short Engine: filter events to distill Annotation's.
+ * @short Engine: filter events to distill Annotations.
  */
 class AnnotatorEngine
 {

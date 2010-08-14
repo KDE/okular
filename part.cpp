@@ -55,6 +55,7 @@
 #include <kio/job.h>
 #include <kicon.h>
 #include <kfilterdev.h>
+#include <kfilterbase.h>
 #if 0
 #include <knewstuff2/engine.h>
 #endif
@@ -88,6 +89,7 @@
 #include "core/fileprinter.h"
 
 #include <cstdio>
+#include <memory>
 
 class FileKeeper
 {
@@ -163,6 +165,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
     static QHash< QString, QString > compressedMimeMap;
     if ( compressedMimeMap.isEmpty() )
     {
+        std::auto_ptr< KFilterBase > f;
         compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
             QString::fromLatin1( "application/x-gzip" );
         compressedMimeMap[ QString::fromLatin1( "application/x-bzip" ) ] =
@@ -177,6 +180,13 @@ static QString compressedMimeFor( const QString& mime_to_check )
             QString::fromLatin1( "application/x-gzip" );
         compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] =
             QString::fromLatin1( "application/x-bzip" );
+        // check we can read XZ-compressed files
+        f.reset( KFilterBase::findFilterByMimeType( QString::fromLatin1( "application/x-xz" ) ) );
+        if ( f.get() )
+        {
+            const QString app_xz( QString::fromLatin1( "application/x-xz" ) );
+            compressedMimeMap[ app_xz ] = app_xz;
+        }
     }
     QHash< QString, QString >::const_iterator it = compressedMimeMap.constFind( mime_to_check );
     if ( it != compressedMimeMap.constEnd() )

@@ -1428,7 +1428,13 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         int deltaY = d->mouseMidLastY - mouseY;
 
         // wrap mouse from top to bottom
-        QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        const int absDeltaY = abs(deltaY);
+        if ( absDeltaY > mouseContainer.height() / 2 )
+        {
+            deltaY = mouseContainer.height() - absDeltaY;
+        }
+        
         if ( mouseY <= mouseContainer.top() + 4 &&
              d->zoomFactor < 3.99 )
         {

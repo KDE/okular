@@ -9,6 +9,7 @@
 
 #include "tts.h"
 
+#include <qdbusservicewatcher.h>
 #include <qset.h>
 
 #include <klocale.h>
@@ -23,6 +24,7 @@ class OkularTTS::Private
 public:
     Private( OkularTTS *qq )
         : q( qq ), kspeech( 0 )
+        , watcher( "org.kde.kttsd", QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForUnregistration )
     {
     }
 
@@ -32,6 +34,7 @@ public:
     OkularTTS *q;
     org::kde::KSpeech* kspeech;
     QSet< int > jobs;
+    QDBusServiceWatcher watcher;
 };
 
 void OkularTTS::Private::setupIface()
@@ -64,17 +67,11 @@ void OkularTTS::Private::setupIface()
         kspeech->setApplicationName( "Okular" );
         connect( kspeech, SIGNAL( jobStateChanged( const QString &, int, int ) ),
                  q, SLOT( slotJobStateChanged( const QString &, int, int ) ) );
-        connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceUnregistered( const QString & ) ),
-                 q, SLOT( slotServiceUnregistered( const QString & ) ) );
-        connect( QDBusConnection::sessionBus().interface(), SIGNAL( serviceOwnerChanged( const QString &, const QString &, const QString & ) ),
-                 q, SLOT( slotServiceOwnerChanged( const QString &, const QString &, const QString & ) ) );
     }
 }
 
 void OkularTTS::Private::teardownIface()
 {
-    disconnect( QDBusConnection::sessionBus().interface(), 0, q, 0 );
-
     delete kspeech;
     kspeech = 0;
 }
@@ -83,10 +80,14 @@ void OkularTTS::Private::teardownIface()
 OkularTTS::OkularTTS( QObject *parent )
     : QObject( parent ), d( new Private( this ) )
 {
+    connect( &d->watcher, SIGNAL( serviceUnregistered( const QString & ) ),
+             this, SLOT( slotServiceUnregistered( const QString & ) ) );
 }
 
 OkularTTS::~OkularTTS()
 {
+    disconnect( &d->watcher, 0, this, 0 );
+
     delete d;
 }
 
@@ -118,14 +119,6 @@ void OkularTTS::stopAllSpeechs()
 void OkularTTS::slotServiceUnregistered( const QString &service )
 {
     if ( service == QLatin1String( "org.kde.kttsd" ) )
-    {
-        d->teardownIface();
-    }
-}
-
-void OkularTTS::slotServiceOwnerChanged( const QString &service, const QString &, const QString &newOwner )
-{
-    if ( service == QLatin1String( "org.kde.kttsd" ) && newOwner.isEmpty() )
     {
         d->teardownIface();
     }

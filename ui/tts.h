@@ -28,7 +28,6 @@ class OkularTTS : public QObject
 
     private slots:
         void slotServiceUnregistered( const QString& );
-        void slotServiceOwnerChanged( const QString&, const QString&, const QString& );
         void slotJobStateChanged( const QString &appId, int jobNum, int state );
 
     private:

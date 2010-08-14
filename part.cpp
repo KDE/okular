@@ -168,18 +168,19 @@ static QString compressedMimeFor( const QString& mime_to_check )
         std::auto_ptr< KFilterBase > f;
         compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
             QString::fromLatin1( "application/x-gzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzip" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
-        compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
         compressedMimeMap[ QString::fromLatin1( "image/x-gzeps" ) ] =
             QString::fromLatin1( "application/x-gzip" );
-        compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] =
-            QString::fromLatin1( "application/x-bzip" );
+        // check we can read bzip2-compressed files
+        f.reset( KFilterBase::findFilterByMimeType( QString::fromLatin1( "application/x-bzip" ) ) );
+        if ( f.get() )
+        {
+            const QString app_bzip( QString::fromLatin1( "application/x-bzip" ) );
+            compressedMimeMap[ app_bzip ] = app_bzip;
+            compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] = app_bzip;
+            compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] = app_bzip;
+            compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] = app_bzip;
+            compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] = app_bzip;
+        }
         // check we can read XZ-compressed files
         f.reset( KFilterBase::findFilterByMimeType( QString::fromLatin1( "application/x-xz" ) ) );
         if ( f.get() )

@@ -1057,19 +1057,12 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
     const QRect & geom = m_frames[ m_frameIndex ]->geometry;
     const Okular::Page * page = m_frames[ m_frameIndex ]->page;
 
-    AnnotatorEngine::EventType eventType = AnnotatorEngine::Press;
-    if ( e->type() == QEvent::MouseMove )
-        eventType = AnnotatorEngine::Move;
-    else if ( e->type() == QEvent::MouseButtonRelease )
-        eventType = AnnotatorEngine::Release;
+    AnnotatorEngine::EventType eventType;
+    AnnotatorEngine::Button button;
 
-    // find out the pressed button
-    AnnotatorEngine::Button button = AnnotatorEngine::None;
-    Qt::MouseButtons buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
-    if ( buttonState == Qt::LeftButton )
-        button = AnnotatorEngine::Left;
-    else if ( buttonState == Qt::RightButton )
-        button = AnnotatorEngine::Right;
+    // figure out the event type and button
+    AnnotatorEngine::decodeEvent( e, &eventType, &button );
+
     static bool hasclicked = false;
     if ( eventType == AnnotatorEngine::Press )
         hasclicked = true;

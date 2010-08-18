@@ -16,6 +16,7 @@
 
 #include "core/area.h"
 
+class QMouseEvent;
 class QPainter;
 class PageViewItem;
 namespace Okular {
@@ -46,6 +47,8 @@ class AnnotatorEngine
         bool creationCompleted() const { return m_creationCompleted; }
 
         void setItem( PageViewItem * item ) { m_item = item; }
+
+        static void decodeEvent( const QMouseEvent * mouseEvent, EventType * eventType, Button * button );
 
     protected:
         PageViewItem * item() { return m_item; }

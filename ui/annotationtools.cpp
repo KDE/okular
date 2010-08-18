@@ -11,6 +11,7 @@
 
 // qt / kde includes
 #include <qcolor.h>
+#include <qevent.h>
 #include <qpainter.h>
 
 // local includes
@@ -27,6 +28,22 @@ AnnotatorEngine::AnnotatorEngine( const QDomElement & engineElement )
     QDomElement annElement = m_engineElement.firstChild().toElement();
     if ( !annElement.isNull() && annElement.tagName() == "annotation" )
         m_annotElement = annElement;
+}
+
+void AnnotatorEngine::decodeEvent( const QMouseEvent * mouseEvent, EventType * eventType, Button * button )
+{
+    *eventType = AnnotatorEngine::Press;
+    if ( mouseEvent->type() == QEvent::MouseMove )
+        *eventType = AnnotatorEngine::Move;
+    else if ( mouseEvent->type() == QEvent::MouseButtonRelease )
+        *eventType = AnnotatorEngine::Release;
+
+    *button = AnnotatorEngine::None;
+    const Qt::MouseButtons buttonState = ( *eventType == AnnotatorEngine::Move ) ? mouseEvent->buttons() : mouseEvent->button();
+    if ( buttonState == Qt::LeftButton )
+        *button = AnnotatorEngine::Left;
+    else if ( buttonState == Qt::RightButton )
+        *button = AnnotatorEngine::Right;
 }
 
 AnnotatorEngine::~AnnotatorEngine()

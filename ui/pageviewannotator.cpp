@@ -711,20 +711,11 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
 {
     if ( !item ) return QRect();
 
-    // find out mouse event type
-    AnnotatorEngine::EventType eventType = AnnotatorEngine::Press;
-    if ( e->type() == QEvent::MouseMove )
-        eventType = AnnotatorEngine::Move;
-    else if ( e->type() == QEvent::MouseButtonRelease )
-        eventType = AnnotatorEngine::Release;
+    AnnotatorEngine::EventType eventType;
+    AnnotatorEngine::Button button;
 
-    // find out the pressed button
-    AnnotatorEngine::Button button = AnnotatorEngine::None;
-    Qt::MouseButtons buttonState = ( eventType == AnnotatorEngine::Move ) ? e->buttons() : e->button();
-    if ( buttonState == Qt::LeftButton )
-        button = AnnotatorEngine::Left;
-    else if ( buttonState == Qt::RightButton )
-        button = AnnotatorEngine::Right;
+    // figure out the event type and button
+    AnnotatorEngine::decodeEvent( e, &eventType, &button );
 
     // find out normalized mouse coords inside current item
     const QRect & itemRect = item->uncroppedGeometry();

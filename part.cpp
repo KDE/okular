@@ -732,6 +732,16 @@ void Part::slotJobStarted(KIO::Job *job)
     {
         QStringList supportedMimeTypes = m_document->supportedMimeTypes();
         job->addMetaData("accept", supportedMimeTypes.join(", ") + ", */*;q=0.5");
+
+        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotJobFinished(KJob*)));
+    }
+}
+
+void Part::slotJobFinished(KJob *job)
+{
+    if ( job->error() == KIO::ERR_USER_CANCELED )
+    {
+        m_pageView->noticeMessage( i18n( "The loading of %1 has been canceled.", realUrl().pathOrUrl() ) );
     }
 }
 
@@ -747,10 +757,6 @@ void Part::loadCancelled(const QString &reason)
         if (!reason.isEmpty())
         {
             KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().prettyUrl(), reason ) );
-        }
-        else
-        {
-            KMessageBox::error( widget(), i18n("Could not open %1", url().prettyUrl() ) );
         }
     }
 }
@@ -1071,6 +1077,10 @@ bool Part::openUrl(const KUrl &_url)
         m_viewportDirty.pageNumber = -1;
 
         setWindowTitleFromDocument();
+    }
+    else
+    {
+        KMessageBox::error( widget(), i18n("Could not open %1", url.pathOrUrl() ) );
     }
 
     return openOk;

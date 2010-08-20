@@ -162,6 +162,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotShowFindBar();
         void slotHideFindBar();
         void slotJobStarted(KIO::Job *job);
+        void slotJobFinished(KJob *job);
         void loadCancelled(const QString &reason);
         void setWindowTitleFromDocument();
         // can be connected to widget elements

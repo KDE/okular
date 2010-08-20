@@ -252,8 +252,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
-    // connect the started signal to tell the job the mimetypes we like
-    connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(setMimeTypes(KIO::Job *)));
+    // connect the started signal to tell the job the mimetypes we like,
+    // and get some more information from it
+    connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(slotJobStarted(KIO::Job *)));
 
     // connect the completed signal so we can put the window caption when loading remote files
     connect(this, SIGNAL(completed()), this, SLOT(setWindowTitleFromDocument()));
@@ -725,7 +726,7 @@ void Part::openUrlFromBookmarks(const KUrl &_url)
         openUrl( url );
 }
 
-void Part::setMimeTypes(KIO::Job *job)
+void Part::slotJobStarted(KIO::Job *job)
 {
     if (job)
     {

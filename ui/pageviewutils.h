@@ -104,7 +104,9 @@ class PageViewMessage : public QWidget
         PageViewMessage( QWidget * parent );
 
         enum Icon { None, Info, Warning, Error, Find, Annotation };
-        void display( const QString & message, Icon icon = Info, int durationMs = 4000 );
+        inline void display( const QString & message, Icon icon = Info, int durationMs = 4000 )
+        { display( message, QString(), icon, durationMs ); }
+        void display( const QString & message, const QString & details /*= QString()*/, Icon icon = Info, int durationMs = 4000 );
 
     protected:
         void paintEvent( QPaintEvent * e );
@@ -112,8 +114,10 @@ class PageViewMessage : public QWidget
 
     private:
         QString m_message;
+        QString m_details;
         QPixmap m_symbol;
         QTimer * m_timer;
+        int m_lineSpacing;
 };
 
 

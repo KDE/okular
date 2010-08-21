@@ -218,6 +218,7 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
 
 PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent ), m_timer( 0 )
+    , m_lineSpacing( 0 )
 {
     setObjectName( "pageViewMessage" );
     setFocusPolicy( Qt::NoFocus );
@@ -231,7 +232,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
     hide();
 }
 
-void PageViewMessage::display( const QString & message, Icon icon, int durationMs )
+void PageViewMessage::display( const QString & message, const QString & details, Icon icon, int durationMs )
 // give Caesar what belongs to Caesar: code taken from Amarok's osd.h/.cpp
 // "redde (reddite, pl.) cesari quae sunt cesaris", just btw.  :)
 {
@@ -243,6 +244,9 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
 
     // set text
     m_message = message;
+    m_details = details;
+    // reset vars
+    m_lineSpacing = 0;
 
     // determine text rectangle
     QRect textRect = fontMetrics().boundingRect( m_message );
@@ -250,6 +254,19 @@ void PageViewMessage::display( const QString & message, Icon icon, int durationM
     textRect.adjust( 0, 0, 2, 2 );
     int width = textRect.width(),
         height = textRect.height();
+
+    if ( !m_details.isEmpty() )
+    {
+        // determine details text rectangle
+        QRect detailsRect = fontMetrics().boundingRect( m_details );
+        detailsRect.translate( -detailsRect.left(), -detailsRect.top() );
+        detailsRect.adjust( 0, 0, 2, 2 );
+        height += detailsRect.height();
+
+        // plus add a ~60% line spacing
+        m_lineSpacing = static_cast< int >( fontMetrics().height() * 0.6 );
+        height += m_lineSpacing;
+    }
 
     // load icon (if set) and update geometry
     m_symbol = QPixmap();
@@ -310,8 +327,16 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     textRect.translate( -textRect.left(), -textRect.top() );
     textRect.adjust( 0, 0, 2, 2 );
 
+    QRect detailsRect;
+    if ( !m_details.isEmpty() )
+    {
+        detailsRect = fontMetrics().boundingRect( m_details );
+        detailsRect.translate( -detailsRect.left(), -detailsRect.top() );
+        detailsRect.adjust( 0, 0, 2, 2 );
+    }
+
     int textXOffset = 0,
-        textYOffset = geometry().height() - textRect.height() / 2,
+        textYOffset = geometry().height() - textRect.height() / 2 - detailsRect.height() - m_lineSpacing,
         iconXOffset = 0,
         iconYOffset = !m_symbol.isNull() ? ( geometry().height() - m_symbol.height() ) / 2 : 0,
         shadowOffset = 1;
@@ -336,8 +361,12 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     // draw shadow and text
     painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );
     painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + shadowOffset, m_message );
+    if ( !m_details.isEmpty() )
+        painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + textRect.height() + m_lineSpacing + shadowOffset, m_details );
     painter.setPen( palette().color( QPalette::WindowText ) );
     painter.drawText( 5 + textXOffset, textYOffset, m_message );
+    if ( !m_details.isEmpty() )
+        painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + textRect.height() + m_lineSpacing, m_details );
 }
 
 void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )

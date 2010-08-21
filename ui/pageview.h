@@ -66,7 +66,7 @@ Q_OBJECT
         bool canFitPageWidth() const;
         void fitPageWidth( int page );
         // keep in sync with pageviewutils
-        void displayMessage( const QString & message , PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
+        void displayMessage( const QString & message, const QString & details = QString(), PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
         uint observerId() const { return PAGEVIEW_ID; }
@@ -99,17 +99,17 @@ Q_OBJECT
     public slots:
         void errorMessage( const QString & message, int duration = -1 )
         {
-            displayMessage( message, PageViewMessage::Error, duration );
+            displayMessage( message, QString(), PageViewMessage::Error, duration );
         }
 
         void noticeMessage( const QString & message, int duration = -1 )
         {
-            displayMessage( message, PageViewMessage::Info, duration );
+            displayMessage( message, QString(), PageViewMessage::Info, duration );
         }
 
         void warningMessage( const QString & message, int duration = -1 )
         {
-            displayMessage( message, PageViewMessage::Warning, duration );
+            displayMessage( message, QString(), PageViewMessage::Warning, duration );
         }
 
         void copyTextSelection() const;

@@ -573,7 +573,7 @@ void PageView::removeAnnotationWindow( Okular::Annotation *annotation )
     }
 }
 
-void PageView::displayMessage( const QString & message,PageViewMessage::Icon icon,int duration )
+void PageView::displayMessage( const QString & message, const QString & details, PageViewMessage::Icon icon, int duration )
 {
     if ( !Okular::Settings::showOSD() )
     {
@@ -589,8 +589,12 @@ void PageView::displayMessage( const QString & message,PageViewMessage::Icon ico
 
     // display message (duration is length dependant)
     if (duration==-1)
+    {
         duration = 500 + 100 * message.length();
-    d->messageWindow->display( message, QString(), icon, duration );
+        if ( !details.isEmpty() )
+            duration += 500 + 100 * details.length();
+    }
+    d->messageWindow->display( message, details, icon, duration );
 }
 
 void PageView::reparseConfig()

@@ -882,7 +882,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             {
                 QString tip = toolSubElement.text();
                 if ( !tip.isEmpty() )
-                    m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), PageViewMessage::Annotation );
+                    m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), QString(), PageViewMessage::Annotation );
             }
         }
 

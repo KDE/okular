@@ -578,9 +578,13 @@ void PageView::displayMessage( const QString & message, const QString & details,
     if ( !Okular::Settings::showOSD() )
     {
         if (icon == PageViewMessage::Error)
-            KMessageBox::error( this, message );
-        else
-            return;
+        {
+            if ( !details.isEmpty() )
+                KMessageBox::detailedError( this, message, details );
+            else
+                KMessageBox::error( this, message );
+        }
+        return;
     }
 
     // hide messageWindow if string is empty

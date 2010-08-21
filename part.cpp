@@ -2160,12 +2160,12 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
         return false;
     }
 
-    QByteArray buf(1024, '\0');
+    char buf[65536];
     int read = 0, wrtn = 0;
 
-    while ((read = filterDev->read(buf.data(), buf.size())) > 0)
+    while ((read = filterDev->read(buf, sizeof(buf))) > 0)
     {
-        wrtn = newtempfile->write(buf.data(), read);
+        wrtn = newtempfile->write(buf, read);
         if ( read != wrtn )
             break;
     }

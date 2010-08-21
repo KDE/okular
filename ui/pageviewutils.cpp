@@ -261,6 +261,7 @@ void PageViewMessage::display( const QString & message, const QString & details,
         QRect detailsRect = fontMetrics().boundingRect( m_details );
         detailsRect.translate( -detailsRect.left(), -detailsRect.top() );
         detailsRect.adjust( 0, 0, 2, 2 );
+        width = qMax( width, detailsRect.width() );
         height += detailsRect.height();
 
         // plus add a ~60% line spacing

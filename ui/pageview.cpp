@@ -590,7 +590,7 @@ void PageView::displayMessage( const QString & message,PageViewMessage::Icon ico
     // display message (duration is length dependant)
     if (duration==-1)
         duration = 500 + 100 * message.length();
-    d->messageWindow->display( message, icon, duration );
+    d->messageWindow->display( message, QString(), icon, duration );
 }
 
 void PageView::reparseConfig()
@@ -782,6 +782,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             i18np(" Loaded a one-page document.",
                  " Loaded a %1-page document.",
                  pageSet.count() ),
+            QString(),
             PageViewMessage::Info, 4000 );
 
     if ( d->aPageSizes )
@@ -2055,7 +2056,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     QString fileName = KFileDialog::getSaveFileName( KUrl(), "image/png image/jpeg", this, QString(),
                                                                      KFileDialog::ConfirmOverwrite );
                     if ( fileName.isEmpty() )
-                        d->messageWindow->display( i18n( "File not saved." ), PageViewMessage::Warning );
+                        d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else
                     {
                         KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
@@ -3299,7 +3300,7 @@ void PageView::slotDragScroll()
 void PageView::slotShowWelcome()
 {
     // show initial welcome text
-    d->messageWindow->display( i18n( "Welcome" ), PageViewMessage::Info, 2000 );
+    d->messageWindow->display( i18n( "Welcome" ), QString(), PageViewMessage::Info, 2000 );
 }
 
 void PageView::slotShowSizeAllCursor()
@@ -3377,7 +3378,7 @@ void PageView::slotSetMouseZoom()
 {
     d->mouseMode = MouseZoom;
     // change the text in messageWindow (and show it if hidden)
-    d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );
@@ -3389,7 +3390,7 @@ void PageView::slotSetMouseSelect()
 {
     d->mouseMode = MouseSelect;
     // change the text in messageWindow (and show it if hidden)
-    d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );
@@ -3401,7 +3402,7 @@ void PageView::slotSetMouseTextSelect()
 {
     d->mouseMode = MouseTextSelect;
     // change the text in messageWindow (and show it if hidden)
-    d->messageWindow->display( i18n( "Select text" ), PageViewMessage::Info, -1 );
+    d->messageWindow->display( i18n( "Select text" ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
     if ( d->annotator )
         d->annotator->setEnabled( false );

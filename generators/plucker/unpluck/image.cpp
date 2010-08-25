@@ -289,8 +289,23 @@ bool TranscribePalmImageToJPEG
             for (j = 0; j < bytes_per_row;) {
                 incount = *palm_ptr++;
                 inval = *palm_ptr++;
-                memset (rowbuf + j, inval, incount);
-                j += incount;
+                if (incount + j <= bytes_per_row  * width)
+                {
+                    memset (rowbuf + j, inval, incount);
+                    j += incount;
+                }
+                else
+                {
+                    free (rowbuf);
+                    free (lastrow);
+                    free (jpeg_row);
+
+                    jpeg_destroy_compress (&cinfo);
+
+                    fclose( outfile );
+
+                    return false;
+                }
             }
         }
         else if ((flags & PALM_IS_COMPRESSED_FLAG)

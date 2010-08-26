@@ -26,7 +26,7 @@ static KAboutData createAboutData()
          "okular_plucker",
          "okular_plucker",
          ki18n( "Plucker Document Backend" ),
-         "0.1",
+         "0.1.1",
          ki18n( "A renderer for Plucker eBooks" ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Tobias Koenig" )

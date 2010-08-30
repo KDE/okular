@@ -1555,7 +1555,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     verticalScrollBar()->setValue(verticalScrollBar()->value() + delta.y());
                 }
             }
-            else if ( rightButton && !d->mousePressPos.isNull() )
+            else if ( rightButton && !d->mousePressPos.isNull() && d->aMouseSelect )
             {
                 // if mouse moves 5 px away from the press point, switch to 'selection'
                 int deltaX = d->mousePressPos.x() - e->globalPos().x(),

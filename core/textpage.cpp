@@ -226,7 +226,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
-    QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
+    const QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
 #if 0
     int it = -1;
     int itB = -1;
@@ -328,16 +328,16 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #else
     NormalizedRect tmp;
 
-    NormalizedPoint startC = sel->start();
-    double startCx = startC.x;
-    double startCy = startC.y;
+    const NormalizedPoint startC = sel->start();
+    const double startCx = startC.x;
+    const double startCy = startC.y;
 
-    NormalizedPoint endC = sel->end();
-    double endCx = endC.x;
-    double endCy = endC.y;
+    const NormalizedPoint endC = sel->end();
+    const double endCx = endC.x;
+    const double endCy = endC.y;
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
+    const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
     for ( ; it != itEnd; ++it )
     {
         tmp = (*it)->area;
@@ -362,7 +362,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
         return 0;
     TextList::ConstIterator start;
     TextList::ConstIterator end;
-    QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.constFind( searchID );
+    const QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.constFind( searchID );
     if ( sIt == d->m_searchPoints.constEnd() )
     {
         // if no previous run of this search is found, then set it to start
@@ -423,10 +423,10 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                                                              const TextList::ConstIterator &start,
                                                              const TextList::ConstIterator &end )
 {
-    QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
-    QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
+    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -442,6 +442,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         curEntity = *it;
         const QString &str = curEntity->text();
+	kDebug() << str;
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )
@@ -533,7 +534,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                                                             const TextList::ConstIterator &start,
                                                             const TextList::ConstIterator &end )
 {
-    QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
     const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
@@ -647,7 +648,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             --it;
     }
     // end of loop - it means that we've ended the textentities
-    QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+    const QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
     if ( sIt != m_searchPoints.end() )
     {
         SearchPoint* sp = *sIt;

@@ -503,12 +503,12 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         if (haveMatch && queryLeft==0 && j==query.length())
         {
             // save or update the search point for the current searchID
-            if ( !m_searchPoints.contains( searchID ) )
+            QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+            if ( sIt == m_searchPoints.end() )
             {
-                SearchPoint* newsp = new SearchPoint;
-                m_searchPoints.insert( searchID, newsp );
+                sIt = m_searchPoints.insert( searchID, new SearchPoint );
             }
-            SearchPoint* sp = m_searchPoints[ searchID ];
+            SearchPoint* sp = *sIt;
             sp->it_begin = it_begin;
             sp->it_end = it;
             sp->offset_begin = j;
@@ -518,10 +518,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         }
     }
     // end of loop - it means that we've ended the textentities
-    if ( m_searchPoints.contains( searchID ) )
+    const QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+    if ( sIt != m_searchPoints.end() )
     {
-        SearchPoint* sp = m_searchPoints[ searchID ];
-        m_searchPoints.remove( searchID );
+        SearchPoint* sp = *sIt;
+        m_searchPoints.erase( sIt );
         delete sp;
     }
     delete ret;

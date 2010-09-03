@@ -226,8 +226,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_gotoPage;
         KAction *m_prevPage;
         KAction *m_nextPage;
-        KAction *m_firstPage;
-        KAction *m_lastPage;
+        KAction *m_beginningOfDocument;
+        KAction *m_endOfDocument;
         KAction *m_historyBack;
         KAction *m_historyNext;
         KAction *m_addBookmark;

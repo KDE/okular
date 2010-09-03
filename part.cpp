@@ -31,6 +31,7 @@
 #include <qtimer.h>
 #include <QtGui/QPrinter>
 #include <QtGui/QPrintDialog>
+#include <QScrollBar>
 
 #include <kvbox.h>
 #include <kaboutapplicationdialog.h>
@@ -434,13 +435,15 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
 #endif
 
-    m_firstPage = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
-    ac->addAction("first_page", m_firstPage);
-    m_firstPage->setWhatsThis( i18n( "Moves to the first page of the document" ) );
+    m_beginningOfDocument = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
+    ac->addAction("first_page", m_beginningOfDocument);
+    m_beginningOfDocument->setText(i18n( "Beginning of the document"));
+    m_beginningOfDocument->setWhatsThis( i18n( "Moves to the beginning of the document" ) );
 
-    m_lastPage = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
-    ac->addAction("last_page",m_lastPage);
-    m_lastPage->setWhatsThis( i18n( "Moves to the last page of the document" ) );
+    m_endOfDocument = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
+    ac->addAction("last_page",m_endOfDocument);
+    m_endOfDocument->setText(i18n( "End of the document"));
+    m_endOfDocument->setWhatsThis( i18n( "Moves to the end of the document" ) );
 
     // we do not want back and next in history in the dummy mode
     m_historyBack = 0;
@@ -810,14 +813,7 @@ void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFl
 
 void Part::notifyViewportChanged( bool /*smoothMove*/ )
 {
-    // update actions if the page is changed
-    static int lastPage = -1;
-    int viewportPage = m_document->viewport().pageNumber;
-    if ( viewportPage != lastPage )
-    {
-        updateViewActions();
-        lastPage = viewportPage;
-    }
+    updateViewActions();
 }
 
 void Part::notifyPageChanged( int page, int flags )
@@ -1262,13 +1258,52 @@ void Part::updateViewActions()
     bool opened = m_document->pages() > 0;
     if ( opened )
     {
-        bool atBegin = m_document->currentPage() < 1;
-        bool atEnd = m_document->currentPage() >= (m_document->pages() - 1);
         m_gotoPage->setEnabled( m_document->pages() > 1 );
-        m_firstPage->setEnabled( !atBegin );
-        m_prevPage->setEnabled( !atBegin );
-        m_lastPage->setEnabled( !atEnd );
-        m_nextPage->setEnabled( !atEnd );
+        
+        // Check if you are at the beginning or not
+        if (m_document->currentPage() != 0)
+        {
+            m_beginningOfDocument->setEnabled( true );
+            m_prevPage->setEnabled( true );
+        }
+        else 
+        {
+            if (m_pageView->verticalScrollBar()->value() != 0)
+            {
+                // The page isn't at the very beginning
+                m_beginningOfDocument->setEnabled( true );
+            }
+            else
+            {
+                // The page is at the very beginning of the document
+                m_beginningOfDocument->setEnabled( false );
+            }
+            // The document is at the first page, you can go to a page before
+            m_prevPage->setEnabled( false );
+        }
+        
+        if (m_document->pages() == m_document->currentPage() + 1 )
+        {
+            // If you are at the end, disable go to next page
+            m_nextPage->setEnabled( false );
+            if (m_pageView->verticalScrollBar()->value() == m_pageView->verticalScrollBar()->maximum())
+            {
+                // If you are the end of the page of the last document, you can't go to the last page
+                m_endOfDocument->setEnabled( false );
+            }
+            else 
+            {
+                // Otherwise you can move to the endif
+                m_endOfDocument->setEnabled( true );
+            }
+        }
+        else 
+        {
+            // If you are not at the end, enable go to next page
+            m_nextPage->setEnabled( true );
+            m_endOfDocument->setEnabled( true );
+        }
+
         if (m_historyBack) m_historyBack->setEnabled( !m_document->historyAtBegin() );
         if (m_historyNext) m_historyNext->setEnabled( !m_document->historyAtEnd() );
         m_reload->setEnabled( true );
@@ -1278,8 +1313,8 @@ void Part::updateViewActions()
     else
     {
         m_gotoPage->setEnabled( false );
-        m_firstPage->setEnabled( false );
-        m_lastPage->setEnabled( false );
+        m_beginningOfDocument->setEnabled( false );
+        m_endOfDocument->setEnabled( false );
         m_prevPage->setEnabled( false );
         m_nextPage->setEnabled( false );
         if (m_historyBack) m_historyBack->setEnabled( false );
@@ -1407,15 +1442,25 @@ void Part::slotNextPage()
 
 void Part::slotGotoFirst()
 {
-    if ( m_document->isOpened() )
+    if ( m_document->isOpened() ) {
         m_document->setViewportPage( 0 );
+        m_beginningOfDocument->setEnabled( false );
+    }
 }
 
 
 void Part::slotGotoLast()
 {
     if ( m_document->isOpened() )
-        m_document->setViewportPage( m_document->pages() - 1 );
+    {
+        DocumentViewport endPage(m_document->pages() -1 );
+        endPage.rePos.enabled = true;
+        endPage.rePos.normalizedX = 0;
+        endPage.rePos.normalizedY = 1;
+        endPage.rePos.pos = Okular::DocumentViewport::TopLeft;
+        m_document->setViewport(endPage);
+        m_endOfDocument->setEnabled(false);
+    }
 }
 
 

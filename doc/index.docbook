@@ -142,23 +142,23 @@ Add a 'Find Previous' entry
 			<itemizedlist>
 				<listitem>
 					<para>
-						You can go to the first page of the document using 
+						You can go to the beginning of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
 						using 
 						<menuchoice>
 							<guimenu>Go</guimenu>
-							<guimenuitem>First Page</guimenuitem>
+							<guimenuitem>Beginning of the document</guimenuitem>
 						</menuchoice>.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You can go to the last page of the document using 
+						You can go to the end of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
 						using 
 						<menuchoice>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Last Page</guimenuitem>
+							<guimenuitem>End of the document</guimenuitem>
 						</menuchoice>.
 					</para>
 				</listitem>

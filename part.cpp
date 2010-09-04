@@ -1239,7 +1239,7 @@ void Part::slotDoFileDirty()
         }
         if ( m_sidebar->isSidebarVisible() != m_wasSidebarVisible )
         {
-            m_sidebar->setCurrentIndex( m_sidebar->currentIndex() );
+            m_sidebar->setSidebarVisibility( m_wasSidebarVisible );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);

@@ -45,7 +45,7 @@ DlgPresentation::DlgPresentation( QWidget * parent )
         Okular::Settings::setSlidesScreen( -2 );
     }
     
-    m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18np(" second", " seconds"));
+    m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
 
     connect( m_dlg->screenCombo, SIGNAL( activated( int ) ), this, SLOT( screenComboChanged( int ) ) );
 }

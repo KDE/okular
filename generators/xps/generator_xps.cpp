@@ -1476,11 +1476,19 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
         return QFont();
     }
 
-    QString fontFamily = m_fontDatabase.applicationFontFamilies( index ).at(0);
-    QString fontStyle =  m_fontDatabase.styles( fontFamily ).at(0);
-    QFont font = m_fontDatabase.font(fontFamily, fontStyle, qRound(size) );
-
-    return font;
+    const QStringList fontFamilies = m_fontDatabase.applicationFontFamilies( index );
+    if ( fontFamilies.isEmpty() ) {
+      kWarning(XpsDebug) << "The unexpected has happened. No font family for a known font:" << fileName << index;
+      return QFont();
+    }
+    const QString fontFamily = fontFamilies[0];
+    const QStringList fontStyles = m_fontDatabase.styles( fontFamily );
+    if ( fontStyles.isEmpty() ) {
+      kWarning(XpsDebug) << "The unexpected has happened. No font style for a known font family:" << fileName << index << fontFamily ;
+      return QFont();
+    }
+    const QString fontStyle =  fontStyles[0];
+    return m_fontDatabase.font(fontFamily, fontStyle, qRound(size));
 }
 
 int XpsFile::loadFontByName( const QString &fileName )

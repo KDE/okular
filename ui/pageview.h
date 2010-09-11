@@ -29,6 +29,7 @@
 
 class KAction;
 class KActionCollection;
+class KMenu;
 class KUrl;
 
 namespace Okular {
@@ -174,6 +175,8 @@ Q_OBJECT
 
         void resizeContentArea( const QSize & newSize );
 
+        void addWebShortcutsMenu( KMenu * menu, const QString & text );
+
         // don't want to expose classes in here
         class PageViewPrivate * d;
 
@@ -192,6 +195,9 @@ Q_OBJECT
         void slotShowWelcome();
         // activated by left click timer
         void slotShowSizeAllCursor();
+
+        void slotHandleWebShortcutAction();
+        void slotConfigureWebShortcuts();
 
         // connected to local actions (toolbar, menu, ..)
         void slotZoom();

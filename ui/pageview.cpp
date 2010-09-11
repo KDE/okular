@@ -45,6 +45,9 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kicon.h>
+#include <kurifilter.h>
+#include <kstringhandler.h>
+#include <ktoolinvocation.h>
 
 // system includes
 #include <math.h>
@@ -279,7 +282,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
-    
+
     d->delayRelayoutTimer = new QTimer( this );
     d->delayRelayoutTimer->setSingleShot( true );
     connect( d->delayRelayoutTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
@@ -1252,7 +1255,7 @@ void PageView::resizeEvent( QResizeEvent *e )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // see bug 160628 for more info
-        // TODO looks are still a bit ugly because things are left uncentered 
+        // TODO looks are still a bit ugly because things are left uncentered
         // but better a bit ugly than unusable
         d->verticalScrollBarVisible = false;
         resizeContentArea( e->size() );
@@ -1443,7 +1446,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         {
             deltaY = mouseContainer.height() - absDeltaY;
         }
-        
+
         if ( mouseY <= mouseContainer.top() + 4 &&
              d->zoomFactor < 3.99 )
         {
@@ -2032,6 +2035,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 if ( Okular::Settings::useKTTSD() )
                     speakText = menu.addAction( KIcon("text-speak"), i18n( "Speak Text" ) );
             }
+            addWebShortcutsMenu( &menu, selectedText );
             menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( KIcon("image-x-generic"), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( KIcon("document-save"), i18n( "Save to File..." ) );
@@ -2135,6 +2139,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         textToClipboard->setEnabled( false );
                         textToClipboard->setText( i18n("Copy forbidden by DRM") );
                     }
+                    addWebShortcutsMenu( &menu, d->selectedText() );
                     QAction *choice = menu.exec( e->globalPos() );
                     // check if the user really selected an action
                     if ( choice )
@@ -2908,13 +2913,67 @@ void PageView::resizeContentArea( const QSize & newSize )
     verticalScrollBar()->setPageStep( vs.height() );
 }
 
+void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
+{
+    if ( text.isEmpty() )
+    {
+        return;
+    }
+
+    QString searchText = text;
+    searchText = searchText.replace( '\n', ' ' ).replace( '\r', ' ' ).simplified();
+
+    if ( searchText.isEmpty() )
+    {
+        return;
+    }
+
+    KUriFilterData filterData( searchText );
+
+    filterData.setSearchFilteringOptions( KUriFilterData::RetrievePreferredSearchProvidersOnly );
+
+    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) )
+    {
+        const QStringList searchProviders = filterData.preferredSearchProviders();
+
+        if ( !searchProviders.isEmpty() )
+        {
+            KMenu *webShortcutsMenu = new KMenu( menu );
+            webShortcutsMenu->setIcon( KIcon( "preferences-web-browser-shortcuts" ) );
+
+            const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
+            webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
+
+            KAction *action = 0;
+
+            foreach( const QString &searchProvider, searchProviders )
+            {
+                action = new KAction( searchProvider, webShortcutsMenu );
+                action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
+                action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
+                connect( action, SIGNAL( triggered() ), this, SLOT( slotHandleWebShortcutAction() ) );
+                webShortcutsMenu->addAction( action );
+            }
+
+            webShortcutsMenu->addSeparator();
+
+            action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action->setIcon( KIcon( "configure" ) );
+            connect( action, SIGNAL( triggered() ), this, SLOT( slotConfigureWebShortcuts() ) );
+            webShortcutsMenu->addAction( action );
+
+            menu->addMenu(webShortcutsMenu);
+        }
+    }
+}
+
 //BEGIN private SLOTS
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
 {
     // If we already got here we don't need to execute the timer slot again
     d->delayRelayoutTimer->stop();
-    
+
     // set an empty container if we have no pages
     int pageCount = d->items.count();
     if ( pageCount < 1 )
@@ -3314,6 +3373,26 @@ void PageView::slotShowWelcome()
 void PageView::slotShowSizeAllCursor()
 {
     setCursor( Qt::SizeAllCursor );
+}
+
+void PageView::slotHandleWebShortcutAction()
+{
+    KAction *action = qobject_cast<KAction*>( sender() );
+
+    if (action)
+    {
+        KUriFilterData filterData( action->data().toString() );
+
+        if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) )
+        {
+            KToolInvocation::invokeBrowser( filterData.uri().url() );
+        }
+    }
+}
+
+void PageView::slotConfigureWebShortcuts()
+{
+    KToolInvocation::kdeinitExec( "kcmshell4", QStringList() << "ebrowsing" );
 }
 
 void PageView::slotZoom()

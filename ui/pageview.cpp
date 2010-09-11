@@ -2027,15 +2027,19 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             {
                 menu.addTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( KIcon("edit-copy"), i18n( "Copy to Clipboard" ) );
-                if ( !d->document->isAllowed( Okular::AllowCopy ) )
+                bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
+                if ( !copyAllowed )
                 {
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
                 if ( Okular::Settings::useKTTSD() )
                     speakText = menu.addAction( KIcon("text-speak"), i18n( "Speak Text" ) );
+                if ( copyAllowed )
+                {
+                    addWebShortcutsMenu( &menu, selectedText );
+                }
             }
-            addWebShortcutsMenu( &menu, selectedText );
             menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( KIcon("image-x-generic"), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( KIcon("document-save"), i18n( "Save to File..." ) );
@@ -2139,7 +2143,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         textToClipboard->setEnabled( false );
                         textToClipboard->setText( i18n("Copy forbidden by DRM") );
                     }
-                    addWebShortcutsMenu( &menu, d->selectedText() );
+                    else
+                    {
+                        addWebShortcutsMenu( &menu, d->selectedText() );
+                    }
                     QAction *choice = menu.exec( e->globalPos() );
                     // check if the user really selected an action
                     if ( choice )

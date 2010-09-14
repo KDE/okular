@@ -29,8 +29,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2009-05-22</date>
-		<releaseinfo>0.9</releaseinfo>
+		<date>2010-09-03</date>
+		<releaseinfo>0.11 (&kde; 4.5)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -59,6 +59,23 @@
 			Although being based on &kpdf; code, &okular; has some unique features such as overview mode,
 			improved presentation support and annotation support.
 		</para>
+		<para>
+			&okular; supports a lot of different formats like PDF, Postscript, Tiff, CHM, DjVU, Images (png, jpg, &etc;) 
+			XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub and Fax.
+			For all supported formats and their features see <ulink url="http://okular.kde.org/formats.php"> 
+			&okular; Document Format Handlers</ulink>.
+		</para>
+		<screenshot>
+		<screeninfo>&okular;s Main Window</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG" />
+		</imageobject>
+		<textobject>
+		<phrase>&okular;s Main Window</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
 <!--
 		<para>
 			The PDF format is widely used for publishing documents that are
@@ -81,6 +98,11 @@
 				If you have already opened files in &okular; before, you can quickly access them by selecting them in
 				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
 			</para>
+			<para>&okular; is the default &kde; application for PDF and Postscript files, launched when you click with the
+			 &LMB; on such a file type in the filemanager. If you want to open any file whose format is supported by &okular; 
+			 use <menuchoice><guimenu>Open with...</guimenu><guimenuitem>&okular;</guimenuitem> </menuchoice> from context 
+			 menu in the filemanager.
+			</para>
 			<para>
 				After having a file opened you probably want to read it and therefore navigate through it. Go to the
 				<link linkend="navigating">next section</link> to learn more about this.
@@ -89,13 +111,9 @@
 		<sect1 id="navigating">
 			<title>Navigating</title>
 			<para>This section describes how you can navigate through a document in &okular;.</para>
-<!-- auto scrolling SHIFT-Arrow down SHIFT[arrow] to increase and decrease the speed
-drag the page down, continue to drag even while reaching the bottom of the screen and lo and behold!
-Once you cross the bottom of the page, the mouse cursor appears on top of the screen and you can just continue to drag!
-
+<!--
 Presentation mode: add Up (previous page) and Down (next page) keys
 Add a 'Find Previous' entry
-
 -->
 			<para>
 				There are multiple ways of scrolling the viewing area. One is to use the 
@@ -108,6 +126,15 @@ Add a 'Find Previous' entry
 				opposite direction of where you want to move. This procedure only works if the Browse Tool is
 				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
 				</guimenuitem></menuchoice>.
+			</para>
+			<para>If you want to read a document with several pages use the automatic scrolling feature of &okular;.
+			Start automatic scrolling with <keycombo action="simul">&Shift;<keysym>Down Arrow</keysym></keycombo> or 
+			<keycombo action="simul">&Shift;<keysym>Up Arrow</keysym></keycombo>. Then use these keys to increase and 
+			decrease the scrolling speed. You can start or stop automatic scrolling temporarily by pressing the &Shift; key;
+			pressing any other key deactivates this feature.
+			</para>
+			<para>Another way to navigate through a several pages is to use the mouse pointer. Drag the page up or down, continue to drag even while reaching the bottom or top of the screen and behold.
+			Once you cross the border of a page, the mouse cursor appears on top or bottom of the screen again and you can just continue to drag.
 			</para>
 			<para>
 				The navigation panel on the left side of the screen enables two more ways of navigating
@@ -127,6 +154,14 @@ Add a 'Find Previous' entry
 						item.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						If the document has bookmarks, enable the <guilabel>Bookmarks</guilabel> view 
+						and click them to go to the associated page.
+						If bookmarks are not only shown for the current document, you can quickly 
+						switch to bookmarks in all recently opened files.
+					</para>
+				</listitem>
 			</itemizedlist>
 			<para>
 				Some documents have links. In this case you can click on them and the view will
@@ -141,6 +176,17 @@ Add a 'Find Previous' entry
 			</para>
 			<itemizedlist>
 				<listitem>
+				  <!-- 4.5-->
+					<para>
+						You can go to the first page of of the document using 
+						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
+						using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>First Page</guimenuitem>
+						</menuchoice>.
+					</para>
+					<!-- 4.6
 					<para>
 						You can go to the beginning of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
@@ -150,8 +196,20 @@ Add a 'Find Previous' entry
 							<guimenuitem>Beginning of the document</guimenuitem>
 						</menuchoice>.
 					</para>
+					-->
 				</listitem>
 				<listitem>
+				  <!-- 4.5-->
+					<para>
+						You can go to the last page of the document using 
+						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
+						using 
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Last Page</guimenuitem>
+						</menuchoice>.
+					</para>
+					<!-- 4.6
 					<para>
 						You can go to the end of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
@@ -161,6 +219,7 @@ Add a 'Find Previous' entry
 							<guimenuitem>End of the document</guimenuitem>
 						</menuchoice>.
 					</para>
+					-->
 				</listitem>
 				<listitem>
 					<para>
@@ -204,6 +263,17 @@ Add a 'Find Previous' entry
 				When in presentation mode, you have an helper bar located on the top of the screen. Just move
 				the mouse cursor to the top of the screen to make it appear.
 			</para>
+			<screenshot>
+			<screeninfo>&okular; in Presentation Mode</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG" />
+			</imageobject>
+			<textobject>
+			<phrase>&okular; in Presentation Mode</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
 			<para>
 				To navigate between
 				pages you may use the &LMB; (next page) and the &RMB; (previous page), the mouse
@@ -218,8 +288,8 @@ Add a 'Find Previous' entry
 			<para>
 				You can also draw on the current page with a pencil. Click on the
 				<guilabel>Toggle Drawing Mode</guilabel> icon in the top bar to enable or disable the possibility
-				of draw in the presentation mode. The drawings are cleared automatically when switching to
-				another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
+				of draw in the presentation mode. The drawings are cleared automatically when leaving the presentation 
+				mode, switching to another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
 			</para>
 			<para>
 				The presentation mode has support for more than one screen in a multi-monitor configuration. 
@@ -259,6 +329,29 @@ Add a 'Find Previous' entry
 				to extract them.
 			</para>
 		</sect1>
+		<sect1 id="forms">
+			<title>Forms</title>
+			<para>
+				If the current document has forms, when you open it a bar
+				will appear above the page view where you can enable the forms.  
+			</para>
+			<screenshot>
+				<screeninfo>The forms bar</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The forms bar</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para>
+				In this case, you can either click on <guilabel>Show Forms</guilabel> in the bar or choose
+				<menuchoice><guimenu>View</guimenu><guimenuitem>Show Forms</guimenuitem></menuchoice>
+				to enter data into the form fields.
+			</para>
+		</sect1>
 		<sect1 id="annotations">
 			<title>Annotations</title>
 			<para>
@@ -267,6 +360,23 @@ Add a 'Find Previous' entry
 				for each user.
 				&okular; does not implicitly change any document it opens.
 			</para>
+			<screenshot>
+			<screeninfo>&okular;'s Annotations</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG" />
+			</imageobject>
+			<textobject>
+			<phrase>&okular;'s Annotations</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para>&okular; has two different kind of annotations:</para>
+			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel> 
+			for files with text like &eg; PDF.</para>
+			<para>Graphic annotations like <guilabel>Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Green Freehand Line</guilabel>, <guilabel>Straight Yellow Line</guilabel>, <guilabel>Blue Polygon</guilabel>, <guilabel>Stamp</guilabel> and <guilabel>Cyan Ellipse</guilabel> for all formats supported by &okular;.</para>
+			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
+			<para>Annotations are not only limited to PDF files, they can be used for any format &okular; supports.</para>
 			<para>
 				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
@@ -293,7 +403,7 @@ Add a 'Find Previous' entry
 				</note>
 				<note>
 					<para>
-						Activating the annotating toolbar will make you switch to the Normal Mode.
+						Activating the annotating toolbar will make you switch to the Browse Tool Mode.
 					</para>
 				</note>
 				<para>
@@ -330,6 +440,17 @@ Add a 'Find Previous' entry
 					annotation settings (like color and opacity, author, &etc;) and the settings specific
 					to that annotation type.
 				</para>
+				<screenshot>
+				<screeninfo>Annotation Property Dialog</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG" />
+				</imageobject>
+				<textobject>
+				<phrase>Annotation Property Dialog</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
 				<para>
 					To move an annotation, hold down the &Ctrl; key, move the mouse pointer on it and 
 					then start dragging with the &LMB;.
@@ -348,7 +469,7 @@ Add a 'Find Previous' entry
 		<title>The Menubar</title>
 
 		<sect1 id="menufile">
-			<title>The <guimenu>File</guimenu> Menu</title>
+			<title>The File Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -419,7 +540,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.</para>
+					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields. <!--Only useful for pdf? what happens with other formats/backends?--></para>
 					</listitem>
 				</varlistentry>
 
@@ -536,7 +657,7 @@ Add a 'Find Previous' entry
 		</sect1>
 
 		<sect1 id="menuedit">
-			<title>The <guimenu>Edit</guimenu> Menu</title>
+			<title>The Edit Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -615,7 +736,7 @@ Add a 'Find Previous' entry
 		</sect1>
 		
 		<sect1 id="menuview">
-			<title>The <guimenu>View</guimenu> Menu</title>
+			<title>The View Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -706,7 +827,8 @@ Add a 'Find Previous' entry
 					<listitem>
 						<para>This submenu makes you choose the view mode for the pages. The possible
 							options are: <guimenuitem>Single Page</guimenuitem> (only one page per row),
-							<guimenuitem>Facing Pages</guimenuitem> (two pages per row, in a book style) and
+							<guimenuitem>Facing Pages</guimenuitem> (two pages per row, in a book style),  
+							<guimenuitem>Facing Pages (Center First Page)</guimenuitem> and
 							<guimenuitem>Overview</guimenuitem> (the number of columns is the one
 							specified in the <link linkend="configure">&okular; settings</link>).</para>
 					</listitem>
@@ -788,15 +910,15 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
 		</sect1>
 
 		<sect1 id="menugo">
-			<title>The <guimenu>Go</guimenu> Menu</title>
+			<title>The Go Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut>&Backspace;</shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Previous Page</guimenuitem>
 						</menuchoice>
@@ -808,7 +930,6 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycap>Space</keycap></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Next Page</guimenuitem>
 						</menuchoice>
@@ -823,10 +944,12 @@ Add a 'Find Previous' entry
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>First Page</guimenuitem>
+							<!--4.6 guimenuitem>Beginning of the document</guimenuitem-->
 					  </menuchoice>
 					</term>
 					<listitem>
 						<para><action>Go to the first page</action> of the document.</para>
+						<!--4.6 para><action>Go to the beginning</action> of the document.</para-->
 				  </listitem>
 				</varlistentry>
 				<varlistentry>
@@ -835,15 +958,18 @@ Add a 'Find Previous' entry
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Last Page</guimenuitem>
+							<!--4.6 guimenuitem>End of the document</guimenuitem-->
 						</menuchoice>
 					</term>
 					<listitem>
 						<para><action>Go to the last page</action> of the document.</para>
+						<!--4.6 para><action>Go to the end</action> of the document.</para-->
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym>Left</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Back in the Document</guimenuitem>
 						</menuchoice>
@@ -855,6 +981,7 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym 	>Right</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward in the Document</guimenuitem>
 						</menuchoice>
@@ -879,7 +1006,7 @@ Add a 'Find Previous' entry
 		</sect1>
 
 		<sect1 id="menubookmarks">
-			<title>The <guimenu>Bookmarks</guimenu> Menu</title>
+			<title>The Bookmarks Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -936,7 +1063,7 @@ Add a 'Find Previous' entry
 		</sect1>
 
 		<sect1 id="menutools">
-			<title>The <guimenu>Tools</guimenu> Menu</title>
+			<title>The Tools Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -1022,15 +1149,15 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>KTTS</application>.</para>
-						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if <application>KTTS</application> is available in the system.</para>
+						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>Jovie</application>.</para>
+						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if &jovie; is available in the system.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
 		</sect1>
 
 		<sect1 id="settings-menu">
-			<title>The <guimenu>Settings</guimenu> Menu</title>
+			<title>The Settings Menu</title>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -1137,7 +1264,7 @@ Add a 'Find Previous' entry
 			</variablelist>
 		</sect1>
 		<sect1 id="menuhelp">
-			<title>The <guimenu>Help</guimenu> Menu</title>
+			<title>The Help Menu</title>
 			&help.menu.documentation;
 		</sect1>
 		
@@ -1238,13 +1365,13 @@ Add a 'Find Previous' entry
 							use the backend with the highest priority.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
+				<!--varlistentry>
 					<term><guilabel>Center first page</guilabel></term>
 					<listitem>
 						<para>Whether the first page should be centered or aligned to the left when
 							displaying the pages in facing and overview mode.</para>
 					</listitem>
-				</varlistentry>
+				</varlistentry-->
 				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
@@ -1400,7 +1527,8 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term><guilabel>Author</guilabel></term>
 					<listitem>
-						<para>The author of the contents added on a document.</para>
+						<para>The author of the contents added on a document.
+						Default is the name from the <guilabel>Password &amp; User Account</guilabel> page of the &systemsettings; module <guilabel>Account Details</guilabel>.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

@@ -49,7 +49,7 @@ void OkularTTS::Private::setupIface()
         QString error;
         if ( KToolInvocation::startServiceByDesktopName( "kttsd", QStringList(), &error ) )
         {
-            emit q->errorMessage( i18n( "Starting KTTSD Failed: %1", error ) );
+            emit q->errorMessage( i18n( "Starting Jovie Text-to-Speech service Failed: %1", error ) );
         }
         else
         {

@@ -135,7 +135,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
     setAttribute( Qt::WA_OpaquePaintEvent );
-    setObjectName( "presentationWidget" );
+    setObjectName( QLatin1String( "presentationWidget" ) );
     QString caption = doc->metaData( "DocumentTitle" ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
@@ -147,7 +147,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     // create top toolbar
     m_topBar = new PresentationToolBar( this );
-    m_topBar->setObjectName( "presentationBar" );
+    m_topBar->setObjectName( QLatin1String( "presentationBar" ) );
     m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);

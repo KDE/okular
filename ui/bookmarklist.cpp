@@ -145,7 +145,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
 
     QToolBar * bookmarkController = new QToolBar( this );
     mainlay->addWidget( bookmarkController );
-    bookmarkController->setObjectName( "BookmarkControlBar" );
+    bookmarkController->setObjectName( QLatin1String( "BookmarkControlBar" ) );
     // change toolbar appearance
     bookmarkController->setIconSize( QSize( 16, 16 ) );
     bookmarkController->setMovable( false );

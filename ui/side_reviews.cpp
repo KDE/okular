@@ -96,7 +96,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar( this );
-    toolBar->setObjectName( "reviewOptsBar" );
+    toolBar->setObjectName( QLatin1String( "reviewOptsBar" ) );
     QSizePolicy sp = toolBar->sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     toolBar->setSizePolicy( sp );

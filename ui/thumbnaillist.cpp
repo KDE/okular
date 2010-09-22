@@ -199,7 +199,7 @@ void ThumbnailListPrivate::paintEvent( QPaintEvent * e )
 ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     : QScrollArea( parent ), d( new ThumbnailListPrivate( this, document ) )
 {
-    setObjectName( "okular::Thumbnails" );
+    setObjectName( QLatin1String( "okular::Thumbnails" ) );
     // set scrollbars
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
@@ -1002,7 +1002,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
 ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list )
     : QToolBar( parent )
 {
-    setObjectName( "ThumbsControlBar" );
+    setObjectName( QLatin1String( "ThumbsControlBar" ) );
     // change toolbar appearance
     setIconSize( QSize( 16, 16 ) );
     setMovable( false );

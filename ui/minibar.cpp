@@ -66,7 +66,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ),
     m_currentPage( -1 )
 {
-    setObjectName( "miniBar" );
+    setObjectName( QLatin1String( "miniBar" ) );
 
     QHBoxLayout * horLayout = new QHBoxLayout( this );
 
@@ -211,7 +211,7 @@ ProgressWidget::ProgressWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ),
     m_currentPage( -1 ), m_progressPercentage( -1 )
 {
-    setObjectName( "progress" );
+    setObjectName( QLatin1String( "progress" ) );
     setAttribute( Qt::WA_OpaquePaintEvent, true );
     setFixedHeight( 4 );
     setMouseTracking( true );

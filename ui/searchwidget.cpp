@@ -24,7 +24,7 @@
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent )
 {
-    setObjectName( "iSearchBar" );
+    setObjectName( QLatin1String( "iSearchBar" ) );
 
     QSizePolicy sp = sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );

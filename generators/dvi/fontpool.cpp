@@ -48,7 +48,7 @@ fontPool::fontPool(bool useFontHinting)
   kDebug(kvs::dvi) << "fontPool::fontPool() called";
 #endif
 
-  setObjectName("Font Pool");
+  setObjectName( QLatin1String("Font Pool" ));
 
   displayResolution_in_dpi = 100.0; // A not-too-bad-default
   useFontHints             = useFontHinting;

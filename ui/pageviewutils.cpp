@@ -220,7 +220,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent ), m_timer( 0 )
     , m_lineSpacing( 0 )
 {
-    setObjectName( "pageViewMessage" );
+    setObjectName( QLatin1String( "pageViewMessage" ) );
     setFocusPolicy( Qt::NoFocus );
     QPalette pal = palette();
     pal.setColor( QPalette::Active, QPalette::Window, QApplication::palette().color( QPalette::Active, QPalette::Window ) );

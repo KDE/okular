@@ -101,7 +101,7 @@ static inline KUrl urlForGroup(const KBookmark &group)
 BookmarkManager::BookmarkManager( DocumentPrivate * document )
     : QObject( document->m_parent ), d( new Private( this ) )
 {
-    setObjectName( "Okular::BookmarkManager" );
+    setObjectName( QLatin1String( "Okular::BookmarkManager" ) );
 
     d->document = document;
 

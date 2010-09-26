@@ -1,7 +1,6 @@
 # explicitely install the "public" cmake files
 
 set(cmakeFiles
-  FindOkular.cmake
   FindKSane.cmake
 )
 

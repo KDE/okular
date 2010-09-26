@@ -5,6 +5,7 @@ add_subdirectory( generators )
 add_subdirectory( tests )
 
 include(OkularConfigureChecks.cmake)
+include(MacroWriteBasicCMakeVersionFile)
 
 if(NOT WIN32)
  set(MATH_LIB m)
@@ -181,3 +182,10 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES part.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
 
+########### cmake files #################
+
+macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake 0 11 80)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
+        DESTINATION ${LIB_INSTALL_DIR}/cmake/Okular )

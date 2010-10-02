@@ -15,3 +15,10 @@ find_library(OKULAR_CORE_LIBRARY okularcore
              NO_DEFAULT_PATH)
 
 set(OKULAR_LIBRARIES ${OKULAR_CORE_LIBRARY})
+
+# Compat: the old FindOkular.cmake was setting OKULAR_FOUND and the
+# new one sets Okular_FOUND.
+if(OKULAR_INCLUDE_DIR AND OKULAR_CORE_LIBRARY)
+  set(OKULAR_FOUND TRUE)
+endif()
+

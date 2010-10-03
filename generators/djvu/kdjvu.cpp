@@ -549,7 +549,17 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
                     dest.toInt( &isNumber );
                     if ( isNumber )
                     {
-                       el.setAttribute( "PageNumber", dest );
+                        // it might be an actual page number, but could also be a page label
+                        // so resolve the number, and get the real page number
+                        int pageNo = pageWithName( dest );
+                        if ( pageNo != -1 )
+                        {
+                            el.setAttribute( "PageNumber", QString::number( pageNo + 1 ) );
+                        }
+                        else
+                        {
+                            el.setAttribute( "PageNumber", dest );
+                        }
                     }
                     else
                     {

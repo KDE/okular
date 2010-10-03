@@ -602,6 +602,10 @@ void KDjVu::Private::readMetaData( int page )
 
 int KDjVu::Private::pageWithName( const QString & name )
 {
+    const int pageNo = m_pageNamesCache.value( name, -1 );
+    if ( pageNo != -1 )
+        return pageNo;
+
     const QByteArray utfName = name.toUtf8();
     const int fileNum = ddjvu_document_get_filenum( m_djvu_document );
     ddjvu_fileinfo_t info;
@@ -612,7 +616,10 @@ int KDjVu::Private::pageWithName( const QString & name )
         if ( info.type != 'P' )
             continue;
         if ( ( utfName == info.id ) || ( utfName == info.name ) || ( utfName == info.title ) )
+        {
+            m_pageNamesCache.insert( name, info.pageno );
             return info.pageno;
+        }
     }
     return -1;
 }
@@ -1137,10 +1144,5 @@ int KDjVu::pageNumber( const QString & name ) const
     if ( !d->m_djvu_document )
         return -1;
 
-    QHash< QString, int >::iterator it = d->m_pageNamesCache.find( name );
-    if ( it == d->m_pageNamesCache.end() )
-    {
-        it = d->m_pageNamesCache.insert( name, d->pageWithName( name ) );
-    }
-    return it.value();
+    return d->pageWithName( name );
 }

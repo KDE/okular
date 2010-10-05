@@ -10,6 +10,18 @@
 
 using namespace Epub;
 
+namespace {
+
+QString resourceUrl(const KUrl &baseUrl, const QString &u)
+{
+  KUrl newUrl(KUrl(baseUrl.directory(KUrl::AppendTrailingSlash)), u);
+  QString newDir = newUrl.toLocalFile();
+  newDir.remove(0, 1);
+  return newDir;
+}
+
+}
+
 EpubDocument::EpubDocument(const QString &fileName) : QTextDocument() 
 {
   mEpub = epub_open(qPrintable(fileName), 3);
@@ -32,6 +44,11 @@ struct epub *EpubDocument::getEpub()
 {
   return mEpub;
 }
+
+void EpubDocument::setCurrentSubDocument(const QString &doc)
+{
+  mCurrentSubDocument = KUrl::fromPath("/" + doc);
+}
     
 QVariant EpubDocument::loadResource(int type, const QUrl &name) 
 {
@@ -39,7 +56,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
   char *data;
    
   // Get the data from the epub file
-  size = epub_get_data(mEpub, name.toString().toUtf8(), &data);
+  size = epub_get_data(mEpub, resourceUrl(mCurrentSubDocument, name.toString()).toUtf8(), &data);
 
 
   QVariant resource;

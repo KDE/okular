@@ -150,6 +150,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       _cursor->insertBlock();
 
       QString link = QString::fromUtf8(epub_it_get_curr_url(it));
+      mTextDocument->setCurrentSubDocument(link);
 
       // Pass on all the anchor since last block
       const QTextBlock &before = _cursor->block();
@@ -167,6 +168,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   } while (epub_it_get_next(it));
 
   epub_free_iterator(it);
+  mTextDocument->setCurrentSubDocument(QString());
 
   
   // handle toc

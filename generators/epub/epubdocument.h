@@ -13,6 +13,7 @@
 #include <QUrl>
 #include <QVariant>
 #include <QImage>
+#include <kurl.h>
 #include <epub.h>
 
 namespace Epub {
@@ -24,12 +25,14 @@ namespace Epub {
     bool isValid();
     ~EpubDocument();   
     struct epub *getEpub();
+    void setCurrentSubDocument(const QString &doc);
     
   protected:
     virtual QVariant loadResource(int type, const QUrl &name);
     
   private:
     struct epub *mEpub;
+    KUrl mCurrentSubDocument;
 
   };
 

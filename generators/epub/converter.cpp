@@ -13,8 +13,8 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
 #include <QTextDocumentFragment>
-#include <QtCore/QDebug>
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <okular/core/action.h>
 
@@ -224,7 +224,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                         block);
           
         } else {
-          qDebug() << "Error: no block found for "<< link << "\n";
+          kDebug() << "Error: no block found for"<< link;
         }
                  
         if (clink)
@@ -237,7 +237,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
     epub_free_titerator(tit);
   } else {
-    qDebug() << "no toc found\n";
+    kDebug() << "no toc found";
   }
 
   // adding link actions
@@ -254,7 +254,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     
       emit addAction(action, hit.value().first, hit.value().second);
     } else {
-      qDebug() << "Error: no block found for "<< hit.key() << "\n";
+      kDebug() << "Error: no block found for "<< hit.key();
     }
   }
   

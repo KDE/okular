@@ -190,7 +190,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         } else { // load missing resource
           char *data;
           int size = epub_get_data(mTextDocument->getEpub(), clink, &data);
-          if (size > 0) {
+          if (data) {
             _cursor->insertBlock();
 
             // try to load as image and if not load as html

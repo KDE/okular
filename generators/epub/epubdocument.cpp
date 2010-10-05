@@ -61,7 +61,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
 
   QVariant resource;
 
-  if (size > 0) {
+  if (data) {
     switch(type) {
     case QTextDocument::ImageResource:
       resource.setValue(QImage::fromData((unsigned char *)data, size));

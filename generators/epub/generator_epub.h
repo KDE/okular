@@ -6,6 +6,7 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+
 #ifndef _OKULAR_GENERATOR_EPUB_H_
 #define _OKULAR_GENERATOR_EPUB_H_
 #include <okular/core/textdocumentgenerator.h>

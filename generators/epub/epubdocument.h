@@ -6,6 +6,7 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+
 #ifndef EPUB_DOCUMENT_H
 #define EPUB_DOCUMENT_H
 
@@ -19,21 +20,20 @@
 namespace Epub {
 
   class EpubDocument : public QTextDocument {
-      
+
   public:
-    EpubDocument(const QString &fileName);  
+    EpubDocument(const QString &fileName);
     bool isValid();
-    ~EpubDocument();   
+    ~EpubDocument();
     struct epub *getEpub();
     void setCurrentSubDocument(const QString &doc);
-    
+
   protected:
     virtual QVariant loadResource(int type, const QUrl &name);
-    
+
   private:
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
-
   };
 
 }

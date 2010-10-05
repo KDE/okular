@@ -22,18 +22,17 @@ using namespace Epub;
 
 Converter::Converter() : mTextDocument(NULL)
 {
-  
 }
 
 Converter::~Converter()
-{    
+{
 }
 
 // join the char * array into one QString
 QString _strPack(char **str, int size)
 {
   QString res;
-  
+
   res = QString::fromUtf8(str[0]);
 
   for (int i=1;i<size;i++) {
@@ -46,16 +45,16 @@ QString _strPack(char **str, int size)
 
 // emit data wrap function that map between epub metadata to okular's
 void Converter::_emitData(Okular::DocumentInfo::Key key,
-                          enum epub_metadata type) 
+                          enum epub_metadata type)
 {
 
   int size;
   unsigned char **data;
-  
+
   data = epub_get_metadata(mTextDocument->getEpub(), type, &size);
-  
-  if (data) { 
-    
+
+  if (data) {
+
     emit addMetaData(key, _strPack((char **)data, size));
     for (int i=0;i<size;i++)
       free(data[i]);
@@ -69,34 +68,34 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
 
   for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
     for (QTextBlock::iterator fit = bit.begin(); !(fit.atEnd()); ++fit) {
-      
+
       QTextFragment frag = fit.fragment();
-      
+
       if (frag.isValid() && frag.charFormat().isAnchor()) {
         QUrl href(frag.charFormat().anchorHref());
 
         if (href.isValid() && !href.isEmpty()) {
           if (href.isRelative()) { // Inside document link
-            mLocalLinks.insert(href.toString(), 
-                               QPair<int, int>(frag.position(), 
+            mLocalLinks.insert(href.toString(),
+                               QPair<int, int>(frag.position(),
                                                frag.position()+frag.length()));
           } else { // Outside document link       
-            Okular::BrowseAction *action = 
+            Okular::BrowseAction *action =
               new Okular::BrowseAction(href.toString());
-            
-            emit addAction(action, frag.position(), 
+
+            emit addAction(action, frag.position(),
                            frag.position() + frag.length());
           }
         }
-        
+
         const QStringList &names = frag.charFormat().anchorNames();
         if (!names.empty()) {
-          for (QStringList::const_iterator lit = names.constBegin(); 
+          for (QStringList::const_iterator lit = names.constBegin();
                lit != names.constEnd(); ++lit) {
             mSectionMap.insert(name + '#' + *lit, bit);
           }
         }
-        
+
       } // end anchor case
     }
   }
@@ -118,14 +117,14 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   QTextFrameFormat frameFormat;
   frameFormat.setMargin( 20 );
-  
+
   QTextFrame *rootFrame = mTextDocument->rootFrame();
   rootFrame->setFrameFormat( frameFormat );
 
   mLocalLinks.clear();
   mSectionMap.clear();
 
-  // Emit the document meta data 
+  // Emit the document meta data
   _emitData(Okular::DocumentInfo::Title, EPUB_TITLE);
   _emitData(Okular::DocumentInfo::Author, EPUB_CREATOR);
   _emitData(Okular::DocumentInfo::Subject, EPUB_SUBJECT);
@@ -133,10 +132,10 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   _emitData(Okular::DocumentInfo::Description, EPUB_DESCRIPTION);
 
-  _emitData(Okular::DocumentInfo::CreationDate, EPUB_DATE);  
+  _emitData(Okular::DocumentInfo::CreationDate, EPUB_DATE);
   _emitData(Okular::DocumentInfo::Category, EPUB_TYPE);
   _emitData(Okular::DocumentInfo::Copyright, EPUB_RIGHTS);
-  emit addMetaData( Okular::DocumentInfo::MimeType, "application/epub+zip");  
+  emit addMetaData( Okular::DocumentInfo::MimeType, "application/epub+zip");
 
   struct eiterator *it;
 
@@ -145,7 +144,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   do {
     if (epub_it_get_curr(it)) {
-      
+
       // insert block for links
       _cursor->insertBlock();
 
@@ -160,7 +159,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       // Add anchors to hashes
       _handle_anchors(before, link);
 
-      // Start new file in a new page 
+      // Start new file in a new page
       int page = mTextDocument->pageCount();
       while(mTextDocument->pageCount() == page)
         _cursor->insertText("\n");
@@ -170,13 +169,12 @@ QTextDocument* Converter::convert( const QString &fileName )
   epub_free_iterator(it);
   mTextDocument->setCurrentSubDocument(QString());
 
-  
   // handle toc
   struct titerator *tit;
-  
+
   // FIXME: support other method beside NAVMAP and GUIDE
   tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_NAVMAP, 0);
-  if (! tit) 
+  if (!tit)
     tit = epub_get_titerator(mTextDocument->getEpub(), TITERATOR_GUIDE, 0);
 
   if (tit) {
@@ -186,8 +184,8 @@ QTextDocument* Converter::convert( const QString &fileName )
         QString link = QString::fromUtf8(clink);
         char *label = epub_tit_get_curr_label(tit);
         QTextBlock block = mTextDocument->begin(); // must point somewhere
-        
-        if(mSectionMap.contains(link)) {
+
+        if (mSectionMap.contains(link)) {
           block = mSectionMap.value(link);
         } else { // load missing resource
           char *data;
@@ -200,8 +198,8 @@ QTextDocument* Converter::convert( const QString &fileName )
             QImage image;
             mSectionMap.insert(link, block);
             if (image.loadFromData((unsigned char *)data, size)) {
-              mTextDocument->addResource(QTextDocument::ImageResource, 
-                                         QUrl(link), image); 
+              mTextDocument->addResource(QTextDocument::ImageResource,
+                                         QUrl(link), image);
               _cursor->insertImage(link);
             } else {
               _cursor->insertHtml(QString::fromUtf8(data));
@@ -209,27 +207,25 @@ QTextDocument* Converter::convert( const QString &fileName )
               _handle_anchors(block, link);
             }
 
-            // Start new file in a new page 
+            // Start new file in a new page
             int page = mTextDocument->pageCount();
             while(mTextDocument->pageCount() == page)
               _cursor->insertText("\n");
           }
-            
+
           free(data);
         }
-        
+
         if (block.isValid()) { // be sure we actually got a block
           emit addTitle(epub_tit_get_curr_depth(tit),
                         QString::fromUtf8(label),
                         block);
-          
         } else {
           kDebug() << "Error: no block found for"<< link;
         }
-                 
+
         if (clink)
           free(clink);
-        
         if (label)
           free(label);
       }
@@ -247,17 +243,17 @@ QTextDocument* Converter::convert( const QString &fileName )
 
     const QTextBlock block = mSectionMap.value(hit.key());
     if (block.isValid()) { // be sure we actually got a block
-      Okular::DocumentViewport viewport = 
+      Okular::DocumentViewport viewport =
         calculateViewport(mTextDocument, block);
 
       Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
-    
+
       emit addAction(action, hit.value().first, hit.value().second);
     } else {
       kDebug() << "Error: no block found for "<< hit.key();
     }
   }
-  
+
   delete _cursor;
 
   return mTextDocument;

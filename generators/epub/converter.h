@@ -6,6 +6,7 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
+
 #ifndef EPUB_CONVERTER_H
 #define EPUB_CONVERTER_H
 
@@ -22,18 +23,17 @@ namespace Epub {
     public:
       Converter();
       ~Converter();
-      
+
       virtual QTextDocument *convert( const QString &fileName );
-      
+
     private:
-      
+
       void _emitData(Okular::DocumentInfo::Key key, enum epub_metadata type); 
       void _handle_anchors(const QTextBlock &start, const QString &name);
       EpubDocument *mTextDocument;
-      
+
       QHash<QString, QTextBlock> mSectionMap;
       QHash<QString, QPair<int, int> > mLocalLinks;
-
     };
 }
 

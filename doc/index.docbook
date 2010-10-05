@@ -29,8 +29,8 @@
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2010-09-03</date>
-		<releaseinfo>0.11 (&kde; 4.5)</releaseinfo>
+		<date>2010-10-05</date>
+		<releaseinfo>0.11.80 (&kde; 4.6)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -176,17 +176,6 @@ Add a 'Find Previous' entry
 			</para>
 			<itemizedlist>
 				<listitem>
-				  <!-- 4.5-->
-					<para>
-						You can go to the first page of of the document using 
-						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
-						using 
-						<menuchoice>
-							<guimenu>Go</guimenu>
-							<guimenuitem>First Page</guimenuitem>
-						</menuchoice>.
-					</para>
-					<!-- 4.6
 					<para>
 						You can go to the beginning of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo> or
@@ -196,20 +185,8 @@ Add a 'Find Previous' entry
 							<guimenuitem>Beginning of the document</guimenuitem>
 						</menuchoice>.
 					</para>
-					-->
 				</listitem>
 				<listitem>
-				  <!-- 4.5-->
-					<para>
-						You can go to the last page of the document using 
-						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
-						using 
-						<menuchoice>
-							<guimenu>Go</guimenu>
-							<guimenuitem>Last Page</guimenuitem>
-						</menuchoice>.
-					</para>
-					<!-- 4.6
 					<para>
 						You can go to the end of the document using 
 						<keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo> or
@@ -219,7 +196,6 @@ Add a 'Find Previous' entry
 							<guimenuitem>End of the document</guimenuitem>
 						</menuchoice>.
 					</para>
-					-->
 				</listitem>
 				<listitem>
 					<para>
@@ -943,13 +919,11 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>First Page</guimenuitem>
-							<!--4.6 guimenuitem>Beginning of the document</guimenuitem-->
+							<guimenuitem>Beginning of the document</guimenuitem>
 					  </menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the first page</action> of the document.</para>
-						<!--4.6 para><action>Go to the beginning</action> of the document.</para-->
+						<para><action>Go to the beginning</action> of the document.</para>
 				  </listitem>
 				</varlistentry>
 				<varlistentry>
@@ -957,13 +931,11 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Last Page</guimenuitem>
-							<!--4.6 guimenuitem>End of the document</guimenuitem-->
+							<guimenuitem>End of the document</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the last page</action> of the document.</para>
-						<!--4.6 para><action>Go to the end</action> of the document.</para-->
+						<para><action>Go to the end</action> of the document.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

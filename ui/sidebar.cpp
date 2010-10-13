@@ -550,7 +550,7 @@ void Sidebar::setItemEnabled( int index, bool enabled )
     }
     d->pages.at( index )->setFlags( f );
 
-    if ( !enabled && index == currentIndex() )
+    if ( !enabled && index == currentIndex() && isSidebarVisible() )
         // find an enabled item, and select that one
         for ( int i = 0; i < d->pages.count(); ++i )
             if ( d->pages.at(i)->flags() & Qt::ItemIsEnabled )

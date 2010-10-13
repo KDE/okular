@@ -629,6 +629,7 @@ void Sidebar::itemClicked( QListWidgetItem *item )
         else
         {
             d->sideContainer->show();
+            d->list->show();
         }
     }
     else

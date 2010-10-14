@@ -47,6 +47,9 @@
 #include "kdocumentviewer.h"
 #include "shellutils.h"
 
+static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
+static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
+
 Shell::Shell(KCmdLineArgs* args, int argIndex)
   : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
 {
@@ -148,6 +151,12 @@ void Shell::readSettings()
     const KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
     bool fullScreen = group.readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
+    
+    if (fullScreen)
+    {
+        m_menuBarWasShown = group.readEntry( shouldShowMenuBarComingFromFullScreen, true );
+        m_toolBarWasShown = group.readEntry( shouldShowToolBarComingFromFullScreen, true );
+    }
 }
 
 void Shell::writeSettings()
@@ -155,6 +164,11 @@ void Shell::writeSettings()
     m_recent->saveEntries( KGlobal::config()->group( "Recent Files" ) );
     KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
     group.writeEntry( "FullScreen", m_fullScreenAction->isChecked() );
+    if (m_fullScreenAction->isChecked())
+    {
+        group.writeEntry( shouldShowMenuBarComingFromFullScreen, m_menuBarWasShown );
+        group.writeEntry( shouldShowToolBarComingFromFullScreen, m_toolBarWasShown );
+    }
     KGlobal::config()->sync();
 }
 
@@ -311,3 +325,5 @@ QSize Shell::sizeHint() const
 }
 
 #include "shell.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

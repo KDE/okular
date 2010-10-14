@@ -7,7 +7,14 @@
   <!ENTITY % English "INCLUDE">
   <!ENTITY % addindex "IGNORE">
 ]>
-
+<!-- TODO
+add chapter about navigation panel
+Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
+Use Small Icons and deselct Show Text to minimize the navigation panel
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc)
+ -->
 <book lang="&language;">
 	<bookinfo>
 		<title>The &okular; Handbook</title>
@@ -391,6 +398,11 @@ Add a 'Find Previous' entry
 					<guilabel>Identity</guilabel> page in &okular;s
 					<link linkend="configure">configuration</link> dialog.
 				</para>
+				<note>
+				<para>Using stamps a single click just places a square stamp (useful for icons).
+				To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point, 
+				then drag to place the bottom-right one.</para>
+				</note>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title>Removing annotations</title>

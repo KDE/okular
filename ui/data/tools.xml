@@ -38,45 +38,46 @@ Engine/Annotation Types [specific attributes]:
         </engine>
         <shortcut>3</shortcut>
     </tool>
-    <tool id="5" name="Yellow Highlighter" pixmap="tool-highlighter-okular">
+    <tool id="4" name="Yellow Highlighter" pixmap="tool-highlighter-okular">
         <tooltip>Yellow Highlight</tooltip>
         <engine type="TextSelector" color="#FFFF00">
             <annotation type="Highlight" color="#FFFF00" />
         </engine>
-        <shortcut>5</shortcut>
+        <shortcut>4</shortcut>
     </tool>
-    <tool id="6" name="Straight Yellow Line" pixmap="tool-line-okular">
+    <tool id="5" name="Straight Yellow Line" pixmap="tool-line-okular">
         <tooltip>Straight Yellow Line</tooltip>
         <engine type="PolyLine" color="#FFE000" points="2">
             <annotation type="Line" width="4" color="#FFE000" />
         </engine>
-        <shortcut>6</shortcut>
+        <shortcut>5</shortcut>
     </tool>
-    <tool id="7" name="Blue Polygon" pixmap="tool-polygon-okular">
+    <tool id="6" name="Blue Polygon" pixmap="tool-polygon-okular">
         <tooltip>Draw a polygon (click on the first point to close it)</tooltip>
         <engine type="PolyLine" color="#007EEE" points="-1">
             <annotation type="Line" width="4" color="#007EEE" />
         </engine>
-        <shortcut>7</shortcut>
+        <shortcut>6</shortcut>
     </tool>
-    <tool id="8" name="Stamp" pixmap="tool-stamp-okular">
+    <tool id="7" name="Stamp" pixmap="tool-stamp-okular">
         <tooltip>Put a stamp symbol</tooltip>
         <engine type="PickPoint" hoverIcon="okular" size="64" block="true">
             <annotation type="Stamp" icon="okular"/>
         </engine>
-        <shortcut>8</shortcut>
+        <shortcut>7</shortcut>
   </tool>
-    <tool id="9" name="Black Underlining" pixmap="tool-underline-okular">
+    <tool id="8" name="Black Underlining" pixmap="tool-underline-okular">
         <tooltip>Underline the text with a black line</tooltip>
         <engine type="TextSelector" color="#000000">
             <annotation type="Underline" color="#000000" />
         </engine>
-        <shortcut>9</shortcut>
+        <shortcut>8</shortcut>
     </tool>
-    <tool id="10" name="Cyan Ellipse" pixmap="tool-ellipse-okular">
+    <tool id="9" name="Cyan Ellipse" pixmap="tool-ellipse-okular">
         <tooltip>A cyan ellipse</tooltip>
         <engine type="PickPoint" color="#00ffff" block="true">
             <annotation type="GeomCircle" color="#00ffff" />
         </engine>
+        <shortcut>9</shortcut>
     </tool>
 </annotatingTools>

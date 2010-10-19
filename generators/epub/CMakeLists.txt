@@ -22,4 +22,4 @@ install(TARGETS okularGenerator_epub DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_epub.desktop okularEPub.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES okularApplication_epub.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( PROGRAMS okularApplication_epub.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )

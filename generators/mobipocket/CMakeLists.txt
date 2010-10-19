@@ -21,4 +21,4 @@ install(TARGETS okularGenerator_mobi DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_mobi.desktop okularMobi.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES okularApplication_mobi.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( PROGRAMS okularApplication_mobi.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )

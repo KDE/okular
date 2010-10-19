@@ -57,4 +57,4 @@ Name[zh_TW]=Okular
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
-MimeType=application/vnd.ms-xpsdocument;
+MimeType=application/oxps;application/vnd.ms-xpsdocument;

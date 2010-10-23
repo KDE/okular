@@ -356,7 +356,9 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
     }
     if ( newlink )
     {
-        const KDjVu::Page* p = m_djvu->pages().at( newpage == -1 ? page : newpage );
+        const KDjVu::Page* p = m_djvu->pages().value( newpage == -1 ? page : newpage );
+        if ( !p )
+            p = m_djvu->pages().at( page );
         int width = p->width();
         int height = p->height();
         bool scape_orientation = false; // hack by tokoe, should always create default page

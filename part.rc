@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="29">
+<kpartgui name="okular_part" version="30">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -77,6 +77,7 @@
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_leftpanel" group="show_merge"/>
+    <Action name="show_bottombar" group="show_merge"/>
     <Action name="options_configure_generators" group="configure_merge"/>
     <Action name="options_configure"/>
   </Menu>

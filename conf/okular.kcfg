@@ -190,6 +190,9 @@
    <default>true</default>
   </entry>
   <entry key="SplitterSizes" type="IntList" />
+  <entry key="ShowBottomBar" type="Bool" >
+   <default>true</default>
+  </entry>
  </group>
  <group name="Nav Panel" >
   <entry key="CurrentPageOnly" type="Bool" >

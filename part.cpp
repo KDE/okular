@@ -369,18 +369,18 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
-    QWidget * bottomBar = new QWidget( rightContainer );
-    QHBoxLayout * bottomBarLayout = new QHBoxLayout( bottomBar );
-    m_pageSizeLabel = new PageSizeLabel( bottomBar, m_document );
+    m_bottomBar = new QWidget( rightContainer );
+    QHBoxLayout * bottomBarLayout = new QHBoxLayout( m_bottomBar );
+    m_pageSizeLabel = new PageSizeLabel( m_bottomBar, m_document );
     bottomBarLayout->setMargin( 0 );
     bottomBarLayout->setSpacing( 0 );
     bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-    m_miniBar = new MiniBar( bottomBar, m_document );
+    m_miniBar = new MiniBar( m_bottomBar, m_document );
     bottomBarLayout->addWidget( m_miniBar );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
-    rightLayout->addWidget( bottomBar );
+    rightLayout->addWidget( m_bottomBar );
 
     connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
@@ -519,6 +519,12 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
     slotShowLeftPanel();
 
+    m_showBottomBar = ac->add<KToggleAction>("show_bottombar");
+    m_showBottomBar->setText(i18n( "Show &Page Bar"));
+    connect( m_showBottomBar, SIGNAL( toggled( bool ) ), this, SLOT( slotShowBottomBar() ) );
+    m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
+    slotShowBottomBar();
+
     QAction * importPS = ac->addAction("import_ps");
     importPS->setText(i18n("&Import PostScript as PDF..."));
     importPS->setIcon(KIcon("document-import"));
@@ -648,6 +654,7 @@ Part::~Part()
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
+    delete m_bottomBar;
 #ifdef OKULAR_ENABLE_MINIBAR
     delete m_progressWidget;
 #endif
@@ -1168,6 +1175,14 @@ void Part::slotShowLeftPanel()
     m_sidebar->setSidebarVisibility( showLeft );
 }
 
+void Part::slotShowBottomBar()
+{
+    const bool showBottom = m_showBottomBar->isChecked();
+    Okular::Settings::setShowBottomBar( showBottom );
+    Okular::Settings::self()->writeConfig();
+    // show/hide bottom bar
+    m_bottomBar->setVisible( showBottom );
+}
 
 void Part::slotFileDirty( const QString& path )
 {

@@ -151,6 +151,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotShowProperties();
         void slotShowEmbeddedFiles();
         void slotShowLeftPanel();
+        void slotShowBottomBar();
         void slotShowPresentation();
         void slotHidePresentation();
         void slotExportAs(QAction *);
@@ -204,6 +205,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
         QPointer<MiniBar> m_miniBar;
+        QPointer<QWidget> m_bottomBar;
         QPointer<PresentationWidget> m_presentationWidget;
         QPointer<ProgressWidget> m_progressWidget;
         QPointer<PageSizeLabel> m_pageSizeLabel;
@@ -249,6 +251,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
+        KToggleAction* m_showBottomBar;
         KToggleFullScreenAction* m_showFullScreenAction;
         KAction *m_aboutBackend;
         KAction *m_reload;

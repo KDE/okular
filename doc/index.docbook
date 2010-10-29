@@ -169,6 +169,12 @@ Add a 'Find Previous' entry
 						switch to bookmarks in all recently opened files.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						If the document has annotations, enable the <guilabel>Reviews</guilabel> view 
+						and click the annotations or select them with the <keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys and press <keycap>Return</keycap> to go to the associated page.
+					</para>
+				</listitem>
 			</itemizedlist>
 			<para>
 				Some documents have links. In this case you can click on them and the view will

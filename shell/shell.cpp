@@ -26,6 +26,7 @@
 #include <kaction.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
+#include <kdualaction.h>
 #include <kfiledialog.h>
 #include <kpluginloader.h>
 #include <kmessagebox.h>
@@ -187,7 +188,7 @@ void Shell::setupActions()
 
   setStandardToolBarMenuEnabled(true);
 
-  m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
+  m_showMenuBarAction = KStandardAction::showHideMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
   m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), this,actionCollection() );
 }
 
@@ -280,7 +281,7 @@ void Shell::setFullScreen( bool useFullScreen )
 
 void Shell::showEvent(QShowEvent *e)
 {
-    m_showMenuBarAction->setChecked( menuBar()->isVisible() );
+    m_showMenuBarAction->setActive( menuBar()->isVisible() );
 
     KParts::MainWindow::showEvent(e);
 }

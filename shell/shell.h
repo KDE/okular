@@ -19,6 +19,7 @@
 #include <kparts/mainwindow.h>
 
 class KCmdLineArgs;
+class KDualAction;
 class KRecentFilesAction;
 class KToggleAction;
 
@@ -99,7 +100,7 @@ private:
   bool m_fileformatsscanned;
   KAction* m_printAction;
   KToggleAction* m_fullScreenAction;
-  KToggleAction* m_showMenuBarAction;
+  KDualAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   KUrl m_openUrl;
 };

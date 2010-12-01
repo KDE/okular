@@ -38,6 +38,7 @@ class AnnotWindow : public QFrame
 
     protected:
         virtual void showEvent( QShowEvent * event );
+        virtual bool eventFilter( QObject * obj, QEvent * event );
 
     private slots:
         void slotOptionBtn();

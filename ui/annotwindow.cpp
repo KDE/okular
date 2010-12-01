@@ -166,6 +166,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     textEdit = new KTextEdit( this );
     textEdit->setAcceptRichText( false );
     textEdit->setPlainText( GuiUtils::contents( m_annot ) );
+    textEdit->installEventFilter( this );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
     
@@ -210,6 +211,20 @@ void AnnotWindow::showEvent( QShowEvent * event )
 
     // focus the content area by default
     textEdit->setFocus();
+}
+
+bool AnnotWindow::eventFilter(QObject *, QEvent *e)
+{
+    if ( e->type () == QEvent::ShortcutOverride )
+    {
+        QKeyEvent * keyEvent = static_cast< QKeyEvent * >( e );
+        if ( keyEvent->key() == Qt::Key_Escape )
+        {
+            close();
+            return true;
+        }
+    }
+    return false;
 }
 
 void AnnotWindow::slotOptionBtn()

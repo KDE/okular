@@ -14,6 +14,10 @@
 #ifdef Q_OS_WIN
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
+#elif defined(Q_OS_FREEBSD)
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#include <vm/vm_param.h>
 #endif
 
 // qt/kde/system includes
@@ -248,6 +252,12 @@ qulonglong DocumentPrivate::getTotalMemory()
         if ( entry.startsWith( "MemTotal:" ) )
             return (cachedValue = (Q_UINT64_C(1024) * entry.section( ' ', -2, -2 ).toULongLong()));
     }
+#elif defined(Q_OS_FREEBSD)
+    qulonglong physmem;
+    int mib[] = {CTL_HW, HW_PHYSMEM};
+    size_t len = sizeof( physmem );
+    if ( sysctl( mib, 2, &physmem, &len, NULL, 0 ) == 0 )
+        return (cachedValue = physmem);
 #elif defined(Q_OS_WIN)
     MEMORYSTATUSEX stat;
     stat.dwLength = sizeof(stat);
@@ -294,6 +304,26 @@ qulonglong DocumentPrivate::getFreeMemory()
     lastUpdate = QTime::currentTime();
 
     return ( cachedValue = (Q_UINT64_C(1024) * memoryFree) );
+#elif defined(Q_OS_FREEBSD)
+    qulonglong cache, inact, free, psize;
+    size_t cachelen, inactlen, freelen, psizelen;
+    cachelen = sizeof( cache );
+    inactlen = sizeof( inact );
+    freelen = sizeof( free );
+    psizelen = sizeof( psize );
+    // sum up inactive, cached and free memory
+    if ( sysctlbyname( "vm.stats.vm.v_cache_count", &cache, &cachelen, NULL, 0 ) == 0 &&
+            sysctlbyname( "vm.stats.vm.v_inactive_count", &inact, &inactlen, NULL, 0 ) == 0 &&
+            sysctlbyname( "vm.stats.vm.v_free_count", &free, &freelen, NULL, 0 ) == 0 &&
+            sysctlbyname( "vm.stats.vm.v_page_size", &psize, &psizelen, NULL, 0 ) == 0 )
+    {
+        lastUpdate = QTime::currentTime();
+        return (cachedValue = (cache + inact + free) * psize);
+    }
+    else
+    {
+        return 0;
+    }
 #elif defined(Q_OS_WIN)
     MEMORYSTATUSEX stat;
     stat.dwLength = sizeof(stat);

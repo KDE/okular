@@ -627,6 +627,13 @@ class OKULAR_EXPORT Annotation
         bool canBeMoved() const;
 
         /**
+         * Returns whether the annotation dialog should be open after creation of the annotation or not
+         *
+         * @since 0.13 (KDE 4.7)
+         */
+        bool openDialogAfterCreation() const;
+
+        /**
          * Returns the sub type of the annotation.
          */
         virtual SubType subType() const = 0;

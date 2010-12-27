@@ -42,6 +42,7 @@ class AnnotationPrivate
         virtual void baseTransform( const QMatrix &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
+        virtual bool openDialogAfterCreation() const;
 
         PagePrivate * m_page;
 

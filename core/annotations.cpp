@@ -669,6 +669,12 @@ void Annotation::translate( const NormalizedPoint &coord )
     }
 }
 
+bool Annotation::openDialogAfterCreation() const
+{
+    Q_D( const Annotation );
+    return d->openDialogAfterCreation();
+}
+
 Annotation::Style & Annotation::style()
 {
     Q_D( Annotation );
@@ -868,6 +874,11 @@ void AnnotationPrivate::translate( const NormalizedPoint &coord )
     m_boundary.bottom = m_boundary.bottom + coord.y;
 }
 
+bool AnnotationPrivate::openDialogAfterCreation() const
+{
+    return false;
+}
+
 //END Annotation implementation
 
 
@@ -887,6 +898,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         virtual void baseTransform( const QMatrix &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
+        virtual bool openDialogAfterCreation() const;
 
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
@@ -1154,6 +1166,11 @@ void TextAnnotationPrivate::translate( const NormalizedPoint &coord )
     ADD_COORD( m_inplaceCallout[1], coord )
     ADD_COORD( m_inplaceCallout[2], coord )
 #undef ADD_COORD
+}
+
+bool TextAnnotationPrivate::openDialogAfterCreation() const
+{
+    return ( m_textType == Okular::TextAnnotation::Linked );
 }
 
 /** LineAnnotation [Annotation] */

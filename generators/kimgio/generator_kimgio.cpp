@@ -20,6 +20,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kicon.h>
+#include <kimageio.h>
 #include <klocale.h>
 
 #include <okular/core/page.h>
@@ -71,12 +72,15 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    QImageReader reader( fileName );
+    const QString mime = KMimeType::findByFileContent(fileName)->name();
+    const QStringList types = KImageIO::typeForMime(mime);
+    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
+    QImageReader reader( fileName, type );
     if ( !reader.read( &m_img ) ) {
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, KMimeType::findByPath(fileName)->name() );
+    docInfo.set( Okular::DocumentInfo::MimeType, mime );
 
     pagesVector.resize( 1 );
 
@@ -88,16 +92,20 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
+    const QString mime = KMimeType::findByContent(fileData)->name();
+    const QStringList types = KImageIO::typeForMime(mime);
+    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
+    
     QBuffer buffer;
     buffer.setData( fileData );
     buffer.open( QIODevice::ReadOnly );
 
-    QImageReader reader( &buffer );
+    QImageReader reader( &buffer, type );
     if ( !reader.read( &m_img ) ) {
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, KMimeType::findByContent(fileData)->name() );
+    docInfo.set( Okular::DocumentInfo::MimeType, mime );
 
     pagesVector.resize( 1 );
 

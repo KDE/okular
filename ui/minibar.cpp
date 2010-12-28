@@ -48,7 +48,6 @@ class PagesEdit : public KLineEdit
     private:
         MiniBar * m_miniBar;
         bool m_eatClick;
-        QString backString;
         QIntValidator * m_validator;
 };
 
@@ -331,13 +330,38 @@ void PagesEdit::setPagesNumber( int pages )
     m_validator->setTop( pages );
 }
 
-void PagesEdit::setText( const QString & text )
+void PagesEdit::setText( const QString & newText )
 {
-    // store a copy of the string
-    backString = text;
     // call default handler if hasn't focus
     if ( !hasFocus() )
-        KLineEdit::setText( text );
+    {
+        KLineEdit::setText( newText );
+    }
+    // else preserve existing selection
+    else
+    {
+        // save selection and adapt it to the new text length
+        int selectionLength = selectedText().length();
+        const bool allSelected = ( selectionLength == text().length() );
+        if ( allSelected )
+        {
+            KLineEdit::setText( newText );
+            selectAll();
+        }
+        else
+        {
+            int newSelectionStart = newText.length() - text().length() + selectionStart();
+            if ( newSelectionStart < 0 )
+            {
+                // the new text is shorter than the old one, and the front part, which is "cut off", is selected
+                // shorten the selection accordingly
+                selectionLength += newSelectionStart;
+                newSelectionStart = 0;
+            }
+            KLineEdit::setText( newText );
+            setSelection( newSelectionStart, selectionLength );
+        }
+    }
 }
 
 void PagesEdit::focusInEvent( QFocusEvent * e )
@@ -360,8 +384,6 @@ void PagesEdit::focusOutEvent( QFocusEvent * e )
     QPalette pal = palette();
     pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
     setPalette( pal );
-    // restore text
-    KLineEdit::setText( backString );
     // call default handler
     KLineEdit::focusOutEvent( e );
 }

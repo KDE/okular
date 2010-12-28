@@ -286,6 +286,13 @@ static KAboutData createAboutData()
 
 OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 
+#ifdef HAVE_POPPLER_0_16
+static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
+{
+    kDebug() << message;
+}
+#endif
+
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
     pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
@@ -302,6 +309,12 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     // generate the pixmapGeneratorThread
     generatorThread = new PDFPixmapGeneratorThread( this );
     connect(generatorThread, SIGNAL(finished()), this, SLOT(threadFinished()), Qt::QueuedConnection);
+    
+#ifdef HAVE_POPPLER_0_16
+    // You only need to do it once not for each of the documents but it is cheap enough
+    // so doing it all the time won't hurt either
+    Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
+#endif
 }
 
 PDFGenerator::~PDFGenerator()

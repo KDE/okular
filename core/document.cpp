@@ -1979,7 +1979,7 @@ const DocumentInfo * Document::documentInfo() const
         if ( tmp )
             *info = *tmp;
 
-        info->set( DocumentInfo::FilePath, currentDocument().url() );
+        info->set( DocumentInfo::FilePath, currentDocument().prettyUrl() );
         const QString pagesSize = d->pagesSizeString();
         if ( d->m_docSize != -1 )
         {

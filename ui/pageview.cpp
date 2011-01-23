@@ -1804,9 +1804,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 updateCursor( eventPos );
 
             PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
+            const QPoint pressPos = contentAreaPoint( mapFromGlobal( d->mousePressPos ) );
+            const PageViewItem * pageItemPressPos = pickItemOnPoint( pressPos.x(), pressPos.y() );
 
             // if the mouse has not moved since the press, that's a -click-
-            if ( leftButton && pageItem && d->mousePressPos == e->globalPos())
+            if ( leftButton && pageItem && pageItem == pageItemPressPos &&
+                 ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
             {
                 double nX = pageItem->absToPageX(eventPos.x());
                 double nY = pageItem->absToPageY(eventPos.y());
@@ -1869,7 +1872,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             }
             else if ( rightButton )
             {
-                if ( pageItem && d->mousePressPos == e->globalPos() )
+                if ( pageItem && pageItem == pageItemPressPos &&
+                     ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
                 {
                     double nX = pageItem->absToPageX(eventPos.x());
                     double nY = pageItem->absToPageY(eventPos.y());

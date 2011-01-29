@@ -58,7 +58,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
-      m_width( w ), m_height( h ), m_boundingBox( 0, 0, 1, 1 ),
+      m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
       m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),

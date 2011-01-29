@@ -29,6 +29,7 @@ namespace Okular {
 
 class Action;
 class Annotation;
+class DocumentPrivate;
 class FormField;
 class HighlightAreaRect;
 class Page;
@@ -117,6 +118,7 @@ class PagePrivate
         int m_number;
         Rotation m_orientation;
         double m_width, m_height;
+        DocumentPrivate *m_doc;
         NormalizedRect m_boundingBox;
         Rotation m_rotation;
         int m_maxuniqueNum;

@@ -1651,6 +1651,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
+    foreach ( Page * p, d->m_pagesVector )
+    {
+        p->d->m_doc = d;
+    }
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     if ( d->m_archiveData )

@@ -29,7 +29,10 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
     if (!iface.isValid())
         return false;
 
-    iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
+    if (args->isSet("page"))
+        iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
+    else
+        iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
 
     return true;
 }

@@ -464,6 +464,11 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
         setToolTip( item.text );
 }
 
+void ToolBarButton::mouseDoubleClickEvent( QMouseEvent * /*event*/ )
+{
+  emit buttonDoubleClicked( buttonID() );
+}
+
 /* PageViewToolBar */
 
 static const int toolBarGridSize = 40;
@@ -542,6 +547,7 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationToolItem> &items )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
         connect( button, SIGNAL( clicked() ), this, SLOT( slotButtonClicked() ) );
+        connect( button, SIGNAL( buttonDoubleClicked(int) ), this, SIGNAL( buttonDoubleClicked(int) ) );
         d->buttons.append( button );
     }
 

@@ -603,7 +603,7 @@ class TextSelectorEngine : public AnnotatorEngine
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
     m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
-    m_lastToolID( -1 ), m_lockedItem( 0 )
+    m_continuousMode( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
@@ -682,6 +682,9 @@ void PageViewAnnotator::setEnabled( bool on )
                 this, SLOT( slotToolSelected(int) ) );
         connect( m_toolBar, SIGNAL( orientationChanged(int) ),
                 this, SLOT( slotSaveToolbarOrientation(int) ) );
+        
+        connect( m_toolBar, SIGNAL( buttonDoubleClicked(int) ),
+                this, SLOT( slotToolDoubleClicked(int) ) );
     }
 
     // show the toolBar
@@ -717,6 +720,17 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     // figure out the event type and button
     AnnotatorEngine::decodeEvent( e, &eventType, &button );
 
+    // if the right mouse button was pressed, we simply do nothing. In this way, we are still editing the annotation
+    // and so this function will receive and process the right mouse button release event too. If we detach now the annotation tool, 
+    // the release event will be processed by the PageView class which would create the annotation property widget, and we do not want this.
+    if ( button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Press )
+        return QRect(); 
+    else if ( button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Release )
+    {
+        detachAnnotation();
+        return QRect(); 
+    }
+    
     // find out normalized mouse coords inside current item
     const QRect & itemRect = item->uncroppedGeometry();
     const QPoint eventPos = m_pageView->contentAreaPoint( e->pos() );
@@ -771,11 +785,10 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
                 m_pageView->setAnnotationWindow( annotation );
         }
 
-        // go on creating annotations of the same type
-        // for now, disable the "construct again the same annotation"
-        //slotToolSelected( m_lastToolID );
-        slotToolSelected( -1 );
-        m_toolBar->selectButton( -1 );
+        if ( m_continuousMode )
+            slotToolSelected( m_lastToolID );
+        else
+            detachAnnotation();
     }
 
     return modifiedRect;
@@ -785,7 +798,7 @@ bool PageViewAnnotator::routeKeyEvent( QKeyEvent * event )
 {
     if ( event->key() == Qt::Key_Escape )
     {
-        m_toolBar->selectButton( -1 );
+        detachAnnotation();
         return true;
     }
     return false;
@@ -837,6 +850,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
         m_lastDrawnRect = QRect();
     }
 
+    if ( toolID != m_lastToolID ) m_continuousMode = false;
     // store current tool for later usage
     m_lastToolID = toolID;
 
@@ -904,6 +918,16 @@ void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     Okular::Settings::setEditToolBarPlacement( (int)side );
     Okular::Settings::self()->writeConfig();
+}
+
+void PageViewAnnotator::slotToolDoubleClicked( int /*toolID*/ )
+{
+    m_continuousMode = true;
+}
+
+void PageViewAnnotator::detachAnnotation()
+{
+    m_toolBar->selectButton( -1 );
 }
 
 #include "pageviewannotator.moc"

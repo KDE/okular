@@ -169,6 +169,12 @@ class ToolBarButton : public QToolButton
         int buttonID() const { return m_id; }
         bool isText() const { return m_isText; }
 
+    signals:
+        void buttonDoubleClicked( int buttonID );
+
+    protected:
+        void mouseDoubleClickEvent( QMouseEvent * event );
+
     private:
         int m_id;
         bool m_isText;
@@ -210,6 +216,8 @@ class PageViewToolBar : public QWidget
         void toolSelected( int toolID );
         // orientation has been changed
         void orientationChanged( int side );
+        // a tool button of this toolbar has been double clicked
+        void buttonDoubleClicked( int buttonID );
 
     protected:
         // handle widget events { anchor_resize, paint, animation, drag }

@@ -70,8 +70,11 @@ class PageViewAnnotator : public QObject
     private slots:
         void slotToolSelected( int toolID );
         void slotSaveToolbarOrientation( int side );
+        void slotToolDoubleClicked( int toolID );
 
     private:
+        void detachAnnotation();
+
         // global class pointers
         Okular::Document * m_document;
         PageView * m_pageView;
@@ -81,6 +84,7 @@ class PageViewAnnotator : public QObject
         QLinkedList<AnnotationToolItem> m_items;
         bool m_textToolsEnabled;
         bool m_toolsEnabled;
+        bool m_continuousMode;
 
         // creation related variables
         int m_lastToolID;

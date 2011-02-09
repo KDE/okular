@@ -2412,6 +2412,8 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
 
 void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 {
+    QColor backColor = viewport()->palette().color( QPalette::Dark );
+
     // when checking if an Item is contained in contentsRect, instead of
     // growing PageViewItems rects (for keeping outline into account), we
     // grow the contentsRect
@@ -2449,15 +2451,15 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
             // draw bottom/right gradient
             static int levels = 2;
-            int r = QColor(Qt::gray).red() / (levels + 2),
-                g = QColor(Qt::gray).green() / (levels + 2),
-                b = QColor(Qt::gray).blue() / (levels + 2);
+            int r = backColor.red() / (levels + 2) + 6,
+                g = backColor.green() / (levels + 2) + 6,
+                b = backColor.blue() / (levels + 2) + 6;
             for ( int i = 0; i < levels; i++ )
             {
                 p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
                 p->drawLine( i, i + itemHeight + 1, i + itemWidth + 1, i + itemHeight + 1 );
                 p->drawLine( i + itemWidth + 1, i, i + itemWidth + 1, i + itemHeight );
-                p->setPen( Qt::gray );
+                p->setPen( backColor );
                 p->drawLine( -1, i + itemHeight + 1, i - 1, i + itemHeight + 1 );
                 p->drawLine( i + itemWidth + 1, -1, i + itemWidth + 1, i - 1 );
             }
@@ -2481,8 +2483,6 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     // fill with background color the unpainted area
     const QVector<QRect> &backRects = remainingArea.rects();
     int backRectsNumber = backRects.count();
-    // the previous color here was Qt::gray
-    QColor backColor = viewport()->palette().color( QPalette::Dark );
     for ( int jr = 0; jr < backRectsNumber; jr++ )
         p->fillRect( backRects[ jr ], backColor );
 }

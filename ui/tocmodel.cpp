@@ -193,7 +193,7 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
                 return item->viewport.pageNumber + 1;
             break;
         case PageItemDelegate::PageLabelRole:
-            if ( item->viewport.isValid() )
+            if ( item->viewport.isValid() && item->viewport.pageNumber < int(d->document->pages()) )
                 return d->document->page( item->viewport.pageNumber )->label();
             break;
     }

@@ -2444,6 +2444,11 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
         kDebug(OkularDebug) << "invalid viewport:" << viewport.toString();
         return;
     }
+    if ( viewport.pageNumber >= int(d->m_pagesVector.count()) )
+    {
+        //kDebug(OkularDebug) << "viewport out of document:" << viewport.toString();
+        return;
+    }
 
     // if already broadcasted, don't redo it
     DocumentViewport & oldViewport = *d->m_viewportIterator;

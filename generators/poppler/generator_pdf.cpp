@@ -52,6 +52,8 @@ Q_DECLARE_METATYPE(Poppler::FontInfo)
 #endif
 
 static const int PDFDebug = 4710;
+static const int defaultPageWidth = 595;
+static const int defaultPageHeight = 842;
 
 class PDFOptionsPage : public QWidget
 {
@@ -487,49 +489,57 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
     {
         // get xpdf page
         Poppler::Page * p = pdfdoc->page( i );
-        const QSizeF pSize = p->pageSizeF();
-        w = pSize.width() / 72.0 * dpiX;
-        h = pSize.height() / 72.0 * dpiY;
-        Okular::Rotation orientation = Okular::Rotation0;
-        switch (p->orientation())
+        Okular::Page * page;
+        if (p)
         {
-          case Poppler::Page::Landscape: orientation = Okular::Rotation90; break;
-          case Poppler::Page::UpsideDown: orientation = Okular::Rotation180; break;
-          case Poppler::Page::Seascape: orientation = Okular::Rotation270; break;
-          case Poppler::Page::Portrait: orientation = Okular::Rotation0; break;
-        }
-        if (rotation % 2 == 1)
-          qSwap(w,h);
-        // init a Okular::page, add transition and annotation information
-        Okular::Page * page = new Okular::Page( i, w, h, orientation );
-        addTransition( p, page );
-        if ( true ) //TODO real check
-          addAnnotations( p, page );
-        Poppler::Link * tmplink = p->action( Poppler::Page::Opening );
-        if ( tmplink )
-        {
-            page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink ) );
-            delete tmplink;
-        }
-        tmplink = p->action( Poppler::Page::Closing );
-        if ( tmplink )
-        {
-            page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink ) );
-            delete tmplink;
-        }
-        page->setDuration( p->duration() );
-        page->setLabel( p->label() );
+            const QSizeF pSize = p->pageSizeF();
+            w = pSize.width() / 72.0 * dpiX;
+            h = pSize.height() / 72.0 * dpiY;
+            Okular::Rotation orientation = Okular::Rotation0;
+            switch (p->orientation())
+            {
+            case Poppler::Page::Landscape: orientation = Okular::Rotation90; break;
+            case Poppler::Page::UpsideDown: orientation = Okular::Rotation180; break;
+            case Poppler::Page::Seascape: orientation = Okular::Rotation270; break;
+            case Poppler::Page::Portrait: orientation = Okular::Rotation0; break;
+            }
+            if (rotation % 2 == 1)
+            qSwap(w,h);
+            // init a Okular::page, add transition and annotation information
+            page = new Okular::Page( i, w, h, orientation );
+            addTransition( p, page );
+            if ( true ) //TODO real check
+            addAnnotations( p, page );
+            Poppler::Link * tmplink = p->action( Poppler::Page::Opening );
+            if ( tmplink )
+            {
+                page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink ) );
+                delete tmplink;
+            }
+            tmplink = p->action( Poppler::Page::Closing );
+            if ( tmplink )
+            {
+                page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink ) );
+                delete tmplink;
+            }
+            page->setDuration( p->duration() );
+            page->setLabel( p->label() );
 
-        addFormFields( p, page );
+            addFormFields( p, page );
 //        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
-        kDebug(PDFDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
+            kDebug(PDFDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
 #endif
-	delete p;
+            delete p;
 
-        if (clear && pagesVector[i])
-            delete pagesVector[i];
+            if (clear && pagesVector[i])
+                delete pagesVector[i];
+        }
+        else
+        {
+            page = new Okular::Page( i, defaultPageWidth, defaultPageHeight, Okular::Rotation0 );
+        }
         // set the Okular::page at the right position in document's pages vector
         pagesVector[i] = page;
     }
@@ -806,6 +816,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
+    if (p)
     {
         QImage img( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
         if ( !page->isBoundingBoxKnown() )
@@ -813,8 +824,14 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
         page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
     }
+    else
+    {
+        QPixmap *dummyPixmap = new QPixmap( request->width(), request->height() );
+        dummyPixmap->fill( Qt::white );
+        page->setPixmap( request->id(), dummyPixmap );
+    }
 
-    if ( genObjectRects )
+    if ( p && genObjectRects )
     {
     	// TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
@@ -825,7 +842,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     // 3. UNLOCK [re-enables shared access]
     userMutex()->unlock();
-    if ( genTextPage )
+    if ( p && genTextPage )
     {
         QList<Poppler::TextBox*> textList = p->textList();
         const QSizeF s = p->pageSizeF();
@@ -851,16 +868,26 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     kDebug(PDFDebug) << "page" << page->number();
 #endif
     // build a TextList...
+    QList<Poppler::TextBox*> textList;
+    double pageWidth, pageHeight;
     Poppler::Page *pp = pdfdoc->page( page->number() );
-    userMutex()->lock();
-    QList<Poppler::TextBox*> textList = pp->textList();
-    userMutex()->unlock();
+    if (pp)
+    {
+        userMutex()->lock();
+        textList = pp->textList();
+        userMutex()->unlock();
 
-    QSizeF s = pp->pageSizeF();
-    const double pageWidth = s.width();
-    const double pageHeight = s.height();
+        QSizeF s = pp->pageSizeF();
+        pageWidth = s.width();
+        pageHeight = s.height();
 
-    delete pp;
+        delete pp;
+    }
+    else   
+    {
+        pageWidth = defaultPageWidth;
+        pageHeight = defaultPageHeight;
+    }
 
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);
@@ -1101,9 +1128,13 @@ bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
         int num = document()->pages();
         for ( int i = 0; i < num; ++i )
         {
+            QString text;
             userMutex()->lock();
             Poppler::Page *pp = pdfdoc->page(i);
-            QString text = pp->text(QRect());
+            if (pp)
+            {
+                text = pp->text(QRect());
+            }
             userMutex()->unlock();
             ts << text;
             delete pp;
@@ -1851,29 +1882,37 @@ void PDFPixmapGeneratorThread::run()
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
     
-    double fakeDpiX = width * d->generator->dpiX / pageWidth,
-           fakeDpiY = height * d->generator->dpiY / pageHeight;
+    if (pp)
+    {
+        double fakeDpiX = width * d->generator->dpiX / pageWidth,
+            fakeDpiY = height * d->generator->dpiY / pageHeight;
 
-    // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
+        // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
 #ifndef NDEBUG
-    if ( d->m_image )
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous image not taken";
-    if ( !d->m_textList.isEmpty() )
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
+        if ( d->m_image )
+            kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous image not taken";
+        if ( !d->m_textList.isEmpty() )
+            kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
 #endif
-    d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
-    
-    if ( genObjectRects )
-    {
-    	d->m_rects = generateLinks(pp->links());
-    }
-    else d->m_rectsTaken = false;
+        d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
+        
+        if ( genObjectRects )
+        {
+            d->m_rects = generateLinks(pp->links());
+        }
+        else d->m_rectsTaken = false;
 
-    if ( genTextPage )
-    {
-        d->m_textList = pp->textList();
+        if ( genTextPage )
+        {
+            d->m_textList = pp->textList();
+        }
+        delete pp;
     }
-    delete pp;
+    else
+    {
+        d->m_image = new QImage( width, height, QImage::Format_ARGB32 );
+        d->m_image->fill( Qt::white );
+    }
     
     // 3. [UNLOCK] mutex
     d->generator->userMutex()->unlock();

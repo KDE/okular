@@ -510,7 +510,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             }
             SearchPoint* sp = *sIt;
             sp->it_begin = it_begin;
-            sp->it_end = it;
+            sp->it_end = it - 1;
             sp->offset_begin = j;
             sp->offset_end = j + qMin( queryLeft, len );
             ret->simplify();

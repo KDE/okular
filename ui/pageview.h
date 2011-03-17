@@ -181,8 +181,10 @@ Q_OBJECT
         class PageViewPrivate * d;
 
     private slots:
-        // activated either directly or via QTimer on the viewportResizeEvent
+        // activated either directly or via queued connection on notifySetup
         void slotRelayoutPages();
+        // activated by the resize event delay timer
+        void delayedResizeEvent();
         // activated either directly or via the contentsMoving(int,int) signal
         void slotRequestVisiblePixmaps( int newValue = -1 );
         // activated by the viewport move timer

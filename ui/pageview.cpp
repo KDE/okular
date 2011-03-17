@@ -132,7 +132,7 @@ public:
     //text annotation dialogs list
     QHash< Okular::Annotation *, AnnotWindow * > m_annowindows;
     // other stuff
-    QTimer * delayRelayoutTimer;
+    QTimer * delayResizeEventTimer;
     bool dirtyLayout;
     bool blockViewport;                 // prevents changes to viewport
     bool blockPixmapsRequest;           // prevent pixmap requests
@@ -284,9 +284,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
 
-    d->delayRelayoutTimer = new QTimer( this );
-    d->delayRelayoutTimer->setSingleShot( true );
-    connect( d->delayRelayoutTimer, SIGNAL( timeout() ), this, SLOT( slotRelayoutPages() ) );
+    d->delayResizeEventTimer = new QTimer( this );
+    d->delayResizeEventTimer->setSingleShot( true );
+    connect( d->delayResizeEventTimer, SIGNAL( timeout() ), this, SLOT( delayedResizeEvent() ) );
 
     setFrameStyle(QFrame::NoFrame);
 
@@ -779,7 +779,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         // because we might end up in notifyViewportChanged while slotRelayoutPages
         // has not been done and we don't want that to happen
         d->dirtyLayout = true;
-        d->delayRelayoutTimer->start(0);
+        QMetaObject::invokeMethod(this, "slotRelayoutPages", Qt::QueuedConnection);
     }
     else
     {
@@ -1264,7 +1264,7 @@ void PageView::resizeEvent( QResizeEvent *e )
     }
 
     // start a timer that will refresh the pixmap after 0.2s
-    d->delayRelayoutTimer->start( 200 );
+    d->delayResizeEventTimer->start( 200 );
     d->verticalScrollBarVisible = verticalScrollBar()->isVisible();
 }
 
@@ -2985,9 +2985,6 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
 {
-    // If we already got here we don't need to execute the timer slot again
-    d->delayRelayoutTimer->stop();
-
     // set an empty container if we have no pages
     int pageCount = d->items.count();
     if ( pageCount < 1 )
@@ -3164,6 +3161,14 @@ void PageView::slotRelayoutPages()
     // 5) update the whole viewport if updated enabled
     if ( wasUpdatesEnabled )
         viewport()->update();
+}
+
+void PageView::delayedResizeEvent()
+{
+    // If we already got here we don't need to execute the timer slot again
+    d->delayResizeEventTimer->stop();
+    slotRelayoutPages();
+    slotRequestVisiblePixmaps();
 }
 
 void PageView::slotRequestVisiblePixmaps( int newValue )

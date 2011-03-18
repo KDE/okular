@@ -738,7 +738,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
     unsigned int * destData = (unsigned int *)dest.bits();
 
     // source image (1:1 conversion from pixmap)
-    QImage srcImage = src->toImage();
+    QImage srcImage = src->toImage().convertToFormat(format);
     unsigned int * srcData = (unsigned int *)srcImage.bits();
 
     // precalc the x correspondancy conversion in a lookup table

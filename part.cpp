@@ -2264,7 +2264,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
     if ( m_bookmarkActions.isEmpty() )
     {
         havebookmarks = false;
-        QAction * a = new QAction( 0 );
+        QAction * a = new KAction( 0 );
         a->setText( i18n( "No Bookmarks" ) );
         a->setEnabled( false );
         m_bookmarkActions.append( a );

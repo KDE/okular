@@ -201,7 +201,7 @@ TextPage::~TextPage()
 void TextPage::append( const QString &text, NormalizedRect *area )
 {
     if ( !text.isEmpty() )
-        d->m_words.append( new TinyTextEntity( text, *area ) );
+        d->m_words.append( new TinyTextEntity( text.normalized(QString::NormalizationForm_KC), *area ) );
     delete area;
 }
 
@@ -426,7 +426,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
-    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
+
+    // normalize query search all unicode (including glyphs)
+    const QString query = (caseSensitivity == Qt::CaseSensitive)
+                            ? _query.normalized(QString::NormalizationForm_KC) 
+                            : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -538,7 +542,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
-    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
+
+    // normalize query to search all unicode (including glyphs)
+    const QString query = (caseSensitivity == Qt::CaseSensitive) 
+                            ? _query.normalized(QString::NormalizationForm_KC) 
+                            : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity

@@ -179,7 +179,7 @@ class PickPointEngine : public AnnotatorEngine
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
                     ta->setBoundingRectangle( this->rect );
-                    ta->window().setSummary( "TextBox" );
+                    ta->window().setSummary( i18n( "Inline Note" ) );
                 }
             }
             else if ( typeString == "Text")
@@ -195,7 +195,7 @@ class PickPointEngine : public AnnotatorEngine
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
                 ta->setBoundingRectangle( this->rect );
-                ta->window().setSummary( "Note" );
+                ta->window().setSummary( i18n( "Note" ) );
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )

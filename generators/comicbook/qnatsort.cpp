@@ -83,16 +83,18 @@ static int natural_order_compare( const QString &leftStr, const QString &rightSt
   int fractional, result;
      
   ai = bi = 0;
+  const int aSize = leftStr.size();
+  const int bSize = rightStr.size();
 
   while ( true ) {
     ca = leftStr[ ai ]; cb = rightStr[ bi ];
 
     /* skip over leading spaces or zeros */
-    while ( ca.isSpace() )
-      ca = leftStr[ ++ai ];
+    while ( ca.isSpace() && ++ai < aSize )
+      ca = leftStr[ ai ];
 
-    while ( cb.isSpace() )
-      cb = rightStr[ ++bi ];
+    while ( cb.isSpace() && ++bi < bSize )
+      cb = rightStr[ bi ];
 
     /* process run of digits */
     if ( ca.isDigit() && cb.isDigit() ) {
@@ -124,6 +126,12 @@ static int natural_order_compare( const QString &leftStr, const QString &rightSt
       return +1;
 
     ++ai; ++bi;
+    if( aSize == ai ) {
+      return aSize <= bSize ? -1 : 1;
+    }
+    if ( bSize == bi ) {
+      return bSize <= aSize ? 1 : -1;
+    }
   }
 }
 
@@ -136,3 +144,4 @@ bool caseInsensitiveNaturalOrderLessThen( const QString &left, const QString &ri
 {
   return (natural_order_compare( left, right, true ) < 0);
 }
+

@@ -8,6 +8,7 @@ include_directories(
 set( okularGenerator_comicbook_PART_SRCS
      document.cpp
      generator_comicbook.cpp
+     directory.cpp
      unrar.cpp qnatsort.cpp
      unrarflavours.cpp
    )

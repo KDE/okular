@@ -20,6 +20,7 @@
 #include <memory>
 
 #include "unrar.h"
+#include "directory.h"
 #include "qnatsort.h"
 
 using namespace ComicBook;
@@ -38,7 +39,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
 
 
 Document::Document()
-    : mUnrar( 0 ), mArchive( 0 )
+    : mDirectory( 0 ), mUnrar( 0 ), mArchive( 0 )
 {
 }
 
@@ -95,6 +96,17 @@ bool Document::open( const QString &fileName )
         }
 
         extractImageFiles( mUnrar->list() );
+    } else if ( mime->is( "inode/directory" ) ) {
+        mDirectory = new Directory();
+
+        if ( !mDirectory->open( fileName ) ) {
+            delete mDirectory;
+            mDirectory = 0;
+
+            return false;
+        }
+
+        extractImageFiles( mDirectory->list() );
     } else {
         mLastErrorString = i18n( "Unknown ComicBook format." );
         return false;
@@ -107,11 +119,13 @@ void Document::close()
 {
     mLastErrorString.clear();
 
-    if ( !( mArchive || mUnrar ) )
+    if ( !( mArchive || mUnrar || mDirectory ) )
         return;
 
     delete mArchive;
     mArchive = 0;
+    delete mDirectory;
+    mDirectory = 0;
     delete mUnrar;
     mUnrar = 0;
     mPageMap.clear();
@@ -177,7 +191,8 @@ QImage Document::pageImage( int page ) const
         const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( mPageMap[ page ] ) );
         if ( entry )
             return QImage::fromData( entry->data() );
-
+    } else if ( mDirectory ) {
+        return QImage( mPageMap[ page ] );
     } else {
         return QImage::fromData( mUnrar->contentOf( mPageMap[ page ] ) );
     }
@@ -195,6 +210,8 @@ QSize Document::pageSize( int page ) const
             dev.reset( entry->createDevice() );
         }
 
+    } else if ( mDirectory ) {
+        dev.reset( mDirectory->createDevice( mPageMap[ page ] ) );
     } else {
         dev.reset( mUnrar->createDevice( mPageMap[ page ] ) );
     }
@@ -217,3 +234,4 @@ QString Document::lastErrorString() const
 {
     return mLastErrorString;
 }
+

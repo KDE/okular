@@ -17,6 +17,7 @@ class KArchive;
 class QImage;
 class QSize;
 class Unrar;
+class Directory;
 
 namespace ComicBook {
 
@@ -42,6 +43,7 @@ class Document
         bool processArchive();
 
         QStringList mPageMap;
+        Directory *mDirectory;
         Unrar *mUnrar;
         KArchive *mArchive;
         KArchiveDirectory *mArchiveDir;

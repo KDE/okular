@@ -1538,9 +1538,9 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( mime.count() <= 0 )
             return false;
 
-        // docFile is always local so we can use QFile on it
-        QFile fileReadTest( docFile );
-        if ( !fileReadTest.open( QIODevice::ReadOnly ) )
+        // docFile is always local so we can use QFileInfo on it
+        QFileInfo fileReadTest( docFile );
+        if ( fileReadTest.isFile() && !fileReadTest.isReadable() )
         {
             d->m_docFileName.clear();
             return false;
@@ -1553,7 +1553,6 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         QString fn = url.fileName();
         document_size = fileReadTest.size();
         fn = QString::number( document_size ) + '.' + fn + ".xml";
-        fileReadTest.close();
         QString newokular = "okular/docdata/" + fn;
         QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
         if ( !QFile::exists( newokularfile ) )

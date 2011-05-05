@@ -252,6 +252,11 @@ void Shell::fileOpen()
         startDir = m_part->url().toLocalFile();
     KFileDialog dlg( startDir, QString(), this );
     dlg.setOperationMode( KFileDialog::Opening );
+
+    // A directory may be a document. E.g. comicbook generator.
+    if ( m_fileformats.contains( "inode/directory" ) )
+        dlg.setMode( dlg.mode() | KFile::Directory );
+
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )
         dlg.setFilter( i18n( "*|All Files" ) );
     else

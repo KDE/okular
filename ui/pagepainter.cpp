@@ -666,7 +666,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         mixedPainter->translate( -crop.left, -crop.top );
 
         QColor normalColor = QApplication::palette().color( QPalette::Active, QPalette::Highlight );
-        QColor lightColor = normalColor.light( 140 );
         // enlarging limits for intersection is like growing the 'rectGeometry' below
         QRect limitsEnlarged = limits;
         limitsEnlarged.adjust( -2, -2, 2, 2 );

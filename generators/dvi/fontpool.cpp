@@ -480,17 +480,11 @@ void fontPool::mf_output_receiver()
 
   // We'd like to print only full lines of text.
   int numleft;
-  bool show_prog = false;
   while( (numleft = MetafontOutput.indexOf('\n')) != -1) {
     QString line = MetafontOutput.left(numleft+1);
 #ifdef DEBUG_FONTPOOL
     kDebug(kvs::dvi) << "MF OUTPUT RECEIVED: " << line;
 #endif
-    // Search for a line which marks the beginning of a MetaFont run
-    // and show the progress dialog at the end of this method.
-    if (line.indexOf("kpathsea:") == 0)
-      show_prog = true;
-
     // If the Output of the kpsewhich program contains a line starting
     // with "kpathsea:", this means that a new MetaFont-run has been
     // started. We filter these lines out and update the display

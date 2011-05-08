@@ -407,7 +407,6 @@ bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 void ThumbnailList::updateWidgets()
 {
     // find all widgets that intersects the viewport and update them
-    const QRect viewportRect = viewport()->rect().translated( viewport()->pos() );
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
     {
@@ -791,7 +790,6 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
     if ( !m_mouseGrabItem )
         return e->ignore();
     const QRect r = m_mouseGrabItem->rect();
-    const QPoint p = e->pos() - m_mouseGrabItem->pos();
     if ( !m_mouseGrabPos.isNull() )
     {
         const QPoint mousePos = e->pos();

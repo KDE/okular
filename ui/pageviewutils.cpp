@@ -136,7 +136,6 @@ void PageViewItem::setWHZC( int w, int h, double z, const Okular:: NormalizedRec
     m_croppedGeometry.setHeight( h );
     m_zoomFactor = z;
     m_crop = c;
-    QRect scaledCrop = c.geometry( w, h );
     m_uncroppedGeometry.setWidth( qRound( w / ( c.right - c.left ) ) );
     m_uncroppedGeometry.setHeight( qRound( h / ( c.bottom - c.top ) ) );
     foreach(FormWidgetIface *fwi, m_formWidgets)

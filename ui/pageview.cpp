@@ -1500,7 +1500,6 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     {
                         const QRect & itemRect = pageItem->uncroppedGeometry();
                         QPoint newpos = eventPos - itemRect.topLeft();
-                        Okular::NormalizedRect r = d->mouseAnn->boundingRectangle();
                         QPoint p( newpos - d->mouseAnnPos );
                         QPointF pf( rotateInRect( p, pageItem->page()->rotation() ) );
                         if ( pageItem->page()->rotation() % 2 == 0 )

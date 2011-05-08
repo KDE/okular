@@ -553,9 +553,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     // queryLeft is the length of the query we have left
     const TinyTextEntity* curEntity = 0;
     int j=query.length() - 1, len=0, queryLeft=query.length();
-    int offset = 0;
     bool haveMatch=false;
-    bool dontIncrement=false;
     bool offsetMoved = false;
     TextList::ConstIterator it = start;
     TextList::ConstIterator it_begin;
@@ -565,10 +563,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         const QString &str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
-            if ( m_searchPoints.contains( searchID ) )
-            {
-                offset = qMax( m_searchPoints[ searchID ]->offset_begin, 0 );
-            }
             offsetMoved = true;
         }
         if ( query.at(j).isSpace() )
@@ -579,14 +573,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #endif
             j--;
             queryLeft--;
-            // since we do not really need to increment this after this
-            // run of the loop finishes because we are not comparing it 
-            // to any entity, rather we are deducing a situation in a document
-            dontIncrement=true;
         }
         else
         {
-            dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
@@ -609,7 +598,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     kDebug(OkularDebug) << "\tnot matched";
 #endif
                     j=query.length() - 1;
-                    offset = 0;
                     queryLeft=query.length();
                     it_begin = TextList::ConstIterator();
             }

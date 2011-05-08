@@ -345,7 +345,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
                 {
                     QPointF point1 = getPointFromString(&token, isRelative, currPos);
                     QPointF point2 = getPointFromString(&token, isRelative, currPos);
-                    path.quadTo(point2, point2);
+                    path.quadTo(point1, point2);
                 }
                 break;
             case 's': // Smooth cubic bezier curve

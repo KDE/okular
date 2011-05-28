@@ -9,6 +9,7 @@
 #include "mobidocument.h"
 #include "mobipocket.h"
 #include "qfilestream.h"
+#include <QtGui/QColor>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
 #include <kdebug.h>
@@ -93,5 +94,12 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
     imgs.setMinimal(true);
     ret.replace(imgs,"<img src=\"pdbrec:/\\1\">");
     ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
+    
+    static QRegExp rgb(" color=\"rgb\\((\\d+),(\\d+),(\\d+)\\)\"", Qt::CaseSensitive);
+    pos = 0;
+    while ((pos = rgb.indexIn(ret, pos)) != -1) {
+      const QString qtColor = QColor(rgb.cap(1).toInt(), rgb.cap(2).toInt(), rgb.cap(3).toInt()).name();
+      ret.replace(pos, rgb.matchedLength(), QString(" color=\"%1\"").arg(qtColor));
+    }
     return ret;
 }

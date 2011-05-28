@@ -99,7 +99,9 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
     pos = 0;
     while ((pos = rgb.indexIn(ret, pos)) != -1) {
       const QString qtColor = QColor(rgb.cap(1).toInt(), rgb.cap(2).toInt(), rgb.cap(3).toInt()).name();
-      ret.replace(pos, rgb.matchedLength(), QString(" color=\"%1\"").arg(qtColor));
+      const QString newColorString = QString(" color=\"%1\"").arg(qtColor);
+      ret.replace(pos, rgb.matchedLength(), newColorString);
+      pos += newColorString.length() - rgb.matchedLength();
     }
     return ret;
 }

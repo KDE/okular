@@ -1,8 +1,28 @@
 project(okular)
+
+find_package(KDE4 4.6.0 REQUIRED)
+include(KDE4Defaults)
+include(MacroLibrary)
+include(MacroOptionalAddSubdirectory)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
+
+macro_optional_find_package(QImageBlitz)
+macro_log_feature(QIMAGEBLITZ_FOUND "QImageBlitz" "An image effects library" "http://sourceforge.net/projects/qimageblitz" TRUE "kdesupport" "Required to build Okular.")
+
+add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+include_directories(
+   ${KDE4_INCLUDES}
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}/..
+   ${QIMAGEBLITZ_INCLUDES}
+)
+
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
 add_subdirectory( tests )
+macro_optional_add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
 include(MacroWriteBasicCMakeVersionFile)
@@ -12,11 +32,6 @@ if(NOT WIN32)
 else(NOT WIN32)
  set(MATH_LIB)
 endif(NOT WIN32)
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}
-   ${QIMAGEBLITZ_INCLUDES}
-)
-
 
 # okularcore
 
@@ -189,3 +204,6 @@ macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVer
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
         DESTINATION ${LIB_INSTALL_DIR}/cmake/Okular )
+
+macro_display_feature_log()
+

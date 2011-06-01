@@ -10,10 +10,10 @@
 #ifndef _OKULAR_TEXTDOCUMENTGENERATOR_H_
 #define _OKULAR_TEXTDOCUMENTGENERATOR_H_
 
-#include <okular/core/okular_export.h>
+#include "okular_export.h"
 
-#include <okular/core/document.h>
-#include <okular/core/generator.h>
+#include "document.h"
+#include "generator.h"
 
 class QTextBlock;
 class QTextDocument;

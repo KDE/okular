@@ -10,8 +10,8 @@
 #ifndef _OKULAR_UTILS_H_
 #define _OKULAR_UTILS_H_
 
-#include <okular/core/okular_export.h>
-#include <okular/core/area.h>
+#include "okular_export.h"
+#include "area.h"
 
 class QRect;
 class QImage;

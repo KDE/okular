@@ -10,8 +10,8 @@
 #ifndef _OKULAR_MOVIE_H_
 #define _OKULAR_MOVIE_H_
 
-#include <okular/core/global.h>
-#include <okular/core/okular_export.h>
+#include "global.h"
+#include "okular_export.h"
 
 #include <QtCore/QSize>
 

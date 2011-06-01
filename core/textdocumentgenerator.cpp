@@ -23,10 +23,10 @@
 #include <QtGui/QTextDocumentWriter>
 #endif
 
-#include <okular/core/action.h>
-#include <okular/core/annotations.h>
-#include <okular/core/page.h>
-#include <okular/core/textpage.h>
+#include "action.h"
+#include "annotations.h"
+#include "page.h"
+#include "textpage.h"
 
 #include "document.h"
 

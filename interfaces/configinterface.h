@@ -10,7 +10,7 @@
 #ifndef _OKULAR_CONFIGINTERFACE_H_
 #define _OKULAR_CONFIGINTERFACE_H_
 
-#include <okular/core/okular_export.h>
+#include "../core/okular_export.h"
 
 #include <QtCore/QObject>
 

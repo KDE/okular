@@ -17,8 +17,8 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 
-#include <okular/core/okular_export.h>
-#include <okular/core/generator.h>
+#include "okular_export.h"
+#include "generator.h"
 
 class QPrinter;
 class QSize;

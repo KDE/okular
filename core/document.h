@@ -11,10 +11,10 @@
 #ifndef _OKULAR_DOCUMENT_H_
 #define _OKULAR_DOCUMENT_H_
 
-#include <okular/core/okular_export.h>
-#include <okular/core/area.h>
-#include <okular/core/global.h>
-#include <okular/core/pagesize.h>
+#include "okular_export.h"
+#include "area.h"
+#include "global.h"
+#include "pagesize.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>

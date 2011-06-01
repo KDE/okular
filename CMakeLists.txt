@@ -12,9 +12,8 @@ macro_log_feature(QIMAGEBLITZ_FOUND "QImageBlitz" "An image effects library" "ht
 
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
-   ${KDE4_INCLUDES}
    ${CMAKE_CURRENT_SOURCE_DIR}
-   ${CMAKE_CURRENT_SOURCE_DIR}/..
+   ${KDE4_INCLUDES}
    ${QIMAGEBLITZ_INCLUDES}
 )
 

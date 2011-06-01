@@ -60,4 +60,4 @@ Name[zh_TW]=文件檢視_Okular
 X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
-MimeType=application/x-pdf;application/pdf;application/x-gzpdf;application/x-bzpdf;
+MimeType=application/x-pdf;application/pdf;application/x-gzpdf;application/x-bzpdf;application/x-wwf;

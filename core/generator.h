@@ -12,10 +12,10 @@
 #ifndef _OKULAR_GENERATOR_H_
 #define _OKULAR_GENERATOR_H_
 
-#include <okular/core/okular_export.h>
-#include <okular/core/fontinfo.h>
-#include <okular/core/global.h>
-#include <okular/core/pagesize.h>
+#include "okular_export.h"
+#include "fontinfo.h"
+#include "global.h"
+#include "pagesize.h"
 
 #include <QtCore/QList>
 #include <QtCore/QObject>

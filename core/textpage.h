@@ -13,8 +13,8 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 
-#include <okular/core/okular_export.h>
-#include <okular/core/global.h>
+#include "okular_export.h"
+#include "global.h"
 
 class QMatrix;
 

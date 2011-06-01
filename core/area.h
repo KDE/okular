@@ -15,8 +15,8 @@
 #include <QtGui/QPainterPath>
 #include <kdebug.h>
 
-#include <okular/core/global.h>
-#include <okular/core/okular_export.h>
+#include "global.h"
+#include "okular_export.h"
 
 class QPolygonF;
 class QRect;

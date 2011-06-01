@@ -12,10 +12,10 @@
 
 #include <QtCore/QLinkedList>
 
-#include <okular/core/okular_export.h>
-#include <okular/core/area.h>
-#include <okular/core/global.h>
-#include <okular/core/textpage.h>
+#include "okular_export.h"
+#include "area.h"
+#include "global.h"
+#include "textpage.h"
 
 class QPixmap;
 

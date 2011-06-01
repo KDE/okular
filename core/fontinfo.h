@@ -15,7 +15,7 @@
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QString>
 
-#include <okular/core/okular_export.h>
+#include "okular_export.h"
 
 namespace Okular {
 

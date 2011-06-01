@@ -10,8 +10,8 @@
 #ifndef _OKULAR_MISC_H_
 #define _OKULAR_MISC_H_
 
-#include <okular/core/okular_export.h>
-#include <okular/core/area.h>
+#include "okular_export.h"
+#include "area.h"
 
 namespace Okular {
 

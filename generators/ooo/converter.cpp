@@ -20,10 +20,10 @@
 #include <QtXml/QDomText>
 #include <QtXml/QXmlSimpleReader>
 
-#include <okular/core/action.h>
-#include <okular/core/annotations.h>
-#include <okular/core/document.h>
-#include <okular/core/utils.h>
+#include <core/action.h>
+#include <core/annotations.h>
+#include <core/document.h>
+#include <core/utils.h>
 
 #include <klocale.h>
 

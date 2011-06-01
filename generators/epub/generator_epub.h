@@ -9,7 +9,7 @@
 
 #ifndef _OKULAR_GENERATOR_EPUB_H_
 #define _OKULAR_GENERATOR_EPUB_H_
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 class EPubGenerator : public Okular::TextDocumentGenerator
 {

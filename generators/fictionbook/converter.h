@@ -10,7 +10,7 @@
 #ifndef FICTIONBOOK_CONVERTER_H
 #define FICTIONBOOK_CONVERTER_H
 
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 class QDomElement;
 class QTextCursor;

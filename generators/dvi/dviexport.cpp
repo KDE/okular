@@ -17,7 +17,7 @@
  */
 
 #include <config.h>
-#include <okular/core/fileprinter.h>
+#include <core/fileprinter.h>
 
 #include "dviexport.h"
 

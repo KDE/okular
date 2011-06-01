@@ -12,7 +12,7 @@
 // qt/kde includes
 #include <qvariant.h>
 
-#include <okular/core/annotations.h>
+#include <core/annotations.h>
 
 #include "popplerembeddedfile.h"
 #include "config-okular-poppler.h"

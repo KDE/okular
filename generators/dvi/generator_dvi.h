@@ -10,7 +10,7 @@
 #ifndef _DVI_GENERATOR_H_
 #define _DVI_GENERATOR_H_
 
-#include <okular/core/generator.h>
+#include <core/generator.h>
 
 #include <qbitarray.h>
 

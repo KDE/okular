@@ -10,7 +10,7 @@
 #ifndef _GENERATOR_DJVU_H_
 #define _GENERATOR_DJVU_H_
 
-#include <okular/core/generator.h>
+#include <core/generator.h>
 
 #include <qvector.h>
 

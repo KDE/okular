@@ -13,7 +13,7 @@
 #include <QtGui/QTextCharFormat>
 #include <QtXml/QDomDocument>
 
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 #include "styleinformation.h"
 

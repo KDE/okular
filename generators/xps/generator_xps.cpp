@@ -32,10 +32,10 @@
 #include <QImageReader>
 #include <QMutex>
 
-#include <okular/core/document.h>
-#include <okular/core/page.h>
-#include <okular/core/area.h>
-#include <okular/core/fileprinter.h>
+#include <core/document.h>
+#include <core/page.h>
+#include <core/area.h>
+#include <core/fileprinter.h>
 
 const int XpsDebug = 4712;
 

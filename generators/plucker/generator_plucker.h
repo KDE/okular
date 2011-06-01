@@ -10,8 +10,8 @@
 #ifndef _OKULAR_GENERATOR_PLUCKER_H_
 #define _OKULAR_GENERATOR_PLUCKER_H_
 
-#include <okular/core/document.h>
-#include <okular/core/generator.h>
+#include <core/document.h>
+#include <core/generator.h>
 
 #include <QtGui/QTextBlock>
 

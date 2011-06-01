@@ -11,8 +11,8 @@
 #ifndef _OKULAR_CHMGENERATOR_H_
 #define _OKULAR_CHMGENERATOR_H_ 
 
-#include <okular/core/document.h>
-#include <okular/core/generator.h>
+#include <core/document.h>
+#include <core/generator.h>
 
 #include "lib/libchmfile.h"
 

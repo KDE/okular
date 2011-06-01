@@ -26,8 +26,8 @@
 
 #include <QtGui/QLabel>
 
-#include <okular/core/action.h>
-#include <okular/core/document.h>
+#include <core/action.h>
+#include <core/document.h>
 
 #include "qunpluck.h"
 #include "image.h"

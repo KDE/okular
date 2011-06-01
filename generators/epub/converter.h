@@ -10,8 +10,8 @@
 #ifndef EPUB_CONVERTER_H
 #define EPUB_CONVERTER_H
 
-#include <okular/core/textdocumentgenerator.h>
-#include <okular/core/document.h>
+#include <core/textdocumentgenerator.h>
+#include <core/document.h>
 
 #include "epubdocument.h"
 

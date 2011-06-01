@@ -16,7 +16,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <okular/core/action.h>
+#include <core/action.h>
 
 using namespace Epub;
 

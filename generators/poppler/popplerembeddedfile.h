@@ -12,7 +12,7 @@
 
 #include <poppler-qt4.h>
 
-#include <okular/core/document.h>
+#include <core/document.h>
 
 class PDFEmbeddedFile : public Okular::EmbeddedFile
 {

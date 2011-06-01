@@ -9,14 +9,14 @@
 
 #include "generator_djvu.h"
 
-#include <okular/core/action.h>
-#include <okular/core/annotations.h>
-#include <okular/core/area.h>
-#include <okular/core/document.h>
-#include <okular/core/page.h>
-#include <okular/core/textpage.h>
-#include <okular/core/utils.h>
-#include <okular/core/fileprinter.h>
+#include <core/action.h>
+#include <core/annotations.h>
+#include <core/area.h>
+#include <core/document.h>
+#include <core/page.h>
+#include <core/textpage.h>
+#include <core/utils.h>
+#include <core/fileprinter.h>
 
 #include <qdom.h>
 #include <qmutex.h>

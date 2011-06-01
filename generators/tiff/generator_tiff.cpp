@@ -23,10 +23,10 @@
 #include <kglobal.h>
 #include <klocale.h>
 
-#include <okular/core/document.h>
-#include <okular/core/page.h>
-#include <okular/core/fileprinter.h>
-#include <okular/core/utils.h>
+#include <core/document.h>
+#include <core/page.h>
+#include <core/fileprinter.h>
+#include <core/utils.h>
 
 #include <tiff.h>
 #include <tiffio.h>

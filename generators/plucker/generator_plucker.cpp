@@ -18,7 +18,7 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 
-#include <okular/core/page.h>
+#include <core/page.h>
 
 static KAboutData createAboutData()
 {

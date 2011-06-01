@@ -31,16 +31,16 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include <okular/core/action.h>
-#include <okular/core/page.h>
-#include <okular/core/annotations.h>
-#include <okular/core/movie.h>
-#include <okular/core/pagetransition.h>
-#include <okular/core/sound.h>
-#include <okular/core/sourcereference.h>
-#include <okular/core/textpage.h>
-#include <okular/core/fileprinter.h>
-#include <okular/core/utils.h>
+#include <core/action.h>
+#include <core/page.h>
+#include <core/annotations.h>
+#include <core/movie.h>
+#include <core/pagetransition.h>
+#include <core/sound.h>
+#include <core/sourcereference.h>
+#include <core/textpage.h>
+#include <core/fileprinter.h>
+#include <core/utils.h>
 
 #include <config-okular-poppler.h>
 

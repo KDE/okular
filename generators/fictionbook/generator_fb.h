@@ -10,7 +10,7 @@
 #ifndef _OKULAR_GENERATOR_FB_H_
 #define _OKULAR_GENERATOR_FB_H_
 
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 class FictionBookGenerator : public Okular::TextDocumentGenerator
 {

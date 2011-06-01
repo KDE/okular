@@ -10,7 +10,7 @@
 #ifndef _OKULAR_GENERATOR_OOO_H_
 #define _OKULAR_GENERATOR_OOO_H_
 
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 class KOOOGenerator : public Okular::TextDocumentGenerator
 {

@@ -20,8 +20,8 @@
 #ifndef _OKULAR_GENERATOR_XPS_H_
 #define _OKULAR_GENERATOR_XPS_H_
 
-#include <okular/core/generator.h>
-#include <okular/core/textpage.h>
+#include <core/generator.h>
+#include <core/textpage.h>
 
 #include <QColor>
 #include <QDomDocument>

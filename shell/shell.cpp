@@ -69,6 +69,7 @@ void Shell::init()
   setXMLFile("shell.rc");
   m_doc=0L;
   m_fileformatsscanned = false;
+  m_showMenuBarAction = 0;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
@@ -280,7 +281,8 @@ void Shell::setFullScreen( bool useFullScreen )
 
 void Shell::showEvent(QShowEvent *e)
 {
-    m_showMenuBarAction->setChecked( menuBar()->isVisible() );
+    if (m_showMenuBarAction)
+        m_showMenuBarAction->setChecked( menuBar()->isVisible() );
 
     KParts::MainWindow::showEvent(e);
 }

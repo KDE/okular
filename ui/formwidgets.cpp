@@ -348,7 +348,7 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 {
     setMode( KFile::File | KFile::ExistingOnly | KFile::LocalOnly );
     setFilter( i18n( "*|All Files" ) );
-    setPath( m_form->text() );
+    setUrl( KUrl( m_form->text() ) );
     lineEdit()->setAlignment( m_form->textAlignment() );
     setEnabled( !m_form->isReadOnly() );
 

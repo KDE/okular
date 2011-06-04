@@ -1165,6 +1165,7 @@ inline void append (Okular::TextPage* ktp,
 
 Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
 {    
+    Q_UNUSED(rot);
     Okular::TextPage* ktp=new Okular::TextPage;
     Poppler::TextBox *next; 
 #ifdef PDFGENERATOR_DEBUG

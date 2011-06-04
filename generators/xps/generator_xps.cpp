@@ -163,7 +163,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
     if (ch.isNumber() || (ch == '+') || (ch == '-'))
     {
         int start = *curPos;
-        while ((*curPos < data.length()) && (!data.at(*curPos).isSpace()) && (data.at(*curPos) != ',') && !data.at(*curPos).isLetter())
+        while ((*curPos < data.length()) && (!data.at(*curPos).isSpace()) && (data.at(*curPos) != ',') && (!data.at(*curPos).isLetter() || data.at(*curPos) == 'e'))
     {
         (*curPos)++;
     }

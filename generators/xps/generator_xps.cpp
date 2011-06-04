@@ -535,10 +535,10 @@ static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString 
 /**
    Load the resource \p fileName from the specified \p archive using the case sensitivity \p cs
 */
-static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt::CaseSensitivity cs )
+static const KArchiveEntry* loadEntry( KZip *archive, const QString &fileName, Qt::CaseSensitivity cs )
 {
     // first attempt: loading the entry straight as requested
-    const KZipFileEntry* entry = static_cast< const KZipFileEntry * >( archive->directory()->entry( fileName ) );
+    const KArchiveEntry* entry = archive->directory()->entry( fileName );
     // in case sensitive mode, or if we actually found something, return what we found
     if ( cs == Qt::CaseSensitive || entry ) {
         return entry;
@@ -562,12 +562,17 @@ static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt
         qSort( relEntries );
         Q_FOREACH ( const QString &relEntry, relEntries ) {
             if ( relEntry.compare( entryName, Qt::CaseInsensitive ) == 0 ) {
-                const KArchiveEntry* ee = relDir->entry( relEntry );
-                return ee->isFile() ? static_cast< const KZipFileEntry * >( ee ) : 0;
+                return relDir->entry( relEntry );
             }
         }
     }
     return 0;
+}
+
+static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt::CaseSensitivity cs )
+{
+    const KArchiveEntry *entry = loadEntry( archive, fileName, cs );
+    return entry->isFile() ? static_cast< const KZipFileEntry * >( entry ) : 0;
 }
 
 /**

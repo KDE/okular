@@ -1601,7 +1601,7 @@ Okular::TextPage* XpsPage::textPage()
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( m_fileName ));
     QXmlStreamReader xml;
-    xml.addData( pageFile->data() );
+    xml.addData( readFileOrDirectoryParts( pageFile ) );
 
     QMatrix matrix = QMatrix();
     QStack<QMatrix> matrices;

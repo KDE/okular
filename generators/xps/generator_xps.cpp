@@ -2003,7 +2003,7 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
 
     m_docInfo = new Okular::DocumentInfo();
 
-    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/vnd.ms-xpsdocument" );
+    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/oxps" );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
         const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));

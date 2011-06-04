@@ -452,6 +452,20 @@ static QMatrix parseRscRefMatrix( const QString &data )
 }
 
 /**
+   \return Path specified by given data or by referenced dictionary
+*/
+static QPainterPath parseRscRefPath( const QString &data )
+{
+    if (data[0] == '{') {
+        //TODO
+        kDebug(XpsDebug) << "Reference" << data;
+        return QPainterPath();
+    } else {
+        return parseAbbreviatedPathData( data );
+    }
+}
+
+/**
    \return The path of the entry
 */
 static QString entryPath( const QString &entry )
@@ -870,7 +884,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     // Clip
     att = node.attributes.value( "Clip" );
     if ( !att.isEmpty() ) {
-        QPainterPath clipPath = parseAbbreviatedPathData( att );
+        QPainterPath clipPath = parseRscRefPath( att );
         if ( !clipPath.isEmpty() ) {
             m_painter->setClipPath( clipPath );
         }
@@ -1009,7 +1023,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
     XpsPathGeometry * pathdata = node.getChildData( "Path.Data" ).value< XpsPathGeometry * >();
     att = node.attributes.value( "Data" );
     if (! att.isEmpty() ) {
-        QPainterPath path = parseAbbreviatedPathData( att );
+        QPainterPath path = parseRscRefPath( att );
         delete pathdata;
         pathdata = new XpsPathGeometry();
         pathdata->paths.append( new XpsPathFigure( path, true ) );
@@ -1161,7 +1175,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
 
     att = node.attributes.value( "Figures" );
     if ( !att.isEmpty() ) {
-        QPainterPath path = parseAbbreviatedPathData( att );
+        QPainterPath path = parseRscRefPath( att );
         qDeleteAll( geom->paths );
         geom->paths.clear();
         geom->paths.append( new XpsPathFigure( path, true ) );

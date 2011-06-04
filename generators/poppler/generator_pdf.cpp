@@ -291,7 +291,8 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 #ifdef HAVE_POPPLER_0_16
 static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
 {
-    kDebug() << message;
+    Q_UNUSED(closure);
+    kDebug() << "[Poppler]" << message;
 }
 #endif
 

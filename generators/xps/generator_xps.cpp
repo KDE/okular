@@ -270,7 +270,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
         {
             if (token.type != abtEOF)
             {
-                kDebug(XpsDebug) << "Error in parsing abbreviated path data";
+                kDebug(XpsDebug).nospace() << "Error in parsing abbreviated path data (" << token.type << "@" << token.curPos << "): " << data;
             }
             return path;
         }

@@ -1630,9 +1630,11 @@ Okular::TextPage* XpsPage::textPage()
                 glyphsAtts = xml.attributes();
             } else if ( (xml.name() == "Path") || (xml.name() == "Path.Fill") || (xml.name() == "SolidColorBrush")
                         || (xml.name() == "ImageBrush") ||  (xml.name() == "ImageBrush.Transform")
-                        || (xml.name() == "Path.OpacityMask") ){
+                        || (xml.name() == "Path.OpacityMask") || (xml.name() == "Path.Data")
+                        || (xml.name() == "PathGeometry") || (xml.name() == "PathFigure")
+                        || (xml.name() == "PolyLineSegment") ) {
                 // those are only graphical - no use in text handling
-            } else if (xml.name() == "FixedPage")  {
+            } else if ( (xml.name() == "FixedPage") || (xml.name() == "FixedPage.Resources") ) {
                 // not useful for text extraction
             } else {
                 kDebug(XpsDebug) << "Unhandled element in Text Extraction start: " << xml.name().toString();
@@ -1677,9 +1679,11 @@ Okular::TextPage* XpsPage::textPage()
                 matrix = matrices.pop();
             } else if ( (xml.name() == "Path") || (xml.name() == "Path.Fill") || (xml.name() == "SolidColorBrush")
                         || (xml.name() == "ImageBrush") ||  (xml.name() == "ImageBrush.Transform")
-                        || (xml.name() == "Path.OpacityMask") ){
+                        || (xml.name() == "Path.OpacityMask") || (xml.name() == "Path.Data")
+                        || (xml.name() == "PathGeometry") || (xml.name() == "PathFigure")
+                        || (xml.name() == "PolyLineSegment") ) {
                 // those are only graphical - no use in text handling
-            } else if (xml.name() == "FixedPage")  {
+            } else if ( (xml.name() == "FixedPage") || (xml.name() == "FixedPage.Resources") ) {
                 // not useful for text extraction
             } else {
                 kDebug(XpsDebug) << "Unhandled element in Text Extraction end: " << xml.name().toString();

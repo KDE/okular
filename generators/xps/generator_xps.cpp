@@ -1500,12 +1500,12 @@ int XpsFile::loadFontByName( const QString &fileName )
 {
     // kDebug(XpsDebug) << "font file name: " << fileName;
 
-    const KZipFileEntry* fontFile = loadFile( m_xpsArchive, fileName, Qt::CaseInsensitive );
+    const KArchiveEntry* fontFile = loadEntry( m_xpsArchive, fileName, Qt::CaseInsensitive );
     if ( !fontFile ) {
         return -1;
     }
 
-    QByteArray fontData = fontFile->data(); // once per file, according to the docs
+    QByteArray fontData = readFileOrDirectoryParts( fontFile ); // once per file, according to the docs
 
     int result = m_fontDatabase.addApplicationFontFromData( fontData );
     if (-1 == result) {

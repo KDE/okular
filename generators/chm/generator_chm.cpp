@@ -181,7 +181,7 @@ bool CHMGenerator::doCloseDocument()
 
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
-    KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
+    KUrl pAddress= QString("ms-its:" + m_fileName + "::" + url);
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->openUrl(pAddress);
@@ -278,7 +278,7 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
         ) ) * 100;
 
-    KUrl pAddress= "ms-its:" + m_fileName + "::" + url;
+    KUrl pAddress= QString("ms-its:" + m_fileName + "::" + url);
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);

@@ -205,7 +205,7 @@ bool find_exe(const QString& exe_)
   const iterator end = path.end();
   for (iterator it = path.begin(); it != end; ++it) {
     const QString dir = it->endsWith("/") ? *it : *it + '/';
-    const QFileInfo abs_exe = dir + exe.filePath();
+    const QFileInfo abs_exe = QString(dir + exe.filePath());
 
     if (abs_exe.exists())
       return abs_exe.isReadable() && abs_exe.isExecutable();

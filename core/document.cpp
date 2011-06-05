@@ -3459,6 +3459,28 @@ bool Document::saveDocumentArchive( const QString &fileName )
     return true;
 }
 
+QPrinter::Orientation Document::orientation() const
+{
+    double width, height;
+    int landscape, portrait;
+    const Okular::Page *currentPage;
+
+    // if some pages are landscape and others are not, the most common wins, as
+    // QPrinter does not accept a per-page setting
+    landscape = 0;
+    portrait = 0;
+    for (uint i = 0; i < pages(); i++)
+    {
+        currentPage = page(i);
+        width = currentPage->width();
+        height = currentPage->height();
+        if (currentPage->orientation() == Okular::Rotation90 || currentPage->orientation() == Okular::Rotation270) qSwap(width, height);
+        if (width > height) landscape++;
+        else portrait++;
+    }
+    return (landscape > portrait) ? QPrinter::Landscape : QPrinter::Portrait;
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

@@ -22,11 +22,11 @@
 #include <ksharedptr.h>
 
 #include <QObject>
+#include <QtGui/QPrinter>
 
 
 class dviRenderer;
 class fontProgressDialog;
-class QPrinter;
 class KProcess;
 class QStringList;
 
@@ -124,13 +124,15 @@ public:
    *  passed to the external process's argv command line.
    *  @param printer having generated the PostScript file, it is passed
    *  to @c printer (if not null).
+   *  @param orientation the original orientation of the document
    */
   DVIExportToPS(dviRenderer& parent,
                 QWidget* parent_widget,
                 const QString& output_name,
                 const QStringList& options,
                 QPrinter* printer,
-                bool useFontHinting);
+                bool useFontHinting,
+                QPrinter::Orientation orientation = QPrinter::Portrait);
 
 private:
   virtual void abort_process_impl();
@@ -139,6 +141,7 @@ private:
   QPrinter* printer_;
   QString output_name_;
   QString tmpfile_name_;
+  QPrinter::Orientation orientation_;
 };
 
 #endif

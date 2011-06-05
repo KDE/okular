@@ -2073,24 +2073,7 @@ void Part::slotPrint()
 
 void Part::setupPrint( QPrinter &printer )
 {
-    double width, height;
-    int landscape, portrait;
-    const Okular::Page *page;
-
-    // if some pages are landscape and others are not the most common win as QPrinter does
-    // not accept a per page setting
-    landscape = 0;
-    portrait = 0;
-    for (uint i = 0; i < m_document->pages(); i++)
-    {
-        page = m_document->page(i);
-        width = page->width();
-        height = page->height();
-        if (page->orientation() == Okular::Rotation90 || page->orientation() == Okular::Rotation270) qSwap(width, height);
-        if (width > height) landscape++;
-        else portrait++;
-    }
-    if (landscape > portrait) printer.setOrientation(QPrinter::Landscape);
+    printer.setOrientation(m_document->orientation());
 
     // title
     QString title = m_document->metaData( "DocumentTitle" ).toString();

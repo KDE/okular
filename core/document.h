@@ -19,11 +19,11 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
+#include <QtGui/QPrinter>
 #include <QtXml/QDomDocument>
 
 #include <kmimetype.h>
 
-class QPrinter;
 class QPrintDialog;
 class KComponentData;
 class KBookmark;
@@ -603,6 +603,15 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.10 (KDE 4.4)
         */
         const SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
+
+        /**
+         * Returns the orientation of the document (for printing purposes). This
+         * is used in the KPart to initialize the print dialog and in the
+         * generators to check whether the document needs to be rotated or not.
+         *
+         * @since 0.14 (KDE 4.8)
+        */
+        QPrinter::Orientation orientation() const;
 
 
     public Q_SLOTS:

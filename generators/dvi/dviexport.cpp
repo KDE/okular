@@ -288,9 +288,11 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                              const QString& output_name,
                              const QStringList& options,
                              QPrinter* printer,
-                             bool useFontHinting)
+                             bool useFontHinting,
+                             QPrinter::Orientation orientation)
   : DVIExport(parent, parent_widget),
-    printer_(printer)
+    printer_(printer),
+    orientation_(orientation)
 {
   // None of these should happen. Paranoia checks.
   if (!parent.dviFile)
@@ -457,7 +459,7 @@ void DVIExportToPS::finished_impl(int exit_code)
     const QFileInfo output(output_name_);
     if (output.exists() && output.isReadable()) {
         // I'm not 100% sure on this, think we still need to select pages in export to ps above
-        Okular::FilePrinter::printFile( (*printer_), output_name_,
+        Okular::FilePrinter::printFile( (*printer_), output_name_, orientation_,
                                 Okular::FilePrinter::ApplicationDeletesFiles,
                                 Okular::FilePrinter::ApplicationSelectsPages,
                                 QString() );

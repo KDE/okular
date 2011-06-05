@@ -16,11 +16,14 @@
 
 #include <QtCore/QList>
 #include <QtCore/QString>
+#include <QtGui/QPrinter>
+
+// For KDE_DEPRECATED
+#include <kdemacros.h>
 
 #include "okular_export.h"
 #include "generator.h"
 
-class QPrinter;
 class QSize;
 
 namespace Okular {
@@ -53,6 +56,39 @@ public:
      *  Only supports CUPS and LPR on *NIX.  Page Range only supported in CUPS.
      *  Most settings unsupported by LPR, some settings unsupported by CUPS.
      *
+     *  The documentOrientation parameter was added in version 0.14.
+     *
+     * @param printer the print settings to use
+     * @param file the file to print
+     * @param documentOrientation the orientation stored in the document itself
+     * @param fileDeletePolicy if the application or system deletes the file
+     * @param pageSelectPolicy if the application or system selects the pages to print
+     * @param pageRange page range to print if SystemSlectsPages and user chooses Selection in Print Dialog
+     *
+     * @returns Returns exit code:
+     *          -9 if lpr not found
+     *          -8 if empty file name
+     *          -7 if unable to find file
+     *          -6 if invalid printer state
+     *          -5 if print to file copy failed
+     *          -2 if the KProcess could not be started
+     *          -1 if the KProcess crashed
+     *          otherwise the KProcess exit code
+     *
+     * @since 0.14 (KDE 4.8)
+     */
+
+    static int printFile( QPrinter &printer, const QString file,
+                          QPrinter::Orientation documentOrientation,
+                          FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
+                          PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
+                          const QString &pageRange = QString() );
+
+    /** Print a file using the settings in QPrinter (compatibility overload)
+     *
+     *  Only supports CUPS and LPR on *NIX.  Page Range only supported in CUPS.
+     *  Most settings unsupported by LPR, some settings unsupported by CUPS.
+     *
      * @param printer the print settings to use
      * @param file the file to print
      * @param fileDeletePolicy if the application or system deletes the file
@@ -68,12 +104,14 @@ public:
      *          -2 if the KProcess could not be started
      *          -1 if the KProcess crashed
      *          otherwise the KProcess exit code
+     *
+     * @deprecated Use the overload which takes the documentOrientation instead.
      */
 
-    static int printFile( QPrinter &printer, const QString file,
-                          FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
-                          PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
-                          const QString &pageRange = QString() );
+    static KDE_DEPRECATED int printFile( QPrinter &printer, const QString file,
+                                         FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles,
+                                         PageSelectPolicy pageSelectPolicy = FilePrinter::ApplicationSelectsPages,
+                                         const QString &pageRange = QString() );
 
     /** Print a list of files using the settings in QPrinter
      *
@@ -93,10 +131,12 @@ public:
      *          -2 if the KProcess could not be started
      *          -1 if the KProcess crashed
      *          otherwise the KProcess exit code
+     *
+     * @deprecated Use printFile instead, passing the documentOrientation for each file.
      */
 
-    static int printFiles( QPrinter &printer, const QStringList &fileList,
-                           FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles );
+    static KDE_DEPRECATED int printFiles( QPrinter &printer, const QStringList &fileList,
+                                          FileDeletePolicy fileDeletePolicy = FilePrinter::ApplicationDeletesFiles );
 
     /** Return the list of pages selected by the user in the Print Dialog
      *
@@ -169,13 +209,21 @@ protected:
     bool detectCupsService();
     bool detectCupsConfig();
 
+    KDE_DEPRECATED int doPrintFiles( QPrinter &printer, const QStringList fileList,
+                                     FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
+                                     const QString &pageRange );
     int doPrintFiles( QPrinter &printer, const QStringList fileList,
                              FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
-                             const QString &pageRange );
+                             const QString &pageRange,
+                             QPrinter::Orientation documentOrientation );
 
+    KDE_DEPRECATED QStringList printArguments( QPrinter &printer,
+                                               FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
+                                               bool useCupsOptions, const QString &pageRange, const QString &version );
     QStringList printArguments( QPrinter &printer,
                                        FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
-                                       bool useCupsOptions, const QString &pageRange, const QString &version );
+                                       bool useCupsOptions, const QString &pageRange, const QString &version,
+                                       QPrinter::Orientation documentOrientation );
 
     QStringList destination( QPrinter &printer, const QString &version );
     QStringList copies( QPrinter &printer, const QString &version );
@@ -185,11 +233,13 @@ protected:
     QStringList pages( QPrinter &printer, PageSelectPolicy pageSelectPolicy,
                               const QString &pageRange, bool useCupsOptions, const QString &version );
 
-    QStringList cupsOptions( QPrinter &printer );
+    KDE_DEPRECATED QStringList cupsOptions( QPrinter &printer );
+    QStringList cupsOptions( QPrinter &printer, QPrinter::Orientation documentOrientation );
     QStringList optionMedia( QPrinter &printer );
     QString mediaPageSize( QPrinter &printer );
     QString mediaPaperSource( QPrinter &printer );
-    QStringList optionOrientation( QPrinter &printer );
+    KDE_DEPRECATED QStringList optionOrientation( QPrinter &printer );
+    QStringList optionOrientation( QPrinter &printer, QPrinter::Orientation documentOrientation );
     QStringList optionDoubleSidedPrinting( QPrinter &printer );
     QStringList optionPageOrder( QPrinter &printer );
     QStringList optionCollateCopies( QPrinter &printer );

@@ -33,21 +33,43 @@
 
 using namespace Okular;
 
+// Deprecated overload for binary compatibility
 int FilePrinter::printFile( QPrinter &printer, const QString file, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
-    FilePrinter fp;
-    return fp.doPrintFiles( printer, QStringList( file ), fileDeletePolicy, pageSelectPolicy, pageRange );
+    return printFile( printer, file, QPrinter::Portrait, fileDeletePolicy, pageSelectPolicy, pageRange );
 }
 
+int FilePrinter::printFile( QPrinter &printer, const QString file,
+                            QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy,
+                            PageSelectPolicy pageSelectPolicy, const QString &pageRange )
+{
+    FilePrinter fp;
+    return fp.doPrintFiles( printer, QStringList( file ), fileDeletePolicy, pageSelectPolicy, pageRange, 
+                            documentOrientation );
+}
+
+// Deprecated function kept for binary compatibility
+// This is deprecated because it cannot support different original orientations
+// for each document in the list.
 int FilePrinter::printFiles( QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy )
 {
     FilePrinter fp;
-    return fp.doPrintFiles( printer, fileList, fileDeletePolicy, FilePrinter::ApplicationSelectsPages, QString() );
+    return fp.doPrintFiles( printer, fileList, fileDeletePolicy, FilePrinter::ApplicationSelectsPages, QString(),
+                            QPrinter::Portrait );
+}
+
+// Deprecated overload for binary compatibility
+int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
+                               PageSelectPolicy pageSelectPolicy, const QString &pageRange )
+{
+    return doPrintFiles( printer, fileList, fileDeletePolicy, pageSelectPolicy, pageRange,
+                         QPrinter::Portrait );
 }
 
 int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
-                               PageSelectPolicy pageSelectPolicy, const QString &pageRange )
+                               PageSelectPolicy pageSelectPolicy, const QString &pageRange,
+                               QPrinter::Orientation documentOrientation )
 {
 
     if ( fileList.size() < 1 ) {
@@ -135,7 +157,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
 
         bool useCupsOptions = cupsAvailable();
         argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, 
-                                  useCupsOptions, pageRange, exe ) << fileList;
+                                  useCupsOptions, pageRange, exe, documentOrientation ) << fileList;
         kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
@@ -358,9 +380,19 @@ Generator::PrintError FilePrinter::printError( int c )
 
 
 
+// Deprecated overload for binary compatibility
 QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
                                          PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
                                          const QString &pageRange, const QString &version )
+{
+    return printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions,
+                           pageRange, version, QPrinter::Portrait );
+}
+
+QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
+                                         PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
+                                         const QString &pageRange, const QString &version, 
+                                         QPrinter::Orientation documentOrientation )
 {
     QStringList argList;
 
@@ -380,8 +412,8 @@ QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fil
         argList << pages( printer, pageSelectPolicy, pageRange, useCupsOptions, version );
     }
 
-    if ( useCupsOptions && ! cupsOptions( printer ).isEmpty() ) {
-        argList << cupsOptions( printer );
+    if ( useCupsOptions && ! cupsOptions( printer, documentOrientation ).isEmpty() ) {
+        argList << cupsOptions( printer, documentOrientation);
     }
 
     if ( ! deleteFile( printer, fileDeletePolicy, version ).isEmpty() ) {
@@ -484,7 +516,13 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
     return QStringList(); // AllPages
 }
 
+// Deprecated overload for binary compatibility
 QStringList FilePrinter::cupsOptions( QPrinter &printer )
+{
+    return cupsOptions( printer, QPrinter::Portrait );
+}
+
+QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation documentOrientation )
 {
     QStringList optionList;
 
@@ -492,8 +530,8 @@ QStringList FilePrinter::cupsOptions( QPrinter &printer )
         optionList << optionMedia( printer );
     }
 
-    if ( ! optionOrientation( printer ).isEmpty() ) {
-        optionList << optionOrientation( printer );
+    if ( ! optionOrientation( printer, documentOrientation ).isEmpty() ) {
+        optionList << optionOrientation( printer, documentOrientation );
     }
 
     if ( ! optionDoubleSidedPrinting( printer ).isEmpty() ) {
@@ -597,12 +635,23 @@ QString FilePrinter::mediaPaperSource( QPrinter &printer )
     }
 }
 
+// Deprecated overload for binary compatibility
 QStringList FilePrinter::optionOrientation( QPrinter &printer )
 {
-    switch ( printer.orientation() ) {
-    case QPrinter::Portrait:   return QStringList("-o") << "portrait";
-    case QPrinter::Landscape:  return QStringList("-o") << "landscape";
-    default:                   return QStringList();
+    return optionOrientation( printer, QPrinter::Portrait );
+}
+
+QStringList FilePrinter::optionOrientation( QPrinter &printer, QPrinter::Orientation documentOrientation )
+{
+    // portrait and landscape options rotate the document according to the document orientation
+    // If we want to print a landscape document as one would expect it, we have to pass the
+    // portrait option so that the document is not rotated additionaly
+    if ( printer.orientation() == documentOrientation ) {
+        // the user wants the document printed as is
+        return QStringList("-o") << "portrait";
+    } else {
+        // the user expects the document being rotated by 90 degrees
+        return QStringList("-o") << "landscape";
     }
 }
 

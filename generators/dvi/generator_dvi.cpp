@@ -567,7 +567,7 @@ bool DviGenerator::print( QPrinter& printer )
 
     QEventLoop el;
     m_dviRenderer->setEventLoop( &el );
-    m_dviRenderer->exportPS( tf.fileName(), printOptions, &printer );
+    m_dviRenderer->exportPS( tf.fileName(), printOptions, &printer, document()->orientation() );
 
     tf.close();
 

@@ -145,7 +145,7 @@ bool GSGenerator::print( QPrinter& printer )
     if ( exportStatus == SPECTRE_STATUS_SUCCESS && endStatus == SPECTRE_STATUS_SUCCESS )
     {
         tf.setAutoRemove( false );
-        int ret = Okular::FilePrinter::printFile( printer, fileName,
+        int ret = Okular::FilePrinter::printFile( printer, fileName, document()->orientation(),
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );

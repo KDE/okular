@@ -217,7 +217,7 @@ bool DjVuGenerator::print( QPrinter& printer )
         tf.setAutoRemove( false );
         const QString fileName = tf.fileName();
         tf.close();
-        int ret = Okular::FilePrinter::printFile( printer, fileName,
+        int ret = Okular::FilePrinter::printFile( printer, fileName, document()->orientation(),
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );

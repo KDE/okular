@@ -976,6 +976,7 @@ bool PDFGenerator::print( QPrinter& printer )
         delete psConverter;
         tf.close();
         int ret = Okular::FilePrinter::printFile( printer, tempfilename,
+                                                  document()->orientation(),
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
                                                   document()->bookmarkedPageRange() );

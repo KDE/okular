@@ -767,9 +767,9 @@ void dviRenderer::exportPDF()
 }
 
 
-void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer)
+void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer, QPrinter::Orientation orientation)
 {
-  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer, font_pool.getUseFontHints()));
+  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, parentWidget, fname, options, printer, font_pool.getUseFontHints(), orientation));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 }

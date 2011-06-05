@@ -29,6 +29,7 @@
 #include <QVector>
 #include <QTimer>
 #include <QMutex>
+#include <QtGui/QPrinter>
 
 class Anchor;
 class DocumentWidget;
@@ -37,7 +38,6 @@ class dviRenderer;
 class ghostscript_interface;
 //class infoDialog;
 class QEventLoop;
-class QPrinter;
 class KProgressDialog;
 class PreBookmark;
 class TeXFontDefinition;
@@ -154,7 +154,7 @@ public:
 //void          editor_finished(const DVISourceEditor*);
 
 public slots:
-  void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0);
+  void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();
 
 //void          showInfo();

@@ -18,21 +18,21 @@ if(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
 else(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)
 
+set(_poppler_version_bad FALSE)
+
 if(NOT WIN32)
-# use pkg-config to get the directories and then use these values
-# in the FIND_PATH() and FIND_LIBRARY() calls
+  # use pkg-config to get the directories and then use these values
+  # in the FIND_PATH() and FIND_LIBRARY() calls
   include(FindPkgConfig)
   pkg_check_modules(_pc_poppler poppler-qt4)
-  if(_pc_poppler_FOUND AND _pc_poppler_VERSION VERSION_GREATER 0.5.3)
-    set(POPPLER_FOUND TRUE)
-  endif(_pc_poppler_FOUND AND _pc_poppler_VERSION VERSION_GREATER 0.5.3)
-else(NOT WIN32)
-  # assume so, for now
-  set(POPPLER_FOUND TRUE)
+  if(_pc_poppler_FOUND)
+    if(NOT "${_pc_poppler_VERSION}" VERSION_GREATER 0.5.3)
+      set(_poppler_version_bad TRUE)
+    endif(NOT "${_pc_poppler_VERSION}" VERSION_GREATER 0.5.3)
+  endif(_pc_poppler_FOUND)
 endif(NOT WIN32)
 
-if(POPPLER_FOUND)
-  # set it back as false
+if(NOT _poppler_version_bad)
   set(POPPLER_FOUND FALSE)
 
   find_library(POPPLER_LIBRARY poppler-qt4
@@ -52,10 +52,10 @@ if(POPPLER_FOUND)
     list(APPEND POPPLER_INCLUDE_DIR "${POPPLER_INCLUDE_DIR_core}")
     set(POPPLER_FOUND TRUE)
   endif(POPPLER_LIBRARY AND POPPLER_INCLUDE_DIR AND POPPLER_INCLUDE_DIR_core)
-endif(POPPLER_FOUND)
+endif(NOT _poppler_version_bad)
 
 if (POPPLER_FOUND)
-  INCLUDE(CheckCXXSourceCompiles)
+  include(CheckCXXSourceCompiles)
 
   # check whether we're using poppler 0.6
   set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
@@ -71,6 +71,7 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_6 )
+
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
 #include <poppler-form.h>
@@ -81,6 +82,7 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_8)
+
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
 int main()
@@ -89,6 +91,7 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_12_1)
+
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
 
@@ -102,6 +105,7 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_16)
+
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
   if (HAVE_POPPLER_0_16)

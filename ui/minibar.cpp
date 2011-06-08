@@ -81,6 +81,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     // bottom: left lineEdit (current page box)
     m_pagesEdit = new PagesEdit( this );
     horLayout->addWidget( m_pagesEdit );
+    m_pagesEdit->installEventFilter( this );
     // bottom: central 'of' label
     horLayout->addSpacing(5);
     horLayout->addWidget( new QLabel( i18nc( "Layouted like: '5 [pages] of 10'", "of" ), this ) );
@@ -116,6 +117,23 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
 MiniBar::~MiniBar()
 {
     m_document->removeObserver( this );
+}
+
+bool MiniBar::eventFilter( QObject *target, QEvent *event )
+{
+    if ( target == m_pagesEdit )
+    {
+        if ( event->type() == QEvent::KeyPress )
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>( event );
+            if ( keyEvent->key() == Qt::Key_PageUp || keyEvent->key() == Qt::Key_PageDown )
+            {
+                emit forwardKeyPressEvent( keyEvent );
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )

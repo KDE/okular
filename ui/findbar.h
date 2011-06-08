@@ -34,6 +34,9 @@ class FindBar
         void focusAndSetCursor();
         bool maybeHide();
 
+    signals:
+        void forwardKeyPressEvent( QKeyEvent* );
+
     public slots:
         void findNext();
         void findPrev();
@@ -47,6 +50,7 @@ class FindBar
         SearchLineWidget * m_search;
         QAction * m_caseSensitiveAct;
         QAction * m_fromCurrentPageAct;
+        bool eventFilter( QObject *target, QEvent *event );
         bool m_active;
 };
 

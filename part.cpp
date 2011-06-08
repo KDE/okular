@@ -382,6 +382,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 
+    connect( m_findBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
+    connect( m_miniBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
+
     connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
     connect( m_reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),

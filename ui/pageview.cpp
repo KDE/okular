@@ -3696,6 +3696,12 @@ void PageView::slotAction( Okular::Action *action )
 {
     d->document->processAction( action );
 }
+
+void PageView::externalKeyPressEvent( QKeyEvent *e )
+{
+    keyPressEvent( e );
+}
+
 //END private SLOTS
 
 #include "pageview.moc"

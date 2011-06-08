@@ -14,6 +14,7 @@
 #include <qlayout.h>
 #include <qmenu.h>
 #include <qtoolbutton.h>
+#include <qevent.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kpushbutton.h>
@@ -47,6 +48,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     m_search->lineEdit()->setSearchColor( qRgb( 255, 255, 64 ) );
     m_search->lineEdit()->setSearchMoveViewport( true );
     m_search->lineEdit()->setToolTip( i18n( "Text to search for" ) );
+    m_search->installEventFilter( this );
     label->setBuddy( m_search );
     lay->addWidget( m_search );
 
@@ -86,6 +88,22 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
 
 FindBar::~FindBar()
 {
+}
+
+bool FindBar::eventFilter( QObject *target, QEvent *event ) {
+    if ( target == m_search )
+    {
+        if ( event->type() == QEvent::KeyPress )
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>( event );
+            if ( keyEvent->key() == Qt::Key_PageUp || keyEvent->key() == Qt::Key_PageDown ) 
+            {
+                emit forwardKeyPressEvent( keyEvent );
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 QString FindBar::text() const

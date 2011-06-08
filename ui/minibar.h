@@ -40,6 +40,7 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
         void gotoPage();
         void prevPage();
         void nextPage();
+        void forwardKeyPressEvent( QKeyEvent *e );
 
     public slots:
         void slotChangePage();
@@ -48,6 +49,7 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
 
     private:
         void resizeForPage( int pages );
+        bool eventFilter( QObject *target, QEvent *event );
 
         Okular::Document * m_document;
         PagesEdit * m_pagesEdit;

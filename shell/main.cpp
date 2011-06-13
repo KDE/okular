@@ -40,6 +40,7 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
 int main(int argc, char** argv)
 {
     KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
+    cout << "This is the main function" << endl;
 
     KCmdLineArgs::init(argc, argv, &about);
 

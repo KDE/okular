@@ -369,12 +369,12 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 void PresentationWidget::setupActions( KActionCollection * collection )
 {
     m_ac = collection;
-    addAction( m_ac->action( "go_previous" ) );
-    addAction( m_ac->action( "go_next" ) );
     addAction( m_ac->action( "first_page" ) );
     addAction( m_ac->action( "last_page" ) );
-    addAction( m_ac->action( "go_document_back" ) );
-    addAction( m_ac->action( "go_document_forward" ) );
+    addAction( m_ac->action( KStandardAction::name( KStandardAction::Prior ) ) );
+    addAction( m_ac->action( KStandardAction::name( KStandardAction::Next ) ) );
+    addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentBack ) ) );
+    addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentForward ) ) );
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
     connect( action, SIGNAL( toggled( bool ) ), SLOT( toggleBlackScreenMode( bool ) ) );

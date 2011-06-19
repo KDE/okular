@@ -373,6 +373,8 @@ void PresentationWidget::setupActions( KActionCollection * collection )
     addAction( m_ac->action( "go_next" ) );
     addAction( m_ac->action( "first_page" ) );
     addAction( m_ac->action( "last_page" ) );
+    addAction( m_ac->action( "go_document_back" ) );
+    addAction( m_ac->action( "go_document_forward" ) );
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
     connect( action, SIGNAL( toggled( bool ) ), SLOT( toggleBlackScreenMode( bool ) ) );

@@ -306,7 +306,6 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
     synctex_scanner(0)
 {
-    cout << "In PDFGenerator: Constructor ... ... " << endl;
 
     setFeature( TextExtraction );
     setFeature( FontInfo );
@@ -340,7 +339,6 @@ PDFGenerator::~PDFGenerator()
 //BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*> & pagesVector )
 {
-    cout << "PDFGenerator::loadDocument is called " << endl;
 
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -350,8 +348,6 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     }
 #endif
 
-    cout << "Loading the document in pdfdoc using Poppler::Document::load(...) "
-            << endl;
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
     bool success = init(pagesVector, filePath.section('/', -1, -1));
@@ -385,7 +381,6 @@ bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Ok
 
 bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &walletKey)
 {
-    cout << "In PDFGenerator::init(...) ..." << endl;
     // if the file didn't open correctly it might be encrypted, so ask for a pass
     bool firstInput = true;
     bool triedWallet = false;
@@ -495,14 +490,10 @@ bool PDFGenerator::doCloseDocument()
 
 void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, bool clear)
 {
-    cout << "In PDFGenerator::loadPages(...) " << endl;
     // TODO XPDF 3.01 check
     const int count = pagesVector.count();
     double w = 0, h = 0;
 
-    cout << "From the poppler document pdfdoc, we will find out all pages " <<
-            "and will keep them in Poppler::Page" << endl;
-    cout << "Later we will put them in Okular::Page ... " << endl;
     for ( int i = 0; i < count ; i++ )
     {
         // get xpdf page
@@ -787,7 +778,6 @@ bool PDFGenerator::canGeneratePixmap() const
 
 void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
-    cout << "PDFGenerator::generatePixmap is called .... " << endl;
 
 #ifndef NDEBUG
     if ( !ready )
@@ -884,7 +874,6 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
-    cout << "PDFGenerator::textPage : Creating a textPage from Page " << endl;
 
 #ifdef PDFGENERATOR_DEBUG
     kDebug(PDFDebug) << "page" << page->number();
@@ -1186,8 +1175,6 @@ inline void append (Okular::TextPage* ktp,
 
 Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
 {
-    cout << "PDFGenerator::abstractTextPage - here we append text in the textPage"
-            << endl;
 
     Q_UNUSED(rot);
     Okular::TextPage* ktp=new Okular::TextPage;

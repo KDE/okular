@@ -188,7 +188,7 @@ TextPagePrivate::~TextPagePrivate()
 TextPage::TextPage()
     : d( new TextPagePrivate() )
 {
-    cout << "TextPage default constructor" << endl;
+//    cout << "TextPage default constructor" << endl;
 }
 
 TextPage::TextPage( const TextEntity::List &words )
@@ -196,7 +196,7 @@ TextPage::TextPage( const TextEntity::List &words )
 {
     TextEntity::List::ConstIterator it = words.constBegin(), itEnd = words.constEnd();
 
-    cout << "TextPage non default constructor: " << endl;
+//    cout << "TextPage non default constructor: " << endl;
 
     for ( ; it != itEnd; ++it )
     {
@@ -248,7 +248,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     //if no rotation, it should be identity matrix
     const QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
-    cout << "Matrix: " << matrix.m11() << "," << matrix.m12() << "," << matrix.m21() << "," << matrix.m22() << endl;
 
 #if 0
     cout << "Have we ever been here ???  !!! .............................. " << endl;
@@ -363,15 +362,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator start = it,end = it;
+    TextList::ConstIterator start = it,end = itEnd-1;
 
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
-
-    cout << "Mergeside: " << side << endl;
-
-    // we need to change here
-
-    // bool flag1 = false, flag2 = false;
 
     for ( ; it != itEnd; ++it )
     {

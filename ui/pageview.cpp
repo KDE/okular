@@ -655,7 +655,7 @@ QPoint PageView::contentAreaPoint( const QPoint & pos ) const
 
 QString PageViewPrivate::selectedText() const
 {
-    cout << "PageViewPrivate: selectedText()" << endl;
+//    cout << "PageViewPrivate: selectedText()" << endl;
 
     if ( pagesWithTextSelection.isEmpty() )
         return QString();
@@ -688,7 +688,7 @@ QString PageViewPrivate::selectedText() const
 void PageView::copyTextSelection() const
 {
 
-    cout << "PageView::copyTextSelection " << endl;
+//    cout << "PageView::copyTextSelection " << endl;
 
     const QString text = d->selectedText();
     if ( !text.isEmpty() )
@@ -1630,8 +1630,8 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             }
             d->pagesWithTextSelection = pagesWithSelectionSet;
 
-            cout << "PageView::mouseMoveEvent():MouseTextSelect " << " point: "
-                 << eventPos.x () << " , " << eventPos.y () << endl;
+//            cout << "PageView::mouseMoveEvent():MouseTextSelect " << " point: "
+//                 << eventPos.x () << " , " << eventPos.y () << endl;
         }
         updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
         break;
@@ -1640,7 +1640,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
 
 void PageView::mousePressEvent( QMouseEvent * e )
 {
-    cout << "PageView::mousePressEvent() " << endl;
+//    cout << "PageView::mousePressEvent() " << endl;
 
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
@@ -1769,7 +1769,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
 void PageView::mouseReleaseEvent( QMouseEvent * e )
 {
-    cout << "PageView::mouseReleaseEvent() " << endl;
+//    cout << "PageView::mouseReleaseEvent() " << endl;
 
     // stop the drag scrolling
     d->dragScrollTimer.stop();
@@ -2358,7 +2358,7 @@ void PageView::scrollContentsBy( int dx, int dy )
 
 QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start, const QPoint& end, int& firstpage )
 {
-    cout << "PageView::textSelections ... " << endl;
+//    cout << "PageView::textSelections ... " << endl;
 
     firstpage = -1;
     QList< Okular::RegularAreaRect * > ret;
@@ -2631,7 +2631,7 @@ void PageView::textSelectionClear()
 
 void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*aboveAll*/ )
 {
-    cout << "selection started: PageView: selectionStart" << endl;
+//    cout << "selection started: PageView: selectionStart" << endl;
 
     selectionClear();
     d->mouseSelecting = true;
@@ -2647,7 +2647,7 @@ void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*
 
 void PageView::selectionEndPoint( const QPoint & pos )
 {
-    cout << "selection ended: PageView::selectionEndPoint " << endl;
+//    cout << "selection ended: PageView::selectionEndPoint " << endl;
 
     if ( !d->mouseSelecting )
         return;
@@ -2700,7 +2700,7 @@ static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QR
 Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
 {
 
-    cout << "PageView::textSelectionForItem **** " << endl;
+//    cout << "PageView::textSelectionForItem **** " << endl;
 
     const QRect & geometry = item->uncroppedGeometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
@@ -3529,7 +3529,7 @@ void PageView::slotSetMouseZoom()
 
 void PageView::slotSetMouseSelect()
 {
-    cout << "selection Button Pressed " << endl;
+//    cout << "selection Button Pressed " << endl;
 
     d->mouseMode = MouseSelect;
     // change the text in messageWindow (and show it if hidden)
@@ -3543,7 +3543,7 @@ void PageView::slotSetMouseSelect()
 
 void PageView::slotSetMouseTextSelect()
 {
-    cout << "Text Selection Pressed ... " << endl;
+//    cout << "Text Selection Pressed ... " << endl;
 
     d->mouseMode = MouseTextSelect;
     // change the text in messageWindow (and show it if hidden)

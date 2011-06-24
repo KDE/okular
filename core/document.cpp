@@ -85,9 +85,6 @@
 #include <iostream>
 using namespace std;
 
-#include "textpage.h"
-#include "textpage_p.h"
-
 using namespace Okular;
 
 struct AllocatedPixmap
@@ -675,9 +672,6 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
     bool openOk = false;
-
-    cout << "going to loadDocument from generator either using loadDocument(..)" <<
-            " or using loadDocumentFromData(...) **** " << endl;
 
     if ( !isstdin )
     {
@@ -1538,7 +1532,7 @@ static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
 
 bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
 {
-    cout << "Document::openDocument .... " << endl;
+//    cout << "Document::openDocument .... " << endl;
 
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
@@ -2325,7 +2319,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
 void Document::requestTextPage( uint page )
 {
-    cout << "Document::requestTextPage " << endl;
+//    cout << "Document::requestTextPage " << endl;
 
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
@@ -2418,7 +2412,7 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
 
 void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color )
 {
-    cout << "Document::setPageTextSelection .. " << endl;
+//    cout << "Document::setPageTextSelection .. " << endl;
 
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
@@ -3590,7 +3584,7 @@ void DocumentPrivate::calculateMaxTextPages()
 
 void DocumentPrivate::textGenerationDone( Page *page )
 {
-    cout << "DocumentPrivate:TextGenerationDone() ... " << endl;
+//    cout << "DocumentPrivate:TextGenerationDone() ... " << endl;
 
     if ( !m_generator || m_closingLoop ) return;
 

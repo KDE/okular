@@ -88,9 +88,9 @@ void Shell::init()
 
   // now that the Part is loaded, we cast it to a Part to get
   // our hands on it
-  cout << "creating a part from factory ... " << endl;
+//  cout << "creating a part from factory ... " << endl;
   m_part = factory->create< KParts::ReadOnlyPart >( this );
-  cout << "creation of part from factory finished ... " << endl;
+//  cout << "creation of part from factory finished ... " << endl;
   if (m_part)
   {
     // then, setup our actions
@@ -132,16 +132,16 @@ Shell::~Shell()
 
 void Shell::openUrl( const KUrl & url )
 {
-    cout << "Shell::openUrl ??? " << endl;
+//    cout << "Shell::openUrl ??? " << endl;
     if ( m_part )
     {
         if ( m_doc && m_args && m_args->isSet( "presentation" ) ){
-            cout << "Shell:openUrl: startPresentaion() ??? " << endl;
+//            cout << "Shell:openUrl: startPresentaion() ??? " << endl;
             m_doc->startPresentation();
         }
         bool openOk = m_part->openUrl( url );
 
-        cout << "Shell::openUrl(): file opened as openOk is true :):)" << endl;
+//        cout << "Shell::openUrl(): file opened as openOk is true :):)" << endl;
 
         const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
         if ( !isstdin )

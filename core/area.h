@@ -457,7 +457,8 @@ static T& deref( T* t )
  * - Shape geometry( int, int )
  * - operator|=( NormalizedShape ) which unite two NormalizedShape's
  */
-template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
+template <class NormalizedShape, class Shape> class RegularArea
+        : public  QList<NormalizedShape>
 {
     public:
         /**

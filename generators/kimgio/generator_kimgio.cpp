@@ -23,7 +23,10 @@
 #include <kimageio.h>
 #include <klocale.h>
 
-#include <core/page.h>
+#include <okular/core/page.h>
+
+#include <iostream>
+using namespace std;
 
 static KAboutData createAboutData()
 {
@@ -49,6 +52,8 @@ OKULAR_EXPORT_PLUGIN( KIMGIOGenerator, createAboutData() )
 KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
 {
+    cout << "KIMGIOGenerator: constructor .... " << endl;
+
     setFeature( ReadRawData );
     setFeature( Threaded );
     setFeature( PrintNative );
@@ -95,7 +100,7 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
     const QString mime = KMimeType::findByContent(fileData)->name();
     const QStringList types = KImageIO::typeForMime(mime);
     const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
-    
+
     QBuffer buffer;
     buffer.setData( fileData );
     buffer.open( QIODevice::ReadOnly );

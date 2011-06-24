@@ -47,6 +47,9 @@
 #include "kdocumentviewer.h"
 #include "shellutils.h"
 
+#include <iostream>
+using namespace std;
+
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
 static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
 
@@ -85,7 +88,9 @@ void Shell::init()
 
   // now that the Part is loaded, we cast it to a Part to get
   // our hands on it
+  cout << "creating a part from factory ... " << endl;
   m_part = factory->create< KParts::ReadOnlyPart >( this );
+  cout << "creation of part from factory finished ... " << endl;
   if (m_part)
   {
     // then, setup our actions
@@ -127,11 +132,17 @@ Shell::~Shell()
 
 void Shell::openUrl( const KUrl & url )
 {
+    cout << "Shell::openUrl ??? " << endl;
     if ( m_part )
     {
-        if ( m_doc && m_args && m_args->isSet( "presentation" ) )
+        if ( m_doc && m_args && m_args->isSet( "presentation" ) ){
+            cout << "Shell:openUrl: startPresentaion() ??? " << endl;
             m_doc->startPresentation();
+        }
         bool openOk = m_part->openUrl( url );
+
+        cout << "Shell::openUrl(): file opened as openOk is true :):)" << endl;
+
         const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
         if ( !isstdin )
         {

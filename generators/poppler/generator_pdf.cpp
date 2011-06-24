@@ -47,6 +47,9 @@
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
+#include <iostream>
+using namespace std;
+
 #ifdef HAVE_POPPLER_0_9
 Q_DECLARE_METATYPE(Poppler::FontInfo)
 #endif
@@ -156,102 +159,102 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
 
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
-	Okular::Action *link = 0;
-	const Poppler::LinkGoto *popplerLinkGoto;
-	const Poppler::LinkExecute *popplerLinkExecute;
-	const Poppler::LinkBrowse *popplerLinkBrowse;
-	const Poppler::LinkAction *popplerLinkAction;
-	const Poppler::LinkSound *popplerLinkSound;
+    Okular::Action *link = 0;
+    const Poppler::LinkGoto *popplerLinkGoto;
+    const Poppler::LinkExecute *popplerLinkExecute;
+    const Poppler::LinkBrowse *popplerLinkBrowse;
+    const Poppler::LinkAction *popplerLinkAction;
+    const Poppler::LinkSound *popplerLinkSound;
 #ifdef HAVE_POPPLER_0_9
-	const Poppler::LinkJavaScript *popplerLinkJS;
+    const Poppler::LinkJavaScript *popplerLinkJS;
 #endif
-	Okular::DocumentViewport viewport;
-	
-	switch(popplerLink->linkType())
-	{
-		case Poppler::Link::None:
-		break;
-	
-		case Poppler::Link::Goto:
-		{
-			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
+    Okular::DocumentViewport viewport;
+
+    switch(popplerLink->linkType())
+    {
+        case Poppler::Link::None:
+        break;
+
+        case Poppler::Link::Goto:
+        {
+            popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
 #ifdef HAVE_POPPLER_0_11
-			const Poppler::LinkDestination dest = popplerLinkGoto->destination();
-			const QString destName = dest.destinationName();
-			if (destName.isEmpty())
-			{
-				fillViewportFromLinkDestination( viewport, dest );
-				link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
-			}
-			else
-			{
-				link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
-			}
+            const Poppler::LinkDestination dest = popplerLinkGoto->destination();
+            const QString destName = dest.destinationName();
+            if (destName.isEmpty())
+            {
+                fillViewportFromLinkDestination( viewport, dest );
+                link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
+            }
+            else
+            {
+                link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
+            }
 #else
-			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination() );
-			link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
+            fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination() );
+            link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
 #endif
-		}
-		break;
-		
-		case Poppler::Link::Execute:
-			popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
-			link = new Okular::ExecuteAction( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
-		break;
-		
-		case Poppler::Link::Browse:
-			popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-			link = new Okular::BrowseAction( popplerLinkBrowse->url() );
-		break;
-		
-		case Poppler::Link::Action:
-			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-			link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
-		break;
-		
-		case Poppler::Link::Sound:
-		{
-			popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
-			Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
-			Okular::Sound *sound = createSoundFromPopplerSound( popplerSound );
-			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
-		}
-		break;
-		
+        }
+        break;
+
+        case Poppler::Link::Execute:
+            popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
+            link = new Okular::ExecuteAction( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
+        break;
+
+        case Poppler::Link::Browse:
+            popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
+            link = new Okular::BrowseAction( popplerLinkBrowse->url() );
+        break;
+
+        case Poppler::Link::Action:
+            popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
+            link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
+        break;
+
+        case Poppler::Link::Sound:
+        {
+            popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
+            Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
+            Okular::Sound *sound = createSoundFromPopplerSound( popplerSound );
+            link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
+        }
+        break;
+
 #ifdef HAVE_POPPLER_0_9
-		case Poppler::Link::JavaScript:
-		{
-			popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
-			link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
-		}
-		break;
+        case Poppler::Link::JavaScript:
+        {
+            popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
+            link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
+        }
+        break;
 #endif
-		
-		case Poppler::Link::Movie:
-			// not implemented
-		break;
-	}
-	
-	return link;
+
+        case Poppler::Link::Movie:
+            // not implemented
+        break;
+    }
+
+    return link;
 }
 
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks )
 {
-	QLinkedList<Okular::ObjectRect*> links;
-	foreach(const Poppler::Link *popplerLink, popplerLinks)
-	{
-		QRectF linkArea = popplerLink->linkArea();
-		double nl = linkArea.left(),
-		       nt = linkArea.top(),
-		       nr = linkArea.right(),
-		       nb = linkArea.bottom();
-		// create the rect using normalized coords and attach the Okular::Link to it
-		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink) );
-		// add the ObjectRect to the container
-		links.push_front( rect );
-	}
-	qDeleteAll(popplerLinks);
-	return links;
+    QLinkedList<Okular::ObjectRect*> links;
+    foreach(const Poppler::Link *popplerLink, popplerLinks)
+    {
+        QRectF linkArea = popplerLink->linkArea();
+        double nl = linkArea.left(),
+               nt = linkArea.top(),
+               nr = linkArea.right(),
+               nb = linkArea.bottom();
+        // create the rect using normalized coords and attach the Okular::Link to it
+        Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink) );
+        // add the ObjectRect to the container
+        links.push_front( rect );
+    }
+    qDeleteAll(popplerLinks);
+    return links;
 }
 
 extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool * doDelete );
@@ -303,6 +306,8 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
     synctex_scanner(0)
 {
+    cout << "In PDFGenerator: Constructor ... ... " << endl;
+
     setFeature( TextExtraction );
     setFeature( FontInfo );
     setFeature( PrintPostscript );
@@ -312,7 +317,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     // generate the pixmapGeneratorThread
     generatorThread = new PDFPixmapGeneratorThread( this );
     connect(generatorThread, SIGNAL(finished()), this, SLOT(threadFinished()), Qt::QueuedConnection);
-    
+
 #ifdef HAVE_POPPLER_0_16
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -335,6 +340,8 @@ PDFGenerator::~PDFGenerator()
 //BEGIN Generator inherited functions
 bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*> & pagesVector )
 {
+    cout << "PDFGenerator::loadDocument is called " << endl;
+
 #ifndef NDEBUG
     if ( pdfdoc )
     {
@@ -342,9 +349,13 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
         return false;
     }
 #endif
+
+    cout << "Loading the document in pdfdoc using Poppler::Document::load(...) "
+            << endl;
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
     bool success = init(pagesVector, filePath.section('/', -1, -1));
+
     if (success)
     {
         // no need to check for the existence of a synctex file, no parser will be
@@ -374,6 +385,7 @@ bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Ok
 
 bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &walletKey)
 {
+    cout << "In PDFGenerator::init(...) ..." << endl;
     // if the file didn't open correctly it might be encrypted, so ask for a pass
     bool firstInput = true;
     bool triedWallet = false;
@@ -483,9 +495,14 @@ bool PDFGenerator::doCloseDocument()
 
 void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, bool clear)
 {
+    cout << "In PDFGenerator::loadPages(...) " << endl;
     // TODO XPDF 3.01 check
     const int count = pagesVector.count();
     double w = 0, h = 0;
+
+    cout << "From the poppler document pdfdoc, we will find out all pages " <<
+            "and will keep them in Poppler::Page" << endl;
+    cout << "Later we will put them in Okular::Page ... " << endl;
     for ( int i = 0; i < count ; i++ )
     {
         // get xpdf page
@@ -551,9 +568,9 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
     if ( docInfoDirty )
     {
         userMutex()->lock();
-        
+
         docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
-        
+
         if ( pdfdoc )
         {
             // compile internal structure reading properties from PDFDoc
@@ -706,7 +723,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
         of.setFile( font.file() );
 #ifdef HAVE_POPPLER_0_9
         of.setCanBeExtracted( of.embedType() != Okular::FontInfo::NotEmbedded );
-        
+
         QVariant nativeId;
         nativeId.setValue( font );
         of.setNativeId( nativeId );
@@ -770,6 +787,8 @@ bool PDFGenerator::canGeneratePixmap() const
 
 void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
+    cout << "PDFGenerator::generatePixmap is called .... " << endl;
+
 #ifndef NDEBUG
     if ( !ready )
         kDebug(PDFDebug) << "calling generatePixmap() when not in READY state!";
@@ -834,7 +853,7 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     if ( p && genObjectRects )
     {
-    	// TODO previously we extracted Image type rects too, but that needed porting to poppler
+        // TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
         page->setObjectRects( generateLinks(p->links()) );
@@ -850,12 +869,12 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
         Okular::TextPage *tp = abstractTextPage(textList, s.height(), s.width(), request->page()->orientation());
         page->setTextPage( tp );
         qDeleteAll(textList);
-        
+
         // notify the new generation
         signalTextGenerationDone( page, tp );
     }
     delete p;
-    
+
     // update ready state
     ready = true;
 
@@ -865,6 +884,8 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
+    cout << "PDFGenerator::textPage : Creating a textPage from Page " << endl;
+
 #ifdef PDFGENERATOR_DEBUG
     kDebug(PDFDebug) << "page" << page->number();
 #endif
@@ -884,7 +905,7 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 
         delete pp;
     }
-    else   
+    else
     {
         pageWidth = defaultPageWidth;
         pageHeight = defaultPageHeight;
@@ -1010,7 +1031,7 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         Okular::DocumentViewport viewport;
         QString optionString = option.toString();
 
-        // if option starts with "src:" assume that we are handling a 
+        // if option starts with "src:" assume that we are handling a
         // source reference
         if ( optionString.startsWith( "src:", Qt::CaseInsensitive ) )
         {
@@ -1164,10 +1185,13 @@ inline void append (Okular::TextPage* ktp,
 }
 
 Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
-{    
+{
+    cout << "PDFGenerator::abstractTextPage - here we append text in the textPage"
+            << endl;
+
     Q_UNUSED(rot);
     Okular::TextPage* ktp=new Okular::TextPage;
-    Poppler::TextBox *next; 
+    Poppler::TextBox *next;
 #ifdef PDFGENERATOR_DEBUG
     kDebug(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
 #endif
@@ -1197,7 +1221,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
             // vertically or horizontally aligned
             QRectF wordBBox = word->boundingBox();
             QRectF nextWordBBox = next->boundingBox();
-            append(ktp, " ", 
+            append(ktp, " ",
                      wordBBox.right()/width,
                      wordBBox.bottom()/height,
                      nextWordBBox.left()/width,
@@ -1569,7 +1593,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     // Extract the file name and the numeral part from the reference string.
     // This will fail if Filename starts with a digit.
     QString name, lineString;
-    // Remove "src:". Presence of substring has been checked before this 
+    // Remove "src:". Presence of substring has been checked before this
     // function is called.
     name = reference.mid( 4 );
     // split
@@ -1584,18 +1608,18 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     // Remove spaces.
     name = name.trimmed();
     lineString = lineString.trimmed();
-    // Convert line to integer. 
+    // Convert line to integer.
     bool ok;
     int line = lineString.toInt( &ok );
     if (!ok) line = -1;
-    
+
     // Use column == -1 for now.
     if( synctex_display_query( synctex_scanner, name.toLatin1(), line, -1 ) > 0 )
     {
         synctex_node_t node;
         // For now use the first hit. Could possibly be made smarter
         // in case there are multiple hits.
-        while( ( node = synctex_next_result( synctex_scanner ) ) ) 
+        while( ( node = synctex_next_result( synctex_scanner ) ) )
         {
             // TeX pages start at 1.
             viewport.pageNumber = synctex_node_page( node ) - 1;
@@ -1609,7 +1633,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
             viewport.rePos.normalizedY = ( py + 0.5 ) / document()->page(viewport.pageNumber)->height();
             viewport.rePos.enabled = true;
             viewport.rePos.pos = Okular::DocumentViewport::Center;
-           
+
             return;
         }
     }
@@ -1714,12 +1738,12 @@ void PDFGenerator::threadFinished()
     {
         Poppler::Page *pp = pdfdoc->page( request->page()->number() );
         const QSizeF s = pp->pageSizeF();
-        Okular::TextPage *tp = abstractTextPage( outText, s.height(), 
+        Okular::TextPage *tp = abstractTextPage( outText, s.height(),
                                                  s.width(),request->page()->orientation());
         request->page()->setTextPage( tp );
         qDeleteAll(outText);
         delete pp;
-        
+
         // notify the new generation
         signalTextGenerationDone( request->page(), tp );
     }
@@ -1883,7 +1907,7 @@ void PDFPixmapGeneratorThread::run()
 
     // 1. set OutputDev parameters and Generate contents
     Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
-    
+
     if (pp)
     {
         double fakeDpiX = width * d->generator->dpiX / pageWidth,
@@ -1897,7 +1921,7 @@ void PDFPixmapGeneratorThread::run()
             kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
 #endif
         d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
-        
+
         if ( genObjectRects )
         {
             d->m_rects = generateLinks(pp->links());
@@ -1915,7 +1939,7 @@ void PDFPixmapGeneratorThread::run()
         d->m_image = new QImage( width, height, QImage::Format_ARGB32 );
         d->m_image->fill( Qt::white );
     }
-    
+
     // 3. [UNLOCK] mutex
     d->generator->userMutex()->unlock();
 

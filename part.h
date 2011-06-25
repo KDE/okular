@@ -220,6 +220,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         int m_dirtyToolboxIndex;
         bool m_wasSidebarVisible;
         bool m_fileWasRemoved;
+        Rotation m_dirtyPageRotation;
 
         // Remember the search history
         QStringList m_searchHistory;

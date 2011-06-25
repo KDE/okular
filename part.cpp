@@ -1239,6 +1239,9 @@ void Part::slotDoFileDirty()
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
 
+        // store the page rotation
+        m_dirtyPageRotation = m_document->rotation();
+
         // inform the user about the operation in progress
         m_pageView->displayMessage( i18n("Reloading the document...") );
     }
@@ -1251,6 +1254,7 @@ void Part::slotDoFileDirty()
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
+        m_document->setRotation( m_dirtyPageRotation );
         if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex ) )
         {
             m_sidebar->setCurrentIndex( m_dirtyToolboxIndex );

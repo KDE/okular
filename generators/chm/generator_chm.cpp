@@ -94,7 +94,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     m_fileName=fileName;
     QVector< LCHMParsedEntry > topics;
     m_file->parseTableOfContents(&topics);
-
+    
     // fill m_docSyn
     QMap<int, QDomElement> lastIndentElement;
     foreach(const LCHMParsedEntry &e, topics)
@@ -112,7 +112,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         else lastIndentElement[e.indent - 1].appendChild(item);
         lastIndentElement[e.indent] = item;
     }
-
+    
     // fill m_urlPage and m_pageUrl
     int pageNum = 0;
     QStringList pageList;
@@ -233,7 +233,7 @@ void CHMGenerator::slotCompleted()
     signalPixmapRequestDone( req );
 }
 
-const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo()
+const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo() 
 {
     if (!m_docInfo)
     {
@@ -261,7 +261,7 @@ bool CHMGenerator::canGeneratePixmap () const
     return !isLocked;
 }
 
-void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
+void CHMGenerator::generatePixmap( Okular::PixmapRequest * request ) 
 {
     int requestWidth = request->width();
     int requestHeight = request->height();
@@ -310,7 +310,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
         else
         {
             for (int i=0;i<nodeTextLength;i++)
-            {
+            { 
                 node.getCursor(i,x,y,height);
                 if (i==0)
                 // i is 0, use left rect boundary
@@ -344,7 +344,7 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
     }
 }
 
-void CHMGenerator::additionalRequestData()
+void CHMGenerator::additionalRequestData() 
 {
     Okular::Page * page=m_request->page();
     bool genObjectRects = m_request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
@@ -434,7 +434,7 @@ Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
     double zoomP = documentMetaData( "ZoomFactor" ).toInt( &ok );
     int zoom = ok ? qRound( zoomP * 100 ) : 100;
     m_syncGen->view()->resize(qRound( page->width() * zoomP ) , qRound( page->height() * zoomP ));
-
+    
     preparePageForSyncOperation(zoom, m_pageUrl[page->number()]);
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
@@ -455,7 +455,7 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
             viewport.pageNumber = it.value();
             return viewport.toString();
         }
-
+        
     }
     else if ( key == "DocumentTitle" )
     {

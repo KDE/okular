@@ -159,8 +159,8 @@ void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
     if (ps.isValid()) resolution = (double)(pW)/ps.width().getLength_in_inch();
     else resolution = m_resolution;
 
-    double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5;
-
+    double py = (double)anch.distance_from_top.getLength_in_inch()*resolution + 0.5; 
+ 
     vp.rePos.normalizedX = 0.5;
     vp.rePos.normalizedY = py/(double)pH;
     vp.rePos.enabled = true;
@@ -172,7 +172,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
     QLinkedList<Okular::ObjectRect*> dviLinks;
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
-
+    
     foreach( const Hyperlink &dviLink, pageInfo->hyperLinkList )
     {
         QRect boxArea = dviLink.box;
@@ -180,7 +180,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
                nt = (double)boxArea.top() / pageHeight,
                nr = (double)boxArea.right() / pageWidth,
                nb = (double)boxArea.bottom() / pageHeight;
-
+        
         QString linkText = dviLink.linkText;
         if ( linkText.startsWith("#") )
             linkText = linkText.mid( 1 );
@@ -201,15 +201,15 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
         {
             okuLink = new Okular::BrowseAction( dviLink.linkText );
         }
-        if ( okuLink )
+        if ( okuLink ) 
         {
-            Okular::ObjectRect *orlink = new Okular::ObjectRect( nl, nt, nr, nb,
+            Okular::ObjectRect *orlink = new Okular::ObjectRect( nl, nt, nr, nb, 
                                         false, Okular::ObjectRect::Action, okuLink );
             dviLinks.push_front( orlink );
         }
 
     }
-    return dviLinks;
+    return dviLinks; 
 }
 
 QImage DviGenerator::image( Okular::PixmapRequest *request )
@@ -278,7 +278,7 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
     kDebug(DviDebug);
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
-
+    
     pageInfo->width=page->width();
     pageInfo->height=page->height();
 
@@ -317,12 +317,12 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
     for ( ; it != itEnd ; ++it )
     {
         TextBox curTB = *it;
-
+ 
 #if 0
         kDebug(DviDebug) << "orientation: " << orientation
                  << ", curTB.box: " << curTB.box
-                 << ", tmpRect: " << tmpRect
-                 << ", ( " << pageWidth << "," << pageHeight << " )"
+                 << ", tmpRect: " << tmpRect 
+                 << ", ( " << pageWidth << "," << pageHeight << " )" 
                <<endl;
 #endif
         textOfThePage.push_back( new Okular::TextEntity( curTB.text,
@@ -371,21 +371,21 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
 
     userMutex()->unlock();
 
-    if ( prebookmarks.isEmpty() )
+    if ( prebookmarks.isEmpty() ) 
         return m_docSynopsis;
 
     QStack<QDomElement> stack;
 
     QVector<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
     QVector<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
-    for( ; it != itEnd; ++it )
+    for( ; it != itEnd; ++it ) 
     {
         QDomElement domel = m_docSynopsis->createElement( (*it).title );
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if ( a.isValid() )
         {
             Okular::DocumentViewport vp;
-
+ 
             const Okular::Page *p = document()->page( a.page - 1 );
 
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height() );
@@ -393,7 +393,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         }
         if ( stack.isEmpty() )
             m_docSynopsis->appendChild( domel );
-        else
+        else 
         {
             stack.top().appendChild( domel );
             stack.pop();
@@ -411,7 +411,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
 
     Okular::FontInfo::List list;
 
-    // the list of the fonts is extracted once
+    // the list of the fonts is extracted once 
     if ( m_fontExtracted )
         return list;
 
@@ -425,7 +425,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
             Okular::FontInfo of;
             QString name;
             int zoom = (int)(font->enlargement*100 + 0.5);
-            if ( font->getFullFontName().isEmpty() )
+            if ( font->getFullFontName().isEmpty() ) 
             {
                 name = QString( "%1, %2%" )
                         .arg( font->fontname )
@@ -433,10 +433,10 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
             }
             else
             {
-                name = QString( "%1 (%2), %3%" )
+                name = QString( "%1 (%2), %3%" ) 
                         .arg( font->fontname )
-                        .arg( font->getFullFontName() )
-                        .arg( zoom );
+                        .arg( font->getFullFontName() ) 
+                        .arg( zoom ); 
             }
             of.setName( name );
 
@@ -551,7 +551,7 @@ bool DviGenerator::print( QPrinter& printer )
     if ( !tf.open() )
         return false;
 
-    QList<int> pageList = Okular::FilePrinter::pageList( printer,
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, 
                                  m_dviRenderer->totalPages(),
                                  document()->currentPage() + 1,
                                  document()->bookmarkedPageList() );
@@ -572,7 +572,7 @@ bool DviGenerator::print( QPrinter& printer )
     tf.close();
 
     // Error messages are handled by the generator - ugly, but it works.
-    return true;
+    return true; 
 }
 
 QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) const

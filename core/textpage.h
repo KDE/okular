@@ -13,8 +13,8 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 
-#include <okular/core/okular_export.h>
-#include <okular/core/global.h>
+#include "okular_export.h"
+#include "global.h"
 
 class QMatrix;
 
@@ -167,7 +167,7 @@ class OKULAR_EXPORT TextPage
          */
         RegularAreaRect *textArea( TextSelection *selection ) const;
 
-        //mamun
+        // mamun.nightcrawler@gmail.com
         /**
         print the textpage contents with area (text and bounding rect)
          **/
@@ -181,4 +181,4 @@ class OKULAR_EXPORT TextPage
 
 }
 
-#endif
+#endif 

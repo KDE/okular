@@ -92,9 +92,6 @@
 #include <cstdio>
 #include <memory>
 
-#include <iostream>
-using namespace std;
-
 class FileKeeper
 {
     public:
@@ -245,8 +242,6 @@ const QVariantList &args )
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
-//    cout << "the part constructor .... " << endl;
-
     // first necessary step: copy the configuration from kpdf, if available
     QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
     if ( !QFile::exists( newokularconffile ) )
@@ -386,6 +381,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
+
+    connect( m_findBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
+    connect( m_miniBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
 
     connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
         m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
@@ -926,8 +924,6 @@ bool Part::slotImportPSFile()
 
 bool Part::openFile()
 {
-//    cout << "Part::openFile() called ... " << endl;
-
     KMimeType::Ptr mime;
     QString fileNameToOpen = localFilePath();
     const bool isstdin = url().isLocalFile() && url().fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
@@ -1057,17 +1053,12 @@ bool Part::openFile()
 
 bool Part::openUrl(const KUrl &_url)
 {
-//    cout << "Part:openUrl ... " << endl;
-
     KUrl url( _url );
     if ( url.hasHTMLRef() )
     {
         const QString dest = url.htmlRef();
         bool ok = true;
         const int page = dest.toInt( &ok );
-
-//        cout << "page: " << page << "...." << endl;
-
         if ( ok )
         {
             Okular::DocumentViewport vp( page - 1 );
@@ -1084,12 +1075,8 @@ bool Part::openUrl(const KUrl &_url)
         url.setHTMLRef( QString() );
     }
 
-//    cout << "going to call: KParts::ReadOnlyPart::openUrl(url) ... " << endl;
-
     // this calls in sequence the 'closeUrl' and 'openFile' methods
     bool openOk = KParts::ReadOnlyPart::openUrl( url );
-
-//    cout << "Part::openUrl(..): openOk is true " << endl;
 
     if ( openOk )
     {
@@ -1108,8 +1095,6 @@ bool Part::openUrl(const KUrl &_url)
 
 bool Part::closeUrl()
 {
-//    cout << "Part::closeUrl() is called ... " << endl;
-
     if (!m_temporaryLocalFile.isNull() && m_temporaryLocalFile != localFilePath())
     {
         QFile::remove( m_temporaryLocalFile );
@@ -1151,9 +1136,7 @@ bool Part::closeUrl()
     if ( m_generatorGuiClient )
         factory()->removeClient( m_generatorGuiClient );
     m_generatorGuiClient = 0;
-
     m_document->closeDocument();
-
     updateViewActions();
     delete m_tempfile;
     m_tempfile = 0;

@@ -24,9 +24,6 @@
 #include "textpage.h"
 #include "utils.h"
 
-#include <iostream>
-using namespace std;
-
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
@@ -257,8 +254,6 @@ bool Generator::canGenerateTextPage() const
 
 void Generator::generateTextPage( Page *page )
 {
-//    cout << "Generator::generateTextPage ... " << endl;
-
     Q_D( Generator );
     TextPage *tp = textPage( page );
     page->setTextPage( tp );
@@ -365,8 +360,6 @@ void Generator::signalPixmapRequestDone( PixmapRequest * request )
 
 void Generator::signalTextGenerationDone( Page *page, TextPage *textPage )
 {
-//    cout << "signalTextGenerationDone emitted ... " << endl;
-
     Q_D( Generator );
     if ( d->m_document )
         d->m_document->textGenerationDone( page );

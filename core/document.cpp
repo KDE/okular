@@ -82,9 +82,6 @@
 
 #include <config-okular.h>
 
-#include <iostream>
-using namespace std;
-
 using namespace Okular;
 
 struct AllocatedPixmap
@@ -672,7 +669,6 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
     bool openOk = false;
-
     if ( !isstdin )
     {
         openOk = m_generator->loadDocument( docFile, m_pagesVector );
@@ -1532,8 +1528,6 @@ static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
 
 bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
 {
-//    cout << "Document::openDocument .... " << endl;
-
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
     qint64 document_size = -1;
@@ -2319,8 +2313,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
 void Document::requestTextPage( uint page )
 {
-//    cout << "Document::requestTextPage " << endl;
-
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
@@ -2328,15 +2320,6 @@ void Document::requestTextPage( uint page )
     // Memory management for TextPages
 
     d->m_generator->generateTextPage( kp );
-
-    //now that textpage generation has been done, we can divide the page into subpages
-    //finding the column and row seperators
-
-//    Okular::TextPage* tpg = d->m_pagesVector[page]->d->m_text;
-
-//    foreach(TinyTextEntity* counter, tpg->d->m_words){
-//        qDebug ()<< counter->text() << endl;
-//    }
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -2412,8 +2395,6 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
 
 void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color )
 {
-//    cout << "Document::setPageTextSelection .. " << endl;
-
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
@@ -3584,8 +3565,6 @@ void DocumentPrivate::calculateMaxTextPages()
 
 void DocumentPrivate::textGenerationDone( Page *page )
 {
-//    cout << "DocumentPrivate:TextGenerationDone() ... " << endl;
-
     if ( !m_generator || m_closingLoop ) return;
 
     // 1. If we reached the cache limit, delete the first text page from the fifo

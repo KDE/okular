@@ -202,6 +202,28 @@ class OKULAR_EXPORT NormalizedRect
          */
         void transform( const QMatrix &matrix );
 
+
+        //mamun.nightcrawler@gmail.com
+        /**
+          * The four methods check whether a point is to the Bottom, Top, Left or
+          * Right of a rectangle
+          **/
+        bool isBottom(NormalizedPoint pt) const{
+            return bottom < pt.y;
+        }
+
+        bool isTop(NormalizedPoint pt) const{
+            return top > pt.y;
+        }
+
+        bool isLeft(NormalizedPoint pt) const{
+            return left > pt.x;
+        }
+
+        bool isRight(NormalizedPoint pt) const{
+            return right < pt.x;
+        }
+
         /**
          * The normalized left coordinate.
          */
@@ -457,8 +479,7 @@ static T& deref( T* t )
  * - Shape geometry( int, int )
  * - operator|=( NormalizedShape ) which unite two NormalizedShape's
  */
-template <class NormalizedShape, class Shape> class RegularArea
-        : public  QList<NormalizedShape>
+template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:
         /**

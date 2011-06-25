@@ -13,9 +13,6 @@
 
 #include <kaboutdata.h>
 
-#include <iostream>
-using namespace std;
-
 static KAboutData createAboutData()
 {
   KAboutData aboutData(
@@ -38,5 +35,4 @@ OKULAR_EXPORT_PLUGIN( EPubGenerator, createAboutData() )
 EPubGenerator::EPubGenerator( QObject *parent, const QVariantList &args )
 : Okular::TextDocumentGenerator( new Epub::Converter, parent, args )
 {
-    cout << "EPubGenerator: constructor ... inherits TextDocumentGenerator" << endl;
 }

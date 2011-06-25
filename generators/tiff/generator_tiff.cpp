@@ -31,9 +31,6 @@
 #include <tiff.h>
 #include <tiffio.h>
 
-#include <iostream>
-using namespace std;
-
 #define TiffDebug 4714
 
 tsize_t okular_tiffReadProc( thandle_t handle, tdata_t buf, tsize_t size )
@@ -183,7 +180,6 @@ TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),
       d( new Private ), m_docInfo( 0 )
 {
-    cout << "a TIFF generator constructor .... " << endl;
     setFeature( Threaded );
     setFeature( PrintNative );
     setFeature( PrintToFile );

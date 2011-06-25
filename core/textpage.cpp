@@ -24,27 +24,26 @@
 #include <iostream>
 using namespace std;
 
-
 using namespace Okular;
 
 class SearchPoint
 {
-public:
-    SearchPoint()
-        : offset_begin( -1 ), offset_end( -1 )
-    {
-    }
+    public:
+        SearchPoint()
+            : offset_begin( -1 ), offset_end( -1 )
+        {
+        }
 
-    TextList::ConstIterator it_begin;
-    TextList::ConstIterator it_end;
-    int offset_begin;
-    int offset_end;
+        TextList::ConstIterator it_begin;
+        TextList::ConstIterator it_end;
+        int offset_begin;
+        int offset_end;
 };
 
 /* text comparison functions */
 
 bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
-                          int *fromLength, int *toLength )
+                           int *fromLength, int *toLength )
 {
     *fromLength = from.length();
     *toLength = to.length();
@@ -52,7 +51,7 @@ bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
 }
 
 bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to,
-                        int *fromLength, int *toLength )
+                           int *fromLength, int *toLength )
 {
     *fromLength = from.length();
     *toLength = to.length();
@@ -75,78 +74,74 @@ class TinyTextEntity
 {
     static const int MaxStaticChars = sizeof( QChar * ) / sizeof( QChar );
 
-public:
-    TinyTextEntity( const QString &text, const NormalizedRect &rect )
-        : area( rect )
-    {
-        Q_ASSERT_X( !text.isEmpty(), "TinyTextEntity", "empty string" );
-        Q_ASSERT_X( sizeof( d ) == sizeof( QChar * ), "TinyTextEntity",
-                   "internal storage is wider than QChar*, fix it!" );
-        length = text.length();
-
-        //cout << "MaxStaticChars: " << MaxStaticChars << endl;
-
-        switch ( length )
+    public:
+        TinyTextEntity( const QString &text, const NormalizedRect &rect )
+            : area( rect )
         {
+            Q_ASSERT_X( !text.isEmpty(), "TinyTextEntity", "empty string" );
+            Q_ASSERT_X( sizeof( d ) == sizeof( QChar * ), "TinyTextEntity",
+                        "internal storage is wider than QChar*, fix it!" );
+            length = text.length();
+            switch ( length )
+            {
 #if QT_POINTER_SIZE >= 8
-        case 4:
-            d.qc[3] = text.at( 3 ).unicode();
-            // fall through
-        case 3:
-            d.qc[2] = text.at( 2 ).unicode();
-            // fall through
+                case 4:
+                    d.qc[3] = text.at( 3 ).unicode();
+                    // fall through
+                case 3:
+                    d.qc[2] = text.at( 2 ).unicode();
+                    // fall through
 #endif
-        case 2:
-            d.qc[1] = text.at( 1 ).unicode();
-            // fall through
-        case 1:
-            d.qc[0] = text.at( 0 ).unicode();
-            break;
-        default:
-            d.data = new QChar[ length ];
-            std::memcpy( d.data, text.constData(), length * sizeof( QChar ) );
+                case 2:
+                    d.qc[1] = text.at( 1 ).unicode();
+                    // fall through
+                case 1:
+                    d.qc[0] = text.at( 0 ).unicode();
+                    break;
+                default:
+                    d.data = new QChar[ length ];
+                    std::memcpy( d.data, text.constData(), length * sizeof( QChar ) );
+            }
         }
-    }
 
-    ~TinyTextEntity()
-    {
-        if ( length > MaxStaticChars )
+        ~TinyTextEntity()
         {
-            delete [] d.data;
+            if ( length > MaxStaticChars )
+            {
+                delete [] d.data;
+            }
         }
-    }
 
-    inline QString text() const
-    {
-        return length <= MaxStaticChars ? QString::fromRawData( ( const QChar * )&d.qc[0], length )
-                                        : QString::fromRawData( d.data, length );
-    }
+        inline QString text() const
+        {
+            return length <= MaxStaticChars ? QString::fromRawData( ( const QChar * )&d.qc[0], length )
+                                            : QString::fromRawData( d.data, length );
+        }
 
-    inline NormalizedRect transformedArea( const QMatrix &matrix ) const
-    {
-        NormalizedRect transformed_area = area;
-        transformed_area.transform( matrix );
-        return transformed_area;
-    }
+        inline NormalizedRect transformedArea( const QMatrix &matrix ) const
+        {
+            NormalizedRect transformed_area = area;
+            transformed_area.transform( matrix );
+            return transformed_area;
+        }
 
-    NormalizedRect area;
+        NormalizedRect area;
 
-private:
-    Q_DISABLE_COPY( TinyTextEntity )
+    private:
+        Q_DISABLE_COPY( TinyTextEntity )
 
-    union
-    {
-        QChar *data;
-        ushort qc[MaxStaticChars];
-    } d;
-    int length;
+        union
+        {
+            QChar *data;
+            ushort qc[MaxStaticChars];
+        } d;
+        int length;
 };
 
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
     : m_text( text ), m_area( area ), d( 0 )
 {
-//    cout << "Text in TextEntity const: " << (m_text.toAscii()).data() << endl;
 }
 
 TextEntity::~TextEntity()
@@ -156,7 +151,6 @@ TextEntity::~TextEntity()
 
 QString TextEntity::text() const
 {
-//    cout << "Text is: " << (m_text.toAscii()).data() << endl;
     return m_text;
 }
 
@@ -188,22 +182,17 @@ TextPagePrivate::~TextPagePrivate()
 TextPage::TextPage()
     : d( new TextPagePrivate() )
 {
-//    cout << "TextPage default constructor" << endl;
 }
 
 TextPage::TextPage( const TextEntity::List &words )
     : d( new TextPagePrivate() )
 {
     TextEntity::List::ConstIterator it = words.constBegin(), itEnd = words.constEnd();
-
-//    cout << "TextPage non default constructor: " << endl;
-
     for ( ; it != itEnd; ++it )
     {
         TextEntity *e = *it;
         if ( !e->text().isEmpty() )
             d->m_words.append( new TinyTextEntity( e->text(), *e->area() ) );
-
         delete e;
     }
 }
@@ -215,11 +204,8 @@ TextPage::~TextPage()
 
 void TextPage::append( const QString &text, NormalizedRect *area )
 {
-    if ( !text.isEmpty() ){
-
+    if ( !text.isEmpty() )
         d->m_words.append( new TinyTextEntity( text.normalized(QString::NormalizationForm_KC), *area ) );
-    }
-
     delete area;
 }
 
@@ -228,30 +214,24 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     if ( d->m_words.isEmpty() )
         return new RegularAreaRect();
 
-    //    cout << "A Text Selection has been made ... returning the area" << endl;
-
-    /**
+/**
     It works like this:
     There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
-    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those
+    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
     points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
-    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both
-    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a
+    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
+    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
     1. (rx,ry)x(1,ty)
     2. (0,ty)x(1,uy)
     3. (0,uy)x(vx,vy)
 
     To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
-    or that has a left border >= cx and bottom border >= cy.
+    or that has a left border >= cx and bottom border >= cy. 
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
-    //if no rotation, it should be identity matrix
     const QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
-
 #if 0
-    cout << "Have we ever been here ???  !!! .............................. " << endl;
-
     int it = -1;
     int itB = -1;
     int itE = -1;
@@ -279,8 +259,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         {
             tmp = *d->m_words[ it ]->area();
             if ( tmp.contains( startCx, startCy )
-                    || ( tmp.top <= startCy && tmp.bottom >= startCy && tmp.left >= startCx )
-                    || ( tmp.top >= startCy))
+                 || ( tmp.top <= startCy && tmp.bottom >= startCy && tmp.left >= startCx )
+                 || ( tmp.top >= startCy))
             {
                 /// we have found the (rx,ry)x(tx,ty)
                 itB = it;
@@ -306,16 +286,16 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         {
             tmp = *d->m_words[ it ]->area();
             if ( tmp.contains( endCx, endCy )
-                    || ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx )
-                    || ( tmp.bottom <= endCy ) )
+                 || ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx )
+                 || ( tmp.bottom <= endCy ) )
             {
                 /// we have found the (ux,uy)x(vx,vy)
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
                 kWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " "
-                           << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
-                              ( tmp.top >= endCy);
+                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
+                  << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
+                  ( tmp.top >= endCy);
 #endif
                 break;
             }
@@ -333,7 +313,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
         NormalizedRect first, second, third;
         /// finding out if there is more than one baseline between them is a hard and discussable task
-        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the
+        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
         /// areas, if more than one -> we have a three or over line selection
         first = start;
         second.top = start.bottom;
@@ -352,24 +332,95 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 #else
     NormalizedRect tmp;
 
-    const NormalizedPoint startC = sel->start();
-    const double startCx = startC.x;
-    const double startCy = startC.y;
+    NormalizedPoint startC = sel->start();
+    double startCx = startC.x;
+    double startCy = startC.y;
 
-    const NormalizedPoint endC = sel->end();
-    const double endCx = endC.x;
-    const double endCy = endC.y;
+    NormalizedPoint endC = sel->end();
+    double endCx = endC.x;
+    double endCy = endC.y;
+
+    //if startPoint is right to endPoint just swap them
+    NormalizedPoint temp;
+    if(startCx > endCx){
+        temp = startC;
+        startC = endC;
+        endC = temp;
+    }
+
+    //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
+    double minX, maxX, minY, maxY;
+    double scaleX = this->d->m_page->m_page->width();
+    double scaleY = this->d->m_page->m_page->height();
+
+    NormalizedRect boundingRect = this->d->m_page->m_page->boundingBox();
+    QRect content = boundingRect.geometry(scaleX,scaleY);
+
+    minX = content.left(), maxX = content.right();
+    minY = content.top(), maxY = content.bottom();
+
+    // cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY <<
+    // " and EndPoint : " << endC.x * scaleX << "," << endC.y * scaleY << endl;
+
+    // cout << "Content in: " << minX << "," << minY << " " << maxX <<
+    // "," << maxY << endl;
+
+//    QRect startRect = (*it)->area.geometry(scaleX,scaleY);
+//    QRect endRect = (*(itEnd-1))->area.geometry(scaleX,scaleY);
+
+//    cout << "start: " << startRect.left() << "," << startRect.top() << " end" <<
+//            endRect.right() << "," <<endRect.bottom() << endl;
+
+    /** we will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
+     the endRectangle .. we have four cases
+
+     *Case 1(a): both startpoint and endpoint are out of the bounding Rectangle and at one side, so the rectangle made of start
+     *and endPoint are outof the bounding rect (do not intersect)
+
+     *Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so their rectangle
+
+     *Case 2: find the rectangle which contains start and endpoint and having some
+     *TextEntity
+
+     *Case 3(a): the startPoint is in some empty space, which is not under any rectangle
+     *containing some TinyTextEntity. So, we search the nearest rectangle consisting of some
+     *TinyTextEntity right to or bottom of the startPoint
+
+     *Case 3(b): Same for the endPoint. Here, we have to find the point top of or left to
+     *start point
+    **/
+
+    //Case 1(a) - we know that startC.x > endC.x, we need to decide which is top and which is left
+
+    NormalizedRect start_end;
+    if(startC.y < endC.y)
+        start_end = NormalizedRect(startC.x, startC.y, endC.x, endC.y);
+    else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
+
+    if(!boundingRect.intersects(start_end)) return ret;
+    //case 1(b) ......................................
+    else{
+        if(startC.x * scaleX < minX) startC.x = minX/scaleX;
+        if(endC.x * scaleX > maxX) endC.x = maxX/scaleX;
+
+        if(startC.y * scaleY < minY) startC.y = minY/scaleY;
+        if(endC.y * scaleY > maxY) endC.y = maxY/scaleY;
+    }
+
+//    cout << "Now: startPoint: " << startC.x * scaleX << "," << startC.y * scaleY <<
+//            " and EndPoint : " << endC.x * scaleX << "," << endC.y * scaleY << "...... " << endl;
 
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator start = it,end = itEnd-1;
-
+    TextList::ConstIterator start = it, end = itEnd, tmpIt = it;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
 
+    //case 2 ......................................
     for ( ; it != itEnd; ++it )
     {
         // (*it) gives a TinyTextEntity*
         tmp = (*it)->area;
+
         if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
                 && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
         {
@@ -379,19 +430,124 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 
-    //cout << "start: " << (*start)->text().toAscii().data() << " end: " << (*end)->text().toAscii().data() << endl;
+
+    it = tmpIt;
+    // case 3.a .........................................
+    if(start == it){
+        // we can take that for start we have to increase right, bottom
+
+        bool flagV = false;
+//        bool flagH = false;
+
+        NormalizedRect rect; /*= (*it)->area;
+        if(rect.isBottom(startC)){
+            //cout << "StartPoint is Bottm to rectangle " << endl;
+            flagV = true;
+        }*/
+
+//        it++;
+        for ( ; it != itEnd; ++it ){
+
+            rect= (*it)->area;
+            //we have come to a rectangle below of the point from
+            //rectangles top to the point which is a transition
+
+            rect.isBottom(startC) ? flagV = false: flagV = true;
+
+//            if(rect.isTop(startC) && flagV){
+
+//                //flagV = false;
+
+//                start = it;
+//                cout << "StartPoint is Top to rectangle" << endl;
+
+//                // if the rectangle is already right to the point,
+//                // we have the nearest rectangle
+//                if(rect.isLeft(startC)) break;
+//                else flagH = true;
+//            }
+
+            if(flagV && rect.isLeft(startC)){
+                start = it;
+                break;
+            }
+        }
+    }
+
+
+    //case 3.b .............................................
+    if(end == itEnd){
+        it = tmpIt;
+        itEnd = itEnd-1;
+
+        bool flagV = false;
+//        bool flagH = false;
+
+        NormalizedRect rect; /*= (*itEnd)->area;
+        if(rect.isTop(endC)){
+            cout << "Endpoint is Top to rectangle " << endl;
+            flagV = true;
+        }*/
+
+//        itEnd--;
+        for ( ; itEnd >= it; itEnd-- ){
+
+            rect= (*itEnd)->area;
+            //we have come to a rectangle below of the point from
+            //rectangles top to the point which is a transition
+
+            rect.isTop(endC) ? flagV = false: flagV = true;
+
+//            if(rect.isBottom(endC) && flagV){
+
+//                flagV = false;
+//                end = itEnd;
+//                cout << "StartPoint is Bottom to rectangle" << endl;
+
+//                // if the rectangle is already right to the point,
+//                // we have the nearest rectangle
+//                if(rect.isRight(endC)) break;
+//                else flagH = true;
+//            }
+
+            if(flagV && rect.isRight(endC)){
+                end = itEnd;
+                break;
+            }
+        }
+    }
+
+    //if(start == it || end == itEnd) return ret;
+
+//    cout << "start: " << (*start)->text().toAscii().data() << " end: " << (*end)->text().toAscii().data() << endl;
+//    cout << "difference: " << start - end << ",.,.,.,.,.," << endl;
 
     //if start is less than end swap them
     if(start > end){
+
+        //Very much necessary when we have singlecolumn text only
+//        cout << "change start and end " << endl;
+
         it = start;
         start = end;
         end = it;
     }
 
-    // I assume texts are keep in TinyTextEntity in the right order
+    // Assume that, texts are keep in TextList in the right order
     for(;start != end ; ++start){
         ret->appendShape( (*start)->transformedArea( matrix ), side );
     }
+
+/** Previous Code **/
+//    for ( ; it != itEnd; ++it )
+//    {
+//        tmp = (*it)->area;
+//        if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
+//             && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
+//        {
+//            ret->appendShape( (*it)->transformedArea( matrix ), side );
+//        }
+//    }
 
 #endif
 
@@ -400,7 +556,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
 
 RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchDirection direct,
-                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area )
+                                     Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area )
 {
     SearchDirection dir=direct;
     // invalid search request
@@ -421,36 +577,36 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     bool forward = true;
     switch ( dir )
     {
-    case FromTop:
-        start = d->m_words.constBegin();
-        end = d->m_words.constEnd();
-        break;
-    case FromBottom:
-        start = d->m_words.constEnd();
-        end = d->m_words.constBegin();
-        Q_ASSERT( start != end );
-        // we can safely go one step back, as we already checked
-        // that the list is not empty
-        --start;
-        forward = false;
-        break;
-    case NextResult:
-        start = (*sIt)->it_end;
-        end = d->m_words.constEnd();
-        if ( ( start + 1 ) != end )
-            ++start;
-        break;
-    case PreviousResult:
-        start = (*sIt)->it_begin;
-        end = d->m_words.constBegin();
-        if ( start != end )
+        case FromTop:
+            start = d->m_words.constBegin();
+            end = d->m_words.constEnd();
+            break;
+        case FromBottom:
+            start = d->m_words.constEnd();
+            end = d->m_words.constBegin();
+            Q_ASSERT( start != end );
+            // we can safely go one step back, as we already checked
+            // that the list is not empty
             --start;
-        forward = false;
-        break;
+            forward = false;
+            break;
+        case NextResult:
+            start = (*sIt)->it_end;
+            end = d->m_words.constEnd();
+            if ( ( start + 1 ) != end )
+                ++start;
+            break;
+        case PreviousResult:
+            start = (*sIt)->it_begin;
+            end = d->m_words.constBegin();
+            if ( start != end )
+                --start;
+            forward = false;
+            break;
     };
     RegularAreaRect* ret = 0;
     const TextComparisonFunction cmpFn = caseSensitivity == Qt::CaseSensitive
-            ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
+                                       ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
     if ( forward )
     {
         ret = d->findTextInternalForward( searchID, query, caseSensitivity, cmpFn, start, end );
@@ -464,10 +620,10 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 
 
 RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
-                                                          Qt::CaseSensitivity caseSensitivity,
-                                                          TextComparisonFunction comparer,
-                                                          const TextList::ConstIterator &start,
-                                                          const TextList::ConstIterator &end )
+                                                             Qt::CaseSensitivity caseSensitivity,
+                                                             TextComparisonFunction comparer,
+                                                             const TextList::ConstIterator &start,
+                                                             const TextList::ConstIterator &end )
 {
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
@@ -475,8 +631,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
     // normalize query search all unicode (including glyphs)
     const QString query = (caseSensitivity == Qt::CaseSensitive)
-            ? _query.normalized(QString::NormalizationForm_KC)
-            : _query.toLower().normalized(QString::NormalizationForm_KC);
+                            ? _query.normalized(QString::NormalizationForm_KC) 
+                            : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -492,7 +648,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         curEntity = *it;
         const QString &str = curEntity->text();
-        kDebug() << str;
+	kDebug() << str;
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )
@@ -507,46 +663,46 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
             if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),
-                           &resStrLen, &resQueryLen ) )
+                            &resStrLen, &resQueryLen ) )
             {
-                // we not have matched
-                // this means we do not have a complete match
-                // we need to get back to query start
-                // and continue the search from this place
-                haveMatch=false;
-                ret->clear();
+                    // we not have matched
+                    // this means we do not have a complete match
+                    // we need to get back to query start
+                    // and continue the search from this place
+                    haveMatch=false;
+                    ret->clear();
 #ifdef DEBUG_TEXTPAGE
-                kDebug(OkularDebug) << "\tnot matched";
+            kDebug(OkularDebug) << "\tnot matched";
 #endif
-                j=0;
-                offset = 0;
-                queryLeft=query.length();
-                it_begin = TextList::ConstIterator();
+                    j=0;
+                    offset = 0;
+                    queryLeft=query.length();
+                    it_begin = TextList::ConstIterator();
             }
             else
             {
-                // we have a match
-                // move the current position in the query
-                // to the position after the length of this string
-                // we matched
-                // subtract the length of the current entity from
-                // the left length of the query
+                    // we have a match
+                    // move the current position in the query
+                    // to the position after the length of this string
+                    // we matched
+                    // subtract the length of the current entity from 
+                    // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-                kDebug(OkularDebug) << "\tmatched";
+            kDebug(OkularDebug) << "\tmatched";
 #endif
-                haveMatch=true;
-                ret->append( curEntity->transformedArea( matrix ) );
-                j += resStrLen;
-                queryLeft -= resQueryLen;
-                if ( it_begin == TextList::ConstIterator() )
-                {
-                    it_begin = it;
-                }
+                    haveMatch=true;
+                    ret->append( curEntity->transformedArea( matrix ) );
+                    j += resStrLen;
+                    queryLeft -= resQueryLen;
+                    if ( it_begin == TextList::ConstIterator() )
+                    {
+                        it_begin = it;
+                    }
             }
         }
 
@@ -580,28 +736,26 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 }
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
-                                                           Qt::CaseSensitivity caseSensitivity,
-                                                           TextComparisonFunction comparer,
-                                                           const TextList::ConstIterator &start,
-                                                           const TextList::ConstIterator &end )
+                                                            Qt::CaseSensitivity caseSensitivity,
+                                                            TextComparisonFunction comparer,
+                                                            const TextList::ConstIterator &start,
+                                                            const TextList::ConstIterator &end )
 {
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
 
     // normalize query to search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive)
-            ? _query.normalized(QString::NormalizationForm_KC)
-            : _query.toLower().normalized(QString::NormalizationForm_KC);
+    const QString query = (caseSensitivity == Qt::CaseSensitive) 
+                            ? _query.normalized(QString::NormalizationForm_KC) 
+                            : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
     const TinyTextEntity* curEntity = 0;
     int j=query.length() - 1, len=0, queryLeft=query.length();
-    int offset = 0;
     bool haveMatch=false;
-    bool dontIncrement=false;
     bool offsetMoved = false;
     TextList::ConstIterator it = start;
     TextList::ConstIterator it_begin;
@@ -611,10 +765,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         const QString &str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
-            if ( m_searchPoints.contains( searchID ) )
-            {
-                offset = qMax( m_searchPoints[ searchID ]->offset_begin, 0 );
-            }
             offsetMoved = true;
         }
         if ( query.at(j).isSpace() )
@@ -625,59 +775,53 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #endif
             j--;
             queryLeft--;
-            // since we do not really need to increment this after this
-            // run of the loop finishes because we are not comparing it
-            // to any entity, rather we are deducing a situation in a document
-            dontIncrement=true;
         }
         else
         {
-            dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
             if ( !comparer( str.rightRef( min ), query.midRef( j - min + 1, min ),
-                           &resStrLen, &resQueryLen ) )
+                            &resStrLen, &resQueryLen ) )
             {
-                // we not have matched
-                // this means we do not have a complete match
-                // we need to get back to query start
-                // and continue the search from this place
-                haveMatch=false;
-                ret->clear();
+                    // we not have matched
+                    // this means we do not have a complete match
+                    // we need to get back to query start
+                    // and continue the search from this place
+                    haveMatch=false;
+                    ret->clear();
 #ifdef DEBUG_TEXTPAGE
-                kDebug(OkularDebug) << "\tnot matched";
+                    kDebug(OkularDebug) << "\tnot matched";
 #endif
-                j=query.length() - 1;
-                offset = 0;
-                queryLeft=query.length();
-                it_begin = TextList::ConstIterator();
+                    j=query.length() - 1;
+                    queryLeft=query.length();
+                    it_begin = TextList::ConstIterator();
             }
             else
             {
-                // we have a match
-                // move the current position in the query
-                // to the position after the length of this string
-                // we matched
-                // subtract the length of the current entity from
-                // the left length of the query
+                    // we have a match
+                    // move the current position in the query
+                    // to the position after the length of this string
+                    // we matched
+                    // subtract the length of the current entity from 
+                    // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-                kDebug(OkularDebug) << "\tmatched";
+                    kDebug(OkularDebug) << "\tmatched";
 #endif
-                haveMatch=true;
-                ret->append( curEntity->transformedArea( matrix ) );
-                j -= resStrLen;
-                queryLeft -= resQueryLen;
-                if ( it_begin == TextList::ConstIterator() )
-                {
-                    it_begin = it;
-                }
+                    haveMatch=true;
+                    ret->append( curEntity->transformedArea( matrix ) );
+                    j -= resStrLen;
+                    queryLeft -= resQueryLen;
+                    if ( it_begin == TextList::ConstIterator() )
+                    {
+                        it_begin = it;
+                    }
             }
         }
 
@@ -755,8 +899,7 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
     return ret;
 }
 
-
-//mamun - added
+// mamun.nightcrawler@gmail.com
 void TextPage::printTextPageContent(){
     // tList is our textList for this text page
     // TextList is of type List<TinyTextEntity* >

@@ -229,6 +229,7 @@ Q_OBJECT
         void slotSpeakCurrentPage();
         void slotStopSpeaks();
         void slotAction( Okular::Action *action );
+        void externalKeyPressEvent( QKeyEvent *e );
 };
 
 #endif

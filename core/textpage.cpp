@@ -217,16 +217,16 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 /**
     It works like this:
     There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
-    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
+    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those
     points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
-    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
-    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
+    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both
+    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a
     1. (rx,ry)x(1,ty)
     2. (0,ty)x(1,uy)
     3. (0,uy)x(vx,vy)
 
     To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
-    or that has a left border >= cx and bottom border >= cy. 
+    or that has a left border >= cx and bottom border >= cy.
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
@@ -293,7 +293,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
                 kWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
+                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " "
                   << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
                   ( tmp.top >= endCy);
 #endif
@@ -313,7 +313,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
         NormalizedRect first, second, third;
         /// finding out if there is more than one baseline between them is a hard and discussable task
-        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
+        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the
         /// areas, if more than one -> we have a three or over line selection
         first = start;
         second.top = start.bottom;
@@ -359,17 +359,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     minX = content.left(), maxX = content.right();
     minY = content.top(), maxY = content.bottom();
 
-    // cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY <<
-    // " and EndPoint : " << endC.x * scaleX << "," << endC.y * scaleY << endl;
-
-    // cout << "Content in: " << minX << "," << minY << " " << maxX <<
-    // "," << maxY << endl;
-
-//    QRect startRect = (*it)->area.geometry(scaleX,scaleY);
-//    QRect endRect = (*(itEnd-1))->area.geometry(scaleX,scaleY);
-
-//    cout << "start: " << startRect.left() << "," << startRect.top() << " end" <<
-//            endRect.right() << "," <<endRect.bottom() << endl;
 
     /** we will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
      the endRectangle .. we have four cases
@@ -407,9 +396,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         if(endC.y * scaleY > maxY) endC.y = maxY/scaleY;
     }
 
-//    cout << "Now: startPoint: " << startC.x * scaleX << "," << startC.y * scaleY <<
-//            " and EndPoint : " << endC.x * scaleX << "," << endC.y * scaleY << "...... " << endl;
-
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     TextList::ConstIterator start = it, end = itEnd, tmpIt = it;
@@ -437,35 +423,13 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         // we can take that for start we have to increase right, bottom
 
         bool flagV = false;
-//        bool flagH = false;
+        NormalizedRect rect;
 
-        NormalizedRect rect; /*= (*it)->area;
-        if(rect.isBottom(startC)){
-            //cout << "StartPoint is Bottm to rectangle " << endl;
-            flagV = true;
-        }*/
-
-//        it++;
         for ( ; it != itEnd; ++it ){
 
             rect= (*it)->area;
-            //we have come to a rectangle below of the point from
-            //rectangles top to the point which is a transition
-
             rect.isBottom(startC) ? flagV = false: flagV = true;
 
-//            if(rect.isTop(startC) && flagV){
-
-//                //flagV = false;
-
-//                start = it;
-//                cout << "StartPoint is Top to rectangle" << endl;
-
-//                // if the rectangle is already right to the point,
-//                // we have the nearest rectangle
-//                if(rect.isLeft(startC)) break;
-//                else flagH = true;
-//            }
 
             if(flagV && rect.isLeft(startC)){
                 start = it;
@@ -481,34 +445,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         itEnd = itEnd-1;
 
         bool flagV = false;
-//        bool flagH = false;
+        NormalizedRect rect;
 
-        NormalizedRect rect; /*= (*itEnd)->area;
-        if(rect.isTop(endC)){
-            cout << "Endpoint is Top to rectangle " << endl;
-            flagV = true;
-        }*/
-
-//        itEnd--;
         for ( ; itEnd >= it; itEnd-- ){
 
             rect= (*itEnd)->area;
-            //we have come to a rectangle below of the point from
-            //rectangles top to the point which is a transition
-
             rect.isTop(endC) ? flagV = false: flagV = true;
-
-//            if(rect.isBottom(endC) && flagV){
-
-//                flagV = false;
-//                end = itEnd;
-//                cout << "StartPoint is Bottom to rectangle" << endl;
-
-//                // if the rectangle is already right to the point,
-//                // we have the nearest rectangle
-//                if(rect.isRight(endC)) break;
-//                else flagH = true;
-//            }
 
             if(flagV && rect.isRight(endC)){
                 end = itEnd;
@@ -517,16 +459,10 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 
-    //if(start == it || end == itEnd) return ret;
 
-//    cout << "start: " << (*start)->text().toAscii().data() << " end: " << (*end)->text().toAscii().data() << endl;
-//    cout << "difference: " << start - end << ",.,.,.,.,.," << endl;
 
     //if start is less than end swap them
     if(start > end){
-
-        //Very much necessary when we have singlecolumn text only
-//        cout << "change start and end " << endl;
 
         it = start;
         start = end;
@@ -534,20 +470,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
     // Assume that, texts are keep in TextList in the right order
-    for(;start != end ; ++start){
+    for(;start <= end ; ++start){
         ret->appendShape( (*start)->transformedArea( matrix ), side );
     }
-
-/** Previous Code **/
-//    for ( ; it != itEnd; ++it )
-//    {
-//        tmp = (*it)->area;
-//        if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
-//             && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
-//        {
-//            ret->appendShape( (*it)->transformedArea( matrix ), side );
-//        }
-//    }
 
 #endif
 
@@ -631,7 +556,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
     // normalize query search all unicode (including glyphs)
     const QString query = (caseSensitivity == Qt::CaseSensitive)
-                            ? _query.normalized(QString::NormalizationForm_KC) 
+                            ? _query.normalized(QString::NormalizationForm_KC)
                             : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
@@ -663,7 +588,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current 
+            // we have equal (or less than) area of the query left as the length of the current
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
@@ -690,7 +615,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // subtract the length of the current entity from 
+                    // subtract the length of the current entity from
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << "\tmatched";
@@ -746,8 +671,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     RegularAreaRect* ret=new RegularAreaRect;
 
     // normalize query to search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive) 
-                            ? _query.normalized(QString::NormalizationForm_KC) 
+    const QString query = (caseSensitivity == Qt::CaseSensitive)
+                            ? _query.normalized(QString::NormalizationForm_KC)
                             : _query.toLower().normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
@@ -783,7 +708,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current 
+            // we have equal (or less than) area of the query left as the length of the current
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
@@ -809,7 +734,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // subtract the length of the current entity from 
+                    // subtract the length of the current entity from
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
                     kDebug(OkularDebug) << "\tmatched";

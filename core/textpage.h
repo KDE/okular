@@ -173,6 +173,23 @@ class OKULAR_EXPORT TextPage
          **/
         void printTextPageContent();
 
+        /**
+        remove odd spaces which are much bigger than normal spaces from m_words
+        **/
+        void removeSpace();
+
+        /**
+        make necessary modifications in the TextList to make the textOrder correct, so
+        textselection works fine
+        **/
+        void correctTextOrder();
+
+        /**
+        add additional spaces between words, if necessary, which can make the words valuable
+        while copying after selection
+        **/
+        void addNecessarySpace();
+
     private:
         TextPagePrivate* const d;
 
@@ -181,4 +198,4 @@ class OKULAR_EXPORT TextPage
 
 }
 
-#endif 
+#endif

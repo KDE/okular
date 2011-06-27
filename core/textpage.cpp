@@ -360,23 +360,24 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     minY = content.top(), maxY = content.bottom();
 
 
-    /** we will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
+    /**
+     we will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
      the endRectangle .. we have four cases
 
-     *Case 1(a): both startpoint and endpoint are out of the bounding Rectangle and at one side, so the rectangle made of start
-     *and endPoint are outof the bounding rect (do not intersect)
+     Case 1(a): both startpoint and endpoint are out of the bounding Rectangle and at one side, so the rectangle made of start
+     and endPoint are outof the bounding rect (do not intersect)
 
-     *Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so their rectangle
+     Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so their rectangle
 
-     *Case 2: find the rectangle which contains start and endpoint and having some
-     *TextEntity
+     Case 2: find the rectangle which contains start and endpoint and having some
+     TextEntity
 
-     *Case 3(a): the startPoint is in some empty space, which is not under any rectangle
-     *containing some TinyTextEntity. So, we search the nearest rectangle consisting of some
-     *TinyTextEntity right to or bottom of the startPoint
+     Case 3(a): the startPoint is in some empty space, which is not under any rectangle
+     containing some TinyTextEntity. So, we search the nearest rectangle consisting of some
+     TinyTextEntity right to or bottom of the startPoint
 
-     *Case 3(b): Same for the endPoint. Here, we have to find the point top of or left to
-     *start point
+     Case 3(b): Same for the endPoint. Here, we have to find the point top of or left to
+     start point
     **/
 
     //Case 1(a) - we know that startC.x > endC.x, we need to decide which is top and which is left
@@ -469,10 +470,23 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         end = it;
     }
 
+
+    //TinyTextEntity ent;
+    //ent.area.geometry(scaleX,scaleY);
+
+    //QString str(' ');
     // Assume that, texts are keep in TextList in the right order
-    for(;start <= end ; ++start){
+    for( ;start <= end ; ++start){
         ret->appendShape( (*start)->transformedArea( matrix ), side );
-    }
+
+//        if((*start)->text() == str){
+//                QRect rect;
+//                rect = (*start)->area.geometry(scaleX,scaleY);
+//                cout << "Text Before:" << (* (start-1) )->text().toAscii().data() << " "
+//                     <<"Top:" << rect.top() << " Bottom: " << rect.bottom()
+//                    << " Left: " << rect.left() << " Right: " << rect.right() << endl;
+//            }
+        }
 
 #endif
 
@@ -835,5 +849,30 @@ void TextPage::printTextPageContent(){
         QRect rect = tiny->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
         cout << " area: " << rect.top() << "," << rect.left() << " " << rect.bottom() << "," << rect.right() << endl;
     }
+
+}
+
+//remove unEvenSpace, currently removes necessary spaces also :(
+void TextPage::removeSpace(){
+
+    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end(), tmpIt = it;
+    QString str(' ');
+
+    // find the average space length
+    for( ; it != itEnd ; it++){
+        //if TextEntity contains space
+        if((*it)->text() == str)
+            this->d->m_words.erase(it);
+    }
+
+}
+
+//correct the textOrder, all layout recognition works here
+void TextPage::correctTextOrder(){
+
+}
+
+//add necessary spaces in the text - mainly for copy purpose
+void TextPage::addNecessarySpace(){
 
 }

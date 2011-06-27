@@ -1861,7 +1861,7 @@ void Document::closeDocument()
     d->m_allocatedTextPagesFifo.clear();
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
-    
+
     delete d->m_documentInfo;
     d->m_documentInfo = 0;
 
@@ -1996,9 +1996,9 @@ const DocumentInfo * Document::documentInfo() const
 
         const DocumentInfo::Key keyPages = DocumentInfo::Pages;
         const QString keyString = DocumentInfo::getKeyString( keyPages );
- 
+
         if ( info->get( keyString ).isEmpty() ) {
-            info->set( keyString, QString::number( this->pages() ), 
+            info->set( keyString, QString::number( this->pages() ),
                        DocumentInfo::getKeyTitle( keyPages ) );
         }
 
@@ -2320,6 +2320,12 @@ void Document::requestTextPage( uint page )
     // Memory management for TextPages
 
     d->m_generator->generateTextPage( kp );
+
+    TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
+
+    tmpPage->removeSpace();
+    tmpPage->correctTextOrder();
+    tmpPage->addNecessarySpace();
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -3134,7 +3140,7 @@ QString Document::printError() const
         case Generator::UnknownPrintError:
             return QString();
     }
-    
+
     return QString();
 }
 
@@ -3295,12 +3301,12 @@ void Document::unregisterView( View *view )
 QByteArray Document::fontData(const FontInfo &font) const
 {
     QByteArray result;
-    
+
     if (d->m_generator)
     {
         QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray *, &result));
     }
-    
+
     return result;
 }
 

@@ -27,6 +27,15 @@ typedef QList< TinyTextEntity* > TextList;
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
 
+//mamun.nightcrawler@gmail.com
+
+/**
+We will make a line of TextList and also store the bounding rectangle of line
+**/
+typedef QList<TextList> SortedTextList;
+typedef QList<QRect> LineRect;
+
+
 class TextPagePrivate
 {
     public:
@@ -47,6 +56,8 @@ class TextPagePrivate
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
+        SortedTextList m_lines;
+        LineRect m_line_rects;
 };
 
 }

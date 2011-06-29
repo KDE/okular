@@ -190,6 +190,12 @@ class OKULAR_EXPORT TextPage
         **/
         void addNecessarySpace();
 
+//        //comparison function which compares two TinyTextEntity by left position
+//        bool compareTinyTextEntityX(TinyTextEntity first, TinyTextEntity second);
+
+//        // by top
+//        bool compareTinyTextEntityX(TinyTextEntity first, TinyTextEntity second);
+
     private:
         TextPagePrivate* const d;
 

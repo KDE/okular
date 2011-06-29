@@ -19,6 +19,7 @@
 #include "page_p.h"
 
 #include <cstring>
+#include <QtAlgorithms>
 
 //On Debugging Purpose
 #include <iostream>
@@ -852,7 +853,7 @@ void TextPage::printTextPageContent(){
 
 }
 
-//remove unEvenSpace, currently removes necessary spaces also :(
+//remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
 void TextPage::removeSpace(){
 
     TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end(), tmpIt = it;
@@ -867,10 +868,165 @@ void TextPage::removeSpace(){
 
 }
 
+
+bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second){
+    QRect firstArea = first->area.geometry(1000,1000);
+    QRect secondArea = second->area.geometry(1000,1000);
+
+    return firstArea.left() < secondArea.left();
+}
+
+bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
+    QRect firstArea = first->area.geometry(1000,1000);
+    QRect secondArea = second->area.geometry(1000,1000);
+
+    return firstArea.top() < secondArea.bottom();
+}
+
+
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
 
+
+/**
+
+    we cannot assume that the generator will give us texts in the right order. We can only assume
+    that we will get texts in the page and their bounding rectangle. The texts can be character, word,
+    half-word anything. So, we need to:
+
+    1. Sort rectangles/boxes containing texts by y0(top)
+    2. Create textline where there is y overlap between TinyTextEntity 's
+    3. Within each line sort the TinyTextEntity 's by x0(left)
+
+    4. Make character analysis to differentiate between word spacing and column spacing
+    5. Break the lines if there is some column spacing somewhere in the line and also calculate
+       the column spacing rectangle
+
+**/
+
+
+    // Step:1 .......................................
+
+    TextList tmpList = d->m_words;
+    qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
+
+    // Step 2: .......................................
+
+    TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt = it;
+    int i =0, index,j = 0;
+    int newLeft,newRight,newTop,newBottom,newWidth,newHeight;
+
+    //for every non-space texts(characters/words) in the textList
+    for( ; it != itEnd ; it++){
+
+        //the textEntity area
+        QRect elementArea = (*it)->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+
+        //d->m_lines in a QList of TextList and TextList is a QList of TinyTextEntity*
+        // see, whether the new text should be inserted to an existing line
+        index = i;
+        bool found = false;
+        for( i = 0 ; i < d->m_lines.length() ; i++){
+
+
+            //the line area
+            QRect lineArea = d->m_line_rects.at(i);
+
+            int text_y1 = elementArea.top() ,text_y2 = elementArea.bottom(), text_x1 = elementArea.left(),
+                    text_x2 = elementArea.right();
+            int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
+                    line_x1 = lineArea.left(), line_x2 = lineArea.right();
+
+            // if the new text and line has y overlapping parts of more than 50%, the text will go to this line
+            if(text_y2 > line_y1 && line_y2 > text_y1){
+
+                TextList tmp = d->m_lines.at(i);
+                tmp.append((*it));
+
+                d->m_lines.replace(i,tmp);
+
+                newLeft = lineArea.left();
+                if(text_x1 < newLeft) newLeft = text_x1;
+                newRight = text_x2;
+                if(lineArea.right() > text_x2) newRight = lineArea.right();
+
+                newTop = text_y1 > line_y1 ? line_y1 : text_y1;
+                newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+                newWidth = newRight - newLeft;
+                newHeight = newBottom - newTop;
+
+                d->m_line_rects.replace( i, QRect(newLeft,newTop,newWidth,newHeight) );
+                found = true;
+            }
+
+        }
+
+        // when we have found a new line
+        // create a new TextList containing only one element and append it to the m_lines
+        if(!found){
+            //(*it) is a TinyTextEntity*
+            TextList tmp;
+            tmp.append((*it));
+            d->m_lines.append(tmp);
+            d->m_line_rects.append(elementArea);
+        }
+    }
+
+    cout << "m_lines length: " << d->m_lines.length() << endl;
+
+    // print every line
+//    for(i = 0 ; i < d->m_lines.length() ; i++){
+//        // list is a line
+//        TextList list = d->m_lines.at(i);
+
+//        if(!i){
+
+//            QRect rect = d->m_line_rects.at(i);
+//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+
+//            cout << "Line " << i << ": ";
+
+//            for(j = 0 ; j < list.length() ; j++){
+//                TinyTextEntity* ent = list.at(j);
+//                cout << ent->text().toAscii().data();
+//            }
+//            cout << endl;
+//        }
+
+//    }
+
+
+
+    // Step 3: .......................................
+    for(i = 0 ; i < d->m_lines.length() ; i++){
+        TextList list = d->m_lines.at(i);
+
+        qSort(list.begin(),list.end(),compareTinyTextEntityX);
+
+        //print lines after sorting
+        if(1){
+
+            QRect rect = d->m_line_rects.at(i);
+            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+
+            cout << "Line " << i << ": ";
+
+            for(j = 0 ; j < list.length() ; j++){
+                TinyTextEntity* ent = list.at(j);
+                cout << ent->text().toAscii().data();
+            }
+            cout << endl;
+        }
+    }
+
+
+    // Step 4: ...........................................
+    for(i = 0 ; i < d->m_lines.length() ; i++){
+        TextList list = d->m_lines.at(i);
+    }
+
 }
+
 
 //add necessary spaces in the text - mainly for copy purpose
 void TextPage::addNecessarySpace(){

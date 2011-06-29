@@ -2323,7 +2323,7 @@ void Document::requestTextPage( uint page )
 
     TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
 
-    tmpPage->removeSpace();
+//    tmpPage->removeSpace();
     tmpPage->correctTextOrder();
     tmpPage->addNecessarySpace();
 }

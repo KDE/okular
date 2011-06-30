@@ -185,6 +185,11 @@ class OKULAR_EXPORT TextPage
         void correctTextOrder();
 
         /**
+        Create lines from TextList and sort them according to their position
+        **/
+        void makeAndSortLines();
+
+        /**
         add additional spaces between words, if necessary, which can make the words valuable
         while copying after selection
         **/

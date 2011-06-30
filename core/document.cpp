@@ -82,6 +82,9 @@
 
 #include <config-okular.h>
 
+#include <iostream>
+using namespace std;
+
 using namespace Okular;
 
 struct AllocatedPixmap
@@ -2313,6 +2316,8 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
 void Document::requestTextPage( uint page )
 {
+    cout << "textPage requested: " << endl;
+
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
@@ -2323,7 +2328,7 @@ void Document::requestTextPage( uint page )
 
     TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
 
-//    tmpPage->removeSpace();
+    tmpPage->removeSpace();
     tmpPage->correctTextOrder();
     tmpPage->addNecessarySpace();
 }

@@ -884,12 +884,11 @@ bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
 }
 
 
-//correct the textOrder, all layout recognition works here
-void TextPage::correctTextOrder(){
+/** mamun_nightcrawler@gmail.com **/
+void TextPage::makeAndSortLines(){
 
 
-/**
-
+    /**
     we cannot assume that the generator will give us texts in the right order. We can only assume
     that we will get texts in the page and their bounding rectangle. The texts can be character, word,
     half-word anything. So, we need to:
@@ -897,13 +896,7 @@ void TextPage::correctTextOrder(){
     1. Sort rectangles/boxes containing texts by y0(top)
     2. Create textline where there is y overlap between TinyTextEntity 's
     3. Within each line sort the TinyTextEntity 's by x0(left)
-
-    4. Make character analysis to differentiate between word spacing and column spacing
-    5. Break the lines if there is some column spacing somewhere in the line and also calculate
-       the column spacing rectangle
-
-**/
-
+    **/
 
     // Step:1 .......................................
 
@@ -1003,24 +996,178 @@ void TextPage::correctTextOrder(){
 
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
 
+        d->m_lines.replace(i,list);
+
         //print lines after sorting
-        if(1){
+//        if(1){
 
-            QRect rect = d->m_line_rects.at(i);
-            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+//            QRect rect = d->m_line_rects.at(i);
+//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
 
-            cout << "Line " << i << ": ";
+//            cout << "Line " << i << ": ";
 
-            for(j = 0 ; j < list.length() ; j++){
-                TinyTextEntity* ent = list.at(j);
-                cout << ent->text().toAscii().data();
+//            for(j = 0 ; j < list.length() ; j++){
+//                TinyTextEntity* ent = list.at(j);
+//                cout << ent->text().toAscii().data();
+//            }
+//            cout << endl;
+//        }
+
+
+    }
+}
+
+//correct the textOrder, all layout recognition works here
+void TextPage::correctTextOrder(){
+
+    makeAndSortLines();
+
+    /**
+
+    Firt Part: Create Text Lines
+
+    1. Make character analysis to differentiate between word spacing and column spacing.
+    2. Break the lines if there is some column spacing somewhere in the line and also calculate
+       the column spacing rectangle if necessary.
+    3. Find if some line contains more than one lines (it can happend if in the left column there is some
+       Big Text like heading and in the right column there is normal texts, so several normal lines from
+       right can be erroneously inserted in same line in merged position)
+
+       For those lines first sort them again using yoverlap and then x ordering
+
+    **/
+
+    /** Step 1: ........................................................................ **/
+
+    //we would like to use QMap instead of QHash as it will keep the keys sorted
+    QMap<int,int> hor_space_stat;   //this is to find word spacing
+    QMap<int,int> col_space_stat;   //this is to find column spacing
+    QList< QList<QRect> > space_rects; // to save all the word spacing or column spacing rects
+
+    int i,j;
+
+    for(i = 0 ; i < d->m_lines.length() ; i++){
+        // list contains a line
+        TextList list = d->m_lines.at(i);
+        QList<QRect> line_space_rects;
+
+//        if(1){
+//            QRect rect = d->m_line_rects.at(i);
+//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+//            cout << "Line " << i << ": ";
+//            for(j = 0 ; j < list.length() ; j++){
+//                TinyTextEntity* ent = list.at(j);
+//                cout << ent->text().toAscii().data();
+//            }
+//            cout << endl;
+//        }
+
+        int maxSpace = 0, minSpace = d->m_page->m_page->width();
+
+        // for every TinyTextEntity element in the line
+        TextList::Iterator it = list.begin(), itEnd = list.end();
+
+//        cout << "Line " << i << ":";
+        for( ; it != itEnd ; it++ ){
+//            cout << (*it)->text().toAscii().data();
+
+            QRect area1 = (*it)->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+            if( it+1 == itEnd ) break;
+
+            QRect area2 = (*(it+1))->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+            int space = area2.left() - area1.right();
+            if(space > maxSpace) maxSpace = space;
+            if(space < minSpace && space != 0) minSpace = space;
+
+            //if we found a real space, whose length is not zero and also less than the pageWidth
+            if(space != 0 && space != d->m_page->m_page->width()){
+                if(hor_space_stat.contains(space)) hor_space_stat[space] = hor_space_stat[space]++;
+                else hor_space_stat[space] = 1;
+
+                //if we have found a space, put it in a list of rectangles
+                int left,right,top,bottom;
+                left = area1.right();
+                right = area2.left();
+
+//                cout << "left: " << left << ", right: " << right << endl;
+
+
+                area1.top() > area2.top() ? top = area2.top() : top = area1.top();
+                area1.bottom() < area2.bottom() ? bottom = area2.bottom() : bottom = area1.bottom();
+
+                QRect rect(left,top,right-left,bottom-top);
+                line_space_rects.append(rect);
+
+
+//                cout << space << " ";
             }
-            cout << endl;
+//            cout << "space: " << space << " " <<  area1.right() << " " << area2.left() << endl;
+        }
+
+        space_rects.append(line_space_rects);
+
+        if(hor_space_stat.contains(maxSpace)){
+            if(hor_space_stat[maxSpace] != 1)
+                hor_space_stat[maxSpace] = hor_space_stat[maxSpace]--;
+            else hor_space_stat.remove(maxSpace);
+        }
+
+        if(maxSpace != 0){
+            if (col_space_stat.contains(maxSpace))
+                col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
+            else col_space_stat[maxSpace] = 1;
+        }
+//        cout << endl;
+//        cout << minSpace << " "<< maxSpace << endl;
+    }
+
+
+    // All the space counts are in hor_space_stat
+    cout << "Word Spacing: " << endl;
+    QMapIterator<int, int> iterate(hor_space_stat);
+    while (iterate.hasNext()) {
+        iterate.next();
+        cout << iterate.key() << ": " << iterate.value() << endl;
+    }
+
+    int col_spacing = 0;
+    cout << "Column Spacing: " << endl;
+    QMapIterator<int, int> iterate_col(col_space_stat);
+    while (iterate_col.hasNext()) {
+        iterate_col.next();
+        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
+        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
+    }
+
+    cout << "Column Spacing is: " << col_spacing << endl;
+
+
+    //print some space rects
+    for( i = 0 ; i < space_rects.length() ; i++){
+
+        QList<QRect> rectList = space_rects.at(i);
+
+        for( j = 0 ; j < rectList.length() ; j++){
+
+            QRect rect = rectList.at(j);
+            cout << "rect:(left,right,top,bottom) : " << rect.left() << "," << rect.right() << ","
+                    << rect.top() << "," << rect.bottom() << endl;
+
         }
     }
 
 
-    // Step 4: ...........................................
+    /** Step 2: ........................................................................ **/
+
+
+
+    /**
+    Second Part: Now we have Text Lines in our hand, we have to find their reading order. We will need to consider both
+    the horizontal spacing and vertical spacing here. We need the concept of line spacing here.
+    **/
+
+    //Find Line spacing/ Vertical spacing for row separators
+    //It will be necessary for reading order detection
     for(i = 0 ; i < d->m_lines.length() ; i++){
         TextList list = d->m_lines.at(i);
     }

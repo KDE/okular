@@ -52,6 +52,8 @@ class TextPagePrivate
                                                     TextComparisonFunction comparer,
                                                     const TextList::ConstIterator &start,
                                                     const TextList::ConstIterator &end );
+        /** prints a line **/
+        void printTextList(int i, TextList list);
 
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;

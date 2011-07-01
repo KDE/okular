@@ -971,19 +971,7 @@ void TextPage::makeAndSortLines(){
 //    for(i = 0 ; i < d->m_lines.length() ; i++){
 //        // list is a line
 //        TextList list = d->m_lines.at(i);
-
-//        if(!i){
-
-//            QRect rect = d->m_line_rects.at(i);
-//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
-
-//            cout << "Line " << i << ": ";
-
-//            for(j = 0 ; j < list.length() ; j++){
-//                TinyTextEntity* ent = list.at(j);
-//                cout << ent->text().toAscii().data();
-//            }
-//            cout << endl;
+//        d->printTextList(i,list);
 //        }
 
 //    }
@@ -999,23 +987,72 @@ void TextPage::makeAndSortLines(){
         d->m_lines.replace(i,list);
 
         //print lines after sorting
-//        if(1){
-
-//            QRect rect = d->m_line_rects.at(i);
-//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
-
-//            cout << "Line " << i << ": ";
-
-//            for(j = 0 ; j < list.length() ; j++){
-//                TinyTextEntity* ent = list.at(j);
-//                cout << ent->text().toAscii().data();
-//            }
-//            cout << endl;
-//        }
-
+        //d->printTextList(i,list);
 
     }
 }
+
+
+// if the horizontal arm of one rectangle fully contains the other (example below)
+//  --------         ----         -----  first
+//    ----         --------       -----  second
+
+// or we can make it overlap of spaces by 80%
+
+bool doesConsumeX(QRect first, QRect second){
+
+//    int threshold = 2;
+
+    // if one consumes another fully
+    if(first.left() >= second.left() && first.right() >= second.right()) return true;
+    if(first.left() <= second.left() && first.right() <= second.right()) return true;
+
+    //or if there is overlap of space by more than 80%
+    // there is overlap
+
+    int overlap;
+    if(second.right() >= first.left() && first.right() >= second.left()){
+
+        int percentage;
+        if(second.right() > first.right()) overlap = first.right() - second.left();
+        else overlap = second.right() - first.left();
+
+        //we will divide by the smaller rectangle to calculate the overlap
+        if( first.width() < second.width()){
+
+            percentage = overlap * 100 / (first.width());
+
+        }
+        else{
+            percentage = overlap * 100 / (second.width());
+        }
+
+        if(percentage > 80) return true;
+
+    }
+
+    return false;
+}
+
+void printRect(QRect rect){
+
+    cout << "l: " << rect.left() << " r: " << rect.right() << " t: " << rect.top() << " b: " << rect.bottom() << endl;
+}
+
+void TextPagePrivate::printTextList(int i, TextList list){
+
+    QRect rect = m_line_rects.at(i);
+    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+    cout << "Line " << i << ": ";
+
+    for(int j = 0 ; j < list.length() ; j++){
+        TinyTextEntity* ent = list.at(j);
+        cout << ent->text().toAscii().data();
+    }
+    cout << endl;
+
+}
+
 
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
@@ -1042,7 +1079,10 @@ void TextPage::correctTextOrder(){
     //we would like to use QMap instead of QHash as it will keep the keys sorted
     QMap<int,int> hor_space_stat;   //this is to find word spacing
     QMap<int,int> col_space_stat;   //this is to find column spacing
+
     QList< QList<QRect> > space_rects; // to save all the word spacing or column spacing rects
+
+    QList<QRect> max_hor_space_rects;
 
     int i,j;
 
@@ -1051,23 +1091,13 @@ void TextPage::correctTextOrder(){
         TextList list = d->m_lines.at(i);
         QList<QRect> line_space_rects;
 
-//        if(1){
-//            QRect rect = d->m_line_rects.at(i);
-//            cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
-//            cout << "Line " << i << ": ";
-//            for(j = 0 ; j < list.length() ; j++){
-//                TinyTextEntity* ent = list.at(j);
-//                cout << ent->text().toAscii().data();
-//            }
-//            cout << endl;
-//        }
-
         int maxSpace = 0, minSpace = d->m_page->m_page->width();
 
         // for every TinyTextEntity element in the line
         TextList::Iterator it = list.begin(), itEnd = list.end();
+        QRect max_area1,max_area2;
 
-//        cout << "Line " << i << ":";
+
         for( ; it != itEnd ; it++ ){
 //            cout << (*it)->text().toAscii().data();
 
@@ -1076,7 +1106,13 @@ void TextPage::correctTextOrder(){
 
             QRect area2 = (*(it+1))->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
             int space = area2.left() - area1.right();
-            if(space > maxSpace) maxSpace = space;
+
+            if(space > maxSpace){
+                max_area1 = area1;
+                max_area2 = area2;
+                maxSpace = space;
+            }
+
             if(space < minSpace && space != 0) minSpace = space;
 
             //if we found a real space, whose length is not zero and also less than the pageWidth
@@ -1088,9 +1124,6 @@ void TextPage::correctTextOrder(){
                 int left,right,top,bottom;
                 left = area1.right();
                 right = area2.left();
-
-//                cout << "left: " << left << ", right: " << right << endl;
-
 
                 area1.top() > area2.top() ? top = area2.top() : top = area1.top();
                 area1.bottom() < area2.bottom() ? bottom = area2.bottom() : bottom = area1.bottom();
@@ -1116,13 +1149,27 @@ void TextPage::correctTextOrder(){
             if (col_space_stat.contains(maxSpace))
                 col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
             else col_space_stat[maxSpace] = 1;
+
+            //store the max rect of each line
+            int left,right,top,bottom;
+            left = max_area1.right();
+            right = max_area2.left();
+
+            max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
+            max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
+
+            QRect rect(QPoint(left,top),QPoint(right,bottom));
+            max_hor_space_rects.append(rect);
+
         }
 //        cout << endl;
 //        cout << minSpace << " "<< maxSpace << endl;
     }
 
 
-    // All the space counts are in hor_space_stat
+    // All the between word space counts are in hor_space_stat
+
+    /*int word_spacing;
     cout << "Word Spacing: " << endl;
     QMapIterator<int, int> iterate(hor_space_stat);
     while (iterate.hasNext()) {
@@ -1137,27 +1184,171 @@ void TextPage::correctTextOrder(){
         iterate_col.next();
         cout << iterate_col.key() << ": " << iterate_col.value() << endl;
         if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
-    }
-
-    cout << "Column Spacing is: " << col_spacing << endl;
+    }*/
 
 
-    //print some space rects
-    for( i = 0 ; i < space_rects.length() ; i++){
+    //show all space rects (between words, word spacing or column spacing)
+//    for( i = 0 ; i < space_rects.length() ; i++){
 
-        QList<QRect> rectList = space_rects.at(i);
+//        QList<QRect> rectList = space_rects.at(i);
 
-        for( j = 0 ; j < rectList.length() ; j++){
+//        for( j = 0 ; j < rectList.length() ; j++){
 
-            QRect rect = rectList.at(j);
-            cout << "rect:(left,right,top,bottom) : " << rect.left() << "," << rect.right() << ","
-                    << rect.top() << "," << rect.bottom() << endl;
+//            QRect rect = rectList.at(j);
+//            cout << "rect:(left,right,top,bottom) : " << rect.left() << "," << rect.right() << ","
+//                    << rect.top() << "," << rect.bottom() << endl;
 
-        }
-    }
+//        }
+//    }
+
+//    cout << "max_hor_space_rectangle:" << endl;
+//    for(j = 0 ; j < max_hor_space_rects.length() ; j++){
+
+//        QRect rect = max_hor_space_rects.at(j);
+//        cout << "rect:(left,right,top,bottom) : " << rect.left() << "," << rect.right() << ","
+//                << rect.top() << "," << rect.bottom() << endl;
+//    }
+
 
 
     /** Step 2: ........................................................................ **/
+
+    /**
+     We will start with the max whitespace rectangle within the first line, if any. Then, we will get the max whitespace
+     rectangle of the second line.
+
+    If both of them are at the same position, we can say, they creates a column.
+    Else we will check
+        if there is any whitespace rectangle under the previous line's maximum whitespace rectangle. In this cae, we can say
+        its a noisy line, which do not preserve the column separation. if we find 3(col_threshold) lines of this type consecutively,
+        we can break the column separation, and say that these 3 lines fully are in the same column.
+
+        else, the line is a single line in a column. We do not need to separate this.
+
+    **/
+
+//    int col_threshold = 3;
+//    int col_spacing_threshold = 2;
+    int length_line_list = d->m_lines.length();
+    bool consume12 = false, consume23 = false, consume13 = false;
+
+    for(i = 0 ; i < length_line_list ; i++){
+
+        int index1 = i % length_line_list, index2 = (i + 1) % length_line_list,
+                index3 = (i + 2) % length_line_list;
+
+        // We will take 3 lines at a time, so that one noisy data do not give wrong idea.
+        // We will see whether they creates a column or not
+        TextList line1 = d->m_lines.at(index1);
+        TextList line2 = d->m_lines.at(index2);
+//        TextList line3 = d->m_lines.at(index3);
+
+        // the estimated column space rectangles of those lines
+        QRect columnRect1 = max_hor_space_rects.at(index1);
+        QRect columnRect2 = max_hor_space_rects.at(index2);
+//        QRect columnRect3 = max_hor_space_rects.at(index3);
+
+        QRect rect1,rect2,rect3;
+
+        cout << "rect1: ";
+        printRect(columnRect1);
+
+        cout << "rect2: ";
+        printRect(columnRect2);
+
+
+        //if the maxRectangle of line1 and line2 are at the same place, they may create a column
+        if(doesConsumeX(columnRect1,columnRect2)){
+            consume12 = true;
+            rect1 = columnRect1;
+            rect2 = columnRect2;
+//            d->printTextList(index1,line1);
+//            cout << "rect1: " << columnRect1.left() << " , " << columnRect1.right() << endl;
+
+//            d->printTextList(index2,line2);
+//            cout << "rect2: " << columnRect2.left() << " , " << columnRect2.right() << endl;
+
+        }
+        //else if one of the lines is noisy and do not maintain column spacing correctly,
+        //so that, maxSpacing is not column spacing but, some other word spacing, so we search
+        //if some rectangle smaller than some word spacing rectangle remains which is consumed by
+        //the other lines maxSpacing rectangle.
+        else{
+            //1. see whether maxSpacing of line1 consumes any space rectangle in line2
+            rect1 = columnRect1;
+            QList<QRect> line2_space_rect = space_rects.at(index2);
+
+            for(j = 0 ; j < line2_space_rect.length() ; j++){
+                rect2 = line2_space_rect.at(j);
+                if(doesConsumeX(rect1,rect2)){
+                    consume12 = true;
+                    break;
+                }
+            }
+
+            if(consume12) break;
+
+            //2. see whether maxSpacing of line2 consumes any space rectangle in line1
+            rect2 = columnRect2;
+            QList<QRect> line1_space_rect = space_rects.at(index1);
+
+            for(j = 0 ; j < line1_space_rect.length() ; j++){
+                rect1 = line1_space_rect.at(j);
+                if(doesConsumeX(rect1,rect2)){
+                    consume12 = true;
+                    break;
+                }
+            }
+
+        }
+
+// if consume12 is still false, then we do not get some column spacing, the spacing are random,
+// so, possibly line1 and line2 are not column separated lines. so, we don't need to split them.
+
+        // possibly we have got a column separator, so, we break the lines in two parts, and
+        // 1. edit previous lines(delete the part after column)
+        // 2. add two new lines and append them to the last of the list
+        if(consume12){
+            //the separating rectangles are rect1 and rect2
+            QRect linerect1 = d->m_line_rects.at(i),linerect2 = linerect1;
+            TextList tmp;
+            TinyTextEntity* tmp_entity;
+
+            for(j = line1.length() - 1 ; j >= 0 ; j --){
+
+                tmp_entity = line1.at(j);
+                QRect area = tmp_entity->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+
+                // we have got maxSpace rect
+                if(area.left() == rect1.right()){
+                    linerect1.setRight(rect1.left());
+                    linerect2.setLeft(rect1.right());
+
+                    tmp.push_front(tmp_entity);
+                    line1.pop_back();
+
+                    break;
+                }
+
+                //push in front in the new line and pop from the back of the old line
+                tmp.push_front(tmp_entity);
+                line1.pop_back();
+
+            }
+
+            d->m_lines.replace(i,line1);
+            d->m_line_rects.replace(i,linerect1);
+
+            d->m_lines.append(tmp);
+            d->m_line_rects.append(linerect2);
+
+            d->printTextList(i,d->m_lines.at(i));
+            d->printTextList(length_line_list + i,d->m_lines.at(i+length_line_list));
+        }
+
+//        break;
+    }
+
 
 
 

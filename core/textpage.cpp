@@ -930,26 +930,44 @@ void TextPage::makeAndSortLines(){
             int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
                     line_x1 = lineArea.left(), line_x2 = lineArea.right();
 
-            // if the new text and line has y overlapping parts of more than 50%, the text will go to this line
-            if(text_y2 > line_y1 && line_y2 > text_y1){
+            // if the new text and line has y overlapping parts of more than 70%,
+            // the text will go to this line
 
-                TextList tmp = d->m_lines.at(i);
-                tmp.append((*it));
+            int overlap,percentage;
 
-                d->m_lines.replace(i,tmp);
+            // if there is overlap
+            if(text_y2 >= line_y1 && line_y2 >= text_y1){
 
-                newLeft = lineArea.left();
-                if(text_x1 < newLeft) newLeft = text_x1;
-                newRight = text_x2;
-                if(lineArea.right() > text_x2) newRight = lineArea.right();
+                if(text_y2 > line_y2) overlap = line_y2 - text_y1;
+                else overlap = text_y2 - line_y1;
 
-                newTop = text_y1 > line_y1 ? line_y1 : text_y1;
-                newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
-                newWidth = newRight - newLeft;
-                newHeight = newBottom - newTop;
+                if( (text_y2 - text_y1) > (line_y2 - line_y1) )
+                    percentage = overlap * 100 / (line_y2 - line_y1);
+                else percentage = overlap * 100 / (text_y2 - text_y1);
 
-                d->m_line_rects.replace( i, QRect(newLeft,newTop,newWidth,newHeight) );
-                found = true;
+//                cout << "percentage: " << percentage << endl;
+
+                //the overlap percentage is more than 70% of the smaller y
+                if(percentage >= 80){
+
+                    TextList tmp = d->m_lines.at(i);
+                    tmp.append((*it));
+
+                    d->m_lines.replace(i,tmp);
+
+                    newLeft = lineArea.left();
+                    if(text_x1 < newLeft) newLeft = text_x1;
+                    newRight = text_x2;
+                    if(lineArea.right() > text_x2) newRight = lineArea.right();
+
+                    newTop = text_y1 > line_y1 ? line_y1 : text_y1;
+                    newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+                    newWidth = newRight - newLeft;
+                    newHeight = newBottom - newTop;
+
+                    d->m_line_rects.replace( i, QRect(newLeft,newTop,newWidth,newHeight) );
+                    found = true;
+                }
             }
 
         }
@@ -972,8 +990,6 @@ void TextPage::makeAndSortLines(){
 //        // list is a line
 //        TextList list = d->m_lines.at(i);
 //        d->printTextList(i,list);
-//        }
-
 //    }
 
 
@@ -986,12 +1002,98 @@ void TextPage::makeAndSortLines(){
 
         d->m_lines.replace(i,list);
 
-        //print lines after sorting
-        //d->printTextList(i,list);
+//        print lines after sorting
+        d->printTextList(i,list);
 
     }
 }
 
+
+void TextPage::makeWord(){
+
+    cout << "In makeword ............" << endl;
+
+    TextList tmpList = d->m_words;
+    TextList newList;
+
+    TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end();
+    int newLeft,newRight,newTop,newBottom,newWidth,newHeight;
+    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+    QString str(' ');
+
+    //for every non-space texts(characters/words) in the textList
+    for( ; it != itEnd ; it++){
+
+        QString textString = (*it)->text().toAscii().data();
+        QString newString;
+        QRect lineArea = (*it)->area.geometry(pageWidth,pageHeight);
+
+        int space = 0;
+
+        while(!space){
+
+            it++;
+            if(it == itEnd) break;
+
+            newString.append(textString);
+
+            //the first textEntity area
+            QRect elementArea = (*it)->area.geometry(pageWidth,pageHeight);
+
+            int text_y1 = elementArea.top() ,text_y2 = elementArea.bottom(),
+                    text_x1 = elementArea.left(), text_x2 = elementArea.right();
+            int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
+                    line_x1 = lineArea.left(), line_x2 = lineArea.right();
+
+
+            //we have found a space
+            space = lineArea.right () - elementArea.left ();
+            if(space){
+                it--;
+                break;
+            }
+
+            newLeft = lineArea.left();
+            if(text_x1 < newLeft) newLeft = text_x1;
+            newRight = text_x2;
+            if(lineArea.right() > text_x2) newRight = lineArea.right();
+
+            newTop = text_y1 > line_y1 ? line_y1 : text_y1;
+            newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+            newWidth = newRight - newLeft;
+            newHeight = newBottom - newTop;
+
+            lineArea.setBottom (newBottom);
+            lineArea.setLeft (newLeft);
+            lineArea.setRight (newRight);
+            lineArea.setTop (newTop);
+
+            textString = (*it)->text().toAscii().data();
+        }
+
+        // if newString is not empty, save it
+        if(newString != str){
+
+            NormalizedRect newRect(newLeft,newTop,newRight,newBottom);
+            newList.append( new TinyTextEntity(newString.normalized
+                                        (QString::NormalizationForm_KC), newRect ));
+
+        }
+
+        if(it == itEnd) break;
+
+    }
+
+    d->m_words = newList;
+
+    it = newList.begin(), itEnd = newList.end();
+    for( ; it!=itEnd ; it++){
+        cout << (*it)->text().toAscii().data() << " ";
+    }
+
+    cout << endl;
+
+}
 
 // if the horizontal arm of one rectangle fully contains the other (example below)
 //  --------         ----         -----  first
@@ -1014,7 +1116,7 @@ bool doesConsumeX(QRect first, QRect second){
     if(second.right() >= first.left() && first.right() >= second.left()){
 
         int percentage;
-        if(second.right() > first.right()) overlap = first.right() - second.left();
+        if(second.right() >= first.right()) overlap = first.right() - second.left();
         else overlap = second.right() - first.left();
 
         //we will divide by the smaller rectangle to calculate the overlap
@@ -1041,22 +1143,24 @@ void printRect(QRect rect){
 
 void TextPagePrivate::printTextList(int i, TextList list){
 
-    QRect rect = m_line_rects.at(i);
-    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+//    QRect rect = m_line_rects.at(i);
+//    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
     cout << "Line " << i << ": ";
 
     for(int j = 0 ; j < list.length() ; j++){
         TinyTextEntity* ent = list.at(j);
-        cout << ent->text().toAscii().data();
+        cout << ent->text().toAscii().data() << " ";
     }
     cout << endl;
 
 }
 
 
+
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
 
+    makeWord();
     makeAndSortLines();
 
     /**
@@ -1250,11 +1354,11 @@ void TextPage::correctTextOrder(){
 
         QRect rect1,rect2,rect3;
 
-        cout << "rect1: ";
-        printRect(columnRect1);
+//        cout << "rect1: ";
+//        printRect(columnRect1);
 
-        cout << "rect2: ";
-        printRect(columnRect2);
+//        cout << "rect2: ";
+//        printRect(columnRect2);
 
 
         //if the maxRectangle of line1 and line2 are at the same place, they may create a column

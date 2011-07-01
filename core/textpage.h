@@ -179,6 +179,11 @@ class OKULAR_EXPORT TextPage
         void removeSpace();
 
         /**
+        if the text() is given characterwise, we can make words from there
+        **/
+        void makeWord();
+
+        /**
         make necessary modifications in the TextList to make the textOrder correct, so
         textselection works fine
         **/

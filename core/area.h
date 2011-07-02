@@ -166,6 +166,12 @@ class OKULAR_EXPORT NormalizedRect
         QRect geometry( int xScale, int yScale ) const;
 
         /**
+         * same thing, but the output is now rounded before typecasting to int
+        **/
+        QRect roundedGeometry( int xScale, int yScale ) const;
+
+
+        /**
          * Returns the normalized bounding rectangle of the normalized rectangle
          * combined with the @p other normalized rectangle.
          */

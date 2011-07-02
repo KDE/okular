@@ -856,7 +856,7 @@ void TextPage::printTextPageContent(){
 //remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
 void TextPage::removeSpace(){
 
-    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end(), tmpIt = it;
+    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end();
     QString str(' ');
 
     // find the average space length
@@ -885,6 +885,27 @@ bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
 
 
 /** mamun_nightcrawler@gmail.com **/
+
+void printRect(QRect rect){
+
+    cout << "l: " << rect.left() << " r: " << rect.right() << " t: " << rect.top() << " b: " << rect.bottom() << endl;
+}
+
+void TextPagePrivate::printTextList(int i, TextList list){
+
+//    QRect rect = m_line_rects.at(i);
+//    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
+    cout << "Line " << i << ": ";
+
+    for(int j = 0 ; j < list.length() ; j++){
+        TinyTextEntity* ent = list.at(j);
+        cout << ent->text().toAscii().data() << " ";
+    }
+    cout << endl;
+
+}
+
+
 void TextPage::makeAndSortLines(){
 
 
@@ -1003,15 +1024,50 @@ void TextPage::makeAndSortLines(){
         d->m_lines.replace(i,list);
 
 //        print lines after sorting
-        d->printTextList(i,list);
+//        d->printTextList(i,list);
 
     }
 }
 
 
+bool doesConsumeY(QRect first, QRect second){
+
+    // if one consumes another fully
+    if(first.top() <= second.top() && first.bottom() >= second.bottom()){
+        return true;
+    }
+    if(first.top() >= second.top() && first.bottom() <= second.bottom()){
+        return true;
+    }
+
+    //or if there is overlap of space by more than 80%
+    // there is overlap
+
+    int overlap;
+    if(second.bottom() >= first.top() && first.bottom() >= second.top()){
+
+        int percentage;
+        if(second.bottom() >= first.bottom()) overlap = first.bottom() - second.top();
+        else overlap = second.bottom() - first.top();
+
+        //we will divide by the smaller rectangle to calculate the overlap
+        if( first.width() < second.width()){
+            percentage = overlap * 100 / (first.bottom() - first.top());
+        }
+        else{
+            percentage = overlap * 100 / (second.bottom() - second.top());
+        }
+
+        if(percentage >= 90) return true;
+
+    }
+
+    return false;
+}
+
 void TextPage::makeWord(){
 
-    cout << "In makeword ............" << endl;
+//    cout << "In makeword ............" << endl;
 
     TextList tmpList = d->m_words;
     TextList newList;
@@ -1019,7 +1075,7 @@ void TextPage::makeWord(){
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end();
     int newLeft,newRight,newTop,newBottom,newWidth,newHeight;
     int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
-    QString str(' ');
+    int index = 0;
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
@@ -1027,6 +1083,9 @@ void TextPage::makeWord(){
         QString textString = (*it)->text().toAscii().data();
         QString newString;
         QRect lineArea = (*it)->area.geometry(pageWidth,pageHeight);
+
+//        cout << "first : ";
+//        printRect(lineArea) ;
 
         int space = 0;
 
@@ -1040,6 +1099,12 @@ void TextPage::makeWord(){
             //the first textEntity area
             QRect elementArea = (*it)->area.geometry(pageWidth,pageHeight);
 
+            if(!doesConsumeY(elementArea,lineArea)){
+//                cout << "maybe y coordinates very far";
+                it--;
+                break;
+            }
+
             int text_y1 = elementArea.top() ,text_y2 = elementArea.bottom(),
                     text_x1 = elementArea.left(), text_x2 = elementArea.right();
             int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
@@ -1047,7 +1112,7 @@ void TextPage::makeWord(){
 
 
             //we have found a space
-            space = lineArea.right () - elementArea.left ();
+            space = lineArea.right() - elementArea.left();
             if(space){
                 it--;
                 break;
@@ -1060,38 +1125,52 @@ void TextPage::makeWord(){
 
             newTop = text_y1 > line_y1 ? line_y1 : text_y1;
             newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
-            newWidth = newRight - newLeft;
-            newHeight = newBottom - newTop;
 
             lineArea.setBottom (newBottom);
             lineArea.setLeft (newLeft);
             lineArea.setRight (newRight);
             lineArea.setTop (newTop);
 
+//            cout << "second : ";
+//            printRect(elementArea) ;
+
+//            cout << "merged: " ;
+//            printRect(lineArea);
+
             textString = (*it)->text().toAscii().data();
         }
 
         // if newString is not empty, save it
-        if(newString != str){
+        if(newString.length()){
 
-            NormalizedRect newRect(newLeft,newTop,newRight,newBottom);
+            NormalizedRect newRect(lineArea,pageWidth,pageHeight);
+
             newList.append( new TinyTextEntity(newString.normalized
                                         (QString::NormalizationForm_KC), newRect ));
 
+//            TinyTextEntity* ent = newList.at(index);
+//            QRect finalRect = ent->area.roundedGeometry(pageWidth,pageHeight);
+//            cout << "final:";
+//            printRect(finalRect);
+//            cout << "text: " << ent->text().toAscii().data()
+//                 << " ................................ " << endl << endl;
+
+            index++;
         }
 
         if(it == itEnd) break;
 
     }
+    cout << "words: " << index << endl;
 
     d->m_words = newList;
 
-    it = newList.begin(), itEnd = newList.end();
-    for( ; it!=itEnd ; it++){
-        cout << (*it)->text().toAscii().data() << " ";
-    }
+//    it = newList.begin(), itEnd = newList.end();
+//    for( ; it!=itEnd ; it++){
+//        cout << (*it)->text().toAscii().data() << " ";
+//    }
 
-    cout << endl;
+//    cout << endl;
 
 }
 
@@ -1106,8 +1185,14 @@ bool doesConsumeX(QRect first, QRect second){
 //    int threshold = 2;
 
     // if one consumes another fully
-    if(first.left() >= second.left() && first.right() >= second.right()) return true;
-    if(first.left() <= second.left() && first.right() <= second.right()) return true;
+    if(first.left() <= second.left() && first.right() >= second.right()){
+//        cout << "First Condition " << endl;
+        return true;
+    }
+    if(first.left() >= second.left() && first.right() <= second.right()){
+//        cout << "Second Condition " << endl;
+        return true;
+    }
 
     //or if there is overlap of space by more than 80%
     // there is overlap
@@ -1122,37 +1207,25 @@ bool doesConsumeX(QRect first, QRect second){
         //we will divide by the smaller rectangle to calculate the overlap
         if( first.width() < second.width()){
 
-            percentage = overlap * 100 / (first.width());
+            percentage = overlap * 100 / (first.right() - first.left());
+
+//            printRect(first);
+//            cout << "overlap: " << overlap << " width: " << first.width() << endl;
 
         }
         else{
-            percentage = overlap * 100 / (second.width());
+            percentage = overlap * 100 / (second.right() - second.left());
+//            printRect(second);
+//            cout << "overlap: " << overlap << " width: " << second.width() << endl;
         }
 
+//        cout << "overlap percentage: " << percentage << endl;
         if(percentage > 80) return true;
 
     }
 
+//    cout << "No Condition Matched " << endl;
     return false;
-}
-
-void printRect(QRect rect){
-
-    cout << "l: " << rect.left() << " r: " << rect.right() << " t: " << rect.top() << " b: " << rect.bottom() << endl;
-}
-
-void TextPagePrivate::printTextList(int i, TextList list){
-
-//    QRect rect = m_line_rects.at(i);
-//    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
-    cout << "Line " << i << ": ";
-
-    for(int j = 0 ; j < list.length() ; j++){
-        TinyTextEntity* ent = list.at(j);
-        cout << ent->text().toAscii().data() << " ";
-    }
-    cout << endl;
-
 }
 
 
@@ -1160,12 +1233,39 @@ void TextPagePrivate::printTextList(int i, TextList list){
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
 
+    // create words from characters
     makeWord();
+
+    // create primary lines from words
     makeAndSortLines();
+
+
+//    //test of doesConsumeX()
+
+//    cout << " ///////////////////////////////// " << endl;
+
+//    QRect rectOne,rectTwo;
+//    rectOne = QRect(QPoint(10,10),QPoint(30,15));
+//    rectTwo = QRect(QPoint(15,20),QPoint(25,30));
+
+//    doesConsumeX(rectOne,rectTwo);
+
+//    rectTwo = QRect(QPoint(5,20),QPoint(35,30));
+//    doesConsumeX(rectOne,rectTwo);
+
+//    doesConsumeX(rectOne,rectOne);
+
+//    rectTwo = QRect(QPoint(15,20),QPoint(35,30));
+//    doesConsumeX(rectOne,rectTwo);
+
+//    rectTwo = QRect(QPoint(5,20),QPoint(25,30));
+//    doesConsumeX(rectOne,rectTwo);
+
+//    cout << " ///////////////////////////////// " << endl;
 
     /**
 
-    Firt Part: Create Text Lines
+    Firt Part: Separate text lines using column detection
 
     1. Make character analysis to differentiate between word spacing and column spacing.
     2. Break the lines if there is some column spacing somewhere in the line and also calculate
@@ -1273,22 +1373,22 @@ void TextPage::correctTextOrder(){
 
     // All the between word space counts are in hor_space_stat
 
-    /*int word_spacing;
-    cout << "Word Spacing: " << endl;
-    QMapIterator<int, int> iterate(hor_space_stat);
-    while (iterate.hasNext()) {
-        iterate.next();
-        cout << iterate.key() << ": " << iterate.value() << endl;
-    }
+//    int word_spacing;
+//    cout << "Word Spacing: " << endl;
+//    QMapIterator<int, int> iterate(hor_space_stat);
+//    while (iterate.hasNext()) {
+//        iterate.next();
+//        cout << iterate.key() << ": " << iterate.value() << endl;
+//    }
 
-    int col_spacing = 0;
-    cout << "Column Spacing: " << endl;
-    QMapIterator<int, int> iterate_col(col_space_stat);
-    while (iterate_col.hasNext()) {
-        iterate_col.next();
-        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
-        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
-    }*/
+//    int col_spacing = 0;
+//    cout << "Column Spacing: " << endl;
+//    QMapIterator<int, int> iterate_col(col_space_stat);
+//    while (iterate_col.hasNext()) {
+//        iterate_col.next();
+//        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
+//        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
+//    }
 
 
     //show all space rects (between words, word spacing or column spacing)
@@ -1446,14 +1546,26 @@ void TextPage::correctTextOrder(){
             d->m_lines.append(tmp);
             d->m_line_rects.append(linerect2);
 
-            d->printTextList(i,d->m_lines.at(i));
-            d->printTextList(length_line_list + i,d->m_lines.at(i+length_line_list));
+//            d->printTextList(i,d->m_lines.at(i));
+//            d->printTextList(length_line_list + i,d->m_lines.at(i+length_line_list));
         }
 
 //        break;
     }
 
 
+    // copies all elements to a TextList
+    TextList tmpList;
+    for(i = 0 ; i < d->m_lines.length() ; i++){
+        TextList list = d->m_lines.at(i);
+        d->printTextList(i,list);
+        for(j = 0 ; j < list.length() ; j++){
+            TinyTextEntity* ent = list.at(j);
+            tmpList.append(ent);
+        }
+    }
+
+    d->m_words = tmpList;
 
 
     /**
@@ -1463,14 +1575,12 @@ void TextPage::correctTextOrder(){
 
     //Find Line spacing/ Vertical spacing for row separators
     //It will be necessary for reading order detection
-    for(i = 0 ; i < d->m_lines.length() ; i++){
-        TextList list = d->m_lines.at(i);
-    }
+
 
 }
 
 
-//add necessary spaces in the text - mainly for copy purpose
+//add necessary spaces in the text - mainly for copy purpose so that words are visible
 void TextPage::addNecessarySpace(){
 
 }

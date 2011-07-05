@@ -1132,6 +1132,7 @@ bool Part::closeUrl()
         m_watcher->removeFile( localFilePath() );
         QFileInfo fi(localFilePath());
         m_watcher->removeDir( fi.absolutePath() );
+        if ( fi.isSymLink() ) m_watcher->removeFile( fi.readLink() );
     }
     m_fileWasRemoved = false;
     if ( m_generatorGuiClient )

@@ -1014,8 +1014,9 @@ bool Part::openFile()
     if ( url().isLocalFile() )
     {
         if ( !m_watcher->contains( localFilePath() ) ) m_watcher->addFile(localFilePath());
-        QFileInfo fi(localFilePath());
+        const QFileInfo fi(localFilePath());
         if ( !m_watcher->contains( fi.absolutePath() ) ) m_watcher->addDir(fi.absolutePath());
+        if ( fi.isSymLink() ) m_watcher->addFile( fi.readLink() );
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
@@ -1204,7 +1205,7 @@ void Part::slotFileDirty( const QString& path )
     }
     else
     {
-        QFileInfo fi(localFilePath());
+        const QFileInfo fi(localFilePath());
         if ( fi.absolutePath() == path )
         {
             // Our parent has been dirtified
@@ -1219,6 +1220,13 @@ void Part::slotFileDirty( const QString& path )
                 m_watcher->addFile(localFilePath());
                 m_dirtyHandler->start( 750 );
             }
+        }
+        else if ( fi.isSymLink() )
+        {
+            if ( QFile::exists( fi.readLink() ))
+                m_dirtyHandler->start( 750 );
+            else
+                m_fileWasRemoved = true;
         }
     }
 }

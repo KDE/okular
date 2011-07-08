@@ -139,6 +139,30 @@ class TinyTextEntity
         int length;
 };
 
+// This class will store the area and TextList of the region in sorted order
+class RegionText{
+
+public:
+    RegionText(TextList &list,QRect &area)
+        : m_region_text(list) ,m_area(area)
+    {
+    }
+
+    // we are not giving any set method for the texts, we assume it will be set only once
+    // at the time of construction
+    inline TextList text() const{
+        return m_region_text;
+    }
+
+    inline QRect area() const{
+        return m_area;
+    }
+
+private:
+    TextList m_region_text;
+    QRect m_area;
+};
+
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
     : m_text( text ), m_area( area ), d( 0 )
@@ -355,7 +379,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     double scaleY = this->d->m_page->m_page->height();
 
     NormalizedRect boundingRect = this->d->m_page->m_page->boundingBox();
-    QRect content = boundingRect.geometry(scaleX,scaleY);
+    QRect content = boundingRect.roundedGeometry(scaleX,scaleY);
 
     minX = content.left(), maxX = content.right();
     minY = content.top(), maxY = content.bottom();
@@ -847,48 +871,10 @@ void TextPage::printTextPageContent(){
 
     foreach(TinyTextEntity* tiny, tList){
         cout << tiny->text().toAscii().data();
-        QRect rect = tiny->area.geometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+        QRect rect = tiny->area.roundedGeometry(d->m_page->m_page->width(),d->m_page->m_page->height());
         cout << " area: " << rect.top() << "," << rect.left() << " " << rect.bottom() << "," << rect.right() << endl;
     }
 
-}
-
-//remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
-void TextPage::removeSpace(){
-
-    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end();
-    QString str(' ');
-
-//    for( ; it != itEnd ; it++){
-//        //if TextEntity contains space
-//        cout << (*it)->text().toAscii().data();
-//    }
-//    cout << endl;
-
-//    cout << "erasing spaces ................................. " << endl;
-//    it =  d->m_words.begin();
-
-    // find the average space length
-    for( ; it != itEnd ; it++){
-        //if TextEntity contains space
-        if((*it)->text() == str)
-            this->d->m_words.erase(it);
-    }
-}
-
-
-bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second){
-    QRect firstArea = first->area.geometry(1000,1000);
-    QRect secondArea = second->area.geometry(1000,1000);
-
-    return firstArea.left() < secondArea.left();
-}
-
-bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
-    QRect firstArea = first->area.geometry(1000,1000);
-    QRect secondArea = second->area.geometry(1000,1000);
-
-    return firstArea.top() < secondArea.top();
 }
 
 
@@ -896,12 +882,72 @@ bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
 
 void printRect(QRect rect){
 
-    cout << "l: " << rect.left() << " r: " << rect.right() << " t: " << rect.top() << " b: " << rect.bottom() << endl;
+    cout << "l: " << rect.left() << " r: " << rect.x() + rect.width() << " t: " << rect.top() <<
+            " b: " << rect.y() + rect.height() << endl;
 }
+
+
+//remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
+void TextPage::removeSpace(){
+
+    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    QString str(' ');
+
+//    cout << "text before space removal ............................................" << endl;
+
+//    for( ; it != itEnd ; it++){
+//        //if TextEntity contains space
+//        cout << (*it)->text().toAscii().data();
+//    }
+//    cout << endl;
+
+    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+
+    // find the average space length()
+    int maxWordSpace = 0, minWordSpace = pageWidth;
+    it = d->m_words.begin(), itEnd = d->m_words.end();
+    for( ; it != itEnd ; it++){
+        //if TextEntity contains space
+        if((*it)->text() == str){
+
+//            cout << "text Space: ";
+            QRect area = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+//            cout << area.right() - area.left() << " ";
+//            printRect(area);
+
+            this->d->m_words.erase(it);
+
+            if(area.width() > maxWordSpace) maxWordSpace = area.width();
+            if(area.width() < minWordSpace) minWordSpace = area.width();
+        }
+    }
+
+    cout << "max Word Spacing " << maxWordSpace << endl;
+    cout << "min Word Spacing " << minWordSpace << endl;
+
+//    cout << endl << endl;
+
+}
+
+
+bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second){
+    QRect firstArea = first->area.roundedGeometry(1000,1000);
+    QRect secondArea = second->area.roundedGeometry(1000,1000);
+
+    return firstArea.left() < secondArea.left();
+}
+
+bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second){
+    QRect firstArea = first->area.roundedGeometry(1000,1000);
+    QRect secondArea = second->area.roundedGeometry(1000,1000);
+
+    return firstArea.top() < secondArea.top();
+}
+
 
 void TextPagePrivate::printTextList(int i, TextList list){
 
-//    QRect rect = m_line_rects.at(i);
+    QRect rect = m_line_rects.at(i);
 //    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
     cout << "Line " << i << ": ";
 
@@ -1005,6 +1051,7 @@ bool doesConsumeY(QRect first, QRect second, int threshold){
     return false;
 }
 
+//we are taking now the characters are horizontally next to next in current m_words, it actually is like that
 void TextPage::makeWord(){
 
 //    cout << "In makeword ............" << endl;
@@ -1022,14 +1069,14 @@ void TextPage::makeWord(){
 
         QString textString = (*it)->text().toAscii().data();
         QString newString;
-        QRect lineArea = (*it)->area.geometry(pageWidth,pageHeight);
+        QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
 //        cout << "first : ";
 //        printRect(lineArea) ;
 
         int space = 0;
 
-        while(!space){
+        while(space <= 1){
 
             it++;
 
@@ -1040,45 +1087,50 @@ void TextPage::makeWord(){
             if(it == itEnd) break;
 
             //the first textEntity area
-            QRect elementArea = (*it)->area.geometry(pageWidth,pageHeight);
+            QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
-            if(!doesConsumeY(elementArea,lineArea,90)){
+            if(!doesConsumeY(elementArea,lineArea,50)){
 //                cout << "maybe y coordinates very far";
                 it--;
                 break;
             }
 
-            int text_y1 = elementArea.top() ,text_y2 = elementArea.bottom(),
-                    text_x1 = elementArea.left(), text_x2 = elementArea.right();
-            int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
-                    line_x1 = lineArea.left(), line_x2 = lineArea.right();
+
+            int text_y1 = elementArea.top() ,
+                    text_x1 = elementArea.left(),
+                    text_y2 = elementArea.y() + elementArea.height(),
+                    text_x2 = elementArea.x() + elementArea.width();
+
+            int line_y1 = lineArea.top() ,line_x1 = lineArea.left(),
+                    line_y2 = lineArea.y() + lineArea.height(),
+                    line_x2 = lineArea.x() + lineArea.width();
 
 
             //we have found a space
-            space = lineArea.right() - elementArea.left();
-            if(space){
+
+
+            space = elementArea.left() - lineArea.right();
+//            cout << "space " << space << " ";
+
+//            printRect(lineArea);
+//            printRect(elementArea) ;
+
+
+            if(space > 1){
                 it--;
                 break;
             }
 
-            newLeft = lineArea.left();
-            if(text_x1 < newLeft) newLeft = text_x1;
-            newRight = text_x2;
-            if(lineArea.right() > text_x2) newRight = lineArea.right();
+            newLeft = text_x1 < line_x1 ? text_x1 : line_x1;
+            newRight = line_x2 > text_x2 ? line_x2 : text_x2;
 
             newTop = text_y1 > line_y1 ? line_y1 : text_y1;
             newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
-            lineArea.setBottom (newBottom);
             lineArea.setLeft (newLeft);
-            lineArea.setRight (newRight);
             lineArea.setTop (newTop);
-
-//            cout << "second : ";
-//            printRect(elementArea) ;
-
-//            cout << "merged: " ;
-//            printRect(lineArea);
+            lineArea.setWidth( newRight - newLeft );
+            lineArea.setHeight( newBottom - newTop );
 
             textString = (*it)->text().toAscii().data();
         }
@@ -1090,6 +1142,8 @@ void TextPage::makeWord(){
 
             newList.append( new TinyTextEntity(newString.normalized
                                         (QString::NormalizationForm_KC), newRect ));
+
+//            printRect(lineArea);
 
 //            TinyTextEntity* ent = newList.at(index);
 //            QRect finalRect = ent->area.roundedGeometry(pageWidth,pageHeight);
@@ -1104,16 +1158,19 @@ void TextPage::makeWord(){
         if(it == itEnd) break;
 
     }
+
+    cout << endl << " ............................................................ " << endl;
+
     cout << "words: " << index << endl;
 
     d->m_words = newList;
 
-    it = newList.begin(), itEnd = newList.end();
-    for( ; it!=itEnd ; it++){
-        cout << (*it)->text().toAscii().data() << " ";
-    }
+//    for(int i = 0 ; i < d->m_words.length() ; i++){
+//        TinyTextEntity *ent = d->m_words.at(i);
+//        printRect(ent->area.roundedGeometry(pageWidth,pageHeight));
+//    }
 
-    cout << endl;
+//    cout << endl;
 
 }
 
@@ -1137,6 +1194,8 @@ void TextPage::makeAndSortLines(){
     TextList tmpList = d->m_words;
     qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
 
+//    d->printTextList(0,tmpList);
+
     // Step 2: .......................................
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt = it;
@@ -1148,7 +1207,7 @@ void TextPage::makeAndSortLines(){
     for( ; it != itEnd ; it++){
 
         //the textEntity area
-        QRect elementArea = (*it)->area.geometry(pageWidth,pageHeight);
+        QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
         //d->m_lines in a QList of TextList and TextList is a QList of TinyTextEntity*
         // see, whether the new text should be inserted to an existing line
@@ -1157,17 +1216,21 @@ void TextPage::makeAndSortLines(){
         //At first there will be no lines
         for( i = 0 ; i < d->m_lines.length() ; i++){
 
-
             //the line area which will be expanded
             // d->m_line_rects is only necessary to preserve the topmin and bottommax of all
             // the texts in the line, left and right is not necessary at all
             // it is in no way the actual line rectangle
             QRect lineArea = d->m_line_rects.at(i);
 
-            int text_y1 = elementArea.top() ,text_y2 = elementArea.bottom(), text_x1 = elementArea.left(),
-                    text_x2 = elementArea.right();
-            int line_y1 = lineArea.top() ,line_y2 = lineArea.bottom(),
-                    line_x1 = lineArea.left(), line_x2 = lineArea.right();
+            int text_y1 = elementArea.top() ,
+                    text_y2 = elementArea.top() + elementArea.height() ,
+                    text_x1 = elementArea.left(),
+                    text_x2 = elementArea.left() + elementArea.width();
+
+            int line_y1 = lineArea.top() ,
+                    line_y2 = lineArea.top() + lineArea.height(),
+                    line_x1 = lineArea.left(),
+                    line_x2 = lineArea.left() + lineArea.width();
 
             // if the new text and the line has y overlapping parts of more than 80%,
             // the text will be added to this line
@@ -1183,7 +1246,7 @@ void TextPage::makeAndSortLines(){
                     percentage = overlap * 100 / (line_y2 - line_y1);
                 else percentage = overlap * 100 / (text_y2 - text_y1);
 
-                //the overlap percentage is more than 80% of the smaller y
+                //the overlap percentage is more than 70% of the smaller y
                 if(percentage >= 70){
 
                     TextList tmp = d->m_lines.at(i);
@@ -1191,18 +1254,16 @@ void TextPage::makeAndSortLines(){
 
                     d->m_lines.replace(i,tmp);
 
-                    newLeft = lineArea.left();
-                    if(text_x1 < newLeft) newLeft = text_x1;
-                    newRight = text_x2;
-                    if(lineArea.right() > text_x2) newRight = lineArea.right();
-
-                    newTop = text_y1 > line_y1 ? line_y1 : text_y1;
+                    newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
+                    newRight = line_x2 > text_x2 ? line_x2 : text_x2;
+                    newTop = line_y1 < text_y1 ? line_y1 : text_y1;
                     newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
-                    newWidth = newRight - newLeft;
-                    newHeight = newBottom - newTop;
 
-                    d->m_line_rects.replace( i, QRect(newLeft,newTop,newWidth,newHeight) );
+                    d->m_line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
                     found = true;
+                }
+                else{
+//                    cout << " percentage: " << percentage << "   text: " << (*it)->text().toAscii().data() << endl;
                 }
             }
 
@@ -1221,50 +1282,143 @@ void TextPage::makeAndSortLines(){
 
     cout << "m_lines length: " << d->m_lines.length() << endl;
 
-    // print every line
-//    for(i = 0 ; i < d->m_lines.length() ; i++){
-//        // list is a line
-//        TextList list = d->m_lines.at(i);
-//        d->printTextList(i,list);
-//    }
-
-
 
     // Step 3: .......................................
     for(i = 0 ; i < d->m_lines.length() ; i++){
         TextList list = d->m_lines.at(i);
 
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
-
         d->m_lines.replace(i,list);
 
-//        print lines after sorting
-//        cout << "Line: " << i << " ................................ " << endl ;
 //        d->printTextList(i,list);
+//        printRect(d->m_line_rects.at(i));
 
     }
 
+//    cout << endl;
 
+
+    // This part is not necessary now
     // make the m_line_rects correct if it is not already
-    for(i = 0 ; i < d->m_lines.length() ; i++){
-        TextList list = d->m_lines.at(i);
+//    for(i = 0 ; i < d->m_lines.length() ; i++){
+//        TextList list = d->m_lines.at(i);
 
-        int left = pageWidth,right = 0,top = pageHeight, bottom = 0;
-        // for every line
-        for(j = 0 ; j < list.length() ; j++){
+//        int left = pageWidth,right = 0,top = pageHeight, bottom = 0;
+//        // for every line
+//        for(j = 0 ; j < list.length() ; j++){
 
-            TinyTextEntity* tmp = list.at(j);
-            QRect rect = tmp->area.geometry(pageWidth,pageHeight);
+//            TinyTextEntity* tmp = list.at(j);
+//            QRect rect = tmp->area.geometry(pageWidth,pageHeight);
 
-            if(rect.left() < left) left = rect.left();
-            if(rect.right() > right) right = rect.right();
-            if(rect.top() < top) top = rect.top();
-            if(rect.bottom() > bottom) bottom = rect.bottom();
+//            if(rect.left() < left) left = rect.left();
+//            if(rect.right() > right) right = rect.right();
+//            if(rect.top() < top) top = rect.top();
+//            if(rect.bottom() > bottom) bottom = rect.bottom();
+
+////            cout << "text: " << tmp->text().toAscii().data() << " ";
+////            printRect(tmp->area.geometry(pageWidth,pageHeight));
+//        }
+
+//        d->m_line_rects.replace(i,QRect(QPoint(left,top),QPoint(right,bottom)));
+////        d->printTextList(i,list);
+//        printRect(d->m_line_rects.at(i));
+//    }
+
+}
+
+
+void TextPage::createProjectionProfiles(){
+
+
+}
+
+void TextPage::XYCutForBoundingBoxes(){
+
+    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+
+    // proj_on_yaxis will start from 0(rect.left()) to N(rect.right)
+    int* proj_on_yaxis, *proj_on_xaxis;  //horizontal and vertical projection respectively
+
+    // RegionText contains a TextList and a QRect
+    // The XY Tree, where the node is a RegionText
+    QList<RegionText> tree;
+    QRect contentRect(d->m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
+    RegionText root(d->m_words,contentRect);
+
+    // start the tree with the root, it is our only region at the start
+    tree.push_back(root);
+
+    int i = 0, j, k;
+
+    // while traversing the tree has not been ended
+    while(i < tree.length()){
+        RegionText node = tree.at(i);
+        QRect regionRect = node.area();
+
+/** 1. calculation of projection profiles .......................... **/
+
+        // allocate the size of proj profiles and initialize with 0
+        int size_proj_y = node.area().height() + 1;
+        int size_proj_x = node.area().width() + 1;
+
+        proj_on_yaxis = new int[size_proj_y];
+        proj_on_xaxis = new int[size_proj_x];
+
+        cout << "size: " << size_proj_y << " " << size_proj_x << endl;
+
+        for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
+        for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
+
+
+        TextList list = node.text();
+        int maxX = 0 , maxY = 0;
+
+        // for every text in the region
+        for( j = 0 ; j < list.length() ; j++ ){
+
+            TinyTextEntity *ent = list.at(j);
+            QRect entRect = ent->area.geometry(pageWidth,pageHeight);
+
+            // calculate vertical projection profile proj_on_yaxis
+            // for left to right of a entity
+            // increase the value of vertical projection profile by 1
+            for(k = entRect.left() ; k <= entRect.left() + entRect.width() ; k++){
+                proj_on_xaxis[k - regionRect.left()] += entRect.height();
+            }
+
+            // calculate vertical projection profile in the same way
+            for(k = entRect.top() ; k <= entRect.top() + entRect.height() ; k++){
+                proj_on_yaxis[k - regionRect.top()] += entRect.width();
+            }
+
         }
 
-        d->m_line_rects.replace(i,QRect(QPoint(left,top),QPoint(right,bottom)));
-        printRect(QRect(QPoint(left,top),QPoint(right,bottom)));
+        cout << "regionRect --> ";
+        printRect(regionRect);
+        cout << "width: " << regionRect.width() << " height: " << regionRect.height() << endl;
+//        cout << "total Elements: " << j << endl;
+
+        cout << "projection on y axis " << endl << endl;
+        for( j = 0 ; j < size_proj_y ; j++ ){
+            if (proj_on_yaxis[j] > maxY) maxY = proj_on_yaxis[j];
+            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
+        }
+        cout << endl;
+
+        cout << "projection on x axis " << endl << endl;
+        for( j = 0 ; j < size_proj_x ; j++ ){
+            if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
+            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
+        }
+        cout << endl;
+
+        delete []proj_on_yaxis;
+        delete []proj_on_xaxis;
+
+        i++;
     }
+
+
 }
 
 
@@ -1275,12 +1429,19 @@ void TextPage::correctTextOrder(){
     // create words from characters
     makeWord();
 
+    XYCutForBoundingBoxes();
+
     // create primary lines from words
     makeAndSortLines();
 
+//    cout << "After makeword and makeAndSortLines() ..................................... " << endl;
+
+//    for(int i = 0 ; i < d->m_lines.length() ; i++){
+//        TextList list = d->m_lines.at(i);
+//        d->printTextList(i,list);
+//    }
 
 //    //test of doesConsumeX()
-
 //    cout << " ///////////////////////////////// " << endl;
 
 //    QRect rectOne,rectTwo;
@@ -1329,6 +1490,7 @@ void TextPage::correctTextOrder(){
     int i,j;
     int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
 
+    // space in every line
     for(i = 0 ; i < d->m_lines.length() ; i++){
         // list contains a line
         TextList list = d->m_lines.at(i);
@@ -1347,11 +1509,13 @@ void TextPage::correctTextOrder(){
         for( ; it != itEnd ; it++ ){
 //            cout << (*it)->text().toAscii().data() << endl;
 
-            QRect area1 = (*it)->area.geometry(pageWidth,pageHeight);
+            QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
             if( it+1 == itEnd ) break;
+//            printRect(area1);
 
-            QRect area2 = (*(it+1))->area.geometry(pageWidth,pageHeight);
+            QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
             int space = area2.left() - area1.right();
+//            printRect(area2);
 
             if(space > maxSpace){
                 max_area1 = area1;
@@ -1362,6 +1526,9 @@ void TextPage::correctTextOrder(){
                 before_max = (*it)->text();
                 after_max = (*(it+1))->text();
             }
+
+//            cout << (*it)->text().toAscii().data() << " " << (*(it+1))->text().toAscii().data();
+//            cout << "  space: " << space << endl;
 
             if(space < minSpace && space != 0) minSpace = space;
 
@@ -1374,27 +1541,23 @@ void TextPage::correctTextOrder(){
 
                 //if we have found a space, put it in a list of rectangles
                 int left,right,top,bottom;
-                left = area1.left();
-                right = area2.right();
 
-                area1.top() > area2.top() ? top = area2.top() : top = area1.top();
-                area1.bottom() < area2.bottom() ? bottom = area2.bottom() : bottom = area1.bottom();
+                left = area1.right();
+                right = area2.left();
+
+                top = area2.top() < area1.top() ? area2.top() : area1.top();
+                bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
 
                 QRect rect(left,top,right-left,bottom-top);
                 line_space_rects.append(rect);
-
-//                cout << "area1 ---- ";
-//                printRect(area1);
-//                cout << "area2 ---- ";
-//                printRect(area2);
-//                cout << "merged --- ";
-//                printRect(rect);
-
 
 //                cout << space << " ";
             }
 //            cout << "space: " << space << " " <<  area1.right() << " " << area2.left() << endl;
         }
+
+
+//        cout << endl <<  "maxSpace " << maxSpace <<  " ----------------------------------------------- " << endl << endl;
 
         space_rects.append(line_space_rects);
 
@@ -1417,7 +1580,7 @@ void TextPage::correctTextOrder(){
             max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
             max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
 
-            QRect rect(QPoint(left,top),QPoint(right,bottom));
+            QRect rect(left,top,right-left,bottom-top);
             max_hor_space_rects.append(rect);
 
 //            printRect(rect);
@@ -1459,6 +1622,7 @@ void TextPage::correctTextOrder(){
 //        for( j = 0 ; j < rectList.length() ; j++){
 
 //            QRect rect = rectList.at(j);
+//            cout << "space: " << rect.width() << " " << endl;
 //            printRect(rect);
 
 //        }
@@ -1491,13 +1655,13 @@ void TextPage::correctTextOrder(){
 
     **/
 
-//    int col_threshold = 3;
-//    int col_spacing_threshold = 2;
+//    cout << endl << endl << "Step 2 ............................................... " << endl << endl;
     int length_line_list = d->m_lines.length();
     bool consume12 = false, consume23 = false, consume13 = false;
 
     for(i = 0 ; i < length_line_list ; i++){
 
+        consume12 = consume23 = consume13 = false;
         int index1, index2, index3;
 
         index1 = i % length_line_list;
@@ -1515,6 +1679,8 @@ void TextPage::correctTextOrder(){
         QRect columnRect2 = max_hor_space_rects.at(index2);
 //        QRect columnRect3 = max_hor_space_rects.at(index3);
 
+//        cout << i << ": ";
+//        printRect(columnRect1);
 //        printRect(columnRect2);
 
         // if the line itself has no space
@@ -1530,16 +1696,13 @@ void TextPage::correctTextOrder(){
 
         QRect rect1,rect2,rect3;
 
-//        cout << "rect1: ";
-//        printRect(columnRect1);
-//        cout << "rect2: ";
-//        printRect(columnRect2);
-
         //if the maxRectangle of line1 and line2 are at the same place, they may create a column
         if(doesConsumeX(columnRect1,columnRect2,90)){
             consume12 = true;
             rect1 = columnRect1;
             rect2 = columnRect2;
+
+//            cout << "true !!!!!!!!!!!!!! ---- 1" << endl;
 
 //            d->printTextList(index1,line1);
 //            cout << "rect1: " << columnRect1.left() << " , " << columnRect1.right() << endl;
@@ -1562,22 +1725,29 @@ void TextPage::correctTextOrder(){
                 rect2 = line2_space_rect.at(j);
                 if(doesConsumeX(rect1,rect2,90)){
                     consume12 = true;
+//                    cout << "true !!!!!!!!!!!!!! ---- 2" << endl;
                     break;
                 }
             }
-
-            if(consume12) break;
 
             //2. see whether maxSpacing of line2 consumes any space rectangle in line1
             rect2 = columnRect2;
             QList<QRect> line1_space_rect = space_rects.at(index1);
 
-            for(j = 0 ; j < line1_space_rect.length() ; j++){
-                rect1 = line1_space_rect.at(j);
-                if(doesConsumeX(rect1,rect2,90)){
-                    consume12 = true;
+            for(j = 0 ; j < line1_space_rect.length(); j++){
+
+                if(consume12){
+//                    cout << "true !!!!!!!!!!!!!! ---- 3" << endl;
                     break;
                 }
+
+                rect1 = line1_space_rect.at(j);
+                if(doesConsumeX(rect1,rect2,90)){
+                    //we need to update the maxSpace rect, otherwise the cut will be in the wrong place
+//                    max_hor_space_rects.replace(index1,rect1);
+                    consume12 = true;
+                }
+
             }
 
         }
@@ -1597,13 +1767,18 @@ void TextPage::correctTextOrder(){
             TextList tmp;
             TinyTextEntity* tmp_entity;
 
+//            cout << "cut rectangle: " ;
+//            printRect(rect1);
+//            printRect(rect2);
+
             for(j = line1.length() - 1 ; j >= 0 ; j --){
 
                 tmp_entity = line1.at(j);
-                QRect area = tmp_entity->area.geometry(pageWidth,pageHeight);
+                QRect area = tmp_entity->area.roundedGeometry(pageWidth,pageHeight);
 
                 // we have got maxSpace rect
-                if(area.left() == rect1.right()){
+                int rect1_right = rect1.left() + rect1.width();
+                if(rect1_right == area.left()){
                     linerect1.setRight(rect1.left());
                     linerect2.setLeft(rect1.right());
 
@@ -1630,15 +1805,16 @@ void TextPage::correctTextOrder(){
 //            d->printTextList(length_line_list + i,d->m_lines.at(i+length_line_list));
         }
 
-//        break;
     }
 
+
+    cout << endl << "After a lot of processing done lines are: ................................ " << endl << endl;
 
     // copies all elements to a TextList
     TextList tmpList;
     for(i = 0 ; i < d->m_lines.length() ; i++){
         TextList list = d->m_lines.at(i);
-        d->printTextList(i,list);
+//        d->printTextList(i,list);
         for(j = 0 ; j < list.length() ; j++){
             TinyTextEntity* ent = list.at(j);
             tmpList.append(ent);
@@ -1647,7 +1823,7 @@ void TextPage::correctTextOrder(){
 
     cout << "print Done" << endl;
 
-    d->m_words = tmpList;
+//    d->m_words = tmpList;
 
 
     /**

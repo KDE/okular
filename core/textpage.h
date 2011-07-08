@@ -200,11 +200,19 @@ class OKULAR_EXPORT TextPage
         **/
         void addNecessarySpace();
 
-//        //comparison function which compares two TinyTextEntity by left position
-//        bool compareTinyTextEntityX(TinyTextEntity first, TinyTextEntity second);
+        /**
+        Functions necessary for document file segmentation into text regions for document layout
+        analysis.
+        **/
+        void XYCutForBoundingBoxes();
 
-//        // by top
-//        bool compareTinyTextEntityX(TinyTextEntity first, TinyTextEntity second);
+        /**
+         The Method for creating horizontal and vertical projection profile within the Region
+        **/
+        void createProjectionProfiles();
+
+
+
 
     private:
         TextPagePrivate* const d;

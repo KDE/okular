@@ -17,6 +17,7 @@
 
 class SearchPoint;
 class TinyTextEntity;
+class RegionText;
 
 namespace Okular
 {

@@ -1355,11 +1355,12 @@ void TextPage::XYCutForBoundingBoxes(){
         RegionText node = tree.at(i);
         QRect regionRect = node.area();
 
-/** 1. calculation of projection profiles .......................... **/
+
+/** 1. calculation of projection profiles ................................... **/
 
         // allocate the size of proj profiles and initialize with 0
-        int size_proj_y = node.area().height() + 1;
-        int size_proj_x = node.area().width() + 1;
+        int size_proj_y = node.area().height() ;
+        int size_proj_x = node.area().width() ;
 
         proj_on_yaxis = new int[size_proj_y];
         proj_on_xaxis = new int[size_proj_x];
@@ -1398,24 +1399,269 @@ void TextPage::XYCutForBoundingBoxes(){
         cout << "width: " << regionRect.width() << " height: " << regionRect.height() << endl;
 //        cout << "total Elements: " << j << endl;
 
-        cout << "projection on y axis " << endl << endl;
+//        cout << "projection on y axis " << endl << endl;
         for( j = 0 ; j < size_proj_y ; j++ ){
             if (proj_on_yaxis[j] > maxY) maxY = proj_on_yaxis[j];
-            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
+//            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
         }
         cout << endl;
+
+//        cout << "projection on x axis " << endl << endl;
+        for( j = 0 ; j < size_proj_x ; j++ ){
+            if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
+//            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
+        }
+        cout << endl;
+
+
+/** 2. Cleanup Boundary White Spaces and removal of noise ..................... **/
+
+        int xbegin = 0, xend = size_proj_x - 1;
+        int ybegin = 0, yend = size_proj_y - 1;
+
+        while(xbegin < size_proj_x && proj_on_xaxis[xbegin] <= 0){
+            xbegin++;
+        }
+        while(xend >= 0 && proj_on_xaxis[xend] <= 0){
+            xend--;
+        }
+
+        while(ybegin < size_proj_y && proj_on_yaxis[ybegin] <= 0){
+            ybegin++;
+        }
+        while(yend >= 0 && proj_on_yaxis[yend] <= 0){
+            yend--;
+        }
+
+        printRect(regionRect);
+        //update the regionRect
+        int old_left = regionRect.left(), old_top = regionRect.top();
+
+        regionRect.setLeft(old_left + xbegin);
+        regionRect.setRight(old_left + xend);
+
+        regionRect.setTop(old_top + ybegin);
+        regionRect.setBottom(old_top + yend);
+
+        printRect(regionRect);
+
+        //removal of noise (subtract from every element 5% of highest)
+        int noiseX = (int)(maxX * 5 / 100), noiseY = 0;
+        for( j = 0 ; j < size_proj_x ; j++ ){
+            proj_on_xaxis[j] -= noiseX;
+        }
+
+        cout << "Noise on X axis: " << noiseX << endl;
 
         cout << "projection on x axis " << endl << endl;
         for( j = 0 ; j < size_proj_x ; j++ ){
             if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
-            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
+//            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
         }
         cout << endl;
 
-        delete []proj_on_yaxis;
-        delete []proj_on_xaxis;
 
-        i++;
+/** 3. Get the Widest gap(<= 0 train)  ........................................ **/
+
+        //find gap in y-axis projection
+        int gap_hor = -1, pos_hor = -1;
+        int begin = -1, end = -1;
+
+        // find all hor_gaps and find the maximum between them
+        for(j = 1 ; j < size_proj_y ; j++){
+
+            //transition from white to black
+            if(begin >= 0 && proj_on_yaxis[j-1] <= 0
+                    && proj_on_yaxis[j] > 0){
+                end = j;
+            }
+
+            //transition from black to white
+            if(proj_on_yaxis[j-1] > 0 && proj_on_yaxis[j] <= 0)
+                begin = j;
+
+            if(begin > 0 && end > 0 && end-begin > gap_hor){
+                gap_hor = end - begin;
+                pos_hor = (end + begin) / 2;
+                begin = -1;
+                end = -1;
+            }
+        }
+
+
+        begin = -1, end = -1;
+        int gap_ver = -1, pos_ver = -1;
+
+        //find all the ver_gaps and find the maximum between them
+        for(j = 1 ; j < size_proj_x ; j++){
+
+            //transition from white to black
+            if(begin >= 0 && proj_on_xaxis[j-1] <= 0
+                    && proj_on_xaxis[j] > 0){
+                end = j;
+            }
+
+            //transition from black to white
+            if(proj_on_xaxis[j-1] > 0 && proj_on_xaxis[j] <= 0)
+                begin = j;
+
+            if(begin > 0 && end > 0 && end-begin > gap_ver){
+                gap_ver = end - begin;
+                pos_ver = (end + begin) / 2;
+                begin = -1;
+                end = -1;
+            }
+        }
+
+        int cut_pos_x = pos_ver, cut_pos_y = pos_hor;
+        int gap_x = gap_ver, gap_y = gap_hor;
+
+        cout << "gap X: " << gap_x << endl;
+        cout << "gap Y: " << gap_y << endl;
+        cout << "cut X: " << cut_pos_x << endl;
+        cout << "cut Y: " << cut_pos_y << endl;
+
+
+/** 4. Cut the region and make nodes (left,right) or (up,down) ................ **/
+
+        //these can be calculated according to space characteristics
+        int tcx = 0, tcy = 0;
+        bool cut_hor = false, cut_ver = false;
+
+        // For horizontal cut
+        QRect topRect(regionRect.left(),
+            regionRect.top(),
+            regionRect.width(),
+            cut_pos_y);
+        QRect bottomRect(regionRect.left(),
+            regionRect.top() + cut_pos_y,
+            regionRect.width(),
+            regionRect.height() - cut_pos_y);
+
+        // For vertical Cut
+        QRect leftRect(regionRect.left(),
+            regionRect.top(),
+            cut_pos_x,
+            regionRect.height());
+        QRect rightRect(regionRect.left() + cut_pos_x,
+            regionRect.top(),
+            regionRect.width() - cut_pos_x,
+            regionRect.height());
+
+
+        // horizontal split (top rect, bottom rect)
+        printRect(regionRect);
+        if(gap_y >= gap_x && gap_y > tcy){
+            printRect(topRect);
+            printRect(bottomRect);
+            cut_hor = true;
+//            goto split_rect;
+        }
+        //vertical cut (left rect, right rect)
+        else if(gap_y >= gap_x && gap_y <= tcy && gap_x > tcx){
+            printRect(leftRect);
+            printRect(bottomRect);
+            cut_ver = true;
+        }
+        //vertical cut
+        else if(gap_x >= gap_y && gap_x > tcx){
+            printRect(leftRect);
+            printRect(bottomRect);
+            cut_ver = true;
+        }
+        //horizontal cut
+        else if(gap_x >= gap_y && gap_x <= tcx && gap_y > tcy){
+            printRect(topRect);
+            printRect(bottomRect);
+            cut_hor = true;
+        }
+        //no cut possible
+        else{
+            i++;
+        }
+
+        TextList list1,list2;
+        // now we need to create two new regionRect
+        //horizontal cut, topRect and bottomRect
+        if(cut_hor){
+            cout << "horizontal cut: " << endl;
+            cout << "list: " << list.length() << endl;
+
+            for( j = 0 ; j < list.length() ; j++ ){
+
+//                cout << j << endl;
+
+                TinyTextEntity *ent = list.at(j);
+                QRect entRect = ent->area.geometry(pageWidth,pageHeight);
+
+                QString str(ent->text());
+                NormalizedRect rect(entRect,pageWidth,pageHeight);
+
+                if(topRect.intersects(entRect)){
+//                    list1.append(ent);
+                    list1.append( new TinyTextEntity(str.normalized
+                        (QString::NormalizationForm_KC), rect ));
+                }
+                else list2.append( new TinyTextEntity(str.normalized
+                        (QString::NormalizationForm_KC), rect ));
+            }
+
+            RegionText node1(list1,topRect);
+            RegionText node2(list2,bottomRect);
+
+            tree.replace(i,node1);
+            tree.insert(i+1,node2);
+
+            list1 = tree.at(i).text();
+            list2 = tree.at(i+1).text();
+
+            cout << "list1: " << list1.length() << endl;
+            cout << "list2: " << list2.length() << endl;
+
+            cout << "Node1 text: ........................ " << endl << endl;
+            for(j = 0 ; j < list1.length() ; j++){
+                TinyTextEntity *ent = list1.at(j);
+                cout << ent->text().toAscii().data();
+            }
+            cout << endl;
+
+            cout << "Node2 text: ........................ " << endl << endl;
+            for(j = 0 ; j < list2.length() ; j++){
+                TinyTextEntity *ent = list2.at(j);
+                cout << ent->text().toAscii().data();
+            }
+            cout << endl;
+        }
+
+        //vertical cut, leftRect and rightRect
+        else if(cut_ver){
+            cout << "vertical cut" << endl;
+            for( j = 0 ; j < list.length() ; j++ ){
+
+                TinyTextEntity *ent = list.at(j);
+                QRect entRect = ent->area.geometry(pageWidth,pageHeight);
+
+                if(leftRect.intersects(entRect))
+                    list1.append(ent);
+                else list2.append(ent);
+            }
+            RegionText node1(list1,leftRect);
+            RegionText node2(list2,rightRect);
+
+            tree.replace(i,node1);
+            tree.insert(i+1,node2);
+        }
+
+        else
+            cout << "no cut " << endl;
+
+//        delete []proj_on_yaxis;
+//        delete []proj_on_xaxis;
+
+//        i++;
+
+        cout << "i: " << i << " ............................................ " << endl;
+
     }
 
 
@@ -1441,27 +1687,6 @@ void TextPage::correctTextOrder(){
 //        d->printTextList(i,list);
 //    }
 
-//    //test of doesConsumeX()
-//    cout << " ///////////////////////////////// " << endl;
-
-//    QRect rectOne,rectTwo;
-//    rectOne = QRect(QPoint(10,10),QPoint(30,15));
-//    rectTwo = QRect(QPoint(15,20),QPoint(25,30));
-
-//    doesConsumeX(rectOne,rectTwo,80);
-
-//    rectTwo = QRect(QPoint(5,20),QPoint(35,30));
-//    doesConsumeX(rectOne,rectTwo,80);
-
-//    doesConsumeX(rectOne,rectOne,80);
-
-//    rectTwo = QRect(QPoint(15,20),QPoint(35,30));
-//    doesConsumeX(rectOne,rectTwo,80);
-
-//    rectTwo = QRect(QPoint(5,20),QPoint(25,30));
-//    doesConsumeX(rectOne,rectTwo,80);
-
-//    cout << " ///////////////////////////////// " << endl;
 
     /**
 

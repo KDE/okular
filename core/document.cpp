@@ -2330,7 +2330,7 @@ void Document::requestTextPage( uint page )
 
     tmpPage->removeSpace();
     tmpPage->correctTextOrder();
-    tmpPage->addNecessarySpace();
+//    tmpPage->addNecessarySpace();
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

@@ -204,7 +204,7 @@ class OKULAR_EXPORT TextPage
         Functions necessary for document file segmentation into text regions for document layout
         analysis.
         **/
-        void XYCutForBoundingBoxes();
+        void XYCutForBoundingBoxes(int tcx,int tcy);
 
         /**
          The Method for creating horizontal and vertical projection profile within the Region

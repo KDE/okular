@@ -413,6 +413,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
 
     if(!boundingRect.intersects(start_end)) return ret;
+
+
     //case 1(b) ......................................
     else{
         if(startC.x * scaleX < minX) startC.x = minX/scaleX;
@@ -501,7 +503,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     //QString str(' ');
     // Assume that, texts are keep in TextList in the right order
-    for( ;start <= end ; ++start){
+//    cout << "Trying to trace crash " << endl;
+//    cout << " end - start " << end - start << endl;
+    for( ;start != end ; ++start){
         ret->appendShape( (*start)->transformedArea( matrix ), side );
 
 //        if((*start)->text() == str){
@@ -512,6 +516,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 //                    << " Left: " << rect.left() << " Right: " << rect.right() << endl;
 //            }
         }
+//    cout << "Never Reached " << endl;
 
 #endif
 
@@ -1687,8 +1692,6 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
             tmp.append(ent);
         }
 
-        cout << endl << endl;
-
     }
 
 //    cout << "length: " << tmp.length() << endl;
@@ -1702,13 +1705,14 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
 
     d->copy(tmp);
 
-//    cout << "length: " << d->m_words.length() << endl;
+    cout << "tree length: " << tree.length() << endl;
+    cout << "length: " << d->m_words.length() << endl;
 
-//    for( i = 0 ; i < d->m_words.length() ; i++){
-//        TinyTextEntity *ent = d->m_words.at(i);
-//        cout << ent->text().toAscii().data();
-//    }
-//    cout << endl;
+    for( i = 0 ; i < d->m_words.length() ; i++){
+        TinyTextEntity *ent = d->m_words.at(i);
+        cout << ent->text().toAscii().data();
+    }
+    cout << endl;
 
 
 }

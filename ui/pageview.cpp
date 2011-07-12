@@ -2119,7 +2119,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             }
             }break;
             case MouseTextSelect:
-                setCursor( Qt::ArrowCursor );
                 if ( d->mouseTextSelecting )
                 {
                     d->mouseTextSelecting = false;

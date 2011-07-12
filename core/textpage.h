@@ -195,12 +195,6 @@ class OKULAR_EXPORT TextPage
         void makeAndSortLines();
 
         /**
-        add additional spaces between words, if necessary, which can make the words valuable
-        while copying after selection
-        **/
-        void addNecessarySpace();
-
-        /**
         Functions necessary for document file segmentation into text regions for document layout
         analysis.
         **/

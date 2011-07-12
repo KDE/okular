@@ -25,6 +25,9 @@ namespace Okular
 class PagePrivate;
 typedef QList< TinyTextEntity* > TextList;
 
+/** list of RegionText -- keeps a bunch of TextList with their bounding rectangles **/
+typedef QList<RegionText> RegionTextList;
+
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
 
@@ -59,7 +62,16 @@ class TextPagePrivate
         /** copy a TextList to m_words **/
         void copy(TextList &list);
 
+        /**
+        add additional spaces between words, if necessary, which can make the words valuable
+        while copying after selection
+        **/
+        void addNecessarySpace(RegionTextList tree);
+
+        RegionTextList m_region_words;
+        TextList m_spaces;
         TextList m_words;
+        TextList m_tmp_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
         SortedTextList m_lines;

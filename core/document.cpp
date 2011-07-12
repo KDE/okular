@@ -2327,10 +2327,7 @@ void Document::requestTextPage( uint page )
     d->m_generator->generateTextPage( kp );
 
     TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
-
-    tmpPage->removeSpace();
     tmpPage->correctTextOrder();
-//    tmpPage->addNecessarySpace();
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

@@ -25,9 +25,6 @@ namespace Okular
 class PagePrivate;
 typedef QList< TinyTextEntity* > TextList;
 
-/** list of RegionText -- keeps a bunch of TextList with their bounding rectangles **/
-typedef QList<RegionText> RegionTextList;
-
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
 
@@ -39,6 +36,8 @@ We will make a line of TextList and also store the bounding rectangle of line
 typedef QList<TextList> SortedTextList;
 typedef QList<QRect> LineRect;
 
+/** list of RegionText -- keeps a bunch of TextList with their bounding rectangles **/
+typedef QList<RegionText> RegionTextList;
 
 class TextPagePrivate
 {
@@ -68,6 +67,8 @@ class TextPagePrivate
         **/
         void addNecessarySpace(RegionTextList tree);
 
+
+        QMap<int, RegionText> m_word_chars_map;
         RegionTextList m_region_words;
         TextList m_spaces;
         TextList m_words;

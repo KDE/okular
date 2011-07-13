@@ -2093,18 +2093,18 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree){
             TextList tmpList = tmp.text();
 
             // 1. adding space
-            TextList::Iterator it1 = m_tmp_words.begin(), itEnd1 = m_tmp_words.end();
-            for( ; it1 != itEnd1 ; it1++){
+//            TextList::Iterator it1 = m_tmp_words.begin(), itEnd1 = m_tmp_words.end();
+//            for( ; it1 != itEnd1 ; it1++){
 
-                QRect entArea = (*it1)->area.geometry(pageWidth,pageHeight);
-                QPoint center = entArea.center();
-                QString text = (*it1)->text();
+//                QRect entArea = (*it1)->area.geometry(pageWidth,pageHeight);
+//                QPoint center = entArea.center();
+//                QString text = (*it1)->text();
 
-                // if some space is in the region, add its TinyTextEntity to the tmpList
-                if(area.contains(center) && text == spaceStr){
-                    tmpList.append((*it1));
-                }
-            }
+//                // if some space is in the region, add its TinyTextEntity to the tmpList
+//                if(area.contains(center) && text == spaceStr){
+//                    tmpList.append((*it1));
+//                }
+//            }
 
             // now we have to keep tmpList in order and then set tmp with the tmpList
 
@@ -2197,9 +2197,45 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree){
                 qSort(list.begin(),list.end(),compareTinyTextEntityX);
                 m_lines.replace(i,list);
 
-                        printTextList(i,list);
-                //        printRect(m_line_rects.at(i));
+                printTextList(i,list);
+            }
 
+            // Bonus ;): Now, we add space in between texts in a region
+            for(i = 0 ; i < m_lines.length() ; i++){
+
+                TextList list = m_lines.at(i);
+
+                for( k = 0 ; k < list.length() ; k++ ){
+
+                    QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
+                    if( k+1 >= list.length() ) break;
+
+                    QRect area2 = list.at(k+1)->area.roundedGeometry(pageWidth,pageHeight);
+                    int space = area2.left() - area1.right();
+
+                    if(space != 0){
+
+                        // Make a TinyTextEntity of string space and push it between it and it+1
+                        int left,right,top,bottom;
+
+                        left = area1.right();
+                        right = area2.left();
+                        top = area2.top() < area1.top() ? area2.top() : area1.top();
+                        bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
+
+                        QString spaceStr(" ");
+                        QRect rect(QPoint(left,top),QPoint(right,bottom));
+                        NormalizedRect entRect(rect,pageWidth,pageHeight);
+                        TinyTextEntity *ent = new TinyTextEntity(spaceStr,entRect);
+
+                        list.insert(k+1,ent);
+
+                        // we want to skip the space
+                         k++;
+
+                    }
+                }
+                m_lines.replace(i,list);
             }
 
             // 5. extract all text and make a TextList

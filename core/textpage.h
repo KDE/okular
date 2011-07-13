@@ -168,44 +168,12 @@ class OKULAR_EXPORT TextPage
         RegularAreaRect *textArea( TextSelection *selection ) const;
 
         // mamun.nightcrawler@gmail.com
-        /**
-        print the textpage contents with area (text and bounding rect)
-         **/
-        void printTextPageContent();
-
-        /**
-        remove odd spaces which are much bigger than normal spaces from m_words
-        **/
-        void removeSpace();
-
-        /**
-        if the text() is given characterwise, we can make words from there
-        **/
-        void makeWord();
 
         /**
         make necessary modifications in the TextList to make the textOrder correct, so
         textselection works fine
         **/
         void correctTextOrder();
-
-        /**
-        Create lines from TextList and sort them according to their position
-        **/
-        void makeAndSortLines();
-
-        /**
-        Functions necessary for document file segmentation into text regions for document layout
-        analysis.
-        **/
-        void XYCutForBoundingBoxes(int tcx,int tcy);
-
-        /**
-         The Method for creating horizontal and vertical projection profile within the Region
-        **/
-        void createProjectionProfiles();
-
-
 
 
     private:

@@ -879,14 +879,15 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
 }
 
 // mamun.nightcrawler@gmail.com
-void TextPage::printTextPageContent(){
+
+void TextPagePrivate::printTextPageContent(){
     // tList is our textList for this text page
     // TextList is of type List<TinyTextEntity* >
-    TextList tList = this->d->m_words;
+    TextList tList = m_words;
 
     foreach(TinyTextEntity* tiny, tList){
         cout << tiny->text().toAscii().data();
-        QRect rect = tiny->area.roundedGeometry(d->m_page->m_page->width(),d->m_page->m_page->height());
+        QRect rect = tiny->area.roundedGeometry(m_page->m_page->width(),m_page->m_page->height());
         cout << " area: " << rect.top() << "," << rect.left() << " " << rect.bottom() << "," << rect.right() << endl;
     }
 
@@ -903,46 +904,21 @@ void printRect(QRect rect){
 
 
 //remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
-void TextPage::removeSpace(){
+void TextPagePrivate::removeSpace(){
 
-    TextList::Iterator it = d->m_words.begin(), itEnd = d->m_words.end();
+    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
     QString str(' ');
 
-//    cout << "text before space removal ............................................" << endl;
-
-//    for( ; it != itEnd ; it++){
-//        //if TextEntity contains space
-//        cout << (*it)->text().toAscii().data();
-//    }
-//    cout << endl;
-//    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
-
-    // copied elements from m_words to m_tmp_words
-    d->m_tmp_words.append(d->m_words);
-
-    // find the average space length()
-//    int maxWordSpace = 0, minWordSpace = pageWidth;
-    it = d->m_words.begin(), itEnd = d->m_words.end();
+    it = m_words.begin(), itEnd = m_words.end();
     for( ; it != itEnd ; it++){
         //if TextEntity contains space
         if((*it)->text() == str){
 
-//            cout << "text Space: ";
-//            QRect area = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-//            cout << area.right() - area.left() << " ";
-//            printRect(area);
-            // we store all the spaces in the m_spaces
-            d->m_spaces.append((*it));
-            this->d->m_words.erase(it);
+            m_spaces.append((*it));
+            this->m_words.erase(it);
 
-//            if(area.width() > maxWordSpace) maxWordSpace = area.width();
-//            if(area.width() < minWordSpace) minWordSpace = area.width();
         }
     }
-
-//    cout << "max Word Spacing " << maxWordSpace << endl;
-//    cout << "min Word Spacing " << minWordSpace << endl;
-//    cout << endl << endl;
 
 }
 
@@ -1003,8 +979,7 @@ void TextPagePrivate::copy(TextList &list){
 // if the horizontal arm of one rectangle fully contains the other (example below)
 //  --------         ----         -----  first
 //    ----         --------       -----  second
-
-// or we can make it overlap of spaces by 80%
+// or we can make it overlap of spaces by threshold%
 
 bool doesConsumeX(QRect first, QRect second, int threshold){
 
@@ -1020,7 +995,7 @@ bool doesConsumeX(QRect first, QRect second, int threshold){
         return true;
     }
 
-    //or if there is overlap of space by more than 80%
+    //or if there is overlap of space by more than threshold%
     // there is overlap
 
     int overlap;
@@ -1035,22 +1010,15 @@ bool doesConsumeX(QRect first, QRect second, int threshold){
 
             percentage = overlap * 100 / (first.right() - first.left());
 
-//            printRect(first);
-//            cout << "overlap: " << overlap << " width: " << first.width() << endl;
-
         }
         else{
             percentage = overlap * 100 / (second.right() - second.left());
-//            printRect(second);
-//            cout << "overlap: " << overlap << " width: " << second.width() << endl;
         }
 
-//        cout << "overlap percentage: " << percentage << endl;
         if(percentage >= threshold) return true;
 
     }
 
-//    cout << "No Condition Matched " << endl;
     return false;
 }
 
@@ -1092,16 +1060,16 @@ bool doesConsumeY(QRect first, QRect second, int threshold){
 }
 
 //we are taking now the characters are horizontally next to next in current m_words, it actually is like that
-void TextPage::makeWord(){
+void TextPagePrivate::makeWordFromCharacters(){
 
 //    cout << "In makeword ............" << endl;
 
-    TextList tmpList = d->m_words;
+    TextList tmpList = m_words;
     TextList newList;
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
-    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
     int index = 0;
 
     // It will contain a list of RegionText, where each RegionText contains a word, which comprises of
@@ -1109,7 +1077,7 @@ void TextPage::makeWord(){
     // the area of the region.
     RegionTextList regionWordList;
 
-    //WordTocharacterList d->m_word_char_map
+    //WordTocharacterList m_word_char_map
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
@@ -1204,15 +1172,11 @@ void TextPage::makeWord(){
 
             QRect rect = newRect.geometry(pageWidth,pageHeight);
             RegionText regionWord(word,rect);
-            regionWordList.append(regionWord);
-
-
-
             int keyRect = rect.left() * rect.top()
                     + rect.right() * rect.bottom();
 
-            // if there are more than one element in the same key
-            d->m_word_chars_map.insertMulti(keyRect,regionWord);
+            // there may be more than one element in the same key
+            m_word_chars_map.insertMulti(keyRect,regionWord);
 
             index++;
         }
@@ -1221,20 +1185,17 @@ void TextPage::makeWord(){
 
     }
 
-    //ok
-    d->m_region_words = regionWordList;
-
     cout << "words: " << index << endl;
 
-    d->copy(newList);
+    copy(newList);
 
-//    for(int i = 0 ; i < d->m_words.length() ; i++){
+//    for(int i = 0 ; i < m_words.length() ; i++){
 
-//        TinyTextEntity *ent = d->m_words.at(i);
+//        TinyTextEntity *ent = m_words.at(i);
 //        QRect entArea = ent->area.geometry(pageWidth,pageHeight);
 //        int key = entArea.top() * entArea.left() + entArea.right() * entArea.bottom();
 
-//        RegionText text_list = d->m_word_chars_map.value(key);
+//        RegionText text_list = m_word_chars_map.value(key);
 //        TextList list = text_list.text();
 
 //        cout << "key: " << key << " text: ";
@@ -1248,9 +1209,7 @@ void TextPage::makeWord(){
 }
 
 
-
-void TextPage::makeAndSortLines(){
-
+void TextPagePrivate::makeAndSortLines(){
 
     /**
     we cannot assume that the generator will give us texts in the right order. We can only assume
@@ -1264,7 +1223,7 @@ void TextPage::makeAndSortLines(){
 
     // Step:1 .......................................
 
-    TextList tmpList = d->m_words;
+    TextList tmpList = m_words;
     qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
 
 
@@ -1273,7 +1232,7 @@ void TextPage::makeAndSortLines(){
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end();
     int i = 0;
     int newLeft,newRight,newTop,newBottom;
-    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
@@ -1281,18 +1240,18 @@ void TextPage::makeAndSortLines(){
         //the textEntity area
         QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
-        //d->m_lines in a QList of TextList and TextList is a QList of TinyTextEntity*
+        //m_lines in a QList of TextList and TextList is a QList of TinyTextEntity*
         // see, whether the new text should be inserted to an existing line
         bool found = false;
 
         //At first there will be no lines
-        for( i = 0 ; i < d->m_lines.length() ; i++){
+        for( i = 0 ; i < m_lines.length() ; i++){
 
             //the line area which will be expanded
-            // d->m_line_rects is only necessary to preserve the topmin and bottommax of all
+            // m_line_rects is only necessary to preserve the topmin and bottommax of all
             // the texts in the line, left and right is not necessary at all
             // it is in no way the actual line rectangle
-            QRect lineArea = d->m_line_rects.at(i);
+            QRect lineArea = m_line_rects.at(i);
 
             int text_y1 = elementArea.top() ,
                     text_y2 = elementArea.top() + elementArea.height() ,
@@ -1321,17 +1280,17 @@ void TextPage::makeAndSortLines(){
                 //the overlap percentage is more than 70% of the smaller y
                 if(percentage >= 70){
 
-                    TextList tmp = d->m_lines.at(i);
+                    TextList tmp = m_lines.at(i);
                     tmp.append((*it));
 
-                    d->m_lines.replace(i,tmp);
+                    m_lines.replace(i,tmp);
 
                     newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
                     newRight = line_x2 > text_x2 ? line_x2 : text_x2;
                     newTop = line_y1 < text_y1 ? line_y1 : text_y1;
                     newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
-                    d->m_line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
+                    m_line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
                     found = true;
                 }
 
@@ -1345,32 +1304,33 @@ void TextPage::makeAndSortLines(){
             //(*it) is a TinyTextEntity*
             TextList tmp;
             tmp.append((*it));
-            d->m_lines.append(tmp);
-            d->m_line_rects.append(elementArea);
+            m_lines.append(tmp);
+            m_line_rects.append(elementArea);
         }
     }
 
-    cout << "m_lines length: " << d->m_lines.length() << endl;
+    cout << "m_lines length: " << m_lines.length() << endl;
 
 
     // Step 3: .......................................
-    for(i = 0 ; i < d->m_lines.length() ; i++){
-        TextList list = d->m_lines.at(i);
+    for(i = 0 ; i < m_lines.length() ; i++){
+        TextList list = m_lines.at(i);
 
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
-        d->m_lines.replace(i,list);
+        m_lines.replace(i,list);
 
+        printTextList(i,list);
     }
 
 }
 
 
-void TextPage::createProjectionProfiles(){
-}
+void TextPagePrivate::createProjectionProfiles(){}
 
-void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
 
-    int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
+void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
+
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
     // proj_on_yaxis will start from 0(rect.left()) to N(rect.right)
     int proj_on_yaxis[5000], proj_on_xaxis[5000];  //horizontal and vertical projection respectively
@@ -1378,8 +1338,8 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
     // RegionText contains a TextList and a QRect
     // The XY Tree, where the node is a RegionText
     RegionTextList tree;
-    QRect contentRect(d->m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
-    RegionText root(d->m_words,contentRect);
+    QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
+    RegionText root(m_words,contentRect);
 
     // start the tree with the root, it is our only region at the start
     tree.push_back(root);
@@ -1619,7 +1579,10 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
         // now we need to create two new regionRect
         //horizontal cut, topRect and bottomRect
         if(cut_hor){
-//            cout << "horizontal cut, list length: " << list.length() << endl;
+            cout << "horizontal cut, list length: " << list.length() << endl;
+
+            printRect(leftRect);
+            printRect(rightRect);
 
             for( j = 0 ; j < list.length() ; j++ ){
 
@@ -1643,10 +1606,19 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
             tree.replace(i,node1);
             tree.insert(i+1,node2);
 
+            list1 = tree.at(i).text();
+            list2 = tree.at(i+1).text();
+
         }
 
         //vertical cut, leftRect and rightRect
         else if(cut_ver){
+
+            cout << "vertical cut, list length: " << list.length() << endl;
+
+            printRect(topRect);
+            printRect(bottomRect);
+
             for( j = 0 ; j < list.length() ; j++ ){
 
                 ent = list.at(j);
@@ -1663,27 +1635,73 @@ void TextPage::XYCutForBoundingBoxes(int tcx,int tcy){
             tree.replace(i,node1);
             tree.insert(i+1,node2);
 
+            list1 = tree.at(i).text();
+            list2 = tree.at(i+1).text();
         }
 
-        else {};
+        else { };
+
+        if(cut_hor || cut_ver){
+
+            cout << "list1: " << list1.length() << endl;
+            cout << "list2: " << list2.length() << endl;
+
+            cout << "Node1 text: ........................ " << endl << endl;
+            for(j = 0 ; j < list1.length() ; j++){
+                 TinyTextEntity *ent = list1.at(j);
+                 cout << ent->text().toAscii().data();
+            }
+            cout << endl;
+
+            cout << "Node2 text: ........................ " << endl << endl;
+            for(j = 0 ; j < list2.length() ; j++){
+                 TinyTextEntity *ent = list2.at(j);
+                 cout << ent->text().toAscii().data();
+            }
+            cout << endl;
+
+        }
 
     }
 
-    // we can now add necessary spaces, so that the selection looks nice
-    d->addNecessarySpace(tree);
+    TextList tmp;
 
+    for(i = 0 ; i < tree.length() ; i++){
+        TextList list = tree.at(i).text();
+
+        cout << "Node: " << i << endl;
+
+        for(j = 0 ; j < list.length() ; j++){
+            TinyTextEntity *ent = list.at(j);
+            tmp.append(ent);
+
+            cout << ent->text().toAscii().data();
+
+        }
+
+        cout << endl << endl;
+
+    }
+    copy(tmp);
+
+    m_XY_cut_tree = tree;
 }
 
 
+void TextPagePrivate::calculateStatisticalInformation(){
+}
 
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
 
-    removeSpace();
+    // remove spaces from the text
+    d->removeSpace();
 
-    makeWord();
+    // make words from characters
+    d->makeWordFromCharacters();
 
-    makeAndSortLines();
+    // create arbitrary lines from words and sort them according to X and Y position
+    d->makeAndSortLines();
 
 
     QMap<int,int> line_space_stat;
@@ -1740,7 +1758,7 @@ void TextPage::correctTextOrder(){
     QList< QList<QRect> > space_rects; // to save all the word spacing or column spacing rects
     QList<QRect> max_hor_space_rects;
 
-    int i,j;
+    int i;
     int pageWidth = d->m_page->m_page->width(), pageHeight = d->m_page->m_page->height();
 
     // space in every line
@@ -2032,12 +2050,12 @@ void TextPage::correctTextOrder(){
 
 
     //This crashes now, need to make it work
-    XYCutForBoundingBoxes(col_spacing-2,line_spacing * 2);
-
+    d->XYCutForBoundingBoxes(col_spacing-2,line_spacing * 2);
+    d->addNecessarySpace();
 
 }
 
-void TextPagePrivate::addNecessarySpace(RegionTextList tree){
+void TextPagePrivate::addNecessarySpace(){
 
 
     // we have d->m_words and d->m_spaces in hand
@@ -2053,13 +2071,12 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree){
      4. We will now add spaces between two words in a line
      5. And, then we will extract all the space separated texts from each region and
         make m_words nice again.
-     6. Then we will merge all the texts from every region to make one TextList and assign it to m_words
     **/
-//    m_spaces;m_words;
+
+        RegionTextList tree = m_XY_cut_tree;
 
         int i,j,k;
         int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
-        QString spaceStr(" ");
 
         // we will only change the texts under RegionTexts, not the area
         for(j = 0 ; j < tree.length() ; j++){
@@ -2226,63 +2243,69 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree){
                 tmp.append(ent);
             }
         }
+
         copy(tmp);
 
+}
 
+// Break Words into Characters
+void TextPagePrivate::breakWordIntoCharacters(){
 
-        // break the words into characters/smallest part that was primarily
-        while(tmp.length()) tmp.pop_back();
-        int count = 0;
-        for(int i = 0 ; i < m_words.length() ; i++){
+    QString spaceStr(" ");
+    TextList tmp;
+    int count = 0, i;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
-            TinyTextEntity *ent = m_words.at(i);
-            QRect rect = ent->area.geometry(pageWidth,pageHeight);
+    for(i = 0 ; i < m_words.length() ; i++){
 
-            // the spaces contains only one character, so we can skip them
-            if(ent->text() == spaceStr){
-                tmp.append(ent);
-            }
-            else{
+        TinyTextEntity *ent = m_words.at(i);
+        QRect rect = ent->area.geometry(pageWidth,pageHeight);
 
-                int key = rect.left() * rect.top()
-                        + rect.right() * rect.bottom();
+        // the spaces contains only one character, so we can skip them
+        if(ent->text() == spaceStr){
+            tmp.append(ent);
+        }
+        else{
 
-                RegionText word_text = m_word_chars_map.value(key);
-                TextList list = word_text.text();
+            int key = rect.left() * rect.top()
+                    + rect.right() * rect.bottom();
 
-                count = m_word_chars_map.count(key);
+            RegionText word_text = m_word_chars_map.value(key);
+            TextList list = word_text.text();
 
-                if(count > 1){
-                    cout << "count : " << count << endl;
+            count = m_word_chars_map.count(key);
 
-                    QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
-                    while( it != m_word_chars_map.end() && it.key() == key ){
+            if(count > 1){
+                cout << "count : " << count << endl;
 
-                        word_text = it.value();
-                        it++;
+                QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
+                while( it != m_word_chars_map.end() && it.key() == key ){
 
-                        list = word_text.text();
-                        QRect regionRect = word_text.area();
+                    word_text = it.value();
+                    it++;
 
-                        if(regionRect.left() == rect.left() && regionRect.top() == rect.top())
-                            break;
-                    }
+                    list = word_text.text();
+                    QRect regionRect = word_text.area();
 
+                    if(regionRect.left() == rect.left() && regionRect.top() == rect.top())
+                        break;
                 }
 
-                tmp.append(list);
             }
+
+            tmp.append(list);
         }
+    }
 
-        copy(tmp);
+    copy(tmp);
 
 
-        // print the final text
-        for( i = 0 ; i < m_words.length() ; i++){
+    // print the final text
+    for( i = 0 ; i < m_words.length() ; i++){
 
-            TinyTextEntity* ent = m_words.at(i);
-            cout << ent->text().toAscii().data();
+        TinyTextEntity* ent = m_words.at(i);
+        cout << ent->text().toAscii().data();
 
-        }
+    }
 
 }

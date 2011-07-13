@@ -62,17 +62,63 @@ class TextPagePrivate
         void copy(TextList &list);
 
         /**
+        print the textpage contents with area (text and bounding rect)
+         **/
+        void printTextPageContent();
+
+        /**
+        remove odd spaces which are much bigger than normal spaces from m_words
+        **/
+        void removeSpace();
+
+        /**
+        create words from characters
+        **/
+        void makeWordFromCharacters();
+
+        /**
+        Create lines from TextList and sort them according to their position
+        **/
+        void makeAndSortLines();
+
+        /**
+        Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
+        we made
+        **/
+        void calculateStatisticalInformation();
+
+        /**
+        Functions necessary for document file segmentation into text regions for document layout
+        analysis.
+        **/
+        void XYCutForBoundingBoxes(int tcx,int tcy);
+
+        /**
+         The Method for creating horizontal and vertical projection profile within the Region,
+         used by XYCutForBoundingBoxes
+        **/
+        void createProjectionProfiles();
+
+
+        /**
         add additional spaces between words, if necessary, which can make the words valuable
         while copying after selection
         **/
-        void addNecessarySpace(RegionTextList tree);
+        void addNecessarySpace();
+
+        /**
+        break the words into characters, so the text selection wors fine
+        **/
+        void breakWordIntoCharacters();
 
 
+
+        // variables those can be accessed directly from TextPage
         QMap<int, RegionText> m_word_chars_map;
-        RegionTextList m_region_words;
+        RegionTextList m_XY_cut_tree;
         TextList m_spaces;
         TextList m_words;
-        TextList m_tmp_words;
+//        TextList m_tmp_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
         SortedTextList m_lines;

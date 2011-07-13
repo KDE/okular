@@ -2246,6 +2246,8 @@ void TextPagePrivate::addNecessarySpace(){
 
         copy(tmp);
 
+        breakWordIntoCharacters();
+
 }
 
 // Break Words into Characters

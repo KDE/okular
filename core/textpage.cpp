@@ -1212,7 +1212,7 @@ void TextPagePrivate::makeWordFromCharacters(){
 }
 
 
-void TextPagePrivate::makeAndSortLines(){
+void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, LineRect &line_rects){
 
     /**
     we cannot assume that the generator will give us texts in the right order. We can only assume
@@ -1226,16 +1226,16 @@ void TextPagePrivate::makeAndSortLines(){
 
     // Step:1 .......................................
 
-    TextList tmpList = m_words;
-    qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
+    qSort(words.begin(),words.end(),compareTinyTextEntityY);
 
 
     // Step 2: .......................................
 
-    TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end();
+    TextList::Iterator it = words.begin(), itEnd = words.end();
     int i = 0;
     int newLeft,newRight,newTop,newBottom;
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
@@ -1243,18 +1243,18 @@ void TextPagePrivate::makeAndSortLines(){
         //the textEntity area
         QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
-        //m_lines in a QList of TextList and TextList is a QList of TinyTextEntity*
+        //lines in a QList of TextList and TextList is a QList of TinyTextEntity*
         // see, whether the new text should be inserted to an existing line
         bool found = false;
 
         //At first there will be no lines
-        for( i = 0 ; i < m_lines.length() ; i++){
+        for( i = 0 ; i < lines.length() ; i++){
 
             //the line area which will be expanded
-            // m_line_rects is only necessary to preserve the topmin and bottommax of all
+            // line_rects is only necessary to preserve the topmin and bottommax of all
             // the texts in the line, left and right is not necessary at all
             // it is in no way the actual line rectangle
-            QRect lineArea = m_line_rects.at(i);
+            QRect lineArea = line_rects.at(i);
 
             int text_y1 = elementArea.top() ,
                     text_y2 = elementArea.top() + elementArea.height() ,
@@ -1287,17 +1287,17 @@ void TextPagePrivate::makeAndSortLines(){
                 //the overlap percentage is more than 70% of the smaller y
                 if(percentage >= 70){
 
-                    TextList tmp = m_lines.at(i);
+                    TextList tmp = lines.at(i);
                     tmp.append((*it));
 
-                    m_lines.replace(i,tmp);
+                    lines.replace(i,tmp);
 
                     newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
                     newRight = line_x2 > text_x2 ? line_x2 : text_x2;
                     newTop = line_y1 < text_y1 ? line_y1 : text_y1;
                     newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
-                    m_line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
+                    line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
                     found = true;
                 }
 
@@ -1306,25 +1306,25 @@ void TextPagePrivate::makeAndSortLines(){
         }
 
         // when we have found a new line
-        // create a new TextList containing only one element and append it to the m_lines
+        // create a new TextList containing only one element and append it to the lines
         if(!found){
             //(*it) is a TinyTextEntity*
             TextList tmp;
             tmp.append((*it));
-            m_lines.append(tmp);
-            m_line_rects.append(elementArea);
+            lines.append(tmp);
+            line_rects.append(elementArea);
         }
     }
 
-//    cout << "m_lines length: " << m_lines.length() << endl;
+//    cout << "lines length: " << lines.length() << endl;
 
 
     // Step 3: .......................................
-    for(i = 0 ; i < m_lines.length() ; i++){
-        TextList list = m_lines.at(i);
+    for(i = 0 ; i < lines.length() ; i++){
+        TextList list = lines.at(i);
 
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
-        m_lines.replace(i,list);
+        lines.replace(i,list);
 
         printTextList(i,list);
     }
@@ -1705,7 +1705,7 @@ void TextPage::correctTextOrder(){
     d->makeWordFromCharacters();
 
     // create arbitrary lines from words and sort them according to X and Y position
-    d->makeAndSortLines();
+    d->makeAndSortLines(d->m_words,d->m_lines,d->m_line_rects);
 
 
     QMap<int,int> line_space_stat;
@@ -1912,101 +1912,25 @@ void TextPagePrivate::addNecessarySpace(){
     **/
 
         RegionTextList tree = m_XY_cut_tree;
-
         int i,j,k;
         int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
         // we will only change the texts under RegionTexts, not the area
         for(j = 0 ; j < tree.length() ; j++){
             RegionText tmp = tree.at(j);
+
             TextList tmpList = tmp.text();
-
-            // 1. sorting by Y
-            qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
-
-            // 2. create line by Y overlap
-
-            TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end();
-            int newLeft,newRight,newTop,newBottom;
-
-            while(m_lines.length()) m_lines.pop_back();
-            while(m_line_rects.length()) m_line_rects.pop_back();
-
-            for( ; it != itEnd ; it++){
-
-                QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-                bool found = false;
-
-                for( i = 0 ; i < m_lines.length() ; i++){
-
-                    QRect lineArea = m_line_rects.at(i);
-                    int overlap,percentage;
-
-                    int text_y1 = elementArea.top() ,
-                            text_y2 = elementArea.top() + elementArea.height() ,
-                            text_x1 = elementArea.left(),
-                            text_x2 = elementArea.left() + elementArea.width();
-
-                    int line_y1 = lineArea.top() ,
-                            line_y2 = lineArea.top() + lineArea.height(),
-                            line_x1 = lineArea.left(),
-                            line_x2 = lineArea.left() + lineArea.width();
+            SortedTextList lines;
+            LineRect line_rects;
 
 
-                    // if there is overlap
-                    if(text_y2 >= line_y1 && line_y2 >= text_y1){
+            makeAndSortLines(tmpList,lines,line_rects);
 
-                        if(text_y2 > line_y2) overlap = line_y2 - text_y1;
-                        else overlap = text_y2 - line_y1;
-
-                        if( (text_y2 - text_y1) > (line_y2 - line_y1) )
-                            percentage = overlap * 100 / (line_y2 - line_y1);
-                        else percentage = overlap * 100 / (text_y2 - text_y1);
-
-                        if(percentage >= 70){
-
-                            TextList tmp = m_lines.at(i);
-                            tmp.append((*it));
-
-                            m_lines.replace(i,tmp);
-
-                            newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
-                            newRight = line_x2 > text_x2 ? line_x2 : text_x2;
-                            newTop = line_y1 < text_y1 ? line_y1 : text_y1;
-                            newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
-
-                            m_line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
-                            found = true;
-                        }
-
-                    }
-
-                }
-
-        //        // when we have found a new line
-                if(!found){
-                    TextList tmp;
-                    tmp.append((*it));
-                    m_lines.append(tmp);
-                    m_line_rects.append(elementArea);
-                }
-            }
-
-            // 3. sort texts in each line by X
-
-            for(i = 0 ; i < m_lines.length() ; i++){
-                TextList list = m_lines.at(i);
-
-                qSort(list.begin(),list.end(),compareTinyTextEntityX);
-                m_lines.replace(i,list);
-
-//                printTextList(i,list);
-            }
 
             // 4. Now, we add space in between texts in a region
-            for(i = 0 ; i < m_lines.length() ; i++){
+            for(i = 0 ; i < lines.length() ; i++){
 
-                TextList list = m_lines.at(i);
+                TextList list = lines.at(i);
 
                 for( k = 0 ; k < list.length() ; k++ ){
 
@@ -2038,24 +1962,23 @@ void TextPagePrivate::addNecessarySpace(){
 
                     }
                 }
-                m_lines.replace(i,list);
+                lines.replace(i,list);
             }
 
             // 5. extract all text and make a TextList
-            // now we have all the texts in sorted order in the m_lines
+            // now we have all the texts in sorted order in the lines
 
             while(tmpList.length()) tmpList.pop_back();
 
-            for( i = 0 ; i < m_lines.length() ; i++){
+            for( i = 0 ; i < lines.length() ; i++){
 
-                TextList list = m_lines.at(i);
+                TextList list = lines.at(i);
                 for( k = 0 ; k < list.length() ; k++){
                     TinyTextEntity *ent = list.at(k);
                     tmpList.append(ent);
                 }
 
             }
-
 
             tmp.setText(tmpList);
             tree.replace(j,tmp);
@@ -2130,11 +2053,9 @@ void TextPagePrivate::breakWordIntoCharacters(){
 
 
     // print the final text
-    for( i = 0 ; i < m_words.length() ; i++){
-
-        TinyTextEntity* ent = m_words.at(i);
-        cout << ent->text().toAscii().data();
-
-    }
+//    for( i = 0 ; i < m_words.length() ; i++){
+//        TinyTextEntity* ent = m_words.at(i);
+//        cout << ent->text().toAscii().data();
+//    }
 
 }

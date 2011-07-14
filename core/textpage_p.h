@@ -79,7 +79,7 @@ class TextPagePrivate
         /**
         Create lines from TextList and sort them according to their position
         **/
-        void makeAndSortLines();
+        void makeAndSortLines(TextList &words,SortedTextList &lines,LineRect &line_rects);
 
         /**
         Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines

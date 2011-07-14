@@ -93,12 +93,6 @@ class TextPagePrivate
         **/
         void XYCutForBoundingBoxes(int tcx,int tcy);
 
-        /**
-         The Method for creating horizontal and vertical projection profile within the Region,
-         used by XYCutForBoundingBoxes
-        **/
-        void createProjectionProfiles();
-
 
         /**
         add additional spaces between words, if necessary, which can make the words valuable

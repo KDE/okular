@@ -41,6 +41,14 @@ class SearchPoint
         int offset_end;
 };
 
+/** mamun.nightcrawler@gmail.com **/
+void printRect(QRect rect){
+
+    cout << "l: " << rect.left() << " r: " << rect.x() + rect.width() << " t: " << rect.top() <<
+            " b: " << rect.y() + rect.height() << endl;
+}
+
+
 /* text comparison functions */
 
 bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
@@ -365,7 +373,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
+
     NormalizedRect tmp;
+    //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
+    double minX, maxX, minY, maxY;
+    double scaleX = this->d->m_page->m_page->width();
+    double scaleY = this->d->m_page->m_page->height();
 
     NormalizedPoint startC = sel->start();
     double startCx = startC.x;
@@ -383,13 +396,9 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         endC = temp;
     }
 
-    //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
-    double minX, maxX, minY, maxY;
-    double scaleX = this->d->m_page->m_page->width();
-    double scaleY = this->d->m_page->m_page->height();
 
-    NormalizedRect boundingRect = this->d->m_page->m_page->boundingBox();
-    QRect content = boundingRect.roundedGeometry(scaleX,scaleY);
+    NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
+    QRect content = boundingRect.geometry(scaleX,scaleY);
 
     minX = content.left(), maxX = content.right();
     minY = content.top(), maxY = content.bottom();
@@ -404,8 +413,11 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
      Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so their rectangle
 
-     Case 2: find the rectangle which contains start and endpoint and having some
+     Case 2(a): find the rectangle which contains start and endpoint and having some
      TextEntity
+
+     Case 2(b): if 2(a) fails (if startPoint and endPoint are unchanged), then we check whether there is
+     TextEntity within the rect made by startPoint and endPoint
 
      Case 3(a): the startPoint is in some empty space, which is not under any rectangle
      containing some TinyTextEntity. So, we search the nearest rectangle consisting of some
@@ -415,17 +427,23 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
      start point
     **/
 
-    //Case 1(a) - we know that startC.x > endC.x, we need to decide which is top and which is left
+    // we know that startC.x > endC.x, we need to decide which is top and which is bottom
 
     NormalizedRect start_end;
     if(startC.y < endC.y)
         start_end = NormalizedRect(startC.x, startC.y, endC.x, endC.y);
     else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
 
+    cout << "selection: ";
+    printRect(start_end.geometry(scaleX,scaleY));
+    cout << "boundary: ";
+    printRect(boundingRect.geometry(scaleX,scaleY));
+
+    //Case 1(a) .......................................
     if(!boundingRect.intersects(start_end)) return ret;
 
-
-    //case 1(b) ......................................
+    // case 1(b) ......................................
+    // Move the points to boundary
     else{
         if(startC.x * scaleX < minX) startC.x = minX/scaleX;
         if(endC.x * scaleX > maxX) endC.x = maxX/scaleX;
@@ -439,24 +457,38 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     TextList::ConstIterator start = it, end = itEnd, tmpIt = it;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
 
-    //case 2 ......................................
+    //case 2(a) ......................................
     for ( ; it != itEnd; ++it )
     {
         // (*it) gives a TinyTextEntity*
         tmp = (*it)->area;
-
-        if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
-                && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
-        {
-            // TinyTextEntity NormalizedRect area;
-            if(tmp.contains(startCx,startCy)) start = it;
-            if(tmp.contains(endCx,endCy)) end = it;
-        }
+        if(tmp.contains(startCx,startCy)) start = it;
+        if(tmp.contains(endCx,endCy)) end = it;
     }
 
 
+    //case 2(b) ......................................
     it = tmpIt;
+    if(start == it && end == itEnd){
+
+        for ( ; it != itEnd; ++it )
+        {
+            tmp = (*it)->area;
+            // is there any text reactangle within the start_end rect
+            if(start_end.intersects(tmp))
+                break;
+        }
+
+        // no text within the area
+        if(it == itEnd){
+            return ret;
+        }
+
+    }
+
+
     // case 3.a .........................................
+    it = tmpIt;
     if(start == it){
         // we can take that for start we have to increase right, bottom
 
@@ -479,7 +511,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     //case 3.b .............................................
     if(end == itEnd){
-        it = tmpIt;
+        it = tmpIt; //start
         itEnd = itEnd-1;
 
         bool flagV = false;
@@ -508,25 +540,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
 
-    //TinyTextEntity ent;
-    //ent.area.geometry(scaleX,scaleY);
+    //removes the possibility of crash, in case none of 1 to 3 is true
+    if(end == d->m_words.constEnd()) end--;
 
-    //QString str(' ');
-    // Assume that, texts are keep in TextList in the right order
-//    cout << "Trying to trace crash " << endl;
-//    cout << " end - start " << end - start << endl;
-    for( ;start != end ; ++start){
+    for( ;start <= end ; start++){
         ret->appendShape( (*start)->transformedArea( matrix ), side );
-
-//        if((*start)->text() == str){
-//                QRect rect;
-//                rect = (*start)->area.geometry(scaleX,scaleY);
-//                cout << "Text Before:" << (* (start-1) )->text().toAscii().data() << " "
-//                     <<"Top:" << rect.top() << " Bottom: " << rect.bottom()
-//                    << " Left: " << rect.left() << " Right: " << rect.right() << endl;
-//            }
-        }
-//    cout << "Never Reached " << endl;
+     }
 
 #endif
 
@@ -896,13 +915,6 @@ void TextPagePrivate::printTextPageContent(){
 
 /** mamun_nightcrawler@gmail.com **/
 
-void printRect(QRect rect){
-
-    cout << "l: " << rect.left() << " r: " << rect.x() + rect.width() << " t: " << rect.top() <<
-            " b: " << rect.y() + rect.height() << endl;
-}
-
-
 //remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
 void TextPagePrivate::removeSpace(){
 
@@ -1062,8 +1074,6 @@ bool doesConsumeY(QRect first, QRect second, int threshold){
 //we are taking now the characters are horizontally next to next in current m_words, it actually is like that
 void TextPagePrivate::makeWordFromCharacters(){
 
-//    cout << "In makeword ............" << endl;
-
     TextList tmpList = m_words;
     TextList newList;
 
@@ -1072,12 +1082,6 @@ void TextPagePrivate::makeWordFromCharacters(){
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
     int index = 0;
 
-    // It will contain a list of RegionText, where each RegionText contains a word, which comprises of
-    // TextList which is a list of TinyTextEntity which contains characters info and a QRect which contains
-    // the area of the region.
-    RegionTextList regionWordList;
-
-    //WordTocharacterList m_word_char_map
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
@@ -1120,7 +1124,6 @@ void TextPagePrivate::makeWordFromCharacters(){
             elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
 
             if(!doesConsumeY(elementArea,lineArea,60)){
-//                cout << "maybe y coordinates very far";
                 it--;
                 break;
             }
@@ -1139,8 +1142,8 @@ void TextPagePrivate::makeWordFromCharacters(){
             space = elementArea.left() - lineArea.right();
 //            cout << "space " << space << " ";
 
-            // if space more than one
-            // or if space is less than zero, that means we are erroneously merging a character with another character
+            // if space more than one or if space is less than zero, that means
+            // we are erroneously merging a character with another character
             // which is really before to it
             if(space > 1 || space < 0){
                 it--;
@@ -1189,22 +1192,22 @@ void TextPagePrivate::makeWordFromCharacters(){
 
     copy(newList);
 
-//    for(int i = 0 ; i < m_words.length() ; i++){
+    for(int i = 0 ; i < m_words.length() ; i++){
 
-//        TinyTextEntity *ent = m_words.at(i);
-//        QRect entArea = ent->area.geometry(pageWidth,pageHeight);
-//        int key = entArea.top() * entArea.left() + entArea.right() * entArea.bottom();
+        TinyTextEntity *ent = m_words.at(i);
+        QRect entArea = ent->area.geometry(pageWidth,pageHeight);
+        int key = entArea.top() * entArea.left() + entArea.right() * entArea.bottom();
 
-//        RegionText text_list = m_word_chars_map.value(key);
-//        TextList list = text_list.text();
+        RegionText text_list = m_word_chars_map.value(key);
+        TextList list = text_list.text();
 
-//        cout << "key: " << key << " text: ";
-//        for( int l = 0 ; l < list.length() ; l++){
-//            ent = list.at(l);
-//            cout << ent->text().toAscii().data();
-//        }
-//        cout << endl;
-//    }
+        cout << "key: " << key << " text: ";
+        for( int l = 0 ; l < list.length() ; l++){
+            ent = list.at(l);
+            cout << ent->text().toAscii().data();
+        }
+        cout << endl;
+    }
 
 }
 
@@ -1263,6 +1266,10 @@ void TextPagePrivate::makeAndSortLines(){
                     line_x1 = lineArea.left(),
                     line_x2 = lineArea.left() + lineArea.width();
 
+
+            // if the font sizes vary very much, they will not make a line
+            if(lineArea.height() > 2 * elementArea.height()) continue;
+
             // if the new text and the line has y overlapping parts of more than 80%,
             // the text will be added to this line
             int overlap,percentage;
@@ -1309,7 +1316,7 @@ void TextPagePrivate::makeAndSortLines(){
         }
     }
 
-    cout << "m_lines length: " << m_lines.length() << endl;
+//    cout << "m_lines length: " << m_lines.length() << endl;
 
 
     // Step 3: .......................................
@@ -1323,9 +1330,6 @@ void TextPagePrivate::makeAndSortLines(){
     }
 
 }
-
-
-void TextPagePrivate::createProjectionProfiles(){}
 
 
 void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
@@ -1885,184 +1889,18 @@ void TextPage::correctTextOrder(){
     cout << "Column Spacing: " << col_spacing << endl;
 
 
+    // Make a XY Cut tree for segmentation
+    d->XYCutForBoundingBoxes(word_spacing * 2,line_spacing * 2);
 
-    /** Step 2: ........................................................................ **/
-
-    /**
-     We will start with the max whitespace rectangle within the first line, if any. Then, we will
-    get the max whitespace rectangle of the second line.
-
-    If both of them are at the same position, we can say, they creates a column.
-    Else we will check
-
-        if there is any whitespace rectangle under the previous line's maximum whitespace
-        rectangle. In this cae, we can say its a noisy line, which do not preserve the column
-        separation. if we find 3(col_threshold) lines of this type consecutively, we can break
-        the column separation, and say that these 3 lines fully are in the same column.
-
-        else, the line is a single line in a column. We do not need to separate this.
-
-    **/
-
-//    int length_line_list = d->m_lines.length();
-//    bool consume12 = false, consume23 = false, consume13 = false;
-
-//    for(i = 0 ; i < length_line_list ; i++){
-
-//        consume12 = consume23 = consume13 = false;
-//        int index1, index2, index3;
-
-//        index1 = i % length_line_list;
-//        index2 = (i + 1) % length_line_list;
-//        index3 = (i + 2) % length_line_list;
-
-//        // We will take 3 lines at a time, so that one noisy data do not give wrong idea.
-//        // We will see whether they creates a column or not
-//        TextList line1 = d->m_lines.at(index1);
-//        TextList line2 = d->m_lines.at(index2);
-////        TextList line3 = d->m_lines.at(index3);
-
-//        // the estimated column space rectangles of those lines
-//        QRect columnRect1 = max_hor_space_rects.at(index1);
-//        QRect columnRect2 = max_hor_space_rects.at(index2);
-////        QRect columnRect3 = max_hor_space_rects.at(index3);
-
-
-//        // if the line itself has no space
-//        if(columnRect1.isEmpty()){
-//            continue;
-//        }
-
-//        // if the line following has no space, then see the next line
-//        if(columnRect2.isEmpty()){
-//            columnRect2 = max_hor_space_rects.at(index3);
-//            line2 = d->m_lines.at(index3);
-//        }
-
-//        QRect rect1,rect2,rect3;
-
-//        //if the maxRectangle of line1 and line2 are at the same place, they may create a column
-//        if(doesConsumeX(columnRect1,columnRect2,90)){
-//            consume12 = true;
-//            rect1 = columnRect1;
-//            rect2 = columnRect2;
-//        }
-//        /** else if one of the lines is noisy and do not maintain column spacing correctly,
-//            so that, maxSpacing is not column spacing but, some other word spacing, so we search
-//            if some rectangle smaller than some word spacing rectangle remains which is
-//            consumed by the other lines maxSpacing rectangle.
-//        **/
-//        else{
-//            //1. see whether maxSpacing of line1 consumes any space rectangle in line2
-//            rect1 = columnRect1;
-//            QList<QRect> line2_space_rect = space_rects.at(index2);
-
-//            for(j = 0 ; j < line2_space_rect.length() ; j++){
-//                rect2 = line2_space_rect.at(j);
-//                if(doesConsumeX(rect1,rect2,90)){
-//                    consume12 = true;
-//                    break;
-//                }
-//            }
-
-//            //2. see whether maxSpacing of line2 consumes any space rectangle in line1
-//            rect2 = columnRect2;
-//            QList<QRect> line1_space_rect = space_rects.at(index1);
-
-//            for(j = 0 ; j < line1_space_rect.length(); j++){
-
-//                if(consume12){
-//                    break;
-//                }
-
-//                rect1 = line1_space_rect.at(j);
-//                if(doesConsumeX(rect1,rect2,90)){
-//                    //we need to update the maxSpace rect,
-//                    //otherwise the cut will be in the wrong place
-//                    consume12 = true;
-//                }
-
-//            }
-
-//        }
-
-//    /** if consume12 is still false, then we do not get some column spacing,
-//    the spacing are random, so, possibly line1 and line2 are not column separated
-//    lines and we don't need to split them.
-//    **/
-
-//        /** possibly we have got a column separator, so, we break the lines in two parts, and
-//         1. edit previous lines(delete the part after column separator)
-//         2. add a new line and append them to the last of the list
-//        **/
-//        if(consume12){
-//            //the separating rectangles are rect1 and rect2
-//            QRect linerect1 = d->m_line_rects.at(i),linerect2 = linerect1;
-//            TextList tmp;
-//            TinyTextEntity* tmp_entity;
-
-//            for(j = line1.length() - 1 ; j >= 0 ; j --){
-
-//                tmp_entity = line1.at(j);
-//                QRect area = tmp_entity->area.roundedGeometry(pageWidth,pageHeight);
-
-//                // we have got maxSpace rect
-//                int rect1_right = rect1.left() + rect1.width();
-//                if(rect1_right == area.left()){
-//                    linerect1.setRight(rect1.left());
-//                    linerect2.setLeft(rect1.right());
-
-//                    tmp.push_front(tmp_entity);
-//                    line1.pop_back();
-
-//                    break;
-//                }
-
-//                //push in front in the new line and pop from the back of the old line
-//                tmp.push_front(tmp_entity);
-//                line1.pop_back();
-
-//            }
-
-//            d->m_lines.replace(i,line1);
-//            d->m_line_rects.replace(i,linerect1);
-
-//            d->m_lines.append(tmp);
-//            d->m_line_rects.append(linerect2);
-
-//        }
-
-//    }
-
-
-//    // copies all elements to a TextList
-//    TextList tmpList;
-//    for(i = 0 ; i < d->m_lines.length() ; i++){
-//        TextList list = d->m_lines.at(i);
-////        d->printTextList(i,list);
-//        for(j = 0 ; j < list.length() ; j++){
-//            TinyTextEntity* ent = list.at(j);
-//            tmpList.append(ent);
-//        }
-//    }
-
-//    cout << "print Done ........................................... " << endl;
-
-
-    //This crashes now, need to make it work
-    d->XYCutForBoundingBoxes(col_spacing-2,line_spacing * 2);
+    // add spaces to the word
     d->addNecessarySpace();
+
+    // break the words into characters
+    d->breakWordIntoCharacters();
 
 }
 
 void TextPagePrivate::addNecessarySpace(){
-
-
-    // we have d->m_words and d->m_spaces in hand
-    // m_words do not contain space, we will now add all spaces in d->m_spaces in m_words regionwise
-    // so that all texts and spaces are in order
-
-    // we will use the concept of line and line sorting here once again
 
     /**
      1. We will sort all the texts in the region by Y
@@ -2085,15 +1923,6 @@ void TextPagePrivate::addNecessarySpace(){
 
             // 1. sorting by Y
             qSort(tmpList.begin(),tmpList.end(),compareTinyTextEntityY);
-
-            //print the tmpList
-//            cout << "printing the tmpList " << " ..................................... " << endl;
-//            for( i = 0 ; i < tmpList.length() ; i++){
-//                TinyTextEntity* ent = tmpList.at(i);
-//                cout << ent->text().toAscii().data();
-//            }
-//            cout << endl << endl;
-
 
             // 2. create line by Y overlap
 
@@ -2245,8 +2074,6 @@ void TextPagePrivate::addNecessarySpace(){
         }
 
         copy(tmp);
-
-        breakWordIntoCharacters();
 
 }
 

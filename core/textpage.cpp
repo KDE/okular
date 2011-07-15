@@ -1096,7 +1096,7 @@ void TextPagePrivate::makeWordFromCharacters(){
 
         int space = 0;
 
-        while(space <= 1){
+        while(!space ){
 
             // we must have to put this line before the if condition of it==itEnd
             // otherwise the last character can be missed
@@ -1145,7 +1145,7 @@ void TextPagePrivate::makeWordFromCharacters(){
             // if space more than one or if space is less than zero, that means
             // we are erroneously merging a character with another character
             // which is really before to it
-            if(space > 1 || space < 0){
+            if(space > 0 || space < 0){
                 it--;
                 break;
             }
@@ -1285,7 +1285,7 @@ void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, L
                 else percentage = overlap * 100 / (text_y2 - text_y1);
 
                 //the overlap percentage is more than 70% of the smaller y
-                if(percentage >= 70){
+                if(percentage >= 80){
 
                     TextList tmp = lines.at(i);
                     tmp.append((*it));
@@ -1326,7 +1326,7 @@ void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, L
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
         lines.replace(i,list);
 
-//        printTextList(i,list);
+        printTextList(i,list);
     }
 
 }
@@ -1471,10 +1471,10 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
         }
 
-        cout << endl << "projection on y axis ............ " << endl << endl;
+//        cout << endl << "projection on y axis ............ " << endl << endl;
         for(j = 0 ; j < size_proj_y ; j++){
             proj_on_yaxis[j] -= tny;
-            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
+//            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
         }
 
 

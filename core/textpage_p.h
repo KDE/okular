@@ -85,7 +85,8 @@ class TextPagePrivate
         Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
         we made
         **/
-        void calculateStatisticalInformation();
+        void calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int& word_spacing,
+                                             int& line_spacing, int& column_spacing);
 
         /**
         Functions necessary for document file segmentation into text regions for document layout

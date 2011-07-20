@@ -219,6 +219,7 @@ TextPagePrivate::~TextPagePrivate()
 {
     qDeleteAll( m_searchPoints );
     qDeleteAll( m_words );
+    qDeleteAll( m_spaces );
 }
 
 
@@ -926,7 +927,8 @@ void TextPagePrivate::removeSpace(){
         //if TextEntity contains space
         if((*it)->text() == str){
 
-            m_spaces.append((*it));
+            // create new Entity, otherwise there might be possible memory leakage
+            m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
             this->m_words.erase(it);
 
         }
@@ -1349,7 +1351,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     tree.push_back(root);
 
     int i = 0, j, k;
-    int count = 0;
+    int countLoop = 0;
 
     cout << "content Rect: ";
     printRect(contentRect);
@@ -1378,7 +1380,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         LineRect line_rects;
 
         // Calculate tcx and tcy locally for each new region
-        if(count++){
+        if(countLoop++){
             makeAndSortLines(list,lines,line_rects);
             calculateStatisticalInformation(lines,line_rects,word_spacing,line_spacing,column_spacing);
             tcx = word_spacing * 2, tcy = line_spacing * 2;

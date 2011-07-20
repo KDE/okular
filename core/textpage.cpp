@@ -974,21 +974,34 @@ void TextPagePrivate::printTextList(int i, TextList list){
 
 }
 
-//copies a TextList to m_words
-void TextPagePrivate::copy(TextList &list){
+//copies a TextList to m_words with the same pointer
+void TextPagePrivate::copyTo(TextList &list){
 
-    int i;
+    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
+    for( ; it != itEnd ; it++){
+        m_words.erase(it);
+    }
 
-    while(m_words.length())
-        m_words.pop_back();
-
-    for(i = 0 ; i < list.length() ; i++){
+    for(int i = 0 ; i < list.length() ; i++){
         TinyTextEntity *ent = list.at(i);
-        m_words.append(ent);
+        m_words.append( new TinyTextEntity(ent->text(),ent->area) );
     }
 
 }
 
+// copies from m_words to list with distince pointers
+void TextPagePrivate::copyFrom(TextList &list){
+
+    TextList::Iterator it = list.begin(), itEnd = list.end();
+    for( ; it != itEnd ; it++){
+        list.erase(it);
+    }
+
+    for(int i = 0 ; i < m_words.length() ; i++){
+        TinyTextEntity* ent = m_words.at(i);
+        list.append( new TinyTextEntity( ent->text(),ent->area ) );
+    }
+}
 
 // if the horizontal arm of one rectangle fully contains the other (example below)
 //  --------         ----         -----  first
@@ -1076,8 +1089,11 @@ bool doesConsumeY(QRect first, QRect second, int threshold){
 //we are taking now the characters are horizontally next to next in current m_words, it actually is like that
 void TextPagePrivate::makeWordFromCharacters(){
 
-    TextList tmpList = m_words;
+    TextList tmpList;
     TextList newList;
+
+    // we are making a new copy from m_words to tmpList before using it
+    copyFrom(tmpList);
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
@@ -1093,15 +1109,11 @@ void TextPagePrivate::makeWordFromCharacters(){
         QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight),elementArea;
 
         TextList word;  //It will contain all the TextEntities in a simple word
-
         tmpIt = it;
-
         int space = 0;
 
         while(!space ){
 
-            // we must have to put this line before the if condition of it==itEnd
-            // otherwise the last character can be missed
             if(textString.length()){
                 newString.append(textString);
 
@@ -1120,6 +1132,8 @@ void TextPagePrivate::makeWordFromCharacters(){
 
             it++;
 
+            // we must have to put this line before the if condition of it==itEnd
+            // otherwise the last character can be missed
             if(it == itEnd) break;
 
             //the first textEntity area
@@ -1144,9 +1158,6 @@ void TextPagePrivate::makeWordFromCharacters(){
             space = elementArea.left() - lineArea.right();
 //            cout << "space " << space << " ";
 
-            // if space more than one or if space is less than zero, that means
-            // we are erroneously merging a character with another character
-            // which is really before to it
             if(space > 0 || space < 0){
                 it--;
                 break;
@@ -1154,7 +1165,6 @@ void TextPagePrivate::makeWordFromCharacters(){
 
             newLeft = text_x1 < line_x1 ? text_x1 : line_x1;
             newRight = line_x2 > text_x2 ? line_x2 : text_x2;
-
             newTop = text_y1 > line_y1 ? line_y1 : text_y1;
             newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
@@ -1170,9 +1180,8 @@ void TextPagePrivate::makeWordFromCharacters(){
         if(newString.length()){
 
             NormalizedRect newRect(lineArea,pageWidth,pageHeight);
-            TinyTextEntity *ent = new TinyTextEntity(newString.normalized
-                                                     (QString::NormalizationForm_KC), newRect );
-            newList.append(ent);
+            newList.append(new TinyTextEntity(newString.normalized
+                                              (QString::NormalizationForm_KC), newRect ));
 
 
             QRect rect = newRect.geometry(pageWidth,pageHeight);
@@ -1192,7 +1201,7 @@ void TextPagePrivate::makeWordFromCharacters(){
 
     cout << "words: " << index << endl;
 
-    copy(newList);
+    copyTo(newList);
 
 //    for(int i = 0 ; i < m_words.length() ; i++){
 
@@ -1210,11 +1219,13 @@ void TextPagePrivate::makeWordFromCharacters(){
 //        }
 //        cout << endl;
 //    }
-
+    // Pointers to element in tmpList and newList are different
+    qDeleteAll(tmpList);
+    qDeleteAll(newList);
 }
 
 
-void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, LineRect &line_rects){
+void TextPagePrivate::makeAndSortLines(TextList &wordsTmp, SortedTextList &lines, LineRect &line_rects){
 
     /**
     we cannot assume that the generator will give us texts in the right order. We can only assume
@@ -1226,8 +1237,15 @@ void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, L
     3. Within each line sort the TinyTextEntity 's by x0(left)
     **/
 
-    // Step:1 .......................................
+    // Make a new copy of the TextList in the words, so that the wordsTmp and lines do not contain
+    // same pointers for all the TinyTextEntity
+    TextList words;
+    for(int i = 0 ; i < wordsTmp.length() ; i++){
+        TinyTextEntity* ent = wordsTmp.at(i);
+        words.append( new TinyTextEntity( ent->text(),ent->area ) );
+    }
 
+    // Step:1 .......................................
     qSort(words.begin(),words.end(),compareTinyTextEntityY);
 
 
@@ -1318,8 +1336,6 @@ void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, L
         }
     }
 
-//    cout << "lines length: " << lines.length() << endl;
-
 
     // Step 3: .......................................
     for(i = 0 ; i < lines.length() ; i++){
@@ -1328,8 +1344,10 @@ void TextPagePrivate::makeAndSortLines(TextList &words, SortedTextList &lines, L
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
         lines.replace(i,list);
 
-        printTextList(i,list);
+//        printTextList(i,list);
     }
+
+    //we cannot delete words here, as lines contains the same pointers as words does
 
 }
 
@@ -1345,7 +1363,12 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     // The XY Tree, where the node is a RegionText
     RegionTextList tree;
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
-    RegionText root(m_words,contentRect);
+
+    //creating a copy of m_words in words so that we do not have same pointers
+    TextList words;
+
+    copyFrom(words);
+    RegionText root(words,contentRect);
 
     // start the tree with the root, it is our only region at the start
     tree.push_back(root);
@@ -1465,12 +1488,12 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
 
         int tnx = (int)((double)avgX * 10.0 / 100.0 + 0.5), tny = 0;
 
-        cout << "noise on x_axis: " << avgX << " " << tnx << endl;
+//        cout << "noise on x_axis: " << avgX << " " << tnx << endl;
 
-        cout << endl << "projection on x axis ............." << endl << endl;
+//        cout << endl << "projection on x axis ............." << endl << endl;
         for( j = 0 ; j < size_proj_x ; j++ ){
             proj_on_xaxis[j] -= tnx;
-            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
+//            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
         }
 
 //        cout << endl << "projection on y axis ............ " << endl << endl;
@@ -1536,10 +1559,10 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         int cut_pos_x = pos_ver, cut_pos_y = pos_hor;
         int gap_x = gap_ver, gap_y = gap_hor;
 
-        cout << "gap X: " << gap_x << endl;
-        cout << "gap Y: " << gap_y << endl;
-        cout << "cut X: " << cut_pos_x << endl;
-        cout << "cut Y: " << cut_pos_y << endl;
+//        cout << "gap X: " << gap_x << endl;
+//        cout << "gap Y: " << gap_y << endl;
+//        cout << "cut X: " << cut_pos_x << endl;
+//        cout << "cut Y: " << cut_pos_y << endl;
 
 
 /** 4. Cut the region and make nodes (left,right) or (up,down) ................ **/
@@ -1679,17 +1702,17 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             cout << "list1: " << list1.length() << endl;
             cout << "list2: " << list2.length() << endl;
 
-            cout << "Node1 text: ........................ " << endl << endl;
+//            cout << "Node1 text: ........................ " << endl << endl;
             for(j = 0 ; j < list1.length() ; j++){
                  TinyTextEntity *ent = list1.at(j);
-                 cout << ent->text().toAscii().data();
+//                 cout << ent->text().toAscii().data();
             }
             cout << endl;
 
-            cout << "Node2 text: ........................ " << endl << endl;
+//            cout << "Node2 text: ........................ " << endl << endl;
             for(j = 0 ; j < list2.length() ; j++){
                  TinyTextEntity *ent = list2.at(j);
-                 cout << ent->text().toAscii().data();
+//                 cout << ent->text().toAscii().data();
             }
             cout << endl;
 
@@ -1702,21 +1725,23 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     for(i = 0 ; i < tree.length() ; i++){
         TextList list = tree.at(i).text();
 
-        cout << "Node: " << i << endl;
+//        cout << "Node: " << i << endl;
 
         for(j = 0 ; j < list.length() ; j++){
             TinyTextEntity *ent = list.at(j);
             tmp.append(ent);
 
-            cout << ent->text().toAscii().data();
+//            cout << ent->text().toAscii().data();
 
         }
 
-        cout << endl << endl;
+//        cout << endl << endl;
 
     }
-    copy(tmp);
+    //copying elements of tmp to m_words
+    copyTo(tmp);
 
+    // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
     m_XY_cut_tree = tree;
 }
 
@@ -1813,15 +1838,16 @@ void TextPagePrivate::addNecessarySpace(){
 
             for(j = 0 ; j < list.length() ; j++){
                 TinyTextEntity *ent = list.at(j);
-                tmp.append(ent);
+                //creating new Entities
+                tmp.append(new TinyTextEntity(ent->text(),ent->area));
             }
         }
 
-        copy(tmp);
+        copyTo(tmp);
 
 }
 
-// Break Words into Characters
+// Break Words into Characters, takes Entities from m_words and for each of them insert in tmp the character entities
 void TextPagePrivate::breakWordIntoCharacters(){
 
     QString spaceStr(" ");
@@ -1870,7 +1896,7 @@ void TextPagePrivate::breakWordIntoCharacters(){
         }
     }
 
-    copy(tmp);
+    copyTo(tmp);
 
 
     // print the final text

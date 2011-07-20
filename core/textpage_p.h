@@ -59,7 +59,10 @@ class TextPagePrivate
         void printTextList(int i, TextList list);
 
         /** copy a TextList to m_words **/
-        void copy(TextList &list);
+        void copyTo(TextList &list);
+
+        /** copy m_words to a TextList **/
+        void copyFrom(TextList &list);
 
         /**
         print the textpage contents with area (text and bounding rect)
@@ -113,7 +116,6 @@ class TextPagePrivate
         RegionTextList m_XY_cut_tree;
         TextList m_spaces;
         TextList m_words;
-//        TextList m_tmp_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
         SortedTextList m_lines;

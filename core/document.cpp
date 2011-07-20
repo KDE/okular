@@ -2326,8 +2326,8 @@ void Document::requestTextPage( uint page )
 
     d->m_generator->generateTextPage( kp );
 
-    TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
-    tmpPage->correctTextOrder();
+//    TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
+//    tmpPage->correctTextOrder();
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

@@ -452,9 +452,10 @@ void Page::setTextPage( TextPage * textPage )
     if ( d->m_text )
     {
         d->m_text->d->m_page = d;
+        // Code for Text Selection
+        d->m_text->correctTextOrder();
     }
-    // Code for Text Selection
-    d->m_text->correctTextOrder();
+
 }
 
 void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )

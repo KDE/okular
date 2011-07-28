@@ -223,11 +223,11 @@ class OKULAR_EXPORT NormalizedRect
         }
 
         bool isLeft(NormalizedPoint pt) const{
-            return left > pt.x;
+            return left < pt.x;
         }
 
         bool isRight(NormalizedPoint pt) const{
-            return right < pt.x;
+            return right > pt.x;
         }
 
         /**

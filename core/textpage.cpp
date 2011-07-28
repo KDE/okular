@@ -471,6 +471,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     //case 2(b) ......................................
     it = tmpIt;
     if(start == it && end == itEnd){
+        //if start or end do not have any text we do not do any text selection
+//        return ret;
 
         for ( ; it != itEnd; ++it )
         {
@@ -488,47 +490,166 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
 
-    // case 3.a .........................................
+    // Selection type 01
     it = tmpIt;
-    if(start == it){
-        // we can take that for start we have to increase right, bottom
 
-        bool flagV = false;
-        NormalizedRect rect;
+    if(startC.y < endC.y){
 
-        for ( ; it != itEnd; ++it ){
+        cout << "first selection type " << endl;
+        //case 3.a 01
+        if(start == it){
 
-            rect= (*it)->area;
-            rect.isBottom(startC) ? flagV = false: flagV = true;
+            bool flagV = false;
+            NormalizedRect rect;
 
+            for ( ; it != itEnd; ++it ){
 
-            if(flagV && rect.isLeft(startC)){
-                start = it;
-                break;
+                rect= (*it)->area;
+                rect.isBottom(startC) ? flagV = false: flagV = true;
+
+                if(flagV && rect.isRight(startC)){
+                    start = it;
+                    break;
+                }
             }
+
         }
+
+        //case 3.b 01
+        if(end == itEnd){
+
+            it = tmpIt; //start
+            itEnd = itEnd-1;
+
+            bool flagV = false;
+            NormalizedRect rect;
+
+            for ( ; itEnd >= it; itEnd-- ){
+
+                rect= (*itEnd)->area;
+                rect.isTop(endC) ? flagV = false: flagV = true;
+
+                if(flagV && rect.isLeft(endC)){
+                    end = itEnd;
+                    break;
+                }
+            }
+
+        }
+
     }
 
+    //selection type 02
+    else{
 
-    //case 3.b .............................................
-    if(end == itEnd){
-        it = tmpIt; //start
-        itEnd = itEnd-1;
+        cout << "second selection type " << endl;
+        //case 3.b 02 (end is upper than start, so we start from the start of the textList)
+        if(end == itEnd){
 
-        bool flagV = false;
-        NormalizedRect rect;
+            it = tmpIt; //start
+            bool flagV = false;
+            NormalizedRect rect;
 
-        for ( ; itEnd >= it; itEnd-- ){
+            for ( ; it != itEnd ; it++ ){
 
-            rect= (*itEnd)->area;
-            rect.isTop(endC) ? flagV = false: flagV = true;
+                rect= (*itEnd)->area;
+                rect.isBottom(endC) ? flagV = false: flagV = true;
 
-            if(flagV && rect.isRight(endC)){
-                end = itEnd;
-                break;
+                if(flagV && rect.isLeft(endC)){
+                    end = itEnd;
+                    break;
+                }
             }
+
         }
+
+        //case 3.a 02
+        if(start == it){
+
+            it = tmpIt;
+            itEnd = itEnd-1;
+            bool flagV = false;
+            NormalizedRect rect;
+
+            for ( ; itEnd >= it; itEnd-- ){
+
+                rect= (*it)->area;
+                rect.isTop(startC) ? flagV = false: flagV = true;
+
+                if(flagV && rect.isRight(startC)){
+                    start = it;
+                    break;
+                }
+            }
+
+        }
+
+
+
     }
+
+//    if(start == it){
+////        return ret;
+//        // we can take that for start we have to increase right, bottom
+
+//        bool flagV = false;
+//        NormalizedRect rect;
+
+//        // The second selection type
+//        if(startC.y > endC.y){
+
+//            cout << "second selection type 01" << endl;
+//            cout << "start: " << startC.x << " end: " << endC.x << endl;
+
+//            for ( ; it != itEnd; ++it ){
+
+//                rect= (*it)->area;
+//                rect.isTop(startC) ? flagV = false: flagV = true;
+
+//                if(flagV && rect.isRight(startC)){
+//                    start = it;
+//                    break;
+//                }
+//            }
+
+//        }
+
+//        else{
+
+
+//        }
+
+//    }
+
+
+//    //case 3.b .............................................
+//    if(end == itEnd){
+//        it = tmpIt; //start
+//        itEnd = itEnd-1;
+
+//        bool flagV = false;
+//        NormalizedRect rect;
+
+//        if(startC.y > endC.y){
+//             cout << "second selection type 02" << endl;
+//             cout << "start: " << startC.x << " end: " << endC.x << endl;
+//            for ( ; itEnd >= it; itEnd-- ){
+
+//                rect= (*itEnd)->area;
+//                rect.isBottom(endC) ? flagV = false: flagV = true;
+
+//                if(flagV && rect.isLeft(endC)){
+//                    end = itEnd;
+//                    break;
+//                }
+//            }
+
+//        }
+
+//        else{
+
+//        }
+//    }
 
 
 
@@ -1943,14 +2064,14 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
     while(iterate_linespace.hasNext()){
         iterate_linespace.next();
-        cout << iterate_linespace.key() << ":" << iterate_linespace.value() << endl;
+//        cout << iterate_linespace.key() << ":" << iterate_linespace.value() << endl;
         line_spacing += iterate_linespace.value() * iterate_linespace.key();
         weighted_count += iterate_linespace.value();
     }
 
     if(line_spacing)
         line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
-    cout << "average line spacing: " << line_spacing << endl;
+//    cout << "average line spacing: " << line_spacing << endl;
 
 
     /** Step 2: ........................................................................ **/
@@ -1989,9 +2110,9 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
             int space = area2.left() - area1.right();
 
             if(space < 0){
-                cout << "space: " << space << endl;
-                cout << "text: " << (*it)->text().toAscii().data() << " "
-                << (*(it+1))->text().toAscii().data() << endl;
+//                cout << "space: " << space << endl;
+//                cout << "text: " << (*it)->text().toAscii().data() << " "
+//                << (*(it+1))->text().toAscii().data() << endl;
             }
 
             if(space > maxSpace){
@@ -2072,7 +2193,7 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
     while (iterate.hasNext()) {
         iterate.next();
-        cout << iterate.key() << ": " << iterate.value() << endl;
+//        cout << iterate.key() << ": " << iterate.value() << endl;
 
         if(iterate.key() > 0){
             word_spacing += iterate.value() * iterate.key();
@@ -2081,7 +2202,7 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
     }
     if(weighted_count)
         word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
-    cout << "Word Spacing: " << word_spacing << endl;
+//    cout << "Word Spacing: " << word_spacing << endl;
 
 
     col_spacing = 0;
@@ -2089,11 +2210,11 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
     while (iterate_col.hasNext()) {
         iterate_col.next();
-        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
+//        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
         if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
     }
     col_spacing = col_space_stat.key(col_spacing);
-    cout << "Column Spacing: " << col_spacing << endl;
+//    cout << "Column Spacing: " << col_spacing << endl;
 
 }
 

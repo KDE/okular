@@ -34,12 +34,12 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);
     m_inputDelayTimer->setSingleShot(true);
-    connect( m_inputDelayTimer, SIGNAL( timeout() ),
-             this, SLOT( startSearch() ) );
+    connect( m_inputDelayTimer, SIGNAL(timeout()),
+             this, SLOT(startSearch()) );
 
-    connect(this, SIGNAL( textChanged(const QString &) ), this, SLOT( slotTextChanged(const QString &) ));
-    connect(this, SIGNAL( returnPressed(const QString &) ), this, SLOT( slotReturnPressed(const QString &) ));
-    connect(document, SIGNAL( searchFinished(int, Okular::Document::SearchStatus) ), this, SLOT( searchFinished(int, Okular::Document::SearchStatus) ));
+    connect(this, SIGNAL(textChanged(QString)), this, SLOT(slotTextChanged(QString)));
+    connect(this, SIGNAL(returnPressed(QString)), this, SLOT(slotReturnPressed(QString)));
+    connect(document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
 }
 
 void SearchLineEdit::clearText()
@@ -244,10 +244,10 @@ SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * documen
 
     m_timer = new QTimer( this );
     m_timer->setSingleShot( true );
-    connect( m_timer, SIGNAL( timeout() ), this, SLOT( slotTimedout() ) );
+    connect( m_timer, SIGNAL(timeout()), this, SLOT(slotTimedout()) );
 
-    connect( m_edit, SIGNAL( searchStarted() ), this, SLOT( slotSearchStarted() ) );
-    connect( m_edit, SIGNAL( searchStopped() ), this, SLOT( slotSearchStopped() ) );
+    connect( m_edit, SIGNAL(searchStarted()), this, SLOT(slotSearchStarted()) );
+    connect( m_edit, SIGNAL(searchStopped()), this, SLOT(slotSearchStopped()) );
 }
 
 SearchLineEdit* SearchLineWidget::lineEdit() const

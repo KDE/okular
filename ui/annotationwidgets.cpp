@@ -43,8 +43,8 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
     m_iconLabel->setFrameStyle( QFrame::StyledPanel );
     setPreviewSize( 32 );
 
-    connect( m_comboItems, SIGNAL( currentIndexChanged( const QString& ) ), this, SLOT( iconComboChanged( const QString& ) ) );
-    connect( m_comboItems, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( iconComboChanged( const QString& ) ) );
+    connect( m_comboItems, SIGNAL(currentIndexChanged(QString)), this, SLOT(iconComboChanged(QString)) );
+    connect( m_comboItems, SIGNAL(editTextChanged(QString)), this, SLOT(iconComboChanged(QString)) );
 }
 
 PixmapPreviewSelector::~PixmapPreviewSelector()
@@ -219,7 +219,7 @@ QWidget * TextAnnotationWidget::createStyleWidget()
     m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
     m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
-    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
     }
 
     QHBoxLayout * fontlay = new QHBoxLayout();
@@ -231,7 +231,7 @@ QWidget * TextAnnotationWidget::createStyleWidget()
 
     m_fontReq->setFont( m_textAnn->textFont() );
 
-    connect( m_fontReq, SIGNAL( fontSelected( const QFont& ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -286,7 +286,7 @@ QWidget * StampAnnotationWidget::createStyleWidget()
     m_pixmapSelector->setIcon( m_stampAnn->stampIconName() );
     m_pixmapSelector->setPreviewSize( 64 );
 
-    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -355,10 +355,10 @@ QWidget * LineAnnotationWidget::createStyleWidget()
 
     if ( m_lineType == 0 )
     {
-    connect( m_spinLL, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
-    connect( m_spinLLE, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
     }
-    connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -400,7 +400,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
     m_typeCombo->addItem( i18n( "Strike out" ) );
     m_typeCombo->setCurrentIndex( m_hlAnn->highlightType() );
 
-    connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -453,11 +453,11 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
     m_spinSize->setRange( 0, 100 );
     m_spinSize->setValue( m_geomAnn->style().width() );
 
-    connect( m_typeCombo, SIGNAL( currentIndexChanged ( int ) ), this, SIGNAL( dataChanged() ) );
-    connect( m_innerColor, SIGNAL( changed( const QColor & ) ), this, SIGNAL( dataChanged() ) );
-    connect( m_useColor, SIGNAL( toggled( bool ) ), this, SIGNAL( dataChanged() ) );
-    connect( m_useColor, SIGNAL( toggled( bool ) ), m_innerColor, SLOT( setEnabled( bool ) ) );
-    connect( m_spinSize, SIGNAL( valueChanged( double ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+    connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
+    connect( m_useColor, SIGNAL(toggled(bool)), m_innerColor, SLOT(setEnabled(bool)) );
+    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -503,7 +503,7 @@ QWidget * FileAttachmentAnnotationWidget::createStyleWidget()
     m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Tag" ), "tag" );
     m_pixmapSelector->setIcon( m_attachAnn->fileIconName() );
 
-    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -601,7 +601,7 @@ QWidget * CaretAnnotationWidget::createStyleWidget()
     m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "P" ), "caret-p" );
     m_pixmapSelector->setIcon( caretSymbolToIcon( m_caretAnn->caretSymbol() ) );
 
-    connect( m_pixmapSelector, SIGNAL( iconChanged( const QString& ) ), this, SIGNAL( dataChanged() ) );
+    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }

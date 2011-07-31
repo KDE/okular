@@ -314,7 +314,7 @@ void PageViewMessage::display( const QString & message, const QString & details,
         {
             m_timer = new QTimer( this );
             m_timer->setSingleShot( true );
-            connect( m_timer, SIGNAL( timeout() ), SLOT( hide() ) );
+            connect( m_timer, SIGNAL(timeout()), SLOT(hide()) );
         }
         m_timer->start( durationMs );
     } else if ( m_timer )
@@ -397,7 +397,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     m_label = new QLabel( this );
     lay->addWidget( m_label );
     m_label->setWordWrap( true );
-    connect( m_label, SIGNAL( linkActivated( const QString& ) ), this, SIGNAL( action() ) );
+    connect( m_label, SIGNAL(linkActivated(QString)), this, SIGNAL(action()) );
     m_button = new QToolButton( this );
     m_button->setVisible( false );
     lay->addWidget( m_button );
@@ -407,7 +407,7 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
     closeButton->setIcon( closeButton->style()->standardIcon( QStyle::SP_TitleBarCloseButton ) );
     closeButton->setIconSize( QSize( 32, 32 ) );
     closeButton->setToolTip( i18n( "Close this message" ) );
-    connect( closeButton, SIGNAL( clicked() ), this, SLOT( hide() ) );
+    connect( closeButton, SIGNAL(clicked()), this, SLOT(hide()) );
     setIconSize( 32 );
     hide();
 }
@@ -517,7 +517,7 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
 
     // create the animation timer
     d->animTimer = new QTimer( this );
-    connect( d->animTimer, SIGNAL( timeout() ), this, SLOT( slotAnimate() ) );
+    connect( d->animTimer, SIGNAL(timeout()), this, SLOT(slotAnimate()) );
 
     // apply a filter to get notified when anchor changes geometry
     d->anchorWidget->installEventFilter( this );
@@ -545,8 +545,8 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationToolItem> &items )
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
-        connect( button, SIGNAL( clicked() ), this, SLOT( slotButtonClicked() ) );
-        connect( button, SIGNAL( buttonDoubleClicked(int) ), this, SIGNAL( buttonDoubleClicked(int) ) );
+        connect( button, SIGNAL(clicked()), this, SLOT(slotButtonClicked()) );
+        connect( button, SIGNAL(buttonDoubleClicked(int)), this, SIGNAL(buttonDoubleClicked(int)) );
         d->buttons.append( button );
     }
 

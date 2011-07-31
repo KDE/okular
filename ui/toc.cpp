@@ -35,7 +35,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     mainlay->addWidget( m_searchLine );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->contentsSearchRegularExpression() );
-    connect( m_searchLine, SIGNAL( searchOptionsChanged() ), this, SLOT( saveSearchOptions() ) );
+    connect( m_searchLine, SIGNAL(searchOptionsChanged()), this, SLOT(saveSearchOptions()) );
 
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
@@ -47,8 +47,8 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     m_treeView->setItemDelegate( new PageItemDelegate( m_treeView ) );
     m_treeView->header()->hide();
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
-    connect( m_treeView, SIGNAL( clicked( const QModelIndex & ) ), this, SLOT( slotExecuted( const QModelIndex & ) ) );
-    connect( m_treeView, SIGNAL( activated( const QModelIndex & ) ), this, SLOT( slotExecuted( const QModelIndex & ) ) );
+    connect( m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
+    connect( m_treeView, SIGNAL(activated(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
     m_searchLine->addTreeView( m_treeView );
 }
 

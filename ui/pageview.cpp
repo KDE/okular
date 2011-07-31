@@ -191,10 +191,10 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
     if ( !formsWidgetController )
     {
         formsWidgetController = new FormWidgetsController();
-        QObject::connect( formsWidgetController, SIGNAL( changed( FormWidgetIface* ) ),
-                          q, SLOT( slotFormWidgetChanged( FormWidgetIface * ) ) );
-        QObject::connect( formsWidgetController, SIGNAL( action( Okular::Action* ) ),
-                          q, SLOT( slotAction( Okular::Action* ) ) );
+        QObject::connect( formsWidgetController, SIGNAL(changed(FormWidgetIface*)),
+                          q, SLOT(slotFormWidgetChanged(FormWidgetIface*)) );
+        QObject::connect( formsWidgetController, SIGNAL(action(Okular::Action*)),
+                          q, SLOT(slotAction(Okular::Action*)) );
     }
 
     return formsWidgetController;
@@ -207,10 +207,10 @@ OkularTTS* PageViewPrivate::tts()
         m_tts = new OkularTTS( q );
         if ( aSpeakStop )
         {
-            QObject::connect( m_tts, SIGNAL( hasSpeechs( bool ) ),
-                              aSpeakStop, SLOT( setEnabled( bool ) ) );
-            QObject::connect( m_tts, SIGNAL( errorMessage( const QString & ) ),
-                              q, SLOT( errorMessage( const QString & ) ) );
+            QObject::connect( m_tts, SIGNAL(hasSpeechs(bool)),
+                              aSpeakStop, SLOT(setEnabled(bool)) );
+            QObject::connect( m_tts, SIGNAL(errorMessage(QString)),
+                              q, SLOT(errorMessage(QString)) );
         }
     }
 
@@ -286,7 +286,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
-    connect( d->delayResizeEventTimer, SIGNAL( timeout() ), this, SLOT( delayedResizeEvent() ) );
+    connect( d->delayResizeEventTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()) );
 
     setFrameStyle(QFrame::NoFrame);
 
@@ -351,12 +351,12 @@ void PageView::setupBaseActions( KActionCollection * ac )
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 13 );
-    connect( d->aZoom, SIGNAL( triggered(QAction *) ), this, SLOT( slotZoom() ) );
+    connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
     updateZoomText();
 
-    d->aZoomIn = KStandardAction::zoomIn( this, SLOT( slotZoomIn() ), ac );
+    d->aZoomIn = KStandardAction::zoomIn( this, SLOT(slotZoomIn()), ac );
 
-    d->aZoomOut = KStandardAction::zoomOut( this, SLOT( slotZoomOut() ), ac );
+    d->aZoomOut = KStandardAction::zoomOut( this, SLOT(slotZoomOut()), ac );
 }
 
 void PageView::setupActions( KActionCollection * ac )
@@ -368,41 +368,41 @@ void PageView::setupActions( KActionCollection * ac )
     d->aRotateClockwise->setIconText( i18nc( "Rotate right", "Right" ) );
     ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
     d->aRotateClockwise->setEnabled( false );
-    connect( d->aRotateClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateClockwise() ) );
+    connect( d->aRotateClockwise, SIGNAL(triggered()), this, SLOT(slotRotateClockwise()) );
     d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate &Left" ), this );
     d->aRotateCounterClockwise->setIconText( i18nc( "Rotate left", "Left" ) );
     ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
     d->aRotateCounterClockwise->setEnabled( false );
-    connect( d->aRotateCounterClockwise, SIGNAL( triggered() ), this, SLOT( slotRotateCounterClockwise() ) );
+    connect( d->aRotateCounterClockwise, SIGNAL(triggered()), this, SLOT(slotRotateCounterClockwise()) );
     d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
     ac->addAction( "view_orientation_original", d->aRotateOriginal );
     d->aRotateOriginal->setEnabled( false );
-    connect( d->aRotateOriginal, SIGNAL( triggered() ), this, SLOT( slotRotateOriginal() ) );
+    connect( d->aRotateOriginal, SIGNAL(triggered()), this, SLOT(slotRotateOriginal()) );
 
     d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
     ac->addAction("view_pagesizes", d->aPageSizes);
     d->aPageSizes->setEnabled( false );
 
-    connect( d->aPageSizes , SIGNAL( triggered( int ) ),
-         this, SLOT( slotPageSizes( int ) ) );
+    connect( d->aPageSizes , SIGNAL(triggered(int)),
+         this, SLOT(slotPageSizes(int)) );
 
     d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), this );
     ac->addAction("view_trim_margins", d->aTrimMargins );
-    connect( d->aTrimMargins, SIGNAL( toggled( bool ) ), SLOT( slotTrimMarginsToggled( bool ) ) );
+    connect( d->aTrimMargins, SIGNAL(toggled(bool)), SLOT(slotTrimMarginsToggled(bool)) );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
     d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
     ac->addAction("view_fit_to_width", d->aZoomFitWidth );
-    connect( d->aZoomFitWidth, SIGNAL( toggled( bool ) ), SLOT( slotFitToWidthToggled( bool ) ) );
+    connect( d->aZoomFitWidth, SIGNAL(toggled(bool)), SLOT(slotFitToWidthToggled(bool)) );
 
     d->aZoomFitPage  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Page"), this);
     ac->addAction("view_fit_to_page", d->aZoomFitPage );
-    connect( d->aZoomFitPage, SIGNAL( toggled( bool ) ), SLOT( slotFitToPageToggled( bool ) ) );
+    connect( d->aZoomFitPage, SIGNAL(toggled(bool)), SLOT(slotFitToPageToggled(bool)) );
 
 /*
     d->aZoomFitText  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Text"), this);
     ac->addAction("zoom_fit_text", d->aZoomFitText );
-    connect( d->aZoomFitText, SIGNAL( toggled( bool ) ), SLOT( slotFitToTextToggled( bool ) ) );
+    connect( d->aZoomFitText, SIGNAL(toggled(bool)), SLOT(slotFitToTextToggled(bool)) );
 */
 
     // View-Layout actions
@@ -431,12 +431,12 @@ do { \
             viewModeAction->setChecked( true );
         }
     }
-    connect( vmGroup, SIGNAL( triggered( QAction* ) ), this, SLOT( slotViewMode( QAction* ) ) );
+    connect( vmGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotViewMode(QAction*)) );
 #undef ADD_VIEWMODE_ACTION
 
     d->aViewContinuous  = new KToggleAction(KIcon( "view-list-text" ), i18n("&Continuous"), this);
     ac->addAction("view_continuous", d->aViewContinuous );
-    connect( d->aViewContinuous, SIGNAL( toggled( bool ) ), SLOT( slotContinuousToggled( bool ) ) );
+    connect( d->aViewContinuous, SIGNAL(toggled(bool)), SLOT(slotContinuousToggled(bool)) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
     // Mouse-Mode actions
@@ -444,7 +444,7 @@ do { \
     actGroup->setExclusive( true );
     d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
-    connect( d->aMouseNormal, SIGNAL( triggered() ), this, SLOT( slotSetMouseNormal() ) );
+    connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
@@ -453,7 +453,7 @@ do { \
 
     KAction * mz  = new KAction(KIcon( "page-zoom" ), i18n("&Zoom Tool"), this);
     ac->addAction("mouse_zoom", mz );
-    connect( mz, SIGNAL( triggered() ), this, SLOT( slotSetMouseZoom() ) );
+    connect( mz, SIGNAL(triggered()), this, SLOT(slotSetMouseZoom()) );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
@@ -461,7 +461,7 @@ do { \
 
     d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
-    connect( d->aMouseSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseSelect() ) );
+    connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
@@ -469,7 +469,7 @@ do { \
 
     d->aMouseTextSelect  = new KAction(KIcon( "draw-text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
-    connect( d->aMouseTextSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTextSelect() ) );
+    connect( d->aMouseTextSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseTextSelect()) );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
@@ -478,7 +478,7 @@ do { \
     d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
-    connect( d->aToggleAnnotator, SIGNAL( toggled( bool ) ), SLOT( slotToggleAnnotator( bool ) ) );
+    connect( d->aToggleAnnotator, SIGNAL(toggled(bool)), SLOT(slotToggleAnnotator(bool)) );
     d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
 
     ToolAction *ta = new ToolAction( this );
@@ -490,34 +490,34 @@ do { \
     d->aSpeakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );
     ac->addAction( "speak_document", d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
-    connect( d->aSpeakDoc, SIGNAL( triggered() ), SLOT( slotSpeakDocument() ) );
+    connect( d->aSpeakDoc, SIGNAL(triggered()), SLOT(slotSpeakDocument()) );
 
     d->aSpeakPage = new KAction( KIcon( "text-speak" ), i18n( "Speak Current Page" ), this );
     ac->addAction( "speak_current_page", d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
-    connect( d->aSpeakPage, SIGNAL( triggered() ), SLOT( slotSpeakCurrentPage() ) );
+    connect( d->aSpeakPage, SIGNAL(triggered()), SLOT(slotSpeakCurrentPage()) );
 
     d->aSpeakStop = new KAction( KIcon( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
     ac->addAction( "speak_stop_all", d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
-    connect( d->aSpeakStop, SIGNAL( triggered() ), SLOT( slotStopSpeaks() ) );
+    connect( d->aSpeakStop, SIGNAL(triggered()), SLOT(slotStopSpeaks()) );
 
     // Other actions
     KAction * su  = new KAction(i18n("Scroll Up"), this);
     ac->addAction("view_scroll_up", su );
-    connect( su, SIGNAL( triggered() ), this, SLOT( slotScrollUp() ) );
+    connect( su, SIGNAL(triggered()), this, SLOT(slotScrollUp()) );
     su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
     addAction(su);
 
     KAction * sd  = new KAction(i18n("Scroll Down"), this);
     ac->addAction("view_scroll_down", sd );
-    connect( sd, SIGNAL( triggered() ), this, SLOT( slotScrollDown() ) );
+    connect( sd, SIGNAL(triggered()), this, SLOT(slotScrollDown()) );
     sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
     addAction(sd);
 
     d->aToggleForms = new KAction( this );
     ac->addAction( "view_toggle_forms", d->aToggleForms );
-    connect( d->aToggleForms, SIGNAL( triggered() ), this, SLOT( slotToggleForms() ) );
+    connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 }
@@ -914,8 +914,8 @@ void PageView::notifyViewportChanged( bool smoothMove )
         if ( !d->viewportMoveTimer )
         {
             d->viewportMoveTimer = new QTimer( this );
-            connect( d->viewportMoveTimer, SIGNAL( timeout() ),
-                     this, SLOT( slotMoveViewport() ) );
+            connect( d->viewportMoveTimer, SIGNAL(timeout()),
+                     this, SLOT(slotMoveViewport()) );
         }
         d->viewportMoveTimer->start( 25 );
         verticalScrollBar()->setEnabled( false );
@@ -1711,10 +1711,10 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         AnnotationPopup popup( d->document, this );
                         popup.addAnnotation( ann, pageItem->pageNumber() );
 
-                        connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
-                                 this, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
-                        connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
-                                 this, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
+                        connect( &popup, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
+                                 this, SLOT(setAnnotationWindow(Okular::Annotation*)) );
+                        connect( &popup, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
+                                 this, SLOT(removeAnnotationWindow(Okular::Annotation*)) );
 
                         popup.exec( e->globalPos() );
                     }
@@ -2962,7 +2962,7 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
                 action = new KAction( searchProvider, webShortcutsMenu );
                 action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
-                connect( action, SIGNAL( triggered() ), this, SLOT( slotHandleWebShortcutAction() ) );
+                connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
                 webShortcutsMenu->addAction( action );
             }
 
@@ -2970,7 +2970,7 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
 
             action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
             action->setIcon( KIcon( "configure" ) );
-            connect( action, SIGNAL( triggered() ), this, SLOT( slotConfigureWebShortcuts() ) );
+            connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
             webShortcutsMenu->addAction( action );
 
             menu->addMenu(webShortcutsMenu);
@@ -3354,7 +3354,7 @@ void PageView::slotAutoScoll()
     {
         d->autoScrollTimer = new QTimer( this );
         d->autoScrollTimer->setSingleShot( true );
-        connect( d->autoScrollTimer, SIGNAL( timeout() ), this, SLOT( slotAutoScoll() ) );
+        connect( d->autoScrollTimer, SIGNAL(timeout()), this, SLOT(slotAutoScoll()) );
     }
 
     // if scrollIncrement is zero, stop the timer
@@ -3639,8 +3639,8 @@ void PageView::slotFormWidgetChanged( FormWidgetIface *w )
     {
         d->refreshTimer = new QTimer( this );
         d->refreshTimer->setSingleShot( true );
-        connect( d->refreshTimer, SIGNAL( timeout() ),
-                 this, SLOT( slotRefreshPage() ) );
+        connect( d->refreshTimer, SIGNAL(timeout()),
+                 this, SLOT(slotRefreshPage()) );
     }
     d->refreshPage = w->pageItem()->pageNumber();
     d->refreshTimer->start( 1000 );

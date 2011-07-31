@@ -128,7 +128,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // add a tree view
     QTreeView *view = new QTreeView(page2);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(view, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(showFontsMenu(const QPoint &)));
+    connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFontsMenu(QPoint)));
     page2Layout->addWidget(view);
     view->setRootIsDecorated(false);
     view->setAlternatingRowColors(true);
@@ -163,8 +163,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   width = qMin( width, 2*screenContainer.width()/3 );
   resize(width, 1);
 
-    connect( pageWidget(), SIGNAL( currentPageChanged( KPageWidgetItem *, KPageWidgetItem * ) ),
-             this, SLOT( pageChanged( KPageWidgetItem *, KPageWidgetItem * ) ) );
+    connect( pageWidget(), SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
+             this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );
 }
 
 PropertiesDialog::~PropertiesDialog()
@@ -176,10 +176,10 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 {
     if ( current == m_fontPage && !m_fontScanStarted )
     {
-        connect( m_document, SIGNAL( gotFont( const Okular::FontInfo& ) ), m_fontModel, SLOT( addFont( const Okular::FontInfo& ) ) );
-        connect( m_document, SIGNAL( fontReadingProgress( int ) ), this, SLOT( slotFontReadingProgress( int ) ) );
-        connect( m_document, SIGNAL( fontReadingEnded() ), this, SLOT( slotFontReadingEnded() ) );
-        QTimer::singleShot( 0, this, SLOT( reallyStartFontReading() ) );
+        connect( m_document, SIGNAL(gotFont(Okular::FontInfo)), m_fontModel, SLOT(addFont(Okular::FontInfo)) );
+        connect( m_document, SIGNAL(fontReadingProgress(int)), this, SLOT(slotFontReadingProgress(int)) );
+        connect( m_document, SIGNAL(fontReadingEnded()), this, SLOT(slotFontReadingEnded()) );
+        QTimer::singleShot( 0, this, SLOT(reallyStartFontReading()) );
 
         m_fontScanStarted = true;
     }

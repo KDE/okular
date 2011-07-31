@@ -73,10 +73,10 @@ dviRenderer::dviRenderer(bool useFontHinting)
   //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
 #endif
 
-//  connect(&font_pool, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+//  connect(&font_pool, SIGNAL(setStatusBarText(QString)), this, SIGNAL(setStatusBarText(QString)) );
 //  connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
   // pass status bar messages through
-//  connect(PS_interface, SIGNAL( setStatusBarText( const QString& ) ), this, SIGNAL( setStatusBarText( const QString& ) ) );
+//  connect(PS_interface, SIGNAL(setStatusBarText(QString)), this, SIGNAL(setStatusBarText(QString)) );
 }
 
 

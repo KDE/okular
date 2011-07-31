@@ -117,7 +117,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_searchLine = new KTreeViewSearchLine( this, m_view );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->reviewsSearchRegularExpression() );
-    connect( m_searchLine, SIGNAL( searchOptionsChanged() ), this, SLOT( saveSearchOptions() ) );
+    connect( m_searchLine, SIGNAL(searchOptionsChanged()), this, SLOT(saveSearchOptions()) );
     vLayout->addWidget( m_searchLine );
     vLayout->addWidget( m_view );
     vLayout->addWidget( toolBar );
@@ -127,12 +127,12 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add Page button
     QAction * groupByPageAction = toolBar->addAction( KIcon( "text-x-generic" ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
-    connect( groupByPageAction, SIGNAL( toggled( bool ) ), this, SLOT( slotPageEnabled( bool ) ) );
+    connect( groupByPageAction, SIGNAL(toggled(bool)), this, SLOT(slotPageEnabled(bool)) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
     QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user-identity" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
-    connect( groupByAuthorAction, SIGNAL( toggled( bool ) ), this, SLOT( slotAuthorEnabled( bool ) ) );
+    connect( groupByAuthorAction, SIGNAL(toggled(bool)), this, SLOT(slotAuthorEnabled(bool)) );
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
 
     // - add separator
@@ -140,15 +140,15 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add Current Page Only button
     QAction * curPageOnlyAction = toolBar->addAction( KIcon( "arrow-down" ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
-    connect( curPageOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotCurrentPageOnly( bool ) ) );
+    connect( curPageOnlyAction, SIGNAL(toggled(bool)), this, SLOT(slotCurrentPageOnly(bool)) );
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );
 
-    connect( m_view, SIGNAL( activated( const QModelIndex& ) ),
-             this, SLOT( activated( const QModelIndex& ) ) );
+    connect( m_view, SIGNAL(activated(QModelIndex)),
+             this, SLOT(activated(QModelIndex)) );
 
     m_view->setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( m_view, SIGNAL( customContextMenuRequested( const QPoint& ) ),
-             this, SLOT( contextMenuRequested( const QPoint& ) ) );
+    connect( m_view, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(contextMenuRequested(QPoint)) );
 
 }
 
@@ -253,10 +253,10 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
     AnnotationPopup popup( m_document, this );
-    connect( &popup, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
-             this, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ) );
-    connect( &popup, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
-             this, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ) );
+    connect( &popup, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
+             this, SIGNAL(setAnnotationWindow(Okular::Annotation*)) );
+    connect( &popup, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
+             this, SIGNAL(removeAnnotationWindow(Okular::Annotation*)) );
 
     QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
     Q_FOREACH ( const QModelIndex &index, indexes )

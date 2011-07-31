@@ -226,23 +226,23 @@ TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, 
         setFeature( Threaded );
 #endif
 
-    connect( converter, SIGNAL( addAction( Action*, int, int ) ),
-             this, SLOT( addAction( Action*, int, int ) ) );
-    connect( converter, SIGNAL( addAnnotation( Annotation*, int, int ) ),
-             this, SLOT( addAnnotation( Annotation*, int, int ) ) );
-    connect( converter, SIGNAL( addTitle( int, const QString&, const QTextBlock& ) ),
-             this, SLOT( addTitle( int, const QString&, const QTextBlock& ) ) );
-    connect( converter, SIGNAL( addMetaData( const QString&, const QString&, const QString& ) ),
-             this, SLOT( addMetaData( const QString&, const QString&, const QString& ) ) );
-    connect( converter, SIGNAL( addMetaData( DocumentInfo::Key, const QString& ) ),
-             this, SLOT( addMetaData( DocumentInfo::Key, const QString& ) ) );
+    connect( converter, SIGNAL(addAction(Action*,int,int)),
+             this, SLOT(addAction(Action*,int,int)) );
+    connect( converter, SIGNAL(addAnnotation(Annotation*,int,int)),
+             this, SLOT(addAnnotation(Annotation*,int,int)) );
+    connect( converter, SIGNAL(addTitle(int,QString,QTextBlock)),
+             this, SLOT(addTitle(int,QString,QTextBlock)) );
+    connect( converter, SIGNAL(addMetaData(QString,QString,QString)),
+             this, SLOT(addMetaData(QString,QString,QString)) );
+    connect( converter, SIGNAL(addMetaData(DocumentInfo::Key,QString)),
+             this, SLOT(addMetaData(DocumentInfo::Key,QString)) );
 
-    connect( converter, SIGNAL( error( const QString&, int ) ),
-             this, SIGNAL( error( const QString&, int ) ) );
-    connect( converter, SIGNAL( warning( const QString&, int ) ),
-             this, SIGNAL( warning( const QString&, int ) ) );
-    connect( converter, SIGNAL( notice( const QString&, int ) ),
-             this, SIGNAL( notice( const QString&, int ) ) );
+    connect( converter, SIGNAL(error(QString,int)),
+             this, SIGNAL(error(QString,int)) );
+    connect( converter, SIGNAL(warning(QString,int)),
+             this, SIGNAL(warning(QString,int)) );
+    connect( converter, SIGNAL(notice(QString,int)),
+             this, SIGNAL(notice(QString,int)) );
 }
 
 TextDocumentGenerator::~TextDocumentGenerator()

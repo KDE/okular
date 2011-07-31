@@ -63,7 +63,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     m_marchAnyWordsAction->setActionGroup( actgrp );
 
     m_marchAllWordsAction->setChecked( true );
-    connect( m_menu, SIGNAL( triggered(QAction *) ), SLOT( slotMenuChaged(QAction*) ) );
+    connect( m_menu, SIGNAL(triggered(QAction*)), SLOT(slotMenuChaged(QAction*)) );
 
     // 3.2. create the toolbar button that spawns the popup menu
     QToolButton *optionsMenuAction =  new QToolButton( this );

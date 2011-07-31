@@ -183,7 +183,7 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
     d->stopAction = d->controlBar->addAction(
         KIcon( "media-playback-stop" ),
         i18nc( "stop the movie playback", "Stop" ),
-        this, SLOT( stop() ) );
+        this, SLOT(stop()) );
     d->stopAction->setEnabled( false );
     d->controlBar->addSeparator();
     d->seekSlider = new Phonon::SeekSlider( d->player->mediaObject(), d->controlBar );
@@ -198,8 +198,8 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
 
     d->controlBar->setVisible( movieann->movie()->showControls() );
 
-    connect( d->player, SIGNAL( finished() ), this, SLOT( finished() ) );
-    connect( d->playPauseAction, SIGNAL( triggered() ), this, SLOT( playOrPause() ) );
+    connect( d->player, SIGNAL(finished()), this, SLOT(finished()) );
+    connect( d->playPauseAction, SIGNAL(triggered()), this, SLOT(playOrPause()) );
 
     d->geom = movieann->transformedBoundingRectangle();
 }

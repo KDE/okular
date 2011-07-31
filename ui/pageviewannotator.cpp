@@ -678,13 +678,13 @@ void PageViewAnnotator::setEnabled( bool on )
         m_toolBar->setItems( m_items );
         m_toolBar->setToolsEnabled( m_toolsEnabled );
         m_toolBar->setTextToolsEnabled( m_textToolsEnabled );
-        connect( m_toolBar, SIGNAL( toolSelected(int) ),
-                this, SLOT( slotToolSelected(int) ) );
-        connect( m_toolBar, SIGNAL( orientationChanged(int) ),
-                this, SLOT( slotSaveToolbarOrientation(int) ) );
+        connect( m_toolBar, SIGNAL(toolSelected(int)),
+                this, SLOT(slotToolSelected(int)) );
+        connect( m_toolBar, SIGNAL(orientationChanged(int)),
+                this, SLOT(slotSaveToolbarOrientation(int)) );
         
-        connect( m_toolBar, SIGNAL( buttonDoubleClicked(int) ),
-                this, SLOT( slotToolDoubleClicked(int) ) );
+        connect( m_toolBar, SIGNAL(buttonDoubleClicked(int)),
+                this, SLOT(slotToolDoubleClicked(int)) );
     }
 
     // show the toolBar

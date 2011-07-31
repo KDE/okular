@@ -110,8 +110,8 @@ BookmarkManager::BookmarkManager( DocumentPrivate * document )
     d->manager = KBookmarkManager::managerForFile( d->file, "okular" );
     d->manager->setEditorOptions( KGlobal::caption(), false );
     d->manager->setUpdate( true );
-    connect( d->manager, SIGNAL( changed( const QString &, const QString & ) ),
-             this, SLOT( _o_changed( const QString &, const QString & ) ) );
+    connect( d->manager, SIGNAL(changed(QString,QString)),
+             this, SLOT(_o_changed(QString,QString)) );
 }
 
 BookmarkManager::~BookmarkManager()

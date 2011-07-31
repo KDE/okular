@@ -52,12 +52,12 @@ QWidget* ToolAction::createWidget( QWidget *parent )
     button->setPopupMode( QToolButton::DelayedPopup );
     button->setMenu( new QMenu( button ) );
     button->setCheckable( true );
-    connect( toolBar, SIGNAL( iconSizeChanged( const QSize & ) ),
-             button, SLOT( setIconSize( const QSize & ) ) );
-    connect( toolBar, SIGNAL( toolButtonStyleChanged( Qt::ToolButtonStyle ) ),
-             button, SLOT( setToolButtonStyle( Qt::ToolButtonStyle ) ) );
-    connect( button, SIGNAL( triggered( QAction * ) ), toolBar, SIGNAL( actionTriggered( QAction * ) ) );
-    connect( button->menu(), SIGNAL( triggered( QAction * ) ), this, SLOT( slotNewDefaultAction( QAction * ) ) );
+    connect( toolBar, SIGNAL(iconSizeChanged(QSize)),
+             button, SLOT(setIconSize(QSize)) );
+    connect( toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)),
+             button, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)) );
+    connect( button, SIGNAL(triggered(QAction*)), toolBar, SIGNAL(actionTriggered(QAction*)) );
+    connect( button->menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotNewDefaultAction(QAction*)) );
 
     m_buttons.append( button );
 

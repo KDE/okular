@@ -61,7 +61,7 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     KAction * kimgio_test = new KAction( this );
     kimgio_test->setText( "Image test" );
     kimgio_test->setIcon( KIcon( "smiley" ) );
-    connect( kimgio_test, SIGNAL( triggered( bool ) ), this, SLOT( slotTest() ) );
+    connect( kimgio_test, SIGNAL(triggered(bool)), this, SLOT(slotTest()) );
     actionCollection()->addAction( "kimgio_test", kimgio_test );
 */
 }

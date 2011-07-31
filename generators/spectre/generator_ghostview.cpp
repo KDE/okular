@@ -62,8 +62,8 @@ GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
 
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
     if (!renderer->isRunning()) renderer->start();
-    connect(renderer, SIGNAL(imageDone(QImage *, Okular::PixmapRequest *)),
-                      SLOT(slotImageGenerated(QImage *, Okular::PixmapRequest *)),
+    connect(renderer, SIGNAL(imageDone(QImage*,Okular::PixmapRequest*)),
+                      SLOT(slotImageGenerated(QImage*,Okular::PixmapRequest*)),
                       Qt::QueuedConnection);
 }
 

@@ -676,7 +676,7 @@ void ThumbnailListPrivate::delayedRequestVisiblePixmaps( int delayMs )
     {
         m_delayTimer = new QTimer( q );
         m_delayTimer->setSingleShot( true );
-        connect( m_delayTimer, SIGNAL( timeout() ), q, SLOT( slotDelayTimeout() ) );
+        connect( m_delayTimer, SIGNAL(timeout()), q, SLOT(slotDelayTimeout()) );
     }
     m_delayTimer->start( delayMs );
 }
@@ -1013,7 +1013,7 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
     QAction * showBoomarkOnlyAction = addAction(
         KIcon( "bookmarks" ), i18n( "Show bookmarked pages only" ) );
     showBoomarkOnlyAction->setCheckable( true );
-    connect( showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), list, SLOT( slotFilterBookmarks( bool ) ) );
+    connect( showBoomarkOnlyAction, SIGNAL(toggled(bool)), list, SLOT(slotFilterBookmarks(bool)) );
     showBoomarkOnlyAction->setChecked( Okular::Settings::filterBookmarks() );
     //insertLineSeparator();
 }

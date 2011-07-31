@@ -113,7 +113,7 @@ void FontExtractionThread::startExtraction( bool async )
 {
     if ( async )
     {
-        connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
+        connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
         start( QThread::InheritPriority );
     }
     else

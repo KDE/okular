@@ -77,7 +77,7 @@ public:
         dateLabel->setCursor( Qt::SizeAllCursor );
         buttonlay->addWidget( dateLabel );
         CloseButton * close = new CloseButton( this );
-        connect( close, SIGNAL( clicked() ), parent, SLOT( hide() ) );
+        connect( close, SIGNAL(clicked()), parent, SLOT(hide()) );
         buttonlay->addWidget( close );
         // option button row
         QHBoxLayout * optionlay = new QHBoxLayout();
@@ -144,7 +144,7 @@ public:
 
     void connectOptionButton( QObject * recv, const char* method )
     {
-        connect( optionButton, SIGNAL( clicked() ), recv, method );
+        connect( optionButton, SIGNAL(clicked()), recv, method );
     }
 
 private:
@@ -183,7 +183,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     lowerlay->addWidget( sb );
 
     m_title->setTitle( m_annot->window().summary() );
-    m_title->connectOptionButton( this, SLOT( slotOptionBtn() ) );
+    m_title->connectOptionButton( this, SLOT(slotOptionBtn()) );
 
     setGeometry(10,10,300,300 );
 

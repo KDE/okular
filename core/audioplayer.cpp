@@ -87,7 +87,7 @@ public:
 AudioPlayerPrivate::AudioPlayerPrivate( AudioPlayer * qq )
     : q( qq )
 {
-    QObject::connect( &m_mapper, SIGNAL( mapped( int ) ), q, SLOT( finished( int ) ) );
+    QObject::connect( &m_mapper, SIGNAL(mapped(int)), q, SLOT(finished(int)) );
 }
 
 AudioPlayerPrivate::~AudioPlayerPrivate()
@@ -170,7 +170,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     }
     if ( data )
     {
-        QObject::connect( data->m_mediaobject, SIGNAL( finished() ), &m_mapper, SLOT( map() ) );
+        QObject::connect( data->m_mediaobject, SIGNAL(finished()), &m_mapper, SLOT(map()) );
         kDebug(OkularDebug) << "PLAY";
         data->play();
     }

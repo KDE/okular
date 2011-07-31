@@ -98,9 +98,9 @@ void Shell::init()
     m_doc = qobject_cast<KDocumentViewer*>(m_part);
   }
 
-  connect( this, SIGNAL( restoreDocument(const KConfigGroup&) ),m_part, SLOT( restoreDocument(const KConfigGroup&)));
-  connect( this, SIGNAL( saveDocumentRestoreInfo(KConfigGroup&) ), m_part, SLOT( saveDocumentRestoreInfo(KConfigGroup&)));
-  connect( m_part, SIGNAL( enablePrintAction(bool) ), m_printAction, SLOT( setEnabled(bool)));
+  connect( this, SIGNAL(restoreDocument(KConfigGroup)),m_part, SLOT(restoreDocument(KConfigGroup)));
+  connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), m_part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
+  connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
 
   readSettings();
 
@@ -176,20 +176,20 @@ void Shell::writeSettings()
 void Shell::setupActions()
 {
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStandardAction::openRecent( this, SLOT( openUrl( const KUrl& ) ), actionCollection() );
+  m_recent = KStandardAction::openRecent( this, SLOT(openUrl(KUrl)), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   m_recent->setToolButtonPopupMode( QToolButton::DelayedPopup );
-  connect( m_recent, SIGNAL( triggered() ), this, SLOT( fileOpen() ) );
+  connect( m_recent, SIGNAL(triggered()), this, SLOT(fileOpen()) );
   m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
-  m_printAction = KStandardAction::print( m_part, SLOT( slotPrint() ), actionCollection() );
+  m_printAction = KStandardAction::print( m_part, SLOT(slotPrint()), actionCollection() );
   m_printAction->setEnabled( false );
   KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
 
   setStandardToolBarMenuEnabled(true);
 
-  m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT( slotShowMenubar() ), actionCollection());
-  m_fullScreenAction = KStandardAction::fullScreen( this, SLOT( slotUpdateFullScreen() ), this,actionCollection() );
+  m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT(slotShowMenubar()), actionCollection());
+  m_fullScreenAction = KStandardAction::fullScreen( this, SLOT(slotUpdateFullScreen()), this,actionCollection() );
 }
 
 void Shell::saveProperties(KConfigGroup &group)

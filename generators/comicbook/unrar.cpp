@@ -219,9 +219,9 @@ int Unrar::startSyncProcess( const QStringList &args )
     mProcess->setOutputChannelMode( KProcess::SeparateChannels );
 #endif
 
-    connect( mProcess, SIGNAL( readyReadStandardOutput() ), SLOT( readFromStdout() ) );
-    connect( mProcess, SIGNAL( readyReadStandardError() ), SLOT( readFromStderr() ) );
-    connect( mProcess, SIGNAL( finished( int, QProcess::ExitStatus ) ), SLOT( finished( int, QProcess::ExitStatus ) ) );
+    connect( mProcess, SIGNAL(readyReadStandardOutput()), SLOT(readFromStdout()) );
+    connect( mProcess, SIGNAL(readyReadStandardError()), SLOT(readFromStderr()) );
+    connect( mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(finished(int,QProcess::ExitStatus)) );
 
 #if defined(Q_OS_WIN)
     mProcess->start( helper->unrarPath, args, QIODevice::ReadWrite | QIODevice::Unbuffered );

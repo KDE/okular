@@ -151,7 +151,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);
-    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT( slotPrevPage() ) );
+    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
     m_pagesEdit = new KLineEdit( m_topBar );
     QSizePolicy sp = m_pagesEdit->sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Minimum );
@@ -166,15 +166,15 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QLabel *pagesLabel = new QLabel( m_topBar );
     pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
     m_topBar->addWidget( pagesLabel );
-    connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotPageChanged() ) );
-    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT( slotNextPage() ) );
+    connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotPageChanged()) );
+    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
     QAction *drawingAct = collection->action( "presentation_drawing_mode" );
-    connect( drawingAct, SIGNAL( toggled( bool ) ), SLOT( togglePencilMode( bool ) ) );
+    connect( drawingAct, SIGNAL(toggled(bool)), SLOT(togglePencilMode(bool)) );
     m_topBar->addAction( drawingAct );
     addAction( drawingAct );
     QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
-    connect( eraseDrawingAct, SIGNAL( triggered() ), SLOT( clearDrawings() ) );
+    connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
     QDesktopWidget *desktop = QApplication::desktop();
@@ -195,7 +195,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QWidget *spacer = new QWidget( m_topBar );
     spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
     m_topBar->addWidget( spacer );
-    m_topBar->addAction( KIcon( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT( close() ) );
+    m_topBar->addAction( KIcon( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT(close()) );
     m_topBar->setAutoFillBackground( true );
     showTopBar( false );
     // change topbar background color
@@ -209,13 +209,13 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setContextMenuPolicy( Qt::PreventContextMenu );
     m_transitionTimer = new QTimer( this );
     m_transitionTimer->setSingleShot( true );
-    connect( m_transitionTimer, SIGNAL( timeout() ), this, SLOT( slotTransitionStep() ) );
+    connect( m_transitionTimer, SIGNAL(timeout()), this, SLOT(slotTransitionStep()) );
     m_overlayHideTimer = new QTimer( this );
     m_overlayHideTimer->setSingleShot( true );
-    connect( m_overlayHideTimer, SIGNAL( timeout() ), this, SLOT( slotHideOverlay() ) );
+    connect( m_overlayHideTimer, SIGNAL(timeout()), this, SLOT(slotHideOverlay()) );
     m_nextPageTimer = new QTimer( this ); 
     m_nextPageTimer->setSingleShot( true );
-    connect( m_nextPageTimer, SIGNAL( timeout() ), this, SLOT( slotNextPage() ) ); 
+    connect( m_nextPageTimer, SIGNAL(timeout()), this, SLOT(slotNextPage()) ); 
 
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
@@ -235,7 +235,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     show();
 
-    QTimer::singleShot( 0, this, SLOT( slotDelayedEvents() ) );
+    QTimer::singleShot( 0, this, SLOT(slotDelayedEvents()) );
 
     // setFocus() so KCursor::setAutoHideCursor() goes into effect if it's enabled
     setFocus( Qt::OtherFocusReason );
@@ -377,7 +377,7 @@ void PresentationWidget::setupActions( KActionCollection * collection )
     addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentForward ) ) );
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
-    connect( action, SIGNAL( toggled( bool ) ), SLOT( toggleBlackScreenMode( bool ) ) );
+    connect( action, SIGNAL(toggled(bool)), SLOT(toggleBlackScreenMode(bool)) );
     addAction( action );
 }
 
@@ -588,7 +588,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_width = width();
         m_height = height();
 
-        connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
+        connect( m_document, SIGNAL(linkFind()), this, SLOT(slotFind()) );
 
         // register this observer in document. events will come immediately
         m_document->addObserver( this );
@@ -1261,15 +1261,15 @@ void PresentationWidget::slotDelayedEvents()
     if ( m_screenSelect )
     {
         m_screenSelect->setCurrentItem( m_screen );
-        connect( m_screenSelect->selectableActionGroup(), SIGNAL( triggered( QAction * ) ),
-                 this, SLOT( chooseScreen( QAction * ) ) );
+        connect( m_screenSelect->selectableActionGroup(), SIGNAL(triggered(QAction*)),
+                 this, SLOT(chooseScreen(QAction*)) );
     }
 
     // show widget and take control
     show();
     setWindowState( windowState() | Qt::WindowFullScreen );
 
-    connect( QApplication::desktop(), SIGNAL( resized( int ) ), this, SLOT( screenResized( int ) ) );
+    connect( QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
 
   // inform user on how to exit from presentation mode
   KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString(), "presentationInfo" );

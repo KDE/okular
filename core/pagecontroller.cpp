@@ -64,8 +64,8 @@ void PageController::initWeaver()
     if ( weaverInited )
         return;
 
-    connect( ThreadWeaver::Weaver::instance(), SIGNAL( jobDone(ThreadWeaver::Job*) ),
-             this, SLOT( imageRotationDone(ThreadWeaver::Job*) ) );
+    connect( ThreadWeaver::Weaver::instance(), SIGNAL(jobDone(ThreadWeaver::Job*)),
+             this, SLOT(imageRotationDone(ThreadWeaver::Job*)) );
 
     weaverInited = true;
 }

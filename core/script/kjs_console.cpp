@@ -47,10 +47,10 @@ static void createConsoleWindow()
     g_jsConsoleLog->setReadOnly( true );
     mainLay->addWidget( g_jsConsoleLog );
 
-    QObject::connect( g_jsConsoleWindow, SIGNAL( closeClicked() ),
-                      g_jsConsoleWindow, SLOT( close() ) );
-    QObject::connect( g_jsConsoleWindow, SIGNAL( user1Clicked() ),
-                      g_jsConsoleLog, SLOT( clear() ) );
+    QObject::connect( g_jsConsoleWindow, SIGNAL(closeClicked()),
+                      g_jsConsoleWindow, SLOT(close()) );
+    QObject::connect( g_jsConsoleWindow, SIGNAL(user1Clicked()),
+                      g_jsConsoleLog, SLOT(clear()) );
 }
 
 static void showConsole()

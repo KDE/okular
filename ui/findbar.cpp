@@ -71,11 +71,11 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     optionsBtn->setMenu( optionsMenu );
     lay->addWidget( optionsBtn );
 
-    connect( closeBtn, SIGNAL( clicked() ), this, SLOT( closeAndStopSearch() ) );
-    connect( findNextBtn, SIGNAL( clicked() ), this, SLOT( findNext() ) );
-    connect( findPrevBtn, SIGNAL( clicked() ), this, SLOT( findPrev() ) );
-    connect( m_caseSensitiveAct, SIGNAL( toggled( bool ) ), this, SLOT( caseSensitivityChanged() ) );
-    connect( m_fromCurrentPageAct, SIGNAL( toggled( bool ) ), this, SLOT( fromCurrentPageChanged() ) );
+    connect( closeBtn, SIGNAL(clicked()), this, SLOT(closeAndStopSearch()) );
+    connect( findNextBtn, SIGNAL(clicked()), this, SLOT(findNext()) );
+    connect( findPrevBtn, SIGNAL(clicked()), this, SLOT(findPrev()) );
+    connect( m_caseSensitiveAct, SIGNAL(toggled(bool)), this, SLOT(caseSensitivityChanged()) );
+    connect( m_fromCurrentPageAct, SIGNAL(toggled(bool)), this, SLOT(fromCurrentPageChanged()) );
 
     m_caseSensitiveAct->setChecked( Okular::Settings::searchCaseSensitive() );
     m_fromCurrentPageAct->setChecked( Okular::Settings::searchFromCurrentPage() );

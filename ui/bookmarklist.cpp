@@ -139,8 +139,8 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     m_tree->header()->hide();
     m_tree->setSelectionBehavior( QAbstractItemView::SelectRows );
     m_tree->setEditTriggers( QAbstractItemView::EditKeyPressed );
-    connect( m_tree, SIGNAL( itemActivated( QTreeWidgetItem *, int ) ), this, SLOT( slotExecuted( QTreeWidgetItem * ) ) );
-    connect( m_tree, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( slotContextMenu( const QPoint& ) ) );
+    connect( m_tree, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(slotExecuted(QTreeWidgetItem*)) );
+    connect( m_tree, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)) );
     m_searchLine->addTreeWidget( m_tree );
 
     QToolBar * bookmarkController = new QToolBar( this );
@@ -155,9 +155,9 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     // insert a togglebutton [show only bookmarks in the current document]
     m_showBoomarkOnlyAction = bookmarkController->addAction( KIcon( "bookmarks" ), i18n( "Current document only" ) );
     m_showBoomarkOnlyAction->setCheckable( true );
-    connect( m_showBoomarkOnlyAction, SIGNAL( toggled( bool ) ), this, SLOT( slotFilterBookmarks( bool ) ) );
+    connect( m_showBoomarkOnlyAction, SIGNAL(toggled(bool)), this, SLOT(slotFilterBookmarks(bool)) );
 
-    connect( m_document->bookmarkManager(), SIGNAL( bookmarksChanged( const KUrl& ) ), this, SLOT( slotBookmarksChanged( const KUrl& ) ) );
+    connect( m_document->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)), this, SLOT(slotBookmarksChanged(KUrl)) );
 
     rebuildTree( m_showBoomarkOnlyAction->isChecked() );
 }
@@ -187,7 +187,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
     }
     else
     {
-        disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+        disconnect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
         if ( m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()  )
         {
             m_currentDocumentItem->setIcon( 0, QIcon() );
@@ -198,7 +198,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
             m_currentDocumentItem->setIcon( 0, KIcon( "bookmarks" ) );
             m_currentDocumentItem->setExpanded( true );
         }
-        connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+        connect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
     }
 }
 
@@ -329,7 +329,7 @@ void BookmarkList::rebuildTree( bool filter )
 {
     // disconnect and reconnect later, otherwise we'll get many itemChanged()
     // signals for all the current items
-    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+    disconnect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
 
     m_currentDocumentItem = 0;
     m_tree->clear();
@@ -377,7 +377,7 @@ void BookmarkList::rebuildTree( bool filter )
 
     m_tree->sortItems( 0, Qt::AscendingOrder );
 
-    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+    connect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
 }
 
 void BookmarkList::goTo( BookmarkItem * item )
@@ -395,7 +395,7 @@ void BookmarkList::goTo( BookmarkItem * item )
 
 void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
 {
-    disconnect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+    disconnect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
 
     const KBookmark::List urlbookmarks = m_document->bookmarkManager()->bookmarks( url );
     if ( urlbookmarks.isEmpty() )
@@ -445,7 +445,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         item->sortChildren( 0, Qt::AscendingOrder );
     }
 
-    connect( m_tree, SIGNAL( itemChanged( QTreeWidgetItem *, int ) ), this, SLOT( slotChanged( QTreeWidgetItem * ) ) );
+    connect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
 }
 
 QTreeWidgetItem* BookmarkList::itemForUrl( const KUrl& url ) const

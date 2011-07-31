@@ -56,8 +56,8 @@ QButtonGroup* FormWidgetsController::registerRadioButton( FormWidgetIface* widge
     newdata.ids.append( id );
     newdata.group = new QButtonGroup();
     newdata.group->addButton( widget->button() );
-    connect( newdata.group, SIGNAL( buttonClicked( QAbstractButton * ) ),
-             this, SLOT( slotButtonClicked( QAbstractButton * ) ) );
+    connect( newdata.group, SIGNAL(buttonClicked(QAbstractButton*)),
+             this, SLOT(slotButtonClicked(QAbstractButton*)) );
     m_radios.append( newdata );
     return newdata.group;
 }
@@ -218,7 +218,7 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     setEnabled( !m_form->isReadOnly() );
     setVisible( m_form->isVisible() );
 
-    connect( this, SIGNAL( clicked() ), this, SLOT( slotClicked() ) );
+    connect( this, SIGNAL(clicked()), this, SLOT(slotClicked()) );
 }
 
 void PushButtonEdit::slotClicked()
@@ -247,7 +247,7 @@ void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
 
     setCheckState( m_form->state() ? Qt::Checked : Qt::Unchecked );
 
-    connect( this, SIGNAL( stateChanged( int ) ), this, SLOT( slotStateChanged( int ) ) );
+    connect( this, SIGNAL(stateChanged(int)), this, SLOT(slotStateChanged(int)) );
 }
 
 QAbstractButton* CheckBoxEdit::button()
@@ -281,7 +281,7 @@ void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controlle
 
     setChecked( m_form->state() );
 
-    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( slotToggled( bool ) ) );
+    connect( this, SIGNAL(toggled(bool)), this, SLOT(slotToggled(bool)) );
 }
 
 QAbstractButton* RadioButtonEdit::button()
@@ -310,7 +310,7 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
         setEchoMode( QLineEdit::Password );
     setReadOnly( m_form->isReadOnly() );
 
-    connect( this, SIGNAL( textEdited( const QString& ) ), this, SLOT( textEdited( const QString& ) ) );
+    connect( this, SIGNAL(textEdited(QString)), this, SLOT(textEdited(QString)) );
     setVisible( m_form->isVisible() );
 }
 
@@ -331,7 +331,7 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
     setPlainText( m_form->text() );
     setReadOnly( m_form->isReadOnly() );
 
-    connect( this, SIGNAL( textChanged() ), this, SLOT( slotChanged() ) );
+    connect( this, SIGNAL(textChanged()), this, SLOT(slotChanged()) );
     setVisible( m_form->isVisible() );
 }
 
@@ -352,7 +352,7 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
     lineEdit()->setAlignment( m_form->textAlignment() );
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotChanged( const QString& ) ) );
+    connect( this, SIGNAL(textChanged(QString)), this, SLOT(slotChanged(QString)) );
     setVisible( m_form->isVisible() );
 }
 
@@ -387,7 +387,7 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     }
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( itemSelectionChanged() ), this, SLOT( slotSelectionChanged() ) );
+    connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(slotSelectionChanged()) );
     setVisible( m_form->isVisible() );
 }
 
@@ -414,7 +414,7 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
         setCurrentIndex( selectedItems.at(0) );
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL( currentIndexChanged( int ) ), this, SLOT( indexChanged( int ) ) );
+    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)) );
     setVisible( m_form->isVisible() );
 }
 

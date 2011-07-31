@@ -103,10 +103,10 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     resizeForPage( 0 );
 
     // connect signals from child widgets to internal handlers / signals bouncers
-    connect( m_pagesEdit, SIGNAL( returnPressed() ), this, SLOT( slotChangePage() ) );
-    connect( m_pagesButton, SIGNAL( clicked() ), this, SIGNAL( gotoPage() ) );
-    connect( m_prevButton, SIGNAL( clicked() ), this, SIGNAL( prevPage() ) );
-    connect( m_nextButton, SIGNAL( clicked() ), this, SIGNAL( nextPage() ) );
+    connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
+    connect( m_pagesButton, SIGNAL(clicked()), this, SIGNAL(gotoPage()) );
+    connect( m_prevButton, SIGNAL(clicked()), this, SIGNAL(prevPage()) );
+    connect( m_nextButton, SIGNAL(clicked()), this, SIGNAL(nextPage()) );
 
     resize( minimumSizeHint() );
 

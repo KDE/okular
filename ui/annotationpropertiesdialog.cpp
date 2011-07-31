@@ -40,8 +40,8 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     {
         setButtons( Ok | Apply | Cancel );
         enableButton( Apply, false );
-        connect( this, SIGNAL( applyClicked() ), this, SLOT( slotapply() ) );
-        connect( this, SIGNAL( okClicked() ), this, SLOT( slotapply() ) );
+        connect( this, SIGNAL(applyClicked()), this, SLOT(slotapply()) );
+        connect( this, SIGNAL(okClicked()), this, SLOT(slotapply()) );
     }
     else
     {
@@ -118,12 +118,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     }
 
     //BEGIN connections
-    connect( colorBn, SIGNAL( changed( const QColor& ) ), this, SLOT( setModified() ) );
-    connect( m_opacity, SIGNAL( valueChanged( int ) ), this, SLOT( setModified() ) );
-    connect( AuthorEdit, SIGNAL( textChanged ( const QString& ) ), this, SLOT( setModified() ) );
+    connect( colorBn, SIGNAL(changed(QColor)), this, SLOT(setModified()) );
+    connect( m_opacity, SIGNAL(valueChanged(int)), this, SLOT(setModified()) );
+    connect( AuthorEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()) );
     if ( m_annotWidget )
     {
-        connect( m_annotWidget, SIGNAL( dataChanged() ), this, SLOT( setModified() ) );
+        connect( m_annotWidget, SIGNAL(dataChanged()), this, SLOT(setModified()) );
     }
     //END
 

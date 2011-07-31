@@ -255,11 +255,11 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     // connect the started signal to tell the job the mimetypes we like,
     // and get some more information from it
-    connect(this, SIGNAL(started(KIO::Job *)), this, SLOT(slotJobStarted(KIO::Job *)));
+    connect(this, SIGNAL(started(KIO::Job*)), this, SLOT(slotJobStarted(KIO::Job*)));
 
     // connect the completed signal so we can put the window caption when loading remote files
     connect(this, SIGNAL(completed()), this, SLOT(setWindowTitleFromDocument()));
-    connect(this, SIGNAL(canceled(const QString &)), this, SLOT(loadCancelled(const QString &)));
+    connect(this, SIGNAL(canceled(QString)), this, SLOT(loadCancelled(QString)));
 
     // create browser extension (for printing when embedded into browser)
     m_bExtension = new BrowserExtension(this);
@@ -276,18 +276,18 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     // build the document
     m_document = new Okular::Document(widget());
-    connect( m_document, SIGNAL( linkFind() ), this, SLOT( slotFind() ) );
-    connect( m_document, SIGNAL( linkGoToPage() ), this, SLOT( slotGoToPage() ) );
-    connect( m_document, SIGNAL( linkPresentation() ), this, SLOT( slotShowPresentation() ) );
-    connect( m_document, SIGNAL( linkEndPresentation() ), this, SLOT( slotHidePresentation() ) );
-    connect( m_document, SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromDocument(const KUrl &) ) );
-    connect( m_document->bookmarkManager(), SIGNAL( openUrl(const KUrl &) ), this, SLOT( openUrlFromBookmarks(const KUrl &) ) );
-    connect( m_document, SIGNAL( close() ), this, SLOT( close() ) );
+    connect( m_document, SIGNAL(linkFind()), this, SLOT(slotFind()) );
+    connect( m_document, SIGNAL(linkGoToPage()), this, SLOT(slotGoToPage()) );
+    connect( m_document, SIGNAL(linkPresentation()), this, SLOT(slotShowPresentation()) );
+    connect( m_document, SIGNAL(linkEndPresentation()), this, SLOT(slotHidePresentation()) );
+    connect( m_document, SIGNAL(openUrl(KUrl)), this, SLOT(openUrlFromDocument(KUrl)) );
+    connect( m_document->bookmarkManager(), SIGNAL(openUrl(KUrl)), this, SLOT(openUrlFromBookmarks(KUrl)) );
+    connect( m_document, SIGNAL(close()), this, SLOT(close()) );
 
     if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ) ) != -1 )
-        connect( m_document, SIGNAL( quit() ), parent, SLOT( slotQuit() ) );
+        connect( m_document, SIGNAL(quit()), parent, SLOT(slotQuit()) );
     else
-        connect( m_document, SIGNAL( quit() ), this, SLOT( cannotQuit() ) );
+        connect( m_document, SIGNAL(quit()), this, SLOT(cannotQuit()) );
     // widgets: ^searchbar (toolbar containing label and SearchWidget)
     //      m_searchToolBar = new KToolBar( parentWidget, "searchBar" );
     //      m_searchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
@@ -299,7 +299,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     int tbIndex;
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
-    connect( m_toc, SIGNAL( hasTOC( bool ) ), this, SLOT( enableTOC( bool ) ) );
+    connect( m_toc, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)) );
     tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
 
@@ -309,8 +309,8 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-    connect( m_thumbnailList, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )) );
-    connect( m_thumbnailList, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
+    connect( m_thumbnailList, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)) );
+    connect( m_thumbnailList, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
     tbIndex = m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
     m_sidebar->setCurrentIndex( tbIndex );
 
@@ -353,7 +353,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     //	rightLayout->addWidget( rtb );
     m_topMessage = new PageViewTopMessage( rightContainer );
     m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "mail-attachment" ) );
-    connect( m_topMessage, SIGNAL( action() ), this, SLOT( slotShowEmbeddedFiles() ) );
+    connect( m_topMessage, SIGNAL(action()), this, SLOT(slotShowEmbeddedFiles()) );
     rightLayout->addWidget( m_topMessage );
     m_formsMessage = new PageViewTopMessage( rightContainer );
     m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
@@ -361,11 +361,11 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_pageView = new PageView( rightContainer, m_document );
     m_pageView->setFocus();      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
-    connect( m_pageView, SIGNAL( urlDropped( const KUrl& ) ), SLOT( openUrlFromDocument( const KUrl & )));
-    connect( m_pageView, SIGNAL( rightClick(const Okular::Page *, const QPoint &) ), this, SLOT( slotShowMenu(const Okular::Page *, const QPoint &) ) );
-    connect( m_document, SIGNAL( error( const QString&, int ) ), m_pageView, SLOT( errorMessage( const QString&, int ) ) );
-    connect( m_document, SIGNAL( warning( const QString&, int ) ), m_pageView, SLOT( warningMessage( const QString&, int ) ) );
-    connect( m_document, SIGNAL( notice( const QString&, int ) ), m_pageView, SLOT( noticeMessage( const QString&, int ) ) );
+    connect( m_pageView, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)));
+    connect( m_pageView, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
+    connect( m_document, SIGNAL(error(QString,int)), m_pageView, SLOT(errorMessage(QString,int)) );
+    connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
+    connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -382,13 +382,13 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 
-    connect( m_findBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
-    connect( m_miniBar, SIGNAL( forwardKeyPressEvent( QKeyEvent* )), m_pageView, SLOT( externalKeyPressEvent( QKeyEvent* ) ));
+    connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
 
-    connect( m_reviewsWidget, SIGNAL( setAnnotationWindow( Okular::Annotation* ) ),
-        m_pageView, SLOT( setAnnotationWindow( Okular::Annotation* ) ) );
-    connect( m_reviewsWidget, SIGNAL( removeAnnotationWindow( Okular::Annotation* ) ),
-        m_pageView, SLOT( removeAnnotationWindow( Okular::Annotation* ) ) );
+    connect( m_reviewsWidget, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
+        m_pageView, SLOT(setAnnotationWindow(Okular::Annotation*)) );
+    connect( m_reviewsWidget, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
+        m_pageView, SLOT(removeAnnotationWindow(Okular::Annotation*)) );
 
     // add document observers
     m_document->addObserver( this );
@@ -404,17 +404,17 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( m_bookmarkList );
 
-    connect( m_document->bookmarkManager(), SIGNAL( saved() ),
-        this, SLOT( slotRebuildBookmarkMenu() ) );
+    connect( m_document->bookmarkManager(), SIGNAL(saved()),
+        this, SLOT(slotRebuildBookmarkMenu()) );
 
     // ACTIONS
     KActionCollection * ac = actionCollection();
 
     // Page Traversal actions
-    m_gotoPage = KStandardAction::gotoPage( this, SLOT( slotGoToPage() ), ac );
+    m_gotoPage = KStandardAction::gotoPage( this, SLOT(slotGoToPage()), ac );
     m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
     // dirty way to activate gotopage when pressing miniBar's button
-    connect( m_miniBar, SIGNAL( gotoPage() ), m_gotoPage, SLOT( trigger() ) );
+    connect( m_miniBar, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
 
     m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
     m_prevPage->setIconText( i18nc( "Previous page", "Previous" ) );
@@ -422,9 +422,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
     m_prevPage->setShortcut( 0 );
     // dirty way to activate prev page when pressing miniBar's button
-    connect( m_miniBar, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+    connect( m_miniBar, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
 #ifdef OKULAR_ENABLE_MINIBAR
-    connect( m_progressWidget, SIGNAL( prevPage() ), m_prevPage, SLOT( trigger() ) );
+    connect( m_progressWidget, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
 #endif
 
     m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac );
@@ -433,17 +433,17 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
     m_nextPage->setShortcut( 0 );
     // dirty way to activate next page when pressing miniBar's button
-    connect( m_miniBar, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+    connect( m_miniBar, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
 #ifdef OKULAR_ENABLE_MINIBAR
-    connect( m_progressWidget, SIGNAL( nextPage() ), m_nextPage, SLOT( trigger() ) );
+    connect( m_progressWidget, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
 #endif
 
-    m_beginningOfDocument = KStandardAction::firstPage( this, SLOT( slotGotoFirst() ), ac );
+    m_beginningOfDocument = KStandardAction::firstPage( this, SLOT(slotGotoFirst()), ac );
     ac->addAction("first_page", m_beginningOfDocument);
     m_beginningOfDocument->setText(i18n( "Beginning of the document"));
     m_beginningOfDocument->setWhatsThis( i18n( "Moves to the beginning of the document" ) );
 
-    m_endOfDocument = KStandardAction::lastPage( this, SLOT( slotGotoLast() ), ac );
+    m_endOfDocument = KStandardAction::lastPage( this, SLOT(slotGotoLast()), ac );
     ac->addAction("last_page",m_endOfDocument);
     m_endOfDocument->setText(i18n( "End of the document"));
     m_endOfDocument->setWhatsThis( i18n( "Moves to the end of the document" ) );
@@ -452,7 +452,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_historyBack = 0;
     m_historyNext = 0;
 
-    m_addBookmark = KStandardAction::addBookmark( this, SLOT( slotAddBookmark() ), ac );
+    m_addBookmark = KStandardAction::addBookmark( this, SLOT(slotAddBookmark()), ac );
     m_addBookmarkText = m_addBookmark->text();
     m_addBookmarkIcon = m_addBookmark->icon();
 
@@ -460,40 +460,40 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
     m_prevBookmark->setIcon(KIcon( "go-up-search" ));
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
-    connect( m_prevBookmark, SIGNAL( triggered() ), this, SLOT( slotPreviousBookmark() ) );
+    connect( m_prevBookmark, SIGNAL(triggered()), this, SLOT(slotPreviousBookmark()) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
     m_nextBookmark->setIcon(KIcon( "go-down-search" ));
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
-    connect( m_nextBookmark, SIGNAL( triggered() ), this, SLOT( slotNextBookmark() ) );
+    connect( m_nextBookmark, SIGNAL(triggered()), this, SLOT(slotNextBookmark()) );
 
-    m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT( copyTextSelection() ), ac );
+    m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 
-    m_selectAll = KStandardAction::selectAll( m_pageView, SLOT( selectAll() ), ac );
+    m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
 
     // Find and other actions
-    m_find = KStandardAction::find( this, SLOT( slotShowFindBar() ), ac );
+    m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
     QList<QKeySequence> s = m_find->shortcuts();
     s.append( QKeySequence( Qt::Key_Slash ) );
     m_find->setShortcuts( s );
     m_find->setEnabled( false );
 
-    m_findNext = KStandardAction::findNext( this, SLOT( slotFindNext() ), ac);
+    m_findNext = KStandardAction::findNext( this, SLOT(slotFindNext()), ac);
     m_findNext->setEnabled( false );
 
-    m_findPrev = KStandardAction::findPrev( this, SLOT( slotFindPrev() ), ac );
+    m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
     m_findPrev->setEnabled( false );
 
-    m_saveCopyAs = KStandardAction::saveAs( this, SLOT( slotSaveCopyAs() ), ac );
+    m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
     m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
     ac->addAction( "file_save_copy", m_saveCopyAs );
     m_saveCopyAs->setEnabled( false );
 
-    m_saveAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), ac );
+    m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
     m_saveAs->setEnabled( false );
 
-    QAction * prefs = KStandardAction::preferences( this, SLOT( slotPreferences() ), ac);
+    QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
     if ( m_embedMode == NativeShellMode )
     {
         prefs->setText( i18n( "Configure Okular..." ) );
@@ -509,22 +509,22 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     genPrefs->setText( i18n( "Configure Backends..." ) );
     genPrefs->setIcon( KIcon( "configure" ) );
     genPrefs->setEnabled( m_document->configurableGenerators() > 0 );
-    connect( genPrefs, SIGNAL( triggered( bool ) ), this, SLOT( slotGeneratorPreferences() ) );
+    connect( genPrefs, SIGNAL(triggered(bool)), this, SLOT(slotGeneratorPreferences()) );
 
-    m_printPreview = KStandardAction::printPreview( this, SLOT( slotPrintPreview() ), ac );
+    m_printPreview = KStandardAction::printPreview( this, SLOT(slotPrintPreview()), ac );
     m_printPreview->setEnabled( false );
 
     m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
     m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
     m_showLeftPanel->setIcon(KIcon( "view-sidetree" ));
-    connect( m_showLeftPanel, SIGNAL( toggled( bool ) ), this, SLOT( slotShowLeftPanel() ) );
+    connect( m_showLeftPanel, SIGNAL(toggled(bool)), this, SLOT(slotShowLeftPanel()) );
     m_showLeftPanel->setShortcut( Qt::Key_F7 );
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
     slotShowLeftPanel();
 
     m_showBottomBar = ac->add<KToggleAction>("show_bottombar");
     m_showBottomBar->setText(i18n( "Show &Page Bar"));
-    connect( m_showBottomBar, SIGNAL( toggled( bool ) ), this, SLOT( slotShowBottomBar() ) );
+    connect( m_showBottomBar, SIGNAL(toggled(bool)), this, SLOT(slotShowBottomBar()) );
     m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
     slotShowBottomBar();
 
@@ -564,7 +564,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_exportAs->setText(i18n("E&xport As"));
     m_exportAs->setIcon( KIcon( "document-export" ) );
     m_exportAsMenu = new QMenu();
-    connect(m_exportAsMenu, SIGNAL(triggered(QAction *)), this, SLOT(slotExportAs(QAction *)));
+    connect(m_exportAsMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotExportAs(QAction*)));
     m_exportAs->setMenu( m_exportAsMenu );
     m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), m_exportAsMenu );
     m_exportAsMenu->addAction( m_exportAsText );
@@ -610,10 +610,10 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
-    connect( m_watcher, SIGNAL( dirty( const QString& ) ), this, SLOT( slotFileDirty( const QString& ) ) );
+    connect( m_watcher, SIGNAL(dirty(QString)), this, SLOT(slotFileDirty(QString)) );
     m_dirtyHandler = new QTimer( this );
     m_dirtyHandler->setSingleShot( true );
-    connect( m_dirtyHandler, SIGNAL( timeout() ),this, SLOT( slotDoFileDirty() ) );
+    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotDoFileDirty()) );
 
     slotNewConfig();
 
@@ -806,7 +806,7 @@ void Part::slotGeneratorPreferences( )
     m_document->fillConfigDialog( dialog );
 
     // keep us informed when the user changes settings
-    connect( dialog, SIGNAL( settingsChanged( const QString& ) ), this, SLOT( slotNewGeneratorConfig() ) );
+    connect( dialog, SIGNAL(settingsChanged(QString)), this, SLOT(slotNewGeneratorConfig()) );
     dialog->show();
 }
 
@@ -912,7 +912,7 @@ bool Part::slotImportPSFile()
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
-        connect(p, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(psTransformEnded(int, QProcess::ExitStatus)));
+        connect(p, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(psTransformEnded(int,QProcess::ExitStatus)));
         p->start(app, args);
         return true;
     }
@@ -1700,7 +1700,7 @@ void Part::slotPreferences()
     // we didn't find an instance of this dialog, so lets create it
     PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self() );
     // keep us informed when the user changes settings
-    connect( dialog, SIGNAL( settingsChanged( const QString & ) ), this, SLOT( slotNewConfig() ) );
+    connect( dialog, SIGNAL(settingsChanged(QString)), this, SLOT(slotNewConfig()) );
 
     dialog->show();
 }
@@ -2159,10 +2159,10 @@ void Part::unsetDummyMode()
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history
-    m_historyBack = KStandardAction::documentBack( this, SLOT( slotHistoryBack() ), actionCollection() );
+    m_historyBack = KStandardAction::documentBack( this, SLOT(slotHistoryBack()), actionCollection() );
     m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
 
-    m_historyNext = KStandardAction::documentForward( this, SLOT( slotHistoryNext() ), actionCollection());
+    m_historyNext = KStandardAction::documentForward( this, SLOT(slotHistoryNext()), actionCollection());
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
 
     m_pageView->setupActions( actionCollection() );

@@ -663,9 +663,9 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
     m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
-    QObject::connect( m_generator, SIGNAL( error( const QString&, int ) ), m_parent, SIGNAL( error( const QString&, int ) ) );
-    QObject::connect( m_generator, SIGNAL( warning( const QString&, int ) ), m_parent, SIGNAL( warning( const QString&, int ) ) );
-    QObject::connect( m_generator, SIGNAL( notice( const QString&, int ) ), m_parent, SIGNAL( notice( const QString&, int ) ) );
+    QObject::connect( m_generator, SIGNAL(error(QString,int)), m_parent, SIGNAL(error(QString,int)) );
+    QObject::connect( m_generator, SIGNAL(warning(QString,int)), m_parent, SIGNAL(warning(QString,int)) );
+    QObject::connect( m_generator, SIGNAL(notice(QString,int)), m_parent, SIGNAL(notice(QString,int)) );
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
     bool openOk = false;
@@ -1489,9 +1489,9 @@ Document::Document( QWidget *widget )
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
 
-    connect( PageController::self(), SIGNAL( rotationFinished( int, Okular::Page * ) ),
-             this, SLOT( rotationFinished( int, Okular::Page * ) ) );
-    connect( Settings::self(), SIGNAL( configChanged() ), this, SLOT( _o_configChanged() ) );
+    connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
+             this, SLOT(rotationFinished(int,Okular::Page*)) );
+    connect( Settings::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
 
     qRegisterMetaType<Okular::FontInfo>();
 }
@@ -1685,7 +1685,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !d->m_saveBookmarksTimer )
     {
         d->m_saveBookmarksTimer = new QTimer( this );
-        connect( d->m_saveBookmarksTimer, SIGNAL( timeout() ), this, SLOT( saveDocumentInfo() ) );
+        connect( d->m_saveBookmarksTimer, SIGNAL(timeout()), this, SLOT(saveDocumentInfo()) );
     }
     d->m_saveBookmarksTimer->start( 5 * 60 * 1000 );
 
@@ -1693,7 +1693,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !d->m_memCheckTimer )
     {
         d->m_memCheckTimer = new QTimer( this );
-        connect( d->m_memCheckTimer, SIGNAL( timeout() ), this, SLOT( slotTimedMemoryCheck() ) );
+        connect( d->m_memCheckTimer, SIGNAL(timeout()), this, SLOT(slotTimedMemoryCheck()) );
     }
     d->m_memCheckTimer->start( 2000 );
 
@@ -2033,8 +2033,8 @@ void Document::startFontReading()
     }
 
     d->m_fontThread = new FontExtractionThread( d->m_generator, pages() );
-    connect( d->m_fontThread, SIGNAL( gotFont( const Okular::FontInfo& ) ), this, SLOT( fontReadingGotFont( const Okular::FontInfo& ) ) );
-    connect( d->m_fontThread, SIGNAL( progress( int ) ), this, SLOT( fontReadingProgress( int ) ) );
+    connect( d->m_fontThread, SIGNAL(gotFont(Okular::FontInfo)), this, SLOT(fontReadingGotFont(Okular::FontInfo)) );
+    connect( d->m_fontThread, SIGNAL(progress(int)), this, SLOT(fontReadingProgress(int)) );
 
     d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
 }
@@ -2567,8 +2567,8 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         searchDialog->setMainWidget( searchLabel );
 
         QTimer::singleShot(500, searchDialog, SLOT(show()));
-        connect(this, SIGNAL( searchFinished(int, Okular::Document::SearchStatus) ), searchDialog, SLOT(deleteLater()));
-        connect(searchDialog, SIGNAL( finished() ), this, SLOT(cancelSearch()));
+        connect(this, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), searchDialog, SLOT(deleteLater()));
+        connect(searchDialog, SIGNAL(finished()), this, SLOT(cancelSearch()));
 #endif
     }
 
@@ -3175,8 +3175,8 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     }
     if ( pagesAdded )
     {
-        connect( dialog, SIGNAL( settingsChanged( const QString& ) ),
-                 this, SLOT( slotGeneratorConfigChanged( const QString& ) ) );
+        connect( dialog, SIGNAL(settingsChanged(QString)),
+                 this, SLOT(slotGeneratorConfigChanged(QString)) );
     }
 }
 

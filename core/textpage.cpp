@@ -455,7 +455,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator start = it, end = itEnd, tmpIt = it;
+    TextList::ConstIterator start = it, end = itEnd, tmpIt = it, tmpItEnd = itEnd;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
 
     //case 2(a) ......................................
@@ -490,10 +490,22 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
 
+//    cout << "startPoint: " << startC.x * scaleX << " " << startC.y * scaleY << endl;
+//    cout << "endPoint: " << endC.x * scaleX << " " << endC.y * scaleY << endl;
+
+    bool selection02 = false;
+
+    //if second type of selection change start and end point like this
+    if(startC.y > endC.y){
+        selection02 = true;
+        double tmp = endC.y;
+        endC.y = startC.y;
+        startC.y = tmp;
+    }
+
+
     // Selection type 01
     it = tmpIt;
-
-//    if(startC.y < endC.y)
     {
 
         cout << "first selection type " << endl;
@@ -541,225 +553,88 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
 
+    // Now we have to find the correct starting and ending text for selection
 
-    if(startC.y > endC.y){
 
-        NormalizedRect rect;
-        //delete all items until it come below the end point and withing the rectangle
-        TextList::ConstIterator tmpStart = start, tmpEnd = end;
 
-        cout << "startText: " << (*tmpStart)->text().toAscii().data() << endl;
-        cout << "endText: " << (*tmpEnd)->text().toAscii().data() << endl;
-        cout << "difference: " << tmpStart - tmpEnd << endl;
+    if(selection02){
 
-        /** for the end point **/
+        // 1. we are back to the previous selection points.
+        double tmp = endC.y;
+        endC.y = startC.y;
+        startC.y = tmp;
 
-        // 1. Take the first rectangle within the bounding rectangle
-        while(1){
 
-            rect = (*tmpEnd)->area;
-            if(rect.isTop(endC)){
-                break;
-            }
-
-            if(*(tmpEnd+1))
-                tmpEnd++;
-            else break;
-        }
-        end = tmpEnd;
-
-        /** for the start point **/
-
-        // 1. Find the last rectangle within the bounding rectangle
-
-        while(1){
-
-            rect = (*tmpStart)->area;
-            if(rect.isBottom(startC)){
-                break;
-            }
-
-            if(*(tmpStart-1))
-                tmpStart--;
-            else break;
-        }
-        start = tmpStart;
+        TextList::ConstIterator tmpStart = end, tmpEnd = start;
+        // Now, we have to find the nearest rectangles from start and end point
 
         cout << "startText: " << (*tmpStart)->text().toAscii().data() << endl;
         cout << "endText: " << (*tmpEnd)->text().toAscii().data() << endl;
         cout << "difference: " << tmpStart - tmpEnd << endl;
 
-        // now end contians the first rectangle withing the boundary and start contains the last rectangle
-        // withing the boundary
+        it = tmpIt, itEnd = tmpItEnd;
 
-//        tmpStart = start, tmpEnd = end;
+        // nearest to end Point
+        if(end == itEnd){
 
-//        // 1. Find the closest rectangle to end point
+            int distance = scaleX + scaleY + 100;
+            for( ; tmpEnd <= tmpStart ; tmpEnd++){
 
-        int distance = scaleX + scaleY + 100;
-        for( ; tmpEnd >= tmpStart ; tmpEnd++){
+                QRect entRect;
+                if(*tmpEnd)
+                    entRect = (*tmpEnd)->area.geometry(scaleX,scaleY);
 
-            QRect entRect;
-            if(*tmpEnd)
-                entRect = (*tmpEnd)->area.geometry(scaleX,scaleY);
+                int xdist, ydist;
+                xdist = entRect.center().x() - endC.x;
+                ydist = entRect.center().y() - endC.y;
 
-            int xdist, ydist;
-            xdist = entRect.center().x() - endC.x;
-            ydist = entRect.center().y() - endC.y;
+                //make them positive
+                if(xdist < 0) xdist = -xdist;
+                if(ydist < 0) ydist = -ydist;
 
-            //make them positive
-            if(xdist < 0) xdist = -xdist;
-            if(ydist < 0) ydist = -ydist;
+                if( (xdist + ydist) < distance){
+                    distance = xdist+ ydist;
+                    end = tmpEnd;
+                }
 
-            if( (xdist + ydist) < distance){
-                distance = xdist+ ydist;
-                end = tmpEnd;
             }
+
+            cout << "Final endText: " << (*tmpEnd)->text().toAscii().data() << endl;
 
         }
 
-        tmpStart = start, tmpEnd = end;
-//        distance = scaleX + scaleY + 100;
+        tmpEnd = end;
+        if(start == it){
 
-//        for(;tmpStart <= tmpEnd; tmpStart--){
-//            QRect entRect = (*tmpStart)->area.geometry(scaleX,scaleY);
+            int distance = scaleX + scaleY + 100;
 
-//            int xdist,ydist;
-//            xdist = entRect.center().x() - startC.x;
-//            ydist = entRect.center().y() - startC.y;
+            for(;tmpStart >= tmpEnd; tmpStart--){
+                QRect entRect = (*tmpStart)->area.geometry(scaleX,scaleY);
 
-//            //make them positive
-//            if(xdist < 0) xdist = -xdist;
-//            if(ydist < 0) ydist = -ydist;
+                int xdist,ydist;
+                xdist = entRect.center().x() - startC.x;
+                ydist = entRect.center().y() - startC.y;
 
-//            if(xdist + ydist < distance){
-//                distance = xdist+ ydist;
-//                start = tmpStart;
-//            }
+                //make them positive
+                if(xdist < 0) xdist = -xdist;
+                if(ydist < 0) ydist = -ydist;
 
-//        }
+                if(xdist + ydist < distance){
+                    distance = xdist+ ydist;
+                    start = tmpStart;
+                }
 
+            }
+            cout << "Final startText: " << (*tmpStart)->text().toAscii().data() << endl;
+        }
 
     }
-
-    //selection type 02
-//    else
-//    {
-
-//        cout << "second selection type " << endl;
-//        //case 3.b 02 (end is upper than start, so we start from the start of the textList)
-//        if(end == itEnd){
-
-//            it = tmpIt; //start
-//            bool flagV = false;
-//            NormalizedRect rect;
-
-//            for ( ; it != itEnd ; it++ ){
-
-//                rect= (*itEnd)->area;
-//                rect.isBottom(endC) ? flagV = false: flagV = true;
-
-//                if(flagV && rect.isLeft(endC)){
-//                    end = itEnd;
-//                    break;
-//                }
-//            }
-
-//        }
-
-//        //case 3.a 02
-//        if(start == it){
-
-//            it = tmpIt;
-//            itEnd = itEnd-1;
-//            bool flagV = false;
-//            NormalizedRect rect;
-
-//            for ( ; itEnd >= it; itEnd-- ){
-
-//                rect= (*it)->area;
-//                rect.isTop(startC) ? flagV = false: flagV = true;
-
-//                if(flagV && rect.isRight(startC)){
-//                    start = it;
-//                    break;
-//                }
-//            }
-
-//        }
-
-
-
-//    }
-
-//    if(start == it){
-////        return ret;
-//        // we can take that for start we have to increase right, bottom
-
-//        bool flagV = false;
-//        NormalizedRect rect;
-
-//        // The second selection type
-//        if(startC.y > endC.y){
-
-//            cout << "second selection type 01" << endl;
-//            cout << "start: " << startC.x << " end: " << endC.x << endl;
-
-//            for ( ; it != itEnd; ++it ){
-
-//                rect= (*it)->area;
-//                rect.isTop(startC) ? flagV = false: flagV = true;
-
-//                if(flagV && rect.isRight(startC)){
-//                    start = it;
-//                    break;
-//                }
-//            }
-
-//        }
-
-//        else{
-
-
-//        }
-
-//    }
-
-
-//    //case 3.b .............................................
-//    if(end == itEnd){
-//        it = tmpIt; //start
-//        itEnd = itEnd-1;
-
-//        bool flagV = false;
-//        NormalizedRect rect;
-
-//        if(startC.y > endC.y){
-//             cout << "second selection type 02" << endl;
-//             cout << "start: " << startC.x << " end: " << endC.x << endl;
-//            for ( ; itEnd >= it; itEnd-- ){
-
-//                rect= (*itEnd)->area;
-//                rect.isBottom(endC) ? flagV = false: flagV = true;
-
-//                if(flagV && rect.isLeft(endC)){
-//                    end = itEnd;
-//                    break;
-//                }
-//            }
-
-//        }
-
-//        else{
-
-//        }
-//    }
-
 
 
     //if start is less than end swap them
     if(start > end){
 
+        cout << "so true ...." << endl;
         it = start;
         start = end;
         end = it;

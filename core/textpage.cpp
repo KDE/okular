@@ -412,20 +412,29 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
      Case 1(a): both startpoint and endpoint are out of the bounding Rectangle and at one side, so the rectangle made of start
      and endPoint are outof the bounding rect (do not intersect)
 
-     Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so their rectangle
+     Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so is their rectangle
 
      Case 2(a): find the rectangle which contains start and endpoint and having some
      TextEntity
 
-     Case 2(b): if 2(a) fails (if startPoint and endPoint are unchanged), then we check whether there is
+     Case 2(b): if 2(a) fails (if startPoint and endPoint both are unchanged), then we check whether there is any
      TextEntity within the rect made by startPoint and endPoint
 
-     Case 3(a): the startPoint is in some empty space, which is not under any rectangle
-     containing some TinyTextEntity. So, we search the nearest rectangle consisting of some
-     TinyTextEntity right to or bottom of the startPoint
+     Case 3:
+     Now, we may have two type of selection.
+     1. startpoint is left-top of start_end and endpoint is right-bottom
+     2. startpoint is left-bottom of start_end and endpoint is top-right
 
-     Case 3(b): Same for the endPoint. Here, we have to find the point top of or left to
-     start point
+     Also, as 2(b) is passed, we might have it,itEnd or both unchanged, but the fact is that we have
+     text within them. so, we need to search for the best suitable textposition for start and end.
+
+     Case 3(a): We search the nearest rectangle consisting of some
+     TinyTextEntity right to or bottom of the startPoint for selection 01.
+     And, for selection 02, we have to search for right and top
+
+     Case 3(b): For endpont, we have to find the point top of or left to
+     endpoint if we have selection 01.
+     Otherwise, the search will be left and bottom
     **/
 
     // we know that startC.x > endC.x, we need to decide which is top and which is bottom
@@ -435,22 +444,29 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         start_end = NormalizedRect(startC.x, startC.y, endC.x, endC.y);
     else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
 
-//    cout << "selection: ";
-//    printRect(start_end.geometry(scaleX,scaleY));
-//    cout << "boundary: ";
-//    printRect(boundingRect.geometry(scaleX,scaleY));
-
     //Case 1(a) .......................................
     if(!boundingRect.intersects(start_end)) return ret;
 
     // case 1(b) ......................................
     // Move the points to boundary
+    /**
+        note that, after swapping of start and end, we know that,
+        start is always left to end. but, we cannot say start is
+        positioned upper than end.
+    **/
     else{
+        // if start is left to content rect take it to content rect boundary
         if(startC.x * scaleX < minX) startC.x = minX/scaleX;
         if(endC.x * scaleX > maxX) endC.x = maxX/scaleX;
 
+        // if start is top to end (selection type 01)
         if(startC.y * scaleY < minY) startC.y = minY/scaleY;
         if(endC.y * scaleY > maxY) endC.y = maxY/scaleY;
+
+        // if start is bottom to end (selection type 02)
+        if(startC.y * scaleY > maxY) startC.y = maxY/scaleY;
+        if(endC.y * scaleY < minY) endC.y = minY/scaleY;
+
     }
 
 
@@ -467,53 +483,42 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         if(tmp.contains(endCx,endCy)) end = it;
     }
 
+//    if(it != start && end != itEnd) goto POST_PROCESSING;
 
     //case 2(b) ......................................
     it = tmpIt;
     if(start == it && end == itEnd){
-        //if start or end do not have any text we do not do any text selection
-//        return ret;
 
         for ( ; it != itEnd; ++it )
         {
-            tmp = (*it)->area;
             // is there any text reactangle within the start_end rect
+            tmp = (*it)->area;
             if(start_end.intersects(tmp))
                 break;
         }
 
-        // no text within the area
+        // we have searched every text entities, but none is within the rectangle created by start and end
+        // so, no selection should be done
         if(it == itEnd){
             return ret;
         }
 
     }
 
+    cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY << endl;
+    cout << "endPoint: " << endC.x * scaleX << "," << endC.y * scaleY << endl;
 
-//    cout << "startPoint: " << startC.x * scaleX << " " << startC.y * scaleY << endl;
-//    cout << "endPoint: " << endC.x * scaleX << " " << endC.y * scaleY << endl;
+    //case 3.a 01
+    if(start == it){
 
-    bool selection02 = false;
+        it = tmpIt;
+        bool flagV = false;
+        NormalizedRect rect;
 
-    //if second type of selection change start and end point like this
-    if(startC.y > endC.y){
-        selection02 = true;
-        double tmp = endC.y;
-        endC.y = startC.y;
-        startC.y = tmp;
-    }
+        // selection type 01
+        if(startC.y <= endC.y){
 
-
-    // Selection type 01
-    it = tmpIt;
-    {
-
-        cout << "first selection type " << endl;
-        //case 3.a 01
-        if(start == it){
-
-            bool flagV = false;
-            NormalizedRect rect;
+            cout << "start First .... "  << endl;
 
             for ( ; it != itEnd; ++it ){
 
@@ -526,16 +531,57 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 }
             }
 
+            cout << "startText: " << (*start)->text().toAscii().data() << endl;
         }
 
-        //case 3.b 01
-        if(end == itEnd){
+        //selection type 02
+        else{
 
-            it = tmpIt; //start
-            itEnd = itEnd-1;
+            //                TextList::ConstIterator tmpStart = end, tmpEnd = start;
+            cout << "start Second .... "  << endl;
+            int distance = scaleX + scaleY + 100;
 
-            bool flagV = false;
-            NormalizedRect rect;
+            for ( ; it != itEnd; ++it ){
+
+                rect= (*it)->area;
+
+//                if(rect.isTop(startC)) break;
+                if(rect.isBottom(startC) && rect.isLeft(startC)){
+
+                    QRect entRect = rect.geometry(scaleX,scaleY);
+
+                    int xdist, ydist;
+                    xdist = entRect.center().x() - startC.x * scaleX;
+                    ydist = entRect.center().y() - startC.y * scaleY;
+
+                    //make them positive
+                    if(xdist < 0) xdist = -xdist;
+                    if(ydist < 0) ydist = -ydist;
+
+                    if( (xdist + ydist) < distance){
+                        distance = xdist+ ydist;
+                        start = it;
+                    }
+
+                }
+
+            }
+
+            cout << "startText: " << (*start)->text().toAscii().data() << endl;
+
+        }
+
+    }
+
+    //case 3.b 01
+    if(end == itEnd){
+        it = tmpIt; //start
+        itEnd = itEnd-1;
+
+        bool flagV = false;
+        NormalizedRect rect;
+
+        if(startC.y <= endC.y){
 
             for ( ; itEnd >= it; itEnd-- ){
 
@@ -546,99 +592,56 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                     end = itEnd;
                     break;
                 }
+
             }
+            cout << "end First Text: " << (*end)->text().toAscii().data() << endl;
+        }
+
+        else{
+
+            int distance = scaleX + scaleY + 100;
+            for ( ; itEnd >= it; itEnd-- ){
+
+                rect= (*itEnd)->area;
+
+                if(rect.isTop(endC) && rect.isRight(endC)){
+
+                    QRect entRect = rect.geometry(scaleX,scaleY);
+
+                    int xdist, ydist;
+                    xdist = entRect.center().x() - endC.x * scaleX;
+                    ydist = entRect.center().y() - endC.y * scaleY;
+
+                    //make them positive
+                    if(xdist < 0) xdist = -xdist;
+                    if(ydist < 0) ydist = -ydist;
+
+                    if( (xdist + ydist) < distance){
+                        distance = xdist+ ydist;
+                        end = itEnd;
+                    }
+
+                }
+            }
+
+            cout << "end second Text: " << (*end)->text().toAscii().data() << endl;
 
         }
 
     }
 
-
-    // Now we have to find the correct starting and ending text for selection
-
-
-
-    if(selection02){
-
-        // 1. we are back to the previous selection points.
-        double tmp = endC.y;
-        endC.y = startC.y;
-        startC.y = tmp;
-
-
-        TextList::ConstIterator tmpStart = end, tmpEnd = start;
-        // Now, we have to find the nearest rectangles from start and end point
-
-        cout << "startText: " << (*tmpStart)->text().toAscii().data() << endl;
-        cout << "endText: " << (*tmpEnd)->text().toAscii().data() << endl;
-        cout << "difference: " << tmpStart - tmpEnd << endl;
-
-        it = tmpIt, itEnd = tmpItEnd;
-
-        // nearest to end Point
-        if(end == itEnd){
-
-            int distance = scaleX + scaleY + 100;
-            for( ; tmpEnd <= tmpStart ; tmpEnd++){
-
-                QRect entRect;
-                if(*tmpEnd)
-                    entRect = (*tmpEnd)->area.geometry(scaleX,scaleY);
-
-                int xdist, ydist;
-                xdist = entRect.center().x() - endC.x;
-                ydist = entRect.center().y() - endC.y;
-
-                //make them positive
-                if(xdist < 0) xdist = -xdist;
-                if(ydist < 0) ydist = -ydist;
-
-                if( (xdist + ydist) < distance){
-                    distance = xdist+ ydist;
-                    end = tmpEnd;
-                }
-
-            }
-
-            cout << "Final endText: " << (*tmpEnd)->text().toAscii().data() << endl;
-
-        }
-
-        tmpEnd = end;
-        if(start == it){
-
-            int distance = scaleX + scaleY + 100;
-
-            for(;tmpStart >= tmpEnd; tmpStart--){
-                QRect entRect = (*tmpStart)->area.geometry(scaleX,scaleY);
-
-                int xdist,ydist;
-                xdist = entRect.center().x() - startC.x;
-                ydist = entRect.center().y() - startC.y;
-
-                //make them positive
-                if(xdist < 0) xdist = -xdist;
-                if(ydist < 0) ydist = -ydist;
-
-                if(xdist + ydist < distance){
-                    distance = xdist+ ydist;
-                    start = tmpStart;
-                }
-
-            }
-            cout << "Final startText: " << (*tmpStart)->text().toAscii().data() << endl;
-        }
-
-    }
-
+    POST_PROCESSING:
 
     //if start is less than end swap them
     if(start > end){
 
-        cout << "so true ...." << endl;
         it = start;
         start = end;
         end = it;
     }
+
+    cout << "start: " << (*start)->text().toAscii().data() << endl;
+    cout << "end: " << (*end)->text().toAscii().data() << endl;
 
 
     //removes the possibility of crash, in case none of 1 to 3 is true

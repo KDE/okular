@@ -222,6 +222,14 @@ class OKULAR_EXPORT NormalizedRect
             return top > pt.y;
         }
 
+        bool isBottomOrLevel(NormalizedPoint pt) const{
+            return top < pt.y;
+        }
+
+        bool isTopOrLevel(NormalizedPoint pt) const{
+            return bottom > pt.y;
+        }
+
         bool isLeft(NormalizedPoint pt) const{
             return left < pt.x;
         }

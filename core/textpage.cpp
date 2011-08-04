@@ -375,23 +375,22 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 #else
 
-    NormalizedRect tmp;
     //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
     double minX, maxX, minY, maxY;
     double scaleX = this->d->m_page->m_page->width();
     double scaleY = this->d->m_page->m_page->height();
 
     NormalizedPoint startC = sel->start();
-    double startCx = startC.x;
-    double startCy = startC.y;
+//    double startCx = startC.x;
+//    double startCy = startC.y;
 
     NormalizedPoint endC = sel->end();
-    double endCx = endC.x;
-    double endCy = endC.y;
+//    double endCx = endC.x;
+//    double endCy = endC.y;
 
     //if startPoint is right to endPoint just swap them
     NormalizedPoint temp;
-    if(startCx > endCx){
+    if(startC.x > endC.x){
         temp = startC;
         startC = endC;
         endC = temp;
@@ -474,13 +473,26 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     TextList::ConstIterator start = it, end = itEnd, tmpIt = it, tmpItEnd = itEnd;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
 
+//    cout << "unchanged: *********** " << endl;
+//    cout << "start: " << startCx * scaleX << "," << startCy * scaleY << endl;
+//    cout << "end: " << endCx * scaleX << "," << endCy * scaleY << endl;
+
+    NormalizedRect tmp;
     //case 2(a) ......................................
     for ( ; it != itEnd; ++it )
     {
         // (*it) gives a TinyTextEntity*
         tmp = (*it)->area;
-        if(tmp.contains(startCx,startCy)) start = it;
-        if(tmp.contains(endCx,endCy)) end = it;
+        if(tmp.contains(startC.x,startC.y)){
+            start = it;
+            cout << "start has been changed .......................... " << endl;
+            cout << "Text: " << (*start)->text().toAscii().data() << endl;
+        }
+        if(tmp.contains(endC.x,endC.y)){
+            end = it;
+            cout << "end has been changed .......................... " << endl;
+            cout << "Text: " << (*end)->text().toAscii().data() << endl;
+        }
     }
 
 //    if(it != start && end != itEnd) goto POST_PROCESSING;
@@ -505,13 +517,15 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     }
 
+    it = tmpIt;
+
     cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY << endl;
     cout << "endPoint: " << endC.x * scaleX << "," << endC.y * scaleY << endl;
 
-    //case 3.a 01
-    if(start == it){
+    bool selection_two_start = false;
 
-        it = tmpIt;
+    //case 3.a 01
+    if(start == it){    //this is becoming false ??!!!
         bool flagV = false;
         NormalizedRect rect;
 
@@ -537,16 +551,20 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         //selection type 02
         else{
 
-            //                TextList::ConstIterator tmpStart = end, tmpEnd = start;
+            selection_two_start = true;
             cout << "start Second .... "  << endl;
             int distance = scaleX + scaleY + 100;
+
+            int count = 0;
 
             for ( ; it != itEnd; ++it ){
 
                 rect= (*it)->area;
+                printRect(rect.geometry(scaleX,scaleY));
 
 //                if(rect.isTop(startC)) break;
-                if(rect.isBottom(startC) && rect.isLeft(startC)){
+                if(rect.isBottomOrLevel(startC) && rect.isRight(startC)){
+                    count++;
 
                     QRect entRect = rect.geometry(scaleX,scaleY);
 
@@ -558,6 +576,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                     if(xdist < 0) xdist = -xdist;
                     if(ydist < 0) ydist = -ydist;
 
+                    cout << "now: " << xdist + ydist << ", prev: " << distance << endl;
+
                     if( (xdist + ydist) < distance){
                         distance = xdist+ ydist;
                         start = it;
@@ -567,6 +587,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
             }
 
+            cout << "count: " << count << endl;
             cout << "startText: " << (*start)->text().toAscii().data() << endl;
 
         }
@@ -604,7 +625,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
                 rect= (*itEnd)->area;
 
-                if(rect.isTop(endC) && rect.isRight(endC)){
+                if(rect.isTopOrLevel(endC) && rect.isLeft(endC)){
 
                     QRect entRect = rect.geometry(scaleX,scaleY);
 
@@ -630,7 +651,15 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     }
 
-    POST_PROCESSING:
+    // special case, if start and end in selection 02 are in the same column, and we start at an empty space
+    // we have to remove the selection of last character
+    if(selection_two_start){
+        if(start > end){
+            start = start - 1;
+        }
+    }
+
+//    POST_PROCESSING:
 
     //if start is less than end swap them
     if(start > end){
@@ -1806,18 +1835,18 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             cout << "list2: " << list2.length() << endl;
 
 //            cout << "Node1 text: ........................ " << endl << endl;
-            for(j = 0 ; j < list1.length() ; j++){
-                 TinyTextEntity *ent = list1.at(j);
+//            for(j = 0 ; j < list1.length() ; j++){
+//                 TinyTextEntity *ent = list1.at(j);
 //                 cout << ent->text().toAscii().data();
-            }
-            cout << endl;
+//            }
+//            cout << endl;
 
 //            cout << "Node2 text: ........................ " << endl << endl;
-            for(j = 0 ; j < list2.length() ; j++){
-                 TinyTextEntity *ent = list2.at(j);
+//            for(j = 0 ; j < list2.length() ; j++){
+//                 TinyTextEntity *ent = list2.at(j);
 //                 cout << ent->text().toAscii().data();
-            }
-            cout << endl;
+//            }
+//            cout << endl;
 
         }
 

@@ -375,31 +375,24 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 #else
 
-    //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
-    double minX, maxX, minY, maxY;
     double scaleX = this->d->m_page->m_page->width();
     double scaleY = this->d->m_page->m_page->height();
 
     NormalizedPoint startC = sel->start();
-//    double startCx = startC.x;
-//    double startCy = startC.y;
-
     NormalizedPoint endC = sel->end();
-//    double endCx = endC.x;
-//    double endCy = endC.y;
+    NormalizedPoint temp;
 
     //if startPoint is right to endPoint just swap them
-    NormalizedPoint temp;
     if(startC.x > endC.x){
         temp = startC;
         startC = endC;
         endC = temp;
     }
 
-
+    //minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
     NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
     QRect content = boundingRect.geometry(scaleX,scaleY);
-
+    double minX, maxX, minY, maxY;
     minX = content.left(), maxX = content.right();
     minY = content.top(), maxY = content.bottom();
 
@@ -470,32 +463,23 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
-    TextList::ConstIterator start = it, end = itEnd, tmpIt = it, tmpItEnd = itEnd;
+    TextList::ConstIterator start = it, end = itEnd, tmpIt = it; //, tmpItEnd = itEnd;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
 
-//    cout << "unchanged: *********** " << endl;
-//    cout << "start: " << startCx * scaleX << "," << startCy * scaleY << endl;
-//    cout << "end: " << endCx * scaleX << "," << endCy * scaleY << endl;
 
     NormalizedRect tmp;
     //case 2(a) ......................................
     for ( ; it != itEnd; ++it )
     {
-        // (*it) gives a TinyTextEntity*
         tmp = (*it)->area;
         if(tmp.contains(startC.x,startC.y)){
             start = it;
-            cout << "start has been changed .......................... " << endl;
-            cout << "Text: " << (*start)->text().toAscii().data() << endl;
         }
         if(tmp.contains(endC.x,endC.y)){
             end = it;
-            cout << "end has been changed .......................... " << endl;
-            cout << "Text: " << (*end)->text().toAscii().data() << endl;
         }
     }
 
-//    if(it != start && end != itEnd) goto POST_PROCESSING;
 
     //case 2(b) ......................................
     it = tmpIt;
@@ -519,20 +503,18 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     it = tmpIt;
 
-    cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY << endl;
-    cout << "endPoint: " << endC.x * scaleX << "," << endC.y * scaleY << endl;
+//    cout << "startPoint: " << startC.x * scaleX << "," << startC.y * scaleY << endl;
+//    cout << "endPoint: " << endC.x * scaleX << "," << endC.y * scaleY << endl;
 
     bool selection_two_start = false;
 
     //case 3.a 01
-    if(start == it){    //this is becoming false ??!!!
+    if(start == it){
         bool flagV = false;
         NormalizedRect rect;
 
         // selection type 01
         if(startC.y <= endC.y){
-
-            cout << "start First .... "  << endl;
 
             for ( ; it != itEnd; ++it ){
 
@@ -545,14 +527,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 }
             }
 
-            cout << "startText: " << (*start)->text().toAscii().data() << endl;
         }
 
         //selection type 02
         else{
 
             selection_two_start = true;
-            cout << "start Second .... "  << endl;
             int distance = scaleX + scaleY + 100;
 
             int count = 0;
@@ -562,7 +542,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 rect= (*it)->area;
                 printRect(rect.geometry(scaleX,scaleY));
 
-//                if(rect.isTop(startC)) break;
                 if(rect.isBottomOrLevel(startC) && rect.isRight(startC)){
                     count++;
 
@@ -576,8 +555,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                     if(xdist < 0) xdist = -xdist;
                     if(ydist < 0) ydist = -ydist;
 
-                    cout << "now: " << xdist + ydist << ", prev: " << distance << endl;
-
                     if( (xdist + ydist) < distance){
                         distance = xdist+ ydist;
                         start = it;
@@ -586,9 +563,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 }
 
             }
-
-            cout << "count: " << count << endl;
-            cout << "startText: " << (*start)->text().toAscii().data() << endl;
 
         }
 
@@ -615,7 +589,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 }
 
             }
-            cout << "end First Text: " << (*end)->text().toAscii().data() << endl;
         }
 
         else{
@@ -645,8 +618,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 }
             }
 
-            cout << "end second Text: " << (*end)->text().toAscii().data() << endl;
-
         }
 
     }
@@ -659,8 +630,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 
-//    POST_PROCESSING:
-
     //if start is less than end swap them
     if(start > end){
 
@@ -668,9 +637,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         start = end;
         end = it;
     }
-
-    cout << "start: " << (*start)->text().toAscii().data() << endl;
-    cout << "end: " << (*end)->text().toAscii().data() << endl;
 
 
     //removes the possibility of crash, in case none of 1 to 3 is true
@@ -1437,7 +1403,7 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp, SortedTextList &lines
                 else percentage = overlap * 100 / (text_y2 - text_y1);
 
                 //the overlap percentage is more than 70% of the smaller y
-                if(percentage >= 80){
+                if(percentage >= 70){
 
                     TextList tmp = lines.at(i);
                     tmp.append((*it));
@@ -1476,7 +1442,7 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp, SortedTextList &lines
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
         lines.replace(i,list);
 
-//        printTextList(i,list);
+        printTextList(i,list);
     }
 
     //we cannot delete words here, as lines contains the same pointers as words does
@@ -1508,8 +1474,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     int i = 0, j, k;
     int countLoop = 0;
 
-    cout << "content Rect: ";
-    printRect(contentRect);
+//    cout << "content Rect: ";
+//    printRect(contentRect);
 
     // while traversing the tree has not been ended
     while(i < tree.length()){
@@ -1517,7 +1483,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         RegionText node = tree.at(i);
         QRect regionRect = node.area();
 
-        cout << "i: " << i << " .......................... " << endl;
+//        cout << "i: " << i << " .......................... " << endl;
 
 /** 1. calculation of projection profiles ................................... **/
 
@@ -1545,7 +1511,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         int avgX = 0, avgY = 0;
         int count;
 
-        cout << "Noise: tcx: " << tcx << " tcy: " << tcy << endl;
+//        cout << "Noise: tcx: " << tcx << " tcy: " << tcy << endl;
 
         // for every text in the region
         for( j = 0 ; j < list.length() ; j++ ){
@@ -1566,7 +1532,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         }
 
 
-        cout << "width: " << regionRect.width() << " height: " << regionRect.height() << endl;
+//        cout << "width: " << regionRect.width() << " height: " << regionRect.height() << endl;
 //        cout << "total Elements: " << j << endl;
 
 //        cout << "projection on y axis " << endl << endl;
@@ -1752,7 +1718,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             tree.replace(i,tmpNode);
 
             i++;
-            cout << "no cut possible :( :( :(" << endl;
+//            cout << "no cut possible :( :( :(" << endl;
 
             continue;
         }
@@ -1761,16 +1727,16 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         TinyTextEntity* ent;
         QRect entRect;
 
-        cout << "previous: ";
-        printRect(regionRect);
+//        cout << "previous: ";
+//        printRect(regionRect);
 
         // now we need to create two new regionRect
         //horizontal cut, topRect and bottomRect
         if(cut_hor){
-            cout << "horizontal cut, list length: " << list.length() << endl;
+//            cout << "horizontal cut, list length: " << list.length() << endl;
 
-            printRect(topRect);
-            printRect(bottomRect);
+//            printRect(topRect);
+//            printRect(bottomRect);
 
             for( j = 0 ; j < list.length() ; j++ ){
 
@@ -1802,10 +1768,10 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         //vertical cut, leftRect and rightRect
         else if(cut_ver){
 
-            cout << "vertical cut, list length: " << list.length() << endl;
+//            cout << "vertical cut, list length: " << list.length() << endl;
 
-            printRect(leftRect);
-            printRect(rightRect);
+//            printRect(leftRect);
+//            printRect(rightRect);
 
             for( j = 0 ; j < list.length() ; j++ ){
 
@@ -1831,8 +1797,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
 
         if(cut_hor || cut_ver){
 
-            cout << "list1: " << list1.length() << endl;
-            cout << "list2: " << list2.length() << endl;
+//            cout << "list1: " << list1.length() << endl;
+//            cout << "list2: " << list2.length() << endl;
 
 //            cout << "Node1 text: ........................ " << endl << endl;
 //            for(j = 0 ; j < list1.length() ; j++){

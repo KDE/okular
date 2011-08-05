@@ -162,16 +162,11 @@ void Document::extractImageFiles( const QStringList &list )
 
     qSort( files.begin(), files.end(), caseSensitiveNaturalOrderLessThen );
 
-    for ( int i = 0; i < files.count(); ++i ) {
-        const QString lowerFile = files[ i ].toLower();
+    foreach(const QString &f, files) {
+        const QImageReader r(f);
 
-        if ( lowerFile.endsWith( ".gif" ) ||
-             lowerFile.endsWith( ".jpg" ) ||
-             lowerFile.endsWith( ".jpeg" ) ||
-             lowerFile.endsWith( ".png" ) ||
-             lowerFile.endsWith( ".tif" ) ||
-             lowerFile.endsWith( ".tiff" ) )
-            mPageMap.append( files[ i ] );
+        if ( r.canRead() )
+            mPageMap.append(f);
     }
 }
 

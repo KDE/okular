@@ -1520,7 +1520,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                 // drag page
                 else if ( !d->mouseGrabPos.isNull() )
                 {
-                    setCursor( Qt::SizeAllCursor );
+                    setCursor( Qt::ClosedHandCursor );
 
                     QPoint mousePos = e->globalPos();
                     QPoint delta = d->mouseGrabPos - mousePos;
@@ -2838,6 +2838,8 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         if ( d->mouseMode == MouseTextSelect )
             setCursor( Qt::IBeamCursor );
+        else if ( d->mouseMode == MouseSelect )
+            setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
         else
@@ -2855,6 +2857,10 @@ void PageView::updateCursor( const QPoint &p )
                 if ( annotobj
                      && ( QApplication::keyboardModifiers() & Qt::ControlModifier )
                      && static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation()->canBeMoved() )
+                {
+                    setCursor( Qt::OpenHandCursor );
+                }
+                else if ( d->mouseMode == MouseNormal )
                 {
                     setCursor( Qt::OpenHandCursor );
                 }

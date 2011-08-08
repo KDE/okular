@@ -32,7 +32,13 @@ static int compare_right( const QString &leftStr, int left, const QString &right
 	 * remember it in BIAS.
    */
   for ( ;; left++, right++ ) {
-    if ( !leftStr[ left ].isDigit() && !rightStr[ right ].isDigit() )
+    if ( left >= leftStr.length() && right < rightStr.length() )
+      return -1;
+    else if ( right >= rightStr.length() && left < leftStr.length() )
+      return +1;
+    else if ( right >= rightStr.length() && left >= leftStr.length() )
+      return bias;
+    else if ( !leftStr[ left ].isDigit() && !rightStr[ right ].isDigit() )
       return bias;
     else if ( !leftStr[ left ].isDigit() )
       return -1;
@@ -58,7 +64,13 @@ static int compare_left( const QString &leftStr, int left, const QString &rightS
    * different value wins.
    */
   for ( ;; left++, right++ ) {
-    if ( !leftStr[ left ].isDigit() && !rightStr[ right ].isDigit() )
+    if ( left >= leftStr.length() && right < rightStr.length() )
+      return -1;
+    else if ( right >= rightStr.length() && left < leftStr.length() )
+      return +1;
+    else if ( right >= rightStr.length() && left >= leftStr.length() )
+      return 0;
+    else if ( !leftStr[ left ].isDigit() && !rightStr[ right ].isDigit() )
       return 0;
     else if ( !leftStr[ left ].isDigit() )
       return -1;

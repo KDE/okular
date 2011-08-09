@@ -58,6 +58,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="kcfg_DisplayDocumentTitle">
+          <property name="text">
+           <string>Display document title in title bar</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

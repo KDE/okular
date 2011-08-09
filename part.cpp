@@ -1738,6 +1738,8 @@ void Part::slotNewConfig()
     // update Reviews settings
     if ( m_sidebar->isItemEnabled(2) )
         m_reviewsWidget->reparseConfig();
+
+    setWindowTitleFromDocument ();
 }
 
 

@@ -39,7 +39,7 @@
 #include <kactioncollection.h>
 #include <kdirwatch.h>
 #include <kstandardaction.h>
-#include <kparts/genericfactory.h>
+#include <kpluginfactory.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <knuminput.h>

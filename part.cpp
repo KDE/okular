@@ -718,9 +718,14 @@ void Part::openUrlFromDocument(const KUrl &url)
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    m_bExtension->openUrlNotify();
-    m_bExtension->setLocationBarUrl(url.prettyUrl());
-    openUrl(url);
+    if (KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, widget()))
+    {
+        m_bExtension->openUrlNotify();
+        m_bExtension->setLocationBarUrl(url.prettyUrl());
+        openUrl(url);
+    } else {
+        KMessageBox::error( widget(), i18n("Could not open '%1'. File does not exist", url.pathOrUrl() ) );
+    }
 }
 
 void Part::openUrlFromBookmarks(const KUrl &_url)

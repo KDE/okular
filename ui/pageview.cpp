@@ -1799,7 +1799,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     {
         case MouseNormal:{
             // return the cursor to its normal state after dragging
-            if ( cursor().shape() == Qt::SizeAllCursor )
+            if ( cursor().shape() == Qt::ClosedHandCursor )
                 updateCursor( eventPos );
 
             PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );

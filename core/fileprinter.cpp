@@ -118,12 +118,12 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
                     ret = -5;
                 }
             }
-        } else if ( inputFileInfo.suffix() == "ps" && outputFileInfo.suffix() == "pdf" && ps2pdfAvailable() ) {
+        } else if ( inputFileInfo.suffix() == "ps" && printer.outputFormat() == QPrinter::PdfFormat && ps2pdfAvailable() ) {
             exe = "ps2pdf";
             argList << fileList[0] << printer.outputFileName();
             kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
-        } else if ( inputFileInfo.suffix() == "pdf" && outputFileInfo.suffix() == "ps" && pdf2psAvailable() ) {
+        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::PostScriptFormat && pdf2psAvailable() ) {
             exe = "pdf2ps";
             argList << fileList[0] << printer.outputFileName();
             kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;

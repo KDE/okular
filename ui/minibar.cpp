@@ -30,26 +30,7 @@
 
 // local includes
 #include "core/document.h"
-
-// [private widget] lineEdit for entering/validating page numbers
-class PagesEdit : public KLineEdit
-{
-    public:
-        PagesEdit( MiniBar * parent );
-        void setPagesNumber( int pages );
-        void setText( const QString & );
-
-    protected:
-        void focusInEvent( QFocusEvent * e );
-        void focusOutEvent( QFocusEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
-
-    private:
-        MiniBar * m_miniBar;
-        bool m_eatClick;
-        QIntValidator * m_validator;
-};
+#include "core/page.h"
 
 // [private widget] a flat qpushbutton that enlights on hover
 class HoverButton : public QToolButton
@@ -79,9 +60,17 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     m_prevButton->setIconSize( buttonSize );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
-    m_pagesEdit = new PagesEdit( this );
-    horLayout->addWidget( m_pagesEdit );
-    m_pagesEdit->installEventFilter( this );
+    m_pageNumberEdit = new PageNumberEdit( this );
+    horLayout->addWidget( m_pageNumberEdit );
+    m_pageNumberEdit->installEventFilter( this );
+    // bottom: left labelWidget (current page label)
+    m_pageLabelEdit = new PageLabelEdit( this );
+    horLayout->addWidget(m_pageLabelEdit);
+    m_pageLabelEdit->installEventFilter( this );
+    // bottom: left labelWidget (current page label)
+    m_pageNumberLabel = new QLabel( this );
+    m_pageNumberLabel->setAlignment( Qt::AlignCenter );
+    horLayout->addWidget(m_pageNumberLabel);
     // bottom: central 'of' label
     horLayout->addSpacing(5);
     horLayout->addWidget( new QLabel( i18nc( "Layouted like: '5 [pages] of 10'", "of" ), this ) );
@@ -103,7 +92,8 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
     resizeForPage( 0 );
 
     // connect signals from child widgets to internal handlers / signals bouncers
-    connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
+    connect( m_pageNumberEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
+    connect( m_pageLabelEdit, SIGNAL(pageNumberChosen(int)), this, SLOT(slotChangePage(int)) );
     connect( m_pagesButton, SIGNAL(clicked()), this, SIGNAL(gotoPage()) );
     connect( m_prevButton, SIGNAL(clicked()), this, SIGNAL(prevPage()) );
     connect( m_nextButton, SIGNAL(clicked()), this, SIGNAL(nextPage()) );
@@ -121,12 +111,13 @@ MiniBar::~MiniBar()
 
 bool MiniBar::eventFilter( QObject *target, QEvent *event )
 {
-    if ( target == m_pagesEdit )
+    if ( target == m_pageNumberEdit || target == m_pageLabelEdit )
     {
         if ( event->type() == QEvent::KeyPress )
         {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>( event );
-            if ( keyEvent->key() == Qt::Key_PageUp || keyEvent->key() == Qt::Key_PageDown )
+            int key = keyEvent->key();
+            if ( key == Qt::Key_PageUp || key == Qt::Key_PageDown || key == Qt::Key_Up || key == Qt::Key_Down )
             {
                 emit forwardKeyPressEvent( keyEvent );
                 return true;
@@ -153,12 +144,28 @@ void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, int set
 
     // resize width of widgets
     resizeForPage( pages );
-
+    
+    bool labelsDiffer = false;
+    foreach(const Okular::Page * page, pageVector)
+    {
+        if (!page->label().isEmpty())
+        {
+            if (page->label().toInt() != (page->number() + 1))
+            {
+                labelsDiffer = true;
+            }
+        }
+    }
+    
     // update child widgets
-    m_pagesEdit->setPagesNumber( pages );
+    m_pageLabelEdit->setPageLabels( pageVector );
+    m_pageNumberEdit->setPagesNumber( pages );
     m_pagesButton->setText( QString::number( pages ) );
     m_prevButton->setEnabled( false );
     m_nextButton->setEnabled( false );
+    m_pageLabelEdit->setVisible( labelsDiffer );
+    m_pageNumberLabel->setVisible( labelsDiffer );
+    m_pageNumberEdit->setVisible( !labelsDiffer );
 
     resize( minimumSizeHint() );
 
@@ -179,14 +186,17 @@ void MiniBar::notifyViewportChanged( bool /*smoothMove*/ )
         m_prevButton->setEnabled( page > 0 );
         m_nextButton->setEnabled( page < ( pages - 1 ) );
         // update text on widgets
-        m_pagesEdit->setText( QString::number( page + 1 ) );
+        const QString pageNumber = QString::number( page + 1 );
+        m_pageNumberEdit->setText( pageNumber );
+        m_pageNumberLabel->setText( pageNumber );
+        m_pageLabelEdit->setText( m_document->page(page)->label() );
     }
 }
 
 void MiniBar::slotChangePage()
 {
     // get text from the lineEdit
-    QString pageNumber = m_pagesEdit->text();
+    QString pageNumber = m_pageNumberEdit->text();
 
     // convert it to page number and go to that page
     bool ok;
@@ -194,9 +204,15 @@ void MiniBar::slotChangePage()
     if ( ok && number >= 0 && number < (int)m_document->pages() &&
          number != m_currentPage )
     {
-        m_document->setViewportPage( number );
-        m_pagesEdit->clearFocus();
+        slotChangePage( number );
     }
+}
+
+void MiniBar::slotChangePage( int pageNumber )
+{
+    m_document->setViewportPage( pageNumber );
+    m_pageNumberEdit->clearFocus();
+    m_pageLabelEdit->clearFocus();
 }
 
 void MiniBar::slotEmitNextPage()
@@ -214,8 +230,12 @@ void MiniBar::slotEmitPrevPage()
 void MiniBar::resizeForPage( int pages )
 {
     int numberWidth = 10 + fontMetrics().width( QString::number( pages ) );
-    m_pagesEdit->setMinimumWidth( numberWidth );
-    m_pagesEdit->setMaximumWidth( 2 * numberWidth );
+    m_pageNumberEdit->setMinimumWidth( numberWidth );
+    m_pageNumberEdit->setMaximumWidth( 2 * numberWidth );
+    m_pageLabelEdit->setMinimumWidth( numberWidth );
+    m_pageLabelEdit->setMaximumWidth( 2 * numberWidth );
+    m_pageNumberLabel->setMinimumWidth( numberWidth );
+    m_pageNumberLabel->setMaximumWidth( 2 * numberWidth );
     m_pagesButton->setMinimumWidth( numberWidth );
     m_pagesButton->setMaximumWidth( 2 * numberWidth );
 }
@@ -325,15 +345,76 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     }
 }
 
+/** PageLabelEdit **/
+
+PageLabelEdit::PageLabelEdit( MiniBar * parent )
+    : PagesEdit( parent )
+{
+    setVisible( false );
+    connect( this, SIGNAL(returnPressed()), this, SLOT(pageChosen()) );
+}
+
+void PageLabelEdit::setText( const QString & newText )
+{
+    m_lastLabel = newText;
+    PagesEdit::setText( newText );
+}
+
+void PageLabelEdit::setPageLabels( const QVector<Okular::Page *> &pageVector )
+{
+    m_labelPageMap.clear();
+    completionObject()->clear();
+    foreach(const Okular::Page * page, pageVector)
+    {
+        if ( !page->label().isEmpty() )
+        {
+            m_labelPageMap.insert( page->label(), page->number() );
+            bool ok;
+            page->label().toInt( &ok );
+            if ( !ok )
+            {
+                // Only add to the completion objects labels that are not numbers
+                completionObject()->addItem( page->label() );
+            }
+        }
+    }
+}
+
+void PageLabelEdit::pageChosen()
+{
+    const QString newInput = text();
+    const int pageNumber = m_labelPageMap.value( newInput, -1 );
+    if (pageNumber != -1)
+    {
+        emit pageNumberChosen( pageNumber );
+    }
+    else
+    {
+        setText( m_lastLabel );
+    }
+}
+
+/** PageNumberEdit **/
+
+PageNumberEdit::PageNumberEdit( MiniBar * miniBar )
+    : PagesEdit( miniBar )
+{
+    // use an integer validator
+    m_validator = new QIntValidator( 1, 1, this );
+    setValidator( m_validator );
+}
+
+void PageNumberEdit::setPagesNumber( int pages )
+{
+    m_validator->setTop( pages );
+}
+
 
 /** PagesEdit **/
 
 PagesEdit::PagesEdit( MiniBar * parent )
     : KLineEdit( parent ), m_miniBar( parent ), m_eatClick( false )
 {
-    // use an integer validator
-    m_validator = new QIntValidator( 1, 1, this );
-    setValidator( m_validator );
 
     // customize text properties
     setAlignment( Qt::AlignCenter );
@@ -341,11 +422,6 @@ PagesEdit::PagesEdit( MiniBar * parent )
     // send a focus out event
     QFocusEvent fe( QEvent::FocusOut );
     QApplication::sendEvent( this, &fe );
-}
-
-void PagesEdit::setPagesNumber( int pages )
-{
-    m_validator->setTop( pages );
 }
 
 void PagesEdit::setText( const QString & newText )
@@ -435,3 +511,4 @@ HoverButton::HoverButton( QWidget * parent )
 }
 
 #include "minibar.moc"
+

@@ -12,14 +12,64 @@
 #define _OKULAR_MINIBAR_H_
 
 #include <qwidget.h>
+#include <klineedit.h>
 #include "core/observer.h"
 
 namespace Okular {
 class Document;
 }
 
-class PagesEdit;
+class MiniBar;
 class HoverButton;
+class QIntValidator;
+class QLabel;
+
+// [private widget] lineEdit for entering/validating page numbers
+class PagesEdit : public KLineEdit
+{
+    public:
+        PagesEdit( MiniBar * parent );
+        void setText( const QString & );
+
+    protected:
+        void focusInEvent( QFocusEvent * e );
+        void focusOutEvent( QFocusEvent * e );
+        void mousePressEvent( QMouseEvent * e );
+        void wheelEvent( QWheelEvent * e );
+
+    private:
+        MiniBar * m_miniBar;
+        bool m_eatClick;
+};
+
+class PageNumberEdit : public PagesEdit
+{
+    public:
+        PageNumberEdit( MiniBar * parent );
+        void setPagesNumber( int pages );
+
+    private:
+        QIntValidator * m_validator;
+};
+
+class PageLabelEdit : public PagesEdit
+{
+  Q_OBJECT
+    public:
+        PageLabelEdit( MiniBar * parent );
+        void setText( const QString & newText );
+        void setPageLabels( const QVector< Okular::Page * > & pageVector );
+
+    signals:
+        void pageNumberChosen( int page );
+
+    private slots:
+        void pageChosen();
+
+    private:
+        QString m_lastLabel;
+        QMap<QString, int> m_labelPageMap;
+};
 
 /**
  * @short A widget to display page number and change current page.
@@ -44,6 +94,7 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
 
     public slots:
         void slotChangePage();
+        void slotChangePage(int page);
         void slotEmitNextPage();
         void slotEmitPrevPage();
 
@@ -52,7 +103,9 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
         bool eventFilter( QObject *target, QEvent *event );
 
         Okular::Document * m_document;
-        PagesEdit * m_pagesEdit;
+        PageNumberEdit * m_pageNumberEdit;
+        PageLabelEdit * m_pageLabelEdit;
+        QLabel * m_pageNumberLabel;
         HoverButton * m_prevButton;
         HoverButton * m_pagesButton;
         HoverButton * m_nextButton;

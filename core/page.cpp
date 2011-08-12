@@ -37,6 +37,9 @@
 
 #include <limits>
 
+#include <iostream>
+using namespace std;
+
 #ifdef PAGE_PROFILE
 #include <QtCore/QTime>
 #endif

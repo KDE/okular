@@ -1610,11 +1610,13 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                 // clear the selection from pages not selected anymore
                 foreach( int p, noMoreSelectedPages )
                 {
+//                    cout << "Pages with selection set color Black " << endl;
                     d->document->setPageTextSelection( p, 0, QColor() );
                 }
                 // set the new selection for the selected pages
                 foreach( int p, pagesWithSelectionSet )
                 {
+//                    cout << "Pages with selection set color Blue " << endl;
                     d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
                 }
                 d->pagesWithTextSelection = pagesWithSelectionSet;
@@ -2123,6 +2125,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 d->aPrevAction = 0;
             }
             }break;
+
             case MouseTextSelect:
                 setCursor( Qt::ArrowCursor );
                 if ( d->mouseTextSelecting )

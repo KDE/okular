@@ -2407,6 +2407,8 @@ void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QCo
     if ( !d->m_generator || !kp )
         return;
 
+//    cout << "color: " << color.red() << "," << color.green() << "," << color.blue() << endl;
+
     // add or remove the selection basing whether rect is null or not
     if ( rect )
         kp->d->setTextSelections( rect, color );

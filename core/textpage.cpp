@@ -1253,7 +1253,6 @@ void TextPagePrivate::makeWordFromCharacters(){
 
 
             space = elementArea.left() - lineArea.right();
-//            cout << "space " << space << " ";
 
             if(space > 0 || space < 0){
                 it--;
@@ -1295,8 +1294,6 @@ void TextPagePrivate::makeWordFromCharacters(){
         if(it == itEnd) break;
 
     }
-
-    cout << "words: " << index << endl;
 
     copyTo(newList);
 
@@ -1857,9 +1854,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             tmp.append(ent);
 
 //            cout << ent->text().toAscii().data();
-
         }
-
 //        cout << endl << endl;
 
     }
@@ -1894,28 +1889,7 @@ void TextPagePrivate::addNecessarySpace(){
             SortedTextList lines;
             LineRect line_rects;
 
-            cout << endl << "Before making Line: ..................... " << j << endl;
-            for(i = 0 ; i < tmpList.length() ; i++){
-                TinyTextEntity* ent = tmpList.at(i);
-                cout << ent->text().toAscii().data();
-            }
-            cout << endl;
-
-            // This makeAndSortLines is not working perfectly. We may remove it and
-            // replace it by something so that everything works perfectly.
-            makeAndSortLines(tmpList,lines,line_rects,true);
-
-            cout << "After making Line: " << endl;
-
-            for( i =  0; i < lines.length() ; i++){
-                TextList list = lines.at(i);
-                for(k = 0 ; k < list.length() ; k++){
-                    TinyTextEntity* ent = list.at(k);
-                    cout << ent->text().toAscii().data();
-                }
-            }
-            cout << endl;
-
+            makeAndSortLines(tmpList,lines,line_rects);
 
             // 4. Now, we add space in between texts in a region
             for(i = 0 ; i < lines.length() ; i++){
@@ -1982,7 +1956,6 @@ void TextPagePrivate::addNecessarySpace(){
 
             for(j = 0 ; j < list.length() ; j++){
                 TinyTextEntity *ent = list.at(j);
-                //creating new Entities
                 tmp.append(new TinyTextEntity(ent->text(),ent->area));
             }
         }
@@ -2019,7 +1992,6 @@ void TextPagePrivate::breakWordIntoCharacters(){
             count = m_word_chars_map.count(key);
 
             if(count > 1){
-                cout << "count : " << count << endl;
 
                 QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
                 while( it != m_word_chars_map.end() && it.key() == key ){
@@ -2041,13 +2013,6 @@ void TextPagePrivate::breakWordIntoCharacters(){
     }
 
     copyTo(tmp);
-
-
-    // print the final text
-//    for( i = 0 ; i < m_words.length() ; i++){
-//        TinyTextEntity* ent = m_words.at(i);
-//        cout << ent->text().toAscii().data();
-//    }
 
 }
 
@@ -2087,14 +2052,12 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
     while(iterate_linespace.hasNext()){
         iterate_linespace.next();
-//        cout << iterate_linespace.key() << ":" << iterate_linespace.value() << endl;
         line_spacing += iterate_linespace.value() * iterate_linespace.key();
         weighted_count += iterate_linespace.value();
     }
 
     if(line_spacing)
         line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
-//    cout << "average line spacing: " << line_spacing << endl;
 
 
     /** Step 2: ........................................................................ **/
@@ -2131,12 +2094,6 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
             QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
             int space = area2.left() - area1.right();
-
-            if(space < 0){
-//                cout << "space: " << space << endl;
-//                cout << "text: " << (*it)->text().toAscii().data() << " "
-//                << (*(it+1))->text().toAscii().data() << endl;
-            }
 
             if(space > maxSpace){
                 max_area1 = area1;
@@ -2197,26 +2154,18 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
             QRect rect(left,top,right-left,bottom-top);
             max_hor_space_rects.append(rect);
 
-//            printRect(rect);
-//            cout << before_max.toAscii().data() << "    "
-//                 << after_max.toAscii().data() << endl;
-
         }
         else max_hor_space_rects.append(QRect(0,0,0,0));
-//        cout << endl;
-//        cout << minSpace << " "<< maxSpace << endl;
     }
 
 
     // All the between word space counts are in hor_space_stat
-
     word_spacing = 0;
     weighted_count = 0;
     QMapIterator<int, int> iterate(hor_space_stat);
 
     while (iterate.hasNext()) {
         iterate.next();
-//        cout << iterate.key() << ": " << iterate.value() << endl;
 
         if(iterate.key() > 0){
             word_spacing += iterate.value() * iterate.key();
@@ -2225,19 +2174,15 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
     }
     if(weighted_count)
         word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
-//    cout << "Word Spacing: " << word_spacing << endl;
-
 
     col_spacing = 0;
     QMapIterator<int, int> iterate_col(col_space_stat);
 
     while (iterate_col.hasNext()) {
         iterate_col.next();
-//        cout << iterate_col.key() << ": " << iterate_col.value() << endl;
         if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
     }
     col_spacing = col_space_stat.key(col_spacing);
-//    cout << "Column Spacing: " << col_spacing << endl;
 
 }
 
@@ -2245,6 +2190,13 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
+
+//    cout << endl << endl << "Text output .................. " << endl;
+//    for(int i = 0 ; i < d->m_words.length() ; i++){
+//        TinyTextEntity* ent = d->m_words.at(i);
+//        cout << ent->text().toAscii().data() << endl;
+//    }
+//    cout << endl;
 
     // remove spaces from the text
     d->removeSpace();

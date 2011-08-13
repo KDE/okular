@@ -31,6 +31,9 @@
 #include "guiutils.h"
 #include "settings.h"
 
+#include <iostream>
+using namespace std;
+
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
@@ -159,6 +162,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     if ( (*hIt).intersects( limitRect ) )
                         bufferedHighlights->append( qMakePair( page->textSelectionColor(), *hIt ) );
                 }
+
                 delete limitRect;
             //}
         }
@@ -246,6 +250,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
             scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
 
+//        if(pixmap->save(QString("/home/mamun/Desktop/first"),"PNG") )
+//        cout << "success " << endl;
+//        else cout << "failed :( :( " << endl;
+
+        cout << "alpha: " << pixmap->hasAlpha() << endl;
+        bool has_alpha = pixmap->hasAlpha();
+
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
         {
@@ -284,6 +295,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     break;
             }
         }
+
         // 4B.3. highlight rects in page
         if ( bufferedHighlights )
         {
@@ -308,10 +320,33 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
                     {
                         val = data[ x + offset ];
-                        newR = (qRed(val) * rh) / 255;
-                        newG = (qGreen(val) * gh) / 255;
-                        newB = (qBlue(val) * bh) / 255;
+
+                        //for odt or epub
+                        if(has_alpha){
+                            newR = qRed(val);
+                            newG = qGreen(val);
+                            newB = qBlue(val);
+
+                            if(newR == newG && newG == newB && newR == 0){
+                                newR = newG = newB = 255;
+                            }
+
+                            newR = (newR * rh)/255;
+                            newG = (newG * gh)/255;
+                            newB = (newB * bh)/255;
+                        }
+
+                        //pdf, djvu and other formats
+                        else{
+
+                            newR = (qRed(val) * rh) / 255;
+                            newG = (qGreen(val) * gh) / 255;
+                            newB = (qBlue(val) * bh) / 255;
+                        }
+
                         data[ x + offset ] = qRgba( newR, newG, newB, 255 );
+//                        cout << "data: " << qRed(val) << "," << qGreen(val)
+//                                << "," << qBlue(val) << endl;
                     }
                     offset += backImage.width();
                 }

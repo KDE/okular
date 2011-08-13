@@ -2316,14 +2316,11 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
 void Document::requestTextPage( uint page )
 {
-    cout << "textPage requested: " << endl;
-
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
 
     // Memory management for TextPages
-
     d->m_generator->generateTextPage( kp );
 
 //    TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
@@ -2406,8 +2403,6 @@ void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QCo
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
-
-//    cout << "color: " << color.red() << "," << color.green() << "," << color.blue() << endl;
 
     // add or remove the selection basing whether rect is null or not
     if ( rect )

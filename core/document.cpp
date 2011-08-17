@@ -82,9 +82,6 @@
 
 #include <config-okular.h>
 
-#include <iostream>
-using namespace std;
-
 using namespace Okular;
 
 struct AllocatedPixmap
@@ -1541,9 +1538,9 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( mime.count() <= 0 )
             return false;
 
-        // docFile is always local so we can use QFileInfo on it
-        QFileInfo fileReadTest( docFile );
-        if ( fileReadTest.isFile() && !fileReadTest.isReadable() )
+        // docFile is always local so we can use QFile on it
+        QFile fileReadTest( docFile );
+        if ( !fileReadTest.open( QIODevice::ReadOnly ) )
         {
             d->m_docFileName.clear();
             return false;
@@ -1556,6 +1553,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         QString fn = url.fileName();
         document_size = fileReadTest.size();
         fn = QString::number( document_size ) + '.' + fn + ".xml";
+        fileReadTest.close();
         QString newokular = "okular/docdata/" + fn;
         QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
         if ( !QFile::exists( newokularfile ) )
@@ -1653,10 +1651,6 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
-    foreach ( Page * p, d->m_pagesVector )
-    {
-        p->d->m_doc = d;
-    }
 
     // 2. load Additional Data (our bookmarks and metadata) about the document
     if ( d->m_archiveData )
@@ -1864,7 +1858,7 @@ void Document::closeDocument()
     d->m_allocatedTextPagesFifo.clear();
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
-
+    
     delete d->m_documentInfo;
     d->m_documentInfo = 0;
 
@@ -1999,9 +1993,9 @@ const DocumentInfo * Document::documentInfo() const
 
         const DocumentInfo::Key keyPages = DocumentInfo::Pages;
         const QString keyString = DocumentInfo::getKeyString( keyPages );
-
+ 
         if ( info->get( keyString ).isEmpty() ) {
-            info->set( keyString, QString::number( this->pages() ),
+            info->set( keyString, QString::number( this->pages() ), 
                        DocumentInfo::getKeyTitle( keyPages ) );
         }
 
@@ -2321,10 +2315,8 @@ void Document::requestTextPage( uint page )
         return;
 
     // Memory management for TextPages
-    d->m_generator->generateTextPage( kp );
 
-//    TextPage *tmpPage = d->m_pagesVector[page]->d->m_text;
-//    tmpPage->correctTextOrder();
+    d->m_generator->generateTextPage( kp );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -3139,7 +3131,7 @@ QString Document::printError() const
         case Generator::UnknownPrintError:
             return QString();
     }
-
+    
     return QString();
 }
 
@@ -3300,12 +3292,12 @@ void Document::unregisterView( View *view )
 QByteArray Document::fontData(const FontInfo &font) const
 {
     QByteArray result;
-
+    
     if (d->m_generator)
     {
         QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray *, &result));
     }
-
+    
     return result;
 }
 

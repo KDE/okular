@@ -168,9 +168,9 @@ class OKULAR_EXPORT TextPage
         RegularAreaRect *textArea( TextSelection *selection ) const;
 
         /**
-        * make necessary modifications in the TextList to make the text order correct, so
-        * that textselection works fine
-        */
+         * Make necessary modifications in the TextList to make the text order correct, so
+         * that textselection works fine
+         */
         void correctTextOrder();
 
     private:

@@ -453,8 +453,8 @@ void Page::setTextPage( TextPage * textPage )
     {
         d->m_text->d->m_page = d;
         /**
-        *correct text order for text selection
-        */
+         * Correct text order for text selection
+         */
         d->m_text->correctTextOrder();
     }
 }

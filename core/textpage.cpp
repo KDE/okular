@@ -19,11 +19,8 @@
 #include "page_p.h"
 
 #include <cstring>
-#include <QtAlgorithms>
 
-//On Debugging Purpose
-#include <iostream>
-using namespace std;
+#include <QtAlgorithms>
 
 using namespace Okular;
 
@@ -40,14 +37,6 @@ class SearchPoint
         int offset_begin;
         int offset_end;
 };
-
-/** mamun.nightcrawler@gmail.com **/
-void printRect(QRect rect){
-
-    cout << "l: " << rect.left() << " r: " << rect.x() + rect.width() << " t: " << rect.top() <<
-            " b: " << rect.y() + rect.height() << endl;
-}
-
 
 /* text comparison functions */
 
@@ -147,40 +136,6 @@ class TinyTextEntity
         int length;
 };
 
-// This class will store the area and TextList of the region in sorted order
-class RegionText{
-
-public:
-    RegionText(){};
-
-    RegionText(TextList &list,QRect &area)
-        : m_region_text(list) ,m_area(area)
-    {
-    }
-
-    // we are not giving any set method for the texts, we assume it will be set only once
-    // at the time of construction
-    inline TextList text() const{
-        return m_region_text;
-    }
-
-    inline QRect area() const{
-        return m_area;
-    }
-
-    inline void setArea(QRect area){
-        m_area = area;
-    }
-
-    inline void setText(TextList text){
-        m_region_text = text;
-    }
-
-private:
-    TextList m_region_text;
-    QRect m_area;
-};
-
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
     : m_text( text ), m_area( area ), d( 0 )
@@ -219,7 +174,6 @@ TextPagePrivate::~TextPagePrivate()
 {
     qDeleteAll( m_searchPoints );
     qDeleteAll( m_words );
-    qDeleteAll( m_spaces );
 }
 
 
@@ -249,9 +203,43 @@ TextPage::~TextPage()
 void TextPage::append( const QString &text, NormalizedRect *area )
 {
     if ( !text.isEmpty() )
-        d->m_words.append( new TinyTextEntity( text.normalized(QString::NormalizationForm_KC), *area ) );
+        d->m_words.append( new TinyTextEntity( text, *area ) );
     delete area;
 }
+
+// This class will store the area and TextList of the region in sorted order
+class RegionText{
+
+public:
+    RegionText(){};
+
+    RegionText(TextList &list,QRect &area)
+        : m_region_text(list) ,m_area(area)
+    {
+    }
+
+    // we are not giving any set method for the texts, we assume it will be set only once
+    // at the time of construction
+    inline TextList text() const{
+        return m_region_text;
+    }
+
+    inline QRect area() const{
+        return m_area;
+    }
+
+    inline void setArea(QRect area){
+        m_area = area;
+    }
+
+    inline void setText(TextList text){
+        m_region_text = text;
+    }
+
+private:
+    TextList m_region_text;
+    QRect m_area;
+};
 
 RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 {
@@ -261,16 +249,16 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 /**
     It works like this:
     There are two cursors, we need to select all the text between them. The coordinates are normalised, leftTop is (0,0)
-    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those
+    rightBottom is (1,1), so for cursors start (sx,sy) and end (ex,ey) we start with finding text rectangles under those 
     points, if not we search for the first that is to the right to it in the same baseline, if none found, then we search
-    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both
-    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a
+    for the first rectangle with a baseline under the cursor, having two points that are the best rectangles to both 
+    of the cursors: (rx,ry)x(tx,ty) for start and (ux,uy)x(vx,vy) for end, we do a 
     1. (rx,ry)x(1,ty)
     2. (0,ty)x(1,uy)
     3. (0,uy)x(vx,vy)
 
     To find the closest rectangle to cursor (cx,cy) we search for a rectangle that either contains the cursor
-    or that has a left border >= cx and bottom border >= cy.
+    or that has a left border >= cx and bottom border >= cy. 
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
@@ -337,7 +325,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
                 kWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " "
+                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
                   << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
                   ( tmp.top >= endCy);
 #endif
@@ -357,7 +345,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
         NormalizedRect first, second, third;
         /// finding out if there is more than one baseline between them is a hard and discussable task
-        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the
+        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
         /// areas, if more than one -> we have a three or over line selection
         first = start;
         second.top = start.bottom;
@@ -374,7 +362,6 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
-
     double scaleX = this->d->m_page->m_page->width();
     double scaleY = this->d->m_page->m_page->height();
 
@@ -724,11 +711,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
-
-    // normalize query search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive)
-                            ? _query.normalized(QString::NormalizationForm_KC)
-                            : _query.toLower().normalized(QString::NormalizationForm_KC);
+    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
@@ -759,7 +742,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
@@ -786,7 +769,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // subtract the length of the current entity from
+                    // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << "\tmatched";
@@ -840,18 +823,16 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
 
     RegularAreaRect* ret=new RegularAreaRect;
-
-    // normalize query to search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive)
-                            ? _query.normalized(QString::NormalizationForm_KC)
-                            : _query.toLower().normalized(QString::NormalizationForm_KC);
+    const QString query = (caseSensitivity == Qt::CaseSensitive) ? _query : _query.toLower();
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
     const TinyTextEntity* curEntity = 0;
     int j=query.length() - 1, len=0, queryLeft=query.length();
+    int offset = 0;
     bool haveMatch=false;
+    bool dontIncrement=false;
     bool offsetMoved = false;
     TextList::ConstIterator it = start;
     TextList::ConstIterator it_begin;
@@ -861,6 +842,10 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         const QString &str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
+            if ( m_searchPoints.contains( searchID ) )
+            {
+                offset = qMax( m_searchPoints[ searchID ]->offset_begin, 0 );
+            }
             offsetMoved = true;
         }
         if ( query.at(j).isSpace() )
@@ -871,15 +856,20 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #endif
             j--;
             queryLeft--;
+            // since we do not really need to increment this after this
+            // run of the loop finishes because we are not comparing it 
+            // to any entity, rather we are deducing a situation in a document
+            dontIncrement=true;
         }
         else
         {
+            dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
 #endif
-            // we have equal (or less than) area of the query left as the length of the current
+            // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
@@ -896,6 +886,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     kDebug(OkularDebug) << "\tnot matched";
 #endif
                     j=query.length() - 1;
+                    offset = 0;
                     queryLeft=query.length();
                     it_begin = TextList::ConstIterator();
             }
@@ -905,7 +896,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // move the current position in the query
                     // to the position after the length of this string
                     // we matched
-                    // subtract the length of the current entity from
+                    // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
                     kDebug(OkularDebug) << "\tmatched";
@@ -995,24 +986,6 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
     return ret;
 }
 
-// mamun.nightcrawler@gmail.com
-
-void TextPagePrivate::printTextPageContent(){
-    // tList is our textList for this text page
-    // TextList is of type List<TinyTextEntity* >
-    TextList tList = m_words;
-
-    foreach(TinyTextEntity* tiny, tList){
-        cout << tiny->text().toAscii().data();
-        QRect rect = tiny->area.roundedGeometry(m_page->m_page->width(),m_page->m_page->height());
-        cout << " area: " << rect.top() << "," << rect.left() << " " << rect.bottom() << "," << rect.right() << endl;
-    }
-
-}
-
-
-/** mamun_nightcrawler@gmail.com **/
-
 //remove all the spaces between texts, it will keep all the generators same, whether they save spaces or not
 void TextPagePrivate::removeSpace(){
 
@@ -1032,7 +1005,6 @@ void TextPagePrivate::removeSpace(){
     }
 
 }
-
 
 bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second){
     QRect firstArea = first->area.roundedGeometry(1000,1000);
@@ -1054,21 +1026,6 @@ bool compareRegionTextY(RegionText first, RegionText second){
 
 bool compareRegionTextX(RegionText first, RegionText second){
     return first.area().left() < second.area().left();
-}
-
-
-void TextPagePrivate::printTextList(int i, TextList list){
-
-    QRect rect = m_line_rects.at(i);
-//    cout << "L:" << rect.left() << " R:" << rect.right() << " T:" << rect.top() << " B:" << rect.bottom() << endl;
-    cout << "Line " << i << ": ";
-
-    for(int j = 0 ; j < list.length() ; j++){
-        TinyTextEntity* ent = list.at(j);
-        cout << ent->text().toAscii().data() << " ";
-    }
-    cout << endl;
-
 }
 
 //copies a TextList to m_words with the same pointer
@@ -1107,15 +1064,11 @@ void TextPagePrivate::copyFrom(TextList &list){
 
 bool doesConsumeX(QRect first, QRect second, int threshold){
 
-//    int threshold = 2;
-
     // if one consumes another fully
     if(first.left() <= second.left() && first.right() >= second.right()){
-//        cout << "First Condition " << endl;
         return true;
     }
     if(first.left() >= second.left() && first.right() <= second.right()){
-//        cout << "Second Condition " << endl;
         return true;
     }
 
@@ -1297,22 +1250,6 @@ void TextPagePrivate::makeWordFromCharacters(){
 
     copyTo(newList);
 
-//    for(int i = 0 ; i < m_words.length() ; i++){
-
-//        TinyTextEntity *ent = m_words.at(i);
-//        QRect entArea = ent->area.geometry(pageWidth,pageHeight);
-//        int key = entArea.top() * entArea.left() + entArea.right() * entArea.bottom();
-
-//        RegionText text_list = m_word_chars_map.value(key);
-//        TextList list = text_list.text();
-
-//        cout << "key: " << key << " text: ";
-//        for( int l = 0 ; l < list.length() ; l++){
-//            ent = list.at(l);
-//            cout << ent->text().toAscii().data();
-//        }
-//        cout << endl;
-//    }
     // Pointers to element in tmpList and newList are different
     qDeleteAll(tmpList);
     qDeleteAll(newList);
@@ -1320,7 +1257,7 @@ void TextPagePrivate::makeWordFromCharacters(){
 
 
 void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
-                        SortedTextList &lines, LineRect &line_rects, bool debug=false){
+                        SortedTextList &lines, LineRect &line_rects){
 
     /**
     we cannot assume that the generator will give us texts in the right order. We can only assume
@@ -1342,15 +1279,6 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
 
     // Step:1 .......................................
     qSort(words.begin(),words.end(),compareTinyTextEntityY);
-
-    if(debug){
-        cout << endl << endl << "After Y sorting: " << endl;
-        for(int i = 0 ; i < words.length() ; i++){
-            TinyTextEntity* ent = words.at(i);
-            cout << ent->text().toAscii().data();
-        }
-        cout << endl;
-    }
 
     // Step 2: .......................................
 
@@ -1396,7 +1324,6 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
 
             // if the new text and the line has y overlapping parts of more than 80%,
             // the text will be added to this line
-//            int overlap,percentage;
 
             if(doesConsumeY(elementArea,lineArea,70)){
 
@@ -1414,34 +1341,6 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
                 found = true;
             }
 
-            // if there is overlap
-//            if(text_y2 >= line_y1 && line_y2 >= text_y1){
-
-//                if(text_y2 > line_y2) overlap = line_y2 - text_y1;
-//                else overlap = text_y2 - line_y1;
-
-//                if( (text_y2 - text_y1) > (line_y2 - line_y1) )
-//                    percentage = overlap * 100 / (line_y2 - line_y1);
-//                else percentage = overlap * 100 / (text_y2 - text_y1);
-
-//                //the overlap percentage is more than 70% of the smaller y
-//                if(percentage >= 70){
-
-//                    TextList tmp = lines.at(i);
-//                    tmp.append((*it));
-
-//                    lines.replace(i,tmp);
-
-//                    newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
-//                    newRight = line_x2 > text_x2 ? line_x2 : text_x2;
-//                    newTop = line_y1 < text_y1 ? line_y1 : text_y1;
-//                    newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
-
-//                    line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
-//                    found = true;
-//                }
-
-//            }
             if(found) break;
 
         }
@@ -1449,7 +1348,6 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
         // when we have found a new line
         // create a new TextList containing only one element and append it to the lines
         if(!found){
-            //(*it) is a TinyTextEntity*
             TextList tmp;
             tmp.append((*it));
             lines.append(tmp);
@@ -1464,13 +1362,7 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
 
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
         lines.replace(i,list);
-
-        if(debug)
-            printTextList(i,list);
     }
-
-    //we cannot delete words here, as lines contains the same pointers as words does
-
 }
 
 
@@ -1498,16 +1390,11 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     int i = 0, j, k;
     int countLoop = 0;
 
-//    cout << "content Rect: ";
-//    printRect(contentRect);
-
     // while traversing the tree has not been ended
     while(i < tree.length()){
 
         RegionText node = tree.at(i);
         QRect regionRect = node.area();
-
-//        cout << "i: " << i << " .......................... " << endl;
 
 /** 1. calculation of projection profiles ................................... **/
 
@@ -1517,7 +1404,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
 
         for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
         for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
-
 
         TextList list = node.text();
         int word_spacing = 0,line_spacing = 0, column_spacing = 0;
@@ -1532,10 +1418,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         }
 
         int maxX = 0 , maxY = 0;
-        int avgX = 0, avgY = 0;
+        int avgX = 0 ;
         int count;
-
-//        cout << "Noise: tcx: " << tcx << " tcy: " << tcy << endl;
 
         // for every text in the region
         for( j = 0 ; j < list.length() ; j++ ){
@@ -1555,17 +1439,10 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
 
         }
 
-
-//        cout << "width: " << regionRect.width() << " height: " << regionRect.height() << endl;
-//        cout << "total Elements: " << j << endl;
-
-//        cout << "projection on y axis " << endl << endl;
         for( j = 0 ; j < size_proj_y ; j++ ){
             if (proj_on_yaxis[j] > maxY) maxY = proj_on_yaxis[j];
-//            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
         }
 
-//        cout << "projection on x axis " << endl << endl;
         avgX = count = 0;
         for( j = 0 ; j < size_proj_x ; j++ ){
             if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
@@ -1573,7 +1450,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
                 count++;
                 avgX+= proj_on_xaxis[j];
             }
-//            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
         }
         if(count)
             avgX /= count;
@@ -1607,24 +1483,15 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         regionRect.setTop(old_top + ybegin);
         regionRect.setBottom(old_top + yend);
 
-
         int tnx = (int)((double)avgX * 10.0 / 100.0 + 0.5), tny = 0;
 
-//        cout << "noise on x_axis: " << avgX << " " << tnx << endl;
-
-//        cout << endl << "projection on x axis ............." << endl << endl;
         for( j = 0 ; j < size_proj_x ; j++ ){
             proj_on_xaxis[j] -= tnx;
-//            cout << "index: " << j << " value: " << proj_on_xaxis[j] << endl;
         }
 
-//        cout << endl << "projection on y axis ............ " << endl << endl;
         for(j = 0 ; j < size_proj_y ; j++){
             proj_on_yaxis[j] -= tny;
-//            cout << "index: " << j << " value: " << proj_on_yaxis[j] << endl;
         }
-
-
 
 /** 3. Get the Widest gap(<= 0 train)  ........................................ **/
 
@@ -1681,12 +1548,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         int cut_pos_x = pos_ver, cut_pos_y = pos_hor;
         int gap_x = gap_ver, gap_y = gap_hor;
 
-//        cout << "gap X: " << gap_x << endl;
-//        cout << "gap Y: " << gap_y << endl;
-//        cout << "cut X: " << cut_pos_x << endl;
-//        cout << "cut Y: " << cut_pos_y << endl;
-
-
 /** 4. Cut the region and make nodes (left,right) or (up,down) ................ **/
 
         //these can be calculated according to space characteristics
@@ -1742,7 +1603,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             tree.replace(i,tmpNode);
 
             i++;
-//            cout << "no cut possible :( :( :(" << endl;
 
             continue;
         }
@@ -1751,23 +1611,14 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         TinyTextEntity* ent;
         QRect entRect;
 
-//        cout << "previous: ";
-//        printRect(regionRect);
-
         // now we need to create two new regionRect
         //horizontal cut, topRect and bottomRect
         if(cut_hor){
-//            cout << "horizontal cut, list length: " << list.length() << endl;
-
-//            printRect(topRect);
-//            printRect(bottomRect);
 
             for( j = 0 ; j < list.length() ; j++ ){
 
                 ent = list.at(j);
                 entRect = ent->area.geometry(pageWidth,pageHeight);
-
-//                printRect(entRect);
 
                 if(topRect.intersects(entRect)){
                     list1.append(ent);
@@ -1792,11 +1643,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         //vertical cut, leftRect and rightRect
         else if(cut_ver){
 
-//            cout << "vertical cut, list length: " << list.length() << endl;
-
-//            printRect(leftRect);
-//            printRect(rightRect);
-
             for( j = 0 ; j < list.length() ; j++ ){
 
                 ent = list.at(j);
@@ -1816,30 +1662,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
             list1 = tree.at(i).text();
             list2 = tree.at(i+1).text();
         }
-
-        else { };
-
-        if(cut_hor || cut_ver){
-
-//            cout << "list1: " << list1.length() << endl;
-//            cout << "list2: " << list2.length() << endl;
-
-//            cout << "Node1 text: ........................ " << endl << endl;
-//            for(j = 0 ; j < list1.length() ; j++){
-//                 TinyTextEntity *ent = list1.at(j);
-//                 cout << ent->text().toAscii().data();
-//            }
-//            cout << endl;
-
-//            cout << "Node2 text: ........................ " << endl << endl;
-//            for(j = 0 ; j < list2.length() ; j++){
-//                 TinyTextEntity *ent = list2.at(j);
-//                 cout << ent->text().toAscii().data();
-//            }
-//            cout << endl;
-
-        }
-
+        //else;
     }
 
     TextList tmp;
@@ -1847,16 +1670,10 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
     for(i = 0 ; i < tree.length() ; i++){
         TextList list = tree.at(i).text();
 
-//        cout << "Node: " << i << endl;
-
         for(j = 0 ; j < list.length() ; j++){
             TinyTextEntity *ent = list.at(j);
             tmp.append(ent);
-
-//            cout << ent->text().toAscii().data();
         }
-//        cout << endl << endl;
-
     }
     //copying elements of tmp to m_words
     copyTo(tmp);
@@ -2021,16 +1838,15 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
                                                       int &line_spacing,int &col_spacing){
 
     /**
+     * For the region, defined by line_rects and lines
+     * 1. Make line statistical analysis to find the line spacing
+     * 2. Make character statistical analysis to differentiate between
+     *   word spacing and column spacing.
+     */
 
-    For the region, defined by line_rects and lines
-
-    1. Make line statistical analysis to find the line spacing
-    2. Make character statistical analysis to differentiate between
-        word spacing and column spacing.
-
-    **/
-
-    /** Step 1: ........................................................................ **/
+    /**
+     * Step 1
+     */
     QMap<int,int> line_space_stat;
     for(int i = 0 ; i < line_rects.length(); i++){
         QRect rectUpper = line_rects.at(i);
@@ -2060,8 +1876,9 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
         line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
 
 
-    /** Step 2: ........................................................................ **/
-
+    /**
+     * Step 2
+     */
     //we would like to use QMap instead of QHash as it will keep the keys sorted
     QMap<int,int> hor_space_stat;   //this is to find word spacing
     QMap<int,int> col_space_stat;   //this is to find column spacing
@@ -2191,33 +2008,40 @@ void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, Lin
 //correct the textOrder, all layout recognition works here
 void TextPage::correctTextOrder(){
 
-//    cout << endl << endl << "Text output .................. " << endl;
-//    for(int i = 0 ; i < d->m_words.length() ; i++){
-//        TinyTextEntity* ent = d->m_words.at(i);
-//        cout << ent->text().toAscii().data() << endl;
-//    }
-//    cout << endl;
-
-    // remove spaces from the text
+    /**
+     * Remove spaces from the text
+     */
     d->removeSpace();
 
-    // make words from characters
+    /**
+     * Construct words from characters
+     */
     d->makeWordFromCharacters();
 
-    // create arbitrary lines from words and sort them according to X and Y position
+    /**
+     * Create arbitrary lines from words and sort them according to X and Y position
+     */
     d->makeAndSortLines(d->m_words,d->m_lines,d->m_line_rects);
 
-    // calculate statistical information
+    /**
+     * Calculate statistical information which will be needed later for algorithm implementation
+     */
     int word_spacing = 0,line_spacing = 0,col_spacing = 0;
     d->calculateStatisticalInformation(d->m_lines,d->m_line_rects,word_spacing,line_spacing, col_spacing);
 
-    // Make a XY Cut tree for segmentation
+    /**
+     * Make a XY Cut tree for segmentation of the texts
+     */
     d->XYCutForBoundingBoxes(word_spacing * 2,line_spacing * 2);
 
-    // add spaces to the word
+    /**
+     * Add spaces to the word
+     */
     d->addNecessarySpace();
 
-    // break the words into characters
+    /**
+     * Break the words into characters
+     */
     d->breakWordIntoCharacters();
 
 }

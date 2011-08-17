@@ -166,10 +166,9 @@ class OKULAR_EXPORT NormalizedRect
         QRect geometry( int xScale, int yScale ) const;
 
         /**
-         * same thing, but the output is now rounded before typecasting to int
-        **/
+         * Same functionality as geometry, but the output is now rounded before typecasting to int
+         */
         QRect roundedGeometry( int xScale, int yScale ) const;
-
 
         /**
          * Returns the normalized bounding rectangle of the normalized rectangle
@@ -208,32 +207,44 @@ class OKULAR_EXPORT NormalizedRect
          */
         void transform( const QMatrix &matrix );
 
-
-        //mamun.nightcrawler@gmail.com
         /**
-          * The four methods check whether a point is to the Bottom, Top, Left or
-          * Right of a rectangle
-          **/
+         * Returns true if the point pt is located to the bottom of the rectangle
+         */
         bool isBottom(NormalizedPoint pt) const{
             return bottom < pt.y;
         }
 
+        /**
+         * Returns true if the point pt is located on the top of the rectangle
+         */
         bool isTop(NormalizedPoint pt) const{
             return top > pt.y;
         }
 
+        /**
+         * Returns true if the point pt is located under the top of the rectangle
+         */
         bool isBottomOrLevel(NormalizedPoint pt) const{
             return top < pt.y;
         }
 
+        /**
+         * Returns true if the point pt is located above the bottom of the rectangle
+         */
         bool isTopOrLevel(NormalizedPoint pt) const{
             return bottom > pt.y;
         }
 
+        /**
+         * Returns true if the point pt is located to the right of the left arm of rectangle
+         */
         bool isLeft(NormalizedPoint pt) const{
             return left < pt.x;
         }
 
+        /**
+         * Returns true if the point pt is located to the left of the right arm of rectangle
+         */
         bool isRight(NormalizedPoint pt) const{
             return right > pt.x;
         }

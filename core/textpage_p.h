@@ -55,58 +55,64 @@ class TextPagePrivate
                                                     TextComparisonFunction comparer,
                                                     const TextList::ConstIterator &start,
                                                     const TextList::ConstIterator &end );
-        /** prints a line from m_lines **/
+        /**
+         * Prints a line from m_lines
+         */
         void printTextList(int i, TextList list);
 
-        /** copy a TextList to m_words **/
+        /**
+         * Copy a TextList to m_words
+         */
         void copyTo(TextList &list);
 
-        /** copy m_words to a TextList **/
+        /**
+         * Copy m_words to a TextList
+         */
         void copyFrom(TextList &list);
 
         /**
-        print the textpage contents with area (text and bounding rect)
-         **/
+         * Print the textpage contents with area (text and bounding rect)
+         */
         void printTextPageContent();
 
         /**
-        remove odd spaces which are much bigger than normal spaces from m_words
-        **/
+         * Remove odd spaces which are much bigger than normal spaces from m_words
+         */
         void removeSpace();
 
         /**
-        create words from characters
-        **/
+         * Create words from characters
+         */
         void makeWordFromCharacters();
 
         /**
-        Create lines from TextList and sort them according to their position
-        **/
+         * Create lines from TextList and sort them according to their position
+         */
         void makeAndSortLines(TextList &words,SortedTextList &lines,LineRect &line_rects, bool debug);
 
         /**
-        Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
-        we made
-        **/
+         * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
+         * we made
+         */
         void calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int& word_spacing,
                                              int& line_spacing, int& column_spacing);
 
         /**
-        Functions necessary for document file segmentation into text regions for document layout
-        analysis.
-        **/
+         * Functions necessary for document file segmentation into text regions for document layout
+         * analysis.
+         */
         void XYCutForBoundingBoxes(int tcx,int tcy);
 
 
         /**
-        add additional spaces between words, if necessary, which can make the words valuable
-        while copying after selection
-        **/
+         * Add additional spaces between words, if necessary, which can make the words valuable
+         * while copying after selection
+         */
         void addNecessarySpace();
 
         /**
-        break the words into characters, so the text selection wors fine
-        **/
+         * Break the words into characters, so the text selection wors fine
+         */
         void breakWordIntoCharacters();
 
 

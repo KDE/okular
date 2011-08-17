@@ -37,9 +37,6 @@
 
 #include <limits>
 
-#include <iostream>
-using namespace std;
-
 #ifdef PAGE_PROFILE
 #include <QtCore/QTime>
 #endif
@@ -455,10 +452,11 @@ void Page::setTextPage( TextPage * textPage )
     if ( d->m_text )
     {
         d->m_text->d->m_page = d;
-        // Code for Text Selection
+        /**
+        *correct text order for text selection
+        */
         d->m_text->correctTextOrder();
     }
-
 }
 
 void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )

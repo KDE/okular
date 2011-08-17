@@ -76,9 +76,6 @@
 #include "core/sourcereference.h"
 #include "settings.h"
 
-#include <iostream>
-using namespace std;
-
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
@@ -1591,7 +1588,6 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                 selectionEndPoint( eventPos );
             break;
         case MouseTextSelect:
-
             // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
             if ( !d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ( ( eventPos - d->mouseSelectPos ).manhattanLength() > 5 ) )
             {
@@ -1599,7 +1595,6 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             }
             if ( d->mouseTextSelecting )
             {
-//                cout << " A Text Selection ................ " << endl;
                 int first = -1;
                 QList< Okular::RegularAreaRect * > selections = textSelections( eventPos, d->mouseSelectPos, first );
                 QSet< int > pagesWithSelectionSet;
@@ -1610,13 +1605,11 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                 // clear the selection from pages not selected anymore
                 foreach( int p, noMoreSelectedPages )
                 {
-//                    cout << "Pages with selection set color Black " << endl;
                     d->document->setPageTextSelection( p, 0, QColor() );
                 }
                 // set the new selection for the selected pages
                 foreach( int p, pagesWithSelectionSet )
                 {
-//                    cout << "Pages with selection set color Blue " << endl;
                     d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
                 }
                 d->pagesWithTextSelection = pagesWithSelectionSet;
@@ -2125,7 +2118,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 d->aPrevAction = 0;
             }
             }break;
-
             case MouseTextSelect:
                 setCursor( Qt::ArrowCursor );
                 if ( d->mouseTextSelecting )

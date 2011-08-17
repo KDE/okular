@@ -31,9 +31,6 @@
 #include "guiutils.h"
 #include "settings.h"
 
-#include <iostream>
-using namespace std;
-
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
@@ -162,7 +159,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     if ( (*hIt).intersects( limitRect ) )
                         bufferedHighlights->append( qMakePair( page->textSelectionColor(), *hIt ) );
                 }
-
                 delete limitRect;
             //}
         }
@@ -222,7 +218,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
-        cout << "useBackBuffer false" << endl;
         // 4A.1. if size is ok, draw the page pixmap using painter
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
             destPainter->drawPixmap( limits.topLeft(), *pixmap, limitsInPixmap );
@@ -244,17 +239,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         // the image over which we are going to draw
         QImage backImage;
+        bool has_alpha = pixmap->hasAlpha();
 
         // 4B.1. draw the page pixmap: normal or scaled
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
             cropPixmapOnImage( backImage, pixmap, limitsInPixmap );
         else
             scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
-
-        pixmap->save(QString("/home/mamun/Desktop/first"),"PNG");
-//        cout << "alpha: " << pixmap->hasAlpha() << endl;
-
-        bool has_alpha = pixmap->hasAlpha();
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
@@ -294,15 +285,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     break;
             }
         }
-
         // 4B.3. highlight rects in page
         if ( bufferedHighlights )
         {
-            cout << "In bufferedHighlights ............" << endl;
             // draw highlights that are inside the 'limits' paint region
             QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->constBegin(), hEnd = bufferedHighlights->constEnd();
-
-//            cout << "difference: " << hEnd - hIt << endl;
             for ( ; hIt != hEnd; ++hIt )
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
@@ -317,10 +304,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     gh = (*hIt).first.green(),
                     bh = (*hIt).first.blue(),
                     offset = highlightRect.top() * backImage.width();
-
-//                    cout << "highTop: " << highlightRect.top() << endl;
-//                    cout << "backImageWidth: " << backImage.width() << endl;
-
                 for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
                 {
                     for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
@@ -549,8 +532,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
         // 4B.5. create the back pixmap converting from the local image
         backPixmap = new QPixmap( QPixmap::fromImage( backImage ) );
-
-        backPixmap->save(QString("/home/mamun/Desktop/second"),"PNG");
 
         // 4B.6. create a painter over the pixmap and set it as the active one
         mixedPainter = new QPainter( backPixmap );

@@ -980,27 +980,6 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
     return ret;
 }
 
-/**
- * Remove all the spaces in between texts. It will make all the generators
- * same, whether they save spaces(like pdf) or not(like djvu).
- */
-void TextPagePrivate::removeSpace(){
-
-    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
-    QString str(' ');
-
-    it = m_words.begin(), itEnd = m_words.end();
-    for( ; it != itEnd ; it++){
-        //if TextEntity contains space
-        if((*it)->text() == str){
-
-            // create new Entity, otherwise there might be possible memory leakage
-            m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
-            this->m_words.erase(it);
-        }
-    }
-}
-
 bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second){
     QRect firstArea = first->area.roundedGeometry(1000,1000);
     QRect secondArea = second->area.roundedGeometry(1000,1000);
@@ -1130,15 +1109,47 @@ bool doesConsumeY(QRect first, QRect second, int threshold){
 }
 
 /**
- * We are now taking the characters that are horizontally next to
- * next in current m_words, it actually is like that
+ * Remove all the spaces in between texts. It will make all the generators
+ * same, whether they save spaces(like pdf) or not(like djvu).
+ */
+void TextPagePrivate::removeSpace(){
+    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
+    QString str(' ');
+
+    it = m_words.begin(), itEnd = m_words.end();
+    for( ; it != itEnd ; it++){
+        if((*it)->text() == str){
+            // create new Entity, otherwise there might be possible memory leakage
+            m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
+            this->m_words.erase(it);
+        }
+    }
+}
+
+/**
+ * We will the TinyTextEntity from m_words and try to create
+ * words from there.
  */
 void TextPagePrivate::makeWordFromCharacters(){
+    /**
+     * At first we will copy m_words to tmpList. Then, we will traverse the
+     * tmpList and try to create words from the TinyTextEntities in tmpList.
+     * We will search TinyTextEntity blocks and merge them until we get a
+     * space between two consecutive TinyTextEntities. When we get a space
+     * we can take it as a end of word. Then we store the word as a TinyTextEntity
+     * and keep it in newList.
+
+     * We also keep a mapping between every element in newList and word. We create a
+     * RegionText named regionWord and create a hash key from the TinyTextEntity
+     * rectangle area of the element in newList. So, we can get the TinyTextEntities from
+     * which every element(word) of newList is generated. It will be necessary later
+     * when we will divide the word into characters.
+
+     * Finally we copy the newList to m_words.
+     */
 
     TextList tmpList;
     TextList newList;
-
-    // we are making a new copy from m_words to tmpList before using it
     copyFrom(tmpList);
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
@@ -1146,15 +1157,12 @@ void TextPagePrivate::makeWordFromCharacters(){
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
     int index = 0;
 
-
-    //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
 
         QString textString = (*it)->text().toAscii().data();
         QString newString;
         QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight),elementArea;
-
-        TextList word;  //It will contain all the TextEntities in a simple word
+        TextList word;
         tmpIt = it;
         int space = 0;
 
@@ -1163,7 +1171,7 @@ void TextPagePrivate::makeWordFromCharacters(){
             if(textString.length()){
                 newString.append(textString);
 
-                // when textString is the start of the word, it contains the lineArea
+                // when textString is the start of the word
                 if(tmpIt == it){
                     NormalizedRect newRect(lineArea,pageWidth,pageHeight);
                     word.append(new TinyTextEntity(textString.normalized
@@ -1178,28 +1186,26 @@ void TextPagePrivate::makeWordFromCharacters(){
 
             it++;
 
-            // we must have to put this line before the if condition of it==itEnd
-            // otherwise the last character can be missed
+            /*
+             we must have to put this line before the if condition of it==itEnd
+             otherwise the last character can be missed
+             */
             if(it == itEnd) break;
 
             //the first textEntity area
             elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-
             if(!doesConsumeY(elementArea,lineArea,60)){
                 it--;
                 break;
             }
 
-
             int text_y1 = elementArea.top() ,
                     text_x1 = elementArea.left(),
                     text_y2 = elementArea.y() + elementArea.height(),
                     text_x2 = elementArea.x() + elementArea.width();
-
             int line_y1 = lineArea.top() ,line_x1 = lineArea.left(),
                     line_y2 = lineArea.y() + lineArea.height(),
                     line_x2 = lineArea.x() + lineArea.width();
-
 
             space = elementArea.left() - lineArea.right();
 
@@ -1228,7 +1234,6 @@ void TextPagePrivate::makeWordFromCharacters(){
             newList.append(new TinyTextEntity(newString.normalized
                                               (QString::NormalizationForm_KC), newRect ));
 
-
             QRect rect = newRect.geometry(pageWidth,pageHeight);
             RegionText regionWord(word,rect);
             int keyRect = rect.left() * rect.top()
@@ -1241,12 +1246,9 @@ void TextPagePrivate::makeWordFromCharacters(){
         }
 
         if(it == itEnd) break;
-
     }
 
     copyTo(newList);
-
-    // Pointers to element in tmpList and newList are different
     qDeleteAll(tmpList);
     qDeleteAll(newList);
 }
@@ -1267,8 +1269,10 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
      * 3. Within each line sort the TinyTextEntity 's by x0(left)
      */
 
-    // Make a new copy of the TextList in the words, so that the wordsTmp and lines do not contain
-    // same pointers for all the TinyTextEntity
+    /*
+     Make a new copy of the TextList in the words, so that the wordsTmp and lines do
+     not contain same pointers for all the TinyTextEntity.
+     */
     TextList words;
     for(int i = 0 ; i < wordsTmp.length() ; i++){
         TinyTextEntity* ent = wordsTmp.at(i);
@@ -1279,20 +1283,15 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
     qSort(words.begin(),words.end(),compareTinyTextEntityY);
 
     // Step 2
-
     TextList::Iterator it = words.begin(), itEnd = words.end();
     int i = 0;
     int newLeft,newRight,newTop,newBottom;
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
-
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++){
 
-        //the textEntity area
         QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-
-        // See, whether the new text should be inserted to an existing line
         bool found = false;
 
         for( i = 0 ; i < lines.length() ; i++){
@@ -1346,14 +1345,183 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
         }
     }
 
-
     // Step 3
     for(i = 0 ; i < lines.length() ; i++){
         TextList list = lines.at(i);
-
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
         lines.replace(i,list);
     }
+}
+
+/**
+ * Calculate Statistical information from the lines we made previously
+ */
+void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int &word_spacing,
+                                                      int &line_spacing,int &col_spacing){
+
+    /**
+     * For the region, defined by line_rects and lines
+     * 1. Make line statistical analysis to find the line spacing
+     * 2. Make character statistical analysis to differentiate between
+     *   word spacing and column spacing.
+     */
+
+    /**
+     * Step 1
+     */
+    QMap<int,int> line_space_stat;
+    for(int i = 0 ; i < line_rects.length(); i++){
+        QRect rectUpper = line_rects.at(i);
+
+        if(i+1 == line_rects.length()) break;
+        QRect rectLower = line_rects.at(i+1);
+
+        int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
+        if(linespace < 0) linespace =-linespace;
+
+        if(line_space_stat.contains(linespace))
+            line_space_stat[linespace]++;
+        else line_space_stat[linespace] = 1;
+    }
+
+    line_spacing = 0;
+    int weighted_count = 0;
+    QMapIterator<int, int> iterate_linespace(line_space_stat);
+
+    while(iterate_linespace.hasNext()){
+        iterate_linespace.next();
+        line_spacing += iterate_linespace.value() * iterate_linespace.key();
+        weighted_count += iterate_linespace.value();
+    }
+
+    if(line_spacing)
+        line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
+
+
+    /**
+     * Step 2
+     */
+    //we would like to use QMap instead of QHash as it will keep the keys sorted
+    QMap<int,int> hor_space_stat;   //this is to find word spacing
+    QMap<int,int> col_space_stat;   //this is to find column spacing
+
+    QList< QList<QRect> > space_rects; // to save all the word spacing or column spacing rects
+    QList<QRect> max_hor_space_rects;
+
+    int i;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    // space in every line
+    for(i = 0 ; i < lines.length() ; i++){
+        // list contains a line
+        TextList list = lines.at(i);
+        QList<QRect> line_space_rects;
+
+        int maxSpace = 0, minSpace = pageWidth;
+
+        // for every TinyTextEntity element in the line
+        TextList::Iterator it = list.begin(), itEnd = list.end();
+        QRect max_area1,max_area2;
+        QString before_max, after_max;
+
+
+        // for every line
+        for( ; it != itEnd ; it++ ){
+
+            QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+            if( it+1 == itEnd ) break;
+
+            QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
+            int space = area2.left() - area1.right();
+
+            if(space > maxSpace){
+                max_area1 = area1;
+                max_area2 = area2;
+
+                maxSpace = space;
+
+                before_max = (*it)->text();
+                after_max = (*(it+1))->text();
+            }
+
+            if(space < minSpace && space != 0) minSpace = space;
+
+            //if we found a real space, whose length is not zero and also less than the pageWidth
+            if(space != 0 && space != pageWidth){
+
+                // increase the count of the space amount
+                if(hor_space_stat.contains(space)) hor_space_stat[space] = hor_space_stat[space]++;
+                else hor_space_stat[space] = 1;
+
+                //if we have found a space, put it in a list of rectangles
+                int left,right,top,bottom;
+
+                left = area1.right();
+                right = area2.left();
+
+                top = area2.top() < area1.top() ? area2.top() : area1.top();
+                bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
+
+                QRect rect(left,top,right-left,bottom-top);
+                line_space_rects.append(rect);
+
+            }
+        }
+
+
+        space_rects.append(line_space_rects);
+
+        if(hor_space_stat.contains(maxSpace)){
+            if(hor_space_stat[maxSpace] != 1)
+                hor_space_stat[maxSpace] = hor_space_stat[maxSpace]--;
+            else hor_space_stat.remove(maxSpace);
+        }
+
+        if(maxSpace != 0){
+            if (col_space_stat.contains(maxSpace))
+                col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
+            else col_space_stat[maxSpace] = 1;
+
+            //store the max rect of each line
+            int left,right,top,bottom;
+            left = max_area1.right();
+            right = max_area2.left();
+
+            max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
+            max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
+
+            QRect rect(left,top,right-left,bottom-top);
+            max_hor_space_rects.append(rect);
+
+        }
+        else max_hor_space_rects.append(QRect(0,0,0,0));
+    }
+
+
+    // All the between word space counts are in hor_space_stat
+    word_spacing = 0;
+    weighted_count = 0;
+    QMapIterator<int, int> iterate(hor_space_stat);
+
+    while (iterate.hasNext()) {
+        iterate.next();
+
+        if(iterate.key() > 0){
+            word_spacing += iterate.value() * iterate.key();
+            weighted_count += iterate.value();
+        }
+    }
+    if(weighted_count)
+        word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
+
+    col_spacing = 0;
+    QMapIterator<int, int> iterate_col(col_space_stat);
+
+    while (iterate_col.hasNext()) {
+        iterate_col.next();
+        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
+    }
+    col_spacing = col_space_stat.key(col_spacing);
 }
 
 /**
@@ -1580,14 +1748,11 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy){
         }
         // no cut possible
         else{
-
             // we can now update the node rectangle with the shrinked rectangle
             RegionText tmpNode = tree.at(i);
             tmpNode.setArea(regionRect);
             tree.replace(i,tmpNode);
-
             i++;
-
             continue;
         }
 
@@ -1817,176 +1982,6 @@ void TextPagePrivate::breakWordIntoCharacters(){
 
     copyTo(tmp);
 }
-
-
-void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int &word_spacing,
-                                                      int &line_spacing,int &col_spacing){
-
-    /**
-     * For the region, defined by line_rects and lines
-     * 1. Make line statistical analysis to find the line spacing
-     * 2. Make character statistical analysis to differentiate between
-     *   word spacing and column spacing.
-     */
-
-    /**
-     * Step 1
-     */
-    QMap<int,int> line_space_stat;
-    for(int i = 0 ; i < line_rects.length(); i++){
-        QRect rectUpper = line_rects.at(i);
-
-        if(i+1 == line_rects.length()) break;
-        QRect rectLower = line_rects.at(i+1);
-
-        int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
-        if(linespace < 0) linespace =-linespace;
-
-        if(line_space_stat.contains(linespace))
-            line_space_stat[linespace]++;
-        else line_space_stat[linespace] = 1;
-    }
-
-    line_spacing = 0;
-    int weighted_count = 0;
-    QMapIterator<int, int> iterate_linespace(line_space_stat);
-
-    while(iterate_linespace.hasNext()){
-        iterate_linespace.next();
-        line_spacing += iterate_linespace.value() * iterate_linespace.key();
-        weighted_count += iterate_linespace.value();
-    }
-
-    if(line_spacing)
-        line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
-
-
-    /**
-     * Step 2
-     */
-    //we would like to use QMap instead of QHash as it will keep the keys sorted
-    QMap<int,int> hor_space_stat;   //this is to find word spacing
-    QMap<int,int> col_space_stat;   //this is to find column spacing
-
-    QList< QList<QRect> > space_rects; // to save all the word spacing or column spacing rects
-    QList<QRect> max_hor_space_rects;
-
-    int i;
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
-
-    // space in every line
-    for(i = 0 ; i < lines.length() ; i++){
-        // list contains a line
-        TextList list = lines.at(i);
-        QList<QRect> line_space_rects;
-
-        int maxSpace = 0, minSpace = pageWidth;
-
-        // for every TinyTextEntity element in the line
-        TextList::Iterator it = list.begin(), itEnd = list.end();
-        QRect max_area1,max_area2;
-        QString before_max, after_max;
-
-
-        // for every line
-        for( ; it != itEnd ; it++ ){
-
-            QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-            if( it+1 == itEnd ) break;
-
-            QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
-            int space = area2.left() - area1.right();
-
-            if(space > maxSpace){
-                max_area1 = area1;
-                max_area2 = area2;
-
-                maxSpace = space;
-
-                before_max = (*it)->text();
-                after_max = (*(it+1))->text();
-            }
-
-            if(space < minSpace && space != 0) minSpace = space;
-
-            //if we found a real space, whose length is not zero and also less than the pageWidth
-            if(space != 0 && space != pageWidth){
-
-                // increase the count of the space amount
-                if(hor_space_stat.contains(space)) hor_space_stat[space] = hor_space_stat[space]++;
-                else hor_space_stat[space] = 1;
-
-                //if we have found a space, put it in a list of rectangles
-                int left,right,top,bottom;
-
-                left = area1.right();
-                right = area2.left();
-
-                top = area2.top() < area1.top() ? area2.top() : area1.top();
-                bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
-
-                QRect rect(left,top,right-left,bottom-top);
-                line_space_rects.append(rect);
-
-            }
-        }
-
-
-        space_rects.append(line_space_rects);
-
-        if(hor_space_stat.contains(maxSpace)){
-            if(hor_space_stat[maxSpace] != 1)
-                hor_space_stat[maxSpace] = hor_space_stat[maxSpace]--;
-            else hor_space_stat.remove(maxSpace);
-        }
-
-        if(maxSpace != 0){
-            if (col_space_stat.contains(maxSpace))
-                col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
-            else col_space_stat[maxSpace] = 1;
-
-            //store the max rect of each line
-            int left,right,top,bottom;
-            left = max_area1.right();
-            right = max_area2.left();
-
-            max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
-            max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
-
-            QRect rect(left,top,right-left,bottom-top);
-            max_hor_space_rects.append(rect);
-
-        }
-        else max_hor_space_rects.append(QRect(0,0,0,0));
-    }
-
-
-    // All the between word space counts are in hor_space_stat
-    word_spacing = 0;
-    weighted_count = 0;
-    QMapIterator<int, int> iterate(hor_space_stat);
-
-    while (iterate.hasNext()) {
-        iterate.next();
-
-        if(iterate.key() > 0){
-            word_spacing += iterate.value() * iterate.key();
-            weighted_count += iterate.value();
-        }
-    }
-    if(weighted_count)
-        word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
-
-    col_spacing = 0;
-    QMapIterator<int, int> iterate_col(col_space_stat);
-
-    while (iterate_col.hasNext()) {
-        iterate_col.next();
-        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
-    }
-    col_spacing = col_space_stat.key(col_spacing);
-}
-
 
 
 //correct the textOrder, all layout recognition works here

@@ -21,6 +21,7 @@
 #include <qstack.h>
 #include <qtextstream.h>
 #include <QtGui/QPrinter>
+#include <QtGui/QPainter>
 
 #include <kaboutdata.h>
 #include <klocale.h>
@@ -305,7 +306,11 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
 {
     setFeature( TextExtraction );
     setFeature( FontInfo );
+#ifdef Q_OS_WIN32
+    setFeature( PrintNative );
+#else
     setFeature( PrintPostscript );
+#endif
     if ( Okular::FilePrinter::ps2pdfAvailable() )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
@@ -909,6 +914,33 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 #define DUMMY_QPRINTER_COPY
 bool PDFGenerator::print( QPrinter& printer )
 {
+#ifdef Q_WS_WIN
+    QPainter painter;
+    painter.begin(&printer);
+    printer.setResolution(QPrinter::HighResolution);
+
+    pdfdoc->setRenderBackend( Poppler::Document::ArthurBackend );
+
+    QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
+                                                         document()->currentPage() + 1,
+                                                         document()->bookmarkedPageList() );
+    for ( int i = 0; i < pageList.count(); ++i )
+    {
+        if ( i != 0 )
+            printer.newPage();
+
+        const int page = pageList.at( i ) - 1;
+        userMutex()->lock();
+        Poppler::Page *pp = pdfdoc->page( page );
+        if (pp)
+            pp->renderToPainter( &painter, printer.logicalDpiX(), printer.logicalDpiY() );
+        delete pp;
+        userMutex()->unlock();
+    }
+    painter.end();
+    return true;
+
+#else
 #ifdef DUMMY_QPRINTER_COPY
     // Get the real page size to pass to the ps generator
     QPrinter dummy( QPrinter::PrinterResolution );
@@ -922,7 +954,6 @@ bool PDFGenerator::print( QPrinter& printer )
     int width = printer.width();
     int height = printer.height();
 #endif
-
     // Create the tempfile to send to FilePrinter, which will manage the deletion
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );
@@ -995,6 +1026,7 @@ bool PDFGenerator::print( QPrinter& printer )
     tf.close();
 
     return false;
+#endif
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const

@@ -309,32 +309,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
                     {
                         val = data[ x + offset ];
-
                         //for odt or epub
-                        if(has_alpha){
+                        if(has_alpha)
+                        {
                             newR = qRed(val);
                             newG = qGreen(val);
                             newB = qBlue(val);
 
-                            if(newR == newG && newG == newB && newR == 0){
+                            if(newR == newG && newG == newB && newR == 0)
                                 newR = newG = newB = 255;
-                            }
 
-                            newR = (newR * rh)/255;
-                            newG = (newG * gh)/255;
-                            newB = (newB * bh)/255;
-
-//                            cout << newR << "," << newG << "," << newB << endl;
+                            newR = (newR * rh) / 255;
+                            newG = (newG * gh) / 255;
+                            newB = (newB * bh) / 255;
                         }
-
-                        //pdf, djvu and other formats
-                        else{
-
+                        else
+                        {
                             newR = (qRed(val) * rh) / 255;
                             newG = (qGreen(val) * gh) / 255;
                             newB = (qBlue(val) * bh) / 255;
                         }
-
                         data[ x + offset ] = qRgba( newR, newG, newB, 255 );
                     }
                     offset += backImage.width();

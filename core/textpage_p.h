@@ -28,15 +28,15 @@ typedef QList< TinyTextEntity* > TextList;
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
 
-//mamun.nightcrawler@gmail.com
-
 /**
-We will make a line of TextList and also store the bounding rectangle of line
-**/
+ * Make a line of TextList and store the bounding rectangle of line
+ */
 typedef QList<TextList> SortedTextList;
 typedef QList<QRect> LineRect;
 
-/** list of RegionText -- keeps a bunch of TextList with their bounding rectangles **/
+/**
+ * A list of RegionText. It keeps a bunch of TextList with their bounding rectangles
+ */
 typedef QList<RegionText> RegionTextList;
 
 class TextPagePrivate
@@ -55,10 +55,6 @@ class TextPagePrivate
                                                     TextComparisonFunction comparer,
                                                     const TextList::ConstIterator &start,
                                                     const TextList::ConstIterator &end );
-        /**
-         * Prints a line from m_lines
-         */
-        void printTextList(int i, TextList list);
 
         /**
          * Copy a TextList to m_words
@@ -69,11 +65,6 @@ class TextPagePrivate
          * Copy m_words to a TextList
          */
         void copyFrom(TextList &list);
-
-        /**
-         * Print the textpage contents with area (text and bounding rect)
-         */
-        void printTextPageContent();
 
         /**
          * Remove odd spaces which are much bigger than normal spaces from m_words
@@ -103,7 +94,6 @@ class TextPagePrivate
          */
         void XYCutForBoundingBoxes(int tcx,int tcy);
 
-
         /**
          * Add additional spaces between words, if necessary, which can make the words valuable
          * while copying after selection
@@ -114,8 +104,6 @@ class TextPagePrivate
          * Break the words into characters, so the text selection wors fine
          */
         void breakWordIntoCharacters();
-
-
 
         // variables those can be accessed directly from TextPage
         QMap<int, RegionText> m_word_chars_map;

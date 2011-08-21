@@ -2143,7 +2143,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     //if there is text selected in the page
                     if(page->textSelection())
                     {
-
                         QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *speakText = 0;
                         if ( Okular::Settings::useKTTSD() )

@@ -372,8 +372,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
-    double scaleX = d->m_page->m_page->width();
-    double scaleY = d->m_page->m_page->height();
+    const double scaleX = d->m_page->m_page->width();
+    const double scaleY = d->m_page->m_page->height();
 
     NormalizedPoint startC = sel->start();
     NormalizedPoint endC = sel->end();
@@ -388,11 +388,12 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
     // minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
-    NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
-    QRect content = boundingRect.geometry(scaleX,scaleY);
-    double minX, maxX, minY, maxY;
-    minX = content.left(), maxX = content.right();
-    minY = content.top(), maxY = content.bottom();
+    const NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
+    const QRect content = boundingRect.geometry(scaleX,scaleY);
+    const double minX = content.left();
+    const double maxX = content.right();
+    const double minY = content.top();
+    const double maxY = content.bottom();
 
     /**
      * We will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
@@ -426,10 +427,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
      */
 
     // we know that startC.x > endC.x, we need to decide which is top and which is bottom
-    NormalizedRect start_end;
-    if(startC.y < endC.y)
-        start_end = NormalizedRect(startC.x, startC.y, endC.x, endC.y);
-    else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
+    const NormalizedRect start_end = (startC.y < endC.y) ? NormalizedRect(startC.x, startC.y, endC.x, endC.y)
+                                                         : NormalizedRect(startC.x, endC.y, endC.x, startC.y);
 
     // Case 1(a)
     if(!boundingRect.intersects(start_end)) return ret;
@@ -1043,19 +1042,13 @@ static bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
 
     // or if there is overlap of space by more than threshold%
     // there is overlap
-    int overlap;
     if(second.right() >= first.left() && first.right() >= second.left())
     {
-        int percentage;
-        if(second.right() >= first.right()) overlap = first.right() - second.left();
-        else overlap = second.right() - first.left();
-
+        const int overlap = (second.right() >= first.right()) ? first.right() - second.left()
+                                                              : second.right() - first.left();
         // we will divide by the smaller rectangle to calculate the overlap
-        if( first.width() < second.width())
-            percentage = overlap * 100 / (first.right() - first.left());
-        else
-            percentage = overlap * 100 / (second.right() - second.left());
-
+        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.right() - first.left())
+                                                                : overlap * 100 / (second.right() - second.left());
         if(percentage >= threshold) return true;
     }
 
@@ -1076,18 +1069,13 @@ static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
 
     // or if there is overlap of space by more than 80%
     // there is overlap
-    int overlap;
     if(second.bottom() >= first.top() && first.bottom() >= second.top())
     {
-        int percentage;
-        if(second.bottom() >= first.bottom()) overlap = first.bottom() - second.top();
-        else overlap = second.bottom() - first.top();
-
+        const int overlap = (second.bottom() >= first.bottom()) ? first.bottom() - second.top()
+                                                                : second.bottom() - first.top();
         //we will divide by the smaller rectangle to calculate the overlap
-        if( first.width() < second.width())
-            percentage = overlap * 100 / (first.bottom() - first.top());
-        else
-            percentage = overlap * 100 / (second.bottom() - second.top());
+        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.bottom() - first.top())
+                                                                : overlap * 100 / (second.bottom() - second.top());
 
         if(percentage >= threshold) return true;
     }
@@ -1102,7 +1090,7 @@ static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
 void TextPagePrivate::removeSpace()
 {
     TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
-    QString str(' ');
+    const QString str(' ');
 
     it = m_words.begin(), itEnd = m_words.end();
     for( ; it != itEnd ; it++)
@@ -1145,7 +1133,8 @@ void TextPagePrivate::makeWordFromCharacters()
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
     int index = 0;
 
     for( ; it != itEnd ; it++)
@@ -1192,13 +1181,13 @@ void TextPagePrivate::makeWordFromCharacters()
                 break;
             }
 
-            int text_y1 = elementArea.top() ,
-                    text_x1 = elementArea.left(),
-                    text_y2 = elementArea.y() + elementArea.height(),
-                    text_x2 = elementArea.x() + elementArea.width();
-            int line_y1 = lineArea.top() ,line_x1 = lineArea.left(),
-                    line_y2 = lineArea.y() + lineArea.height(),
-                    line_x2 = lineArea.x() + lineArea.width();
+            const int text_y1 = elementArea.top() ,
+                      text_x1 = elementArea.left(),
+                      text_y2 = elementArea.y() + elementArea.height(),
+                      text_x2 = elementArea.x() + elementArea.width();
+            const int line_y1 = lineArea.top() ,line_x1 = lineArea.left(),
+                      line_y2 = lineArea.y() + lineArea.height(),
+                      line_x2 = lineArea.x() + lineArea.width();
 
             space = elementArea.left() - lineArea.right();
 
@@ -1224,13 +1213,13 @@ void TextPagePrivate::makeWordFromCharacters()
         // if newString is not empty, save it
         if(newString.length())
         {
-            NormalizedRect newRect(lineArea,pageWidth,pageHeight);
+            const NormalizedRect newRect(lineArea,pageWidth,pageHeight);
             newList.append(new TinyTextEntity(newString.normalized
                                               (QString::NormalizationForm_KC), newRect ));
-            QRect rect = newRect.geometry(pageWidth,pageHeight);
-            RegionText regionWord(word,rect);
-            int keyRect = rect.left() * rect.top()
-                    + rect.right() * rect.bottom();
+            const QRect rect = newRect.geometry(pageWidth,pageHeight);
+            const RegionText regionWord(word,rect);
+            const int keyRect = rect.left() * rect.top()
+                                + rect.right() * rect.bottom();
 
             // there may be more than one element in the same key
             m_word_chars_map.insertMulti(keyRect,regionWord);
@@ -1281,12 +1270,13 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
     TextList::Iterator it = words.begin(), itEnd = words.end();
     int i = 0;
     int newLeft,newRight,newTop,newBottom;
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++)
     {
-        QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+        const QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
         for( i = 0 ; i < lines.length() ; i++)
@@ -1295,15 +1285,15 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
                line_rects is only necessary to preserve the topmin and bottommax of all
                the texts in the line, left and right is not necessary at all
             */
-            QRect lineArea = line_rects.at(i);
-            int text_y1 = elementArea.top() ,
-                    text_y2 = elementArea.top() + elementArea.height() ,
-                    text_x1 = elementArea.left(),
-                    text_x2 = elementArea.left() + elementArea.width();
-            int line_y1 = lineArea.top() ,
-                    line_y2 = lineArea.top() + lineArea.height(),
-                    line_x1 = lineArea.left(),
-                    line_x2 = lineArea.left() + lineArea.width();
+            const QRect lineArea = line_rects.at(i);
+            const int text_y1 = elementArea.top() ,
+                      text_y2 = elementArea.top() + elementArea.height() ,
+                      text_x1 = elementArea.left(),
+                      text_x2 = elementArea.left() + elementArea.width();
+            const int line_y1 = lineArea.top() ,
+                      line_y2 = lineArea.top() + lineArea.height(),
+                      line_x1 = lineArea.left(),
+                      line_x2 = lineArea.left() + lineArea.width();
 
             /*
                if the new text and the line has y overlapping parts of more than 70%,
@@ -1368,10 +1358,10 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
     QMap<int,int> line_space_stat;
     for(int i = 0 ; i < line_rects.length(); i++)
     {
-        QRect rectUpper = line_rects.at(i);
+        const QRect rectUpper = line_rects.at(i);
 
         if(i+1 == line_rects.length()) break;
-        QRect rectLower = line_rects.at(i+1);
+        const QRect rectLower = line_rects.at(i+1);
 
         int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
         if(linespace < 0) linespace =-linespace;
@@ -1422,10 +1412,10 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
         // for every line
         for( ; it != itEnd ; it++ )
         {
-            QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+            const QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
             if( it+1 == itEnd ) break;
 
-            QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
+            const QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
             int space = area2.left() - area1.right();
 
             if(space > maxSpace)
@@ -1475,14 +1465,14 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
             else col_space_stat[maxSpace] = 1;
 
             //store the max rect of each line
-            int left,right,top,bottom;
-            left = max_area1.right();
-            right = max_area2.left();
+            const int left = max_area1.right();
+                const int right = max_area2.left();
+            const int top = (max_area1.top() > max_area2.top()) ? max_area2.top() :
+                                                                  max_area1.top();
+            const int bottom = (max_area1.bottom() < max_area2.bottom()) ? max_area2.bottom() :
+                                                                           max_area1.bottom();
 
-            max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
-            max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
-
-            QRect rect(left,top,right-left,bottom-top);
+            const QRect rect(left,top,right-left,bottom-top);
             max_hor_space_rects.append(rect);
         }
         else max_hor_space_rects.append(QRect(0,0,0,0));
@@ -1522,7 +1512,8 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
  */
 void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 {
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
 
     // proj_on_yaxis will start from 0(rect.left()) to N(rect.right)
     int proj_on_yaxis[5000], proj_on_xaxis[5000];
@@ -1531,7 +1522,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
     TextList words;
     copyToList(words);
-    RegionText root(words,contentRect);
+    const RegionText root(words,contentRect);
 
     // start the tree with the root, it is our only region at the start
     tree.push_back(root);
@@ -1542,7 +1533,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     // while traversing the tree has not been ended
     while(i < tree.length())
     {
-        RegionText node = tree.at(i);
+        const RegionText node = tree.at(i);
         QRect regionRect = node.area();
 
         /**
@@ -1699,27 +1690,26 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         bool cut_hor = false, cut_ver = false;
 
         // For horizontal cut
-        int topHeight = cut_pos_y - (regionRect.top() - old_top);
-        QRect topRect(regionRect.left(),
-            regionRect.top(),
-            regionRect.width(),
-            topHeight);
-        QRect bottomRect(regionRect.left(),
-            regionRect.top() + topHeight,
-            regionRect.width(),
-            regionRect.height() - topHeight );
+        const int topHeight = cut_pos_y - (regionRect.top() - old_top);
+        const QRect topRect(regionRect.left(),
+                            regionRect.top(),
+                            regionRect.width(),
+                            topHeight);
+        const QRect bottomRect(regionRect.left(),
+                               regionRect.top() + topHeight,
+                               regionRect.width(),
+                               regionRect.height() - topHeight );
 
         // For vertical Cut
-        int leftWidth = cut_pos_x - (regionRect.left() - old_left);
-
-        QRect leftRect(regionRect.left(),
-            regionRect.top(),
-            leftWidth,
-            regionRect.height());
-        QRect rightRect(regionRect.left() + leftWidth,
-            regionRect.top(),
-            regionRect.width() - leftWidth,
-            regionRect.height());
+        const int leftWidth = cut_pos_x - (regionRect.left() - old_left);
+        const QRect leftRect(regionRect.left(),
+                             regionRect.top(),
+                             leftWidth,
+                             regionRect.height());
+        const QRect rightRect(regionRect.left() + leftWidth,
+                              regionRect.top(),
+                              regionRect.width() - leftWidth,
+                              regionRect.height());
 
         if(gap_y >= gap_x && gap_y >= tcy)
             cut_hor = true;
@@ -1823,7 +1813,8 @@ void TextPagePrivate::addNecessarySpace()
 
     RegionTextList tree = m_XY_cut_tree;
     int i,j,k;
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
 
     // Only change the texts under RegionTexts, not the area
     for(j = 0 ; j < tree.length() ; j++)
@@ -1842,25 +1833,23 @@ void TextPagePrivate::addNecessarySpace()
             TextList list = lines.at(i);
             for( k = 0 ; k < list.length() ; k++ )
             {
-                QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
+                const QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
                 if( k+1 >= list.length() ) break;
 
-                QRect area2 = list.at(k+1)->area.roundedGeometry(pageWidth,pageHeight);
-                int space = area2.left() - area1.right();
+                const QRect area2 = list.at(k+1)->area.roundedGeometry(pageWidth,pageHeight);
+                const int space = area2.left() - area1.right();
 
                 if(space != 0)
                 {
                     // Make a TinyTextEntity of string space and push it between it and it+1
-                    int left,right,top,bottom;
+                    const int left = area1.right();
+                    const int right = area2.left();
+                    const int top = area2.top() < area1.top() ? area2.top() : area1.top();
+                    const int bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
 
-                    left = area1.right();
-                    right = area2.left();
-                    top = area2.top() < area1.top() ? area2.top() : area1.top();
-                    bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
-
-                    QString spaceStr(" ");
-                    QRect rect(QPoint(left,top),QPoint(right,bottom));
-                    NormalizedRect entRect(rect,pageWidth,pageHeight);
+                    const QString spaceStr(" ");
+                    const QRect rect(QPoint(left,top),QPoint(right,bottom));
+                    const NormalizedRect entRect(rect,pageWidth,pageHeight);
                     TinyTextEntity *ent = new TinyTextEntity(spaceStr,entRect);
 
                     list.insert(k+1,ent);
@@ -1909,28 +1898,28 @@ void TextPagePrivate::addNecessarySpace()
  */
 void TextPagePrivate::breakWordIntoCharacters()
 {
-    QString spaceStr(" ");
+    const QString spaceStr(" ");
     TextList tmp;
-    int count = 0, i;
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
 
-    for(i = 0 ; i < m_words.length() ; i++)
+    for(int i = 0 ; i < m_words.length() ; i++)
     {
         TinyTextEntity *ent = m_words.at(i);
-        QRect rect = ent->area.geometry(pageWidth,pageHeight);
+        const QRect rect = ent->area.geometry(pageWidth,pageHeight);
 
         // the spaces contains only one character, so we can skip them
         if(ent->text() == spaceStr)
             tmp.append(ent);
         else
         {
-            int key = rect.left() * rect.top()
-                    + rect.right() * rect.bottom();
+            const int key = rect.left() * rect.top()
+                            + rect.right() * rect.bottom();
 
             RegionText word_text = m_word_chars_map.value(key);
             TextList list = word_text.text();
 
-            count = m_word_chars_map.count(key);
+            const int count = m_word_chars_map.count(key);
             if(count > 1)
             {
                 QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
@@ -1940,7 +1929,7 @@ void TextPagePrivate::breakWordIntoCharacters()
                     it++;
 
                     list = word_text.text();
-                    QRect regionRect = word_text.area();
+                    const QRect regionRect = word_text.area();
 
                     if(regionRect.left() == rect.left() && regionRect.top() == rect.top())
                         break;

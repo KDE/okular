@@ -999,7 +999,7 @@ static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second
 /**
  * Copies a TextList to m_words with the same pointer
  */
-void TextPagePrivate::copyTo(TextList &list)
+void TextPagePrivate::copyFromList(const TextList &list)
 {
     TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
     for( ; it != itEnd ; it++)
@@ -1017,7 +1017,7 @@ void TextPagePrivate::copyTo(TextList &list)
 /**
  * Copies from m_words to list with distinct pointers
  */
-void TextPagePrivate::copyFrom(TextList &list)
+void TextPagePrivate::copyToList(TextList &list) const
 {
     TextList::Iterator it = list.begin(), itEnd = list.end();
     for( ; it != itEnd ; it++)
@@ -1147,7 +1147,7 @@ void TextPagePrivate::makeWordFromCharacters()
 
     TextList tmpList;
     TextList newList;
-    copyFrom(tmpList);
+    copyToList(tmpList);
 
     TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
@@ -1247,7 +1247,7 @@ void TextPagePrivate::makeWordFromCharacters()
         if(it == itEnd) break;
     }
 
-    copyTo(newList);
+    copyFromList(newList);
     qDeleteAll(tmpList);
     qDeleteAll(newList);
 }
@@ -1536,7 +1536,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     RegionTextList tree;
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
     TextList words;
-    copyFrom(words);
+    copyToList(words);
     RegionText root(words,contentRect);
 
     // start the tree with the root, it is our only region at the start
@@ -1809,7 +1809,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         }
     }
     //copying elements of tmp to m_words
-    copyTo(tmp);
+    copyFromList(tmp);
 
     // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
     m_XY_cut_tree = tree;
@@ -1906,7 +1906,7 @@ void TextPagePrivate::addNecessarySpace()
             tmp.append(new TinyTextEntity(ent->text(),ent->area));
         }
     }
-    copyTo(tmp);
+    copyFromList(tmp);
 }
 
 /**
@@ -1955,7 +1955,7 @@ void TextPagePrivate::breakWordIntoCharacters()
             tmp.append(list);
         }
     }
-    copyTo(tmp);
+    copyFromList(tmp);
 }
 
 

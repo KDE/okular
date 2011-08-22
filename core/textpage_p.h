@@ -59,12 +59,12 @@ class TextPagePrivate
         /**
          * Copy a TextList to m_words
          */
-        void copyTo(TextList &list);
+        void copyFromList(const TextList &list);
 
         /**
          * Copy m_words to a TextList
          */
-        void copyFrom(TextList &list);
+        void copyToList(TextList &list) const;
 
         /**
          * Remove odd spaces which are much bigger than normal spaces from m_words

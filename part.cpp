@@ -2022,7 +2022,7 @@ void Part::slotPrint()
 {
     if (m_document->pages() == 0) return;
 
-    QPrinter printer(QPrinter::PrinterResolution);
+    QPrinter printer(QPrinter::HighResolution);
     QPrintDialog *printDialog = 0;
     QWidget *printConfigWidget = 0;
 

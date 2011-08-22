@@ -2136,12 +2136,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 }
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
-                    KMenu menu( this );
                     PageViewItem* item = pickItemOnPoint(eventPos.x(),eventPos.y());
                     const Okular::Page *page = item->page();
                     //if there is text selected in the page
                     if(page->textSelection())
                     {
+                        KMenu menu( this );
                         QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *speakText = 0;
                         if ( Okular::Settings::useKTTSD() )

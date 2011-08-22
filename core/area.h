@@ -210,7 +210,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located to the bottom of the rectangle
          */
-        bool isBottom(NormalizedPoint pt) const
+        bool isBottom(const NormalizedPoint& pt) const
         {
             return bottom < pt.y;
         }
@@ -218,7 +218,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located on the top of the rectangle
          */
-        bool isTop(NormalizedPoint pt) const
+        bool isTop(const NormalizedPoint& pt) const
         {
             return top > pt.y;
         }
@@ -226,7 +226,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located under the top of the rectangle
          */
-        bool isBottomOrLevel(NormalizedPoint pt) const
+        bool isBottomOrLevel(const NormalizedPoint& pt) const
         {
             return top < pt.y;
         }
@@ -234,7 +234,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located above the bottom of the rectangle
          */
-        bool isTopOrLevel(NormalizedPoint pt) const
+        bool isTopOrLevel(const NormalizedPoint& pt) const
         {
             return bottom > pt.y;
         }
@@ -242,7 +242,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located to the right of the left arm of rectangle
          */
-        bool isLeft(NormalizedPoint pt) const
+        bool isLeft(const NormalizedPoint& pt) const
         {
             return left < pt.x;
         }
@@ -250,7 +250,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Returns true if the point pt is located to the left of the right arm of rectangle
          */
-        bool isRight(NormalizedPoint pt) const
+        bool isRight(const NormalizedPoint& pt) const
         {
             return right > pt.x;
         }

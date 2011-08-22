@@ -220,7 +220,7 @@ public:
     {
     };
 
-    RegionText(TextList &list,QRect &area)
+    RegionText(const TextList &list,const QRect &area)
         : m_region_text(list) ,m_area(area)
     {
     }
@@ -236,12 +236,12 @@ public:
         return m_area;
     }
 
-    inline void setArea(QRect area)
+    inline void setArea(const QRect area)
     {
         m_area = area;
     }
 
-    inline void setText(TextList text)
+    inline void setText(const TextList text)
     {
         m_region_text = text;
     }
@@ -1000,12 +1000,12 @@ bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second)
     return firstArea.top() < secondArea.top();
 }
 
-bool compareRegionTextY(RegionText first, RegionText second)
+bool compareRegionTextY(const RegionText& first, const RegionText& second)
 {
     return first.area().top() < second.area().top();
 }
 
-bool compareRegionTextX(RegionText first, RegionText second)
+bool compareRegionTextX(const RegionText& first, const RegionText& second)
 {
     return first.area().left() < second.area().left();
 }
@@ -1052,7 +1052,7 @@ void TextPagePrivate::copyFrom(TextList &list)
  *    ----         --------       -----  second
  * or we can make it overlap of spaces by threshold%
 */
-bool doesConsumeX(QRect first, QRect second, int threshold)
+bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
 {
     // if one consumes another fully
     if(first.left() <= second.left() && first.right() >= second.right())
@@ -1085,7 +1085,7 @@ bool doesConsumeX(QRect first, QRect second, int threshold)
 /**
  * Same concept of doesConsumeX but in this case we calculate on y axis
  */
-bool doesConsumeY(QRect first, QRect second, int threshold)
+bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
 {
     // if one consumes another fully
     if(first.top() <= second.top() && first.bottom() >= second.bottom())

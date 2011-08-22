@@ -1139,7 +1139,7 @@ void TextPagePrivate::makeWordFromCharacters()
 
     for( ; it != itEnd ; it++)
     {
-        QString textString = (*it)->text().toAscii().data();
+        QString textString = (*it)->text();
         QString newString;
         QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight),elementArea;
         TextList word;
@@ -1207,7 +1207,7 @@ void TextPagePrivate::makeWordFromCharacters()
             lineArea.setWidth( newRight - newLeft );
             lineArea.setHeight( newBottom - newTop );
 
-            textString = (*it)->text().toAscii().data();
+            textString = (*it)->text();
         }
 
         // if newString is not empty, save it

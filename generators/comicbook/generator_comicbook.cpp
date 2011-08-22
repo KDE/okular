@@ -25,7 +25,7 @@ static KAboutData createAboutData()
          "okular_comicbook",
          "okular_comicbook",
          ki18n( "ComicBook Backend" ),
-         "0.3",
+         "0.3.1",
          ki18n( "A renderer for various comic book formats" ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Tobias Koenig" )

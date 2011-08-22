@@ -2137,29 +2137,35 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
                     KMenu menu( this );
-                    QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
-                    QAction *speakText = 0;
-                    if ( Okular::Settings::useKTTSD() )
-                        speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
-                    if ( !d->document->isAllowed( Okular::AllowCopy ) )
+                    PageViewItem* item = pickItemOnPoint(eventPos.x(),eventPos.y());
+                    const Okular::Page *page = item->page();
+                    //if there is text selected in the page
+                    if(page->textSelection())
                     {
-                        textToClipboard->setEnabled( false );
-                        textToClipboard->setText( i18n("Copy forbidden by DRM") );
-                    }
-                    else
-                    {
-                        addWebShortcutsMenu( &menu, d->selectedText() );
-                    }
-                    QAction *choice = menu.exec( e->globalPos() );
-                    // check if the user really selected an action
-                    if ( choice )
-                    {
-                        if ( choice == textToClipboard )
-                            copyTextSelection();
-                        else if ( choice == speakText )
+                        QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
+                        QAction *speakText = 0;
+                        if ( Okular::Settings::useKTTSD() )
+                            speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
+                        if ( !d->document->isAllowed( Okular::AllowCopy ) )
                         {
-                            const QString text = d->selectedText();
-                            d->tts()->say( text );
+                            textToClipboard->setEnabled( false );
+                            textToClipboard->setText( i18n("Copy forbidden by DRM") );
+                        }
+                        else
+                        {
+                            addWebShortcutsMenu( &menu, d->selectedText() );
+                        }
+                        QAction *choice = menu.exec( e->globalPos() );
+                        // check if the user really selected an action
+                        if ( choice )
+                        {
+                            if ( choice == textToClipboard )
+                                copyTextSelection();
+                            else if ( choice == speakText )
+                            {
+                                const QString text = d->selectedText();
+                                d->tts()->say( text );
+                            }
                         }
                     }
                 }

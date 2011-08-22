@@ -20,6 +20,8 @@
 
 #include <cstring>
 
+#include <QtAlgorithms>
+
 using namespace Okular;
 
 class SearchPoint
@@ -205,6 +207,50 @@ void TextPage::append( const QString &text, NormalizedRect *area )
     delete area;
 }
 
+/**
+ * We will divide the whole page in some regions depending on the horizontal and
+ * vertical spacing among different regions. Each region will have an area and an
+ * associated TextList in sorted order.
+*/
+class RegionText
+{
+
+public:
+    RegionText()
+    {
+    };
+
+    RegionText(const TextList &list,const QRect &area)
+        : m_region_text(list) ,m_area(area)
+    {
+    }
+
+    // We assume text will be set only once at the time of object creation
+    inline TextList text() const
+    {
+        return m_region_text;
+    }
+
+    inline QRect area() const
+    {
+        return m_area;
+    }
+
+    inline void setArea(const QRect area)
+    {
+        m_area = area;
+    }
+
+    inline void setText(const TextList text)
+    {
+        m_region_text = text;
+    }
+
+private:
+    TextList m_region_text;
+    QRect m_area;
+};
+
 RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 {
     if ( d->m_words.isEmpty() )
@@ -326,27 +372,264 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
-    NormalizedRect tmp;
+    double scaleX = this->d->m_page->m_page->width();
+    double scaleY = this->d->m_page->m_page->height();
 
-    const NormalizedPoint startC = sel->start();
-    const double startCx = startC.x;
-    const double startCy = startC.y;
+    NormalizedPoint startC = sel->start();
+    NormalizedPoint endC = sel->end();
+    NormalizedPoint temp;
 
-    const NormalizedPoint endC = sel->end();
-    const double endCx = endC.x;
-    const double endCy = endC.y;
+    // if startPoint is right to endPoint swap them
+    if(startC.x > endC.x)
+    {
+        temp = startC;
+        startC = endC;
+        endC = temp;
+    }
+
+    // minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
+    NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
+    QRect content = boundingRect.geometry(scaleX,scaleY);
+    double minX, maxX, minY, maxY;
+    minX = content.left(), maxX = content.right();
+    minY = content.top(), maxY = content.bottom();
+
+    /**
+     * We will now find out the TinyTextEntity for the startRectangle and TinyTextEntity for
+     * the endRectangle. We have four cases:
+     *
+     * Case 1(a): both startpoint and endpoint are out of the bounding Rectangle and at one side, so the rectangle made of start
+     * and endPoint are outof the bounding rect (do not intersect)
+     *
+     * Case 1(b): both startpoint and endpoint are out of bounding rect, but they are in different side, so is their rectangle
+     *
+     * Case 2(a): find the rectangle which contains start and endpoint and having some
+     * TextEntity
+     *
+     * Case 2(b): if 2(a) fails (if startPoint and endPoint both are unchanged), then we check whether there is any
+     * TextEntity within the rect made by startPoint and endPoint
+     *
+     * Case 3: Now, we may have two type of selection.
+     * 1. startpoint is left-top of start_end and endpoint is right-bottom
+     * 2. startpoint is left-bottom of start_end and endpoint is top-right
+     *
+     * Also, as 2(b) is passed, we might have it,itEnd or both unchanged, but the fact is that we have
+     * text within them. so, we need to search for the best suitable textposition for start and end.
+     *
+     * Case 3(a): We search the nearest rectangle consisting of some
+     * TinyTextEntity right to or bottom of the startPoint for selection 01.
+     * And, for selection 02, we have to search for right and top
+     *
+     * Case 3(b): For endpoint, we have to find the point top of or left to
+     * endpoint if we have selection 01.
+     * Otherwise, the search will be left and bottom
+     */
+
+    // we know that startC.x > endC.x, we need to decide which is top and which is bottom
+    NormalizedRect start_end;
+    if(startC.y < endC.y)
+        start_end = NormalizedRect(startC.x, startC.y, endC.x, endC.y);
+    else start_end = NormalizedRect(startC.x, endC.y, endC.x, startC.y);
+
+    // Case 1(a)
+    if(!boundingRect.intersects(start_end)) return ret;
+
+    // case 1(b)
+    /**
+        note that, after swapping of start and end, we know that,
+        start is always left to end. but, we cannot say start is
+        positioned upper than end.
+    **/
+    else
+    {
+        // if start is left to content rect take it to content rect boundary
+        if(startC.x * scaleX < minX) startC.x = minX/scaleX;
+        if(endC.x * scaleX > maxX) endC.x = maxX/scaleX;
+
+        // if start is top to end (selection type 01)
+        if(startC.y * scaleY < minY) startC.y = minY/scaleY;
+        if(endC.y * scaleY > maxY) endC.y = maxY/scaleY;
+
+        // if start is bottom to end (selection type 02)
+        if(startC.y * scaleY > maxY) startC.y = maxY/scaleY;
+        if(endC.y * scaleY < minY) endC.y = minY/scaleY;
+    }
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextList::ConstIterator start = it, end = itEnd, tmpIt = it; //, tmpItEnd = itEnd;
     const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
+
+    NormalizedRect tmp;
+    //case 2(a)
     for ( ; it != itEnd; ++it )
     {
         tmp = (*it)->area;
-        if ( ( tmp.top > startCy || ( tmp.bottom > startCy && tmp.right > startCx ) )
-             && ( tmp.bottom < endCy || ( tmp.top < endCy && tmp.left < endCx ) ) )
-        {
-            ret->appendShape( (*it)->transformedArea( matrix ), side );
+        if(tmp.contains(startC.x,startC.y)){
+            start = it;
+        }
+        if(tmp.contains(endC.x,endC.y)){
+            end = it;
         }
     }
+
+    //case 2(b)
+    it = tmpIt;
+    if(start == it && end == itEnd)
+    {
+        for ( ; it != itEnd; ++it )
+        {
+            // is there any text reactangle within the start_end rect
+            tmp = (*it)->area;
+            if(start_end.intersects(tmp))
+                break;
+        }
+
+        // we have searched every text entities, but none is within the rectangle created by start and end
+        // so, no selection should be done
+        if(it == itEnd)
+        {
+            return ret;
+        }
+    }
+    it = tmpIt;
+    bool selection_two_start = false;
+
+    //case 3.a
+    if(start == it)
+    {
+        bool flagV = false;
+        NormalizedRect rect;
+
+        // selection type 01
+        if(startC.y <= endC.y)
+        {
+            for ( ; it != itEnd; ++it )
+            {
+                rect= (*it)->area;
+                rect.isBottom(startC) ? flagV = false: flagV = true;
+
+                if(flagV && rect.isRight(startC))
+                {
+                    start = it;
+                    break;
+                }
+            }
+        }
+
+        //selection type 02
+        else
+        {
+            selection_two_start = true;
+            int distance = scaleX + scaleY + 100;
+            int count = 0;
+
+            for ( ; it != itEnd; ++it )
+            {
+                rect= (*it)->area;
+
+                if(rect.isBottomOrLevel(startC) && rect.isRight(startC))
+                {
+                    count++;
+                    QRect entRect = rect.geometry(scaleX,scaleY);
+                    int xdist, ydist;
+                    xdist = entRect.center().x() - startC.x * scaleX;
+                    ydist = entRect.center().y() - startC.y * scaleY;
+
+                    //make them positive
+                    if(xdist < 0) xdist = -xdist;
+                    if(ydist < 0) ydist = -ydist;
+
+                    if( (xdist + ydist) < distance)
+                    {
+                        distance = xdist+ ydist;
+                        start = it;
+                    }
+                }
+            }
+        }
+    }
+
+    //case 3.b
+    if(end == itEnd)
+    {
+        it = tmpIt;
+        itEnd = itEnd-1;
+
+        bool flagV = false;
+        NormalizedRect rect;
+
+        if(startC.y <= endC.y)
+        {
+            for ( ; itEnd >= it; itEnd-- )
+            {
+                rect= (*itEnd)->area;
+                rect.isTop(endC) ? flagV = false: flagV = true;
+
+                if(flagV && rect.isLeft(endC))
+                {
+                    end = itEnd;
+                    break;
+                }
+            }
+        }
+
+        else
+        {
+            int distance = scaleX + scaleY + 100;
+            for ( ; itEnd >= it; itEnd-- )
+            {
+                rect= (*itEnd)->area;
+
+                if(rect.isTopOrLevel(endC) && rect.isLeft(endC))
+                {
+                    QRect entRect = rect.geometry(scaleX,scaleY);
+                    int xdist, ydist;
+                    xdist = entRect.center().x() - endC.x * scaleX;
+                    ydist = entRect.center().y() - endC.y * scaleY;
+
+                    //make them positive
+                    if(xdist < 0) xdist = -xdist;
+                    if(ydist < 0) ydist = -ydist;
+
+                    if( (xdist + ydist) < distance)
+                    {
+                        distance = xdist+ ydist;
+                        end = itEnd;
+                    }
+
+                }
+            }
+        }
+    }
+
+    /* if start and end in selection 02 are in the same column, and we
+     start at an empty space we have to remove the selection of last
+     character
+    */
+    if(selection_two_start)
+    {
+        if(start > end)
+        {
+            start = start - 1;
+        }
+    }
+
+    // if start is less than end swap them
+    if(start > end)
+    {
+        it = start;
+        start = end;
+        end = it;
+    }
+
+    // removes the possibility of crash, in case none of 1 to 3 is true
+    if(end == d->m_words.constEnd()) end--;
+
+    for( ;start <= end ; start++)
+    {
+        ret->appendShape( (*start)->transformedArea( matrix ), side );
+     }
+
 #endif
 
     return ret;
@@ -553,7 +836,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
     // queryLeft is the length of the query we have left
     const TinyTextEntity* curEntity = 0;
     int j=query.length() - 1, len=0, queryLeft=query.length();
+    int offset = 0;
     bool haveMatch=false;
+    bool dontIncrement=false;
     bool offsetMoved = false;
     TextList::ConstIterator it = start;
     TextList::ConstIterator it_begin;
@@ -563,6 +848,10 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         const QString &str = curEntity->text();
         if ( !offsetMoved && ( it == start ) )
         {
+            if ( m_searchPoints.contains( searchID ) )
+            {
+                offset = qMax( m_searchPoints[ searchID ]->offset_begin, 0 );
+            }
             offsetMoved = true;
         }
         if ( query.at(j).isSpace() )
@@ -573,9 +862,14 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #endif
             j--;
             queryLeft--;
+            // since we do not really need to increment this after this
+            // run of the loop finishes because we are not comparing it 
+            // to any entity, rather we are deducing a situation in a document
+            dontIncrement=true;
         }
         else
         {
+            dontIncrement=false;
             len=str.length();
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
@@ -598,6 +892,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     kDebug(OkularDebug) << "\tnot matched";
 #endif
                     j=query.length() - 1;
+                    offset = 0;
                     queryLeft=query.length();
                     it_begin = TextList::ConstIterator();
             }
@@ -695,4 +990,1035 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
             ret += (*it)->text();
     }
     return ret;
+}
+
+bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second)
+{
+    QRect firstArea = first->area.roundedGeometry(1000,1000);
+    QRect secondArea = second->area.roundedGeometry(1000,1000);
+
+    return firstArea.left() < secondArea.left();
+}
+
+bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second)
+{
+    QRect firstArea = first->area.roundedGeometry(1000,1000);
+    QRect secondArea = second->area.roundedGeometry(1000,1000);
+
+    return firstArea.top() < secondArea.top();
+}
+
+bool compareRegionTextY(const RegionText& first, const RegionText& second)
+{
+    return first.area().top() < second.area().top();
+}
+
+bool compareRegionTextX(const RegionText& first, const RegionText& second)
+{
+    return first.area().left() < second.area().left();
+}
+
+/**
+ * Copies a TextList to m_words with the same pointer
+ */
+void TextPagePrivate::copyTo(TextList &list)
+{
+    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
+    for( ; it != itEnd ; it++)
+    {
+        m_words.erase(it);
+    }
+
+    for(int i = 0 ; i < list.length() ; i++)
+    {
+        TinyTextEntity *ent = list.at(i);
+        m_words.append( new TinyTextEntity(ent->text(),ent->area) );
+    }
+}
+
+/**
+ * Copies from m_words to list with distinct pointers
+ */
+void TextPagePrivate::copyFrom(TextList &list)
+{
+    TextList::Iterator it = list.begin(), itEnd = list.end();
+    for( ; it != itEnd ; it++)
+    {
+        list.erase(it);
+    }
+
+    for(int i = 0 ; i < m_words.length() ; i++)
+    {
+        TinyTextEntity* ent = m_words.at(i);
+        list.append( new TinyTextEntity( ent->text(),ent->area ) );
+    }
+}
+
+/**
+ * If the horizontal arm of one rectangle fully contains the other (example below)
+ *  --------         ----         -----  first
+ *    ----         --------       -----  second
+ * or we can make it overlap of spaces by threshold%
+*/
+bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
+{
+    // if one consumes another fully
+    if(first.left() <= second.left() && first.right() >= second.right())
+        return true;
+
+    if(first.left() >= second.left() && first.right() <= second.right())
+        return true;
+
+    // or if there is overlap of space by more than threshold%
+    // there is overlap
+    int overlap;
+    if(second.right() >= first.left() && first.right() >= second.left())
+    {
+        int percentage;
+        if(second.right() >= first.right()) overlap = first.right() - second.left();
+        else overlap = second.right() - first.left();
+
+        // we will divide by the smaller rectangle to calculate the overlap
+        if( first.width() < second.width())
+            percentage = overlap * 100 / (first.right() - first.left());
+        else
+            percentage = overlap * 100 / (second.right() - second.left());
+
+        if(percentage >= threshold) return true;
+    }
+
+    return false;
+}
+
+/**
+ * Same concept of doesConsumeX but in this case we calculate on y axis
+ */
+bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+{
+    // if one consumes another fully
+    if(first.top() <= second.top() && first.bottom() >= second.bottom())
+        return true;
+
+    if(first.top() >= second.top() && first.bottom() <= second.bottom())
+        return true;
+
+    // or if there is overlap of space by more than 80%
+    // there is overlap
+    int overlap;
+    if(second.bottom() >= first.top() && first.bottom() >= second.top())
+    {
+        int percentage;
+        if(second.bottom() >= first.bottom()) overlap = first.bottom() - second.top();
+        else overlap = second.bottom() - first.top();
+
+        //we will divide by the smaller rectangle to calculate the overlap
+        if( first.width() < second.width())
+            percentage = overlap * 100 / (first.bottom() - first.top());
+        else
+            percentage = overlap * 100 / (second.bottom() - second.top());
+
+        if(percentage >= threshold) return true;
+    }
+
+    return false;
+}
+
+/**
+ * Remove all the spaces in between texts. It will make all the generators
+ * same, whether they save spaces(like pdf) or not(like djvu).
+ */
+void TextPagePrivate::removeSpace()
+{
+    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
+    QString str(' ');
+
+    it = m_words.begin(), itEnd = m_words.end();
+    for( ; it != itEnd ; it++)
+    {
+        if((*it)->text() == str)
+        {
+            // create new Entity, otherwise there might be possible memory leakage
+            m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
+            this->m_words.erase(it);
+        }
+    }
+}
+
+/**
+ * We will the TinyTextEntity from m_words and try to create
+ * words from there.
+ */
+void TextPagePrivate::makeWordFromCharacters()
+{
+    /**
+     * At first we will copy m_words to tmpList. Then, we will traverse the
+     * tmpList and try to create words from the TinyTextEntities in tmpList.
+     * We will search TinyTextEntity blocks and merge them until we get a
+     * space between two consecutive TinyTextEntities. When we get a space
+     * we can take it as a end of word. Then we store the word as a TinyTextEntity
+     * and keep it in newList.
+
+     * We also keep a mapping between every element in newList and word. We create a
+     * RegionText named regionWord and create a hash key from the TinyTextEntity
+     * rectangle area of the element in newList. So, we can get the TinyTextEntities from
+     * which every element(word) of newList is generated. It will be necessary later
+     * when we will divide the word into characters.
+
+     * Finally we copy the newList to m_words.
+     */
+
+    TextList tmpList;
+    TextList newList;
+    copyFrom(tmpList);
+
+    TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
+    int newLeft,newRight,newTop,newBottom;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+    int index = 0;
+
+    for( ; it != itEnd ; it++)
+    {
+        QString textString = (*it)->text().toAscii().data();
+        QString newString;
+        QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight),elementArea;
+        TextList word;
+        tmpIt = it;
+        int space = 0;
+
+        while(!space )
+        {
+            if(textString.length())
+            {
+                newString.append(textString);
+
+                // when textString is the start of the word
+                if(tmpIt == it)
+                {
+                    NormalizedRect newRect(lineArea,pageWidth,pageHeight);
+                    word.append(new TinyTextEntity(textString.normalized
+                                                   (QString::NormalizationForm_KC), newRect));
+                }
+                else
+                {
+                    NormalizedRect newRect(elementArea,pageWidth,pageHeight);
+                    word.append(new TinyTextEntity(textString.normalized
+                                                   (QString::NormalizationForm_KC), newRect));
+                }
+            }
+
+            it++;
+
+            /*
+             we must have to put this line before the if condition of it==itEnd
+             otherwise the last character can be missed
+             */
+            if(it == itEnd) break;
+            elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+            if(!doesConsumeY(elementArea,lineArea,60))
+            {
+                it--;
+                break;
+            }
+
+            int text_y1 = elementArea.top() ,
+                    text_x1 = elementArea.left(),
+                    text_y2 = elementArea.y() + elementArea.height(),
+                    text_x2 = elementArea.x() + elementArea.width();
+            int line_y1 = lineArea.top() ,line_x1 = lineArea.left(),
+                    line_y2 = lineArea.y() + lineArea.height(),
+                    line_x2 = lineArea.x() + lineArea.width();
+
+            space = elementArea.left() - lineArea.right();
+
+            if(space > 0 || space < 0)
+            {
+                it--;
+                break;
+            }
+
+            newLeft = text_x1 < line_x1 ? text_x1 : line_x1;
+            newRight = line_x2 > text_x2 ? line_x2 : text_x2;
+            newTop = text_y1 > line_y1 ? line_y1 : text_y1;
+            newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+
+            lineArea.setLeft (newLeft);
+            lineArea.setTop (newTop);
+            lineArea.setWidth( newRight - newLeft );
+            lineArea.setHeight( newBottom - newTop );
+
+            textString = (*it)->text().toAscii().data();
+        }
+
+        // if newString is not empty, save it
+        if(newString.length())
+        {
+            NormalizedRect newRect(lineArea,pageWidth,pageHeight);
+            newList.append(new TinyTextEntity(newString.normalized
+                                              (QString::NormalizationForm_KC), newRect ));
+            QRect rect = newRect.geometry(pageWidth,pageHeight);
+            RegionText regionWord(word,rect);
+            int keyRect = rect.left() * rect.top()
+                    + rect.right() * rect.bottom();
+
+            // there may be more than one element in the same key
+            m_word_chars_map.insertMulti(keyRect,regionWord);
+
+            index++;
+        }
+
+        if(it == itEnd) break;
+    }
+
+    copyTo(newList);
+    qDeleteAll(tmpList);
+    qDeleteAll(newList);
+}
+
+/**
+ * Create Lines from the words and sort them
+ */
+void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
+                        SortedTextList &lines, LineRect &line_rects)
+{
+    /**
+     * We cannot assume that the generator will give us texts in the right order.
+     * We can only assume that we will get texts in the page and their bounding
+     * rectangle. The texts can be character, word, half-word anything.
+     * So, we need to:
+     **
+     * 1. Sort rectangles/boxes containing texts by y0(top)
+     * 2. Create textline where there is y overlap between TinyTextEntity 's
+     * 3. Within each line sort the TinyTextEntity 's by x0(left)
+     */
+
+    /*
+     Make a new copy of the TextList in the words, so that the wordsTmp and lines do
+     not contain same pointers for all the TinyTextEntity.
+     */
+    TextList words;
+    for(int i = 0 ; i < wordsTmp.length() ; i++)
+    {
+        TinyTextEntity* ent = wordsTmp.at(i);
+        words.append( new TinyTextEntity( ent->text(),ent->area ) );
+    }
+
+    // Step 1
+    qSort(words.begin(),words.end(),compareTinyTextEntityY);
+
+    // Step 2
+    TextList::Iterator it = words.begin(), itEnd = words.end();
+    int i = 0;
+    int newLeft,newRight,newTop,newBottom;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    //for every non-space texts(characters/words) in the textList
+    for( ; it != itEnd ; it++)
+    {
+        QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+        bool found = false;
+
+        for( i = 0 ; i < lines.length() ; i++)
+        {
+            /* the line area which will be expanded
+               line_rects is only necessary to preserve the topmin and bottommax of all
+               the texts in the line, left and right is not necessary at all
+            */
+            QRect lineArea = line_rects.at(i);
+            int text_y1 = elementArea.top() ,
+                    text_y2 = elementArea.top() + elementArea.height() ,
+                    text_x1 = elementArea.left(),
+                    text_x2 = elementArea.left() + elementArea.width();
+            int line_y1 = lineArea.top() ,
+                    line_y2 = lineArea.top() + lineArea.height(),
+                    line_x1 = lineArea.left(),
+                    line_x2 = lineArea.left() + lineArea.width();
+
+            /*
+               if the new text and the line has y overlapping parts of more than 70%,
+               the text will be added to this line
+             */
+            if(doesConsumeY(elementArea,lineArea,70))
+            {
+                TextList tmp = lines.at(i);
+                tmp.append((*it));
+
+                lines.replace(i,tmp);
+
+                newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
+                newRight = line_x2 > text_x2 ? line_x2 : text_x2;
+                newTop = line_y1 < text_y1 ? line_y1 : text_y1;
+                newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+
+                line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
+                found = true;
+            }
+
+            if(found) break;
+        }
+
+        /* when we have found a new line create a new TextList containing
+           only one element and append it to the lines
+         */
+        if(!found)
+        {
+            TextList tmp;
+            tmp.append((*it));
+            lines.append(tmp);
+            line_rects.append(elementArea);
+        }
+    }
+
+    // Step 3
+    for(i = 0 ; i < lines.length() ; i++)
+    {
+        TextList list = lines.at(i);
+        qSort(list.begin(),list.end(),compareTinyTextEntityX);
+        lines.replace(i,list);
+    }
+}
+
+/**
+ * Calculate Statistical information from the lines we made previously
+ */
+void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int &word_spacing,
+                                                      int &line_spacing,int &col_spacing)
+{
+    /**
+     * For the region, defined by line_rects and lines
+     * 1. Make line statistical analysis to find the line spacing
+     * 2. Make character statistical analysis to differentiate between
+     *   word spacing and column spacing.
+     */
+
+    /**
+     * Step 1
+     */
+    QMap<int,int> line_space_stat;
+    for(int i = 0 ; i < line_rects.length(); i++)
+    {
+        QRect rectUpper = line_rects.at(i);
+
+        if(i+1 == line_rects.length()) break;
+        QRect rectLower = line_rects.at(i+1);
+
+        int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
+        if(linespace < 0) linespace =-linespace;
+
+        if(line_space_stat.contains(linespace))
+            line_space_stat[linespace]++;
+        else line_space_stat[linespace] = 1;
+    }
+
+    line_spacing = 0;
+    int weighted_count = 0;
+    QMapIterator<int, int> iterate_linespace(line_space_stat);
+
+    while(iterate_linespace.hasNext())
+    {
+        iterate_linespace.next();
+        line_spacing += iterate_linespace.value() * iterate_linespace.key();
+        weighted_count += iterate_linespace.value();
+    }
+
+    if(line_spacing)
+        line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
+
+    /**
+     * Step 2
+     */
+    // We would like to use QMap instead of QHash as it will keep the keys sorted
+    QMap<int,int> hor_space_stat;
+    QMap<int,int> col_space_stat;
+    QList< QList<QRect> > space_rects;
+    QList<QRect> max_hor_space_rects;
+
+    int i;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    // Space in every line
+    for(i = 0 ; i < lines.length() ; i++)
+    {
+        TextList list = lines.at(i);
+        QList<QRect> line_space_rects;
+        int maxSpace = 0, minSpace = pageWidth;
+
+        // for every TinyTextEntity element in the line
+        TextList::Iterator it = list.begin(), itEnd = list.end();
+        QRect max_area1,max_area2;
+        QString before_max, after_max;
+
+        // for every line
+        for( ; it != itEnd ; it++ )
+        {
+            QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+            if( it+1 == itEnd ) break;
+
+            QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
+            int space = area2.left() - area1.right();
+
+            if(space > maxSpace)
+            {
+                max_area1 = area1;
+                max_area2 = area2;
+                maxSpace = space;
+                before_max = (*it)->text();
+                after_max = (*(it+1))->text();
+            }
+
+            if(space < minSpace && space != 0) minSpace = space;
+
+            //if we found a real space, whose length is not zero and also less than the pageWidth
+            if(space != 0 && space != pageWidth)
+            {
+                // increase the count of the space amount
+                if(hor_space_stat.contains(space)) hor_space_stat[space] = hor_space_stat[space]++;
+                else hor_space_stat[space] = 1;
+
+                int left,right,top,bottom;
+
+                left = area1.right();
+                right = area2.left();
+
+                top = area2.top() < area1.top() ? area2.top() : area1.top();
+                bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
+
+                QRect rect(left,top,right-left,bottom-top);
+                line_space_rects.append(rect);
+            }
+        }
+
+        space_rects.append(line_space_rects);
+
+        if(hor_space_stat.contains(maxSpace))
+        {
+            if(hor_space_stat[maxSpace] != 1)
+                hor_space_stat[maxSpace] = hor_space_stat[maxSpace]--;
+            else hor_space_stat.remove(maxSpace);
+        }
+
+        if(maxSpace != 0)
+        {
+            if (col_space_stat.contains(maxSpace))
+                col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
+            else col_space_stat[maxSpace] = 1;
+
+            //store the max rect of each line
+            int left,right,top,bottom;
+            left = max_area1.right();
+            right = max_area2.left();
+
+            max_area1.top() > max_area2.top() ? top = max_area2.top() : top = max_area1.top();
+            max_area1.bottom() < max_area2.bottom() ? bottom = max_area2.bottom() : bottom = max_area1.bottom();
+
+            QRect rect(left,top,right-left,bottom-top);
+            max_hor_space_rects.append(rect);
+        }
+        else max_hor_space_rects.append(QRect(0,0,0,0));
+    }
+
+    // All the between word space counts are in hor_space_stat
+    word_spacing = 0;
+    weighted_count = 0;
+    QMapIterator<int, int> iterate(hor_space_stat);
+
+    while (iterate.hasNext())
+    {
+        iterate.next();
+
+        if(iterate.key() > 0)
+        {
+            word_spacing += iterate.value() * iterate.key();
+            weighted_count += iterate.value();
+        }
+    }
+    if(weighted_count)
+        word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
+
+    col_spacing = 0;
+    QMapIterator<int, int> iterate_col(col_space_stat);
+
+    while (iterate_col.hasNext())
+    {
+        iterate_col.next();
+        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
+    }
+    col_spacing = col_space_stat.key(col_spacing);
+}
+
+/**
+ * Implements the XY Cut algorithm for textpage segmentation
+ */
+void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
+{
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    // proj_on_yaxis will start from 0(rect.left()) to N(rect.right)
+    int proj_on_yaxis[5000], proj_on_xaxis[5000];
+
+    RegionTextList tree;
+    QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
+    TextList words;
+    copyFrom(words);
+    RegionText root(words,contentRect);
+
+    // start the tree with the root, it is our only region at the start
+    tree.push_back(root);
+
+    int i = 0, j, k;
+    int countLoop = 0;
+
+    // while traversing the tree has not been ended
+    while(i < tree.length())
+    {
+        RegionText node = tree.at(i);
+        QRect regionRect = node.area();
+
+        /**
+         * 1. calculation of projection profiles
+         */
+        // allocate the size of proj profiles and initialize with 0
+        int size_proj_y = node.area().height() ;
+        int size_proj_x = node.area().width() ;
+
+        for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
+        for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
+
+        TextList list = node.text();
+        int word_spacing = 0,line_spacing = 0, column_spacing = 0;
+        SortedTextList lines;
+        LineRect line_rects;
+
+        // Calculate tcx and tcy locally for each new region
+        if(countLoop++)
+        {
+            makeAndSortLines(list,lines,line_rects);
+            calculateStatisticalInformation(lines,line_rects,word_spacing,line_spacing,column_spacing);
+            tcx = word_spacing * 2, tcy = line_spacing * 2;
+        }
+
+        int maxX = 0 , maxY = 0;
+        int avgX = 0 ;
+        int count;
+
+        // for every text in the region
+        for( j = 0 ; j < list.length() ; j++ )
+        {
+            TinyTextEntity *ent = list.at(j);
+            QRect entRect = ent->area.geometry(pageWidth,pageHeight);
+
+            // calculate vertical projection profile proj_on_xaxis1
+            for(k = entRect.left() ; k <= entRect.left() + entRect.width() ; k++)
+            {
+                proj_on_xaxis[k - regionRect.left()] += entRect.height();
+            }
+
+            // calculate horizontal projection profile in the same way
+            for(k = entRect.top() ; k <= entRect.top() + entRect.height() ; k++)
+            {
+                proj_on_yaxis[k - regionRect.top()] += entRect.width();
+            }
+        }
+
+        for( j = 0 ; j < size_proj_y ; j++ )
+        {
+            if (proj_on_yaxis[j] > maxY)
+                maxY = proj_on_yaxis[j];
+        }
+
+        avgX = count = 0;
+        for( j = 0 ; j < size_proj_x ; j++ )
+        {
+            if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
+            if(proj_on_xaxis[j])
+            {
+                count++;
+                avgX+= proj_on_xaxis[j];
+            }
+        }
+        if(count) avgX /= count;
+
+
+        /**
+         * 2. Cleanup Boundary White Spaces and removal of noise
+         */
+        int xbegin = 0, xend = size_proj_x - 1;
+        int ybegin = 0, yend = size_proj_y - 1;
+        while(xbegin < size_proj_x && proj_on_xaxis[xbegin] <= 0)
+            xbegin++;
+        while(xend >= 0 && proj_on_xaxis[xend] <= 0)
+            xend--;
+        while(ybegin < size_proj_y && proj_on_yaxis[ybegin] <= 0)
+            ybegin++;
+        while(yend >= 0 && proj_on_yaxis[yend] <= 0)
+            yend--;
+
+        //update the regionRect
+        int old_left = regionRect.left(), old_top = regionRect.top();
+        regionRect.setLeft(old_left + xbegin);
+        regionRect.setRight(old_left + xend);
+        regionRect.setTop(old_top + ybegin);
+        regionRect.setBottom(old_top + yend);
+
+        int tnx = (int)((double)avgX * 10.0 / 100.0 + 0.5), tny = 0;
+        for( j = 0 ; j < size_proj_x ; j++ )
+            proj_on_xaxis[j] -= tnx;
+        for(j = 0 ; j < size_proj_y ; j++)
+            proj_on_yaxis[j] -= tny;
+
+        /**
+         * 3. Find the Widest gap
+         */
+        int gap_hor = -1, pos_hor = -1;
+        int begin = -1, end = -1;
+
+        // find all hor_gaps and find the maximum between them
+        for(j = 1 ; j < size_proj_y ; j++)
+        {
+            //transition from white to black
+            if(begin >= 0 && proj_on_yaxis[j-1] <= 0
+                    && proj_on_yaxis[j] > 0)
+                end = j;
+
+            //transition from black to white
+            if(proj_on_yaxis[j-1] > 0 && proj_on_yaxis[j] <= 0)
+                begin = j;
+
+            if(begin > 0 && end > 0 && end-begin > gap_hor)
+            {
+                gap_hor = end - begin;
+                pos_hor = (end + begin) / 2;
+                begin = -1;
+                end = -1;
+            }
+        }
+
+
+        begin = -1, end = -1;
+        int gap_ver = -1, pos_ver = -1;
+
+        //find all the ver_gaps and find the maximum between them
+        for(j = 1 ; j < size_proj_x ; j++)
+        {
+            //transition from white to black
+            if(begin >= 0 && proj_on_xaxis[j-1] <= 0
+                    && proj_on_xaxis[j] > 0){
+                end = j;
+            }
+
+            //transition from black to white
+            if(proj_on_xaxis[j-1] > 0 && proj_on_xaxis[j] <= 0)
+                begin = j;
+
+            if(begin > 0 && end > 0 && end-begin > gap_ver)
+            {
+                gap_ver = end - begin;
+                pos_ver = (end + begin) / 2;
+                begin = -1;
+                end = -1;
+            }
+        }
+
+        int cut_pos_x = pos_ver, cut_pos_y = pos_hor;
+        int gap_x = gap_ver, gap_y = gap_hor;
+
+        /**
+         * 4. Cut the region and make nodes (left,right) or (up,down)
+         */
+        bool cut_hor = false, cut_ver = false;
+
+        // For horizontal cut
+        int topHeight = cut_pos_y - (regionRect.top() - old_top);
+        QRect topRect(regionRect.left(),
+            regionRect.top(),
+            regionRect.width(),
+            topHeight);
+        QRect bottomRect(regionRect.left(),
+            regionRect.top() + topHeight,
+            regionRect.width(),
+            regionRect.height() - topHeight );
+
+        // For vertical Cut
+        int leftWidth = cut_pos_x - (regionRect.left() - old_left);
+
+        QRect leftRect(regionRect.left(),
+            regionRect.top(),
+            leftWidth,
+            regionRect.height());
+        QRect rightRect(regionRect.left() + leftWidth,
+            regionRect.top(),
+            regionRect.width() - leftWidth,
+            regionRect.height());
+
+        if(gap_y >= gap_x && gap_y >= tcy)
+            cut_hor = true;
+        else if(gap_y >= gap_x && gap_y <= tcy && gap_x >= tcx)
+            cut_ver = true;
+        else if(gap_x >= gap_y && gap_x >= tcx)
+            cut_ver = true;
+        else if(gap_x >= gap_y && gap_x <= tcx && gap_y >= tcy)
+            cut_hor = true;
+        // no cut possible
+        else
+        {
+            // we can now update the node rectangle with the shrinked rectangle
+            RegionText tmpNode = tree.at(i);
+            tmpNode.setArea(regionRect);
+            tree.replace(i,tmpNode);
+            i++;
+            continue;
+        }
+
+        TextList list1,list2;
+        TinyTextEntity* ent;
+        QRect entRect;
+
+        // horizontal cut, topRect and bottomRect
+        if(cut_hor)
+        {
+            for( j = 0 ; j < list.length() ; j++ )
+            {
+                ent = list.at(j);
+                entRect = ent->area.geometry(pageWidth,pageHeight);
+
+                if(topRect.intersects(entRect))
+                    list1.append(ent);
+                else
+                    list2.append(ent);
+            }
+
+            RegionText node1(list1,topRect);
+            RegionText node2(list2,bottomRect);
+
+            tree.replace(i,node1);
+            tree.insert(i+1,node2);
+
+            list1 = tree.at(i).text();
+            list2 = tree.at(i+1).text();
+        }
+
+        //vertical cut, leftRect and rightRect
+        else if(cut_ver)
+        {
+            for( j = 0 ; j < list.length() ; j++ )
+            {
+                ent = list.at(j);
+                entRect = ent->area.geometry(pageWidth,pageHeight);
+
+                if(leftRect.intersects(entRect))
+                    list1.append(ent);
+                else list2.append(ent);
+            }
+
+            RegionText node1(list1,leftRect);
+            RegionText node2(list2,rightRect);
+
+            tree.replace(i,node1);
+            tree.insert(i+1,node2);
+
+            list1 = tree.at(i).text();
+            list2 = tree.at(i+1).text();
+        }
+    }
+
+    TextList tmp;
+    for(i = 0 ; i < tree.length() ; i++)
+    {
+        TextList list = tree.at(i).text();
+        for(j = 0 ; j < list.length() ; j++)
+        {
+            TinyTextEntity *ent = list.at(j);
+            tmp.append(ent);
+        }
+    }
+    //copying elements of tmp to m_words
+    copyTo(tmp);
+
+    // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
+    m_XY_cut_tree = tree;
+}
+
+/**
+ * Add spaces in between words in a line
+ */
+void TextPagePrivate::addNecessarySpace()
+{
+    /**
+     * 1. Call makeAndSortLines before adding spaces in between words in a line
+     * 2. Now add spaces between every two words in a line
+     * 3. Finally, extract all the space separated texts from each region and
+     *    make m_words nice again.
+     */
+
+    RegionTextList tree = m_XY_cut_tree;
+    int i,j,k;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    // Only change the texts under RegionTexts, not the area
+    for(j = 0 ; j < tree.length() ; j++)
+    {
+        RegionText tmp = tree.at(j);
+        TextList tmpList = tmp.text();
+        SortedTextList lines;
+        LineRect line_rects;
+
+        // Step 01
+        makeAndSortLines(tmpList,lines,line_rects);
+
+        // Step 02
+        for(i = 0 ; i < lines.length() ; i++)
+        {
+            TextList list = lines.at(i);
+            for( k = 0 ; k < list.length() ; k++ )
+            {
+                QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
+                if( k+1 >= list.length() ) break;
+
+                QRect area2 = list.at(k+1)->area.roundedGeometry(pageWidth,pageHeight);
+                int space = area2.left() - area1.right();
+
+                if(space != 0)
+                {
+                    // Make a TinyTextEntity of string space and push it between it and it+1
+                    int left,right,top,bottom;
+
+                    left = area1.right();
+                    right = area2.left();
+                    top = area2.top() < area1.top() ? area2.top() : area1.top();
+                    bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
+
+                    QString spaceStr(" ");
+                    QRect rect(QPoint(left,top),QPoint(right,bottom));
+                    NormalizedRect entRect(rect,pageWidth,pageHeight);
+                    TinyTextEntity *ent = new TinyTextEntity(spaceStr,entRect);
+
+                    list.insert(k+1,ent);
+
+                    // Skip the space
+                    k++;
+                }
+            }
+            lines.replace(i,list);
+        }
+
+        while(tmpList.length())
+            tmpList.pop_back();
+
+        for( i = 0 ; i < lines.length() ; i++)
+        {
+            TextList list = lines.at(i);
+            for( k = 0 ; k < list.length() ; k++)
+            {
+                TinyTextEntity *ent = list.at(k);
+                tmpList.append(ent);
+            }
+        }
+
+        tmp.setText(tmpList);
+        tree.replace(j,tmp);
+    }
+
+    // Step 03
+    TextList tmp;
+    for(i = 0 ; i < tree.length() ; i++)
+    {
+        TextList list = tree.at(i).text();
+        for(j = 0 ; j < list.length() ; j++)
+        {
+            TinyTextEntity *ent = list.at(j);
+            tmp.append(new TinyTextEntity(ent->text(),ent->area));
+        }
+    }
+    copyTo(tmp);
+}
+
+/**
+ * Break Words into Characters, takes Entities from m_words and for each of
+ * them insert the character entities in tmp. Finally, copies tmp back to m_words
+ */
+void TextPagePrivate::breakWordIntoCharacters()
+{
+    QString spaceStr(" ");
+    TextList tmp;
+    int count = 0, i;
+    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
+
+    for(i = 0 ; i < m_words.length() ; i++)
+    {
+        TinyTextEntity *ent = m_words.at(i);
+        QRect rect = ent->area.geometry(pageWidth,pageHeight);
+
+        // the spaces contains only one character, so we can skip them
+        if(ent->text() == spaceStr)
+            tmp.append(ent);
+        else
+        {
+            int key = rect.left() * rect.top()
+                    + rect.right() * rect.bottom();
+
+            RegionText word_text = m_word_chars_map.value(key);
+            TextList list = word_text.text();
+
+            count = m_word_chars_map.count(key);
+            if(count > 1)
+            {
+                QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
+                while( it != m_word_chars_map.end() && it.key() == key )
+                {
+                    word_text = it.value();
+                    it++;
+
+                    list = word_text.text();
+                    QRect regionRect = word_text.area();
+
+                    if(regionRect.left() == rect.left() && regionRect.top() == rect.top())
+                        break;
+                }
+            }
+            tmp.append(list);
+        }
+    }
+    copyTo(tmp);
+}
+
+
+/**
+ * Correct the textOrder, all layout recognition works here
+ */
+void TextPage::correctTextOrder()
+{
+    /**
+     * Remove spaces from the text
+     */
+    d->removeSpace();
+
+    /**
+     * Construct words from characters
+     */
+    d->makeWordFromCharacters();
+
+    /**
+     * Create arbitrary lines from words and sort them according to X and Y position
+     */
+    d->makeAndSortLines(d->m_words,d->m_lines,d->m_line_rects);
+
+    /**
+     * Calculate statistical information which will be needed later for algorithm implementation
+     */
+    int word_spacing = 0,line_spacing = 0,col_spacing = 0;
+    d->calculateStatisticalInformation(d->m_lines,d->m_line_rects,word_spacing,line_spacing, col_spacing);
+
+    /**
+     * Make a XY Cut tree for segmentation of the texts
+     */
+    d->XYCutForBoundingBoxes(word_spacing * 2,line_spacing * 2);
+
+    /**
+     * Add spaces to the word
+     */
+    d->addNecessarySpace();
+
+    /**
+     * Break the words into characters
+     */
+    d->breakWordIntoCharacters();
 }

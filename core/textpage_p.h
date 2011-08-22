@@ -17,6 +17,7 @@
 
 class SearchPoint;
 class TinyTextEntity;
+class RegionText;
 
 namespace Okular
 {
@@ -26,6 +27,17 @@ typedef QList< TinyTextEntity* > TextList;
 
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
+
+/**
+ * Make a line of TextList and store the bounding rectangle of line
+ */
+typedef QList<TextList> SortedTextList;
+typedef QList<QRect> LineRect;
+
+/**
+ * A list of RegionText. It keeps a bunch of TextList with their bounding rectangles
+ */
+typedef QList<RegionText> RegionTextList;
 
 class TextPagePrivate
 {
@@ -44,9 +56,64 @@ class TextPagePrivate
                                                     const TextList::ConstIterator &start,
                                                     const TextList::ConstIterator &end );
 
+        /**
+         * Copy a TextList to m_words
+         */
+        void copyTo(TextList &list);
+
+        /**
+         * Copy m_words to a TextList
+         */
+        void copyFrom(TextList &list);
+
+        /**
+         * Remove odd spaces which are much bigger than normal spaces from m_words
+         */
+        void removeSpace();
+
+        /**
+         * Create words from characters
+         */
+        void makeWordFromCharacters();
+
+        /**
+         * Create lines from TextList and sort them according to their position
+         */
+        void makeAndSortLines(TextList &words,SortedTextList &lines,LineRect &line_rects);
+
+        /**
+         * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
+         * we made
+         */
+        void calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int& word_spacing,
+                                             int& line_spacing, int& column_spacing);
+
+        /**
+         * Functions necessary for document file segmentation into text regions for document layout
+         * analysis.
+         */
+        void XYCutForBoundingBoxes(int tcx,int tcy);
+
+        /**
+         * Add additional spaces between words, if necessary, which can make the words valuable
+         * while copying after selection
+         */
+        void addNecessarySpace();
+
+        /**
+         * Break the words into characters, so the text selection wors fine
+         */
+        void breakWordIntoCharacters();
+
+        // variables those can be accessed directly from TextPage
+        QMap<int, RegionText> m_word_chars_map;
+        RegionTextList m_XY_cut_tree;
+        TextList m_spaces;
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
+        SortedTextList m_lines;
+        LineRect m_line_rects;
 };
 
 }

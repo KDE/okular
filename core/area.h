@@ -166,6 +166,11 @@ class OKULAR_EXPORT NormalizedRect
         QRect geometry( int xScale, int yScale ) const;
 
         /**
+         * Same functionality as geometry, but the output is now rounded before typecasting to int
+         */
+        QRect roundedGeometry( int xScale, int yScale ) const;
+
+        /**
          * Returns the normalized bounding rectangle of the normalized rectangle
          * combined with the @p other normalized rectangle.
          */
@@ -201,6 +206,54 @@ class OKULAR_EXPORT NormalizedRect
          * Transforms the normalized rectangle with the operations defined by @p matrix.
          */
         void transform( const QMatrix &matrix );
+
+        /**
+         * Returns true if the point pt is located to the bottom of the rectangle
+         */
+        bool isBottom(const NormalizedPoint& pt) const
+        {
+            return bottom < pt.y;
+        }
+
+        /**
+         * Returns true if the point pt is located on the top of the rectangle
+         */
+        bool isTop(const NormalizedPoint& pt) const
+        {
+            return top > pt.y;
+        }
+
+        /**
+         * Returns true if the point pt is located under the top of the rectangle
+         */
+        bool isBottomOrLevel(const NormalizedPoint& pt) const
+        {
+            return top < pt.y;
+        }
+
+        /**
+         * Returns true if the point pt is located above the bottom of the rectangle
+         */
+        bool isTopOrLevel(const NormalizedPoint& pt) const
+        {
+            return bottom > pt.y;
+        }
+
+        /**
+         * Returns true if the point pt is located to the right of the left arm of rectangle
+         */
+        bool isLeft(const NormalizedPoint& pt) const
+        {
+            return left < pt.x;
+        }
+
+        /**
+         * Returns true if the point pt is located to the left of the right arm of rectangle
+         */
+        bool isRight(const NormalizedPoint& pt) const
+        {
+            return right > pt.x;
+        }
 
         /**
          * The normalized left coordinate.

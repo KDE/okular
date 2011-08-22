@@ -180,6 +180,16 @@ QRect NormalizedRect::geometry( int xScale, int yScale ) const
     return QRect( l, t, r - l + 1, b - t + 1 );
 }
 
+QRect NormalizedRect::roundedGeometry( int xScale, int yScale ) const
+{
+    int l = (int)( left * xScale + 0.5 ),
+        t = (int)( top * yScale + 0.5 ),
+        r = (int)( right * xScale + 0.5 ),
+        b = (int)( bottom * yScale + 0.5 );
+
+    return QRect( l, t, r - l + 1, b - t + 1 );
+}
+
 void NormalizedRect::transform( const QMatrix &matrix )
 {
     QRectF rect( left, top, right - left, bottom - top );

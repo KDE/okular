@@ -239,6 +239,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         // the image over which we are going to draw
         QImage backImage;
+        bool has_alpha = pixmap->hasAlpha();
 
         // 4B.1. draw the page pixmap: normal or scaled
         if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
@@ -308,9 +309,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
                     {
                         val = data[ x + offset ];
-                        newR = (qRed(val) * rh) / 255;
-                        newG = (qGreen(val) * gh) / 255;
-                        newB = (qBlue(val) * bh) / 255;
+                        //for odt or epub
+                        if(has_alpha)
+                        {
+                            newR = qRed(val);
+                            newG = qGreen(val);
+                            newB = qBlue(val);
+
+                            if(newR == newG && newG == newB && newR == 0)
+                                newR = newG = newB = 255;
+
+                            newR = (newR * rh) / 255;
+                            newG = (newG * gh) / 255;
+                            newB = (newB * bh) / 255;
+                        }
+                        else
+                        {
+                            newR = (qRed(val) * rh) / 255;
+                            newG = (qGreen(val) * gh) / 255;
+                            newB = (qBlue(val) * bh) / 255;
+                        }
                         data[ x + offset ] = qRgba( newR, newG, newB, 255 );
                     }
                     offset += backImage.width();

@@ -1796,6 +1796,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     }
     //copying elements of tmp to m_words
     copyFromList(tmp);
+    qDeleteAll(words);
 
     // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
     m_XY_cut_tree = tree;

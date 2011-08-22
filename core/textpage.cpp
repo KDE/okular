@@ -1093,13 +1093,18 @@ void TextPagePrivate::removeSpace()
     const QString str(' ');
 
     it = m_words.begin(), itEnd = m_words.end();
-    for( ; it != itEnd ; it++)
+    while ( it != itEnd )
     {
         if((*it)->text() == str)
         {
             // create new Entity, otherwise there might be possible memory leakage
             m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
-            m_words.erase(it);
+            delete *it;
+            it = m_words.erase(it);
+        }
+        else
+        {
+            ++it;
         }
     }
 }

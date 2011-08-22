@@ -917,9 +917,6 @@ bool PDFGenerator::print( QPrinter& printer )
 #ifdef Q_WS_WIN
     QPainter painter;
     painter.begin(&printer);
-    printer.setResolution(QPrinter::HighResolution);
-
-    pdfdoc->setRenderBackend( Poppler::Document::ArthurBackend );
 
     QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
                                                          document()->currentPage() + 1,
@@ -933,8 +930,11 @@ bool PDFGenerator::print( QPrinter& printer )
         userMutex()->lock();
         Poppler::Page *pp = pdfdoc->page( page );
         if (pp)
-            pp->renderToPainter( &painter, printer.logicalDpiX(), printer.logicalDpiY() );
-        delete pp;
+        {
+            QImage img = pp->renderToImage(  printer.physicalDpiX(), printer.physicalDpiY() );
+            painter.drawImage( painter.window(), img, QRectF(0, 0, img.width(), img.height()) );
+            delete pp;
+        }
         userMutex()->unlock();
     }
     painter.end();

@@ -372,8 +372,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
-    double scaleX = this->d->m_page->m_page->width();
-    double scaleY = this->d->m_page->m_page->height();
+    double scaleX = d->m_page->m_page->width();
+    double scaleY = d->m_page->m_page->height();
 
     NormalizedPoint startC = sel->start();
     NormalizedPoint endC = sel->end();
@@ -1111,7 +1111,7 @@ void TextPagePrivate::removeSpace()
         {
             // create new Entity, otherwise there might be possible memory leakage
             m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
-            this->m_words.erase(it);
+            m_words.erase(it);
         }
     }
 }

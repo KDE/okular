@@ -1032,7 +1032,7 @@ void TextPagePrivate::copyToList(TextList &list) const
  *    ----         --------       -----  second
  * or we can make it overlap of spaces by threshold%
 */
-bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
+static bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
 {
     // if one consumes another fully
     if(first.left() <= second.left() && first.right() >= second.right())
@@ -1065,7 +1065,7 @@ bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
 /**
  * Same concept of doesConsumeX but in this case we calculate on y axis
  */
-bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
 {
     // if one consumes another fully
     if(first.top() <= second.top() && first.bottom() >= second.bottom())

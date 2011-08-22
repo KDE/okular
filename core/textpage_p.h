@@ -64,7 +64,7 @@ class TextPagePrivate
         /**
          * Copy m_words to a TextList
          */
-        void copyToList(TextList &list) const;
+        TextList duplicateWordsList() const;
 
         /**
          * Remove odd spaces which are much bigger than normal spaces from m_words

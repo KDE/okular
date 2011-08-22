@@ -1013,16 +1013,15 @@ void TextPagePrivate::copyFromList(const TextList &list)
 /**
  * Copies from m_words to list with distinct pointers
  */
-void TextPagePrivate::copyToList(TextList &list) const
+TextList TextPagePrivate::duplicateWordsList() const
 {
-    qDeleteAll(list);
-    list.clear();
-
+    TextList list;
     for(int i = 0 ; i < m_words.length() ; i++)
     {
         TinyTextEntity* ent = m_words.at(i);
         list.append( new TinyTextEntity( ent->text(),ent->area ) );
     }
+    return list;
 }
 
 /**
@@ -1132,11 +1131,10 @@ void TextPagePrivate::makeWordFromCharacters()
      * Finally we copy the newList to m_words.
      */
 
-    TextList tmpList;
+    const TextList tmpList = duplicateWordsList();
     TextList newList;
-    copyToList(tmpList);
 
-    TextList::Iterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
+    TextList::ConstIterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
@@ -1525,8 +1523,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 
     RegionTextList tree;
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
-    TextList words;
-    copyToList(words);
+    const TextList words = duplicateWordsList();
     const RegionText root(words,contentRect);
 
     // start the tree with the root, it is our only region at the start

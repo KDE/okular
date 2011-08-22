@@ -79,13 +79,13 @@ class TextPagePrivate
         /**
          * Create lines from TextList and sort them according to their position
          */
-        void makeAndSortLines(TextList &words,SortedTextList &lines,LineRect &line_rects);
+        void makeAndSortLines(const TextList &words, SortedTextList &lines, LineRect &line_rects);
 
         /**
          * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
          * we made
          */
-        void calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int& word_spacing,
+        void calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int& word_spacing,
                                              int& line_spacing, int& column_spacing);
 
         /**

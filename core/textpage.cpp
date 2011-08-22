@@ -236,12 +236,12 @@ public:
         return m_area;
     }
 
-    inline void setArea(const QRect area)
+    inline void setArea(const QRect &area)
     {
         m_area = area;
     }
 
-    inline void setText(const TextList text)
+    inline void setText(const TextList &text)
     {
         m_region_text = text;
     }
@@ -992,7 +992,7 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
     return ret;
 }
 
-bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second)
+static bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second)
 {
     QRect firstArea = first->area.roundedGeometry(1000,1000);
     QRect secondArea = second->area.roundedGeometry(1000,1000);
@@ -1000,22 +1000,12 @@ bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second)
     return firstArea.left() < secondArea.left();
 }
 
-bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second)
+static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second)
 {
     QRect firstArea = first->area.roundedGeometry(1000,1000);
     QRect secondArea = second->area.roundedGeometry(1000,1000);
 
     return firstArea.top() < secondArea.top();
-}
-
-bool compareRegionTextY(const RegionText& first, const RegionText& second)
-{
-    return first.area().top() < second.area().top();
-}
-
-bool compareRegionTextX(const RegionText& first, const RegionText& second)
-{
-    return first.area().left() < second.area().left();
 }
 
 /**
@@ -1277,7 +1267,7 @@ void TextPagePrivate::makeWordFromCharacters()
 /**
  * Create Lines from the words and sort them
  */
-void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
+void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
                         SortedTextList &lines, LineRect &line_rects)
 {
     /**
@@ -1380,8 +1370,8 @@ void TextPagePrivate::makeAndSortLines(TextList &wordsTmp,
 /**
  * Calculate Statistical information from the lines we made previously
  */
-void TextPagePrivate::calculateStatisticalInformation(SortedTextList &lines, LineRect line_rects,int &word_spacing,
-                                                      int &line_spacing,int &col_spacing)
+void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int &word_spacing,
+                                                      int &line_spacing, int &col_spacing)
 {
     /**
      * For the region, defined by line_rects and lines

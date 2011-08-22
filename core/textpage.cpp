@@ -1001,11 +1001,8 @@ static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second
  */
 void TextPagePrivate::copyFromList(const TextList &list)
 {
-    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
-    for( ; it != itEnd ; it++)
-    {
-        m_words.erase(it);
-    }
+    qDeleteAll(m_words);
+    m_words.clear();
 
     for(int i = 0 ; i < list.length() ; i++)
     {
@@ -1019,11 +1016,8 @@ void TextPagePrivate::copyFromList(const TextList &list)
  */
 void TextPagePrivate::copyToList(TextList &list) const
 {
-    TextList::Iterator it = list.begin(), itEnd = list.end();
-    for( ; it != itEnd ; it++)
-    {
-        list.erase(it);
-    }
+    qDeleteAll(list);
+    list.clear();
 
     for(int i = 0 ; i < m_words.length() ; i++)
     {

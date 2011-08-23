@@ -1517,10 +1517,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 {
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
-
-    // proj_on_yaxis will start from 0(rect.left()) to N(rect.right)
-    int proj_on_yaxis[5000], proj_on_xaxis[5000];
-
     RegionTextList tree;
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
     const TextList words = duplicateWordsList();
@@ -1544,6 +1540,9 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         // allocate the size of proj profiles and initialize with 0
         int size_proj_y = node.area().height() ;
         int size_proj_x = node.area().width() ;
+        //dynamic memory allocation
+        int *proj_on_xaxis = new int[size_proj_x];
+        int *proj_on_yaxis = new int[size_proj_y];
 
         for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
         for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
@@ -1574,13 +1573,15 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             // calculate vertical projection profile proj_on_xaxis1
             for(k = entRect.left() ; k <= entRect.left() + entRect.width() ; k++)
             {
-                proj_on_xaxis[k - regionRect.left()] += entRect.height();
+                if( ( k-regionRect.left() ) < size_proj_x && ( k-regionRect.left() ) >= 0 )
+                    proj_on_xaxis[k - regionRect.left()] += entRect.height();
             }
 
             // calculate horizontal projection profile in the same way
             for(k = entRect.top() ; k <= entRect.top() + entRect.height() ; k++)
             {
-                proj_on_yaxis[k - regionRect.top()] += entRect.width();
+                if( ( k-regionRect.top() ) < size_proj_y && ( k-regionRect.top() ) >= 0 )
+                    proj_on_yaxis[k - regionRect.top()] += entRect.width();
             }
         }
 
@@ -1755,9 +1756,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 
             tree.replace(i,node1);
             tree.insert(i+1,node2);
-
-            list1 = tree.at(i).text();
-            list2 = tree.at(i+1).text();
         }
 
         //vertical cut, leftRect and rightRect
@@ -1778,10 +1776,12 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 
             tree.replace(i,node1);
             tree.insert(i+1,node2);
-
-            list1 = tree.at(i).text();
-            list2 = tree.at(i+1).text();
         }
+
+        if(proj_on_xaxis)
+            delete []proj_on_xaxis;
+        if(proj_on_yaxis)
+            delete []proj_on_yaxis;
     }
 
     TextList tmp;
@@ -1791,12 +1791,12 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         for(j = 0 ; j < list.length() ; j++)
         {
             TinyTextEntity *ent = list.at(j);
-            tmp.append(ent);
+            tmp.append( new TinyTextEntity(ent->text(),ent->area) );
         }
     }
     //copying elements of tmp to m_words
     copyFromList(tmp);
-    qDeleteAll(words);
+    qDeleteAll(tmp);
 
     // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
     m_XY_cut_tree = tree;
@@ -1893,6 +1893,8 @@ void TextPagePrivate::addNecessarySpace()
         }
     }
     copyFromList(tmp);
+    // deletes all TinyTextEntity from the m_XY_cut_tree
+    qDeleteAll(tmp);
 }
 
 /**
@@ -1913,7 +1915,7 @@ void TextPagePrivate::breakWordIntoCharacters()
 
         // the spaces contains only one character, so we can skip them
         if(ent->text() == spaceStr)
-            tmp.append(ent);
+            tmp.append( new TinyTextEntity(ent->text(),ent->area) );
         else
         {
             const int key = rect.left() * rect.top()
@@ -1942,6 +1944,7 @@ void TextPagePrivate::breakWordIntoCharacters()
         }
     }
     copyFromList(tmp);
+    qDeleteAll(tmp);
 }
 
 

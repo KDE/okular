@@ -1848,12 +1848,7 @@ void TextPagePrivate::addNecessarySpace()
 
         for(int i = 0 ; i < lines.length() ; i++)
         {
-            TextList list = lines.at(i);
-            for(int k = 0 ; k < list.length() ; k++)
-            {
-                TinyTextEntity *ent = list.at(k);
-                tmpList.append(ent);
-            }
+            tmpList += lines.at(i);
         }
 
         tmpRegion.setText(tmpList);

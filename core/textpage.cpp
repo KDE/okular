@@ -1269,7 +1269,6 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
 
     // Step 2
     TextList::Iterator it = words.begin(), itEnd = words.end();
-    int i = 0;
     int newLeft,newRight,newTop,newBottom;
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
@@ -1280,7 +1279,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
         const QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
-        for( i = 0 ; i < lines.length() ; i++)
+        for( int i = 0 ; i < lines.length() ; i++)
         {
             /* the line area which will be expanded
                line_rects is only necessary to preserve the topmin and bottommax of all
@@ -1330,7 +1329,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
     }
 
     // Step 3
-    for(i = 0 ; i < lines.length() ; i++)
+    for(int i = 0 ; i < lines.length() ; i++)
     {
         TextList &list = lines[i];
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
@@ -1392,11 +1391,10 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
     QList< QList<QRect> > space_rects;
     QList<QRect> max_hor_space_rects;
 
-    int i;
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
     // Space in every line
-    for(i = 0 ; i < lines.length() ; i++)
+    for(int i = 0 ; i < lines.length() ; i++)
     {
         TextList list = lines.at(i);
         QList<QRect> line_space_rects;
@@ -1810,12 +1808,11 @@ void TextPagePrivate::addNecessarySpace()
      */
 
     RegionTextList tree = m_XY_cut_tree;
-    int i,j,k;
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
 
     // Only change the texts under RegionTexts, not the area
-    for(j = 0 ; j < tree.length() ; j++)
+    for(int j = 0 ; j < tree.length() ; j++)
     {
         RegionText &tmpRegion = tree[j];
         TextList tmpList = tmpRegion.text();
@@ -1826,10 +1823,10 @@ void TextPagePrivate::addNecessarySpace()
         makeAndSortLines(tmpList,lines,line_rects);
 
         // Step 02
-        for(i = 0 ; i < lines.length() ; i++)
+        for(int i = 0 ; i < lines.length() ; i++)
         {
             TextList &list = lines[i];
-            for( k = 0 ; k < list.length() ; k++ )
+            for(int k = 0 ; k < list.length() ; k++ )
             {
                 const QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
                 if( k+1 >= list.length() ) break;
@@ -1861,10 +1858,10 @@ void TextPagePrivate::addNecessarySpace()
         qDeleteAll(tmpList);
         tmpList.clear();
 
-        for( i = 0 ; i < lines.length() ; i++)
+        for(int i = 0 ; i < lines.length() ; i++)
         {
             TextList list = lines.at(i);
-            for( k = 0 ; k < list.length() ; k++)
+            for(int k = 0 ; k < list.length() ; k++)
             {
                 TinyTextEntity *ent = list.at(k);
                 tmpList.append(ent);
@@ -1876,10 +1873,10 @@ void TextPagePrivate::addNecessarySpace()
 
     // Step 03
     TextList tmp;
-    for(i = 0 ; i < tree.length() ; i++)
+    for(int i = 0 ; i < tree.length() ; i++)
     {
         TextList list = tree.at(i).text();
-        for(j = 0 ; j < list.length() ; j++)
+        for(int j = 0 ; j < list.length() ; j++)
         {
             TinyTextEntity *ent = list.at(j);
             tmp.append(new TinyTextEntity(ent->text(),ent->area));

@@ -1817,8 +1817,8 @@ void TextPagePrivate::addNecessarySpace()
     // Only change the texts under RegionTexts, not the area
     for(j = 0 ; j < tree.length() ; j++)
     {
-        RegionText tmp = tree.at(j);
-        TextList tmpList = tmp.text();
+        RegionText &tmpRegion = tree[j];
+        TextList tmpList = tmpRegion.text();
         SortedTextList lines;
         LineRect line_rects;
 
@@ -1858,8 +1858,8 @@ void TextPagePrivate::addNecessarySpace()
             }
         }
 
-        while(tmpList.length())
-            tmpList.pop_back();
+        qDeleteAll(tmpList);
+        tmpList.clear();
 
         for( i = 0 ; i < lines.length() ; i++)
         {
@@ -1871,8 +1871,7 @@ void TextPagePrivate::addNecessarySpace()
             }
         }
 
-        tmp.setText(tmpList);
-        tree.replace(j,tmp);
+        tmpRegion.setText(tmpList);
     }
 
     // Step 03

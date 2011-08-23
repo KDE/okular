@@ -1125,7 +1125,7 @@ QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
      */
 
     QMap<int, RegionText> word_chars_map;
-    const TextList tmpList = duplicateWordList();
+    const TextList tmpList = m_words;
     TextList newList;
 
     TextList::ConstIterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
@@ -1227,7 +1227,6 @@ QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
         if(it == itEnd) break;
     }
 
-    qDeleteAll(tmpList);
     setWordList(newList);
 
     return word_chars_map;

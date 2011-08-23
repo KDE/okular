@@ -108,7 +108,6 @@ class TextPagePrivate
         // variables those can be accessed directly from TextPage
         QMap<int, RegionText> m_word_chars_map;
         RegionTextList m_XY_cut_tree;
-        TextList m_spaces;
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;

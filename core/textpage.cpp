@@ -1096,8 +1096,6 @@ void TextPagePrivate::removeSpace()
     {
         if((*it)->text() == str)
         {
-            // create new Entity, otherwise there might be possible memory leakage
-            m_spaces.append( new TinyTextEntity( (*it)->text(),(*it)->area ) );
             delete *it;
             it = m_words.erase(it);
         }

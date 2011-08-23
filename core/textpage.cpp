@@ -999,22 +999,16 @@ static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second
 /**
  * Copies a TextList to m_words with the same pointer
  */
-void TextPagePrivate::copyFromList(const TextList &list)
+void TextPagePrivate::setWordList(const TextList &list)
 {
     qDeleteAll(m_words);
-    m_words.clear();
-
-    for(int i = 0 ; i < list.length() ; i++)
-    {
-        TinyTextEntity *ent = list.at(i);
-        m_words.append( new TinyTextEntity(ent->text(),ent->area) );
-    }
+    m_words = list;
 }
 
 /**
  * Copies from m_words to list with distinct pointers
  */
-TextList TextPagePrivate::duplicateWordsList() const
+TextList TextPagePrivate::duplicateWordList() const
 {
     TextList list;
     for(int i = 0 ; i < m_words.length() ; i++)
@@ -1130,7 +1124,7 @@ void TextPagePrivate::makeWordFromCharacters()
      * Finally we copy the newList to m_words.
      */
 
-    const TextList tmpList = duplicateWordsList();
+    const TextList tmpList = duplicateWordList();
     TextList newList;
 
     TextList::ConstIterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
@@ -1232,9 +1226,8 @@ void TextPagePrivate::makeWordFromCharacters()
         if(it == itEnd) break;
     }
 
-    copyFromList(newList);
     qDeleteAll(tmpList);
-    qDeleteAll(newList);
+    setWordList(newList);
 }
 
 /**
@@ -1513,7 +1506,7 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     const int pageHeight = m_page->m_page->height();
     RegionTextList tree;
     QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
-    const TextList words = duplicateWordsList();
+    const TextList words = duplicateWordList();
     const RegionText root(words,contentRect);
 
     // start the tree with the root, it is our only region at the start
@@ -1783,9 +1776,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             tmp.append( new TinyTextEntity(ent->text(),ent->area) );
         }
     }
-    //copying elements of tmp to m_words
-    copyFromList(tmp);
-    qDeleteAll(tmp);
+    // set tmp as new m_words
+    setWordList(tmp);
 
     // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
     m_XY_cut_tree = tree;
@@ -1878,9 +1870,7 @@ void TextPagePrivate::addNecessarySpace()
             tmp.append(new TinyTextEntity(ent->text(),ent->area));
         }
     }
-    copyFromList(tmp);
-    // deletes all TinyTextEntity from the m_XY_cut_tree
-    qDeleteAll(tmp);
+    setWordList(tmp);
 }
 
 /**
@@ -1929,8 +1919,7 @@ void TextPagePrivate::breakWordIntoCharacters()
             tmp.append(list);
         }
     }
-    copyFromList(tmp);
-    qDeleteAll(tmp);
+    setWordList(tmp);
 }
 
 

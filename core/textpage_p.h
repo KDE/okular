@@ -57,14 +57,14 @@ class TextPagePrivate
                                                     const TextList::ConstIterator &end );
 
         /**
-         * Copy a TextList to m_words
+         * Copy a TextList to m_words, the pointers of list are adopted
          */
-        void copyFromList(const TextList &list);
+        void setWordList(const TextList &list);
 
         /**
-         * Copy m_words to a TextList
+         * Copy m_words to a new TextList, it is the caller responsability to free the pointers
          */
-        TextList duplicateWordsList() const;
+        TextList duplicateWordList() const;
 
         /**
          * Remove odd spaces which are much bigger than normal spaces from m_words

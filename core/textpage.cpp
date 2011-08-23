@@ -1730,6 +1730,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             tmpNode.setArea(regionRect);
             tree.replace(i,tmpNode);
             i++;
+            delete[] proj_on_xaxis;
+            delete[] proj_on_yaxis;
             continue;
         }
 

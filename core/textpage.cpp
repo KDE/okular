@@ -21,6 +21,7 @@
 #include <cstring>
 
 #include <QtAlgorithms>
+#include <QVarLengthArray>
 
 using namespace Okular;
 
@@ -1534,8 +1535,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         int size_proj_y = node.area().height() ;
         int size_proj_x = node.area().width() ;
         //dynamic memory allocation
-        int *proj_on_xaxis = new int[size_proj_x];
-        int *proj_on_yaxis = new int[size_proj_y];
+        QVarLengthArray<int> proj_on_xaxis(size_proj_x);
+        QVarLengthArray<int> proj_on_yaxis(size_proj_y);
 
         for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
         for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
@@ -1723,8 +1724,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             tmpNode.setArea(regionRect);
             tree.replace(i,tmpNode);
             i++;
-            delete[] proj_on_xaxis;
-            delete[] proj_on_yaxis;
             continue;
         }
 
@@ -1772,9 +1771,6 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             tree.replace(i,node1);
             tree.insert(i+1,node2);
         }
-
-        delete[] proj_on_xaxis;
-        delete[] proj_on_yaxis;
     }
 
     TextList tmp;

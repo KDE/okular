@@ -2015,7 +2015,11 @@ void Part::slotPrint()
 {
     if (m_document->pages() == 0) return;
 
+#ifdef Q_WS_WIN
     QPrinter printer(QPrinter::HighResolution);
+#else
+    QPrinter printer;
+#endif
     QPrintDialog *printDialog = 0;
     QWidget *printConfigWidget = 0;
 

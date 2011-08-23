@@ -1302,10 +1302,8 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
              */
             if(doesConsumeY(elementArea,lineArea,70))
             {
-                TextList tmp = lines.at(i);
-                tmp.append((*it));
-
-                lines.replace(i,tmp);
+                TextList &line = lines[i];
+                line.append((*it));
 
                 newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
                 newRight = line_x2 > text_x2 ? line_x2 : text_x2;
@@ -1334,9 +1332,8 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
     // Step 3
     for(i = 0 ; i < lines.length() ; i++)
     {
-        TextList list = lines.at(i);
+        TextList &list = lines[i];
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
-        lines.replace(i,list);
     }
 }
 
@@ -1831,7 +1828,7 @@ void TextPagePrivate::addNecessarySpace()
         // Step 02
         for(i = 0 ; i < lines.length() ; i++)
         {
-            TextList list = lines.at(i);
+            TextList &list = lines[i];
             for( k = 0 ; k < list.length() ; k++ )
             {
                 const QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
@@ -1859,7 +1856,6 @@ void TextPagePrivate::addNecessarySpace()
                     k++;
                 }
             }
-            lines.replace(i,list);
         }
 
         while(tmpList.length())

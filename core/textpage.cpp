@@ -1263,7 +1263,6 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
 
     // Step 2
     TextList::Iterator it = words.begin(), itEnd = words.end();
-    int newLeft,newRight,newTop,newBottom;
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
 
@@ -1298,10 +1297,10 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
                 TextList &line = lines[i];
                 line.append((*it));
 
-                newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
-                newRight = line_x2 > text_x2 ? line_x2 : text_x2;
-                newTop = line_y1 < text_y1 ? line_y1 : text_y1;
-                newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
+                const int newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
+                const int newRight = line_x2 > text_x2 ? line_x2 : text_x2;
+                const int newTop = line_y1 < text_y1 ? line_y1 : text_y1;
+                const int newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
                 line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
                 found = true;

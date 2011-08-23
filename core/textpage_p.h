@@ -74,45 +74,41 @@ class TextPagePrivate
         /**
          * Create words from characters
          */
-        void makeWordFromCharacters();
+        QMap<int, RegionText> makeWordFromCharacters();
 
         /**
          * Create lines from TextList and sort them according to their position
          */
-        void makeAndSortLines(const TextList &words, SortedTextList &lines, LineRect &line_rects);
+        void makeAndSortLines(const TextList &words, SortedTextList *lines, LineRect *line_rects);
 
         /**
          * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
          * we made
          */
-        void calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int& word_spacing,
-                                             int& line_spacing, int& column_spacing);
+        void calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing,
+                                             int *line_spacing, int *column_spacing);
 
         /**
          * Functions necessary for document file segmentation into text regions for document layout
          * analysis.
          */
-        void XYCutForBoundingBoxes(int tcx,int tcy);
+        RegionTextList XYCutForBoundingBoxes(int tcx, int tcy);
 
         /**
          * Add additional spaces between words, if necessary, which can make the words valuable
          * while copying after selection
          */
-        void addNecessarySpace();
+        void addNecessarySpace(RegionTextList tree);
 
         /**
          * Break the words into characters, so the text selection wors fine
          */
-        void breakWordIntoCharacters();
+        void breakWordIntoCharacters(const QMap<int, RegionText> &words_char_map);
 
         // variables those can be accessed directly from TextPage
-        QMap<int, RegionText> m_word_chars_map;
-        RegionTextList m_XY_cut_tree;
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
-        SortedTextList m_lines;
-        LineRect m_line_rects;
 };
 
 }

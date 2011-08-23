@@ -1105,7 +1105,7 @@ void TextPagePrivate::removeSpace()
  * We will the TinyTextEntity from m_words and try to create
  * words from there.
  */
-void TextPagePrivate::makeWordFromCharacters()
+QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
 {
     /**
      * At first we will copy m_words to tmpList. Then, we will traverse the
@@ -1124,6 +1124,7 @@ void TextPagePrivate::makeWordFromCharacters()
      * Finally we copy the newList to m_words.
      */
 
+    QMap<int, RegionText> word_chars_map;
     const TextList tmpList = duplicateWordList();
     TextList newList;
 
@@ -1218,7 +1219,7 @@ void TextPagePrivate::makeWordFromCharacters()
                                 + rect.right() * rect.bottom();
 
             // there may be more than one element in the same key
-            m_word_chars_map.insertMulti(keyRect,regionWord);
+            word_chars_map.insertMulti(keyRect,regionWord);
 
             index++;
         }
@@ -1228,13 +1229,14 @@ void TextPagePrivate::makeWordFromCharacters()
 
     qDeleteAll(tmpList);
     setWordList(newList);
+
+    return word_chars_map;
 }
 
 /**
  * Create Lines from the words and sort them
  */
-void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
-                        SortedTextList &lines, LineRect &line_rects)
+void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList *lines, LineRect *line_rects)
 {
     /**
      * We cannot assume that the generator will give us texts in the right order.
@@ -1272,13 +1274,13 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
         const QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
-        for( int i = 0 ; i < lines.length() ; i++)
+        for( int i = 0 ; i < lines->length() ; i++)
         {
             /* the line area which will be expanded
                line_rects is only necessary to preserve the topmin and bottommax of all
                the texts in the line, left and right is not necessary at all
             */
-            const QRect lineArea = line_rects.at(i);
+            QRect &lineArea = (*line_rects)[i];
             const int text_y1 = elementArea.top() ,
                       text_y2 = elementArea.top() + elementArea.height() ,
                       text_x1 = elementArea.left(),
@@ -1294,15 +1296,15 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
              */
             if(doesConsumeY(elementArea,lineArea,70))
             {
-                TextList &line = lines[i];
-                line.append((*it));
+                TextList &line = (*lines)[i];
+                line.append(*it);
 
                 const int newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
                 const int newRight = line_x2 > text_x2 ? line_x2 : text_x2;
                 const int newTop = line_y1 < text_y1 ? line_y1 : text_y1;
                 const int newBottom = text_y2 > line_y2 ? text_y2 : line_y2;
 
-                line_rects.replace( i, QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop ) );
+                lineArea = QRect( newLeft,newTop, newRight - newLeft, newBottom - newTop );
                 found = true;
             }
 
@@ -1316,15 +1318,15 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
         {
             TextList tmp;
             tmp.append((*it));
-            lines.append(tmp);
-            line_rects.append(elementArea);
+            lines->append(tmp);
+            line_rects->append(elementArea);
         }
     }
 
     // Step 3
-    for(int i = 0 ; i < lines.length() ; i++)
+    for(int i = 0 ; i < lines->length() ; i++)
     {
-        TextList &list = lines[i];
+        TextList &list = (*lines)[i];
         qSort(list.begin(),list.end(),compareTinyTextEntityX);
     }
 }
@@ -1332,8 +1334,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp,
 /**
  * Calculate Statistical information from the lines we made previously
  */
-void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int &word_spacing,
-                                                      int &line_spacing, int &col_spacing)
+void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing, int *line_spacing, int *col_spacing)
 {
     /**
      * For the region, defined by line_rects and lines
@@ -1361,19 +1362,18 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
         else line_space_stat[linespace] = 1;
     }
 
-    line_spacing = 0;
+    *line_spacing = 0;
     int weighted_count = 0;
     QMapIterator<int, int> iterate_linespace(line_space_stat);
 
     while(iterate_linespace.hasNext())
     {
         iterate_linespace.next();
-        line_spacing += iterate_linespace.value() * iterate_linespace.key();
+        *line_spacing += iterate_linespace.value() * iterate_linespace.key();
         weighted_count += iterate_linespace.value();
     }
-
-    if(line_spacing)
-        line_spacing = (int) ( (double)line_spacing / (double) weighted_count + 0.5);
+    if (*line_spacing != 0)
+        *line_spacing = (int) ( (double)*line_spacing / (double) weighted_count + 0.5);
 
     /**
      * Step 2
@@ -1468,7 +1468,7 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
     }
 
     // All the between word space counts are in hor_space_stat
-    word_spacing = 0;
+    *word_spacing = 0;
     weighted_count = 0;
     QMapIterator<int, int> iterate(hor_space_stat);
 
@@ -1478,28 +1478,28 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
 
         if(iterate.key() > 0)
         {
-            word_spacing += iterate.value() * iterate.key();
+            *word_spacing += iterate.value() * iterate.key();
             weighted_count += iterate.value();
         }
     }
     if(weighted_count)
-        word_spacing = (int) ((double)word_spacing / (double)weighted_count + 0.5);
+        *word_spacing = (int) ((double)*word_spacing / (double)weighted_count + 0.5);
 
-    col_spacing = 0;
+    *col_spacing = 0;
     QMapIterator<int, int> iterate_col(col_space_stat);
 
     while (iterate_col.hasNext())
     {
         iterate_col.next();
-        if(iterate_col.value() > col_spacing) col_spacing = iterate_col.value();
+        if(iterate_col.value() > *col_spacing) *col_spacing = iterate_col.value();
     }
-    col_spacing = col_space_stat.key(col_spacing);
+    *col_spacing = col_space_stat.key(*col_spacing);
 }
 
 /**
  * Implements the XY Cut algorithm for textpage segmentation
  */
-void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
+RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
 {
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
@@ -1534,16 +1534,24 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
 
         TextList list = node.text();
-        int word_spacing = 0,line_spacing = 0, column_spacing = 0;
-        SortedTextList lines;
-        LineRect line_rects;
 
         // Calculate tcx and tcy locally for each new region
         if(countLoop++)
         {
-            makeAndSortLines(list,lines,line_rects);
-            calculateStatisticalInformation(lines,line_rects,word_spacing,line_spacing,column_spacing);
-            tcx = word_spacing * 2, tcy = line_spacing * 2;
+            SortedTextList lines;
+            LineRect line_rects;
+            int word_spacing, line_spacing, column_spacing;
+
+            makeAndSortLines(list, &lines, &line_rects);
+            calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &column_spacing);
+            for(int i = 0 ; i < lines.length() ; i++)
+            {
+                qDeleteAll(lines.at(i));
+            }   
+            lines.clear();
+
+            tcx = word_spacing * 2;
+            tcy = line_spacing * 2;
         }
 
         int maxX = 0 , maxY = 0;
@@ -1768,24 +1776,18 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     TextList tmp;
     for(i = 0 ; i < tree.length() ; i++)
     {
-        TextList list = tree.at(i).text();
-        for(j = 0 ; j < list.length() ; j++)
-        {
-            TinyTextEntity *ent = list.at(j);
-            tmp.append( new TinyTextEntity(ent->text(),ent->area) );
-        }
+        tmp += tree.at(i).text();
     }
     // set tmp as new m_words
     setWordList(tmp);
 
-    // we are not removing tmp because, the elements of tmp are in m_XY_cut_tree, we will finally free from m_XY_cut_tree
-    m_XY_cut_tree = tree;
+    return tree;
 }
 
 /**
  * Add spaces in between words in a line
  */
-void TextPagePrivate::addNecessarySpace()
+void TextPagePrivate::addNecessarySpace(RegionTextList tree)
 {
     /**
      * 1. Call makeAndSortLines before adding spaces in between words in a line
@@ -1794,7 +1796,6 @@ void TextPagePrivate::addNecessarySpace()
      *    make m_words nice again.
      */
 
-    RegionTextList tree = m_XY_cut_tree;
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
 
@@ -1802,12 +1803,11 @@ void TextPagePrivate::addNecessarySpace()
     for(int j = 0 ; j < tree.length() ; j++)
     {
         RegionText &tmpRegion = tree[j];
-        TextList tmpList = tmpRegion.text();
         SortedTextList lines;
         LineRect line_rects;
 
         // Step 01
-        makeAndSortLines(tmpList,lines,line_rects);
+        makeAndSortLines(tmpRegion.text(), &lines, &line_rects);
 
         // Step 02
         for(int i = 0 ; i < lines.length() ; i++)
@@ -1842,14 +1842,11 @@ void TextPagePrivate::addNecessarySpace()
             }
         }
 
-        qDeleteAll(tmpList);
-        tmpList.clear();
-
+        TextList tmpList;
         for(int i = 0 ; i < lines.length() ; i++)
         {
             tmpList += lines.at(i);
         }
-
         tmpRegion.setText(tmpList);
     }
 
@@ -1857,12 +1854,7 @@ void TextPagePrivate::addNecessarySpace()
     TextList tmp;
     for(int i = 0 ; i < tree.length() ; i++)
     {
-        TextList list = tree.at(i).text();
-        for(int j = 0 ; j < list.length() ; j++)
-        {
-            TinyTextEntity *ent = list.at(j);
-            tmp.append(new TinyTextEntity(ent->text(),ent->area));
-        }
+        tmp += tree.at(i).text();
     }
     setWordList(tmp);
 }
@@ -1871,7 +1863,7 @@ void TextPagePrivate::addNecessarySpace()
  * Break Words into Characters, takes Entities from m_words and for each of
  * them insert the character entities in tmp. Finally, copies tmp back to m_words
  */
-void TextPagePrivate::breakWordIntoCharacters()
+void TextPagePrivate::breakWordIntoCharacters(const QMap<int, RegionText> &word_chars_map)
 {
     const QString spaceStr(" ");
     TextList tmp;
@@ -1891,14 +1883,14 @@ void TextPagePrivate::breakWordIntoCharacters()
             const int key = rect.left() * rect.top()
                             + rect.right() * rect.bottom();
 
-            RegionText word_text = m_word_chars_map.value(key);
+            RegionText word_text = word_chars_map.value(key);
             TextList list = word_text.text();
 
-            const int count = m_word_chars_map.count(key);
+            const int count = word_chars_map.count(key);
             if(count > 1)
             {
-                QMap<int, RegionText>::iterator it = m_word_chars_map.find(key);
-                while( it != m_word_chars_map.end() && it.key() == key )
+                QMap<int, RegionText>::const_iterator it = word_chars_map.find(key);
+                while( it != word_chars_map.end() && it.key() == key )
                 {
                     word_text = it.value();
                     it++;
@@ -1930,31 +1922,38 @@ void TextPage::correctTextOrder()
     /**
      * Construct words from characters
      */
-    d->makeWordFromCharacters();
+    const QMap<int, RegionText> word_chars_map = d->makeWordFromCharacters();
 
+    SortedTextList lines;
+    LineRect line_rects;
     /**
      * Create arbitrary lines from words and sort them according to X and Y position
      */
-    d->makeAndSortLines(d->m_words,d->m_lines,d->m_line_rects);
+    d->makeAndSortLines(d->m_words, &lines, &line_rects);
 
     /**
      * Calculate statistical information which will be needed later for algorithm implementation
      */
-    int word_spacing = 0,line_spacing = 0,col_spacing = 0;
-    d->calculateStatisticalInformation(d->m_lines,d->m_line_rects,word_spacing,line_spacing, col_spacing);
+    int word_spacing, line_spacing, col_spacing;
+    d->calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &col_spacing);
+    for(int i = 0 ; i < lines.length() ; i++)
+    {
+       qDeleteAll(lines.at(i));
+    }
+    lines.clear();
 
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    d->XYCutForBoundingBoxes(word_spacing * 2,line_spacing * 2);
+    RegionTextList tree = d->XYCutForBoundingBoxes(word_spacing * 2, line_spacing * 2);
 
     /**
      * Add spaces to the word
      */
-    d->addNecessarySpace();
+    d->addNecessarySpace(tree);
 
     /**
      * Break the words into characters
      */
-    d->breakWordIntoCharacters();
+    d->breakWordIntoCharacters(word_chars_map);
 }

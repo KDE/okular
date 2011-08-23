@@ -1778,10 +1778,8 @@ void TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
             tree.insert(i+1,node2);
         }
 
-        if(proj_on_xaxis)
-            delete []proj_on_xaxis;
-        if(proj_on_yaxis)
-            delete []proj_on_yaxis;
+        delete[] proj_on_xaxis;
+        delete[] proj_on_yaxis;
     }
 
     TextList tmp;

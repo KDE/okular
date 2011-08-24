@@ -1496,7 +1496,7 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
 
     // if there is just one line in a region, there is no point in dividing it
     if(lines.length() == 1)
-        word_spacing = col_spacing;
+        *word_spacing = *col_spacing;
 }
 
 /**

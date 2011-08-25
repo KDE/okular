@@ -261,6 +261,9 @@ void CheckBoxEdit::slotStateChanged( int state )
 
     if ( !group() )
         m_controller->signalChanged( this );
+    
+    if ( state == Qt::Checked && m_form->activationAction() )
+        m_controller->signalAction( m_form->activationAction() );
 }
 
 

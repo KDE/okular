@@ -217,6 +217,7 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     setText( m_form->caption() );
     setEnabled( !m_form->isReadOnly() );
     setVisible( m_form->isVisible() );
+    setCursor( Qt::ArrowCursor );
 
     connect( this, SIGNAL(clicked()), this, SLOT(slotClicked()) );
 }
@@ -235,6 +236,7 @@ CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
     setEnabled( !m_form->isReadOnly() );
 
     setVisible( m_form->isVisible() );
+    setCursor( Qt::ArrowCursor );
 }
 
 void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
@@ -274,6 +276,7 @@ RadioButtonEdit::RadioButtonEdit( Okular::FormFieldButton * button, QWidget * pa
     setEnabled( !m_form->isReadOnly() );
 
     setVisible( m_form->isVisible() );
+    setCursor( Qt::ArrowCursor );
 }
 
 void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controller )
@@ -392,6 +395,7 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 
     connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(slotSelectionChanged()) );
     setVisible( m_form->isVisible() );
+    setCursor( Qt::ArrowCursor );
 }
 
 void ListEdit::slotSelectionChanged()
@@ -419,6 +423,7 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 
     connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)) );
     setVisible( m_form->isVisible() );
+    setCursor( Qt::ArrowCursor );
 }
 
 void ComboEdit::indexChanged( int index )

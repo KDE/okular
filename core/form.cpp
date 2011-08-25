@@ -50,6 +50,12 @@ FormField::FieldType FormField::type() const
     return d->m_type;
 }
 
+QString FormField::defaultValue() const
+{
+    Q_D( const FormField );
+    return d->m_default;
+}
+
 bool FormField::isReadOnly() const
 {
     return false;
@@ -66,6 +72,12 @@ Action* FormField::activationAction() const
     return d->m_activateAction;
 }
 
+QString FormField::fullyQualifiedName() const
+{
+    Q_D( const FormField );
+    return d->m_fullyQualifiedName;
+}
+
 void FormField::setActivationAction( Action *action )
 {
     Q_D( FormField );
@@ -73,6 +85,11 @@ void FormField::setActivationAction( Action *action )
     d->m_activateAction = action;
 }
 
+void FormField::setFullyQualifiedName( const QString &name )
+{
+    Q_D( FormField );
+    d->m_fullyQualifiedName = name;
+}
 
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 {

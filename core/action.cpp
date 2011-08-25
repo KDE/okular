@@ -429,3 +429,49 @@ QString MovieAction::actionTip() const
     return i18n( "Play movie..." );
 }
 #endif
+
+// FormAction
+
+class Okular::ResetFormActionPrivate : public Okular::ActionPrivate
+{
+    public:
+        ResetFormActionPrivate( const QStringList &fieldList, ResetFormAction::Behaviour behaviour )
+            : ActionPrivate(), m_fieldList(fieldList), m_behaviour(behaviour)
+        {
+        }
+
+    QStringList m_fieldList;
+    ResetFormAction::Behaviour m_behaviour;
+};
+
+ResetFormAction::ResetFormAction( const QStringList &fieldList, Behaviour behaviour )
+    : Action( *new ResetFormActionPrivate( fieldList, behaviour ) )
+{
+}
+
+ResetFormAction::~ResetFormAction()
+{
+}
+
+Action::ActionType ResetFormAction::actionType() const
+{
+    return ResetForm;
+}
+
+QString ResetFormAction::actionTip() const
+{
+    return i18n( "Reset Forms" );
+}
+
+ResetFormAction::Behaviour ResetFormAction::behaviour() const
+{
+    Q_D( const Okular::ResetFormAction );
+    return d->m_behaviour;
+}
+
+QStringList ResetFormAction::fieldList() const
+{
+    Q_D( const Okular::ResetFormAction );
+    return d->m_fieldList;
+}
+

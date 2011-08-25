@@ -43,6 +43,7 @@ class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
 class FontInfo;
+class FormField;
 class Generator;
 class Action;
 class Page;
@@ -722,6 +723,12 @@ class OKULAR_EXPORT Document : public QObject
          * Reports that the current search finished
          */
         void searchFinished( int id, Okular::Document::SearchStatus endStatus );
+        
+        /**
+         * Reports that some data of the given form changed
+         * @since 0.14 (KDE 4.8)
+         */
+        void formFieldChanged( Okular::FormField *formField );
 
     private:
         /// @cond PRIVATE

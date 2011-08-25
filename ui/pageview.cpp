@@ -3708,6 +3708,40 @@ void PageView::slotAction( Okular::Action *action )
     d->document->processAction( action );
 }
 
+void PageView::slotFormFieldChanged( Okular::FormField *ff )
+{
+    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+    for ( ; dIt != dEnd; ++dIt )
+    {
+        FormWidgetIface *fw = (*dIt)->formWidgets().value( ff->id() );
+        if (fw != NULL)
+        {
+            switch (ff->type()) {
+                case Okular::FormField::FormText: {
+                    Okular::FormFieldText* fft = static_cast<Okular::FormFieldText *>(ff);
+                    FormLineEdit *le = dynamic_cast<FormLineEdit *>(fw);
+                    TextAreaEdit *te = dynamic_cast<TextAreaEdit *>(fw);
+
+                    if (le) le->setText( fft->text() );
+                    if (te) te->setText( fft->text() );
+                } break;
+       
+                case Okular::FormField::FormButton: {
+                    Okular::FormFieldButton* ffb = static_cast<Okular::FormFieldButton *>(ff);
+                    QAbstractButton *be = dynamic_cast<QAbstractButton *>(fw);
+                    if (be) be->setChecked( ffb->state() );
+                } break;
+       
+                default:
+                    kDebug() << "Unhandled form field: " << ff->name() << ff->defaultValue();
+                break;
+            }
+            
+            break; // Found the widget, no need to loop more pages
+        }
+    }
+}
+
 void PageView::externalKeyPressEvent( QKeyEvent *e )
 {
     keyPressEvent( e );

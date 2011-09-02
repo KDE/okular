@@ -352,7 +352,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
         matchingFiles = fileNameList.filter(fn);
 #endif
       if (matchingFiles.isEmpty() == true)
-        matchingFiles += fileNameList.filter(fontp->fontname+".");
+        matchingFiles += fileNameList.filter("/"+fontp->fontname+".");
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL

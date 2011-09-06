@@ -927,6 +927,13 @@ bool Part::slotImportPSFile()
     return false;
 }
 
+static void addFileToWatcher( KDirWatch *watcher, const QString &filePath)
+{
+    if ( !watcher->contains( filePath ) ) watcher->addFile(filePath);
+    const QFileInfo fi(filePath);
+    if ( !watcher->contains( fi.absolutePath() ) ) watcher->addDir(fi.absolutePath());
+    if ( fi.isSymLink() ) watcher->addFile( fi.readLink() );
+}
 
 bool Part::openFile()
 {
@@ -1019,10 +1026,7 @@ bool Part::openFile()
     // set the file to the fileWatcher
     if ( url().isLocalFile() )
     {
-        if ( !m_watcher->contains( localFilePath() ) ) m_watcher->addFile(localFilePath());
-        const QFileInfo fi(localFilePath());
-        if ( !m_watcher->contains( fi.absolutePath() ) ) m_watcher->addDir(fi.absolutePath());
-        if ( fi.isSymLink() ) m_watcher->addFile( fi.readLink() );
+        addFileToWatcher( m_watcher, localFilePath() );
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
@@ -1283,8 +1287,8 @@ void Part::slotDoFileDirty()
     }
     else
     {
-        // start watching the file again (since we dropped it on close)
-        m_watcher->addFile(localFilePath());
+        // start watching the file again (since we dropped it on close) 
+        addFileToWatcher( m_watcher, localFilePath() );
         m_dirtyHandler->start( 750 );
     }
 }

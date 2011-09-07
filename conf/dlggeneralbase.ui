@@ -220,7 +220,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="scrollOverlapLabel">
         <property name="toolTip">
-         <string>Defines how much of the current viewing area will remain in the viewing area when pressing the Page Up/Down keys.</string>
+         <string>Defines how much of the current viewing area will still be visible when pressing the Page Up/Down keys.</string>
         </property>
         <property name="text">
          <string>&amp;Page Up/Down overlap:</string>

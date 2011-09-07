@@ -193,66 +193,55 @@
      <property name="title">
       <string>View Options</string>
      </property>
-     <layout class="QVBoxLayout">
-      <item>
-       <layout class="QHBoxLayout">
-        <item>
-         <widget class="QLabel" name="columnLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Overview columns:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KIntSpinBox" name="kcfg_ViewColumns">
-          <property name="minimum">
-           <number>3</number>
-          </property>
-          <property name="maximum">
-           <number>10</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="columnLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Overview columns:</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="scrollOverlapLabel">
-          <property name="toolTip">
-           <string>Overlap pages by given amount to prevent parts of the text cut off during scrolling.</string>
-          </property>
-          <property name="text">
-           <string>Scro&amp;ll overlap:</string>
-          </property>
-          <property name="buddy">
-           <cstring>kcfg_ScrollOverlap</cstring>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KIntSpinBox" name="kcfg_ScrollOverlap">
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="suffix">
-           <string>%</string>
-          </property>
-          <property name="maximum">
-           <number>50</number>
-          </property>
-          <property name="singleStep">
-           <number>5</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="0" column="1">
+       <widget class="KIntSpinBox" name="kcfg_ViewColumns">
+        <property name="minimum">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="scrollOverlapLabel">
+        <property name="toolTip">
+         <string>Defines how much of the current viewing area will remain in the viewing area when pressing the Page Up/Down keys.</string>
+        </property>
+        <property name="text">
+         <string>&amp;Page Up/Down overlap:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_ScrollOverlap</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="KIntSpinBox" name="kcfg_ScrollOverlap">
+        <property name="suffix">
+         <string>%</string>
+        </property>
+        <property name="maximum">
+         <number>50</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

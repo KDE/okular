@@ -229,7 +229,7 @@
            <string>Overlap pages by given amount to prevent parts of the text cut off during scrolling.</string>
           </property>
           <property name="text">
-           <string>Scro&amp;ll overlap</string>
+           <string>Scro&amp;ll overlap:</string>
           </property>
           <property name="buddy">
            <cstring>kcfg_ScrollOverlap</cstring>

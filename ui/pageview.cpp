@@ -2940,8 +2940,7 @@ void PageView::resizeContentArea( const QSize & newSize )
 void PageView::updatePageStep() {
     const QSize vs = viewport()->size();
     horizontalScrollBar()->setPageStep( vs.width() );
-    verticalScrollBar()->setPageStep( vs.height() *
-            (100-Okular::Settings::scrollOverlap()) / 100 );
+    verticalScrollBar()->setPageStep( vs.height() * (100 - Okular::Settings::scrollOverlap()) / 100 );
 }
 
 void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )

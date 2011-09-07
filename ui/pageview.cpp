@@ -623,6 +623,9 @@ void PageView::reparseConfig()
 
         slotRelayoutPages();
     }
+
+    updatePageStep();
+
 }
 
 KAction *PageView::toggleFormsAction() const
@@ -2930,9 +2933,15 @@ void PageView::resizeContentArea( const QSize & newSize )
 {
     const QSize vs = viewport()->size();
     horizontalScrollBar()->setRange( 0, newSize.width() - vs.width() );
-    horizontalScrollBar()->setPageStep( vs.width() );
     verticalScrollBar()->setRange( 0, newSize.height() - vs.height() );
-    verticalScrollBar()->setPageStep( vs.height() );
+    updatePageStep();
+}
+
+void PageView::updatePageStep() {
+    const QSize vs = viewport()->size();
+    horizontalScrollBar()->setPageStep( vs.width() );
+    verticalScrollBar()->setPageStep( vs.height() *
+            (100-Okular::Settings::scrollOverlap()) / 100 );
 }
 
 void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )

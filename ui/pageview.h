@@ -175,6 +175,7 @@ Q_OBJECT
         void toggleFormWidgets( bool on );
 
         void resizeContentArea( const QSize & newSize );
+        void updatePageStep();
 
         void addWebShortcutsMenu( KMenu * menu, const QString & text );
 

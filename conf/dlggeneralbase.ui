@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
-    <height>348</height>
+    <width>320</width>
+    <height>378</height>
    </rect>
   </property>
   <layout class="QVBoxLayout">
@@ -216,6 +216,39 @@
           </property>
           <property name="maximum">
            <number>10</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="scrollOverlapLabel">
+          <property name="toolTip">
+           <string>Overlap pages by given amount to prevent parts of the text cut off during scrolling.</string>
+          </property>
+          <property name="text">
+           <string>Scro&amp;ll overlap</string>
+          </property>
+          <property name="buddy">
+           <cstring>kcfg_ScrollOverlap</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KIntSpinBox" name="kcfg_ScrollOverlap">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="suffix">
+           <string>%</string>
+          </property>
+          <property name="maximum">
+           <number>50</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
           </property>
          </widget>
         </item>

@@ -1161,7 +1161,10 @@ bool Part::closeUrl()
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
 #endif
-    return KParts::ReadOnlyPart::closeUrl();
+    bool r = KParts::ReadOnlyPart::closeUrl();
+    setUrl(KUrl());
+
+    return r;
 }
 
 

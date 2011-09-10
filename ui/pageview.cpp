@@ -179,6 +179,8 @@ public:
     KActionCollection * actionCollection;
 
     int setting_viewCols;
+
+    bool showMoveDestinationGraphically;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -283,6 +285,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->showMoveDestinationGraphically = false;
 
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
@@ -653,6 +656,11 @@ QPoint PageView::contentAreaPoint( const QPoint & pos ) const
     return pos + contentAreaPosition();
 }
 
+void PageView::setShowMoveDestinationGraphically(bool b)
+{
+    d->showMoveDestinationGraphically = b;
+}
+
 QString PageViewPrivate::selectedText() const
 {
     if ( pagesWithTextSelection.isEmpty() )
@@ -938,6 +946,10 @@ void PageView::notifyViewportChanged( bool smoothMove )
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
 
+    if(viewport()) {
+        viewport()->repaint();
+    }
+
     // since the page has moved below cursor, update it
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
 }
@@ -1218,7 +1230,11 @@ void PageView::paintEvent(QPaintEvent *pe)
                     pixmapPainter.setPen( Qt::blue );
                     pixmapPainter.drawRect( contentsRect );
                 }
-
+                if ( d->showMoveDestinationGraphically )
+                {
+                    pixmapPainter.setPen( Qt::red );
+                    pixmapPainter.drawLine(0, d->viewportMoveDest.y(), viewport()->width(), d->viewportMoveDest.y());
+                }
                 // finish painting and draw contents
                 pixmapPainter.end();
                 screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
@@ -1242,6 +1258,11 @@ void PageView::paintEvent(QPaintEvent *pe)
                 {
                     screenPainter.setPen( Qt::red );
                     screenPainter.drawRect( contentsRect );
+                }
+                if ( d->showMoveDestinationGraphically )
+                {
+                    screenPainter.setPen( Qt::red );
+                    screenPainter.drawLine(0, d->viewportMoveDest.y(), viewport()->width(), d->viewportMoveDest.y());
                 }
             }
         }

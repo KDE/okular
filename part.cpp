@@ -83,6 +83,7 @@
 #include "ui/guiutils.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
+#include "core/action.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
@@ -214,8 +215,12 @@ static Okular::Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *
     {
         if ( arg.type() == QVariant::String )
         {
-            if ( arg.toString() == QLatin1String( "Print/Preview" ) )
+            if ( arg.toString() == QLatin1String( "Print/Preview" ) ) {
                 return Okular::Part::PrintPreviewMode;
+            }
+            else if ( arg.toString() == QLatin1String( "ViewerWidget" ) ) {
+                return Okular::Part::ViewerWidgetMode;
+            }
         }
     }
 
@@ -367,6 +372,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(formFieldChanged(Okular::FormField*)), m_pageView, SLOT(slotFormFieldChanged(Okular::FormField*)) );
+    connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool&)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool&)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -634,8 +640,18 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     updateViewActions();
 
     m_sidebar->setSidebarVisibility( false );
-    if ( m_embedMode != PrintPreviewMode )
+    if ( m_embedMode != PrintPreviewMode && m_embedMode != ViewerWidgetMode ) {
         unsetDummyMode();
+    }
+
+    if( m_embedMode == ViewerWidgetMode ) {
+        m_bottomBar->setVisible(false);
+        m_pageView->setShowMoveDestinationGraphically(true);
+        // FIXME: this should probably be implemented in such a way that there is no
+        //        need to change the configuration settings
+        Okular::Settings::setViewMode(Okular::Settings::EnumViewMode::Single);
+        Okular::Settings::setViewContinuous(true);
+    }
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );
@@ -713,6 +729,34 @@ KUrl Part::realUrl() const
     return url();
 }
 
+// ViewerInterface
+
+void Part::showSourceLocation(const QString& fileName, int line, int column)
+{
+    QString u = "src:" + QString::number(line) + ' ' + fileName;
+    GotoAction action(QString(), u);
+    m_document->processAction(&action);
+}
+
+void Part::setWatchFileModeEnabled(bool b)
+{
+    if (b && m_watcher->isStopped()) {
+        m_watcher->startScan();
+    }
+    else if(!b && !m_watcher->isStopped() )
+    {
+        m_dirtyHandler->stop();
+        m_watcher->stopScan();
+    }
+}
+
+void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool &handled)
+{
+    emit(openSourceReference(absFileName, line, col));
+    if ( m_embedMode == Okular::Part::ViewerWidgetMode ) {
+        handled = true;
+    }
+}
 
 void Part::openUrlFromDocument(const KUrl &url)
 {
@@ -1725,14 +1769,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = Okular::Settings::watchFile();
-    if ( watchFile && m_watcher->isStopped() )
-        m_watcher->startScan();
-    if ( !watchFile && !m_watcher->isStopped() )
-    {
-        m_dirtyHandler->stop();
-        m_watcher->stopScan();
-    }
+    setWatchFileModeEnabled(Okular::Settings::watchFile());
 
     // Main View (pageView)
     m_pageView->reparseConfig();

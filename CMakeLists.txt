@@ -100,6 +100,7 @@ install( FILES
            interfaces/configinterface.h
            interfaces/guiinterface.h
            interfaces/printinterface.h
+           interfaces/viewerinterface.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
 
 kde4_add_ui_files(okularcore_SRCS

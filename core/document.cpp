@@ -3073,6 +3073,12 @@ void Document::processSourceReference( const SourceReference * ref )
         return;
     }
 
+    bool handled = false;
+    emit(sourceReferenceActivated(absFileName, ref->row(), ref->column(), handled));
+    if(handled) {
+        return;
+    }
+
     static QHash< int, QString > editors;
     // init the editors table if empty (on first run, usually)
     if ( editors.isEmpty() )

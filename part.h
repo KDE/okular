@@ -24,6 +24,7 @@
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
+#include "interfaces/viewerinterface.h"
 
 #include <QtDBus/QtDBus>
 
@@ -71,11 +72,12 @@ class ExportFormat;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer
+class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer, public ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
+    Q_INTERFACES(ViewerInterface)
 
     public:
         enum EmbedMode
@@ -83,7 +85,8 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
             UnknownEmbedMode,
             NativeShellMode,         // embedded in the native Okular' shell
             PrintPreviewMode,        // embedded to show the print preview of a document
-            KHTMLPartMode            // embedded in KHTML
+            KHTMLPartMode,           // embedded in KHTML
+            ViewerWidgetMode,        // the part acts as a widget that can display all kinds of documents
         };
 
         // Default constructor
@@ -104,6 +107,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         KUrl realUrl() const;
 
+        void showSourceLocation(const QString& fileName, int line, int column);
+        void setWatchFileModeEnabled(bool b);
+
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
         Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
@@ -123,6 +129,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     signals:
         void enablePrintAction(bool enable);
+        void openSourceReference(const QString& absFileName, int line, int column);
 
     protected:
         // reimplemented from KParts::ReadOnlyPart
@@ -276,6 +283,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private slots:
         void slotGeneratorPreferences();
+        void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool &handled);
 };
 
 }

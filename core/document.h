@@ -730,6 +730,8 @@ class OKULAR_EXPORT Document : public QObject
          */
         void formFieldChanged( Okular::FormField *formField );
 
+        void sourceReferenceActivated(const QString& absFileName, int line, int col, bool &handled);
+
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;

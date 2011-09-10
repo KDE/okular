@@ -72,12 +72,12 @@ class ExportFormat;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer, public ViewerInterface
+class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
-    Q_INTERFACES(ViewerInterface)
+    Q_INTERFACES(Okular::ViewerInterface)
 
     public:
         enum EmbedMode

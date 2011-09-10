@@ -7,10 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _VIEWERINTERFACE_H_
-#define _VIEWERINTERFACE_H_
+#ifndef _OKULAR_VIEWERINTERFACE_H_
+#define _OKULAR_VIEWERINTERFACE_H_
 
+#include "../core/okular_export.h"
+
+#include <QtCore/QObject>
 #include <QString>
+
+namespace Okular {
 
 /**
  * @short Abstract interface for controlling advanced features of a document viewer
@@ -18,7 +23,7 @@
  * This interface can be used to control some more or less advanced features of a document
  * viewer.
  */
-class ViewerInterface
+class OKULAR_EXPORT ViewerInterface
 {
     public:
         virtual ~ViewerInterface() {}
@@ -43,6 +48,8 @@ class ViewerInterface
         void openSourceReference(const QString& absFileName, int line, int column);
 };
 
-Q_DECLARE_INTERFACE( ViewerInterface, "org.kde.viewerinterface/0.1" )
+}
+
+Q_DECLARE_INTERFACE( Okular::ViewerInterface, "org.kde.okular.ViewerInterface/0.1" )
 
 #endif

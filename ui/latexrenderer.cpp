@@ -34,12 +34,6 @@ LatexRenderer::LatexRenderer()
 
 LatexRenderer::~LatexRenderer()
 {
-    while (!m_filelist->isEmpty())
-    {
-        QFile::remove(m_filelist->last());
-        m_filelist->pop_back();
-    }
-
     delete m_filelist;
 }
 

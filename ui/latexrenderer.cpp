@@ -29,14 +29,7 @@ namespace GuiUtils
 
 LatexRenderer::LatexRenderer()
 {
-    m_filelist = new QVector<QString>();
 }
-
-LatexRenderer::~LatexRenderer()
-{
-    delete m_filelist;
-}
-
 
 LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QColor& textColor, int fontSize, int resolution, QString& latexOutput )
 {
@@ -180,7 +173,6 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
         return DvipngFailed;
     }
 
-    m_filelist->append(tempFileNameNS + QString(".png"));    
     fileName = tempFileNameNS + QString(".png");
     return NoError;
 }

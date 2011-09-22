@@ -12,9 +12,9 @@
 
 #ifndef LATEXRENDERER_H
 #define LATEXRENDERER_H
+
 #include "guiutils.h"
 
-#include <QVector>
 class QString;
 class QColor;
 
@@ -34,7 +34,6 @@ public:
     };
 
     LatexRenderer();
-    virtual ~LatexRenderer();
 
     Error renderLatexInHtml( QString& html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
     static bool mightContainLatex ( const QString& text );
@@ -42,8 +41,6 @@ public:
 private:
     Error handleLatex( QString &fileName, const QString &latexFormula, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
     static bool securityCheck( const QString &latexFormula );
-
-    QVector<QString> *m_filelist;
 };
 
 }

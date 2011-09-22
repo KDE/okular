@@ -34,7 +34,6 @@
 #include "guiutils.h"
 #include "latexrenderer.h"
 #include <core/utils.h>
-#include <QMessageBox>
 #include <KMessageBox>
 
 class CloseButton

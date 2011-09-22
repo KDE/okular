@@ -134,7 +134,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     {
         kDebug() << "Could not find latex!";
         delete tempFile;
-        fileName = QString("");
+        fileName = QString();
         return LatexNotFound;
     }
     latexProc << latexExecutable << "-interaction=nonstopmode" << "-halt-on-error" << QString("-output-directory=%1").arg(tempFilePath) << tempFile->fileName();
@@ -149,7 +149,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
 
     if (!QFile::exists(tempFileNameNS + QString(".dvi")))
     {
-        fileName = QString("");
+        fileName = QString();
         return LatexFailed;
     }
 
@@ -157,7 +157,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     if (dvipngExecutable.isEmpty())
     {
         kDebug() << "Could not find dvipng!";
-        fileName = QString("");
+        fileName = QString();
         return DvipngNotFound;
     }
 
@@ -169,7 +169,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     
     if (!QFile::exists(tempFileNameNS + QString(".png")))
     {
-        fileName = QString("");
+        fileName = QString();
         return DvipngFailed;
     }
 

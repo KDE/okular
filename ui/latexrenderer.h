@@ -15,6 +15,8 @@
 
 #include "guiutils.h"
 
+#include <QStringList>
+
 class QString;
 class QColor;
 
@@ -34,6 +36,7 @@ public:
     };
 
     LatexRenderer();
+    ~LatexRenderer();
 
     Error renderLatexInHtml( QString& html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
     static bool mightContainLatex ( const QString& text );
@@ -41,6 +44,8 @@ public:
 private:
     Error handleLatex( QString &fileName, const QString &latexFormula, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
     static bool securityCheck( const QString &latexFormula );
+
+    QStringList m_fileList;
 };
 
 }

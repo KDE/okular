@@ -31,6 +31,14 @@ LatexRenderer::LatexRenderer()
 {
 }
 
+LatexRenderer::~LatexRenderer()
+{
+    foreach(const QString &file, m_fileList)
+    {
+        QFile::remove(file);
+    }
+}
+
 LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QColor& textColor, int fontSize, int resolution, QString& latexOutput )
 {
     if( !html.contains("$$"))
@@ -174,6 +182,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     }
 
     fileName = tempFileNameNS + QString(".png");
+    m_fileList << fileName;
     return NoError;
 }
 

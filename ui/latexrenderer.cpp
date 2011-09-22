@@ -12,10 +12,17 @@
 
 #include "latexrenderer.h"
 
-#include <QtGui>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
+
+#include <QColor>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QImage>
+#include <QTextDocument>
+#include <QTextStream>
 
 namespace GuiUtils
 {

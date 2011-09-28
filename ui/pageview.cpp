@@ -284,8 +284,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
 
-    int initialZoom = Okular::Settings::zoomMode();
-    switch( initialZoom )
+    switch( Okular::Settings::zoomMode() )
     {
         case 0:
         {

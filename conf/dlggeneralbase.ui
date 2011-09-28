@@ -203,7 +203,10 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Overview columns:</string>
+         <string>Overview &amp;columns:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_ViewColumns</cstring>
         </property>
        </widget>
       </item>
@@ -254,7 +257,10 @@ For files which were opened before the previous zoom is applied.</string>
 For files which were opened before the previous zoom is applied.</string>
         </property>
         <property name="text">
-         <string>Default Zoom:</string>
+         <string>&amp;Default Zoom:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_ZoomMode</cstring>
         </property>
        </widget>
       </item>

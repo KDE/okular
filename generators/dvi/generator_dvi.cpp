@@ -52,7 +52,7 @@ static KAboutData createAboutData()
          "okular_dvi",
          "okular_dvi",
          ki18n( "DVI Backend" ),
-         "0.3.1",
+         "0.3.2",
          ki18n( "A DVI file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2006 Luigi Toscano" )

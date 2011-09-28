@@ -284,6 +284,27 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
 
+    int initialZoom = Okular::Settings::zoomMode();
+    switch( initialZoom )
+    {
+        case 0:
+        {
+            d->zoomFactor = 1;
+            d->zoomMode = PageView::ZoomFixed;
+            break;
+        }
+        case 1:
+        {
+            d->zoomMode = PageView::ZoomFitWidth;
+            break;
+        }
+        case 2:
+        {
+            d->zoomMode = PageView::ZoomFitPage;
+            break;
+        }
+    }
+
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
     connect( d->delayResizeEventTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()) );

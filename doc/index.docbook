@@ -1372,6 +1372,16 @@ Add a 'Find Previous' entry
 						</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Default Zoom</guilabel></term>
+					<listitem>
+						<para>
+							This options specifies the default zoom mode for file which were never
+							opened before. For which which were opened before the previous zoom mode
+							is applied.
+						</para>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</sect1>
 		<sect1 id="configaccessibility">

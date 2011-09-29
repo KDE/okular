@@ -1,0 +1,31 @@
+diff --git a/generators/poppler/synctex/synctex_parser.c b/generators/poppler/synctex/synctex_parser.c
+index c8f61bb..8244f27 100644
+--- a/generators/poppler/synctex/synctex_parser.c
++++ b/generators/poppler/synctex/synctex_parser.c
+@@ -3395,11 +3395,11 @@ int synctex_display_query(synctex_scanner_t scanner,const char * name,int line,i
+ 				}
+ 				start_ref += 1;
+                 SYNCTEX_END = (char *)start_ref;
+-                SYNCTEX_CUR = NULL;// added on behalf of Jose Alliste
+-				return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t);// added on behalf Jan Sundermeyer
++                SYNCTEX_CUR = NULL;/* added on behalf of Jose Alliste */
++				return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t);/* added on behalf Jan Sundermeyer */
+             }
+ 			SYNCTEX_CUR = NULL;
+-			// return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t); removed on behalf Jan Sundermeyer
++			/* return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t); removed on behalf Jan Sundermeyer */
+ 		}
+ #       if defined(__SYNCTEX_STRONG_DISPLAY_QUERY__)
+ 		break;
+diff --git a/generators/poppler/synctex/synctex_parser_utils.c b/generators/poppler/synctex/synctex_parser_utils.c
+index ef1645e..3be45b7 100644
+--- a/generators/poppler/synctex/synctex_parser_utils.c
++++ b/generators/poppler/synctex/synctex_parser_utils.c
+@@ -492,6 +492,6 @@ int _synctex_get_name(const char * output, const char * build_directory, char **
+ 
+ const char * _synctex_get_io_mode_name(synctex_io_mode_t io_mode) {
+     static const char * synctex_io_modes[4] = {"r","rb","a","ab"}; 
+-    unsigned index = ((io_mode & synctex_io_gz_mask)?1:0) + ((io_mode & synctex_io_append_mask)?2:0);// bug pointed out by Jose Alliste
++    unsigned index = ((io_mode & synctex_io_gz_mask)?1:0) + ((io_mode & synctex_io_append_mask)?2:0);/* bug pointed out by Jose Alliste */
+     return synctex_io_modes[index];
+ }

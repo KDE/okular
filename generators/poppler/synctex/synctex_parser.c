@@ -3395,11 +3395,11 @@ int synctex_display_query(synctex_scanner_t scanner,const char * name,int line,i
 				}
 				start_ref += 1;
                 SYNCTEX_END = (char *)start_ref;
-                SYNCTEX_CUR = NULL;// added on behalf of Jose Alliste
-				return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t);// added on behalf Jan Sundermeyer
+                SYNCTEX_CUR = NULL;/* added on behalf of Jose Alliste */
+				return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t);/* added on behalf Jan Sundermeyer */
             }
 			SYNCTEX_CUR = NULL;
-			// return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t); removed on behalf Jan Sundermeyer
+			/* return (SYNCTEX_END-SYNCTEX_START)/sizeof(synctex_node_t); removed on behalf Jan Sundermeyer */
 		}
 #       if defined(__SYNCTEX_STRONG_DISPLAY_QUERY__)
 		break;

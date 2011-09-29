@@ -157,7 +157,7 @@ synctex_bool_t _synctex_is_equivalent_file_name(const char *lhs, const char *rhs
     /*  Remove the leading regex '(\./+)*' in both rhs and lhs */
     lhs = synctex_ignore_leading_dot_slash(lhs);
     rhs = synctex_ignore_leading_dot_slash(rhs);
-#	if SYNCTEX_WINDOWS
+#	ifdef SYNCTEX_WINDOWS
     /*  On Windows, filename should be compared case insensitive.
 	 *  The characters '/' and '\' are both valid path separators.
 	 *  There will be a very serious problem concerning UTF8 because
@@ -189,7 +189,7 @@ synctex_bool_t _synctex_path_is_absolute(const char * name) {
 	if(!strlen(name)) {
 		return synctex_NO;
 	}
-#	if SYNCTEX_WINDOWS
+#	ifdef SYNCTEX_WINDOWS
 	if(strlen(name)>2) {
 		return (name[1]==':' && SYNCTEX_IS_PATH_SEPARATOR(name[2]))?synctex_YES:synctex_NO;
 	}

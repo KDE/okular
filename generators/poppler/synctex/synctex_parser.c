@@ -1440,7 +1440,7 @@ next_character:
 		len = SYNCTEX_END - SYNCTEX_CUR;
 		if (current_size>UINT_MAX-len-1) {
 			/*  We have reached the limit. */
-			_synctex_error("limit reached (missing %i).",current_size-(UINT_MAX-len-1));
+			_synctex_error("limit reached (missing %lu).",current_size-(UINT_MAX-len-1));
 			return SYNCTEX_STATUS_ERROR;
 		}
 		new_size = current_size+len;

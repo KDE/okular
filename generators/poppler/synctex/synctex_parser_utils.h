@@ -72,7 +72,13 @@ extern "C" {
 #	else
 #		define SYNCTEX_IS_DOT(c) ('.' == c)
 #	endif
-    
+
+#	ifdef __GNUC__
+#		define SYNCTEX_PRINTF_FORMAT(si, ftc) __attribute__ ((format (printf, si, ftc)))
+#	else
+#		define SYNCTEX_PRINTF_FORMAT(si, ftc)
+#	endif
+ 
 /*  This custom malloc functions initializes to 0 the newly allocated memory.
  *  There is no bzero function on windows. */
 void *_synctex_malloc(size_t size);
@@ -80,7 +86,7 @@ void *_synctex_malloc(size_t size);
 /*  This is used to log some informational message to the standard error stream.
  *  On Windows, the stderr stream is not exposed and another method is used.
  *	The return value is the number of characters printed.	*/
-int _synctex_error(const char * reason,...);
+int _synctex_error(const char * reason,...) SYNCTEX_PRINTF_FORMAT(1, 2);
 
 /*  strip the last extension of the given string, this string is modified!
  *  This function depends on the OS because the path separator may differ.

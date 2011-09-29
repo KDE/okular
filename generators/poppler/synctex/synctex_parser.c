@@ -67,7 +67,7 @@ Thu Jun 19 09:39:21 UTC 2008
 #       if defined(_MSC_VER) 
 #          define SYNCTEX_INLINE __inline
 #       else
-#          define SYNCTEX_INLINE inline
+#          define SYNCTEX_INLINE
 #       endif
 #   endif
 

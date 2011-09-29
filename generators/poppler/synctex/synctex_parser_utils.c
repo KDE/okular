@@ -90,8 +90,26 @@ int _synctex_error(const char * reason,...) {
 		char *buff;
 		size_t len;
 		OutputDebugStringA("SyncTeX ERROR: ");
+#	ifdef _MSC_VER
 		len = _vscprintf(reason, arg) + 1;
 		buff = (char*)malloc( len * sizeof(char) );
+#else  /* MinGW */
+		size_t buffersize = 1024;
+		size_t max_buffersize = 1024 * buffersize;
+		int result;
+		buff = (char*)malloc(buffersize * sizeof(char));
+		result = _vsnprintf(buff, buffersize - 1, reason, arg);
+		while(-1 == result && buffersize <= max_buffersize) {
+			buffersize = buffersize * 2;
+			buff = (char*)realloc(buff, buffersize * sizeof(char));
+			result = _vsnprintf(buff, buffersize - 1, reason, arg);
+		}
+		if(-1 == result) {
+			// could not make the buffer big enough or simply could not write to it
+			free(buff);
+			return -1;
+		}
+#endif
 		result = vsprintf(buff, reason, arg) +strlen("SyncTeX ERROR: ");
 		OutputDebugStringA(buff);
 		OutputDebugStringA("\n");

@@ -2,11 +2,11 @@ _vscprintf() is specific for MSVC; thus in _synctex_error(), for any other
 compiler on Windows, use _vsnprintf() and grow the buffer until necessary.
 
 Patch provided by Patrick Spendrin <ps_ml@gmx.de>.
-Index: synctex/synctex_parser_utils.c
-===================================================================
---- synctex.orig/synctex_parser_utils.c	2010-05-23 19:17:10.000000000 +0200
-+++ synctex/synctex_parser_utils.c	2010-05-23 19:17:33.000000000 +0200
-@@ -89,8 +89,26 @@
+diff --git a/generators/poppler/synctex/synctex_parser_utils.c b/generators/poppler/synctex/synctex_parser_utils.c
+index e85ca73..ef1645e 100644
+--- a/generators/poppler/synctex/synctex_parser_utils.c
++++ b/generators/poppler/synctex/synctex_parser_utils.c
+@@ -90,8 +90,26 @@ int _synctex_error(const char * reason,...) {
  		char *buff;
  		size_t len;
  		OutputDebugStringA("SyncTeX ERROR: ");

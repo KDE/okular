@@ -1377,7 +1377,7 @@ Add a 'Find Previous' entry
 					<listitem>
 						<para>
 							This options specifies the default zoom mode for file which were never
-							opened before. For which which were opened before the previous zoom mode
+							opened before. For those files which were opened before the previous zoom mode
 							is applied.
 						</para>
 					</listitem>

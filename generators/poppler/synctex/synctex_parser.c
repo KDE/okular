@@ -2584,6 +2584,8 @@ synctex_scanner_t synctex_scanner_new_with_output_file(const char * output, cons
 	}
 	/*  now open the synctex file */
 	if (_synctex_open(output,build_directory,&synctex,&file,synctex_ADD_QUOTES,&io_mode) || !file) {
+		/* reset the io_mode to the default, ie read */
+		io_mode = 0;
 		if (_synctex_open(output,build_directory,&synctex,&file,synctex_DONT_ADD_QUOTES,&io_mode) || !file) {
 			return NULL;
 		}

@@ -6,3 +6,4 @@
 05-fix-error-formats.diff
 06-mingw-_synctex_error.diff
 07-synctex_scanner_new_with_output_file-reset-mode.diff
+08-fix_path_comparison.diff

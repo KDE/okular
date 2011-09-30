@@ -184,7 +184,16 @@ next_character:
 	++rhs;
 	goto next_character;
 #	else
-    return 0 == strcmp(lhs,rhs)?synctex_YES:synctex_NO;
+	if (lhs[0] == '/' && rhs[0] == '/') { /* for absolute paths compare the real paths */
+		char *lhsreal = realpath(lhs, 0);
+		char *rhsreal = realpath(rhs, 0);
+		synctex_bool_t result = lhsreal && rhsreal && 0 == strcmp(lhsreal,rhsreal)?synctex_YES:synctex_NO;
+		free (lhsreal);
+		free (rhsreal);
+		return result;
+	} else {
+		return 0 == strcmp(lhs,rhs)?synctex_YES:synctex_NO;
+	}
 #	endif
 }
 

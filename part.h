@@ -90,6 +90,12 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         };
 
         // Default constructor
+        /**
+         * If one element of 'args' contains one of the strings "Print/Preview" or "ViewerWidget",
+         * the part will be set up in the corresponding mode. Additionally, it is possible to specify
+         * which config file should be used by adding a string containing "ConfigFileName=<file name>"
+         * to 'args'.
+         **/
         Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor

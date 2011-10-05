@@ -227,6 +227,24 @@ static Okular::Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *
     return Okular::Part::UnknownEmbedMode;
 }
 
+static QString detectConfigFileName( const QVariantList &args )
+{
+    Q_FOREACH ( const QVariant &arg, args )
+    {
+        if ( arg.type() == QVariant::String )
+        {
+            QString argString = arg.toString();
+            int separatorIndex = argString.indexOf( "=" );
+            if ( separatorIndex >= 0 && argString.left( separatorIndex ) == QLatin1String( "ConfigFileName" ) )
+            {
+                return argString.mid( separatorIndex + 1 );
+            }
+        }
+    }
+
+    return "";
+}
+
 #undef OKULAR_KEEP_FILE_OPEN
 
 #ifdef OKULAR_KEEP_FILE_OPEN
@@ -247,14 +265,20 @@ const QVariantList &args )
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
-    // first necessary step: copy the configuration from kpdf, if available
-    QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
-    if ( !QFile::exists( newokularconffile ) )
+    // first, we check if a config file name has been specified
+    QString configFileName = detectConfigFileName( args );
+    if( configFileName.isEmpty())
     {
-        QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
-        if ( QFile::exists( oldkpdfconffile ) )
-            QFile::copy( oldkpdfconffile, newokularconffile );
+        configFileName = KStandardDirs::locateLocal( "config", "okularpartrc" );
+        // first necessary step: copy the configuration from kpdf, if available
+        if ( !QFile::exists( configFileName ) )
+        {
+            QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
+            if ( QFile::exists( oldkpdfconffile ) )
+                QFile::copy( oldkpdfconffile, configFileName );
+        }
     }
+    Okular::Settings::instance( configFileName );
 
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 

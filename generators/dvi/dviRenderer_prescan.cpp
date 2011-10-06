@@ -361,11 +361,18 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
         anchorList[anchorName] = Anchor(current_page+1, l);
       }
       // The PostScript code defines a bookmark
-      if (cp.contains("/Dest") && cp.contains("/Title"))
+      if (cp.contains("/Dest") && cp.contains("/Title")) {
+        const QString childrenNumberAndMoreStuff = cp.section('-', 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
+        int indexOfFirstNonDigit = 0;
+        foreach(const QChar &c, childrenNumberAndMoreStuff) {
+          if (c.isDigit()) ++indexOfFirstNonDigit;
+          else break;
+        }
         prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
                                         cp.section('(', 1, 1).section(')', 0, 0),
-                                        cp.section('-', 1, 1).section(' ', 0, 0).toUInt()
+                                        childrenNumberAndMoreStuff.left(indexOfFirstNonDigit).toUInt()
                                         ));
+      }
       return;
     }
   }

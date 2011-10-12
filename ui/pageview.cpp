@@ -533,6 +533,7 @@ do { \
     ac->addAction( "mouse_selecttools", ta );
     ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTextSelect );
+    ta->addAction( d->aMouseTableSelect );
 
     // speak actions
     d->aSpeakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );

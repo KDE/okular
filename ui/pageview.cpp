@@ -1262,8 +1262,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     pixmapPainter.drawRect( selectionRect.adjusted( 0, 0, -1, -1 ) );
                 }
                 // 2b) Layer 1b: paint (blend) transparent selection (table)
-                for (int i=0; i<d->tableSelectionParts.length(); i++) {
-                    TableSelectionPart& tsp = d->tableSelectionParts[i];
+                foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                     QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                     selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                     QRect selectionPartRectInternal = selectionPartRect;
@@ -1321,8 +1320,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     screenPainter.drawRect( selectionRect );
                 }
                 // 2b) Layer 1b: paint opaque selection (table)
-                for (int i=0; i<d->tableSelectionParts.length(); i++) {
-                    TableSelectionPart& tsp = d->tableSelectionParts[i];
+                foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                     QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                     selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                     QRect selectionPartRectInternal = selectionPartRect;
@@ -1352,8 +1350,7 @@ void PageView::drawTableDividers(QPainter * screenPainter)
 {
         if (!d->tableSelectionParts.isEmpty()) {
             screenPainter->setPen( d->mouseSelectionColor.dark() );
-            for (int i=0; i<d->tableSelectionParts.length(); i++) {
-                TableSelectionPart& tsp = d->tableSelectionParts[i];
+            foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                 QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                 selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                 QRect selectionPartRectInternal = selectionPartRect;
@@ -1885,8 +1882,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                     selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
                 } else {
                     QRect updatedRect;
-                    for (int i=0; i<d->tableSelectionParts.length(); i++) {
-                        TableSelectionPart& tsp = d->tableSelectionParts[i];
+                    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                         selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
 
@@ -2397,9 +2393,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     Okular::NormalizedRect cell(xs[c], ys[r], xs[c+1], ys[r+1]);
                     if (c) selText += '\t';
                     QString txt;
-                    for (int i=0; i<d->tableSelectionParts.length(); i++) {
-                        TableSelectionPart& tsp = d->tableSelectionParts[i];
-
+                    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                         // first, crop the cell to this part
                         if (!tsp.rectInSelection.intersects(cell))
                             continue;
@@ -3076,8 +3070,7 @@ void PageView::selectionClear()
     d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
     d->tableSelectionCols.clear();
     d->tableSelectionRows.clear();
-    for (int i=0; i<d->tableSelectionParts.length(); i++) {
-        TableSelectionPart& tsp = d->tableSelectionParts[i];
+    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
         selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
         // should check whether this is on-screen here?

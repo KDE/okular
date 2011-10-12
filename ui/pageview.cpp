@@ -87,7 +87,6 @@ static inline double normClamp( double value, double def )
 }
 
 struct TableSelectionPart {
-public:
     PageViewItem * item;
     Okular::NormalizedRect rectInItem;
     Okular::NormalizedRect rectInSelection;

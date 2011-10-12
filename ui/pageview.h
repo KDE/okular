@@ -26,7 +26,6 @@
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/view.h"
-#include "core/textpage.h"
 
 class KAction;
 class KActionCollection;
@@ -157,8 +156,6 @@ Q_OBJECT
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
-        // extract text from a rectangular region
-        const QString rectExtractText(const QRect &selectionRect, const Okular::TextPage::TextAreaInclusionBehaviour b);
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );

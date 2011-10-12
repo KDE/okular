@@ -27,7 +27,8 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
               "(C) 2004-2005 Enrico Ros\n"
               "(C) 2005 Piotr Szymanski\n"
               "(C) 2004-2009 Albert Astals Cid\n"
-              "(C) 2006-2009 Pino Toscano"),
+              "(C) 2006-2009 Pino Toscano\n"
+              "(C) 2011 Jiri Baum - NICTA"),
         KLocalizedString(),
         "http://okular.kde.org"
     );
@@ -37,6 +38,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
     about.addAuthor(ki18n("Albert Astals Cid"), ki18n("Current maintainer"), "aacid@kde.org");
     about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created Okular from KPDF codebase"), "djurban@pld-dc.org");
     about.addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
+    about.addAuthor(ki18n("Jiri Baum - NICTA"), ki18n("Table selection tool"), "jiri@baum.com.au");
     about.addCredit(ki18n("Eugene Trounev"), ki18n("Annotations artwork"), "eugene.trounev@gmail.com");
 
     return about;

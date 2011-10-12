@@ -590,11 +590,10 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     reload->setShortcut( KStandardShortcut::reload() );
     m_reload = reload;
 
-    KAction *closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
-    ac->addAction("close_find_bar", closeFindBar);
-    connect(closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
-    closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
-    widget()->addAction(closeFindBar);
+    m_closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
+    ac->addAction("close_find_bar", m_closeFindBar);
+    connect(m_closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
+    widget()->addAction(m_closeFindBar);
 
     KToggleAction *blackscreenAction = new KToggleAction( i18n( "Switch Blackscreen Mode" ), ac );
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
@@ -1408,6 +1407,7 @@ void Part::slotShowFindBar()
 {
     m_findBar->show();
     m_findBar->focusAndSetCursor();
+    m_closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
 }
 
 void Part::slotHideFindBar()
@@ -1415,6 +1415,7 @@ void Part::slotHideFindBar()
     if ( m_findBar->maybeHide() )
     {
         m_pageView->setFocus();
+        m_closeFindBar->setShortcut( QKeySequence( /* None */ ) );
     }
 }
 

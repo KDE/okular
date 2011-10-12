@@ -26,6 +26,7 @@
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/view.h"
+#include "core/textpage.h"
 
 class KAction;
 class KActionCollection;
@@ -58,7 +59,7 @@ Q_OBJECT
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect, MouseTableSelect };
 
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );
@@ -156,10 +157,13 @@ Q_OBJECT
         void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
+        // extract text from a rectangular region
+        const QString rectExtractText(const QRect &selectionRect, const Okular::TextPage::TextAreaInclusionBehaviour b);
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );
         void selectionClear();
+        void drawTableDividers(QPainter * screenPainter);
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -216,6 +220,7 @@ Q_OBJECT
         void slotSetMouseZoom();
         void slotSetMouseSelect();
         void slotSetMouseTextSelect();
+        void slotSetMouseTableSelect();
         void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();

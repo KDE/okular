@@ -68,6 +68,7 @@
     <Action name="mouse_zoom"/>
     <Action name="mouse_select"/>
     <Action name="mouse_textselect"/>
+    <Action name="mouse_tableselect"/>
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
     <Separator/>

@@ -91,10 +91,10 @@ struct TableSelectionPart {
     Okular::NormalizedRect rectInItem;
     Okular::NormalizedRect rectInSelection;
 
-    TableSelectionPart(PageViewItem * item_p, Okular::NormalizedRect rectInItem_p, Okular::NormalizedRect rectInSelection_p);
+    TableSelectionPart(PageViewItem * item_p, const Okular::NormalizedRect &rectInItem_p, const Okular::NormalizedRect &rectInSelection_p);
 };
 
-TableSelectionPart::TableSelectionPart(  PageViewItem * item_p, Okular::NormalizedRect rectInItem_p, Okular::NormalizedRect rectInSelection_p)
+TableSelectionPart::TableSelectionPart(  PageViewItem * item_p, const Okular::NormalizedRect &rectInItem_p, const Okular::NormalizedRect &rectInSelection_p)
     : item ( item_p ), rectInItem (rectInItem_p), rectInSelection (rectInSelection_p)
 {
 }

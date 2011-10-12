@@ -1355,8 +1355,7 @@ void PageView::drawTableDividers(QPainter * screenPainter)
                 selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                 QRect selectionPartRectInternal = selectionPartRect;
                 selectionPartRectInternal.adjust( 1, 1, -1, -1 );
-                for(int i=0; i<d->tableSelectionCols.length(); i++) {
-                    double col = d->tableSelectionCols[i];
+                foreach(double col, d->tableSelectionCols) {
                     if (col >= tsp.rectInSelection.left && col <= tsp.rectInSelection.right) {
                         col = (col - tsp.rectInSelection.left) / (tsp.rectInSelection.right - tsp.rectInSelection.left);
                         const int x =  selectionPartRect.left() + col * selectionPartRect.width() + 0.5;
@@ -1366,8 +1365,7 @@ void PageView::drawTableDividers(QPainter * screenPainter)
                         );
                     }
                 }
-                for(int i=0; i<d->tableSelectionRows.length(); i++) {
-                    double row = d->tableSelectionRows[i];
+                foreach(double row, d->tableSelectionRows) {
                     if (row >= tsp.rectInSelection.top && row <= tsp.rectInSelection.bottom) {
                         row = (row - tsp.rectInSelection.top) / (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
                         const int y =  selectionPartRect.top() + row * selectionPartRect.height() + 0.5;

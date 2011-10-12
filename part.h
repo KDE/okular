@@ -80,15 +80,6 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     Q_INTERFACES(Okular::ViewerInterface)
 
     public:
-        enum EmbedMode
-        {
-            UnknownEmbedMode,
-            NativeShellMode,         // embedded in the native Okular' shell
-            PrintPreviewMode,        // embedded to show the print preview of a document
-            KHTMLPartMode,           // embedded in KHTML
-            ViewerWidgetMode,        // the part acts as a widget that can display all kinds of documents
-        };
-
         // Default constructor
         /**
          * If one element of 'args' contains one of the strings "Print/Preview" or "ViewerWidget",
@@ -195,6 +186,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void psTransformEnded(int, QProcess::ExitStatus);
 
     private:
+        void setupViewerActions();
+        void setupActions();
+
         void setupPrint( QPrinter &printer );
         void doPrint( QPrinter &printer );
         bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );

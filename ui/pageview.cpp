@@ -197,6 +197,7 @@ public:
     KAction * aSpeakPage;
     KAction * aSpeakStop;
     KActionCollection * actionCollection;
+    QActionGroup * mouseModeActionGroup;
 
     int setting_viewCols;
 
@@ -305,6 +306,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->mouseModeActionGroup = 0;
     d->showMoveDestinationGraphically = false;
 
     switch( Okular::Settings::zoomMode() )
@@ -402,9 +404,12 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoomOut = KStandardAction::zoomOut( this, SLOT(slotZoomOut()), ac );
 }
 
-void PageView::setupActions( KActionCollection * ac )
+void PageView::setupViewerActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
+
+    d->aZoomIn->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus) );
+    d->aZoomOut->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus) );
 
     // orientation menu actions
     d->aRotateClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
@@ -482,16 +487,16 @@ do { \
     connect( d->aViewContinuous, SIGNAL(toggled(bool)), SLOT(slotContinuousToggled(bool)) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
-    // Mouse-Mode actions
-    QActionGroup * actGroup = new QActionGroup( this );
-    actGroup->setExclusive( true );
+    // Mouse mode actions for viewer mode
+    d->mouseModeActionGroup = new QActionGroup( this );
+    d->mouseModeActionGroup->setExclusive( true );
     d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
-    d->aMouseNormal->setActionGroup( actGroup );
+    d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( true );
 
     KAction * mz  = new KAction(KIcon( "page-zoom" ), i18n("&Zoom Tool"), this);
@@ -500,15 +505,26 @@ do { \
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
-    mz->setActionGroup( actGroup );
+    mz->setActionGroup( d->mouseModeActionGroup );
 
+}
+
+// WARNING: 'setupViewerActions' must have been called before this method
+void PageView::setupActions( KActionCollection * ac )
+{
+    d->actionCollection = ac;
+
+    d->aZoomIn->setShortcut( KStandardShortcut::zoomIn() );
+    d->aZoomOut->setShortcut( KStandardShortcut::zoomOut() );
+
+    // Mouse-Mode actions
     d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
-    d->aMouseSelect->setActionGroup( actGroup );
+    d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aMouseTextSelect  = new KAction(KIcon( "draw-text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
@@ -516,7 +532,8 @@ do { \
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
-    d->aMouseTextSelect->setActionGroup( actGroup );
+    Q_ASSERT( d->mouseModeActionGroup );
+    d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aMouseTableSelect  = new KAction(KIcon( "select-table" ), i18n("T&able Selection Tool"), this);
     ac->addAction("mouse_tableselect", d->aMouseTableSelect );
@@ -524,7 +541,7 @@ do { \
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
     d->aMouseTableSelect->setCheckable( true );
     d->aMouseTableSelect->setShortcut( Qt::CTRL + Qt::Key_5 );
-    d->aMouseTableSelect->setActionGroup( actGroup );
+    d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
@@ -3877,7 +3894,7 @@ void PageView::slotSetMouseNormal()
     // hide the messageWindow
     d->messageWindow->hide();
     // reshow the annotator toolbar if hiding was forced
-    if ( d->aToggleAnnotator->isChecked() )
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
         slotToggleAnnotator( true );
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );

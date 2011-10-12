@@ -62,6 +62,7 @@ Q_OBJECT
 
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );
+        void setupViewerActions( KActionCollection * collection );
         void setupActions( KActionCollection * collection );
 
         // misc methods (from RMB menu/children)

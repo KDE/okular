@@ -270,6 +270,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_aboutBackend;
         KAction *m_reload;
         QMenu *m_exportAsMenu;
+        KAction *m_closeFindBar;
 
         bool m_actionsSearched;
         BrowserExtension *m_bExtension;

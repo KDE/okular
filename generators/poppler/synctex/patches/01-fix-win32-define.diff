@@ -1,17 +1,17 @@
-Index: synctex/synctex_parser_utils.c
-===================================================================
---- synctex.orig/synctex_parser_utils.c	2010-05-23 18:49:35.000000000 +0200
-+++ synctex/synctex_parser_utils.c	2010-05-23 19:04:27.000000000 +0200
-@@ -142,7 +142,7 @@
- 
- /*  Compare two file names, windows is sometimes case insensitive... */
- synctex_bool_t _synctex_is_equivalent_file_name(const char *lhs, const char *rhs) {
+diff --git a/generators/poppler/synctex/synctex_parser_utils.c b/generators/poppler/synctex/synctex_parser_utils.c
+index 569f7e9..e85ca73 100644
+--- a/generators/poppler/synctex/synctex_parser_utils.c
++++ b/generators/poppler/synctex/synctex_parser_utils.c
+@@ -157,7 +157,7 @@ synctex_bool_t _synctex_is_equivalent_file_name(const char *lhs, const char *rhs
+     /*  Remove the leading regex '(\./+)*' in both rhs and lhs */
+     lhs = synctex_ignore_leading_dot_slash(lhs);
+     rhs = synctex_ignore_leading_dot_slash(rhs);
 -#	if SYNCTEX_WINDOWS
 +#	ifdef SYNCTEX_WINDOWS
      /*  On Windows, filename should be compared case insensitive.
  	 *  The characters '/' and '\' are both valid path separators.
  	 *  There will be a very serious problem concerning UTF8 because
-@@ -174,7 +174,7 @@
+@@ -189,7 +189,7 @@ synctex_bool_t _synctex_path_is_absolute(const char * name) {
  	if(!strlen(name)) {
  		return synctex_NO;
  	}
@@ -20,11 +20,11 @@ Index: synctex/synctex_parser_utils.c
  	if(strlen(name)>2) {
  		return (name[1]==':' && SYNCTEX_IS_PATH_SEPARATOR(name[2]))?synctex_YES:synctex_NO;
  	}
-Index: synctex/synctex_parser_utils.h
-===================================================================
---- synctex.orig/synctex_parser_utils.h	2010-05-23 18:49:35.000000000 +0200
-+++ synctex/synctex_parser_utils.h	2010-05-23 19:03:30.000000000 +0200
-@@ -55,7 +55,7 @@
+diff --git a/generators/poppler/synctex/synctex_parser_utils.h b/generators/poppler/synctex/synctex_parser_utils.h
+index e67f8f5..f0709e9 100644
+--- a/generators/poppler/synctex/synctex_parser_utils.h
++++ b/generators/poppler/synctex/synctex_parser_utils.h
+@@ -61,13 +61,13 @@ authorization from the copyright holder.
  extern "C" {
  #endif
  
@@ -33,3 +33,10 @@ Index: synctex/synctex_parser_utils.h
  #		define SYNCTEX_IS_PATH_SEPARATOR(c) ('/' == c || '\\' == c)
  #	else
  #		define SYNCTEX_IS_PATH_SEPARATOR(c) ('/' == c)
+ #	endif
+     
+-#	if _WIN32
++#	ifdef _WIN32
+ #		define SYNCTEX_IS_DOT(c) ('.' == c)
+ #	else
+ #		define SYNCTEX_IS_DOT(c) ('.' == c)

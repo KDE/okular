@@ -58,7 +58,7 @@ Q_OBJECT
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
-        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect };
+        enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect, MouseTableSelect };
 
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );
@@ -162,6 +162,7 @@ Q_OBJECT
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );
         void selectionClear();
+        void drawTableDividers(QPainter * screenPainter);
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -218,6 +219,7 @@ Q_OBJECT
         void slotSetMouseZoom();
         void slotSetMouseSelect();
         void slotSetMouseTextSelect();
+        void slotSetMouseTableSelect();
         void slotToggleAnnotator( bool );
         void slotScrollUp();
         void slotScrollDown();

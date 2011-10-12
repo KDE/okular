@@ -1,21 +1,23 @@
-Index: synctex/synctex_parser_utils.h
-===================================================================
---- synctex.orig/synctex_parser_utils.h	2010-05-23 19:07:34.000000000 +0200
-+++ synctex/synctex_parser_utils.h	2010-05-23 19:08:00.000000000 +0200
-@@ -61,6 +61,12 @@
- #		define SYNCTEX_IS_PATH_SEPARATOR(c) ('/' == c)
+diff --git a/generators/poppler/synctex/synctex_parser_utils.h b/generators/poppler/synctex/synctex_parser_utils.h
+index f0709e9..92184b8 100644
+--- a/generators/poppler/synctex/synctex_parser_utils.h
++++ b/generators/poppler/synctex/synctex_parser_utils.h
+@@ -72,7 +72,13 @@ extern "C" {
+ #	else
+ #		define SYNCTEX_IS_DOT(c) ('.' == c)
  #	endif
- 
+-    
++
 +#	ifdef __GNUC__
 +#		define SYNCTEX_PRINTF_FORMAT(si, ftc) __attribute__ ((format (printf, si, ftc)))
 +#	else
 +#		define SYNCTEX_PRINTF_FORMAT(si, ftc)
 +#	endif
-+
++ 
  /*  This custom malloc functions initializes to 0 the newly allocated memory.
   *  There is no bzero function on windows. */
  void *_synctex_malloc(size_t size);
-@@ -68,7 +74,7 @@
+@@ -80,7 +86,7 @@ void *_synctex_malloc(size_t size);
  /*  This is used to log some informational message to the standard error stream.
   *  On Windows, the stderr stream is not exposed and another method is used.
   *	The return value is the number of characters printed.	*/

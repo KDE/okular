@@ -32,6 +32,9 @@
 // local includes
 #include "core/annotations.h"
 #include "guiutils.h"
+#include "latexrenderer.h"
+#include <core/utils.h>
+#include <KMessageBox>
 
 class CloseButton
   : public QPushButton
@@ -96,6 +99,22 @@ public:
         optionlay->addWidget( optionButton );
         // ### disabled for now
         optionButton->hide();
+        latexButton = new QToolButton( this );
+        QHBoxLayout * latexlay = new QHBoxLayout();
+        QString latextext = i18n ( "This annotation may contain LaTeX code.\nClick here to render." );
+        latexButton->setText( latextext );
+        latexButton->setAutoRaise( true );
+        s = QFontMetrics( latexButton->font() ).boundingRect(0, 0, this->width(), this->height(), 0, latextext ).size() + QSize( 8, 8 );
+        latexButton->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+        latexButton->setFixedSize( s );
+        latexButton->setCheckable( true );
+        latexButton->setVisible( false );
+        latexlay->addSpacing( 1 );
+        latexlay->addWidget( latexButton );
+        latexlay->addSpacing( 1 );
+        mainlay->addLayout( latexlay );
+        connect(latexButton, SIGNAL(clicked(bool)), parent, SLOT(renderLatex(bool)));
+        connect(parent, SIGNAL(containsLatex(bool)), latexButton, SLOT(setVisible(bool)));
 
         titleLabel->installEventFilter( this );
         dateLabel->installEventFilter( this );
@@ -147,12 +166,18 @@ public:
         connect( optionButton, SIGNAL(clicked()), recv, method );
     }
 
+    void uncheckLatexButton()
+    {
+        latexButton->setChecked( false );
+    }
+
 private:
     QLabel * titleLabel;
     QLabel * dateLabel;
     QLabel * authorLabel;
     QPoint mousePressPos;
     QToolButton * optionButton;
+    QToolButton * latexButton;
 };
 
 
@@ -169,7 +194,10 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     textEdit->installEventFilter( this );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
-    
+
+    m_latexRenderer = new GuiUtils::LatexRenderer();
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );
+
     QVBoxLayout * mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 2 );
     mainlay->setSpacing( 0 );
@@ -188,6 +216,11 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
     setGeometry(10,10,300,300 );
 
     reloadInfo();
+}
+
+AnnotWindow::~AnnotWindow()
+{
+    delete m_latexRenderer;
 }
 
 void AnnotWindow::reloadInfo()
@@ -233,7 +266,7 @@ void AnnotWindow::slotOptionBtn()
     //emit sig...
 }
 
- void AnnotWindow::slotsaveWindowText()
+void AnnotWindow::slotsaveWindowText()
 {
     const QString newText = textEdit->toPlainText();
 
@@ -256,6 +289,58 @@ void AnnotWindow::slotOptionBtn()
 
     // 3. contents
     m_annot->setContents( newText );
+
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( newText ) );
+}
+
+void AnnotWindow::renderLatex( bool render )
+{
+    if (render)
+    {
+        textEdit->setReadOnly( true );
+        disconnect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
+        textEdit->setAcceptRichText( true );
+        QString contents =  GuiUtils::contents( m_annot );
+        contents = Qt::convertFromPlainText( contents );
+        QColor fontColor = textEdit->textColor();
+        int fontSize = textEdit->fontPointSize();
+        QString latexOutput;
+        GuiUtils::LatexRenderer::Error errorCode = m_latexRenderer->renderLatexInHtml( contents, fontColor, fontSize, Okular::Utils::dpiX(), latexOutput );
+        switch ( errorCode )
+        {
+            case GuiUtils::LatexRenderer::LatexNotFound:
+                KMessageBox::sorry( this, i18n( "Cannot find latex executable." ), i18n( "LaTeX rendering failed" ) );
+                m_title->uncheckLatexButton();
+                renderLatex( false );
+                break;
+            case GuiUtils::LatexRenderer::DvipngNotFound:
+                KMessageBox::sorry( this, i18n( "Cannot find dvipng executable." ), i18n( "LaTeX rendering failed" ) );
+                m_title->uncheckLatexButton();
+                renderLatex( false );
+                break;
+            case GuiUtils::LatexRenderer::LatexFailed:
+                KMessageBox::detailedSorry( this, i18n( "latex failed." ), latexOutput, i18n( "LaTeX rendering failed" ) );
+                m_title->uncheckLatexButton();
+                renderLatex( false );
+                break;
+            case GuiUtils::LatexRenderer::DvipngFailed:
+                KMessageBox::sorry( this, i18n( "dvipng failed." ), i18n( "LaTeX rendering failed" ) );
+                m_title->uncheckLatexButton();
+                renderLatex( false );
+                break;
+            case GuiUtils::LatexRenderer::NoError:
+            default:
+                textEdit->setHtml( contents );
+                break;
+        }
+    }
+    else
+    {
+        textEdit->setAcceptRichText( false );
+        textEdit->setPlainText( GuiUtils::contents( m_annot ) );
+        connect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
+        textEdit->setReadOnly( false );
+    }
 }
 
 #include "annotwindow.moc"

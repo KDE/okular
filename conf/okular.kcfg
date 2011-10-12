@@ -253,7 +253,7 @@
    </choices>
   </entry>
   <entry key="ZoomMode" type="UInt" >
-    <default>2</default>
+    <default>1</default>
     <max>2</max>
   </entry>
   <entry key="ZoomFactor" type="Double" >

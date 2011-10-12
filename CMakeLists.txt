@@ -153,6 +153,7 @@ set(okularpart_SRCS
    ui/formwidgets.cpp
    ui/guiutils.cpp
    ui/ktreeviewsearchline.cpp
+   ui/latexrenderer.cpp
    ui/minibar.cpp
    ui/pageitemdelegate.cpp
    ui/pagepainter.cpp

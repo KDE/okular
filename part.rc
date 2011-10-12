@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="30">
+<kpartgui name="okular_part" version="31">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -68,6 +68,7 @@
     <Action name="mouse_zoom"/>
     <Action name="mouse_select"/>
     <Action name="mouse_textselect"/>
+    <Action name="mouse_tableselect"/>
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
     <Separator/>

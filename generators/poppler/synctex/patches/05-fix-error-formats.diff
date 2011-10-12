@@ -1,10 +1,10 @@
-Index: synctex/synctex_parser.c
-===================================================================
---- synctex.orig/synctex_parser.c	2010-05-23 19:09:29.000000000 +0200
-+++ synctex/synctex_parser.c	2010-05-23 19:10:17.000000000 +0200
-@@ -1435,7 +1435,7 @@
+diff --git a/generators/poppler/synctex/synctex_parser.c b/generators/poppler/synctex/synctex_parser.c
+index 53f462d..588f350 100644
+--- a/generators/poppler/synctex/synctex_parser.c
++++ b/generators/poppler/synctex/synctex_parser.c
+@@ -1440,7 +1440,7 @@ next_character:
  		len = SYNCTEX_END - SYNCTEX_CUR;
- 		if(current_size>UINT_MAX-len-1) {
+ 		if (current_size>UINT_MAX-len-1) {
  			/*  We have reached the limit. */
 -			_synctex_error("limit reached (missing %i).",current_size-(UINT_MAX-len-1));
 +			_synctex_error("limit reached (missing %lu).",current_size-(UINT_MAX-len-1));

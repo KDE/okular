@@ -18,6 +18,10 @@ namespace Okular {
 class Annotation;
 }
 
+namespace GuiUtils {
+class LatexRenderer;
+}
+
 class QTextEdit;
 class MovableTitle;
 
@@ -26,6 +30,7 @@ class AnnotWindow : public QFrame
     Q_OBJECT
     public:
         AnnotWindow( QWidget * parent, Okular::Annotation * annot);
+        ~AnnotWindow();
 
         void reloadInfo();
         
@@ -33,6 +38,7 @@ class AnnotWindow : public QFrame
         MovableTitle * m_title;
         QTextEdit *textEdit;
         QColor m_color;
+        GuiUtils::LatexRenderer *m_latexRenderer;
     public:
         Okular::Annotation* m_annot;
 
@@ -43,6 +49,10 @@ class AnnotWindow : public QFrame
     private slots:
         void slotOptionBtn();
         void slotsaveWindowText();
+        void renderLatex( bool render );
+
+    signals:
+        void containsLatex( bool );
 };
 
 

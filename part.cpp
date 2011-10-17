@@ -490,9 +490,6 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     if( m_embedMode == ViewerWidgetMode ) {
         m_bottomBar->setVisible(false);
-        m_pageView->setShowMoveDestinationGraphically(true);
-        // FIXME: this should probably be implemented in such a way that there is no
-        //        need to change the configuration settings
         Okular::Settings::setViewMode(Okular::Settings::EnumViewMode::Single);
         Okular::Settings::setViewContinuous(true);
     }
@@ -847,6 +844,16 @@ void Part::setWatchFileModeEnabled(bool b)
         m_dirtyHandler->stop();
         m_watcher->stopScan();
     }
+}
+
+void Part::setShowSourceLocationsGraphically(bool b)
+{
+    if( b == Okular::Settings::showSourceLocationsGraphically() )
+    {
+        return;
+    }
+    Okular::Settings::setShowSourceLocationsGraphically(b);
+    m_pageView->repaint();
 }
 
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool &handled)

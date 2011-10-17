@@ -99,8 +99,6 @@ Q_OBJECT
         QPoint contentAreaPosition() const;
         QPoint contentAreaPoint( const QPoint & pos ) const;
 
-        void setShowMoveDestinationGraphically(bool b);
-
     public slots:
         void errorMessage( const QString & message, int duration = -1 )
         {

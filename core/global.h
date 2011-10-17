@@ -87,6 +87,15 @@ enum EmbedMode
     ViewerWidgetMode,        // the part acts as a widget that can display all kinds of documents
 };
 
+/**
+ * Describes the type of viewport objects
+ */
+enum ViewportType
+{
+    NormalViewport,            ///<
+    SourceLocationViewport      ///< Viewport position that corresponds to a source location
+};
+
 }
 
 #endif

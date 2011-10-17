@@ -261,6 +261,9 @@
     <min>0.1</min>
     <max>4.0</max>
   </entry>
+  <entry key="ShowSourceLocationsGraphically" type="Bool" >
+   <default>false</default>
+  </entry>
  </group>
  <group name="Identity" >
   <entry key="IdentityAuthor" type="String">

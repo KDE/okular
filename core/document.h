@@ -776,7 +776,7 @@ class OKULAR_EXPORT DocumentViewport
         /**
          * Creates a new viewport from the given xml @p description.
          */
-        DocumentViewport( const QString &description );
+        DocumentViewport( const QString &description, Okular::ViewportType type = Okular::NormalViewport );
 
         /**
          * Returns the viewport as xml description.
@@ -826,6 +826,11 @@ class OKULAR_EXPORT DocumentViewport
             bool width;
             bool height;
         } autoFit;
+
+        /**
+         * Describes the type of this viewport.
+         */
+        Okular::ViewportType type;
 };
 
 /**

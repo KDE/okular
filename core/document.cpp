@@ -66,6 +66,7 @@
 #include "interfaces/printinterface.h"
 #include "interfaces/saveinterface.h"
 #include "observer.h"
+#include "misc.h"
 #include "page.h"
 #include "page_p.h"
 #include "pagecontroller_p.h"
@@ -756,7 +757,7 @@ DocumentViewport DocumentPrivate::nextDocumentViewport() const
     DocumentViewport ret = m_nextDocumentViewport;
     if ( !m_nextDocumentDestination.isEmpty() && m_generator )
     {
-        DocumentViewport vp( m_generator->metaData( "NamedViewport", m_nextDocumentDestination ).toString() );
+        DocumentViewport vp( m_generator->metaData( "NamedViewport", m_nextDocumentDestination ).toString(), Okular::SourceLocationViewport );
         if ( vp.isValid() )
         {
             ret = vp;
@@ -3740,8 +3741,8 @@ DocumentViewport::DocumentViewport( int n )
     autoFit.height = false;
 }
 
-DocumentViewport::DocumentViewport( const QString & xmlDesc )
-    : pageNumber( -1 )
+DocumentViewport::DocumentViewport( const QString & xmlDesc, ViewportType type )
+    : pageNumber( -1 ), type( type )
 {
     // default settings (maybe overridden below)
     rePos.enabled = false;

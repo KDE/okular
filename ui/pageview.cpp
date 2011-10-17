@@ -68,6 +68,7 @@
 #include "tts.h"
 #include "videowidget.h"
 #include "core/action.h"
+#include "core/area.h"
 #include "core/document.h"
 #include "core/form.h"
 #include "core/page.h"
@@ -142,6 +143,9 @@ public:
     bool viewportMoveActive;
     QTime viewportMoveTime;
     QPoint viewportMoveDest;
+    int lastSourceLocationViewportPageNumber;
+    double lastSourceLocationViewportNormalizedX;
+    double lastSourceLocationViewportNormalizedY;
     QTimer * viewportMoveTimer;
     // auto scroll
     int scrollIncrement;
@@ -200,8 +204,6 @@ public:
     QActionGroup * mouseModeActionGroup;
 
     int setting_viewCols;
-
-    bool showMoveDestinationGraphically;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -307,7 +309,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->mouseModeActionGroup = 0;
-    d->showMoveDestinationGraphically = false;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -722,11 +723,6 @@ QPoint PageView::contentAreaPoint( const QPoint & pos ) const
     return pos + contentAreaPosition();
 }
 
-void PageView::setShowMoveDestinationGraphically(bool b)
-{
-    d->showMoveDestinationGraphically = b;
-}
-
 QString PageViewPrivate::selectedText() const
 {
     if ( pagesWithTextSelection.isEmpty() )
@@ -954,6 +950,10 @@ void PageView::notifyViewportChanged( bool smoothMove )
 #ifdef PAGEVIEW_DEBUG
     kDebug() << "document viewport changed";
 #endif
+    if( vp.type == Okular::SourceLocationViewport )
+    {
+        d->lastSourceLocationViewportPageNumber = vp.pageNumber;
+    }
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
     if ( !Okular::Settings::viewContinuous() || d->dirtyLayout )
@@ -981,6 +981,12 @@ void PageView::notifyViewportChanged( bool smoothMove )
     {
         newCenterX += r.width() / 2;
         newCenterY += viewport()->height() / 2 - 10;
+    }
+
+    if( vp.type == Okular::SourceLocationViewport )
+    {
+        d->lastSourceLocationViewportNormalizedX = normClamp( vp.rePos.normalizedX, 0.5 );
+        d->lastSourceLocationViewportNormalizedY = normClamp( vp.rePos.normalizedY, 0.0 );
     }
 
     // if smooth movement requested, setup parameters and start it
@@ -1333,11 +1339,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     pixmapPainter.setPen( Qt::blue );
                     pixmapPainter.drawRect( contentsRect );
                 }
-                if ( d->showMoveDestinationGraphically )
-                {
-                    pixmapPainter.setPen( Qt::red );
-                    pixmapPainter.drawLine(0, d->viewportMoveDest.y(), viewport()->width(), d->viewportMoveDest.y());
-                }
+
                 // finish painting and draw contents
                 pixmapPainter.end();
                 screenPainter.drawPixmap( contentsRect.left(), contentsRect.top(), doubleBuffer );
@@ -1375,11 +1377,6 @@ void PageView::paintEvent(QPaintEvent *pe)
                 {
                     screenPainter.setPen( Qt::red );
                     screenPainter.drawRect( contentsRect );
-                }
-                if ( d->showMoveDestinationGraphically )
-                {
-                    screenPainter.setPen( Qt::red );
-                    screenPainter.drawLine(0, d->viewportMoveDest.y(), viewport()->width(), d->viewportMoveDest.y());
                 }
             }
         }
@@ -2866,11 +2863,18 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
+            Okular::NormalizedPoint *viewPortPoint = NULL;
+            Okular::NormalizedPoint point( d->lastSourceLocationViewportNormalizedX, d->lastSourceLocationViewportNormalizedY );
+            if( Okular::Settings::showSourceLocationsGraphically()
+                && item->pageNumber() ==  d->lastSourceLocationViewportPageNumber )
+            {
+                viewPortPoint = &point;
+            }
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
             PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
-                item->crop() );
+                item->crop(), viewPortPoint );
         }
 
         // remove painted area from 'remainingArea' and restore painter

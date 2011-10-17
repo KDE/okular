@@ -49,7 +49,7 @@ class PagePainter
         // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
         static void paintCroppedPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits,
-            const Okular::NormalizedRect & crop );
+            const Okular::NormalizedRect & crop, Okular::NormalizedPoint *viewPortPoint );
 
     private:
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );

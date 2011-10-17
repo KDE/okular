@@ -106,6 +106,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         void showSourceLocation(const QString& fileName, int line, int column);
         void setWatchFileModeEnabled(bool b);
+        void setShowSourceLocationsGraphically(bool b);
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);

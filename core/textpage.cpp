@@ -1915,30 +1915,30 @@ void TextPagePrivate::breakWordIntoCharacters(const QMap<int, RegionText> &word_
 /**
  * Correct the textOrder, all layout recognition works here
  */
-void TextPage::correctTextOrder()
+void TextPagePrivate::correctTextOrder()
 {
     /**
      * Remove spaces from the text
      */
-    d->removeSpace();
+    removeSpace();
 
     /**
      * Construct words from characters
      */
-    const QMap<int, RegionText> word_chars_map = d->makeWordFromCharacters();
+    const QMap<int, RegionText> word_chars_map = makeWordFromCharacters();
 
     SortedTextList lines;
     LineRect line_rects;
     /**
      * Create arbitrary lines from words and sort them according to X and Y position
      */
-    d->makeAndSortLines(d->m_words, &lines, &line_rects);
+    makeAndSortLines(m_words, &lines, &line_rects);
 
     /**
      * Calculate statistical information which will be needed later for algorithm implementation
      */
     int word_spacing, line_spacing, col_spacing;
-    d->calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &col_spacing);
+    calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &col_spacing);
     for(int i = 0 ; i < lines.length() ; i++)
     {
        qDeleteAll(lines.at(i));
@@ -1948,15 +1948,15 @@ void TextPage::correctTextOrder()
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    RegionTextList tree = d->XYCutForBoundingBoxes(word_spacing * 2, line_spacing * 2);
+    const RegionTextList tree = XYCutForBoundingBoxes(word_spacing * 2, line_spacing * 2);
 
     /**
      * Add spaces to the word
      */
-    d->addNecessarySpace(tree);
+    addNecessarySpace(tree);
 
     /**
      * Break the words into characters
      */
-    d->breakWordIntoCharacters(word_chars_map);
+    breakWordIntoCharacters(word_chars_map);
 }

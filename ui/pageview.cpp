@@ -859,6 +859,9 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         // update the mouse cursor when closing because we may have close through a link and
         // want the cursor to come back to the normal cursor
         updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
+        // then, make the message window and scrollbars disappear, which triggers a repaint
+        d->messageWindow->hide();
+        resizeContentArea( QSize( 0,0 ) );
     }
 
     // OSD to display pages

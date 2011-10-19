@@ -1117,17 +1117,13 @@ void PDFGenerator::addPages( KConfigDialog * )
 bool PDFGenerator::setDocumentRenderHints()
 {
     bool changed = false;
-    static Poppler::Document::RenderHints oldhints = 0;
+    const Poppler::Document::RenderHints oldhints = pdfdoc->renderHints();
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
     bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
     if (newhint != (oldhints & hintflag)) \
     { \
         pdfdoc->setRenderHint(hintflag, newhint); \
-        if (newhint) \
-            oldhints |= hintflag; \
-        else \
-            oldhints &= ~(int)hintflag; \
         changed = true; \
     } \
 }

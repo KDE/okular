@@ -33,16 +33,16 @@ class OKULAR_EXPORT ViewerInterface
          */
         virtual void showSourceLocation(const QString& fileName, int line, int column) = 0;
 
+        /**
+        * Allows to control whether source locations are shown graphically, or not.
+        **/
+        virtual void setShowSourceLocationsGraphically(bool b) = 0;
 
         /**
          * Allows to enable or disable the watch file mode
          */
         virtual void setWatchFileModeEnabled(bool b) = 0;
 
-       /**
-        * Allows to control whether source locations are shown graphically, or not.
-        **/
-        virtual void setShowSourceLocationsGraphically(bool b) = 0;
 
         // SIGNALS
         /**

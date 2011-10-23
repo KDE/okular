@@ -67,6 +67,12 @@ class TextPagePrivate
         TextList duplicateWordList() const;
 
         /**
+         * Make necessary modifications in the TextList to make the text order correct, so
+         * that textselection works fine
+         */
+        void correctTextOrder();
+
+        /**
          * Remove odd spaces which are much bigger than normal spaces from m_words
          */
         void removeSpace();

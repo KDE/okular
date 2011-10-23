@@ -42,6 +42,7 @@ class KSelectAction;
 class KAboutData;
 class KTemporaryFile;
 class KAction;
+namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
 class ThumbnailList;
@@ -135,6 +136,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool openFile();
         bool openUrl(const KUrl &url);
         bool closeUrl();
+        void guiActivateEvent(KParts::GUIActivateEvent *event);
 
     protected slots:
         // connected to actions

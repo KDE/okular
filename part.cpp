@@ -1327,6 +1327,12 @@ bool Part::closeUrl()
     return r;
 }
 
+void Part::guiActivateEvent(KParts::GUIActivateEvent *event)
+{
+    updateViewActions();
+
+    KParts::ReadOnlyPart::guiActivateEvent(event);
+}
 
 void Part::close()
 {
@@ -1531,10 +1537,10 @@ void Part::updateViewActions()
     if ( factory() )
     {
         QWidget *menu = factory()->container("menu_okular_part_viewer", this);
-        if( menu )
-        {
-            menu->setEnabled( opened );
-        }
+        if (menu) menu->setEnabled( opened );
+
+        menu = factory()->container("view_orientation", this);
+        if (menu) menu->setEnabled( opened );
     }
     emit(viewerMenuStateChange( opened ));
 

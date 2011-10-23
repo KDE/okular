@@ -215,10 +215,12 @@ static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent
     {
         if ( arg.type() == QVariant::String )
         {
-            if ( arg.toString() == QLatin1String( "Print/Preview" ) ) {
+            if ( arg.toString() == QLatin1String( "Print/Preview" ) )
+            {
                 return Okular::PrintPreviewMode;
             }
-            else if ( arg.toString() == QLatin1String( "ViewerWidget" ) ) {
+            else if ( arg.toString() == QLatin1String( "ViewerWidget" ) )
+            {
                 return Okular::ViewerWidgetMode;
             }
         }
@@ -242,7 +244,7 @@ static QString detectConfigFileName( const QVariantList &args )
         }
     }
 
-    return "";
+    return QString();
 }
 
 #undef OKULAR_KEEP_FILE_OPEN
@@ -267,7 +269,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 {
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
-    if( configFileName.isEmpty())
+    if ( configFileName.isEmpty() )
     {
         configFileName = KStandardDirs::locateLocal( "config", "okularpartrc" );
         // first necessary step: copy the configuration from kpdf, if available
@@ -396,7 +398,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(formFieldChanged(Okular::FormField*)), m_pageView, SLOT(slotFormFieldChanged(Okular::FormField*)) );
-    connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool&)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool&)) );
+    connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -565,9 +567,9 @@ void Part::setupViewerActions()
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
     connect( m_nextBookmark, SIGNAL(triggered()), this, SLOT(slotNextBookmark()) );
 
-    m_copy = NULL;
+    m_copy = 0;
 
-    m_selectAll = NULL;
+    m_selectAll = 0;
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
@@ -582,8 +584,8 @@ void Part::setupViewerActions()
     m_findPrev->setShortcut( QKeySequence() );
     m_findPrev->setEnabled( false );
 
-    m_saveCopyAs = NULL;
-    m_saveAs = NULL;
+    m_saveCopyAs = 0;
+    m_saveAs = 0;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
     if ( m_embedMode == NativeShellMode )
@@ -602,7 +604,8 @@ void Part::setupViewerActions()
     {
         genPrefs->setText( i18n( "Configure Viewer Backends..." ) );
     }
-    else {
+    else
+    {
         genPrefs->setText( i18n( "Configure Backends..." ) );
     }
     genPrefs->setIcon( KIcon( "configure" ) );
@@ -612,8 +615,8 @@ void Part::setupViewerActions()
     m_printPreview = KStandardAction::printPreview( this, SLOT(slotPrintPreview()), ac );
     m_printPreview->setEnabled( false );
 
-    m_showLeftPanel = NULL;
-    m_showBottomBar = NULL;
+    m_showLeftPanel = 0;
+    m_showBottomBar = 0;
 
     m_showProperties = ac->addAction("properties");
     m_showProperties->setText(i18n("&Properties"));
@@ -621,13 +624,13 @@ void Part::setupViewerActions()
     connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
     m_showProperties->setEnabled( false );
 
-    m_showEmbeddedFiles = NULL;
-    m_showPresentation = NULL;
+    m_showEmbeddedFiles = 0;
+    m_showPresentation = 0;
 
-    m_exportAs = NULL;
-    m_exportAsMenu = NULL;
-    m_exportAsText = NULL;
-    m_exportAsDocArchive = NULL;
+    m_exportAs = 0;
+    m_exportAsMenu = 0;
+    m_exportAsText = 0;
+    m_exportAsDocArchive = 0;
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About Backend"));
@@ -853,11 +856,11 @@ void Part::setShowSourceLocationsGraphically(bool b)
     m_pageView->repaint();
 }
 
-void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool &handled)
+void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)
 {
     emit(openSourceReference(absFileName, line, col));
     if ( m_embedMode == Okular::ViewerWidgetMode ) {
-        handled = true;
+        *handled = true;
     }
 }
 

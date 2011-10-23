@@ -2902,7 +2902,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
-            Okular::NormalizedPoint *viewPortPoint = NULL;
+            Okular::NormalizedPoint *viewPortPoint = 0;
             Okular::NormalizedPoint point( d->lastSourceLocationViewportNormalizedX, d->lastSourceLocationViewportNormalizedY );
             if( Okular::Settings::showSourceLocationsGraphically()
                 && item->pageNumber() ==  d->lastSourceLocationViewportPageNumber )

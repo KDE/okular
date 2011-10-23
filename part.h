@@ -288,7 +288,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private slots:
         void slotGeneratorPreferences();
-        void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool &handled);
+        void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };
 
 }

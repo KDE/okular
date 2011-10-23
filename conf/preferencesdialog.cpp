@@ -27,9 +27,9 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_general = new DlgGeneral( this, embedMode );
     m_performance = new DlgPerformance( this );
     m_accessibility = new DlgAccessibility( this );
-    m_presentation = NULL;
-    m_identity = NULL;
-    m_editor = NULL;
+    m_presentation = 0;
+    m_identity = 0;
+    m_editor = 0;
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     m_debug = new DlgDebug( this );
 #endif

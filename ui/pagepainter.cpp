@@ -51,7 +51,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
         paintCroppedPageOnPainter( destPainter, page, pixID, flags, scaledWidth, scaledHeight, limits,
-                                   Okular::NormalizedRect( 0, 0, 1, 1 ), NULL );
+                                   Okular::NormalizedRect( 0, 0, 1, 1 ), 0 );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,

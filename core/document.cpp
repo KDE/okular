@@ -3075,7 +3075,7 @@ void Document::processSourceReference( const SourceReference * ref )
     }
 
     bool handled = false;
-    emit(sourceReferenceActivated(absFileName, ref->row(), ref->column(), handled));
+    emit sourceReferenceActivated(absFileName, ref->row(), ref->column(), &handled);
     if(handled) {
         return;
     }

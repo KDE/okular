@@ -488,11 +488,8 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     // ensure history actions are in the correct state
     updateViewActions();
 
-    if( m_embedMode == ViewerWidgetMode ) {
-        m_bottomBar->setVisible(false);
-        Okular::Settings::setViewMode(Okular::Settings::EnumViewMode::Single);
-        Okular::Settings::setViewContinuous(true);
-    }
+    // also update the state of the actions in the page view
+    m_pageView->updateActionState( false, false, false );
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );
@@ -1530,6 +1527,17 @@ void Part::updateViewActions()
         if (m_copy) m_copy->setEnabled( false );
         if (m_selectAll) m_selectAll->setEnabled( false );
     }
+
+    if ( factory() )
+    {
+        QWidget *menu = factory()->container("menu_okular_part_viewer", this);
+        if( menu )
+        {
+            menu->setEnabled( opened );
+        }
+    }
+    emit(viewerMenuStateChange( opened ));
+
     updateBookmarksActions();
 }
 

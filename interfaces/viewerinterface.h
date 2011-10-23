@@ -50,6 +50,12 @@ class OKULAR_EXPORT ViewerInterface
          * reference in the currently displayed document.
          */
         void openSourceReference(const QString& absFileName, int line, int column);
+
+        /**
+         * The signal 'viewerMenuStateChange' is emitted whenever the state of the menu
+         * 'menu_okular_part_viewer' defined in 'part-viewermode.rc' has changed.
+         */
+        void viewerMenuStateChange(bool enabled);
 };
 
 }

@@ -873,6 +873,16 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             QString(),
             PageViewMessage::Info, 4000 );
 
+    updateActionState( haspages, documentChanged, hasformwidgets );
+
+    qDeleteAll( d->m_annowindows );
+    d->m_annowindows.clear();
+
+    selectionClear();
+}
+
+void PageView::updateActionState( bool haspages, bool documentChanged, bool hasformwidgets )
+{
     if ( d->aPageSizes )
     { // may be null if dummy mode is on
         bool pageSizes = d->document->supportsPageSizes();
@@ -888,6 +898,36 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             d->aPageSizes->setItems( items );
         }
     }
+
+    if ( d->aTrimMargins )
+        d->aTrimMargins->setEnabled( haspages );
+
+    if ( d->aViewMode )
+        d->aViewMode->setEnabled( haspages );
+
+    if ( d->aViewContinuous )
+        d->aViewContinuous->setEnabled( haspages );
+
+    if ( d->aZoomFitWidth )
+        d->aZoomFitWidth->setEnabled( haspages );
+    if ( d->aZoomFitPage )
+        d->aZoomFitPage->setEnabled( haspages );
+    if ( d->aZoomFitText )
+        d->aZoomFitText->setEnabled( haspages );
+
+    if ( d->aZoom )
+    {
+        d->aZoom->selectableActionGroup()->setEnabled( haspages );
+        d->aZoom->setEnabled( haspages );
+    }
+    if ( d->aZoomIn )
+        d->aZoomIn->setEnabled( haspages );
+    if ( d->aZoomOut )
+        d->aZoomOut->setEnabled( haspages );
+
+    if ( d->mouseModeActionGroup )
+        d->mouseModeActionGroup->setEnabled( haspages );
+
     if ( d->aRotateClockwise )
         d->aRotateClockwise->setEnabled( haspages );
     if ( d->aRotateCounterClockwise )
@@ -919,10 +959,6 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
-    qDeleteAll( d->m_annowindows );
-    d->m_annowindows.clear();
-
-    selectionClear();
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
@@ -3240,6 +3276,8 @@ void PageView::updateZoomText()
     else if ( d->zoomMode == ZoomFitText )
         selIdx = 2;
     d->aZoom->setCurrentItem( selIdx );
+    d->aZoom->setEnabled(d->items.size() > 0);
+    d->aZoom->selectableActionGroup()->setEnabled( d->items.size() > 0 );
 }
 
 void PageView::updateCursor( const QPoint &p )
@@ -3843,6 +3881,9 @@ void PageView::slotConfigureWebShortcuts()
 
 void PageView::slotZoom()
 {
+    if ( !d->aZoom->selectableActionGroup()->isEnabled() )
+        return;
+
     setFocus();
     updateZoom( ZoomFixed );
 }

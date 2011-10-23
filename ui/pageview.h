@@ -64,6 +64,7 @@ Q_OBJECT
         void setupBaseActions( KActionCollection * collection );
         void setupViewerActions( KActionCollection * collection );
         void setupActions( KActionCollection * collection );
+        void updateActionState( bool docHasPages, bool docChanged, bool docHasFormWidgets );
 
         // misc methods (from RMB menu/children)
         bool canFitPageWidth() const;

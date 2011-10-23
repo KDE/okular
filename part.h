@@ -128,6 +128,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     signals:
         void enablePrintAction(bool enable);
         void openSourceReference(const QString& absFileName, int line, int column);
+        void viewerMenuStateChange(bool enabled);
 
     protected:
         // reimplemented from KParts::ReadOnlyPart

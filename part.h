@@ -191,6 +191,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private:
         void setupViewerActions();
+        void setViewerShortcuts();
         void setupActions();
 
         void setupPrint( QPrinter &printer );

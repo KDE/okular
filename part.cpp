@@ -446,6 +446,10 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     {
         setupActions();
     }
+    else
+    {
+        setViewerShortcuts();
+    }
 
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
@@ -508,7 +512,7 @@ void Part::setupViewerActions()
 
     // Page Traversal actions
     m_gotoPage = KStandardAction::gotoPage( this, SLOT(slotGoToPage()), ac );
-    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G) );
+    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
     // dirty way to activate gotopage when pressing miniBar's button
     connect( m_miniBar, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
 
@@ -538,20 +542,17 @@ void Part::setupViewerActions()
     ac->addAction("first_page", m_beginningOfDocument);
     m_beginningOfDocument->setText(i18n( "Beginning of the document"));
     m_beginningOfDocument->setWhatsThis( i18n( "Moves to the beginning of the document" ) );
-    m_beginningOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_Home ) );
 
     m_endOfDocument = KStandardAction::lastPage( this, SLOT(slotGotoLast()), ac );
     ac->addAction("last_page",m_endOfDocument);
     m_endOfDocument->setText(i18n( "End of the document"));
     m_endOfDocument->setWhatsThis( i18n( "Moves to the end of the document" ) );
-    m_endOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_End ) );
 
     // we do not want back and next in history in the dummy mode
     m_historyBack = 0;
     m_historyNext = 0;
 
     m_addBookmark = KStandardAction::addBookmark( this, SLOT(slotAddBookmark()), ac );
-    m_addBookmark->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_B ) );
     m_addBookmarkText = m_addBookmark->text();
     m_addBookmarkIcon = m_addBookmark->icon();
 
@@ -573,15 +574,15 @@ void Part::setupViewerActions()
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
-    m_find->setShortcut( QKeySequence() );
+    QList<QKeySequence> s = m_find->shortcuts();
+    s.append( QKeySequence( Qt::Key_Slash ) );
+    m_find->setShortcuts( s );
     m_find->setEnabled( false );
 
     m_findNext = KStandardAction::findNext( this, SLOT(slotFindNext()), ac);
-    m_findNext->setShortcut( QKeySequence() );
     m_findNext->setEnabled( false );
 
     m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
-    m_findPrev->setShortcut( QKeySequence() );
     m_findPrev->setEnabled( false );
 
     m_saveCopyAs = 0;
@@ -642,7 +643,7 @@ void Part::setupViewerActions()
     reload->setIcon( KIcon( "view-refresh" ) );
     reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
     connect( reload, SIGNAL(triggered()), this, SLOT(slotReload()) );
-    reload->setShortcut( QKeySequence( Qt::ALT + Qt::Key_F5 ) );
+    reload->setShortcut( KStandardShortcut::reload() );
     m_reload = reload;
 
     m_closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
@@ -651,30 +652,28 @@ void Part::setupViewerActions()
     widget()->addAction(m_closeFindBar);
 }
 
-void Part::setupActions()
+void Part::setViewerShortcuts()
 {
     KActionCollection * ac = actionCollection();
 
-    // we change some shortcuts back to their defaults (which were changed in 'setupViewerActions')
-    if ( m_embedMode != ViewerWidgetMode )
-    {
-        m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
-        m_find->setShortcut( KStandardShortcut::find() );
-        QList<QKeySequence> s = m_find->shortcuts();
-        s.append( QKeySequence( Qt::Key_Slash ) );
-        m_find->setShortcuts( s );
-        m_findNext->setShortcut( KStandardShortcut::findNext() );
-        m_findNext->setShortcut( KStandardShortcut::findPrev() );
+    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G) );
+    m_find->setShortcuts( QList<QKeySequence>() );
 
-        m_addBookmark->setShortcut( KStandardShortcut::addBookmark() );
-        m_beginningOfDocument->setShortcut( KStandardShortcut::begin() );
-        m_endOfDocument->setShortcut( KStandardShortcut::end() );
+    m_findNext->setShortcut( QKeySequence() );
+    m_findPrev->setShortcut( QKeySequence() );
 
-        KAction *action = static_cast<KAction*>(ac->action("close_find_bar"));
-        if( action ) action->setShortcut( QKeySequence( Qt::Key_Escape ) );
-        action = static_cast<KAction*>(ac->action("file_reload"));
-        if( action ) action->setShortcut( KStandardShortcut::reload() );
-    }
+    m_addBookmark->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_B ) );
+
+    m_beginningOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_Home ) );
+    m_endOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_End ) );
+
+    KAction *action = static_cast<KAction*>( ac->action( "file_reload" ) );
+    if( action )  action->setShortcuts( QList<QKeySequence>() << QKeySequence( Qt::ALT + Qt::Key_F5 ) );
+}
+
+void Part::setupActions()
+{
+    KActionCollection * ac = actionCollection();
 
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 

@@ -63,6 +63,7 @@
 #endif
 #include <kdeprintdialog.h>
 #include <kprintpreview.h>
+#include <kbookmarkmenu.h>
 
 // local includes
 #include "aboutdata.h"
@@ -462,7 +463,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_renameBookmark->setText(i18n( "Rename Bookmark" ));
     m_renameBookmark->setIcon(KIcon( "edit-rename" ));
     m_renameBookmark->setWhatsThis( i18n( "Rename the current page bookmark" ) );
-    connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameBookmark()) );
+    connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameCurrentPageBookmark()) );
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
@@ -1541,18 +1542,52 @@ void Part::slotAddBookmark()
     }
 }
 
-void Part::slotRenameBookmark()
+void Part::slotRenameBookmark( int page )
 {
-    const uint current = m_document->currentPage();
-    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( current ));
-    if ( m_document->bookmarkManager()->isBookmarked( current ) )
+    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( page ));
+    if ( m_document->bookmarkManager()->isBookmarked( page ) )
     {
-        KBookmark bookmark = m_document->bookmarkManager()->bookmark( current );
+        KBookmark bookmark = m_document->bookmarkManager()->bookmark( page );
         const QString newName = KInputDialog::getText( i18n( "Rename Bookmark" ), i18n( "Enter the new name of the bookmark:" ), bookmark.fullText(), 0, widget());
         if (!newName.isEmpty())
         {
             m_document->bookmarkManager()->renameBookmark(&bookmark, newName);
         }
+    }
+}
+
+void Part::slotRenameBookmarkFromMenu()
+{
+    QAction *action = dynamic_cast<QAction *>(sender());
+    Q_ASSERT( action );
+    if ( action )
+    {
+        slotRenameBookmark( action->data().toInt() );
+    }
+}
+
+void Part::slotRenameCurrentPageBookmark()
+{
+    slotRenameBookmark( m_document->currentPage() );
+}
+
+void Part::slotAboutToShowContextMenu(KMenu * /*menu*/, QAction *action, QMenu *contextMenu)
+{
+    const QList<QAction*> actions = contextMenu->findChildren<QAction*>("OkularPrivateRenameBookmarkActions");
+    foreach(QAction *a, actions)
+    {
+        contextMenu->removeAction(a);
+        delete a;
+    }
+
+    KBookmarkAction *ba = dynamic_cast<KBookmarkAction*>(action);
+    if (ba != NULL)
+    {
+        QAction *separatorAction = contextMenu->addSeparator();
+        separatorAction->setObjectName("OkularPrivateRenameBookmarkActions");
+        QAction *renameAction = contextMenu->addAction( KIcon( "edit-rename" ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
+        renameAction->setData(ba->property("pageNumber").toInt() - 1); // These page numbers are indexed starting on 1
+        renameAction->setObjectName("OkularPrivateRenameBookmarkActions");
     }
 }
 
@@ -1851,7 +1886,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 
         if (factory())
         {
-            QList<KXMLGUIClient*> clients(factory()->clients());
+            const QList<KXMLGUIClient*> clients(factory()->clients());
             for(int i = 0 ; (!m_showMenuBarAction || !m_showFullScreenAction) && i < clients.size(); ++i)
             {
                 ac = clients.at(i)->actionCollection();
@@ -2310,6 +2345,23 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         m_bookmarkActions.append( a );
     }
     plugActionList( "bookmarks_currentdocument", m_bookmarkActions );
+    
+    if (factory())
+    {
+        const QList<KXMLGUIClient*> clients(factory()->clients());
+        bool containerFound = false;
+        for (int i = 0; !containerFound && i < clients.size(); ++i)
+        {
+            QWidget *container = factory()->container("bookmarks", clients[i]);
+            if (container && container->actions().contains(m_bookmarkActions.first()))
+            {
+                Q_ASSERT(dynamic_cast<KMenu*>(container));
+                disconnect(container, 0, this, 0);
+                connect(container, SIGNAL(aboutToShowContextMenu(KMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(KMenu*,QAction*,QMenu*)));
+                containerFound = true;
+            }
+        }
+    }
 
     m_prevBookmark->setEnabled( havebookmarks );
     m_nextBookmark->setEnabled( havebookmarks );

@@ -37,19 +37,16 @@ class OkularBookmarkAction : public KBookmarkAction
     public:
         OkularBookmarkAction( const Okular::DocumentViewport& vp, const KBookmark& bk, KBookmarkOwner* owner, QObject *parent )
             : KBookmarkAction( bk, owner, parent )
-            , m_pageNumber( vp.pageNumber + 1 )
         {
             if ( vp.isValid() )
                 setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
+            setProperty("pageNumber", vp.pageNumber + 1);
         }
-
+        
         inline int pageNumber() const
         {
-            return m_pageNumber;
+            return property("pageNumber").toInt();
         }
-
-    private:
-        const int m_pageNumber;
 };
 
 inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )

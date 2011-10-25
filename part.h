@@ -138,6 +138,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotHistoryBack();
         void slotHistoryNext();
         void slotAddBookmark();
+        void slotRenameBookmark();
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
@@ -234,6 +235,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_historyBack;
         KAction *m_historyNext;
         KAction *m_addBookmark;
+        KAction *m_renameBookmark;
         KAction *m_prevBookmark;
         KAction *m_nextBookmark;
         KAction *m_copy;

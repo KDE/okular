@@ -41,6 +41,7 @@
 #include <kstandardaction.h>
 #include <kpluginfactory.h>
 #include <kfiledialog.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
@@ -456,6 +457,12 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_addBookmark = KStandardAction::addBookmark( this, SLOT(slotAddBookmark()), ac );
     m_addBookmarkText = m_addBookmark->text();
     m_addBookmarkIcon = m_addBookmark->icon();
+
+    m_renameBookmark = ac->addAction("rename_bookmark");
+    m_renameBookmark->setText(i18n( "Rename Bookmark" ));
+    m_renameBookmark->setIcon(KIcon( "edit-rename" ));
+    m_renameBookmark->setWhatsThis( i18n( "Rename the current page bookmark" ) );
+    connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameBookmark()) );
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
@@ -1377,11 +1384,13 @@ void Part::updateBookmarksActions()
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
             m_addBookmark->setIcon( KIcon( "edit-delete-bookmark" ) );
+            m_renameBookmark->setEnabled( true );
         }
         else
         {
             m_addBookmark->setText( m_addBookmarkText );
             m_addBookmark->setIcon( m_addBookmarkIcon );
+            m_renameBookmark->setEnabled( false );
         }
     }
     else
@@ -1389,6 +1398,7 @@ void Part::updateBookmarksActions()
         m_addBookmark->setEnabled( false );
         m_addBookmark->setText( m_addBookmarkText );
         m_addBookmark->setIcon( m_addBookmarkIcon );
+        m_renameBookmark->setEnabled( false );
     }
 }
 
@@ -1531,6 +1541,20 @@ void Part::slotAddBookmark()
     }
 }
 
+void Part::slotRenameBookmark()
+{
+    const uint current = m_document->currentPage();
+    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( current ));
+    if ( m_document->bookmarkManager()->isBookmarked( current ) )
+    {
+        KBookmark bookmark = m_document->bookmarkManager()->bookmark( current );
+        const QString newName = KInputDialog::getText( i18n( "Rename Bookmark" ), i18n( "Enter the new name of the bookmark:" ), bookmark.fullText(), 0, widget());
+        if (!newName.isEmpty())
+        {
+            m_document->bookmarkManager()->renameBookmark(&bookmark, newName);
+        }
+    }
+}
 
 void Part::slotPreviousBookmark()
 {

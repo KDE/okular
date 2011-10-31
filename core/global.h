@@ -78,6 +78,11 @@ enum ScriptType
     JavaScript = 0           ///< JavaScript code
 };
 
+/**
+ * Describes the possible embedding modes of the part
+ *
+ * @since 0.14 (KDE 4.8)
+ */
 enum EmbedMode
 {
     UnknownEmbedMode,

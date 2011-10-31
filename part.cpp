@@ -828,37 +828,39 @@ KUrl Part::realUrl() const
 
 void Part::showSourceLocation(const QString& fileName, int line, int column)
 {
-    QString u = "src:" + QString::number(line) + ' ' + fileName;
-    GotoAction action(QString(), u);
-    m_document->processAction(&action);
+    const QString u = QString( "src:%1 %2" ).arg( line ).arg( fileName );
+    GotoAction action( QString(), u );
+    m_document->processAction( &action );
 }
 
-void Part::setWatchFileModeEnabled(bool b)
+void Part::setWatchFileModeEnabled(bool enabled)
 {
-    if (b && m_watcher->isStopped()) {
+    if ( enabled && m_watcher->isStopped() )
+    {
         m_watcher->startScan();
     }
-    else if(!b && !m_watcher->isStopped() )
+    else if( !enabled && !m_watcher->isStopped() )
     {
         m_dirtyHandler->stop();
         m_watcher->stopScan();
     }
 }
 
-void Part::setShowSourceLocationsGraphically(bool b)
+void Part::setShowSourceLocationsGraphically(bool show)
 {
-    if( b == Okular::Settings::showSourceLocationsGraphically() )
+    if( show == Okular::Settings::showSourceLocationsGraphically() )
     {
         return;
     }
-    Okular::Settings::setShowSourceLocationsGraphically(b);
-    m_pageView->repaint();
+    Okular::Settings::setShowSourceLocationsGraphically( show );
+    m_pageView->update();
 }
 
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)
 {
-    emit(openSourceReference(absFileName, line, col));
-    if ( m_embedMode == Okular::ViewerWidgetMode ) {
+    emit openSourceReference( absFileName, line, col );
+    if ( m_embedMode == Okular::ViewerWidgetMode )
+    {
         *handled = true;
     }
 }
@@ -1544,7 +1546,7 @@ void Part::updateViewActions()
         menu = factory()->container("view_orientation", this);
         if (menu) menu->setEnabled( opened );
     }
-    emit(viewerMenuStateChange( opened ));
+    emit viewerMenuStateChange( opened );
 
     updateBookmarksActions();
 }

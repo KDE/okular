@@ -730,6 +730,16 @@ class OKULAR_EXPORT Document : public QObject
          */
         void formFieldChanged( Okular::FormField *formField );
 
+        /**
+         * This signal is emitted whenever a source reference with the given parameters has been
+         * activated.
+         *
+         * \param handled should be set to 'true' if a slot handles this source reference; the
+         *                default action to launch the configured editor will then not be performed
+         *                by the document
+         *
+         * @since 0.14 (KDE 4.8)
+         */
         void sourceReferenceActivated(const QString& absFileName, int line, int col, bool *handled);
 
     private:

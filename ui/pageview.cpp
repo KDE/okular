@@ -533,7 +533,6 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
-    Q_ASSERT( d->mouseModeActionGroup );
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aMouseTableSelect  = new KAction(KIcon( "select-table" ), i18n("T&able Selection Tool"), this);
@@ -1059,8 +1058,9 @@ void PageView::notifyViewportChanged( bool smoothMove )
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
 
-    if(viewport()) {
-        viewport()->repaint();
+    if( viewport() )
+    {
+        viewport()->update();
     }
 
     // since the page has moved below cursor, update it
@@ -3276,7 +3276,7 @@ void PageView::updateZoomText()
     else if ( d->zoomMode == ZoomFitText )
         selIdx = 2;
     d->aZoom->setCurrentItem( selIdx );
-    d->aZoom->setEnabled(d->items.size() > 0);
+    d->aZoom->setEnabled( d->items.size() > 0 );
     d->aZoom->selectableActionGroup()->setEnabled( d->items.size() > 0 );
 }
 

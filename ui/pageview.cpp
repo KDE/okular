@@ -137,6 +137,7 @@ public:
     QList<double> tableSelectionCols;
     QList<double> tableSelectionRows;
     QList<TableSelectionPart> tableSelectionParts;
+    bool tableDividersGuessed;
 
     // viewport move
     bool viewportMoveActive;
@@ -267,6 +268,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
     d->mouseAnn = 0;
+    d->tableDividersGuessed = false;
     d->viewportMoveActive = false;
     d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
@@ -1351,6 +1353,11 @@ void PageView::drawTableDividers(QPainter * screenPainter)
 {
         if (!d->tableSelectionParts.isEmpty()) {
             screenPainter->setPen( d->mouseSelectionColor.dark() );
+            if (d->tableDividersGuessed) {
+                QPen p = screenPainter->pen();
+                p.setStyle( Qt::DashLine );
+                screenPainter->setPen( p );
+            }
             foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                 QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                 selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
@@ -1484,7 +1491,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Escape:
-            selectionClear();
+            selectionClear( d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection );
             d->mousePressPos = QPoint();
             if ( d->aPrevAction )
             {
@@ -1891,6 +1898,9 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
                         if (!selectionPartRect.contains(eventPos))
                             continue;
+
+                        // At this point it's clear we're either adding or removing a divider manually, so obviously the user is happy with the guess (if any).
+                        d->tableDividersGuessed = false;
 
                         // There's probably a neat trick to finding which edge it's closest to,
                         // but this way has the advantage of simplicity.
@@ -2395,6 +2405,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
                 d->tableSelectionCols.clear();
                 d->tableSelectionRows.clear();
+                guessTableDividers();
                 viewport()->update( updatedRect );
             }
 
@@ -2530,6 +2541,114 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     // reset mouse press / 'drag start' position
     d->mousePressPos = QPoint();
+}
+
+void PageView::guessTableDividers()
+{
+    QList< QPair<double, int> > colTicks, rowTicks, colSelectionTicks, rowSelectionTicks;
+
+    foreach ( const TableSelectionPart& tsp, d->tableSelectionParts )
+    {
+        // add ticks for the edges of this area...
+        colSelectionTicks.append( qMakePair( tsp.rectInSelection.left,   +1 ) );
+        colSelectionTicks.append( qMakePair( tsp.rectInSelection.right,  -1 ) );
+        rowSelectionTicks.append( qMakePair( tsp.rectInSelection.top,    +1 ) );
+        rowSelectionTicks.append( qMakePair( tsp.rectInSelection.bottom, -1 ) );
+
+        // get the words in this part
+        Okular::RegularAreaRect rects;
+        rects.append( tsp.rectInItem );
+        const Okular::TextEntity::List words = tsp.item->page()->words( &rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour );
+
+        foreach (Okular::TextEntity *te, words)
+        {
+            if (te->text().isEmpty()) {
+                delete te;
+                continue;
+            }
+
+            Okular::NormalizedRect wordArea = *te->area();
+
+            // convert it from item coordinates to part coordinates
+            wordArea.left -= tsp.rectInItem.left;
+            wordArea.left /= (tsp.rectInItem.right - tsp.rectInItem.left);
+            wordArea.right -= tsp.rectInItem.left;
+            wordArea.right /= (tsp.rectInItem.right - tsp.rectInItem.left);
+            wordArea.top -= tsp.rectInItem.top;
+            wordArea.top /= (tsp.rectInItem.bottom - tsp.rectInItem.top);
+            wordArea.bottom -= tsp.rectInItem.top;
+            wordArea.bottom /= (tsp.rectInItem.bottom - tsp.rectInItem.top);
+
+            // convert from part coordinates to table coordinates
+            wordArea.left *= (tsp.rectInSelection.right - tsp.rectInSelection.left);
+            wordArea.left += tsp.rectInSelection.left;
+            wordArea.right *= (tsp.rectInSelection.right - tsp.rectInSelection.left);
+            wordArea.right += tsp.rectInSelection.left;
+            wordArea.top *= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
+            wordArea.top += tsp.rectInSelection.top;
+            wordArea.bottom *= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
+            wordArea.bottom += tsp.rectInSelection.top;
+
+            // add to the ticks arrays...
+            colTicks.append( qMakePair( wordArea.left,   +1) );
+            colTicks.append( qMakePair( wordArea.right,  -1) );
+            rowTicks.append( qMakePair( wordArea.top,    +1) );
+            rowTicks.append( qMakePair( wordArea.bottom, -1) );
+
+            delete te;
+        }
+    }
+
+    int tally = 0;
+
+    qSort( colSelectionTicks );
+    qSort( rowSelectionTicks );
+
+    for (int i = 0; i < colSelectionTicks.length(); ++i)
+    {
+        tally += colSelectionTicks[i].second;
+        if ( tally == 0 && i + 1 < colSelectionTicks.length() && colSelectionTicks[i+1].first != colSelectionTicks[i].first)
+        {
+            colTicks.append( qMakePair( colSelectionTicks[i].first,   +1 ) );
+            colTicks.append( qMakePair( colSelectionTicks[i+1].first, -1 ) );
+        }
+    }
+    Q_ASSERT( tally == 0 );
+
+    for (int i = 0; i < rowSelectionTicks.length(); ++i)
+    {
+        tally += rowSelectionTicks[i].second;
+        if ( tally == 0 && i + 1 < rowSelectionTicks.length() && rowSelectionTicks[i+1].first != rowSelectionTicks[i].first) {
+            rowTicks.append( qMakePair( rowSelectionTicks[i].first,   +1 ) );
+            rowTicks.append( qMakePair( rowSelectionTicks[i+1].first, -1 ) );
+        }
+    }
+    Q_ASSERT( tally == 0 );
+
+    qSort( colTicks );
+    qSort( rowTicks );
+
+    for (int i = 0; i < colTicks.length(); ++i)
+    {
+        tally += colTicks[i].second;
+        if ( tally == 0 && i + 1 < colTicks.length() && colTicks[i+1].first != colTicks[i].first)
+        {
+            d->tableSelectionCols.append( (colTicks[i].first+colTicks[i+1].first) / 2 );
+            d->tableDividersGuessed = true;
+        }
+    }
+    Q_ASSERT( tally == 0 );
+
+    for (int i = 0; i < rowTicks.length(); ++i)
+    {
+        tally += rowTicks[i].second;
+        if ( tally == 0 && i + 1 < rowTicks.length() && rowTicks[i+1].first != rowTicks[i].first)
+        {
+            d->tableSelectionRows.append( (rowTicks[i].first+rowTicks[i+1].first) / 2 );
+            d->tableDividersGuessed = true;
+        }
+    }
+    Q_ASSERT( tally == 0 );
 }
 
 void PageView::mouseDoubleClickEvent( QMouseEvent * e )
@@ -3054,18 +3173,22 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
     return selectionArea;
 }
 
-void PageView::selectionClear()
+void PageView::selectionClear(const ClearMode mode)
 {
     QRect updatedRect = d->mouseSelectionRect.normalized().adjusted( 0, 0, 1, 1 );
     d->mouseSelecting = false;
     d->mouseSelectionRect.setCoords( 0, 0, 0, 0 );
     d->tableSelectionCols.clear();
     d->tableSelectionRows.clear();
+    d->tableDividersGuessed = false;
     foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
         selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
         // should check whether this is on-screen here?
         updatedRect = updatedRect.united(selectionPartRect);
+    }
+    if ( mode != ClearOnlyDividers ) {
+        d->tableSelectionParts.clear();
     }
     d->tableSelectionParts.clear();
     updatedRect.translate( -contentAreaPosition() );

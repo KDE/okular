@@ -197,6 +197,15 @@ class OKULAR_EXPORT Page
         QString text( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
 
         /**
+         * Returns the page text (or part of it) including the bounding
+         * rectangles. Note that ownership of the contents of the returned
+         * list belongs to the caller.
+         * @see TextPage::words()
+         * @since 0.14 (KDE 4.8)
+         */
+        TextEntity::List words( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
+
+        /**
          * Returns the rectangular area of the given @p selection.
          */
         RegularAreaRect * textArea( TextSelection *selection ) const;

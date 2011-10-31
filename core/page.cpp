@@ -300,6 +300,33 @@ QString Page::text( const RegularAreaRect * area, TextPage::TextAreaInclusionBeh
     return ret;
 }
 
+TextEntity::List Page::words( const RegularAreaRect * area, TextPage::TextAreaInclusionBehaviour b ) const
+{
+    TextEntity::List ret;
+
+    if ( !d->m_text )
+        return ret;
+
+    if ( area )
+    {
+        RegularAreaRect rotatedArea = *area;
+        rotatedArea.transform( d->rotationMatrix().inverted() );
+
+        ret = d->m_text->words( &rotatedArea, b );
+    }
+    else
+        ret = d->m_text->words( 0, b );
+
+    for (int i = 0; i < ret.length(); ++i)
+    {
+        const TextEntity * orig = ret[i];
+        ret[i] = new TextEntity( orig->text(), new Okular::NormalizedRect(orig->transformedArea ( d->rotationMatrix() )) );
+        delete orig;
+    }
+
+    return ret;
+}
+
 void PagePrivate::rotateAt( Rotation orientation )
 {
     if ( orientation == m_rotation )

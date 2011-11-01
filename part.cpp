@@ -839,6 +839,7 @@ void Part::showSourceLocation(const QString& fileName, int line, int column)
     const QString u = QString( "src:%1 %2" ).arg( line ).arg( fileName );
     GotoAction action( QString(), u );
     m_document->processAction( &action );
+    m_pageView->setLastSourceLocationViewport( m_document->viewport() );
 }
 
 void Part::setWatchFileModeEnabled(bool enabled)
@@ -2423,6 +2424,9 @@ void Part::unsetDummyMode()
 
     // attach the actions of the children widgets too
     m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
+
+    // ensure history actions are in the correct state
+    updateViewActions();
 }
 
 

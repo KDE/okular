@@ -962,6 +962,21 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     }
 }
 
+void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp )
+{
+    if( vp.rePos.enabled )
+    {
+        d->lastSourceLocationViewportNormalizedX = normClamp( vp.rePos.normalizedX, 0.5 );
+        d->lastSourceLocationViewportNormalizedY = normClamp( vp.rePos.normalizedY, 0.0 );
+    }
+    else
+    {
+        d->lastSourceLocationViewportNormalizedX = 0.5;
+        d->lastSourceLocationViewportNormalizedY = 0.0;
+    }
+    d->lastSourceLocationViewportPageNumber = vp.pageNumber;
+}
+
 void PageView::notifyViewportChanged( bool smoothMove )
 {
     // if we are the one changing viewport, skip this nofity
@@ -990,10 +1005,6 @@ void PageView::notifyViewportChanged( bool smoothMove )
 #ifdef PAGEVIEW_DEBUG
     kDebug() << "document viewport changed";
 #endif
-    if( vp.type == Okular::SourceLocationViewport )
-    {
-        d->lastSourceLocationViewportPageNumber = vp.pageNumber;
-    }
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
     if ( !Okular::Settings::viewContinuous() || d->dirtyLayout )
@@ -1021,12 +1032,6 @@ void PageView::notifyViewportChanged( bool smoothMove )
     {
         newCenterX += r.width() / 2;
         newCenterY += viewport()->height() / 2 - 10;
-    }
-
-    if( vp.type == Okular::SourceLocationViewport )
-    {
-        d->lastSourceLocationViewportNormalizedX = normClamp( vp.rePos.normalizedX, 0.5 );
-        d->lastSourceLocationViewportNormalizedY = normClamp( vp.rePos.normalizedY, 0.0 );
     }
 
     // if smooth movement requested, setup parameters and start it

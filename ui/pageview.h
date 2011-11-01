@@ -60,6 +60,8 @@ Q_OBJECT
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
         enum MouseMode { MouseNormal, MouseZoom, MouseSelect, MouseImageSelect, MouseTextSelect, MouseTableSelect };
 
+        enum ClearMode { ClearAllSelection, ClearOnlyDividers };
+
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );
         void setupViewerActions( KActionCollection * collection );
@@ -161,8 +163,9 @@ Q_OBJECT
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
         void selectionEndPoint( const QPoint & pos );
-        void selectionClear();
+        void selectionClear( const ClearMode mode = ClearAllSelection );
         void drawTableDividers(QPainter * screenPainter);
+        void guessTableDividers();
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one

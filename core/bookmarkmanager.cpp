@@ -37,19 +37,16 @@ class OkularBookmarkAction : public KBookmarkAction
     public:
         OkularBookmarkAction( const Okular::DocumentViewport& vp, const KBookmark& bk, KBookmarkOwner* owner, QObject *parent )
             : KBookmarkAction( bk, owner, parent )
-            , m_pageNumber( vp.pageNumber + 1 )
         {
             if ( vp.isValid() )
                 setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
+            setProperty("pageNumber", vp.pageNumber + 1);
         }
-
+        
         inline int pageNumber() const
         {
-            return m_pageNumber;
+            return property("pageNumber").toInt();
         }
-
-    private:
-        const int m_pageNumber;
 };
 
 inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
@@ -225,6 +222,25 @@ KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
     return ret;
 }
 
+KBookmark::List BookmarkManager::bookmarks() const
+{
+    return bookmarks( d->url );
+}
+        
+KBookmark BookmarkManager::bookmark( int page ) const
+{
+    const KBookmark::List bmarks = bookmarks();
+    foreach( const KBookmark &bm, bmarks )
+    {
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( vp.isValid() && vp.pageNumber == page )
+        {
+            return bm;
+        }
+    }
+    return KBookmark();
+}
+
 void BookmarkManager::save() const
 {
     d->manager->emitChanged();
@@ -332,6 +348,18 @@ void BookmarkManager::removeBookmark( int n )
         if ( removePageBookmark( n ) )
             foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
     }
+}
+
+void BookmarkManager::renameBookmark( KBookmark* bm, const QString& newName)
+{
+    KBookmarkGroup thebg;
+    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
+    Q_ASSERT ( it != d->knownFiles.end() );
+    if ( it == d->knownFiles.end() )
+        return;
+
+    bm->setFullText( newName );
+    d->manager->emitChanged( thebg );
 }
 
 int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )

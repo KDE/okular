@@ -40,11 +40,24 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * Returns the list of documents with bookmarks.
          */
         KUrl::List files() const;
+
         /**
          * Returns the list of bookmarks for the specified @p url.
          */
         KBookmark::List bookmarks( const KUrl& url ) const;
 
+        /**
+         * Returns the list of bookmarks for document
+         * @since 0.14 (KDE 4.8)
+         */
+        KBookmark::List bookmarks() const;
+        
+        /**
+         * Returns the bookmark for the given page of the document
+         * @since 0.14 (KDE 4.8)
+         */
+        KBookmark bookmark( int page ) const;
+        
         /**
          * Forces to save the list of bookmarks.
          */
@@ -81,6 +94,12 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * @since 0.11 (KDE 4.5)
          */
         void removeBookmarks( const KUrl& referurl, const KBookmark::List& list );
+
+        /**
+         * Returns the bookmark given bookmark of the document
+         * @since 0.14 (KDE 4.8)
+         */
+        void renameBookmark( KBookmark* bm, const QString& newName );
 
         /**
          * Returns whether the given @p page is bookmarked.

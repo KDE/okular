@@ -68,6 +68,9 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
             if (formul.isEmpty() || !securityCheck(formul))
                 continue;
 
+            //unescape formula
+            formul.replace("&gt;",">").replace("&lt;","<").replace("&amp;","&").replace("&quot;","\"").replace("&apos;","\'").replace("<br>"," ");
+
             QString fileName;
             Error returnCode = handleLatex(fileName, formul, textColor, fontSize, resolution, latexOutput);
             if (returnCode != NoError)
@@ -89,7 +92,7 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
         imagePxWidth = theImage.width();
         imagePxHeight = theImage.height();
         QString escapedLATEX=Qt::escape(it.key()).replace('\"',"&quot;");  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
-        html.replace(Qt::escape(it.key()), " <img width=\"" + QString::number(imagePxWidth) + "\" height=\"" + QString::number(imagePxHeight) + "\" align=\"middle\" src=\"" + (*it) + "\"  alt=\"" + escapedLATEX +"\" title=\"" + escapedLATEX +"\"  /> ");
+        html.replace(it.key(), " <img width=\"" + QString::number(imagePxWidth) + "\" height=\"" + QString::number(imagePxHeight) + "\" align=\"middle\" src=\"" + (*it) + "\"  alt=\"" + escapedLATEX +"\" title=\"" + escapedLATEX +"\"  /> ");
     }
     return NoError;
 }

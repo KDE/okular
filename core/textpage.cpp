@@ -1960,3 +1960,40 @@ void TextPagePrivate::correctTextOrder()
      */
     breakWordIntoCharacters(word_chars_map);
 }
+
+TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const
+{
+    if ( area && area->isNull() )
+        return TextEntity::List();
+
+    TextEntity::List ret;
+    if ( area )
+    {
+        foreach (TinyTextEntity *te, d->m_words)
+        {
+            if (b == AnyPixelTextAreaInclusionBehaviour)
+            {
+                if ( area->intersects( te->area ) )
+                {
+                    ret.append( new TextEntity( te->text(), new Okular::NormalizedRect( te->area) ) );
+                }
+            }
+            else
+            {
+                const NormalizedPoint center = te->area.center();
+                if ( area->contains( center.x, center.y ) )
+                {
+                    ret.append( new TextEntity( te->text(), new Okular::NormalizedRect( te->area) ) );
+                }
+            }
+        }
+    }
+    else
+    {
+        foreach (TinyTextEntity *te, d->m_words)
+        {
+            ret.append( new TextEntity( te->text(), new Okular::NormalizedRect( te->area) ) );
+        }
+    }
+    return ret;
+}

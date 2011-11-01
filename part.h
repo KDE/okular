@@ -42,6 +42,7 @@ class KSelectAction;
 class KAboutData;
 class KTemporaryFile;
 class KAction;
+class KMenu;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
@@ -146,6 +147,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotHistoryBack();
         void slotHistoryNext();
         void slotAddBookmark();
+        void slotRenameBookmarkFromMenu();
+        void slotRenameCurrentPageBookmark();
+        void slotAboutToShowContextMenu(KMenu *menu, QAction *action, QMenu *contextMenu);
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
@@ -200,6 +204,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
         void unsetDummyMode();
+        void slotRenameBookmark( int page );
 
         KTemporaryFile *m_tempfile;
 
@@ -246,6 +251,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         KAction *m_historyBack;
         KAction *m_historyNext;
         KAction *m_addBookmark;
+        KAction *m_renameBookmark;
         KAction *m_prevBookmark;
         KAction *m_nextBookmark;
         KAction *m_copy;

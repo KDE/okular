@@ -979,6 +979,11 @@ void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp
 
 void PageView::notifyViewportChanged( bool smoothMove )
 {
+    QMetaObject::invokeMethod(this, "slotRealNotifyViewportChanged", Qt::QueuedConnection, Q_ARG( bool, smoothMove ));
+}
+    
+void PageView::slotRealNotifyViewportChanged( bool smoothMove )
+{
     // if we are the one changing viewport, skip this nofity
     if ( d->blockViewport )
         return;

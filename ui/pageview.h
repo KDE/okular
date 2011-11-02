@@ -191,6 +191,8 @@ Q_OBJECT
         class PageViewPrivate * d;
 
     private slots:
+        // used to decouple the notifyViewportChanged calle
+        void slotRealNotifyViewportChanged(bool smoothMove);
         // activated either directly or via queued connection on notifySetup
         void slotRelayoutPages();
         // activated by the resize event delay timer

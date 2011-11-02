@@ -167,6 +167,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Same functionality as geometry, but the output is now rounded before typecasting to int
+         * @since 0.14 (KDE 4.8)
          */
         QRect roundedGeometry( int xScale, int yScale ) const;
 
@@ -209,6 +210,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located to the bottom of the rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isBottom(const NormalizedPoint& pt) const
         {
@@ -217,6 +219,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located on the top of the rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isTop(const NormalizedPoint& pt) const
         {
@@ -225,6 +228,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located under the top of the rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isBottomOrLevel(const NormalizedPoint& pt) const
         {
@@ -233,6 +237,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located above the bottom of the rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isTopOrLevel(const NormalizedPoint& pt) const
         {
@@ -241,6 +246,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located to the right of the left arm of rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isLeft(const NormalizedPoint& pt) const
         {
@@ -249,6 +255,7 @@ class OKULAR_EXPORT NormalizedRect
 
         /**
          * Returns true if the point pt is located to the left of the right arm of rectangle
+         * @since 0.14 (KDE 4.8)
          */
         bool isRight(const NormalizedPoint& pt) const
         {

@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
- <kcfgfile name="okularpartrc" />
+ <kcfgfile arg="true" />
  <include>kuser.h</include>
  <group name="Debugging Options" >
   <entry key="DebugDrawBoundaries" type="Bool" >
@@ -260,6 +260,9 @@
     <default>1.0</default>
     <min>0.1</min>
     <max>4.0</max>
+  </entry>
+  <entry key="ShowSourceLocationsGraphically" type="Bool" >
+   <default>false</default>
   </entry>
  </group>
  <group name="Identity" >

@@ -66,6 +66,7 @@
 #include "interfaces/printinterface.h"
 #include "interfaces/saveinterface.h"
 #include "observer.h"
+#include "misc.h"
 #include "page.h"
 #include "page_p.h"
 #include "pagecontroller_p.h"
@@ -3070,6 +3071,12 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !QFile::exists( absFileName ) )
     {
         kDebug(OkularDebug) << "No such file:" << absFileName;
+        return;
+    }
+
+    bool handled = false;
+    emit sourceReferenceActivated(absFileName, ref->row(), ref->column(), &handled);
+    if(handled) {
         return;
     }
 

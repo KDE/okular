@@ -11,6 +11,7 @@
 #define _PREFERENCESDIALOG_H
 
 #include <kconfigdialog.h>
+#include "part.h"
 #include "settings.h"
 
 class QWidget;
@@ -28,7 +29,7 @@ class PreferencesDialog : public KConfigDialog
 {
 
     public:
-        PreferencesDialog( QWidget * parent, KConfigSkeleton * config );
+        PreferencesDialog( QWidget * parent, KConfigSkeleton * config, Okular::EmbedMode embedMode );
 
     protected:
 //      void updateSettings(); // Called when OK/Apply is pressed.

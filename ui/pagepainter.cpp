@@ -51,12 +51,12 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
         paintCroppedPageOnPainter( destPainter, page, pixID, flags, scaledWidth, scaledHeight, limits,
-                                   Okular::NormalizedRect( 0, 0, 1, 1 ) );
+                                   Okular::NormalizedRect( 0, 0, 1, 1 ), 0 );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
     int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
-    const Okular::NormalizedRect &crop )
+    const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
 	/* Calculate the cropped geometry of the page */
 	QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
@@ -209,7 +209,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
     bool bufferAccessibility = (flags & Accessibility) && Okular::Settings::changeColors() && (Okular::Settings::renderMode() != Okular::Settings::EnumRenderMode::Paper);
-    bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations;
+    bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations || viewPortPoint;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
     QRect limitsInPixmap = limits.translated( crop.geometry( scaledWidth, scaledHeight ).topLeft() );
@@ -522,6 +522,33 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     }
                 }
             } // end current annotation drawing
+        }
+
+        if(viewPortPoint)
+        {
+            QPainter painter(&backImage);
+            painter.translate( -limits.left(), -limits.top() );
+            painter.setPen( QApplication::palette().color( QPalette::Active, QPalette::Highlight ) );
+            painter.drawLine( 0, viewPortPoint->y * scaledHeight + 1, scaledWidth - 1, viewPortPoint->y * scaledHeight + 1 );
+// ROTATION CURRENTLY NOT IMPLEMENTED
+/*
+            if( page->rotation() == Okular::Rotation0)
+            {
+
+            }
+            else if(page->rotation() == Okular::Rotation270)
+            {
+                painter.drawLine( viewPortPoint->y * scaledHeight + 1, 0, viewPortPoint->y * scaledHeight + 1, scaledWidth - 1);
+            }
+            else if(page->rotation() == Okular::Rotation180)
+            {
+                painter.drawLine( 0, (1.0 - viewPortPoint->y) * scaledHeight - 1, scaledWidth - 1, (1.0 - viewPortPoint->y) * scaledHeight - 1 );
+            }
+            else if(page->rotation() == Okular::Rotation90) // not right, rotation clock-wise
+            {
+                painter.drawLine( scaledWidth - (viewPortPoint->y * scaledHeight + 1), 0, scaledWidth - (viewPortPoint->y * scaledHeight + 1), scaledWidth - 1);
+            }
+*/
         }
 
         // 4B.5. create the back pixmap converting from the local image

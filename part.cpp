@@ -85,6 +85,7 @@
 #include "ui/guiutils.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
+#include "core/action.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
@@ -199,29 +200,53 @@ static QString compressedMimeFor( const QString& mime_to_check )
     return QString();
 }
 
-static Okular::Part::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
+static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
 {
     Q_UNUSED( parentWidget );
 
     if ( parent
          && ( parent->objectName() == QLatin1String( "okular::Shell" )
               || parent->objectName() == QLatin1String( "okular/okular__Shell" ) ) )
-        return Okular::Part::NativeShellMode;
+        return Okular::NativeShellMode;
 
     if ( parent
          && ( QByteArray( "KHTMLPart" ) == parent->metaObject()->className() ) )
-        return Okular::Part::KHTMLPartMode;
+        return Okular::KHTMLPartMode;
 
     Q_FOREACH ( const QVariant &arg, args )
     {
         if ( arg.type() == QVariant::String )
         {
             if ( arg.toString() == QLatin1String( "Print/Preview" ) )
-                return Okular::Part::PrintPreviewMode;
+            {
+                return Okular::PrintPreviewMode;
+            }
+            else if ( arg.toString() == QLatin1String( "ViewerWidget" ) )
+            {
+                return Okular::ViewerWidgetMode;
+            }
         }
     }
 
-    return Okular::Part::UnknownEmbedMode;
+    return Okular::UnknownEmbedMode;
+}
+
+static QString detectConfigFileName( const QVariantList &args )
+{
+    Q_FOREACH ( const QVariant &arg, args )
+    {
+        if ( arg.type() == QVariant::String )
+        {
+            QString argString = arg.toString();
+            int separatorIndex = argString.indexOf( "=" );
+            if ( separatorIndex >= 0 && argString.left( separatorIndex ) == QLatin1String( "ConfigFileName" ) )
+            {
+                return argString.mid( separatorIndex + 1 );
+            }
+        }
+    }
+
+    return QString();
 }
 
 #undef OKULAR_KEEP_FILE_OPEN
@@ -244,14 +269,20 @@ const QVariantList &args )
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
-    // first necessary step: copy the configuration from kpdf, if available
-    QString newokularconffile = KStandardDirs::locateLocal( "config", "okularpartrc" );
-    if ( !QFile::exists( newokularconffile ) )
+    // first, we check if a config file name has been specified
+    QString configFileName = detectConfigFileName( args );
+    if ( configFileName.isEmpty() )
     {
-        QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
-        if ( QFile::exists( oldkpdfconffile ) )
-            QFile::copy( oldkpdfconffile, newokularconffile );
+        configFileName = KStandardDirs::locateLocal( "config", "okularpartrc" );
+        // first necessary step: copy the configuration from kpdf, if available
+        if ( !QFile::exists( configFileName ) )
+        {
+            QString oldkpdfconffile = KStandardDirs::locateLocal( "config", "kpdfpartrc" );
+            if ( QFile::exists( oldkpdfconffile ) )
+                QFile::copy( oldkpdfconffile, configFileName );
+        }
     }
+    Okular::Settings::instance( configFileName );
 
     QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
 
@@ -369,6 +400,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(formFieldChanged(Okular::FormField*)), m_pageView, SLOT(slotFormFieldChanged(Okular::FormField*)) );
+    connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -410,6 +442,73 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_document->bookmarkManager(), SIGNAL(saved()),
         this, SLOT(slotRebuildBookmarkMenu()) );
 
+    setupViewerActions();
+
+    if ( m_embedMode != ViewerWidgetMode )
+    {
+        setupActions();
+    }
+    else
+    {
+        setViewerShortcuts();
+    }
+
+    // document watcher and reloader
+    m_watcher = new KDirWatch( this );
+    connect( m_watcher, SIGNAL(dirty(QString)), this, SLOT(slotFileDirty(QString)) );
+    m_dirtyHandler = new QTimer( this );
+    m_dirtyHandler->setSingleShot( true );
+    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotDoFileDirty()) );
+
+    slotNewConfig();
+
+    // [SPEECH] check for KTTSD presence and usability
+    const KService::Ptr kttsd = KService::serviceByDesktopName("kttsd");
+    Okular::Settings::setUseKTTSD( kttsd );
+    Okular::Settings::self()->writeConfig();
+
+    rebuildBookmarkMenu( false );
+
+    if ( m_embedMode == ViewerWidgetMode ) {
+        // set the XML-UI resource file for the viewer mode
+        setXMLFile("part-viewermode.rc");
+    }
+    else
+    {
+        // set our main XML-UI resource file
+        setXMLFile("part.rc");
+    }
+
+    m_pageView->setupBaseActions( actionCollection() );
+
+    m_sidebar->setSidebarVisibility( false );
+    if ( m_embedMode != PrintPreviewMode )
+    {
+        // now set up actions that are required for all remaining modes
+        m_pageView->setupViewerActions( actionCollection() );
+        // and if we are not in viewer mode, we want the full GUI
+        if ( m_embedMode != ViewerWidgetMode )
+        {
+            unsetDummyMode();
+        }
+    }
+
+    // ensure history actions are in the correct state
+    updateViewActions();
+
+    // also update the state of the actions in the page view
+    m_pageView->updateActionState( false, false, false );
+
+    if ( m_embedMode == NativeShellMode )
+        m_sidebar->setAutoFillBackground( false );
+
+#ifdef OKULAR_KEEP_FILE_OPEN
+    m_keeper = new FileKeeper();
+#endif
+}
+
+void Part::setupViewerActions()
+{
     // ACTIONS
     KActionCollection * ac = actionCollection();
 
@@ -477,9 +576,9 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
     connect( m_nextBookmark, SIGNAL(triggered()), this, SLOT(slotNextBookmark()) );
 
-    m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
+    m_copy = 0;
 
-    m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
+    m_selectAll = 0;
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
@@ -494,13 +593,8 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
     m_findPrev->setEnabled( false );
 
-    m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
-    m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
-    ac->addAction( "file_save_copy", m_saveCopyAs );
-    m_saveCopyAs->setEnabled( false );
-
-    m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
-    m_saveAs->setEnabled( false );
+    m_saveCopyAs = 0;
+    m_saveAs = 0;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
     if ( m_embedMode == NativeShellMode )
@@ -515,7 +609,14 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     KAction * genPrefs = new KAction( ac );
     ac->addAction("options_configure_generators", genPrefs);
-    genPrefs->setText( i18n( "Configure Backends..." ) );
+    if ( m_embedMode == ViewerWidgetMode )
+    {
+        genPrefs->setText( i18n( "Configure Viewer Backends..." ) );
+    }
+    else
+    {
+        genPrefs->setText( i18n( "Configure Backends..." ) );
+    }
     genPrefs->setIcon( KIcon( "configure" ) );
     genPrefs->setEnabled( m_document->configurableGenerators() > 0 );
     connect( genPrefs, SIGNAL(triggered(bool)), this, SLOT(slotGeneratorPreferences()) );
@@ -523,32 +624,8 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_printPreview = KStandardAction::printPreview( this, SLOT(slotPrintPreview()), ac );
     m_printPreview->setEnabled( false );
 
-    m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
-    m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
-    m_showLeftPanel->setIcon(KIcon( "view-sidetree" ));
-    connect( m_showLeftPanel, SIGNAL(toggled(bool)), this, SLOT(slotShowLeftPanel()) );
-    m_showLeftPanel->setShortcut( Qt::Key_F7 );
-    m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
-    slotShowLeftPanel();
-
-    m_showBottomBar = ac->add<KToggleAction>("show_bottombar");
-    m_showBottomBar->setText(i18n( "Show &Page Bar"));
-    connect( m_showBottomBar, SIGNAL(toggled(bool)), this, SLOT(slotShowBottomBar()) );
-    m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
-    slotShowBottomBar();
-
-    QAction * importPS = ac->addAction("import_ps");
-    importPS->setText(i18n("&Import PostScript as PDF..."));
-    importPS->setIcon(KIcon("document-import"));
-    connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
-#if 0
-    QAction * ghns = ac->addAction("get_new_stuff");
-    ghns->setText(i18n("&Get Books From Internet..."));
-    ghns->setIcon(KIcon("get-hot-new-stuff"));
-    connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
-    // TEMP, REMOVE ME!
-    ghns->setShortcut( Qt::Key_G );
-#endif
+    m_showLeftPanel = 0;
+    m_showBottomBar = 0;
 
     m_showProperties = ac->addAction("properties");
     m_showProperties->setText(i18n("&Properties"));
@@ -556,34 +633,13 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
     m_showProperties->setEnabled( false );
 
-    m_showEmbeddedFiles = ac->addAction("embedded_files");
-    m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
-    m_showEmbeddedFiles->setIcon( KIcon( "mail-attachment" ) );
-    connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
-    m_showEmbeddedFiles->setEnabled( false );
+    m_showEmbeddedFiles = 0;
+    m_showPresentation = 0;
 
-    m_showPresentation = ac->addAction("presentation");
-    m_showPresentation->setText(i18n("P&resentation"));
-    m_showPresentation->setIcon( KIcon( "view-presentation" ) );
-    connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
-    m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
-    m_showPresentation->setEnabled( false );
-
-    m_exportAs = ac->addAction("file_export_as");
-    m_exportAs->setText(i18n("E&xport As"));
-    m_exportAs->setIcon( KIcon( "document-export" ) );
-    m_exportAsMenu = new QMenu();
-    connect(m_exportAsMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotExportAs(QAction*)));
-    m_exportAs->setMenu( m_exportAsMenu );
-    m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), m_exportAsMenu );
-    m_exportAsMenu->addAction( m_exportAsText );
-    m_exportAs->setEnabled( false );
-    m_exportAsText->setEnabled( false );
-    m_exportAsDocArchive = actionForExportFormat( Okular::ExportFormat(
-            i18nc( "A document format, Okular-specific", "Document Archive" ),
-            KMimeType::mimeType( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
-    m_exportAsMenu->addAction( m_exportAsDocArchive );
-    m_exportAsDocArchive->setEnabled( false );
+    m_exportAs = 0;
+    m_exportAsMenu = 0;
+    m_exportAsText = 0;
+    m_exportAsDocArchive = 0;
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About Backend"));
@@ -602,6 +658,98 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     ac->addAction("close_find_bar", m_closeFindBar);
     connect(m_closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
     widget()->addAction(m_closeFindBar);
+}
+
+void Part::setViewerShortcuts()
+{
+    KActionCollection * ac = actionCollection();
+
+    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G) );
+    m_find->setShortcuts( QList<QKeySequence>() );
+
+    m_findNext->setShortcut( QKeySequence() );
+    m_findPrev->setShortcut( QKeySequence() );
+
+    m_addBookmark->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_B ) );
+
+    m_beginningOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_Home ) );
+    m_endOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_End ) );
+
+    KAction *action = static_cast<KAction*>( ac->action( "file_reload" ) );
+    if( action )  action->setShortcuts( QList<QKeySequence>() << QKeySequence( Qt::ALT + Qt::Key_F5 ) );
+}
+
+void Part::setupActions()
+{
+    KActionCollection * ac = actionCollection();
+
+    m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
+
+    m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
+
+    m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
+    m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
+    ac->addAction( "file_save_copy", m_saveCopyAs );
+    m_saveCopyAs->setEnabled( false );
+
+    m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
+    m_saveAs->setEnabled( false );
+
+    m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
+    m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
+    m_showLeftPanel->setIcon(KIcon( "view-sidetree" ));
+    connect( m_showLeftPanel, SIGNAL(toggled(bool)), this, SLOT(slotShowLeftPanel()) );
+    m_showLeftPanel->setShortcut( Qt::Key_F7 );
+    m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
+    slotShowLeftPanel();
+
+    m_showBottomBar = ac->add<KToggleAction>("show_bottombar");
+    m_showBottomBar->setText(i18n( "Show &Page Bar"));
+    connect( m_showBottomBar, SIGNAL(toggled(bool)), this, SLOT(slotShowBottomBar()) );
+    m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
+    slotShowBottomBar();
+
+    m_showEmbeddedFiles = ac->addAction("embedded_files");
+    m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
+    m_showEmbeddedFiles->setIcon( KIcon( "mail-attachment" ) );
+    connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
+    m_showEmbeddedFiles->setEnabled( false );
+
+    m_exportAs = ac->addAction("file_export_as");
+    m_exportAs->setText(i18n("E&xport As"));
+    m_exportAs->setIcon( KIcon( "document-export" ) );
+    m_exportAsMenu = new QMenu();
+    connect(m_exportAsMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotExportAs(QAction*)));
+    m_exportAs->setMenu( m_exportAsMenu );
+    m_exportAsText = actionForExportFormat( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ), m_exportAsMenu );
+    m_exportAsMenu->addAction( m_exportAsText );
+    m_exportAs->setEnabled( false );
+    m_exportAsText->setEnabled( false );
+    m_exportAsDocArchive = actionForExportFormat( Okular::ExportFormat(
+            i18nc( "A document format, Okular-specific", "Document Archive" ),
+            KMimeType::mimeType( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
+    m_exportAsMenu->addAction( m_exportAsDocArchive );
+    m_exportAsDocArchive->setEnabled( false );
+
+    m_showPresentation = ac->addAction("presentation");
+    m_showPresentation->setText(i18n("P&resentation"));
+    m_showPresentation->setIcon( KIcon( "view-presentation" ) );
+    connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
+    m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
+    m_showPresentation->setEnabled( false );
+
+    QAction * importPS = ac->addAction("import_ps");
+    importPS->setText(i18n("&Import PostScript as PDF..."));
+    importPS->setIcon(KIcon("document-import"));
+    connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
+#if 0
+    QAction * ghns = ac->addAction("get_new_stuff");
+    ghns->setText(i18n("&Get Books From Internet..."));
+    ghns->setIcon(KIcon("get-hot-new-stuff"));
+    connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
+    // TEMP, REMOVE ME!
+    ghns->setShortcut( Qt::Key_G );
+#endif
 
     KToggleAction *blackscreenAction = new KToggleAction( i18n( "Switch Blackscreen Mode" ), ac );
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
@@ -615,43 +763,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
-
-    // document watcher and reloader
-    m_watcher = new KDirWatch( this );
-    connect( m_watcher, SIGNAL(dirty(QString)), this, SLOT(slotFileDirty(QString)) );
-    m_dirtyHandler = new QTimer( this );
-    m_dirtyHandler->setSingleShot( true );
-    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotDoFileDirty()) );
-
-    slotNewConfig();
-
-    // [SPEECH] check for KTTSD presence and usability
-    const KService::Ptr kttsd = KService::serviceByDesktopName("kttsd");
-    Okular::Settings::setUseKTTSD( kttsd );
-    Okular::Settings::self()->writeConfig();
-
-    rebuildBookmarkMenu( false );
-
-    // set our XML-UI resource file
-    setXMLFile("part.rc");
-
-    m_pageView->setupBaseActions( actionCollection() );
-
-    // ensure history actions are in the correct state
-    updateViewActions();
-
-    m_sidebar->setSidebarVisibility( false );
-    if ( m_embedMode != PrintPreviewMode )
-        unsetDummyMode();
-
-    if ( m_embedMode == NativeShellMode )
-        m_sidebar->setAutoFillBackground( false );
-
-#ifdef OKULAR_KEEP_FILE_OPEN
-    m_keeper = new FileKeeper();
-#endif
 }
-
 
 Part::~Part()
 {
@@ -720,6 +832,47 @@ KUrl Part::realUrl() const
     return url();
 }
 
+// ViewerInterface
+
+void Part::showSourceLocation(const QString& fileName, int line, int column)
+{
+    const QString u = QString( "src:%1 %2" ).arg( line ).arg( fileName );
+    GotoAction action( QString(), u );
+    m_document->processAction( &action );
+    m_pageView->setLastSourceLocationViewport( m_document->viewport() );
+}
+
+void Part::setWatchFileModeEnabled(bool enabled)
+{
+    if ( enabled && m_watcher->isStopped() )
+    {
+        m_watcher->startScan();
+    }
+    else if( !enabled && !m_watcher->isStopped() )
+    {
+        m_dirtyHandler->stop();
+        m_watcher->stopScan();
+    }
+}
+
+void Part::setShowSourceLocationsGraphically(bool show)
+{
+    if( show == Okular::Settings::showSourceLocationsGraphically() )
+    {
+        return;
+    }
+    Okular::Settings::setShowSourceLocationsGraphically( show );
+    m_pageView->update();
+}
+
+void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)
+{
+    emit openSourceReference( absFileName, line, col );
+    if ( m_embedMode == Okular::ViewerWidgetMode )
+    {
+        *handled = true;
+    }
+}
 
 void Part::openUrlFromDocument(const KUrl &url)
 {
@@ -814,7 +967,14 @@ void Part::slotGeneratorPreferences( )
 
     // we didn't find an instance of this dialog, so lets create it
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
-    dialog->setCaption( i18n( "Configure Backends" ) );
+    if( m_embedMode == ViewerWidgetMode )
+    {
+        dialog->setCaption( i18n( "Configure Viewer Backends" ) );
+    }
+    else
+    {
+        dialog->setCaption( i18n( "Configure Backends" ) );
+    }
 
     m_document->fillConfigDialog( dialog );
 
@@ -983,26 +1143,29 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
-    m_saveCopyAs->setEnabled( ok );
+    if( m_saveAs ) m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
+    if( m_saveCopyAs ) m_saveCopyAs->setEnabled( ok );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
-    m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
+    if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles );
     // m_pageView->toggleFormsAction() may be null on dummy mode
     m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() );
-    m_showPresentation->setEnabled( ok );
+    if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
     if ( ok )
     {
-        m_exportFormats = m_document->exportFormats();
-        QList<Okular::ExportFormat>::ConstIterator it = m_exportFormats.constBegin();
-        QList<Okular::ExportFormat>::ConstIterator itEnd = m_exportFormats.constEnd();
-        QMenu *menu = m_exportAs->menu();
-        for ( ; it != itEnd; ++it )
+        if ( m_exportAs )
         {
-            menu->addAction( actionForExportFormat( *it ) );
+            m_exportFormats = m_document->exportFormats();
+            QList<Okular::ExportFormat>::ConstIterator it = m_exportFormats.constBegin();
+            QList<Okular::ExportFormat>::ConstIterator itEnd = m_exportFormats.constEnd();
+            QMenu *menu = m_exportAs->menu();
+            for ( ; it != itEnd; ++it )
+            {
+                menu->addAction( actionForExportFormat( *it ) );
+            }
         }
         if ( isCompressedFile )
         {
@@ -1013,9 +1176,9 @@ bool Part::openFile()
             m_keeper->open( fileNameToOpen );
 #endif
     }
-    m_exportAsText->setEnabled( ok && m_document->canExportToText() );
-    m_exportAsDocArchive->setEnabled( ok );
-    m_exportAs->setEnabled( ok );
+    if ( m_exportAsText ) m_exportAsText->setEnabled( ok && m_document->canExportToText() );
+    if ( m_exportAsDocArchive ) m_exportAsDocArchive->setEnabled( ok );
+    if ( m_exportAs ) m_exportAs->setEnabled( ok );
 
     // update viewing actions
     updateViewActions();
@@ -1123,24 +1286,27 @@ bool Part::closeUrl()
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );
-    m_saveAs->setEnabled( false );
-    m_saveCopyAs->setEnabled( false );
+    if( m_saveAs )  m_saveAs->setEnabled( false );
+    if( m_saveCopyAs ) m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
-    m_showEmbeddedFiles->setEnabled( false );
-    m_exportAs->setEnabled( false );
-    m_exportAsText->setEnabled( false );
-    m_exportAsDocArchive->setEnabled( false );
+    if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( false );
+    if ( m_exportAs ) m_exportAs->setEnabled( false );
+    if ( m_exportAsText ) m_exportAsText->setEnabled( false );
+    if ( m_exportAsDocArchive ) m_exportAsDocArchive->setEnabled( false );
     m_exportFormats.clear();
-    QMenu *menu = m_exportAs->menu();
-    QList<QAction*> acts = menu->actions();
-    int num = acts.count();
-    for ( int i = 2; i < num; ++i )
+    if ( m_exportAs )
     {
-        menu->removeAction( acts.at(i) );
-        delete acts.at(i);
+        QMenu *menu = m_exportAs->menu();
+        QList<QAction*> acts = menu->actions();
+        int num = acts.count();
+        for ( int i = 2; i < num; ++i )
+        {
+            menu->removeAction( acts.at(i) );
+            delete acts.at(i);
+        }
     }
-    m_showPresentation->setEnabled( false );
+    if ( m_showPresentation ) m_showPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
     m_realUrl = KUrl();
@@ -1168,9 +1334,18 @@ bool Part::closeUrl()
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
 #endif
-    return KParts::ReadOnlyPart::closeUrl();
+    bool r = KParts::ReadOnlyPart::closeUrl();
+    setUrl(KUrl());
+
+    return r;
 }
 
+void Part::guiActivateEvent(KParts::GUIActivateEvent *event)
+{
+    updateViewActions();
+
+    KParts::ReadOnlyPart::guiActivateEvent(event);
+}
 
 void Part::close()
 {
@@ -1355,8 +1530,8 @@ void Part::updateViewActions()
         if (m_historyBack) m_historyBack->setEnabled( !m_document->historyAtBegin() );
         if (m_historyNext) m_historyNext->setEnabled( !m_document->historyAtEnd() );
         m_reload->setEnabled( true );
-        m_copy->setEnabled( true );
-        m_selectAll->setEnabled( true );
+        if (m_copy) m_copy->setEnabled( true );
+        if (m_selectAll) m_selectAll->setEnabled( true );
     }
     else
     {
@@ -1368,9 +1543,20 @@ void Part::updateViewActions()
         if (m_historyBack) m_historyBack->setEnabled( false );
         if (m_historyNext) m_historyNext->setEnabled( false );
         m_reload->setEnabled( false );
-        m_copy->setEnabled( false );
-        m_selectAll->setEnabled( false );
+        if (m_copy) m_copy->setEnabled( false );
+        if (m_selectAll) m_selectAll->setEnabled( false );
     }
+
+    if ( factory() )
+    {
+        QWidget *menu = factory()->container("menu_okular_part_viewer", this);
+        if (menu) menu->setEnabled( opened );
+
+        menu = factory()->container("view_orientation", this);
+        if (menu) menu->setEnabled( opened );
+    }
+    emit viewerMenuStateChange( opened );
+
     updateBookmarksActions();
 }
 
@@ -1768,7 +1954,7 @@ void Part::slotPreferences()
         return;
 
     // we didn't find an instance of this dialog, so lets create it
-    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self() );
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self(), m_embedMode );
     // keep us informed when the user changes settings
     connect( dialog, SIGNAL(settingsChanged(QString)), this, SLOT(slotNewConfig()) );
 
@@ -1782,14 +1968,7 @@ void Part::slotNewConfig()
     // changed before applying changes.
 
     // Watch File
-    bool watchFile = Okular::Settings::watchFile();
-    if ( watchFile && m_watcher->isStopped() )
-        m_watcher->startScan();
-    if ( !watchFile && !m_watcher->isStopped() )
-    {
-        m_dirtyHandler->stop();
-        m_watcher->stopScan();
-    }
+    setWatchFileModeEnabled(Okular::Settings::watchFile());
 
     // Main View (pageView)
     m_pageView->reparseConfig();

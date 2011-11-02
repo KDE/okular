@@ -15,11 +15,18 @@
 
 #include "ui_dlggeneralbase.h"
 
-DlgGeneral::DlgGeneral( QWidget * parent )
+DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
     : QWidget( parent )
 {
     m_dlg = new Ui_DlgGeneralBase();
     m_dlg->setupUi( this );
+
+    if( embedMode == Okular::ViewerWidgetMode )
+    {
+        m_dlg->kcfg_SyncThumbnailsViewport->setVisible( false );
+        m_dlg->kcfg_DisplayDocumentTitle->setVisible( false );
+        m_dlg->kcfg_WatchFile->setVisible( false );
+    }
 }
 
 DlgGeneral::~DlgGeneral()

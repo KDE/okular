@@ -35,6 +35,7 @@ class KUrl;
 namespace Okular {
 class Action;
 class Document;
+class DocumentViewport;
 class Annotation;
 class FormField;
 }
@@ -64,7 +65,9 @@ Q_OBJECT
 
         // create actions that interact with this widget
         void setupBaseActions( KActionCollection * collection );
+        void setupViewerActions( KActionCollection * collection );
         void setupActions( KActionCollection * collection );
+        void updateActionState( bool docHasPages, bool docChanged, bool docHasFormWidgets );
 
         // misc methods (from RMB menu/children)
         bool canFitPageWidth() const;
@@ -100,6 +103,7 @@ Q_OBJECT
         QPoint contentAreaPosition() const;
         QPoint contentAreaPoint( const QPoint & pos ) const;
 
+        void setLastSourceLocationViewport( const Okular::DocumentViewport& vp );
     public slots:
         void errorMessage( const QString & message, int duration = -1 )
         {
@@ -187,6 +191,8 @@ Q_OBJECT
         class PageViewPrivate * d;
 
     private slots:
+        // used to decouple the notifyViewportChanged calle
+        void slotRealNotifyViewportChanged(bool smoothMove);
         // activated either directly or via queued connection on notifySetup
         void slotRelayoutPages();
         // activated by the resize event delay timer

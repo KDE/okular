@@ -12,12 +12,14 @@
 
 #include <qwidget.h>
 
+#include "part.h"
+
 class Ui_DlgGeneralBase;
 
 class DlgGeneral : public QWidget
 {
     public:
-        DlgGeneral( QWidget * parent = 0 );
+        DlgGeneral( QWidget * parent,  Okular::EmbedMode embedMode );
         virtual ~DlgGeneral();
 
     protected:

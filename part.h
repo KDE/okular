@@ -24,6 +24,7 @@
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
+#include "interfaces/viewerinterface.h"
 
 #include <QtDBus/QtDBus>
 
@@ -42,6 +43,7 @@ class KAboutData;
 class KTemporaryFile;
 class KAction;
 class KMenu;
+namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
 class ThumbnailList;
@@ -65,6 +67,20 @@ class BrowserExtension;
 class ExportFormat;
 
 /**
+ * Describes the possible embedding modes of the part
+ *
+ * @since 0.14 (KDE 4.8)
+ */
+enum EmbedMode
+{
+    UnknownEmbedMode,
+    NativeShellMode,         // embedded in the native Okular' shell
+    PrintPreviewMode,        // embedded to show the print preview of a document
+    KHTMLPartMode,           // embedded in KHTML
+    ViewerWidgetMode,        // the part acts as a widget that can display all kinds of documents
+};
+
+/**
  * This is a "Part".  It that does all the real work in a KPart
  * application.
  *
@@ -72,22 +88,21 @@ class ExportFormat;
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer
+class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
+    Q_INTERFACES(Okular::ViewerInterface)
 
     public:
-        enum EmbedMode
-        {
-            UnknownEmbedMode,
-            NativeShellMode,         // embedded in the native Okular' shell
-            PrintPreviewMode,        // embedded to show the print preview of a document
-            KHTMLPartMode            // embedded in KHTML
-        };
-
         // Default constructor
+        /**
+         * If one element of 'args' contains one of the strings "Print/Preview" or "ViewerWidget",
+         * the part will be set up in the corresponding mode. Additionally, it is possible to specify
+         * which config file should be used by adding a string containing "ConfigFileName=<file name>"
+         * to 'args'.
+         **/
         Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor
@@ -104,6 +119,10 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QStringList supportedMimeTypes() const;
 
         KUrl realUrl() const;
+
+        void showSourceLocation(const QString& fileName, int line, int column);
+        void setWatchFileModeEnabled(bool enable);
+        void setShowSourceLocationsGraphically(bool show);
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
@@ -124,12 +143,15 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     signals:
         void enablePrintAction(bool enable);
+        void openSourceReference(const QString& absFileName, int line, int column);
+        void viewerMenuStateChange(bool enabled);
 
     protected:
         // reimplemented from KParts::ReadOnlyPart
         bool openFile();
         bool openUrl(const KUrl &url);
         bool closeUrl();
+        void guiActivateEvent(KParts::GUIActivateEvent *event);
 
     protected slots:
         // connected to actions
@@ -186,6 +208,10 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void psTransformEnded(int, QProcess::ExitStatus);
 
     private:
+        void setupViewerActions();
+        void setViewerShortcuts();
+        void setupActions();
+
         void setupPrint( QPrinter &printer );
         void doPrint( QPrinter &printer );
         bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
@@ -283,6 +309,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
     private slots:
         void slotGeneratorPreferences();
+        void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };
 
 }

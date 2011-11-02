@@ -68,6 +68,7 @@
 #include "tts.h"
 #include "videowidget.h"
 #include "core/action.h"
+#include "core/area.h"
 #include "core/document.h"
 #include "core/form.h"
 #include "core/page.h"
@@ -143,6 +144,9 @@ public:
     bool viewportMoveActive;
     QTime viewportMoveTime;
     QPoint viewportMoveDest;
+    int lastSourceLocationViewportPageNumber;
+    double lastSourceLocationViewportNormalizedX;
+    double lastSourceLocationViewportNormalizedY;
     QTimer * viewportMoveTimer;
     // auto scroll
     int scrollIncrement;
@@ -198,6 +202,7 @@ public:
     KAction * aSpeakPage;
     KAction * aSpeakStop;
     KActionCollection * actionCollection;
+    QActionGroup * mouseModeActionGroup;
 
     int setting_viewCols;
 };
@@ -305,6 +310,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->mouseModeActionGroup = 0;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -401,9 +407,12 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoomOut = KStandardAction::zoomOut( this, SLOT(slotZoomOut()), ac );
 }
 
-void PageView::setupActions( KActionCollection * ac )
+void PageView::setupViewerActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
+
+    d->aZoomIn->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus) );
+    d->aZoomOut->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus) );
 
     // orientation menu actions
     d->aRotateClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
@@ -481,16 +490,16 @@ do { \
     connect( d->aViewContinuous, SIGNAL(toggled(bool)), SLOT(slotContinuousToggled(bool)) );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
-    // Mouse-Mode actions
-    QActionGroup * actGroup = new QActionGroup( this );
-    actGroup->setExclusive( true );
+    // Mouse mode actions for viewer mode
+    d->mouseModeActionGroup = new QActionGroup( this );
+    d->mouseModeActionGroup->setExclusive( true );
     d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
     d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
-    d->aMouseNormal->setActionGroup( actGroup );
+    d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( true );
 
     KAction * mz  = new KAction(KIcon( "page-zoom" ), i18n("&Zoom Tool"), this);
@@ -499,15 +508,26 @@ do { \
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
-    mz->setActionGroup( actGroup );
+    mz->setActionGroup( d->mouseModeActionGroup );
 
+}
+
+// WARNING: 'setupViewerActions' must have been called before this method
+void PageView::setupActions( KActionCollection * ac )
+{
+    d->actionCollection = ac;
+
+    d->aZoomIn->setShortcut( KStandardShortcut::zoomIn() );
+    d->aZoomOut->setShortcut( KStandardShortcut::zoomOut() );
+
+    // Mouse-Mode actions
     d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
     d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
-    d->aMouseSelect->setActionGroup( actGroup );
+    d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aMouseTextSelect  = new KAction(KIcon( "draw-text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
@@ -515,7 +535,7 @@ do { \
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
-    d->aMouseTextSelect->setActionGroup( actGroup );
+    d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aMouseTableSelect  = new KAction(KIcon( "select-table" ), i18n("T&able Selection Tool"), this);
     ac->addAction("mouse_tableselect", d->aMouseTableSelect );
@@ -523,7 +543,7 @@ do { \
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
     d->aMouseTableSelect->setCheckable( true );
     d->aMouseTableSelect->setShortcut( Qt::CTRL + Qt::Key_5 );
-    d->aMouseTableSelect->setActionGroup( actGroup );
+    d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
 
     d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
@@ -840,6 +860,9 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         // update the mouse cursor when closing because we may have close through a link and
         // want the cursor to come back to the normal cursor
         updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
+        // then, make the message window and scrollbars disappear, which triggers a repaint
+        d->messageWindow->hide();
+        resizeContentArea( QSize( 0,0 ) );
     }
 
     // OSD to display pages
@@ -851,6 +874,16 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             QString(),
             PageViewMessage::Info, 4000 );
 
+    updateActionState( haspages, documentChanged, hasformwidgets );
+
+    qDeleteAll( d->m_annowindows );
+    d->m_annowindows.clear();
+
+    selectionClear();
+}
+
+void PageView::updateActionState( bool haspages, bool documentChanged, bool hasformwidgets )
+{
     if ( d->aPageSizes )
     { // may be null if dummy mode is on
         bool pageSizes = d->document->supportsPageSizes();
@@ -866,6 +899,36 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             d->aPageSizes->setItems( items );
         }
     }
+
+    if ( d->aTrimMargins )
+        d->aTrimMargins->setEnabled( haspages );
+
+    if ( d->aViewMode )
+        d->aViewMode->setEnabled( haspages );
+
+    if ( d->aViewContinuous )
+        d->aViewContinuous->setEnabled( haspages );
+
+    if ( d->aZoomFitWidth )
+        d->aZoomFitWidth->setEnabled( haspages );
+    if ( d->aZoomFitPage )
+        d->aZoomFitPage->setEnabled( haspages );
+    if ( d->aZoomFitText )
+        d->aZoomFitText->setEnabled( haspages );
+
+    if ( d->aZoom )
+    {
+        d->aZoom->selectableActionGroup()->setEnabled( haspages );
+        d->aZoom->setEnabled( haspages );
+    }
+    if ( d->aZoomIn )
+        d->aZoomIn->setEnabled( haspages );
+    if ( d->aZoomOut )
+        d->aZoomOut->setEnabled( haspages );
+
+    if ( d->mouseModeActionGroup )
+        d->mouseModeActionGroup->setEnabled( haspages );
+
     if ( d->aRotateClockwise )
         d->aRotateClockwise->setEnabled( haspages );
     if ( d->aRotateCounterClockwise )
@@ -897,13 +960,29 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
-    qDeleteAll( d->m_annowindows );
-    d->m_annowindows.clear();
+}
 
-    selectionClear();
+void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp )
+{
+    if( vp.rePos.enabled )
+    {
+        d->lastSourceLocationViewportNormalizedX = normClamp( vp.rePos.normalizedX, 0.5 );
+        d->lastSourceLocationViewportNormalizedY = normClamp( vp.rePos.normalizedY, 0.0 );
+    }
+    else
+    {
+        d->lastSourceLocationViewportNormalizedX = 0.5;
+        d->lastSourceLocationViewportNormalizedY = 0.0;
+    }
+    d->lastSourceLocationViewportPageNumber = vp.pageNumber;
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )
+{
+    QMetaObject::invokeMethod(this, "slotRealNotifyViewportChanged", Qt::QueuedConnection, Q_ARG( bool, smoothMove ));
+}
+    
+void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 {
     // if we are the one changing viewport, skip this nofity
     if ( d->blockViewport )
@@ -990,6 +1069,11 @@ void PageView::notifyViewportChanged( bool smoothMove )
     // update zoom text if in a ZoomFit/* zoom mode
     if ( d->zoomMode != ZoomFixed )
         updateZoomText();
+
+    if( viewport() )
+    {
+        viewport()->update();
+    }
 
     // since the page has moved below cursor, update it
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
@@ -2947,11 +3031,18 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
+            Okular::NormalizedPoint *viewPortPoint = 0;
+            Okular::NormalizedPoint point( d->lastSourceLocationViewportNormalizedX, d->lastSourceLocationViewportNormalizedY );
+            if( Okular::Settings::showSourceLocationsGraphically()
+                && item->pageNumber() ==  d->lastSourceLocationViewportPageNumber )
+            {
+                viewPortPoint = &point;
+            }
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
             PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
-                item->crop() );
+                item->crop(), viewPortPoint );
         }
 
         // remove painted area from 'remainingArea' and restore painter
@@ -3318,6 +3409,8 @@ void PageView::updateZoomText()
     else if ( d->zoomMode == ZoomFitText )
         selIdx = 2;
     d->aZoom->setCurrentItem( selIdx );
+    d->aZoom->setEnabled( d->items.size() > 0 );
+    d->aZoom->selectableActionGroup()->setEnabled( d->items.size() > 0 );
 }
 
 void PageView::updateCursor( const QPoint &p )
@@ -3921,6 +4014,9 @@ void PageView::slotConfigureWebShortcuts()
 
 void PageView::slotZoom()
 {
+    if ( !d->aZoom->selectableActionGroup()->isEnabled() )
+        return;
+
     setFocus();
     updateZoom( ZoomFixed );
 }
@@ -3979,7 +4075,7 @@ void PageView::slotSetMouseNormal()
     // hide the messageWindow
     d->messageWindow->hide();
     // reshow the annotator toolbar if hiding was forced
-    if ( d->aToggleAnnotator->isChecked() )
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
         slotToggleAnnotator( true );
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );

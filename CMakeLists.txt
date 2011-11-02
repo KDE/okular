@@ -100,6 +100,7 @@ install( FILES
            interfaces/configinterface.h
            interfaces/guiinterface.h
            interfaces/printinterface.h
+           interfaces/viewerinterface.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
 
 kde4_add_ui_files(okularcore_SRCS
@@ -196,7 +197,7 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES part.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
+install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
 
 ########### cmake files #################
 

@@ -298,12 +298,13 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
 #endif
 
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
-    : Generator( parent, args ), pdfdoc( 0 ), ready( true ),
-    pixmapRequest( 0 ), docInfoDirty( true ), docSynopsisDirty( true ),
+    : Generator( parent, args ), pdfdoc( 0 ),
+    docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
     dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
     synctex_scanner(0)
 {
+    setFeature( Threaded );
     setFeature( TextExtraction );
     setFeature( FontInfo );
 #ifdef Q_OS_WIN32
@@ -314,9 +315,6 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     if ( Okular::FilePrinter::ps2pdfAvailable() )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
-    // generate the pixmapGeneratorThread
-    generatorThread = new PDFPixmapGeneratorThread( this );
-    connect(generatorThread, SIGNAL(finished()), this, SLOT(threadFinished()), Qt::QueuedConnection);
     
 #ifdef HAVE_POPPLER_0_16
     // You only need to do it once not for each of the documents but it is cheap enough
@@ -327,13 +325,6 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
 
 PDFGenerator::~PDFGenerator()
 {
-    // stop and delete the generator thread
-    if ( generatorThread )
-    {
-        generatorThread->wait();
-        delete generatorThread;
-    }
-
     delete pdfOptionsPage;
 }
 
@@ -768,33 +759,11 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
     return b;
 }
 
-bool PDFGenerator::canGeneratePixmap() const
+QImage PDFGenerator::image( Okular::PixmapRequest * request )
 {
-    return ready;
-}
-
-void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
-{
-#ifndef NDEBUG
-    if ( !ready )
-        kDebug(PDFDebug) << "calling generatePixmap() when not in READY state!";
-#endif
-    // update busy state (not really needed here, because the flag needs to
-    // be set only to prevent asking a pixmap while the thread is running)
-    ready = false;
-
     // debug requests to this (xpdf) generator
     //kDebug(PDFDebug) << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "].";
 
-    /** asynchronous requests (generation in PDFPixmapGeneratorThread::run() **/
-    if ( request->asynchronous() )
-    {
-        // start the generation into the thread
-        generatorThread->startGeneration( request );
-        return;
-    }
-
-    /** synchronous request: in-place generation **/
     // compute dpi used to get an image with desired width and height
     Okular::Page * page = request->page();
 
@@ -807,10 +776,6 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     double fakeDpiX = request->width() * dpiX / pageWidth,
            fakeDpiY = request->height() * dpiY / pageHeight;
 
-    // setup Okular:: output device: text page is generated only if we are at 72dpi.
-    // since we can pre-generate the TextPage at the right res.. why not?
-    bool genTextPage = !page->hasTextPage() && (request->width() == page->width()) &&
-                       (request->height() == page->height());
     // generate links rects only the first time
     bool genObjectRects = !rectsGenerated.at( page->number() );
 
@@ -822,19 +787,15 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
     Poppler::Page *p = pdfdoc->page(page->number());
 
     // 2. Take data from outputdev and attach it to the Page
+    QImage img;
     if (p)
     {
-        QImage img( p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
-        if ( !page->isBoundingBoxKnown() )
-            updatePageBoundingBox( page->number(), Okular::Utils::imageBoundingBox( &img ) );
-
-        page->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
+        img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
     }
     else
     {
-        QPixmap *dummyPixmap = new QPixmap( request->width(), request->height() );
-        dummyPixmap->fill( Qt::white );
-        page->setPixmap( request->id(), dummyPixmap );
+        img = QImage( request->width(), request->height(), QImage::Format_Mono );
+        img.fill( Qt::white );
     }
 
     if ( p && genObjectRects )
@@ -848,24 +809,10 @@ void PDFGenerator::generatePixmap( Okular::PixmapRequest * request )
 
     // 3. UNLOCK [re-enables shared access]
     userMutex()->unlock();
-    if ( p && genTextPage )
-    {
-        QList<Poppler::TextBox*> textList = p->textList();
-        const QSizeF s = p->pageSizeF();
-        Okular::TextPage *tp = abstractTextPage(textList, s.height(), s.width(), request->page()->orientation());
-        page->setTextPage( tp );
-        qDeleteAll(textList);
-        
-        // notify the new generation
-        signalTextGenerationDone( page, tp );
-    }
+
     delete p;
     
-    // update ready state
-    ready = true;
-
-    // notify the new generation
-    signalPixmapRequestDone( request );
+    return img;
 }
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
@@ -1696,259 +1643,6 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
 #endif
     delete pdfConv;
     return success;
-}
-
-void PDFGenerator::threadFinished()
-{
-#if 0
-    // check if thread is running (has to be stopped now)
-    if ( generatorThread->running() )
-    {
-        // if so, wait for effective thread termination
-        if ( !generatorThread->wait( 9999 /*10s timeout*/ ) )
-        {
-            kWarning(PDFDebug) << "PDFGenerator: thread sent 'data available' "
-                        << "signal but had problems ending.";
-            return;
-        }
-}
-#endif
-
-    // 1. the mutex must be unlocked now
-    bool isLocked = true;
-    if (userMutex()->tryLock()) {
-        userMutex()->unlock();
-        isLocked = false;
-    }
-    if ( isLocked )
-    {
-        kWarning(PDFDebug) << "PDFGenerator: 'data available' but mutex still "
-                    << "held. Recovering.";
-        // synchronize GUI thread (must not happen)
-        userMutex()->lock();
-        userMutex()->unlock();
-    }
-
-    // 2. put thread's generated data into the Okular::Page
-    Okular::PixmapRequest * request = generatorThread->request();
-    QImage * outImage = generatorThread->takeImage();
-    QList<Poppler::TextBox*> outText = generatorThread->takeText();
-    QLinkedList< Okular::ObjectRect * > outRects = generatorThread->takeObjectRects();
-
-    if ( !request->page()->isBoundingBoxKnown() )
-        updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( outImage ) );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( *outImage ) ) );
-    delete outImage;
-    if ( !outText.isEmpty() )
-    {
-        Poppler::Page *pp = pdfdoc->page( request->page()->number() );
-        const QSizeF s = pp->pageSizeF();
-        Okular::TextPage *tp = abstractTextPage( outText, s.height(), 
-                                                 s.width(),request->page()->orientation());
-        request->page()->setTextPage( tp );
-        qDeleteAll(outText);
-        delete pp;
-        
-        // notify the new generation
-        signalTextGenerationDone( request->page(), tp );
-    }
-    bool genObjectRects = !rectsGenerated.at( request->page()->number() );
-    if (genObjectRects)
-    {
-        request->page()->setObjectRects( outRects );
-        rectsGenerated[ request->page()->number() ] = true;
-    }
-    else
-        qDeleteAll( outRects );
-
-    // 3. tell generator that data has been taken
-    generatorThread->endGeneration();
-
-    // update ready state
-    ready = true;
-    // notify the new generation
-    signalPixmapRequestDone( request );
-}
-
-
-
-/** The  PDF Pixmap Generator Thread  **/
-
-struct PPGThreadPrivate
-{
-    // reference to main objects
-    PDFGenerator * generator;
-    Okular::PixmapRequest * currentRequest;
-
-    // internal temp stored items. don't delete this.
-    QImage * m_image;
-    QList<Poppler::TextBox*> m_textList;
-    QLinkedList< Okular::ObjectRect * > m_rects;
-    bool m_rectsTaken;
-};
-
-PDFPixmapGeneratorThread::PDFPixmapGeneratorThread( PDFGenerator * gen )
-    : QThread(), d( new PPGThreadPrivate() )
-{
-    d->generator = gen;
-    d->currentRequest = 0;
-    d->m_image = 0;
-    d->m_rectsTaken = true;
-}
-
-PDFPixmapGeneratorThread::~PDFPixmapGeneratorThread()
-{
-    // delete internal objects if the class is deleted before the gui thread
-    // takes the data
-    delete d->m_image;
-    qDeleteAll(d->m_textList);
-    if ( !d->m_rectsTaken && d->m_rects.count() )
-    {
-        qDeleteAll(d->m_rects);
-    }
-    delete d->currentRequest;
-    // delete internal storage structure
-    delete d;
-}
-
-void PDFPixmapGeneratorThread::startGeneration( Okular::PixmapRequest * request )
-{
-#ifndef NDEBUG
-    // check if a generation is already running
-    if ( d->currentRequest )
-    {
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: requesting a pixmap "
-                  << "when another is being generated.";
-        delete request;
-        return;
-    }
-
-    // check if the mutex is already held
-    bool isLocked = true;
-    if (d->generator->userMutex()->tryLock()) {
-        d->generator->userMutex()->unlock();
-        isLocked = false;
-    }
-    if ( isLocked )
-    {
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: requesting a pixmap "
-                  << "with the mutex already held.";
-        delete request;
-        return;
-    }
-#endif
-    // set generation parameters and run thread
-    d->currentRequest = request;
-    start( QThread::InheritPriority );
-}
-
-void PDFPixmapGeneratorThread::endGeneration()
-{
-#ifndef NDEBUG
-    // check if a generation is already running
-    if ( !d->currentRequest )
-    {
-        kDebug(PDFDebug) << "PDFPixmapGeneratorThread: 'end generation' called "
-                  << "but generation was not started.";
-        return;
-    }
-#endif
-    // reset internal members preparing for a new generation
-    d->currentRequest = 0;
-}
-
-Okular::PixmapRequest *PDFPixmapGeneratorThread::request() const
-{
-    return d->currentRequest;
-}
-
-QImage * PDFPixmapGeneratorThread::takeImage() const
-{
-    QImage * img = d->m_image;
-    d->m_image = 0;
-    return img;
-}
-
-QList<Poppler::TextBox*> PDFPixmapGeneratorThread::takeText()
-{
-    QList<Poppler::TextBox*> tl = d->m_textList;
-    d->m_textList.clear();
-    return tl;
-}
-
-QLinkedList< Okular::ObjectRect * > PDFPixmapGeneratorThread::takeObjectRects() const
-{
-    d->m_rectsTaken = true;
-    QLinkedList< Okular::ObjectRect * > newrects = d->m_rects;
-    d->m_rects.clear();
-    return newrects;
-}
-
-void PDFPixmapGeneratorThread::run()
-// perform contents generation, when the MUTEX is already LOCKED
-// @see PDFGenerator::generatePixmap( .. ) (and be aware to sync the code)
-{
-    // compute dpi used to get an image with desired width and height
-    Okular::Page * page = d->currentRequest->page();
-    int width = d->currentRequest->width(),
-        height = d->currentRequest->height();
-    double pageWidth = page->width(),
-           pageHeight = page->height();
-
-    if ( page->rotation() % 2 )
-        qSwap( pageWidth, pageHeight );
-
-    // setup Okular:: output device: text page is generated only if we are at 72dpi.
-    // since we can pre-generate the TextPage at the right res.. why not?
-    bool genTextPage = !page->hasTextPage() &&
-                       ( width == page->width() ) &&
-                       ( height == page->height() );
-
-    // generate links rects only the first time
-    bool genObjectRects = !d->generator->rectsGenerated.at( page->number() );
-
-    // 0. LOCK s[tart locking XPDF thread unsafe classes]
-    d->generator->userMutex()->lock();
-
-    // 1. set OutputDev parameters and Generate contents
-    Poppler::Page *pp = d->generator->pdfdoc->page( page->number() );
-    
-    if (pp)
-    {
-        double fakeDpiX = width * d->generator->dpiX / pageWidth,
-            fakeDpiY = height * d->generator->dpiY / pageHeight;
-
-        // 2. grab data from the OutputDev and store it locally (note takeIMAGE)
-#ifndef NDEBUG
-        if ( d->m_image )
-            kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous image not taken";
-        if ( !d->m_textList.isEmpty() )
-            kDebug(PDFDebug) << "PDFPixmapGeneratorThread: previous text not taken";
-#endif
-        d->m_image = new QImage( pp->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 ) );
-        
-        if ( genObjectRects )
-        {
-            d->m_rects = generateLinks(pp->links());
-        }
-        else d->m_rectsTaken = false;
-
-        if ( genTextPage )
-        {
-            d->m_textList = pp->textList();
-        }
-        delete pp;
-    }
-    else
-    {
-        d->m_image = new QImage( width, height, QImage::Format_ARGB32 );
-        d->m_image->fill( Qt::white );
-    }
-    
-    // 3. [UNLOCK] mutex
-    d->generator->userMutex()->unlock();
-
-    // by ending the thread notifies the GUI thread that data is pending and can be read
 }
 
 #include "generator_pdf.moc"

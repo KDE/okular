@@ -67,6 +67,20 @@ class BrowserExtension;
 class ExportFormat;
 
 /**
+ * Describes the possible embedding modes of the part
+ *
+ * @since 0.14 (KDE 4.8)
+ */
+enum EmbedMode
+{
+    UnknownEmbedMode,
+    NativeShellMode,         // embedded in the native Okular' shell
+    PrintPreviewMode,        // embedded to show the print preview of a document
+    KHTMLPartMode,           // embedded in KHTML
+    ViewerWidgetMode,        // the part acts as a widget that can display all kinds of documents
+};
+
+/**
  * This is a "Part".  It that does all the real work in a KPart
  * application.
  *

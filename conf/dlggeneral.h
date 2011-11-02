@@ -12,7 +12,7 @@
 
 #include <qwidget.h>
 
-#include "core/global.h"
+#include "part.h"
 
 class Ui_DlgGeneralBase;
 

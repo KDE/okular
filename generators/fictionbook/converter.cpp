@@ -665,6 +665,9 @@ bool Converter::convertPoem( const QDomElement &element )
         } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
             if ( !convertEmptyLine( child ) )
                 return false;
+        } else if ( child.tagName() == QLatin1String( "stanza" ) ) {
+            if ( !convertStanza( child ) )
+                return false;
         }
 
         child = child.nextSiblingElement();
@@ -762,6 +765,30 @@ bool Converter::convertLink( const QDomElement &element )
         // external link
         Okular::BrowseAction *action = new Okular::BrowseAction( href );
         emit addAction( action, startPosition, endPosition );
+    }
+
+    return true;
+}
+
+bool Converter::convertStanza( const QDomElement &element )
+{
+    QDomElement child = element.firstChildElement();
+    while ( !child.isNull() ) {
+        if ( child.tagName() == QLatin1String( "title" ) ) {
+            if ( !convertTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "subtitle" ) ) {
+            if ( !convertSubTitle( child ) )
+                return false;
+        } else if ( child.tagName() == QLatin1String( "v" ) ) {
+            QTextBlockFormat format;
+            format.setTextIndent( 50 );
+            mCursor->insertBlock( format );
+            if ( !convertParagraph( child ) )
+                return false;
+        }
+
+        child = child.nextSiblingElement();
     }
 
     return true;

@@ -44,6 +44,7 @@ class Converter : public Okular::TextDocumentConverter
         bool convertStrong( const QDomElement &element );
         bool convertStrikethrough( const QDomElement &element );
         bool convertStyle( const QDomElement &element );
+        bool convertStanza( const QDomElement &element );
 
 
         bool convertTitleInfo( const QDomElement &element );

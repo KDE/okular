@@ -272,7 +272,7 @@ void Shell::fileOpen()
 
 void Shell::slotQuit()
 {
-    kapp->closeAllWindows();
+    close();
 }
 
 // only called when starting the program

@@ -39,6 +39,11 @@ class SearchPoint
         int offset_end;
 };
 
+static int qHash(const QRect &r)
+{
+    return r.left() * r.top() + r.right() * r.bottom();
+}
+
 /* text comparison functions */
 
 bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
@@ -1112,7 +1117,7 @@ void TextPagePrivate::removeSpace()
  * We will the TinyTextEntity from m_words and try to create
  * words from there.
  */
-QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
+QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
 {
     /**
      * At first we will copy m_words to tmpList. Then, we will traverse the
@@ -1131,7 +1136,7 @@ QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
      * Finally we copy the newList to m_words.
      */
 
-    QMap<int, RegionText> word_chars_map;
+    QHash<QRect, RegionText> word_chars_map;
     const TextList tmpList = m_words;
     TextList newList;
 
@@ -1222,11 +1227,9 @@ QMap<int, RegionText> TextPagePrivate::makeWordFromCharacters()
                                               (QString::NormalizationForm_KC), newRect ));
             const QRect rect = newRect.geometry(pageWidth,pageHeight);
             const RegionText regionWord(word,rect);
-            const int keyRect = rect.left() * rect.top()
-                                + rect.right() * rect.bottom();
 
             // there may be more than one element in the same key
-            word_chars_map.insertMulti(keyRect,regionWord);
+            word_chars_map.insertMulti(rect,regionWord);
 
             index++;
         }
@@ -1873,7 +1876,7 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
  * Break Words into Characters, takes Entities from m_words and for each of
  * them insert the character entities in tmp. Finally, copies tmp back to m_words
  */
-void TextPagePrivate::breakWordIntoCharacters(const QMap<int, RegionText> &word_chars_map)
+void TextPagePrivate::breakWordIntoCharacters(const QHash<QRect, RegionText> &word_chars_map)
 {
     const QString spaceStr(" ");
     TextList tmp;
@@ -1890,17 +1893,14 @@ void TextPagePrivate::breakWordIntoCharacters(const QMap<int, RegionText> &word_
             tmp.append( new TinyTextEntity(ent->text(),ent->area) );
         else
         {
-            const int key = rect.left() * rect.top()
-                            + rect.right() * rect.bottom();
-
-            RegionText word_text = word_chars_map.value(key);
+            RegionText word_text = word_chars_map.value(rect);
             TextList list = word_text.text();
 
-            const int count = word_chars_map.count(key);
+            const int count = word_chars_map.count(rect);
             if(count > 1)
             {
-                QMap<int, RegionText>::const_iterator it = word_chars_map.find(key);
-                while( it != word_chars_map.end() && it.key() == key )
+                QHash<QRect, RegionText>::const_iterator it = word_chars_map.find(rect);
+                while( it != word_chars_map.end() && it.key() == rect )
                 {
                     word_text = it.value();
                     list = word_text.text();
@@ -1931,7 +1931,7 @@ void TextPagePrivate::correctTextOrder()
     /**
      * Construct words from characters
      */
-    const QMap<int, RegionText> word_chars_map = makeWordFromCharacters();
+    const QHash<QRect, RegionText> word_chars_map = makeWordFromCharacters();
 
     SortedTextList lines;
     LineRect line_rects;

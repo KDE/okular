@@ -80,7 +80,7 @@ class TextPagePrivate
         /**
          * Create words from characters
          */
-        QMap<int, RegionText> makeWordFromCharacters();
+        QHash<QRect, RegionText> makeWordFromCharacters();
 
         /**
          * Create lines from TextList and sort them according to their position
@@ -109,7 +109,7 @@ class TextPagePrivate
         /**
          * Break the words into characters, so the text selection wors fine
          */
-        void breakWordIntoCharacters(const QMap<int, RegionText> &words_char_map);
+        void breakWordIntoCharacters(const QHash<QRect, RegionText> &words_char_map);
 
         // variables those can be accessed directly from TextPage
         TextList m_words;

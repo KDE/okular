@@ -1893,25 +1893,19 @@ void TextPagePrivate::breakWordIntoCharacters(const QHash<QRect, RegionText> &wo
             tmp.append( new TinyTextEntity(ent->text(),ent->area) );
         else
         {
-            RegionText word_text = word_chars_map.value(rect);
-            TextList list = word_text.text();
+            RegionText word_text;
 
-            const int count = word_chars_map.count(rect);
-            if(count > 1)
+            QHash<QRect, RegionText>::const_iterator it = word_chars_map.find(rect);
+            while( it != word_chars_map.end() && it.key() == rect )
             {
-                QHash<QRect, RegionText>::const_iterator it = word_chars_map.find(rect);
-                while( it != word_chars_map.end() && it.key() == rect )
-                {
-                    word_text = it.value();
-                    list = word_text.text();
+                word_text = it.value();
                     
-                    if(word_text.area() == rect && ent->text() == word_text.string())
-                        break;
+                if (ent->text() == word_text.string())
+                    break;
                     
-                    ++it;
-                }
+                ++it;
             }
-            tmp.append(list);
+            tmp.append(word_text.text());
         }
     }
     setWordList(tmp);

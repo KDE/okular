@@ -225,8 +225,15 @@ public:
         : m_region_text(list) ,m_area(area)
     {
     }
+    
+    inline QString string() const
+    {
+        QString res;
+        foreach(TinyTextEntity *te, m_region_text)
+            res += te->text();
+        return res;
+    }
 
-    // We assume text will be set only once at the time of object creation
     inline TextList text() const
     {
         return m_region_text;
@@ -1896,13 +1903,12 @@ void TextPagePrivate::breakWordIntoCharacters(const QMap<int, RegionText> &word_
                 while( it != word_chars_map.end() && it.key() == key )
                 {
                     word_text = it.value();
-                    it++;
-
                     list = word_text.text();
-                    const QRect regionRect = word_text.area();
-
-                    if(regionRect.left() == rect.left() && regionRect.top() == rect.top())
+                    
+                    if(word_text.area() == rect && ent->text() == word_text.string())
                         break;
+                    
+                    ++it;
                 }
             }
             tmp.append(list);

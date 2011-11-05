@@ -834,12 +834,21 @@ KUrl Part::realUrl() const
 
 // ViewerInterface
 
-void Part::showSourceLocation(const QString& fileName, int line, int column)
+void Part::showSourceLocation(const QString& fileName, int line, int column, bool showGraphically)
 {
     const QString u = QString( "src:%1 %2" ).arg( line ).arg( fileName );
     GotoAction action( QString(), u );
     m_document->processAction( &action );
-    m_pageView->setLastSourceLocationViewport( m_document->viewport() );
+    if( showGraphically )
+    {
+        m_pageView->setLastSourceLocationViewport( m_document->viewport() );
+    }
+}
+
+void Part::clearLastShownSourceLocation()
+{
+    m_pageView->clearLastSourceLocationViewport();
+    m_pageView->viewport()->update();
 }
 
 void Part::setWatchFileModeEnabled(bool enabled)

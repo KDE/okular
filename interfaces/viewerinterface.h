@@ -30,8 +30,16 @@ class OKULAR_EXPORT ViewerInterface
 
         /**
          * Show the specified source location centrally in the viewer.
+         *
+         * @param showGraphically controls whether the given source location will be
+         *        shown graphically in the viewer (if that feature is globally activated)
          */
-        virtual void showSourceLocation(const QString& fileName, int line, int column) = 0;
+        virtual void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true) = 0;
+
+        /**
+         * Clear the source location that was set last in the viewer.
+         */
+        virtual void clearLastShownSourceLocation() = 0;
 
         /**
         * Allows to control whether source locations are shown graphically, or not.

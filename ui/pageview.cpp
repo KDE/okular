@@ -275,6 +275,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseAnn = 0;
     d->tableDividersGuessed = false;
     d->viewportMoveActive = false;
+    d->lastSourceLocationViewportPageNumber = -1;
+    d->lastSourceLocationViewportNormalizedX = 0.0;
+    d->lastSourceLocationViewportNormalizedY = 0.0;
     d->viewportMoveTimer = 0;
     d->scrollIncrement = 0;
     d->autoScrollTimer = 0;
@@ -975,6 +978,13 @@ void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp
         d->lastSourceLocationViewportNormalizedY = 0.0;
     }
     d->lastSourceLocationViewportPageNumber = vp.pageNumber;
+}
+
+void PageView::clearLastSourceLocationViewport()
+{
+    d->lastSourceLocationViewportPageNumber = -1;
+    d->lastSourceLocationViewportNormalizedX = 0.0;
+    d->lastSourceLocationViewportNormalizedY = 0.0;
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

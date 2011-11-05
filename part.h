@@ -122,7 +122,9 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
 
         void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true);
         void clearLastShownSourceLocation();
+        bool isWatchFileModeEnabled() const;
         void setWatchFileModeEnabled(bool enable);
+        bool areSourceLocationsShownGraphically() const;
         void setShowSourceLocationsGraphically(bool show);
 
     public slots:                // dbus

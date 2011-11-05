@@ -851,6 +851,11 @@ void Part::clearLastShownSourceLocation()
     m_pageView->viewport()->update();
 }
 
+bool Part::isWatchFileModeEnabled() const
+{
+    return !m_watcher->isStopped();
+}
+
 void Part::setWatchFileModeEnabled(bool enabled)
 {
     if ( enabled && m_watcher->isStopped() )
@@ -862,6 +867,11 @@ void Part::setWatchFileModeEnabled(bool enabled)
         m_dirtyHandler->stop();
         m_watcher->stopScan();
     }
+}
+
+bool Part::areSourceLocationsShownGraphically() const
+{
+    return Okular::Settings::showSourceLocationsGraphically();
 }
 
 void Part::setShowSourceLocationsGraphically(bool show)

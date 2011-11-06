@@ -842,6 +842,7 @@ void Part::showSourceLocation(const QString& fileName, int line, int column, boo
     if( showGraphically )
     {
         m_pageView->setLastSourceLocationViewport( m_document->viewport() );
+        m_pageView->viewport()->update();
     }
 }
 
@@ -881,7 +882,7 @@ void Part::setShowSourceLocationsGraphically(bool show)
         return;
     }
     Okular::Settings::setShowSourceLocationsGraphically( show );
-    m_pageView->update();
+    m_pageView->viewport()->update();
 }
 
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)

@@ -965,6 +965,21 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     }
 }
 
+bool PageView::areSourceLocationsShownGraphically() const
+{
+    return Okular::Settings::showSourceLocationsGraphically();
+}
+
+void PageView::setShowSourceLocationsGraphically(bool show)
+{
+    if( show == Okular::Settings::showSourceLocationsGraphically() )
+    {
+        return;
+    }
+    Okular::Settings::setShowSourceLocationsGraphically( show );
+    viewport()->update();
+}
+
 void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp )
 {
     if( vp.rePos.enabled )
@@ -978,6 +993,7 @@ void PageView::setLastSourceLocationViewport( const Okular::DocumentViewport& vp
         d->lastSourceLocationViewportNormalizedY = 0.0;
     }
     d->lastSourceLocationViewportPageNumber = vp.pageNumber;
+    viewport()->update();
 }
 
 void PageView::clearLastSourceLocationViewport()
@@ -985,6 +1001,7 @@ void PageView::clearLastSourceLocationViewport()
     d->lastSourceLocationViewportPageNumber = -1;
     d->lastSourceLocationViewportNormalizedX = 0.0;
     d->lastSourceLocationViewportNormalizedY = 0.0;
+    viewport()->update();
 }
 
 void PageView::notifyViewportChanged( bool smoothMove )

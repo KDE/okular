@@ -842,14 +842,12 @@ void Part::showSourceLocation(const QString& fileName, int line, int column, boo
     if( showGraphically )
     {
         m_pageView->setLastSourceLocationViewport( m_document->viewport() );
-        m_pageView->viewport()->update();
     }
 }
 
 void Part::clearLastShownSourceLocation()
 {
     m_pageView->clearLastSourceLocationViewport();
-    m_pageView->viewport()->update();
 }
 
 bool Part::isWatchFileModeEnabled() const
@@ -872,17 +870,12 @@ void Part::setWatchFileModeEnabled(bool enabled)
 
 bool Part::areSourceLocationsShownGraphically() const
 {
-    return Okular::Settings::showSourceLocationsGraphically();
+    return m_pageView->areSourceLocationsShownGraphically();
 }
 
 void Part::setShowSourceLocationsGraphically(bool show)
 {
-    if( show == Okular::Settings::showSourceLocationsGraphically() )
-    {
-        return;
-    }
-    Okular::Settings::setShowSourceLocationsGraphically( show );
-    m_pageView->viewport()->update();
+    m_pageView->setShowSourceLocationsGraphically(show);
 }
 
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)

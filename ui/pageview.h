@@ -103,6 +103,9 @@ Q_OBJECT
         QPoint contentAreaPosition() const;
         QPoint contentAreaPoint( const QPoint & pos ) const;
 
+        bool areSourceLocationsShownGraphically() const;
+        void setShowSourceLocationsGraphically(bool show);
+
         void setLastSourceLocationViewport( const Okular::DocumentViewport& vp );
         void clearLastSourceLocationViewport();
     public slots:

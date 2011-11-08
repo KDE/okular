@@ -31,6 +31,9 @@ class OKULAR_EXPORT ViewerInterface
         /**
          * Show the specified source location centrally in the viewer.
          *
+         * @param fileName source file name
+         * @param line in the source file, starts from 0
+         * @param column in the source file, starts from 0
          * @param showGraphically controls whether the given source location will be
          *                        shown graphically in the viewer (if that feature is globally activated)
          */

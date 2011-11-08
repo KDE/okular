@@ -836,7 +836,7 @@ KUrl Part::realUrl() const
 
 void Part::showSourceLocation(const QString& fileName, int line, int column, bool showGraphically)
 {
-    const QString u = QString( "src:%1 %2" ).arg( line ).arg( fileName );
+    const QString u = QString( "src:%1 %2" ).arg( line + 1 ).arg( fileName );
     GotoAction action( QString(), u );
     m_document->processAction( &action );
     if( showGraphically )

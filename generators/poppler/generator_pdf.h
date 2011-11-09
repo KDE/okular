@@ -19,7 +19,6 @@
 
 #include <qbitarray.h>
 #include <qpointer.h>
-#include <qthread.h>
 
 #include <core/document.h>
 #include <core/generator.h>
@@ -33,7 +32,6 @@ class SourceReference;
 }
 
 class PDFOptionsPage;
-class PDFPixmapGeneratorThread;
 
 /**
  * @short A generator that builds contents from a PDF document.
@@ -46,8 +44,6 @@ class PDFPixmapGeneratorThread;
  * For generating page contents we tell PDFDoc to render a page and grab
  * contents from out OutputDevs when rendering finishes.
  *
- * Background asynchronous contents providing is done via a QThread inherited
- * class defined at the bottom of the file.
  */
 class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::PrintInterface, public Okular::SaveInterface
 {
@@ -75,8 +71,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool isAllowed( Okular::Permission permission ) const;
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
+        QImage image( Okular::PixmapRequest *page );
 
         // [INHERITED] print page using an already configured kprinter
         bool print( QPrinter& printer );
@@ -108,15 +103,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         const Okular::SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
         Okular::Generator::PrintError printError() const;
 
-    private slots:
-        // (async related) receive data from the generator thread
-        void threadFinished();
-
     private:
         bool init(QVector<Okular::Page*> & pagesVector, const QString &walletKey);
-
-        // friend class to access private document related variables
-        friend class PDFPixmapGeneratorThread;
 
         // create the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );
@@ -140,12 +128,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         // poppler dependant stuff
         Poppler::Document *pdfdoc;
 
-        // asynchronous generation related stuff
-        PDFPixmapGeneratorThread * generatorThread;
 
         // misc variables for document info and synopsis caching
-        bool ready;
-        Okular::PixmapRequest * pixmapRequest;
         bool docInfoDirty;
         Okular::DocumentInfo docInfo;
         bool docSynopsisDirty;
@@ -163,36 +147,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         synctex_scanner_t synctex_scanner;
         
         PrintError lastPrintError;
-};
-
-
-/**
- * @short A thread that builds contents for PDFGenerator in the background.
- *
- */
-class PDFPixmapGeneratorThread : public QThread
-{
-    public:
-        PDFPixmapGeneratorThread( PDFGenerator * generator );
-        ~PDFPixmapGeneratorThread();
-
-        // set the request to the thread (it will be reparented)
-        void startGeneration( Okular::PixmapRequest * request );
-        // end generation
-        void endGeneration();
-
-        Okular::PixmapRequest *request() const;
-
-        // methods for getting contents from the GUI thread
-        QImage * takeImage() const;
-        QList<Poppler::TextBox*> takeText();
-        QLinkedList< Okular::ObjectRect * > takeObjectRects() const;
-
-    private:
-        // can't be called from the outside (but from startGeneration)
-        void run();
-
-        class PPGThreadPrivate * d;
 };
 
 #endif

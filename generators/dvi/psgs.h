@@ -16,8 +16,6 @@
 #include <QHash>
 #include <QObject>
 
-#include <QThread>
-
 class KUrl;
 class PageNumber;
 class QPainter;

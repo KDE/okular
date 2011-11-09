@@ -23,6 +23,9 @@
 #include <QtAlgorithms>
 #include <QVarLengthArray>
 
+#include <iostream>
+using namespace std;
+
 using namespace Okular;
 
 class SearchPoint
@@ -758,6 +761,12 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
+
+
+            //just a little experiment for pdf
+            if(str.at(0).toAscii() == '-')
+                continue;
+            cout << str.at(0).toAscii() << endl;
 
             int resStrLen = 0, resQueryLen = 0;
             if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),

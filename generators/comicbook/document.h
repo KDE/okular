@@ -19,6 +19,10 @@ class QSize;
 class Unrar;
 class Directory;
 
+namespace Okular {
+class Page;
+}
+
 namespace ComicBook {
 
 class Document
@@ -30,16 +34,14 @@ class Document
         bool open( const QString &fileName );
         void close();
 
-        int pages() const;
+        void pages( QVector<Okular::Page*> * pagesVector );
         QStringList pageTitles() const;
 
         QImage pageImage( int page ) const;
-        QSize pageSize( int page ) const;
 
         QString lastErrorString() const;
 
     private:
-        void extractImageFiles( const QStringList& );
         bool processArchive();
 
         QStringList mPageMap;
@@ -48,6 +50,7 @@ class Document
         KArchive *mArchive;
         KArchiveDirectory *mArchiveDir;
         QString mLastErrorString;
+        QStringList mEntries;
 };
 
 }

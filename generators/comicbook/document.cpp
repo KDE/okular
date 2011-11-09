@@ -9,6 +9,7 @@
 
 #include "document.h"
 
+#include <QtCore/QScopedPointer>
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 
@@ -18,6 +19,8 @@
 #include <ktar.h>
 
 #include <memory>
+
+#include <core/page.h>
 
 #include "unrar.h"
 #include "directory.h"
@@ -95,7 +98,7 @@ bool Document::open( const QString &fileName )
             return false;
         }
 
-        extractImageFiles( mUnrar->list() );
+        mEntries = mUnrar->list();
     } else if ( mime->is( "inode/directory" ) ) {
         mDirectory = new Directory();
 
@@ -106,7 +109,7 @@ bool Document::open( const QString &fileName )
             return false;
         }
 
-        extractImageFiles( mDirectory->list() );
+        mEntries = mDirectory->list();
     } else {
         mLastErrorString = i18n( "Unknown ComicBook format." );
         return false;
@@ -129,6 +132,7 @@ void Document::close()
     delete mUnrar;
     mUnrar = 0;
     mPageMap.clear();
+    mEntries.clear();
 }
 
 bool Document::processArchive() {
@@ -149,30 +153,47 @@ bool Document::processArchive() {
 
     mArchiveDir = const_cast<KArchiveDirectory*>( directory );
 
-    QStringList entries;
-    imagesInArchive( QString(), mArchiveDir, &entries );
+    imagesInArchive( QString(), mArchiveDir, &mEntries );
 
-    extractImageFiles( entries );
     return true;
 }
 
-void Document::extractImageFiles( const QStringList &list )
+void Document::pages( QVector<Okular::Page*> * pagesVector )
 {
-    QStringList files( list );
+    qSort( mEntries.begin(), mEntries.end(), caseSensitiveNaturalOrderLessThen );
+    QScopedPointer< QIODevice > dev;
 
-    qSort( files.begin(), files.end(), caseSensitiveNaturalOrderLessThen );
+    int count = 0;
+    pagesVector->clear();
+    pagesVector->resize( mEntries.size() );
+    QImageReader reader;
+    foreach(const QString &file, mEntries) {
+        if ( mArchive ) {
+            const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( file ) );
+            if ( entry ) {
+                dev.reset( entry->createDevice() );
+            }
+        } else if ( mDirectory ) {
+            dev.reset( mDirectory->createDevice( file ) );
+        } else {
+            dev.reset( mUnrar->createDevice( file ) );
+        }
 
-    foreach(const QString &f, files) {
-        const QImageReader r(f);
-
-        if ( r.canRead() )
-            mPageMap.append(f);
+        if ( ! dev.isNull() ) {
+            reader.setDevice( dev.data() );
+            if ( reader.canRead() )
+            {
+                QSize pageSize = reader.size();
+                if ( !pageSize.isValid() ) {
+                    pageSize = reader.read().size();
+                }
+                pagesVector->replace( count, new Okular::Page( count, pageSize.width(), pageSize.height(), Okular::Rotation0 ) );
+                mPageMap.append(file);
+                count++;
+            }
+        }
     }
-}
-
-int Document::pages() const
-{
-    return mPageMap.count();
+    pagesVector->resize( count );
 }
 
 QStringList Document::pageTitles() const
@@ -193,36 +214,6 @@ QImage Document::pageImage( int page ) const
     }
 
     return QImage();
-}
-
-QSize Document::pageSize( int page ) const
-{
-    std::auto_ptr< QIODevice > dev;
-
-    if ( mArchive ) {
-        const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( mPageMap[ page ] ) );
-        if ( entry ) {
-            dev.reset( entry->createDevice() );
-        }
-
-    } else if ( mDirectory ) {
-        dev.reset( mDirectory->createDevice( mPageMap[ page ] ) );
-    } else {
-        dev.reset( mUnrar->createDevice( mPageMap[ page ] ) );
-    }
-
-    if ( dev.get() ) {
-        QImageReader reader( dev.get() );
-        if ( reader.canRead() ) {
-            QSize s = reader.size();
-            if ( !s.isValid() ) {
-                s = reader.read().size();
-            }
-            return s;
-        }
-    }
-
-    return QSize();
 }
 
 QString Document::lastErrorString() const

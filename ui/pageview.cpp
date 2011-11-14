@@ -1327,7 +1327,7 @@ void PageView::paintEvent(QPaintEvent *pe)
             if ( useSubdivision )
             {
                 // set 'contentsRect' to a part of the sub-divided region
-                contentsRect = allRects[i].normalized().intersect( viewportRect );
+                contentsRect = allRects[i].translated( areaPos ).intersect( viewportRect );
                 if ( !contentsRect.isValid() )
                     continue;
             }

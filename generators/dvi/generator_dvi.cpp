@@ -425,6 +425,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
             Okular::FontInfo of;
             QString name;
             int zoom = (int)(font->enlargement*100 + 0.5);
+#ifdef HAVE_FREETYPE
             if ( font->getFullFontName().isEmpty() ) 
             {
                 name = QString( "%1, %2%" )
@@ -438,6 +439,11 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
                         .arg( font->getFullFontName() ) 
                         .arg( zoom ); 
             }
+#else
+            name = QString( "%1, %2%" )
+                    .arg( font->fontname )
+                    .arg( zoom );
+#endif
             of.setName( name );
 
             QString fontFileName;

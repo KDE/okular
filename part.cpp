@@ -487,6 +487,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     m_saveCopyAs = KStandardAction::saveAs( this, SLOT( slotSaveCopyAs() ), ac );
     m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
+    m_saveCopyAs->setShortcut( KShortcut() );
     ac->addAction( "file_save_copy", m_saveCopyAs );
     m_saveCopyAs->setEnabled( false );
 

@@ -2624,6 +2624,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                             textToClipboard->setEnabled( false );
                             textToClipboard->setText( i18n("Copy forbidden by DRM") );
                         }
+                        else if ( d->selectedText().isEmpty() )
+                        {
+                            textToClipboard->setEnabled( false );
+                            textToClipboard->setText( i18n("Nothing to copy") );
+                        }
                         else
                         {
                             addWebShortcutsMenu( &menu, d->selectedText() );

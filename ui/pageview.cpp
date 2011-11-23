@@ -2610,9 +2610,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( !d->mousePressPos.isNull() && rightButton )
                 {
                     PageViewItem* item = pickItemOnPoint(eventPos.x(),eventPos.y());
-                    const Okular::Page *page = item->page();
+                    const Okular::Page *page;
                     //if there is text selected in the page
-                    if(page->textSelection())
+                    if (item && (page = item->page())->textSelection())
                     {
                         KMenu menu( this );
                         QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );

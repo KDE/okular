@@ -919,6 +919,11 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     if ( d->aZoomFitText )
         d->aZoomFitText->setEnabled( haspages );
 
+    if ( d->aZoom )
+    {
+        d->aZoom->selectableActionGroup()->setEnabled( haspages );
+        d->aZoom->setEnabled( haspages );
+    }
     if ( d->aZoomIn )
         d->aZoomIn->setEnabled( haspages );
     if ( d->aZoomOut )
@@ -3430,7 +3435,12 @@ void PageView::updateZoomText()
         selIdx = 1;
     else if ( d->zoomMode == ZoomFitText )
         selIdx = 2;
+    // we have to temporarily enable the actions as otherwise we can't set a new current item
+    d->aZoom->setEnabled( true );
+    d->aZoom->selectableActionGroup()->setEnabled( true );
     d->aZoom->setCurrentItem( selIdx );
+    d->aZoom->setEnabled( d->items.size() > 0 );
+    d->aZoom->selectableActionGroup()->setEnabled( d->items.size() > 0 );
 }
 
 void PageView::updateCursor( const QPoint &p )

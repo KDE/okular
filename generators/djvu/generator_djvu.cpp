@@ -240,13 +240,14 @@ QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) c
 Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
 {
     userMutex()->lock();
+    QList<KDjVu::TextEntity> te;
 #if 0
-    QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "char" );
+    m_djvu->textEntities( page->number(), "char" );
+#endif
     if ( te.isEmpty() )
         te = m_djvu->textEntities( page->number(), "word" );
-#else
-    QList<KDjVu::TextEntity> te = m_djvu->textEntities( page->number(), "word" );
-#endif
+    if ( te.isEmpty() )
+        te = m_djvu->textEntities( page->number(), "line" );
     userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();

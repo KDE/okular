@@ -319,12 +319,12 @@ void AnnotWindow::renderLatex( bool render )
                 renderLatex( false );
                 break;
             case GuiUtils::LatexRenderer::LatexFailed:
-                KMessageBox::detailedSorry( this, i18n( "A problem occured during the execution of the 'latex' command." ), latexOutput, i18n( "LaTeX rendering failed" ) );
+                KMessageBox::detailedSorry( this, i18n( "A problem occurred during the execution of the 'latex' command." ), latexOutput, i18n( "LaTeX rendering failed" ) );
                 m_title->uncheckLatexButton();
                 renderLatex( false );
                 break;
             case GuiUtils::LatexRenderer::DvipngFailed:
-                KMessageBox::sorry( this, i18n( "A problem occured during the execution of the 'dvipng' command." ), i18n( "LaTeX rendering failed" ) );
+                KMessageBox::sorry( this, i18n( "A problem occurred during the execution of the 'dvipng' command." ), i18n( "LaTeX rendering failed" ) );
                 m_title->uncheckLatexButton();
                 renderLatex( false );
                 break;

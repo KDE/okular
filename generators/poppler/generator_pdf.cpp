@@ -1147,22 +1147,42 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
 #ifdef PDFGENERATOR_DEBUG
     kDebug(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
 #endif
-    int charCount=0;
-    int j;
     QString s;
+    bool addChar;
     foreach (Poppler::TextBox *word, text)
     {
-        charCount=word->text().length();
+        const int qstringCharCount = word->text().length();
         next=word->nextWord();
-        for (j = 0; j < charCount; j++)
+        int textBoxChar = 0;
+        for (int j = 0; j < qstringCharCount; j++)
         {
-            s = word->text().at(j);
-            QRectF charBBox = word->charBoundingBox(j);
-            append(ktp, (j==charCount-1 && !next ) ? (s + '\n') : s,
-                charBBox.left()/width,
-                charBBox.bottom()/height,
-                charBBox.right()/width,
-                charBBox.top()/height);
+            const QChar c = word->text().at(j);
+            if (c.isHighSurrogate())
+            {
+                s = c;
+                addChar = false;
+            }
+            else if (c.isLowSurrogate())
+            {
+                s += c;
+                addChar = true;
+            }
+            else
+            {
+                s = c;
+                addChar = true;
+            }
+            
+            if (addChar)
+            {
+                QRectF charBBox = word->charBoundingBox(textBoxChar);
+                append(ktp, (j==qstringCharCount-1 && !next) ? (s + "\n") : s,
+                    charBBox.left()/width,
+                    charBBox.bottom()/height,
+                    charBBox.right()/width,
+                    charBBox.top()/height);
+                textBoxChar++;
+            }
         }
 
         if ( word->hasSpaceAfter() && next )

@@ -1575,7 +1575,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         for(int j = 0 ; j < list.length() ; ++j )
         {
             TinyTextEntity *ent = list.at(j);
-            QRect entRect = ent->area.geometry(pageWidth,pageHeight);
+            const QRect entRect = ent->area.geometry(pageWidth, pageHeight);
 
             // calculate vertical projection profile proj_on_xaxis1
             for(int k = entRect.left() ; k <= entRect.left() + entRect.width() ; ++k)

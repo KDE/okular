@@ -13,6 +13,7 @@
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
+#include <QtCore/QPair>
 #include <QtGui/QMatrix>
 
 class SearchPoint;
@@ -27,12 +28,6 @@ typedef QList< TinyTextEntity* > TextList;
 
 typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
                                           int *fromLength, int *toLength );
-
-/**
- * Make a line of TextList and store the bounding rectangle of line
- */
-typedef QList<TextList> SortedTextList;
-typedef QList<QRect> LineRect;
 
 /**
  * A list of RegionText. It keeps a bunch of TextList with their bounding rectangles
@@ -85,7 +80,7 @@ class TextPagePrivate
         /**
          * Create lines from TextList and sort them according to their position
          */
-        void makeAndSortLines(const TextList &words, SortedTextList *lines, LineRect *line_rects) const;
+        QList< QPair<TextList, QRect> > makeAndSortLines(const TextList &words) const;
 
         /**
          * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines

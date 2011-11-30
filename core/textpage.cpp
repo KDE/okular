@@ -1245,7 +1245,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
 /**
  * Create Lines from the words and sort them
  */
-void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList *lines, LineRect *line_rects) const
+QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList &wordsTmp) const
 {
     /**
      * We cannot assume that the generator will give us texts in the right order.
@@ -1257,6 +1257,8 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
      * 2. Create textline where there is y overlap between TinyTextEntity 's
      * 3. Within each line sort the TinyTextEntity 's by x0(left)
      */
+    
+    QList< QPair<TextList, QRect> > lines;
 
     /*
      Make a new copy of the TextList in the words, so that the wordsTmp and lines do
@@ -1283,13 +1285,13 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
         const QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
-        for( int i = 0 ; i < lines->length() ; i++)
+        for( int i = 0 ; i < lines.length() ; i++)
         {
             /* the line area which will be expanded
                line_rects is only necessary to preserve the topmin and bottommax of all
                the texts in the line, left and right is not necessary at all
             */
-            QRect &lineArea = (*line_rects)[i];
+            QRect &lineArea = lines[i].second;
             const int text_y1 = elementArea.top() ,
                       text_y2 = elementArea.top() + elementArea.height() ,
                       text_x1 = elementArea.left(),
@@ -1305,7 +1307,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
              */
             if(doesConsumeY(elementArea,lineArea,70))
             {
-                TextList &line = (*lines)[i];
+                TextList &line = lines[i].first;
                 line.append(*it);
 
                 const int newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
@@ -1327,17 +1329,18 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
         {
             TextList tmp;
             tmp.append((*it));
-            lines->append(tmp);
-            line_rects->append(elementArea);
+            lines.append(QPair<TextList, QRect>(tmp, elementArea));
         }
     }
 
     // Step 3
-    for(int i = 0 ; i < lines->length() ; i++)
+    for(int i = 0 ; i < lines.length() ; i++)
     {
-        TextList &list = (*lines)[i];
-        qSort(list.begin(),list.end(),compareTinyTextEntityX);
+        TextList &list = lines[i].first;
+        qSort(list.begin(), list.end(), compareTinyTextEntityX);
     }
+    
+    return lines;
 }
 
 /**
@@ -1355,21 +1358,18 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     /**
      * Step 0
      */
-    SortedTextList lines;
-    LineRect line_rects;
-
-    makeAndSortLines(words, &lines, &line_rects);
+    const QList< QPair<TextList, QRect> > sortedLines = makeAndSortLines(words);
 
     /**
      * Step 1
      */
     QMap<int,int> line_space_stat;
-    for(int i = 0 ; i < line_rects.length(); i++)
+    for(int i = 0 ; i < sortedLines.length(); i++)
     {
-        const QRect rectUpper = line_rects.at(i);
+        const QRect rectUpper = sortedLines.at(i).second;
 
-        if(i+1 == line_rects.length()) break;
-        const QRect rectLower = line_rects.at(i+1);
+        if(i+1 == sortedLines.length()) break;
+        const QRect rectLower = sortedLines.at(i+1).second;
 
         int linespace = rectLower.top() - (rectUpper.top() + rectUpper.height());
         if(linespace < 0) linespace =-linespace;
@@ -1404,14 +1404,14 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
 
     // Space in every line
-    for(int i = 0 ; i < lines.length() ; i++)
+    for(int i = 0 ; i < sortedLines.length() ; i++)
     {
-        TextList list = lines.at(i);
+        const TextList list = sortedLines.at(i).first;
         QList<QRect> line_space_rects;
         int maxSpace = 0, minSpace = pageWidth;
 
         // for every TinyTextEntity element in the line
-        TextList::Iterator it = list.begin(), itEnd = list.end();
+        TextList::ConstIterator it = list.begin(), itEnd = list.end();
         QRect max_area1,max_area2;
         QString before_max, after_max;
 
@@ -1513,12 +1513,12 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     *col_spacing = col_space_stat.key(*col_spacing);
 
     // if there is just one line in a region, there is no point in dividing it
-    if(lines.length() == 1)
+    if(sortedLines.length() == 1)
         *word_spacing = *col_spacing;
     
-    for(int j = 0 ; j < lines.length() ; ++j )
+    for(int j = 0 ; j < sortedLines.length() ; ++j )
     {
-        qDeleteAll(lines.at(j));
+        qDeleteAll(sortedLines.at(j).first);
     }
 }
 
@@ -1816,16 +1816,14 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
     for(int j = 0 ; j < tree.length() ; j++)
     {
         RegionText &tmpRegion = tree[j];
-        SortedTextList lines;
-        LineRect line_rects;
 
         // Step 01
-        makeAndSortLines(tmpRegion.text(), &lines, &line_rects);
+        QList< QPair<TextList, QRect> > sortedLines = makeAndSortLines(tmpRegion.text());
 
         // Step 02
-        for(int i = 0 ; i < lines.length() ; i++)
+        for(int i = 0 ; i < sortedLines.length() ; i++)
         {
-            TextList &list = lines[i];
+            TextList &list = sortedLines[i].first;
             for(int k = 0 ; k < list.length() ; k++ )
             {
                 const QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
@@ -1856,9 +1854,9 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
         }
 
         TextList tmpList;
-        for(int i = 0 ; i < lines.length() ; i++)
+        for(int i = 0 ; i < sortedLines.length() ; i++)
         {
-            tmpList += lines.at(i);
+            tmpList += sortedLines.at(i).first;
         }
         tmpRegion.setText(tmpList);
     }

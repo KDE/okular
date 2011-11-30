@@ -1200,7 +1200,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
 
             space = elementArea.left() - lineArea.right();
 
-            if (space > 0 || space < 0)
+            if (space != 0)
             {
                 it--;
                 break;

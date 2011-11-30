@@ -1546,7 +1546,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
         for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
 
-        TextList list = node.text();
+        const TextList list = node.text();
 
         // Calculate tcx and tcy locally for each new region
         if(countLoop++)

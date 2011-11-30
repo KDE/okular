@@ -1220,7 +1220,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
         }
 
         // if newString is not empty, save it
-        if (newString.length())
+        if (!newString.isEmpty())
         {
             const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
             newList.append(new TinyTextEntity(newString.normalized

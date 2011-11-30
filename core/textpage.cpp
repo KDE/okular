@@ -1245,7 +1245,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
 /**
  * Create Lines from the words and sort them
  */
-void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList *lines, LineRect *line_rects)
+void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList *lines, LineRect *line_rects) const
 {
     /**
      * We cannot assume that the generator will give us texts in the right order.

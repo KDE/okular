@@ -1524,7 +1524,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
     // start the tree with the root, it is our only region at the start
     tree.push_back(root);
 
-    int i = 0, j, k;
+    int i = 0;
 
     // while traversing the tree has not been ended
     while(i < tree.length())
@@ -1542,8 +1542,8 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         QVarLengthArray<int> proj_on_xaxis(size_proj_x);
         QVarLengthArray<int> proj_on_yaxis(size_proj_y);
 
-        for( j = 0 ; j < size_proj_y ; j++ ) proj_on_yaxis[j] = 0;
-        for( j = 0 ; j < size_proj_x ; j++ ) proj_on_xaxis[j] = 0;
+        for( int j = 0 ; j < size_proj_y ; ++j ) proj_on_yaxis[j] = 0;
+        for( int j = 0 ; j < size_proj_x ; ++j ) proj_on_xaxis[j] = 0;
 
         const TextList list = node.text();
 
@@ -1554,7 +1554,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
 
         makeAndSortLines(list, &lines, &line_rects);
         calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &column_spacing);
-        for(j = 0 ; j < lines.length() ; j++)
+        for(int j = 0 ; j < lines.length() ; ++j )
         {
             qDeleteAll(lines.at(j));
         }   
@@ -1564,38 +1564,38 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         const int tcy = line_spacing * 2;
 
         int maxX = 0 , maxY = 0;
-        int avgX = 0 ;
+        int avgX = 0;
         int count;
 
         // for every text in the region
-        for( j = 0 ; j < list.length() ; j++ )
+        for(int j = 0 ; j < list.length() ; ++j )
         {
             TinyTextEntity *ent = list.at(j);
             QRect entRect = ent->area.geometry(pageWidth,pageHeight);
 
             // calculate vertical projection profile proj_on_xaxis1
-            for(k = entRect.left() ; k <= entRect.left() + entRect.width() ; k++)
+            for(int k = entRect.left() ; k <= entRect.left() + entRect.width() ; ++k)
             {
                 if( ( k-regionRect.left() ) < size_proj_x && ( k-regionRect.left() ) >= 0 )
                     proj_on_xaxis[k - regionRect.left()] += entRect.height();
             }
 
             // calculate horizontal projection profile in the same way
-            for(k = entRect.top() ; k <= entRect.top() + entRect.height() ; k++)
+            for(int k = entRect.top() ; k <= entRect.top() + entRect.height() ; ++k)
             {
                 if( ( k-regionRect.top() ) < size_proj_y && ( k-regionRect.top() ) >= 0 )
                     proj_on_yaxis[k - regionRect.top()] += entRect.width();
             }
         }
 
-        for( j = 0 ; j < size_proj_y ; j++ )
+        for( int j = 0 ; j < size_proj_y ; ++j )
         {
             if (proj_on_yaxis[j] > maxY)
                 maxY = proj_on_yaxis[j];
         }
 
         avgX = count = 0;
-        for( j = 0 ; j < size_proj_x ; j++ )
+        for( int j = 0 ; j < size_proj_x ; ++j )
         {
             if(proj_on_xaxis[j] > maxX) maxX = proj_on_xaxis[j];
             if(proj_on_xaxis[j])
@@ -1629,9 +1629,9 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         regionRect.setBottom(old_top + yend);
 
         int tnx = (int)((double)avgX * 10.0 / 100.0 + 0.5), tny = 0;
-        for( j = 0 ; j < size_proj_x ; j++ )
+        for( int j = 0 ; j < size_proj_x ; ++j )
             proj_on_xaxis[j] -= tnx;
-        for(j = 0 ; j < size_proj_y ; j++)
+        for( int j = 0 ; j < size_proj_y ; ++j )
             proj_on_yaxis[j] -= tny;
 
         /**
@@ -1641,7 +1641,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         int begin = -1, end = -1;
 
         // find all hor_gaps and find the maximum between them
-        for(j = 1 ; j < size_proj_y ; j++)
+        for(int j = 1 ; j < size_proj_y ; ++j)
         {
             //transition from white to black
             if(begin >= 0 && proj_on_yaxis[j-1] <= 0
@@ -1666,7 +1666,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         int gap_ver = -1, pos_ver = -1;
 
         //find all the ver_gaps and find the maximum between them
-        for(j = 1 ; j < size_proj_x ; j++)
+        for(int j = 1 ; j < size_proj_x ; ++j)
         {
             //transition from white to black
             if(begin >= 0 && proj_on_xaxis[j-1] <= 0
@@ -1743,7 +1743,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         // horizontal cut, topRect and bottomRect
         if(cut_hor)
         {
-            for( j = 0 ; j < list.length() ; j++ )
+            for( int j = 0 ; j < list.length() ; ++j )
             {
                 ent = list.at(j);
                 entRect = ent->area.geometry(pageWidth,pageHeight);
@@ -1764,7 +1764,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         //vertical cut, leftRect and rightRect
         else if(cut_ver)
         {
-            for( j = 0 ; j < list.length() ; j++ )
+            for( int j = 0 ; j < list.length() ; ++j )
             {
                 ent = list.at(j);
                 entRect = ent->area.geometry(pageWidth,pageHeight);

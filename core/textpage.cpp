@@ -1155,14 +1155,14 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
         tmpIt = it;
         int space = 0;
 
-        while(!space )
+        while (!space)
         {
-            if(textString.length())
+            if (textString.length())
             {
                 newString.append(textString);
 
                 // when textString is the start of the word
-                if(tmpIt == it)
+                if (tmpIt == it)
                 {
                     NormalizedRect newRect(lineArea,pageWidth,pageHeight);
                     word.append(new TinyTextEntity(textString.normalized
@@ -1176,17 +1176,17 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
                 }
             }
 
-            it++;
+            ++it;
 
             /*
              we must have to put this line before the if condition of it==itEnd
              otherwise the last character can be missed
              */
-            if(it == itEnd) break;
+            if (it == itEnd) break;
             elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-            if(!doesConsumeY(elementArea,lineArea,60))
+            if (!doesConsumeY(elementArea, lineArea, 60))
             {
-                it--;
+                --it;
                 break;
             }
 
@@ -1200,7 +1200,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
 
             space = elementArea.left() - lineArea.right();
 
-            if(space > 0 || space < 0)
+            if (space > 0 || space < 0)
             {
                 it--;
                 break;
@@ -1220,16 +1220,16 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
         }
 
         // if newString is not empty, save it
-        if(newString.length())
+        if (newString.length())
         {
-            const NormalizedRect newRect(lineArea,pageWidth,pageHeight);
+            const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
             newList.append(new TinyTextEntity(newString.normalized
-                                              (QString::NormalizationForm_KC), newRect ));
-            const QRect rect = newRect.geometry(pageWidth,pageHeight);
+                                              (QString::NormalizationForm_KC), newRect));
+            const QRect rect = newRect.geometry(pageWidth, pageHeight);
             const RegionText regionWord(word,rect);
 
             // there may be more than one element in the same key
-            word_chars_map.insertMulti(rect,regionWord);
+            word_chars_map.insertMulti(rect, regionWord);
 
             index++;
         }

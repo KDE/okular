@@ -92,7 +92,7 @@ class TextPagePrivate
          * we made
          */
         void calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing,
-                                             int *line_spacing, int *column_spacing);
+                                             int *line_spacing, int *column_spacing) const;
 
         /**
          * Functions necessary for document file segmentation into text regions for document layout

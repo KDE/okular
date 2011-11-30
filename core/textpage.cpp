@@ -1343,7 +1343,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
 /**
  * Calculate Statistical information from the lines we made previously
  */
-void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing, int *line_spacing, int *col_spacing)
+void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing, int *line_spacing, int *col_spacing) const
 {
     /**
      * For the region, defined by line_rects and lines
@@ -1537,8 +1537,8 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
          * 1. calculation of projection profiles
          */
         // allocate the size of proj profiles and initialize with 0
-        int size_proj_y = node.area().height() ;
-        int size_proj_x = node.area().width() ;
+        int size_proj_y = node.area().height();
+        int size_proj_x = node.area().width();
         //dynamic memory allocation
         QVarLengthArray<int> proj_on_xaxis(size_proj_x);
         QVarLengthArray<int> proj_on_yaxis(size_proj_y);

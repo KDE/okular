@@ -98,7 +98,7 @@ class TextPagePrivate
          * Functions necessary for document file segmentation into text regions for document layout
          * analysis.
          */
-        RegionTextList XYCutForBoundingBoxes(int tcx, int tcy);
+        RegionTextList XYCutForBoundingBoxes();
 
         /**
          * Add additional spaces between words, if necessary, which can make the words valuable

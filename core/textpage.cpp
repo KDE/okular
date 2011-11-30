@@ -1512,7 +1512,7 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
 /**
  * Implements the XY Cut algorithm for textpage segmentation
  */
-RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
+RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
 {
     const int pageWidth = m_page->m_page->width();
     const int pageHeight = m_page->m_page->height();
@@ -1525,7 +1525,6 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
     tree.push_back(root);
 
     int i = 0, j, k;
-    int countLoop = 0;
 
     // while traversing the tree has not been ended
     while(i < tree.length())
@@ -1549,23 +1548,20 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes(int tcx, int tcy)
         const TextList list = node.text();
 
         // Calculate tcx and tcy locally for each new region
-        if(countLoop++)
+        SortedTextList lines;
+        LineRect line_rects;
+        int word_spacing, line_spacing, column_spacing;
+
+        makeAndSortLines(list, &lines, &line_rects);
+        calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &column_spacing);
+        for(j = 0 ; j < lines.length() ; j++)
         {
-            SortedTextList lines;
-            LineRect line_rects;
-            int word_spacing, line_spacing, column_spacing;
+            qDeleteAll(lines.at(j));
+        }   
+        lines.clear();
 
-            makeAndSortLines(list, &lines, &line_rects);
-            calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &column_spacing);
-            for(int i = 0 ; i < lines.length() ; i++)
-            {
-                qDeleteAll(lines.at(i));
-            }   
-            lines.clear();
-
-            tcx = word_spacing * 2;
-            tcy = line_spacing * 2;
-        }
+        const int tcx = word_spacing * 2;
+        const int tcy = line_spacing * 2;
 
         int maxX = 0 , maxY = 0;
         int avgX = 0 ;
@@ -1927,28 +1923,10 @@ void TextPagePrivate::correctTextOrder()
      */
     const QHash<QRect, RegionText> word_chars_map = makeWordFromCharacters();
 
-    SortedTextList lines;
-    LineRect line_rects;
-    /**
-     * Create arbitrary lines from words and sort them according to X and Y position
-     */
-    makeAndSortLines(m_words, &lines, &line_rects);
-
-    /**
-     * Calculate statistical information which will be needed later for algorithm implementation
-     */
-    int word_spacing, line_spacing, col_spacing;
-    calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &col_spacing);
-    for(int i = 0 ; i < lines.length() ; i++)
-    {
-       qDeleteAll(lines.at(i));
-    }
-    lines.clear();
-
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    const RegionTextList tree = XYCutForBoundingBoxes(word_spacing * 2, line_spacing * 2);
+    const RegionTextList tree = XYCutForBoundingBoxes();
 
     /**
      * Add spaces to the word

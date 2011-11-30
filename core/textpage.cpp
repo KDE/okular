@@ -1343,7 +1343,7 @@ void TextPagePrivate::makeAndSortLines(const TextList &wordsTmp, SortedTextList 
 /**
  * Calculate Statistical information from the lines we made previously
  */
-void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &lines, const LineRect &line_rects, int *word_spacing, int *line_spacing, int *col_spacing) const
+void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int *word_spacing, int *line_spacing, int *col_spacing) const
 {
     /**
      * For the region, defined by line_rects and lines
@@ -1351,6 +1351,14 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
      * 2. Make character statistical analysis to differentiate between
      *   word spacing and column spacing.
      */
+    
+    /**
+     * Step 0
+     */
+    SortedTextList lines;
+    LineRect line_rects;
+
+    makeAndSortLines(words, &lines, &line_rects);
 
     /**
      * Step 1
@@ -1507,6 +1515,11 @@ void TextPagePrivate::calculateStatisticalInformation(const SortedTextList &line
     // if there is just one line in a region, there is no point in dividing it
     if(lines.length() == 1)
         *word_spacing = *col_spacing;
+    
+    for(int j = 0 ; j < lines.length() ; ++j )
+    {
+        qDeleteAll(lines.at(j));
+    }
 }
 
 /**
@@ -1548,17 +1561,8 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         const TextList list = node.text();
 
         // Calculate tcx and tcy locally for each new region
-        SortedTextList lines;
-        LineRect line_rects;
         int word_spacing, line_spacing, column_spacing;
-
-        makeAndSortLines(list, &lines, &line_rects);
-        calculateStatisticalInformation(lines, line_rects, &word_spacing, &line_spacing, &column_spacing);
-        for(int j = 0 ; j < lines.length() ; ++j )
-        {
-            qDeleteAll(lines.at(j));
-        }   
-        lines.clear();
+        calculateStatisticalInformation(list, &word_spacing, &line_spacing, &column_spacing);
 
         const int tcx = word_spacing * 2;
         const int tcy = line_spacing * 2;

@@ -39,11 +39,6 @@ class SearchPoint
         int offset_end;
 };
 
-static int qHash(const QRect &r)
-{
-    return r.left() * r.top() + r.right() * r.bottom();
-}
-
 /* text comparison functions */
 
 bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
@@ -213,10 +208,32 @@ void TextPage::append( const QString &text, NormalizedRect *area )
     delete area;
 }
 
+struct WordWithCharacters
+{
+    WordWithCharacters(TinyTextEntity *w, const TextList &c)
+     : word(w), characters(c)
+    {
+    }
+    
+    inline QString text() const
+    {
+        return word->text();
+    }
+    
+    inline const NormalizedRect &area() const
+    {
+      return word->area;
+    }
+    
+    TinyTextEntity *word;
+    TextList characters;
+};
+typedef QList<WordWithCharacters> WordsWithCharacters;
+
 /**
  * We will divide the whole page in some regions depending on the horizontal and
  * vertical spacing among different regions. Each region will have an area and an
- * associated TextList in sorted order.
+ * associated WordsWithCharacters in sorted order.
 */
 class RegionText
 {
@@ -226,22 +243,22 @@ public:
     {
     };
 
-    RegionText(const TextList &list,const QRect &area)
-        : m_region_text(list) ,m_area(area)
+    RegionText(const WordsWithCharacters &wordsWithCharacters, const QRect &area)
+        : m_region_wordWithCharacters(wordsWithCharacters), m_area(area)
     {
     }
     
     inline QString string() const
     {
         QString res;
-        foreach(TinyTextEntity *te, m_region_text)
-            res += te->text();
+        foreach(const WordWithCharacters &word, m_region_wordWithCharacters)
+            res += word.text();
         return res;
     }
 
-    inline TextList text() const
+    inline WordsWithCharacters text() const
     {
-        return m_region_text;
+        return m_region_wordWithCharacters;
     }
 
     inline QRect area() const
@@ -254,13 +271,13 @@ public:
         m_area = area;
     }
 
-    inline void setText(const TextList &text)
+    inline void setText(const WordsWithCharacters &wordsWithCharacters)
     {
-        m_region_text = text;
+        m_region_wordWithCharacters = wordsWithCharacters;
     }
 
 private:
-    TextList m_region_text;
+    WordsWithCharacters m_region_wordWithCharacters;
     QRect m_area;
 };
 
@@ -992,43 +1009,29 @@ QString TextPage::text(const RegularAreaRect *area, TextAreaInclusionBehaviour b
     return ret;
 }
 
-static bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second)
+static bool compareTinyTextEntityX(const WordWithCharacters &first, const WordWithCharacters &second)
 {
-    QRect firstArea = first->area.roundedGeometry(1000,1000);
-    QRect secondArea = second->area.roundedGeometry(1000,1000);
+    QRect firstArea = first.area().roundedGeometry(1000,1000);
+    QRect secondArea = second.area().roundedGeometry(1000,1000);
 
     return firstArea.left() < secondArea.left();
 }
 
-static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second)
+static bool compareTinyTextEntityY(const WordWithCharacters &first, const WordWithCharacters &second)
 {
-    QRect firstArea = first->area.roundedGeometry(1000,1000);
-    QRect secondArea = second->area.roundedGeometry(1000,1000);
+    const QRect firstArea = first.area().roundedGeometry(1000,1000);
+    const QRect secondArea = second.area().roundedGeometry(1000,1000);
 
     return firstArea.top() < secondArea.top();
 }
 
 /**
- * Copies a TextList to m_words with the same pointer
+ * Sets a new world list. Deleting the contents of the old one
  */
 void TextPagePrivate::setWordList(const TextList &list)
 {
     qDeleteAll(m_words);
     m_words = list;
-}
-
-/**
- * Copies from m_words to list with distinct pointers
- */
-TextList TextPagePrivate::duplicateWordList() const
-{
-    TextList list;
-    for(int i = 0 ; i < m_words.length() ; i++)
-    {
-        TinyTextEntity* ent = m_words.at(i);
-        list.append( new TinyTextEntity( ent->text(),ent->area ) );
-    }
-    return list;
 }
 
 /**
@@ -1093,18 +1096,16 @@ static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
  * Remove all the spaces in between texts. It will make all the generators
  * same, whether they save spaces(like pdf) or not(like djvu).
  */
-void TextPagePrivate::removeSpace()
+static void removeSpace(TextList *words)
 {
-    TextList::Iterator it = m_words.begin(), itEnd = m_words.end();
+    TextList::Iterator it = words->begin(), itEnd = words->end();
     const QString str(' ');
 
-    it = m_words.begin(), itEnd = m_words.end();
     while ( it != itEnd )
     {
         if((*it)->text() == str)
         {
-            delete *it;
-            it = m_words.erase(it);
+            it = words->erase(it);
         }
         else
         {
@@ -1114,36 +1115,29 @@ void TextPagePrivate::removeSpace()
 }
 
 /**
- * We will the TinyTextEntity from m_words and try to create
- * words from there.
+ * We will read the TinyTextEntity from characters and try to create words from there.
+ * Note: characters might be already characters for some generators, but we will keep
+ * the nomenclature characters for the generator produced data. The resulting
+ * WordsWithCharacters memory has to be managed by the caller, both the 
+ * WordWithCharacters::word and WordWithCharacters::characters contents
  */
-QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
+static WordsWithCharacters makeWordFromCharacters(const TextList &characters, int pageWidth, int pageHeight)
 {
     /**
-     * At first we will copy m_words to tmpList. Then, we will traverse the
-     * tmpList and try to create words from the TinyTextEntities in tmpList.
+     * We will traverse characters and try to create words from the TinyTextEntities in it.
      * We will search TinyTextEntity blocks and merge them until we get a
      * space between two consecutive TinyTextEntities. When we get a space
      * we can take it as a end of word. Then we store the word as a TinyTextEntity
      * and keep it in newList.
 
-     * We also keep a mapping between every element in newList and word. We create a
-     * RegionText named regionWord and create a hash key from the TinyTextEntity
-     * rectangle area of the element in newList. So, we can get the TinyTextEntities from
-     * which every element(word) of newList is generated. It will be necessary later
-     * when we will divide the word into characters.
+     * We create a RegionText named regionWord that contains the word and the characters associated with it and
+     * a rectangle area of the element in newList. 
 
-     * Finally we copy the newList to m_words.
      */
+    WordsWithCharacters wordsWithCharacters;
 
-    QHash<QRect, RegionText> word_chars_map;
-    const TextList tmpList = m_words;
-    TextList newList;
-
-    TextList::ConstIterator it = tmpList.begin(), itEnd = tmpList.end(), tmpIt;
+    TextList::ConstIterator it = characters.begin(), itEnd = characters.end(), tmpIt;
     int newLeft,newRight,newTop,newBottom;
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
     int index = 0;
 
     for( ; it != itEnd ; it++)
@@ -1151,7 +1145,7 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
         QString textString = (*it)->text();
         QString newString;
         QRect lineArea = (*it)->area.roundedGeometry(pageWidth,pageHeight),elementArea;
-        TextList word;
+        TextList wordCharacters;
         tmpIt = it;
         int space = 0;
 
@@ -1165,13 +1159,13 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
                 if (tmpIt == it)
                 {
                     NormalizedRect newRect(lineArea,pageWidth,pageHeight);
-                    word.append(new TinyTextEntity(textString.normalized
+                    wordCharacters.append(new TinyTextEntity(textString.normalized
                                                    (QString::NormalizationForm_KC), newRect));
                 }
                 else
                 {
                     NormalizedRect newRect(elementArea,pageWidth,pageHeight);
-                    word.append(new TinyTextEntity(textString.normalized
+                    wordCharacters.append(new TinyTextEntity(textString.normalized
                                                    (QString::NormalizationForm_KC), newRect));
                 }
             }
@@ -1223,29 +1217,22 @@ QHash<QRect, RegionText> TextPagePrivate::makeWordFromCharacters()
         if (!newString.isEmpty())
         {
             const NormalizedRect newRect(lineArea, pageWidth, pageHeight);
-            newList.append(new TinyTextEntity(newString.normalized
-                                              (QString::NormalizationForm_KC), newRect));
-            const QRect rect = newRect.geometry(pageWidth, pageHeight);
-            const RegionText regionWord(word,rect);
-
-            // there may be more than one element in the same key
-            word_chars_map.insertMulti(rect, regionWord);
+            TinyTextEntity *word = new TinyTextEntity(newString.normalized(QString::NormalizationForm_KC), newRect);
+            wordsWithCharacters.append(WordWithCharacters(word, wordCharacters));
 
             index++;
         }
 
         if(it == itEnd) break;
     }
-
-    setWordList(newList);
-
-    return word_chars_map;
+    
+    return wordsWithCharacters;
 }
 
 /**
  * Create Lines from the words and sort them
  */
-QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList &wordsTmp) const
+QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithCharacters &wordsTmp, int pageWidth, int pageHeight)
 {
     /**
      * We cannot assume that the generator will give us texts in the right order.
@@ -1258,31 +1245,24 @@ QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList
      * 3. Within each line sort the TinyTextEntity 's by x0(left)
      */
     
-    QList< QPair<TextList, QRect> > lines;
+    QList< QPair<WordsWithCharacters, QRect> > lines;
 
     /*
      Make a new copy of the TextList in the words, so that the wordsTmp and lines do
      not contain same pointers for all the TinyTextEntity.
      */
-    TextList words;
-    for(int i = 0 ; i < wordsTmp.length() ; i++)
-    {
-        TinyTextEntity* ent = wordsTmp.at(i);
-        words.append( new TinyTextEntity( ent->text(),ent->area ) );
-    }
+    QList<WordWithCharacters> words = wordsTmp;
 
     // Step 1
     qSort(words.begin(),words.end(),compareTinyTextEntityY);
 
     // Step 2
-    TextList::Iterator it = words.begin(), itEnd = words.end();
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
+    QList<WordWithCharacters>::Iterator it = words.begin(), itEnd = words.end();
 
     //for every non-space texts(characters/words) in the textList
     for( ; it != itEnd ; it++)
     {
-        const QRect elementArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+        const QRect elementArea = (*it).area().roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
         for( int i = 0 ; i < lines.length() ; i++)
@@ -1307,7 +1287,7 @@ QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList
              */
             if(doesConsumeY(elementArea,lineArea,70))
             {
-                TextList &line = lines[i].first;
+                WordsWithCharacters &line = lines[i].first;
                 line.append(*it);
 
                 const int newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
@@ -1327,16 +1307,16 @@ QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList
          */
         if(!found)
         {
-            TextList tmp;
+            WordsWithCharacters tmp;
             tmp.append((*it));
-            lines.append(QPair<TextList, QRect>(tmp, elementArea));
+            lines.append(QPair<WordsWithCharacters, QRect>(tmp, elementArea));
         }
     }
 
     // Step 3
     for(int i = 0 ; i < lines.length() ; i++)
     {
-        TextList &list = lines[i].first;
+        WordsWithCharacters &list = lines[i].first;
         qSort(list.begin(), list.end(), compareTinyTextEntityX);
     }
     
@@ -1346,7 +1326,7 @@ QList< QPair<TextList, QRect> > TextPagePrivate::makeAndSortLines(const TextList
 /**
  * Calculate Statistical information from the lines we made previously
  */
-void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int *word_spacing, int *line_spacing, int *col_spacing) const
+static void calculateStatisticalInformation(const QList<WordWithCharacters> &words, int pageWidth, int pageHeight, int *word_spacing, int *line_spacing, int *col_spacing)
 {
     /**
      * For the region, defined by line_rects and lines
@@ -1358,7 +1338,7 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     /**
      * Step 0
      */
-    const QList< QPair<TextList, QRect> > sortedLines = makeAndSortLines(words);
+    const QList< QPair<WordsWithCharacters, QRect> > sortedLines = makeAndSortLines(words, pageWidth, pageHeight);
 
     /**
      * Step 1
@@ -1401,27 +1381,25 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     QList< QList<QRect> > space_rects;
     QList<QRect> max_hor_space_rects;
 
-    int pageWidth = m_page->m_page->width(), pageHeight = m_page->m_page->height();
-
     // Space in every line
     for(int i = 0 ; i < sortedLines.length() ; i++)
     {
-        const TextList list = sortedLines.at(i).first;
+        const WordsWithCharacters list = sortedLines.at(i).first;
         QList<QRect> line_space_rects;
         int maxSpace = 0, minSpace = pageWidth;
 
         // for every TinyTextEntity element in the line
-        TextList::ConstIterator it = list.begin(), itEnd = list.end();
+        WordsWithCharacters::ConstIterator it = list.begin(), itEnd = list.end();
         QRect max_area1,max_area2;
         QString before_max, after_max;
 
         // for every line
         for( ; it != itEnd ; it++ )
         {
-            const QRect area1 = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+            const QRect area1 = (*it).area().roundedGeometry(pageWidth,pageHeight);
             if( it+1 == itEnd ) break;
 
-            const QRect area2 = (*(it+1))->area.roundedGeometry(pageWidth,pageHeight);
+            const QRect area2 = (*(it+1)).area().roundedGeometry(pageWidth,pageHeight);
             int space = area2.left() - area1.right();
 
             if(space > maxSpace)
@@ -1429,8 +1407,8 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
                 max_area1 = area1;
                 max_area2 = area2;
                 maxSpace = space;
-                before_max = (*it)->text();
-                after_max = (*(it+1))->text();
+                before_max = (*it).text();
+                after_max = (*(it+1)).text();
             }
 
             if(space < minSpace && space != 0) minSpace = space;
@@ -1515,24 +1493,18 @@ void TextPagePrivate::calculateStatisticalInformation(const TextList &words, int
     // if there is just one line in a region, there is no point in dividing it
     if(sortedLines.length() == 1)
         *word_spacing = *col_spacing;
-    
-    for(int j = 0 ; j < sortedLines.length() ; ++j )
-    {
-        qDeleteAll(sortedLines.at(j).first);
-    }
 }
 
 /**
  * Implements the XY Cut algorithm for textpage segmentation
+ * The resulting RegionTextList will contain RegionText whose WordsWithCharacters::word and
+ * WordsWithCharacters::characters are reused from wordsWithCharacters (i.e. no new nor delete happens in this function)
  */
-RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
+static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wordsWithCharacters, const NormalizedRect &boundingBox, int pageWidth, int pageHeight)
 {
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
     RegionTextList tree;
-    QRect contentRect(m_page->m_page->boundingBox().geometry(pageWidth,pageHeight));
-    const TextList words = duplicateWordList();
-    const RegionText root(words,contentRect);
+    QRect contentRect(boundingBox.geometry(pageWidth,pageHeight));
+    const RegionText root(wordsWithCharacters, contentRect);
 
     // start the tree with the root, it is our only region at the start
     tree.push_back(root);
@@ -1558,11 +1530,11 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         for( int j = 0 ; j < size_proj_y ; ++j ) proj_on_yaxis[j] = 0;
         for( int j = 0 ; j < size_proj_x ; ++j ) proj_on_xaxis[j] = 0;
 
-        const TextList list = node.text();
+        const QList<WordWithCharacters> list = node.text();
 
         // Calculate tcx and tcy locally for each new region
         int word_spacing, line_spacing, column_spacing;
-        calculateStatisticalInformation(list, &word_spacing, &line_spacing, &column_spacing);
+        calculateStatisticalInformation(list, pageWidth, pageHeight, &word_spacing, &line_spacing, &column_spacing);
 
         const int tcx = word_spacing * 2;
         const int tcy = line_spacing * 2;
@@ -1574,7 +1546,7 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         // for every text in the region
         for(int j = 0 ; j < list.length() ; ++j )
         {
-            TinyTextEntity *ent = list.at(j);
+            TinyTextEntity *ent = list.at(j).word;
             const QRect entRect = ent->area.geometry(pageWidth, pageHeight);
 
             // calculate vertical projection profile proj_on_xaxis1
@@ -1740,22 +1712,20 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
             continue;
         }
 
-        TextList list1,list2;
-        TinyTextEntity* ent;
-        QRect entRect;
+        WordsWithCharacters list1,list2;
 
         // horizontal cut, topRect and bottomRect
         if(cut_hor)
         {
             for( int j = 0 ; j < list.length() ; ++j )
             {
-                ent = list.at(j);
-                entRect = ent->area.geometry(pageWidth,pageHeight);
+                const WordWithCharacters word = list.at(j);
+                const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
-                if(topRect.intersects(entRect))
-                    list1.append(ent);
+                if(topRect.intersects(wordRect))
+                    list1.append(word);
                 else
-                    list2.append(ent);
+                    list2.append(word);
             }
 
             RegionText node1(list1,topRect);
@@ -1770,12 +1740,13 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         {
             for( int j = 0 ; j < list.length() ; ++j )
             {
-                ent = list.at(j);
-                entRect = ent->area.geometry(pageWidth,pageHeight);
+                const WordWithCharacters word = list.at(j);
+                const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
-                if(leftRect.intersects(entRect))
-                    list1.append(ent);
-                else list2.append(ent);
+                if(leftRect.intersects(wordRect))
+                    list1.append(word);
+                else 
+                    list2.append(word);
             }
 
             RegionText node1(list1,leftRect);
@@ -1786,31 +1757,19 @@ RegionTextList TextPagePrivate::XYCutForBoundingBoxes()
         }
     }
 
-    TextList tmp;
-    for(i = 0 ; i < tree.length() ; i++)
-    {
-        tmp += tree.at(i).text();
-    }
-    // set tmp as new m_words
-    setWordList(tmp);
-
     return tree;
 }
 
 /**
- * Add spaces in between words in a line
+ * Add spaces in between words in a line. It reuses the pointers passed in tree and might add new ones. You will need to take care of deleting them if needed
  */
-void TextPagePrivate::addNecessarySpace(RegionTextList tree)
+WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pageHeight)
 {
     /**
      * 1. Call makeAndSortLines before adding spaces in between words in a line
      * 2. Now add spaces between every two words in a line
-     * 3. Finally, extract all the space separated texts from each region and
-     *    make m_words nice again.
+     * 3. Finally, extract all the space separated texts from each region and return it
      */
-
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
 
     // Only change the texts under RegionTexts, not the area
     for(int j = 0 ; j < tree.length() ; j++)
@@ -1818,18 +1777,18 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
         RegionText &tmpRegion = tree[j];
 
         // Step 01
-        QList< QPair<TextList, QRect> > sortedLines = makeAndSortLines(tmpRegion.text());
+        QList< QPair<WordsWithCharacters, QRect> > sortedLines = makeAndSortLines(tmpRegion.text(), pageWidth, pageHeight);
 
         // Step 02
         for(int i = 0 ; i < sortedLines.length() ; i++)
         {
-            TextList &list = sortedLines[i].first;
+            WordsWithCharacters &list = sortedLines[i].first;
             for(int k = 0 ; k < list.length() ; k++ )
             {
-                const QRect area1 = list.at(k)->area.roundedGeometry(pageWidth,pageHeight);
+                const QRect area1 = list.at(k).area().roundedGeometry(pageWidth,pageHeight);
                 if( k+1 >= list.length() ) break;
 
-                const QRect area2 = list.at(k+1)->area.roundedGeometry(pageWidth,pageHeight);
+                const QRect area2 = list.at(k+1).area().roundedGeometry(pageWidth,pageHeight);
                 const int space = area2.left() - area1.right();
 
                 if(space != 0)
@@ -1843,9 +1802,11 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
                     const QString spaceStr(" ");
                     const QRect rect(QPoint(left,top),QPoint(right,bottom));
                     const NormalizedRect entRect(rect,pageWidth,pageHeight);
-                    TinyTextEntity *ent = new TinyTextEntity(spaceStr,entRect);
+                    TinyTextEntity *ent1 = new TinyTextEntity(spaceStr, entRect);
+                    TinyTextEntity *ent2 = new TinyTextEntity(spaceStr, entRect);
+                    WordWithCharacters word(ent1, QList<TinyTextEntity*>() << ent2);
 
-                    list.insert(k+1,ent);
+                    list.insert(k+1, word);
 
                     // Skip the space
                     k++;
@@ -1853,7 +1814,7 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
             }
         }
 
-        TextList tmpList;
+        WordsWithCharacters tmpList;
         for(int i = 0 ; i < sortedLines.length() ; i++)
         {
             tmpList += sortedLines.at(i).first;
@@ -1862,83 +1823,54 @@ void TextPagePrivate::addNecessarySpace(RegionTextList tree)
     }
 
     // Step 03
-    TextList tmp;
+    WordsWithCharacters tmp;
     for(int i = 0 ; i < tree.length() ; i++)
     {
         tmp += tree.at(i).text();
     }
-    setWordList(tmp);
+    return tmp;
 }
-
-/**
- * Break Words into Characters, takes Entities from m_words and for each of
- * them insert the character entities in tmp. Finally, copies tmp back to m_words
- */
-void TextPagePrivate::breakWordIntoCharacters(const QHash<QRect, RegionText> &word_chars_map)
-{
-    const QString spaceStr(" ");
-    TextList tmp;
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
-
-    for(int i = 0 ; i < m_words.length() ; i++)
-    {
-        TinyTextEntity *ent = m_words.at(i);
-        const QRect rect = ent->area.geometry(pageWidth,pageHeight);
-
-        // the spaces contains only one character, so we can skip them
-        if(ent->text() == spaceStr)
-            tmp.append( new TinyTextEntity(ent->text(),ent->area) );
-        else
-        {
-            RegionText word_text;
-
-            QHash<QRect, RegionText>::const_iterator it = word_chars_map.find(rect);
-            while( it != word_chars_map.end() && it.key() == rect )
-            {
-                word_text = it.value();
-                    
-                if (ent->text() == word_text.string())
-                    break;
-                    
-                ++it;
-            }
-            tmp.append(word_text.text());
-        }
-    }
-    setWordList(tmp);
-}
-
 
 /**
  * Correct the textOrder, all layout recognition works here
  */
 void TextPagePrivate::correctTextOrder()
 {
+    const int pageWidth = m_page->m_page->width();
+    const int pageHeight = m_page->m_page->height();
+
+    TextList characters = m_words;
+
     /**
      * Remove spaces from the text
      */
-    removeSpace();
+    removeSpace(&characters);
 
     /**
      * Construct words from characters
      */
-    const QHash<QRect, RegionText> word_chars_map = makeWordFromCharacters();
+    const QList<WordWithCharacters> wordsWithCharacters = makeWordFromCharacters(characters, pageWidth, pageHeight);
 
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    const RegionTextList tree = XYCutForBoundingBoxes();
+    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, m_page->m_page->boundingBox(), pageWidth, pageHeight);
 
     /**
      * Add spaces to the word
      */
-    addNecessarySpace(tree);
+    const WordsWithCharacters listWithWordsAndSpaces = addNecessarySpace(tree, pageWidth, pageHeight);
 
     /**
      * Break the words into characters
      */
-    breakWordIntoCharacters(word_chars_map);
+    TextList listOfCharacters;
+    foreach(const WordWithCharacters &word, listWithWordsAndSpaces)
+    {
+        delete word.word;
+        listOfCharacters.append(word.characters);
+    }
+    setWordList(listOfCharacters);
 }
 
 TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const

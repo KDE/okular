@@ -57,54 +57,10 @@ class TextPagePrivate
         void setWordList(const TextList &list);
 
         /**
-         * Copy m_words to a new TextList, it is the caller responsability to free the pointers
-         */
-        TextList duplicateWordList() const;
-
-        /**
          * Make necessary modifications in the TextList to make the text order correct, so
          * that textselection works fine
          */
         void correctTextOrder();
-
-        /**
-         * Remove odd spaces which are much bigger than normal spaces from m_words
-         */
-        void removeSpace();
-
-        /**
-         * Create words from characters
-         */
-        QHash<QRect, RegionText> makeWordFromCharacters();
-
-        /**
-         * Create lines from TextList and sort them according to their position
-         */
-        QList< QPair<TextList, QRect> > makeAndSortLines(const TextList &words) const;
-
-        /**
-         * Caluclate statistical info like, word spacing, column spacing, line spacing from the Lines
-         * we made
-         */
-        void calculateStatisticalInformation(const TextList &words, int *word_spacing,
-                                             int *line_spacing, int *column_spacing) const;
-
-        /**
-         * Functions necessary for document file segmentation into text regions for document layout
-         * analysis.
-         */
-        RegionTextList XYCutForBoundingBoxes();
-
-        /**
-         * Add additional spaces between words, if necessary, which can make the words valuable
-         * while copying after selection
-         */
-        void addNecessarySpace(RegionTextList tree);
-
-        /**
-         * Break the words into characters, so the text selection wors fine
-         */
-        void breakWordIntoCharacters(const QHash<QRect, RegionText> &words_char_map);
 
         // variables those can be accessed directly from TextPage
         TextList m_words;

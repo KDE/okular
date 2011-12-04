@@ -3638,8 +3638,10 @@ void PageView::slotRelayoutPages()
 
     // handle the 'center first page in row' stuff
     int nCols = viewColumns();
-    bool centerFirstPage = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
+    const bool centerFirstPage = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
+    const bool centerLastPage = centerFirstPage && d->items.count() % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
+    const bool facingPages = centerFirstPage || Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing;
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
@@ -3721,7 +3723,26 @@ void PageView::slotRelayoutPages()
             if ( continuousView || rIdx == pageRowIdx )
             {
                 const bool reallyDoCenterFirst = item->pageNumber() == 0 && centerFirstPage;
-                item->moveTo( (reallyDoCenterFirst ? 0 : insertX) + ( (reallyDoCenterFirst ? fullWidth : cWidth) - item->croppedWidth()) / 2,
+                const bool reallyDoCenterLast = item->pageNumber() == d->items.count() - 1 && centerLastPage;
+                int actualX = 0;
+                if ( reallyDoCenterFirst || reallyDoCenterLast )
+                {
+                    // page is centered across entire viewport
+                    actualX = (fullWidth - item->croppedWidth()) / 2;
+                }
+                else if ( facingPages )
+                {
+                    // page edges 'touch' the center of the viewport
+                    actualX = ( (centerFirstPage && item->pageNumber() % 2 == 1) ||
+                                (!centerFirstPage && item->pageNumber() % 2 == 0) ) ?
+                        (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                }
+                else
+                {
+                    // page is centered within its virtual column
+                    actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                }
+                item->moveTo( actualX,
                               (continuousView ? insertY : origInsertY) + (rHeight - item->croppedHeight()) / 2 );
                 item->setVisible( true );
             }

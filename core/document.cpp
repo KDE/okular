@@ -78,7 +78,6 @@
 #include "utils_p.h"
 #include "view.h"
 #include "view_p.h"
-#include "form.h"
 
 #include <memory>
 
@@ -3003,55 +3002,6 @@ void Document::processAction( const Action * action )
             //const MovieAction * movie = static_cast< const MovieAction * >( action );
             // TODO this (Movie action)
             break;
-
-        case Action::ResetForm: {
-            const ResetFormAction *resetFormAction = static_cast< const ResetFormAction * >( action );
-            foreach( Page *page, d->m_pagesVector )
-            {
-                foreach( FormField* ff, page->formFields() )
-                {
-                    bool reset = false;
-                    switch (resetFormAction->behaviour())
-                    {
-                        case ResetFormAction::ResetAllForms: 
-                            reset = true;
-                        break;
-                        case ResetFormAction::ResetFormsInFieldList: 
-                            reset = resetFormAction->fieldList().contains(ff->fullyQualifiedName());
-                        break;
-                        case ResetFormAction::ResetAllFormsExceptFieldList: 
-                            reset = !resetFormAction->fieldList().contains(ff->fullyQualifiedName());
-                        break;
-                    }
-                    
-                    if (reset)
-                    {
-                        switch (ff->type()) {
-                            case Okular::FormField::FormText: {
-                                Okular::FormFieldText* fft = static_cast<Okular::FormFieldText *>(ff);
-                                if (!fft->isReadOnly()) {
-                                    fft->setText( fft->defaultValue() );
-                                    emit formFieldChanged(fft);
-                                }
-                            } break;
-        
-                            case Okular::FormField::FormButton: {
-                                Okular::FormFieldButton* ffb = static_cast<Okular::FormFieldButton *>(ff);
-
-                                if (!ffb->isReadOnly()) {
-                                    ffb->setState( "true" == ffb->defaultValue() );
-                                    emit formFieldChanged(ffb);
-                                }
-                            } break;
-                            
-                            default:
-                                kDebug() << "Unhandled form field: " << ff->name() << ff->defaultValue();
-                            break;
-                        }
-                    }
-                }
-            }
-            } break;
     }
 }
 

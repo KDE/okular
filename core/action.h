@@ -27,7 +27,6 @@ class ScriptActionPrivate;
 class MovieActionPrivate;
 class Sound;
 class DocumentViewport;
-class ResetFormActionPrivate;
 
 /**
  * @short Encapsulates data that describes an action.
@@ -49,8 +48,7 @@ class OKULAR_EXPORT Action
             DocAction,  ///< Start a custom action
             Sound,      ///< Play a sound
             Movie,      ///< Play a movie
-            Script,     ///< Executes a Script code
-            ResetForm   ///< Start a reset form action @since 0.14 (KDE 4.8)
+            Script      ///< Executes a Script code
         };
 
         /**
@@ -432,55 +430,6 @@ class MovieAction : public Action
         Q_DISABLE_COPY( MovieAction )
 };
 #endif
-
-/**
- * The ResetFormAction action resets forms on activation
- * @since 0.14 (KDE 4.8)
- */
-class OKULAR_EXPORT ResetFormAction : public Action
-{
-    public:
-        enum Behaviour
-        {
-            ResetAllForms,                  ///< Reset all the forms in the document
-            ResetFormsInFieldList,          ///< Reset the forms whose fully qualified name is in the list
-            ResetAllFormsExceptFieldList    ///< Reset all the forms in the document exect those whose fully qualified name is in the list
-        };
-
-        /**
-         * Creates a new reset form action.
-         */
-        ResetFormAction( const QStringList &fieldList, Behaviour behaviour );
-
-        /**
-         * Destroys the document action.
-         */
-        virtual ~ResetFormAction();
-        
-        /**
-         * Returns the action type.
-         */
-        ActionType actionType() const;
-
-        /**
-         * Returns the action tip.
-         */
-        QString actionTip() const;
-
-        /**
-         * Returns the reset behaviour.
-         */
-        Behaviour behaviour() const;
-        
-        /**
-         * Returns the list of field fully qualified names.
-         */
-        QStringList fieldList() const;
-
-    private:
-        Q_DECLARE_PRIVATE( ResetFormAction )
-        Q_DISABLE_COPY( ResetFormAction )
-};
 
 }
 

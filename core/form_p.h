@@ -33,7 +33,6 @@ class FormFieldPrivate
         FormField::FieldType m_type;
         QString m_default;
         Action *m_activateAction;
-        QString m_fullyQualifiedName;
 
         Q_DECLARE_PUBLIC( FormField )
         FormField *q_ptr;

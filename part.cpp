@@ -399,7 +399,6 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_document, SIGNAL(error(QString,int)), m_pageView, SLOT(errorMessage(QString,int)) );
     connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
-    connect( m_document, SIGNAL(formFieldChanged(Okular::FormField*)), m_pageView, SLOT(slotFormFieldChanged(Okular::FormField*)) );
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );

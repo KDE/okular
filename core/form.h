@@ -60,12 +60,6 @@ class OKULAR_EXPORT FormField
         FieldType type() const;
 
         /**
-         * The field default value.
-         * @since 0.14 (KDE 4.8)
-         */
-        QString defaultValue() const;
-
-        /**
          * The bouding rect of the field, in normalized coordinates.
          */
         virtual NormalizedRect rect() const = 0;
@@ -98,12 +92,6 @@ class OKULAR_EXPORT FormField
         virtual bool isVisible() const;
 
         Action* activationAction() const;
-        
-        /**
-         * The internal fully qualified name of the field
-         * @since 0.14 (KDE 4.8)
-         */
-        QString fullyQualifiedName() const;
 
     protected:
         /// @cond PRIVATE
@@ -113,8 +101,6 @@ class OKULAR_EXPORT FormField
         /// @endcond
 
         void setActivationAction( Action *action );
-        /// @since 0.14 (KDE 4.8)
-        void setFullyQualifiedName( const QString &name );
 
     private:
         Q_DISABLE_COPY( FormField )

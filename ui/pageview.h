@@ -37,7 +37,6 @@ class Action;
 class Document;
 class DocumentViewport;
 class Annotation;
-class FormField;
 }
 
 class FormWidgetIface;
@@ -246,7 +245,6 @@ Q_OBJECT
         void slotSpeakCurrentPage();
         void slotStopSpeaks();
         void slotAction( Okular::Action *action );
-        void slotFormFieldChanged( Okular::FormField *formField );
         void externalKeyPressEvent( QKeyEvent *e );
 };
 

@@ -13,7 +13,7 @@
 #include "../core/okular_export.h"
 
 #include <QtCore/QObject>
-#include <QString>
+#include <QtCore/QString>
 
 namespace Okular {
 

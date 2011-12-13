@@ -3832,6 +3832,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
     QRect viewportRect( horizontalScrollBar()->value(),
                         verticalScrollBar()->value(),
                         viewport()->width(), viewport()->height() );
+    const QRect viewportRectAtZeroZero( 0, 0, viewport()->width(), viewport()->height() );
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
@@ -3862,6 +3863,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             vw->move(
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
+            
+            if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
+                vw->stop();
+            }
         }
 
         if ( !i->isVisible() )

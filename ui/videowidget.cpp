@@ -219,6 +219,11 @@ Okular::NormalizedRect VideoWidget::normGeometry() const
     return d->geom;
 }
 
+bool VideoWidget::isPlaying() const
+{
+    return d->player->isPlaying();
+}
+
 void VideoWidget::play()
 {
     d->load();

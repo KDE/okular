@@ -3827,7 +3827,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
          d->mouseMidZooming )
         return;
 
-    // precalc view limits for intersecting with page coords inside the lOOp
+    // precalc view limits for intersecting with page coords inside the loop
     const bool isEvent = newValue != -1 && !d->blockViewport;
     const QRect viewportRect( horizontalScrollBar()->value(),
                               verticalScrollBar()->value(),

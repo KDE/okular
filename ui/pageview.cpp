@@ -3828,17 +3828,17 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         return;
 
     // precalc view limits for intersecting with page coords inside the lOOp
-    bool isEvent = newValue != -1 && !d->blockViewport;
-    QRect viewportRect( horizontalScrollBar()->value(),
-                        verticalScrollBar()->value(),
-                        viewport()->width(), viewport()->height() );
+    const bool isEvent = newValue != -1 && !d->blockViewport;
+    const QRect viewportRect( horizontalScrollBar()->value(),
+                              verticalScrollBar()->value(),
+                              viewport()->width(), viewport()->height() );
     const QRect viewportRectAtZeroZero( 0, 0, viewport()->width(), viewport()->height() );
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
-    double viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2.0,
-           viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2.0,
-           focusedX = 0.5,
+    const double viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2.0;
+    const double viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2.0;
+    double focusedX = 0.5,
            focusedY = 0.0,
            minDistance = -1.0;
 

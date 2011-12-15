@@ -216,8 +216,8 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     viewport()->setPalette( viewportPal );
 
     setWidget( d );
-    // widget setup: can be focused by tab and mouse click (not wheel)
-    widget()->setFocusPolicy( Qt::StrongFocus );
+    // widget setup: can be focused by mouse click (not wheel nor tab)
+    widget()->setFocusPolicy( Qt::ClickFocus );
     widget()->show();
     QPalette widgetPal = widget()->palette();
     widgetPal.setColor( widget()->backgroundRole(), pal.color( QPalette::Base ) );

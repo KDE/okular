@@ -474,6 +474,8 @@ Sidebar::Sidebar( QWidget *parent )
     connect( d->list, SIGNAL(customContextMenuRequested(QPoint)),
              this, SLOT(listContextMenu(QPoint)) );
     connect( d->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)) );
+    
+    setFocusProxy( d->list );
 }
 
 Sidebar::~Sidebar()

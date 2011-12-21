@@ -3639,11 +3639,14 @@ void PageView::slotRelayoutPages()
     QRect viewportRect( horizontalScrollBar()->value(), verticalScrollBar()->value(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
-    int nCols = viewColumns();
-    const bool centerFirstPage = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
-    const bool centerLastPage = centerFirstPage && d->items.count() % 2 == 0;
+    const bool facing = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing;
+    const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
+    const bool overrideCentering = facingCentered && pageCount < 3;
+    const bool centerFirstPage = facingCentered && !overrideCentering;
+    const bool facingPages = facing || centerFirstPage;
+    const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
-    const bool facingPages = centerFirstPage || Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing;
+    int nCols = overrideCentering ? 1 : viewColumns();
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
@@ -3725,7 +3728,7 @@ void PageView::slotRelayoutPages()
             if ( continuousView || rIdx == pageRowIdx )
             {
                 const bool reallyDoCenterFirst = item->pageNumber() == 0 && centerFirstPage;
-                const bool reallyDoCenterLast = item->pageNumber() == d->items.count() - 1 && centerLastPage;
+                const bool reallyDoCenterLast = item->pageNumber() == pageCount - 1 && centerLastPage;
                 int actualX = 0;
                 if ( reallyDoCenterFirst || reallyDoCenterLast )
                 {

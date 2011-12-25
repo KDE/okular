@@ -3614,7 +3614,7 @@ void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
 {
     // set an empty container if we have no pages
-    int pageCount = d->items.count();
+    const int pageCount = d->items.count();
     if ( pageCount < 1 )
     {
         return;
@@ -3646,18 +3646,15 @@ void PageView::slotRelayoutPages()
     const bool facingPages = facing || centerFirstPage;
     const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
-    int nCols = overrideCentering ? 1 : viewColumns();
+    const int nCols = overrideCentering ? 1 : viewColumns();
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
     PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage() ) ];
 
-        // handle the 'centering on first row' stuff
-        if ( centerFirstPage )
-            pageCount += nCols - 1;
         // Here we find out column's width and row's height to compute a table
         // so we can place widgets 'centered in virtual cells'.
-	int nRows = (int)ceil( (float)pageCount / (float)nCols );
+        const int nRows = (int)ceil( (float)(centerFirstPage ? (pageCount + nCols - 1) : pageCount) / (float)nCols );
 
         int * colWidth = new int[ nCols ],
             * rowHeight = new int[ nRows ],
@@ -3669,10 +3666,7 @@ void PageView::slotRelayoutPages()
             rowHeight[ i ] = 0;
         // handle the 'centering on first row' stuff
         if ( centerFirstPage )
-        {
-            pageCount -= nCols - 1;
             cIdx += nCols - 1;
-        }
 
         // 1) find the maximum columns width and rows height for a grid in
         // which each page must well-fit inside a cell

@@ -1213,7 +1213,7 @@ bool Part::openFile()
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() )
     {
         const bool sidebarVisible = m_sidebar->isSidebarVisible();
         m_sidebar->setCurrentIndex( 0 );
@@ -1449,6 +1449,7 @@ void Part::slotDoFileDirty()
         // store the current toolbox pane
         m_dirtyToolboxIndex = m_sidebar->currentIndex();
         m_wasSidebarVisible = m_sidebar->isSidebarVisible();
+        m_wasSidebarCollapsed = m_sidebar->isCollapsed();
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
@@ -1469,13 +1470,18 @@ void Part::slotDoFileDirty()
         m_document->setViewport( m_viewportDirty );
         m_viewportDirty.pageNumber = -1;
         m_document->setRotation( m_dirtyPageRotation );
-        if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex ) )
+        if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex )
+            && !m_sidebar->isCollapsed() )
         {
             m_sidebar->setCurrentIndex( m_dirtyToolboxIndex );
         }
         if ( m_sidebar->isSidebarVisible() != m_wasSidebarVisible )
         {
             m_sidebar->setSidebarVisibility( m_wasSidebarVisible );
+        }
+        if ( m_sidebar->isCollapsed() != m_wasSidebarCollapsed )
+        {
+            m_sidebar->setCollapsed( m_wasSidebarCollapsed );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);

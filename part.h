@@ -253,6 +253,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         bool m_wasPresentationOpen;
         int m_dirtyToolboxIndex;
         bool m_wasSidebarVisible;
+        bool m_wasSidebarCollapsed;
         bool m_fileWasRemoved;
         Rotation m_dirtyPageRotation;
 

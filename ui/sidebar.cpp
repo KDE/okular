@@ -469,12 +469,12 @@ Sidebar::Sidebar( QWidget *parent )
 
     d->stack = new QStackedWidget( d->sideContainer );
     d->vlay->addWidget( d->stack );
-    d->sideContainer->hide();
 
     connect( d->list, SIGNAL(customContextMenuRequested(QPoint)),
              this, SLOT(listContextMenu(QPoint)) );
     connect( d->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)) );
     
+    setCollapsed( true );
     setFocusProxy( d->list );
 }
 
@@ -592,24 +592,34 @@ void Sidebar::setSidebarVisibility( bool visible )
     if ( visible != d->list->isHidden() )
         return;
 
-    static bool sideWasVisible = !d->sideContainer->isHidden();
+    static bool wasCollapsed = isCollapsed();
 
     d->list->setHidden( !visible );
     if ( visible )
     {
-        d->sideContainer->setHidden( !sideWasVisible );
-        sideWasVisible = true;
+        setCollapsed( wasCollapsed );
+        wasCollapsed = false;
     }
     else
     {
-        sideWasVisible = !d->sideContainer->isHidden();
-        d->sideContainer->setHidden( true );
+        wasCollapsed = isCollapsed();
+        setCollapsed( true );
     }
 }
 
 bool Sidebar::isSidebarVisible() const
 {
     return !d->list->isHidden();
+}
+
+void Sidebar::setCollapsed( bool collapsed )
+{
+    d->sideContainer->setHidden( collapsed );
+}
+
+bool Sidebar::isCollapsed() const
+{
+    return d->sideContainer->isHidden();
 }
 
 void Sidebar::itemClicked( QListWidgetItem *item )
@@ -623,22 +633,22 @@ void Sidebar::itemClicked( QListWidgetItem *item )
 
     if ( sbItem->widget() == d->stack->currentWidget() )
     {
-        if ( d->sideContainer->isVisible() )
+        if ( !isCollapsed() )
         {
             d->list->selectionModel()->clear();
-            d->sideContainer->hide();
+            setCollapsed( true );
         }
         else
         {
-            d->sideContainer->show();
+            setCollapsed( false );
             d->list->show();
         }
     }
     else
     {
-        if ( d->sideContainer->isHidden() )
+        if ( isCollapsed() )
         {
-            d->sideContainer->show();
+            setCollapsed( false );
             d->list->show();
         }
         d->stack->setCurrentWidget( sbItem->widget() );

@@ -131,7 +131,11 @@ typedef struct HashTable HashTable;
 void _plkr_message (
     const char *formatSpec,
     ...
-);
+)
+#ifdef __GNUC__
+   __attribute__ ((format (printf, 1, 2)))
+#endif
+;
 /* Display the message to stderr */
 
 char *_plkr_strndup (

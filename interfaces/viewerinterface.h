@@ -23,7 +23,7 @@ namespace Okular {
  * This interface can be used to control some more or less advanced features of a document
  * viewer.
  */
-class OKULAR_EXPORT ViewerInterface
+class ViewerInterface
 {
     public:
         virtual ~ViewerInterface() {}

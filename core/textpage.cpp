@@ -769,7 +769,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             // hyphenated '-' must be at the end of a word, so hyphenation means
             // we have a '-' just followed by a '\n' character
             // check if the string contains a '-' character
-            if(str.contains('-')){
+            if(str.contains('-') && j != 0){
 
                 // if the '-' is the last entry
                 if(str.at(len-1) == '-'){
@@ -928,6 +928,58 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         else
         {
             len=str.length();
+
+
+
+            // hyphenated '-' must be at the end of a word, so hyphenation means
+            // we have a '-' just followed by a '\n' character
+            // check if the string contains a '-' character
+            if(str.contains('-')){
+
+                // if the '-' is the last entry
+                if(str.at(len-1) == '-'){
+
+                    // validity chek of it + 1
+                    if( ( it + 1 ) != end){
+
+                        // 1. if the next character is '\n'
+                        const QString &lookahedStr = (*(it+1))->text();
+                        if(lookahedStr.at(0) == '\n'){
+                            len -= 1;
+                        }
+
+                        else{
+                            // 2. if the next word is in a different line or not
+
+                            QRect hyphenArea,lookaheadArea;
+                            const int pageWidth = m_page->m_page->width();
+                            const int pageHeight = m_page->m_page->height();
+
+                            hyphenArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+                            lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth,pageHeight);
+
+                            // lookahead to check whether both the '-' rect and next character rect overlap
+                            if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
+                                len -= 1;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                // else if it is the second last entry - for example in pdf format
+                else if(str.at(len-2) == '-'){
+                    if(str.at(len-1) == '\n'){
+                        len -= 2;
+                    }
+                }
+
+            }
+
+
+
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);

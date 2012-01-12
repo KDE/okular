@@ -23,9 +23,6 @@
 #include <QtAlgorithms>
 #include <QVarLengthArray>
 
-#include <iostream>
-using namespace std;
-
 using namespace Okular;
 
 // Common Function Declaration
@@ -771,7 +768,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
             // hyphenated '-' must be at the end of a word, so hyphenation means
             // we have a '-' just followed by a '\n' character
-
             // check if the string contains a '-' character
             if(str.contains('-')){
 
@@ -797,10 +793,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                             hyphenArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
                             lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth,pageHeight);
 
-                            //                     lookahead to check whether both the '-' rect and next character rect overlap
+                            // lookahead to check whether both the '-' rect and next character rect overlap
                             if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
                                 len -= 1;
-                                cout << "hyphenated - djvu" << endl;
                             }
 
                         }
@@ -813,7 +808,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                 else if(str.at(len-2) == '-'){
                     if(str.at(len-1) == '\n'){
                         len -= 2;
-                        cout << "hyphenated - pdf" << endl;
                     }
                 }
 

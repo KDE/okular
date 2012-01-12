@@ -28,6 +28,12 @@ using namespace std;
 
 using namespace Okular;
 
+// Common Function Declaration
+static bool compareTinyTextEntityX(TinyTextEntity* first, TinyTextEntity* second);
+static bool compareTinyTextEntityY(TinyTextEntity* first, TinyTextEntity* second);
+static bool doesConsumeX(const QRect& first, const QRect& second, int threshold);
+static bool doesConsumeY(const QRect& first, const QRect& second, int threshold);
+
 class SearchPoint
 {
     public:
@@ -755,7 +761,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         }
         {
             len=str.length();
-            int min=qMin(queryLeft,len);
+
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
@@ -763,10 +769,57 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             // entity
 
 
-            //just a little experiment for pdf
-            if(str.at(0).toAscii() == '-')
-                continue;
-            cout << str.at(0).toAscii() << endl;
+            // hyphenated '-' must be at the end of a word, so hyphenation means
+            // we have a '-' just followed by a '\n' character
+
+            // check if the string contains a '-' character
+            if(str.contains('-')){
+
+                // if the '-' is the last entry
+                if(str.at(len-1) == '-'){
+
+                    // validity chek of it + 1
+                    if( ( it + 1 ) != end){
+
+                        // 1. if the next character is '\n'
+                        const QString &lookahedStr = (*(it+1))->text();
+                        if(lookahedStr.at(0) == '\n'){
+                            len -= 1;
+                        }
+
+                        else{
+                            // 2. if the next word is in a different line or not
+
+                            QRect hyphenArea,lookaheadArea;
+                            const int pageWidth = m_page->m_page->width();
+                            const int pageHeight = m_page->m_page->height();
+
+                            hyphenArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
+                            lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth,pageHeight);
+
+                            //                     lookahead to check whether both the '-' rect and next character rect overlap
+                            if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
+                                len -= 1;
+                                cout << "hyphenated - djvu" << endl;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                // else if it is the second last entry - for example in pdf format
+                else if(str.at(len-2) == '-'){
+                    if(str.at(len-1) == '\n'){
+                        len -= 2;
+                        cout << "hyphenated - pdf" << endl;
+                    }
+                }
+
+            }
+
+            int min=qMin(queryLeft,len);
 
             int resStrLen = 0, resQueryLen = 0;
             if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),

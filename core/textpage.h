@@ -27,6 +27,7 @@ class TextPagePrivate;
 class TextSelection;
 class RegularAreaRect;
 
+
 /*! @class TextEntity
  * @short Abstract textentity of Okular
  * @par The context

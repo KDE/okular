@@ -297,6 +297,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
+
+/**
+  * We need to change in this function to resolve some issues with transparency.
+  * This is the next phase of work.
+  */
                 // highlight composition (product: highlight color * destcolor)
                 unsigned int * data = (unsigned int *)backImage.bits();
                 int val, newR, newG, newB,

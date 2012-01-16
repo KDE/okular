@@ -405,6 +405,9 @@ QModelIndex AuthorGroupProxyModel::parent( const QModelIndex &index ) const
 
 QModelIndex AuthorGroupProxyModel::mapFromSource( const QModelIndex &sourceIndex ) const
 {
+    if ( !sourceIndex.isValid() )
+        return QModelIndex();
+
     const AuthorGroupItem *item = d->mRoot->findIndex( sourceIndex );
     if ( !item )
         return QModelIndex();

@@ -419,10 +419,8 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
 
-    connect( m_reviewsWidget, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
-        m_pageView, SLOT(setAnnotationWindow(Okular::Annotation*)) );
-    connect( m_reviewsWidget, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
-        m_pageView, SLOT(removeAnnotationWindow(Okular::Annotation*)) );
+    connect( m_reviewsWidget, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
+        m_pageView, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );
 
     // add document observers
     m_document->addObserver( this );

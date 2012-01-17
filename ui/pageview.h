@@ -126,9 +126,7 @@ Q_OBJECT
         void copyTextSelection() const;
         void selectAll();
 
-        void setAnnotationWindow( Okular::Annotation *annotation );
-
-        void removeAnnotationWindow( Okular::Annotation *annotation );
+        void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
 
     signals:
         void urlDropped( const KUrl& );
@@ -246,6 +244,7 @@ Q_OBJECT
         void slotStopSpeaks();
         void slotAction( Okular::Action *action );
         void externalKeyPressEvent( QKeyEvent *e );
+        void slotAnnotationWindowDestroyed( QObject *window );
 };
 
 #endif

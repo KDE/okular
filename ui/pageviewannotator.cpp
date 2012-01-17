@@ -782,7 +782,7 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
             
             if ( annotation->openDialogAfterCreation() )
-                m_pageView->setAnnotationWindow( annotation );
+                m_pageView->openAnnotationWindow( annotation, item->pageNumber() );
         }
 
         if ( m_continuousMode )

@@ -72,14 +72,12 @@ void AnnotationPopup::exec( const QPoint &point )
     // check if the user really selected an action
     if ( choice ) {
         if ( choice == popoutWindow ) {
-            emit setAnnotationWindow( firstAnnotPagePair.annotation  );
+            emit openAnnotationWindow( firstAnnotPagePair.annotation, firstAnnotPagePair.pageNumber );
         } else if( choice == deleteNote ) {
             Q_FOREACH ( const AnnotPagePair& pair, mAnnotations )
             {
                 if ( pair.pageNumber != -1 )
                     mDocument->removePageAnnotation( pair.pageNumber, pair.annotation );
-
-                emit removeAnnotationWindow( pair.annotation );
             }
         } else if( choice == showProperties ) {
             if ( firstAnnotPagePair.pageNumber != -1 ) {

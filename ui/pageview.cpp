@@ -618,7 +618,7 @@ void PageView::fitPageWidth( int page )
     setFocus();
 }
 
-void PageView::setAnnotationWindow( Okular::Annotation * annotation )
+void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNumber )
 {
     if ( !annotation )
         return;
@@ -633,7 +633,8 @@ void PageView::setAnnotationWindow( Okular::Annotation * annotation )
 
     if ( existWindow == 0 )
     {
-        existWindow = new AnnotWindow( this, annotation );
+        existWindow = new AnnotWindow( this, annotation, d->document, pageNumber );
+        connect(existWindow, SIGNAL(destroyed(QObject*)), this, SLOT(slotAnnotationWindowDestroyed(QObject*)));
 
         d->m_annowindows.insert( annotation, existWindow );
     }
@@ -641,13 +642,20 @@ void PageView::setAnnotationWindow( Okular::Annotation * annotation )
     existWindow->show();
 }
 
-void PageView::removeAnnotationWindow( Okular::Annotation *annotation )
+void PageView::slotAnnotationWindowDestroyed( QObject * window )
 {
-    QHash< Okular::Annotation *, AnnotWindow * >::Iterator it = d->m_annowindows.find( annotation );
-    if ( it != d->m_annowindows.end() )
+    QHash< Okular::Annotation*, AnnotWindow * >::Iterator it = d->m_annowindows.begin();
+    QHash< Okular::Annotation*, AnnotWindow * >::Iterator itEnd = d->m_annowindows.end();
+    while ( it != itEnd )
     {
-        delete *it;
-        d->m_annowindows.erase( it );
+        if ( it.value() == window )
+        {
+            it = d->m_annowindows.erase( it );
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 
@@ -1129,8 +1137,12 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
             }
             else
             {
-                delete *it;
+                AnnotWindow *w = *it;
                 it = d->m_annowindows.erase( it );
+                // Need to delete after removing from the list
+                // otherwise deleting will call slotAnnotationWindowDestroyed wich will mess
+                // the list and the iterators
+                delete w; 
             }
         }
     }
@@ -1968,10 +1980,8 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         AnnotationPopup popup( d->document, this );
                         popup.addAnnotation( ann, pageItem->pageNumber() );
 
-                        connect( &popup, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
-                                 this, SLOT(setAnnotationWindow(Okular::Annotation*)) );
-                        connect( &popup, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
-                                 this, SLOT(removeAnnotationWindow(Okular::Annotation*)) );
+                        connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
+                                 this, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );
 
                         popup.exec( e->globalPos() );
                     }
@@ -2782,7 +2792,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
                 ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
             if ( ann )
             {
-                setAnnotationWindow( ann );
+                openAnnotationWindow( ann, pageItem->pageNumber() );
             }
         }
     }

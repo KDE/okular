@@ -16,6 +16,7 @@
 
 namespace Okular {
 class Annotation;
+class Document;
 }
 
 namespace GuiUtils {
@@ -29,18 +30,20 @@ class AnnotWindow : public QFrame
 {
     Q_OBJECT
     public:
-        AnnotWindow( QWidget * parent, Okular::Annotation * annot);
+        AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::Document * document, int page );
         ~AnnotWindow();
 
         void reloadInfo();
+        Okular::Annotation* annotation() const;
         
     private:
         MovableTitle * m_title;
         QTextEdit *textEdit;
         QColor m_color;
         GuiUtils::LatexRenderer *m_latexRenderer;
-    public:
         Okular::Annotation* m_annot;
+        Okular::Document* m_document;
+        int m_page;
 
     protected:
         virtual void showEvent( QShowEvent * event );

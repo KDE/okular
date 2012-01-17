@@ -52,8 +52,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void slotCurrentPageOnly( bool );
 
     Q_SIGNALS:
-        void setAnnotationWindow( Okular::Annotation *annotation );
-        void removeAnnotationWindow( Okular::Annotation *annotation );
+        void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
 
     private Q_SLOTS:
         void activated( const QModelIndex& );

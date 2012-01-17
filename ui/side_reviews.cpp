@@ -253,10 +253,8 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
     AnnotationPopup popup( m_document, this );
-    connect( &popup, SIGNAL(setAnnotationWindow(Okular::Annotation*)),
-             this, SIGNAL(setAnnotationWindow(Okular::Annotation*)) );
-    connect( &popup, SIGNAL(removeAnnotationWindow(Okular::Annotation*)),
-             this, SIGNAL(removeAnnotationWindow(Okular::Annotation*)) );
+    connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
+             this, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)) );
 
     QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
     Q_FOREACH ( const QModelIndex &index, indexes )

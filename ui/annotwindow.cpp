@@ -31,6 +31,7 @@
 
 // local includes
 #include "core/annotations.h"
+#include "core/document.h"
 #include "guiutils.h"
 #include "latexrenderer.h"
 #include <core/utils.h>
@@ -80,7 +81,7 @@ public:
         dateLabel->setCursor( Qt::SizeAllCursor );
         buttonlay->addWidget( dateLabel );
         CloseButton * close = new CloseButton( this );
-        connect( close, SIGNAL(clicked()), parent, SLOT(hide()) );
+        connect( close, SIGNAL(clicked()), parent, SLOT(close()) );
         buttonlay->addWidget( close );
         // option button row
         QHBoxLayout * optionlay = new QHBoxLayout();
@@ -182,11 +183,12 @@ private:
 
 
 // Qt::SubWindow is needed to make QSizeGrip work
-AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot)
-    : QFrame( parent, Qt::SubWindow ), m_annot( annot )
+AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::Document *document, int page )
+    : QFrame( parent, Qt::SubWindow ), m_annot( annot ), m_document( document ), m_page( page )
 {
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
+    setAttribute( Qt::WA_DeleteOnClose );
 
     textEdit = new KTextEdit( this );
     textEdit->setAcceptRichText( false );
@@ -238,6 +240,11 @@ void AnnotWindow::reloadInfo()
     m_title->setDate( m_annot->modificationDate() );
 }
 
+Okular::Annotation* AnnotWindow::annotation() const
+{
+    return m_annot;
+}
+
 void AnnotWindow::showEvent( QShowEvent * event )
 {
     QFrame::showEvent( event );
@@ -269,6 +276,9 @@ void AnnotWindow::slotOptionBtn()
 void AnnotWindow::slotsaveWindowText()
 {
     const QString newText = textEdit->toPlainText();
+    
+    // 0. tell the document
+    m_document->modifyPageAnnotation( m_page, m_annot );
 
     // 1. window text
     if ( !m_annot->window().text().isEmpty() )

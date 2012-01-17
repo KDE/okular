@@ -33,8 +33,7 @@ class AnnotationPopup : public QObject
         void exec( const QPoint &point = QPoint() );
 
     Q_SIGNALS:
-        void setAnnotationWindow( Okular::Annotation *annotation );
-        void removeAnnotationWindow( Okular::Annotation *annotation );
+        void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
 
     private:
         QWidget *mParent;

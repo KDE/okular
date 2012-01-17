@@ -52,16 +52,17 @@ void AnnotationPopup::exec( const QPoint &point )
     deleteNote = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
     deleteNote->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
 
-    if ( onlyOne && mAnnotations.first().annotation->flags() & Okular::Annotation::DenyDelete )
+    const AnnotPagePair &firstAnnotPagePair = mAnnotations.at(0);
+    if ( onlyOne && firstAnnotPagePair.annotation->flags() & Okular::Annotation::DenyDelete )
         deleteNote->setEnabled( false );
 
     showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
     showProperties->setEnabled( onlyOne );
 
-    if ( onlyOne && mAnnotations.first().annotation->subType() == Okular::Annotation::AFileAttachment )
+    if ( onlyOne && firstAnnotPagePair.annotation->subType() == Okular::Annotation::AFileAttachment )
     {
         menu.addSeparator();
-        fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( mAnnotations.first().annotation );
+        fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( firstAnnotPagePair.annotation );
         const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
         saveAttachment = menu.addAction( KIcon( "document-save" ), saveText );
     }
@@ -71,7 +72,7 @@ void AnnotationPopup::exec( const QPoint &point )
     // check if the user really selected an action
     if ( choice ) {
         if ( choice == popoutWindow ) {
-            emit setAnnotationWindow( mAnnotations.first().annotation  );
+            emit setAnnotationWindow( firstAnnotPagePair.annotation  );
         } else if( choice == deleteNote ) {
             Q_FOREACH ( const AnnotPagePair& pair, mAnnotations )
             {
@@ -81,8 +82,8 @@ void AnnotationPopup::exec( const QPoint &point )
                 emit removeAnnotationWindow( pair.annotation );
             }
         } else if( choice == showProperties ) {
-            if ( mAnnotations.first().pageNumber != -1 ) {
-                AnnotsPropertiesDialog propdialog( mParent, mDocument, mAnnotations.first().pageNumber, mAnnotations.first().annotation );
+            if ( firstAnnotPagePair.pageNumber != -1 ) {
+                AnnotsPropertiesDialog propdialog( mParent, mDocument, firstAnnotPagePair.pageNumber, firstAnnotPagePair.annotation );
                 propdialog.exec();
             }
         } else if( choice == saveAttachment ) {

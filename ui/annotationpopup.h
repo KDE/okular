@@ -38,7 +38,19 @@ class AnnotationPopup : public QObject
 
     private:
         QWidget *mParent;
-        typedef QPair< Okular::Annotation*, int > AnnotPagePair;
+        struct AnnotPagePair {
+            AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )
+            { }
+            
+            AnnotPagePair( const AnnotPagePair & pair ) : annotation( pair.annotation ),  pageNumber( pair.pageNumber )
+            { }
+            
+            bool operator==( const AnnotPagePair & pair ) const
+            { return annotation == pair.annotation && pageNumber == pair.pageNumber; }
+            
+            Okular::Annotation* annotation;
+            int pageNumber;
+        };
         QList< AnnotPagePair > mAnnotations;
         Okular::Document *mDocument;
 };

@@ -129,7 +129,7 @@ class PresentationToolBar : public QToolBar
 
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
-    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ), m_screenSaverCookie( -1 ),
+    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false )
@@ -232,8 +232,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     setupActions( collection );
 
-    // inhibit the screen saver
-    inhibitScreenSaver();
+    // inhibit power management
+    inhibitPowerManagement();
 
     show();
 
@@ -245,8 +245,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
 PresentationWidget::~PresentationWidget()
 {
-    // allow the screen saver again
-    allowScreenSaver();
+    // allow power management saver again
+    allowPowerManagement();
 
     // stop the audio playbacks
     Okular::AudioPlayer::instance()->stopPlaybacks();
@@ -1391,33 +1391,18 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     generatePage( true /* no transitions */ );
 }
 
-void PresentationWidget::inhibitScreenSaver()
+void PresentationWidget::inhibitPowerManagement()
 {
     QString reason = i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
-    QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
-                                                           "org.freedesktop.ScreenSaver", "Inhibit" );
-    message << QString( "Okular" );
-    message << reason;
-
-    QDBusReply<uint> reply = QDBusConnection::sessionBus().call( message );
-    if ( reply.isValid() )
-        m_screenSaverCookie = reply.value();
 
     // Inhibit screen and sleep
+    // Note: beginSuppressingScreenPowerManagement inhibits DPMS, automatic brightness change and screensaver
     m_screenInhibitCookie = Solid::PowerManagement::beginSuppressingScreenPowerManagement(reason);
     m_sleepInhibitCookie = Solid::PowerManagement::beginSuppressingSleep(reason);
 }
 
-void PresentationWidget::allowScreenSaver()
+void PresentationWidget::allowPowerManagement()
 {
-    if ( m_screenSaverCookie != -1 )
-    {
-        QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
-                                                               "org.freedesktop.ScreenSaver", "UnInhibit" );
-        message << (uint)m_screenSaverCookie;
-        QDBusConnection::sessionBus().send( message );
-    }
-
     // Remove cookies
     Solid::PowerManagement::stopSuppressingScreenPowerManagement(m_screenInhibitCookie);
     Solid::PowerManagement::stopSuppressingSleep(m_sleepInhibitCookie);

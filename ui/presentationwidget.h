@@ -86,8 +86,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void requestPixmaps();
         void setScreen( int );
         void applyNewScreenSize( const QSize & oldSize );
-        void inhibitScreenSaver();
-        void allowScreenSaver();
+        void inhibitPowerManagement();
+        void allowPowerManagement();
         void showTopBar( bool );
         // create actions that interact with this widget
         void setupActions( KActionCollection * collection );
@@ -104,7 +104,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         AnnotatorEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
-        int m_screenSaverCookie;
         int m_screenInhibitCookie;
         int m_sleepInhibitCookie;
 

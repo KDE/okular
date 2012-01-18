@@ -23,6 +23,9 @@
 #include <QtAlgorithms>
 #include <QVarLengthArray>
 
+#include <iostream>
+using namespace std;
+
 using namespace Okular;
 
 // Common Function Declaration
@@ -769,7 +772,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             // hyphenated '-' must be at the end of a word, so hyphenation means
             // we have a '-' just followed by a '\n' character
             // check if the string contains a '-' character
-            if(str.contains('-') && j != 0){
+            if(str.contains('-')){
 
                 // if the '-' is the last entry
                 if(str.at(len-1) == '-'){
@@ -796,6 +799,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                             // lookahead to check whether both the '-' rect and next character rect overlap
                             if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
                                 len -= 1;
+//                                cout << "f: " << lookahedStr.toAscii().data() << endl;
                             }
 
                         }
@@ -929,7 +933,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         {
             len=str.length();
 
-
+            bool hyphenated = false;
+            int changeHyphenated = 0;
 
             // hyphenated '-' must be at the end of a word, so hyphenation means
             // we have a '-' just followed by a '\n' character
@@ -937,7 +942,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             if(str.contains('-')){
 
                 // if the '-' is the last entry
-                if(str.at(len-1) == '-'){
+                if(str.endsWith('-')){
 
                     // validity chek of it + 1
                     if( ( it + 1 ) != end){
@@ -946,6 +951,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                         const QString &lookahedStr = (*(it+1))->text();
                         if(lookahedStr.at(0) == '\n'){
                             len -= 1;
+                            hyphenated = true;
+                            changeHyphenated = 1;
                         }
 
                         else{
@@ -960,7 +967,12 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
                             // lookahead to check whether both the '-' rect and next character rect overlap
                             if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
+//                                cout << "djvu" << endl;
+//                                cout << "b:" << str.toAscii().data() << lookahedStr.toAscii().data() << endl;
+//                                str.remove(len-1,1);
                                 len -= 1;
+                                hyphenated = true;
+                                changeHyphenated = 1;
                             }
 
                         }
@@ -970,12 +982,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                 }
 
                 // else if it is the second last entry - for example in pdf format
-                else if(str.at(len-2) == '-'){
-                    if(str.at(len-1) == '\n'){
-                        len -= 2;
-                    }
+                else if(str.endsWith("-\n")){
+                    len -= 2;
+                    hyphenated = true;
+                    changeHyphenated = 1;
                 }
-
             }
 
 
@@ -988,7 +999,13 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
-            if ( !comparer( str.rightRef( min ), query.midRef( j - min + 1, min ),
+            int offset = len - min;
+
+            if(hyphenated){
+                //offset = offset - changeHyphenated;
+            }
+
+            if ( !comparer( str.midRef(offset, min ), query.midRef( j - min + 1, min ),
                             &resStrLen, &resQueryLen ) )
             {
                     // we not have matched

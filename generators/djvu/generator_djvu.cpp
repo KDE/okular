@@ -72,7 +72,7 @@ static KAboutData createAboutData()
          "okular_djvu",
          "okular_djvu",
          ki18n( "DjVu Backend" ),
-         "0.2.1",
+         "0.2.3",
          ki18n( "DjVu backend based on DjVuLibre." ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2008 Pino Toscano" )

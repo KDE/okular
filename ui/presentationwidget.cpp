@@ -41,6 +41,8 @@
 #include <kshortcut.h>
 #include <kdialog.h>
 
+#include <Solid/PowerManagement>
+
 // system includes
 #include <stdlib.h>
 #include <math.h>
@@ -1391,14 +1393,19 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
 
 void PresentationWidget::inhibitScreenSaver()
 {
+    QString reason = i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
     QDBusMessage message = QDBusMessage::createMethodCall( "org.freedesktop.ScreenSaver", "/ScreenSaver",
                                                            "org.freedesktop.ScreenSaver", "Inhibit" );
     message << QString( "Okular" );
-    message << i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
+    message << reason;
 
     QDBusReply<uint> reply = QDBusConnection::sessionBus().call( message );
     if ( reply.isValid() )
         m_screenSaverCookie = reply.value();
+
+    // Inhibit screen and sleep
+    m_screenInhibitCookie = Solid::PowerManagement::beginSuppressingScreenPowerManagement(reason);
+    m_sleepInhibitCookie = Solid::PowerManagement::beginSuppressingSleep(reason);
 }
 
 void PresentationWidget::allowScreenSaver()
@@ -1410,6 +1417,10 @@ void PresentationWidget::allowScreenSaver()
         message << (uint)m_screenSaverCookie;
         QDBusConnection::sessionBus().send( message );
     }
+
+    // Remove cookies
+    Solid::PowerManagement::stopSuppressingScreenPowerManagement(m_screenInhibitCookie);
+    Solid::PowerManagement::stopSuppressingSleep(m_sleepInhibitCookie);
 }
 
 void PresentationWidget::showTopBar( bool show )

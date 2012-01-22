@@ -49,7 +49,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     m_search->lineEdit()->setSearchMoveViewport( true );
     m_search->lineEdit()->setToolTip( i18n( "Text to search for" ) );
     m_search->installEventFilter( this );
-    label->setBuddy( m_search );
+    label->setBuddy( m_search->lineEdit() );
     lay->addWidget( m_search );
 
     QPushButton * findNextBtn = new QPushButton( KIcon( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );

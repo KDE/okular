@@ -933,9 +933,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         {
             len=str.length();
 
-            bool hyphenated = false;
-            int changeHyphenated = 0;
-
             // hyphenated '-' must be at the end of a word, so hyphenation means
             // we have a '-' just followed by a '\n' character
             // check if the string contains a '-' character
@@ -949,10 +946,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
                         // 1. if the next character is '\n'
                         const QString &lookahedStr = (*(it+1))->text();
-                        if(lookahedStr.at(0) == '\n'){
+                        if(lookahedStr == "\n"){
                             len -= 1;
-                            hyphenated = true;
-                            changeHyphenated = 1;
                         }
 
                         else{
@@ -971,8 +966,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 //                                cout << "b:" << str.toAscii().data() << lookahedStr.toAscii().data() << endl;
 //                                str.remove(len-1,1);
                                 len -= 1;
-                                hyphenated = true;
-                                changeHyphenated = 1;
                             }
 
                         }
@@ -984,8 +977,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                 // else if it is the second last entry - for example in pdf format
                 else if(str.endsWith("-\n")){
                     len -= 2;
-                    hyphenated = true;
-                    changeHyphenated = 1;
                 }
             }
 
@@ -1000,10 +991,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
             int resStrLen = 0, resQueryLen = 0;
             int offset = len - min;
-
-            if(hyphenated){
-                //offset = offset - changeHyphenated;
-            }
 
             if ( !comparer( str.midRef(offset, min ), query.midRef( j - min + 1, min ),
                             &resStrLen, &resQueryLen ) )

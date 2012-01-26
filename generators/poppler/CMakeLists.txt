@@ -1,24 +1,6 @@
 
 set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
-check_cxx_source_compiles("
-#include <poppler-qt4.h>
-int main()
-{
-  Poppler::Document * doc = 0;
-  (void)doc->scripts();
-  return 0;
-}
-" HAVE_POPPLER_0_9)
-check_cxx_source_compiles("
-#include <poppler-qt4.h>
-int main()
-{
-  Poppler::LinkDestination * dest = 0;
-  const QString foo = dest->destinationName();
-  return 0;
-}
-" HAVE_POPPLER_0_11)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

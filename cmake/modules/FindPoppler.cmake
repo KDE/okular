@@ -60,28 +60,6 @@ if (POPPLER_FOUND)
   # check whether we're using poppler 0.6
   set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
-check_cxx_source_compiles("
-#include <poppler-qt4.h>
-
-int main()
-{
-  Poppler::SoundObject * so = 0;
-  (void)so;
-
-  return 0;
-}
-" HAVE_POPPLER_0_6 )
-
-check_cxx_source_compiles("
-#include <poppler-qt4.h>
-#include <poppler-form.h>
-int main()
-{
-  Poppler::FormFieldButton * button = 0;
-  button->buttonType();
-  return 0;
-}
-" HAVE_POPPLER_0_8)
 
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
@@ -112,10 +90,6 @@ int main()
     set(popplerVersionMessage "0.16")
   elseif (HAVE_POPPLER_0_12_1)
     set(popplerVersionMessage "0.12.1")
-  elseif (HAVE_POPPLER_0_8)
-    set(popplerVersionMessage "0.8")
-  elseif (HAVE_POPPLER_0_6)
-    set(popplerVersionMessage "0.6")
   else (HAVE_POPPLER_0_16)
     set(popplerVersionMessage "0.5.4")
   endif (HAVE_POPPLER_0_16)
@@ -132,8 +106,6 @@ endif (POPPLER_FOUND)
 # ensure that they are cached
 set(POPPLER_INCLUDE_DIR ${POPPLER_INCLUDE_DIR} CACHE INTERNAL "The Poppler-Qt4 include path")
 set(POPPLER_LIBRARY ${POPPLER_LIBRARY} CACHE INTERNAL "The Poppler-Qt4 library")
-set(HAVE_POPPLER_0_6 ${HAVE_POPPLER_0_6} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.6")
-set(HAVE_POPPLER_0_8 ${HAVE_POPPLER_0_8} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.8")
 set(HAVE_POPPLER_0_12_1 ${HAVE_POPPLER_0_12_1} CACHE INTERNAL "Whether the version of Poppler-Qt4 is >= 0.12.1")
 
 endif(POPPLER_INCLUDE_DIR AND POPPLER_LIBRARY)

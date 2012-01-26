@@ -48,9 +48,7 @@
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
-#ifdef HAVE_POPPLER_0_9
 Q_DECLARE_METATYPE(Poppler::FontInfo)
-#endif
 
 static const int PDFDebug = 4710;
 static const int defaultPageWidth = 595;
@@ -143,7 +141,6 @@ Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerS
     return sound;
 }
 
-#ifdef HAVE_POPPLER_0_9
 Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie )
 {
     Okular::Movie *movie = new Okular::Movie( popplerMovie->url() );
@@ -153,7 +150,6 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     movie->setPlayMode( (Okular::Movie::PlayMode)popplerMovie->playMode() );
     return movie;
 }
-#endif
 
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
@@ -163,9 +159,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 	const Poppler::LinkBrowse *popplerLinkBrowse;
 	const Poppler::LinkAction *popplerLinkAction;
 	const Poppler::LinkSound *popplerLinkSound;
-#ifdef HAVE_POPPLER_0_9
 	const Poppler::LinkJavaScript *popplerLinkJS;
-#endif
 	Okular::DocumentViewport viewport;
 	
 	switch(popplerLink->linkType())
@@ -176,7 +170,6 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 		case Poppler::Link::Goto:
 		{
 			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
-#ifdef HAVE_POPPLER_0_11
 			const Poppler::LinkDestination dest = popplerLinkGoto->destination();
 			const QString destName = dest.destinationName();
 			if (destName.isEmpty())
@@ -188,10 +181,6 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 			{
 				link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
 			}
-#else
-			fillViewportFromLinkDestination( viewport, popplerLinkGoto->destination() );
-			link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
-#endif
 		}
 		break;
 		
@@ -219,14 +208,12 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 		}
 		break;
 		
-#ifdef HAVE_POPPLER_0_9
 		case Poppler::Link::JavaScript:
 		{
 			popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
 			link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
 		}
 		break;
-#endif
 		
 		case Poppler::Link::Movie:
 			// not implemented
@@ -700,13 +687,11 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
         of.setType( convertPopplerFontInfoTypeToOkularFontInfoType( font.type() ) );
         of.setEmbedType( embedTypeForPopplerFontInfo( font) );
         of.setFile( font.file() );
-#ifdef HAVE_POPPLER_0_9
         of.setCanBeExtracted( of.embedType() != Okular::FontInfo::NotEmbedded );
         
         QVariant nativeId;
         nativeId.setValue( font );
         of.setNativeId( nativeId );
-#endif
 
         list.append( of );
     }
@@ -849,13 +834,8 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 
 void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *data)
 {
-#ifdef HAVE_POPPLER_0_9
     Poppler::FontInfo fi = font.nativeId().value<Poppler::FontInfo>();
     *data = pdfdoc->fontData(fi);
-#else
-    Q_UNUSED( font )
-    Q_UNUSED( data )
-#endif
 }
 
 #define DUMMY_QPRINTER_COPY
@@ -1025,13 +1005,11 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
             return true;
     }
-#ifdef HAVE_POPPLER_0_9
     else if ( key == "DocumentScripts" && option.toString() == "JavaScript" )
     {
         QMutexLocker ml(userMutex());
         return pdfdoc->scripts();
     }
-#endif
     return QVariant();
 }
 

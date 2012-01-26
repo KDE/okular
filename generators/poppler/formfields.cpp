@@ -21,14 +21,12 @@ PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field
     : Okular::FormFieldButton(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-#ifdef HAVE_POPPLER_0_9
     Poppler::Link *aAction = field->activationAction();
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
         delete aAction;
     }
-#endif
 }
 
 PopplerFormFieldButton::~PopplerFormFieldButton()
@@ -105,14 +103,12 @@ PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-#ifdef HAVE_POPPLER_0_9
     Poppler::Link *aAction = field->activationAction();
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
         delete aAction;
     }
-#endif
 }
 
 PopplerFormFieldText::~PopplerFormFieldText()
@@ -204,14 +200,12 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( Poppler::FormFieldChoice * field
     : Okular::FormFieldChoice(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-#ifdef HAVE_POPPLER_0_9
     Poppler::Link *aAction = field->activationAction();
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
         delete aAction;
     }
-#endif
 }
 
 PopplerFormFieldChoice::~PopplerFormFieldChoice()

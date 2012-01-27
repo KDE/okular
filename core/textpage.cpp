@@ -775,7 +775,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             if(str.contains('-')){
 
                 // if the '-' is the last entry
-                if(str.at(len-1) == '-'){
+                //                if(str.at(len-1) == '-'){
+                if(str.endsWith('-')){
 
                     // validity chek of it + 1
                     if( ( it + 1 ) != end){
@@ -799,7 +800,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                             // lookahead to check whether both the '-' rect and next character rect overlap
                             if( !doesConsumeY(hyphenArea,lookaheadArea,70) ){
                                 len -= 1;
-//                                cout << "f: " << lookahedStr.toAscii().data() << endl;
+                                //                                cout << "f: " << lookahedStr.toAscii().data() << endl;
                             }
 
                         }
@@ -810,7 +811,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 
                 // else if it is the second last entry - for example in pdf format
                 else if(str.at(len-2) == '-'){
-                    if(str.at(len-1) == '\n'){
+//                    if(str.at(len-1) == '\n'){
+                    if(str.endsWith('\n')){
                         len -= 2;
                     }
                 }

@@ -39,14 +39,126 @@ class HoverButton : public QToolButton
         HoverButton( QWidget * parent );
 };
 
+MiniBarLogic::MiniBarLogic( QObject * parent, Okular::Document * document )
+ : QObject(parent)
+ , m_document( document )
+ , m_currentPage( -1 )
+{
+}   
+
+MiniBarLogic::~MiniBarLogic()
+{
+    m_document->removeObserver( this );
+}
+
+void MiniBarLogic::addMiniBar( MiniBar * miniBar )
+{
+    m_miniBars.insert( miniBar );
+}
+
+void MiniBarLogic::removeMiniBar( MiniBar * miniBar )
+{
+    m_miniBars.remove( miniBar );
+}
+
+Okular::Document *MiniBarLogic::document() const
+{
+    return m_document;
+}
+
+int MiniBarLogic::currentPage() const
+{
+    return m_currentPage;
+}
+
+void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
+{
+    // only process data when document changes
+    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
+        return;
+
+    // if document is closed or has no pages, hide widget
+    const int pages = pageVector.count();
+    if ( pages < 1 )
+    {
+        m_currentPage = -1;
+        foreach ( MiniBar *miniBar, m_miniBars )
+        {
+            miniBar->setEnabled( false );
+        }
+        return;
+    }
+    
+    bool labelsDiffer = false;
+    foreach(const Okular::Page * page, pageVector)
+    {
+        if (!page->label().isEmpty())
+        {
+            if (page->label().toInt() != (page->number() + 1))
+            {
+                labelsDiffer = true;
+            }
+        }
+    }
+    
+    const QString pagesString = QString::number( pages );
+
+    foreach ( MiniBar *miniBar, m_miniBars )
+    {
+        // resize width of widgets
+        miniBar->resizeForPage( pages );
+            
+        // update child widgets
+        miniBar->m_pageLabelEdit->setPageLabels( pageVector );
+        miniBar->m_pageNumberEdit->setPagesNumber( pages );
+        miniBar->m_pagesButton->setText( pagesString );
+        miniBar->m_prevButton->setEnabled( false );
+        miniBar->m_nextButton->setEnabled( false );
+        miniBar->m_pageLabelEdit->setVisible( labelsDiffer );
+        miniBar->m_pageNumberLabel->setVisible( labelsDiffer );
+        miniBar->m_pageNumberEdit->setVisible( !labelsDiffer );
+
+        miniBar->resize( miniBar->minimumSizeHint() );
+
+        miniBar->setEnabled( true );
+    }
+}
+
+void MiniBarLogic::notifyViewportChanged( bool /*smoothMove*/ )
+{
+    // get current page number
+    const int page = m_document->viewport().pageNumber;
+    const int pages = m_document->pages();
+
+    // if the document is opened and page is changed
+    if ( page != m_currentPage && pages > 0 )
+    {
+        m_currentPage = page;
+        const QString pageNumber = QString::number( page + 1 );
+        const QString pageLabel = m_document->page(page)->label();
+        
+        foreach ( MiniBar *miniBar, m_miniBars )
+        {
+            // update prev/next button state
+            miniBar->m_prevButton->setEnabled( page > 0 );
+            miniBar->m_nextButton->setEnabled( page < ( pages - 1 ) );
+            // update text on widgets
+            miniBar->m_pageNumberEdit->setText( pageNumber );
+            miniBar->m_pageNumberLabel->setText( pageNumber );
+            miniBar->m_pageLabelEdit->setText( pageLabel );
+        }
+    }
+}
 
 /** MiniBar **/
 
-MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
-    : QWidget( parent ), m_document( document ),
-    m_currentPage( -1 )
+MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
+    : QWidget( parent )
+    , m_miniBarLogic( miniBarLogic )
 {
     setObjectName( QLatin1String( "miniBar" ) );
+    
+    m_miniBarLogic->addMiniBar( this );
 
     QHBoxLayout * horLayout = new QHBoxLayout( this );
 
@@ -106,7 +218,7 @@ MiniBar::MiniBar( QWidget * parent, Okular::Document * document )
 
 MiniBar::~MiniBar()
 {
-    m_document->removeObserver( this );
+    m_miniBarLogic->removeMiniBar( this );
 }
 
 bool MiniBar::eventFilter( QObject *target, QEvent *event )
@@ -127,82 +239,16 @@ bool MiniBar::eventFilter( QObject *target, QEvent *event )
     return false;
 }
 
-void MiniBar::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
-{
-    // only process data when document changes
-    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
-        return;
-
-    // if document is closed or has no pages, hide widget
-    int pages = pageVector.count();
-    if ( pages < 1 )
-    {
-        m_currentPage = -1;
-        setEnabled( false );
-        return;
-    }
-
-    // resize width of widgets
-    resizeForPage( pages );
-    
-    bool labelsDiffer = false;
-    foreach(const Okular::Page * page, pageVector)
-    {
-        if (!page->label().isEmpty())
-        {
-            if (page->label().toInt() != (page->number() + 1))
-            {
-                labelsDiffer = true;
-            }
-        }
-    }
-    
-    // update child widgets
-    m_pageLabelEdit->setPageLabels( pageVector );
-    m_pageNumberEdit->setPagesNumber( pages );
-    m_pagesButton->setText( QString::number( pages ) );
-    m_prevButton->setEnabled( false );
-    m_nextButton->setEnabled( false );
-    m_pageLabelEdit->setVisible( labelsDiffer );
-    m_pageNumberLabel->setVisible( labelsDiffer );
-    m_pageNumberEdit->setVisible( !labelsDiffer );
-
-    resize( minimumSizeHint() );
-
-    setEnabled( true );
-}
-
-void MiniBar::notifyViewportChanged( bool /*smoothMove*/ )
-{
-    // get current page number
-    int page = m_document->viewport().pageNumber;
-    int pages = m_document->pages();
-
-    // if the document is opened and page is changed
-    if ( page != m_currentPage && pages > 0 )
-    {
-        m_currentPage = page;
-        // update prev/next button state
-        m_prevButton->setEnabled( page > 0 );
-        m_nextButton->setEnabled( page < ( pages - 1 ) );
-        // update text on widgets
-        const QString pageNumber = QString::number( page + 1 );
-        m_pageNumberEdit->setText( pageNumber );
-        m_pageNumberLabel->setText( pageNumber );
-        m_pageLabelEdit->setText( m_document->page(page)->label() );
-    }
-}
-
 void MiniBar::slotChangePage()
 {
     // get text from the lineEdit
-    QString pageNumber = m_pageNumberEdit->text();
+    const QString pageNumber = m_pageNumberEdit->text();
 
     // convert it to page number and go to that page
     bool ok;
     int number = pageNumber.toInt( &ok ) - 1;
-    if ( ok && number >= 0 && number < (int)m_document->pages() &&
-         number != m_currentPage )
+    if ( ok && number >= 0 && number < (int)m_miniBarLogic->document()->pages() &&
+         number != m_miniBarLogic->currentPage() )
     {
         slotChangePage( number );
     }
@@ -210,7 +256,7 @@ void MiniBar::slotChangePage()
 
 void MiniBar::slotChangePage( int pageNumber )
 {
-    m_document->setViewportPage( pageNumber );
+    m_miniBarLogic->document()->setViewportPage( pageNumber );
     m_pageNumberEdit->clearFocus();
     m_pageLabelEdit->clearFocus();
 }

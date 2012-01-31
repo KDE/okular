@@ -239,6 +239,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
         QPointer<MiniBar> m_miniBar;
+        QPointer<MiniBar> m_pageNumberTool;
         QPointer<QWidget> m_bottomBar;
         QPointer<PresentationWidget> m_presentationWidget;
         QPointer<ProgressWidget> m_progressWidget;

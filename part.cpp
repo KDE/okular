@@ -410,14 +410,18 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     bottomBarLayout->setSpacing( 0 );
     bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-    m_miniBar = new MiniBar( m_bottomBar, m_document );
+    MiniBarLogic * miniBarLogic = new MiniBarLogic( this, m_document );
+    m_miniBar = new MiniBar( m_bottomBar, miniBarLogic );
     bottomBarLayout->addWidget( m_miniBar );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 
+    m_pageNumberTool = new MiniBar( 0, miniBarLogic );
+
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_pageNumberTool, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
 
     connect( m_reviewsWidget, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
         m_pageView, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );
@@ -428,7 +432,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_document->addObserver( m_pageView );
     m_document->registerView( m_pageView );
     m_document->addObserver( m_toc );
-    m_document->addObserver( m_miniBar );
+    m_document->addObserver( miniBarLogic );
 #ifdef OKULAR_ENABLE_MINIBAR
     m_document->addObserver( m_progressWidget );
 #endif
@@ -514,6 +518,7 @@ void Part::setupViewerActions()
     m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
     // dirty way to activate gotopage when pressing miniBar's button
     connect( m_miniBar, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
+    connect( m_pageNumberTool, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
 
     m_prevPage = KStandardAction::prior(this, SLOT(slotPreviousPage()), ac);
     m_prevPage->setIconText( i18nc( "Previous page", "Previous" ) );
@@ -522,6 +527,7 @@ void Part::setupViewerActions()
     m_prevPage->setShortcut( 0 );
     // dirty way to activate prev page when pressing miniBar's button
     connect( m_miniBar, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
+    connect( m_pageNumberTool, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
 #ifdef OKULAR_ENABLE_MINIBAR
     connect( m_progressWidget, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
 #endif
@@ -533,6 +539,7 @@ void Part::setupViewerActions()
     m_nextPage->setShortcut( 0 );
     // dirty way to activate next page when pressing miniBar's button
     connect( m_miniBar, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
+    connect( m_pageNumberTool, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
 #ifdef OKULAR_ENABLE_MINIBAR
     connect( m_progressWidget, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
 #endif
@@ -655,6 +662,10 @@ void Part::setupViewerActions()
     ac->addAction("close_find_bar", m_closeFindBar);
     connect(m_closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
     widget()->addAction(m_closeFindBar);
+
+    KAction *pageno = new KAction( i18n( "Page Number" ), ac );
+    pageno->setDefaultWidget( m_pageNumberTool );
+    ac->addAction( "page_number", pageno );
 }
 
 void Part::setViewerShortcuts()
@@ -775,6 +786,7 @@ Part::~Part()
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
+    delete m_pageNumberTool;
     delete m_bottomBar;
 #ifdef OKULAR_ENABLE_MINIBAR
     delete m_progressWidget;

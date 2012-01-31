@@ -11,6 +11,7 @@
 #ifndef _OKULAR_MINIBAR_H_
 #define _OKULAR_MINIBAR_H_
 
+#include <qset.h>
 #include <qwidget.h>
 #include <klineedit.h>
 #include "core/observer.h"
@@ -72,19 +73,42 @@ class PageLabelEdit : public PagesEdit
 };
 
 /**
- * @short A widget to display page number and change current page.
+ * @short The object that observes the document and feeds the minibars
  */
-class MiniBar : public QWidget, public Okular::DocumentObserver
+class MiniBarLogic : public QObject, public Okular::DocumentObserver
 {
-    Q_OBJECT
     public:
-        MiniBar( QWidget *parent, Okular::Document * document );
-        ~MiniBar();
-
+        MiniBarLogic( QObject * parent, Okular::Document * m_document );
+        ~MiniBarLogic();
+        
+        void addMiniBar( MiniBar * miniBar );
+        void removeMiniBar( MiniBar * miniBar );
+        
+        Okular::Document *document() const;
+        int currentPage() const;
+        
         // [INHERITED] from DocumentObserver
         uint observerId() const { return MINIBAR_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
+        
+    private:
+        QSet<MiniBar *> m_miniBars;
+        Okular::Document * m_document;
+        int m_currentPage;
+};
+
+/**
+ * @short A widget to display page number and change current page.
+ */
+class MiniBar : public QWidget
+{
+    Q_OBJECT
+    friend class MiniBarLogic;
+    
+    public:
+        MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
+        ~MiniBar();
 
     signals:
         void gotoPage();
@@ -102,14 +126,13 @@ class MiniBar : public QWidget, public Okular::DocumentObserver
         void resizeForPage( int pages );
         bool eventFilter( QObject *target, QEvent *event );
 
-        Okular::Document * m_document;
+        MiniBarLogic * m_miniBarLogic;
         PageNumberEdit * m_pageNumberEdit;
         PageLabelEdit * m_pageLabelEdit;
         QLabel * m_pageNumberLabel;
         HoverButton * m_prevButton;
         HoverButton * m_pagesButton;
         HoverButton * m_nextButton;
-        int m_currentPage;
 };
 
 /**

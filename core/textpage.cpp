@@ -985,8 +985,8 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
-            int offset = len - min;
-
+            // Note len is not str.length() so we can't use rightRef here
+            const int offset = len - min;
             if ( !comparer( str.midRef(offset, min ), query.midRef( j - min + 1, min ),
                             &resStrLen, &resQueryLen ) )
             {

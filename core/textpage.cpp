@@ -57,6 +57,63 @@ bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to,
     return from.compare( to, Qt::CaseSensitive ) == 0;
 }
 
+/**
+ * If the horizontal arm of one rectangle fully contains the other (example below)
+ *  --------         ----         -----  first
+ *    ----         --------       -----  second
+ * or we can make it overlap of spaces by threshold%
+*/
+static bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
+{
+    // if one consumes another fully
+    if(first.left() <= second.left() && first.right() >= second.right())
+        return true;
+
+    if(first.left() >= second.left() && first.right() <= second.right())
+        return true;
+
+    // or if there is overlap of space by more than threshold%
+    // there is overlap
+    if(second.right() >= first.left() && first.right() >= second.left())
+    {
+        const int overlap = (second.right() >= first.right()) ? first.right() - second.left()
+                                                              : second.right() - first.left();
+        // we will divide by the smaller rectangle to calculate the overlap
+        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.right() - first.left())
+                                                                : overlap * 100 / (second.right() - second.left());
+        if(percentage >= threshold) return true;
+    }
+
+    return false;
+}
+
+/**
+ * Same concept of doesConsumeX but in this case we calculate on y axis
+ */
+static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+{
+    // if one consumes another fully
+    if(first.top() <= second.top() && first.bottom() >= second.bottom())
+        return true;
+
+    if(first.top() >= second.top() && first.bottom() <= second.bottom())
+        return true;
+
+    // or if there is overlap of space by more than 80%
+    // there is overlap
+    if(second.bottom() >= first.top() && first.bottom() >= second.top())
+    {
+        const int overlap = (second.bottom() >= first.bottom()) ? first.bottom() - second.top()
+                                                                : second.bottom() - first.top();
+        //we will divide by the smaller rectangle to calculate the overlap
+        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.bottom() - first.top())
+                                                                : overlap * 100 / (second.bottom() - second.top());
+
+        if(percentage >= threshold) return true;
+    }
+
+    return false;
+}
 
 /*
   Rationale behind TinyTextEntity:
@@ -728,6 +785,54 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     return ret;
 }
 
+// hyphenated '-' must be at the end of a word, so hyphenation means
+// we have a '-' just followed by a '\n' character
+// check if the string contains a '-' character
+// if the '-' is the last entry
+static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &end, PagePrivate *page)
+{
+    int len = str.length();
+    
+    // hyphenated '-' must be at the end of a word, so hyphenation means
+    // we have a '-' just followed by a '\n' character
+    // check if the string contains a '-' character
+    // if the '-' is the last entry
+    if ( str.endsWith( '-' ) )
+    {
+        // validity chek of it + 1
+        if ( ( it + 1 ) != end )
+        {
+            // 1. if the next character is '\n'
+            const QString &lookahedStr = (*(it+1))->text();
+            if (lookahedStr.startsWith('\n'))
+            {
+                len -= 1;
+            }
+            else
+            {
+                // 2. if the next word is in a different line or not
+                const int pageWidth = page->m_page->width();
+                const int pageHeight = page->m_page->height();
+
+                const QRect hyphenArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
+                const QRect lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth, pageHeight);
+
+                // lookahead to check whether both the '-' rect and next character rect overlap
+                if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
+                {
+                    len -= 1;
+                }
+            }
+        }
+    }
+    // else if it is the second last entry - for example in pdf format
+    else if (str.endsWith("-\n"))
+    {
+        len -= 2;
+    }
+    
+    return len;
+}
 
 RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
                                                              Qt::CaseSensitivity caseSensitivity,
@@ -768,7 +873,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             offsetMoved = true;
         }
         {
-            len=str.length();
+            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
@@ -888,7 +993,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         }
         else
         {
-            len=str.length();
+            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
@@ -897,7 +1002,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             // entity
 
             int resStrLen = 0, resQueryLen = 0;
-            if ( !comparer( str.rightRef( min ), query.midRef( j - min + 1, min ),
+            // Note len is not str.length() so we can't use rightRef here
+            const int offset = len - min;
+            if ( !comparer( str.midRef(offset, min ), query.midRef( j - min + 1, min ),
                             &resStrLen, &resQueryLen ) )
             {
                     // we not have matched
@@ -1032,64 +1139,6 @@ void TextPagePrivate::setWordList(const TextList &list)
 {
     qDeleteAll(m_words);
     m_words = list;
-}
-
-/**
- * If the horizontal arm of one rectangle fully contains the other (example below)
- *  --------         ----         -----  first
- *    ----         --------       -----  second
- * or we can make it overlap of spaces by threshold%
-*/
-static bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
-{
-    // if one consumes another fully
-    if(first.left() <= second.left() && first.right() >= second.right())
-        return true;
-
-    if(first.left() >= second.left() && first.right() <= second.right())
-        return true;
-
-    // or if there is overlap of space by more than threshold%
-    // there is overlap
-    if(second.right() >= first.left() && first.right() >= second.left())
-    {
-        const int overlap = (second.right() >= first.right()) ? first.right() - second.left()
-                                                              : second.right() - first.left();
-        // we will divide by the smaller rectangle to calculate the overlap
-        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.right() - first.left())
-                                                                : overlap * 100 / (second.right() - second.left());
-        if(percentage >= threshold) return true;
-    }
-
-    return false;
-}
-
-/**
- * Same concept of doesConsumeX but in this case we calculate on y axis
- */
-static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
-{
-    // if one consumes another fully
-    if(first.top() <= second.top() && first.bottom() >= second.bottom())
-        return true;
-
-    if(first.top() >= second.top() && first.bottom() <= second.bottom())
-        return true;
-
-    // or if there is overlap of space by more than 80%
-    // there is overlap
-    if(second.bottom() >= first.top() && first.bottom() >= second.top())
-    {
-        const int overlap = (second.bottom() >= first.bottom()) ? first.bottom() - second.top()
-                                                                : second.bottom() - first.top();
-        //we will divide by the smaller rectangle to calculate the overlap
-        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.bottom() - first.top())
-                                                                : overlap * 100 / (second.bottom() - second.top());
-
-        if(percentage >= threshold) return true;
-    }
-
-    return false;
 }
 
 /**

@@ -768,6 +768,54 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     return ret;
 }
 
+// hyphenated '-' must be at the end of a word, so hyphenation means
+// we have a '-' just followed by a '\n' character
+// check if the string contains a '-' character
+// if the '-' is the last entry
+static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &end, PagePrivate *page)
+{
+    int len = str.length();
+    
+    // hyphenated '-' must be at the end of a word, so hyphenation means
+    // we have a '-' just followed by a '\n' character
+    // check if the string contains a '-' character
+    // if the '-' is the last entry
+    if ( str.endsWith( '-' ) )
+    {
+        // validity chek of it + 1
+        if ( ( it + 1 ) != end )
+        {
+            // 1. if the next character is '\n'
+            const QString &lookahedStr = (*(it+1))->text();
+            if (lookahedStr.startsWith('\n'))
+            {
+                len -= 1;
+            }
+            else
+            {
+                // 2. if the next word is in a different line or not
+                const int pageWidth = page->m_page->width();
+                const int pageHeight = page->m_page->height();
+
+                const QRect hyphenArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
+                const QRect lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth, pageHeight);
+
+                // lookahead to check whether both the '-' rect and next character rect overlap
+                if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
+                {
+                    len -= 1;
+                }
+            }
+        }
+    }
+    // else if it is the second last entry - for example in pdf format
+    else if (str.endsWith("-\n"))
+    {
+        len -= 2;
+    }
+    
+    return len;
+}
 
 RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
                                                              Qt::CaseSensitivity caseSensitivity,
@@ -808,51 +856,13 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             offsetMoved = true;
         }
         {
-            len=str.length();
+            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
 
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
-
-            // hyphenated '-' must be at the end of a word, so hyphenation means
-            // we have a '-' just followed by a '\n' character
-            // check if the string contains a '-' character
-            // if the '-' is the last entry
-            if ( str.endsWith( '-' ) )
-            {
-                // validity chek of it + 1
-                if ( ( it + 1 ) != end )
-                {
-                    // 1. if the next character is '\n'
-                    const QString &lookahedStr = (*(it+1))->text();
-                    if (lookahedStr.startsWith('\n'))
-                    {
-                        len -= 1;
-                    }
-                    else
-                    {
-                        // 2. if the next word is in a different line or not
-                        const int pageWidth = m_page->m_page->width();
-                        const int pageHeight = m_page->m_page->height();
-
-                        const QRect hyphenArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
-                        const QRect lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth, pageHeight);
-
-                        // lookahead to check whether both the '-' rect and next character rect overlap
-                        if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
-                        {
-                            len -= 1;
-                        }
-                    }
-                }
-            }
-            // else if it is the second last entry - for example in pdf format
-            else if (str.endsWith("-\n"))
-            {
-                len -= 2;
-            }
 
             int min=qMin(queryLeft,len);
             int resStrLen = 0, resQueryLen = 0;
@@ -967,45 +977,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         }
         else
         {
-            len=str.length();
-
-            // hyphenated '-' must be at the end of a word, so hyphenation means
-            // we have a '-' just followed by a '\n' character
-            // check if the string contains a '-' character
-            // if the '-' is the last entry
-            if ( str.endsWith('-') )
-            {
-                // validity chek of it + 1
-                if ( ( it + 1 ) != end )
-                {
-                    // 1. if the next character is '\n'
-                    const QString &lookahedStr = (*(it+1))->text();
-                    if ( lookahedStr.startsWith('\n') )
-                    {
-                        len -= 1;
-                    }
-                    else
-                    {
-                        // 2. if the next word is in a different line or not
-                        const int pageWidth = m_page->m_page->width();
-                        const int pageHeight = m_page->m_page->height();
-
-                        const QRect hyphenArea = (*it)->area.roundedGeometry(pageWidth,pageHeight);
-                        const QRect lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth,pageHeight);
-
-                        // lookahead to check whether both the '-' rect and next character rect overlap
-                        if ( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
-                        {
-                            len -= 1;
-                        }
-                    }
-                }
-            }
-            // else if it is the second last entry - for example in pdf format
-            else if ( str.endsWith("-\n") )
-            {
-                len -= 2;
-            }
+            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
 
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE

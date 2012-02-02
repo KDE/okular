@@ -56,6 +56,7 @@ class SearchWidget;
 class Sidebar;
 class TOC;
 class MiniBar;
+class MiniBarLogic;
 class FileKeeper;
 class Reviews;
 class BookmarkList;
@@ -238,6 +239,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
+        QPointer<MiniBarLogic> m_miniBarLogic;
         QPointer<MiniBar> m_miniBar;
         QPointer<MiniBar> m_pageNumberTool;
         QPointer<QWidget> m_bottomBar;

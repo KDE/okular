@@ -410,14 +410,14 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     bottomBarLayout->setSpacing( 0 );
     bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-    MiniBarLogic * miniBarLogic = new MiniBarLogic( this, m_document );
-    m_miniBar = new MiniBar( m_bottomBar, miniBarLogic );
+    m_miniBarLogic = new MiniBarLogic( this, m_document );
+    m_miniBar = new MiniBar( m_bottomBar, m_miniBarLogic );
     bottomBarLayout->addWidget( m_miniBar );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 
-    m_pageNumberTool = new MiniBar( 0, miniBarLogic );
+    m_pageNumberTool = new MiniBar( 0, m_miniBarLogic );
 
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
@@ -432,7 +432,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_document->addObserver( m_pageView );
     m_document->registerView( m_pageView );
     m_document->addObserver( m_toc );
-    m_document->addObserver( miniBarLogic );
+    m_document->addObserver( m_miniBarLogic );
 #ifdef OKULAR_ENABLE_MINIBAR
     m_document->addObserver( m_progressWidget );
 #endif
@@ -787,6 +787,7 @@ Part::~Part()
     delete m_thumbnailList;
     delete m_miniBar;
     delete m_pageNumberTool;
+    delete m_miniBarLogic;
     delete m_bottomBar;
 #ifdef OKULAR_ENABLE_MINIBAR
     delete m_progressWidget;

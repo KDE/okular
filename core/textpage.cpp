@@ -857,14 +857,13 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         }
         {
             len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
-
+            int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
-            int min=qMin(queryLeft,len);
             int resStrLen = 0, resQueryLen = 0;
             if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),
                             &resStrLen, &resQueryLen ) )
@@ -978,7 +977,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         else
         {
             len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
-
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);

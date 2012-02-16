@@ -126,6 +126,7 @@ Type=Application
 InitialPreference=8
 Categories=Qt;KDE;Graphics;Viewer;
 X-KDE-Keywords=PDF, Portable Document Format
+X-KDE-Keywords[ar]=PDF, Portable Document Format
 X-KDE-Keywords[ca]=PDF, Portable Document Format, Format de document portable
 X-KDE-Keywords[ca@valencia]=PDF, Portable Document Format, Format de document portable
 X-KDE-Keywords[cs]=PDF, Portable Document Format

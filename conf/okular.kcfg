@@ -283,7 +283,7 @@
    <default>false</default>
   </entry>
   <entry key="SearchFromCurrentPage" type="Bool">
-   <default>false</default>
+   <default>true</default>
   </entry>
  </group>
  <group name="Contents" >

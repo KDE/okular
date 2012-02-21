@@ -127,6 +127,7 @@ InitialPreference=1
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
 X-KDE-Keywords=epub, e-book
+X-KDE-Keywords[ar]=epub, e-book
 X-KDE-Keywords[ca]=epub, e-book
 X-KDE-Keywords[ca@valencia]=epub, e-book
 X-KDE-Keywords[cs]=epub, e-book

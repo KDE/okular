@@ -1098,10 +1098,10 @@ static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
  */
 static void removeSpace(TextList *words)
 {
-    TextList::Iterator it = words->begin(), itEnd = words->end();
+    TextList::Iterator it = words->begin();
     const QString str(' ');
 
-    while ( it != itEnd )
+    while ( it != words->end() )
     {
         if((*it)->text() == str)
         {

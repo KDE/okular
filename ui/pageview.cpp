@@ -383,7 +383,13 @@ PageView::~PageView()
         d->m_tts->stopAllSpeechs();
 
     // delete the local storage structure
-    qDeleteAll(d->m_annowindows);
+    
+    // We need to assign it to a different list otherwise slotAnnotationWindowDestroyed
+    // will bite us and clear d->m_annowindows
+    QHash< Okular::Annotation *, AnnotWindow * > annowindows = d->m_annowindows;
+    d->m_annowindows.clear();
+    qDeleteAll( annowindows );
+
     // delete all widgets
     QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
     for ( ; dIt != dEnd; ++dIt )
@@ -889,8 +895,11 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
 
     updateActionState( haspages, documentChanged, hasformwidgets );
 
-    qDeleteAll( d->m_annowindows );
+    // We need to assign it to a different list otherwise slotAnnotationWindowDestroyed
+    // will bite us and clear d->m_annowindows
+    QHash< Okular::Annotation *, AnnotWindow * > annowindows = d->m_annowindows;
     d->m_annowindows.clear();
+    qDeleteAll( annowindows );
 
     selectionClear();
 }

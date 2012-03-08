@@ -94,10 +94,11 @@ class BookmarkItem : public QTreeWidgetItem
 class FileItem : public QTreeWidgetItem
 {
     public:
-        FileItem( const KUrl & url, QTreeWidget *tree  )
+        FileItem( const KUrl & url, QTreeWidget *tree, Okular::Document *document  )
             : QTreeWidgetItem( tree, FileItemType )
         {
-            const QString fileString = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
+            setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
+            const QString fileString = document->bookmarkManager()->titleForUrl( url );
             setText( 0, fileString );
             setData( 0, UrlRole, qVariantFromValue( url ) );
         }
@@ -219,11 +220,18 @@ void BookmarkList::slotExecuted( QTreeWidgetItem * item )
 void BookmarkList::slotChanged( QTreeWidgetItem * item )
 {
     BookmarkItem* bmItem = dynamic_cast<BookmarkItem*>( item );
-    if ( !bmItem || !bmItem->viewport().isValid() )
-        return;
+    if ( bmItem && bmItem->viewport().isValid() )
+    {
+        bmItem->bookmark().setFullText( bmItem->text( 0 ) );
+        m_document->bookmarkManager()->save();
+    }
 
-    bmItem->bookmark().setFullText( bmItem->text( 0 ) );
-    m_document->bookmarkManager()->save();
+    FileItem* fItem = dynamic_cast<FileItem*>( item );
+    if ( fItem )
+    {
+        m_document->bookmarkManager()->renameBookmark( m_document->currentDocument(), fItem->text( 0 ) );
+        m_document->bookmarkManager()->save();
+    }
 }
 
 void BookmarkList::slotContextMenu( const QPoint& p )
@@ -271,6 +279,7 @@ void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
     QAction * open = 0;
     if ( !thisdoc )
         open = menu.addAction( i18nc( "Opens the selected document", "Open Document" ) );
+    QAction * editbm = menu.addAction( KIcon( "edit-rename" ), i18n( "Rename Bookmark" ) );
     QAction * removebm = menu.addAction( KIcon( "list-remove" ), i18n( "Remove Bookmarks" ) );
     QAction * res = menu.exec( QCursor::pos() );
     if ( !res )
@@ -281,6 +290,8 @@ void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
         Okular::GotoAction action( itemurl.pathOrUrl(), Okular::DocumentViewport() );
         m_document->processAction( &action );
     }
+    else if ( res == editbm )
+        m_tree->editItem( fItem, 0 );
     else if ( res == removebm )
     {
         KBookmark::List list;
@@ -358,7 +369,7 @@ void BookmarkList::rebuildTree( bool filter )
             QList<QTreeWidgetItem*> subitems = createItems( url, m_document->bookmarkManager()->bookmarks( url ) );
             if ( !subitems.isEmpty() )
             {
-                FileItem * item = new FileItem( url, m_tree );
+                FileItem * item = new FileItem( url, m_tree, m_document );
                 item->addChildren( subitems );
                 if ( !currenturlitem && url == m_document->currentDocument() )
                 {
@@ -426,7 +437,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         }
         else
         {
-            item = new FileItem( url, m_tree );
+            item = new FileItem( url, m_tree, m_document );
             fileitem_created = true;
         }
         if ( m_document->isOpened() && url == m_document->currentDocument() )

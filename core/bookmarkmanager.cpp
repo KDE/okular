@@ -362,6 +362,30 @@ void BookmarkManager::renameBookmark( KBookmark* bm, const QString& newName)
     d->manager->emitChanged( thebg );
 }
 
+void BookmarkManager::renameBookmark( const KUrl& referurl, const QString& newName )
+{
+    if ( !referurl.isValid() )
+        return;
+
+    KBookmarkGroup thebg;
+    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    Q_ASSERT ( it != d->knownFiles.end() );
+    if ( it == d->knownFiles.end() )
+        return;
+
+    thebg.setFullText( newName );
+    d->manager->emitChanged( thebg );
+}
+
+QString BookmarkManager::titleForUrl( const KUrl& referurl ) const
+{
+    KBookmarkGroup thebg;
+    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    Q_ASSERT( it != d->knownFiles.end() );
+
+    return thebg.fullText();
+}
+
 int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
 {
     if ( !referurl.isValid() || bm.isNull() || bm.isGroup() || bm.isSeparator() )

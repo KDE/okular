@@ -102,6 +102,19 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         void renameBookmark( KBookmark* bm, const QString& newName );
 
         /**
+         * Renames the top-level bookmark for the @p referurl specified with
+         * the @p newName specified.
+         * @since 0.15 (KDE 4.9)
+         */
+        void renameBookmark( const KUrl& referurl, const QString& newName );
+
+        /**
+         * Returns title for the @p referurl
+         * @since 0.15 (KDE 4.9)
+         */
+        QString titleForUrl( const KUrl& referurl ) const;
+
+        /**
          * Returns whether the given @p page is bookmarked.
          */
         bool isBookmarked( int page ) const;

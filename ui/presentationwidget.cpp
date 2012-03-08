@@ -356,7 +356,8 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 {
-    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Aggressive )
+    if ( Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Low ||
+         Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Normal )
     {
         // can unload all pixmaps except for the currently visible one
         return pageNumber != m_frameIndex;
@@ -1161,6 +1162,19 @@ void PresentationWidget::requestPixmaps()
             pixH = prevFrame->geometry.height();
             if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
                 requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+        }
+
+        // If greedy, preload everything
+        if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+        {
+            for(int i = 0; i < (int)m_document->pages(); ++i)
+            {
+                PresentationFrame *loopFrame = m_frames[ i ];
+                pixW = loopFrame->geometry.width();
+                pixH = loopFrame->geometry.height();
+                if ( !loopFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ))
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, i, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
         }
     }
     m_document->requestPixmaps( requests );

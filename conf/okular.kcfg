@@ -59,6 +59,7 @@
     <choice name="Low" />
     <choice name="Normal" />
     <choice name="Aggressive" />
+    <choice name="Greedy" />
    </choices>
   </entry>
   <entry key="EnableCompositing" type="Bool" >

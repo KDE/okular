@@ -1209,7 +1209,8 @@ void PageView::notifyZoom( int factor )
 
 bool PageView::canUnloadPixmap( int pageNumber ) const
 {
-    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Aggressive )
+    if ( Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Low ||
+         Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Normal )
     {
         // if the item is visible, forbid unloading
         QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.constBegin(), vEnd = d->visibleItems.constEnd();
@@ -3945,6 +3946,11 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         // request first the next page and then the previous
 
         int pagesToPreload = viewColumns();
+
+        // if the greedy option is set, preload all pages
+        if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+            pagesToPreload = d->items.count();
+
         for( int j = 1; j <= pagesToPreload; j++ )
         {
             // add the page after the 'visible series' in preload

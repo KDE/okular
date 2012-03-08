@@ -199,6 +199,12 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
             if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
         }
         break;
+        case Settings::EnumMemoryLevel::Greedy:
+        {
+            const qulonglong memoryLimit = qMax(getFreeMemory(), getTotalMemory() / 2);
+            if (m_allocatedPixmapsTotalMemory > memoryLimit) clipValue = (m_allocatedPixmapsTotalMemory - memoryLimit) / 2;
+        }
+        break;
     }
 
     if ( clipValue > memoryToFree )
@@ -3588,6 +3594,10 @@ void DocumentPrivate::calculateMaxTextPages()
 
         case Settings::EnumMemoryLevel::Aggressive:
             m_maxAllocatedTextPages = multipliers * 250;
+        break;
+
+        case Settings::EnumMemoryLevel::Greedy:
+            m_maxAllocatedTextPages = multipliers * 1250;
         break;
     }
 }

@@ -49,6 +49,7 @@ void DlgPerformance::radioGroup_changed( int which )
             m_dlg->descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (For systems with more than 512MB of memory.)") );
             break;
         case 3:
+	    // xgettext: no-c-format
             m_dlg->descLabel->setText( i18n("Loads and keeps everything in memory. Preload all pages. (Will use at maximum 50% of your total memory or your free memory, whatever is bigger.)"));
             break;
     }

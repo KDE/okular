@@ -63,11 +63,13 @@ QWidget* ToolAction::createWidget( QWidget *parent )
 
     if ( !m_actions.isEmpty() )
     {
+        button->setDefaultAction( m_actions.first() );
         foreach ( QAction *action, m_actions )
         {
             button->menu()->addAction( action );
+            if ( action->isChecked() )
+                button->setDefaultAction( action );
         }
-        button->setDefaultAction( button->menu()->actions().first() );
         button->setToolTip( i18n("Click to use the current selection tool\nClick and hold to choose another selection tool") );
     }
 

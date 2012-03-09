@@ -253,6 +253,16 @@
     <choice name="Summary" />
    </choices>
   </entry>
+  <entry key="MouseMode" type="Enum" >
+   <default>Browse</default>
+   <choices>
+    <choice name="Browse" />
+    <choice name="Zoom" />
+    <choice name="RectSelect" />
+    <choice name="TextSelect" />
+    <choice name="TableSelect" />
+   </choices>
+  </entry>
   <entry key="ZoomMode" type="UInt" >
     <default>1</default>
     <max>2</max>

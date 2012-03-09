@@ -16,6 +16,7 @@
 
 // local includes
 #include "document.h"
+#include "document_p.h"
 #include "movie.h"
 #include "page_p.h"
 #include "sound.h"
@@ -735,9 +736,9 @@ void Annotation::setDisposeDataFunction( DisposeDataFunction func )
 bool Annotation::canBeMoved() const
 {
     Q_D( const Annotation );
-    // for now, it is pointless moving external annotations
-    // as we cannot change them anyway
-    if ( d->m_flags & External )
+
+    // Don't move annotations if they cannot be modified
+    if ( !d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this) )
         return false;
 
     // highlight "requires" to be "bounded" to text, and that's tricky for now

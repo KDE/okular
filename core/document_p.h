@@ -114,6 +114,8 @@ class DocumentPrivate
         bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
+        bool canModifyExternalAnnotations() const;
+        bool canRemoveExternalAnnotations() const;
 
         // private slots
         void saveDocumentInfo() const;

@@ -190,12 +190,17 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     setFrameStyle( Panel | Raised );
     setAttribute( Qt::WA_DeleteOnClose );
 
+    const bool canEditAnnotation = m_document->canModifyPageAnnotation( annot );
+
     textEdit = new KTextEdit( this );
     textEdit->setAcceptRichText( false );
     textEdit->setPlainText( GuiUtils::contents( m_annot ) );
     textEdit->installEventFilter( this );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
+
+    if (!canEditAnnotation)
+        textEdit->setReadOnly(true);
 
     m_latexRenderer = new GuiUtils::LatexRenderer();
     emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );

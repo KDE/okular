@@ -34,7 +34,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
 {
     setFaceType( Tabbed );
     m_annot=ann;
-    bool canEditAnnotations = !(ann->flags() & Okular::Annotation::External) && m_document->isAllowed( Okular::AllowNotes );
+    const bool canEditAnnotations = m_document->canModifyPageAnnotation( ann );
     setCaptionTextbyAnnotType();
     if ( canEditAnnotations )
     {

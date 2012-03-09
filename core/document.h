@@ -368,6 +368,13 @@ class OKULAR_EXPORT Document : public QObject
         void addPageAnnotation( int page, Annotation *annotation );
 
         /**
+         * Tests if the @p annotation can be modified
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        bool canModifyPageAnnotation( const Annotation * annotation ) const;
+
+        /**
          * Modifies the given @p annotation on the given @p page.
          *
          * Same as calling modifyPageAnnotation(int,Annotation*,bool) with

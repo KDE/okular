@@ -27,7 +27,7 @@ class VideoWidget : public QWidget
 
         void setNormGeometry( const Okular::NormalizedRect &rect );
         Okular::NormalizedRect normGeometry() const;
-        
+
         bool isPlaying() const;
 
     public slots:

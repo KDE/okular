@@ -14,6 +14,7 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qwidget.h>
+#include "core/area.h"
 #include "core/observer.h"
 #include "core/pagetransition.h"
 
@@ -68,7 +69,9 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void leaveEvent( QEvent * e );
 
     private:
+        const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = 0 ) const;
         const Okular::Action * getLink( int x, int y, QRect * geometry = 0 ) const;
+        const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = 0 ) const;
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );

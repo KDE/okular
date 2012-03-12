@@ -489,6 +489,17 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
         if ( ( m_pressedLink = getLink( e->x(), e->y() ) ) )
             return;
 
+        const Okular::Annotation *annotation = getAnnotation( e->x(), e->y() );
+        if ( annotation && ( annotation->subType() == Okular::Annotation::AMovie ) )
+        {
+            const Okular::MovieAnnotation *movieAnnotation = static_cast<const Okular::MovieAnnotation*>( annotation );
+
+            VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( movieAnnotation->movie() );
+            vw->show();
+            vw->play();
+            return;
+        }
+
         // handle clicking on top-right overlay
         if ( !( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden ) &&
              m_overlayGeometry.contains( e->pos() ) )
@@ -679,7 +690,7 @@ void PresentationWidget::leaveEvent( QEvent * e )
 }
 // </widget events>
 
-const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+const void * PresentationWidget::getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry ) const
 {
     // no links on invalid pages
     if ( geometry && !geometry->isNull() )
@@ -702,7 +713,7 @@ const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geomet
 
     // check if 1) there is an object and 2) it's a link
     const QRect d = QApplication::desktop()->screenGeometry( m_screen );
-    const Okular::ObjectRect * object = page->objectRect( Okular::ObjectRect::Action, nx, ny, d.width(), d.height() );
+    const Okular::ObjectRect * object = page->objectRect( type, nx, ny, d.width(), d.height() );
     if ( !object )
         return 0;
 
@@ -714,18 +725,32 @@ const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geomet
     }
 
     // return the link pointer
-    return (Okular::Action *)object->object();
+    return object->object();
+}
+
+const Okular::Action * PresentationWidget::getLink( int x, int y, QRect * geometry ) const
+{
+    return reinterpret_cast<const Okular::Action*>( getObjectRect( Okular::ObjectRect::Action, x, y, geometry ) );
+}
+
+const Okular::Annotation * PresentationWidget::getAnnotation( int x, int y, QRect * geometry ) const
+{
+    return reinterpret_cast<const Okular::Annotation*>( getObjectRect( Okular::ObjectRect::OAnnotation, x, y, geometry ) );
 }
 
 void PresentationWidget::testCursorOnLink( int x, int y )
 {
     const Okular::Action * link = getLink( x, y, 0 );
+    const Okular::Annotation *annotation = getAnnotation( x, y, 0 );
+
+    const bool needsHandCursor = ( ( link != 0 ) ||
+                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) );
 
     // only react on changes (in/out from a link)
-    if ( (link && !m_handCursor) || (!link && m_handCursor) )
+    if ( ( needsHandCursor && !m_handCursor ) || ( !needsHandCursor && m_handCursor ) )
     {
         // change cursor shape
-        m_handCursor = link != 0;
+        m_handCursor = needsHandCursor;
         setCursor( QCursor( m_handCursor ? Qt::PointingHandCursor : Qt::ArrowCursor ) );
     }
 }
@@ -804,13 +829,6 @@ void PresentationWidget::changePage( int newPage )
                 vw->hide();
             }
         }
-
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        {
-            vw->show();
-            vw->raise();
-        }
-
     }
 }
 

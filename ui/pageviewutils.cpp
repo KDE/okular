@@ -182,10 +182,6 @@ void PageViewItem::setVisible( bool visible )
 {
     setFormWidgetsVisible( visible && m_formsVisible );
     m_visible = visible;
-    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
-    {
-        vw->setVisible( m_visible );
-    }
 }
 
 void PageViewItem::invalidate()

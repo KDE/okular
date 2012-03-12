@@ -859,7 +859,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, d->document, viewport() );
                 item->videoWidgets().insert( movieAnn->movie(), vw );
-                vw->show();
+                vw->hide();
             }
         }
     }
@@ -2207,6 +2207,18 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 }
                 else
                 {
+                    Okular::Annotation *ann = 0;
+
+                    rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                    if ( rect )
+                        ann = ( (Okular::AnnotationObjectRect *)rect )->annotation();
+
+                    if ( ann )
+                    {
+                        VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::MovieAnnotation*>( ann )->movie() );
+                        vw->show();
+                        vw->play();
+                    }
 #if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
@@ -3491,11 +3503,18 @@ void PageView::updateCursor( const QPoint &p )
             else
             {
                 d->mouseOnRect = false;
-                if ( annotobj
-                     && ( QApplication::keyboardModifiers() & Qt::ControlModifier )
-                     && static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation()->canBeMoved() )
+                if ( annotobj )
                 {
-                    setCursor( Qt::OpenHandCursor );
+                    if ( ( QApplication::keyboardModifiers() & Qt::ControlModifier )
+                         && static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation()->canBeMoved() )
+                    {
+                        setCursor( Qt::OpenHandCursor );
+                    }
+                    else if ( static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation()->subType() == Okular::Annotation::AMovie )
+                    {
+                        d->mouseOnRect = true;
+                        setCursor( Qt::PointingHandCursor );
+                    }
                 }
                 else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
                 {
@@ -3881,6 +3900,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             
             if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
                 vw->stop();
+                vw->hide();
             }
         }
 

@@ -2213,7 +2213,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     if ( rect )
                         ann = ( (Okular::AnnotationObjectRect *)rect )->annotation();
 
-                    if ( ann )
+                    if ( ann && ann->subType() == Okular::Annotation::AMovie )
                     {
                         VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::MovieAnnotation*>( ann )->movie() );
                         vw->show();

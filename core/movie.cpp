@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,7 +11,13 @@
 #include "movie.h"
 
 // qt/kde includes
+#include <qdir.h>
 #include <qstring.h>
+#include <qtemporaryfile.h>
+
+#include <kdebug.h>
+
+#include "debug_p.h"
 
 using namespace Okular;
 
@@ -21,7 +28,9 @@ class Movie::Private
             : m_url( url ),
               m_rotation( Rotation0 ),
               m_playMode( PlayOnce ),
-              m_showControls( false )
+              m_tmp( 0 ),
+              m_showControls( false ),
+              m_autoPlay( false )
         {
         }
 
@@ -29,7 +38,9 @@ class Movie::Private
         QSize m_aspect;
         Rotation m_rotation;
         PlayMode m_playMode;
+        QTemporaryFile *m_tmp;
         bool m_showControls : 1;
+        bool m_autoPlay : 1;
 };
 
 Movie::Movie( const QString& fileName )
@@ -37,14 +48,36 @@ Movie::Movie( const QString& fileName )
 {
 }
 
+Movie::Movie( const QString& fileName, const QByteArray &data )
+    : d( new Private( fileName ) )
+{
+    /* Store movie data as temporary file.
+     *
+     * Originally loaded movie data directly using a QBuffer, but sadly phonon
+     * fails to play on a few of my test systems (I think it's the Phonon
+     * GStreamer backend). Storing the data in a temporary file works fine
+     * though, not to mention, it releases much needed memory. (gamaral)
+     */
+    d->m_tmp = new QTemporaryFile( QString( "%1/okrXXXXXX_%2" ).arg( QDir::tempPath() ).arg( fileName ) );
+    if ( d->m_tmp->open() ) {
+       d->m_tmp->write( data );
+       d->m_tmp->flush();
+    }
+    else kDebug(OkularDebug) << "Failed to create temporary file for video data.";
+}
+
 Movie::~Movie()
 {
+    delete d->m_tmp;
     delete d;
 }
 
 QString Movie::url() const
 {
-    return d->m_url;
+    if (d->m_tmp)
+        return d->m_tmp->fileName();
+    else
+        return d->m_url;
 }
 
 void Movie::setSize( const QSize &aspect )
@@ -86,3 +119,14 @@ Movie::PlayMode Movie::playMode() const
 {
     return d->m_playMode;
 }
+
+void Movie::setAutoPlay( bool autoPlay )
+{
+    d->m_autoPlay = autoPlay;
+}
+
+bool Movie::autoPlay() const
+{
+    return d->m_autoPlay;
+}
+

@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2004-2008 by Albert Astals Cid <tsdgeos@terra.es>       *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -44,6 +45,10 @@
 #include <core/utils.h>
 
 #include <config-okular-poppler.h>
+
+#ifdef HAVE_POPPLER_0_20
+#  include <poppler-media.h>
+#endif
 
 #include "formfields.h"
 #include "popplerembeddedfile.h"
@@ -151,6 +156,19 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     return movie;
 }
 
+#ifdef HAVE_POPPLER_0_20
+Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen )
+{
+    Poppler::MediaRendition *rendition = popplerScreen->rendition();
+    Okular::Movie *movie = new Okular::Movie( rendition->fileName(), rendition->data() );
+    movie->setSize( rendition->size() );
+    movie->setShowControls( rendition->showControls() );
+    movie->setPlayMode( Okular::Movie::PlayOnce );
+    movie->setAutoPlay( rendition->autoPlay() );
+    return movie;
+}
+#endif
+
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
 	Okular::Action *link = 0;
@@ -214,6 +232,12 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 			link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
 		}
 		break;
+		
+#ifdef HAVE_POPPLER_0_20
+		case Poppler::Link::Rendition:
+			// not implemented
+		break;
+#endif
 		
 		case Poppler::Link::Movie:
 			// not implemented

@@ -3,3 +3,6 @@
 
 /* Defined if we have the 0.16 version of the Poppler library */
 #cmakedefine HAVE_POPPLER_0_16 1
+
+/* Defined if we have the 0.20 version of the Poppler library */
+#cmakedefine HAVE_POPPLER_0_20 1

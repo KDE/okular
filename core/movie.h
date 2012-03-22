@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -40,6 +41,11 @@ class OKULAR_EXPORT Movie
          * Creates a new movie object with the given external @p fileName.
          */
         explicit Movie( const QString& fileName );
+
+        /**
+         * Creates a new movie object with the given movie data.
+         */
+        explicit Movie( const QString& fileName, const QByteArray &data );
 
         /**
          * Destroys the movie object.
@@ -90,6 +96,16 @@ class OKULAR_EXPORT Movie
          * How to play the movie
          */
         PlayMode playMode() const;
+
+        /**
+         * Sets whether to play the movie automatically
+         */
+        void setAutoPlay( bool autoPlay );
+
+        /**
+         * Whether to play the movie automatically
+         */
+        bool autoPlay() const;
 
     private:
         class Private;

@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +22,9 @@ Q_DECLARE_METATYPE( Poppler::Annotation* )
 
 extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
 extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie );
+#ifdef HAVE_POPPLER_0_20
+extern Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen );
+#endif
 
 static void disposeAnnotation( const Okular::Annotation *ann )
 {
@@ -69,6 +73,18 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             break;
         }
+#ifdef HAVE_POPPLER_0_20
+        case Poppler::Annotation::AScreen:
+        {
+            Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
+            Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
+            annotation = m;
+
+            m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
+
+            break;
+        }
+#endif
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core

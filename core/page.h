@@ -204,6 +204,14 @@ class OKULAR_EXPORT Page
          * @since 0.14 (KDE 4.8)
          */
         TextEntity::List words( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
+        
+        /**
+         * Returns the area and text of the word at the given point
+         * Note that ownership of the returned area belongs to the caller.
+         * @see TextPage::wordAt()
+         * @since 0.15 (KDE 4.9)
+         */
+        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = 0 ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

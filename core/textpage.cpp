@@ -1958,3 +1958,84 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
     }
     return ret;
 }
+
+RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) const
+{
+    TextList::ConstIterator itBegin = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextList::ConstIterator it = itBegin;
+    TextList::ConstIterator posIt = itEnd;
+    for ( ; it != itEnd; ++it )
+    {
+        if ( (*it)->area.contains( p.x, p.y ) )
+        {
+            posIt = it;
+            break;
+        }
+    }
+    QString text;
+    if ( posIt != itEnd )
+    {
+        if ( (*posIt)->text().simplified().isEmpty() )
+        {
+            return NULL;
+        }
+        // Find the first TinyTextEntity of the word
+        while ( posIt != itBegin )
+        {
+            --posIt;
+            const QString itText = (*posIt)->text();
+            if ( itText.right(1).at(0).isSpace() )
+            {
+                if (itText.endsWith("-\n"))
+                {
+                    // Is an hyphenated word
+                    // continue searching the start of the word back
+                    continue;
+                }
+                
+                if (itText == "\n" && posIt != itBegin )
+                {
+                    --posIt;
+                    if ((*posIt)->text().endsWith("-")) {
+                        // Is an hyphenated word
+                        // continue searching the start of the word back
+                        continue;
+                    }
+                    ++posIt;
+                }
+
+                ++posIt;
+                break;
+            }
+        }
+        RegularAreaRect *ret = new RegularAreaRect();
+        for ( ; posIt != itEnd; ++posIt )
+        {
+            const QString itText = (*posIt)->text();
+            if ( itText.simplified().isEmpty() )
+            {
+                break;
+            }
+            
+            ret->appendShape( (*posIt)->area );
+            text += (*posIt)->text();
+            if (itText.right(1).at(0).isSpace())
+            {
+                if (!text.endsWith("-\n"))
+                {
+                    break;
+                }
+            }
+        }
+        
+        if (word)
+        {
+            *word = text;
+        }
+        return ret;
+    }
+    else
+    {
+        return NULL;
+    }
+}

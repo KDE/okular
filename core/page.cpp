@@ -217,6 +217,14 @@ bool Page::hasTextPage() const
     return d->m_text != 0;
 }
 
+RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
+{
+    if ( d->m_text )
+        return d->m_text->wordAt( p, word );
+
+    return 0;    
+}
+
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
 {
     if ( d->m_text )

@@ -2803,9 +2803,23 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
         if ( pageItem )
         {
             // find out normalized mouse coords inside current item
-            const QRect & itemRect = pageItem->uncroppedGeometry();
             double nX = pageItem->absToPageX(eventPos.x());
             double nY = pageItem->absToPageY(eventPos.y());
+
+            if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect ) {
+                textSelectionClear();
+                
+                Okular::RegularAreaRect *wordRect = pageItem->page()->wordAt( Okular::NormalizedPoint( nX, nY ) );
+                if ( wordRect )
+                {
+                    // TODO words with hyphens across pages
+                    d->document->setPageTextSelection( pageItem->pageNumber(), wordRect, palette().color( QPalette::Active, QPalette::Highlight ) );
+                    d->pagesWithTextSelection << pageItem->pageNumber();
+                    return;
+                }
+            }
+            
+            const QRect & itemRect = pageItem->uncroppedGeometry();
             Okular::Annotation * ann = 0;
             const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
             if ( orect )

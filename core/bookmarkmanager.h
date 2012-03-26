@@ -51,13 +51,25 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * @since 0.14 (KDE 4.8)
          */
         KBookmark::List bookmarks() const;
-        
+
+        /**
+         * Returns the list of bookmarks for the given page of the document
+         * @since 0.15 (KDE 4.9)
+         */
+        KBookmark::List bookmarks( int page ) const;
+
         /**
          * Returns the bookmark for the given page of the document
          * @since 0.14 (KDE 4.8)
          */
         KBookmark bookmark( int page ) const;
-        
+
+        /**
+         * Returns the bookmark for the given @p viewport of the document
+         * @since 0.15 (KDE 4.9)
+         */
+        KBookmark bookmark( const DocumentViewport &viewport ) const;
+
         /**
          * Forces to save the list of bookmarks.
          */
@@ -67,6 +79,12 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * Adds a bookmark for the given @p page.
          */
         void addBookmark( int page );
+
+        /**
+         * Adds a bookmark for the given viewport @p vp
+         * @since 0.15 (KDE 4.9)
+         */
+        void addBookmark( const DocumentViewport &vp );
 
         /**
          * Adds a new bookmark for the @p referurl at the specified viewport @p vp,
@@ -80,6 +98,12 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * Remove a bookmark for the given @p page.
          */
         void removeBookmark( int page );
+
+        /**
+         * Remove a bookmark for the given viewport @p vp
+         * @since 0.15 (KDE 4.9)
+         */
+        void removeBookmark( const DocumentViewport &vp );
 
         /**
          * Removes the bookmark @p bm for the @p referurl specified.
@@ -118,6 +142,24 @@ class OKULAR_EXPORT BookmarkManager : public QObject
          * Returns whether the given @p page is bookmarked.
          */
         bool isBookmarked( int page ) const;
+
+        /**
+         * Return whether the the given @p viewport is bookmarked.
+         * @since 0.15 (KDE 4.9)
+         */
+        bool isBookmarked( const DocumentViewport &viewport ) const;
+
+        /**
+         * Given a @p viewport, returns the next bookmark
+         * @since 0.15 (KDE 4.9)
+         */
+        KBookmark nextBookmark( const DocumentViewport &viewport ) const;
+
+        /**
+         * Given a @p viewport, returns the previous bookmark
+         * @since 0.15 (KDE 4.9)
+         */
+        KBookmark previousBookmark( const DocumentViewport &viewport ) const;
 
         /**
          * Returns a list of actions for the bookmarks of the specified @p url.

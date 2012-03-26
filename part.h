@@ -166,7 +166,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void slotHistoryNext();
         void slotAddBookmark();
         void slotRenameBookmarkFromMenu();
-        void slotRenameCurrentPageBookmark();
+        void slotRenameCurrentViewportBookmark();
         void slotAboutToShowContextMenu(KMenu *menu, QAction *action, QMenu *contextMenu);
         void slotPreviousBookmark();
         void slotNextBookmark();
@@ -222,7 +222,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
         void unsetDummyMode();
-        void slotRenameBookmark( int page );
+        void slotRenameBookmark( const DocumentViewport &viewport );
 
         KTemporaryFile *m_tempfile;
 

@@ -565,19 +565,19 @@ void Part::setupViewerActions()
     m_renameBookmark = ac->addAction("rename_bookmark");
     m_renameBookmark->setText(i18n( "Rename Bookmark" ));
     m_renameBookmark->setIcon(KIcon( "edit-rename" ));
-    m_renameBookmark->setWhatsThis( i18n( "Rename the current page bookmark" ) );
-    connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameCurrentPageBookmark()) );
+    m_renameBookmark->setWhatsThis( i18n( "Rename the current bookmark" ) );
+    connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameCurrentViewportBookmark()) );
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
     m_prevBookmark->setIcon(KIcon( "go-up-search" ));
-    m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmarked page" ) );
+    m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmark" ) );
     connect( m_prevBookmark, SIGNAL(triggered()), this, SLOT(slotPreviousBookmark()) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
     m_nextBookmark->setIcon(KIcon( "go-down-search" ));
-    m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmarked page" ) );
+    m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmark" ) );
     connect( m_nextBookmark, SIGNAL(triggered()), this, SLOT(slotNextBookmark()) );
 
     m_copy = 0;
@@ -1597,7 +1597,7 @@ void Part::updateBookmarksActions()
     if ( opened )
     {
         m_addBookmark->setEnabled( true );
-        if ( m_document->bookmarkManager()->isBookmarked( m_document->currentPage() ) )
+        if ( m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
             m_addBookmark->setIcon( KIcon( "edit-delete-bookmark" ) );
@@ -1747,23 +1747,23 @@ void Part::slotHistoryNext()
 
 void Part::slotAddBookmark()
 {
-    uint current = m_document->currentPage();
-    if ( m_document->bookmarkManager()->isBookmarked( current ) )
+    DocumentViewport vp = m_document->viewport();
+    if ( m_document->bookmarkManager()->isBookmarked( vp ) )
     {
-        m_document->bookmarkManager()->removeBookmark( current );
+        m_document->bookmarkManager()->removeBookmark( vp );
     }
     else
     {
-        m_document->bookmarkManager()->addBookmark( current );
+        m_document->bookmarkManager()->addBookmark( vp );
     }
 }
 
-void Part::slotRenameBookmark( int page )
+void Part::slotRenameBookmark( const DocumentViewport &viewport )
 {
-    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( page ));
-    if ( m_document->bookmarkManager()->isBookmarked( page ) )
+    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( viewport ));
+    if ( m_document->bookmarkManager()->isBookmarked( viewport ) )
     {
-        KBookmark bookmark = m_document->bookmarkManager()->bookmark( page );
+        KBookmark bookmark = m_document->bookmarkManager()->bookmark( viewport );
         const QString newName = KInputDialog::getText( i18n( "Rename Bookmark" ), i18n( "Enter the new name of the bookmark:" ), bookmark.fullText(), 0, widget());
         if (!newName.isEmpty())
         {
@@ -1778,13 +1778,14 @@ void Part::slotRenameBookmarkFromMenu()
     Q_ASSERT( action );
     if ( action )
     {
-        slotRenameBookmark( action->data().toInt() );
+        DocumentViewport vp( action->data().toString() );
+        slotRenameBookmark( vp );
     }
 }
 
-void Part::slotRenameCurrentPageBookmark()
+void Part::slotRenameCurrentViewportBookmark()
 {
-    slotRenameBookmark( m_document->currentPage() );
+    slotRenameBookmark( m_document->viewport() );
 }
 
 void Part::slotAboutToShowContextMenu(KMenu * /*menu*/, QAction *action, QMenu *contextMenu)
@@ -1802,44 +1803,31 @@ void Part::slotAboutToShowContextMenu(KMenu * /*menu*/, QAction *action, QMenu *
         QAction *separatorAction = contextMenu->addSeparator();
         separatorAction->setObjectName("OkularPrivateRenameBookmarkActions");
         QAction *renameAction = contextMenu->addAction( KIcon( "edit-rename" ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
-        renameAction->setData(ba->property("pageNumber").toInt() - 1); // These page numbers are indexed starting on 1
+        renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName("OkularPrivateRenameBookmarkActions");
     }
 }
 
 void Part::slotPreviousBookmark()
 {
-    uint current = m_document->currentPage();
-    // we are at the first page
-    if ( current == 0 )
-        return;
+    const KBookmark bookmark = m_document->bookmarkManager()->previousBookmark( m_document->viewport() );
 
-    for ( int i = current - 1; i >= 0; --i )
+    if ( !bookmark.isNull() )
     {
-        if ( m_document->bookmarkManager()->isBookmarked( i ) )
-        {
-            m_document->setViewportPage( i );
-            break;
-        }
+        DocumentViewport vp( bookmark.url().htmlRef() );
+        m_document->setViewport( vp );
     }
 }
 
 
 void Part::slotNextBookmark()
 {
-    uint current = m_document->currentPage();
-    uint pages = m_document->pages();
-    // we are at the last page
-    if ( current == pages )
-        return;
+    const KBookmark bookmark = m_document->bookmarkManager()->nextBookmark( m_document->viewport() );
 
-    for ( uint i = current + 1; i < pages; ++i )
+    if ( !bookmark.isNull() )
     {
-        if ( m_document->bookmarkManager()->isBookmarked( i ) )
-        {
-            m_document->setViewportPage( i );
-            break;
-        }
+        DocumentViewport vp( bookmark.url().htmlRef() );
+        m_document->setViewport( vp );
     }
 }
 
@@ -2119,7 +2107,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     if (page)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-        if ( m_document->bookmarkManager()->isBookmarked( page->number() ) )
+        if ( m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) )
             removeBookmark = popup->addAction( KIcon("edit-delete-bookmark"), i18n("Remove Bookmark") );
         else
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
@@ -2151,8 +2139,8 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         QAction *res = popup->exec(point);
         if (res)
         {
-            if (res == addBookmark) m_document->bookmarkManager()->addBookmark( page->number() );
-            else if (res == removeBookmark) m_document->bookmarkManager()->removeBookmark( page->number() );
+            if (res == addBookmark) m_document->bookmarkManager()->addBookmark( m_document->viewport() );
+            else if (res == removeBookmark) m_document->bookmarkManager()->removeBookmark( m_document->viewport() );
             else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
         }
     }

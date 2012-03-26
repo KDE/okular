@@ -41,18 +41,69 @@ class OkularBookmarkAction : public KBookmarkAction
             if ( vp.isValid() )
                 setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
             setProperty("pageNumber", vp.pageNumber + 1);
+            setProperty("htmlRef", bk.url().htmlRef());
         }
         
         inline int pageNumber() const
         {
             return property("pageNumber").toInt();
         }
+
+        inline QString htmlRef() const
+        {
+            return property("htmlRef").toString();
+        }
 };
 
-inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
+static inline bool documentViewportFuzzyCompare( const DocumentViewport &vp1, const DocumentViewport &vp2 )
 {
-    return static_cast< OkularBookmarkAction * >( a1 )->pageNumber()
-           < static_cast< OkularBookmarkAction * >( a2 )->pageNumber();
+    bool equal = vp1.isValid() && vp2.isValid() &&
+                 ( vp1.pageNumber == vp2.pageNumber ) &&
+                 ( vp1.rePos.pos == vp2.rePos.pos );
+
+    if ( !equal )
+        return false;
+
+    if ( qAbs(vp1.rePos.normalizedX-vp2.rePos.normalizedX) >= 0.000001 )
+        return false;
+
+    if ( qAbs(vp1.rePos.normalizedY-vp2.rePos.normalizedY) >= 0.000001 )
+        return false;
+
+    return true;
+}
+
+static inline bool documentViewportLessThan( const DocumentViewport &vp1, const DocumentViewport &vp2 )
+{
+    if ( vp1.pageNumber != vp2.pageNumber )
+        return vp1.pageNumber < vp2.pageNumber;
+
+    if ( !vp1.rePos.enabled && vp2.rePos.enabled )
+        return true;
+
+    if ( !vp2.rePos.enabled )
+        return false;
+
+    if ( vp1.rePos.normalizedY != vp2.rePos.normalizedY )
+        return vp1.rePos.normalizedY < vp2.rePos.normalizedY;
+
+    return vp1.rePos.normalizedX < vp2.rePos.normalizedX;
+}
+
+static inline bool bookmarkLessThan( const KBookmark &b1, const KBookmark &b2 )
+{
+    DocumentViewport vp1( b1.url().htmlRef() );
+    DocumentViewport vp2( b2.url().htmlRef() );
+
+    return documentViewportLessThan( vp1, vp2 );
+}
+
+static inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
+{
+    DocumentViewport vp1( static_cast< OkularBookmarkAction * >( a1 )->htmlRef() );
+    DocumentViewport vp2( static_cast< OkularBookmarkAction * >( a2 )->htmlRef() );
+
+    return documentViewportLessThan( vp1, vp2 );
 }
 
 class BookmarkManager::Private : public KBookmarkOwner
@@ -82,7 +133,7 @@ class BookmarkManager::Private : public KBookmarkOwner
 
         BookmarkManager * q;
         KUrl url;
-        QSet<int> urlBookmarks;
+        QHash<int,int> urlBookmarks;
         DocumentPrivate * document;
         QString file;
         KBookmarkManager * manager;
@@ -174,13 +225,24 @@ void BookmarkManager::Private::_o_changed( const QString & groupAddress, const Q
     if ( referurl == url )
     {
         // save the old bookmarks for the current url
-        const QSet<int> oldUrlBookmarks = urlBookmarks;
+        const QHash<int,int> oldUrlBookmarks = urlBookmarks;
         // set the same url again, so we reload the information we have about it
         q->setUrl( referurl );
         // then notify the observers about the changes in the bookmarks
-        foreach ( int p, ( oldUrlBookmarks + urlBookmarks ) - ( oldUrlBookmarks & urlBookmarks ) )
+        for ( int i = 0; i < qMax( oldUrlBookmarks.size(), urlBookmarks.size() ); i++ )
         {
-            foreachObserverD( notifyPageChanged( p, DocumentObserver::Bookmark ) );
+            bool oldContains = oldUrlBookmarks.contains(i) && oldUrlBookmarks[i] > 0;
+            bool curContains = urlBookmarks.contains(i) && urlBookmarks[i] > 0;
+
+            if ( oldContains != curContains )
+            {
+                foreachObserverD( notifyPageChanged( i, DocumentObserver::Bookmark ) );
+            }
+            else if ( oldContains && oldUrlBookmarks[i] != urlBookmarks[i] )
+            {
+                foreachObserverD( notifyPageChanged( i, DocumentObserver::Bookmark ) );
+            }
+
         }
     }
     emit q->saved();
@@ -219,6 +281,7 @@ KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
         }
         break;
     }
+
     return ret;
 }
 
@@ -226,7 +289,23 @@ KBookmark::List BookmarkManager::bookmarks() const
 {
     return bookmarks( d->url );
 }
-        
+
+KBookmark::List BookmarkManager::bookmarks( int page ) const
+{
+    const KBookmark::List bmarks = bookmarks();
+    KBookmark::List ret;
+    foreach( const KBookmark &bm, bmarks )
+    {
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( vp.isValid() && vp.pageNumber == page )
+        {
+            ret.append(bm);
+        }
+    }
+
+    return ret;
+}
+
 KBookmark BookmarkManager::bookmark( int page ) const
 {
     const KBookmark::List bmarks = bookmarks();
@@ -238,6 +317,31 @@ KBookmark BookmarkManager::bookmark( int page ) const
             return bm;
         }
     }
+    return KBookmark();
+}
+
+KBookmark BookmarkManager::bookmark( const DocumentViewport &viewport ) const
+{
+    if ( !viewport.isValid() || !isBookmarked( viewport.pageNumber ) )
+        return KBookmark();
+
+    KBookmarkGroup thebg;
+    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
+    if ( it == d->knownFiles.end() )
+        return KBookmark();
+
+    for ( KBookmark bm = thebg.first(); !bm.isNull(); bm = thebg.next( bm ) )
+    {
+        if ( bm.isSeparator() || bm.isGroup() )
+            continue;
+
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( documentViewportFuzzyCompare( vp, viewport ) )
+        {
+            return bm;
+        }
+    }
+
     return KBookmark();
 }
 
@@ -304,37 +408,65 @@ void BookmarkManager::addBookmark( int n )
     }
 }
 
+void BookmarkManager::addBookmark( const DocumentViewport &vp )
+{
+    addBookmark( d->url, vp );
+}
+
 bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
 {
     if ( !referurl.isValid() || !vp.isValid() )
+        return false;
+
+    if ( vp.pageNumber < 0 || vp.pageNumber >= d->document->m_pagesVector.count() )
         return false;
 
     KBookmarkGroup thebg;
     QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, true, &thebg );
     Q_ASSERT( it != d->knownFiles.end() );
 
+    int count = 0; // Number of bookmarks in the current page
+    bool found = false;
+    // Check if the bookmark already exists
+    for ( KBookmark bm = thebg.first(); !found && !bm.isNull(); bm = thebg.next( bm ) )
+    {
+        if ( bm.isSeparator() || bm.isGroup() )
+            continue;
+
+        DocumentViewport bmViewport( bm.url().htmlRef() );
+        if ( bmViewport.isValid() && bmViewport.pageNumber == vp.pageNumber )
+        {
+            ++count;
+
+            if ( documentViewportFuzzyCompare( bmViewport, vp ) )
+                found = true;
+        }
+    }
+
+    if ( found )
+        return false;
+
     QString newtitle;
     if ( title.isEmpty() )
     {
         // if we have no title specified for the new bookmark, then give it the
-        // name '#n' where n is the index of this bookmark among the ones of
-        // its file
-        int count = 0;
-        for ( KBookmark bm = thebg.first(); !bm.isNull(); bm = thebg.next( bm ) )
-        {
-            if ( !bm.isSeparator() && !bm.isGroup() )
-                ++count;
-        }
-        newtitle = QString( "#%1" ).arg( count + 1 );
+        // name '#p' where p is the page number where the bookmark is located.
+        // if there's more than one bookmark per page, give the name '#p-n'
+        // where n is the index of this bookmark among the ones of its page.
+        if ( count > 0 )
+            newtitle = QString( "#%1-%2" ).arg( vp.pageNumber + 1 ).arg( count );
+        else
+            newtitle = QString( "#%1" ).arg( vp.pageNumber + 1 );
     }
     else
         newtitle = title;
+
     KUrl newurl = referurl;
     newurl.setHTMLRef( vp.toString() );
     thebg.addBookmark( newtitle, newurl, QString() );
     if ( referurl == d->document->m_url )
     {
-        d->urlBookmarks.insert( vp.pageNumber );
+        d->urlBookmarks[ vp.pageNumber ]++;
         foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
     }
     d->manager->emitChanged( thebg );
@@ -347,6 +479,15 @@ void BookmarkManager::removeBookmark( int n )
     {
         if ( removePageBookmark( n ) )
             foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+    }
+}
+
+void BookmarkManager::removeBookmark( const DocumentViewport &vp )
+{
+    int page = vp.pageNumber;
+    if ( page >= 0 && page < d->document->m_pagesVector.count() )
+    {
+        removeBookmark( d->url, bookmark( vp ) );
     }
 }
 
@@ -401,9 +542,10 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
         return -1;
 
     thebg.deleteBookmark( bm );
+
     if ( referurl == d->document->m_url )
     {
-        d->urlBookmarks.remove( vp.pageNumber );
+        d->urlBookmarks[ vp.pageNumber ]--;
         foreachObserver( notifyPageChanged( vp.pageNumber, DocumentObserver::Bookmark ) );
     }
     d->manager->emitChanged( thebg );
@@ -421,7 +563,7 @@ void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::Li
     if ( it == d->knownFiles.end() )
         return;
 
-    const QSet<int> oldUrlBookmarks = d->urlBookmarks;
+    const QHash<int,int> oldUrlBookmarks = d->urlBookmarks;
     bool deletedAny = false;
     foreach ( const KBookmark & bm, list )
     {
@@ -429,18 +571,30 @@ void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::Li
         {
             thebg.deleteBookmark( bm );
             deletedAny = true;
+
+            DocumentViewport vp( bm.url().htmlRef() );
             if ( referurl == d->document->m_url )
             {
-                d->urlBookmarks.remove( DocumentViewport( bm.url().htmlRef() ).pageNumber );
+                d->urlBookmarks[ vp.pageNumber ]--;
             }
         }
     }
 
     if ( referurl == d->document->m_url )
     {
-        foreach ( int p, oldUrlBookmarks - d->urlBookmarks )
+        for ( int i = 0; i < qMax( oldUrlBookmarks.size(), d->urlBookmarks.size() ); i++ )
         {
-            foreachObserver( notifyPageChanged( p, DocumentObserver::Bookmark ) );
+            bool oldContains = oldUrlBookmarks.contains(i) && oldUrlBookmarks[i] > 0;
+            bool curContains = d->urlBookmarks.contains(i) && d->urlBookmarks[i] > 0;
+
+            if ( oldContains != curContains )
+            {
+                foreachObserver( notifyPageChanged( i, DocumentObserver::Bookmark ) );
+            }
+            else if ( oldContains && oldUrlBookmarks[i] != d->urlBookmarks[i] )
+            {
+                foreachObserver( notifyPageChanged( i, DocumentObserver::Bookmark ) );
+            }
         }
     }
     if ( deletedAny )
@@ -487,7 +641,7 @@ void BookmarkManager::setUrl( const KUrl& url )
             if ( !vp.isValid() )
                 continue;
 
-            d->urlBookmarks.insert( vp.pageNumber );
+            d->urlBookmarks[ vp.pageNumber ]++;
         }
     }
 }
@@ -512,7 +666,7 @@ bool BookmarkManager::setPageBookmark( int page )
     }
     if ( !found )
     {
-        d->urlBookmarks.insert( page );
+        d->urlBookmarks[ page ]++;
         DocumentViewport vp;
         vp.pageNumber = page;
         KUrl newurl = d->url;
@@ -542,7 +696,7 @@ bool BookmarkManager::removePageBookmark( int page )
         {
             found = true;
             thebg.deleteBookmark( bm );
-            d->urlBookmarks.remove( page );
+            d->urlBookmarks[ page ]--;
             d->manager->emitChanged( thebg );
         }
     }
@@ -551,7 +705,53 @@ bool BookmarkManager::removePageBookmark( int page )
 
 bool BookmarkManager::isBookmarked( int page ) const
 {
-    return d->urlBookmarks.contains( page );
+    return d->urlBookmarks.contains( page ) && d->urlBookmarks[ page ] > 0;
+}
+
+bool BookmarkManager::isBookmarked( const DocumentViewport &viewport ) const
+{
+    KBookmark bm = bookmark( viewport );
+
+    return !bm.isNull();
+}
+
+KBookmark BookmarkManager::nextBookmark( const DocumentViewport &viewport) const
+{
+    KBookmark::List bmarks = bookmarks();
+    qSort( bmarks.begin(), bmarks.end(), bookmarkLessThan);
+
+    KBookmark bookmark;
+    foreach ( const KBookmark &bm, bmarks )
+    {
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( documentViewportLessThan( viewport, vp ) )
+        {
+            bookmark = bm;
+            break;
+        }
+    }
+
+    return bookmark;
+}
+
+KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) const
+{
+    KBookmark::List bmarks = bookmarks();
+    qSort( bmarks.begin(), bmarks.end(), bookmarkLessThan );
+
+    KBookmark bookmark;
+    for ( KBookmark::List::const_iterator it = bmarks.end(); it != bmarks.begin(); --it )
+    {
+        KBookmark bm = *(it-1);
+        DocumentViewport vp( bm.url().htmlRef() );
+        if ( documentViewportLessThan( vp, viewport ) )
+        {
+            bookmark = bm;
+            break;
+        }
+    }
+
+    return bookmark;
 }
 
 #undef foreachObserver

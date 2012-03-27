@@ -740,7 +740,7 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
     qSort( bmarks.begin(), bmarks.end(), bookmarkLessThan );
 
     KBookmark bookmark;
-    for ( KBookmark::List::const_iterator it = bmarks.end(); it != bmarks.begin(); --it )
+    for ( KBookmark::List::const_iterator it = bmarks.constEnd(); it != bmarks.constBegin(); --it )
     {
         KBookmark bm = *(it-1);
         DocumentViewport vp( bm.url().htmlRef() );

@@ -132,6 +132,7 @@ void VideoWidget::Private::finished()
             setupPlayPauseAction( PlayMode );
             if ( anno->movie()->playMode() == Okular::Movie::PlayOnce )
                 controlBar->setVisible( false );
+            q->setVisible(false);
             break;
         case Okular::Movie::PlayRepeat:
             // repeat the playback

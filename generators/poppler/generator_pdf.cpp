@@ -171,99 +171,99 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
 
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
-	Okular::Action *link = 0;
-	const Poppler::LinkGoto *popplerLinkGoto;
-	const Poppler::LinkExecute *popplerLinkExecute;
-	const Poppler::LinkBrowse *popplerLinkBrowse;
-	const Poppler::LinkAction *popplerLinkAction;
-	const Poppler::LinkSound *popplerLinkSound;
-	const Poppler::LinkJavaScript *popplerLinkJS;
-	Okular::DocumentViewport viewport;
-	
-	switch(popplerLink->linkType())
-	{
-		case Poppler::Link::None:
-		break;
-	
-		case Poppler::Link::Goto:
-		{
-			popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
-			const Poppler::LinkDestination dest = popplerLinkGoto->destination();
-			const QString destName = dest.destinationName();
-			if (destName.isEmpty())
-			{
-				fillViewportFromLinkDestination( viewport, dest );
-				link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
-			}
-			else
-			{
-				link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
-			}
-		}
-		break;
-		
-		case Poppler::Link::Execute:
-			popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
-			link = new Okular::ExecuteAction( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
-		break;
-		
-		case Poppler::Link::Browse:
-			popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-			link = new Okular::BrowseAction( popplerLinkBrowse->url() );
-		break;
-		
-		case Poppler::Link::Action:
-			popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
-			link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
-		break;
-		
-		case Poppler::Link::Sound:
-		{
-			popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
-			Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
-			Okular::Sound *sound = createSoundFromPopplerSound( popplerSound );
-			link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
-		}
-		break;
-		
-		case Poppler::Link::JavaScript:
-		{
-			popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
-			link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
-		}
-		break;
-		
+    Okular::Action *link = 0;
+    const Poppler::LinkGoto *popplerLinkGoto;
+    const Poppler::LinkExecute *popplerLinkExecute;
+    const Poppler::LinkBrowse *popplerLinkBrowse;
+    const Poppler::LinkAction *popplerLinkAction;
+    const Poppler::LinkSound *popplerLinkSound;
+    const Poppler::LinkJavaScript *popplerLinkJS;
+    Okular::DocumentViewport viewport;
+
+    switch(popplerLink->linkType())
+    {
+        case Poppler::Link::None:
+        break;
+
+        case Poppler::Link::Goto:
+        {
+            popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
+            const Poppler::LinkDestination dest = popplerLinkGoto->destination();
+            const QString destName = dest.destinationName();
+            if (destName.isEmpty())
+            {
+                fillViewportFromLinkDestination( viewport, dest );
+                link = new Okular::GotoAction(popplerLinkGoto->fileName(), viewport);
+            }
+            else
+            {
+                link = new Okular::GotoAction(popplerLinkGoto->fileName(), destName);
+            }
+        }
+        break;
+
+        case Poppler::Link::Execute:
+            popplerLinkExecute = static_cast<const Poppler::LinkExecute *>(popplerLink);
+            link = new Okular::ExecuteAction( popplerLinkExecute->fileName(), popplerLinkExecute->parameters() );
+        break;
+
+        case Poppler::Link::Browse:
+            popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
+            link = new Okular::BrowseAction( popplerLinkBrowse->url() );
+        break;
+
+        case Poppler::Link::Action:
+            popplerLinkAction = static_cast<const Poppler::LinkAction *>(popplerLink);
+            link = new Okular::DocumentAction( (Okular::DocumentAction::DocumentActionType)popplerLinkAction->actionType() );
+        break;
+
+        case Poppler::Link::Sound:
+        {
+            popplerLinkSound = static_cast<const Poppler::LinkSound *>(popplerLink);
+            Poppler::SoundObject *popplerSound = popplerLinkSound->sound();
+            Okular::Sound *sound = createSoundFromPopplerSound( popplerSound );
+            link = new Okular::SoundAction( popplerLinkSound->volume(), popplerLinkSound->synchronous(), popplerLinkSound->repeat(), popplerLinkSound->mix(), sound );
+        }
+        break;
+
+        case Poppler::Link::JavaScript:
+        {
+            popplerLinkJS = static_cast<const Poppler::LinkJavaScript *>(popplerLink);
+            link = new Okular::ScriptAction( Okular::JavaScript, popplerLinkJS->script() );
+        }
+        break;
+
 #ifdef HAVE_POPPLER_0_20
-		case Poppler::Link::Rendition:
-			// not implemented
-		break;
+        case Poppler::Link::Rendition:
+            // not implemented
+        break;
 #endif
-		
-		case Poppler::Link::Movie:
-			// not implemented
-		break;
-	}
-	
-	return link;
+
+        case Poppler::Link::Movie:
+            // not implemented
+        break;
+    }
+
+    return link;
 }
 
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks )
 {
-	QLinkedList<Okular::ObjectRect*> links;
-	foreach(const Poppler::Link *popplerLink, popplerLinks)
-	{
-		QRectF linkArea = popplerLink->linkArea();
-		double nl = linkArea.left(),
-		       nt = linkArea.top(),
-		       nr = linkArea.right(),
-		       nb = linkArea.bottom();
-		// create the rect using normalized coords and attach the Okular::Link to it
-		Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink) );
-		// add the ObjectRect to the container
-		links.push_front( rect );
-	}
-	qDeleteAll(popplerLinks);
-	return links;
+    QLinkedList<Okular::ObjectRect*> links;
+    foreach(const Poppler::Link *popplerLink, popplerLinks)
+    {
+        QRectF linkArea = popplerLink->linkArea();
+        double nl = linkArea.left(),
+               nt = linkArea.top(),
+               nr = linkArea.right(),
+               nb = linkArea.bottom();
+        // create the rect using normalized coords and attach the Okular::Link to it
+        Okular::ObjectRect * rect = new Okular::ObjectRect( nl, nt, nr, nb, false, Okular::ObjectRect::Action, createLinkFromPopplerLink(popplerLink) );
+        // add the ObjectRect to the container
+        links.push_front( rect );
+    }
+    qDeleteAll(popplerLinks);
+    return links;
 }
 
 extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool * doDelete );
@@ -326,7 +326,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     if ( Okular::FilePrinter::ps2pdfAvailable() )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
-    
+
 #ifdef HAVE_POPPLER_0_16
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -558,9 +558,9 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
     if ( docInfoDirty )
     {
         userMutex()->lock();
-        
+
         docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
-        
+
         if ( pdfdoc )
         {
             // compile internal structure reading properties from PDFDoc
@@ -712,7 +712,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
         of.setEmbedType( embedTypeForPopplerFontInfo( font) );
         of.setFile( font.file() );
         of.setCanBeExtracted( of.embedType() != Okular::FontInfo::NotEmbedded );
-        
+
         QVariant nativeId;
         nativeId.setValue( font );
         of.setNativeId( nativeId );
@@ -809,7 +809,7 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
 
     if ( p && genObjectRects )
     {
-    	// TODO previously we extracted Image type rects too, but that needed porting to poppler
+        // TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
         page->setObjectRects( generateLinks(p->links()) );
@@ -820,7 +820,7 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
     userMutex()->unlock();
 
     delete p;
-    
+
     return img;
 }
 
@@ -845,7 +845,7 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 
         delete pp;
     }
-    else   
+    else
     {
         pageWidth = defaultPageWidth;
         pageHeight = defaultPageHeight;
@@ -994,7 +994,7 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         Okular::DocumentViewport viewport;
         QString optionString = option.toString();
 
-        // if option starts with "src:" assume that we are handling a 
+        // if option starts with "src:" assume that we are handling a
         // source reference
         if ( optionString.startsWith( "src:", Qt::CaseInsensitive ) )
         {
@@ -1132,20 +1132,14 @@ inline void append (Okular::TextPage* ktp,
     const QString &s, double l, double b, double r, double t)
 {
 //    kWarning(PDFDebug).nospace() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")";
-                ktp->append( s ,
-                    new Okular::NormalizedRect(
-                    l,
-                    t,
-                    r,
-                    b
-                    ));
+    ktp->append(s, new Okular::NormalizedRect(l, t, r, b));
 }
 
 Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width,int rot)
-{    
+{
     Q_UNUSED(rot);
     Okular::TextPage* ktp=new Okular::TextPage;
-    Poppler::TextBox *next; 
+    Poppler::TextBox *next;
 #ifdef PDFGENERATOR_DEBUG
     kDebug(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
 #endif
@@ -1174,7 +1168,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
                 s = c;
                 addChar = true;
             }
-            
+
             if (addChar)
             {
                 QRectF charBBox = word->charBoundingBox(textBoxChar);
@@ -1195,7 +1189,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
             // vertically or horizontally aligned
             QRectF wordBBox = word->boundingBox();
             QRectF nextWordBBox = next->boundingBox();
-            append(ktp, " ", 
+            append(ktp, " ",
                      wordBBox.right()/width,
                      wordBBox.bottom()/height,
                      nextWordBBox.left()/width,
@@ -1230,7 +1224,7 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
         if (!e.attribute("DestinationURI").isNull()) item.setAttribute("URL", e.attribute("DestinationURI"));
 
         // descend recursively and advance to the next node
-        if ( e.hasChildNodes() ) addSynopsisChildren( &n, &	item );
+        if ( e.hasChildNodes() ) addSynopsisChildren( &n, &    item );
         n = n.nextSibling();
     }
 }
@@ -1567,7 +1561,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     // Extract the file name and the numeral part from the reference string.
     // This will fail if Filename starts with a digit.
     QString name, lineString;
-    // Remove "src:". Presence of substring has been checked before this 
+    // Remove "src:". Presence of substring has been checked before this
     // function is called.
     name = reference.mid( 4 );
     // split
@@ -1582,18 +1576,18 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     // Remove spaces.
     name = name.trimmed();
     lineString = lineString.trimmed();
-    // Convert line to integer. 
+    // Convert line to integer.
     bool ok;
     int line = lineString.toInt( &ok );
     if (!ok) line = -1;
-    
+
     // Use column == -1 for now.
     if( synctex_display_query( synctex_scanner, name.toLatin1(), line, -1 ) > 0 )
     {
         synctex_node_t node;
         // For now use the first hit. Could possibly be made smarter
         // in case there are multiple hits.
-        while( ( node = synctex_next_result( synctex_scanner ) ) ) 
+        while( ( node = synctex_next_result( synctex_scanner ) ) )
         {
             // TeX pages start at 1.
             viewport.pageNumber = synctex_node_page( node ) - 1;
@@ -1607,7 +1601,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
             viewport.rePos.normalizedY = ( py + 0.5 ) / document()->page(viewport.pageNumber)->height();
             viewport.rePos.enabled = true;
             viewport.rePos.pos = Okular::DocumentViewport::Center;
-           
+
             return;
         }
     }

@@ -363,6 +363,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->leftClickTimer.setSingleShot( true );
     connect( &d->leftClickTimer, SIGNAL(timeout()), this, SLOT(slotShowSizeAllCursor()) );
 
+    connect( d->document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)) );
+
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
 //    resizeButton->setPixmap( SmallIcon("crop") );
@@ -4431,6 +4433,46 @@ void PageView::slotAction( Okular::Action *action )
 void PageView::externalKeyPressEvent( QKeyEvent *e )
 {
     keyPressEvent( e );
+}
+
+void PageView::slotProcessMovieAction( const Okular::MovieAction *action )
+{
+    const Okular::MovieAnnotation *movieAnnotation = action->annotation();
+    if ( !movieAnnotation )
+        return;
+
+    Okular::Movie *movie = movieAnnotation->movie();
+    if ( !movie )
+        return;
+
+    const int currentPage = d->document->viewport().pageNumber;
+
+    PageViewItem *item = d->items.at( currentPage );
+    if ( !item )
+        return;
+
+    VideoWidget *vw = item->videoWidgets().value( movie );
+    if ( !vw )
+        return;
+
+    vw->show();
+
+    switch ( action->operation() )
+    {
+        case Okular::MovieAction::Play:
+            vw->stop();
+            vw->play();
+            break;
+        case Okular::MovieAction::Stop:
+            vw->stop();
+            break;
+        case Okular::MovieAction::Pause:
+            vw->pause();
+            break;
+        case Okular::MovieAction::Resume:
+            vw->play();
+            break;
+    };
 }
 
 //END private SLOTS

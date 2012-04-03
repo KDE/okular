@@ -29,6 +29,8 @@ class Okular::ActionPrivate
         virtual ~ActionPrivate()
         {
         }
+
+        QVariant m_nativeId;
 };
 
 Action::Action( ActionPrivate &dd )
@@ -44,6 +46,18 @@ Action::~Action()
 QString Action::actionTip() const
 {
     return "";
+}
+
+void Action::setNativeId( const QVariant &id )
+{
+    Q_D( Action );
+    d->m_nativeId = id;
+}
+
+QVariant Action::nativeId() const
+{
+    Q_D( const Action );
+    return d->m_nativeId;
 }
 
 // GotoAction
@@ -400,18 +414,20 @@ QString ScriptAction::script() const
 
 // MovieAction
 
-#if 0
 class Okular::MovieActionPrivate : public Okular::ActionPrivate
 {
     public:
-        MovieActionPrivate()
-            : ActionPrivate()
+        MovieActionPrivate( MovieAction::OperationType operation )
+            : ActionPrivate(), m_operation( operation ), m_annotation( 0 )
         {
         }
+
+    MovieAction::OperationType m_operation;
+    MovieAnnotation *m_annotation;
 };
 
-MovieAction::MovieAction()
-    : Action( *new MovieActionPrivate() )
+MovieAction::MovieAction( OperationType operation )
+    : Action( *new MovieActionPrivate( operation ) )
 {
 }
 
@@ -428,4 +444,21 @@ QString MovieAction::actionTip() const
 {
     return i18n( "Play movie..." );
 }
-#endif
+
+MovieAction::OperationType MovieAction::operation() const
+{
+    Q_D( const Okular::MovieAction );
+    return d->m_operation;
+}
+
+void MovieAction::setAnnotation( MovieAnnotation *annotation )
+{
+    Q_D( Okular::MovieAction );
+    d->m_annotation = annotation;
+}
+
+MovieAnnotation* MovieAction::annotation() const
+{
+    Q_D( const Okular::MovieAction );
+    return d->m_annotation;
+}

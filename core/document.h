@@ -45,6 +45,7 @@ class ExportFormat;
 class FontInfo;
 class Generator;
 class Action;
+class MovieAction;
 class Page;
 class PixmapRequest;
 class SourceReference;
@@ -734,6 +735,11 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.14 (KDE 4.8)
          */
         void sourceReferenceActivated(const QString& absFileName, int line, int col, bool *handled);
+
+        /**
+         * This signal is emitted whenever an movie action is triggered and the UI should process it.
+         */
+        void processMovieAction( const Okular::MovieAction *action );
 
     private:
         /// @cond PRIVATE

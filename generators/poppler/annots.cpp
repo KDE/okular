@@ -68,6 +68,8 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             Poppler::MovieAnnotation * movieann = static_cast< Poppler::MovieAnnotation * >( ann );
             Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
             annotation = m;
+            tieToOkularAnn = true;
+            *doDelete = false;
 
             m->setMovie( createMovieFromPopplerMovie( movieann->movie() ) );
 
@@ -79,6 +81,8 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
             Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
             annotation = m;
+            tieToOkularAnn = true;
+            *doDelete = false;
 
             m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
 

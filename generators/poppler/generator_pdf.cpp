@@ -53,7 +53,9 @@
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
+Q_DECLARE_METATYPE(Poppler::Annotation*)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
+Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 
 static const int PDFDebug = 4710;
 static const int defaultPageWidth = 595;
@@ -169,6 +171,9 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
 }
 #endif
 
+/**
+ * Note: the function will take ownership of the popplerLink object.
+ */
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
     Okular::Action *link = 0;
@@ -178,7 +183,12 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
     const Poppler::LinkAction *popplerLinkAction;
     const Poppler::LinkSound *popplerLinkSound;
     const Poppler::LinkJavaScript *popplerLinkJS;
+#ifdef HAVE_POPPLER_0_20
+    const Poppler::LinkMovie *popplerLinkMovie;
+#endif
     Okular::DocumentViewport viewport;
+
+    bool deletePopplerLink = true;
 
     switch(popplerLink->linkType())
     {
@@ -239,14 +249,47 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
         break;
 #endif
 
+#ifdef HAVE_POPPLER_0_20
         case Poppler::Link::Movie:
-            // not implemented
+        {
+            deletePopplerLink = false; // we'll delete it inside resolveMovieLinkReferences() after we have resolved all references
+
+            popplerLinkMovie = static_cast<const Poppler::LinkMovie *>( popplerLink );
+
+            Okular::MovieAction::OperationType operation = Okular::MovieAction::Play;
+            switch ( popplerLinkMovie->operation() )
+            {
+                case Poppler::LinkMovie::Play:
+                    operation = Okular::MovieAction::Play;
+                    break;
+                case Poppler::LinkMovie::Stop:
+                    operation = Okular::MovieAction::Stop;
+                    break;
+                case Poppler::LinkMovie::Pause:
+                    operation = Okular::MovieAction::Pause;
+                    break;
+                case Poppler::LinkMovie::Resume:
+                    operation = Okular::MovieAction::Resume;
+                    break;
+            };
+
+            Okular::MovieAction *movieAction = new Okular::MovieAction( operation );
+            movieAction->setNativeId( QVariant::fromValue( popplerLinkMovie ) );
+            link = movieAction;
+        }
         break;
+#endif
     }
+
+    if ( deletePopplerLink )
+        delete popplerLink;
 
     return link;
 }
 
+/**
+ * Note: the function will take ownership of the popplerLink objects.
+ */
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks )
 {
     QLinkedList<Okular::ObjectRect*> links;
@@ -262,7 +305,6 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
         // add the ObjectRect to the container
         links.push_front( rect );
     }
-    qDeleteAll(popplerLinks);
     return links;
 }
 
@@ -455,6 +497,8 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     pagesVector.resize(pageCount);
     rectsGenerated.fill(false, pageCount);
 
+    annotationsHash.clear();
+
     loadPages(pagesVector, 0, false);
 
     // update the configuration
@@ -522,13 +566,11 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             if ( tmplink )
             {
                 page->setPageAction( Okular::Page::Opening, createLinkFromPopplerLink( tmplink ) );
-                delete tmplink;
             }
             tmplink = p->action( Poppler::Page::Closing );
             if ( tmplink )
             {
                 page->setPageAction( Okular::Page::Closing, createLinkFromPopplerLink( tmplink ) );
-                delete tmplink;
             }
             page->setDuration( p->duration() );
             page->setLabel( p->label() );
@@ -814,6 +856,8 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
         // dead gp_outputdev.cpp on image extraction
         page->setObjectRects( generateLinks(p->links()) );
         rectsGenerated[ request->page()->number() ] = true;
+
+        resolveMovieLinkReferences( page );
     }
 
     // 3. UNLOCK [re-enables shared access]
@@ -822,6 +866,49 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
     delete p;
 
     return img;
+}
+
+void PDFGenerator::resolveMovieLinkReference( Okular::Action *action, Okular::Page *page )
+{
+#ifdef HAVE_POPPLER_0_20
+    if ( !action )
+        return;
+
+    if ( action->actionType() != Okular::Action::Movie )
+        return;
+
+    Okular::MovieAction *movieAction = static_cast<Okular::MovieAction*>( action );
+
+    const Poppler::LinkMovie *linkMovie = movieAction->nativeId().value<const Poppler::LinkMovie*>();
+
+    QHashIterator<Okular::Annotation*, Poppler::Annotation*> it( annotationsHash );
+    while ( it.hasNext() )
+    {
+        it.next();
+
+        if ( it.key()->subType() == Okular::Annotation::AMovie )
+        {
+            const Poppler::MovieAnnotation *movieAnnotation = static_cast<const Poppler::MovieAnnotation*>( it.value() );
+
+            if ( linkMovie->isReferencedAnnotation( movieAnnotation ) )
+            {
+                movieAction->setAnnotation( static_cast<Okular::MovieAnnotation*>( it.key() ) );
+                movieAction->setNativeId( QVariant() );
+                delete linkMovie; // delete the associated Poppler::LinkMovie object, it's not needed anymore
+                break;
+            }
+        }
+    }
+#endif
+}
+
+void PDFGenerator::resolveMovieLinkReferences( Okular::Page *page )
+{
+    resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Opening ) ), page );
+    resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Closing ) ), page );
+
+    foreach ( Okular::FormField *field, page->formFields() )
+        resolveMovieLinkReference( field->activationAction(), page );
 }
 
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
@@ -1279,6 +1366,9 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
             // explicitly mark as external
             newann->setFlags( newann->flags() | Okular::Annotation::External );
             page->addAnnotation(newann);
+
+            if ( !doDelete )
+                annotationsHash.insert( newann, a );
         }
         if ( doDelete )
             delete a;

@@ -25,7 +25,6 @@ PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
-        delete aAction;
     }
 }
 
@@ -107,7 +106,6 @@ PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
-        delete aAction;
     }
 }
 
@@ -204,7 +202,6 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( Poppler::FormFieldChoice * field
     if ( aAction )
     {
         setActivationAction( createLinkFromPopplerLink( aAction ) );
-        delete aAction;
     }
 }
 

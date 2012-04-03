@@ -123,6 +123,9 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
+        void resolveMovieLinkReferences( Okular::Page *page );
+        void resolveMovieLinkReference( Okular::Action *action, Okular::Page *page );
+
         bool setDocumentRenderHints();
 
         // poppler dependant stuff
@@ -139,6 +142,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         int nextFontPage;
         double dpiX;
         double dpiY;
+        QHash<Okular::Annotation*, Poppler::Annotation*> annotationsHash;
 
         QBitArray rectsGenerated;
 

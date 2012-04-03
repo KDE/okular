@@ -219,6 +219,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_nextPageTimer->setSingleShot( true );
     connect( m_nextPageTimer, SIGNAL(timeout()), this, SLOT(slotNextPage()) ); 
 
+    connect( m_document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)) );
+
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
     {
@@ -1999,5 +2001,38 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
     m_transitionTimer->start( 0 );
 }
 
+void PresentationWidget::slotProcessMovieAction( const Okular::MovieAction *action )
+{
+    const Okular::MovieAnnotation *movieAnnotation = action->annotation();
+    if ( !movieAnnotation )
+        return;
+
+    Okular::Movie *movie = movieAnnotation->movie();
+    if ( !movie )
+        return;
+
+    VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( movieAnnotation->movie() );
+    if ( !vw )
+        return;
+
+    vw->show();
+
+    switch ( action->operation() )
+    {
+        case Okular::MovieAction::Play:
+            vw->stop();
+            vw->play();
+            break;
+        case Okular::MovieAction::Stop:
+            vw->stop();
+            break;
+        case Okular::MovieAction::Pause:
+            vw->pause();
+            break;
+        case Okular::MovieAction::Resume:
+            vw->play();
+            break;
+    };
+}
 
 #include "presentationwidget.moc"

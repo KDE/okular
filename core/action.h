@@ -14,6 +14,7 @@
 #include "okular_export.h"
 
 #include <QtCore/QString>
+#include <QtCore/QVariant>
 
 namespace Okular {
 
@@ -25,6 +26,7 @@ class DocumentActionPrivate;
 class SoundActionPrivate;
 class ScriptActionPrivate;
 class MovieActionPrivate;
+class MovieAnnotation;
 class Sound;
 class DocumentViewport;
 
@@ -69,6 +71,26 @@ class OKULAR_EXPORT Action
          * the user.
          */
         virtual QString actionTip() const;
+
+        /**
+         * Sets the "native" @p id of the action.
+         *
+         * This is for use of the Generator, that can optionally store an
+         * handle (a pointer, an identifier, etc) of the "native" action
+         * object, if any.
+         *
+         * @note Okular makes no use of this
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        void setNativeId( const QVariant &id );
+
+        /**
+         * Returns the "native" id of the action.
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        QVariant nativeId() const;
 
     protected:
         /// @cond PRIVATE
@@ -398,17 +420,28 @@ class OKULAR_EXPORT ScriptAction : public Action
         Q_DISABLE_COPY( ScriptAction )
 };
 
-#if 0
 /**
- * The Movie action plays a video on activation.
+ * The Movie action executes an operation on a video on activation.
+ *
+ * @since 0.15 (KDE 4.9)
  */
-class MovieAction : public Action
+class OKULAR_EXPORT MovieAction : public Action
 {
     public:
         /**
+         * Describes the possible operation types.
+         */
+        enum OperationType {
+            Play,
+            Stop,
+            Pause,
+            Resume
+        };
+
+        /**
          * Creates a new movie action.
          */
-        MovieAction();
+        MovieAction( OperationType operation );
 
         /**
          * Destroys the movie action.
@@ -425,11 +458,25 @@ class MovieAction : public Action
          */
         QString actionTip() const;
 
+        /**
+         * Returns the operation type.
+         */
+        OperationType operation() const;
+
+        /**
+         * Sets the @p annotation that is associated with the movie action.
+         */
+        void setAnnotation( MovieAnnotation *annotation );
+
+        /**
+         * Returns the annotation or @c 0 if no annotation has been set.
+         */
+        MovieAnnotation* annotation() const;
+
     private:
         Q_DECLARE_PRIVATE( MovieAction )
         Q_DISABLE_COPY( MovieAction )
 };
-#endif
 
 }
 

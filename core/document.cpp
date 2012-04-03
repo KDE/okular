@@ -3005,8 +3005,7 @@ void Document::processAction( const Action * action )
             } break;
 
         case Action::Movie:
-            //const MovieAction * movie = static_cast< const MovieAction * >( action );
-            // TODO this (Movie action)
+            emit processMovieAction( static_cast< const MovieAction * >( action ) );
             break;
     }
 }

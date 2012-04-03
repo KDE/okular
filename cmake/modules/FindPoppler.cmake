@@ -92,6 +92,7 @@ int main()
 {
   Poppler::ScreenAnnotation *annot = 0;
   Poppler::LinkRendition *link = 0;
+  const Poppler::LinkMovie::Operation operation = Poppler::LinkMovie::Play;
   return 0;
 }
 " HAVE_POPPLER_0_20)

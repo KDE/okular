@@ -37,6 +37,7 @@ class Action;
 class Document;
 class DocumentViewport;
 class Annotation;
+class MovieAction;
 }
 
 class FormWidgetIface;
@@ -244,6 +245,7 @@ Q_OBJECT
         void slotAction( Okular::Action *action );
         void externalKeyPressEvent( QKeyEvent *e );
         void slotAnnotationWindowDestroyed( QObject *window );
+        void slotProcessMovieAction( const Okular::MovieAction *action );
 };
 
 #endif

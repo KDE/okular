@@ -55,7 +55,9 @@
 
 Q_DECLARE_METATYPE(Poppler::Annotation*)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
+#ifdef HAVE_POPPLER_0_20
 Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
+#endif
 
 static const int PDFDebug = 4710;
 static const int defaultPageWidth = 595;

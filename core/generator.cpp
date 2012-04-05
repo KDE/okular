@@ -257,7 +257,6 @@ void Generator::generateTextPage( Page *page )
     Q_D( Generator );
     TextPage *tp = textPage( page );
     page->setTextPage( tp );
-    d->mTextPageReady = true;
     signalTextGenerationDone( page, tp );
 }
 

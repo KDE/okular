@@ -831,6 +831,12 @@ void PresentationWidget::changePage( int newPage )
                 vw->hide();
             }
         }
+        else
+        {
+            // we have just opened the presentation view
+            if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
+                m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+        }
     }
 }
 

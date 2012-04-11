@@ -363,8 +363,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->leftClickTimer.setSingleShot( true );
     connect( &d->leftClickTimer, SIGNAL(timeout()), this, SLOT(slotShowSizeAllCursor()) );
 
-    connect( d->document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)) );
-
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
 //    resizeButton->setPixmap( SmallIcon("crop") );

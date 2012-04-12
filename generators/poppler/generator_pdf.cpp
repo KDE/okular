@@ -1238,8 +1238,8 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
     QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
     foreach(Poppler::Annotation *a, popplerAnnotations)
     {
-        a->window.width = (int)(page->width() * a->window.width);
-        a->window.height = (int)(page->height() * a->window.height);
+        //a->window.width = (int)(page->width() * a->window.width);
+        //a->window.height = (int)(page->height() * a->window.height);
         //a->window.width = a->window.width < 200 ? 200 : a->window.width;
         // a->window.height = a->window.height < 120 ? 120 : a->window.height;
         // resize annotation's geometry to an icon

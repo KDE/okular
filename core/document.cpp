@@ -2356,7 +2356,6 @@ void Document::modifyPageAnnotation( int page, Annotation * newannotation )
     if ( !d->m_generator || !kp )
         return;
 
-    kp->d->modifyAnnotation( newannotation );
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }

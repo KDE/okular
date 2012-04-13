@@ -14,7 +14,10 @@
 #include <qvariant.h>
 
 #include <core/annotations.h>
+#include <core/area.h>
 
+#include "annots.h"
+#include "generator_pdf.h"
 #include "popplerembeddedfile.h"
 #include "config-okular-poppler.h"
 
@@ -32,11 +35,209 @@ static void disposeAnnotation( const Okular::Annotation *ann )
     delete popplerAnn;
 }
 
+static QPointF normPointToPointF( const Okular::NormalizedPoint& pt )
+{
+    return QPointF(pt.x, pt.y);
+}
+
+static QRectF normRectToRectF( const Okular::NormalizedRect& rect )
+{
+    return QRectF( QPointF(rect.left, rect.top), QPointF(rect.right, rect.bottom) );
+}
+
+//BEGIN PopplerAnnotationProxy implementation
+PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc )
+    : ppl_doc ( doc )
+{
+}
+
+PopplerAnnotationProxy::~PopplerAnnotationProxy()
+{
+}
+
+bool PopplerAnnotationProxy::supports( Capability cap ) const
+{
+    switch ( cap )
+    {
+        case Addition:
+        case Modification:
+        case Removal:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int page )
+{
+    // Export annotation to DOM
+    QDomDocument doc;
+    QDomElement dom_ann = doc.createElement( "root" );
+    Okular::AnnotationUtils::storeAnnotation( okl_ann, dom_ann, doc );
+
+    // Create poppler annotation
+    Poppler::Annotation *ppl_ann = Poppler::AnnotationUtils::createAnnotation( dom_ann );
+
+    // Poppler doesn't render StampAnnotations yet
+    if ( ppl_ann->subType() != Poppler::Annotation::AStamp )
+        okl_ann->setFlags( okl_ann->flags() | Okular::Annotation::ExternallyDrawn );
+
+    // Poppler stores highlight points in swapped order
+    if ( ppl_ann->subType() == Poppler::Annotation::AHighlight )
+    {
+        Poppler::HighlightAnnotation * hlann = static_cast<Poppler::HighlightAnnotation*>( ppl_ann );
+        QList<Poppler::HighlightAnnotation::Quad> quads = hlann->highlightQuads();
+        QMutableListIterator<Poppler::HighlightAnnotation::Quad> it( quads );
+        while ( it.hasNext() )
+        {
+            Poppler::HighlightAnnotation::Quad &q = it.next();
+            QPointF t;
+            t = q.points[3];
+            q.points[3] = q.points[0];
+            q.points[0] = t;
+            t = q.points[2];
+            q.points[2] = q.points[1];
+            q.points[1] = t;
+        }
+        hlann->setHighlightQuads( quads );
+    }
+
+    // Bind poppler object to page
+    Poppler::Page *ppl_page = ppl_doc->page( page );
+    ppl_page->addAnnotation( ppl_ann );
+    delete ppl_page;
+
+    // Set pointer to poppler annotation as native Id
+    okl_ann->setNativeId( qVariantFromValue( ppl_ann ) );
+    okl_ann->setDisposeDataFunction( disposeAnnotation );
+
+    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+}
+
+void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_ann, int page, bool appearanceChanged )
+{
+    Q_UNUSED( page );
+    Q_UNUSED( appearanceChanged );
+
+    Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation*>( okl_ann->nativeId() );
+
+    if ( !ppl_ann ) // Ignore non-native annotations
+        return;
+
+    // Set basic properties
+    ppl_ann->setBoundary(normRectToRectF( okl_ann->boundingRectangle() ));
+    ppl_ann->setAuthor( okl_ann->author() );
+    ppl_ann->setContents( okl_ann->contents() );
+
+    // Set style
+    Poppler::Annotation::Style s;
+    s.setColor( okl_ann->style().color() );
+    s.setWidth( okl_ann->style().width() );
+    s.setOpacity( okl_ann->style().opacity() );
+    ppl_ann->setStyle( s );
+
+    // Set type-specific properties (if any)
+    switch ( ppl_ann->subType() )
+    {
+        case Poppler::Annotation::AText:
+        {
+            const Okular::TextAnnotation * okl_txtann = static_cast<const Okular::TextAnnotation*>(okl_ann);
+            Poppler::TextAnnotation * ppl_txtann = static_cast<Poppler::TextAnnotation*>(ppl_ann);
+            ppl_txtann->setTextIcon( okl_txtann->textIcon() );
+            ppl_txtann->setTextFont( okl_txtann->textFont() );
+            ppl_txtann->setInplaceAlign( okl_txtann->inplaceAlignment() );
+            if ( okl_txtann->textType() == Okular::TextAnnotation::InPlace )
+                ppl_txtann->setContents( okl_txtann->inplaceText() ); // overrides contents
+            ppl_txtann->setCalloutPoints( QVector<QPointF>() );
+            ppl_txtann->setInplaceIntent( (Poppler::TextAnnotation::InplaceIntent)okl_txtann->inplaceIntent() );
+            break;
+        }
+        case Poppler::Annotation::ALine:
+        {
+            const Okular::LineAnnotation * okl_lineann = static_cast<const Okular::LineAnnotation*>(okl_ann);
+            Poppler::LineAnnotation * ppl_lineann = static_cast<Poppler::LineAnnotation*>(ppl_ann);
+            QLinkedList<QPointF> points;
+            foreach ( const Okular::NormalizedPoint &p, okl_lineann->linePoints() )
+                points.append(normPointToPointF( p ));
+            ppl_lineann->setLinePoints( points );
+            ppl_lineann->setLineStartStyle( (Poppler::LineAnnotation::TermStyle)okl_lineann->lineStartStyle() );
+            ppl_lineann->setLineEndStyle( (Poppler::LineAnnotation::TermStyle)okl_lineann->lineEndStyle() );
+            ppl_lineann->setLineClosed( okl_lineann->lineClosed() );
+            ppl_lineann->setLineInnerColor( okl_lineann->lineInnerColor() );
+            ppl_lineann->setLineLeadingForwardPoint( okl_lineann->lineLeadingForwardPoint() );
+            ppl_lineann->setLineLeadingBackPoint( okl_lineann->lineLeadingBackwardPoint() );
+            ppl_lineann->setLineShowCaption( okl_lineann->showCaption() );
+            ppl_lineann->setLineIntent( (Poppler::LineAnnotation::LineIntent)okl_lineann->lineIntent() );
+            break;
+        }
+        case Poppler::Annotation::AGeom:
+        {
+            const Okular::GeomAnnotation * okl_geomann = static_cast<const Okular::GeomAnnotation*>(okl_ann);
+            Poppler::GeomAnnotation * ppl_geomann = static_cast<Poppler::GeomAnnotation*>(ppl_ann);
+            ppl_geomann->setGeomType( (Poppler::GeomAnnotation::GeomType)okl_geomann->geometricalType() );
+            ppl_geomann->setGeomInnerColor( okl_geomann->geometricalInnerColor() );
+            break;
+        }
+        case Poppler::Annotation::AHighlight:
+        {
+            const Okular::HighlightAnnotation * okl_hlann = static_cast<const Okular::HighlightAnnotation*>(okl_ann);
+            Poppler::HighlightAnnotation * ppl_hlann = static_cast<Poppler::HighlightAnnotation*>(ppl_ann);
+            ppl_hlann->setHighlightType( (Poppler::HighlightAnnotation::HighlightType)okl_hlann->highlightType() );
+            break;
+        }
+        case Poppler::Annotation::AStamp:
+        {
+            const Okular::StampAnnotation * okl_stampann = static_cast<const Okular::StampAnnotation*>(okl_ann);
+            Poppler::StampAnnotation * ppl_stampann = static_cast<Poppler::StampAnnotation*>(ppl_ann);
+            ppl_stampann->setStampIconName( okl_stampann->stampIconName() );
+            break;
+        }
+        case Poppler::Annotation::AInk:
+        {
+            const Okular::InkAnnotation * okl_inkann = static_cast<const Okular::InkAnnotation*>(okl_ann);
+            Poppler::InkAnnotation * ppl_inkann = static_cast<Poppler::InkAnnotation*>(ppl_ann);
+            QList< QLinkedList<QPointF> > paths;
+            foreach ( const QLinkedList<Okular::NormalizedPoint> &path, okl_inkann->inkPaths() )
+            {
+                QLinkedList<QPointF> points;
+                foreach ( const Okular::NormalizedPoint &p, path )
+                    points.append(normPointToPointF( p ));
+                paths.append( points );
+            }
+            ppl_inkann->setInkPaths( paths );
+            break;
+        }
+        default:
+            kDebug() << "Type-specific property modification is not implemented for this annotation type";
+            break;
+    }
+
+    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+}
+
+void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int page )
+{
+    Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation*>( okl_ann->nativeId() );
+
+    if ( !ppl_ann ) // Ignore non-native annotations
+        return;
+
+    Poppler::Page *ppl_page = ppl_doc->page( page );
+    ppl_page->removeAnnotation( ppl_ann ); // Also destroys ppl_ann
+    delete ppl_page;
+
+    okl_ann->setNativeId( qVariantFromValue(0) ); // So that we don't double-free in disposeAnnotation
+
+    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+}
+//END PopplerAnnotationProxy implementation
+
 Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool *doDelete )
 {
     Okular::Annotation *annotation = 0;
     *doDelete = true;
     bool tieToOkularAnn = false;
+    bool externallyDrawn = false;
     switch ( ann->subType() )
     {
         case Poppler::Annotation::AFileAttachment:
@@ -87,6 +288,21 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             break;
         }
 #endif
+        case Poppler::Annotation::AText:
+        case Poppler::Annotation::ALine:
+        case Poppler::Annotation::AGeom:
+        case Poppler::Annotation::AHighlight:
+        case Poppler::Annotation::AInk:
+        {
+            externallyDrawn = true;
+            /* fallback */
+        }
+        case Poppler::Annotation::AStamp:
+        {
+            tieToOkularAnn = true;
+            *doDelete = false;
+            /* fallback */
+        }
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
@@ -95,7 +311,7 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             doc.appendChild( root );
             Poppler::AnnotationUtils::storeAnnotation( ann, root, doc );
             annotation = Okular::AnnotationUtils::createAnnotation( root );
-            return annotation;
+            break;
         }
     }
     if ( annotation )
@@ -107,6 +323,27 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         annotation->setCreationDate( ann->creationDate() );
         annotation->setFlags( ann->flags() );
         annotation->setBoundingRectangle( Okular::NormalizedRect::fromQRectF( ann->boundary() ) );
+
+        if (externallyDrawn)
+            annotation->setFlags( annotation->flags() | Okular::Annotation::ExternallyDrawn );
+
+        // Poppler stores highlight points in swapped order
+        if ( annotation->subType() == Okular::Annotation::AHighlight )
+        {
+            Okular::HighlightAnnotation * hlann = static_cast<Okular::HighlightAnnotation*>( annotation );
+            QList<Okular::HighlightAnnotation::Quad> &quads = hlann->highlightQuads();
+            for (QList<Okular::HighlightAnnotation::Quad>::iterator it = quads.begin(); it != quads.end(); ++it)
+            {
+                Okular::NormalizedPoint t;
+                t = it->point( 3 );
+                it->setPoint( it->point(0), 3 );
+                it->setPoint( t, 0 );
+                t = it->point( 2 );
+                it->setPoint( it->point(1), 2 );
+                it->setPoint( t, 1 );
+            }
+        }
+
         // TODO clone style
         // TODO clone window
         // TODO clone revisions

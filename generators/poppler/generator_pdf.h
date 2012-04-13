@@ -32,6 +32,7 @@ class SourceReference;
 }
 
 class PDFOptionsPage;
+class PopplerAnnotationProxy;
 
 /**
  * @short A generator that builds contents from a PDF document.
@@ -145,6 +146,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         int nextFontPage;
         double dpiX;
         double dpiY;
+        PopplerAnnotationProxy *annotProxy;
         QHash<Okular::Annotation*, Poppler::Annotation*> annotationsHash;
 
         QBitArray rectsGenerated;

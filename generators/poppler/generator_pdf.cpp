@@ -52,6 +52,7 @@
 #  include <poppler-media.h>
 #endif
 
+#include "annots.h"
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
@@ -333,8 +334,6 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
     return links;
 }
 
-extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool * doDelete );
-
 /** NOTES on threading:
  * internal: thread race prevention is done via the 'docLock' mutex. the
  *           mutex is needed only because we have the asynchronous thread; else
@@ -380,7 +379,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
     dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
-    synctex_scanner(0)
+    annotProxy( 0 ), synctex_scanner( 0 )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -529,6 +528,9 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     // update the configuration
     reparseConfig();
 
+    // create annotation proxy
+    annotProxy = new PopplerAnnotationProxy( pdfdoc );
+
     // the file has been loaded correctly
     return true;
 }
@@ -537,6 +539,8 @@ bool PDFGenerator::doCloseDocument()
 {
     // remove internal objects
     userMutex()->lock();
+    delete annotProxy;
+    annotProxy = 0;
     delete pdfdoc;
     pdfdoc = 0;
     userMutex()->unlock();
@@ -1787,7 +1791,7 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
 
 Okular::AnnotationProxy* PDFGenerator::annotationProxy() const
 {
-    return 0; // Not supported
+    return annotProxy;
 }
 
 #include "generator_pdf.moc"

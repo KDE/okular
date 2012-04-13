@@ -164,7 +164,11 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
 Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen )
 {
     Poppler::MediaRendition *rendition = popplerScreen->rendition();
-    Okular::Movie *movie = new Okular::Movie( rendition->fileName(), rendition->data() );
+    Okular::Movie *movie = 0;
+    if ( rendition->isEmbedded() )
+        movie = new Okular::Movie( rendition->fileName(), rendition->data() );
+    else
+        movie = new Okular::Movie( rendition->fileName() );
     movie->setSize( rendition->size() );
     movie->setShowControls( rendition->showControls() );
     movie->setPlayMode( Okular::Movie::PlayOnce );

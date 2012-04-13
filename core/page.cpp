@@ -14,6 +14,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
+#include <QtCore/QUuid>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -61,7 +62,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
       m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
-      m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
+      m_rotation( Rotation0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
       m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),
       m_isBoundingBoxKnown( false )
@@ -575,14 +576,10 @@ QColor Page::textSelectionColor() const
 
 void Page::addAnnotation( Annotation * annotation )
 {
-    //uniqueName: okular-PAGENUM-ID
+    // Generate uniqueName: okular-{UUID}
     if(annotation->uniqueName().isEmpty())
     {
-        QString uniqueName = "okular-";
-        uniqueName += ( QString::number(d->m_number) + '-' + QString::number(++(d->m_maxuniqueNum)) );
-
-        kDebug(OkularDebug).nospace() << "inc m_maxuniqueNum=" << d->m_maxuniqueNum;
-
+        QString uniqueName = "okular-" + QUuid::createUuid().toString();
         annotation->setUniqueName( uniqueName );
     }
     annotation->d_ptr->m_page = d;
@@ -755,14 +752,6 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( annotation )
                 {
                     m_doc->m_parent->addPageAnnotation(m_number, annotation);
-                    int pos = annotation->uniqueName().lastIndexOf("-");
-                    if(pos != -1)
-                    {
-                        int uniqID=annotation->uniqueName().right(annotation->uniqueName().length()-pos-1).toInt();
-                        if ( m_maxuniqueNum < uniqID )
-                            m_maxuniqueNum = uniqID;
-                    }
-
                     kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else

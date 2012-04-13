@@ -114,7 +114,6 @@ class PagePrivate
         DocumentPrivate *m_doc;
         NormalizedRect m_boundingBox;
         Rotation m_rotation;
-        int m_maxuniqueNum;
 
         TextPage * m_text;
         PageTransition * m_transition;

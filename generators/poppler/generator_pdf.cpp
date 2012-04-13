@@ -61,7 +61,6 @@ Q_DECLARE_METATYPE(Poppler::FontInfo)
 Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 #endif
 
-static const int PDFDebug = 4710;
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
 

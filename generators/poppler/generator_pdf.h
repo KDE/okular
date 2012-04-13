@@ -56,6 +56,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         PDFGenerator( QObject *parent, const QVariantList &args );
         virtual ~PDFGenerator();
 
+        static const int PDFDebug = 4710;
+
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );

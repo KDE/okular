@@ -72,11 +72,27 @@ class PDFOptionsPage : public QWidget
        {
            setWindowTitle( i18n( "PDF Options" ) );
            QVBoxLayout *layout = new QVBoxLayout(this);
+           m_printAnnots = new QCheckBox(i18n("Print annotations"), this);
+           m_printAnnots->setToolTip(i18n("Include annotations in the printed document"));
+           m_printAnnots->setWhatsThis(i18n("Includes annotations in the printed document. You can disable this if you want to print the original unannotated document."));
+           layout->addWidget(m_printAnnots);
            m_forceRaster = new QCheckBox(i18n("Force rasterization"), this);
            m_forceRaster->setToolTip(i18n("Rasterize into an image before printing"));
            m_forceRaster->setWhatsThis(i18n("Forces the rasterization of each page into an image before printing it. This usually gives somewhat worse results, but is useful when printing documents that appear to print incorrectly."));
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
+
+           setPrintAnnots( true ); // Default value
+       }
+
+       bool printAnnots()
+       {
+           return m_printAnnots->isChecked();
+       }
+
+       void setPrintAnnots( bool printAnnots )
+       {
+           m_printAnnots->setChecked( printAnnots );
        }
 
        bool printForceRaster()
@@ -90,6 +106,7 @@ class PDFOptionsPage : public QWidget
        }
 
     private:
+        QCheckBox *m_printAnnots;
         QCheckBox *m_forceRaster;
 };
 
@@ -1026,9 +1043,11 @@ bool PDFGenerator::print( QPrinter& printer )
         pstitle = document()->currentDocument().fileName();
     }
 
+    bool printAnnots = true;
     bool forceRasterize = false;
     if ( pdfOptionsPage )
     {
+        printAnnots = pdfOptionsPage->printAnnots();
         forceRasterize = pdfOptionsPage->printForceRaster();
     }
 
@@ -1046,6 +1065,9 @@ bool PDFGenerator::print( QPrinter& printer )
     psConverter->setStrictMargins(false);
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
+
+    if (!printAnnots)
+        psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations );
 
     userMutex()->lock();
     if (psConverter->convert())

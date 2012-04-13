@@ -157,6 +157,7 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     movie->setRotation( (Okular::Rotation)( popplerMovie->rotation() / 90 ) );
     movie->setShowControls( popplerMovie->showControls() );
     movie->setPlayMode( (Okular::Movie::PlayMode)popplerMovie->playMode() );
+    movie->setAutoPlay( false ); // will be triggered by external MovieAnnotation
     return movie;
 }
 

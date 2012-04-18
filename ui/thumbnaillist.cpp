@@ -483,6 +483,7 @@ ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(con
         return ThumbnailListPrivate::Right;
     if ( vp.rePos.normalizedX < 0.0 )
         return ThumbnailListPrivate::Left;
+    vp.rePos.enabled = true;
     m_document->setViewport( vp );
     return ThumbnailListPrivate::Null;
 }

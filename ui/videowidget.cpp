@@ -225,6 +225,14 @@ bool VideoWidget::isPlaying() const
     return d->player->isPlaying();
 }
 
+void VideoWidget::pageEntered()
+{
+    if ( d->anno->movie()->autoPlay() ) {
+        show();
+        QMetaObject::invokeMethod(this, "play", Qt::QueuedConnection);
+    }
+}
+
 void VideoWidget::play()
 {
     d->load();

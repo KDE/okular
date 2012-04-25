@@ -819,6 +819,10 @@ void PresentationWidget::changePage( int newPage )
         if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
             m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        {
+            vw->pageEntered();
+        }
     }
 
     if ( oldIndex != m_frameIndex )
@@ -836,6 +840,11 @@ void PresentationWidget::changePage( int newPage )
             // we have just opened the presentation view
             if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
                 m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
+            Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+            {
+                vw->pageEntered();
+            }
         }
     }
 }

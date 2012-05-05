@@ -46,6 +46,8 @@
 
 #include <config-okular-poppler.h>
 
+#include <algorithm>
+
 #ifdef HAVE_POPPLER_0_20
 #  include <poppler-media.h>
 #endif
@@ -1326,6 +1328,10 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
 void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * page )
 {
     QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
+
+    // Reverse the list so that the z-order of Poppler/PDF matches the z-order used by Okular
+    std::reverse(popplerAnnotations.begin(), popplerAnnotations.end());
+
     foreach(Poppler::Annotation *a, popplerAnnotations)
     {
         //a->window.width = (int)(page->width() * a->window.width);

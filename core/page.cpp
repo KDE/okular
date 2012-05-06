@@ -26,6 +26,7 @@
 #include "annotations_p.h"
 #include "area.h"
 #include "debug_p.h"
+#include "document.h"
 #include "document_p.h"
 #include "form.h"
 #include "form_p.h"
@@ -753,9 +754,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 // append annotation to the list or show warning
                 if ( annotation )
                 {
-                    annotation->d_ptr->m_page = this;
-                    m_page->m_annotations.append( annotation );
-                    m_page->m_rects.append( new AnnotationObjectRect( annotation ) );
+                    m_doc->m_parent->addPageAnnotation(m_number, annotation);
                     int pos = annotation->uniqueName().lastIndexOf("-");
                     if(pos != -1)
                     {

@@ -169,7 +169,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             for ( ; aIt != aEnd; ++aIt )
             {
                 Okular::Annotation * ann = *aIt;
-                if ( ann->flags() & ( Okular::Annotation::Hidden | Okular::Annotation::ExternallyDrawn ) )
+                int flags = ann->flags();
+                if ( flags & Okular::Annotation::Hidden )
+                    continue;
+                if ( ( flags & Okular::Annotation::ExternallyDrawn) && !(flags & Okular::Annotation::BeingMoved) )
                     continue;
 
                 bool intersects = ann->transformedBoundingRectangle().intersects( nXMin, nYMin, nXMax, nYMax );

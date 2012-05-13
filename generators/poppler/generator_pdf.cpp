@@ -82,6 +82,9 @@ class PDFOptionsPage : public QWidget
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
 
+#ifndef HAVE_POPPLER_0_20
+           m_printAnnots->setVisible( false );
+#endif
            setPrintAnnots( true ); // Default value
        }
 
@@ -1069,8 +1072,10 @@ bool PDFGenerator::print( QPrinter& printer )
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
 
+#ifdef HAVE_POPPLER_0_20
     if (!printAnnots)
         psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations );
+#endif
 
     userMutex()->lock();
     if (psConverter->convert())

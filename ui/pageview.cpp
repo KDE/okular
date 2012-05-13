@@ -132,6 +132,7 @@ public:
     bool mouseOnRect;
     Okular::Annotation * mouseAnn;
     QPoint mouseAnnPos;
+    int mouseAnnPageNum;
 
     // table selection
     QList<double> tableSelectionCols;
@@ -1793,7 +1794,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                         }
                         d->mouseAnn->translate( Okular::NormalizedPoint( pf.x(), pf.y() ) );
                         d->mouseAnnPos = newpos;
-                        d->document->modifyPageAnnotation( pageItem->pageNumber(), d->mouseAnn );
+                        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
                     }
                 }
                 // drag page
@@ -1965,11 +1966,17 @@ void PageView::mousePressEvent( QMouseEvent * e )
                     if ( d->mouseAnn && !d->mouseAnn->canBeMoved() )
                         d->mouseAnn = 0;
                 }
-                if ( !d->mouseAnn )
+                if ( d->mouseAnn )
                 {
-                d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
-                if ( !d->mouseOnRect )
-                    d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
+                    d->mouseAnn->setFlags( d->mouseAnn->flags() | Okular::Annotation::BeingMoved );
+                    d->mouseAnnPageNum = pageItem->pageNumber();
+                    d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
+                }
+                else
+                {
+                    d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
+                    if ( !d->mouseOnRect )
+                        d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
             else if ( rightButton )
@@ -2145,6 +2152,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     if ( d->mouseAnn )
     {
+        // Just finished to move the annotation
+        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
+        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
         setCursor( Qt::ArrowCursor );
         d->mouseAnn = 0;
     }

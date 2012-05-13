@@ -2409,6 +2409,20 @@ void Document::modifyPageAnnotation( int page, Annotation * annotation, bool app
 
     if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
     {
+        /* When an annotation is being moved, the generator will not render it.
+         * Therefore there's no need to refresh pixmaps after the first time */
+        if ( annotation->flags() & Annotation::BeingMoved )
+        {
+            if ( d->m_annotationBeingMoved )
+                return;
+            else // First time: take note
+                d->m_annotationBeingMoved = true;
+        }
+        else
+        {
+            d->m_annotationBeingMoved = false;
+        }
+
         // Redraw everything, including ExternallyDrawn annotations
         d->refreshPixmaps( page );
     }

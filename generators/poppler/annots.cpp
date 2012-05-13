@@ -45,6 +45,18 @@ static QRectF normRectToRectF( const Okular::NormalizedRect& rect )
     return QRectF( QPointF(rect.left, rect.top), QPointF(rect.right, rect.bottom) );
 }
 
+// Poppler and Okular share the same flag values, but we don't want to export internal flags
+static int maskExportedFlags(int flags)
+{
+    return flags & ( Okular::Annotation::Hidden |
+                     Okular::Annotation::FixedSize |
+                     Okular::Annotation::FixedRotation |
+                     Okular::Annotation::DenyPrint |
+                     Okular::Annotation::DenyWrite |
+                     Okular::Annotation::DenyDelete |
+                     Okular::Annotation::ToggleHidingOnMouse );
+}
+
 //BEGIN PopplerAnnotationProxy implementation
 PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc )
     : ppl_doc ( doc )
@@ -129,10 +141,18 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
     if ( !ppl_ann ) // Ignore non-native annotations
         return;
 
+    if ( okl_ann->flags() & Okular::Annotation::BeingMoved )
+    {
+        // Okular ui already renders the annotation on its own
+        ppl_ann->setFlags( Poppler::Annotation::Hidden );
+        return;
+    }
+
     // Set basic properties
     ppl_ann->setBoundary(normRectToRectF( okl_ann->boundingRectangle() ));
     ppl_ann->setAuthor( okl_ann->author() );
     ppl_ann->setContents( okl_ann->contents() );
+    ppl_ann->setFlags(maskExportedFlags( okl_ann->flags() ));
 
     // Set style
     Poppler::Annotation::Style s;

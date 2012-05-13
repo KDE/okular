@@ -768,8 +768,8 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         e.setAttribute( "creationDate", d->m_creationDate.toString(Qt::ISODate) );
 
     // store -other- attributes
-    if ( d->m_flags ) // Strip ExternallyDrawn flag because it's an implementation detail
-        e.setAttribute( "flags", d->m_flags & ~Annotation::ExternallyDrawn );
+    if ( d->m_flags ) // Strip internal flags
+        e.setAttribute( "flags", d->m_flags & ~(External | ExternallyDrawn | BeingMoved) );
     if ( d->m_style.color().isValid() )
         e.setAttribute( "color", d->m_style.color().name() );
     if ( d->m_style.opacity() != 1.0 )

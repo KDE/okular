@@ -85,7 +85,8 @@ class DocumentPrivate
             m_scripter( 0 ),
             m_archiveData( 0 ),
             m_fontsCached( false ),
-            m_documentInfo( 0 )
+            m_documentInfo( 0 ),
+            m_annotationBeingMoved( false )
         {
             calculateMaxTextPages();
         }
@@ -229,6 +230,8 @@ class DocumentPrivate
         FontInfo::List m_fontsCache;
 
         QSet< View * > m_views;
+
+        bool m_annotationBeingMoved; // is an annotation currently being moved?
 };
 
 }

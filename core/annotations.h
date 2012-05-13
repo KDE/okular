@@ -128,7 +128,8 @@ class OKULAR_EXPORT Annotation
             DenyDelete = 32,          ///< Cannot be deleted
             ToggleHidingOnMouse = 64, ///< Can be hidden/shown by mouse click
             External = 128,           ///< Is stored external
-            ExternallyDrawn = 256     ///< Is drawn externally (eg the generator which povided it) @since 0.10 (KDE 4.4)
+            ExternallyDrawn = 256,    ///< Is drawn externally (by the generator which provided it) @since 0.10 (KDE 4.4)
+            BeingMoved = 512          ///< Is being moved (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 0.15 (KDE 4.9)
         };
 
         /**

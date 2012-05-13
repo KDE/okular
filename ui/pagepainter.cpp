@@ -117,6 +117,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = 0;
     QList< Okular::Annotation * > * bufferedAnnotations = 0;
     QList< Okular::Annotation * > * unbufferedAnnotations = 0;
+    Okular::Annotation *boundingRectOnlyAnn = 0; // Paint the bounding rect of this annotation
     // fill up lists with visible annotation/highlight objects/text selections
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
@@ -170,10 +171,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 Okular::Annotation * ann = *aIt;
                 int flags = ann->flags();
+
                 if ( flags & Okular::Annotation::Hidden )
                     continue;
-                if ( ( flags & Okular::Annotation::ExternallyDrawn) && !(flags & Okular::Annotation::BeingMoved) )
+
+                if ( flags & Okular::Annotation::ExternallyDrawn )
+                {
+                    // ExternallyDrawn annots are never rendered by PagePainter.
+                    // Just paint the boundingRect if the annot is BeingMoved
+                    if ( flags & Okular::Annotation::BeingMoved )
+                        boundingRectOnlyAnn = ann;
                     continue;
+                }
 
                 bool intersects = ann->transformedBoundingRectangle().intersects( nXMin, nYMin, nXMax, nYMax );
                 if ( ann->subType() == Okular::Annotation::AText )
@@ -704,6 +713,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 mixedPainter->drawRect( annotBoundary );
             }
         }
+    }
+
+    if ( boundingRectOnlyAnn )
+    {
+        QRect annotBoundary = boundingRectOnlyAnn->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
+        mixedPainter->setPen( Qt::DashLine );
+        mixedPainter->drawRect( annotBoundary );
     }
 
     /** 6 -- MIXED FLOW. Draw LINKS+IMAGES BORDER on ACTIVE PAINTER  **/

@@ -1764,6 +1764,11 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
     return success;
 }
 
+Okular::AnnotationProxy* PDFGenerator::annotationProxy() const
+{
+    return 0; // Not supported
+}
+
 #include "generator_pdf.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

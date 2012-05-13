@@ -655,6 +655,59 @@ class OKULAR_EXPORT Annotation
         Q_DISABLE_COPY( Annotation )
 };
 
+/**
+ * @short Native annotation interface
+ *
+ * Generators can subclass it to provide native annotation support.
+ * Generators can use Annotation::setNativeId to store per-annotation data.
+ *
+ * @since 0.15 (KDE 4.9)
+ */
+class OKULAR_EXPORT AnnotationProxy
+{
+    public:
+        enum Capability
+        {
+            Addition,       ///< Generator can create native annotations
+            Modification,   ///< Generator can edit native annotations
+            Removal         ///< Generator can remove native annotations
+        };
+
+        /**
+         * Destroys the annotation proxy.
+         */
+        virtual ~AnnotationProxy();
+
+        /**
+         * Query for the supported capabilities.
+         */
+        virtual bool supports( Capability capability ) const = 0;
+
+        /**
+         * Called when a new @p annotation is added to a @p page.
+         *
+         * @note Only called if supports(Addition) == true
+         */
+        virtual void notifyAddition( Annotation *annotation, int page ) = 0;
+
+        /**
+         * Called after an existing @p annotation at a given @p page is modified.
+         * 
+         * Generator can call @p annotation getters to get the new values.
+         * @p appearanceChanged tells if a non-visible property was modifed
+         *
+         * @note Only called if supports(Modification) == true
+         */
+        virtual void notifyModification( const Annotation *annotation, int page, bool appearanceChanged ) = 0;
+
+        /**
+         * Called when an existing @p annotation at a given @p page is removed.
+         *
+         * @note Only called if supports(Removal) == true
+         */
+        virtual void notifyRemoval( Annotation *annotation, int page ) = 0;
+};
+
 class OKULAR_EXPORT TextAnnotation : public Annotation
 {
     public:

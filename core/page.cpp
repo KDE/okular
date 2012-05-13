@@ -26,6 +26,7 @@
 #include "annotations_p.h"
 #include "area.h"
 #include "debug_p.h"
+#include "document_p.h"
 #include "form.h"
 #include "form_p.h"
 #include "pagecontroller_p.h"
@@ -598,7 +599,7 @@ void Page::addAnnotation( Annotation * annotation )
 
 bool Page::removeAnnotation( Annotation * annotation )
 {
-    if ( !annotation || ( annotation->flags() & Annotation::DenyDelete ) )
+    if ( !d->m_doc->m_parent->canRemovePageAnnotation(annotation) )
         return false;
 
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();

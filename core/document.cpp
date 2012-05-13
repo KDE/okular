@@ -2331,6 +2331,9 @@ void Document::requestTextPage( uint page )
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
 {
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+
     // find out the page to attach annotation
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
@@ -2343,41 +2346,110 @@ void Document::addPageAnnotation( int page, Annotation * annotation )
     // add annotation to the page
     kp->addAnnotation( annotation );
 
+    // tell the annotation proxy
+    if ( proxy && proxy->supports(AnnotationProxy::Addition) )
+        proxy->notifyAddition( annotation, page );
+
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+    if ( annotation->flags() & Annotation::ExternallyDrawn )
+    {
+        // Redraw everything, including ExternallyDrawn annotations
+        d->refreshPixmaps( page );
+    }
 }
 
-void Document::modifyPageAnnotation( int page, Annotation * newannotation )
+void Document::modifyPageAnnotation( int page, Annotation * annotation )
 {
-    //TODO: modify annotations
+    modifyPageAnnotation( page, annotation, true );
+}
+
+void Document::modifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged )
+{
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
 
     // find out the page
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
 
+    // tell the annotation proxy
+    if ( proxy && proxy->supports(AnnotationProxy::Modification) )
+        proxy->notifyModification( annotation, page, appearanceChanged );
+
     // notify observers about the change
     foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+    if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
+    {
+        // Redraw everything, including ExternallyDrawn annotations
+        d->refreshPixmaps( page );
+    }
 }
 
+bool Document::canRemovePageAnnotation( const Annotation * annotation ) const
+{
+    if ( !annotation || ( annotation->flags() & Annotation::DenyDelete ) )
+        return false;
+
+    switch ( annotation->subType() )
+    {
+        case Annotation::AText:
+        case Annotation::ALine:
+        case Annotation::AGeom:
+        case Annotation::AHighlight:
+        case Annotation::AStamp:
+        case Annotation::AInk:
+            return true;
+        default:
+            return false;
+    }
+}
 
 void Document::removePageAnnotation( int page, Annotation * annotation )
 {
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    bool isExternallyDrawn;
+
     // find out the page
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
         return;
 
+    if ( annotation->flags() & Annotation::ExternallyDrawn )
+        isExternallyDrawn = true;
+    else
+        isExternallyDrawn = false;
+
     // try to remove the annotation
-    if ( kp->removeAnnotation( annotation ) )
+    if ( canRemovePageAnnotation( annotation ) )
     {
+        // tell the annotation proxy
+        if ( proxy && proxy->supports(AnnotationProxy::Removal) )
+            proxy->notifyRemoval( annotation, page );
+
+        kp->removeAnnotation( annotation ); // Also destroys the object
+
         // in case of success, notify observers about the change
         foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+        if ( isExternallyDrawn )
+        {
+            // Redraw everything, including ExternallyDrawn annotations
+            d->refreshPixmaps( page );
+        }
     }
 }
 
 void Document::removePageAnnotations( int page, const QList< Annotation * > &annotations )
 {
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    bool refreshNeeded = false;
+
     // find out the page
     Page * kp = d->m_pagesVector[ page ];
     if ( !d->m_generator || !kp )
@@ -2386,9 +2458,22 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
     bool changed = false;
     foreach ( Annotation * annotation, annotations )
     {
-        // try to remove the annotation
-        if ( kp->removeAnnotation( annotation ) )
+        bool isExternallyDrawn;
+        if ( annotation->flags() & Annotation::ExternallyDrawn )
+            isExternallyDrawn = true;
+        else
+            isExternallyDrawn = false;
+
+        if ( canRemovePageAnnotation( annotation ) )
         {
+            if ( isExternallyDrawn )
+                refreshNeeded = true;
+
+            // tell the annotation proxy
+            if ( proxy && proxy->supports(AnnotationProxy::Removal) )
+                proxy->notifyRemoval( annotation, page );
+
+            kp->removeAnnotation( annotation ); // Also destroys the object
             changed = true;
         }
     }
@@ -2396,6 +2481,12 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
     {
         // in case we removed even only one annotation, notify observers about the change
         foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+
+        if ( refreshNeeded )
+        {
+            // Redraw everything, including ExternallyDrawn annotations
+            d->refreshPixmaps( page );
+        }
     }
 }
 

@@ -1754,7 +1754,11 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     switch ( option )
     {
         case SaveChanges:
-            return true;
+        {
+            QMutexLocker locker( userMutex() );
+            // Saving files with /Encrypt is not supported
+            return pdfdoc->isEncrypted() ? false : true;
+        }
         default: ;
     }
     return false;

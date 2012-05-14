@@ -1,0 +1,35 @@
+project(okular)
+
+add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+include_directories(
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_BINARY_DIR}
+   ${KDE4_INCLUDES}
+   ${QIMAGEBLITZ_INCLUDES}
+)
+
+set(okular_SRCS
+    okularplugin.cpp
+    pagepainter.cpp
+    pageitem.cpp
+    documentitem.cpp
+    thumbnailitem.cpp
+    )
+
+qt4_automoc(${okular_SRCS})
+
+kde4_add_library(okularplugin SHARED ${okular_SRCS})
+target_link_libraries(okularplugin
+        ${QT_QTCORE_LIBRARY}
+        ${QT_QTGUI_LIBRARY}
+        ${QT_QTDECLARATIVE_LIBRARY}
+        ${KDE4_KDECORE_LIBRARY}
+        ${KDE4_KDEUI_LIBRARY}
+        ${QIMAGEBLITZ_LIBRARIES}
+        okularcore
+        )
+
+install(TARGETS okularplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/okular)
+install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/okular)
+
+#add_subdirectory(test)

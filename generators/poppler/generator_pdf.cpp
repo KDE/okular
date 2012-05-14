@@ -532,7 +532,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     reparseConfig();
 
     // create annotation proxy
-    annotProxy = new PopplerAnnotationProxy( pdfdoc );
+    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex() );
 
     // the file has been loaded correctly
     return true;

@@ -13,6 +13,8 @@
 #include <poppler-annotation.h>
 #include <poppler-qt4.h>
 
+#include <qmutex.h>
+
 #include "core/annotations.h"
 #include "config-okular-poppler.h"
 
@@ -21,7 +23,7 @@ extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annot
 class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {
     public:
-        PopplerAnnotationProxy( Poppler::Document *doc );
+        PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex );
         ~PopplerAnnotationProxy();
 
         bool supports( Capability capability ) const;
@@ -30,6 +32,7 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
         void notifyRemoval( Okular::Annotation *annotation, int page );
     private:
         Poppler::Document *ppl_doc;
+        QMutex *mutex;
 };
 
 #endif

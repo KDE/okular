@@ -58,8 +58,8 @@ static int maskExportedFlags(int flags)
 }
 
 //BEGIN PopplerAnnotationProxy implementation
-PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc )
-    : ppl_doc ( doc )
+PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex )
+    : ppl_doc ( doc ), mutex ( userMutex )
 {
 }
 
@@ -89,6 +89,8 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
     QDomDocument doc;
     QDomElement dom_ann = doc.createElement( "root" );
     Okular::AnnotationUtils::storeAnnotation( okl_ann, dom_ann, doc );
+
+    QMutexLocker ml(mutex);
 
     // Create poppler annotation
     Poppler::Annotation *ppl_ann = Poppler::AnnotationUtils::createAnnotation( dom_ann );
@@ -140,6 +142,8 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
 
     if ( !ppl_ann ) // Ignore non-native annotations
         return;
+
+    QMutexLocker ml(mutex);
 
     if ( okl_ann->flags() & Okular::Annotation::BeingMoved )
     {
@@ -248,6 +252,8 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
 
     if ( !ppl_ann ) // Ignore non-native annotations
         return;
+
+    QMutexLocker ml(mutex);
 
     Poppler::Page *ppl_page = ppl_doc->page( page );
     ppl_page->removeAnnotation( ppl_ann ); // Also destroys ppl_ann

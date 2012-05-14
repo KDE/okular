@@ -46,10 +46,12 @@ PlasmaComponents.Page {
                 if (pageArea.delegate.delta > 0) {
                     pageArea.oldDelegate.visible = true
                     pageArea.oldDelegate.pageNumber = pageArea.delegate.pageNumber + 1
+                    resultsGrid.currentIndex = pageArea.oldDelegate.pageNumber
 
                     pageArea.oldDelegate.visible = !(pageArea.delegate.pageNumber == documentItem.pageCount-1)
                 } else if (pageArea.delegate.delta < 0) {
                     pageArea.oldDelegate.pageNumber =  pageArea.delegate.pageNumber - 1
+                    resultsGrid.currentIndex = pageArea.oldDelegate.pageNumber
 
                     pageArea.oldDelegate.visible = pageArea.delegate.pageNumber != 0
                 }
@@ -179,6 +181,7 @@ PlasmaComponents.Page {
                         }
                     }
                 }
+                highlight: PlasmaComponents.Highlight {}
             }
         }
 

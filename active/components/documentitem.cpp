@@ -87,7 +87,6 @@ Observer::Observer(DocumentItem *parent, int id)
 
 Observer::~Observer()
 {
-    m_document->document()->removeObserver(this);
 }
 
 void Observer::notifyPageChanged(int page, int flags)

@@ -55,7 +55,6 @@ Item {
                 right: parent.left
                 top: parent.top
                 bottom: parent.bottom
-                rightMargin: -1
             }
         }
         Image {
@@ -66,7 +65,6 @@ Item {
                 left: parent.right
                 top: parent.top
                 bottom: parent.bottom
-                leftMargin: -1
             }
         }
     }

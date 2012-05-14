@@ -1,0 +1,23 @@
+
+include_directories( ${KDE4_INCLUDES} ${QT_INCLUDES})
+
+set(active-documentviewer_SRCS
+    main.cpp
+    documentviewer.cpp
+)
+
+kde4_add_kdeinit_executable(active-documentviewer ${active-documentviewer_SRCS})
+
+find_package(ActiveApp REQUIRED)
+
+target_link_libraries(kdeinit_active-documentviewer
+    ${QT_QTDECLARATIVE_LIBRARY}
+    ${QT_QTOPENGL_LIBRARY}
+    ${KDE4_KDEUI_LIBS}
+    ${KDE4_PLASMA_LIBS}
+    ${ACTIVEAPP_LIBRARIES}
+)
+
+install(TARGETS active-documentviewer ${INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS kdeinit_active-documentviewer ${INSTALL_TARGETS_DEFAULT_ARGS} )
+

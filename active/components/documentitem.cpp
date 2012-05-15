@@ -51,6 +51,7 @@ void DocumentItem::setPath(const QString &path)
     emit pathChanged();
     emit pageCountChanged();
     emit openedChanged();
+    emit supportsSearchingChanged();
 }
 
 QString DocumentItem::path() const
@@ -84,6 +85,11 @@ QList<int> DocumentItem::matchingPages() const
     return m_matchingPages;
 }
 
+bool DocumentItem::supportsSearching() const
+{
+    return m_document->supportsSearching();
+}
+
 bool DocumentItem::isSearchInProgress() const
 {
     return m_searchInProgress;
@@ -95,6 +101,7 @@ void DocumentItem::searchText(const QString &text)
         resetSearch();
         return;
     }
+    m_document->cancelSearch();
     m_document->resetSearch(PAGEVIEW_SEARCH_ID);
     m_document->searchText(PAGEVIEW_SEARCH_ID, text, 1, Qt::CaseInsensitive,
                            Okular::Document::AllDocument, true, QColor(100,100,200,40), true);

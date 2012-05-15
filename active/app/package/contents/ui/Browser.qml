@@ -200,6 +200,7 @@ PlasmaComponents.Page {
                     height: searchField.height + 10
                     MobileComponents.ViewSearch {
                         id: searchField
+                        enabled: documentItem.supportsSearch
                         anchors.centerIn: parent
                         busy: documentItem.searchInProgress
                         onSearchQueryChanged: {

@@ -41,6 +41,7 @@ class DocumentItem : public QObject
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
     Q_PROPERTY(bool opened READ isOpened NOTIFY openedChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
+    Q_PROPERTY(bool supportsSearching READ supportsSearching NOTIFY supportsSearchingChanged)
     Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
     Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
 
@@ -58,6 +59,8 @@ public:
     bool isOpened() const;
 
     int pageCount() const;
+
+    bool supportsSearching() const;
 
     bool isSearchInProgress() const;
 
@@ -78,6 +81,7 @@ Q_SIGNALS:
     void searchInProgressChanged();
     void matchingPagesChanged();
     void currentPageChanged();
+    void supportsSearchingChanged();
 
 private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);

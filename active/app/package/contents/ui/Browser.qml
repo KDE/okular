@@ -89,7 +89,7 @@ PlasmaComponents.Page {
             id: delegate1
             width: parent.width
             height: parent.height
-            pageNumber: documentItem.currentPage
+            Component.onCompleted: pageNumber = documentItem.currentPage
         }
         SequentialAnimation {
             id: switchAnimation

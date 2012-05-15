@@ -130,8 +130,9 @@ PlasmaComponents.Page {
             GridView {
                 id: resultsGrid
                 anchors.fill: parent
+                clip: true
 
-                model: documentItem.pageCount
+                model: documentItem.matchingPages
                 cellWidth: theme.defaultFont.mSize.width * 14
                 cellHeight: theme.defaultFont.mSize.height * 12
 
@@ -182,6 +183,31 @@ PlasmaComponents.Page {
                     }
                 }
                 highlight: PlasmaComponents.Highlight {}
+                header: PlasmaComponents.ToolBar {
+                    width: resultsGrid.width
+                    height: searchField.height + 10
+                    MobileComponents.ViewSearch {
+                        id: searchField
+                        anchors.centerIn: parent
+                        busy: documentItem.searchInProgress
+                        onSearchQueryChanged: {
+                            print(searchQuery)
+                            if (searchQuery.length > 2) {
+                                documentItem.searchText(searchQuery)
+                            } else {
+                                documentItem.resetSearch()
+                            }
+                        }
+                    }
+                    PlasmaComponents.Label {
+                        anchors {
+                            left: searchField.right
+                            verticalCenter: searchField.verticalCenter
+                        }
+                        visible: documentItem.matchingPages.length == 0
+                        text: i18n("No results found.")
+                    }
+                }
             }
         }
 

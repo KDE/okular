@@ -19,15 +19,17 @@
 
 #include "documentitem.h"
 
-
-#include <okular/core/document.h>
+#include <okular/core/page.h>
 
 
 DocumentItem::DocumentItem(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      m_searchInProgress(false)
 {
     Okular::Settings::instance("okularproviderrc");
     m_document = new Okular::Document(0);
+    connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
+            this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
 }
 
 
@@ -41,6 +43,11 @@ void DocumentItem::setPath(const QString &path)
     //TODO: remote urls
     m_document->openDocument(path, KUrl(), KMimeType::findByUrl(KUrl(path)));
 
+    m_matchingPages.clear();
+    for (uint i = 0; i < m_document->pages(); ++i) {
+         m_matchingPages << (int)i;
+    }
+    emit matchingPagesChanged();
     emit pathChanged();
     emit pageCountChanged();
     emit openedChanged();
@@ -61,6 +68,47 @@ int DocumentItem::pageCount() const
     return m_document->pages();
 }
 
+QList<int> DocumentItem::matchingPages() const
+{
+    return m_matchingPages;
+}
+
+bool DocumentItem::isSearchInProgress() const
+{
+    return m_searchInProgress;
+}
+
+void DocumentItem::searchText(const QString &text)
+{
+    if (text.isEmpty()) {
+        resetSearch();
+        return;
+    }
+    m_document->resetSearch(PAGEVIEW_SEARCH_ID);
+    m_document->searchText(PAGEVIEW_SEARCH_ID, text, 1, Qt::CaseInsensitive,
+                           Okular::Document::AllDocument, true, QColor(100,100,200,40), true);
+
+    if (!m_searchInProgress) {
+        m_searchInProgress = true;
+        emit searchInProgressChanged();
+    }
+}
+
+void DocumentItem::resetSearch()
+{
+    m_document->resetSearch(PAGEVIEW_SEARCH_ID);
+    m_matchingPages.clear();
+    for (uint i = 0; i < m_document->pages(); ++i) {
+         m_matchingPages << (int)i;
+    }
+    if (m_searchInProgress) {
+        m_searchInProgress = false;
+        emit searchInProgressChanged();
+    }
+
+    emit matchingPagesChanged();
+}
+
 Okular::Document *DocumentItem::document()
 {
     return m_document;
@@ -74,6 +122,29 @@ Observer *DocumentItem::observerFor(int id)
 
     return m_observers.value(id);
 }
+
+void DocumentItem::searchFinished(int id, Okular::Document::SearchStatus endStatus)
+{
+    Q_UNUSED(endStatus)
+
+    if (id != PAGEVIEW_SEARCH_ID) {
+        return;
+    }
+
+    m_matchingPages.clear();
+    for (uint i = 0; i < m_document->pages(); ++i) {
+        if (m_document->page(i)->hasHighlights(id)) {
+            m_matchingPages << (int)i;
+        }
+    }
+
+    if (m_searchInProgress) {
+        m_searchInProgress = false;
+        emit searchInProgressChanged();
+    }
+    emit matchingPagesChanged();
+}
+
 
 //Observer
 
@@ -93,6 +164,5 @@ void Observer::notifyPageChanged(int page, int flags)
 {
     emit pageChanged(page, flags);
 }
-
 
 #include "documentitem.moc"

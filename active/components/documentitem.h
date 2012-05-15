@@ -24,6 +24,7 @@
 
 #include "settings.h"
 
+#include <okular/core/document.h>
 #include <okular/core/observer.h>
 
 namespace Okular {
@@ -39,6 +40,8 @@ class DocumentItem : public QObject
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
     Q_PROPERTY(bool opened READ isOpened NOTIFY openedChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
+    Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
+    Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
 
 public:
 
@@ -52,6 +55,14 @@ public:
 
     int pageCount() const;
 
+    bool isSearchInProgress() const;
+
+    QList<int> matchingPages() const;
+
+    //Those could be a property, but maybe we want to have parameter for searchText
+    Q_INVOKABLE void searchText(const QString &text);
+    Q_INVOKABLE void resetSearch();
+
     //Internal, not binded to qml
     Okular::Document *document();
     Observer *observerFor(int id);
@@ -60,10 +71,17 @@ Q_SIGNALS:
     void pathChanged();
     void pageCountChanged();
     void openedChanged();
+    void searchInProgressChanged();
+    void matchingPagesChanged();
+
+private Q_SLOTS:
+    void searchFinished(int id, Okular::Document::SearchStatus endStatus);
 
 private:
     Okular::Document *m_document;
     QHash <int, Observer *> m_observers;
+    QList<int> m_matchingPages;
+    bool m_searchInProgress;
 };
 
 class Observer : public QObject, public Okular::DocumentObserver

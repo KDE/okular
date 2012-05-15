@@ -121,8 +121,15 @@ PlasmaComponents.Page {
             bottom: parent.bottom
         }
         width: parent.width - handleGraphics.width
-        x: parent.width
+        x: parent.width + extraSpace
         property bool open: false
+        property int extraSpace: resourceBrowser.state == "toolsOpen" ? 0 : handleGraphics.width
+        Behavior on extraSpace {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+            }
+        }
 
 
         PlasmaExtras.ScrollArea {
@@ -274,7 +281,7 @@ PlasmaComponents.Page {
                 } else {
                     browserFrame.open = (browserFrame.x < resourceBrowser.width/2)
                 }
-                browserFrameSlideAnimation.to = browserFrame.open ? handleGraphics.width : resourceBrowser.width
+                browserFrameSlideAnimation.to = browserFrame.open ? handleGraphics.width : resourceBrowser.width + browserFrame.extraSpace
                 browserFrameSlideAnimation.running = true
             }
         }

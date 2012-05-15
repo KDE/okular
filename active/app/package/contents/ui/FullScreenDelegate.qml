@@ -86,10 +86,10 @@ Item {
         onContentXChanged: {
             if (atXBeginning && contentX < 0) {
                 root.delta = -1
-                root.doSwitch = (contentX < -mainFlickable.width/3)
+                root.doSwitch = (contentX < -mainFlickable.width/4)
             } else if (atXEnd) {
                 root.delta = +1
-                root.doSwitch = (contentX + mainFlickable.width - contentWidth > mainFlickable.width/3)
+                root.doSwitch = (contentX + mainFlickable.width - contentWidth > mainFlickable.width/4)
             } else {
                 root.delta = 0
                 root.doSwitch = false

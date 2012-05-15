@@ -47,11 +47,13 @@ PlasmaComponents.Page {
                     pageArea.oldDelegate.visible = true
                     pageArea.oldDelegate.pageNumber = pageArea.delegate.pageNumber + 1
                     resultsGrid.currentIndex = pageArea.oldDelegate.pageNumber
+                    documentItem.currentPage = pageArea.oldDelegate.pageNumber
 
                     pageArea.oldDelegate.visible = !(pageArea.delegate.pageNumber == documentItem.pageCount-1)
                 } else if (pageArea.delegate.delta < 0) {
                     pageArea.oldDelegate.pageNumber =  pageArea.delegate.pageNumber - 1
                     resultsGrid.currentIndex = pageArea.oldDelegate.pageNumber
+                    documentItem.currentPage = pageArea.oldDelegate.pageNumber
 
                     pageArea.oldDelegate.visible = pageArea.delegate.pageNumber != 0
                 }
@@ -87,6 +89,7 @@ PlasmaComponents.Page {
             id: delegate1
             width: parent.width
             height: parent.height
+            pageNumber: documentItem.currentPage
         }
         SequentialAnimation {
             id: switchAnimation
@@ -142,6 +145,7 @@ PlasmaComponents.Page {
                 model: documentItem.matchingPages
                 cellWidth: theme.defaultFont.mSize.width * 14
                 cellHeight: theme.defaultFont.mSize.height * 12
+                currentIndex: documentItem.currentPage
 
                 delegate: Item {
                     width: resultsGrid.cellWidth
@@ -181,6 +185,7 @@ PlasmaComponents.Page {
                             onClicked: {
                                 resultsGrid.currentIndex = index
                                 pageArea.delegate.pageNumber = index
+                                documentItem.currentPage = index
                                 browserFrame.open = false
 
                                 browserFrameSlideAnimation.to =  resourceBrowser.width

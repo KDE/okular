@@ -38,6 +38,7 @@ class DocumentItem : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
+    Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
     Q_PROPERTY(bool opened READ isOpened NOTIFY openedChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
     Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
@@ -50,6 +51,9 @@ public:
 
     void setPath(const QString &path);
     QString path() const;
+
+    void setCurrentPage(int page);
+    int currentPage() const;
 
     bool isOpened() const;
 
@@ -73,6 +77,7 @@ Q_SIGNALS:
     void openedChanged();
     void searchInProgressChanged();
     void matchingPagesChanged();
+    void currentPageChanged();
 
 private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);

@@ -41,7 +41,7 @@ DocumentItem::~DocumentItem()
 void DocumentItem::setPath(const QString &path)
 {
     //TODO: remote urls
-    m_document->openDocument(path, KUrl(), KMimeType::findByUrl(KUrl(path)));
+    m_document->openDocument(path, KUrl(path), KMimeType::findByUrl(KUrl(path)));
 
     m_matchingPages.clear();
     for (uint i = 0; i < m_document->pages(); ++i) {
@@ -56,6 +56,17 @@ void DocumentItem::setPath(const QString &path)
 QString DocumentItem::path() const
 {
     return m_document->currentDocument().prettyUrl();
+}
+
+void DocumentItem::setCurrentPage(int page)
+{
+    m_document->setViewportPage(page);
+    emit currentPageChanged();
+}
+
+int DocumentItem::currentPage() const
+{
+    return m_document->currentPage();
 }
 
 bool DocumentItem::isOpened() const

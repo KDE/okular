@@ -24,9 +24,9 @@
 #include <QTimer>
 #include <QStyleOptionGraphicsItem>
 
-#include <okular/core/document.h>
-#include <okular/core/page.h>
-#include <okular/core/generator.h>
+#include <core/document.h>
+#include <core/page.h>
+#include <core/generator.h>
 
 #include "pagepainter.h"
 #include "settings.h"

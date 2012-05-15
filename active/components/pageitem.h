@@ -22,7 +22,7 @@
 
 #include <QDeclarativeItem>
 
-#include <okular/core/view.h>
+#include <core/view.h>
 
 class QTimer;
 

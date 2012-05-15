@@ -24,8 +24,8 @@
 
 #include "settings.h"
 
-#include <okular/core/document.h>
-#include <okular/core/observer.h>
+#include <core/document.h>
+#include <core/observer.h>
 
 namespace Okular {
     class Document;

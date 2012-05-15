@@ -19,7 +19,7 @@
 
 #include "thumbnailitem.h"
 
-#include <okular/core/observer.h>
+#include <core/observer.h>
 
 ThumbnailItem::ThumbnailItem(QDeclarativeItem *parent)
     : PageItem(parent)

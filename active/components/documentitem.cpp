@@ -19,7 +19,7 @@
 
 #include "documentitem.h"
 
-#include <okular/core/page.h>
+#include <core/page.h>
 
 
 DocumentItem::DocumentItem(QObject *parent)

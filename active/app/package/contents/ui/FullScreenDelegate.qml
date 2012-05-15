@@ -37,6 +37,11 @@ Item {
     property alias pageNumber: mainPage.pageNumber
     property string label: model["label"]
 
+    function scale(zoom)
+    {
+        mainPage.width = mainPage.implicitWidth * zoom
+        mainPage.height = mainPage.implicitHeight * zoom
+    }
     Rectangle {
         x: -mainFlickable.contentX + mainPage.x
         y: 0
@@ -115,6 +120,7 @@ Item {
                 mainFlickable.contentY += pinch.previousCenter.y - pinch.center.y + startY * (pinch.scale - pinch.previousScale) - deltaHeight
 
                 mainFlickable.contentX += pinch.previousCenter.x - pinch.center.x + startX * (pinch.scale - pinch.previousScale) - deltaWidth
+                pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth)
             }
 
             Okular.PageItem {

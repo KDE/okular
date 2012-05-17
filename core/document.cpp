@@ -2534,28 +2534,23 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
 
 bool DocumentPrivate::canModifyExternalAnnotations() const
 {
-    /* To be enabled once external annotations are implemented independently
-     * of save/restoreLocalContents. At the moment, we support editing internal
-     * annotations only. */
-#if 0
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
 
-    if ( iface && iface->annotationProxy() &&
-         iface->annotationProxy()->supports(AnnotationProxy::Modification) )
+    if ( iface && iface->supportsOption(Okular::SaveInterface::SaveChanges) &&
+         iface->annotationProxy() && iface->annotationProxy()->supports(AnnotationProxy::Modification) )
         return true;
-#endif
+
     return false;
 }
 
 bool DocumentPrivate::canRemoveExternalAnnotations() const
 {
-#if 0 /* See canModifyExternalAnnotations */
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
 
-    if ( iface && iface->annotationProxy() &&
-         iface->annotationProxy()->supports(AnnotationProxy::Removal) )
+    if ( iface && iface->supportsOption(Okular::SaveInterface::SaveChanges) &&
+         iface->annotationProxy() && iface->annotationProxy()->supports(AnnotationProxy::Removal) )
         return true;
-#endif
+
     return false;
 }
 

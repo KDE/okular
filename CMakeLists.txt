@@ -100,6 +100,7 @@ install( FILES
            interfaces/configinterface.h
            interfaces/guiinterface.h
            interfaces/printinterface.h
+           interfaces/saveinterface.h
            interfaces/viewerinterface.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
 

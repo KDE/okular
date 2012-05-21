@@ -144,7 +144,7 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
 
 void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    if (!m_documentItem || !m_page) {
+    if (!m_documentItem || !m_page || m_pixmap.isNull()) {
         QDeclarativeItem::paint(painter, option, widget);
         return;
     }
@@ -154,8 +154,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setRenderHint(QPainter::Antialiasing, true);
     }
 
-    int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, option->rect.width(), option->rect.height(), option->rect);
+    painter->drawPixmap(m_pixmap.rect(), m_pixmap, option->rect);
 
     if (m_smooth) {
         painter->restore();
@@ -176,6 +175,12 @@ void PageItem::delayedRedraw()
     requestedPixmaps.push_back( new Okular::PixmapRequest(
                                 m_observerId, m_pageNumber, width(), height(), priority, true ) );
     m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
+
+    m_pixmap = QPixmap(QSize(width(), height()));
+    QPainter p(&m_pixmap);
+    int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
+    PagePainter::paintPageOnPainter(&p, m_page, m_observerId, flags, width(), height(), boundingRect().toRect());
+    p.end();
     update();
 }
 

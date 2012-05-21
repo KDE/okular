@@ -91,6 +91,7 @@ PlasmaComponents.Page {
             height: parent.height
             Component.onCompleted: pageNumber = documentItem.currentPage
         }
+
         SequentialAnimation {
             id: switchAnimation
             NumberAnimation {

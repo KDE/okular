@@ -86,6 +86,7 @@ private:
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
     int m_observerId;
+    QPixmap m_pixmap;
     friend class ThumbnailItem;
 };
 

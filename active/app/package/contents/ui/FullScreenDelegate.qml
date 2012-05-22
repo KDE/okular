@@ -124,6 +124,9 @@ Item {
                 mainFlickable.contentX += pinch.previousCenter.x - pinch.center.x + startX * (pinch.scale - pinch.previousScale) - deltaWidth
                 pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth)
             }
+            onPinchFinished: {
+                mainFlickable.returnToBounds()
+            }
 
             Okular.PageItem {
                 id: mainPage

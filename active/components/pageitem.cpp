@@ -188,9 +188,10 @@ void PageItem::delayedRedraw()
 
 void PageItem::pageHasChanged( int page, int flags )
 {
-    Q_UNUSED(page)
     Q_UNUSED(flags)
-    m_redrawTimer->start(REDRAW_TIMEOUT);
+    if (m_pageNumber == page) {
+        m_redrawTimer->start(REDRAW_TIMEOUT);
+    }
 }
 
 #include "pageitem.moc"

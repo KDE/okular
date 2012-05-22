@@ -150,14 +150,15 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         return;
     }
 
-    if (m_smooth) {
+    const bool setAA = m_smooth && !(painter->renderHints() & QPainter::Antialiasing);
+    if (setAA) {
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing, true);
     }
 
     painter->drawPixmap(m_pixmap.rect(), m_pixmap, option->rect);
 
-    if (m_smooth) {
+    if (setAA) {
         painter->restore();
     }
 }

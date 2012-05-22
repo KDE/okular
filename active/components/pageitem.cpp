@@ -183,11 +183,7 @@ void PageItem::delayedRedraw()
 void PageItem::pageHasChanged( int page, int flags )
 {
     Q_UNUSED(flags)
-    // add whatever flags are useful here to trigger paints on those changes
-    // e.g. right now we don't draw bookmarks or annotations, so we ignore those
-    // as these features are added, add those flags to the triggers definition below
-    static const int triggers = Okular::DocumentObserver::Pixmap;
-    if (m_pageNumber == page && (flags & triggers)) {
+    if (m_pageNumber == page) {
         m_redrawTimer->start(REDRAW_TIMEOUT);
     }
 }

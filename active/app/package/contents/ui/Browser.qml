@@ -212,7 +212,7 @@ PlasmaComponents.Page {
                 startX = browserFrame.x
                 oldMouseScreenX = mouse.screenX
                 startMouseScreenX = mouse.screenX
-                toggle = true
+                toggle = (mouse.x < handleGraphics.width)
                 startDragging = false
             }
             onPositionChanged: {

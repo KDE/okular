@@ -48,12 +48,6 @@ Image {
         anchors.fill: parent
     }
 
-    Timer {
-        interval: 500
-        running: true
-        onTriggered: mainStack.push(Qt.createComponent("Browser.qml"))
-    }
-
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing
     Timer {
         interval: 100
@@ -62,6 +56,8 @@ Image {
             if (application.startupArguments.length > 0) {
                 documentItem.path = application.startupArguments[0]
             }
+
+            mainStack.push(Qt.createComponent("Browser.qml"))
         }
     }
 }

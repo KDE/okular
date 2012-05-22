@@ -1621,11 +1621,25 @@ void PageView::keyPressEvent( QKeyEvent * e )
             break;
         case Qt::Key_Left:
         case Qt::Key_H:
-            horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
+            if ( horizontalScrollBar()->maximum() == 0 )
+            {
+                //if we cannot scroll we go to the previous page vertically
+                int next_page = d->document->currentPage() - viewColumns();
+                d->document->setViewportPage(next_page);
+            }
+            else
+                horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepSub );
             break;
         case Qt::Key_Right:
         case Qt::Key_L:
-            horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
+            if ( horizontalScrollBar()->maximum() == 0 )
+            {
+                //if we cannot scroll we advance the page vertically
+                int next_page = d->document->currentPage() + viewColumns();
+                d->document->setViewportPage(next_page);
+            }
+            else
+                horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Escape:
             selectionClear( d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection );

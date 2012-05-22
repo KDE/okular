@@ -350,12 +350,16 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
     }
     if ( annotation )
     {
+        // the Contents field might have lines separated by \r
+        QString contents = ann->contents();
+        contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
+
         annotation->setAuthor( ann->author() );
-        annotation->setContents( ann->contents() );
+        annotation->setContents( contents );
         annotation->setUniqueName( ann->uniqueName() );
         annotation->setModificationDate( ann->modificationDate() );
         annotation->setCreationDate( ann->creationDate() );
-        annotation->setFlags( ann->flags() );
+        annotation->setFlags( ann->flags() | Okular::Annotation::External );
         annotation->setBoundingRectangle( Okular::NormalizedRect::fromQRectF( ann->boundary() ) );
 
         if (externallyDrawn)
@@ -377,6 +381,16 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
                 it->setPoint( t, 1 );
             }
         }
+
+#ifndef HAVE_POPPLER_0_20
+        // Poppler <0.20 returns the inplaceText in contents
+        if ( annotation->subType() == Okular::Annotation::AText )
+        {
+            Okular::TextAnnotation * txtann = static_cast<Okular::TextAnnotation*>( annotation );
+            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+                txtann->setInplaceText( txtann->contents() );
+        }
+#endif
 
         // TODO clone style
         // TODO clone window

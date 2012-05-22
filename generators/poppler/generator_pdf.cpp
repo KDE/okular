@@ -1402,12 +1402,6 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
         Okular::Annotation * newann = createAnnotationFromPopplerAnnotation( a, &doDelete );
         if (newann)
         {
-            // the Contents field has lines separated by \r
-            QString contents = newann->contents();
-            contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
-            newann->setContents( contents );
-            // explicitly mark as external
-            newann->setFlags( newann->flags() | Okular::Annotation::External );
             page->addAnnotation(newann);
 
             if ( !doDelete )

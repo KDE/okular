@@ -190,7 +190,7 @@ void PageItem::pageHasChanged( int page, int flags )
 {
     Q_UNUSED(page)
     Q_UNUSED(flags)
-    update();
+    m_redrawTimer->start(REDRAW_TIMEOUT);
 }
 
 #include "pageitem.moc"

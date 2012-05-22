@@ -313,10 +313,10 @@ PlasmaComponents.Page {
                             anchors.centerIn: parent
                             busy: documentItem.searchInProgress
                             onSearchQueryChanged: {
-                                print(searchQuery)
                                 if (searchQuery.length > 2) {
                                     documentItem.searchText(searchQuery)
                                 } else {
+                                    resultsGrid.currentIndex = pageArea.delegate.pageNumber
                                     documentItem.resetSearch()
                                 }
                             }

@@ -293,8 +293,8 @@ PlasmaComponents.Page {
                                 anchors.fill: parent
                                 onClicked: {
                                     resultsGrid.currentIndex = index
-                                    pageArea.delegate.pageNumber = index
-                                    documentItem.currentPage = index
+                                    pageArea.delegate.pageNumber = modelData
+                                    documentItem.currentPage = modelData
                                     browserFrame.open = false
 
                                     browserFrameSlideAnimation.to =  resourceBrowser.width

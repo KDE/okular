@@ -781,7 +781,7 @@ void DocumentPrivate::warnLimitedAnnotSupport()
     {
         // Show only if there are external annotations (we follow the usual XML path otherwise)
         if ( m_containsExternalAnnotations )
-            KMessageBox::sorry( m_parent->widget(), i18n("Your changes will not be saved automatically. Use File -> Save As... or your changes will be lost") );
+            KMessageBox::sorry( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed") );
     }
     else
     {

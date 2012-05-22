@@ -30,10 +30,7 @@
 #include "kdeclarativemainwindow.h"
 #include "kdeclarativeview.h"
 
-// Own
-#include "documentviewer.h"
-
-static const char description[] = I18N_NOOP("Document viewer for Plasma Active");
+static const char description[] = I18N_NOOP("Document viewer for Plasma Active using Okular");
 
 static const char version[] = "0.1";
 

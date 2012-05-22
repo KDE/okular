@@ -82,7 +82,7 @@ class PDFOptionsPage : public QWidget
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
 
-#ifndef HAVE_POPPLER_0_20
+#if defined(Q_WS_WIN) || !defined(HAVE_POPPLER_0_20)
            m_printAnnots->setVisible( false );
 #endif
            setPrintAnnots( true ); // Default value

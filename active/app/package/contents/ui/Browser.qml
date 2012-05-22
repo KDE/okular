@@ -163,95 +163,6 @@ PlasmaComponents.Page {
         }
 
 
-        PlasmaExtras.ScrollArea {
-            anchors.fill: parent
-            GridView {
-                id: resultsGrid
-                anchors.fill: parent
-                clip: true
-
-                model: documentItem.matchingPages
-                cellWidth: theme.defaultFont.mSize.width * 14
-                cellHeight: theme.defaultFont.mSize.height * 12
-                currentIndex: documentItem.currentPage
-
-                delegate: Item {
-                    width: resultsGrid.cellWidth
-                    height: resultsGrid.cellHeight
-                    PlasmaCore.FrameSvgItem {
-                        anchors.centerIn: parent
-                        imagePath: "widgets/media-delegate"
-                        prefix: "picture"
-                        width: thumbnail.width + margins.left + margins.right
-                        //FIXME: why bindings with thumbnail.height doesn't work?
-                        height: thumbnail.height + margins.top + margins.bottom
-                        Okular.ThumbnailItem {
-                            id: thumbnail
-                            x: parent.margins.left
-                            y: parent.margins.top
-                            document: documentItem
-                            pageNumber: modelData
-                            width: theme.defaultFont.mSize.width * 10
-                            height: Math.round(width / (implicitWidth/implicitHeight))
-                            Rectangle {
-                                width: childrenRect.width
-                                height: childrenRect.height
-                                color: theme.backgroundColor
-                                radius: width
-                                smooth: true
-                                anchors {
-                                    bottom: parent.bottom
-                                    right: parent.right
-                                }
-                                PlasmaComponents.Label {
-                                    text: modelData + 1
-                                }
-                            }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                resultsGrid.currentIndex = index
-                                pageArea.delegate.pageNumber = index
-                                documentItem.currentPage = index
-                                browserFrame.open = false
-
-                                browserFrameSlideAnimation.to =  resourceBrowser.width
-                                browserFrameSlideAnimation.running = true
-                            }
-                        }
-                    }
-                }
-                highlight: PlasmaComponents.Highlight {}
-                header: PlasmaComponents.ToolBar {
-                    width: resultsGrid.width
-                    height: searchField.height + 10
-                    MobileComponents.ViewSearch {
-                        id: searchField
-                        enabled: documentItem.supportsSearch
-                        anchors.centerIn: parent
-                        busy: documentItem.searchInProgress
-                        onSearchQueryChanged: {
-                            print(searchQuery)
-                            if (searchQuery.length > 2) {
-                                documentItem.searchText(searchQuery)
-                            } else {
-                                documentItem.resetSearch()
-                            }
-                        }
-                    }
-                    PlasmaComponents.Label {
-                        anchors {
-                            left: searchField.right
-                            verticalCenter: searchField.verticalCenter
-                        }
-                        visible: documentItem.matchingPages.length == 0
-                        text: i18n("No results found.")
-                    }
-                }
-            }
-        }
-
         Image {
             source: "image://appbackgrounds/shadow-left"
             fillMode: Image.TileVertically
@@ -284,41 +195,145 @@ PlasmaComponents.Page {
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
-        MouseArea {
+
+        MouseEventListener {
             anchors {
                 top: parent.top
                 bottom: parent.bottom
                 left: handleGraphics.left
-                right: handleGraphics.right
+                right: parent.right
             }
-            drag {
-                target: browserFrame
-                axis: Drag.XAxis
-                //-50, an overshoot to make it look smooter
-                minimumX: handleGraphics.width
-                maximumX: resourceBrowser.width
-            }
+
             property int startX
+            property real oldMouseScreenX
             property bool toggle: true
+            property bool startDragging: false
             onPressed: {
                 startX = browserFrame.x
+                oldMouseScreenX = mouse.screenX
+                startMouseScreenX = mouse.screenX
                 toggle = true
+                startDragging = false
             }
             onPositionChanged: {
-                if (Math.abs(browserFrame.x - startX) > 20) {
+                //mouse over handle and didn't move much
+                if (mouse.x > handleGraphics.width ||
+                    Math.abs(mouse.screenX - startMouseScreenX) > 20) {
                     toggle = false
                 }
+
+                if (mouse.x < handleGraphics.width ||
+                    Math.abs(mouse.screenX - startMouseScreenX) > resourceBrowser.width / 5) {
+                    startDragging = true
+                }
+                if (startDragging) {
+                    browserFrame.x = Math.max(resourceBrowser.width - browserFrame.width, browserFrame.x + mouse.screenX - oldMouseScreenX)
+                }
+                oldMouseScreenX = mouse.screenX
             }
             onReleased: {
                 if (toggle) {
                     browserFrame.open = !browserFrame.open
                 } else {
-                    browserFrame.open = (browserFrame.x < resourceBrowser.width/2)
+                    browserFrame.open = Math.abs(browserFrame.x - startX) > resourceBrowser.width / 3 ? !browserFrame.open : browserFrame.open
                 }
                 browserFrameSlideAnimation.to = browserFrame.open ? handleGraphics.width : resourceBrowser.width + browserFrame.extraSpace
                 browserFrameSlideAnimation.running = true
             }
+
+            PlasmaExtras.ScrollArea {
+                anchors {
+                    fill: parent
+                    leftMargin: handleGraphics.width + 8
+                }
+                GridView {
+                    id: resultsGrid
+                    anchors.fill: parent
+                    clip: true
+
+                    model: documentItem.matchingPages
+                    cellWidth: theme.defaultFont.mSize.width * 14
+                    cellHeight: theme.defaultFont.mSize.height * 12
+                    currentIndex: documentItem.currentPage
+
+                    delegate: Item {
+                        width: resultsGrid.cellWidth
+                        height: resultsGrid.cellHeight
+                        PlasmaCore.FrameSvgItem {
+                            anchors.centerIn: parent
+                            imagePath: "widgets/media-delegate"
+                            prefix: "picture"
+                            width: thumbnail.width + margins.left + margins.right
+                            //FIXME: why bindings with thumbnail.height doesn't work?
+                            height: thumbnail.height + margins.top + margins.bottom
+                            Okular.ThumbnailItem {
+                                id: thumbnail
+                                x: parent.margins.left
+                                y: parent.margins.top
+                                document: documentItem
+                                pageNumber: modelData
+                                width: theme.defaultFont.mSize.width * 10
+                                height: Math.round(width / (implicitWidth/implicitHeight))
+                                Rectangle {
+                                    width: childrenRect.width
+                                    height: childrenRect.height
+                                    color: theme.backgroundColor
+                                    radius: width
+                                    smooth: true
+                                    anchors {
+                                        bottom: parent.bottom
+                                        right: parent.right
+                                    }
+                                    PlasmaComponents.Label {
+                                        text: modelData + 1
+                                    }
+                                }
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    resultsGrid.currentIndex = index
+                                    pageArea.delegate.pageNumber = index
+                                    documentItem.currentPage = index
+                                    browserFrame.open = false
+
+                                    browserFrameSlideAnimation.to =  resourceBrowser.width
+                                    browserFrameSlideAnimation.running = true
+                                }
+                            }
+                        }
+                    }
+                    highlight: PlasmaComponents.Highlight {}
+                    header: PlasmaComponents.ToolBar {
+                        width: resultsGrid.width
+                        height: searchField.height + 10
+                        MobileComponents.ViewSearch {
+                            id: searchField
+                            enabled: documentItem.supportsSearch
+                            anchors.centerIn: parent
+                            busy: documentItem.searchInProgress
+                            onSearchQueryChanged: {
+                                print(searchQuery)
+                                if (searchQuery.length > 2) {
+                                    documentItem.searchText(searchQuery)
+                                } else {
+                                    documentItem.resetSearch()
+                                }
+                            }
+                        }
+                        PlasmaComponents.Label {
+                            anchors {
+                                left: searchField.right
+                                verticalCenter: searchField.verticalCenter
+                            }
+                            visible: documentItem.matchingPages.length == 0
+                            text: i18n("No results found.")
+                        }
+                    }
+                }
+            }
         }
+
         //FIXME: use a state machine
         SequentialAnimation {
             id: browserFrameSlideAnimation

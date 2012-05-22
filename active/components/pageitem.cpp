@@ -64,6 +64,7 @@ void PageItem::setDocument(DocumentItem *doc)
         return;
     }
 
+    m_page = 0;
     m_documentItem = doc;
     Observer *observer = m_documentItem.data()->observerFor(m_observerId);
     connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));

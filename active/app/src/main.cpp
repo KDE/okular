@@ -27,6 +27,9 @@
 #include <KDE/KLocale>
 #include <KConfigGroup>
 
+#include "kdeclarativemainwindow.h"
+#include "kdeclarativeview.h"
+
 // Own
 #include "documentviewer.h"
 
@@ -56,7 +59,8 @@ KDE_EXPORT int kdemain(int argc, char **argv)
 
     //kDebug() << "ARGS:" << args << args->count();
 
-    DocumentViewer *mainWindow = new DocumentViewer();
+    KDeclarativeMainWindow *mainWindow = new KDeclarativeMainWindow();
+    mainWindow->declarativeView()->setPackageName("org.kde.active.documentviewer");
     mainWindow->show();
     args->clear();
     return app.exec();

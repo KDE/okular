@@ -3,7 +3,6 @@ include_directories( ${KDE4_INCLUDES} ${QT_INCLUDES})
 
 set(active-documentviewer_SRCS
     main.cpp
-    documentviewer.cpp
 )
 
 kde4_add_kdeinit_executable(active-documentviewer ${active-documentviewer_SRCS})

@@ -67,7 +67,7 @@ PlasmaComponents.Page {
             startY = mouse.screenY
         }
         onPositionChanged: {
-            if (Math.abs(mouse.x - startX) > width/5) {
+            if (Math.abs(mouse.screenX - startX) > width/5) {
                 delegate.pageSwitchEnabled = true
             }
         }
@@ -244,7 +244,7 @@ PlasmaComponents.Page {
             PlasmaExtras.ScrollArea {
                 anchors {
                     fill: parent
-                    leftMargin: handleGraphics.width + 8
+                    leftMargin: handleGraphics.width
                 }
                 GridView {
                     id: resultsGrid

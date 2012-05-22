@@ -893,7 +893,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
     public:
         TextAnnotationPrivate()
             : AnnotationPrivate(), m_textType( TextAnnotation::Linked ),
-              m_textIcon( "Note" ), m_inplaceAlign( 0 ),
+              m_textIcon( "Comment" ), m_inplaceAlign( 0 ),
               m_inplaceIntent( TextAnnotation::Unknown )
         {
         }
@@ -1098,7 +1098,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // store the optional attributes
     if ( d->m_textType != Linked )
         textElement.setAttribute( "type", (int)d->m_textType );
-    if ( d->m_textIcon != "Comment" )
+    if ( !d->m_textIcon.isEmpty() )
         textElement.setAttribute( "icon", d->m_textIcon );
     if ( d->m_textFont != QApplication::font() )
         textElement.setAttribute( "font", d->m_textFont.toString() );

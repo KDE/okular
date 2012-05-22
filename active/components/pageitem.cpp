@@ -145,7 +145,7 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
 
 void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    if (!m_documentItem || !m_page || m_pixmap.isNull()) {
+    if (!m_documentItem || !m_page) {
         QDeclarativeItem::paint(painter, option, widget);
         return;
     }
@@ -156,7 +156,15 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setRenderHint(QPainter::Antialiasing, true);
     }
 
-    painter->drawPixmap(m_pixmap.rect(), m_pixmap, option->rect);
+    const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
+
+    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+    requestedPixmaps.push_back( new Okular::PixmapRequest(
+                                m_observerId, m_pageNumber, width(), height(), priority, true ) );
+    m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
+
+    const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
+    PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), boundingRect().toRect());
 
     if (setAA) {
         painter->restore();
@@ -167,23 +175,9 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 //Protected slots
 void PageItem::delayedRedraw()
 {
-    if (!m_documentItem || !m_page) {
-        return;
+    if (m_documentItem && m_page) {
+        update();
     }
-
-    const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
-
-    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    requestedPixmaps.push_back( new Okular::PixmapRequest(
-                                m_observerId, m_pageNumber, width(), height(), priority, true ) );
-    m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
-
-    m_pixmap = QPixmap(QSize(width(), height()));
-    QPainter p(&m_pixmap);
-    int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(&p, m_page, m_observerId, flags, width(), height(), boundingRect().toRect());
-    p.end();
-    update();
 }
 
 void PageItem::pageHasChanged( int page, int flags )

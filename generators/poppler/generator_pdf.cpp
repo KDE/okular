@@ -1364,40 +1364,6 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
 
     foreach(Poppler::Annotation *a, popplerAnnotations)
     {
-        //a->window.width = (int)(page->width() * a->window.width);
-        //a->window.height = (int)(page->height() * a->window.height);
-        //a->window.width = a->window.width < 200 ? 200 : a->window.width;
-        // a->window.height = a->window.height < 120 ? 120 : a->window.height;
-        // resize annotation's geometry to an icon
-        // TODO okular geom.right = geom.left + 22.0 / page->width();
-        // TODO okular geom.bottom = geom.top + 22.0 / page->height();
-        /*
-        QString szanno;
-        QTextStream(&szanno)<<"PopplerAnnotation={author:"<<a->author
-                <<", contents:"<<a->contents
-                <<", uniqueName:"<<a->uniqueName
-                <<", modifyDate:"<<a->modifyDate.toString("hh:mm:ss, dd.MM.yyyy")
-                <<", creationDate:"<<a->creationDate.toString("hh:mm:ss, dd.MM.yyyy")
-                <<", flags:"<<a->flags
-                <<", boundary:"<<a->boundary.left()<<","<<a->boundary.top()<<","<<a->boundary.right()<<","<<a->boundary.bottom()
-                <<", style.color:"<<a->style.color.name()
-                <<", style.opacity:"<<a->style.opacity
-                <<", style.width:"<<a->style.width
-                <<", style.LineStyle:"<<a->style.style
-                <<", style.xyCorners:"<<a->style.xCorners<<","<<a->style.yCorners
-                <<", style.marks:"<<a->style.marks
-                <<", style.spaces:"<<a->style.spaces
-                <<", style.LineEffect:"<<a->style.effect
-                <<", style.effectIntensity:"<<a->style.effectIntensity
-                <<", window.flags:"<<a->window.flags
-                <<", window.topLeft:"<<(a->window.topLeft.x())
-                <<","<<(a->window.topLeft.y())
-                <<", window.width,height:"<<a->window.width<<","<<a->window.height
-                <<", window.title:"<<a->window.title
-                <<", window.summary:"<<a->window.summary
-                <<", window.text:"<<a->window.text;
-        kDebug(PDFDebug) << "astario:    " << szanno; */
-        //TODO add annotations after poppler write feather is full suported
         bool doDelete = true;
         Okular::Annotation * newann = createAnnotationFromPopplerAnnotation( a, &doDelete );
         if (newann)

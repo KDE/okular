@@ -33,8 +33,10 @@ Item {
     //if true when released will switch the delegate
     property bool doSwitch: false
 
+    property bool pageSwitchEnabled: false
     property alias document: mainPage.document
     property alias pageNumber: mainPage.pageNumber
+
     property string label: model["label"]
 
     function scale(zoom)
@@ -86,7 +88,7 @@ Item {
         onContentXChanged: {
             if (atXBeginning && contentX < 0) {
                 root.delta = -1
-                root.doSwitch = (contentX < -mainFlickable.width/4)
+                root.doSwitch = (contentX < -mainFlickable.width/6)
             } else if (atXEnd) {
                 root.delta = +1
                 root.doSwitch = (contentX + mainFlickable.width - contentWidth > mainFlickable.width/4)
@@ -98,7 +100,7 @@ Item {
 
         PinchArea {
             id: imageMargin
-            width: Math.max(mainFlickable.width+1, mainPage.width)
+            width: Math.max(mainFlickable.width + (pageSwitchEnabled ? 1: 0), mainPage.width)
             height: Math.max(mainFlickable.height, mainPage.height)
 
             property real startWidth

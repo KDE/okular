@@ -66,7 +66,13 @@ PlasmaComponents.Page {
             startX = mouse.screenX
             startY = mouse.screenY
         }
+        onPositionChanged: {
+            if (Math.abs(mouse.x - startX) > width/5) {
+                delegate.pageSwitchEnabled = true
+            }
+        }
         onReleased: {
+            delegate.pageSwitchEnabled = false
             if (Math.abs(mouse.screenX - startX) < 20 &&
                 Math.abs(mouse.screenY - startY) < 20) {
                 if (resourceBrowser.state == "toolsOpen") {
@@ -74,7 +80,10 @@ PlasmaComponents.Page {
                 } else {
                     resourceBrowser.state = "toolsOpen"
                 }
-            } else if (oldDelegate.visible && delegate.delta != 0 && delegate.doSwitch) {
+            } else if (oldDelegate.visible && delegate.delta != 0 &&
+                delegate.doSwitch &&
+                ((incrementing && mouse.x <= width/5) ||
+                  !incrementing && mouse.x >= (width/5)*4)) {
                 oldDelegate = delegate
                 delegate = (delegate == delegate1) ? delegate2 : delegate1
                 switchAnimation.running = true

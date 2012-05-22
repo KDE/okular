@@ -19,7 +19,8 @@
 
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.extras 0.1 as PlasmaExtras
+import org.kde.plasma.extras 0.1 as PlasmaExtra
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1
 import org.kde.okular 0.1 as Okular
@@ -33,6 +34,7 @@ Item {
     //if true when released will switch the delegate
     property bool doSwitch: false
 
+    property Item flickable: mainFlickable
     property bool pageSwitchEnabled: false
     property alias document: mainPage.document
     property alias pageNumber: mainPage.pageNumber

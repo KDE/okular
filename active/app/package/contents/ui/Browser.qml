@@ -123,6 +123,24 @@ PlasmaComponents.Page {
             }
         }
     }
+    PlasmaComponents.ScrollBar {
+        flickableItem: pageArea.delegate.flickable
+        orientation: Qt.Vertical
+        anchors {
+            right: pageArea.right
+            top: pageArea.top
+            bottom: pageArea.bottom
+        }
+    }
+    PlasmaComponents.ScrollBar {
+        flickableItem: pageArea.delegate.flickable
+        orientation: Qt.Horizontal
+        anchors {
+            left: pageArea.left
+            right: pageArea.right
+            bottom: pageArea.bottom
+        }
+    }
 
     Image {
         id: browserFrame

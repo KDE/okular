@@ -232,11 +232,11 @@ PlasmaComponents.Page {
                 oldMouseScreenX = mouse.screenX
             }
             onReleased: {
-                if (toggle) {
+                //If one condition for toggle is satisfied toggle, otherwise do an animation that resets the original position
+                if (toggle || Math.abs(browserFrame.x - startX) > resourceBrowser.width / 3) {
                     browserFrame.open = !browserFrame.open
-                } else {
-                    browserFrame.open = Math.abs(browserFrame.x - startX) > resourceBrowser.width / 3 ? !browserFrame.open : browserFrame.open
                 }
+
                 browserFrameSlideAnimation.to = browserFrame.open ? handleGraphics.width : resourceBrowser.width + browserFrame.extraSpace
                 browserFrameSlideAnimation.running = true
             }
@@ -292,6 +292,7 @@ PlasmaComponents.Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
+                                    browserFrameSlideAnimation.running = false
                                     resultsGrid.currentIndex = index
                                     pageArea.delegate.pageNumber = modelData
                                     documentItem.currentPage = modelData

@@ -28,7 +28,6 @@ import org.kde.okular 0.1 as Okular
 
 PlasmaComponents.Page {
     id: resourceBrowser
-    state: "toolsClosed"
     property string currentUdi
     anchors.fill: parent
 
@@ -60,25 +59,25 @@ PlasmaComponents.Page {
             }
         }
 
-        property int startX
+        property int startBrowserFrameX
         property int starty
         onPressed: {
-            startX = mouse.screenX
+            startBrowserFrameX = mouse.screenX
             startY = mouse.screenY
         }
         onPositionChanged: {
-            if (Math.abs(mouse.screenX - startX) > width/5) {
+            if (Math.abs(mouse.screenX - startBrowserFrameX) > width/5) {
                 delegate.pageSwitchEnabled = true
             }
         }
         onReleased: {
             delegate.pageSwitchEnabled = false
-            if (Math.abs(mouse.screenX - startX) < 20 &&
+            if (Math.abs(mouse.screenX - startBrowserFrameX) < 20 &&
                 Math.abs(mouse.screenY - startY) < 20) {
-                if (resourceBrowser.state == "toolsOpen") {
-                    resourceBrowser.state = "toolsClosed"
+                if (browserFrame.state == "Closed") {
+                    browserFrame.state = "Hidden"
                 } else {
-                    resourceBrowser.state = "toolsOpen"
+                    browserFrame.state = "Closed"
                 }
             } else if (oldDelegate.visible && delegate.delta != 0 &&
                 delegate.doSwitch &&
@@ -152,15 +151,7 @@ PlasmaComponents.Page {
             bottom: parent.bottom
         }
         width: parent.width - handleGraphics.width
-        x: parent.width + extraSpace
-        property bool open: false
-        property int extraSpace: resourceBrowser.state == "toolsOpen" ? 0 : handleGraphics.width
-        Behavior on extraSpace {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutQuad
-            }
-        }
+        state: "Hidden"
 
 
         Image {
@@ -197,6 +188,7 @@ PlasmaComponents.Page {
         }
 
         MouseEventListener {
+            id: mouseEventListener
             anchors {
                 top: parent.top
                 bottom: parent.bottom
@@ -204,16 +196,20 @@ PlasmaComponents.Page {
                 right: parent.right
             }
 
-            property int startX
+            property int startBrowserFrameX
             property real oldMouseScreenX
             property bool toggle: true
             property bool startDragging: false
+            property string startState
+
             onPressed: {
-                startX = browserFrame.x
+                startBrowserFrameX = browserFrame.x
                 oldMouseScreenX = mouse.screenX
                 startMouseScreenX = mouse.screenX
                 toggle = (mouse.x < handleGraphics.width)
                 startDragging = false
+                startState = browserFrame.state
+                browserFrame.state = "Dragging"
             }
             onPositionChanged: {
                 //mouse over handle and didn't move much
@@ -233,12 +229,11 @@ PlasmaComponents.Page {
             }
             onReleased: {
                 //If one condition for toggle is satisfied toggle, otherwise do an animation that resets the original position
-                if (toggle || Math.abs(browserFrame.x - startX) > resourceBrowser.width / 3) {
-                    browserFrame.open = !browserFrame.open
+                if (toggle || Math.abs(browserFrame.x - startBrowserFrameX) > resourceBrowser.width / 3) {
+                    browserFrame.state = startState == "Open" ? "Closed" : "Open"
+                } else {
+                    browserFrame.state = startState
                 }
-
-                browserFrameSlideAnimation.to = browserFrame.open ? handleGraphics.width : resourceBrowser.width + browserFrame.extraSpace
-                browserFrameSlideAnimation.running = true
             }
 
             PlasmaExtras.ScrollArea {
@@ -292,14 +287,11 @@ PlasmaComponents.Page {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
-                                    browserFrameSlideAnimation.running = false
                                     resultsGrid.currentIndex = index
                                     pageArea.delegate.pageNumber = modelData
                                     documentItem.currentPage = modelData
-                                    browserFrame.open = false
 
-                                    browserFrameSlideAnimation.to =  resourceBrowser.width
-                                    browserFrameSlideAnimation.running = true
+                                    browserFrame.state = "Closed"
                                 }
                             }
                         }
@@ -335,18 +327,51 @@ PlasmaComponents.Page {
             }
         }
 
-        //FIXME: use a state machine
-        SequentialAnimation {
-            id: browserFrameSlideAnimation
-            property alias to: actualSlideAnimation.to
-            NumberAnimation {
-                id: actualSlideAnimation
-                target: browserFrame
-                properties: "x"
-                duration: 250
-                easing.type: Easing.InOutQuad
+        states: [
+            State {
+                name: "Open"
+                PropertyChanges {
+                    target: browserFrame
+                    x: handleGraphics.width
+                }
+
+            },
+            State {
+                name: "Dragging"
+                //workaround for a quirkiness of the state machine
+                //if no x binding gets defined in this state x will be set to whatever last x it had last time it was in this state
+                PropertyChanges {
+                    target: browserFrame
+                    x: mouseEventListener.startBrowserFrameX
+                }
+            },
+            State {
+                name: "Closed"
+                PropertyChanges {
+                    target: browserFrame
+                    x: resourceBrowser.width
+                }
+            },
+            State {
+                name: "Hidden"
+                PropertyChanges {
+                    target: browserFrame
+                    x: resourceBrowser.width + handleGraphics.width
+                }
             }
-        }
+        ]
+
+        transitions: [
+            Transition {
+                //Exclude Dragging
+                to: "Open,Closed,Hidden"
+                NumberAnimation {
+                    properties: "x"
+                    duration: 250
+                    easing.type: Easing.InOutQuad
+                }
+            }
+        ]
     }
 }
 

@@ -229,7 +229,8 @@ void BookmarkList::slotChanged( QTreeWidgetItem * item )
     FileItem* fItem = dynamic_cast<FileItem*>( item );
     if ( fItem )
     {
-        m_document->bookmarkManager()->renameBookmark( m_document->currentDocument(), fItem->text( 0 ) );
+        const KUrl url = fItem->data( 0, UrlRole ).value< KUrl >();
+        m_document->bookmarkManager()->renameBookmark( url, fItem->text( 0 ) );
         m_document->bookmarkManager()->save();
     }
 }

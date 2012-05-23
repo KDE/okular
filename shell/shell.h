@@ -68,6 +68,7 @@ protected:
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
+  bool queryClose();
 
   void showEvent(QShowEvent *event);
 
@@ -92,7 +93,7 @@ private:
 
 private:
   KCmdLineArgs* m_args;
-  KParts::ReadOnlyPart* m_part;
+  KParts::ReadWritePart* m_part;
   KDocumentViewer* m_doc;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;

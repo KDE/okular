@@ -17,6 +17,7 @@
 #define _PART_H_
 
 #include <kparts/part.h>
+#include <kpluginfactory.h>
 #include <qicon.h>
 #include <qlist.h>
 #include <qpointer.h>
@@ -89,7 +90,7 @@ enum EmbedMode
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
+class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
@@ -104,7 +105,7 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
          * which config file should be used by adding a string containing "ConfigFileName=<file name>"
          * to 'args'.
          **/
-        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
+        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args, KComponentData componentData);
 
         // Destructor
         ~Part();
@@ -151,11 +152,17 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
         void viewerMenuStateChange(bool enabled);
 
     protected:
-        // reimplemented from KParts::ReadOnlyPart
+        // reimplemented from KParts::ReadWritePart
         bool openFile();
         bool openUrl(const KUrl &url);
-        bool closeUrl();
         void guiActivateEvent(KParts::GUIActivateEvent *event);
+    public:
+        bool saveFile();
+        bool queryClose();
+        bool closeUrl();
+        bool closeUrl(bool promptToSave);
+        void setReadWrite(bool readwrite);
+        bool saveAs(const KUrl & saveUrl);
 
     protected slots:
         // connected to actions
@@ -317,6 +324,18 @@ class Part : public KParts::ReadOnlyPart, public Okular::DocumentObserver, publi
     private slots:
         void slotGeneratorPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
+};
+
+class PartFactory : public KPluginFactory
+{
+    Q_OBJECT
+
+    public:
+        PartFactory();
+        virtual ~PartFactory();
+
+    protected:
+        virtual QObject *create(const char *iface, QWidget *parentWidget, QObject *parent, const QVariantList &args, const QString &keyword);
 };
 
 }

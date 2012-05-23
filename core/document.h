@@ -642,6 +642,14 @@ class OKULAR_EXPORT Document : public QObject
         */
         QPrinter::Orientation orientation() const;
 
+        /**
+         * Control annotation editing (creation, modification and removal),
+         * which is enabled by default.
+         *
+         * @since 0.15 (KDE 4.9)
+        */
+        void setAnnotationEditingEnabled( bool enable );
+
 
     public Q_SLOTS:
         /**

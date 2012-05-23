@@ -85,7 +85,7 @@ void Shell::init()
 
   // now that the Part is loaded, we cast it to a Part to get
   // our hands on it
-  m_part = factory->create< KParts::ReadOnlyPart >( this );
+  m_part = factory->create< KParts::ReadWritePart >( this );
   if (m_part)
   {
     // then, setup our actions
@@ -234,6 +234,10 @@ QStringList Shell::fileFormats() const
 
 void Shell::fileOpen()
 {
+    // Don't open dialog if current document can't be closed
+    if ( !m_part->queryClose() )
+        return;
+
 	// this slot is called whenever the File->Open menu is selected,
 	// the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
 	// button is clicked
@@ -267,7 +271,10 @@ void Shell::fileOpen()
         return;
     KUrl url = dlg.selectedUrl();
     if ( !url.isEmpty() )
+    {
+        m_part->closeUrl( false );
         openUrl( url );
+    }
 }
 
 void Shell::slotQuit()
@@ -329,6 +336,11 @@ void Shell::slotShowMenubar()
 QSize Shell::sizeHint() const
 {
     return QApplication::desktop()->availableGeometry( this ).size() * 0.75;
+}
+
+bool Shell::queryClose()
+{
+    return m_part ? m_part->closeUrl() : true;
 }
 
 #include "shell.moc"

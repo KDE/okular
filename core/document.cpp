@@ -2138,6 +2138,9 @@ KUrl Document::currentDocument() const
 
 bool Document::isAllowed( Permission action ) const
 {
+    if ( action == Okular::AllowNotes && !d->m_annotationEditingEnabled )
+        return false;
+
 #if !OKULAR_FORCE_DRM
     if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
         return true;
@@ -2354,6 +2357,16 @@ void Document::requestTextPage( uint page )
     d->m_generator->generateTextPage( kp );
 }
 
+void DocumentPrivate::notifyAnnotationChanges( int page )
+{
+    int flags = DocumentObserver::Annotations;
+
+    if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
+        flags |= DocumentObserver::NeedSaveAs; // Annotations are not saved locally in this case
+
+    foreachObserverD( notifyPageChanged( page, flags ) );
+}
+
 void Document::addPageAnnotation( int page, Annotation * annotation )
 {
     Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
@@ -2376,7 +2389,7 @@ void Document::addPageAnnotation( int page, Annotation * annotation )
         proxy->notifyAddition( annotation, page );
 
     // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    d->notifyAnnotationChanges( page );
 
     if ( annotation->flags() & Annotation::ExternallyDrawn )
     {
@@ -2432,7 +2445,7 @@ void Document::modifyPageAnnotation( int page, Annotation * annotation, bool app
         proxy->notifyModification( annotation, page, appearanceChanged );
 
     // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    d->notifyAnnotationChanges( page );
 
     if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
     {
@@ -2507,7 +2520,7 @@ void Document::removePageAnnotation( int page, Annotation * annotation )
         kp->removeAnnotation( annotation ); // Also destroys the object
 
         // in case of success, notify observers about the change
-        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+        d->notifyAnnotationChanges( page );
 
         if ( isExternallyDrawn )
         {
@@ -2555,7 +2568,7 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
     if ( changed )
     {
         // in case we removed even only one annotation, notify observers about the change
-        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+        d->notifyAnnotationChanges( page );
 
         if ( refreshNeeded )
         {
@@ -3715,6 +3728,12 @@ QPrinter::Orientation Document::orientation() const
         else portrait++;
     }
     return (landscape > portrait) ? QPrinter::Landscape : QPrinter::Portrait;
+}
+
+void Document::setAnnotationEditingEnabled( bool enable )
+{
+    d->m_annotationEditingEnabled = enable;
+    foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

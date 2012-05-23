@@ -31,8 +31,7 @@ Item {
     //-1: switch to previous image on mouse release
     //0: do nothing
     property int delta
-    //if true when released will switch the delegate
-    property bool doSwitch: false
+
 
     property Item flickable: mainFlickable
     property bool pageSwitchEnabled: false
@@ -90,13 +89,10 @@ Item {
         onContentXChanged: {
             if (atXBeginning && contentX < 0) {
                 root.delta = -1
-                root.doSwitch = (contentX < -mainFlickable.width/6)
             } else if (atXEnd) {
                 root.delta = +1
-                root.doSwitch = (contentX + mainFlickable.width - contentWidth > mainFlickable.width/4)
             } else {
                 root.delta = 0
-                root.doSwitch = false
             }
         }
 

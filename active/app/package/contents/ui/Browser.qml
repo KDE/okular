@@ -59,30 +59,30 @@ PlasmaComponents.Page {
             }
         }
 
-        property int startBrowserFrameX
-        property int starty
+        property int startMouseScreenX
+        property int startMouseScreenY
         onPressed: {
-            startBrowserFrameX = mouse.screenX
-            startY = mouse.screenY
+            startMouseScreenX = mouse.screenX
+            startMouseScreenY = mouse.screenY
         }
         onPositionChanged: {
-            if (Math.abs(mouse.screenX - startBrowserFrameX) > width/5) {
+            if (Math.abs(mouse.screenX - startMouseScreenX) > width/5) {
                 delegate.pageSwitchEnabled = true
             }
         }
         onReleased: {
             delegate.pageSwitchEnabled = false
-            if (Math.abs(mouse.screenX - startBrowserFrameX) < 20 &&
-                Math.abs(mouse.screenY - startY) < 20) {
+            if (Math.abs(mouse.screenX - startMouseScreenX) < 20 &&
+                Math.abs(mouse.screenY - startMouseScreenY) < 20) {
                 if (browserFrame.state == "Closed") {
                     browserFrame.state = "Hidden"
                 } else {
                     browserFrame.state = "Closed"
                 }
+
             } else if (oldDelegate.visible && delegate.delta != 0 &&
-                delegate.doSwitch &&
-                ((incrementing && mouse.x <= width/5) ||
-                  !incrementing && mouse.x >= (width/5)*4)) {
+                (Math.abs(mouse.screenX - startMouseScreenX) > width/5) &&
+                 Math.abs(mouse.screenX - startMouseScreenX) > Math.abs(mouse.screenY - startMouseScreenY)) {
                 oldDelegate = delegate
                 delegate = (delegate == delegate1) ? delegate2 : delegate1
                 switchAnimation.running = true

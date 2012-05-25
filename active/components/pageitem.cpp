@@ -38,7 +38,8 @@ PageItem::PageItem(QDeclarativeItem *parent)
       Okular::View( QString::fromLatin1( "PageView" ) ),
       m_page(0),
       m_pageNumber(0),
-      m_smooth(false)
+      m_smooth(false),
+      m_intentionalDraw(true)
 {
     m_observerId = PAGEVIEW_ID;
     setFlag(QGraphicsItem::ItemHasNoContents, false);
@@ -135,7 +136,9 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
         return;
     }
 
-    m_redrawTimer->start(REDRAW_TIMEOUT);
+    if (newGeometry.size() != oldGeometry.size()) {
+        m_redrawTimer->start(REDRAW_TIMEOUT);
+    }
 
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
     //Why aren't they automatically emuitted?
@@ -158,11 +161,15 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
 
-    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    requestedPixmaps.push_back( new Okular::PixmapRequest(
-                                m_observerId, m_pageNumber, width(), height(), priority, true ) );
-    m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
-
+    if (m_intentionalDraw) {
+        qDebug() << "***************************";
+        qDebug() << "grabbing pixmaps!"<< this ;
+        QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+        requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_pageNumber, width(), height(), priority, true));
+        m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
+        qDebug() << "***************************";
+    }
+    m_intentionalDraw = false;
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), boundingRect().toRect());
 
@@ -171,11 +178,11 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
 }
 
-
 //Protected slots
 void PageItem::delayedRedraw()
 {
     if (m_documentItem && m_page) {
+        m_intentionalDraw = true;
         update();
     }
 }

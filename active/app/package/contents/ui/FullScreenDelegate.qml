@@ -25,7 +25,7 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 import org.kde.qtextracomponents 0.1
 import org.kde.okular 0.1 as Okular
 
-Item {
+MouseEventListener {
     id: root
     //+1: switch to next image on mouse release
     //-1: switch to previous image on mouse release
@@ -33,6 +33,14 @@ Item {
     property int delta
 
 
+    onWheelMoved: {
+        if (wheel.modifiers == Qt.ControlModifier) {
+            var scale = wheel.delta > 0 ? 1.1 : 0.9
+            mainPage.width *= scale
+            mainPage.height *= scale
+            pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth)
+        }
+    }
     property Item flickable: mainFlickable
     property bool pageSwitchEnabled: false
     property alias document: mainPage.document

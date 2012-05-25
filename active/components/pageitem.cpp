@@ -162,16 +162,13 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
 
     if (m_intentionalDraw) {
-        qDebug() << "***************************";
-        qDebug() << "grabbing pixmaps!"<< this ;
         QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
         requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_pageNumber, width(), height(), priority, true));
         m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
-        qDebug() << "***************************";
     }
     m_intentionalDraw = false;
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), boundingRect().toRect());
+    PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), option->exposedRect.toRect());
 
     if (setAA) {
         painter->restore();

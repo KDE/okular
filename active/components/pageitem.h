@@ -83,6 +83,7 @@ private:
     const Okular::Page *m_page;
     int m_pageNumber;
     bool m_smooth;
+    bool m_intentionalDraw;
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
     int m_observerId;

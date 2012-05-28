@@ -103,6 +103,7 @@ class PagePrivate
         {
             public:
                 QPixmap *m_pixmap;
+                NormalizedRect m_rect;
                 Rotation m_rotation;
         };
         QMap< int, PixmapObject > m_pixmaps;

@@ -3963,13 +3963,14 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
         // if the item has not the right pixmap, add a request for it
         // TODO: We presently request a pixmap for the full page, and then render just the crop part. This waste memory and cycles.
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) )
+        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), vItem->rect ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+            p->setVisiblePageRect( vItem );
             requestedPixmaps.push_back( p );
         }
 

@@ -53,6 +53,7 @@ class PixmapRequestPrivate;
 class TextPage;
 class NormalizedRect;
 class SourceReference;
+class VisiblePageRect;
 
 /* Note: on contents generation and asynchronous queries.
  * Many observers may want to request data syncronously or asynchronously.
@@ -578,6 +579,9 @@ class OKULAR_EXPORT PixmapRequest
          * Returns a pointer to the page where the pixmap shall be generated for.
          */
         Page *page() const;
+
+        void setVisiblePageRect( VisiblePageRect *visiblePageRect );
+        VisiblePageRect *visiblePageRect() const;
 
     private:
         Q_DISABLE_COPY( PixmapRequest )

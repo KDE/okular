@@ -431,6 +431,7 @@ PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int
     d->mPriority = priority;
     d->mAsynchronous = asynchronous;
     d->mForce = false;
+    d->mVisiblePageRect = 0;
 }
 
 PixmapRequest::~PixmapRequest()
@@ -471,6 +472,19 @@ bool PixmapRequest::asynchronous() const
 Page* PixmapRequest::page() const
 {
     return d->mPage;
+}
+
+void PixmapRequest::setVisiblePageRect( VisiblePageRect *visiblePageRect )
+{
+    if ( d->mVisiblePageRect == visiblePageRect )
+        return;
+
+    d->mVisiblePageRect = visiblePageRect;
+}
+
+VisiblePageRect *PixmapRequest::visiblePageRect() const
+{
+    return d->mVisiblePageRect;
 }
 
 void PixmapRequestPrivate::swap()

@@ -139,7 +139,7 @@ class OKULAR_EXPORT Page
          * Returns whether the page has a pixmap of size @p width x @p height
          * for the observer with given @p id.
          */
-        bool hasPixmap( int id, int width = -1, int height = -1 ) const;
+        bool hasPixmap( int id, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect() ) const;
 
         /**
          * Returns whether the page provides a text page (@ref TextPage).
@@ -255,7 +255,7 @@ class OKULAR_EXPORT Page
         /**
          * Sets the @p pixmap for the observer with the given @p id.
          */
-        void setPixmap( int id, QPixmap *pixmap );
+        void setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect = NormalizedRect() );
 
         /**
          * Sets the @p text page.

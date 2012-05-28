@@ -29,6 +29,7 @@ class PixmapGenerationThread;
 class PixmapRequest;
 class TextPage;
 class TextPageGenerationThread;
+class VisiblePageRect;
 
 class GeneratorPrivate
 {
@@ -79,6 +80,7 @@ class PixmapRequestPrivate
         bool mAsynchronous;
         bool mForce : 1;
         Page *mPage;
+        VisiblePageRect *mVisiblePageRect;
 };
 
 

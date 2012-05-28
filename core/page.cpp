@@ -201,7 +201,7 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
     d->m_isBoundingBoxKnown = true;
 }
 
-bool Page::hasPixmap( int id, int width, int height ) const
+bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
     QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constFind( id );
     if ( it == d->m_pixmaps.constEnd() )
@@ -212,7 +212,13 @@ bool Page::hasPixmap( int id, int width, int height ) const
 
     const QPixmap *pixmap = it.value().m_pixmap;
 
-    return (pixmap->width() == width && pixmap->height() == height);
+    if ( pixmap->width() != width || pixmap->height() != height )
+        return false;
+
+    if ( rect.isNull() )
+        return true;
+
+    return (rect == it.value().m_rect);
 }
 
 bool Page::hasTextPage() const
@@ -459,7 +465,7 @@ QLinkedList< FormField * > Page::formFields() const
     return d->formfields;
 }
 
-void Page::setPixmap( int id, QPixmap *pixmap )
+void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
 {
     if ( d->m_rotation == Rotation0 ) {
         QMap< int, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( id );
@@ -472,6 +478,7 @@ void Page::setPixmap( int id, QPixmap *pixmap )
             it = d->m_pixmaps.insert( id, PagePrivate::PixmapObject() );
         }
         it.value().m_pixmap = pixmap;
+        it.value().m_rect = rect;
         it.value().m_rotation = d->m_rotation;
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );

@@ -873,7 +873,26 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
     QImage img;
     if (p)
     {
-        img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
+        if ( request->visiblePageRect() && !request->visiblePageRect()->rect.isNull() )
+        {
+            // TODO: Even though  we're only rendering the visible region, the
+            // generated image is still as big as if we were rendering the
+            // whole page at once.
+            QRect rect = request->visiblePageRect()->rect.geometry( request->width(), request->height() );
+            // Call poppler to render only the visible region
+            QImage visibleImg = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0 );
+
+            // Get the generated image and placing at the right position
+            // relative to the page.
+            img = QImage( request->width(), request->height(), visibleImg.format() );
+            QPainter p( &img );
+            p.drawImage( rect.topLeft(), visibleImg );
+            p.end();
+        }
+        else
+        {
+            img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
+        }
     }
     else
     {

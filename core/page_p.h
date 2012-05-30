@@ -16,14 +16,13 @@
 #include <qmap.h>
 #include <qmatrix.h>
 #include <qstring.h>
+#include <qdom.h>
 
 // local includes
 #include "global.h"
 #include "area.h"
 
 class QColor;
-class QDomDocument;
-class QDomNode;
 
 namespace Okular {
 
@@ -43,7 +42,11 @@ enum PageItem
     None = 0,
     AnnotationPageItems = 0x01,
     FormFieldPageItems = 0x02,
-    AllPageItems = 0xff
+    AllPageItems = 0xff,
+
+    /* If set along with AnnotationPageItems, tells saveLocalContents to save
+     * the original annotations (if any) instead of the modified ones */
+    OriginalAnnotationPageItems = 0x100
 };
 Q_DECLARE_FLAGS(PageItems, PageItem)
 
@@ -125,6 +128,7 @@ class PagePrivate
         QString m_label;
 
         bool m_isBoundingBoxKnown : 1;
+        QDomDocument restoredLocalAnnotationList; // <annotationList>...</annotationList>
 };
 
 }

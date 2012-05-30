@@ -736,6 +736,9 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
             QTime time;
             time.start();
 #endif
+            // Clone annotationList as root node in restoredLocalAnnotationList
+            const QDomNode clonedNode = restoredLocalAnnotationList.importNode( childElement, true );
+            restoredLocalAnnotationList.appendChild( clonedNode );
 
             // iterate over all annotations
             QDomNode annotationNode = childElement.firstChild();
@@ -803,10 +806,6 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
 {
-    // only add a node if there is some stuff to write into
-    if ( m_page->m_annotations.isEmpty() && formfields.isEmpty() )
-        return;
-
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
     pageElement.setAttribute( "number", m_number );
@@ -825,7 +824,17 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
 #endif
 
     // add annotations info if has got any
-    if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
+    if ( ( what & AnnotationPageItems ) && ( what & OriginalAnnotationPageItems ) )
+    {
+        const QDomElement savedDocRoot = restoredLocalAnnotationList.documentElement();
+        if ( !savedDocRoot.isNull() )
+        {
+            // Import and append node in target document
+            const QDomNode importedNode = document.importNode( savedDocRoot, true );
+            pageElement.appendChild( importedNode );
+        }
+    }
+    else if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );

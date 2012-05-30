@@ -236,8 +236,8 @@ class DocumentPrivate
         QSet< View * > m_views;
 
         bool m_annotationEditingEnabled;
+        bool m_annotationsNeedSaveAs;
         bool m_annotationBeingMoved; // is an annotation currently being moved?
-        bool m_containsExternalAnnotations; // set on opening and never changed
         bool m_showWarningLimitedAnnotSupport;
 };
 

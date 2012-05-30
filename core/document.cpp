@@ -777,13 +777,14 @@ void DocumentPrivate::warnLimitedAnnotSupport()
         return;
     m_showWarningLimitedAnnotSupport = false; // Show the warning once
 
-    if ( canAddAnnotationsNatively() )
+    if ( m_annotationsNeedSaveAs )
     {
-        // Show only if there are external annotations (we follow the usual XML path otherwise)
-        if ( m_containsExternalAnnotations )
-            KMessageBox::sorry( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed") );
+        KMessageBox::information( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
     }
-    else
+
+    // Warn the user that he can only save as okular archive, but don't warn if
+    // this document is already an archive
+    if ( !canAddAnnotationsNatively() && !m_archiveData )
     {
         KMessageBox::information( m_parent->widget(), i18n("You can save the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
     }
@@ -810,8 +811,14 @@ void DocumentPrivate::saveDocumentInfo() const
         QDomElement pageList = doc.createElement( "pageList" );
         root.appendChild( pageList );
         PageItems saveWhat = AllPageItems;
-        if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
-            saveWhat &= ~AnnotationPageItems; // Don't save local annotations in this case
+        if ( m_annotationsNeedSaveAs )
+        {
+            /* In this case, if the user makes a modification, he's requested to
+             * save to a new document. Therefore, if there are existing local
+             * annotations, we save them back unmodified in the original
+             * document's metadata, so that it appears that it was not changed */
+            saveWhat |= OriginalAnnotationPageItems;
+        }
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for ( ; pIt != pEnd; ++pIt )
@@ -1678,24 +1685,32 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
-    d->m_containsExternalAnnotations = false;
-    d->m_showWarningLimitedAnnotSupport = true;
+
+    bool containsExternalAnnotations = false;
     foreach ( Page * p, d->m_pagesVector )
     {
         p->d->m_doc = d;
         if ( !p->annotations().empty() )
-            d->m_containsExternalAnnotations = true;
+            containsExternalAnnotations = true;
     }
+
+    // Be quiet while restoring local annotations
+    d->m_showWarningLimitedAnnotSupport = false;
+    d->m_annotationsNeedSaveAs = false;
 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
         d->loadDocumentInfo( d->m_archiveData->metadataFileName );
+        d->m_annotationsNeedSaveAs = true;
     }
     else
     {
         d->loadDocumentInfo();
+        d->m_annotationsNeedSaveAs = ( d->canAddAnnotationsNatively() && containsExternalAnnotations );
     }
+
+    d->m_showWarningLimitedAnnotSupport = true;
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
@@ -2361,8 +2376,8 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
 {
     int flags = DocumentObserver::Annotations;
 
-    if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
-        flags |= DocumentObserver::NeedSaveAs; // Annotations are not saved locally in this case
+    if ( m_annotationsNeedSaveAs )
+        flags |= DocumentObserver::NeedSaveAs;
 
     foreachObserverD( notifyPageChanged( page, flags ) );
 }

@@ -236,6 +236,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         // the document
         Okular::Document * m_document;
         QString m_temporaryLocalFile;
+        bool isDocumentArchive;
 
         // main widgets
         Sidebar *m_sidebar;

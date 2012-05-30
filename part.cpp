@@ -1175,12 +1175,18 @@ bool Part::openFile()
         mime = KMimeType::findByPath( fileNameToOpen );
     }
     bool ok = false;
+    isDocumentArchive = false;
     if ( uncompressOk )
     {
         if ( mime->is( "application/vnd.kde.okular-archive" ) )
+        {
             ok = m_document->openDocumentArchive( fileNameToOpen, url() );
+            isDocumentArchive = true;
+        }
         else
+        {
             ok = m_document->openDocument( fileNameToOpen, url(), mime );
+        }
     }
     bool canSearch = m_document->supportsSearching();
 
@@ -1188,7 +1194,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    if( m_saveAs ) m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
+    if( m_saveAs ) m_saveAs->setEnabled( ok && (m_document->canSaveChanges() || isDocumentArchive) );
     if( m_saveCopyAs ) m_saveCopyAs->setEnabled( ok );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
@@ -1959,7 +1965,14 @@ bool Part::saveAs( const KUrl & saveUrl )
     tf.close();
 
     QString errorText;
-    if ( !m_document->saveChanges( fileName, &errorText ) )
+    bool saved;
+
+    if ( isDocumentArchive )
+        saved = m_document->saveDocumentArchive( fileName );
+    else
+        saved = m_document->saveChanges( fileName, &errorText );
+
+    if ( !saved )
     {
         if (errorText.isEmpty())
         {

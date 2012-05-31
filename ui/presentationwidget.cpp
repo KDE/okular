@@ -573,6 +573,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         if ( m_drawingEngine && e->buttons() != Qt::NoButton )
         {
             QRect r = routeMouseDrawingEvent( e );
+            if ( r.isValid() )
             {
                 m_drawingRect |= r.translated( m_frames[ m_frameIndex ]->geometry.topLeft() );
                 update( m_drawingRect );
@@ -1094,6 +1095,9 @@ void PresentationWidget::generateOverlay()
 
 QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 {
+    if ( m_frameIndex == -1 ) // Can't draw on the summary page
+        return QRect();
+
     const QRect & geom = m_frames[ m_frameIndex ]->geometry;
     const Okular::Page * page = m_frames[ m_frameIndex ]->page;
 

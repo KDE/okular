@@ -340,7 +340,7 @@ QSize Shell::sizeHint() const
 
 bool Shell::queryClose()
 {
-    return m_part ? m_part->closeUrl() : true;
+    return m_part ? m_part->queryClose() : true;
 }
 
 #include "shell.moc"

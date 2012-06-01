@@ -798,7 +798,7 @@ Part::~Part()
     m_document->removeObserver( this );
 
     if ( m_document->isOpened() )
-        Part::closeUrl();
+        Part::closeUrl( false );
 
     delete m_toc;
     delete m_pageView;

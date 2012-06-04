@@ -22,6 +22,7 @@
 #include <kparts/part.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
+#include <kpushbutton.h>
 #include <kservice.h>
 #include <kdebug.h>
 
@@ -128,6 +129,7 @@ FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent
     // Set up the dialog
     setCaption(i18n("Print Preview"));
     setButtons(KDialog::Close);
+    button(KDialog::Close)->setAutoDefault(false);
 
     restoreDialogSize(d->config->group("Print Preview"));
 }

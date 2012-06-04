@@ -4053,6 +4053,25 @@ bool DocumentViewport::operator==( const DocumentViewport & vp ) const
     return true;
 }
 
+bool DocumentViewport::operator<( const DocumentViewport & vp ) const
+{
+    // TODO: Check autoFit and Position
+
+    if ( pageNumber != vp.pageNumber )
+        return pageNumber < vp.pageNumber;
+
+    if ( !rePos.enabled && vp.rePos.enabled )
+        return true;
+
+    if ( !vp.rePos.enabled )
+        return false;
+
+    if ( rePos.normalizedY != vp.rePos.normalizedY )
+        return rePos.normalizedY < vp.rePos.normalizedY;
+
+    return rePos.normalizedX < vp.rePos.normalizedX;
+}
+
 
 /** DocumentInfo **/
 

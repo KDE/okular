@@ -837,6 +837,7 @@ class OKULAR_EXPORT DocumentViewport
          * @internal
          */
         bool operator==( const DocumentViewport &other ) const;
+        bool operator<( const DocumentViewport &other ) const;
 
         /**
          * The number of the page nearest the center of the viewport.

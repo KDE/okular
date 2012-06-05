@@ -187,6 +187,7 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
                 ta->setTextType( Okular::TextAnnotation::Linked );
+                ta->setTextIcon( "Note" );
                 ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 double iconhei=0.03;

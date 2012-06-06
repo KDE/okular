@@ -779,9 +779,32 @@ void PresentationWidget::changePage( int newPage )
     if ( m_frameIndex == newPage )
         return;
 
-    const int oldIndex = m_frameIndex;
-    // check if pixmap exists or else request it
+    // prepare to leave the current page
+    if ( m_frameIndex != -1 )
+    {
+        // remove the drawings on the old page before switching
+        clearDrawings();
+
+        // stop video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        {
+            vw->stop();
+            vw->hide();
+        }
+
+        // stop audio playback, if any
+        Okular::AudioPlayer::instance()->stopPlaybacks();
+
+        // perform the page closing action, if any
+        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) )
+            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) );
+    }
+
+    // switch to newPage
     m_frameIndex = newPage;
+    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+
+    // check if pixmap exists or else request it
     PresentationFrame * frame = m_frames[ m_frameIndex ];
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
@@ -803,51 +826,13 @@ void PresentationWidget::changePage( int newPage )
         generatePage();
     }
 
-    // set a new viewport in document if page number differs
-    if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
-    {
-        // stop the audio playback, if any
-        Okular::AudioPlayer::instance()->stopPlaybacks();
-        // perform the page closing action, if any
-        if ( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) )
-            m_document->processAction( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
+    // perform the page opening action, if any
+    if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
+        m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
-        // remove the drawing on the old page before switching
-        clearDrawings();
-        m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
-
-        // perform the page opening action, if any
-        if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
-            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        {
-            vw->pageEntered();
-        }
-    }
-
-    if ( oldIndex != m_frameIndex )
-    {
-        if ( oldIndex != -1 )
-        {
-            Q_FOREACH ( VideoWidget *vw, m_frames[ oldIndex ]->videoWidgets )
-            {
-                vw->stop();
-                vw->hide();
-            }
-        }
-        else
-        {
-            // we have just opened the presentation view
-            if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
-                m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-            Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-            {
-                vw->pageEntered();
-            }
-        }
-    }
+    // start autoplay video playback
+    Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        vw->pageEntered();
 }
 
 void PresentationWidget::generatePage( bool disableTransition )
@@ -1222,14 +1207,16 @@ void PresentationWidget::requestPixmaps()
 
 void PresentationWidget::slotNextPage()
 {
-    // loop when configured
-    if ( m_frameIndex == (int)m_frames.count() - 1 && Okular::Settings::slidesLoop() )
-        m_frameIndex = -1;
+    int nextIndex = m_frameIndex + 1;
 
-    if ( m_frameIndex < (int)m_frames.count() - 1 )
+    // loop when configured
+    if ( nextIndex == m_frames.count() && Okular::Settings::slidesLoop() )
+        nextIndex = 0;
+
+    if ( nextIndex < m_frames.count() )
     {
         // go to next page
-        changePage( m_frameIndex + 1 );
+        changePage( nextIndex );
         // auto advance to the next page if set
         startAutoChangeTimer();
     }
@@ -1369,7 +1356,7 @@ void PresentationWidget::togglePencilMode( bool on )
 
 void PresentationWidget::clearDrawings()
 {
-    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
+    m_document->removePageAnnotations( m_frameIndex, m_currentPageDrawings );
     m_currentPageDrawings.clear();
 }
 

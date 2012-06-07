@@ -19,7 +19,7 @@ static KAboutData createAboutData()
                        "okular_epub",
                        "okular_epub",
                        ki18n("EPub Backend"),
-                       "0.2",
+                       "0.2.1",
                        ki18n("An EPub backend"),
                        KAboutData::License_GPL,
                        ki18n("© 2008 Ely Levy")

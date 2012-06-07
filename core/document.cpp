@@ -3625,6 +3625,7 @@ bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
 
     const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
     d->m_archiveData = archiveData.get();
+    d->m_archivedFileName = documentFileName;
     bool ret = openDocument( tempFileName, url, docMime );
 
     if ( ret )
@@ -3644,7 +3645,9 @@ bool Document::saveDocumentArchive( const QString &fileName )
     if ( !d->m_generator )
         return false;
 
-    QString docFileName = d->m_url.fileName();
+    /* If we opened an archive, use the name of original file (eg foo.pdf)
+     * instead of the archive's one (eg foo.okular) */
+    QString docFileName = d->m_archiveData ? d->m_archivedFileName : d->m_url.fileName();
     if ( docFileName == QLatin1String( "-" ) )
         return false;
 

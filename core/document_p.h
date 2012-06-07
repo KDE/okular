@@ -227,6 +227,7 @@ class DocumentPrivate
         Scripter *m_scripter;
 
         ArchiveData *m_archiveData;
+        QString m_archivedFileName;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;

@@ -173,9 +173,11 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->addSeparator();
     QAction *drawingAct = collection->action( "presentation_drawing_mode" );
     connect( drawingAct, SIGNAL(toggled(bool)), SLOT(togglePencilMode(bool)) );
+    drawingAct->setEnabled( true );
     m_topBar->addAction( drawingAct );
     addAction( drawingAct );
     QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
+    eraseDrawingAct->setEnabled( true );
     connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
@@ -264,8 +266,15 @@ PresentationWidget::~PresentationWidget()
 
     QAction *drawingAct = m_ac->action( "presentation_drawing_mode" );
     disconnect( drawingAct, 0, this, 0 );
-    if ( drawingAct->isChecked() )
-        drawingAct->toggle();
+    drawingAct->setChecked( false );
+    drawingAct->setEnabled( false );
+
+    QAction *eraseDrawingAct = m_ac->action( "presentation_erase_drawings" );
+    eraseDrawingAct->setEnabled( false );
+
+    QAction *blackScreenAct = m_ac->action( "switch_blackscreen_mode" );
+    blackScreenAct->setChecked( false );
+    blackScreenAct->setEnabled( false );
     delete m_drawingEngine;
 
     // delete frames
@@ -382,6 +391,7 @@ void PresentationWidget::setupActions( KActionCollection * collection )
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
     connect( action, SIGNAL(toggled(bool)), SLOT(toggleBlackScreenMode(bool)) );
+    action->setEnabled( true );
     addAction( action );
 }
 

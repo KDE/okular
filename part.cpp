@@ -782,14 +782,17 @@ void Part::setupActions()
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
     blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
     blackscreenAction->setIcon( KIcon( "view-presentation" ) );
+    blackscreenAction->setEnabled( false );
 
     KToggleAction *drawingAction = new KToggleAction( i18n( "Toggle Drawing Mode" ), ac );
     ac->addAction( "presentation_drawing_mode", drawingAction );
     drawingAction->setIcon( KIcon( "draw-freehand" ) );
+    drawingAction->setEnabled( false );
 
     KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
+    eraseDrawingAction->setEnabled( false );
 }
 
 Part::~Part()

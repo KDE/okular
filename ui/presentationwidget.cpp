@@ -266,7 +266,6 @@ PresentationWidget::~PresentationWidget()
     disconnect( drawingAct, 0, this, 0 );
     if ( drawingAct->isChecked() )
         drawingAct->toggle();
-    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     delete m_drawingEngine;
 
     // delete frames
@@ -526,15 +525,17 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         (void)r;
         if ( m_drawingEngine->creationCompleted() )
         {
-            QList< Okular::Annotation * > annots = m_drawingEngine->end();
+            // add drawing to current page
+            m_currentPageDrawings << m_drawingEngine->endSmoothPath();
+
             // manually disable and re-enable the pencil mode, so we can do
             // cleaning of the actual drawer and create a new one just after
             // that - that gives continuous drawing
             togglePencilMode( false );
             togglePencilMode( true );
-            foreach( Okular::Annotation * ann, annots )
-                m_document->addPageAnnotation( m_frameIndex, ann );
-            m_currentPageDrawings << annots;
+
+            // schedule repaint
+            update();
         }
         return;
     }
@@ -660,12 +661,21 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         // copy the rendered pixmap to the screen
         painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
     }
-    if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
+
+    // paint drawings
+    if ( m_frameIndex != -1 )
     {
         const QRect & geom = m_frames[ m_frameIndex ]->geometry;
         painter.save();
         painter.translate( geom.topLeft() );
-        m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+        painter.setRenderHints( QPainter::Antialiasing );
+
+        foreach ( const SmoothPath &drawing, m_currentPageDrawings )
+            drawing.paint( &painter, geom.width(), geom.height() );
+
+        if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
+            m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+
         painter.restore();
     }
     painter.end();
@@ -1356,8 +1366,8 @@ void PresentationWidget::togglePencilMode( bool on )
 
 void PresentationWidget::clearDrawings()
 {
-    m_document->removePageAnnotations( m_frameIndex, m_currentPageDrawings );
     m_currentPageDrawings.clear();
+    update();
 }
 
 void PresentationWidget::screenResized( int screen )

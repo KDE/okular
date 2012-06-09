@@ -86,10 +86,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     destPainter->fillRect( limits, color );
 
     /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-    double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
+    double pixmapRescaleRatio = pixmap ? limits.width() / (double)pixmap->width() : -1;
     long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
     if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-         (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
+         (limits.width() != pixmap->width() && pixmapPixels > 6000000L) )
     {
         // draw something on the blank page: the okular icon or a cross (as a fallback)
         if ( !busyPixmap->isNull() )
@@ -231,17 +231,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( !useBackBuffer )
     {
         // 4A.1. if size is ok, draw the page pixmap using painter
-        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            destPainter->drawPixmap( limits.topLeft(), *pixmap, limitsInPixmap );
-
-        // else draw a scaled portion of the magnified pixmap
-        else
-        {
-            QImage destImage;
-            scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
-            destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
-                                     limits.width(),limits.height() );
-        }
+        destPainter->drawPixmap( limits.topLeft(), *pixmap );
 
         // 4A.2. active painter is the one passed to this method
         mixedPainter = destPainter;

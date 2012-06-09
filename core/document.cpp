@@ -889,6 +889,8 @@ void DocumentPrivate::sendGeneratorRequest()
     {
         PixmapRequest * r = m_pixmapRequestsStack.last();
         const NormalizedRect visibleRect = ( r && r->visiblePageRect() ? r->visiblePageRect()->rect : NormalizedRect() );
+        const QRect requestRect = !visibleRect.isNull() ? visibleRect.geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
+
         if (!r)
             m_pixmapRequestsStack.pop_back();
 
@@ -898,7 +900,7 @@ void DocumentPrivate::sendGeneratorRequest()
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        else if ( (long)r->width() * (long)r->height() > 20000000L )
+        else if ( (long)requestRect.width() * (long)requestRect.height() > 20000000L )
         {
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
@@ -922,7 +924,8 @@ void DocumentPrivate::sendGeneratorRequest()
     }
 
     // [MEM] preventive memory freeing
-    qulonglong pixmapBytes = 4 * request->width() * request->height();
+    const QRect requestRect = request->visiblePageRect() ? request->visiblePageRect()->rect.geometry( request->width(), request->height() ) : QRect(0, 0, request->width(), request->height() );
+    qulonglong pixmapBytes = 4 * requestRect.width() * requestRect.height();
     if ( pixmapBytes > (1024 * 1024) )
         cleanupPixmapMemory( pixmapBytes );
 
@@ -3775,7 +3778,8 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     if ( itObserver != m_observers.constEnd() )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
-        qulonglong memoryBytes = 4 * req->width() * req->height();
+        const QRect requestRect = req->visiblePageRect() ? req->visiblePageRect()->rect.geometry( req->width(), req->height() ) : QRect(0, 0, req->width(), req->height() );
+        qulonglong memoryBytes = 4 * requestRect.width() * requestRect.height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
         m_allocatedPixmapsFifo.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;

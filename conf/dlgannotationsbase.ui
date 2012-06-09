@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>DlgIdentityBase</class>
- <widget class="QWidget" name="DlgIdentityBase" >
+ <class>DlgAnnotationsBase</class>
+ <widget class="QWidget" name="DlgAnnotationsBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>

@@ -74,6 +74,8 @@ class PageViewAnnotator : public QObject
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
 
+        void reparseConfig();
+
     private slots:
         void slotToolSelected( int toolID );
         void slotSaveToolbarOrientation( int side );

@@ -728,6 +728,13 @@ void PageView::reparseConfig()
 
     updatePageStep();
 
+    if ( d->annotator )
+    {
+        d->annotator->setEnabled( false );
+        d->annotator->reparseConfig();
+        if ( d->aToggleAnnotator->isChecked() )
+            slotToggleAnnotator( true );
+    }
 }
 
 KAction *PageView::toggleFormsAction() const

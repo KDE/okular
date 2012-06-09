@@ -614,6 +614,13 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
     m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
     m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
+    reparseConfig();
+}
+
+void PageViewAnnotator::reparseConfig()
+{
+    m_items.clear();
+
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
     if ( infoFile.exists() && infoFile.open( QIODevice::ReadOnly ) )

@@ -40,11 +40,12 @@ class PageView;
  * to this class that performs a rough visual representation of what the
  * annotation will become when finished.
  *
- * "data/tools.xml" is the file that contains Annotations/Engine association
+ * m_toolsDefinition is a DOM object that contains Annotations/Engine association
  * for the items placed in the toolbar. The XML is parsed (1) when populating
  * the toolbar and (2)after selecting a toolbar item, in which case an Ann is
  * initialized with the values in the XML and an engine is created to handle
- * that annotation.
+ * that annotation. m_toolsDefinition is created in reparseConfig according to
+ * user configuration.
  */
 class PageViewAnnotator : public QObject
 {

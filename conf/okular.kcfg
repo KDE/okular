@@ -237,5 +237,35 @@
     </code>
     <default code="true">userString</default>
   </entry>
+  <entry key="AnnotationTools" type="StringList">
+    <code>
+      QStringList annotationTools;
+      // load the default tool list from the 'xml tools definition' file
+      QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
+      if ( infoFile.exists() &amp;&amp; infoFile.open( QIODevice::ReadOnly ) )
+      {
+          QDomDocument doc;
+          if ( doc.setContent( &amp;infoFile ) )
+          {
+              QDomElement toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
+               // create the annotationTools list from the XML dom tree
+              QDomNode toolDescription = toolsDefinition.firstChild();
+              while ( toolDescription.isElement() )
+              {
+                  QDomElement toolElement = toolDescription.toElement();
+                  if ( toolElement.tagName() == "tool" )
+                  {
+                      QDomDocument temp;
+                      temp.appendChild( temp.importNode( toolElement, true) );
+                      // add each &lt;tool&gt;...&lt;/tool&gt; as XML string
+                      annotationTools &lt;&lt; temp.toString(-1);
+                  }
+                  toolDescription = toolDescription.nextSibling();
+              }
+          }
+      }
+    </code>
+    <default code="true">annotationTools</default>
+  </entry>
  </group>
 </kcfg>

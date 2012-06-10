@@ -621,47 +621,46 @@ void PageViewAnnotator::reparseConfig()
 {
     m_items.clear();
 
-    // load the tools from the 'xml tools definition' file. store the tree internally.
-    QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
-    if ( infoFile.exists() && infoFile.open( QIODevice::ReadOnly ) )
-    {
-        QDomDocument doc( "annotatingTools" );
-        if ( doc.setContent( &infoFile ) )
-        {
-            m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
+    // Read tool list from configuration. It's a list of XML <tool></tool> elements
+    const QStringList userTools = Okular::Settings::annotationTools();
 
-            // create the AnnotationToolItems from the XML dom tree
-            QDomNode toolDescription = m_toolsDefinition.firstChild();
-            while ( toolDescription.isElement() )
-            {
-                QDomElement toolElement = toolDescription.toElement();
-                if ( toolElement.tagName() == "tool" )
-                {
-                    AnnotationToolItem item;
-                    item.id = toolElement.attribute("id").toInt();
-                    item.text = i18n( toolElement.attribute( "name" ).toUtf8() );
-                    item.pixmap = toolElement.attribute("pixmap");
-                    QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
-                    if ( shortcutNode.isElement() )
-                        item.shortcut = shortcutNode.toElement().text();
-                    QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
-                    if ( engineNodeList.size() > 0 )
-                    {
-                        QDomElement engineEl = engineNodeList.item( 0 ).toElement();
-                        if ( !engineEl.isNull() && engineEl.hasAttribute( "type" ) )
-                            item.isText = engineEl.attribute( "type" ) == QLatin1String( "TextSelector" );
-                    }
-                    m_items.push_back( item );
-                }
-                toolDescription = toolDescription.nextSibling();
-            }
-        }
+    // Populate m_toolsDefinition
+    QDomDocument doc;
+    m_toolsDefinition = doc.createElement( "annotatingTools" );
+    foreach ( const QString &toolXml, userTools )
+    {
+        QDomDocument entryParser;
+        if ( entryParser.setContent( toolXml ) )
+            m_toolsDefinition.appendChild( doc.importNode( entryParser.documentElement(), true ) );
         else
-            kWarning() << "AnnotatingTools XML file seems to be damaged";
-        infoFile.close();
+            kWarning() << "Skipping malformed tool XML in AnnotationTools setting";
     }
-    else
-        kWarning() << "Unable to open AnnotatingTools XML definition";
+
+    // Create the AnnotationToolItems from the XML dom tree
+    QDomNode toolDescription = m_toolsDefinition.firstChild();
+    while ( toolDescription.isElement() )
+    {
+        QDomElement toolElement = toolDescription.toElement();
+        if ( toolElement.tagName() == "tool" )
+        {
+            AnnotationToolItem item;
+            item.id = toolElement.attribute("id").toInt();
+            item.text = i18n( toolElement.attribute( "name" ).toUtf8() );
+            item.pixmap = toolElement.attribute("pixmap");
+            QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
+            if ( shortcutNode.isElement() )
+                item.shortcut = shortcutNode.toElement().text();
+            QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+            if ( engineNodeList.size() > 0 )
+            {
+                QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+                if ( !engineEl.isNull() && engineEl.hasAttribute( "type" ) )
+                    item.isText = engineEl.attribute( "type" ) == QLatin1String( "TextSelector" );
+            }
+            m_items.push_back( item );
+        }
+        toolDescription = toolDescription.nextSibling();
+    }
 }
 
 PageViewAnnotator::~PageViewAnnotator()

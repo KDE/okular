@@ -86,11 +86,7 @@
      <property name="title">
       <string>Annotation tools</string>
      </property>
-     <layout class="QGridLayout">
-      <item row="0" column="0">
-       <widget class="KEditListBox" name="kcfg_AnnotationTools"/>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="annotToolsPlaceholder" />
     </widget>
    </item>
    <item>

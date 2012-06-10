@@ -9,6 +9,9 @@
 
 #include "dlgannotations.h"
 
+#include <kconfigdialogmanager.h>
+
+#include "widgetannottools.h"
 #include "ui_dlgannotationsbase.h"
 
 DlgAnnotations::DlgAnnotations( QWidget * parent )
@@ -16,4 +19,10 @@ DlgAnnotations::DlgAnnotations( QWidget * parent )
 {
     Ui_DlgAnnotationsBase dlg;
     dlg.setupUi( this );
+
+    WidgetAnnotTools * kcfg_AnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
+    dlg.annotToolsPlaceholder->addWidget( kcfg_AnnotationTools );
+    kcfg_AnnotationTools->setObjectName( "kcfg_AnnotationTools" );
+
+    KConfigDialogManager::changedMap()->insert( "WidgetAnnotTools" , SIGNAL(changed()) );
 }

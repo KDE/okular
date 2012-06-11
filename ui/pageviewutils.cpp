@@ -446,7 +446,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
     setAutoRaise( true );
     resize( buttonSize, buttonSize );
     setIconSize( QSize( iconSize, iconSize ) );
-    setIcon( KIcon( item.pixmap, GuiUtils::iconLoader() ) );
+    setIcon( QIcon( item.pixmap ) );
     // set shortcut if defined
     if ( !item.shortcut.isEmpty() )
         setShortcut( QKeySequence( item.shortcut ) );

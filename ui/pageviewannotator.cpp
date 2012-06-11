@@ -646,7 +646,7 @@ void PageViewAnnotator::reparseConfig()
             AnnotationToolItem item;
             item.id = toolElement.attribute("id").toInt();
             item.text = toolElement.attribute( "name" );
-            item.pixmap = toolElement.attribute("pixmap");
+            item.pixmap = makeToolPixmap( toolElement );
             QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
             if ( shortcutNode.isElement() )
                 item.shortcut = shortcutNode.toElement().text();
@@ -991,6 +991,47 @@ void PageViewAnnotator::slotToolDoubleClicked( int /*toolID*/ )
 void PageViewAnnotator::detachAnnotation()
 {
     m_toolBar->selectButton( -1 );
+}
+
+QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
+{
+    QPixmap pixmap( 32, 32 );
+    QString iconName;
+
+    const QString annotType = toolElement.attribute( "type" );
+
+    if ( annotType == "note-linked" )
+        iconName = "tool-note-okular";
+    else if ( annotType == "note-inline" )
+        iconName = "tool-note-inline-okular";
+    else if ( annotType == "ink" )
+        iconName = "tool-ink-okular";
+    else if ( annotType == "highlight" )
+        iconName = "tool-highlighter-okular";
+    else if ( annotType == "straight-line" )
+        iconName = "tool-line-okular";
+    else if ( annotType == "polygon" )
+        iconName = "tool-polygon-okular";
+    else if ( annotType == "stamp" )
+        iconName = "tool-stamp-okular";
+    else if ( annotType == "underline" )
+        iconName = "tool-underline-okular";
+    else if ( annotType == "ellipse" )
+        iconName = "tool-ellipse-okular";
+    else
+    {
+        /* Unrecognized annotation type */
+        pixmap.fill( Qt::red );
+    }
+
+    if ( !iconName.isEmpty() )
+    {
+        // Load static image file
+        const QString fileName = "okular/pics/" + iconName + ".png";
+        pixmap.load( KStandardDirs::locate( "data", fileName ) );
+    }
+
+    return pixmap;
 }
 
 #include "pageviewannotator.moc"

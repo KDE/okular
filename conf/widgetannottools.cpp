@@ -248,67 +248,67 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     m_type->addItem( name, qVariantFromValue(QString( template )) )
 
     TYPE( i18n("Note"),
-            "<tool pixmap=\"tool-note-okular\">"
+            "<tool type=\"note-linked\">"
              "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
               "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Inline Note" ),
-            "<tool pixmap=\"tool-note-inline-okular\">"
+            "<tool type=\"note-inline\">"
              "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note-inline\" block=\"true\">"
               "<annotation type=\"FreeText\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Freehand Line" ),
-            "<tool pixmap=\"tool-ink-okular\">"
+            "<tool type=\"ink\">"
              "<engine type=\"SmoothLine\" color=\"%1\">"
               "<annotation type=\"Ink\" color=\"%1\" width=\"2\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Straight Line" ),
-            "<tool pixmap=\"tool-line-okular\">"
+            "<tool type=\"straight-line\">"
              "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
               "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Polygon" ),
-            "<tool pixmap=\"tool-polygon-okular\">"
+            "<tool type=\"polygon\">"
              "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
               "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Highlight" ),
-            "<tool pixmap=\"tool-highlighter-okular\">"
+            "<tool type=\"highlight\">"
              "<engine type=\"TextSelector\" color=\"%1\">"
               "<annotation type=\"Highlight\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Squiggly" ),
-            "<tool pixmap=\"tool-highlighter-okular\">"
+            "<tool type=\"squiggly\">"
              "<engine type=\"TextSelector\" color=\"%1\">"
               "<annotation type=\"Squiggly\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Underline" ),
-            "<tool pixmap=\"tool-underline-okular\">"
+            "<tool type=\"underline\">"
              "<engine type=\"TextSelector\" color=\"%1\">"
               "<annotation type=\"Underline\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Strike out" ),
-            "<tool pixmap=\"tool-underline-okular\">"
+            "<tool type=\"strikeout\">"
              "<engine type=\"TextSelector\" color=\"%1\">"
               "<annotation type=\"StrikeOut\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Ellipse" ),
-            "<tool pixmap=\"tool-ellipse-okular\">"
+            "<tool type=\"ellipse\">"
              "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
               "<annotation type=\"GeomCircle\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"
             "</tool>" );
     TYPE( i18n("Rectangle" ),
-            "<tool pixmap=\"tool-ellipse-okular\">"
+            "<tool type=\"rectangle\">"
              "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
               "<annotation type=\"GeomSquare\" color=\"%1\" opacity=\"%2\" />"
              "</engine>"

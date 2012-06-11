@@ -83,6 +83,7 @@ class PageViewAnnotator : public QObject
         void slotToolDoubleClicked( int toolID );
 
     private:
+        static QPixmap makeToolPixmap( const QDomElement &toolElement );
         void detachAnnotation();
 
         // global class pointers

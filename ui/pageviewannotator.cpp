@@ -1008,20 +1008,86 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
         iconName = "tool-ink-okular";
     else if ( annotType == "highlight" )
         iconName = "tool-highlighter-okular";
-    else if ( annotType == "straight-line" )
-        iconName = "tool-line-okular";
-    else if ( annotType == "polygon" )
-        iconName = "tool-polygon-okular";
     else if ( annotType == "stamp" )
         iconName = "tool-stamp-okular";
-    else if ( annotType == "underline" )
-        iconName = "tool-underline-okular";
-    else if ( annotType == "ellipse" )
-        iconName = "tool-ellipse-okular";
     else
     {
-        /* Unrecognized annotation type */
-        pixmap.fill( Qt::red );
+        // Load base pixmap. We'll draw on top of it
+        pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
+
+        /* Parse the color */
+        QColor engineColor;
+        QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+        if ( engineNodeList.size() > 0 )
+        {
+            QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+            if ( !engineEl.isNull() && engineEl.hasAttribute( "color" ) )
+                engineColor = QColor( engineEl.attribute( "color" ) );
+        }
+
+        QPainter p( &pixmap );
+
+        if ( annotType == "ellipse" )
+        {
+            p.setRenderHint( QPainter::Antialiasing );
+            p.setPen( QPen( engineColor, 2 ) );
+            p.drawEllipse( 2, 7, 21, 14 );
+        }
+        else if ( annotType == "polygon" )
+        {
+            QPainterPath path;
+            path.moveTo( 0, 7 );
+            path.lineTo( 19, 7 );
+            path.lineTo( 19, 14 );
+            path.lineTo( 23, 14 );
+            path.lineTo( 23, 20 );
+            path.lineTo( 0, 20 );
+            p.setPen( QPen( engineColor, 1 ) );
+            p.drawPath( path );
+        }
+        else if ( annotType == "rectangle" )
+        {
+            p.setRenderHint( QPainter::Antialiasing );
+            p.setPen( QPen( engineColor, 2 ) );
+            p.drawRect( 2, 7, 21, 14 );
+        }
+        else if ( annotType == "squiggly" )
+        {
+            p.setPen( QPen( engineColor, 1, Qt::DotLine ) );
+            p.drawLine( 1, 13, 16, 13 );
+            p.drawLine( 2, 14, 15, 14 );
+            p.drawLine( 0, 20, 19, 20 );
+            p.drawLine( 1, 21, 18, 21 );
+        }
+        else if ( annotType == "straight-line" )
+        {
+            QPainterPath path;
+            path.moveTo( 1, 8 );
+            path.lineTo( 20, 8 );
+            path.lineTo( 1, 27 );
+            path.lineTo( 20, 27 );
+            p.setRenderHint( QPainter::Antialiasing );
+            p.setPen( QPen( engineColor, 1 ) );
+            p.drawPath( path ); // TODO To be discussed: This is not a straight line!
+        }
+        else if ( annotType == "strikeout" )
+        {
+            p.setPen( QPen( engineColor, 1 ) );
+            p.drawLine( 1, 10, 16, 10 );
+            p.drawLine( 0, 17, 19, 17 );
+        }
+        else if ( annotType == "underline" )
+        {
+            p.setPen( QPen( engineColor, 1 ) );
+            p.drawLine( 1, 13, 16, 13 );
+            p.drawLine( 0, 20, 19, 20 );
+        }
+        else
+        {
+            /* Unrecognized annotation type -- It shouldn't happen */
+            p.setPen( QPen( engineColor ) );
+            p.drawText( QPoint(20, 31), "?" );
+        }
     }
 
     if ( !iconName.isEmpty() )

@@ -10,8 +10,13 @@
 #ifndef _WIDGETANNOTTOOLS_H_
 #define _WIDGETANNOTTOOLS_H_
 
+#include <kdialog.h>
 #include <qwidget.h>
 
+class KLineEdit;
+class KComboBox;
+class KColorButton;
+class KIntNumInput;
 class KPushButton;
 class QListWidget;
 
@@ -46,6 +51,25 @@ class WidgetAnnotTools : public QWidget
         void slotRemove( bool );
         void slotMoveUp( bool );
         void slotMoveDown( bool );
+};
+
+class NewAnnotToolDialog : public KDialog
+{
+    Q_OBJECT
+
+    public:
+        NewAnnotToolDialog( QWidget *parent = 0 );
+        QString name() const;
+        QString toolXml() const;
+
+    private:
+        KLineEdit * m_name;
+        KComboBox * m_type;
+        KColorButton * m_color;
+        KIntNumInput * m_opacity;
+
+    private slots:
+        void slotNameEdited( const QString &new_name );
 };
 
 #endif

@@ -9,16 +9,22 @@
 
 #include "widgetannottools.h"
 
+#include <kcolorbutton.h>
+#include <kcombobox.h>
 #include <kdebug.h>
 #include <kicon.h>
 #include <klocalizedstring.h>
-#include <kmessagebox.h>
+#include <klineedit.h>
+#include <knuminput.h>
 #include <kpushbutton.h>
 
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QGroupBox>
+#include <QtGui/QLabel>
 #include <QtGui/QListWidget>
 #include <QtGui/QListWidgetItem>
+#include <QtGui/QStackedWidget>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
@@ -148,7 +154,20 @@ void WidgetAnnotTools::slotRowChanged( int )
 
 void WidgetAnnotTools::slotAdd( bool )
 {
-    KMessageBox::sorry( this, "Not implemented yet" );
+    NewAnnotToolDialog t( this );
+
+    if ( t.exec() != QDialog::Accepted )
+        return;
+
+    // Create list entry and attach XML string as data
+    QListWidgetItem * listEntry = new QListWidgetItem( t.name(), m_list );
+    listEntry->setData( ToolXmlRole, qVariantFromValue( t.toolXml() ) );
+
+    // Select and scroll
+    m_list->setCurrentItem( listEntry );
+    m_list->scrollToItem( listEntry );
+    updateButtons();
+    emit changed();
 }
 
 void WidgetAnnotTools::slotRemove( bool )
@@ -175,6 +194,144 @@ void WidgetAnnotTools::slotMoveDown( bool )
     m_list->scrollToItem( m_list->currentItem() );
     updateButtons();
     emit changed();
+}
+
+NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
+    : KDialog( parent )
+{
+    setCaption( i18n("Create annotation tool") );
+    setButtons( Ok | Cancel );
+    enableButton( Ok, false );
+    setDefaultButton( Ok );
+
+    QLabel * tmplabel;
+    QWidget *widget = new QWidget( this );
+    QGridLayout * widgetLayout = new QGridLayout( widget );
+
+    setMainWidget(widget);
+
+    m_name = new KLineEdit( widget );
+    connect( m_name, SIGNAL( textEdited(const QString &) ), this, SLOT( slotNameEdited(const QString &) ) );
+    tmplabel = new QLabel( i18n( "&Name:" ), widget );
+    tmplabel->setBuddy( m_name );
+    widgetLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    widgetLayout->addWidget( m_name, 0, 1 );
+
+    m_type = new KComboBox( false, widget );
+    tmplabel = new QLabel( i18n( "&Type:" ), widget );
+    tmplabel->setBuddy( m_type );
+    widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    widgetLayout->addWidget( m_type, 1, 1 );
+
+    QGroupBox * appearance = new QGroupBox( i18n( "Appearance" ), widget );
+    QGridLayout * appearanceLayout = new QGridLayout( appearance );
+
+    m_color = new KColorButton( appearance );
+    tmplabel = new QLabel( i18n( "&Color:" ), appearance );
+    m_color->setColor( Qt::green );
+    tmplabel->setBuddy( m_color );
+    appearanceLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    appearanceLayout->addWidget( m_color, 0, 1 );
+
+    m_opacity = new KIntNumInput( appearance );
+    m_opacity->setRange( 0, 100 );
+    m_opacity->setValue( 100 );
+    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+    tmplabel = new QLabel( i18n( "&Opacity:" ), appearance );
+    tmplabel->setBuddy( m_opacity );
+    appearanceLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    appearanceLayout->addWidget( m_opacity, 1, 1 );
+
+    widgetLayout->addWidget( appearance, 2, 0, 1, 2 );
+
+#define TYPE(name, template) \
+    m_type->addItem( name, qVariantFromValue(QString( template )) )
+
+    TYPE( i18n("Note"),
+            "<tool pixmap=\"tool-note-okular\">"
+             "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
+              "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Inline Note" ),
+            "<tool pixmap=\"tool-note-inline-okular\">"
+             "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note-inline\" block=\"true\">"
+              "<annotation type=\"FreeText\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Freehand Line" ),
+            "<tool pixmap=\"tool-ink-okular\">"
+             "<engine type=\"SmoothLine\" color=\"%1\">"
+              "<annotation type=\"Ink\" color=\"%1\" width=\"2\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Straight Line" ),
+            "<tool pixmap=\"tool-line-okular\">"
+             "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
+              "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Polygon" ),
+            "<tool pixmap=\"tool-polygon-okular\">"
+             "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
+              "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Highlight" ),
+            "<tool pixmap=\"tool-highlighter-okular\">"
+             "<engine type=\"TextSelector\" color=\"%1\">"
+              "<annotation type=\"Highlight\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Squiggly" ),
+            "<tool pixmap=\"tool-highlighter-okular\">"
+             "<engine type=\"TextSelector\" color=\"%1\">"
+              "<annotation type=\"Squiggly\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Underline" ),
+            "<tool pixmap=\"tool-underline-okular\">"
+             "<engine type=\"TextSelector\" color=\"%1\">"
+              "<annotation type=\"Underline\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Strike out" ),
+            "<tool pixmap=\"tool-underline-okular\">"
+             "<engine type=\"TextSelector\" color=\"%1\">"
+              "<annotation type=\"StrikeOut\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Ellipse" ),
+            "<tool pixmap=\"tool-ellipse-okular\">"
+             "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
+              "<annotation type=\"GeomCircle\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    TYPE( i18n("Rectangle" ),
+            "<tool pixmap=\"tool-ellipse-okular\">"
+             "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
+              "<annotation type=\"GeomSquare\" color=\"%1\" opacity=\"%2\" />"
+             "</engine>"
+            "</tool>" );
+    // TODO: Stamp
+#undef ADDTYPE
+}
+
+QString NewAnnotToolDialog::name() const
+{
+    return m_name->text();
+}
+
+QString NewAnnotToolDialog::toolXml() const
+{
+    const QString templ = m_type->itemData( m_type->currentIndex() ).value<QString>();
+    const double opacity = (double)m_opacity->value() / 100.0;
+    return templ.arg( m_color->color().name() ).arg( opacity );
+}
+
+void NewAnnotToolDialog::slotNameEdited( const QString &new_name )
+{
+    enableButton( Ok, !new_name.isEmpty() );
 }
 
 #include "moc_widgetannottools.cpp"

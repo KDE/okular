@@ -255,6 +255,17 @@
                   QDomElement toolElement = toolDescription.toElement();
                   if ( toolElement.tagName() == "tool" )
                   {
+                      // Translate strings
+                      toolElement.setAttribute( "name", i18n( toolElement.attribute("name").toUtf8() ) );
+                      QDomNode tooltip = toolElement.elementsByTagName( "tooltip" ).item( 0 );
+                      if ( tooltip.isElement() )
+                      {
+                          QDomElement trTooltip = doc.createElement( "tooltip" );
+                          QString trTooltipStr = i18nc( "Annotation tool",  tooltip.toElement().text().toUtf8() );
+                          trTooltip.appendChild( doc.createTextNode( trTooltipStr ) );
+                          toolElement.replaceChild( tooltip, trTooltip );
+                      }
+
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );
                       // add each &lt;tool&gt;...&lt;/tool&gt; as XML string

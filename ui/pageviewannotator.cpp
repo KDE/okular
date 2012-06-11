@@ -645,7 +645,7 @@ void PageViewAnnotator::reparseConfig()
         {
             AnnotationToolItem item;
             item.id = toolElement.attribute("id").toInt();
-            item.text = i18n( toolElement.attribute( "name" ).toUtf8() );
+            item.text = toolElement.attribute( "name" );
             item.pixmap = toolElement.attribute("pixmap");
             QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
             if ( shortcutNode.isElement() )
@@ -962,7 +962,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             {
                 const QString tip = toolSubElement.text();
                 if ( !tip.isEmpty() )
-                    m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), QString(), PageViewMessage::Annotation );
+                    m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
             }
         }
 

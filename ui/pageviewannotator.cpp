@@ -36,6 +36,7 @@
 #include "core/annotations.h"
 #include "settings.h"
 #include "annotationtools.h"
+#include "guiutils.h"
 #include "pageview.h"
 
 /** @short PickPointEngine */
@@ -996,20 +997,13 @@ void PageViewAnnotator::detachAnnotation()
 QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
 {
     QPixmap pixmap( 32, 32 );
-    QString iconName;
-
     const QString annotType = toolElement.attribute( "type" );
 
-    if ( annotType == "note-linked" )
-        iconName = "tool-note-okular";
-    else if ( annotType == "note-inline" )
-        iconName = "tool-note-inline-okular";
-    else if ( annotType == "ink" )
-        iconName = "tool-ink-okular";
-    else if ( annotType == "highlight" )
-        iconName = "tool-highlighter-okular";
-    else if ( annotType == "stamp" )
-        iconName = "tool-stamp-okular";
+    if ( annotType == "stamp" )
+    {
+        // Load static image file
+        pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-stamp-okular.png" ) );
+    }
     else
     {
         // Load base pixmap. We'll draw on top of it
@@ -1032,6 +1026,38 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
             p.setRenderHint( QPainter::Antialiasing );
             p.setPen( QPen( engineColor, 2 ) );
             p.drawEllipse( 2, 7, 21, 14 );
+        }
+        else if ( annotType == "highlight" )
+        {
+            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-highlighter-okular-colorizable.png" ) );
+            QImage colorizedOverlay = overlay;
+            GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+            p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+            p.drawImage( QPoint(0,-32), overlay ); // Text + Shadow (uncolorized)
+            p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+        }
+        else if ( annotType == "ink" )
+        {
+            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-ink-okular-colorizable.png" ) );
+            QImage colorizedOverlay = overlay;
+            GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+            p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+            p.drawImage( QPoint(0,-32), overlay ); // Shadow (uncolorized)
+            p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+        }
+        else if ( annotType == "note-inline" )
+        {
+            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-inline-okular-colorizable.png" ) );
+            GuiUtils::colorizeImage( overlay, engineColor );
+            p.drawImage( QPoint(0,0), overlay );
+        }
+        else if ( annotType == "note-linked" )
+        {
+            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-okular-colorizable.png" ) );
+            GuiUtils::colorizeImage( overlay, engineColor );
+            p.drawImage( QPoint(0,0), overlay );
         }
         else if ( annotType == "polygon" )
         {
@@ -1088,13 +1114,6 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
             p.setPen( QPen( engineColor ) );
             p.drawText( QPoint(20, 31), "?" );
         }
-    }
-
-    if ( !iconName.isEmpty() )
-    {
-        // Load static image file
-        const QString fileName = "okular/pics/" + iconName + ".png";
-        pixmap.load( KStandardDirs::locate( "data", fileName ) );
     }
 
     return pixmap;

@@ -12,6 +12,8 @@
 
 #include <QtCore/QString>
 
+class QColor;
+class QImage;
 class QPixmap;
 class QSize;
 class QWidget;
@@ -51,6 +53,9 @@ namespace GuiUtils
      * a media rendition.
      */
     Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation * annotation );
+
+    // colorize a gray image to the given color
+    void colorizeImage( QImage & image, const QColor & color, unsigned int alpha = 255 );
 }
 
 

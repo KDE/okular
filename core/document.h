@@ -570,8 +570,8 @@ class OKULAR_EXPORT Document : public QObject
          */
         enum SaveCapability
         {
-            Forms = 1,       ///< Can save form changes
-            Annotations = 2  ///< Can save annotation changes
+            SaveFormsCapability = 1,       ///< Can save form changes
+            SaveAnnotationsCapability = 2  ///< Can save annotation changes
         };
 
         /**

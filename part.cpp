@@ -1949,7 +1949,7 @@ void Part::slotSaveFileAs()
 
     /* Show a warning before saving if the generator can't save annotations,
      * unless we are going to save a .okular archive. */
-    if ( !isDocumentArchive && !m_document->canSaveChanges( Document::Annotations ) )
+    if ( !isDocumentArchive && !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
     {
         /* Search local annotations */
         bool containsLocalAnnotations = false;

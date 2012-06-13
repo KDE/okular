@@ -86,6 +86,7 @@
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
+#include "core/annotations.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
@@ -1945,6 +1946,38 @@ void Part::slotSaveFileAs()
 {
     if ( m_embedMode == PrintPreviewMode )
        return;
+
+    /* Show a warning before saving if the generator can't save annotations,
+     * unless we are going to save a .okular archive. */
+    if ( !isDocumentArchive && !m_document->canSaveChanges( Document::Annotations ) )
+    {
+        /* Search local annotations */
+        bool containsLocalAnnotations = false;
+        const int pagecount = m_document->pages();
+
+        for ( int pageno = 0; pageno < pagecount; ++pageno )
+        {
+            const Okular::Page *page = m_document->page( pageno );
+            foreach ( const Okular::Annotation *ann, page->annotations() )
+            {
+                if ( !(ann->flags() & Okular::Annotation::External) )
+                {
+                    containsLocalAnnotations = true;
+                    break;
+                }
+            }
+            if ( containsLocalAnnotations )
+                break;
+        }
+
+        /* Don't show it if there are no local annotations */
+        if ( containsLocalAnnotations )
+        {
+            int res = KMessageBox::warningContinueCancel( widget(), "Your annotations will not be exported.\nYou can export the annotated document using File -> Export As -> Document Archive" );
+            if ( res != KMessageBox::Continue )
+                return; // Canceled
+        }
+    }
 
     KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
                                             QString(), widget(), QString(),

@@ -779,14 +779,14 @@ void DocumentPrivate::warnLimitedAnnotSupport()
 
     if ( m_annotationsNeedSaveAs )
     {
+        // Shown if the user is editing annotations in a file whose metadata is
+        // not stored locally (.okular archives belong to this category)
         KMessageBox::information( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
     }
-
-    // Warn the user that he can only save as okular archive, but don't warn if
-    // this document is already an archive
-    if ( !canAddAnnotationsNatively() && !m_archiveData )
+    else if ( !canAddAnnotationsNatively() )
     {
-        KMessageBox::information( m_parent->widget(), i18n("You can save the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
+        // If the generator doesn't support native annotations
+        KMessageBox::information( m_parent->widget(), i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
     }
 }
 

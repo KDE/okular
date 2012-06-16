@@ -406,7 +406,7 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoom  = new KSelectAction(KIcon( "page-zoom" ), i18n("Zoom"), this);
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
-    d->aZoom->setMaxComboViewCount( 13 );
+    d->aZoom->setMaxComboViewCount( 16 );
     connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
     updateZoomText();
 
@@ -1743,14 +1743,14 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         }
 
         if ( mouseY <= mouseContainer.top() + 4 &&
-             d->zoomFactor < 3.99 )
+             d->zoomFactor < 15.99 )
         {
             mouseY = mouseContainer.bottom() - 5;
             QCursor::setPos( e->globalPos().x(), mouseY );
         }
         // wrap mouse from bottom to top
         else if ( mouseY >= mouseContainer.bottom() - 4 &&
-                  d->zoomFactor > 0.11 )
+                  d->zoomFactor > 0.101 )
         {
             mouseY = mouseContainer.top() + 5;
             QCursor::setPos( e->globalPos().x(), mouseY );
@@ -2339,8 +2339,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentAreaWidth());
                 double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentAreaHeight());
 
-                // zoom up to 400%
-                if ( d->zoomFactor <= 4.0 || zoom <= 1.0 )
+                // zoom up to 1600%
+                if ( d->zoomFactor <= 16.0 || zoom <= 1.0 )
                 {
                     d->zoomFactor *= zoom;
                     viewport()->setUpdatesEnabled( false );
@@ -3441,8 +3441,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             d->zoomFactor = -1;
             break;
     }
-    if ( newFactor > 4.0 )
-        newFactor = 4.0;
+    if ( newFactor > 16.0 )
+        newFactor = 16.0;
     if ( newFactor < 0.1 )
         newFactor = 0.1;
 
@@ -3471,8 +3471,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     else if ( newZoomMode == ZoomFixed && newFactor == d->zoomFactor )
         updateZoomText();
 
-    d->aZoomIn->setEnabled( d->zoomFactor < 3.9 );
-    d->aZoomOut->setEnabled( d->zoomFactor > 0.2 );
+    d->aZoomIn->setEnabled( d->zoomFactor < 15.999 );
+    d->aZoomOut->setEnabled( d->zoomFactor > 0.101 );
 }
 
 void PageView::updateZoomText()
@@ -3489,13 +3489,13 @@ void PageView::updateZoomText()
 
     // add percent items
     QString double_oh( "00" );
-    const float zoomValue[10] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00 };
+    const float zoomValue[13] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
     int idx = 0,
         selIdx = 2; // use 3 if "fit text" present
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
-    while ( idx < 10 || !inserted )
+    while ( idx < 13 || !inserted )
     {
-        float value = idx < 10 ? zoomValue[ idx ] : newFactor;
+        float value = idx < 13 ? zoomValue[ idx ] : newFactor;
         if ( !inserted && newFactor < (value - 0.0001) )
             value = newFactor;
         else

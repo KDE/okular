@@ -270,7 +270,7 @@
   <entry key="ZoomFactor" type="Double" >
     <default>1.0</default>
     <min>0.1</min>
-    <max>4.0</max>
+    <max>16.0</max>
   </entry>
   <entry key="ShowSourceLocationsGraphically" type="Bool" >
    <default>false</default>

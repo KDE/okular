@@ -1663,8 +1663,8 @@ Add a 'Find Previous' entry
 
 		<itemizedlist>
 			<title>Program Copyright:</title>
-			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> </para></listitem>
-			<listitem><para>Pino Toscano <email>pino@kde.org</email> Current maintainer</para></listitem>
+			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> Current maintainer</para></listitem>
+			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 			<listitem><para>Enrico Ros <email>eros.kde@email.it</email> &kpdf; developer</para></listitem>
 		</itemizedlist>
 

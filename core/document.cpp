@@ -249,8 +249,6 @@ qulonglong DocumentPrivate::getTotalMemory()
     if ( !memFile.open( QIODevice::ReadOnly ) )
         return (cachedValue = 134217728);
 
-    // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
-    // and 'Cached' fields. consider swapped memory as used memory.
     QTextStream readStream( &memFile );
      while ( true )
     {

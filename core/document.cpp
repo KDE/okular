@@ -250,7 +250,7 @@ qulonglong DocumentPrivate::getTotalMemory()
         return (cachedValue = 134217728);
 
     QTextStream readStream( &memFile );
-     while ( true )
+    while ( true )
     {
         QString entry = readStream.readLine();
         if ( entry.isNull() ) break;

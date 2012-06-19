@@ -1205,6 +1205,17 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<guimenu>Settings</guimenu>
+							<guimenuitem>Show Page Bar</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Toggle the page bar</action> at the bottom of document area on and off to save vertical place in &okular; window.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Settings</guimenu>
 							<guimenuitem>Full Screen Mode</guimenuitem>

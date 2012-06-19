@@ -1089,8 +1089,8 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the previous bookmarked page</action>, or do nothing if there
-							are no bookmark prior to the current one.</para>
+						<para><action>Go to the previous bookmark</action>, or do nothing if there
+							are no bookmarks prior to the current one.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1101,8 +1101,8 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Go to the next bookmarked page</action>, or do nothing if there
-							are no bookmark after the current one.</para>
+						<para><action>Go to the next bookmark</action>, or do nothing if there
+							are no bookmarks after the current one.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1114,8 +1114,8 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para>This is an always disabled action that appears in this menu only if the current document has
-						no bookmarks. Otherwise a list of all bookmarked pages is displayed here. Clicking on these bookmarks
-						allows you to go directly to the associated pages.</para>
+						no bookmarks. Otherwise a list of all bookmarks is displayed here. Clicking on these bookmarks
+						allows you to go directly to the associated position.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

@@ -292,19 +292,34 @@ qulonglong DocumentPrivate::getFreeMemory()
     qulonglong memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
+    static const int nElems = 5;
+    QString names[nElems] = { "MemFree:", "Buffers:", "Cached:", "SwapFree:", "SwapTotal:" };
+    qulonglong values[nElems] = { 0, 0, 0, 0, 0 };
+    bool foundValues[nElems] = { false, false, false, false, false };
     while ( true )
     {
         entry = readStream.readLine();
         if ( entry.isNull() ) break;
-        if ( entry.startsWith( "MemFree:" ) ||
-                entry.startsWith( "Buffers:" ) ||
-                entry.startsWith( "Cached:" ) ||
-                entry.startsWith( "SwapFree:" ) )
-            memoryFree += entry.section( ' ', -2, -2 ).toULongLong();
-        if ( entry.startsWith( "SwapTotal:" ) )
-            memoryFree -= entry.section( ' ', -2, -2 ).toULongLong();
+        for ( int i = 0; i < nElems; ++i )
+        {
+            if ( entry.startsWith( names[i] ) )
+            {
+                values[i] = entry.section( ' ', -2, -2 ).toULongLong( &foundValues[i] );
+            }
+        }
     }
     memFile.close();
+    bool found = true;
+    for ( int i = 0; found && i < nElems; ++i )
+        found = found && foundValues[i];
+    if ( found )
+    {
+        memoryFree = values[0] + values[1] + values[2] + values[3];
+        if ( values[4] > memoryFree )
+            memoryFree = 0;
+        else
+            memoryFree -= values[4];
+    }
 
     lastUpdate = QTime::currentTime();
 

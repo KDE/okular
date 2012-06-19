@@ -1064,7 +1064,20 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para>
-							<action>Add or remove a bookmark for the current page</action>.
+							<action>Add or remove a bookmark for the current position</action>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Bookmarks</guimenu>
+							<guimenuitem>Rename Bookmark</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+						  <action>Rename a bookmark for the current position</action>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -1077,7 +1090,7 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para><action>Go to the previous bookmarked page</action>, or do nothing if there
-							are no bookmarked pages prior to the current one.</para>
+							are no bookmark prior to the current one.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1089,7 +1102,7 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para><action>Go to the next bookmarked page</action>, or do nothing if there
-							are no bookmarked pages after the current one.</para>
+							are no bookmark after the current one.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

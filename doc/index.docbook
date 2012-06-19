@@ -471,6 +471,48 @@ Add a 'Find Previous' entry
 				</note>
 			</sect2>
 		</sect1>
+		<sect1 id="bookmark-management">
+			<title>Bookmark Management</title>
+			<para>
+				&okular; has a very flexible bookmark system. &okular; saves the position on the page in bookmark and allows you to define more than one bookmark per page.
+			</para>
+			<para>
+			  To manage bookmarks in &okular; you can use <guilabel>Bookmarks</guilabel> view from <guilabel>Navigation Panel</guilabel>, <link linkend="menubookmarks">Bookmarks menu</link> or context menu of document view (click with &RMB; to open it).
+			</para>
+			<sect2 id="bookmarks-view">
+				<title>Bookmarks view</title>
+				<para>
+				  To open <guilabel>Bookmarks</guilabel> view click on <guilabel>Bookmarks</guilabel> item on the <guilabel>Navigation Panel</guilabel>. If the <guilabel>Navigation Panel</guilabel> is not shown, use <menuchoice><shortcut><keycap>F7</keycap></shortcut> <guimenu>Settings</guimenu><guimenuitem>Show Navigation Panel</guimenuitem>
+				  </menuchoice> main menu item to make it visible.
+				</para>
+				<screenshot>
+				    <screeninfo>Bookmark view context menu</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG" />
+				      </imageobject>
+				      <textobject>
+					<phrase>Bookmark view context menu</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para>
+				  The filter bar at the top of <guilabel>Bookmarks</guilabel> view can be used to filter the content of bookmark list pane according to the text in the box.
+				</para>
+				<para>
+				  The list pane permits to view the bookmark list in a tree-like fashion: each document in the list can be <quote>expanded</quote> or <quote>collapsed</quote> by clicking on the <guiicon>&lt;</guiicon> or <guiicon>v</guiicon> icon next to it.
+				</para>
+				<para>
+				  Click on <inlinemediaobject><imageobject><imagedata fileref="rating.png" format="PNG"/></imageobject></inlinemediaobject> icon below the list to show only the bookmarks from the current document.
+				</para>
+				<para>
+				  Right-click menu of document item can be used to open document, rename its item or remove it from the list. Remember that the removal of a document item leads to the removal of all bookmarks in the corresponding document.
+				</para>
+				<para>
+				  Right-click menus of individual bookmark items allow you to go to the bookmark, rename or remove it.
+				</para>
+		      </sect2>
+		</sect1>
 	</chapter>
 
 	<chapter id="primary-menu-items">

@@ -223,8 +223,14 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
             {
                 // update internal variables
                 pIt = m_allocatedPixmapsFifo.erase( pIt );
+                // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove 
+                // the memory used by the AllocatedPixmap so at most it can reach zero
                 m_allocatedPixmapsTotalMemory -= p->memory;
-                memoryToFree -= p->memory;
+                // Make sure memoryToFree does not underflow
+                if ( p->memory > memoryToFree )
+                    memoryToFree = 0;
+                else
+                    memoryToFree -= p->memory;
                 pagesFreed++;
                 // delete pixmap
                 m_pagesVector.at( p->page )->deletePixmap( p->id );

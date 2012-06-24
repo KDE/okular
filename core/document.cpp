@@ -322,6 +322,10 @@ qulonglong DocumentPrivate::getFreeMemory()
         else
             memoryFree -= values[4];
     }
+    else
+    {
+        return 0;
+    }
 
     lastUpdate = QTime::currentTime();
 

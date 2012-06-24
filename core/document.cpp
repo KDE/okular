@@ -178,6 +178,8 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
     // [MEM] choose memory parameters based on configuration profile
     qulonglong clipValue = 0;
     qulonglong memoryToFree = 0;
+    qulonglong freeSwap;
+
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:
@@ -187,7 +189,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
         case Settings::EnumMemoryLevel::Normal:
         {
             qulonglong thirdTotalMemory = getTotalMemory() / 3;
-            qulonglong freeMemory = getFreeMemory();
+            qulonglong freeMemory = getFreeMemory( &freeSwap );
             if (m_allocatedPixmapsTotalMemory > thirdTotalMemory) memoryToFree = m_allocatedPixmapsTotalMemory - thirdTotalMemory;
             if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
         }
@@ -195,13 +197,14 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
 
         case Settings::EnumMemoryLevel::Aggressive:
         {
-            qulonglong freeMemory = getFreeMemory();
+            qulonglong freeMemory = getFreeMemory( &freeSwap );
             if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
         }
         break;
         case Settings::EnumMemoryLevel::Greedy:
         {
-            const qulonglong memoryLimit = qMax(getFreeMemory(), getTotalMemory() / 2);
+            qulonglong freeMemory = getFreeMemory( &freeSwap );
+            const qulonglong memoryLimit = qMin( qMax( freeMemory, getTotalMemory()/2 ), freeMemory+freeSwap );
             if (m_allocatedPixmapsTotalMemory > memoryLimit) clipValue = (m_allocatedPixmapsTotalMemory - memoryLimit) / 2;
         }
         break;
@@ -279,13 +282,21 @@ qulonglong DocumentPrivate::getTotalMemory()
     return (cachedValue = 134217728);
 }
 
-qulonglong DocumentPrivate::getFreeMemory()
+qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 {
     static QTime lastUpdate = QTime::currentTime().addSecs(-3);
     static qulonglong cachedValue = 0;
+    static qulonglong cachedFreeSwap = 0;
 
     if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
+    {
+        *freeSwap = cachedFreeSwap;
         return cachedValue;
+    }
+
+    /* Initialize the returned free swap value to 0. It is overwritten if the
+     * actual value is available */
+    *freeSwap = 0;
 
 #if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return MEMORY FULL
@@ -320,6 +331,9 @@ qulonglong DocumentPrivate::getFreeMemory()
         found = found && foundValues[i];
     if ( found )
     {
+        /* MemFree + Buffers + Cached - SwapUsed =
+         * = MemFree + Buffers + Cached - (SwapTotal - SwapFree) =
+         * = MemFree + Buffers + Cached + SwapFree - SwapTotal */
         memoryFree = values[0] + values[1] + values[2] + values[3];
         if ( values[4] > memoryFree )
             memoryFree = 0;
@@ -333,6 +347,7 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     lastUpdate = QTime::currentTime();
 
+    *freeSwap = ( cachedFreeSwap = (Q_UINT64_C(1024) * values[3]) );
     return ( cachedValue = (Q_UINT64_C(1024) * memoryFree) );
 #elif defined(Q_OS_FREEBSD)
     qulonglong cache, inact, free, psize;
@@ -361,6 +376,7 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     lastUpdate = QTime::currentTime();
 
+    *freeSwap = ( cachedFreeSwap = stat.ullAvailPageFile );
     return ( cachedValue = stat.ullAvailPhys );
 #else
     // tell the memory is full.. will act as in LOW profile

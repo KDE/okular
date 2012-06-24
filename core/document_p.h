@@ -98,7 +98,7 @@ class DocumentPrivate
         void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
-        qulonglong getFreeMemory();
+        qulonglong getFreeMemory( qulonglong *freeSwap );
         void loadDocumentInfo();
         void loadDocumentInfo( const QString &fileName );
         void loadViewsInfo( View *view, const QDomElement &e );

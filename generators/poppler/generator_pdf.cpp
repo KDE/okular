@@ -1238,7 +1238,7 @@ bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
             Poppler::Page *pp = pdfdoc->page(i);
             if (pp)
             {
-                text = pp->text(QRect());
+                text = pp->text(QRect()).normalized(QString::NormalizationForm_KC);
             }
             userMutex()->unlock();
             ts << text;

@@ -35,9 +35,11 @@ class AnnotationPopup : public QObject
     Q_SIGNALS:
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
 
-    private:
-        QWidget *mParent;
+    public:
         struct AnnotPagePair {
+            AnnotPagePair() : annotation( 0 ),  pageNumber( -1 )
+            { }
+
             AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )
             { }
             
@@ -50,6 +52,10 @@ class AnnotationPopup : public QObject
             Okular::Annotation* annotation;
             int pageNumber;
         };
+
+    private:
+        QWidget *mParent;
+
         QList< AnnotPagePair > mAnnotations;
         Okular::Document *mDocument;
 };

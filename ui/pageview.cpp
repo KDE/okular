@@ -2015,14 +2015,20 @@ void PageView::mousePressEvent( QMouseEvent * e )
                     const QRect & itemRect = pageItem->uncroppedGeometry();
                     double nX = pageItem->absToPageX(eventPos.x());
                     double nY = pageItem->absToPageY(eventPos.y());
-                    Okular::Annotation * ann = 0;
-                    const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
-                    if ( orect )
-                        ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
-                    if ( ann )
+
+                    const QLinkedList< const Okular::ObjectRect *> orects = pageItem->page()->objectRects( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
+
+                    if ( !orects.isEmpty() )
                     {
                         AnnotationPopup popup( d->document, this );
-                        popup.addAnnotation( ann, pageItem->pageNumber() );
+
+                        foreach ( const Okular::ObjectRect * orect, orects )
+                        {
+                            Okular::Annotation * ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
+                            if ( ann )
+                                popup.addAnnotation( ann, pageItem->pageNumber() );
+
+                        }
 
                         connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
                                  this, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );

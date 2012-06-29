@@ -405,6 +405,19 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
     return 0;
 }
 
+QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
+{
+    QLinkedList< const ObjectRect * > result;
+
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    for ( ; it != end; ++it )
+        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
+            result.append( *it );
+
+    return result;
+}
+
+
 const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
 {
     ObjectRect * res = 0;

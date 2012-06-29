@@ -12,6 +12,7 @@
 
 // qt/kde includes
 #include <qdir.h>
+#include <qimage.h>
 #include <qstring.h>
 #include <qtemporaryfile.h>
 
@@ -30,7 +31,8 @@ class Movie::Private
               m_playMode( PlayOnce ),
               m_tmp( 0 ),
               m_showControls( false ),
-              m_autoPlay( false )
+              m_autoPlay( false ),
+              m_showPosterImage( false )
         {
         }
 
@@ -39,8 +41,10 @@ class Movie::Private
         Rotation m_rotation;
         PlayMode m_playMode;
         QTemporaryFile *m_tmp;
+        QImage m_posterImage;
         bool m_showControls : 1;
         bool m_autoPlay : 1;
+        bool m_showPosterImage : 1;
 };
 
 Movie::Movie( const QString& fileName )
@@ -130,3 +134,22 @@ bool Movie::autoPlay() const
     return d->m_autoPlay;
 }
 
+void Movie::setShowPosterImage( bool show )
+{
+    d->m_showPosterImage = show;
+}
+
+bool Movie::showPosterImage() const
+{
+    return d->m_showPosterImage;
+}
+
+void Movie::setPosterImage( const QImage &image )
+{
+    d->m_posterImage = image;
+}
+
+QImage Movie::posterImage() const
+{
+    return d->m_posterImage;
+}

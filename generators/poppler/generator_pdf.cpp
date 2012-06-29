@@ -180,6 +180,10 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     movie->setShowControls( popplerMovie->showControls() );
     movie->setPlayMode( (Okular::Movie::PlayMode)popplerMovie->playMode() );
     movie->setAutoPlay( false ); // will be triggered by external MovieAnnotation
+#ifdef HAVE_POPPLER_0_22
+    movie->setShowPosterImage( popplerMovie->showPosterImage() );
+    movie->setPosterImage( popplerMovie->posterImage() );
+#endif
     return movie;
 }
 

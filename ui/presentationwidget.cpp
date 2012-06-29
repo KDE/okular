@@ -316,7 +316,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, m_document, this );
                 frame->videoWidgets.insert( movieAnn->movie(), vw );
-                vw->hide();
+                vw->pageEntered();
             }
         }
         frame->recalcGeometry( m_width, m_height, screenRatio );
@@ -809,7 +809,7 @@ void PresentationWidget::changePage( int newPage )
         Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
         {
             vw->stop();
-            vw->hide();
+            vw->pageLeft();
         }
 
         // stop audio playback, if any

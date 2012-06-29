@@ -169,6 +169,7 @@ set(okularpart_SRCS
    ui/searchwidget.cpp
    ui/sidebar.cpp
    ui/side_reviews.cpp
+   ui/snapshottaker.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
    ui/tocmodel.cpp

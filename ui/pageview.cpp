@@ -860,7 +860,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, d->document, viewport() );
                 item->videoWidgets().insert( movieAnn->movie(), vw );
-                vw->hide();
+                vw->pageEntered();
             }
         }
     }
@@ -3961,7 +3961,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             
             if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
                 vw->stop();
-                vw->hide();
+                vw->pageLeft();
             }
         }
 

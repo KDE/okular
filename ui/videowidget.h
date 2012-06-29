@@ -35,6 +35,11 @@ class VideoWidget : public QWidget
          */
         void pageEntered();
 
+        /**
+         * This method is called when the page the video widget is located on has been left.
+         */
+        void pageLeft();
+
     public slots:
         void play();
         void pause();
@@ -48,6 +53,7 @@ class VideoWidget : public QWidget
     private:
         Q_PRIVATE_SLOT( d, void finished() )
         Q_PRIVATE_SLOT( d, void playOrPause() )
+        Q_PRIVATE_SLOT( d, void setPosterImage( const QImage& ) )
 
         // private storage
         class Private;

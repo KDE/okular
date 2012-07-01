@@ -95,7 +95,9 @@ class DocumentPrivate
         // private methods
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
-        void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        qulonglong calculateMemoryToFree();
+        void cleanupPixmapMemory();
+        void cleanupPixmapMemory( qulonglong memoryToFree );
         AllocatedPixmap * searchLowestPriorityUnloadablePixmap( bool thenRemoveIt = false );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();

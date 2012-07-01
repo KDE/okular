@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY kappname "&okular;">
+  <!ENTITY latex "L<superscript>A</superscript>T<subscript>E</subscript>X">
   <!ENTITY package "kdegraphics">
   <!ENTITY kpdf "<application>KPDF</application>">
   <!ENTITY PDF "<acronym>PDF</acronym>">
@@ -36,7 +37,7 @@ Context menu actions like Rename Bookmarks etc)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-06-18</date>
+		<date>2012-06-29</date>
 		<releaseinfo>0.15 (&kde; 4.9)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -290,6 +291,42 @@ Add a 'Find Previous' entry
 				description in the chapter <link linkend="configpresentation">Configuring &okular;</link>.
 			</para>
 		</sect1>
+		<sect1 id="inverse_search">
+		
+		<title>Inverse Search between &latex; Editors and &okular;</title>
+
+		<para>Inverse search is a very useful feature when you are writing a &latex; document yourself. If everything is set up properly, you can
+		click into &okular;'s window with the <mousebutton>left</mousebutton> mouse button while pressing &Shift;. After that editor loads the &latex; source file and jumps to
+		the proper paragraph.</para>
+
+		<para>Inverse search cannot work unless:</para>
+
+		<itemizedlist>
+			<listitem><para>The source file has been compiled successfully.</para></listitem>
+			<listitem><para>&okular; knows which editor you would like to use.</para></listitem>
+		</itemizedlist>
+
+		<para>With this feature of &okular;, a left mouse click while pressing &Shift; in the &DVI; or &PDF; document will
+		result in editor opening the corresponding &latex; document and attempt to go to the
+		corresponding line. Remember to tell &okular; to use proper editor, in &okular;'s
+		menu item <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Okular...</guimenuitem></menuchoice>
+		(on the page <guimenuitem>Editor</guimenuitem>).</para>
+		
+		<para>For more details on editor configuration please refer to the <link linkend="configeditor">corresponding section of this manual</link>.</para>
+
+		<screenshot>
+			<screeninfo>Configuring &okular;</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG" />
+			</imageobject>
+			<textobject>
+			<phrase>Configuring editor in &okular;</phrase>
+			</textobject>
+			<caption><para>Configuring editor in &okular;</para></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
 	</chapter>
 
 	<chapter id="advanced">
@@ -1647,12 +1684,35 @@ Add a 'Find Previous' entry
 						<para>Choose the editor you want to launch when &okular; wants to open a source file.
 						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
 						</para>
+						<para>
+						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">Emacs client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
+						</para>
+						<note>
+						  <para>
+						    To use inverse search in <application>Kile</application>, you have to compile your &latex; file with the <guilabel>Modern</guilabel> configuration.
+						  </para>
+						</note>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term><guilabel>Command</guilabel></term>
 					<listitem>
 						<para>This is the command and its parameters to invoke the selected editor with the source file of the actual document.</para>
+						<para>This field will be filled automatically if you use one of the preconfigured editors. Otherwise, please choose <guimenuitem>Custom Text Editor</guimenuitem> in <guilabel>Editor</guilabel> drop-down list and refer to the documentation on your favorite editor to find the proper command.
+					        </para>
+						<para>You can use the following placeholders:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para>%f - the file name</para>
+						  </listitem>
+						  <listitem>
+						    <para>%l - the line of the file to be reached</para>
+						  </listitem>
+						  <listitem>
+						    <para>%c - the column of the file to be reached</para>
+						  </listitem>
+						</itemizedlist>
+						<para>If %f is not specified, then the document name is appended to the specified command.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

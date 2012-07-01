@@ -173,7 +173,7 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
     }
 }
 
-void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
+qulonglong DocumentPrivate::calculateMemoryToFree()
 {
     // [MEM] choose memory parameters based on configuration profile
     qulonglong clipValue = 0;
@@ -213,6 +213,16 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
     if ( clipValue > memoryToFree )
         memoryToFree = clipValue;
 
+    return memoryToFree;
+}
+
+void DocumentPrivate::cleanupPixmapMemory()
+{
+    cleanupPixmapMemory( calculateMemoryToFree() );
+}
+
+void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
+{
     if ( memoryToFree > 0 )
     {
         // [MEM] free memory starting from older pixmaps
@@ -1004,7 +1014,7 @@ void DocumentPrivate::sendGeneratorRequest()
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 4 * request->width() * request->height();
     if ( pixmapBytes > (1024 * 1024) )
-        cleanupPixmapMemory( pixmapBytes );
+        cleanupPixmapMemory();
 
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )

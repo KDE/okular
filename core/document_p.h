@@ -96,6 +96,7 @@ class DocumentPrivate
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
         void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        AllocatedPixmap * searchLowestPriorityUnloadablePixmap( bool thenRemoveIt = false );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
@@ -186,7 +187,7 @@ class DocumentPrivate
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;
-        QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
+        QLinkedList< AllocatedPixmap * > m_allocatedPixmaps;
         qulonglong m_allocatedPixmapsTotalMemory;
         QList< int > m_allocatedTextPagesFifo;
         int m_maxAllocatedTextPages;

@@ -217,33 +217,64 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
     {
         // [MEM] free memory starting from older pixmaps
         int pagesFreed = 0;
-        QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmapsFifo.end();
-        while ( (pIt != pEnd) && (memoryToFree > 0) )
+        while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = *pIt;
-            if ( m_observers.value( p->id )->canUnloadPixmap( p->page ) )
-            {
-                // update internal variables
-                pIt = m_allocatedPixmapsFifo.erase( pIt );
-                // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove 
-                // the memory used by the AllocatedPixmap so at most it can reach zero
-                m_allocatedPixmapsTotalMemory -= p->memory;
-                // Make sure memoryToFree does not underflow
-                if ( p->memory > memoryToFree )
-                    memoryToFree = 0;
-                else
-                    memoryToFree -= p->memory;
-                pagesFreed++;
-                // delete pixmap
-                m_pagesVector.at( p->page )->deletePixmap( p->id );
-                // delete allocation descriptor
-                delete p;
-            } else
-                ++pIt;
+            AllocatedPixmap * p = searchLowestPriorityUnloadablePixmap( true );
+            if ( !p ) // No pixmap to remove
+                break;
+
+            kDebug().nospace() << "Evicting cache pixmap id=" << p->id << " page=" << p->page;
+
+            // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
+            // the memory used by the AllocatedPixmap so at most it can reach zero
+            m_allocatedPixmapsTotalMemory -= p->memory;
+            // Make sure memoryToFree does not underflow
+            if ( p->memory > memoryToFree )
+                memoryToFree = 0;
+            else
+                memoryToFree -= p->memory;
+            pagesFreed++;
+            // delete pixmap
+            m_pagesVector.at( p->page )->deletePixmap( p->id );
+            // delete allocation descriptor
+            delete p;
         }
-        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmapsFifo.count() + pagesFreed, pagesFreed, m_allocatedPixmapsFifo.count() );
+        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
     }
+}
+
+/* Returns the next pixmap to evict from cache, or NULL if no suitable pixmap
+ * is found. If thenRemoveIt is set, the pixmap is removed from
+ * m_allocatedPixmaps before returning it */
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityUnloadablePixmap( bool thenRemoveIt )
+{
+    QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
+    QLinkedList< AllocatedPixmap * >::iterator farthestPixmap = pEnd;
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+
+    /* Find the pixmap that is farthest from the current viewport */
+    int maxDistance = -1;
+    while ( pIt != pEnd )
+    {
+        const AllocatedPixmap * p = *pIt;
+        const int distance = qAbs( p->page - currentViewportPage );
+        if ( maxDistance < distance && m_observers.value( p->id )->canUnloadPixmap( p->page ) )
+        {
+            maxDistance = distance;
+            farthestPixmap = pIt;
+        }
+        ++pIt;
+    }
+
+    /* No pixmap to remove */
+    if ( farthestPixmap == pEnd )
+        return 0;
+
+    AllocatedPixmap * selectedPixmap = *farthestPixmap;
+    if ( thenRemoveIt )
+        m_allocatedPixmaps.erase( farthestPixmap );
+    return selectedPixmap;
 }
 
 qulonglong DocumentPrivate::getTotalMemory()
@@ -1058,11 +1089,8 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        m_allocatedPixmapsFifo.clear();
+        qDeleteAll( m_allocatedPixmaps );
+        m_allocatedPixmaps.clear();
         m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -1071,7 +1099,7 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !m_allocatedPixmapsFifo.isEmpty() && !m_pagesVector.isEmpty() )
+         !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
 }
 
@@ -1921,11 +1949,8 @@ void Document::closeDocument()
     d->m_pagesVector.clear();
 
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
 
     // clear 'running searches' descriptors
     QMap< int, RunningSearch * >::const_iterator rIt = d->m_searches.constBegin();
@@ -1983,14 +2008,14 @@ void Document::removeObserver( DocumentObserver * pObserver )
             (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmaps.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmaps.end();
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
             if ( p->id == observerId )
             {
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
+                aIt = d->m_allocatedPixmaps.erase( aIt );
                 delete p;
             }
             else
@@ -2021,11 +2046,8 @@ void Document::reparseConfig()
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        d->m_allocatedPixmapsFifo.clear();
+        qDeleteAll( d->m_allocatedPixmaps );
+        d->m_allocatedPixmaps.clear();
         d->m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -2034,7 +2056,7 @@ void Document::reparseConfig()
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !d->m_allocatedPixmapsFifo.isEmpty() && !d->m_pagesVector.isEmpty() )
+         !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty() )
         d->cleanupPixmapMemory();
 }
 
@@ -2757,27 +2779,6 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     for ( ; it != end ; ++ it )
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
-
-    // [MEM] raise position of currently viewed page in allocation queue
-    if ( d->m_allocatedPixmapsFifo.count() > 1 )
-    {
-        const int page = viewport.pageNumber;
-        QLinkedList< AllocatedPixmap * > viewportPixmaps;
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
-        while ( aIt != aEnd )
-        {
-            if ( (*aIt)->page == page )
-            {
-                viewportPixmaps.append( *aIt );
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
-                continue;
-            }
-            ++aIt;
-        }
-        if ( !viewportPixmaps.isEmpty() )
-            d->m_allocatedPixmapsFifo += viewportPixmaps;
-    }
 }
 
 void Document::setZoom(int factor, int excludeId)
@@ -3836,13 +3837,13 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
         {
             AllocatedPixmap * p = *aIt;
-            m_allocatedPixmapsFifo.erase( aIt );
+            m_allocatedPixmaps.erase( aIt );
             m_allocatedPixmapsTotalMemory -= p->memory;
             delete p;
             break;
@@ -3854,7 +3855,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 4 * req->width() * req->height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
-        m_allocatedPixmapsFifo.append( memoryPage );
+        m_allocatedPixmaps.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
@@ -3989,11 +3990,8 @@ void Document::setPageSize( const PageSize &size )
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->d->changeSize( size );
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
     d->m_allocatedPixmapsTotalMemory = 0;
     // notify the generator that the current page size has changed
     d->m_generator->pageSizeChanged( size, d->m_pageSize );

@@ -70,6 +70,7 @@ class PixmapRequestPrivate
 {
     public:
         void swap();
+        bool isPreload() const;
 
         int mId;
         int mPageNumber;

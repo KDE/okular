@@ -10,6 +10,7 @@
 
 #include "generator.h"
 #include "generator_p.h"
+#include "observer.h"
 
 #include <qeventloop.h>
 #include <QtGui/QPrinter>
@@ -475,6 +476,19 @@ Page* PixmapRequest::page() const
 void PixmapRequestPrivate::swap()
 {
     qSwap( mWidth, mHeight );
+}
+
+bool PixmapRequestPrivate::isPreload() const
+{
+    switch ( mPriority )
+    {
+        case PAGEVIEW_PRELOAD_PRIO:
+        case THUMBNAILS_PRELOAD_PRIO:
+        case PRESENTATION_PRELOAD_PRIO:
+            return true;
+        default:
+            return false;
+    }
 }
 
 class Okular::ExportFormatPrivate : public QSharedData

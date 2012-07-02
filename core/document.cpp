@@ -11,6 +11,7 @@
 #include "document.h"
 #include "document_p.h"
 
+#include <limits.h>
 #ifdef Q_OS_WIN
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
@@ -973,6 +974,20 @@ void DocumentPrivate::slotTimedMemoryCheck()
 
 void DocumentPrivate::sendGeneratorRequest()
 {
+    /* If the pixmap cache will have to be cleaned in order to make room for the
+     * next request, get the distance from the current viewport of the page
+     * whose pixmap will be removed. We will ignore preload requests for pages
+     * that are at the same distance or farther */
+    const qulonglong memoryToFree = calculateMemoryToFree();
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+    int maxDistance = INT_MAX; // Default: No maximum
+    if ( memoryToFree )
+    {
+        AllocatedPixmap *pixmapToReplace = searchLowestPriorityUnloadablePixmap();
+        if ( pixmapToReplace )
+            maxDistance = qAbs( pixmapToReplace->page - currentViewportPage );
+    }
+
     // find a request
     PixmapRequest * request = 0;
     m_pixmapRequestsMutex.lock();
@@ -1000,8 +1015,16 @@ void DocumentPrivate::sendGeneratorRequest()
             }
             delete r;
         }
+        else if ( !r->d->mForce && r->d->isPreload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
+        {
+            m_pixmapRequestsStack.pop_back();
+            //kDebug() << "Ignoring request that doesn't fit in cache";
+            delete r;
+        }
         else
+        {
             request = r;
+        }
     }
 
     // if no request found (or already generated), return
@@ -1014,7 +1037,7 @@ void DocumentPrivate::sendGeneratorRequest()
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 4 * request->width() * request->height();
     if ( pixmapBytes > (1024 * 1024) )
-        cleanupPixmapMemory();
+        cleanupPixmapMemory( memoryToFree /* previously calculated value */ );
 
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )

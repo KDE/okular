@@ -254,7 +254,6 @@ bool Generator::canGenerateTextPage() const
 
 void Generator::generateTextPage( Page *page )
 {
-    Q_D( Generator );
     TextPage *tp = textPage( page );
     page->setTextPage( tp );
     signalTextGenerationDone( page, tp );

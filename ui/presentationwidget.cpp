@@ -1191,34 +1191,37 @@ void PresentationWidget::requestPixmaps()
     // ask for next and previous page if not in low memory usage setting
     if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading() )
     {
-        if ( m_frameIndex + 1 < (int)m_document->pages() )
-        {
-            PresentationFrame *nextFrame = m_frames[ m_frameIndex + 1 ];
-            pixW = nextFrame->geometry.width();
-            pixH = nextFrame->geometry.height();
-            if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-        }
-        if ( m_frameIndex - 1 >= 0 )
-        {
-            PresentationFrame *prevFrame = m_frames[ m_frameIndex - 1 ];
-            pixW = prevFrame->geometry.width();
-            pixH = prevFrame->geometry.height();
-            if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-        }
+        int pagesToPreload = 1;
 
         // If greedy, preload everything
         if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+            pagesToPreload = (int)m_document->pages();
+
+        for( int j = 1; j <= pagesToPreload; j++ )
         {
-            for(int i = 0; i < (int)m_document->pages(); ++i)
+            int tailRequest = m_frameIndex + j;
+            if ( tailRequest < (int)m_document->pages() )
             {
-                PresentationFrame *loopFrame = m_frames[ i ];
-                pixW = loopFrame->geometry.width();
-                pixH = loopFrame->geometry.height();
-                if ( !loopFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ))
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, i, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+                PresentationFrame *nextFrame = m_frames[ tailRequest ];
+                pixW = nextFrame->geometry.width();
+                pixH = nextFrame->geometry.height();
+                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, tailRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
             }
+
+            int headRequest = m_frameIndex - j;
+            if ( headRequest >= 0 )
+            {
+                PresentationFrame *prevFrame = m_frames[ headRequest ];
+                pixW = prevFrame->geometry.width();
+                pixH = prevFrame->geometry.height();
+                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, headRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+
+            // stop if we've already reached both ends of the document
+            if ( headRequest < 0 && tailRequest >= (int)m_document->pages() )
+                break;
         }
     }
     m_document->requestPixmaps( requests );

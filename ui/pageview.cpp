@@ -4019,10 +4019,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     requestedPixmaps.push_back( new Okular::PixmapRequest(
                                 PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
             }
-        }
 
-        for( int j = 1; j <= pagesToPreload; j++ )
-        {
             // add the page before the 'visible series' in preload
             int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
@@ -4033,6 +4030,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     requestedPixmaps.push_back( new Okular::PixmapRequest(
                                 PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
             }
+
+            // stop if we've already reached both ends of the document
+            if ( headRequest < 0 && tailRequest >= (int)d->items.count() )
+                break;
         }
     }
 

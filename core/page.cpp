@@ -134,6 +134,7 @@ Page::Page( uint page, double w, double h, Rotation o )
 Page::~Page()
 {
     deletePixmaps();
+    deleteTilesManagers();
     deleteRects();
     d->deleteHighlights();
     deleteAnnotations();
@@ -203,6 +204,26 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
+    if ( id == 3 )
+    {
+        TilesManager *tm = tilesManager( id );
+        if ( !tm )
+        {
+            tm = new TilesManager( width, height );
+            d->m_tilesManagers.insert( id, tm );
+        }
+
+        // TODO: mark tiles as dirty
+        if ( width != tm->width || height != tm->height )
+        {
+            tm->width = width;
+            tm->height = height;
+            return false;
+        }
+
+        return tm->hasPixmap( rect );
+    }
+
     QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constFind( id );
     if ( it == d->m_pixmaps.constEnd() )
         return false;
@@ -467,6 +488,13 @@ QLinkedList< FormField * > Page::formFields() const
 
 void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
 {
+    TilesManager *tm = tilesManager( id );
+    if ( tm )
+    {
+        tm->setPixmap( pixmap, rect );
+        return;
+    }
+
     if ( d->m_rotation == Rotation0 ) {
         QMap< int, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( id );
         if ( it != d->m_pixmaps.end() )
@@ -921,4 +949,27 @@ const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
     }
 
     return pixmap;
+}
+
+TilesManager *Page::tilesManager( int id ) const
+{
+    TilesManager *tilesManager = 0;
+
+    QMap< int, TilesManager* >::iterator itTilesManager = d->m_tilesManagers.find( id );
+    if ( itTilesManager != d->m_tilesManagers.end() )
+        tilesManager = *itTilesManager;
+
+    return tilesManager;
+}
+
+void Page::deleteTilesManagers()
+{
+    QMap< int, TilesManager* >::iterator itTilesManager = d->m_tilesManagers.begin();
+    while ( itTilesManager != d->m_tilesManagers.end() )
+    {
+        delete (*itTilesManager);
+        itTilesManager++;
+    }
+
+    d->m_tilesManagers.clear();
 }

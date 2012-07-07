@@ -31,6 +31,7 @@ class PagePrivate;
 class PageTransition;
 class SourceReference;
 class TextSelection;
+class TilesManager;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -356,6 +357,16 @@ class OKULAR_EXPORT Page
          * Deletes all annotations of the page.
          */
         void deleteAnnotations();
+
+        /**
+         * Returns the tile manager for the observer with the given @p id.
+         */
+        TilesManager *tilesManager( int id ) const;
+
+        /**
+         * Deletes all tiles managers
+         */
+        void deleteTilesManagers();
 
     private:
         PagePrivate* const d;

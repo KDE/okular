@@ -30,6 +30,7 @@
 #include "core/utils.h"
 #include "guiutils.h"
 #include "settings.h"
+#include "core/tilesmanager.h"
 
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
@@ -63,9 +64,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 	int croppedWidth = scaledCrop.width();
 	int croppedHeight = scaledCrop.height();
 
-    /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-    const QPixmap * pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
-
     QColor color = Qt::white;
     if ( Okular::Settings::changeColors() )
     {
@@ -85,24 +83,32 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, color );
 
-    /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-    double pixmapRescaleRatio = pixmap ? limits.width() / (double)pixmap->width() : -1;
-    long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
-    if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-         (limits.width() != pixmap->width() && pixmapPixels > 6000000L) )
+    Okular::TilesManager *tilesManager = page->tilesManager( pixID );
+    const QPixmap *pixmap = 0;
+    if ( !tilesManager )
     {
-        // draw something on the blank page: the okular icon or a cross (as a fallback)
-        if ( !busyPixmap->isNull() )
+        /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
+        pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
+
+        /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
+        double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
+        long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
+        if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
+             (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
         {
-            destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
+            // draw something on the blank page: the okular icon or a cross (as a fallback)
+            if ( !busyPixmap->isNull() )
+            {
+                destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
+            }
+            else
+            {
+                destPainter->setPen( Qt::gray );
+                destPainter->drawLine( 0, 0, croppedWidth-1, croppedHeight-1 );
+                destPainter->drawLine( 0, croppedHeight-1, croppedWidth-1, 0 );
+            }
+            return;
         }
-        else
-        {
-            destPainter->setPen( Qt::gray );
-            destPainter->drawLine( 0, 0, croppedWidth-1, croppedHeight-1 );
-            destPainter->drawLine( 0, croppedHeight-1, croppedWidth-1, 0 );
-        }
-        return;
     }
 
     /** 2 - FIND OUT WHAT TO PAINT (Flags + Configuration + Presence) **/
@@ -230,8 +236,32 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
-        // 4A.1. if size is ok, draw the page pixmap using painter
-        destPainter->drawPixmap( limits.topLeft(), *pixmap );
+        if ( tilesManager )
+        {
+            QList<Okular::Tile*> tiles = tilesManager->tilesAt( crop );
+            QList<Okular::Tile*>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+            while ( tIt != tEnd )
+            {
+                Okular::Tile *tile = *tIt;
+                destPainter->drawPixmap( tile->rect.geometry( scaledWidth, scaledHeight ).topLeft(), *(tile->pixmap) );
+                tIt++;
+            }
+        }
+        else
+        {
+            // 4A.1. if size is ok, draw the page pixmap using painter
+            if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
+                destPainter->drawPixmap( limits.topLeft(), *pixmap, limitsInPixmap );
+
+            // else draw a scaled portion of the magnified pixmap
+            else
+            {
+                QImage destImage;
+                scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
+                destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
+                                         limits.width(),limits.height() );
+            }
+        }
 
         // 4A.2. active painter is the one passed to this method
         mixedPainter = destPainter;

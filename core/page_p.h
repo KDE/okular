@@ -20,6 +20,7 @@
 // local includes
 #include "global.h"
 #include "area.h"
+#include "tilesmanager.h"
 
 class QColor;
 class QDomDocument;
@@ -107,6 +108,7 @@ class PagePrivate
                 Rotation m_rotation;
         };
         QMap< int, PixmapObject > m_pixmaps;
+        QMap< int, TilesManager* > m_tilesManagers;
 
         Page *m_page;
         int m_number;

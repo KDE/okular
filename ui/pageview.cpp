@@ -3983,10 +3983,27 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-            p->setNormalizedRect( vItem->rect );
-            requestedPixmaps.push_back( p );
+            const double dim = 0.25;
+            int left = vItem->rect.left/dim;
+            int top = vItem->rect.top/dim;
+            int right = ceil( vItem->rect.right/dim );
+            int bottom = ceil( vItem->rect.bottom/dim );
+
+            for ( int y = top; y < bottom; y++ )
+            {
+                for ( int x = left; x < right; x++ )
+                {
+                    const Okular::NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
+
+                    if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), tileRect ) )
+                    {
+                        Okular::PixmapRequest * p = new Okular::PixmapRequest(
+                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+                        p->setNormalizedRect( tileRect );
+                        requestedPixmaps.push_back( p );
+                    }
+                }
+            }
         }
 
         // look for the item closest to viewport center and the relative

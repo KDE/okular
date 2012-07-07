@@ -60,6 +60,7 @@ set(okularcore_SRCS
    core/sourcereference.cpp
    core/textdocumentgenerator.cpp
    core/textpage.cpp
+   core/tilesmanager.cpp
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp

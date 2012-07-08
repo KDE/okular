@@ -888,7 +888,7 @@ void DocumentPrivate::sendGeneratorRequest()
     while ( !m_pixmapRequestsStack.isEmpty() && !request )
     {
         PixmapRequest * r = m_pixmapRequestsStack.last();
-        const NormalizedRect visibleRect = ( r && r->visiblePageRect() ? r->visiblePageRect()->rect : NormalizedRect() );
+        const NormalizedRect visibleRect = ( r ? r->normalizedRect() : NormalizedRect() );
         const QRect requestRect = !visibleRect.isNull() ? visibleRect.geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
 
         if (!r)
@@ -924,7 +924,7 @@ void DocumentPrivate::sendGeneratorRequest()
     }
 
     // [MEM] preventive memory freeing
-    const QRect requestRect = request->visiblePageRect() ? request->visiblePageRect()->rect.geometry( request->width(), request->height() ) : QRect(0, 0, request->width(), request->height() );
+    const QRect requestRect = !request->normalizedRect().isNull() ? request->normalizedRect().geometry( request->width(), request->height() ) : QRect(0, 0, request->width(), request->height() );
     qulonglong pixmapBytes = 4 * requestRect.width() * requestRect.height();
     if ( pixmapBytes > (1024 * 1024) )
         cleanupPixmapMemory( pixmapBytes );
@@ -3778,7 +3778,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     if ( itObserver != m_observers.constEnd() )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
-        const QRect requestRect = req->visiblePageRect() ? req->visiblePageRect()->rect.geometry( req->width(), req->height() ) : QRect(0, 0, req->width(), req->height() );
+        const QRect requestRect = !req->normalizedRect().isNull() ? req->normalizedRect().geometry( req->width(), req->height() ) : QRect(0, 0, req->width(), req->height() );
         qulonglong memoryBytes = 4 * requestRect.width() * requestRect.height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
         m_allocatedPixmapsFifo.append( memoryPage );

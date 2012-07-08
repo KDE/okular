@@ -99,7 +99,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
     }
 
     const QImage& img = mPixmapGenerationThread->image();
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
     q->signalPixmapRequestDone( request );
@@ -235,7 +235,7 @@ void Generator::generatePixmap( PixmapRequest *request )
     }
 
     const QImage& img = image( request );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
+    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const bool bboxKnown = request->page()->isBoundingBoxKnown();
     const int pageNumber = request->page()->number();
 
@@ -431,7 +431,7 @@ PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int
     d->mPriority = priority;
     d->mAsynchronous = asynchronous;
     d->mForce = false;
-    d->mVisiblePageRect = 0;
+    d->mNormalizedRect = NormalizedRect();
 }
 
 PixmapRequest::~PixmapRequest()
@@ -474,17 +474,17 @@ Page* PixmapRequest::page() const
     return d->mPage;
 }
 
-void PixmapRequest::setVisiblePageRect( VisiblePageRect *visiblePageRect )
+void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )
 {
-    if ( d->mVisiblePageRect == visiblePageRect )
+    if ( d->mNormalizedRect == rect )
         return;
 
-    d->mVisiblePageRect = visiblePageRect;
+    d->mNormalizedRect = rect;
 }
 
-VisiblePageRect *PixmapRequest::visiblePageRect() const
+const NormalizedRect PixmapRequest::normalizedRect() const
 {
-    return d->mVisiblePageRect;
+    return d->mNormalizedRect;
 }
 
 void PixmapRequestPrivate::swap()

@@ -3985,7 +3985,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-            p->setVisiblePageRect( vItem );
+            p->setNormalizedRect( vItem->rect );
             requestedPixmaps.push_back( p );
         }
 

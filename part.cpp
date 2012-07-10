@@ -2561,9 +2561,11 @@ void Part::unsetDummyMode()
     // add back and next in history
     m_historyBack = KStandardAction::documentBack( this, SLOT(slotHistoryBack()), actionCollection() );
     m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
+    connect(m_pageView, SIGNAL(mouseBackButtonClick()), m_historyBack, SLOT(trigger()));
 
     m_historyNext = KStandardAction::documentForward( this, SLOT(slotHistoryNext()), actionCollection());
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+    connect(m_pageView, SIGNAL(mouseForwardButtonClick()), m_historyNext, SLOT(trigger()));
 
     m_pageView->setupActions( actionCollection() );
 

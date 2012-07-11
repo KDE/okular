@@ -31,6 +31,7 @@
 #include "document_p.h"
 #include "form.h"
 #include "form_p.h"
+#include "observer.h"
 #include "pagecontroller_p.h"
 #include "pagesize.h"
 #include "pagetransition.h"
@@ -134,7 +135,7 @@ Page::Page( uint page, double w, double h, Rotation o )
 Page::~Page()
 {
     deletePixmaps();
-    deleteTilesManagers();
+    qDeleteAll( d->m_tilesManagers );
     deleteRects();
     d->deleteHighlights();
     deleteAnnotations();
@@ -204,7 +205,7 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
-    if ( id == 3 )
+    if ( id == PAGEVIEW_ID )
     {
         TilesManager *tm = tilesManager( id );
         if ( !tm )
@@ -213,11 +214,10 @@ bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect 
             d->m_tilesManagers.insert( id, tm );
         }
 
-        // TODO: mark tiles as dirty
-        if ( width != tm->width || height != tm->height )
+        if ( width != tm->width() || height != tm->height() )
         {
-            tm->width = width;
-            tm->height = height;
+            tm->setWidth( width );
+            tm->setHeight( height );
             return false;
         }
 

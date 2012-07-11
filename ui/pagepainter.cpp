@@ -238,12 +238,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         if ( tilesManager )
         {
-            QList<Okular::Tile*> tiles = tilesManager->tilesAt( crop );
-            QList<Okular::Tile*>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+            QList<Okular::Tile> tiles = tilesManager->tilesAt( crop );
+            QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
-                Okular::Tile *tile = *tIt;
-                destPainter->drawPixmap( tile->rect.geometry( scaledWidth, scaledHeight ).topLeft(), *(tile->pixmap) );
+                Okular::Tile tile = *tIt;
+                if ( tile.pixmap )
+                    destPainter->drawPixmap( tile.rect.geometry( scaledWidth, scaledHeight ), *(tile.pixmap) );
                 tIt++;
             }
         }

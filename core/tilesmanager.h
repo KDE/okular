@@ -16,7 +16,17 @@ class QPixmap;
 
 namespace Okular {
 
-class Tile;
+class OKULAR_EXPORT Tile
+{
+    public:
+        Tile();
+
+        bool isValid() const;
+
+        NormalizedRect rect;
+        QPixmap *pixmap;
+        uint dirty : 1;
+};
 
 class OKULAR_EXPORT TilesManager
 {
@@ -26,23 +36,17 @@ class OKULAR_EXPORT TilesManager
 
         void setPixmap( QPixmap *pixmap, const NormalizedRect &rect );
         bool hasPixmap( const NormalizedRect &rect );
-        QList<Tile*> tilesAt( const NormalizedRect &rect ) const;
+        QList<Tile> tilesAt( const NormalizedRect &rect ) const;
 
-        int width;
-        int height;
+        inline int width() const { return m_width; }
+        void setWidth( int width );
+        inline int height() const { return m_height; }
+        void setHeight( int height );
 
     private:
-        Tile *mTiles[16];
-};
-
-class OKULAR_EXPORT Tile
-{
-    public:
-        Tile();
-        virtual ~Tile();
-
-        NormalizedRect rect;
-        QPixmap *pixmap;
+        Tile m_tiles[16];
+        int m_width;
+        int m_height;
 };
 
 }

@@ -76,6 +76,7 @@
 #include "core/generator.h"
 #include "core/movie.h"
 #include "core/sourcereference.h"
+#include "core/tilesmanager.h"
 #include "settings.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
@@ -3983,26 +3984,19 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            const double dim = 0.25;
-            int left = vItem->rect.left/dim;
-            int top = vItem->rect.top/dim;
-            int right = ceil( vItem->rect.right/dim );
-            int bottom = ceil( vItem->rect.bottom/dim );
-
-            for ( int y = top; y < bottom; y++ )
+            QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( vItem->rect );
+            QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+            while ( tIt != tEnd )
             {
-                for ( int x = left; x < right; x++ )
+                Okular::Tile tile = *tIt;
+                if ( !tile.isValid() )
                 {
-                    const Okular::NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
-
-                    if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), tileRect ) )
-                    {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-                        p->setNormalizedRect( tileRect );
-                        requestedPixmaps.push_back( p );
-                    }
+                    Okular::PixmapRequest * p = new Okular::PixmapRequest(
+                            PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+                    p->setNormalizedRect( tile.rect );
+                    requestedPixmaps.push_back( p );
                 }
+                tIt++;
             }
         }
 

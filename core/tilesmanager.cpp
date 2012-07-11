@@ -14,11 +14,14 @@
 using namespace Okular;
 
 TilesManager::TilesManager( int width, int height )
-    : width( width ), height( height )
+    : m_width( width ), m_height( height )
 {
+    const double dim = 0.25;
     for ( int i = 0; i < 16; ++i )
     {
-        mTiles[ i ] = 0;
+        int x = i % 4;
+        int y = i / 4;
+        m_tiles[ i ].rect = NormalizedRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
     }
 }
 
@@ -26,11 +29,34 @@ TilesManager::~TilesManager()
 {
     for ( int i = 0; i < 16; ++i )
     {
-        if ( mTiles[ i ] )
-        {
-            delete mTiles[ i ];
-            mTiles[ i ] = 0;
-        }
+        if ( m_tiles[ i ] )
+            delete m_tiles[ i ].pixmap;
+    }
+}
+
+void TilesManager::setWidth( int width )
+{
+    if ( width == m_width )
+        return;
+
+    m_width = width;
+
+    for ( int i = 0; i < 16; ++i )
+    {
+        m_tiles[ i ].dirty = true;
+    }
+}
+
+void TilesManager::setHeight( int height )
+{
+    if ( height == m_height )
+        return;
+
+    m_height = height;
+
+    for ( int i = 0; i < 16; ++i )
+    {
+        m_tiles[ i ].dirty = true;
     }
 }
 
@@ -42,7 +68,7 @@ void TilesManager::setPixmap( QPixmap *pixmap, const NormalizedRect &rect )
     int right = rect.right/dim;
     int bottom = rect.bottom/dim;
 
-    const QRect pixmapRect = rect.geometry( width, height );
+    const QRect pixmapRect = rect.geometry( m_width, m_height );
 
     for ( int y = top; y < bottom; y++ )
     {
@@ -50,15 +76,12 @@ void TilesManager::setPixmap( QPixmap *pixmap, const NormalizedRect &rect )
         {
             const NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
             int index = 4*y+x;
-            if ( !mTiles[ index ] )
-                mTiles[ index ] = new Tile();
 
-            Tile *tile = mTiles[ index ];
-            tile->rect = tileRect;
-            if ( tile->pixmap )
-                delete (tile->pixmap);
+            if ( m_tiles[ index ].pixmap )
+                delete (m_tiles[ index ].pixmap);
 
-            tile->pixmap = new QPixmap( pixmap->copy( tileRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            m_tiles[ index ].pixmap = new QPixmap( pixmap->copy( tileRect.geometry( m_width, m_height ).translated( -pixmapRect.topLeft() ) ) );
+            m_tiles[ index ].dirty = false;
         }
     }
 
@@ -78,17 +101,10 @@ bool TilesManager::hasPixmap( const NormalizedRect &rect )
         for ( int x = left; x < right; x++ )
         {
             int index = 4*y + x;
-            if ( !mTiles[ index ] )
+            if ( !m_tiles[ index ].pixmap )
                 return false;
 
-            if ( !mTiles[ index ]->pixmap )
-                return false;
-
-            const NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
-            QRect tileQRect = tileRect.geometry( width, height );
-            if ( tileQRect.width() != mTiles[ index ]->pixmap->width() )
-                return false;
-            if ( tileQRect.height() != mTiles[ index ]->pixmap->height() )
+            if ( m_tiles[ index ].dirty )
                 return false;
         }
     }
@@ -96,9 +112,9 @@ bool TilesManager::hasPixmap( const NormalizedRect &rect )
     return true;
 }
 
-QList<Tile*> TilesManager::tilesAt( const NormalizedRect &rect ) const
+QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect ) const
 {
-    QList<Tile*> result;
+    QList<Tile> result;
 
     const double dim = 0.25;
     int left = rect.left/dim;
@@ -111,19 +127,7 @@ QList<Tile*> TilesManager::tilesAt( const NormalizedRect &rect ) const
         for ( int x = left; x < right; x++ )
         {
             int index = 4*y + x;
-            if ( mTiles[ index ] )
-            {
-                if ( !mTiles[ index ]->pixmap )
-                    continue;
-
-                const NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
-                QRect tileQRect = tileRect.geometry( width, height );
-                if ( tileQRect.width() == mTiles[ index ]->pixmap->width()
-                        && tileQRect.height() == mTiles[ index ]->pixmap->height() )
-                {
-                    result.append( mTiles[ index ] );
-                }
-            }
+            result.append( m_tiles[ index ] );
         }
     }
 
@@ -132,9 +136,11 @@ QList<Tile*> TilesManager::tilesAt( const NormalizedRect &rect ) const
 
 Tile::Tile()
     : pixmap( 0 )
+    , dirty ( true )
 {
 }
 
-Tile::~Tile() {
-    delete pixmap;
+bool Tile::isValid() const
+{
+    return pixmap && !dirty;
 }

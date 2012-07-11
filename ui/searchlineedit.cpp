@@ -173,10 +173,8 @@ void SearchLineEdit::slotReturnPressed( const QString &text )
 {
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
-    if ( m_changed )
-        startSearch();
-    else
-        findNext();
+    m_searchType = Okular::Document::NextMatch;
+    findNext();
 }
 
 void SearchLineEdit::startSearch()

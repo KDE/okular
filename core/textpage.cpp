@@ -863,7 +863,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         curEntity = *it;
         const QString &str = curEntity->text();
-	kDebug() << str;
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )

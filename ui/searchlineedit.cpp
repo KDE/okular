@@ -173,7 +173,10 @@ void SearchLineEdit::slotReturnPressed( const QString &text )
 {
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
-    findNext();
+    if ( m_changed )
+        startSearch();
+    else
+        findNext();
 }
 
 void SearchLineEdit::startSearch()

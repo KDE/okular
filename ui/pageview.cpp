@@ -1642,6 +1642,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Escape:
+            d->document->resetSearch( PART_SEARCH_ID );
             selectionClear( d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection );
             d->mousePressPos = QPoint();
             if ( d->aPrevAction )

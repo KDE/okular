@@ -58,7 +58,9 @@ Movie::Movie( const QString& fileName, const QByteArray &data )
      * GStreamer backend). Storing the data in a temporary file works fine
      * though, not to mention, it releases much needed memory. (gamaral)
      */
-    const QString relativeFileName = (fileName.startsWith("./") ? fileName.mid( 2 ) : fileName);
+    QString relativeFileName = (fileName.startsWith("./") ? fileName.mid( 2 ) : fileName);
+    relativeFileName.replace( '/', '_' );
+    relativeFileName.replace( '\\', '_' );
     d->m_tmp = new QTemporaryFile( QString( "%1/okrXXXXXX_%2" ).arg( QDir::tempPath() ).arg( relativeFileName ) );
     if ( d->m_tmp->open() ) {
        d->m_tmp->write( data );

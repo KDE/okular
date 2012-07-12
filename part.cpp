@@ -1373,6 +1373,7 @@ bool Part::closeUrl(bool promptToSave)
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );
+    m_findBar->resetSearch();
     if( m_saveAs )  m_saveAs->setEnabled( false );
     if( m_saveCopyAs ) m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );

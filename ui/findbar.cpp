@@ -149,6 +149,11 @@ void FindBar::findPrev()
     m_search->lineEdit()->findPrev();
 }
 
+void FindBar::resetSearch()
+{
+    m_search->lineEdit()->resetSearch();
+}
+
 void FindBar::caseSensitivityChanged()
 {
     m_search->lineEdit()->setSearchCaseSensitivity( m_caseSensitiveAct->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive );

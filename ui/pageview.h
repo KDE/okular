@@ -133,6 +133,7 @@ Q_OBJECT
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
+        void escPressed();
 
     protected:
         void resizeEvent( QResizeEvent* );

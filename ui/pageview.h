@@ -131,6 +131,7 @@ Q_OBJECT
     signals:
         void urlDropped( const KUrl& );
         void rightClick( const Okular::Page *, const QPoint & );
+        void escPressed();
 
     protected:
         void resizeEvent( QResizeEvent* );

@@ -90,6 +90,19 @@ void SearchLineEdit::setSearchFromStart( bool fromStart )
     m_fromStart = fromStart;
 }
 
+void SearchLineEdit::resetSearch()
+{
+    // Stop the currently running search, if any
+    stopSearch();
+
+    // Clear highlights
+    if ( m_id != -1 )
+        m_document->resetSearch( m_id );
+
+    // Make sure that the search will be reset at the next one
+    m_changed = true;
+}
+
 bool SearchLineEdit::isSearchRunning() const
 {
     return m_searchRunning;

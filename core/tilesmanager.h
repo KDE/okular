@@ -34,7 +34,7 @@ class OKULAR_EXPORT TilesManager
         TilesManager( int width, int height );
         virtual ~TilesManager();
 
-        void setPixmap( QPixmap *pixmap, const NormalizedRect &rect );
+        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
         bool hasPixmap( const NormalizedRect &rect );
         QList<Tile> tilesAt( const NormalizedRect &rect ) const;
 

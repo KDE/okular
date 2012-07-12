@@ -364,9 +364,9 @@ class OKULAR_EXPORT Page
         TilesManager *tilesManager( int id ) const;
 
         /**
-         * Deletes all tiles managers
+         * Sets a tiles manager for the given @p id
          */
-        void deleteTilesManagers();
+        void setTilesManager( int id, TilesManager *tm );
 
     private:
         PagePrivate* const d;

@@ -3126,20 +3126,24 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             }
         }
 
-        QVector< Okular::VisiblePageRect * >::const_iterator vIt = d->document->visiblePageRects().constBegin(), vEnd = d->document->visiblePageRects().constEnd();
         Okular::NormalizedRect crop;
-        for ( ; vIt != vEnd; ++vIt )
-        {
-            Okular::VisiblePageRect *vItem = *vIt;
-            if ( vItem->pageNumber == item->pageNumber() )
-            {
-                crop = item->crop() & vItem->rect;
-                if ( crop.isNull() )
-                    crop = item->crop();
 
-                break;
+        if ( item->page()->tilesManager( PAGEVIEW_ID ) )
+        {
+            QVector< Okular::VisiblePageRect * >::const_iterator vIt = d->document->visiblePageRects().constBegin(), vEnd = d->document->visiblePageRects().constEnd();
+            for ( ; vIt != vEnd; ++vIt )
+            {
+                Okular::VisiblePageRect *vItem = *vIt;
+                if ( vItem->pageNumber == item->pageNumber() )
+                {
+                    crop = item->crop() & vItem->rect;
+                    break;
+                }
             }
         }
+
+        if ( crop.isNull() )
+            crop = item->crop();
 
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
@@ -3984,19 +3988,29 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( vItem->rect );
-            QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-            while ( tIt != tEnd )
+            Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+            if ( tilesManager )
             {
-                Okular::Tile tile = *tIt;
-                if ( !tile.isValid() )
+                QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( vItem->rect );
+                QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+                while ( tIt != tEnd )
                 {
-                    Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                            PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-                    p->setNormalizedRect( tile.rect );
-                    requestedPixmaps.push_back( p );
+                    Okular::Tile tile = *tIt;
+                    if ( !tile.isValid() )
+                    {
+                        Okular::PixmapRequest * p = new Okular::PixmapRequest(
+                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+                        p->setNormalizedRect( tile.rect );
+                        requestedPixmaps.push_back( p );
+                    }
+                    tIt++;
                 }
-                tIt++;
+            }
+            else
+            {
+                Okular::PixmapRequest * p = new Okular::PixmapRequest(
+                        PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+                requestedPixmaps.push_back( p );
             }
         }
 

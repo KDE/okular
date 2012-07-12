@@ -29,7 +29,7 @@ TilesManager::~TilesManager()
 {
     for ( int i = 0; i < 16; ++i )
     {
-        if ( m_tiles[ i ] )
+        if ( m_tiles[ i ].pixmap )
             delete m_tiles[ i ].pixmap;
     }
 }
@@ -60,7 +60,7 @@ void TilesManager::setHeight( int height )
     }
 }
 
-void TilesManager::setPixmap( QPixmap *pixmap, const NormalizedRect &rect )
+void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
 {
     const double dim = 0.25;
     int left = qCeil( rect.left/dim );
@@ -84,8 +84,6 @@ void TilesManager::setPixmap( QPixmap *pixmap, const NormalizedRect &rect )
             m_tiles[ index ].dirty = false;
         }
     }
-
-    delete pixmap;
 }
 
 bool TilesManager::hasPixmap( const NormalizedRect &rect )

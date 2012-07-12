@@ -891,6 +891,8 @@ void DocumentPrivate::sendGeneratorRequest()
         const NormalizedRect visibleRect = ( r ? r->normalizedRect() : NormalizedRect() );
         const QRect requestRect = !visibleRect.isNull() ? visibleRect.geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
 
+        TilesManager *tilesManager = r->page()->tilesManager( r->id() );
+
         if (!r)
             m_pixmapRequestsStack.pop_back();
 
@@ -900,7 +902,42 @@ void DocumentPrivate::sendGeneratorRequest()
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        else if ( (long)requestRect.width() * (long)requestRect.height() > 20000000L )
+        else if ( !tilesManager && r->id() == PAGEVIEW_ID && (long)r->width() * (long)r->height() > 8000000L )
+        {
+            // if the image is too big. start using tiles
+            kWarning(OkularDebug).nospace() << "Running out of memory on page " << r->pageNumber()
+                << " (" << r->width() << "x" << r->height() << " px);";
+            kWarning(OkularDebug) << "start using tiles.";
+
+            // fill the tiles manager with the last rendered pixmap
+            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->id(), r->width(), r->height() );
+            if ( pixmap )
+            {
+                tilesManager = new TilesManager( pixmap->width(), pixmap->height() );
+                tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
+                tilesManager->setWidth( r->width() );
+                tilesManager->setHeight( r->height() );
+            }
+            else
+            {
+                // create new tiles manager
+                tilesManager = new TilesManager( r->width(), r->height() );
+            }
+            r->page()->setTilesManager( r->id(), tilesManager );
+
+            request = r;
+        }
+        else if ( tilesManager && (long)r->width() * (long)r->height() < 6000000L )
+        {
+            kWarning(OkularDebug).nospace() << "Stop using tiles on page " << r->pageNumber()
+                << " (" << r->width() << "x" << r->height() << " px);";
+
+            // page is too small. stop using tiles.
+            r->setNormalizedRect( NormalizedRect() );
+
+            request = r;
+        }
+        else if ( tilesManager && (long)requestRect.width() * (long)requestRect.height() > 20000000L )
         {
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
@@ -932,7 +969,8 @@ void DocumentPrivate::sendGeneratorRequest()
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
     {
-        kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber() << " async == " << request->asynchronous();
+        QRect requestRect = request->normalizedRect().isNull() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
+        kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous();
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( (int)m_rotation % 2 )

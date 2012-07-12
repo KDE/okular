@@ -205,15 +205,9 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
-    if ( id == PAGEVIEW_ID )
+    TilesManager *tm = tilesManager( id );
+    if ( tm )
     {
-        TilesManager *tm = tilesManager( id );
-        if ( !tm )
-        {
-            tm = new TilesManager( width, height );
-            d->m_tilesManagers.insert( id, tm );
-        }
-
         if ( width != tm->width() || height != tm->height() )
         {
             tm->setWidth( width );
@@ -492,6 +486,7 @@ void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
     if ( tm )
     {
         tm->setPixmap( pixmap, rect );
+        delete pixmap;
         return;
     }
 
@@ -962,14 +957,14 @@ TilesManager *Page::tilesManager( int id ) const
     return tilesManager;
 }
 
-void Page::deleteTilesManagers()
+void Page::setTilesManager( int id, TilesManager *tm )
 {
-    QMap< int, TilesManager* >::iterator itTilesManager = d->m_tilesManagers.begin();
-    while ( itTilesManager != d->m_tilesManagers.end() )
+    QMap< int, TilesManager* >::const_iterator itTilesManager = d->m_tilesManagers.constFind( id );
+    if ( itTilesManager != d->m_tilesManagers.constEnd() )
     {
-        delete (*itTilesManager);
-        itTilesManager++;
+        if ( *itTilesManager )
+            delete *itTilesManager;
     }
 
-    d->m_tilesManagers.clear();
+    d->m_tilesManagers.insert( id, tm );
 }

@@ -103,6 +103,9 @@ void SearchLineEdit::resetSearch()
 
     // Make sure that the search will be reset at the next one
     m_changed = true;
+
+    // Reset input box color
+    prepareLineEditForSearch();
 }
 
 bool SearchLineEdit::isSearchRunning() const

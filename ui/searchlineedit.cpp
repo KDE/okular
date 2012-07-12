@@ -65,7 +65,9 @@ void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
         return;
 
     m_searchType = type;
-    m_changed = ( m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch );
+
+    if ( !m_changed )
+        m_changed = ( m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch );
 }
 
 void SearchLineEdit::setSearchId( int id )

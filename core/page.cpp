@@ -135,7 +135,6 @@ Page::Page( uint page, double w, double h, Rotation o )
 Page::~Page()
 {
     deletePixmaps();
-    qDeleteAll( d->m_tilesManagers );
     deleteRects();
     d->deleteHighlights();
     deleteAnnotations();
@@ -688,8 +687,14 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 
 void Page::deletePixmap( int id )
 {
-    PagePrivate::PixmapObject object = d->m_pixmaps.take( id );
-    delete object.m_pixmap;
+    TilesManager *tm = d->m_tilesManagers.take( id );
+    if ( tm )
+        delete tm;
+    else
+    {
+        PagePrivate::PixmapObject object = d->m_pixmaps.take( id );
+        delete object.m_pixmap;
+    }
 }
 
 void Page::deletePixmaps()
@@ -701,6 +706,7 @@ void Page::deletePixmaps()
     }
 
     d->m_pixmaps.clear();
+    qDeleteAll( d->m_tilesManagers );
 }
 
 void Page::deleteRects()

@@ -132,6 +132,20 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect ) const
     return result;
 }
 
+long TilesManager::totalMemory() const
+{
+    long totalPixels = 0;
+
+    for ( int i = 0; i < 16; i++ )
+    {
+        QPixmap *pixmap = m_tiles[ i ].pixmap;
+        if ( pixmap )
+            totalPixels += pixmap->width() * pixmap->height();
+    }
+
+    return 4*totalPixels;
+}
+
 Tile::Tile()
     : pixmap( 0 )
     , dirty ( true )

@@ -923,6 +923,7 @@ void DocumentPrivate::sendGeneratorRequest()
                 // create new tiles manager
                 tilesManager = new TilesManager( r->width(), r->height() );
             }
+            r->page()->deletePixmap( r->id() );
             r->page()->setTilesManager( r->id(), tilesManager );
 
             request = r;
@@ -933,6 +934,7 @@ void DocumentPrivate::sendGeneratorRequest()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // page is too small. stop using tiles.
+            r->page()->deletePixmap( r->id() );
             r->setNormalizedRect( NormalizedRect() );
 
             request = r;
@@ -961,8 +963,13 @@ void DocumentPrivate::sendGeneratorRequest()
     }
 
     // [MEM] preventive memory freeing
-    const QRect requestRect = !request->normalizedRect().isNull() ? request->normalizedRect().geometry( request->width(), request->height() ) : QRect(0, 0, request->width(), request->height() );
-    qulonglong pixmapBytes = 4 * requestRect.width() * requestRect.height();
+    qulonglong pixmapBytes = 0;
+    const TilesManager * tm = request->page()->tilesManager( request->id() );
+    if ( tm )
+        pixmapBytes = tm->totalMemory();
+    else
+        pixmapBytes = 4 * request->width() * request->height();
+
     if ( pixmapBytes > (1024 * 1024) )
         cleanupPixmapMemory( pixmapBytes );
 
@@ -3816,8 +3823,13 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     if ( itObserver != m_observers.constEnd() )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
-        const QRect requestRect = !req->normalizedRect().isNull() ? req->normalizedRect().geometry( req->width(), req->height() ) : QRect(0, 0, req->width(), req->height() );
-        qulonglong memoryBytes = 4 * requestRect.width() * requestRect.height();
+        qulonglong memoryBytes = 0;
+        const TilesManager *tm = req->page()->tilesManager( req->id() );
+        if ( tm )
+            memoryBytes = tm->totalMemory();
+        else
+            memoryBytes = 4 * req->width() * req->height();
+
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
         m_allocatedPixmapsFifo.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;

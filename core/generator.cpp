@@ -103,9 +103,9 @@ void GeneratorPrivate::pixmapGenerationFinished()
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
     const int pageNumber = request->page()->number();
 
-    q->signalPixmapRequestDone( request );
     if ( mPixmapGenerationThread->calcBoundingBox() )
         q->updatePageBoundingBox( pageNumber, mPixmapGenerationThread->boundingBox() );
+    q->signalPixmapRequestDone( request );
 }
 
 void GeneratorPrivate::textpageGenerationFinished()

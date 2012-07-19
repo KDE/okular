@@ -3988,9 +3988,14 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
+            Okular::PixmapRequest * p = new Okular::PixmapRequest(
+                    PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+            requestedPixmaps.push_back( p );
+
             Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
             if ( tilesManager )
             {
+                Okular::NormalizedRect tilesRect;
                 QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( vItem->rect );
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
@@ -3998,19 +4003,16 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     Okular::Tile tile = *tIt;
                     if ( !tile.isValid() )
                     {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-                        p->setNormalizedRect( tile.rect );
-                        requestedPixmaps.push_back( p );
+                        if ( tilesRect.isNull() )
+                            tilesRect = tile.rect;
+                        else
+                            tilesRect |= tile.rect;
                     }
+
                     tIt++;
                 }
-            }
-            else
-            {
-                Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                        PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-                requestedPixmaps.push_back( p );
+
+                p->setNormalizedRect( tilesRect );
             }
         }
 

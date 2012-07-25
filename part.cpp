@@ -1038,6 +1038,7 @@ void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFl
 
     rebuildBookmarkMenu();
     updateAboutBackendAction();
+    m_findBar->resetSearch();
     m_searchWidget->setEnabled( m_document->supportsSearching() );
 }
 
@@ -1373,7 +1374,6 @@ bool Part::closeUrl(bool promptToSave)
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );
-    m_findBar->resetSearch();
     if( m_saveAs )  m_saveAs->setEnabled( false );
     if( m_saveCopyAs ) m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );

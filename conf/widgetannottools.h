@@ -70,6 +70,7 @@ class NewAnnotToolDialog : public KDialog
 
     private:
         void rebuildAppearanceBox();
+        void updateDefaultName();
 
         KLineEdit *m_name;
         KComboBox *m_type;
@@ -79,8 +80,8 @@ class NewAnnotToolDialog : public KDialog
         AnnotationWidget *m_annotationWidget;
 
     private slots:
-        void slotNameEdited( const QString &new_name );
         void slotTypeChanged();
+        void slotDataChanged();
 };
 
 #endif

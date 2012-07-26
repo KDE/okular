@@ -211,7 +211,6 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
 {
     setCaption( i18n("Create annotation tool") );
     setButtons( Ok | Cancel );
-    enableButton( Ok, false );
     setDefaultButton( Ok );
 
     QLabel * tmplabel;
@@ -221,7 +220,6 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     setMainWidget(widget);
 
     m_name = new KLineEdit( widget );
-    connect( m_name, SIGNAL( textEdited(const QString &) ), this, SLOT( slotNameEdited(const QString &) ) );
     tmplabel = new QLabel( i18n( "&Name:" ), widget );
     tmplabel->setBuddy( m_name );
     widgetLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
@@ -249,6 +247,7 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     m_type->addItem( i18n("Stamp"), QByteArray("stamp") );
 
     rebuildAppearanceBox();
+    updateDefaultName();
 }
 
 NewAnnotToolDialog::~NewAnnotToolDialog()
@@ -258,7 +257,10 @@ NewAnnotToolDialog::~NewAnnotToolDialog()
 
 QString NewAnnotToolDialog::name() const
 {
-    return m_name->text();
+    QString userText = m_name->text();
+    if ( userText.isEmpty() )
+        userText = m_name->placeholderText();
+    return userText;
 }
 
 QString NewAnnotToolDialog::toolXml() const
@@ -442,18 +444,59 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
     m_annotationWidget = AnnotationWidgetFactory::widgetFor( m_stubann );
     m_appearanceBox->layout()->addWidget( m_annotationWidget->appearanceWidget() );
 
-    // Tell the widget to mirror changes back in the stub annotation
-    connect( m_annotationWidget, SIGNAL(dataChanged()), m_annotationWidget, SLOT(applyChanges()) );
+    connect( m_annotationWidget, SIGNAL(dataChanged()), this, SLOT(slotDataChanged()) );
 }
 
-void NewAnnotToolDialog::slotNameEdited( const QString &new_name )
+void NewAnnotToolDialog::updateDefaultName()
 {
-    enableButton( Ok, !new_name.isEmpty() );
+    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+    QString defaultName = m_type->currentText();
+
+    if ( toolType == "text-markup" )
+    {
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+
+        switch ( ha->highlightType() )
+        {
+            case Okular::HighlightAnnotation::Highlight:
+                defaultName = i18n( "Highlight" );
+                break;
+            case Okular::HighlightAnnotation::Squiggly:
+                defaultName = i18n( "Squiggly" );
+                break;
+            case Okular::HighlightAnnotation::Underline:
+                defaultName = i18n( "Underline" );
+                break;
+            case Okular::HighlightAnnotation::StrikeOut:
+                defaultName = i18n( "Strike out" );
+                break;
+        }
+    }
+    else if ( toolType == "geometrical-shape" )
+    {
+        Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
+
+        if ( ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle )
+            defaultName = i18n( "Ellipse" );
+        else
+            defaultName = i18n( "Rectangle" );
+    }
+
+    m_name->setPlaceholderText( defaultName );
 }
 
 void NewAnnotToolDialog::slotTypeChanged()
 {
     rebuildAppearanceBox();
+    updateDefaultName();
+}
+
+void NewAnnotToolDialog::slotDataChanged()
+{
+    // Mirror changes back in the stub annotation
+    m_annotationWidget->applyChanges();
+
+    updateDefaultName();
 }
 
 #include "moc_widgetannottools.cpp"

@@ -259,6 +259,7 @@ QString NewAnnotToolDialog::toolXml() const
     const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
     const QString color = m_stubann->style().color().name();
     const double opacity = m_stubann->style().opacity();
+    const double width = m_stubann->style().width();
 
     if ( toolType == "note-linked" )
     {
@@ -286,9 +287,9 @@ QString NewAnnotToolDialog::toolXml() const
         Q_UNUSED( ia );
         return QString( "<tool type=\"ink\">"
                          "<engine type=\"SmoothLine\" color=\"%1\">"
-                          "<annotation type=\"Ink\" color=\"%1\" width=\"2\" opacity=\"%2\" />"
+                          "<annotation type=\"Ink\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
                          "</engine>"
-                        "</tool>").arg( color ).arg( opacity );
+                        "</tool>").arg( color ).arg( opacity ).arg( width );
     }
     else if ( toolType == "straight-line" )
     {
@@ -296,9 +297,9 @@ QString NewAnnotToolDialog::toolXml() const
         Q_UNUSED( la );
         return QString( "<tool type=\"straight-line\">"
                          "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
-                          "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
                          "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity );
+                        "</tool>" ).arg( color ).arg( opacity ).arg( width );
     }
     else if ( toolType == "polygon" )
     {
@@ -306,9 +307,9 @@ QString NewAnnotToolDialog::toolXml() const
         Q_UNUSED( la );
         return QString( "<tool type=\"polygon\">"
                          "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
-                          "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
                          "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity );
+                        "</tool>" ).arg( color ).arg( opacity ).arg( width );
     }
     else if ( toolType == "text-markup" )
     {
@@ -346,11 +347,11 @@ QString NewAnnotToolDialog::toolXml() const
     {
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
         const bool isCircle = (ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle);
-        return QString( "<tool type=\"%3\">"
+        return QString( "<tool type=\"%4\">"
                          "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
-                          "<annotation type=\"%4\" color=\"%1\" opacity=\"%2\" />"
+                          "<annotation type=\"%5\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
                          "</engine>"
-                        "</tool>").arg( color ).arg( opacity )
+                        "</tool>").arg( color ).arg( opacity ).arg( width )
                                   .arg( isCircle ? "ellipse" : "rectangle" )
                                   .arg( isCircle ? "GeomCircle" : "GeomSquare" );
     }

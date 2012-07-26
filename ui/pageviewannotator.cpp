@@ -238,7 +238,8 @@ class PickPointEngine : public AnnotatorEngine
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
                 else
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
-                ga->style().setWidth( 5 );
+                if ( m_annotElement.hasAttribute( "width" ) )
+                    ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
                 //set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
@@ -422,6 +423,9 @@ class PolyLineEngine : public AnnotatorEngine
             // safety check
             if ( !ann )
                 return QList< Okular::Annotation* >();
+
+            if ( m_annotElement.hasAttribute( "width" ) )
+                ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
 
             // set common attributes
             ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?

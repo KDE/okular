@@ -80,6 +80,7 @@ public:
     QWidget * appearanceWidget();
     QWidget * extraWidget();
 
+public slots:
     virtual void applyChanges();
 
 signals:

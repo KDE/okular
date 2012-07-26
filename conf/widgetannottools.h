@@ -15,10 +15,15 @@
 
 class KLineEdit;
 class KComboBox;
-class KColorButton;
-class KIntNumInput;
 class KPushButton;
 class QListWidget;
+class QGroupBox;
+class AnnotationWidget;
+
+namespace Okular
+{
+class Annotation;
+}
 
 class WidgetAnnotTools : public QWidget
 {
@@ -59,17 +64,23 @@ class NewAnnotToolDialog : public KDialog
 
     public:
         NewAnnotToolDialog( QWidget *parent = 0 );
+        ~NewAnnotToolDialog();
         QString name() const;
         QString toolXml() const;
 
     private:
-        KLineEdit * m_name;
-        KComboBox * m_type;
-        KColorButton * m_color;
-        KIntNumInput * m_opacity;
+        void rebuildAppearanceBox();
+
+        KLineEdit *m_name;
+        KComboBox *m_type;
+        QGroupBox *m_appearanceBox;
+
+        Okular::Annotation *m_stubann;
+        AnnotationWidget *m_annotationWidget;
 
     private slots:
         void slotNameEdited( const QString &new_name );
+        void slotTypeChanged();
 };
 
 #endif

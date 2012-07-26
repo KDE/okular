@@ -28,6 +28,9 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
+#include "core/annotations.h"
+#include "ui/annotationwidgets.h"
+
 // Used to store tools' XML description in m_list's items
 static const int ToolXmlRole = Qt::UserRole;
 
@@ -197,7 +200,7 @@ void WidgetAnnotTools::slotMoveDown( bool )
 }
 
 NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
-    : KDialog( parent )
+    : KDialog( parent ), m_stubann( 0 ), m_annotationWidget( 0 )
 {
     setCaption( i18n("Create annotation tool") );
     setButtons( Ok | Cancel );
@@ -218,103 +221,32 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     widgetLayout->addWidget( m_name, 0, 1 );
 
     m_type = new KComboBox( false, widget );
+    connect( m_type, SIGNAL( currentIndexChanged(int) ), this, SLOT( slotTypeChanged() ) );
     tmplabel = new QLabel( i18n( "&Type:" ), widget );
     tmplabel->setBuddy( m_type );
     widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_type, 1, 1 );
 
-    QGroupBox * appearance = new QGroupBox( i18n( "Appearance" ), widget );
-    QGridLayout * appearanceLayout = new QGridLayout( appearance );
+    m_appearanceBox = new QGroupBox( i18n( "Appearance" ), widget );
+    m_appearanceBox->setLayout( new QVBoxLayout( m_appearanceBox ) );
+    widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 2 );
 
-    m_color = new KColorButton( appearance );
-    tmplabel = new QLabel( i18n( "&Color:" ), appearance );
-    m_color->setColor( Qt::green );
-    tmplabel->setBuddy( m_color );
-    appearanceLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    appearanceLayout->addWidget( m_color, 0, 1 );
+    // Populate combobox with annotation types
+    m_type->addItem( i18n("Note"), QByteArray("note-linked") );
+    m_type->addItem( i18n("Inline Note"), QByteArray("note-inline") );
+    m_type->addItem( i18n("Freehand Line"), QByteArray("ink") );
+    m_type->addItem( i18n("Straight Line"), QByteArray("straight-line") );
+    m_type->addItem( i18n("Polygon"), QByteArray("polygon") );
+    m_type->addItem( i18n("Text markup"), QByteArray("text-markup") );
+    m_type->addItem( i18n("Geometrical shape"), QByteArray("geometrical-shape") );
+    m_type->addItem( i18n("Stamp"), QByteArray("stamp") );
 
-    m_opacity = new KIntNumInput( appearance );
-    m_opacity->setRange( 0, 100 );
-    m_opacity->setValue( 100 );
-    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
-    tmplabel = new QLabel( i18n( "&Opacity:" ), appearance );
-    tmplabel->setBuddy( m_opacity );
-    appearanceLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    appearanceLayout->addWidget( m_opacity, 1, 1 );
+    rebuildAppearanceBox();
+}
 
-    widgetLayout->addWidget( appearance, 2, 0, 1, 2 );
-
-#define TYPE(name, template) \
-    m_type->addItem( name, qVariantFromValue(QString( template )) )
-
-    TYPE( i18n("Note"),
-            "<tool type=\"note-linked\">"
-             "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
-              "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Inline Note" ),
-            "<tool type=\"note-inline\">"
-             "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note-inline\" block=\"true\">"
-              "<annotation type=\"FreeText\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Freehand Line" ),
-            "<tool type=\"ink\">"
-             "<engine type=\"SmoothLine\" color=\"%1\">"
-              "<annotation type=\"Ink\" color=\"%1\" width=\"2\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Straight Line" ),
-            "<tool type=\"straight-line\">"
-             "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
-              "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Polygon" ),
-            "<tool type=\"polygon\">"
-             "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
-              "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Highlight" ),
-            "<tool type=\"highlight\">"
-             "<engine type=\"TextSelector\" color=\"%1\">"
-              "<annotation type=\"Highlight\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Squiggly" ),
-            "<tool type=\"squiggly\">"
-             "<engine type=\"TextSelector\" color=\"%1\">"
-              "<annotation type=\"Squiggly\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Underline" ),
-            "<tool type=\"underline\">"
-             "<engine type=\"TextSelector\" color=\"%1\">"
-              "<annotation type=\"Underline\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Strike out" ),
-            "<tool type=\"strikeout\">"
-             "<engine type=\"TextSelector\" color=\"%1\">"
-              "<annotation type=\"StrikeOut\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Ellipse" ),
-            "<tool type=\"ellipse\">"
-             "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
-              "<annotation type=\"GeomCircle\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    TYPE( i18n("Rectangle" ),
-            "<tool type=\"rectangle\">"
-             "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
-              "<annotation type=\"GeomSquare\" color=\"%1\" opacity=\"%2\" />"
-             "</engine>"
-            "</tool>" );
-    // TODO: Stamp
-#undef ADDTYPE
+NewAnnotToolDialog::~NewAnnotToolDialog()
+{
+    delete m_annotationWidget;
 }
 
 QString NewAnnotToolDialog::name() const
@@ -324,14 +256,197 @@ QString NewAnnotToolDialog::name() const
 
 QString NewAnnotToolDialog::toolXml() const
 {
-    const QString templ = m_type->itemData( m_type->currentIndex() ).value<QString>();
-    const double opacity = (double)m_opacity->value() / 100.0;
-    return templ.arg( m_color->color().name() ).arg( opacity );
+    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+    const QString color = m_stubann->style().color().name();
+    const double opacity = m_stubann->style().opacity();
+
+    if ( toolType == "note-linked" )
+    {
+        Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
+        Q_UNUSED( ta );
+        return QString( "<tool type=\"note-linked\">"
+                         "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
+                          "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>" ).arg( color ).arg( opacity );
+    }
+    else if ( toolType == "note-inline" )
+    {
+        Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
+        Q_UNUSED( ta );
+        return QString( "<tool type=\"note-inline\">"
+                         "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note-inline\" block=\"true\">"
+                          "<annotation type=\"FreeText\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>" ).arg( color ).arg( opacity );
+    }
+    else if ( toolType == "ink" )
+    {
+        Okular::InkAnnotation * ia = static_cast<Okular::InkAnnotation*>( m_stubann );
+        Q_UNUSED( ia );
+        return QString( "<tool type=\"ink\">"
+                         "<engine type=\"SmoothLine\" color=\"%1\">"
+                          "<annotation type=\"Ink\" color=\"%1\" width=\"2\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>").arg( color ).arg( opacity );
+    }
+    else if ( toolType == "straight-line" )
+    {
+        Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
+        Q_UNUSED( la );
+        return QString( "<tool type=\"straight-line\">"
+                         "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
+                          "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>" ).arg( color ).arg( opacity );
+    }
+    else if ( toolType == "polygon" )
+    {
+        Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
+        Q_UNUSED( la );
+        return QString( "<tool type=\"polygon\">"
+                         "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
+                          "<annotation type=\"Line\" width=\"4\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>" ).arg( color ).arg( opacity );
+    }
+    else if ( toolType == "text-markup" )
+    {
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+
+        QString toolType, annotationType;
+        switch ( ha->highlightType() )
+        {
+            case Okular::HighlightAnnotation::Highlight:
+                toolType = "highlight";
+                annotationType = "Highlight";
+                break;
+            case Okular::HighlightAnnotation::Squiggly:
+                toolType = "squiggly";
+                annotationType = "Squiggly";
+                break;
+            case Okular::HighlightAnnotation::Underline:
+                toolType = "underline";
+                annotationType = "Underline";
+                break;
+            case Okular::HighlightAnnotation::StrikeOut:
+                toolType = "strikeout";
+                annotationType = "StrikeOut";
+                break;
+        }
+
+        return QString( "<tool type=\"%3\">"
+                         "<engine type=\"TextSelector\" color=\"%1\">"
+                          "<annotation type=\"%4\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>").arg( color ).arg( opacity )
+                                  .arg( toolType ).arg( annotationType );
+    }
+    else if ( toolType == "geometrical-shape" )
+    {
+        Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
+        const bool isCircle = (ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle);
+        return QString( "<tool type=\"%3\">"
+                         "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
+                          "<annotation type=\"%4\" color=\"%1\" opacity=\"%2\" />"
+                         "</engine>"
+                        "</tool>").arg( color ).arg( opacity )
+                                  .arg( isCircle ? "ellipse" : "rectangle" )
+                                  .arg( isCircle ? "GeomCircle" : "GeomSquare" );
+    }
+    else if ( toolType == "stamp" )
+    {
+        Okular::StampAnnotation * sa = static_cast<Okular::StampAnnotation*>( m_stubann );
+        return QString( "<tool type=\"stamp\">"
+                         "<engine type=\"PickPoint\" hoverIcon=\"%1\" size=\"64\" block=\"true\">"
+                          "<annotation type=\"Stamp\" icon=\"%1\"/>"
+                         "</engine>"
+                        "</tool>" ).arg( sa->stampIconName() ); // FIXME: Check bad strings
+    }
+
+    return QString(); // This should never happen
+}
+
+void NewAnnotToolDialog::rebuildAppearanceBox()
+{
+    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+
+    // Delete previous stub annotation, if any
+    delete m_stubann;
+
+    // Create stub annotation
+    if ( toolType == "note-linked" )
+    {
+        Okular::TextAnnotation * ta = new Okular::TextAnnotation();
+        ta->setTextType( Okular::TextAnnotation::Linked );
+        m_stubann = ta;
+    }
+    else if ( toolType == "note-inline" )
+    {
+        Okular::TextAnnotation * ta = new Okular::TextAnnotation();
+        ta->setTextType( Okular::TextAnnotation::InPlace );
+        m_stubann = ta;
+    }
+    else if ( toolType == "ink" )
+    {
+        m_stubann = new Okular::InkAnnotation();
+    }
+    else if ( toolType == "straight-line" )
+    {
+        Okular::LineAnnotation * la = new Okular::LineAnnotation();
+        la->setLinePoints( QLinkedList<Okular::NormalizedPoint>() <<
+                                Okular::NormalizedPoint(0,0) <<
+                                Okular::NormalizedPoint(1,0) );
+        m_stubann = la;
+    }
+    else if ( toolType == "polygon" )
+    {
+        Okular::LineAnnotation * la = new Okular::LineAnnotation();
+        la->setLinePoints( QLinkedList<Okular::NormalizedPoint>() <<
+                                Okular::NormalizedPoint(0,0) <<
+                                Okular::NormalizedPoint(1,0) <<
+                                Okular::NormalizedPoint(1,1) );
+        m_stubann = la;
+    }
+    else if ( toolType == "text-markup" )
+    {
+        m_stubann = new Okular::HighlightAnnotation();
+    }
+    else if ( toolType == "geometrical-shape" )
+    {
+        m_stubann = new Okular::GeomAnnotation();
+    }
+    else if ( toolType == "stamp" )
+    {
+        Okular::StampAnnotation * sa = new Okular::StampAnnotation();
+        sa->setStampIconName( "okular" );
+        m_stubann = sa;
+    }
+
+    m_stubann->style().setColor( Qt::yellow ); // TODO: Choose default color according to annotation type
+
+    // Remove previous widget (if any)
+    if ( m_annotationWidget )
+    {
+        delete m_annotationWidget->appearanceWidget();
+        delete m_annotationWidget;
+    }
+
+    m_annotationWidget = AnnotationWidgetFactory::widgetFor( m_stubann );
+    m_appearanceBox->layout()->addWidget( m_annotationWidget->appearanceWidget() );
+
+    // Tell the widget to mirror changes back in the stub annotation
+    connect( m_annotationWidget, SIGNAL(dataChanged()), m_annotationWidget, SLOT(applyChanges()) );
 }
 
 void NewAnnotToolDialog::slotNameEdited( const QString &new_name )
 {
     enableButton( Ok, !new_name.isEmpty() );
+}
+
+void NewAnnotToolDialog::slotTypeChanged()
+{
+    rebuildAppearanceBox();
 }
 
 #include "moc_widgetannottools.cpp"

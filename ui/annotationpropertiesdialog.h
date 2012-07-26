@@ -14,8 +14,6 @@
 
 class QLabel;
 class QLineEdit;
-class KColorButton;
-class KIntNumInput;
 class AnnotationWidget;
 
 namespace Okular {
@@ -37,8 +35,6 @@ private:
     Okular::Annotation* m_annot;    //source annotation
     //dialog widgets:
     QLineEdit *AuthorEdit;
-    KColorButton *colorBn;
-    KIntNumInput *m_opacity;
     AnnotationWidget *m_annotWidget;
     QLabel *m_modifyDateLabel;
     

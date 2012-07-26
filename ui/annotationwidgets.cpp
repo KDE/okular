@@ -22,6 +22,7 @@
 #include <kicon.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <knuminput.h>
 #include <kdebug.h>
 
 #include "core/document.h"
@@ -146,13 +147,13 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         default:
             ;
     }
-    // cases not covered yet
-    return 0;
+    // cases not covered yet: return a generic widget
+    return new AnnotationWidget( ann );
 }
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann ), m_styleWidget( 0 ), m_extraWidget( 0 )
+    : QObject(), m_ann( ann ), m_appearanceWidget( 0 ), m_extraWidget( 0 )
 {
 }
 
@@ -165,13 +166,13 @@ Okular::Annotation::SubType AnnotationWidget::annotationType() const
     return m_ann->subType();
 }
 
-QWidget * AnnotationWidget::styleWidget()
+QWidget * AnnotationWidget::appearanceWidget()
 {
-    if ( m_styleWidget )
-        return m_styleWidget;
+    if ( m_appearanceWidget )
+        return m_appearanceWidget;
 
-    m_styleWidget = createStyleWidget();
-    return m_styleWidget;
+    m_appearanceWidget = createAppearanceWidget();
+    return m_appearanceWidget;
 }
 
 QWidget * AnnotationWidget::extraWidget()
@@ -181,6 +182,50 @@ QWidget * AnnotationWidget::extraWidget()
 
     m_extraWidget = createExtraWidget();
     return m_extraWidget;
+}
+
+void AnnotationWidget::applyChanges()
+{
+    m_ann->style().setColor( m_colorBn->color() );
+    m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
+}
+
+QWidget * AnnotationWidget::createAppearanceWidget()
+{
+    QWidget * widget = new QWidget();
+    QGridLayout * gridlayout = new QGridLayout( widget );
+
+    QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
+    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    m_colorBn = new KColorButton( widget );
+    m_colorBn->setColor( m_ann->style().color() );
+    tmplabel->setBuddy( m_colorBn );
+    gridlayout->addWidget( m_colorBn, 0, 1 );
+
+    tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
+    gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    m_opacity = new KIntNumInput( widget );
+    m_opacity->setRange( 0, 100 );
+    m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
+    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+    tmplabel->setBuddy( m_opacity );
+    gridlayout->addWidget( m_opacity, 1, 1 );
+
+    QWidget * styleWidget = createStyleWidget();
+    if ( styleWidget )
+        gridlayout->addWidget( styleWidget, 2, 0, 1, 2 );
+
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
+
+    connect( m_colorBn, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+    connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
+
+    return widget;
+}
+
+QWidget * AnnotationWidget::createStyleWidget()
+{
+    return 0;
 }
 
 QWidget * AnnotationWidget::createExtraWidget()
@@ -238,6 +283,7 @@ QWidget * TextAnnotationWidget::createStyleWidget()
 
 void TextAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
         m_textAnn->setTextIcon( m_pixmapSelector->icon() );
@@ -293,6 +339,7 @@ QWidget * StampAnnotationWidget::createStyleWidget()
 
 void StampAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_stampAnn->setStampIconName( m_pixmapSelector->icon() );
 }
 
@@ -365,6 +412,7 @@ QWidget * LineAnnotationWidget::createStyleWidget()
 
 void LineAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     if ( m_lineType == 0 )
     {
         m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
@@ -407,6 +455,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
 
 void HighlightAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_hlAnn->setHighlightType( (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex() );
 }
 
@@ -464,6 +513,7 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
 
 void GeomAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_geomAnn->setGeometricalType( (Okular::GeomAnnotation::GeomType)m_typeCombo->currentIndex() );
     if ( !m_useColor->isChecked() )
     {
@@ -553,6 +603,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
 void FileAttachmentAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_attachAnn->setFileIconName( m_pixmapSelector->icon() );
 }
 
@@ -608,6 +659,7 @@ QWidget * CaretAnnotationWidget::createStyleWidget()
 
 void CaretAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_caretAnn->setCaretSymbol( caretSymbolFromIcon( m_pixmapSelector->icon() ) );
 }
 

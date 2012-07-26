@@ -20,6 +20,7 @@ class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class KColorButton;
+class KIntNumInput;
 class KFontRequester;
 class AnnotationWidget;
 
@@ -71,27 +72,30 @@ class AnnotationWidget
     Q_OBJECT
 
 public:
+    AnnotationWidget( Okular::Annotation * ann );
     virtual ~AnnotationWidget();
 
     virtual Okular::Annotation::SubType annotationType() const;
 
-    QWidget * styleWidget();
+    QWidget * appearanceWidget();
     QWidget * extraWidget();
 
-    virtual void applyChanges() = 0;
+    virtual void applyChanges();
 
 signals:
     void dataChanged();
 
 protected:
-    AnnotationWidget( Okular::Annotation * ann );
+    QWidget * createAppearanceWidget();
 
-    virtual QWidget * createStyleWidget() = 0;
+    virtual QWidget * createStyleWidget();
     virtual QWidget * createExtraWidget();
 
     Okular::Annotation * m_ann;
-    QWidget * m_styleWidget;
+    QWidget * m_appearanceWidget;
     QWidget * m_extraWidget;
+    KColorButton *m_colorBn;
+    KIntNumInput *m_opacity;
 };
 
 class TextAnnotationWidget

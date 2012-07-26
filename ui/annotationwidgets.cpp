@@ -248,35 +248,36 @@ QWidget * TextAnnotationWidget::createStyleWidget()
 
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
-    QGroupBox * gb = new QGroupBox( widget );
-    lay->addWidget( gb );
-    gb->setTitle( i18n( "Icon" ) );
-    QHBoxLayout * gblay = new QHBoxLayout( gb );
-    m_pixmapSelector = new PixmapPreviewSelector( gb );
-    gblay->addWidget( m_pixmapSelector );
+        QGroupBox * gb = new QGroupBox( widget );
+        lay->addWidget( gb );
+        gb->setTitle( i18n( "Icon" ) );
+        QHBoxLayout * gblay = new QHBoxLayout( gb );
+        m_pixmapSelector = new PixmapPreviewSelector( gb );
+        gblay->addWidget( m_pixmapSelector );
 
-    m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
-    m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
-    m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
-    m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
-    m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
-    m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
-    m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
-    m_pixmapSelector->setIcon( m_textAnn->textIcon() );
+        m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
+        m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
+        m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
+        m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
+        m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
+        m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
+        m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
+        m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
-    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+        connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
     }
+    else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
+    {
+        QHBoxLayout * fontlay = new QHBoxLayout();
+        QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
+        fontlay->addWidget( tmplabel );
+        m_fontReq = new KFontRequester( widget );
+        fontlay->addWidget( m_fontReq );
+        lay->addLayout( fontlay );
+        m_fontReq->setFont( m_textAnn->textFont() );
 
-    QHBoxLayout * fontlay = new QHBoxLayout();
-    QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
-    fontlay->addWidget( tmplabel );
-    m_fontReq = new KFontRequester( widget );
-    fontlay->addWidget( m_fontReq );
-    lay->addLayout( fontlay );
-
-    m_fontReq->setFont( m_textAnn->textFont() );
-
-    connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+        connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+    }
 
     return widget;
 }
@@ -288,7 +289,10 @@ void TextAnnotationWidget::applyChanges()
     {
         m_textAnn->setTextIcon( m_pixmapSelector->icon() );
     }
-    m_textAnn->setTextFont( m_fontReq->font() );
+    else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
+    {
+        m_textAnn->setTextFont( m_fontReq->font() );
+    }
 }
 
 

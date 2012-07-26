@@ -101,18 +101,18 @@ class PickPointEngine : public AnnotatorEngine
             // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            if ( center && pixmap )
+            if ( center )
             {
-                rect.left = nX - ( pixmap->width() / ( xScale * 2.0 ) );
-                rect.top = nY - ( pixmap->height() / ( yScale * 2.0 ) );
+                rect.left = nX - ( size / ( xScale * 2.0 ) );
+                rect.top = nY - ( size / ( yScale * 2.0 ) );
             }
             else
             {
                 rect.left = nX;
                 rect.top = nY;
             }
-            rect.right = rect.left + ( pixmap ? pixmap->width() / xScale : 0 );
-            rect.bottom = rect.top + ( pixmap ? pixmap->height() / yScale : 0 );
+            rect.right = rect.left + size;
+            rect.bottom = rect.top + size;
             QRect boundrect = rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
             if ( m_block )
             {

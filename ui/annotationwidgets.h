@@ -233,4 +233,22 @@ private:
     PixmapPreviewSelector * m_pixmapSelector;
 };
 
+class InkAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    InkAnnotationWidget( Okular::Annotation * ann );
+
+    virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
+
+private:
+    Okular::InkAnnotation * m_inkAnn;
+    QDoubleSpinBox * m_spinSize;
+};
+
 #endif

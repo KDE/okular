@@ -134,6 +134,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         case Okular::Annotation::AHighlight:
             return new HighlightAnnotationWidget( ann );
             break;
+        case Okular::Annotation::AInk:
+            return new InkAnnotationWidget( ann );
+            break;
         case Okular::Annotation::AGeom:
             return new GeomAnnotationWidget( ann );
             break;
@@ -423,6 +426,44 @@ void LineAnnotationWidget::applyChanges()
         m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
     }
     m_lineAnn->style().setWidth( m_spinSize->value() );
+}
+
+
+
+InkAnnotationWidget::InkAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann )
+{
+    m_inkAnn = static_cast< Okular::InkAnnotation * >( ann );
+}
+
+QWidget * InkAnnotationWidget::createStyleWidget()
+{
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
+    lay->setMargin( 0 );
+
+    QGroupBox * gb2 = new QGroupBox( widget );
+    lay->addWidget( gb2 );
+    gb2->setTitle( i18n( "Style" ) );
+    QGridLayout * gridlay2 = new QGridLayout( gb2 );
+    QLabel * tmplabel2 = new QLabel( i18n( "&Size:" ), gb2 );
+    gridlay2->addWidget( tmplabel2, 0, 0, Qt::AlignRight );
+    m_spinSize = new QDoubleSpinBox( gb2 );
+    gridlay2->addWidget( m_spinSize, 0, 1 );
+    tmplabel2->setBuddy( m_spinSize );
+
+    m_spinSize->setRange( 1, 100 );
+    m_spinSize->setValue( m_inkAnn->style().width() );
+
+    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+
+    return widget;
+}
+
+void InkAnnotationWidget::applyChanges()
+{
+    AnnotationWidget::applyChanges();
+    m_inkAnn->style().setWidth( m_spinSize->value() );
 }
 
 

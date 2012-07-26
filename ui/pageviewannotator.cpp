@@ -61,7 +61,7 @@ class PickPointEngine : public AnnotatorEngine
 
             // create engine objects
             if ( !pixmapName.simplified().isEmpty() )
-                pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
+                pixmap = new QPixmap( GuiUtils::loadStamp( pixmapName, QSize( size, size ) ) );
         }
 
         ~PickPointEngine()

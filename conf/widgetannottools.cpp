@@ -30,6 +30,7 @@
 
 #include "core/annotations.h"
 #include "ui/annotationwidgets.h"
+#include "ui/pageviewannotator.h"
 
 // Used to store tools' XML description in m_list's items
 static const int ToolXmlRole = Qt::UserRole;
@@ -134,6 +135,7 @@ void WidgetAnnotTools::setTools(const QStringList& items)
             const QString itemText = toolElement.attribute( "name" );
             QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
             listEntry->setData( ToolXmlRole, qVariantFromValue(toolXml) );
+            listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
         }
     }
 
@@ -162,9 +164,14 @@ void WidgetAnnotTools::slotAdd( bool )
     if ( t.exec() != QDialog::Accepted )
         return;
 
+    QDomDocument entryParser;
+    entryParser.setContent( t.toolXml() );
+    QDomElement toolElement = entryParser.documentElement();
+
     // Create list entry and attach XML string as data
     QListWidgetItem * listEntry = new QListWidgetItem( t.name(), m_list );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( t.toolXml() ) );
+    listEntry->setData( ToolXmlRole, qVariantFromValue( entryParser.toString(-1) ) );
+    listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
 
     // Select and scroll
     m_list->setCurrentItem( listEntry );

@@ -77,13 +77,14 @@ class PageViewAnnotator : public QObject
 
         void reparseConfig();
 
+        static QPixmap makeToolPixmap( const QDomElement &toolElement );
+
     private slots:
         void slotToolSelected( int toolID );
         void slotSaveToolbarOrientation( int side );
         void slotToolDoubleClicked( int toolID );
 
     private:
-        static QPixmap makeToolPixmap( const QDomElement &toolElement );
         void detachAnnotation();
 
         // global class pointers

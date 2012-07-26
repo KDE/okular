@@ -264,12 +264,11 @@ QString NewAnnotToolDialog::toolXml() const
     if ( toolType == "note-linked" )
     {
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
-        Q_UNUSED( ta );
         return QString( "<tool type=\"note-linked\">"
                          "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
-                          "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" />"
+                          "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" icon=\"%3\" />"
                          "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity );
+                        "</tool>" ).arg( color ).arg( opacity ).arg( ta->textIcon() );
     }
     else if ( toolType == "note-inline" )
     {

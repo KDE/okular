@@ -48,10 +48,10 @@ class PickPointEngine : public AnnotatorEngine
               xscale( 1.0 ), yscale( 1.0 )
         {
             // parse engine specific attributes
-            pixmapName = engineElement.attribute( "hoverIcon" );
-            const QString stampname = m_annotElement.attribute( "icon" );
-            if ( m_annotElement.attribute( "type" ) == "Stamp" && !stampname.simplified().isEmpty() )
-                pixmapName = stampname;
+            hoverIconName = engineElement.attribute( "hoverIcon" );
+            iconName = m_annotElement.attribute( "icon" );
+            if ( m_annotElement.attribute( "type" ) == "Stamp" && !iconName.simplified().isEmpty() )
+                hoverIconName = iconName;
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
             bool ok = true;
             size = engineElement.attribute( "size", "32" ).toInt( &ok );
@@ -60,8 +60,8 @@ class PickPointEngine : public AnnotatorEngine
             m_block = QVariant( engineElement.attribute( "block" ) ).toBool();
 
             // create engine objects
-            if ( !pixmapName.simplified().isEmpty() )
-                pixmap = new QPixmap( GuiUtils::loadStamp( pixmapName, QSize( size, size ) ) );
+            if ( !hoverIconName.simplified().isEmpty() )
+                pixmap = new QPixmap( GuiUtils::loadStamp( hoverIconName, QSize( size, size ) ) );
         }
 
         ~PickPointEngine()
@@ -187,7 +187,7 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
                 ta->setTextType( Okular::TextAnnotation::Linked );
-                ta->setTextIcon( "Note" );
+                ta->setTextIcon( iconName );
                 ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 const double iconhei=0.03;
@@ -202,7 +202,7 @@ class PickPointEngine : public AnnotatorEngine
             {
                 Okular::StampAnnotation * sa = new Okular::StampAnnotation();
                 ann = sa;
-                sa->setStampIconName( pixmapName );
+                sa->setStampIconName( iconName );
                 // set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
@@ -281,7 +281,7 @@ class PickPointEngine : public AnnotatorEngine
         Okular::NormalizedPoint startpoint;
         Okular::NormalizedPoint point;
         QPixmap * pixmap;
-        QString pixmapName;
+        QString hoverIconName, iconName;
         int size;
         double xscale,yscale;
         double pagewidth, pageheight;

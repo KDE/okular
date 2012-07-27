@@ -18,38 +18,38 @@ Engine/Annotation Types [specific attributes]:
 -->
 <annotatingTools>
     <tool id="1" type="note-linked">
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note">
-            <annotation type="Text" color="#FFFF00" icon="Note" />
+        <engine type="PickPoint" color="#ffff00" hoverIcon="tool-note">
+            <annotation type="Text" color="#ffff00" icon="Note" />
         </engine>
         <shortcut>1</shortcut>
     </tool>
     <tool id="2" type="note-inline">
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note-inline" block="true">
-            <annotation type="FreeText" color="#FFFF00" />
+        <engine type="PickPoint" color="#ffff00" hoverIcon="tool-note-inline" block="true">
+            <annotation type="FreeText" color="#ffff00" />
         </engine>
         <shortcut>2</shortcut>
     </tool>
     <tool id="3" type="ink">
-        <engine type="SmoothLine" color="#00FF00">
-            <annotation type="Ink" color="#00FF00" width="2" />
+        <engine type="SmoothLine" color="#00ff00">
+            <annotation type="Ink" color="#00ff00" width="2" />
         </engine>
         <shortcut>3</shortcut>
     </tool>
     <tool id="4" type="highlight">
-        <engine type="TextSelector" color="#FFFF00">
-            <annotation type="Highlight" color="#FFFF00" />
+        <engine type="TextSelector" color="#ffff00">
+            <annotation type="Highlight" color="#ffff00" />
         </engine>
         <shortcut>4</shortcut>
     </tool>
     <tool id="5" type="straight-line">
-        <engine type="PolyLine" color="#FFE000" points="2">
-            <annotation type="Line" width="1" color="#FFE000" />
+        <engine type="PolyLine" color="#ffe000" points="2">
+            <annotation type="Line" width="1" color="#ffe000" />
         </engine>
         <shortcut>5</shortcut>
     </tool>
     <tool id="6" type="polygon">
-        <engine type="PolyLine" color="#007EEE" points="-1">
-            <annotation type="Line" width="1" color="#007EEE" />
+        <engine type="PolyLine" color="#007eee" points="-1">
+            <annotation type="Line" width="1" color="#007eee" />
         </engine>
         <shortcut>6</shortcut>
     </tool>

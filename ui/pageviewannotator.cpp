@@ -416,7 +416,11 @@ class PolyLineEngine : public AnnotatorEngine
                 la->setLinePoints( list );
 
                 if ( numofpoints == -1 )
+                {
                     la->setLineClosed( true );
+                    if ( m_annotElement.hasAttribute( "innerColor" ) )
+                        la->setLineInnerColor( QColor( m_annotElement.attribute( "innerColor" ) ) );
+                }
 
                 la->setBoundingRectangle( normRect );
 
@@ -1083,6 +1087,8 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
             path.lineTo( 23, 14 );
             path.lineTo( 23, 20 );
             path.lineTo( 0, 20 );
+            if ( innerColor.isValid() )
+                p.setBrush( innerColor );
             p.setPen( QPen( engineColor, 1 ) );
             p.drawPath( path );
         }

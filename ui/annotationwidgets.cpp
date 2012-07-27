@@ -371,20 +371,20 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     lay->setMargin( 0 );
     if ( m_lineType == 0 )
     {
-    QGroupBox * gb = new QGroupBox( widget );
-    lay->addWidget( gb );
-    gb->setTitle( i18n( "Line Extensions" ) );
-    QGridLayout * gridlay = new QGridLayout( gb );
-    QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
-    gridlay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    m_spinLL = new QDoubleSpinBox( gb );
-    gridlay->addWidget( m_spinLL, 0, 1 );
-    tmplabel->setBuddy( m_spinLL );
-    tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
-    gridlay->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_spinLLE = new QDoubleSpinBox( gb );
-    gridlay->addWidget( m_spinLLE, 1, 1 );
-    tmplabel->setBuddy( m_spinLLE );
+        QGroupBox * gb = new QGroupBox( widget );
+        lay->addWidget( gb );
+        gb->setTitle( i18n( "Line Extensions" ) );
+        QGridLayout * gridlay = new QGridLayout( gb );
+        QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
+        gridlay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+        m_spinLL = new QDoubleSpinBox( gb );
+        gridlay->addWidget( m_spinLL, 0, 1 );
+        tmplabel->setBuddy( m_spinLL );
+        tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
+        gridlay->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+        m_spinLLE = new QDoubleSpinBox( gb );
+        gridlay->addWidget( m_spinLLE, 1, 1 );
+        tmplabel->setBuddy( m_spinLLE );
     }
 
     QGroupBox * gb2 = new QGroupBox( widget );
@@ -397,20 +397,46 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     gridlay2->addWidget( m_spinSize, 0, 1 );
     tmplabel2->setBuddy( m_spinSize );
 
+    if ( m_lineType == 1 )
+    {
+        m_useColor = new QCheckBox( i18n( "Inner color:" ), gb2 );
+        gridlay2->addWidget( m_useColor, 1, 0 );
+        m_innerColor = new KColorButton( gb2 );
+        gridlay2->addWidget( m_innerColor, 1, 1 );
+    }
+
     if ( m_lineType == 0 )
     {
-    m_spinLL->setRange( -500, 500 );
-    m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
-    m_spinLLE->setRange( 0, 500 );
-    m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+        m_spinLL->setRange( -500, 500 );
+        m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
+        m_spinLLE->setRange( 0, 500 );
+        m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+    }
+    else if ( m_lineType == 1 )
+    {
+        m_innerColor->setColor( m_lineAnn->lineInnerColor() );
+        if ( m_lineAnn->lineInnerColor().isValid() )
+        {
+            m_useColor->setChecked( true );
+        }
+        else
+        {
+            m_innerColor->setEnabled( false );
+        }
     }
     m_spinSize->setRange( 1, 100 );
     m_spinSize->setValue( m_lineAnn->style().width() );
 
     if ( m_lineType == 0 )
     {
-    connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
-    connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    }
+    else if ( m_lineType == 1 )
+    {
+        connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+        connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
+        connect( m_useColor, SIGNAL(toggled(bool)), m_innerColor, SLOT(setEnabled(bool)) );
     }
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
@@ -424,6 +450,17 @@ void LineAnnotationWidget::applyChanges()
     {
         m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
         m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
+    }
+    else if ( m_lineType == 1 )
+    {
+        if ( !m_useColor->isChecked() )
+        {
+            m_lineAnn->setLineInnerColor( QColor() );
+        }
+        else
+        {
+            m_lineAnn->setLineInnerColor( m_innerColor->color() );
+        }
     }
     m_lineAnn->style().setWidth( m_spinSize->value() );
 }

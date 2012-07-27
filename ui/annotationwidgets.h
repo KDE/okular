@@ -153,6 +153,8 @@ private:
     int m_lineType;
     QDoubleSpinBox * m_spinLL;
     QDoubleSpinBox * m_spinLLE;
+    QCheckBox * m_useColor;
+    KColorButton * m_innerColor;
     QDoubleSpinBox * m_spinSize;
 };
 

@@ -312,12 +312,17 @@ QString NewAnnotToolDialog::toolXml() const
     else if ( toolType == "polygon" )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
-        Q_UNUSED( la );
+
+        QString innerColor;
+        if ( la->lineInnerColor().isValid() )
+            innerColor = QString( "innerColor=\"%1\"" ).arg( la->lineInnerColor().name() );
+
         return QString( "<tool type=\"polygon\">"
                          "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
-                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
+                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" %4 />"
                          "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity ).arg( width );
+                        "</tool>" ).arg( color ).arg( opacity ).arg( width )
+                                   .arg( innerColor );
     }
     else if ( toolType == "text-markup" )
     {

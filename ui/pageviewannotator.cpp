@@ -975,13 +975,38 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else
                     kWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
             }
+
             // display the tooltip
-            else if ( toolSubElement.tagName() == "tooltip" )
-            {
-                const QString tip = toolSubElement.text();
-                if ( !tip.isEmpty() && !m_continuousMode )
-                    m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
-            }
+            const QString annotType = toolElement.attribute( "type" );
+            QString tip;
+
+            if ( annotType == "ellipse" )
+                tip = i18nc( "Annotation tool", "Draw an ellipse (drag to select a zone)" );
+            else if ( annotType == "highlight" )
+                tip = i18nc( "Annotation tool", "Highlight text" );
+            else if ( annotType == "ink" )
+                tip = i18nc( "Annotation tool", "Draw a freehand line" );
+            else if ( annotType == "note-inline" )
+                tip = i18nc( "Annotation tool", "Inline Text Annotation (drag to select a zone)" );
+            else if ( annotType == "note-linked" )
+                tip = i18nc( "Annotation tool", "Put a pop-up note" );
+            else if ( annotType == "polygon" )
+                tip = i18nc( "Annotation tool", "Draw a polygon (click on the first point to close it)" );
+            else if ( annotType == "rectangle" )
+                tip = i18nc( "Annotation tool", "Draw a rectangle" );
+            else if ( annotType == "squiggly" )
+                tip = i18nc( "Annotation tool", "Squiggle text" );
+            else if ( annotType == "stamp" )
+                tip = i18nc( "Annotation tool", "Put a stamp symbol" );
+            else if ( annotType == "straight-line" )
+                tip = i18nc( "Annotation tool", "Draw a straight line" );
+            else if ( annotType == "strikeout" )
+                tip = i18nc( "Annotation tool", "Strike out text" );
+            else if ( annotType == "underline" )
+                tip = i18nc( "Annotation tool", "Underline text" );
+
+            if ( !tip.isEmpty() && !m_continuousMode )
+                m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
         }
 
         // consistancy warning

@@ -240,6 +240,8 @@ class PickPointEngine : public AnnotatorEngine
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
                 if ( m_annotElement.hasAttribute( "width" ) )
                     ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
+                if ( m_annotElement.hasAttribute( "innerColor" ) )
+                    ga->setGeometricalInnerColor( QColor( m_annotElement.attribute( "innerColor" ) ) );
                 //set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
@@ -1014,7 +1016,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
         pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
 
         /* Parse the color */
-        QColor engineColor;
+        QColor engineColor, innerColor;
         QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
         if ( engineNodeList.size() > 0 )
         {
@@ -1022,12 +1024,21 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
             if ( !engineEl.isNull() && engineEl.hasAttribute( "color" ) )
                 engineColor = QColor( engineEl.attribute( "color" ) );
         }
+        QDomNodeList annotationNodeList = toolElement.elementsByTagName( "annotation" );
+        if ( annotationNodeList.size() > 0 )
+        {
+            QDomElement annotationEl = annotationNodeList.item( 0 ).toElement();
+            if ( !annotationEl.isNull() && annotationEl.hasAttribute( "innerColor" ) )
+                innerColor = QColor( annotationEl.attribute( "innerColor" ) );
+        }
 
         QPainter p( &pixmap );
 
         if ( annotType == "ellipse" )
         {
             p.setRenderHint( QPainter::Antialiasing );
+            if ( innerColor.isValid() )
+                p.setBrush( innerColor );
             p.setPen( QPen( engineColor, 2 ) );
             p.drawEllipse( 2, 7, 21, 14 );
         }
@@ -1078,6 +1089,8 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
         else if ( annotType == "rectangle" )
         {
             p.setRenderHint( QPainter::Antialiasing );
+            if ( innerColor.isValid() )
+                p.setBrush( innerColor );
             p.setPen( QPen( engineColor, 2 ) );
             p.drawRect( 2, 7, 21, 14 );
         }

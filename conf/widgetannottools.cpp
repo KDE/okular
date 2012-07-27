@@ -354,14 +354,20 @@ QString NewAnnotToolDialog::toolXml() const
     else if ( toolType == "geometrical-shape" )
     {
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
+
         const bool isCircle = (ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle);
+        QString innerColor;
+        if ( ga->geometricalInnerColor().isValid() )
+            innerColor = QString( "innerColor=\"%1\"" ).arg( ga->geometricalInnerColor().name() );
+
         return QString( "<tool type=\"%4\">"
                          "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
-                          "<annotation type=\"%5\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
+                          "<annotation type=\"%5\" color=\"%1\" opacity=\"%2\" width=\"%3\" %6 />"
                          "</engine>"
                         "</tool>").arg( color ).arg( opacity ).arg( width )
                                   .arg( isCircle ? "ellipse" : "rectangle" )
-                                  .arg( isCircle ? "GeomCircle" : "GeomSquare" );
+                                  .arg( isCircle ? "GeomCircle" : "GeomSquare" )
+                                  .arg( innerColor );
     }
     else if ( toolType == "stamp" )
     {

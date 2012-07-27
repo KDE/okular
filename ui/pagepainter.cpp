@@ -475,11 +475,15 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     }
 
                     const QPen linePen = buildPen( a, a->style().width(), a->style().color() );
+                    QBrush fillBrush;
+
+                    if ( la->lineClosed() && la->lineInnerColor().isValid() )
+                        fillBrush = QBrush( la->lineInnerColor() );
 
                     // draw the line as normalized path into image
                     drawShapeOnImage( backImage, path, la->lineClosed(),
                                       linePen,
-                                      QBrush(), pageScale ,Multiply);
+                                      fillBrush, pageScale ,Multiply);
 
                     if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
                     {

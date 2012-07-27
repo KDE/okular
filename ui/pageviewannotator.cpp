@@ -167,6 +167,13 @@ class PickPointEngine : public AnnotatorEngine
                     ann = ta;
                     ta->setInplaceText( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
+                    //set font
+                    if ( m_annotElement.hasAttribute( "font" ) )
+                    {
+                        QFont f;
+                        f.fromString( m_annotElement.attribute( "font" ) );
+                        ta->setTextFont( f );
+                    }
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);

@@ -18,6 +18,7 @@
 #include <knuminput.h>
 #include <kpushbutton.h>
 
+#include <QtGui/QApplication>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGroupBox>
@@ -351,7 +352,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         engineElement.setAttribute( "block", "true" );
         annotationElement.setAttribute( "type", "FreeText" );
         annotationElement.setAttribute( "color", color );
-        // TODO: Font
+        if ( ta->textFont() != QApplication::font() )
+            annotationElement.setAttribute( "font", ta->textFont().toString() );
     }
     else if ( toolType == "ink" )
     {
@@ -590,6 +592,13 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     else if ( annotType == "note-inline" )
     {
         setToolType( "note-inline" );
+        Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
+        if ( annotationElement.hasAttribute( "font" ) )
+        {
+            QFont f;
+            f.fromString( annotationElement.attribute( "font" ) );
+            ta->setTextFont( f );
+        }
     }
     else if ( annotType == "note-linked" )
     {

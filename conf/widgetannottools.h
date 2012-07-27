@@ -18,6 +18,7 @@ class KLineEdit;
 class KComboBox;
 class KPushButton;
 class QListWidget;
+class QListWidgetItem;
 class QGroupBox;
 class AnnotationWidget;
 
@@ -52,6 +53,7 @@ class WidgetAnnotTools : public QWidget
         KPushButton *m_btnMoveDown;
 
     private slots:
+        void slotItemDoubleClicked( QListWidgetItem * );
         void slotRowChanged( int );
         void slotAdd( bool );
         void slotRemove( bool );
@@ -59,19 +61,22 @@ class WidgetAnnotTools : public QWidget
         void slotMoveDown( bool );
 };
 
-class NewAnnotToolDialog : public KDialog
+class EditAnnotToolDialog : public KDialog
 {
     Q_OBJECT
 
     public:
-        NewAnnotToolDialog( QWidget *parent = 0 );
-        ~NewAnnotToolDialog();
+        EditAnnotToolDialog( QWidget *parent = 0, const QDomElement &initialState = QDomElement() );
+        ~EditAnnotToolDialog();
         QString name() const;
         QDomDocument toolXml() const;
 
     private:
+        void createStubAnnotation();
         void rebuildAppearanceBox();
         void updateDefaultName();
+        void setToolType( const QByteArray &newType );
+        void loadTool( const QDomElement &toolElement );
 
         KLineEdit *m_name;
         KComboBox *m_type;

@@ -62,6 +62,7 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     vBoxLayout->addStretch();
     hBoxLayout->addLayout( vBoxLayout );
 
+    connect( m_list, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( slotItemDoubleClicked(QListWidgetItem*) ) );
     connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( slotRowChanged(int) ) );
     connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd(bool) ) );
     connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove(bool) ) );
@@ -153,6 +154,40 @@ void WidgetAnnotTools::updateButtons()
     m_btnMoveDown->setEnabled( row != -1 && row != last );
 }
 
+void WidgetAnnotTools::slotItemDoubleClicked( QListWidgetItem *listEntry )
+{
+    QDomDocument doc;
+    doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
+    QDomElement toolElement = doc.documentElement();
+
+    EditAnnotToolDialog t( this, toolElement );
+
+    if ( t.exec() != QDialog::Accepted )
+        return;
+
+    doc = t.toolXml();
+    toolElement = doc.documentElement();
+
+    QString itemText = t.name();
+
+    // Store name attribute only if the user specified a customized name
+    if ( !itemText.isEmpty() )
+        toolElement.setAttribute( "name", itemText );
+    else
+        itemText = PageViewAnnotator::defaultToolName( toolElement );
+
+    // Create list entry and attach XML string as data
+    listEntry->setText( itemText );
+    listEntry->setData( ToolXmlRole, qVariantFromValue( doc.toString(-1) ) );
+    listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
+
+    // Select and scroll
+    m_list->setCurrentItem( listEntry );
+    m_list->scrollToItem( listEntry );
+    updateButtons();
+    emit changed();
+}
+
 void WidgetAnnotTools::slotRowChanged( int )
 {
     updateButtons();
@@ -160,7 +195,7 @@ void WidgetAnnotTools::slotRowChanged( int )
 
 void WidgetAnnotTools::slotAdd( bool )
 {
-    NewAnnotToolDialog t( this );
+    EditAnnotToolDialog t( this );
 
     if ( t.exec() != QDialog::Accepted )
         return;
@@ -214,10 +249,9 @@ void WidgetAnnotTools::slotMoveDown( bool )
     emit changed();
 }
 
-NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
+EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &initialState )
     : KDialog( parent ), m_stubann( 0 ), m_annotationWidget( 0 )
 {
-    setCaption( i18n("Create annotation tool") );
     setButtons( Ok | Cancel );
     setDefaultButton( Ok );
 
@@ -254,21 +288,33 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     m_type->addItem( i18n("Geometrical shape"), QByteArray("geometrical-shape") );
     m_type->addItem( i18n("Stamp"), QByteArray("stamp") );
 
+    createStubAnnotation();
+
+    if ( initialState.isNull() )
+    {
+        setCaption( i18n("Create annotation tool") );
+    }
+    else
+    {
+        setCaption( i18n("Edit annotation tool") );
+        loadTool( initialState );
+    }
+
     rebuildAppearanceBox();
     updateDefaultName();
 }
 
-NewAnnotToolDialog::~NewAnnotToolDialog()
+EditAnnotToolDialog::~EditAnnotToolDialog()
 {
     delete m_annotationWidget;
 }
 
-QString NewAnnotToolDialog::name() const
+QString EditAnnotToolDialog::name() const
 {
     return m_name->text();
 }
 
-QDomDocument NewAnnotToolDialog::toolXml() const
+QDomDocument EditAnnotToolDialog::toolXml() const
 {
     const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
 
@@ -417,7 +463,7 @@ QDomDocument NewAnnotToolDialog::toolXml() const
     return doc;
 }
 
-void NewAnnotToolDialog::rebuildAppearanceBox()
+void EditAnnotToolDialog::createStubAnnotation()
 {
     const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
 
@@ -485,7 +531,10 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
         sa->setStampIconName( "okular" );
         m_stubann = sa;
     }
+}
 
+void EditAnnotToolDialog::rebuildAppearanceBox()
+{
     // Remove previous widget (if any)
     if ( m_annotationWidget )
     {
@@ -499,20 +548,124 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
     connect( m_annotationWidget, SIGNAL(dataChanged()), this, SLOT(slotDataChanged()) );
 }
 
-void NewAnnotToolDialog::updateDefaultName()
+void EditAnnotToolDialog::updateDefaultName()
 {
     QDomDocument doc = toolXml();
     QDomElement toolElement = doc.documentElement();
     m_name->setPlaceholderText( PageViewAnnotator::defaultToolName( toolElement ) );
 }
 
-void NewAnnotToolDialog::slotTypeChanged()
+void EditAnnotToolDialog::setToolType( const QByteArray &newType )
 {
+    const int idx = m_type->findData( newType );
+
+    // The following call also results in createStubAnnotation being called
+    m_type->setCurrentIndex( idx );
+}
+
+void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
+{
+    const QDomElement engineElement = toolElement.elementsByTagName( "engine" ).item( 0 ).toElement();
+    const QDomElement annotationElement = engineElement.elementsByTagName( "annotation" ).item( 0 ).toElement();
+    const QString annotType = toolElement.attribute( "type" );
+
+    if ( annotType == "ellipse" )
+    {
+        setToolType( "geometrical-shape" );
+        Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
+        ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
+        if ( annotationElement.hasAttribute( "innerColor" ) )
+            ga->setGeometricalInnerColor( QColor( annotationElement.attribute( "innerColor" ) ) );
+    }
+    else if ( annotType == "highlight" )
+    {
+        setToolType( "text-markup" );
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+        ha->setHighlightType( Okular::HighlightAnnotation::Highlight );
+    }
+    else if ( annotType == "ink" )
+    {
+        setToolType( "ink" );
+    }
+    else if ( annotType == "note-inline" )
+    {
+        setToolType( "note-inline" );
+    }
+    else if ( annotType == "note-linked" )
+    {
+        setToolType( "note-linked" );
+        Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
+        ta->setTextIcon( annotationElement.attribute( "icon" ) );
+    }
+    else if ( annotType == "polygon" )
+    {
+        setToolType( "polygon" );
+        Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
+        if ( annotationElement.hasAttribute( "innerColor" ) )
+            la->setLineInnerColor( QColor( annotationElement.attribute( "innerColor" ) ) );
+    }
+    else if ( annotType == "rectangle" )
+    {
+        setToolType( "geometrical-shape" );
+        Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
+        ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
+        if ( annotationElement.hasAttribute( "innerColor" ) )
+            ga->setGeometricalInnerColor( QColor( annotationElement.attribute( "innerColor" ) ) );
+    }
+    else if ( annotType == "squiggly" )
+    {
+        setToolType( "text-markup" );
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+        ha->setHighlightType( Okular::HighlightAnnotation::Squiggly );
+    }
+    else if ( annotType == "stamp" )
+    {
+        setToolType( "stamp" );
+        Okular::StampAnnotation * sa = static_cast<Okular::StampAnnotation*>( m_stubann );
+        sa->setStampIconName( annotationElement.attribute( "icon" ) );
+    }
+    else if ( annotType == "straight-line" )
+    {
+        setToolType( "straight-line" );
+        Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
+        if ( annotationElement.hasAttribute( "leadFwd" ) )
+            la->setLineLeadingForwardPoint( annotationElement.attribute( "leadFwd" ).toDouble() );
+        if ( annotationElement.hasAttribute( "leadBack" ) )
+            la->setLineLeadingBackwardPoint( annotationElement.attribute( "leadBack" ).toDouble() );
+    }
+    else if ( annotType == "strikeout" )
+    {
+        setToolType( "text-markup" );
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+        ha->setHighlightType( Okular::HighlightAnnotation::StrikeOut );
+    }
+    else if ( annotType == "underline" )
+    {
+        setToolType( "text-markup" );
+        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
+        ha->setHighlightType( Okular::HighlightAnnotation::Underline );
+    }
+
+    // Common properties
+    if ( annotationElement.hasAttribute( "color" ) )
+        m_stubann->style().setColor( QColor( annotationElement.attribute( "color" ) ) );
+    if ( annotationElement.hasAttribute( "opacity" ) )
+        m_stubann->style().setOpacity( annotationElement.attribute( "opacity" ).toDouble() );
+    if ( annotationElement.hasAttribute( "width" ) )
+        m_stubann->style().setWidth( annotationElement.attribute( "width" ).toDouble() );
+
+    if ( toolElement.hasAttribute( "name" ) )
+        m_name->setText( toolElement.attribute( "name" ) );
+}
+
+void EditAnnotToolDialog::slotTypeChanged()
+{
+    createStubAnnotation();
     rebuildAppearanceBox();
     updateDefaultName();
 }
 
-void NewAnnotToolDialog::slotDataChanged()
+void EditAnnotToolDialog::slotDataChanged()
 {
     // Mirror changes back in the stub annotation
     m_annotationWidget->applyChanges();

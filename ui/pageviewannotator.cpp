@@ -663,7 +663,10 @@ void PageViewAnnotator::reparseConfig()
         {
             AnnotationToolItem item;
             item.id = toolElement.attribute("id").toInt();
-            item.text = toolElement.attribute( "name" );
+            if ( toolElement.hasAttribute( "name" ) )
+                item.text = toolElement.attribute( "name" );
+            else
+                item.text = defaultToolName( toolElement );
             item.pixmap = makeToolPixmap( toolElement );
             QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
             if ( shortcutNode.isElement() )
@@ -1034,6 +1037,38 @@ void PageViewAnnotator::slotToolDoubleClicked( int /*toolID*/ )
 void PageViewAnnotator::detachAnnotation()
 {
     m_toolBar->selectButton( -1 );
+}
+
+QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
+{
+    const QString annotType = toolElement.attribute( "type" );
+
+    if ( annotType == "ellipse" )
+        return i18n( "Ellipse" );
+    else if ( annotType == "highlight" )
+        return i18n( "Highlighter" );
+    else if ( annotType == "ink" )
+        return i18n( "Freehand Line" );
+    else if ( annotType == "note-inline" )
+        return i18n( "Inline Note" );
+    else if ( annotType == "note-linked" )
+        return i18n( "Note" );
+    else if ( annotType == "polygon" )
+        return i18n( "Polygon" );
+    else if ( annotType == "rectangle" )
+        return i18n( "Rectangle" );
+    else if ( annotType == "squiggly" )
+        return i18n( "Squiggly" );
+    else if ( annotType == "stamp" )
+        return i18n( "Stamp" );
+    else if ( annotType == "straight-line" )
+        return i18n( "Straight Line" );
+    else if ( annotType == "strikeout" )
+        return i18n( "Strike out" );
+    else if ( annotType == "underline" )
+        return i18n( "Underline" );
+    else
+        return QString();
 }
 
 QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )

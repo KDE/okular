@@ -5,5 +5,5 @@ Inherits=SettingsCore
 Mutators=true
 Singleton=true
 IncludeFiles=core/okular_export.h, settings_core.h
-SourceIncludeFiles=klocalizedstring.h,kstandarddirs.h,qdom.h
+SourceIncludeFiles=kstandarddirs.h,qdom.h
 MemberVariables=dpointer

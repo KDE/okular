@@ -17,55 +17,55 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-    <tool id="1" name="Note" type="note-linked">
+    <tool id="1" type="note-linked">
         <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note">
             <annotation type="Text" color="#FFFF00" icon="Note" />
         </engine>
         <shortcut>1</shortcut>
     </tool>
-    <tool id="2" name="Inline Note" type="note-inline">
+    <tool id="2" type="note-inline">
         <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note-inline" block="true">
             <annotation type="FreeText" color="#FFFF00" />
         </engine>
         <shortcut>2</shortcut>
     </tool>
-    <tool id="3" name="Green Freehand Line" type="ink">
+    <tool id="3" type="ink">
         <engine type="SmoothLine" color="#00FF00">
             <annotation type="Ink" color="#00FF00" width="2" />
         </engine>
         <shortcut>3</shortcut>
     </tool>
-    <tool id="4" name="Yellow Highlighter" type="highlight">
+    <tool id="4" type="highlight">
         <engine type="TextSelector" color="#FFFF00">
             <annotation type="Highlight" color="#FFFF00" />
         </engine>
         <shortcut>4</shortcut>
     </tool>
-    <tool id="5" name="Straight Yellow Line" type="straight-line">
+    <tool id="5" type="straight-line">
         <engine type="PolyLine" color="#FFE000" points="2">
             <annotation type="Line" width="1" color="#FFE000" />
         </engine>
         <shortcut>5</shortcut>
     </tool>
-    <tool id="6" name="Blue Polygon" type="polygon">
+    <tool id="6" type="polygon">
         <engine type="PolyLine" color="#007EEE" points="-1">
             <annotation type="Line" width="1" color="#007EEE" />
         </engine>
         <shortcut>6</shortcut>
     </tool>
-    <tool id="7" name="Stamp" type="stamp">
+    <tool id="7" type="stamp">
         <engine type="PickPoint" hoverIcon="okular" size="64" block="true">
             <annotation type="Stamp" icon="okular"/>
         </engine>
         <shortcut>7</shortcut>
   </tool>
-    <tool id="8" name="Black Underlining" type="underline">
+    <tool id="8" type="underline">
         <engine type="TextSelector" color="#000000">
             <annotation type="Underline" color="#000000" />
         </engine>
         <shortcut>8</shortcut>
     </tool>
-    <tool id="9" name="Cyan Ellipse" type="ellipse">
+    <tool id="9" type="ellipse">
         <engine type="PickPoint" color="#00ffff" block="true">
             <annotation type="GeomCircle" width="5" color="#00ffff" />
         </engine>

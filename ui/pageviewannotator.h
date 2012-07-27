@@ -77,6 +77,7 @@ class PageViewAnnotator : public QObject
 
         void reparseConfig();
 
+        static QString defaultToolName( const QDomElement &toolElement );
         static QPixmap makeToolPixmap( const QDomElement &toolElement );
 
     private slots:

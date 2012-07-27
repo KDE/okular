@@ -255,9 +255,6 @@
                   QDomElement toolElement = toolDescription.toElement();
                   if ( toolElement.tagName() == "tool" )
                   {
-                      // Translate strings
-                      toolElement.setAttribute( "name", i18n( toolElement.attribute("name").toUtf8() ) );
-
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );
                       // add each &lt;tool&gt;...&lt;/tool&gt; as XML string

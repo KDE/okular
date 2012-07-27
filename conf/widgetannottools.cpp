@@ -73,7 +73,7 @@ WidgetAnnotTools::~WidgetAnnotTools()
 {
 }
 
-/* Before returning the XML strings, this functions updates the name, id and
+/* Before returning the XML strings, this functions updates the id and
  * shortcut properties.
  * Note: The shortcut is only assigned to the first nine tools */
 QStringList WidgetAnnotTools::tools() const
@@ -89,9 +89,8 @@ QStringList WidgetAnnotTools::tools() const
         QDomDocument doc;
         doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
 
-        // Set name and id
+        // Set id
         QDomElement toolElement = doc.documentElement();
-        toolElement.setAttribute( "name", listEntry->text() );
         toolElement.setAttribute( "id", i+1 );
 
         // Remove old shortcut, if any
@@ -132,7 +131,9 @@ void WidgetAnnotTools::setTools(const QStringList& items)
         if ( toolElement.tagName() == "tool" )
         {
             // Create list item and attach the source XML string as data
-            const QString itemText = toolElement.attribute( "name" );
+            QString itemText = toolElement.attribute( "name" );
+            if ( itemText.isEmpty() )
+                itemText = PageViewAnnotator::defaultToolName( toolElement );
             QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
             listEntry->setData( ToolXmlRole, qVariantFromValue(toolXml) );
             listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
@@ -168,8 +169,16 @@ void WidgetAnnotTools::slotAdd( bool )
     entryParser.setContent( t.toolXml() );
     QDomElement toolElement = entryParser.documentElement();
 
+    QString itemText = t.name();
+
+    // Store name attribute only if the user specified a customized name
+    if ( !itemText.isEmpty() )
+        toolElement.setAttribute( "name", itemText );
+    else
+        itemText = PageViewAnnotator::defaultToolName( toolElement );
+
     // Create list entry and attach XML string as data
-    QListWidgetItem * listEntry = new QListWidgetItem( t.name(), m_list );
+    QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
     listEntry->setData( ToolXmlRole, qVariantFromValue( entryParser.toString(-1) ) );
     listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
 
@@ -257,10 +266,7 @@ NewAnnotToolDialog::~NewAnnotToolDialog()
 
 QString NewAnnotToolDialog::name() const
 {
-    QString userText = m_name->text();
-    if ( userText.isEmpty() )
-        userText = m_name->placeholderText();
-    return userText;
+    return m_name->text();
 }
 
 QString NewAnnotToolDialog::toolXml() const
@@ -476,40 +482,10 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
 
 void NewAnnotToolDialog::updateDefaultName()
 {
-    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
-    QString defaultName = m_type->currentText();
-
-    if ( toolType == "text-markup" )
-    {
-        Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
-
-        switch ( ha->highlightType() )
-        {
-            case Okular::HighlightAnnotation::Highlight:
-                defaultName = i18n( "Highlight" );
-                break;
-            case Okular::HighlightAnnotation::Squiggly:
-                defaultName = i18n( "Squiggly" );
-                break;
-            case Okular::HighlightAnnotation::Underline:
-                defaultName = i18n( "Underline" );
-                break;
-            case Okular::HighlightAnnotation::StrikeOut:
-                defaultName = i18n( "Strike out" );
-                break;
-        }
-    }
-    else if ( toolType == "geometrical-shape" )
-    {
-        Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
-
-        if ( ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle )
-            defaultName = i18n( "Ellipse" );
-        else
-            defaultName = i18n( "Rectangle" );
-    }
-
-    m_name->setPlaceholderText( defaultName );
+    QDomDocument entryParser;
+    entryParser.setContent( toolXml() );
+    QDomElement toolElement = entryParser.documentElement();
+    m_name->setPlaceholderText( PageViewAnnotator::defaultToolName( toolElement ) );
 }
 
 void NewAnnotToolDialog::slotTypeChanged()

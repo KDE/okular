@@ -165,9 +165,8 @@ void WidgetAnnotTools::slotAdd( bool )
     if ( t.exec() != QDialog::Accepted )
         return;
 
-    QDomDocument entryParser;
-    entryParser.setContent( t.toolXml() );
-    QDomElement toolElement = entryParser.documentElement();
+    QDomDocument rootDoc = t.toolXml();
+    QDomElement toolElement = rootDoc.documentElement();
 
     QString itemText = t.name();
 
@@ -179,7 +178,7 @@ void WidgetAnnotTools::slotAdd( bool )
 
     // Create list entry and attach XML string as data
     QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( entryParser.toString(-1) ) );
+    listEntry->setData( ToolXmlRole, qVariantFromValue( rootDoc.toString(-1) ) );
     listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
 
     // Select and scroll
@@ -269,9 +268,18 @@ QString NewAnnotToolDialog::name() const
     return m_name->text();
 }
 
-QString NewAnnotToolDialog::toolXml() const
+QDomDocument NewAnnotToolDialog::toolXml() const
 {
     const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+
+    QDomDocument doc;
+    QDomElement toolElement = doc.createElement( "tool" );
+    QDomElement engineElement = doc.createElement( "engine" );
+    QDomElement annotationElement = doc.createElement( "annotation" );
+    doc.appendChild( toolElement );
+    toolElement.appendChild( engineElement );
+    engineElement.appendChild( annotationElement );
+
     const QString color = m_stubann->style().color().name();
     const double opacity = m_stubann->style().opacity();
     const double width = m_stubann->style().width();
@@ -279,123 +287,134 @@ QString NewAnnotToolDialog::toolXml() const
     if ( toolType == "note-linked" )
     {
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
-        return QString( "<tool type=\"note-linked\">"
-                         "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note\">"
-                          "<annotation type=\"Text\" color=\"%1\" opacity=\"%2\" icon=\"%3\" />"
-                         "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity ).arg( ta->textIcon() );
+        toolElement.setAttribute( "type", "note-linked" );
+        engineElement.setAttribute( "type", "PickPoint" );
+        engineElement.setAttribute( "color", color );
+        engineElement.setAttribute( "hoverIcon", "tool-note" );
+        annotationElement.setAttribute( "type", "Text" );
+        annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "icon", ta->textIcon() );
     }
     else if ( toolType == "note-inline" )
     {
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
-        Q_UNUSED( ta );
-        return QString( "<tool type=\"note-inline\">"
-                         "<engine type=\"PickPoint\" color=\"%1\" hoverIcon=\"tool-note-inline\" block=\"true\">"
-                          "<annotation type=\"FreeText\" color=\"%1\" opacity=\"%2\" />"
-                         "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity );
+        toolElement.setAttribute( "type", "note-inline" );
+        engineElement.setAttribute( "type", "PickPoint" );
+        engineElement.setAttribute( "color", color );
+        engineElement.setAttribute( "hoverIcon", "tool-note-inline" );
+        engineElement.setAttribute( "block", "true" );
+        annotationElement.setAttribute( "type", "FreeText" );
+        annotationElement.setAttribute( "color", color );
+        // TODO: Font
     }
     else if ( toolType == "ink" )
     {
-        Okular::InkAnnotation * ia = static_cast<Okular::InkAnnotation*>( m_stubann );
-        Q_UNUSED( ia );
-        return QString( "<tool type=\"ink\">"
-                         "<engine type=\"SmoothLine\" color=\"%1\">"
-                          "<annotation type=\"Ink\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
-                         "</engine>"
-                        "</tool>").arg( color ).arg( opacity ).arg( width );
+        toolElement.setAttribute( "type", "ink" );
+        engineElement.setAttribute( "type", "SmoothLine" );
+        engineElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "type", "Ink" );
+        annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "width", width );
     }
     else if ( toolType == "straight-line" )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
-
-        QString lineExt;
+        toolElement.setAttribute( "type", "straight-line" );
+        engineElement.setAttribute( "type", "PolyLine" );
+        engineElement.setAttribute( "color", color );
+        engineElement.setAttribute( "points", "2" );
+        annotationElement.setAttribute( "type", "Line" );
+        annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "width", width );
         if ( la->lineLeadingForwardPoint() != 0 || la->lineLeadingBackwardPoint() != 0 )
-            lineExt = QString( "leadFwd=\"%1\" leadBack=\"%2\"" ).arg( la->lineLeadingForwardPoint() ).arg( la->lineLeadingBackwardPoint() );
-
-        return QString( "<tool type=\"straight-line\">"
-                         "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
-                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" %4 />"
-                         "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity ).arg( width )
-                                   .arg( lineExt );
+        {
+            annotationElement.setAttribute( "leadFwd", la->lineLeadingForwardPoint() );
+            annotationElement.setAttribute( "leadBack", la->lineLeadingBackwardPoint() );
+        }
     }
     else if ( toolType == "polygon" )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
-
-        QString innerColor;
+        toolElement.setAttribute( "type", "polygon" );
+        engineElement.setAttribute( "type", "PolyLine" );
+        engineElement.setAttribute( "color", color );
+        engineElement.setAttribute( "points", "-1" );
+        annotationElement.setAttribute( "type", "Line" );
+        annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "width", width );
         if ( la->lineInnerColor().isValid() )
-            innerColor = QString( "innerColor=\"%1\"" ).arg( la->lineInnerColor().name() );
-
-        return QString( "<tool type=\"polygon\">"
-                         "<engine type=\"PolyLine\" color=\"%1\" points=\"-1\">"
-                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" %4 />"
-                         "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity ).arg( width )
-                                   .arg( innerColor );
+        {
+            annotationElement.setAttribute( "innerColor", la->lineInnerColor().name() );
+        }
     }
     else if ( toolType == "text-markup" )
     {
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
 
-        QString toolType, annotationType;
         switch ( ha->highlightType() )
         {
             case Okular::HighlightAnnotation::Highlight:
-                toolType = "highlight";
-                annotationType = "Highlight";
+                toolElement.setAttribute( "type", "highlight" );
+                annotationElement.setAttribute( "type", "Highlight" );
                 break;
             case Okular::HighlightAnnotation::Squiggly:
-                toolType = "squiggly";
-                annotationType = "Squiggly";
+                toolElement.setAttribute( "type", "squiggly" );
+                annotationElement.setAttribute( "type", "Squiggly" );
                 break;
             case Okular::HighlightAnnotation::Underline:
-                toolType = "underline";
-                annotationType = "Underline";
+                toolElement.setAttribute( "type", "underline" );
+                annotationElement.setAttribute( "type", "Underline" );
                 break;
             case Okular::HighlightAnnotation::StrikeOut:
-                toolType = "strikeout";
-                annotationType = "StrikeOut";
+                toolElement.setAttribute( "type", "strikeout" );
+                annotationElement.setAttribute( "type", "StrikeOut" );
                 break;
         }
 
-        return QString( "<tool type=\"%3\">"
-                         "<engine type=\"TextSelector\" color=\"%1\">"
-                          "<annotation type=\"%4\" color=\"%1\" opacity=\"%2\" />"
-                         "</engine>"
-                        "</tool>").arg( color ).arg( opacity )
-                                  .arg( toolType ).arg( annotationType );
+        engineElement.setAttribute( "type", "TextSelector" );
+        engineElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "color", color );
     }
     else if ( toolType == "geometrical-shape" )
     {
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
 
-        const bool isCircle = (ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle);
-        QString innerColor;
-        if ( ga->geometricalInnerColor().isValid() )
-            innerColor = QString( "innerColor=\"%1\"" ).arg( ga->geometricalInnerColor().name() );
+        if ( ga->geometricalType() == Okular::GeomAnnotation::InscribedCircle )
+        {
+            toolElement.setAttribute( "type", "ellipse" );
+            annotationElement.setAttribute( "type", "GeomCircle" );
+        }
+        else
+        {
+            toolElement.setAttribute( "type", "rectangle" );
+            annotationElement.setAttribute( "type", "GeomSquare" );
+        }
 
-        return QString( "<tool type=\"%4\">"
-                         "<engine type=\"PickPoint\" color=\"%1\" block=\"true\">"
-                          "<annotation type=\"%5\" color=\"%1\" opacity=\"%2\" width=\"%3\" %6 />"
-                         "</engine>"
-                        "</tool>").arg( color ).arg( opacity ).arg( width )
-                                  .arg( isCircle ? "ellipse" : "rectangle" )
-                                  .arg( isCircle ? "GeomCircle" : "GeomSquare" )
-                                  .arg( innerColor );
+        engineElement.setAttribute( "type", "PickPoint" );
+        engineElement.setAttribute( "color", color );
+        engineElement.setAttribute( "block", "true" );
+        annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "width", width );
+
+        if ( ga->geometricalInnerColor().isValid() )
+            annotationElement.setAttribute( "innerColor", ga->geometricalInnerColor().name() );
     }
     else if ( toolType == "stamp" )
     {
         Okular::StampAnnotation * sa = static_cast<Okular::StampAnnotation*>( m_stubann );
-        return QString( "<tool type=\"stamp\">"
-                         "<engine type=\"PickPoint\" hoverIcon=\"%1\" size=\"64\" block=\"true\">"
-                          "<annotation type=\"Stamp\" icon=\"%1\"/>"
-                         "</engine>"
-                        "</tool>" ).arg( sa->stampIconName() ); // FIXME: Check bad strings
+        toolElement.setAttribute( "type", "stamp" );
+        engineElement.setAttribute( "type", "PickPoint" );
+        engineElement.setAttribute( "hoverIcon", sa->stampIconName() );
+        engineElement.setAttribute( "size", "64" );
+        engineElement.setAttribute( "block", "true" );
+        annotationElement.setAttribute( "type", "Stamp" );
+        annotationElement.setAttribute( "icon", sa->stampIconName() );
     }
 
-    return QString(); // This should never happen
+    if ( opacity != 1 )
+        annotationElement.setAttribute( "opacity", opacity );
+
+    return doc;
 }
 
 void NewAnnotToolDialog::rebuildAppearanceBox()
@@ -482,9 +501,8 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
 
 void NewAnnotToolDialog::updateDefaultName()
 {
-    QDomDocument entryParser;
-    entryParser.setContent( toolXml() );
-    QDomElement toolElement = entryParser.documentElement();
+    QDomDocument doc = toolXml();
+    QDomElement toolElement = doc.documentElement();
     m_name->setPlaceholderText( PageViewAnnotator::defaultToolName( toolElement ) );
 }
 

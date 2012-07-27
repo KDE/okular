@@ -11,6 +11,7 @@
 #define _WIDGETANNOTTOOLS_H_
 
 #include <kdialog.h>
+#include <qdom.h>
 #include <qwidget.h>
 
 class KLineEdit;
@@ -66,7 +67,7 @@ class NewAnnotToolDialog : public KDialog
         NewAnnotToolDialog( QWidget *parent = 0 );
         ~NewAnnotToolDialog();
         QString name() const;
-        QString toolXml() const;
+        QDomDocument toolXml() const;
 
     private:
         void rebuildAppearanceBox();

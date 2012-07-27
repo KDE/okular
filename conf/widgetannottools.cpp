@@ -404,17 +404,22 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::Linked );
+        ta->setTextIcon( "Note" );
+        ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }
     else if ( toolType == "note-inline" )
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::InPlace );
+        ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }
     else if ( toolType == "ink" )
     {
         m_stubann = new Okular::InkAnnotation();
+        m_stubann->style().setWidth( 2.0 );
+        m_stubann->style().setColor( Qt::green );
     }
     else if ( toolType == "straight-line" )
     {
@@ -422,6 +427,7 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
         la->setLinePoints( QLinkedList<Okular::NormalizedPoint>() <<
                                 Okular::NormalizedPoint(0,0) <<
                                 Okular::NormalizedPoint(1,0) );
+        la->style().setColor( QColor( 0xff, 0xe0, 0x00 ) );
         m_stubann = la;
     }
     else if ( toolType == "polygon" )
@@ -431,15 +437,22 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
                                 Okular::NormalizedPoint(0,0) <<
                                 Okular::NormalizedPoint(1,0) <<
                                 Okular::NormalizedPoint(1,1) );
+        la->setLineClosed( true );
+        la->style().setColor( QColor( 0x00, 0x7e, 0xee ) );
         m_stubann = la;
     }
     else if ( toolType == "text-markup" )
     {
         m_stubann = new Okular::HighlightAnnotation();
+        m_stubann->style().setColor( Qt::yellow );
     }
     else if ( toolType == "geometrical-shape" )
     {
-        m_stubann = new Okular::GeomAnnotation();
+        Okular::GeomAnnotation * ga = new Okular::GeomAnnotation();
+        ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
+        ga->style().setWidth( 5.0 );
+        ga->style().setColor( Qt::cyan );
+        m_stubann = ga;
     }
     else if ( toolType == "stamp" )
     {
@@ -447,8 +460,6 @@ void NewAnnotToolDialog::rebuildAppearanceBox()
         sa->setStampIconName( "okular" );
         m_stubann = sa;
     }
-
-    m_stubann->style().setColor( Qt::yellow ); // TODO: Choose default color according to annotation type
 
     // Remove previous widget (if any)
     if ( m_annotationWidget )

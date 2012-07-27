@@ -41,7 +41,7 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
 {
     QHBoxLayout *hBoxLayout = new QHBoxLayout( this );
     m_list = new QListWidget( this );
-    m_list->setIconSize( QSize( 32, 32 ) );
+    m_list->setIconSize( QSize( 64, 64 ) );
     hBoxLayout->addWidget( m_list );
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();

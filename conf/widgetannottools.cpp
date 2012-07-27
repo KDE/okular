@@ -302,12 +302,17 @@ QString NewAnnotToolDialog::toolXml() const
     else if ( toolType == "straight-line" )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
-        Q_UNUSED( la );
+
+        QString lineExt;
+        if ( la->lineLeadingForwardPoint() != 0 || la->lineLeadingBackwardPoint() != 0 )
+            lineExt = QString( "leadFwd=\"%1\" leadBack=\"%2\"" ).arg( la->lineLeadingForwardPoint() ).arg( la->lineLeadingBackwardPoint() );
+
         return QString( "<tool type=\"straight-line\">"
                          "<engine type=\"PolyLine\" color=\"%1\" points=\"2\">"
-                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" />"
+                          "<annotation type=\"Line\" color=\"%1\" opacity=\"%2\" width=\"%3\" %4 />"
                          "</engine>"
-                        "</tool>" ).arg( color ).arg( opacity ).arg( width );
+                        "</tool>" ).arg( color ).arg( opacity ).arg( width )
+                                   .arg( lineExt );
     }
     else if ( toolType == "polygon" )
     {

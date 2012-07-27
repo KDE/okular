@@ -421,6 +421,13 @@ class PolyLineEngine : public AnnotatorEngine
                     if ( m_annotElement.hasAttribute( "innerColor" ) )
                         la->setLineInnerColor( QColor( m_annotElement.attribute( "innerColor" ) ) );
                 }
+                else if ( numofpoints == 2 )
+                {
+                    if ( m_annotElement.hasAttribute( "leadFwd" ) )
+                        la->setLineLeadingForwardPoint( m_annotElement.attribute( "leadFwd" ).toDouble() );
+                    if ( m_annotElement.hasAttribute( "leadBack" ) )
+                        la->setLineLeadingBackwardPoint( m_annotElement.attribute( "leadBack" ).toDouble() );
+                }
 
                 la->setBoundingRectangle( normRect );
 

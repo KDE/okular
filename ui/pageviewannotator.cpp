@@ -144,11 +144,13 @@ class PickPointEngine : public AnnotatorEngine
 
         QList< Okular::Annotation* > end()
         {
-            m_creationCompleted = false;
-
             // find out annotation's description node
             if ( m_annotElement.isNull() )
+            {
+                m_creationCompleted = false;
+                clicked = false;
                 return QList< Okular::Annotation* >();
+            }
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
@@ -257,6 +259,9 @@ class PickPointEngine : public AnnotatorEngine
                 rect.right = qMax( startpoint.x, point.x );
                 rect.bottom = qMax( startpoint.y, point.y );
             }
+
+            m_creationCompleted = false;
+            clicked = false;
 
             // safety check
             if ( !ann )

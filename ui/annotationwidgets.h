@@ -115,6 +115,7 @@ private:
     Okular::TextAnnotation * m_textAnn;
     PixmapPreviewSelector * m_pixmapSelector;
     KFontRequester * m_fontReq;
+    QComboBox * m_textAlign;
 };
 
 class StampAnnotationWidget

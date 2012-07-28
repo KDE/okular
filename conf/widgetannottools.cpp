@@ -357,6 +357,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         engineElement.setAttribute( "block", "true" );
         annotationElement.setAttribute( "type", "FreeText" );
         annotationElement.setAttribute( "color", color );
+        if ( ta->inplaceAlignment() != 0 )
+            annotationElement.setAttribute( "align", ta->inplaceAlignment() );
         if ( ta->textFont() != QApplication::font() )
             annotationElement.setAttribute( "font", ta->textFont().toString() );
     }
@@ -599,6 +601,8 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     {
         setToolType( "note-inline" );
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
+        if ( annotationElement.hasAttribute( "align" ) )
+            ta->setInplaceAlignment( annotationElement.attribute( "align" ).toInt() );
         if ( annotationElement.hasAttribute( "font" ) )
         {
             QFont f;

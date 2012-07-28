@@ -167,6 +167,9 @@ class PickPointEngine : public AnnotatorEngine
                     ann = ta;
                     ta->setContents( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
+                    //set alignment
+                    if ( m_annotElement.hasAttribute( "align" ) )
+                        ta->setInplaceAlignment( m_annotElement.attribute( "align" ).toInt() );
                     //set font
                     if ( m_annotElement.hasAttribute( "font" ) )
                     {

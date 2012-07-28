@@ -271,15 +271,26 @@ QWidget * TextAnnotationWidget::createStyleWidget()
     }
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
-        QHBoxLayout * fontlay = new QHBoxLayout();
+        QGridLayout * innerlay = new QGridLayout();
+        lay->addLayout( innerlay );
+
         QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
-        fontlay->addWidget( tmplabel );
+        innerlay->addWidget( tmplabel, 0, 0 );
         m_fontReq = new KFontRequester( widget );
-        fontlay->addWidget( m_fontReq );
-        lay->addLayout( fontlay );
+        innerlay->addWidget( m_fontReq, 0, 1 );
         m_fontReq->setFont( m_textAnn->textFont() );
 
+        tmplabel = new QLabel( i18n( "Align:" ), widget );
+        innerlay->addWidget( tmplabel, 1, 0 );
+        m_textAlign = new KComboBox( widget );
+        innerlay->addWidget( m_textAlign, 1, 1 );
+        m_textAlign->addItem( i18n("Left") );
+        m_textAlign->addItem( i18n("Center") );
+        m_textAlign->addItem( i18n("Right") );
+        m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
+
         connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+        connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
     }
 
     return widget;
@@ -295,6 +306,7 @@ void TextAnnotationWidget::applyChanges()
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
         m_textAnn->setTextFont( m_fontReq->font() );
+        m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
     }
 }
 

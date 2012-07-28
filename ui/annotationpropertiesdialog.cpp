@@ -115,7 +115,7 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
     {
         case Okular::Annotation::AText:
             if(((Okular::TextAnnotation*)m_annot)->textType()==Okular::TextAnnotation::Linked)
-                captiontext = i18n( "Note Properties" );
+                captiontext = i18n( "Pop-up Note Properties" );
             else
                 captiontext = i18n( "Inline Note Properties" );
             break;

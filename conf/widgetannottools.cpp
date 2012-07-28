@@ -246,7 +246,7 @@ NewAnnotToolDialog::NewAnnotToolDialog( QWidget *parent )
     widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 2 );
 
     // Populate combobox with annotation types
-    m_type->addItem( i18n("Note"), QByteArray("note-linked") );
+    m_type->addItem( i18n("Pop-up Note"), QByteArray("note-linked") );
     m_type->addItem( i18n("Inline Note"), QByteArray("note-inline") );
     m_type->addItem( i18n("Freehand Line"), QByteArray("ink") );
     m_type->addItem( i18n("Straight Line"), QByteArray("straight-line") );

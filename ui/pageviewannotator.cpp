@@ -1052,7 +1052,7 @@ QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
     else if ( annotType == "note-inline" )
         return i18n( "Inline Note" );
     else if ( annotType == "note-linked" )
-        return i18n( "Note" );
+        return i18n( "Pop-up Note" );
     else if ( annotType == "polygon" )
         return i18n( "Polygon" );
     else if ( annotType == "rectangle" )

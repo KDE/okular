@@ -351,10 +351,10 @@ class PolyLineEngine : public AnnotatorEngine
             else if ( type == Release )
             {
                 const Okular::NormalizedPoint tmppoint(nX, nY);
-                if ( fabs( tmppoint.x - newPoint.x + tmppoint.y - newPoint.y ) > 1e-2 )
+                if ( fabs( tmppoint.x - newPoint.x ) + fabs( tmppoint.y - newPoint.y ) > 1e-2 )
                     return rect;
 
-                if ( numofpoints == -1 && points.count() > 1 && ( fabs( points[0].x - newPoint.x + points[0].y - newPoint.y ) < 1e-2 ) )
+                if ( numofpoints == -1 && points.count() > 1 && ( fabs( points[0].x - newPoint.x ) + fabs( points[0].y - newPoint.y ) < 1e-2 ) )
                 {
                     last = true;
                 }

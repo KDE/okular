@@ -275,9 +275,14 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_type, 1, 1 );
 
+    m_toolIcon = new QLabel( widget );
+    m_toolIcon->setAlignment( Qt::AlignRight | Qt::AlignTop );
+    m_toolIcon->setMinimumSize( 40, 32 );
+    widgetLayout->addWidget( m_toolIcon, 0, 2, 2, 1 );
+
     m_appearanceBox = new QGroupBox( i18n( "Appearance" ), widget );
     m_appearanceBox->setLayout( new QVBoxLayout( m_appearanceBox ) );
-    widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 2 );
+    widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 3 );
 
     // Populate combobox with annotation types
     m_type->addItem( i18n("Pop-up Note"), QByteArray("note-linked") );
@@ -302,7 +307,7 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     }
 
     rebuildAppearanceBox();
-    updateDefaultName();
+    updateDefaultNameAndIcon();
 }
 
 EditAnnotToolDialog::~EditAnnotToolDialog()
@@ -550,11 +555,12 @@ void EditAnnotToolDialog::rebuildAppearanceBox()
     connect( m_annotationWidget, SIGNAL(dataChanged()), this, SLOT(slotDataChanged()) );
 }
 
-void EditAnnotToolDialog::updateDefaultName()
+void EditAnnotToolDialog::updateDefaultNameAndIcon()
 {
     QDomDocument doc = toolXml();
     QDomElement toolElement = doc.documentElement();
     m_name->setPlaceholderText( PageViewAnnotator::defaultToolName( toolElement ) );
+    m_toolIcon->setPixmap( PageViewAnnotator::makeToolPixmap( toolElement ) );
 }
 
 void EditAnnotToolDialog::setToolType( const QByteArray &newType )
@@ -671,7 +677,7 @@ void EditAnnotToolDialog::slotTypeChanged()
 {
     createStubAnnotation();
     rebuildAppearanceBox();
-    updateDefaultName();
+    updateDefaultNameAndIcon();
 }
 
 void EditAnnotToolDialog::slotDataChanged()
@@ -679,7 +685,7 @@ void EditAnnotToolDialog::slotDataChanged()
     // Mirror changes back in the stub annotation
     m_annotationWidget->applyChanges();
 
-    updateDefaultName();
+    updateDefaultNameAndIcon();
 }
 
 #include "moc_widgetannottools.cpp"

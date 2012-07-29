@@ -17,6 +17,7 @@
 class KLineEdit;
 class KComboBox;
 class KPushButton;
+class QLabel;
 class QListWidget;
 class QListWidgetItem;
 class QGroupBox;
@@ -74,12 +75,13 @@ class EditAnnotToolDialog : public KDialog
     private:
         void createStubAnnotation();
         void rebuildAppearanceBox();
-        void updateDefaultName();
+        void updateDefaultNameAndIcon();
         void setToolType( const QByteArray &newType );
         void loadTool( const QDomElement &toolElement );
 
         KLineEdit *m_name;
         KComboBox *m_type;
+        QLabel *m_toolIcon;
         QGroupBox *m_appearanceBox;
 
         Okular::Annotation *m_stubann;

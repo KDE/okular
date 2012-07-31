@@ -19,15 +19,21 @@
 
 #include "documentitem.h"
 
+#include <QtDeclarative/qdeclarative.h>
+
 #include <core/page.h>
 
+#include "tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent),
       m_searchInProgress(false)
 {
+    qmlRegisterUncreatableType<TOCModel>("org.kde.okular", 1, 0, "TOCModel", QLatin1String("Do not create objects of this type."));
     Okular::Settings::instance("okularproviderrc");
     m_document = new Okular::Document(0);
+    m_tocModel = new TOCModel(m_document, this);
+
     connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
             this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
 }
@@ -42,6 +48,8 @@ void DocumentItem::setPath(const QString &path)
 {
     //TODO: remote urls
     m_document->openDocument(path, KUrl(path), KMimeType::findByUrl(KUrl(path)));
+
+    m_tocModel->fill(m_document->documentSynopsis());
 
     m_matchingPages.clear();
     for (uint i = 0; i < m_document->pages(); ++i) {
@@ -83,6 +91,11 @@ int DocumentItem::pageCount() const
 QList<int> DocumentItem::matchingPages() const
 {
     return m_matchingPages;
+}
+
+TOCModel *DocumentItem::tableOfContents() const
+{
+    return m_tocModel;
 }
 
 bool DocumentItem::supportsSearching() const

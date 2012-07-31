@@ -14,6 +14,7 @@ set(okular_SRCS
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
+    tocmodel.cpp
     )
 
 qt4_automoc(${okular_SRCS})
@@ -23,6 +24,7 @@ target_link_libraries(okularplugin
         ${QT_QTCORE_LIBRARY}
         ${QT_QTGUI_LIBRARY}
         ${QT_QTDECLARATIVE_LIBRARY}
+        ${QT_QTXML_LIBRARY}
         ${KDE4_KDECORE_LIBRARY}
         ${KDE4_KDEUI_LIBRARY}
         ${QIMAGEBLITZ_LIBRARIES}

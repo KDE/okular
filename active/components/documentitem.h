@@ -32,6 +32,7 @@ namespace Okular {
 }
 
 class Observer;
+class TOCModel;
 
 class DocumentItem : public QObject
 {
@@ -44,6 +45,7 @@ class DocumentItem : public QObject
     Q_PROPERTY(bool supportsSearching READ supportsSearching NOTIFY supportsSearchingChanged)
     Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
     Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
+    Q_PROPERTY(TOCModel *tableOfContents READ tableOfContents CONSTANT)
 
 public:
 
@@ -65,6 +67,8 @@ public:
     bool isSearchInProgress() const;
 
     QList<int> matchingPages() const;
+
+    TOCModel *tableOfContents() const;
 
     //Those could be a property, but maybe we want to have parameter for searchText
     Q_INVOKABLE void searchText(const QString &text);
@@ -88,6 +92,7 @@ private Q_SLOTS:
 
 private:
     Okular::Document *m_document;
+    TOCModel *m_tocModel;
     QHash <int, Observer *> m_observers;
     QList<int> m_matchingPages;
     bool m_searchInProgress;

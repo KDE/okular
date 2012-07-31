@@ -1,5 +1,5 @@
 /*
- *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Marco Martin <mart@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -20,15 +20,39 @@
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.extras 0.1 as PlasmaExtras
+import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
-Column {
-    id: treeView
-    Repeater {
-        model: VisualDataModel {
-            id: tocModel
-            model: documentItem.tableOfContents
-            delegate: TreeDelegate {
-                sourceModel: tocModel
+PlasmaComponents.Page {
+    property alias contentY: flickable.contentY
+    tools: MobileComponents.ViewSearch {
+        id: searchField
+        anchors.centerIn: parent
+        busy: documentItem.searchInProgress
+    }
+    PlasmaExtras.ScrollArea {
+        anchors {
+            fill: parent
+            leftMargin: handleGraphics.width
+        }
+
+        Flickable {
+            id: flickable
+            anchors.fill: parent
+            contentWidth: width
+            contentHeight: treeView.height
+            Column {
+                id: treeView
+                //it's just a spacer
+                Repeater {
+                    model: VisualDataModel {
+                        id: tocModel
+                        model: documentItem.tableOfContents
+                        delegate: TreeDelegate {
+                            sourceModel: tocModel
+                        }
+                    }
+                }
             }
         }
     }

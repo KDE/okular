@@ -1,5 +1,5 @@
 /*
- *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Marco Martin <mart@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -27,6 +27,7 @@ Column {
     property variant sourceModel
     property int rowIndex: index
     Row {
+        visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
         spacing: 30
         PlasmaComponents.Label {
             id: label

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2011 Marco Martin <mart@kde.org>
+ *   Copyright 2012 Marco Martin <mart@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU Library General Public License as
@@ -236,94 +236,75 @@ PlasmaComponents.Page {
                 }
             }
 
-            PlasmaExtras.ScrollArea {
+            Column {
+                id: toolbarContainer
+                z: 999
+                clip: true
+                y: pageStack.currentPage.contentY <= 0 ? 0 : -height
+                spacing: -6
+                transform: Translate {
+                    y: Math.max(0, -pageStack.currentPage.contentY)
+                }
+                Behavior on y {
+                    NumberAnimation {
+                        duration: 250
+                    }
+                }
                 anchors {
-                    fill: parent
+                    left: parent.left
+                    right: parent.right
                     leftMargin: handleGraphics.width
                 }
-                GridView {
-                    id: resultsGrid
-                    anchors.fill: parent
-                    clip: true
-
-                    model: documentItem.matchingPages
-                    cellWidth: theme.defaultFont.mSize.width * 14
-                    cellHeight: theme.defaultFont.mSize.height * 12
-                    currentIndex: documentItem.currentPage
-
-                    delegate: Item {
-                        width: resultsGrid.cellWidth
-                        height: resultsGrid.cellHeight
-                        PlasmaCore.FrameSvgItem {
-                            anchors.centerIn: parent
-                            imagePath: "widgets/media-delegate"
-                            prefix: "picture"
-                            width: thumbnail.width + margins.left + margins.right
-                            //FIXME: why bindings with thumbnail.height doesn't work?
-                            height: thumbnail.height + margins.top + margins.bottom
-                            Okular.ThumbnailItem {
-                                id: thumbnail
-                                x: parent.margins.left
-                                y: parent.margins.top
-                                document: documentItem
-                                pageNumber: modelData
-                                width: theme.defaultFont.mSize.width * 10
-                                height: Math.round(width / (implicitWidth/implicitHeight))
-                                Rectangle {
-                                    width: childrenRect.width
-                                    height: childrenRect.height
-                                    color: theme.backgroundColor
-                                    radius: width
-                                    smooth: true
-                                    anchors {
-                                        bottom: parent.bottom
-                                        right: parent.right
-                                    }
-                                    PlasmaComponents.Label {
-                                        text: modelData + 1
-                                    }
-                                }
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    resultsGrid.currentIndex = index
-                                    pageArea.delegate.pageNumber = modelData
-                                    documentItem.currentPage = modelData
-
-                                    browserFrame.state = "Closed"
-                                }
+                PlasmaComponents.TabBar {
+                    id: mainTabBar
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    PlasmaComponents.TabButton {
+                        id: thumbnailsButton
+                        text: i18n("Thumbnails")
+                        tab: thumbnails
+                        property bool current: mainTabBar.currentTab == thumbnailsButton
+                        onCurrentChanged: {
+                            if (current) {
+                                pageStack.replace(Qt.createComponent("Thumbnails.qml"))
                             }
                         }
                     }
-                    highlight: PlasmaComponents.Highlight {}
-                    header: PlasmaComponents.ToolBar {
-                        width: resultsGrid.width
-                        height: searchField.height + 10
-                        MobileComponents.ViewSearch {
-                            id: searchField
-                            enabled: documentItem.supportsSearch
-                            anchors.centerIn: parent
-                            busy: documentItem.searchInProgress
-                            onSearchQueryChanged: {
-                                if (searchQuery.length > 2) {
-                                    documentItem.searchText(searchQuery)
-                                } else {
-                                    resultsGrid.currentIndex = pageArea.delegate.pageNumber
-                                    documentItem.resetSearch()
-                                }
+                    PlasmaComponents.TabButton {
+                        id: tocButton
+                        text: i18n("Table of contents")
+                        tab: tableOfContents
+                        property bool current: mainTabBar.currentTab == tocButton
+                        onCurrentChanged: {
+                            if (current) {
+                                pageStack.replace(Qt.createComponent("TableOfContents.qml"))
                             }
-                        }
-                        PlasmaComponents.Label {
-                            anchors {
-                                left: searchField.right
-                                verticalCenter: searchField.verticalCenter
-                            }
-                            visible: documentItem.matchingPages.length == 0
-                            text: i18n("No results found.")
                         }
                     }
                 }
+                PlasmaComponents.ToolBar {
+                    id: mainToolBar
+                    anchors {
+                        top: undefined
+                        left:parent.left
+                        right:parent.right
+                    }
+                }
+                Item {
+                    width: 10
+                    height: 10
+                }
+            }
+            PlasmaComponents.PageStack {
+                id: pageStack
+                anchors {
+                    left: parent.left
+                    leftMargin: handleGraphics.width
+                    top: toolbarContainer.bottom
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                clip: true
+                toolBar: mainToolBar
             }
         }
 

@@ -31,10 +31,7 @@ PlasmaComponents.Page {
         busy: documentItem.searchInProgress
     }
     PlasmaExtras.ScrollArea {
-        anchors {
-            fill: parent
-            leftMargin: handleGraphics.width
-        }
+        anchors.fill: parent
 
         Flickable {
             id: flickable
@@ -43,13 +40,14 @@ PlasmaComponents.Page {
             contentHeight: treeView.height
             Column {
                 id: treeView
-                //it's just a spacer
+                width: flickable.width
                 Repeater {
                     model: VisualDataModel {
                         id: tocModel
                         model: documentItem.tableOfContents
                         delegate: TreeDelegate {
                             sourceModel: tocModel
+                            width: treeView.width
                         }
                     }
                 }

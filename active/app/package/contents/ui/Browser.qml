@@ -146,7 +146,6 @@ MobileComponents.OverlayDrawer {
         anchors.fill: parent
         state: "Hidden"
 
-
         Column {
             id: toolbarContainer
             z: 999

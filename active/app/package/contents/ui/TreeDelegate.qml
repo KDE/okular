@@ -20,37 +20,54 @@
 import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-
+import org.kde.qtextracomponents 0.1
 
 Column {
     id: treeDelegate
     property variant sourceModel
     property int rowIndex: index
+    width: parent.width
+
     MouseArea {
-        width: childrenRect.width
+        width: parent.width
         height: childrenRect.height
-        Row {
-            visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
-            spacing: 30
-            PlasmaComponents.Label {
-                id: label
-                text: display
-            }
-            PlasmaComponents.Label {
-                id: pageNumber
-                text: page
-            }
-        }
+        visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
+
         onClicked: {
             pageArea.delegate.pageNumber = page
             documentItem.currentPage = page
 
             resourceBrowser.open = false
         }
+
+        PlasmaComponents.Label {
+            id: label
+            text: display
+            verticalAlignment: Text.AlignBottom
+        }
+        //there isn't a sane way to do a dotted line in QML1
+        Rectangle {
+            color: theme.textColor
+            opacity: 0.1
+            height: 1
+            anchors {
+                bottom: parent.bottom
+                left: label.right
+                right: pageNumber.left
+            }
+        }
+        PlasmaComponents.Label {
+            id: pageNumber
+            text: page
+            anchors.right: parent.right
+            verticalAlignment: Text.AlignBottom
+            anchors.rightMargin: 40
+        }
     }
     Column {
         id: col
         x: 20
+        width: parent.width - 20
         property variant model: childrenModel
         Repeater {
             id: rep
@@ -64,6 +81,7 @@ Column {
         if (treeDelegate.parent && treeDelegate.parent.model) {
             sourceModel = treeDelegate.parent.model
         }
+
         childrenModel.rootIndex = sourceModel.modelIndex(index)
 
         if (model.hasModelChildren) {

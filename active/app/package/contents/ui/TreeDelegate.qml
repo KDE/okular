@@ -30,7 +30,7 @@ Column {
 
     MouseArea {
         width: parent.width
-        height: childrenRect.height
+        height: label.height
         visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
 
         onClicked: {
@@ -40,10 +40,18 @@ Column {
             resourceBrowser.open = false
         }
 
+        QIconItem {
+            id: icon
+            icon: decoration
+            width: theme.smallIconSize
+            height: width
+            anchors.verticalCenter: parent.verticalCenter
+        }
         PlasmaComponents.Label {
             id: label
             text: display
             verticalAlignment: Text.AlignBottom
+            anchors.left: icon.right
         }
         //there isn't a sane way to do a dotted line in QML1
         Rectangle {
@@ -58,7 +66,7 @@ Column {
         }
         PlasmaComponents.Label {
             id: pageNumber
-            text: page
+            text: pageLabel
             anchors.right: parent.right
             verticalAlignment: Text.AlignBottom
             anchors.rightMargin: 40

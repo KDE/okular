@@ -26,7 +26,7 @@ import org.kde.qtextracomponents 0.1
 import org.kde.okular 0.1 as Okular
 
 
-PlasmaComponents.Page {
+MobileComponents.OverlayDrawer {
     id: resourceBrowser
     property string currentUdi
     anchors.fill: parent
@@ -141,218 +141,81 @@ PlasmaComponents.Page {
         }
     }
 
-    Image {
+    drawer: Item {
         id: browserFrame
-        z: 100
-        source: "image://appbackgrounds/standard"
-        fillMode: Image.Tile
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-        }
-        width: parent.width - handleGraphics.width
+        anchors.fill: parent
         state: "Hidden"
 
 
-        Image {
-            source: "image://appbackgrounds/shadow-left"
-            fillMode: Image.TileVertically
-            anchors {
-                right: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                rightMargin: -1
+        Column {
+            id: toolbarContainer
+            z: 999
+            clip: true
+            y: pageStack.currentPage.contentY <= 0 ? 0 : -height
+            spacing: -6
+            transform: Translate {
+                y: Math.max(0, -pageStack.currentPage.contentY)
             }
-        }
-        PlasmaCore.FrameSvgItem {
-            id: handleGraphics
-            imagePath: "dialogs/background"
-            enabledBorders: "LeftBorder|TopBorder|BottomBorder"
-            width: handleIcon.width + margins.left + margins.right + 4
-            height: handleIcon.width * 1.6 + margins.top + margins.bottom + 4
-            anchors {
-                right: parent.left
-                verticalCenter: parent.verticalCenter
-            }
-
-            PlasmaCore.SvgItem {
-                id: handleIcon
-                svg: PlasmaCore.Svg {imagePath: "toolbar-icons/show"}
-                elementId: "show-menu"
-                x: parent.margins.left
-                y: parent.margins.top
-                width: theme.smallMediumIconSize
-                height: width
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-        MouseEventListener {
-            id: mouseEventListener
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: handleGraphics.left
-                right: parent.right
-            }
-
-            property int startBrowserFrameX
-            property real oldMouseScreenX
-            property bool toggle: true
-            property bool startDragging: false
-            property string startState
-
-            onPressed: {
-                startBrowserFrameX = browserFrame.x
-                oldMouseScreenX = mouse.screenX
-                startMouseScreenX = mouse.screenX
-                toggle = (mouse.x < handleGraphics.width)
-                startDragging = false
-                startState = browserFrame.state
-                browserFrame.state = "Dragging"
-            }
-            onPositionChanged: {
-                //mouse over handle and didn't move much
-                if (mouse.x > handleGraphics.width ||
-                    Math.abs(mouse.screenX - startMouseScreenX) > 20) {
-                    toggle = false
-                }
-
-                if (mouse.x < handleGraphics.width ||
-                    Math.abs(mouse.screenX - startMouseScreenX) > resourceBrowser.width / 5) {
-                    startDragging = true
-                }
-                if (startDragging) {
-                    browserFrame.x = Math.max(resourceBrowser.width - browserFrame.width, browserFrame.x + mouse.screenX - oldMouseScreenX)
-                }
-                oldMouseScreenX = mouse.screenX
-            }
-            onReleased: {
-                //If one condition for toggle is satisfied toggle, otherwise do an animation that resets the original position
-                if (toggle || Math.abs(browserFrame.x - startBrowserFrameX) > resourceBrowser.width / 3) {
-                    browserFrame.state = startState == "Open" ? "Closed" : "Open"
-                } else {
-                    browserFrame.state = startState
-                }
-            }
-
-            Column {
-                id: toolbarContainer
-                z: 999
-                clip: true
-                y: pageStack.currentPage.contentY <= 0 ? 0 : -height
-                spacing: -6
-                transform: Translate {
-                    y: Math.max(0, -pageStack.currentPage.contentY)
-                }
-                Behavior on y {
-                    NumberAnimation {
-                        duration: 250
-                    }
-                }
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: handleGraphics.width
-                }
-                PlasmaComponents.TabBar {
-                    id: mainTabBar
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    PlasmaComponents.TabButton {
-                        id: thumbnailsButton
-                        text: i18n("Thumbnails")
-                        tab: thumbnails
-                        property bool current: mainTabBar.currentTab == thumbnailsButton
-                        onCurrentChanged: {
-                            if (current) {
-                                pageStack.replace(Qt.createComponent("Thumbnails.qml"))
-                            }
-                        }
-                    }
-                    PlasmaComponents.TabButton {
-                        id: tocButton
-                        text: i18n("Table of contents")
-                        tab: tableOfContents
-                        property bool current: mainTabBar.currentTab == tocButton
-                        onCurrentChanged: {
-                            if (current) {
-                                pageStack.replace(Qt.createComponent("TableOfContents.qml"))
-                            }
-                        }
-                    }
-                }
-                PlasmaComponents.ToolBar {
-                    id: mainToolBar
-                    anchors {
-                        top: undefined
-                        left:parent.left
-                        right:parent.right
-                    }
-                }
-                Item {
-                    width: 10
-                    height: 10
-                }
-            }
-            PlasmaComponents.PageStack {
-                id: pageStack
-                anchors {
-                    left: parent.left
-                    leftMargin: handleGraphics.width
-                    top: toolbarContainer.bottom
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-                clip: true
-                toolBar: mainToolBar
-            }
-        }
-
-        states: [
-            State {
-                name: "Open"
-                PropertyChanges {
-                    target: browserFrame
-                    x: handleGraphics.width
-                }
-
-            },
-            State {
-                name: "Dragging"
-                //workaround for a quirkiness of the state machine
-                //if no x binding gets defined in this state x will be set to whatever last x it had last time it was in this state
-                PropertyChanges {
-                    target: browserFrame
-                    x: mouseEventListener.startBrowserFrameX
-                }
-            },
-            State {
-                name: "Closed"
-                PropertyChanges {
-                    target: browserFrame
-                    x: resourceBrowser.width
-                }
-            },
-            State {
-                name: "Hidden"
-                PropertyChanges {
-                    target: browserFrame
-                    x: resourceBrowser.width + handleGraphics.width
-                }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                //Exclude Dragging
-                to: "Open,Closed,Hidden"
+            Behavior on y {
                 NumberAnimation {
-                    properties: "x"
                     duration: 250
-                    easing.type: Easing.InOutQuad
                 }
             }
-        ]
+            anchors {
+                left: parent.left
+                right: parent.right
+                leftMargin: -10
+            }
+            PlasmaComponents.TabBar {
+                id: mainTabBar
+                anchors.horizontalCenter: parent.horizontalCenter
+                PlasmaComponents.TabButton {
+                    id: thumbnailsButton
+                    text: i18n("Thumbnails")
+                    tab: thumbnails
+                    property bool current: mainTabBar.currentTab == thumbnailsButton
+                    onCurrentChanged: {
+                        if (current) {
+                            pageStack.replace(Qt.createComponent("Thumbnails.qml"))
+                        }
+                    }
+                }
+                PlasmaComponents.TabButton {
+                    id: tocButton
+                    text: i18n("Table of contents")
+                    tab: tableOfContents
+                    property bool current: mainTabBar.currentTab == tocButton
+                    onCurrentChanged: {
+                        if (current) {
+                            pageStack.replace(Qt.createComponent("TableOfContents.qml"))
+                        }
+                    }
+                }
+            }
+            PlasmaComponents.ToolBar {
+                id: mainToolBar
+                anchors {
+                    top: undefined
+                    left:parent.left
+                    right:parent.right
+                }
+            }
+            Item {
+                width: 10
+                height: 10
+            }
+        }
+        PlasmaComponents.PageStack {
+            id: pageStack
+            anchors {
+                left: parent.left
+                top: toolbarContainer.bottom
+                right: parent.right
+                bottom: parent.bottom
+            }
+            clip: true
+            toolBar: mainToolBar
+        }
     }
 }
 

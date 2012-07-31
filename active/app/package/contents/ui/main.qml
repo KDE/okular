@@ -43,8 +43,6 @@ Image {
     PlasmaComponents.PageStack {
         id: mainStack
         clip: false
-        toolBar: toolBar
-        //initialPage: Qt.createComponent("Browser.qml")
         anchors.fill: parent
     }
 

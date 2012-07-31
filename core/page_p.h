@@ -67,13 +67,6 @@ class PagePrivate
         void saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what = AllPageItems ) const;
 
         /**
-         * Modifies an existing annotation by replacing it with a new @p annotation.
-         *
-         * The unique name is used to find the old annotation.
-         */
-        void modifyAnnotation( Annotation * annotation );
-
-        /**
          * Rotates the image and object rects of the page to the given @p orientation.
          */
         void rotateAt( Rotation orientation );
@@ -121,7 +114,6 @@ class PagePrivate
         DocumentPrivate *m_doc;
         NormalizedRect m_boundingBox;
         Rotation m_rotation;
-        int m_maxuniqueNum;
 
         TextPage * m_text;
         PageTransition * m_transition;

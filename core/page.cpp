@@ -14,6 +14,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
+#include <QtCore/QUuid>
 #include <QtGui/QPixmap>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -26,6 +27,8 @@
 #include "annotations_p.h"
 #include "area.h"
 #include "debug_p.h"
+#include "document.h"
+#include "document_p.h"
 #include "form.h"
 #include "form_p.h"
 #include "pagecontroller_p.h"
@@ -59,7 +62,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
       m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
-      m_rotation( Rotation0 ), m_maxuniqueNum( 0 ),
+      m_rotation( Rotation0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
       m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),
       m_isBoundingBoxKnown( false )
@@ -573,14 +576,10 @@ QColor Page::textSelectionColor() const
 
 void Page::addAnnotation( Annotation * annotation )
 {
-    //uniqueName: okular-PAGENUM-ID
+    // Generate uniqueName: okular-{UUID}
     if(annotation->uniqueName().isEmpty())
     {
-        QString uniqueName = "okular-";
-        uniqueName += ( QString::number(d->m_number) + '-' + QString::number(++(d->m_maxuniqueNum)) );
-
-        kDebug(OkularDebug).nospace() << "inc m_maxuniqueNum=" << d->m_maxuniqueNum;
-
+        QString uniqueName = "okular-" + QUuid::createUuid().toString();
         annotation->setUniqueName( uniqueName );
     }
     annotation->d_ptr->m_page = d;
@@ -596,37 +595,9 @@ void Page::addAnnotation( Annotation * annotation )
     m_rects.append( rect );
 }
 
-void PagePrivate::modifyAnnotation(Annotation * newannotation )
-{
-    if(!newannotation)
-        return;
-
-    QLinkedList< Annotation * >::iterator aIt = m_page->m_annotations.begin(), aEnd = m_page->m_annotations.end();
-    for ( ; aIt != aEnd; ++aIt )
-    {
-        if((*aIt)==newannotation)
-            return; //modified already
-        if((*aIt) && (*aIt)->uniqueName()==newannotation->uniqueName())
-        {
-            int rectfound = false;
-            QLinkedList< ObjectRect * >::iterator it = m_page->m_rects.begin(), end = m_page->m_rects.end();
-            for ( ; it != end && !rectfound; ++it )
-                if ( ( (*it)->objectType() == ObjectRect::OAnnotation ) && ( (*it)->object() == (*aIt) ) )
-                {
-                    delete *it;
-                    *it = new AnnotationObjectRect( newannotation );
-                    rectfound = true;
-                }
-            delete *aIt;
-            *aIt = newannotation;
-            break;
-        }
-    }
-}
-
 bool Page::removeAnnotation( Annotation * annotation )
 {
-    if ( !annotation || ( annotation->flags() & Annotation::DenyDelete ) )
+    if ( !d->m_doc->m_parent->canRemovePageAnnotation(annotation) )
         return false;
 
     QLinkedList< Annotation * >::iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
@@ -780,17 +751,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 // append annotation to the list or show warning
                 if ( annotation )
                 {
-                    annotation->d_ptr->m_page = this;
-                    m_page->m_annotations.append( annotation );
-                    m_page->m_rects.append( new AnnotationObjectRect( annotation ) );
-                    int pos = annotation->uniqueName().lastIndexOf("-");
-                    if(pos != -1)
-                    {
-                        int uniqID=annotation->uniqueName().right(annotation->uniqueName().length()-pos-1).toInt();
-                        if ( m_maxuniqueNum < uniqID )
-                            m_maxuniqueNum = uniqID;
-                    }
-
+                    m_doc->m_parent->addPageAnnotation(m_number, annotation);
                     kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else

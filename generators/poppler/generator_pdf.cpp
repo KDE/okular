@@ -52,6 +52,7 @@
 #  include <poppler-media.h>
 #endif
 
+#include "annots.h"
 #include "formfields.h"
 #include "popplerembeddedfile.h"
 
@@ -61,7 +62,6 @@ Q_DECLARE_METATYPE(Poppler::FontInfo)
 Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 #endif
 
-static const int PDFDebug = 4710;
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
 
@@ -72,11 +72,30 @@ class PDFOptionsPage : public QWidget
        {
            setWindowTitle( i18n( "PDF Options" ) );
            QVBoxLayout *layout = new QVBoxLayout(this);
+           m_printAnnots = new QCheckBox(i18n("Print annotations"), this);
+           m_printAnnots->setToolTip(i18n("Include annotations in the printed document"));
+           m_printAnnots->setWhatsThis(i18n("Includes annotations in the printed document. You can disable this if you want to print the original unannotated document."));
+           layout->addWidget(m_printAnnots);
            m_forceRaster = new QCheckBox(i18n("Force rasterization"), this);
            m_forceRaster->setToolTip(i18n("Rasterize into an image before printing"));
            m_forceRaster->setWhatsThis(i18n("Forces the rasterization of each page into an image before printing it. This usually gives somewhat worse results, but is useful when printing documents that appear to print incorrectly."));
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
+
+#ifndef HAVE_POPPLER_0_20
+           m_printAnnots->setVisible( false );
+#endif
+           setPrintAnnots( true ); // Default value
+       }
+
+       bool printAnnots()
+       {
+           return m_printAnnots->isChecked();
+       }
+
+       void setPrintAnnots( bool printAnnots )
+       {
+           m_printAnnots->setChecked( printAnnots );
        }
 
        bool printForceRaster()
@@ -90,6 +109,7 @@ class PDFOptionsPage : public QWidget
        }
 
     private:
+        QCheckBox *m_printAnnots;
         QCheckBox *m_forceRaster;
 };
 
@@ -317,8 +337,6 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
     return links;
 }
 
-extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool * doDelete );
-
 /** NOTES on threading:
  * internal: thread race prevention is done via the 'docLock' mutex. the
  *           mutex is needed only because we have the asynchronous thread; else
@@ -364,7 +382,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
     dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
-    synctex_scanner(0)
+    annotProxy( 0 ), synctex_scanner( 0 )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -513,6 +531,9 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     // update the configuration
     reparseConfig();
 
+    // create annotation proxy
+    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex() );
+
     // the file has been loaded correctly
     return true;
 }
@@ -521,6 +542,8 @@ bool PDFGenerator::doCloseDocument()
 {
     // remove internal objects
     userMutex()->lock();
+    delete annotProxy;
+    annotProxy = 0;
     delete pdfdoc;
     pdfdoc = 0;
     userMutex()->unlock();
@@ -1026,9 +1049,11 @@ bool PDFGenerator::print( QPrinter& printer )
         pstitle = document()->currentDocument().fileName();
     }
 
+    bool printAnnots = true;
     bool forceRasterize = false;
     if ( pdfOptionsPage )
     {
+        printAnnots = pdfOptionsPage->printAnnots();
         forceRasterize = pdfOptionsPage->printForceRaster();
     }
 
@@ -1046,6 +1071,11 @@ bool PDFGenerator::print( QPrinter& printer )
     psConverter->setStrictMargins(false);
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
+
+#ifdef HAVE_POPPLER_0_20
+    if (!printAnnots)
+        psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations );
+#endif
 
     userMutex()->lock();
     if (psConverter->convert())
@@ -1724,7 +1754,11 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     switch ( option )
     {
         case SaveChanges:
-            return true;
+        {
+            QMutexLocker locker( userMutex() );
+            // Saving files with /Encrypt is not supported
+            return pdfdoc->isEncrypted() ? false : true;
+        }
         default: ;
     }
     return false;
@@ -1762,6 +1796,11 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
 #endif
     delete pdfConv;
     return success;
+}
+
+Okular::AnnotationProxy* PDFGenerator::annotationProxy() const
+{
+    return annotProxy;
 }
 
 #include "generator_pdf.moc"

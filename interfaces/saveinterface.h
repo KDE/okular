@@ -65,11 +65,21 @@ class OKULAR_EXPORT SaveInterface
          * Save to the specified @p fileName with the specified @p options.
          */
         virtual bool save( const QString &fileName, SaveOptions options, QString *errorText ) = 0;
+
+        /**
+         * Returns the annotation proxy. Generators can return NULL if native
+         * annotations are not supported.
+         *
+         * @note Returning NULL is equivalent to returning an AnnotationProxy
+         *       that doesn't support any capability.
+         * @since 0.15 (KDE 4.9)
+         */
+        virtual AnnotationProxy* annotationProxy() const = 0;
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::SaveInterface, "org.kde.okular.SaveInterface/0.2" )
+Q_DECLARE_INTERFACE( Okular::SaveInterface, "org.kde.okular.SaveInterface/0.3" )
 Q_DECLARE_OPERATORS_FOR_FLAGS( Okular::SaveInterface::SaveOptions )
 
 #endif

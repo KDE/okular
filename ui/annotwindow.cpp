@@ -190,12 +190,17 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     setFrameStyle( Panel | Raised );
     setAttribute( Qt::WA_DeleteOnClose );
 
+    const bool canEditAnnotation = m_document->canModifyPageAnnotation( annot );
+
     textEdit = new KTextEdit( this );
     textEdit->setAcceptRichText( false );
     textEdit->setPlainText( GuiUtils::contents( m_annot ) );
     textEdit->installEventFilter( this );
     connect(textEdit,SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
+
+    if (!canEditAnnotation)
+        textEdit->setReadOnly(true);
 
     m_latexRenderer = new GuiUtils::LatexRenderer();
     emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );
@@ -276,29 +281,46 @@ void AnnotWindow::slotOptionBtn()
 void AnnotWindow::slotsaveWindowText()
 {
     const QString newText = textEdit->toPlainText();
-    
-    // 0. tell the document
-    m_document->modifyPageAnnotation( m_page, m_annot );
+    bool appearanceChanged = false;
 
-    // 1. window text
+    // Set window text
     if ( !m_annot->window().text().isEmpty() )
     {
         m_annot->window().setText( newText );
         return;
     }
-    // 2. if Text and InPlace, the inplace text
-    if ( m_annot->subType() == Okular::Annotation::AText )
+
+    // Handle special cases
+    switch ( m_annot->subType() )
     {
-        Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( m_annot );
-        if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+        // If it's an in-place TextAnnotation, set the inplace text
+        case Okular::Annotation::AText:
         {
-            txtann->setInplaceText( newText );
-            return;
+            Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( m_annot );
+            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+            {
+                txtann->setInplaceText( newText );
+                appearanceChanged = true;
+            }
+            break;
         }
+        // If it's a LineAnnotation, check if caption text is visible
+        case Okular::Annotation::ALine:
+        {
+            Okular::LineAnnotation * lineann = static_cast< Okular::LineAnnotation * >( m_annot );
+            if ( lineann->showCaption() )
+                appearanceChanged = true;
+            break;
+        }
+        default:
+            break;
     }
 
-    // 3. contents
+    // Set contents
     m_annot->setContents( newText );
+
+    // Tell the document
+    m_document->modifyPageAnnotation( m_page, m_annot, appearanceChanged );
 
     emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( newText ) );
 }

@@ -368,9 +368,37 @@ class OKULAR_EXPORT Document : public QObject
         void addPageAnnotation( int page, Annotation *annotation );
 
         /**
+         * Tests if the @p annotation can be modified
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        bool canModifyPageAnnotation( const Annotation * annotation ) const;
+
+        /**
          * Modifies the given @p annotation on the given @p page.
+         *
+         * Same as calling modifyPageAnnotation(int,Annotation*,bool) with
+         * appearanceChanged = true
          */
         void modifyPageAnnotation( int page, Annotation *annotation );
+
+        /**
+         * Modifies the given @p annotation on the given @p page.
+         *
+         * The caller can set @p appearanceChanged to false if it didn't change
+         * the annotation appearance (because it only changed non-visible data
+         * such as timestamps or author name).
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        void modifyPageAnnotation( int page, Annotation *annotation, bool appearanceChanged );
+
+        /**
+         * Tests if the @p annotation can be removed
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        bool canRemovePageAnnotation( const Annotation * annotation ) const;
 
         /**
          * Removes the given @p annotation from the given @p page.

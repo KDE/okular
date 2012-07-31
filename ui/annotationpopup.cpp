@@ -53,8 +53,11 @@ void AnnotationPopup::exec( const QPoint &point )
     deleteNote->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
 
     const AnnotPagePair &firstAnnotPagePair = mAnnotations.at(0);
-    if ( onlyOne && firstAnnotPagePair.annotation->flags() & Okular::Annotation::DenyDelete )
-        deleteNote->setEnabled( false );
+    foreach ( const AnnotPagePair& pair, mAnnotations )
+    {
+        if ( !mDocument->canRemovePageAnnotation(pair.annotation) )
+            deleteNote->setEnabled( false );
+    }
 
     showProperties = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
     showProperties->setEnabled( onlyOne );

@@ -16,6 +16,7 @@
 
 // local includes
 #include "document.h"
+#include "document_p.h"
 #include "movie.h"
 #include "page_p.h"
 #include "sound.h"
@@ -100,6 +101,9 @@ QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
 }
 //END AnnotationUtils implementation
 
+AnnotationProxy::~AnnotationProxy()
+{
+}
 
 //BEGIN Annotation implementation
 
@@ -732,9 +736,9 @@ void Annotation::setDisposeDataFunction( DisposeDataFunction func )
 bool Annotation::canBeMoved() const
 {
     Q_D( const Annotation );
-    // for now, it is pointless moving external annotations
-    // as we cannot change them anyway
-    if ( d->m_flags & External )
+
+    // Don't move annotations if they cannot be modified
+    if ( !d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this) )
         return false;
 
     // highlight "requires" to be "bounded" to text, and that's tricky for now
@@ -764,8 +768,8 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         e.setAttribute( "creationDate", d->m_creationDate.toString(Qt::ISODate) );
 
     // store -other- attributes
-    if ( d->m_flags )
-        e.setAttribute( "flags", d->m_flags );
+    if ( d->m_flags ) // Strip internal flags
+        e.setAttribute( "flags", d->m_flags & ~(External | ExternallyDrawn | BeingMoved) );
     if ( d->m_style.color().isValid() )
         e.setAttribute( "color", d->m_style.color().name() );
     if ( d->m_style.opacity() != 1.0 )

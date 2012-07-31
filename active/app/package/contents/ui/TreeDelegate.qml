@@ -26,16 +26,26 @@ Column {
     id: treeDelegate
     property variant sourceModel
     property int rowIndex: index
-    Row {
-        visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
-        spacing: 30
-        PlasmaComponents.Label {
-            id: label
-            text: display
+    MouseArea {
+        width: childrenRect.width
+        height: childrenRect.height
+        Row {
+            visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
+            spacing: 30
+            PlasmaComponents.Label {
+                id: label
+                text: display
+            }
+            PlasmaComponents.Label {
+                id: pageNumber
+                text: page
+            }
         }
-        PlasmaComponents.Label {
-            id: pageNumber
-            text: page
+        onClicked: {
+            pageArea.delegate.pageNumber = page
+            documentItem.currentPage = page
+
+            resourceBrowser.open = false
         }
     }
     Column {

@@ -106,7 +106,7 @@ PlasmaComponents.Page {
                             pageArea.delegate.pageNumber = modelData
                             documentItem.currentPage = modelData
 
-                            browserFrame.state = "Closed"
+                            resourceBrowser.open = false
                         }
                     }
                 }

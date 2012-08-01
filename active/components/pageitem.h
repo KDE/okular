@@ -42,6 +42,7 @@ class PageItem : public QDeclarativeItem, public Okular::View
     Q_PROPERTY(bool smooth READ smooth WRITE setSmooth)
     Q_PROPERTY(int implicitWidth READ implicitWidth NOTIFY implicitWidthChanged)
     Q_PROPERTY(int implicitHeight READ implicitHeight NOTIFY implicitHeightChanged)
+    Q_PROPERTY(bool bookmarked READ isBookmarked WRITE setBookmarked NOTIFY bookmarkedChanged)
 
 public:
 
@@ -61,6 +62,9 @@ public:
     bool smooth() const;
     void setSmooth(bool smooth);
 
+    bool isBookmarked();
+    void setBookmarked(bool bookmarked);
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     // inherited from View
@@ -72,18 +76,21 @@ public:
 private Q_SLOTS:
     void delayedRedraw();
     void pageHasChanged(int page, int flags);
+    void checkBookmarksChanged();
 
 Q_SIGNALS:
     void implicitWidthChanged();
     void implicitHeightChanged();
     void documentChanged();
     void pageNumberChanged();
+    void bookmarkedChanged();
 
 private:
     const Okular::Page *m_page;
     int m_pageNumber;
     bool m_smooth;
     bool m_intentionalDraw;
+    bool m_bookmarked;
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
     int m_observerId;

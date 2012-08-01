@@ -24,9 +24,10 @@
 #include <QTimer>
 #include <QStyleOptionGraphicsItem>
 
+#include <core/bookmarkmanager.h>
 #include <core/document.h>
-#include <core/page.h>
 #include <core/generator.h>
+#include <core/page.h>
 
 #include "pagepainter.h"
 #include "settings.h"
@@ -39,7 +40,8 @@ PageItem::PageItem(QDeclarativeItem *parent)
       m_page(0),
       m_pageNumber(0),
       m_smooth(false),
-      m_intentionalDraw(true)
+      m_intentionalDraw(true),
+      m_bookmarked(false)
 {
     m_observerId = PAGEVIEW_ID;
     setFlag(QGraphicsItem::ItemHasNoContents, false);
@@ -66,9 +68,12 @@ void PageItem::setDocument(DocumentItem *doc)
     }
 
     m_page = 0;
+    disconnect(doc, 0, this, 0);
     m_documentItem = doc;
     Observer *observer = m_documentItem.data()->observerFor(m_observerId);
     connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));
+    connect(doc->document(), SIGNAL(bookmarksChanged(KUrl)),
+            this, SLOT(checkBookmarksChanged()));
     setPageNumber(0);
     emit documentChanged();
     m_redrawTimer->start(REDRAW_TIMEOUT);
@@ -95,6 +100,7 @@ void PageItem::setPageNumber(int number)
     emit pageNumberChanged();
     emit implicitWidthChanged();
     emit implicitHeightChanged();
+    checkBookmarksChanged();
     m_redrawTimer->start(REDRAW_TIMEOUT);
 }
 
@@ -126,6 +132,30 @@ void PageItem::setSmooth(const bool smooth)
 bool PageItem::smooth() const
 {
     return m_smooth;
+}
+
+bool PageItem::isBookmarked()
+{
+    return m_bookmarked;
+}
+
+void PageItem::setBookmarked(bool bookmarked)
+{
+    if (!m_documentItem) {
+        return;
+    }
+
+    if (bookmarked == m_bookmarked) {
+        return;
+    }
+
+    if (bookmarked) {
+        m_documentItem.data()->document()->bookmarkManager()->addBookmark(m_pageNumber);
+    } else {
+        m_documentItem.data()->document()->bookmarkManager()->removeBookmark(m_pageNumber);
+    }
+    m_bookmarked = bookmarked;
+    emit bookmarkedChanged();
 }
 
 //Reimplemented
@@ -189,6 +219,19 @@ void PageItem::pageHasChanged( int page, int flags )
     Q_UNUSED(flags)
     if (m_pageNumber == page) {
         m_redrawTimer->start(REDRAW_TIMEOUT);
+    }
+}
+
+void PageItem::checkBookmarksChanged()
+{
+    if (!m_documentItem) {
+        return;
+    }
+
+    bool newBookmarked = m_documentItem.data()->document()->bookmarkManager()->isBookmarked(m_pageNumber);
+    if (m_bookmarked != newBookmarked) {
+        m_bookmarked = newBookmarked;
+        emit bookmarkedChanged();
     }
 }
 

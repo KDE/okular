@@ -54,6 +54,7 @@ MouseEventListener {
         mainPage.height = mainPage.implicitHeight * zoom
     }
     Rectangle {
+        id: backgroundRectangle
         x: -mainFlickable.contentX + mainPage.x
         y: 0
         anchors {
@@ -145,6 +146,20 @@ MouseEventListener {
                 width: implicitWidth
                 height: implicitHeight
             }
+        }
+    }
+    Rectangle {
+        anchors {
+            top: parent.top
+            right: backgroundRectangle.right
+            rightMargin: 60
+        }
+        width: 30
+        height: mainPage.bookmarked ? 60 : 20
+        color: "red"
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mainPage.bookmarked = !mainPage.bookmarked
         }
     }
 }

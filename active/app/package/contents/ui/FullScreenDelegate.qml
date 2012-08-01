@@ -153,8 +153,8 @@ MouseEventListener {
         anchors {
             top: parent.top
             right: backgroundRectangle.right
-            rightMargin: 60
-            topMargin: mainPage.bookmarked ? -20 : -110
+            rightMargin: -5
+            topMargin: mainPage.bookmarked ? -30 : -120
         }
         Behavior on anchors.topMargin {
                 NumberAnimation {
@@ -163,7 +163,10 @@ MouseEventListener {
             }
 
         MouseArea {
-            anchors.fill: parent
+            anchors {
+                fill: parent
+                margins: -8
+            }
             onClicked: mainPage.bookmarked = !mainPage.bookmarked
         }
     }

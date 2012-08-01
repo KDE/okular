@@ -40,11 +40,16 @@ PlasmaComponents.Page {
 
             cellWidth: theme.defaultFont.mSize.width * 14
             cellHeight: theme.defaultFont.mSize.height * 12
-            currentIndex: documentItem.currentPage
 
             delegate: Item {
                 width: resultsGrid.cellWidth
                 height: resultsGrid.cellHeight
+                property bool current: documentItem.currentPage == modelData
+                onCurrentChanged: {
+                    if (current) {
+                        resultsGrid.currentIndex = index
+                    }
+                }
                 PlasmaCore.FrameSvgItem {
                     anchors.centerIn: parent
                     imagePath: "widgets/media-delegate"

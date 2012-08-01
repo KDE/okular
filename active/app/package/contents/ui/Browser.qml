@@ -146,12 +146,11 @@ MobileComponents.OverlayDrawer {
         anchors.fill: parent
         state: "Hidden"
 
-        Column {
-            id: toolbarContainer
-            z: 999
-            clip: true
+
+        PlasmaComponents.ToolBar {
+            id: mainToolBar
+
             y: pageStack.currentPage.contentY <= 0 ? 0 : -height
-            spacing: -6
             transform: Translate {
                 y: Math.max(0, -pageStack.currentPage.contentY)
             }
@@ -165,55 +164,82 @@ MobileComponents.OverlayDrawer {
                 right: parent.right
                 leftMargin: -10
             }
-            PlasmaComponents.TabBar {
-                id: mainTabBar
-                anchors.horizontalCenter: parent.horizontalCenter
-                PlasmaComponents.TabButton {
-                    id: thumbnailsButton
-                    text: i18n("Thumbnails")
-                    tab: thumbnails
-                    property bool current: mainTabBar.currentTab == thumbnailsButton
-                    onCurrentChanged: {
-                        if (current) {
-                            pageStack.replace(Qt.createComponent("Thumbnails.qml"))
-                        }
-                    }
-                }
-                PlasmaComponents.TabButton {
-                    id: tocButton
-                    text: i18n("Table of contents")
-                    tab: tableOfContents
-                    property bool current: mainTabBar.currentTab == tocButton
-                    onCurrentChanged: {
-                        if (current) {
-                            pageStack.replace(Qt.createComponent("TableOfContents.qml"))
-                        }
-                    }
-                }
-            }
-            PlasmaComponents.ToolBar {
-                id: mainToolBar
-                anchors {
-                    top: undefined
-                    left:parent.left
-                    right:parent.right
-                }
-            }
-            Item {
-                width: 10
-                height: 10
-            }
         }
+
+
         PlasmaComponents.PageStack {
             id: pageStack
             anchors {
                 left: parent.left
-                top: toolbarContainer.bottom
+                top: mainToolBar.bottom
                 right: parent.right
                 bottom: parent.bottom
             }
             clip: true
             toolBar: mainToolBar
+        }
+
+        Connections {
+            id: scrollConnection
+            property int oldContentY:0
+            target: pageStack.currentPage
+
+            onContentYChanged: {
+
+                if (scrollConnection.oldContentY < pageStack.currentPage.contentY && pageStack.currentPage.contentY > 0) {
+                    tabsToolbar.y = tabsToolbar.parent.height - tabsToolbar.height
+                } else {
+                    tabsToolbar.y = tabsToolbar.parent.height
+                }
+                scrollConnection.oldContentY = pageStack.currentPage.contentY
+            }
+        }
+
+        PlasmaComponents.ToolBar {
+            id: tabsToolbar
+            y: parent.height
+            anchors {
+                top: undefined
+                bottom: undefined
+                left: parent.left
+                right: parent.right
+                leftMargin: -10
+            }
+            tools: Item {
+                width: parent.width
+                height: childrenRect.height
+                PlasmaComponents.TabBar {
+                    id: mainTabBar
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    PlasmaComponents.TabButton {
+                        id: thumbnailsButton
+                        text: i18n("Thumbnails")
+                        tab: thumbnails
+                        property bool current: mainTabBar.currentTab == thumbnailsButton
+                        onCurrentChanged: {
+                            if (current) {
+                                pageStack.replace(Qt.createComponent("Thumbnails.qml"))
+                            }
+                        }
+                    }
+                    PlasmaComponents.TabButton {
+                        id: tocButton
+                        text: i18n("Table of contents")
+                        tab: tableOfContents
+                        property bool current: mainTabBar.currentTab == tocButton
+                        onCurrentChanged: {
+                            if (current) {
+                                pageStack.replace(Qt.createComponent("TableOfContents.qml"))
+                            }
+                        }
+                    }
+                }
+            }
+            Behavior on y {
+                NumberAnimation {
+                    duration: 250
+                }
+            }
         }
     }
 }

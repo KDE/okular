@@ -162,7 +162,6 @@ MobileComponents.OverlayDrawer {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: -10
             }
         }
 
@@ -203,7 +202,6 @@ MobileComponents.OverlayDrawer {
                 bottom: undefined
                 left: parent.left
                 right: parent.right
-                leftMargin: -10
             }
             tools: Item {
                 width: parent.width

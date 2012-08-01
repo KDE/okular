@@ -237,9 +237,7 @@ MobileComponents.OverlayDrawer {
                         property bool current: mainTabBar.currentTab == bookmarksButton
                         onCurrentChanged: {
                             if (current) {
-                                var page = pageStack.replace(Qt.createComponent("Thumbnails.qml"))
-                                page.model = documentItem.bookmarks
-                                page.toolBarVisible = false
+                                pageStack.replace(Qt.createComponent("Bookmarks.qml"))
                             }
                         }
                     }

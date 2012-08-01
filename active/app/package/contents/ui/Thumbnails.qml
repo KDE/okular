@@ -18,17 +18,12 @@
  */
 
 import QtQuick 1.1
-import org.kde.okular 0.1 as Okular
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
-PlasmaComponents.Page {
-    property alias contentY: resultsGrid.contentY
-    property alias contentHeight: resultsGrid.contentHeight
-    property alias model: resultsGrid.model
-    property bool toolBarVisible: true
+ThumbnailsBase {
+    model: documentItem.matchingPages
 
     anchors.fill: parent
     tools: Item {
@@ -57,66 +52,6 @@ PlasmaComponents.Page {
             }
             visible: documentItem.matchingPages.length == 0
             text: i18n("No results found.")
-        }
-    }
-    PlasmaExtras.ScrollArea {
-        anchors.fill: parent
-
-        GridView {
-            id: resultsGrid
-            anchors.fill: parent
-
-            model: documentItem.matchingPages
-            cellWidth: theme.defaultFont.mSize.width * 14
-            cellHeight: theme.defaultFont.mSize.height * 12
-            currentIndex: documentItem.currentPage
-
-            delegate: Item {
-                width: resultsGrid.cellWidth
-                height: resultsGrid.cellHeight
-                PlasmaCore.FrameSvgItem {
-                    anchors.centerIn: parent
-                    imagePath: "widgets/media-delegate"
-                    prefix: "picture"
-                    width: thumbnail.width + margins.left + margins.right
-                    //FIXME: why bindings with thumbnail.height doesn't work?
-                    height: thumbnail.height + margins.top + margins.bottom
-                    Okular.ThumbnailItem {
-                        id: thumbnail
-                        x: parent.margins.left
-                        y: parent.margins.top
-                        document: documentItem
-                        pageNumber: modelData
-                        width: theme.defaultFont.mSize.width * 10
-                        height: Math.round(width / (implicitWidth/implicitHeight))
-                        Rectangle {
-                            width: childrenRect.width
-                            height: childrenRect.height
-                            color: theme.backgroundColor
-                            radius: width
-                            smooth: true
-                            anchors {
-                                bottom: parent.bottom
-                                right: parent.right
-                            }
-                            PlasmaComponents.Label {
-                                text: modelData + 1
-                            }
-                        }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            resultsGrid.currentIndex = index
-                            pageArea.delegate.pageNumber = modelData
-                            documentItem.currentPage = modelData
-
-                            resourceBrowser.open = false
-                        }
-                    }
-                }
-            }
-            highlight: PlasmaComponents.Highlight {}
         }
     }
 }

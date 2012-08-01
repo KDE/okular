@@ -184,7 +184,7 @@ MobileComponents.OverlayDrawer {
 
                 if (pageStack.currentPage.contentHeight <= pageStack.height ||
                     (scrollConnection.oldContentY < pageStack.currentPage.contentY &&
-                     pageStack.currentPage.contentY >= 0)) {
+                     pageStack.currentPage.contentY > 0)) {
                     tabsToolbar.y = tabsToolbar.parent.height - tabsToolbar.height
                 } else {
                     tabsToolbar.y = tabsToolbar.parent.height

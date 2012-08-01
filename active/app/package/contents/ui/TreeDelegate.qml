@@ -28,10 +28,20 @@ Column {
     property int rowIndex: index
     width: parent.width
 
+    property bool matches: searchField.searchQuery.length < 3 || display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
+
+
     MouseArea {
+        id: delegateArea
         width: parent.width
         height: label.height
-        visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
+        opacity: matches ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+            }
+        }
+
 
         onClicked: {
             pageArea.delegate.pageNumber = page-1

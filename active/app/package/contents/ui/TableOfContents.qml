@@ -25,6 +25,8 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 PlasmaComponents.Page {
     property alias contentY: flickable.contentY
+    property alias contentHeight: flickable.contentHeight
+
     tools: MobileComponents.ViewSearch {
         id: searchField
         anchors.centerIn: parent

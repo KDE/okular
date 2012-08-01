@@ -26,6 +26,7 @@ import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 PlasmaComponents.Page {
     property alias contentY: resultsGrid.contentY
+    property alias contentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
     property bool toolBarVisible: true
 

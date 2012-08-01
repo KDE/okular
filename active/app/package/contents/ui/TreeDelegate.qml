@@ -34,8 +34,8 @@ Column {
         visible: display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
 
         onClicked: {
-            pageArea.delegate.pageNumber = page
-            documentItem.currentPage = page
+            pageArea.delegate.pageNumber = page-1
+            documentItem.currentPage = page-1
 
             resourceBrowser.open = false
         }

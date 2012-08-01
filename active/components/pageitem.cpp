@@ -72,7 +72,7 @@ void PageItem::setDocument(DocumentItem *doc)
     m_documentItem = doc;
     Observer *observer = m_documentItem.data()->observerFor(m_observerId);
     connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));
-    connect(doc->document(), SIGNAL(bookmarksChanged(KUrl)),
+    connect(doc->document()->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
             this, SLOT(checkBookmarksChanged()));
     setPageNumber(0);
     emit documentChanged();

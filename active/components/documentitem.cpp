@@ -37,7 +37,7 @@ DocumentItem::DocumentItem(QObject *parent)
 
     connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
             this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
-    connect(m_document, SIGNAL(bookmarksChanged(KUrl)),
+    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
             this, SIGNAL(bookmarksChanged()));
 }
 
@@ -109,6 +109,7 @@ QList<int> DocumentItem::bookmarks() const
     foreach (KBookmark bookmark, m_document->bookmarkManager()->bookmarks()) {
         list << bookmark.url().fragment().split(";").first().toInt();
     }
+    qSort(list);
     return list;
 }
 

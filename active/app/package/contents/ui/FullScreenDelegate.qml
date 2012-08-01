@@ -148,15 +148,20 @@ MouseEventListener {
             }
         }
     }
-    Rectangle {
+    Image {
+        source: "bookmark.png"
         anchors {
             top: parent.top
             right: backgroundRectangle.right
             rightMargin: 60
+            topMargin: mainPage.bookmarked ? -20 : -110
         }
-        width: 30
-        height: mainPage.bookmarked ? 60 : 20
-        color: "red"
+        Behavior on anchors.topMargin {
+                NumberAnimation {
+                    duration: 250
+                }
+            }
+
         MouseArea {
             anchors.fill: parent
             onClicked: mainPage.bookmarked = !mainPage.bookmarked

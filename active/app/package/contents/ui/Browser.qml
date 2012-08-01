@@ -228,6 +228,19 @@ MobileComponents.OverlayDrawer {
                             }
                         }
                     }
+                    PlasmaComponents.TabButton {
+                        id: bookmarksButton
+                        text: i18n("Bookmarks")
+                        tab: tableOfContents
+                        property bool current: mainTabBar.currentTab == bookmarksButton
+                        onCurrentChanged: {
+                            if (current) {
+                                var page = pageStack.replace(Qt.createComponent("Thumbnails.qml"))
+                                page.model = documentItem.bookmarks
+                                page.toolBarVisible = false
+                            }
+                        }
+                    }
                 }
             }
             Behavior on y {

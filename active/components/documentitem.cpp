@@ -22,6 +22,7 @@
 #include <QtDeclarative/qdeclarative.h>
 
 #include <core/page.h>
+#include <core/bookmarkmanager.h>
 
 #include "tocmodel.h"
 
@@ -36,6 +37,8 @@ DocumentItem::DocumentItem(QObject *parent)
 
     connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
             this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
+    connect(m_document, SIGNAL(bookmarksChanged(KUrl)),
+            this, SIGNAL(bookmarksChanged()));
 }
 
 
@@ -98,6 +101,15 @@ QList<int> DocumentItem::matchingPages() const
 TOCModel *DocumentItem::tableOfContents() const
 {
     return m_tocModel;
+}
+
+QList<int> DocumentItem::bookmarks() const
+{
+    QList<int> list;
+    foreach (KBookmark bookmark, m_document->bookmarkManager()->bookmarks()) {
+        list << bookmark.url().fragment().split(";").first().toInt();
+    }
+    return list;
 }
 
 bool DocumentItem::supportsSearching() const

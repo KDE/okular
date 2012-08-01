@@ -27,6 +27,7 @@ target_link_libraries(okularplugin
         ${QT_QTXML_LIBRARY}
         ${KDE4_KDECORE_LIBRARY}
         ${KDE4_KDEUI_LIBRARY}
+        ${KDE4_KIO_LIBRARY}
         ${QIMAGEBLITZ_LIBRARIES}
         okularcore
         )

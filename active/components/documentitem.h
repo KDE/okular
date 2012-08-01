@@ -46,6 +46,7 @@ class DocumentItem : public QObject
     Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
     Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
     Q_PROPERTY(TOCModel *tableOfContents READ tableOfContents CONSTANT)
+    Q_PROPERTY(QList<int> bookmarks READ bookmarks NOTIFY bookmarksChanged)
 
 public:
 
@@ -70,6 +71,8 @@ public:
 
     TOCModel *tableOfContents() const;
 
+    QList<int> bookmarks() const;
+
     //Those could be a property, but maybe we want to have parameter for searchText
     Q_INVOKABLE void searchText(const QString &text);
     Q_INVOKABLE void resetSearch();
@@ -86,6 +89,7 @@ Q_SIGNALS:
     void matchingPagesChanged();
     void currentPageChanged();
     void supportsSearchingChanged();
+    void bookmarksChanged();
 
 private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);

@@ -76,7 +76,7 @@ Column {
         }
         PlasmaComponents.Label {
             id: pageNumber
-            text: pageLabel
+            text: pageLabel ? pageLabel : page
             anchors.right: parent.right
             verticalAlignment: Text.AlignBottom
             anchors.rightMargin: 40

@@ -212,31 +212,30 @@ MobileComponents.OverlayDrawer {
                         id: thumbnailsButton
                         text: i18n("Thumbnails")
                         tab: thumbnails
-                        property bool current: mainTabBar.currentTab == thumbnailsButton
-                        onCurrentChanged: {
-                            if (current) {
+                        onCheckedChanged: {
+                            if (checked) {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
                             }
                         }
                     }
                     PlasmaComponents.TabButton {
                         id: tocButton
+                        //enabled: 
                         text: i18n("Table of contents")
                         tab: tableOfContents
-                        property bool current: mainTabBar.currentTab == tocButton
-                        onCurrentChanged: {
-                            if (current) {
+                        onCheckedChanged: {
+                            if (checked) {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
                             }
                         }
                     }
                     PlasmaComponents.TabButton {
                         id: bookmarksButton
+                        enabled: documentItem.bookmarks.length > 0
                         text: i18n("Bookmarks")
                         tab: tableOfContents
-                        property bool current: mainTabBar.currentTab == bookmarksButton
-                        onCurrentChanged: {
-                            if (current) {
+                        onCheckedChanged: {
+                            if (checked) {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))
                             }
                         }

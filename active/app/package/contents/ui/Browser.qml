@@ -220,7 +220,7 @@ MobileComponents.OverlayDrawer {
                     }
                     PlasmaComponents.TabButton {
                         id: tocButton
-                        //enabled: 
+                        enabled: documentItem.tableOfContents.count > 0
                         text: i18n("Table of contents")
                         tab: tableOfContents
                         onCheckedChanged: {

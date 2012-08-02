@@ -163,6 +163,13 @@ TOCModel::TOCModel( Okular::Document *document, QObject *parent )
     roles.insert(PageRole, "page");
     roles.insert(PageLabelRole, "pageLabel");
     setRoleNames(roles);
+
+    connect(this, SIGNAL(rowsInserted(const QModelIndex &, int, int)),
+            this, SIGNAL(countChanged()));
+    connect(this, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
+            this, SIGNAL(countChanged()));
+    connect(this, SIGNAL(modelReset()),
+            this, SIGNAL(countChanged()));
 }
 
 TOCModel::~TOCModel()

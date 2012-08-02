@@ -24,6 +24,11 @@ class TOCModel : public QAbstractItemModel
 {
     Q_OBJECT
 
+    /**
+     * How many items are in this model
+     */
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+
     public:
         enum TOCRoles {
             PageRole = Qt::UserRole + 1,
@@ -51,6 +56,11 @@ class TOCModel : public QAbstractItemModel
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
         QString urlForIndex( const QModelIndex &index ) const;
+
+        int count() const {return rowCount();}
+
+    Q_SIGNALS:
+        void countChanged();
 
     private:
         // storage

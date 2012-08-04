@@ -11,100 +11,254 @@
 #include <QPixmap>
 #include <QtCore/qmath.h>
 
+#ifdef TILES_DEBUG
+#include <QPainter>
+#endif
+
 using namespace Okular;
 
-TilesManager::TilesManager( int width, int height )
-    : m_width( width ), m_height( height )
+class TilesManager::Private
 {
+    public:
+        Private();
+
+        bool hasPixmap( const NormalizedRect &rect, const Tile &tile ) const;
+        void tilesAt( const NormalizedRect &rect, const Tile &tile, QList<Tile> &result ) const;
+        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile );
+        void markDirty( Tile &tile );
+        void deleteTiles( const Tile &tile );
+
+        Tile tiles[16];
+        int width;
+        int height;
+        long totalPixels;
+};
+
+TilesManager::Private::Private()
+    : width( 0 )
+    , height( 0 )
+    , totalPixels( 0 )
+{
+}
+
+TilesManager::TilesManager( int width, int height )
+    : d( new Private )
+{
+    d->width = width;
+    d->height = height;
+
     const double dim = 0.25;
     for ( int i = 0; i < 16; ++i )
     {
         int x = i % 4;
         int y = i / 4;
-        m_tiles[ i ].rect = NormalizedRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
+        d->tiles[ i ].rect = NormalizedRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
     }
 }
 
 TilesManager::~TilesManager()
 {
     for ( int i = 0; i < 16; ++i )
-    {
-        if ( m_tiles[ i ].pixmap )
-            delete m_tiles[ i ].pixmap;
-    }
+        d->deleteTiles( d->tiles[ i ] );
+}
+
+void TilesManager::Private::deleteTiles( const Tile &tile )
+{
+    if ( tile.pixmap )
+        delete tile.pixmap;
+
+    for ( int i = 0; i < tile.nTiles; ++i )
+        deleteTiles( tile.tiles[ i ] );
 }
 
 void TilesManager::setWidth( int width )
 {
-    if ( width == m_width )
+    if ( width == d->width )
         return;
 
-    m_width = width;
+    d->width = width;
 
     for ( int i = 0; i < 16; ++i )
     {
-        m_tiles[ i ].dirty = true;
+        d->markDirty( d->tiles[ i ] );
     }
+}
+
+int TilesManager::width() const {
+    return d->width;
 }
 
 void TilesManager::setHeight( int height )
 {
-    if ( height == m_height )
+    if ( height == d->height )
         return;
 
-    m_height = height;
+    d->height = height;
+}
 
-    for ( int i = 0; i < 16; ++i )
+int TilesManager::height() const {
+    return d->height;
+}
+
+void TilesManager::Private::markDirty( Tile &tile )
+{
+    tile.dirty = true;
+
+    if ( tile.nTiles > 0 && tile.tiles )
     {
-        m_tiles[ i ].dirty = true;
+        for ( int i = 0; i < tile.nTiles; ++i )
+        {
+            markDirty( tile.tiles[ i ] );
+        }
     }
 }
 
 void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
 {
-    const double dim = 0.25;
-    int left = qCeil( rect.left/dim );
-    int top = qCeil( rect.top/dim );
-    int right = rect.right/dim;
-    int bottom = rect.bottom/dim;
-
-    const QRect pixmapRect = rect.geometry( m_width, m_height );
-
-    for ( int y = top; y < bottom; y++ )
+    for ( int i = 0; i < 16; ++i )
     {
-        for ( int x = left; x < right; x++ )
+        d->setPixmap( pixmap, rect, d->tiles[ i ] );
+    }
+}
+
+void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile )
+{
+    QRect pixmapRect = rect.geometry( width, height );
+
+    if ( !tile.rect.intersects( rect ) )
+        return;
+
+    if ( !((tile.rect & rect) == tile.rect) )
+    {
+        // paint subtiles if applied
+        for ( int i = 0; i < tile.nTiles; ++i )
+            setPixmap( pixmap, rect, tile.tiles[ i ] );
+
+        return;
+    }
+
+    if ( tile.nTiles == 0 )
+    {
+        tile.dirty = false;
+
+        QRect tileRect = tile.rect.geometry( width, height );
+
+        if ( tileRect.width()*tileRect.height() < TILES_MAXSIZE ) // size ok
         {
-            const NormalizedRect tileRect( x*dim, y*dim, x*dim+dim, y*dim+dim );
-            int index = 4*y+x;
+            if ( tile.pixmap )
+            {
+                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                delete tile.pixmap;
+            }
 
-            if ( m_tiles[ index ].pixmap )
-                delete (m_tiles[ index ].pixmap);
+            tile.pixmap = new QPixmap( pixmap->copy( tile.rect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            totalPixels += tile.pixmap->width()*tile.pixmap->height();
 
-            m_tiles[ index ].pixmap = new QPixmap( pixmap->copy( tileRect.geometry( m_width, m_height ).translated( -pixmapRect.topLeft() ) ) );
-            m_tiles[ index ].dirty = false;
+#ifdef TILES_DEBUG
+            QRect pixRect = tile.pixmap->rect();
+            QPainter p(tile.pixmap);
+            p.drawLine(0,0,pixRect.right(),0);
+            p.drawLine(pixRect.right(), 0, pixRect.right(), pixRect.bottom());
+            p.drawLine(pixRect.right(), pixRect.bottom(), pixRect.left(), pixRect.bottom());
+            p.drawLine(pixRect.left(), pixRect.bottom(), 0,0);
+#endif // TILES_DEBUG
+        }
+        else
+        {
+            tile.nTiles = 4;
+            tile.tiles = new Tile[4];
+            double hCenter = (tile.rect.left + tile.rect.right)/2;
+            double vCenter = (tile.rect.top + tile.rect.bottom)/2;
+
+            tile.tiles[0].rect = NormalizedRect( tile.rect.left, tile.rect.top, hCenter, vCenter );
+            tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
+            tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
+            tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
+
+            for ( int i = 0; i < tile.nTiles; ++i )
+                setPixmap( pixmap, rect, tile.tiles[ i ] );
+
+            if ( tile.pixmap )
+            {
+                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                delete tile.pixmap;
+            }
+            tile.pixmap = 0;
+        }
+    }
+    else
+    {
+        QRect tileRect = tile.rect.geometry( width, height );
+        if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE ) // size ok
+        {
+            tile.dirty = false;
+            for ( int i = 0; i < tile.nTiles; ++i )
+                setPixmap( pixmap, rect, tile.tiles[ i ] );
+        }
+        else // size not ok (too small)
+        {
+            // remove children tiles
+            tile.rect = NormalizedRect();
+            for ( int i = 0; i < tile.nTiles; ++i )
+            {
+                if ( tile.rect.isNull() )
+                    tile.rect = tile.tiles[ i ].rect;
+                else
+                    tile.rect |= tile.tiles[ i ].rect;
+
+                if ( tile.tiles[ i ].pixmap )
+                {
+                    totalPixels -= tile.tiles[ i ].pixmap->width()*tile.tiles[ i ].pixmap->height();
+                    delete tile.tiles[ i ].pixmap;
+                }
+                tile.tiles[ i ].pixmap = 0;
+            }
+
+            delete [] tile.tiles;
+            tile.tiles = 0;
+            tile.nTiles = 0;
+
+            // paint tile
+            if ( tile.pixmap )
+            {
+                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                delete tile.pixmap;
+            }
+            tile.pixmap = new QPixmap( pixmap->copy( tile.rect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            totalPixels += tile.pixmap->width()*tile.pixmap->height();
+            tile.dirty = false;
         }
     }
 }
 
 bool TilesManager::hasPixmap( const NormalizedRect &rect )
 {
-    const double dim = 0.25;
-    int left = rect.left/dim;
-    int top = rect.top/dim;
-    int right = qCeil( rect.right/dim );
-    int bottom = qCeil( rect.bottom/dim );
-
-    for ( int y = top; y < bottom; y++ )
+    for ( int i = 0; i < 16; ++i )
     {
-        for ( int x = left; x < right; x++ )
-        {
-            int index = 4*y + x;
-            if ( !m_tiles[ index ].pixmap )
-                return false;
+        if ( !d->hasPixmap( rect, d->tiles[ i ] ) )
+            return false;
+    }
 
-            if ( m_tiles[ index ].dirty )
-                return false;
-        }
+    return true;
+}
+
+bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &tile ) const
+{
+    if ( !tile.rect.intersects( rect ) )
+        return true;
+
+    if ( tile.nTiles == 0 )
+        return tile.pixmap && !tile.dirty;
+
+    // XXX
+    // TODO: onClearPixmap -> if (!parent.dirty) { parent.dirty(); onClearPixmap(parent); }
+    if ( !tile.dirty )
+        return true;
+
+    for ( int i = 0; i < tile.nTiles; ++i )
+    {
+        if ( !hasPixmap( rect, tile.tiles[ i ] ) )
+            return false;
     }
 
     return true;
@@ -114,41 +268,40 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect ) const
 {
     QList<Tile> result;
 
-    const double dim = 0.25;
-    int left = rect.left/dim;
-    int top = rect.top/dim;
-    int right = qCeil( rect.right/dim );
-    int bottom = qCeil( rect.bottom/dim );
-
-    for ( int y = top; y < bottom; y++ )
+    for ( int i = 0; i < 16; ++i )
     {
-        for ( int x = left; x < right; x++ )
-        {
-            int index = 4*y + x;
-            result.append( m_tiles[ index ] );
-        }
+        d->tilesAt( rect, d->tiles[ i ], result );
     }
 
     return result;
 }
 
+void TilesManager::Private::tilesAt( const NormalizedRect &rect, const Tile &tile, QList<Tile> &result ) const
+{
+    if ( !tile.rect.intersects( rect ) )
+        return;
+
+    if ( tile.nTiles == 0 )
+    {
+        result.append( tile );
+    }
+    else
+    {
+        for ( int i = 0; i < tile.nTiles; ++i )
+            tilesAt( rect, tile.tiles[ i ], result );
+    }
+}
+
 long TilesManager::totalMemory() const
 {
-    long totalPixels = 0;
-
-    for ( int i = 0; i < 16; i++ )
-    {
-        QPixmap *pixmap = m_tiles[ i ].pixmap;
-        if ( pixmap )
-            totalPixels += pixmap->width() * pixmap->height();
-    }
-
-    return 4*totalPixels;
+    return 4*d->totalPixels;
 }
 
 Tile::Tile()
     : pixmap( 0 )
     , dirty ( true )
+    , tiles( 0 )
+    , nTiles( 0 )
 {
 }
 

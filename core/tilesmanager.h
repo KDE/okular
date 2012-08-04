@@ -12,6 +12,8 @@
 #include "okular_export.h"
 #include "area.h"
 
+#define TILES_MAXSIZE 2000000
+
 class QPixmap;
 
 namespace Okular {
@@ -26,6 +28,9 @@ class OKULAR_EXPORT Tile
         NormalizedRect rect;
         QPixmap *pixmap;
         uint dirty : 1;
+
+        Tile *tiles;
+        int nTiles;
 };
 
 class OKULAR_EXPORT TilesManager
@@ -39,15 +44,15 @@ class OKULAR_EXPORT TilesManager
         QList<Tile> tilesAt( const NormalizedRect &rect ) const;
         long totalMemory() const;
 
-        inline int width() const { return m_width; }
+        int width() const;
         void setWidth( int width );
-        inline int height() const { return m_height; }
+        int height() const;
         void setHeight( int height );
 
     private:
-        Tile m_tiles[16];
-        int m_width;
-        int m_height;
+        class Private;
+        Private * const d;
+        friend class Private;
 };
 
 }

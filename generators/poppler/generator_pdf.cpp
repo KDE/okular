@@ -1543,7 +1543,7 @@ const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr
             }
             const char *name = synctex_scanner_get_name( synctex_scanner, synctex_node_tag( node ) );
 
-            Okular::SourceReference * sourceRef = new Okular::SourceReference( name, line, col );
+            Okular::SourceReference * sourceRef = new Okular::SourceReference( QString::fromLocal8Bit( name ), line, col );
             return sourceRef;
         }
     }

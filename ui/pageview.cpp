@@ -2927,7 +2927,11 @@ void PageView::dragMoveEvent( QDragMoveEvent * ev )
 void PageView::dropEvent( QDropEvent * ev )
 {
     if (  KUrl::List::canDecode(  ev->mimeData() ) )
-        emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
+    {
+        const KUrl::List list = KUrl::List::fromMimeData( ev->mimeData() );
+        if ( !list.isEmpty() )
+            emit urlDropped( list.first() );
+    }
 }
 
 bool PageView::viewportEvent( QEvent * e )

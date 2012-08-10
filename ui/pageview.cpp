@@ -3927,6 +3927,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
     const QRect viewportRectAtZeroZero( 0, 0, viewport()->width(), viewport()->height() );
 
     // some variables used to determine the viewport
+    Okular::NormalizedRect visibleRect;
     int nearPageNumber = -1;
     const double viewportCenterX = (viewportRect.left() + viewportRect.right()) / 2.0;
     const double viewportCenterY = (viewportRect.top() + viewportRect.bottom()) / 2.0;
@@ -3981,9 +3982,20 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() );
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
+
+        visibleRect = vItem->rect;
+        Okular::NormalizedRect expandedVisibleRect = vItem->rect;
+        if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
+        {
+            int value = 512;
+            double rectMargin = value/(double)i->uncroppedHeight();
+            expandedVisibleRect.top = qMax( 0.0, expandedVisibleRect.top - rectMargin );
+            expandedVisibleRect.bottom = qMin( 1.0, expandedVisibleRect.bottom + rectMargin );
+        }
+
         // if the item has not the right pixmap, add a request for it
         // TODO: We presently request a pixmap for the full page, and then render just the crop part. This waste memory and cycles.
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), vItem->rect ) )
+        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
@@ -3996,7 +4008,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( tilesManager )
             {
                 Okular::NormalizedRect tilesRect;
-                QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( vItem->rect );
+                QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( expandedVisibleRect );
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -4054,13 +4066,50 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         {
             // add the page after the 'visible series' in preload
             int tailRequest = d->visibleItems.last()->pageNumber() + j;
+
             if ( tailRequest < (int)d->items.count() )
             {
                 PageViewItem * i = d->items[ tailRequest ];
+                Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+                Okular::NormalizedRect preRenderRegion;
+                if ( tilesManager && !visibleRect.isNull() )
+                {
+                    int value = 512;
+                    double rectMargin = value/(double)i->uncroppedHeight();
+                    preRenderRegion.left = visibleRect.left;
+                    preRenderRegion.top = 0.0;
+                    preRenderRegion.right = visibleRect.right;
+                    preRenderRegion.bottom = qMin( 1.0, rectMargin );
+                }
+
                 // request the pixmap if not already present
-                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) && i->uncroppedWidth() > 0 )
-                    requestedPixmaps.push_back( new Okular::PixmapRequest(
-                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
+                {
+                    Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+                    requestedPixmaps.push_back( p );
+
+                    if ( tilesManager && !preRenderRegion.isNull() )
+                    {
+                        Okular::NormalizedRect tilesRect;
+                        QList<Okular::Tile> tiles = tilesManager->tilesAt( preRenderRegion );
+                        QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+                        while ( tIt != tEnd )
+                        {
+                            Okular::Tile tile = *tIt;
+                            if ( !tile.isValid() )
+                            {
+                                if ( tilesRect.isNull() )
+                                    tilesRect = tile.rect;
+                                else
+                                    tilesRect |= tile.rect;
+                            }
+
+                            tIt++;
+                        }
+
+                        p->setNormalizedRect( tilesRect );
+                    }
+                }
             }
         }
 
@@ -4071,10 +4120,46 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( headRequest >= 0 )
             {
                 PageViewItem * i = d->items[ headRequest ];
+                Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+                Okular::NormalizedRect preRenderRegion;
+                if ( tilesManager && !visibleRect.isNull() )
+                {
+                    int value = 512;
+                    double rectMargin = value/(double)i->uncroppedHeight();
+                    preRenderRegion.left = visibleRect.left;
+                    preRenderRegion.top = qMax( 0.0, 1.0 - rectMargin );
+                    preRenderRegion.right = visibleRect.right;
+                    preRenderRegion.bottom = 1.0;
+                }
+
                 // request the pixmap if not already present
-                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() ) && i->uncroppedWidth() > 0 )
-                    requestedPixmaps.push_back( new Okular::PixmapRequest(
-                                PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true ) );
+                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
+                {
+                    Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+                    requestedPixmaps.push_back( p );
+
+                    if ( tilesManager && !preRenderRegion.isNull() )
+                    {
+                        Okular::NormalizedRect tilesRect;
+                        QList<Okular::Tile> tiles = tilesManager->tilesAt( preRenderRegion );
+                        QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+                        while ( tIt != tEnd )
+                        {
+                            Okular::Tile tile = *tIt;
+                            if ( !tile.isValid() )
+                            {
+                                if ( tilesRect.isNull() )
+                                    tilesRect = tile.rect;
+                                else
+                                    tilesRect |= tile.rect;
+                            }
+
+                            tIt++;
+                        }
+
+                        p->setNormalizedRect( tilesRect );
+                    }
+                }
             }
         }
     }

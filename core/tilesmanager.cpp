@@ -10,12 +10,24 @@
 
 #include <QPixmap>
 #include <QtCore/qmath.h>
+#include <QList>
 
 #ifdef TILES_DEBUG
 #include <QPainter>
 #endif
 
+#define RANGE_MAX 1073741823
+#define RANGE_MIN -1073741824
+
 using namespace Okular;
+
+static bool rankedTilesLessThan( Tile *t1, Tile *t2 )
+{
+    if ( t1->dirty ^ t2->dirty )
+        return t1->miss < t2->miss;
+
+    return !t1->dirty;
+}
 
 class TilesManager::Private
 {
@@ -23,21 +35,28 @@ class TilesManager::Private
         Private();
 
         bool hasPixmap( const NormalizedRect &rect, const Tile &tile ) const;
-        void tilesAt( const NormalizedRect &rect, const Tile &tile, QList<Tile> &result ) const;
+        void tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result );
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile );
         void markDirty( Tile &tile );
         void deleteTiles( const Tile &tile );
+
+        void onClearPixmap( const Tile &tile );
+        void rankTiles( Tile &tile );
 
         Tile tiles[16];
         int width;
         int height;
         long totalPixels;
+
+        QList<Tile*> rankedTiles;
+        QSize tileSize;
 };
 
 TilesManager::Private::Private()
     : width( 0 )
     , height( 0 )
     , totalPixels( 0 )
+    , tileSize( QSize() )
 {
 }
 
@@ -128,6 +147,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
     if ( !tile.rect.intersects( rect ) )
         return;
 
+    // the tile intersects an edge of the viewport
     if ( !((tile.rect & rect) == tile.rect) )
     {
         // paint subtiles if applied
@@ -175,8 +195,13 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
             tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
 
+            tileSize = tile.tiles[0].rect.geometry( width, height ).size();
+
             for ( int i = 0; i < tile.nTiles; ++i )
+            {
+                tile.tiles[ i ].parent = &tile;
                 setPixmap( pixmap, rect, tile.tiles[ i ] );
+            }
 
             if ( tile.pixmap )
             {
@@ -214,6 +239,8 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 tile.tiles[ i ].pixmap = 0;
             }
 
+            tileSize = tile.rect.geometry( width, height ).size();
+
             delete [] tile.tiles;
             tile.tiles = 0;
             tile.nTiles = 0;
@@ -250,8 +277,7 @@ bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &t
     if ( tile.nTiles == 0 )
         return tile.pixmap && !tile.dirty;
 
-    // XXX
-    // TODO: onClearPixmap -> if (!parent.dirty) { parent.dirty(); onClearPixmap(parent); }
+    // all children tiles are clean. doesn't need to go deeper
     if ( !tile.dirty )
         return true;
 
@@ -264,7 +290,7 @@ bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &t
     return true;
 }
 
-QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect ) const
+QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect )
 {
     QList<Tile> result;
 
@@ -276,13 +302,18 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect ) const
     return result;
 }
 
-void TilesManager::Private::tilesAt( const NormalizedRect &rect, const Tile &tile, QList<Tile> &result ) const
+void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result )
 {
     if ( !tile.rect.intersects( rect ) )
+    {
+        tile.miss = qMin( tile.miss+1, RANGE_MAX );
         return;
+    }
 
     if ( tile.nTiles == 0 )
     {
+        // TODO: check tile size
+        tile.miss = qMax( tile.miss-1, RANGE_MIN );
         result.append( tile );
     }
     else
@@ -297,11 +328,71 @@ long TilesManager::totalMemory() const
     return 4*d->totalPixels;
 }
 
+void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
+{
+    d->rankedTiles.clear();
+    for ( int i = 0; i < 16; ++i )
+    {
+        d->rankTiles( d->tiles[ i ] );
+    }
+    qSort( d->rankedTiles.begin(), d->rankedTiles.end(), rankedTilesLessThan );
+
+    while ( numberOfBytes > 0 && !d->rankedTiles.isEmpty() )
+    {
+        Tile *tile = d->rankedTiles.takeLast();
+        if ( !tile->pixmap )
+            continue;
+
+        long pixels = tile->pixmap->width()*tile->pixmap->height();
+        d->totalPixels -= pixels;
+        numberOfBytes -= 4*pixels;
+
+        tile->miss = 0;
+        delete tile->pixmap;
+        tile->pixmap = 0;
+
+        d->onClearPixmap( *tile );
+    }
+}
+
+void TilesManager::Private::onClearPixmap( const Tile &tile )
+{
+    if ( !tile.parent )
+        return;
+
+    if ( !tile.parent->dirty )
+    {
+        tile.parent->dirty = true;
+        onClearPixmap( *tile.parent );
+    }
+}
+
+void TilesManager::Private::rankTiles( Tile &tile )
+{
+    if ( tile.parent )
+        tile.miss = qBound( RANGE_MIN, tile.miss + tile.parent->miss, RANGE_MAX );
+
+    if ( tile.pixmap )
+    {
+        rankedTiles.append( &tile );
+    }
+    else
+    {
+        for ( int i = 0; i < tile.nTiles; ++i )
+        {
+            rankTiles( tile.tiles[ i ] );
+        }
+        tile.miss = 0;
+    }
+}
+
 Tile::Tile()
     : pixmap( 0 )
     , dirty ( true )
     , tiles( 0 )
     , nTiles( 0 )
+    , parent( 0 )
+    , miss( 0 )
 {
 }
 

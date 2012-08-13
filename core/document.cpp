@@ -216,6 +216,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
         int pagesFreed = 0;
         QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmapsFifo.begin();
         QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * > visiblePixmaps;
         while ( (pIt != pEnd) && (memoryToFree > 0) )
         {
             AllocatedPixmap * p = *pIt;
@@ -230,9 +231,35 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
                 m_pagesVector.at( p->page )->deletePixmap( p->id );
                 // delete allocation descriptor
                 delete p;
-            } else
+            }
+            else
+            {
+                visiblePixmaps.append( p );
                 ++pIt;
+            }
         }
+
+        // Delete hidden pages may not be enough
+        pIt = visiblePixmaps.begin();
+        pEnd = visiblePixmaps.end();
+        while ( (pIt != pEnd) && memoryToFree > 0 )
+        {
+            AllocatedPixmap * p = *pIt;
+
+            TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager( p->id );
+            if ( tilesManager )
+            {
+                tilesManager->cleanupPixmapMemory( memoryToFree );
+                m_allocatedPixmapsTotalMemory -= p->memory;
+                memoryToFree -= p->memory;
+                p->memory = tilesManager->totalMemory();
+                memoryToFree += p->memory;
+                m_allocatedPixmapsTotalMemory += p->memory;
+            }
+
+            ++pIt;
+        }
+
         //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmapsFifo.count() + pagesFreed, pagesFreed, m_allocatedPixmapsFifo.count() );
     }
 }

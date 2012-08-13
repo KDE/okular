@@ -31,6 +31,9 @@ class OKULAR_EXPORT Tile
 
         Tile *tiles;
         int nTiles;
+
+        Tile *parent;
+        int miss;
 };
 
 class OKULAR_EXPORT TilesManager
@@ -41,8 +44,9 @@ class OKULAR_EXPORT TilesManager
 
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
         bool hasPixmap( const NormalizedRect &rect );
-        QList<Tile> tilesAt( const NormalizedRect &rect ) const;
+        QList<Tile> tilesAt( const NormalizedRect &rect );
         long totalMemory() const;
+        void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 
         int width() const;
         void setWidth( int width );

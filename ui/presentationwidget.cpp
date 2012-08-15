@@ -173,9 +173,11 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->addSeparator();
     QAction *drawingAct = collection->action( "presentation_drawing_mode" );
     connect( drawingAct, SIGNAL(toggled(bool)), SLOT(togglePencilMode(bool)) );
+    drawingAct->setEnabled( true );
     m_topBar->addAction( drawingAct );
     addAction( drawingAct );
     QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
+    eraseDrawingAct->setEnabled( true );
     connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
@@ -264,9 +266,15 @@ PresentationWidget::~PresentationWidget()
 
     QAction *drawingAct = m_ac->action( "presentation_drawing_mode" );
     disconnect( drawingAct, 0, this, 0 );
-    if ( drawingAct->isChecked() )
-        drawingAct->toggle();
-    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
+    drawingAct->setChecked( false );
+    drawingAct->setEnabled( false );
+
+    QAction *eraseDrawingAct = m_ac->action( "presentation_erase_drawings" );
+    eraseDrawingAct->setEnabled( false );
+
+    QAction *blackScreenAct = m_ac->action( "switch_blackscreen_mode" );
+    blackScreenAct->setChecked( false );
+    blackScreenAct->setEnabled( false );
     delete m_drawingEngine;
 
     // delete frames
@@ -383,6 +391,7 @@ void PresentationWidget::setupActions( KActionCollection * collection )
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
     connect( action, SIGNAL(toggled(bool)), SLOT(toggleBlackScreenMode(bool)) );
+    action->setEnabled( true );
     addAction( action );
 }
 
@@ -526,15 +535,17 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         (void)r;
         if ( m_drawingEngine->creationCompleted() )
         {
-            QList< Okular::Annotation * > annots = m_drawingEngine->end();
+            // add drawing to current page
+            m_currentPageDrawings << m_drawingEngine->endSmoothPath();
+
             // manually disable and re-enable the pencil mode, so we can do
             // cleaning of the actual drawer and create a new one just after
             // that - that gives continuous drawing
             togglePencilMode( false );
             togglePencilMode( true );
-            foreach( Okular::Annotation * ann, annots )
-                m_document->addPageAnnotation( m_frameIndex, ann );
-            m_currentPageDrawings << annots;
+
+            // schedule repaint
+            update();
         }
         return;
     }
@@ -573,6 +584,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
         if ( m_drawingEngine && e->buttons() != Qt::NoButton )
         {
             QRect r = routeMouseDrawingEvent( e );
+            if ( r.isValid() )
             {
                 m_drawingRect |= r.translated( m_frames[ m_frameIndex ]->geometry.topLeft() );
                 update( m_drawingRect );
@@ -659,12 +671,21 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         // copy the rendered pixmap to the screen
         painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
     }
-    if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
+
+    // paint drawings
+    if ( m_frameIndex != -1 )
     {
         const QRect & geom = m_frames[ m_frameIndex ]->geometry;
         painter.save();
         painter.translate( geom.topLeft() );
-        m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+        painter.setRenderHints( QPainter::Antialiasing );
+
+        foreach ( const SmoothPath &drawing, m_currentPageDrawings )
+            drawing.paint( &painter, geom.width(), geom.height() );
+
+        if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
+            m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+
         painter.restore();
     }
     painter.end();
@@ -778,9 +799,32 @@ void PresentationWidget::changePage( int newPage )
     if ( m_frameIndex == newPage )
         return;
 
-    const int oldIndex = m_frameIndex;
-    // check if pixmap exists or else request it
+    // prepare to leave the current page
+    if ( m_frameIndex != -1 )
+    {
+        // remove the drawings on the old page before switching
+        clearDrawings();
+
+        // stop video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        {
+            vw->stop();
+            vw->hide();
+        }
+
+        // stop audio playback, if any
+        Okular::AudioPlayer::instance()->stopPlaybacks();
+
+        // perform the page closing action, if any
+        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) )
+            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) );
+    }
+
+    // switch to newPage
     m_frameIndex = newPage;
+    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+
+    // check if pixmap exists or else request it
     PresentationFrame * frame = m_frames[ m_frameIndex ];
     int pixW = frame->geometry.width();
     int pixH = frame->geometry.height();
@@ -802,51 +846,13 @@ void PresentationWidget::changePage( int newPage )
         generatePage();
     }
 
-    // set a new viewport in document if page number differs
-    if ( m_frameIndex != -1 && m_frameIndex != m_document->viewport().pageNumber )
-    {
-        // stop the audio playback, if any
-        Okular::AudioPlayer::instance()->stopPlaybacks();
-        // perform the page closing action, if any
-        if ( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) )
-            m_document->processAction( m_document->page( m_document->viewport().pageNumber )->pageAction( Okular::Page::Closing ) );
+    // perform the page opening action, if any
+    if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
+        m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
-        // remove the drawing on the old page before switching
-        clearDrawings();
-        m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
-
-        // perform the page opening action, if any
-        if ( m_document->page( m_frameIndex)->pageAction( Okular::Page::Opening ) )
-            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        {
-            vw->pageEntered();
-        }
-    }
-
-    if ( oldIndex != m_frameIndex )
-    {
-        if ( oldIndex != -1 )
-        {
-            Q_FOREACH ( VideoWidget *vw, m_frames[ oldIndex ]->videoWidgets )
-            {
-                vw->stop();
-                vw->hide();
-            }
-        }
-        else
-        {
-            // we have just opened the presentation view
-            if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
-                m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-            Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-            {
-                vw->pageEntered();
-            }
-        }
-    }
+    // start autoplay video playback
+    Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        vw->pageEntered();
 }
 
 void PresentationWidget::generatePage( bool disableTransition )
@@ -1094,6 +1100,9 @@ void PresentationWidget::generateOverlay()
 
 QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 {
+    if ( m_frameIndex == -1 ) // Can't draw on the summary page
+        return QRect();
+
     const QRect & geom = m_frames[ m_frameIndex ]->geometry;
     const Okular::Page * page = m_frames[ m_frameIndex ]->page;
 
@@ -1182,34 +1191,37 @@ void PresentationWidget::requestPixmaps()
     // ask for next and previous page if not in low memory usage setting
     if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading() )
     {
-        if ( m_frameIndex + 1 < (int)m_document->pages() )
-        {
-            PresentationFrame *nextFrame = m_frames[ m_frameIndex + 1 ];
-            pixW = nextFrame->geometry.width();
-            pixH = nextFrame->geometry.height();
-            if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex + 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-        }
-        if ( m_frameIndex - 1 >= 0 )
-        {
-            PresentationFrame *prevFrame = m_frames[ m_frameIndex - 1 ];
-            pixW = prevFrame->geometry.width();
-            pixH = prevFrame->geometry.height();
-            if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex - 1, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
-        }
+        int pagesToPreload = 1;
 
         // If greedy, preload everything
         if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+            pagesToPreload = (int)m_document->pages();
+
+        for( int j = 1; j <= pagesToPreload; j++ )
         {
-            for(int i = 0; i < (int)m_document->pages(); ++i)
+            int tailRequest = m_frameIndex + j;
+            if ( tailRequest < (int)m_document->pages() )
             {
-                PresentationFrame *loopFrame = m_frames[ i ];
-                pixW = loopFrame->geometry.width();
-                pixH = loopFrame->geometry.height();
-                if ( !loopFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ))
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, i, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+                PresentationFrame *nextFrame = m_frames[ tailRequest ];
+                pixW = nextFrame->geometry.width();
+                pixH = nextFrame->geometry.height();
+                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, tailRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
             }
+
+            int headRequest = m_frameIndex - j;
+            if ( headRequest >= 0 )
+            {
+                PresentationFrame *prevFrame = m_frames[ headRequest ];
+                pixW = prevFrame->geometry.width();
+                pixH = prevFrame->geometry.height();
+                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, headRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+            }
+
+            // stop if we've already reached both ends of the document
+            if ( headRequest < 0 && tailRequest >= (int)m_document->pages() )
+                break;
         }
     }
     m_document->requestPixmaps( requests );
@@ -1218,14 +1230,16 @@ void PresentationWidget::requestPixmaps()
 
 void PresentationWidget::slotNextPage()
 {
-    // loop when configured
-    if ( m_frameIndex == (int)m_frames.count() - 1 && Okular::Settings::slidesLoop() )
-        m_frameIndex = -1;
+    int nextIndex = m_frameIndex + 1;
 
-    if ( m_frameIndex < (int)m_frames.count() - 1 )
+    // loop when configured
+    if ( nextIndex == m_frames.count() && Okular::Settings::slidesLoop() )
+        nextIndex = 0;
+
+    if ( nextIndex < m_frames.count() )
     {
         // go to next page
-        changePage( m_frameIndex + 1 );
+        changePage( nextIndex );
         // auto advance to the next page if set
         startAutoChangeTimer();
     }
@@ -1365,8 +1379,8 @@ void PresentationWidget::togglePencilMode( bool on )
 
 void PresentationWidget::clearDrawings()
 {
-    m_document->removePageAnnotations( m_document->viewport().pageNumber, m_currentPageDrawings );
     m_currentPageDrawings.clear();
+    update();
 }
 
 void PresentationWidget::screenResized( int screen )

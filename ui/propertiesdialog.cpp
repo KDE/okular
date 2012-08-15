@@ -85,8 +85,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     const QString valueString = element.attribute( "value" );
     if ( titleString.isEmpty() || valueString.isEmpty() )
         continue;
-    if ( !orderedProperties.contains( titleString ) )
-        orderedProperties << titleString;
+    if ( !orderedProperties.contains( element.tagName() ) ) {
+        orderedProperties << element.tagName();
+    }
   }
 
   QDomNodeList list;

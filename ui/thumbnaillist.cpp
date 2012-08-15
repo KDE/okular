@@ -618,7 +618,11 @@ void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
 void ThumbnailList::dropEvent( QDropEvent * ev )
 {
     if (  KUrl::List::canDecode(  ev->mimeData() ) )
-        emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
+    {
+        const KUrl::List list = KUrl::List::fromMimeData( ev->mimeData() );
+        if ( !list.isEmpty() )
+            emit urlDropped( list.first() );
+    }
 }
 //END widget events
 

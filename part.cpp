@@ -86,6 +86,7 @@
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
+#include "core/annotations.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/generator.h"
@@ -439,6 +440,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
 
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_pageView, SIGNAL(escPressed()), m_findBar, SLOT(resetSearch()) );
     connect( m_pageNumberTool, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
 
     connect( m_reviewsWidget, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
@@ -782,14 +784,17 @@ void Part::setupActions()
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
     blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
     blackscreenAction->setIcon( KIcon( "view-presentation" ) );
+    blackscreenAction->setEnabled( false );
 
     KToggleAction *drawingAction = new KToggleAction( i18n( "Toggle Drawing Mode" ), ac );
     ac->addAction( "presentation_drawing_mode", drawingAction );
     drawingAction->setIcon( KIcon( "draw-freehand" ) );
+    drawingAction->setEnabled( false );
 
     KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
+    eraseDrawingAction->setEnabled( false );
 }
 
 Part::~Part()
@@ -798,7 +803,7 @@ Part::~Part()
     m_document->removeObserver( this );
 
     if ( m_document->isOpened() )
-        Part::closeUrl();
+        Part::closeUrl( false );
 
     delete m_toc;
     delete m_pageView;
@@ -1033,6 +1038,7 @@ void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFl
 
     rebuildBookmarkMenu();
     updateAboutBackendAction();
+    m_findBar->resetSearch();
     m_searchWidget->setEnabled( m_document->supportsSearching() );
 }
 
@@ -1175,12 +1181,18 @@ bool Part::openFile()
         mime = KMimeType::findByPath( fileNameToOpen );
     }
     bool ok = false;
+    isDocumentArchive = false;
     if ( uncompressOk )
     {
         if ( mime->is( "application/vnd.kde.okular-archive" ) )
+        {
             ok = m_document->openDocumentArchive( fileNameToOpen, url() );
+            isDocumentArchive = true;
+        }
         else
+        {
             ok = m_document->openDocument( fileNameToOpen, url(), mime );
+        }
     }
     bool canSearch = m_document->supportsSearching();
 
@@ -1188,7 +1200,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    if( m_saveAs ) m_saveAs->setEnabled( ok && m_document->canSaveChanges() );
+    if( m_saveAs ) m_saveAs->setEnabled( ok && (m_document->canSaveChanges() || isDocumentArchive) );
     if( m_saveCopyAs ) m_saveCopyAs->setEnabled( ok );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
@@ -1937,6 +1949,38 @@ void Part::slotSaveFileAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
+    /* Show a warning before saving if the generator can't save annotations,
+     * unless we are going to save a .okular archive. */
+    if ( !isDocumentArchive && !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
+    {
+        /* Search local annotations */
+        bool containsLocalAnnotations = false;
+        const int pagecount = m_document->pages();
+
+        for ( int pageno = 0; pageno < pagecount; ++pageno )
+        {
+            const Okular::Page *page = m_document->page( pageno );
+            foreach ( const Okular::Annotation *ann, page->annotations() )
+            {
+                if ( !(ann->flags() & Okular::Annotation::External) )
+                {
+                    containsLocalAnnotations = true;
+                    break;
+                }
+            }
+            if ( containsLocalAnnotations )
+                break;
+        }
+
+        /* Don't show it if there are no local annotations */
+        if ( containsLocalAnnotations )
+        {
+            int res = KMessageBox::warningContinueCancel( widget(), "Your annotations will not be exported.\nYou can export the annotated document using File -> Export As -> Document Archive" );
+            if ( res != KMessageBox::Continue )
+                return; // Canceled
+        }
+    }
+
     KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
                                             QString(), widget(), QString(),
                                             KFileDialog::ConfirmOverwrite );
@@ -1959,7 +2003,14 @@ bool Part::saveAs( const KUrl & saveUrl )
     tf.close();
 
     QString errorText;
-    if ( !m_document->saveChanges( fileName, &errorText ) )
+    bool saved;
+
+    if ( isDocumentArchive )
+        saved = m_document->saveDocumentArchive( fileName );
+    else
+        saved = m_document->saveChanges( fileName, &errorText );
+
+    if ( !saved )
     {
         if (errorText.isEmpty())
         {
@@ -2512,9 +2563,11 @@ void Part::unsetDummyMode()
     // add back and next in history
     m_historyBack = KStandardAction::documentBack( this, SLOT(slotHistoryBack()), actionCollection() );
     m_historyBack->setWhatsThis( i18n( "Go to the place you were before" ) );
+    connect(m_pageView, SIGNAL(mouseBackButtonClick()), m_historyBack, SLOT(trigger()));
 
     m_historyNext = KStandardAction::documentForward( this, SLOT(slotHistoryNext()), actionCollection());
     m_historyNext->setWhatsThis( i18n( "Go to the place you were after" ) );
+    connect(m_pageView, SIGNAL(mouseForwardButtonClick()), m_historyNext, SLOT(trigger()));
 
     m_pageView->setupActions( actionCollection() );
 

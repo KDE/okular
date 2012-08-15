@@ -95,10 +95,13 @@ class DocumentPrivate
         // private methods
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
-        void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        qulonglong calculateMemoryToFree();
+        void cleanupPixmapMemory();
+        void cleanupPixmapMemory( qulonglong memoryToFree );
+        AllocatedPixmap * searchLowestPriorityUnloadablePixmap( bool thenRemoveIt = false );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
-        qulonglong getFreeMemory();
+        qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
         void loadDocumentInfo();
         void loadDocumentInfo( const QString &fileName );
         void loadViewsInfo( View *view, const QDomElement &e );
@@ -186,7 +189,7 @@ class DocumentPrivate
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;
-        QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
+        QLinkedList< AllocatedPixmap * > m_allocatedPixmaps;
         qulonglong m_allocatedPixmapsTotalMemory;
         QList< int > m_allocatedTextPagesFifo;
         int m_maxAllocatedTextPages;
@@ -227,6 +230,7 @@ class DocumentPrivate
         Scripter *m_scripter;
 
         ArchiveData *m_archiveData;
+        QString m_archivedFileName;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
@@ -236,8 +240,8 @@ class DocumentPrivate
         QSet< View * > m_views;
 
         bool m_annotationEditingEnabled;
+        bool m_annotationsNeedSaveAs;
         bool m_annotationBeingMoved; // is an annotation currently being moved?
-        bool m_containsExternalAnnotations; // set on opening and never changed
         bool m_showWarningLimitedAnnotSupport;
 };
 

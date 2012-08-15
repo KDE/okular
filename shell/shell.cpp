@@ -120,7 +120,7 @@ void Shell::delayedOpen()
 Shell::~Shell()
 {
     if ( m_part ) writeSettings();
-    delete m_part;
+    m_part = 0; // It is deleted by the KPart/QObject machinery
     if ( m_args )
         m_args->clear();
 }
@@ -340,7 +340,7 @@ QSize Shell::sizeHint() const
 
 bool Shell::queryClose()
 {
-    return m_part ? m_part->closeUrl() : true;
+    return m_part ? m_part->queryClose() : true;
 }
 
 #include "shell.moc"

@@ -62,9 +62,7 @@ class BookmarkItem : public QTreeWidgetItem
             if ( other.type() == BookmarkItemType )
             {
                 const BookmarkItem *cmp = static_cast< const BookmarkItem* >( &other );
-                const int v = m_viewport.pageNumber - cmp->m_viewport.pageNumber;
-                if ( v != 0 )
-                    return v < 0;
+                return m_viewport < cmp->m_viewport;
             }
             return QTreeWidgetItem::operator<( other );
         }

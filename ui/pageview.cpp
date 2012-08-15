@@ -1643,6 +1643,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 horizontalScrollBar()->triggerAction( QScrollBar::SliderSingleStepAdd );
             break;
         case Qt::Key_Escape:
+            emit escPressed();
             selectionClear( d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection );
             d->mousePressPos = QPoint();
             if ( d->aPrevAction )
@@ -1947,6 +1948,18 @@ void PageView::mousePressEvent( QMouseEvent * e )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
         d->annotator->routeEvent( e, pageItem );
+        return;
+    }
+
+    // trigger history navigation for additional mouse buttons
+    if ( e->button() == Qt::XButton1 )
+    {
+        emit mouseBackButtonClick();
+        return;
+    }
+    if ( e->button() == Qt::XButton2 )
+    {
+        emit mouseForwardButtonClick();
         return;
     }
 
@@ -2927,7 +2940,11 @@ void PageView::dragMoveEvent( QDragMoveEvent * ev )
 void PageView::dropEvent( QDropEvent * ev )
 {
     if (  KUrl::List::canDecode(  ev->mimeData() ) )
-        emit urlDropped( KUrl::List::fromMimeData( ev->mimeData() ).first() );
+    {
+        const KUrl::List list = KUrl::List::fromMimeData( ev->mimeData() );
+        if ( !list.isEmpty() )
+            emit urlDropped( list.first() );
+    }
 }
 
 bool PageView::viewportEvent( QEvent * e )
@@ -4111,10 +4128,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     }
                 }
             }
-        }
 
-        for( int j = 1; j <= pagesToPreload; j++ )
-        {
             // add the page before the 'visible series' in preload
             int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
@@ -4161,6 +4175,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     }
                 }
             }
+
+            // stop if we've already reached both ends of the document
+            if ( headRequest < 0 && tailRequest >= (int)d->items.count() )
+                break;
         }
     }
 

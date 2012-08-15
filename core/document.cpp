@@ -11,6 +11,7 @@
 #include "document.h"
 #include "document_p.h"
 
+#include <limits.h>
 #ifdef Q_OS_WIN
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
@@ -173,11 +174,12 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
     }
 }
 
-void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
+qulonglong DocumentPrivate::calculateMemoryToFree()
 {
     // [MEM] choose memory parameters based on configuration profile
     qulonglong clipValue = 0;
     qulonglong memoryToFree = 0;
+
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:
@@ -201,7 +203,9 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
         break;
         case Settings::EnumMemoryLevel::Greedy:
         {
-            const qulonglong memoryLimit = qMax(getFreeMemory(), getTotalMemory() / 2);
+            qulonglong freeSwap;
+            qulonglong freeMemory = getFreeMemory( &freeSwap );
+            const qulonglong memoryLimit = qMin( qMax( freeMemory, getTotalMemory()/2 ), freeMemory+freeSwap );
             if (m_allocatedPixmapsTotalMemory > memoryLimit) clipValue = (m_allocatedPixmapsTotalMemory - memoryLimit) / 2;
         }
         break;
@@ -210,39 +214,47 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
     if ( clipValue > memoryToFree )
         memoryToFree = clipValue;
 
+    return memoryToFree;
+}
+
+void DocumentPrivate::cleanupPixmapMemory()
+{
+    cleanupPixmapMemory( calculateMemoryToFree() );
+}
+
+void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
+{
     if ( memoryToFree > 0 )
     {
         // [MEM] free memory starting from older pixmaps
         int pagesFreed = 0;
-        QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmapsFifo.end();
-        QLinkedList< AllocatedPixmap * > visiblePixmaps;
-        while ( (pIt != pEnd) && (memoryToFree > 0) )
+        while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = *pIt;
-            if ( m_observers.value( p->id )->canUnloadPixmap( p->page ) )
-            {
-                // update internal variables
-                pIt = m_allocatedPixmapsFifo.erase( pIt );
-                m_allocatedPixmapsTotalMemory -= p->memory;
-                memoryToFree -= p->memory;
-                pagesFreed++;
-                // delete pixmap
-                m_pagesVector.at( p->page )->deletePixmap( p->id );
-                // delete allocation descriptor
-                delete p;
-            }
+            AllocatedPixmap * p = searchLowestPriorityUnloadablePixmap( true );
+            if ( !p ) // No pixmap to remove
+                break;
+
+            kDebug().nospace() << "Evicting cache pixmap id=" << p->id << " page=" << p->page;
+
+            // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
+            // the memory used by the AllocatedPixmap so at most it can reach zero
+            m_allocatedPixmapsTotalMemory -= p->memory;
+            // Make sure memoryToFree does not underflow
+            if ( p->memory > memoryToFree )
+                memoryToFree = 0;
             else
-            {
-                visiblePixmaps.append( p );
-                ++pIt;
-            }
+                memoryToFree -= p->memory;
+            pagesFreed++;
+            // delete pixmap
+            m_pagesVector.at( p->page )->deletePixmap( p->id );
+            // delete allocation descriptor
+            delete p;
         }
 
         // Delete hidden pages may not be enough
-        pIt = visiblePixmaps.begin();
-        pEnd = visiblePixmaps.end();
-        while ( (pIt != pEnd) && memoryToFree > 0 )
+        QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
+        QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
+        while ( pIt != pEnd && memoryToFree > 0 )
         {
             AllocatedPixmap * p = *pIt;
 
@@ -251,17 +263,51 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
             {
                 tilesManager->cleanupPixmapMemory( memoryToFree );
                 m_allocatedPixmapsTotalMemory -= p->memory;
-                memoryToFree -= p->memory;
+                int memoryDiff = -p->memory;
                 p->memory = tilesManager->totalMemory();
-                memoryToFree += p->memory;
+                memoryDiff += p->memory;
+                memoryToFree = qMax( 0, memoryDiff );
                 m_allocatedPixmapsTotalMemory += p->memory;
             }
 
             ++pIt;
         }
-
-        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmapsFifo.count() + pagesFreed, pagesFreed, m_allocatedPixmapsFifo.count() );
+        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
     }
+}
+
+/* Returns the next pixmap to evict from cache, or NULL if no suitable pixmap
+ * is found. If thenRemoveIt is set, the pixmap is removed from
+ * m_allocatedPixmaps before returning it */
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityUnloadablePixmap( bool thenRemoveIt )
+{
+    QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
+    QLinkedList< AllocatedPixmap * >::iterator farthestPixmap = pEnd;
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+
+    /* Find the pixmap that is farthest from the current viewport */
+    int maxDistance = -1;
+    while ( pIt != pEnd )
+    {
+        const AllocatedPixmap * p = *pIt;
+        const int distance = qAbs( p->page - currentViewportPage );
+        if ( maxDistance < distance && m_observers.value( p->id )->canUnloadPixmap( p->page ) )
+        {
+            maxDistance = distance;
+            farthestPixmap = pIt;
+        }
+        ++pIt;
+    }
+
+    /* No pixmap to remove */
+    if ( farthestPixmap == pEnd )
+        return 0;
+
+    AllocatedPixmap * selectedPixmap = *farthestPixmap;
+    if ( thenRemoveIt )
+        m_allocatedPixmaps.erase( farthestPixmap );
+    return selectedPixmap;
 }
 
 qulonglong DocumentPrivate::getTotalMemory()
@@ -276,10 +322,8 @@ qulonglong DocumentPrivate::getTotalMemory()
     if ( !memFile.open( QIODevice::ReadOnly ) )
         return (cachedValue = 134217728);
 
-    // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
-    // and 'Cached' fields. consider swapped memory as used memory.
     QTextStream readStream( &memFile );
-     while ( true )
+    while ( true )
     {
         QString entry = readStream.readLine();
         if ( entry.isNull() ) break;
@@ -302,13 +346,23 @@ qulonglong DocumentPrivate::getTotalMemory()
     return (cachedValue = 134217728);
 }
 
-qulonglong DocumentPrivate::getFreeMemory()
+qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 {
     static QTime lastUpdate = QTime::currentTime().addSecs(-3);
     static qulonglong cachedValue = 0;
+    static qulonglong cachedFreeSwap = 0;
 
     if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
+    {
+        if (freeSwap)
+            *freeSwap = cachedFreeSwap;
         return cachedValue;
+    }
+
+    /* Initialize the returned free swap value to 0. It is overwritten if the
+     * actual value is available */
+    if (freeSwap)
+        *freeSwap = 0;
 
 #if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return MEMORY FULL
@@ -321,22 +375,46 @@ qulonglong DocumentPrivate::getFreeMemory()
     qulonglong memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
+    static const int nElems = 5;
+    QString names[nElems] = { "MemFree:", "Buffers:", "Cached:", "SwapFree:", "SwapTotal:" };
+    qulonglong values[nElems] = { 0, 0, 0, 0, 0 };
+    bool foundValues[nElems] = { false, false, false, false, false };
     while ( true )
     {
         entry = readStream.readLine();
         if ( entry.isNull() ) break;
-        if ( entry.startsWith( "MemFree:" ) ||
-                entry.startsWith( "Buffers:" ) ||
-                entry.startsWith( "Cached:" ) ||
-                entry.startsWith( "SwapFree:" ) )
-            memoryFree += entry.section( ' ', -2, -2 ).toULongLong();
-        if ( entry.startsWith( "SwapTotal:" ) )
-            memoryFree -= entry.section( ' ', -2, -2 ).toULongLong();
+        for ( int i = 0; i < nElems; ++i )
+        {
+            if ( entry.startsWith( names[i] ) )
+            {
+                values[i] = entry.section( ' ', -2, -2 ).toULongLong( &foundValues[i] );
+            }
+        }
     }
     memFile.close();
+    bool found = true;
+    for ( int i = 0; found && i < nElems; ++i )
+        found = found && foundValues[i];
+    if ( found )
+    {
+        /* MemFree + Buffers + Cached - SwapUsed =
+         * = MemFree + Buffers + Cached - (SwapTotal - SwapFree) =
+         * = MemFree + Buffers + Cached + SwapFree - SwapTotal */
+        memoryFree = values[0] + values[1] + values[2] + values[3];
+        if ( values[4] > memoryFree )
+            memoryFree = 0;
+        else
+            memoryFree -= values[4];
+    }
+    else
+    {
+        return 0;
+    }
 
     lastUpdate = QTime::currentTime();
 
+    if (freeSwap)
+        *freeSwap = ( cachedFreeSwap = (Q_UINT64_C(1024) * values[3]) );
     return ( cachedValue = (Q_UINT64_C(1024) * memoryFree) );
 #elif defined(Q_OS_FREEBSD)
     qulonglong cache, inact, free, psize;
@@ -365,6 +443,8 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     lastUpdate = QTime::currentTime();
 
+    if (freeSwap)
+        *freeSwap = ( cachedFreeSwap = stat.ullAvailPageFile );
     return ( cachedValue = stat.ullAvailPhys );
 #else
     // tell the memory is full.. will act as in LOW profile
@@ -804,15 +884,16 @@ void DocumentPrivate::warnLimitedAnnotSupport()
         return;
     m_showWarningLimitedAnnotSupport = false; // Show the warning once
 
-    if ( canAddAnnotationsNatively() )
+    if ( m_annotationsNeedSaveAs )
     {
-        // Show only if there are external annotations (we follow the usual XML path otherwise)
-        if ( m_containsExternalAnnotations )
-            KMessageBox::sorry( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed") );
+        // Shown if the user is editing annotations in a file whose metadata is
+        // not stored locally (.okular archives belong to this category)
+        KMessageBox::information( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
     }
-    else
+    else if ( !canAddAnnotationsNatively() )
     {
-        KMessageBox::information( m_parent->widget(), i18n("You can save the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
+        // If the generator doesn't support native annotations
+        KMessageBox::information( m_parent->widget(), i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
     }
 }
 
@@ -837,8 +918,14 @@ void DocumentPrivate::saveDocumentInfo() const
         QDomElement pageList = doc.createElement( "pageList" );
         root.appendChild( pageList );
         PageItems saveWhat = AllPageItems;
-        if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
-            saveWhat &= ~AnnotationPageItems; // Don't save local annotations in this case
+        if ( m_annotationsNeedSaveAs )
+        {
+            /* In this case, if the user makes a modification, he's requested to
+             * save to a new document. Therefore, if there are existing local
+             * annotations, we save them back unmodified in the original
+             * document's metadata, so that it appears that it was not changed */
+            saveWhat |= OriginalAnnotationPageItems;
+        }
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for ( ; pIt != pEnd; ++pIt )
@@ -909,6 +996,20 @@ void DocumentPrivate::slotTimedMemoryCheck()
 
 void DocumentPrivate::sendGeneratorRequest()
 {
+    /* If the pixmap cache will have to be cleaned in order to make room for the
+     * next request, get the distance from the current viewport of the page
+     * whose pixmap will be removed. We will ignore preload requests for pages
+     * that are at the same distance or farther */
+    const qulonglong memoryToFree = calculateMemoryToFree();
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+    int maxDistance = INT_MAX; // Default: No maximum
+    if ( memoryToFree )
+    {
+        AllocatedPixmap *pixmapToReplace = searchLowestPriorityUnloadablePixmap();
+        if ( pixmapToReplace )
+            maxDistance = qAbs( pixmapToReplace->page - currentViewportPage );
+    }
+
     // find a request
     PixmapRequest * request = 0;
     m_pixmapRequestsMutex.lock();
@@ -927,6 +1028,12 @@ void DocumentPrivate::sendGeneratorRequest()
         else if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), visibleRect ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
         {
             m_pixmapRequestsStack.pop_back();
+            delete r;
+        }
+        else if ( !r->d->mForce && r->d->isPreload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
+        {
+            m_pixmapRequestsStack.pop_back();
+            //kDebug() << "Ignoring request that doesn't fit in cache";
             delete r;
         }
         else if ( !tilesManager && r->id() == PAGEVIEW_ID && (long)r->width() * (long)r->height() > 8000000L )
@@ -979,7 +1086,9 @@ void DocumentPrivate::sendGeneratorRequest()
             delete r;
         }
         else
+        {
             request = r;
+        }
     }
 
     // if no request found (or already generated), return
@@ -998,7 +1107,7 @@ void DocumentPrivate::sendGeneratorRequest()
         pixmapBytes = 4 * request->width() * request->height();
 
     if ( pixmapBytes > (1024 * 1024) )
-        cleanupPixmapMemory( pixmapBytes );
+        cleanupPixmapMemory( memoryToFree /* previously calculated value */ );
 
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
@@ -1084,11 +1193,8 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        m_allocatedPixmapsFifo.clear();
+        qDeleteAll( m_allocatedPixmaps );
+        m_allocatedPixmaps.clear();
         m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -1097,7 +1203,7 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !m_allocatedPixmapsFifo.isEmpty() && !m_pagesVector.isEmpty() )
+         !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
 }
 
@@ -1754,24 +1860,32 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
-    d->m_containsExternalAnnotations = false;
-    d->m_showWarningLimitedAnnotSupport = true;
+
+    bool containsExternalAnnotations = false;
     foreach ( Page * p, d->m_pagesVector )
     {
         p->d->m_doc = d;
         if ( !p->annotations().empty() )
-            d->m_containsExternalAnnotations = true;
+            containsExternalAnnotations = true;
     }
+
+    // Be quiet while restoring local annotations
+    d->m_showWarningLimitedAnnotSupport = false;
+    d->m_annotationsNeedSaveAs = false;
 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
         d->loadDocumentInfo( d->m_archiveData->metadataFileName );
+        d->m_annotationsNeedSaveAs = true;
     }
     else
     {
         d->loadDocumentInfo();
+        d->m_annotationsNeedSaveAs = ( d->canAddAnnotationsNatively() && containsExternalAnnotations );
     }
+
+    d->m_showWarningLimitedAnnotSupport = true;
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
@@ -1939,11 +2053,8 @@ void Document::closeDocument()
     d->m_pagesVector.clear();
 
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
 
     // clear 'running searches' descriptors
     QMap< int, RunningSearch * >::const_iterator rIt = d->m_searches.constBegin();
@@ -2001,14 +2112,14 @@ void Document::removeObserver( DocumentObserver * pObserver )
             (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmaps.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmaps.end();
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
             if ( p->id == observerId )
             {
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
+                aIt = d->m_allocatedPixmaps.erase( aIt );
                 delete p;
             }
             else
@@ -2039,11 +2150,8 @@ void Document::reparseConfig()
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        d->m_allocatedPixmapsFifo.clear();
+        qDeleteAll( d->m_allocatedPixmaps );
+        d->m_allocatedPixmaps.clear();
         d->m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -2052,7 +2160,7 @@ void Document::reparseConfig()
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !d->m_allocatedPixmapsFifo.isEmpty() && !d->m_pagesVector.isEmpty() )
+         !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty() )
         d->cleanupPixmapMemory();
 }
 
@@ -2437,8 +2545,8 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
 {
     int flags = DocumentObserver::Annotations;
 
-    if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
-        flags |= DocumentObserver::NeedSaveAs; // Annotations are not saved locally in this case
+    if ( m_annotationsNeedSaveAs )
+        flags |= DocumentObserver::NeedSaveAs;
 
     foreachObserverD( notifyPageChanged( page, flags ) );
 }
@@ -2775,27 +2883,6 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     for ( ; it != end ; ++ it )
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
-
-    // [MEM] raise position of currently viewed page in allocation queue
-    if ( d->m_allocatedPixmapsFifo.count() > 1 )
-    {
-        const int page = viewport.pageNumber;
-        QLinkedList< AllocatedPixmap * > viewportPixmaps;
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
-        while ( aIt != aEnd )
-        {
-            if ( (*aIt)->page == page )
-            {
-                viewportPixmaps.append( *aIt );
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
-                continue;
-            }
-            ++aIt;
-        }
-        if ( !viewportPixmaps.isEmpty() )
-            d->m_allocatedPixmapsFifo += viewportPixmaps;
-    }
 }
 
 void Document::setZoom(int factor, int excludeId)
@@ -3540,6 +3627,23 @@ bool Document::canSaveChanges() const
     return saveIface->supportsOption( SaveInterface::SaveChanges );
 }
 
+bool Document::canSaveChanges( SaveCapability cap ) const
+{
+    switch ( cap )
+    {
+        case SaveFormsCapability:
+            /* Assume that if the generator supports saving, forms can be saved.
+             * We have no means to actually query the generator at the moment
+             * TODO: Add some method to query the generator in SaveInterface */
+            return canSaveChanges();
+
+        case SaveAnnotationsCapability:
+            return d->canAddAnnotationsNatively();
+    }
+
+    return false;
+}
+
 bool Document::saveChanges( const QString &fileName )
 {
     QString errorText;
@@ -3686,6 +3790,7 @@ bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
 
     const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
     d->m_archiveData = archiveData.get();
+    d->m_archivedFileName = documentFileName;
     bool ret = openDocument( tempFileName, url, docMime );
 
     if ( ret )
@@ -3705,7 +3810,9 @@ bool Document::saveDocumentArchive( const QString &fileName )
     if ( !d->m_generator )
         return false;
 
-    QString docFileName = d->m_url.fileName();
+    /* If we opened an archive, use the name of original file (eg foo.pdf)
+     * instead of the archive's one (eg foo.okular) */
+    QString docFileName = d->m_archiveData ? d->m_archivedFileName : d->m_url.fileName();
     if ( docFileName == QLatin1String( "-" ) )
         return false;
 
@@ -3834,13 +3941,13 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
         {
             AllocatedPixmap * p = *aIt;
-            m_allocatedPixmapsFifo.erase( aIt );
+            m_allocatedPixmaps.erase( aIt );
             m_allocatedPixmapsTotalMemory -= p->memory;
             delete p;
             break;
@@ -3858,7 +3965,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
             memoryBytes = 4 * req->width() * req->height();
 
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
-        m_allocatedPixmapsFifo.append( memoryPage );
+        m_allocatedPixmaps.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
@@ -3993,11 +4100,8 @@ void Document::setPageSize( const PageSize &size )
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->d->changeSize( size );
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
     d->m_allocatedPixmapsTotalMemory = 0;
     // notify the generator that the current page size has changed
     d->m_generator->pageSizeChanged( size, d->m_pageSize );
@@ -4118,6 +4222,25 @@ bool DocumentViewport::operator==( const DocumentViewport & vp ) const
          ( autoFit.height != vp.autoFit.height )) )
         return false;
     return true;
+}
+
+bool DocumentViewport::operator<( const DocumentViewport & vp ) const
+{
+    // TODO: Check autoFit and Position
+
+    if ( pageNumber != vp.pageNumber )
+        return pageNumber < vp.pageNumber;
+
+    if ( !rePos.enabled && vp.rePos.enabled )
+        return true;
+
+    if ( !vp.rePos.enabled )
+        return false;
+
+    if ( rePos.normalizedY != vp.rePos.normalizedY )
+        return rePos.normalizedY < vp.rePos.normalizedY;
+
+    return rePos.normalizedX < vp.rePos.normalizedX;
 }
 
 

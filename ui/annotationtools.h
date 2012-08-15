@@ -12,6 +12,7 @@
 
 #include <qdom.h>
 #include <qlinkedlist.h>
+#include <qpen.h>
 #include <qrect.h>
 
 #include "core/area.h"
@@ -64,6 +65,17 @@ class AnnotatorEngine
         PageViewItem * m_item;
 };
 
+class SmoothPath
+{
+    public:
+        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen );
+        void paint( QPainter * painter, double xScale, double yScale ) const;
+
+    private:
+        const QLinkedList<Okular::NormalizedPoint> points;
+        const QPen pen;
+};
+
 /** @short SmoothPathEngine */
 class SmoothPathEngine
     : public AnnotatorEngine
@@ -75,7 +87,9 @@ class SmoothPathEngine
 
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ );
 
+        // These are two alternative ways to get the resulting path. Don't call them both!
         QList< Okular::Annotation* > end();
+        SmoothPath endSmoothPath();
 
     private:
         // data

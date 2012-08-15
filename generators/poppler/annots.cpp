@@ -350,12 +350,16 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
     }
     if ( annotation )
     {
+        // the Contents field might have lines separated by \r
+        QString contents = ann->contents();
+        contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
+
         annotation->setAuthor( ann->author() );
-        annotation->setContents( ann->contents() );
+        annotation->setContents( contents );
         annotation->setUniqueName( ann->uniqueName() );
         annotation->setModificationDate( ann->modificationDate() );
         annotation->setCreationDate( ann->creationDate() );
-        annotation->setFlags( ann->flags() );
+        annotation->setFlags( ann->flags() | Okular::Annotation::External );
         annotation->setBoundingRectangle( Okular::NormalizedRect::fromQRectF( ann->boundary() ) );
 
         if (externallyDrawn)
@@ -375,6 +379,27 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
                 t = it->point( 2 );
                 it->setPoint( it->point(1), 2 );
                 it->setPoint( t, 1 );
+            }
+        }
+
+        if ( annotation->subType() == Okular::Annotation::AText )
+        {
+            Okular::TextAnnotation * txtann = static_cast<Okular::TextAnnotation*>( annotation );
+
+            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+            {
+#ifndef HAVE_POPPLER_0_20
+                // Poppler before 0.20 returns the inplaceText in contents
+                txtann->setInplaceText( txtann->contents() );
+#endif
+            }
+            else if ( txtann->textType() == Okular::TextAnnotation::Linked )
+            {
+                Poppler::TextAnnotation * ppl_txtann = static_cast<Poppler::TextAnnotation*>( ann );
+
+                // Poppler and Okular assume a different default icon name in XML
+                // We re-read it via getter, which always tells the right one
+                txtann->setTextIcon( ppl_txtann->textIcon() );
             }
         }
 

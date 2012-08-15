@@ -73,29 +73,12 @@ static inline bool documentViewportFuzzyCompare( const DocumentViewport &vp1, co
     return true;
 }
 
-static inline bool documentViewportLessThan( const DocumentViewport &vp1, const DocumentViewport &vp2 )
-{
-    if ( vp1.pageNumber != vp2.pageNumber )
-        return vp1.pageNumber < vp2.pageNumber;
-
-    if ( !vp1.rePos.enabled && vp2.rePos.enabled )
-        return true;
-
-    if ( !vp2.rePos.enabled )
-        return false;
-
-    if ( vp1.rePos.normalizedY != vp2.rePos.normalizedY )
-        return vp1.rePos.normalizedY < vp2.rePos.normalizedY;
-
-    return vp1.rePos.normalizedX < vp2.rePos.normalizedX;
-}
-
 static inline bool bookmarkLessThan( const KBookmark &b1, const KBookmark &b2 )
 {
     DocumentViewport vp1( b1.url().htmlRef() );
     DocumentViewport vp2( b2.url().htmlRef() );
 
-    return documentViewportLessThan( vp1, vp2 );
+    return vp1 < vp2;
 }
 
 static inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
@@ -103,7 +86,7 @@ static inline bool okularBookmarkActionLessThan( QAction * a1, QAction * a2 )
     DocumentViewport vp1( static_cast< OkularBookmarkAction * >( a1 )->htmlRef() );
     DocumentViewport vp2( static_cast< OkularBookmarkAction * >( a2 )->htmlRef() );
 
-    return documentViewportLessThan( vp1, vp2 );
+    return vp1 < vp2;
 }
 
 class BookmarkManager::Private : public KBookmarkOwner
@@ -724,7 +707,7 @@ KBookmark BookmarkManager::nextBookmark( const DocumentViewport &viewport) const
     foreach ( const KBookmark &bm, bmarks )
     {
         DocumentViewport vp( bm.url().htmlRef() );
-        if ( documentViewportLessThan( viewport, vp ) )
+        if ( viewport < vp )
         {
             bookmark = bm;
             break;
@@ -744,7 +727,7 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
     {
         KBookmark bm = *(it-1);
         DocumentViewport vp( bm.url().htmlRef() );
-        if ( documentViewportLessThan( vp, viewport ) )
+        if ( vp < viewport )
         {
             bookmark = bm;
             break;

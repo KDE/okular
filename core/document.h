@@ -562,8 +562,32 @@ class OKULAR_EXPORT Document : public QObject
         const KComponentData* componentData() const;
 
         /**
+         * Saving capabilities. Their availability varies according to the
+         * underlying generator and/or the document type.
+         *
+         * @see canSaveChanges (SaveCapability)
+         * @since 0.15 (KDE 4.9)
+         */
+        enum SaveCapability
+        {
+            SaveFormsCapability = 1,       ///< Can save form changes
+            SaveAnnotationsCapability = 2  ///< Can save annotation changes
+        };
+
+        /**
+         * Returns whether it's possible to save a given category of changes to
+         * another document.
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        bool canSaveChanges( SaveCapability cap ) const;
+
+        /**
          * Returns whether the changes to the document (modified annotations,
          * values in form fields, etc) can be saved to another document.
+         *
+         * Equivalent to the logical OR of canSaveChanges(SaveCapability) for
+         * each capability.
          *
          * @since 0.7 (KDE 4.1)
          */
@@ -837,6 +861,7 @@ class OKULAR_EXPORT DocumentViewport
          * @internal
          */
         bool operator==( const DocumentViewport &other ) const;
+        bool operator<( const DocumentViewport &other ) const;
 
         /**
          * The number of the page nearest the center of the viewport.

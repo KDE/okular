@@ -25,7 +25,7 @@
 
 
 TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double slant)
-  : TeXFont(parent)
+  : TeXFont(parent), face(0)
 {
 #ifdef DEBUG_PFB
   if (enc != 0)

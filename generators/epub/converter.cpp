@@ -188,7 +188,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         if (mSectionMap.contains(link)) {
           block = mSectionMap.value(link);
         } else { // load missing resource
-          char *data;
+          char *data = 0;
           int size = epub_get_data(mTextDocument->getEpub(), clink, &data);
           if (data) {
             _cursor->insertBlock();

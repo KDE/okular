@@ -345,7 +345,10 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
 
         long pixels = tile->pixmap->width()*tile->pixmap->height();
         d->totalPixels -= pixels;
-        numberOfBytes -= 4*pixels;
+        if ( numberOfBytes < 4*pixels )
+            numberOfBytes = 0;
+        else
+            numberOfBytes -= 4*pixels;
 
         tile->miss = 0;
         delete tile->pixmap;

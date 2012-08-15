@@ -20,9 +20,9 @@
 
 Q_DECLARE_METATYPE( AnnotationPopup::AnnotPagePair )
 
-AnnotationPopup::AnnotationPopup( Okular::Document *document,
+AnnotationPopup::AnnotationPopup( Okular::Document *document, MenuMode mode,
                                   QWidget *parent )
-    : mParent( parent ), mDocument( document )
+    : mParent( parent ), mDocument( document ), mMenuMode( mode )
 {
 }
 
@@ -47,35 +47,79 @@ void AnnotationPopup::exec( const QPoint &point )
 
     const QString openId = QString::fromLatin1( "open" );
     const QString deleteId = QString::fromLatin1( "delete" );
+    const QString deleteAllId = QString::fromLatin1( "deleteAll" );
     const QString propertiesId = QString::fromLatin1( "properties" );
     const QString saveId = QString::fromLatin1( "save" );
 
-    foreach ( const AnnotPagePair& pair, mAnnotations )
+    if ( mMenuMode == SingleAnnotationMode )
     {
-        menu.addTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
+        const bool onlyOne = (mAnnotations.count() == 1);
+
+        const AnnotPagePair &pair = mAnnotations.at(0);
+
+        menu.addTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
 
         action = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
         action->setData( QVariant::fromValue( pair ) );
+        action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, openId );
 
         action = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
-        action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) &&
-                            mDocument->canRemovePageAnnotation( pair.annotation ) );
-        action->setData( QVariant::fromValue( pair ) );
-        action->setProperty( actionTypeId, deleteId );
+        action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
+        action->setProperty( actionTypeId, deleteAllId );
+
+        foreach ( const AnnotPagePair& pair, mAnnotations )
+        {
+            if ( !mDocument->canRemovePageAnnotation( pair.annotation ) )
+                action->setEnabled( false );
+        }
 
         action = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
         action->setData( QVariant::fromValue( pair ) );
+        action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, propertiesId );
 
-        if ( pair.annotation->subType() == Okular::Annotation::AFileAttachment )
+        if ( onlyOne && pair.annotation->subType() == Okular::Annotation::AFileAttachment )
         {
+            menu.addSeparator();
             fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( pair.annotation );
             const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
 
             action = menu.addAction( KIcon( "document-save" ), saveText );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, saveId );
+        }
+    }
+    else
+    {
+        foreach ( const AnnotPagePair& pair, mAnnotations )
+        {
+            menu.addTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
+
+            action = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
+            action->setData( QVariant::fromValue( pair ) );
+            action->setProperty( actionTypeId, openId );
+
+            action = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
+            action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) &&
+                                mDocument->canRemovePageAnnotation( pair.annotation ) );
+            action->setData( QVariant::fromValue( pair ) );
+            action->setProperty( actionTypeId, deleteId );
+
+            action = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
+            action->setData( QVariant::fromValue( pair ) );
+            action->setProperty( actionTypeId, propertiesId );
+
+            if ( pair.annotation->subType() == Okular::Annotation::AFileAttachment )
+            {
+                menu.addSeparator();
+                fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( pair.annotation );
+                const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
+
+                action = menu.addAction( KIcon( "document-save" ), saveText );
+                action->setData( QVariant::fromValue( pair ) );
+                action->setProperty( actionTypeId, saveId );
+            }
         }
     }
 
@@ -91,6 +135,12 @@ void AnnotationPopup::exec( const QPoint &point )
         } else if( actionType == deleteId ) {
             if ( pair.pageNumber != -1 )
                 mDocument->removePageAnnotation( pair.pageNumber, pair.annotation );
+        } else if( actionType == deleteAllId ) {
+            Q_FOREACH ( const AnnotPagePair& pair, mAnnotations )
+            {
+                if ( pair.pageNumber != -1 )
+                    mDocument->removePageAnnotation( pair.pageNumber, pair.annotation );
+            }
         } else if( actionType == propertiesId ) {
             if ( pair.pageNumber != -1 ) {
                 AnnotsPropertiesDialog propdialog( mParent, mDocument, pair.pageNumber, pair.annotation );

@@ -2020,7 +2020,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
                     if ( !orects.isEmpty() )
                     {
-                        AnnotationPopup popup( d->document, this );
+                        AnnotationPopup popup( d->document, AnnotationPopup::MultiAnnotationMode, this );
 
                         foreach ( const Okular::ObjectRect * orect, orects )
                         {

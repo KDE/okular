@@ -25,8 +25,16 @@ class AnnotationPopup : public QObject
     Q_OBJECT
 
     public:
-        explicit AnnotationPopup( Okular::Document *document,
-                                  QWidget *parent = 0 );
+        /**
+         * Describes the structure of the popup menu.
+         */
+        enum MenuMode
+        {
+            SingleAnnotationMode, ///< The menu shows only entries to manipulate a single annotation, or multiple annotations as a group.
+            MultiAnnotationMode   ///< The menu shows entries to manipulate multiple annotations.
+        };
+
+        AnnotationPopup( Okular::Document *document, MenuMode mode, QWidget *parent = 0 );
 
         void addAnnotation( Okular::Annotation* annotation, int pageNumber );
 
@@ -58,6 +66,7 @@ class AnnotationPopup : public QObject
 
         QList< AnnotPagePair > mAnnotations;
         Okular::Document *mDocument;
+        MenuMode mMenuMode;
 };
 
 

@@ -310,11 +310,12 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     d->delayedRequestVisiblePixmaps( 200 );
 }
 
-void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
+void ThumbnailList::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
+    Q_UNUSED( previousPage )
+
     // skip notifies for the current page (already selected)
-    const int newPage = d->m_document->viewport().pageNumber;
-    if ( d->m_selected && d->m_selected->pageNumber() == newPage )
+    if ( d->m_selected && d->m_selected->pageNumber() == currentPage )
         return;
 
     // deselect previous thumbnail
@@ -327,7 +328,7 @@ void ThumbnailList::notifyViewportChanged( bool /*smoothMove*/ )
     QVector<ThumbnailWidget *>::const_iterator tIt = d->m_thumbnails.constBegin(), tEnd = d->m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
     {
-        if ( (*tIt)->pageNumber() == newPage )
+        if ( (*tIt)->pageNumber() == currentPage )
         {
             d->m_selected = *tIt;
             d->m_selected->setSelected( true );

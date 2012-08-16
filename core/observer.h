@@ -130,6 +130,16 @@ class OKULAR_EXPORT DocumentObserver
          */
         virtual bool canUnloadPixmap( int page ) const;
 
+        /**
+         * This method is called after the current page of the document has been entered.
+         *
+         * @param previous The number of the previous page (is @c -1 for the initial page change).
+         * @param current The number of the current page.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        virtual void notifyCurrentPageChanged( int previous, int current );
+
     private:
         class Private;
         const Private* d;

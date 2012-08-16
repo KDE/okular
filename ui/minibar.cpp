@@ -42,7 +42,6 @@ class HoverButton : public QToolButton
 MiniBarLogic::MiniBarLogic( QObject * parent, Okular::Document * document )
  : QObject(parent)
  , m_document( document )
- , m_currentPage( -1 )
 {
 }   
 
@@ -68,7 +67,7 @@ Okular::Document *MiniBarLogic::document() const
 
 int MiniBarLogic::currentPage() const
 {
-    return m_currentPage;
+    return m_document->currentPage();
 }
 
 void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
@@ -81,7 +80,6 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
     const int pages = pageVector.count();
     if ( pages < 1 )
     {
-        m_currentPage = -1;
         foreach ( MiniBar *miniBar, m_miniBars )
         {
             miniBar->setEnabled( false );
@@ -124,24 +122,24 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
     }
 }
 
-void MiniBarLogic::notifyViewportChanged( bool /*smoothMove*/ )
+void MiniBarLogic::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
+    Q_UNUSED( previousPage )
+
     // get current page number
-    const int page = m_document->viewport().pageNumber;
     const int pages = m_document->pages();
 
     // if the document is opened and page is changed
-    if ( page != m_currentPage && pages > 0 )
+    if ( pages > 0 )
     {
-        m_currentPage = page;
-        const QString pageNumber = QString::number( page + 1 );
-        const QString pageLabel = m_document->page(page)->label();
-        
+        const QString pageNumber = QString::number( currentPage + 1 );
+        const QString pageLabel = m_document->page( currentPage )->label();
+
         foreach ( MiniBar *miniBar, m_miniBars )
         {
             // update prev/next button state
-            miniBar->m_prevButton->setEnabled( page > 0 );
-            miniBar->m_nextButton->setEnabled( page < ( pages - 1 ) );
+            miniBar->m_prevButton->setEnabled( currentPage > 0 );
+            miniBar->m_nextButton->setEnabled( currentPage < ( pages - 1 ) );
             // update text on widgets
             miniBar->m_pageNumberEdit->setText( pageNumber );
             miniBar->m_pageNumberLabel->setText( pageNumber );
@@ -292,7 +290,7 @@ void MiniBar::resizeForPage( int pages )
 
 ProgressWidget::ProgressWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ),
-    m_currentPage( -1 ), m_progressPercentage( -1 )
+    m_progressPercentage( -1 )
 {
     setObjectName( QLatin1String( "progress" ) );
     setAttribute( Qt::WA_OpaquePaintEvent, true );
@@ -305,18 +303,18 @@ ProgressWidget::~ProgressWidget()
     m_document->removeObserver( this );
 }
 
-void ProgressWidget::notifyViewportChanged( bool /*smoothMove*/ )
+void ProgressWidget::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
+    Q_UNUSED( previousPage )
+
     // get current page number
-    int page = m_document->viewport().pageNumber;
     int pages = m_document->pages();
 
     // if the document is opened and page is changed
-    if ( page != m_currentPage && pages > 0 )
+    if ( pages > 0 )
     {
         // update percentage
-        m_currentPage = page;
-        float percentage = pages < 2 ? 1.0 : (float)page / (float)(pages - 1);
+        const float percentage = pages < 2 ? 1.0 : (float)currentPage / (float)(pages - 1);
         setProgress( percentage );
     }
 }
@@ -332,7 +330,7 @@ void ProgressWidget::slotGotoNormalizedPage( float index )
     // figure out page number and go to that page
     int number = (int)( index * (float)m_document->pages() );
     if ( number >= 0 && number < (int)m_document->pages() &&
-         number != m_currentPage )
+         number != (int)m_document->currentPage() )
         m_document->setViewportPage( number );
 }
 

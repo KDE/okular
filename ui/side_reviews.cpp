@@ -158,9 +158,11 @@ Reviews::~Reviews()
 }
 
 //BEGIN DocumentObserver Notifies 
-void Reviews::notifyViewportChanged( bool )
+void Reviews::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
-    m_filterProxy->setCurrentPage( m_document->currentPage() );
+    Q_UNUSED( previousPage )
+
+    m_filterProxy->setCurrentPage( currentPage );
 }
 //END DocumentObserver Notifies 
 

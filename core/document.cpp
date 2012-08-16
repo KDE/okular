@@ -2788,6 +2788,8 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     //if ( viewport == oldViewport )
     //    kDebug(OkularDebug) << "setViewport with the same viewport.";
 
+    const int oldPageNumber = oldViewport.pageNumber;
+
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
     {
@@ -2807,11 +2809,20 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
         d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), viewport );
     }
 
+    const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
+
+    const bool currentPageChanged = (oldPageNumber != currentViewportPage);
+
     // notify change to all other (different from id) observers
     QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
     for ( ; it != end ; ++ it )
+    {
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
+
+        if ( currentPageChanged )
+            (*it)->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
+    }
 }
 
 void Document::setZoom(int factor, int excludeId)

@@ -53,6 +53,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber ) const;
+        void notifyCurrentPageChanged( int previous, int current );
 
     public slots:
         void slotFind();
@@ -133,6 +134,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
+        bool m_showSummaryView;
 
     private slots:
         void slotNextPage();

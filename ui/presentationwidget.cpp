@@ -132,7 +132,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false )
+    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
+    m_showSummaryView( Okular::Settings::slidesShowSummary() )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -342,10 +343,6 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
 
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
-    // discard notifications if displaying the summary
-    if ( m_frameIndex == -1 && Okular::Settings::slidesShowSummary() )
-        return;
-
     // display the current page
     changePage( m_document->viewport().pageNumber );
 
@@ -362,6 +359,64 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
     // check if it's the last requested pixmap. if so update the widget.
     if ( (changedFlags & ( DocumentObserver::Pixmap | DocumentObserver::Annotations | DocumentObserver::Highlights ) ) && pageNumber == m_frameIndex )
         generatePage( changedFlags & ( DocumentObserver::Annotations | DocumentObserver::Highlights ) );
+}
+
+void PresentationWidget::notifyCurrentPageChanged( int previousPage, int currentPage )
+{
+    if ( previousPage != -1 )
+    {
+        // remove the drawings on the old page before switching
+        clearDrawings();
+
+        // stop video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ previousPage ]->videoWidgets )
+        {
+            vw->stop();
+            vw->pageLeft();
+        }
+
+        // stop audio playback, if any
+        Okular::AudioPlayer::instance()->stopPlaybacks();
+
+        // perform the page closing action, if any
+        if ( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) )
+            m_document->processAction( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) );
+    }
+
+    if ( currentPage != -1 )
+    {
+        m_frameIndex = currentPage;
+
+        // check if pixmap exists or else request it
+        PresentationFrame * frame = m_frames[ m_frameIndex ];
+        int pixW = frame->geometry.width();
+        int pixH = frame->geometry.height();
+
+        bool signalsBlocked = m_pagesEdit->signalsBlocked();
+        m_pagesEdit->blockSignals( true );
+        m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
+        m_pagesEdit->blockSignals( signalsBlocked );
+
+        // if pixmap not inside the Okular::Page we request it and wait for
+        // notifyPixmapChanged call or else we can proceed to pixmap generation
+        if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+        {
+            requestPixmaps();
+        }
+        else
+        {
+            // make the background pixmap
+            generatePage();
+        }
+
+        // perform the page opening action, if any
+        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
+            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
+        // start autoplay video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+            vw->pageEntered();
+    }
 }
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
@@ -796,63 +851,20 @@ void PresentationWidget::overlayClick( const QPoint & position )
 
 void PresentationWidget::changePage( int newPage )
 {
+    if ( m_showSummaryView ) {
+        m_showSummaryView = false;
+        m_frameIndex = -1;
+        return;
+    }
+
     if ( m_frameIndex == newPage )
         return;
 
-    // prepare to leave the current page
-    if ( m_frameIndex != -1 )
-    {
-        // remove the drawings on the old page before switching
-        clearDrawings();
-
-        // stop video playback
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        {
-            vw->stop();
-            vw->pageLeft();
-        }
-
-        // stop audio playback, if any
-        Okular::AudioPlayer::instance()->stopPlaybacks();
-
-        // perform the page closing action, if any
-        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) )
-            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) );
-    }
-
     // switch to newPage
-    m_frameIndex = newPage;
-    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+    m_document->setViewportPage( newPage, PRESENTATION_ID );
 
-    // check if pixmap exists or else request it
-    PresentationFrame * frame = m_frames[ m_frameIndex ];
-    int pixW = frame->geometry.width();
-    int pixH = frame->geometry.height();
-
-    bool signalsBlocked = m_pagesEdit->signalsBlocked();
-    m_pagesEdit->blockSignals( true );
-    m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
-    m_pagesEdit->blockSignals( signalsBlocked );
-
-    // if pixmap not inside the Okular::Page we request it and wait for
-    // notifyPixmapChanged call or else we can proceed to pixmap generation
-    if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-    {
-        requestPixmaps();
-    }
-    else
-    {
-        // make the background pixmap
-        generatePage();
-    }
-
-    // perform the page opening action, if any
-    if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
-        m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-    // start autoplay video playback
-    Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        vw->pageEntered();
+    if ( (Okular::Settings::slidesShowSummary() && !m_showSummaryView) || m_frameIndex == -1 )
+        notifyCurrentPageChanged( -1, newPage );
 }
 
 void PresentationWidget::generatePage( bool disableTransition )

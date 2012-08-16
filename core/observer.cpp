@@ -48,3 +48,7 @@ bool DocumentObserver::canUnloadPixmap( int ) const
 {
     return true;
 }
+
+void DocumentObserver::notifyCurrentPageChanged( int, int )
+{
+}

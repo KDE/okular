@@ -34,11 +34,10 @@ class PageSizeLabel : public QLabel, public Okular::DocumentObserver
         // [INHERITED] from DocumentObserver
         uint observerId() const { return PAGESIZELABEL_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
 
     private:
         Okular::Document * m_document;
-        int m_currentPage;
         QWidget *m_antiWidget;
 };
 

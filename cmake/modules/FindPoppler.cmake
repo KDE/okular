@@ -99,11 +99,15 @@ int main()
 
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
+#include <poppler-annotation.h>
 
 int main()
 {
   Poppler::MovieObject *movie = 0;
   movie->showPosterImage();
+
+  const Poppler::Annotation::AdditionalActionType type = Poppler::Annotation::PageOpeningAction;
+
   return 0;
 }
 " HAVE_POPPLER_0_22)

@@ -945,6 +945,23 @@ void PDFGenerator::resolveMovieLinkReferences( Okular::Page *page )
     resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Opening ) ), page );
     resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Closing ) ), page );
 
+    foreach ( Okular::Annotation *annotation, page->annotations() )
+    {
+        if ( annotation->subType() == Okular::Annotation::AScreen )
+        {
+            Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation*>( annotation );
+            resolveMovieLinkReference( screenAnnotation->additionalAction( Okular::Annotation::PageOpening ), page );
+            resolveMovieLinkReference( screenAnnotation->additionalAction( Okular::Annotation::PageClosing ), page );
+        }
+
+        if ( annotation->subType() == Okular::Annotation::AWidget )
+        {
+            Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( annotation );
+            resolveMovieLinkReference( widgetAnnotation->additionalAction( Okular::Annotation::PageOpening ), page );
+            resolveMovieLinkReference( widgetAnnotation->additionalAction( Okular::Annotation::PageClosing ), page );
+        }
+    }
+
     foreach ( Okular::FormField *field, page->formFields() )
         resolveMovieLinkReference( field->activationAction(), page );
 }
@@ -1375,6 +1392,36 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
         if (newann)
         {
             page->addAnnotation(newann);
+
+#ifdef HAVE_POPPLER_0_22
+            if ( a->subType() == Poppler::Annotation::AScreen )
+            {
+                Poppler::ScreenAnnotation *annotScreen = static_cast<Poppler::ScreenAnnotation*>( a );
+                Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation*>( newann );
+
+                const Poppler::Link *pageOpeningLink = annotScreen->additionalAction( Poppler::Annotation::PageOpeningAction );
+                if ( pageOpeningLink )
+                    screenAnnotation->setAdditionalAction( Okular::Annotation::PageOpening, createLinkFromPopplerLink( pageOpeningLink ) );
+
+                const Poppler::Link *pageClosingLink = annotScreen->additionalAction( Poppler::Annotation::PageClosingAction );
+                if ( pageClosingLink )
+                    screenAnnotation->setAdditionalAction( Okular::Annotation::PageClosing, createLinkFromPopplerLink( pageClosingLink ) );
+            }
+
+            if ( a->subType() == Poppler::Annotation::AWidget )
+            {
+                Poppler::WidgetAnnotation *annotWidget = static_cast<Poppler::WidgetAnnotation*>( a );
+                Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( newann );
+
+                const Poppler::Link *pageOpeningLink = annotWidget->additionalAction( Poppler::Annotation::PageOpeningAction );
+                if ( pageOpeningLink )
+                    widgetAnnotation->setAdditionalAction( Okular::Annotation::PageOpening, createLinkFromPopplerLink( pageOpeningLink ) );
+
+                const Poppler::Link *pageClosingLink = annotWidget->additionalAction( Poppler::Annotation::PageClosingAction );
+                if ( pageClosingLink )
+                    widgetAnnotation->setAdditionalAction( Okular::Annotation::PageClosing, createLinkFromPopplerLink( pageClosingLink ) );
+            }
+#endif
 
             if ( !doDelete )
                 annotationsHash.insert( newann, a );

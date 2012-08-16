@@ -310,6 +310,13 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             break;
         }
+#ifdef HAVE_POPPLER_0_22
+        case Poppler::Annotation::AWidget:
+        {
+            annotation = new Okular::WidgetAnnotation();
+            break;
+        }
+#endif
 #ifdef HAVE_POPPLER_0_20
         case Poppler::Annotation::AScreen:
         {

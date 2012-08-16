@@ -379,6 +379,20 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
         // perform the page closing action, if any
         if ( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) )
             m_document->processAction( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) );
+
+        // perform the additional actions of the page's annotations, if any
+        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
+        {
+            Okular::Action *action = 0;
+
+            if ( annotation->subType() == Okular::Annotation::AScreen )
+                action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageClosing );
+            else if ( annotation->subType() == Okular::Annotation::AWidget )
+                action = static_cast<const Okular::WidgetAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageClosing );
+
+            if ( action )
+                m_document->processAction( action );
+        }
     }
 
     if ( currentPage != -1 )
@@ -410,6 +424,20 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
         // perform the page opening action, if any
         if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
             m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
+        // perform the additional actions of the page's annotations, if any
+        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
+        {
+            Okular::Action *action = 0;
+
+            if ( annotation->subType() == Okular::Annotation::AScreen )
+                action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageOpening );
+            else if ( annotation->subType() == Okular::Annotation::AWidget )
+                action = static_cast<const Okular::WidgetAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageOpening );
+
+            if ( action )
+                m_document->processAction( action );
+        }
 
         // start autoplay video playback
         Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )

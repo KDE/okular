@@ -15,6 +15,7 @@
 #include <QtGui/QColor>
 
 // local includes
+#include "action.h"
 #include "document.h"
 #include "document_p.h"
 #include "movie.h"
@@ -2410,4 +2411,150 @@ void MovieAnnotation::setMovie( Movie *movie )
 {
     Q_D( MovieAnnotation );
     d->movie = movie;
+}
+
+/** ScreenAnnotation [Annotation] */
+
+class Okular::ScreenAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        ~ScreenAnnotationPrivate();
+        QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
+};
+
+ScreenAnnotationPrivate::~ScreenAnnotationPrivate()
+{
+    qDeleteAll( m_additionalActions );
+}
+
+ScreenAnnotation::ScreenAnnotation()
+    : Annotation( *new ScreenAnnotationPrivate() )
+{
+}
+
+ScreenAnnotation::ScreenAnnotation( const QDomNode & node )
+    : Annotation( *new ScreenAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'screen' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "screen" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+ScreenAnnotation::~ScreenAnnotation()
+{
+}
+
+void ScreenAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [screen] element
+    QDomElement movieElement = document.createElement( "screen" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType ScreenAnnotation::subType() const
+{
+    return AScreen;
+}
+
+void ScreenAnnotation::setAdditionalAction( AdditionalActionType type, Action *action )
+{
+    Q_D( ScreenAnnotation );
+    if ( d->m_additionalActions.contains( type ) )
+        delete d->m_additionalActions.value( type );
+
+    d->m_additionalActions.insert( type, action );
+}
+
+Action* ScreenAnnotation::additionalAction( AdditionalActionType type ) const
+{
+    Q_D( const ScreenAnnotation );
+    if ( !d->m_additionalActions.contains( type ) )
+        return 0;
+    else
+        return d->m_additionalActions.value( type );
+}
+
+/** WidgetAnnotation [Annotation] */
+
+class Okular::WidgetAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        ~WidgetAnnotationPrivate();
+        QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
+};
+
+WidgetAnnotationPrivate::~WidgetAnnotationPrivate()
+{
+    qDeleteAll( m_additionalActions );
+}
+
+WidgetAnnotation::WidgetAnnotation()
+    : Annotation( *new WidgetAnnotationPrivate() )
+{
+}
+
+WidgetAnnotation::WidgetAnnotation( const QDomNode & node )
+    : Annotation( *new WidgetAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'widget' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "widget" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+WidgetAnnotation::~WidgetAnnotation()
+{
+}
+
+void WidgetAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [widget] element
+    QDomElement movieElement = document.createElement( "widget" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType WidgetAnnotation::subType() const
+{
+    return AWidget;
+}
+
+void WidgetAnnotation::setAdditionalAction( AdditionalActionType type, Action *action )
+{
+    Q_D( WidgetAnnotation );
+    if ( d->m_additionalActions.contains( type ) )
+        delete d->m_additionalActions.value( type );
+
+    d->m_additionalActions.insert( type, action );
+}
+
+Action* WidgetAnnotation::additionalAction( AdditionalActionType type ) const
+{
+    Q_D( const WidgetAnnotation );
+    if ( !d->m_additionalActions.contains( type ) )
+        return 0;
+    else
+        return d->m_additionalActions.value( type );
 }

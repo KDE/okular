@@ -282,13 +282,56 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         // the image over which we are going to draw
         QImage backImage;
-        bool has_alpha = pixmap->hasAlpha();
 
-        // 4B.1. draw the page pixmap: normal or scaled
-        if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-            cropPixmapOnImage( backImage, pixmap, limitsInPixmap );
+        bool has_alpha;
+        if ( pixmap )
+            has_alpha = pixmap->hasAlpha();
         else
-            scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
+            has_alpha = true;
+
+        if ( tilesManager )
+        {
+            backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
+            QPainter p( &backImage );
+            const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
+            QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits );
+            QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+            while ( tIt != tEnd )
+            {
+                Okular::Tile tile = *tIt;
+                QRect tileRect = tile.rect.geometry( scaledWidth, scaledHeight );
+                QRect limitsInTile = limits & tileRect;
+                if ( tile.pixmap && !limitsInTile.isEmpty() )
+                {
+                    if ( !tile.pixmap->hasAlpha() )
+                        has_alpha = false;
+
+                    if ( tile.pixmap->width() == tileRect.width() && tile.pixmap->height() == tileRect.height() )
+                    {
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap),
+                                limitsInTile.translated( -tileRect.topLeft() ) );
+                    }
+                    else
+                    {
+                        double xScale = tile.pixmap->width() / (double)tileRect.width();
+                        double yScale = tile.pixmap->height() / (double)tileRect.height();
+                        QTransform transform( xScale, 0, 0, yScale, 0, 0 );
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap),
+                                transform.mapRect( limitsInTile ).translated( -transform.mapRect( tileRect ).topLeft() ) );
+                    }
+                }
+                ++tIt;
+            }
+            p.end();
+        }
+        else
+        {
+            // 4B.1. draw the page pixmap: normal or scaled
+            if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
+                cropPixmapOnImage( backImage, pixmap, limitsInPixmap );
+            else
+                scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
+        }
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )

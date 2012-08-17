@@ -47,6 +47,7 @@ class TilesManager::Private
         int width;
         int height;
         long totalPixels;
+        Rotation rotation;
 
         QList<Tile*> rankedTiles;
         QSize tileSize;
@@ -56,15 +57,17 @@ TilesManager::Private::Private()
     : width( 0 )
     , height( 0 )
     , totalPixels( 0 )
+    , rotation( Rotation0 )
     , tileSize( QSize() )
 {
 }
 
-TilesManager::TilesManager( int width, int height )
+TilesManager::TilesManager( int width, int height, Rotation rotation )
     : d( new Private )
 {
     d->width = width;
     d->height = height;
+    d->rotation = rotation;
 
     const double dim = 0.25;
     for ( int i = 0; i < 16; ++i )
@@ -119,6 +122,24 @@ int TilesManager::height() const {
     return d->height;
 }
 
+void TilesManager::setRotation( Rotation rotation )
+{
+    if ( rotation == d->rotation )
+        return;
+
+    d->rotation = rotation;
+
+    for ( int i = 0; i < 16; ++i )
+    {
+        d->markDirty( d->tiles[ i ] );
+    }
+}
+
+Rotation TilesManager::rotation() const
+{
+    return d->rotation;
+}
+
 void TilesManager::Private::markDirty( Tile &tile )
 {
     tile.dirty = true;
@@ -136,13 +157,13 @@ void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect 
 {
     for ( int i = 0; i < 16; ++i )
     {
-        d->setPixmap( pixmap, rect, d->tiles[ i ] );
+        d->setPixmap( pixmap, fromRotatedRect( rect, d->rotation ), d->tiles[ i ] );
     }
 }
 
 void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile )
 {
-    QRect pixmapRect = rect.geometry( width, height );
+    QRect pixmapRect = TilesManager::toRotatedRect( rect, rotation ).geometry( width, height );
 
     if ( !tile.rect.intersects( rect ) )
         return;
@@ -170,8 +191,8 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
             }
-
-            tile.pixmap = new QPixmap( pixmap->copy( tile.rect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
+            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
 
 #ifdef TILES_DEBUG
@@ -262,7 +283,7 @@ bool TilesManager::hasPixmap( const NormalizedRect &rect )
 {
     for ( int i = 0; i < 16; ++i )
     {
-        if ( !d->hasPixmap( rect, d->tiles[ i ] ) )
+        if ( !d->hasPixmap( fromRotatedRect( rect, d->rotation ), d->tiles[ i ] ) )
             return false;
     }
 
@@ -296,7 +317,7 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect )
 
     for ( int i = 0; i < 16; ++i )
     {
-        d->tilesAt( rect, d->tiles[ i ], result );
+        d->tilesAt( fromRotatedRect( rect, d->rotation ), d->tiles[ i ], result );
     }
 
     return result;
@@ -314,7 +335,10 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
     {
         // TODO: check tile size
         tile.miss = qMax( tile.miss-1, RANGE_MIN );
-        result.append( tile );
+        Tile newTile = tile;
+        if ( rotation != Rotation0 )
+            newTile.rect = TilesManager::toRotatedRect( tile.rect, rotation );
+        result.append( newTile );
     }
     else
     {
@@ -387,6 +411,56 @@ void TilesManager::Private::rankTiles( Tile &tile )
         }
         tile.miss = 0;
     }
+}
+
+NormalizedRect TilesManager::fromRotatedRect( const NormalizedRect &rect, Rotation rotation )
+{
+    if ( rotation == Rotation0 )
+        return rect;
+
+    NormalizedRect newRect;
+    switch ( rotation )
+    {
+        case Rotation90:
+            newRect = NormalizedRect( rect.top, 1 - rect.right, rect.bottom, 1 - rect.left );
+            break;
+        case Rotation180:
+            newRect = NormalizedRect( 1 - rect.right, 1 - rect.bottom, 1 - rect.left, 1 - rect.top );
+            break;
+        case Rotation270:
+            newRect = NormalizedRect( 1 - rect.bottom, rect.left, 1 - rect.top, rect.right );
+            break;
+        default:
+            newRect = rect;
+            break;
+    }
+
+    return newRect;
+}
+
+NormalizedRect TilesManager::toRotatedRect( const NormalizedRect &rect, Rotation rotation )
+{
+    if ( rotation == Rotation0 )
+        return rect;
+
+    NormalizedRect newRect;
+    switch ( rotation )
+    {
+        case Rotation90:
+            newRect = NormalizedRect( 1 - rect.bottom, rect.left, 1 - rect.top, rect.right );
+            break;
+        case Rotation180:
+            newRect = NormalizedRect( 1 - rect.right, 1 - rect.bottom, 1 - rect.left, 1 - rect.top );
+            break;
+        case Rotation270:
+            newRect = NormalizedRect( rect.top, 1 - rect.right, rect.bottom, 1 - rect.left );
+            break;
+        default:
+            newRect = rect;
+            break;
+    }
+
+    return newRect;
 }
 
 Tile::Tile()

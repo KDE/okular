@@ -15,12 +15,18 @@ using namespace Okular;
 
 RotationJob::RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id )
     : mImage( image ), mOldRotation( oldRotation ), mNewRotation( newRotation ), mId( id ), m_pd( 0 )
+    , mRect( NormalizedRect() )
 {
 }
 
 void RotationJob::setPage( PagePrivate * pd )
 {
     m_pd = pd;
+}
+
+void RotationJob::setRect( const NormalizedRect &rect )
+{
+    mRect = rect;
 }
 
 QImage RotationJob::image() const
@@ -41,6 +47,11 @@ int RotationJob::id() const
 PagePrivate * RotationJob::page() const
 {
     return m_pd;
+}
+
+NormalizedRect RotationJob::rect() const
+{
+    return mRect;
 }
 
 void RotationJob::run()

@@ -39,7 +39,7 @@ class OKULAR_EXPORT Tile
 class OKULAR_EXPORT TilesManager
 {
     public:
-        TilesManager( int width, int height );
+        TilesManager( int width, int height, Rotation rotation = Rotation0 );
         virtual ~TilesManager();
 
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
@@ -52,6 +52,11 @@ class OKULAR_EXPORT TilesManager
         void setWidth( int width );
         int height() const;
         void setHeight( int height );
+        Rotation rotation() const;
+        void setRotation( Rotation rotation );
+
+        static NormalizedRect toRotatedRect( const NormalizedRect &rect, Rotation rotation );
+        static NormalizedRect fromRotatedRect( const NormalizedRect &rect, Rotation rotation );
 
     private:
         class Private;

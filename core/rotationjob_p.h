@@ -16,6 +16,7 @@
 #include <threadweaver/Job.h>
 
 #include "core/global.h"
+#include "core/area.h"
 
 namespace Okular {
 
@@ -29,11 +30,13 @@ class RotationJob : public ThreadWeaver::Job
         RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id );
 
         void setPage( PagePrivate * pd );
+        void setRect( const NormalizedRect &rect );
 
         QImage image() const;
         Rotation rotation() const;
         int id() const;
         PagePrivate * page() const;
+        NormalizedRect rect() const;
 
         static QMatrix rotationMatrix( Rotation from, Rotation to );
 
@@ -47,6 +50,7 @@ class RotationJob : public ThreadWeaver::Job
         int mId;
         QImage mRotatedImage;
         PagePrivate * m_pd;
+        NormalizedRect mRect;
 };
 
 }

@@ -1047,7 +1047,7 @@ void DocumentPrivate::sendGeneratorRequest()
             const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->id(), r->width(), r->height() );
             if ( pixmap )
             {
-                tilesManager = new TilesManager( pixmap->width(), pixmap->height() );
+                tilesManager = new TilesManager( pixmap->width(), pixmap->height(), r->page()->rotation() );
                 tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
                 tilesManager->setWidth( r->width() );
                 tilesManager->setHeight( r->height() );
@@ -1055,7 +1055,7 @@ void DocumentPrivate::sendGeneratorRequest()
             else
             {
                 // create new tiles manager
-                tilesManager = new TilesManager( r->width(), r->height() );
+                tilesManager = new TilesManager( r->width(), r->height(), r->page()->rotation() );
             }
             r->page()->deletePixmap( r->id() );
             r->page()->setTilesManager( r->id(), tilesManager );
@@ -1118,6 +1118,10 @@ void DocumentPrivate::sendGeneratorRequest()
 
         if ( (int)m_rotation % 2 )
             request->d->swap();
+
+        if ( m_rotation != Rotation0 && !request->normalizedRect().isNull() )
+            request->setNormalizedRect( TilesManager::fromRotatedRect(
+                        request->normalizedRect(), m_rotation ) );
 
         // we always have to unlock _before_ the generatePixmap() because
         // a sync generation would end with requestDone() -> deadlock, and

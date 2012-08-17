@@ -88,6 +88,15 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
+    TilesManager *tm = m_page->tilesManager( job->id() );
+    if ( tm )
+    {
+        QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
+        tm->setPixmap( pixmap, job->rect() );
+        delete pixmap;
+        return;
+    }
+
     QMap< int, PixmapObject >::iterator it = m_pixmaps.find( job->id() );
     if ( it != m_pixmaps.end() )
     {
@@ -387,6 +396,18 @@ void PagePrivate::rotateAt( Rotation orientation )
     }
 
     /**
+     * Rotate tiles managers
+     */
+    QMapIterator< int, TilesManager* > tIt( m_tilesManagers );
+    while ( it.hasNext() )
+    {
+        it.next();
+
+        TilesManager *tilesManager = tIt.value();
+        tilesManager->setRotation( m_rotation );
+    }
+
+    /**
      * Rotate the object rects on the page.
      */
     const QMatrix matrix = rotationMatrix();
@@ -481,15 +502,15 @@ QLinkedList< FormField * > Page::formFields() const
 
 void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
 {
-    TilesManager *tm = tilesManager( id );
-    if ( tm )
-    {
-        tm->setPixmap( pixmap, rect );
-        delete pixmap;
-        return;
-    }
-
     if ( d->m_rotation == Rotation0 ) {
+        TilesManager *tm = tilesManager( id );
+        if ( tm )
+        {
+            tm->setPixmap( pixmap, rect );
+            delete pixmap;
+            return;
+        }
+
         QMap< int, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( id );
         if ( it != d->m_pixmaps.end() )
         {
@@ -505,6 +526,7 @@ void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );
         job->setPage( d );
+        job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
         PageController::self()->addRotationJob(job);
 
         delete pixmap;

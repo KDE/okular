@@ -21,7 +21,6 @@
 // local includes
 #include "global.h"
 #include "area.h"
-#include "tilesmanager.h"
 
 class QColor;
 
@@ -37,6 +36,7 @@ class PageSize;
 class PageTransition;
 class RotationJob;
 class TextPage;
+class TilesManager;
 
 enum PageItem
 {

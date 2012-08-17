@@ -38,6 +38,7 @@
 #include "rotationjob_p.h"
 #include "textpage.h"
 #include "textpage_p.h"
+#include "tilesmanager_p.h"
 
 #include <limits>
 

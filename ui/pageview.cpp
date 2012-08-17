@@ -76,7 +76,7 @@
 #include "core/generator.h"
 #include "core/movie.h"
 #include "core/sourcereference.h"
-#include "core/tilesmanager.h"
+#include "core/tilesmanager_p.h"
 #include "settings.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |

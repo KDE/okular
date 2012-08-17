@@ -76,6 +76,7 @@
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 #include "texteditors_p.h"
+#include "tilesmanager_p.h"
 #include "utils_p.h"
 #include "view.h"
 #include "view_p.h"

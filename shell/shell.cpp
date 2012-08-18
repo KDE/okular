@@ -119,7 +119,11 @@ void Shell::delayedOpen()
 
 Shell::~Shell()
 {
-    if ( m_part ) writeSettings();
+    if ( m_part )
+    {
+        writeSettings();
+        m_part->closeUrl();
+    }
     m_part = 0; // It is deleted by the KPart/QObject machinery
     if ( m_args )
         m_args->clear();

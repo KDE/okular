@@ -44,7 +44,7 @@ class OKULAR_EXPORT TilesManager
 
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
         bool hasPixmap( const NormalizedRect &rect );
-        QList<Tile> tilesAt( const NormalizedRect &rect );
+        QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true );
         long totalMemory() const;
         void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 

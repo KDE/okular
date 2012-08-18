@@ -240,7 +240,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( tilesManager )
         {
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
-            QList<Okular::Tile> tiles = tilesManager->tilesAt( crop | normalizedLimits );
+            QList<Okular::Tile> tiles = tilesManager->tilesAt( crop | normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
@@ -295,7 +295,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
-            QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits );
+            QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {

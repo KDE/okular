@@ -35,13 +35,14 @@ class TilesManager::Private
         Private();
 
         bool hasPixmap( const NormalizedRect &rect, const Tile &tile ) const;
-        void tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result );
+        void tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty );
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile );
         void markDirty( Tile &tile );
         void deleteTiles( const Tile &tile );
 
         void onClearPixmap( const Tile &tile );
         void rankTiles( Tile &tile );
+        void split( Tile &tile, const NormalizedRect &rect );
 
         Tile tiles[16];
         int width;
@@ -144,12 +145,9 @@ void TilesManager::Private::markDirty( Tile &tile )
 {
     tile.dirty = true;
 
-    if ( tile.nTiles > 0 && tile.tiles )
+    for ( int i = 0; i < tile.nTiles; ++i )
     {
-        for ( int i = 0; i < tile.nTiles; ++i )
-        {
-            markDirty( tile.tiles[ i ] );
-        }
+        markDirty( tile.tiles[ i ] );
     }
 }
 
@@ -171,9 +169,15 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
     // the tile intersects an edge of the viewport
     if ( !((tile.rect & rect) == tile.rect) )
     {
-        // paint subtiles if applied
-        for ( int i = 0; i < tile.nTiles; ++i )
-            setPixmap( pixmap, rect, tile.tiles[ i ] );
+        // paint children tiles
+        if ( tile.nTiles > 0 )
+        {
+            for ( int i = 0; i < tile.nTiles; ++i )
+                setPixmap( pixmap, rect, tile.tiles[ i ] );
+
+            delete tile.pixmap;
+            tile.pixmap = 0;
+        }
 
         return;
     }
@@ -206,30 +210,19 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
         }
         else
         {
-            tile.nTiles = 4;
-            tile.tiles = new Tile[4];
-            double hCenter = (tile.rect.left + tile.rect.right)/2;
-            double vCenter = (tile.rect.top + tile.rect.bottom)/2;
-
-            tile.tiles[0].rect = NormalizedRect( tile.rect.left, tile.rect.top, hCenter, vCenter );
-            tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
-            tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
-            tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
-
-            tileSize = tile.tiles[0].rect.geometry( width, height ).size();
-
-            for ( int i = 0; i < tile.nTiles; ++i )
+            split( tile, rect );
+            if ( tile.nTiles > 0 )
             {
-                tile.tiles[ i ].parent = &tile;
-                setPixmap( pixmap, rect, tile.tiles[ i ] );
-            }
+                for ( int i = 0; i < tile.nTiles; ++i )
+                    setPixmap( pixmap, rect, tile.tiles[ i ] );
 
-            if ( tile.pixmap )
-            {
-                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
-                delete tile.pixmap;
+                if ( tile.pixmap )
+                {
+                    totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                    delete tile.pixmap;
+                    tile.pixmap = 0;
+                }
             }
-            tile.pixmap = 0;
         }
     }
     else
@@ -240,6 +233,13 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             tile.dirty = false;
             for ( int i = 0; i < tile.nTiles; ++i )
                 setPixmap( pixmap, rect, tile.tiles[ i ] );
+
+            if ( tile.pixmap )
+            {
+                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                delete tile.pixmap;
+                tile.pixmap = 0;
+            }
         }
         else // size not ok (too small)
         {
@@ -311,19 +311,19 @@ bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &t
     return true;
 }
 
-QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect )
+QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, bool allowEmpty )
 {
     QList<Tile> result;
 
     for ( int i = 0; i < 16; ++i )
     {
-        d->tilesAt( fromRotatedRect( rect, d->rotation ), d->tiles[ i ], result );
+        d->tilesAt( fromRotatedRect( rect, d->rotation ), d->tiles[ i ], result, allowEmpty );
     }
 
     return result;
 }
 
-void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result )
+void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty )
 {
     if ( !tile.rect.intersects( rect ) )
     {
@@ -331,7 +331,10 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
         return;
     }
 
-    if ( tile.nTiles == 0 )
+    // split tile (if necessary)
+    split( tile, rect );
+
+    if ( ( allowEmpty && tile.nTiles == 0 ) || ( !allowEmpty && tile.pixmap ) )
     {
         // TODO: check tile size
         tile.miss = qMax( tile.miss-1, RANGE_MIN );
@@ -343,7 +346,7 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
     else
     {
         for ( int i = 0; i < tile.nTiles; ++i )
-            tilesAt( rect, tile.tiles[ i ], result );
+            tilesAt( rect, tile.tiles[ i ], result, allowEmpty );
     }
 }
 
@@ -409,7 +412,40 @@ void TilesManager::Private::rankTiles( Tile &tile )
         {
             rankTiles( tile.tiles[ i ] );
         }
-        tile.miss = 0;
+
+        if ( tile.nTiles > 0 )
+            tile.miss = 0;
+    }
+}
+
+void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
+{
+    if ( tile.nTiles != 0 )
+        return;
+
+    if ( rect.isNull() || !tile.rect.intersects( rect ) )
+        return;
+
+    QRect tileRect = tile.rect.geometry( width, height );
+    if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE )
+    {
+        tile.nTiles = 4;
+        tile.tiles = new Tile[4];
+        double hCenter = (tile.rect.left + tile.rect.right)/2;
+        double vCenter = (tile.rect.top + tile.rect.bottom)/2;
+
+        tile.tiles[0].rect = NormalizedRect( tile.rect.left, tile.rect.top, hCenter, vCenter );
+        tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
+        tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
+        tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
+
+        tileSize = tile.tiles[0].rect.geometry( width, height ).size();
+
+        for ( int i = 0; i < tile.nTiles; ++i )
+        {
+            tile.tiles[ i ].parent = &tile;
+            split( tile.tiles[ i ], rect );
+        }
     }
 }
 

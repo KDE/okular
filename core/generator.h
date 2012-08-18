@@ -250,6 +250,11 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool canGeneratePixmap() const;
 
         /**
+         * Returns whether the generator can render tiles.
+         */
+        virtual bool supportsTiles() const;
+
+        /**
          * This method can be called to trigger the generation of
          * a new pixmap as described by @p request.
          */

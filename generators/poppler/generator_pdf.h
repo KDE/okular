@@ -74,6 +74,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool isAllowed( Okular::Permission permission ) const;
 
         // [INHERITED] perform actions on document / pages
+        bool supportsTiles() const;
         QImage image( Okular::PixmapRequest *page );
 
         // [INHERITED] print page using an already configured kprinter

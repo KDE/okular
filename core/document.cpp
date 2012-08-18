@@ -1037,7 +1037,7 @@ void DocumentPrivate::sendGeneratorRequest()
             //kDebug() << "Ignoring request that doesn't fit in cache";
             delete r;
         }
-        else if ( !tilesManager && r->id() == PAGEVIEW_ID && (long)r->width() * (long)r->height() > 8000000L )
+        else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->supportsTiles() && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
             kWarning(OkularDebug).nospace() << "Running out of memory on page " << r->pageNumber()
@@ -1074,7 +1074,7 @@ void DocumentPrivate::sendGeneratorRequest()
 
             request = r;
         }
-        else if ( tilesManager && (long)requestRect.width() * (long)requestRect.height() > 20000000L )
+        else if ( (long)requestRect.width() * (long)requestRect.height() > 20000000L )
         {
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )

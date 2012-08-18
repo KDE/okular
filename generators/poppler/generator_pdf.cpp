@@ -844,6 +844,11 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
     return b;
 }
 
+bool PDFGenerator::supportsTiles() const
+{
+    return true;
+}
+
 QImage PDFGenerator::image( Okular::PixmapRequest * request )
 {
     // debug requests to this (xpdf) generator

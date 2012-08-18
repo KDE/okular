@@ -214,6 +214,11 @@ bool Generator::canGeneratePixmap() const
     return d->mPixmapReady;
 }
 
+bool Generator::supportsTiles() const
+{
+    return false;
+}
+
 void Generator::generatePixmap( PixmapRequest *request )
 {
     Q_D( Generator );

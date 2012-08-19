@@ -137,8 +137,8 @@ class OKULAR_EXPORT Page
         void setBoundingBox( const NormalizedRect& bbox );
 
         /**
-         * Returns whether the page has a pixmap of size @p width x @p height
-         * for the observer with given @p id.
+         * Returns whether the page of size @p width x @p height has a @p pixmap 
+         * in the region given by @rect for the observer with given @p id.
          */
         bool hasPixmap( int id, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect() ) const;
 
@@ -254,7 +254,10 @@ class OKULAR_EXPORT Page
         QLinkedList< FormField * > formFields() const;
 
         /**
-         * Sets the @p pixmap for the observer with the given @p id.
+         * Sets the region described by @p rect with @p pixmap for the observer
+         * with the given @p id.
+         * If @p rect is not set (default) the @p pixmap is set to the entire
+         * page.
          */
         void setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect = NormalizedRect() );
 

@@ -584,7 +584,16 @@ class OKULAR_EXPORT PixmapRequest
          */
         Page *page() const;
 
+        /**
+         * Sets the region of the page to request. If not set, the entire page
+         * will be requested.
+         */
         void setNormalizedRect( const NormalizedRect &rect );
+
+        /**
+         * Returns the normalized region of the page to request. If the
+         * normalized rect is null, requests the entire page.
+         */
         const NormalizedRect normalizedRect() const;
 
     private:

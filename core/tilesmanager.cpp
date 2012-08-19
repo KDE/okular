@@ -37,11 +37,26 @@ class TilesManager::Private
         bool hasPixmap( const NormalizedRect &rect, const Tile &tile ) const;
         void tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty );
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile );
+
+        /**
+         * Mark @p tile and all its children as dirty
+         */
         void markDirty( Tile &tile );
+
+        /**
+         * Deletes all tiles, recursively
+         */
         void deleteTiles( const Tile &tile );
 
         void onClearPixmap( const Tile &tile );
         void rankTiles( Tile &tile );
+        /**
+         * Since the tile can be large enough to occupy a significant amount of
+         * space, they may be split in more tiles. This operation is performed
+         * when the tiles of a certain region is requested and they are bigger
+         * than an arbitrary value. Only tiles intersecting the desired region
+         * are split. There's no need to do this for the entire page.
+         */
         void split( Tile &tile, const NormalizedRect &rect );
 
         Tile tiles[16];

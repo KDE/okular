@@ -18,44 +18,120 @@ class QPixmap;
 
 namespace Okular {
 
+/**
+ * Tile is a class that stores the pixmap of a tile and its location on the
+ * page
+ */
 class OKULAR_EXPORT Tile
 {
     public:
         Tile();
 
+        /**
+         * True if the pixmap is available and updated
+         */
         bool isValid() const;
 
+        /**
+         * Location of the tile
+         */
         NormalizedRect rect;
+        /**
+         * Pixmap (may also be NULL)
+         */
         QPixmap *pixmap;
-        uint dirty : 1;
+        /**
+         * Whether the tile needs to be repainted (after a zoom or rotation)
+         * If a tile doesn't have a pixmap but all its children are updated
+         * (dirty = false), the parent tile is also considered updated.
+         */
+        bool dirty : 1;
 
+        /**
+         * Children tiles
+         */
         Tile *tiles;
         int nTiles;
 
         Tile *parent;
+
+        /**
+         * Hit/miss counter.
+         * Increased whenever the tile is not referenced. Decreased whenever a
+         * reference to the tile is made
+         * Used by the ranking algorithm.
+         */
         int miss;
 };
 
+/**
+ * @short Tiles management
+ *
+ * This class has direct access to all tiles and handle how they should be
+ * stored, deleted and retrieved.
+ *
+ * The tiles manager is a tree of tiles. At first the page is divided in 16
+ * tiles. Then each one of these tiles can be split in more tiles (or merged
+ * back to only one).
+ */
 class OKULAR_EXPORT TilesManager
 {
     public:
         TilesManager( int width, int height, Rotation rotation = Rotation0 );
         virtual ~TilesManager();
 
+        /**
+         * Use @p pixmap to paint all tiles that are contained inside @p rect
+         */
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
+
+        /**
+         * Checks whether all tiles intersecting with @p rect are available.
+         * Returns false if at least one tile needs to be repainted (the tile
+         * is dirty).
+         */
         bool hasPixmap( const NormalizedRect &rect );
+
+        /**
+         * Returns a list of all tiles intersecting with @p rect.
+         *
+         * @param allowEmpty If false only tiles with a non null pixmap are returned
+         */
         QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true );
+
+        /**
+         * The total memory consumed by the tiles manager
+         */
         long totalMemory() const;
+
+        /**
+         * Removes the least ranked tiles from memory
+         */
         void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 
-        int width() const;
-        void setWidth( int width );
-        int height() const;
-        void setHeight( int height );
-        Rotation rotation() const;
-        void setRotation( Rotation rotation );
 
+        /**
+         * Inform the new width of the page and mark all tiles to repaint
+         */
+        void setWidth( int width );
+        int width() const;
+        void setHeight( int height );
+        int height() const;
+
+        /**
+         * Perform a rotation and mark all tiles to repaint.
+         */
+        void setRotation( Rotation rotation );
+        Rotation rotation() const;
+
+        /**
+         * Returns a rotated NormalizedRect given a @p rotation
+         */
         static NormalizedRect toRotatedRect( const NormalizedRect &rect, Rotation rotation );
+
+        /**
+         * Returns a non rotated version of @p rect, which is rotated by @p rotation
+         */
         static NormalizedRect fromRotatedRect( const NormalizedRect &rect, Rotation rotation );
 
     private:

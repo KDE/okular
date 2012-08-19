@@ -1017,16 +1017,17 @@ void DocumentPrivate::sendGeneratorRequest()
     while ( !m_pixmapRequestsStack.isEmpty() && !request )
     {
         PixmapRequest * r = m_pixmapRequestsStack.last();
-        const NormalizedRect visibleRect = ( r ? r->normalizedRect() : NormalizedRect() );
-        const QRect requestRect = !visibleRect.isNull() ? visibleRect.geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
+        if (!r)
+        {
+            m_pixmapRequestsStack.pop_back();
+            continue;
+        }
 
+        QRect requestRect = !r->normalizedRect().isNull() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
         TilesManager *tilesManager = r->page()->tilesManager( r->id() );
 
-        if (!r)
-            m_pixmapRequestsStack.pop_back();
-
         // request only if page isn't already present or request has invalid id
-        else if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), visibleRect ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
+        if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), r->normalizedRect() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
         {
             m_pixmapRequestsStack.pop_back();
             delete r;

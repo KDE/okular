@@ -3989,7 +3989,12 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         // if the item doesn't intersect the viewport, skip it
         QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
         if ( intersectionRect.isEmpty() )
+        {
+            Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+            if ( tilesManager )
+                tilesManager->setVisibleRect( Okular::NormalizedRect() );
             continue;
+        }
 
         // add the item to the 'visible list'
         d->visibleItems.push_back( i );
@@ -4001,6 +4006,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
 
         visibleRect = vItem->rect;
+        Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+        if ( tilesManager )
+            tilesManager->setVisibleRect( vItem->rect );
+
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
         if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
@@ -4021,7 +4030,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
             requestedPixmaps.push_back( p );
 
-            Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
             if ( tilesManager )
             {
                 Okular::NormalizedRect tilesRect;

@@ -109,7 +109,6 @@ class OKULAR_EXPORT TilesManager
          */
         void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 
-
         /**
          * Inform the new width of the page and mark all tiles to repaint
          */
@@ -123,6 +122,16 @@ class OKULAR_EXPORT TilesManager
          */
         void setRotation( Rotation rotation );
         Rotation rotation() const;
+
+        /**
+         * Sets the visible area of the page
+         */
+        void setVisibleRect( const NormalizedRect &rect );
+
+        /**
+         * Returns the visible area of the page
+         */
+        NormalizedRect visibleRect() const;
 
         /**
          * Returns a rotated NormalizedRect given a @p rotation

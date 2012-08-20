@@ -64,6 +64,7 @@ class TilesManager::Private
         int height;
         long totalPixels;
         Rotation rotation;
+        NormalizedRect visibleRect;
 
         QList<Tile*> rankedTiles;
         QSize tileSize;
@@ -164,6 +165,19 @@ void TilesManager::Private::markDirty( Tile &tile )
     {
         markDirty( tile.tiles[ i ] );
     }
+}
+
+void TilesManager::setVisibleRect( const NormalizedRect &rect )
+{
+    if ( d->visibleRect == rect )
+        return;
+
+    d->visibleRect = rect;
+}
+
+NormalizedRect TilesManager::visibleRect() const
+{
+    return d->visibleRect;
 }
 
 void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
@@ -383,6 +397,9 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
     {
         Tile *tile = d->rankedTiles.takeLast();
         if ( !tile->pixmap )
+            continue;
+
+        if ( tile->rect.intersects( d->visibleRect ) )
             continue;
 
         long pixels = tile->pixmap->width()*tile->pixmap->height();

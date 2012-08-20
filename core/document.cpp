@@ -260,7 +260,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             AllocatedPixmap * p = *pIt;
 
             TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager( p->id );
-            if ( tilesManager )
+            if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
                 tilesManager->cleanupPixmapMemory( memoryToFree );
                 m_allocatedPixmapsTotalMemory -= p->memory;

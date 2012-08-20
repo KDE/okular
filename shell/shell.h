@@ -80,6 +80,7 @@ private slots:
 
   void openUrl( const KUrl & url );
   void delayedOpen();
+  void showOpenRecentMenu();
 
 signals:
   void restoreDocument(const KConfigGroup &group);

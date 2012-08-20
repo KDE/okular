@@ -1721,9 +1721,13 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     {
         case SaveChanges:
         {
+            // Saving files with /Encrypt is not supported before Poppler 0.22
+#ifndef HAVE_POPPLER_0_22
             QMutexLocker locker( userMutex() );
-            // Saving files with /Encrypt is not supported
             return pdfdoc->isEncrypted() ? false : true;
+#else
+            return true;
+#endif
         }
         default: ;
     }
@@ -1746,7 +1750,10 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
         switch (pdfConv->lastError())
         {
             case Poppler::BaseConverter::NotSupportedInputFileError:
+#ifndef HAVE_POPPLER_0_22
+                // This can only happen with Poppler before 0.22
                 *errorText = i18n("Saving files with /Encrypt is not supported.");
+#endif
             break;
 
             case Poppler::BaseConverter::NoError:

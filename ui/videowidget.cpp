@@ -25,6 +25,7 @@
 #include <kicon.h>
 #include <klocale.h>
 
+#include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
 #include <phonon/videoplayer.h>
 
@@ -69,6 +70,7 @@ public:
     void setPosterImage( const QImage& );
     void takeSnapshot();
     void videoStopped();
+    void stateChanged(Phonon::State, Phonon::State);
 
     // slots
     void finished();
@@ -112,6 +114,9 @@ void VideoWidget::Private::load()
         player->load( newurl.toLocalFile() );
     else
         player->load( newurl );
+
+    connect( player->mediaObject(), SIGNAL( stateChanged( Phonon::State, Phonon::State ) ),
+             q, SLOT( stateChanged( Phonon::State, Phonon::State ) ) );
 
     seekSlider->setEnabled( true );
 }
@@ -208,6 +213,12 @@ void VideoWidget::Private::setPosterImage( const QImage &image )
 
     posterImagePage->setPixmap( QPixmap::fromImage( image ) );
     q->show();
+}
+
+void VideoWidget::Private::stateChanged( Phonon::State newState, Phonon::State )
+{
+    if ( newState == Phonon::PlayingState )
+        pageLayout->setCurrentIndex( 0 );
 }
 
 VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *document, QWidget *parent )
@@ -336,7 +347,6 @@ void VideoWidget::pageLeft()
 
 void VideoWidget::play()
 {
-    d->pageLayout->setCurrentIndex( 0 );
     d->load();
     d->player->play();
     d->stopAction->setEnabled( true );

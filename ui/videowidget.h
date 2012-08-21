@@ -54,6 +54,7 @@ class VideoWidget : public QWidget
         Q_PRIVATE_SLOT( d, void finished() )
         Q_PRIVATE_SLOT( d, void playOrPause() )
         Q_PRIVATE_SLOT( d, void setPosterImage( const QImage& ) )
+        Q_PRIVATE_SLOT( d, void stateChanged( Phonon::State, Phonon::State ) )
 
         // private storage
         class Private;

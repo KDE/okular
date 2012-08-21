@@ -42,6 +42,7 @@
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kactioncollection.h>
+#include <kwindowsystem.h>
 
 // local includes
 #include "kdocumentviewer.h"
@@ -104,10 +105,13 @@ void Shell::init()
 
   readSettings();
 
-  if (m_args && m_args->isSet("unique") && m_args->count() == 1)
+  m_unique = false;
+  if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
   {
-    QDBusConnection::sessionBus().registerService("org.kde.okular");
+    m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
   }
+  
+  QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
 
   if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
 }
@@ -288,6 +292,14 @@ void Shell::fileOpen()
 void Shell::slotQuit()
 {
     close();
+}
+
+void Shell::tryRaise()
+{
+    if (m_unique)
+    {
+        KWindowSystem::forceActiveWindow( window()->effectiveWinId() );
+    }
 }
 
 // only called when starting the program

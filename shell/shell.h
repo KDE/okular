@@ -18,6 +18,8 @@
 
 #include <kparts/mainwindow.h>
 
+#include <QtDBus/QtDBus>
+
 class KCmdLineArgs;
 class KRecentFilesAction;
 class KToggleAction;
@@ -36,6 +38,7 @@ class Part;
 class Shell : public KParts::MainWindow
 {
   Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
 
 public:
   /**
@@ -51,6 +54,8 @@ public:
   QSize sizeHint() const;
 public slots:
   void slotQuit();
+  
+  Q_SCRIPTABLE Q_NOREPLY void tryRaise();
 
 protected:
   /**
@@ -103,6 +108,7 @@ private:
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
+  bool m_unique;
   KUrl m_openUrl;
 };
 

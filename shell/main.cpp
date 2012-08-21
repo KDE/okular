@@ -26,13 +26,15 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
         return false;
 
     QDBusInterface iface("org.kde.okular", "/okular", "org.kde.okular");
-    if (!iface.isValid())
+    QDBusInterface iface2("org.kde.okular", "/okularshell", "org.kde.okular");
+    if (!iface.isValid() || !iface2.isValid())
         return false;
 
     if (args->isSet("page"))
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
     else
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
+    iface2.call("tryRaise");
 
     return true;
 }

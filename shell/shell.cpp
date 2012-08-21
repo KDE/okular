@@ -122,7 +122,7 @@ Shell::~Shell()
     if ( m_part )
     {
         writeSettings();
-        m_part->closeUrl();
+        m_part->closeUrl( false );
     }
     m_part = 0; // It is deleted by the KPart/QObject machinery
     if ( m_args )

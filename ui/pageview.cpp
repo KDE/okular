@@ -4008,7 +4008,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         if ( tilesManager )
             tilesManager->setVisibleRect( vItem->rect );
 
-        Okular::NormalizedRect expandedVisibleRect;
+        Okular::NormalizedRect expandedVisibleRect = vItem->rect;
         if ( tilesManager && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
             // Margin (in pixels) to expand

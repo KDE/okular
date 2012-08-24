@@ -99,6 +99,8 @@ TilesManager::~TilesManager()
 {
     for ( int i = 0; i < 16; ++i )
         d->deleteTiles( d->tiles[ i ] );
+
+    delete d;
 }
 
 void TilesManager::Private::deleteTiles( const Tile &tile )
@@ -106,8 +108,13 @@ void TilesManager::Private::deleteTiles( const Tile &tile )
     if ( tile.pixmap )
         delete tile.pixmap;
 
-    for ( int i = 0; i < tile.nTiles; ++i )
-        deleteTiles( tile.tiles[ i ] );
+    if ( tile.nTiles > 0 )
+    {
+        for ( int i = 0; i < tile.nTiles; ++i )
+            deleteTiles( tile.tiles[ i ] );
+
+        delete [] tile.tiles;
+    }
 }
 
 void TilesManager::setWidth( int width )

@@ -4029,6 +4029,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+            p->setNormalizedRect( vItem->rect );
             requestedPixmaps.push_back( p );
 
             if ( tilesManager )
@@ -4051,6 +4052,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 }
 
                 p->setNormalizedRect( tilesRect );
+                p->setTile( true );
             }
         }
 
@@ -4100,13 +4102,11 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             {
                 PageViewItem * i = d->items[ tailRequest ];
                 Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+
                 Okular::NormalizedRect preRenderRegion;
-                if ( tilesManager )
-                {
-                    QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
-                    if ( !intersectionRect.isEmpty() )
-                        preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
-                }
+                QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+                if ( !intersectionRect.isEmpty() )
+                    preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
@@ -4133,11 +4133,13 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
                         p->setNormalizedRect( tilesRect );
+                        p->setTile( true );
                     }
                     else if ( !tilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
+                        p->setNormalizedRect( preRenderRegion );
                     }
                 }
             }
@@ -4148,13 +4150,11 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             {
                 PageViewItem * i = d->items[ headRequest ];
                 Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+
                 Okular::NormalizedRect preRenderRegion;
-                if ( tilesManager )
-                {
-                    QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
-                    if ( !intersectionRect.isEmpty() )
-                        preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
-                }
+                QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+                if ( !intersectionRect.isEmpty() )
+                    preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
@@ -4181,11 +4181,13 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
                         p->setNormalizedRect( tilesRect );
+                        p->setTile( true );
                     }
                     else if ( !tilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
+                        p->setNormalizedRect( preRenderRegion );
                     }
                 }
             }

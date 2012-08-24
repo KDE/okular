@@ -880,7 +880,7 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
     QImage img;
     if (p)
     {
-        if ( !request->normalizedRect().isNull() )
+        if ( request->isTile() )
         {
             QRect rect = request->normalizedRect().geometry( request->width(), request->height() );
             img = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0 );

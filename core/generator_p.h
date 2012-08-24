@@ -80,6 +80,7 @@ class PixmapRequestPrivate
         bool mAsynchronous;
         bool mForce : 1;
         Page *mPage;
+        bool mTile : 1;
         NormalizedRect mNormalizedRect;
 };
 

@@ -1023,7 +1023,7 @@ void DocumentPrivate::sendGeneratorRequest()
             continue;
         }
 
-        QRect requestRect = !r->normalizedRect().isNull() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
+        QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
         TilesManager *tilesManager = r->page()->tilesManager( r->id() );
 
         // request only if page isn't already present or request has invalid id
@@ -1050,7 +1050,7 @@ void DocumentPrivate::sendGeneratorRequest()
             if ( pixmap )
             {
                 tilesManager = new TilesManager( pixmap->width(), pixmap->height(), r->page()->rotation() );
-                tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
+                tilesManager->setPixmap( pixmap, r->normalizedRect() );
                 tilesManager->setWidth( r->width() );
                 tilesManager->setHeight( r->height() );
             }
@@ -1061,6 +1061,7 @@ void DocumentPrivate::sendGeneratorRequest()
             }
             r->page()->deletePixmap( r->id() );
             r->page()->setTilesManager( r->id(), tilesManager );
+            r->setTile( true );
 
             request = r;
         }
@@ -1071,7 +1072,7 @@ void DocumentPrivate::sendGeneratorRequest()
 
             // page is too small. stop using tiles.
             r->page()->deletePixmap( r->id() );
-            r->setNormalizedRect( NormalizedRect() );
+            r->setTile( false );
 
             request = r;
         }
@@ -1114,7 +1115,7 @@ void DocumentPrivate::sendGeneratorRequest()
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
     {
-        QRect requestRect = request->normalizedRect().isNull() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
+        QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
         kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous();
         m_pixmapRequestsStack.removeAll ( request );
 

@@ -585,14 +585,24 @@ class OKULAR_EXPORT PixmapRequest
         Page *page() const;
 
         /**
-         * Sets the region of the page to request. If not set, the entire page
-         * will be requested.
+         * Sets whether the generator should render only the given normalized
+         * rect or the entire page
+         */
+        void setTile( bool tile );
+
+        /**
+         * Returns whether the generator should render just the region given by
+         * normalizedRect() or the entire page.
+         */
+        bool isTile() const;
+
+        /**
+         * Sets the region of the page to request.
          */
         void setNormalizedRect( const NormalizedRect &rect );
 
         /**
-         * Returns the normalized region of the page to request. If the
-         * normalized rect is null, requests the entire page.
+         * Returns the normalized region of the page to request.
          */
         const NormalizedRect normalizedRect() const;
 

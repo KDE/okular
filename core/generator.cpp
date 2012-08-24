@@ -436,6 +436,7 @@ PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int
     d->mPriority = priority;
     d->mAsynchronous = asynchronous;
     d->mForce = false;
+    d->mTile = false;
     d->mNormalizedRect = NormalizedRect();
 }
 
@@ -477,6 +478,16 @@ bool PixmapRequest::asynchronous() const
 Page* PixmapRequest::page() const
 {
     return d->mPage;
+}
+
+void PixmapRequest::setTile( bool tile )
+{
+    d->mTile = tile;
+}
+
+bool PixmapRequest::isTile() const
+{
+    return d->mTile;
 }
 
 void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )

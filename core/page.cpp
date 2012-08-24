@@ -236,13 +236,7 @@ bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect 
 
     const QPixmap *pixmap = it.value().m_pixmap;
 
-    if ( pixmap->width() != width || pixmap->height() != height )
-        return false;
-
-    if ( rect.isNull() )
-        return true;
-
-    return (rect == it.value().m_rect);
+    return (pixmap->width() == width && pixmap->height() == height);
 }
 
 bool Page::hasTextPage() const
@@ -522,7 +516,6 @@ void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
             it = d->m_pixmaps.insert( id, PagePrivate::PixmapObject() );
         }
         it.value().m_pixmap = pixmap;
-        it.value().m_rect = rect;
         it.value().m_rotation = d->m_rotation;
     } else {
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );

@@ -730,6 +730,7 @@ void Page::deletePixmaps()
 
     d->m_pixmaps.clear();
     qDeleteAll( d->m_tilesManagers );
+    d->m_tilesManagers.clear();
 }
 
 void Page::deleteRects()

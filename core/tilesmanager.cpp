@@ -12,10 +12,6 @@
 #include <QtCore/qmath.h>
 #include <QList>
 
-#ifdef TILES_DEBUG
-#include <QPainter>
-#endif
-
 #define RANGE_MAX 1073741823
 #define RANGE_MIN -1073741824
 
@@ -234,15 +230,6 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
             tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
-
-#ifdef TILES_DEBUG
-            QRect pixRect = tile.pixmap->rect();
-            QPainter p(tile.pixmap);
-            p.drawLine(0,0,pixRect.right(),0);
-            p.drawLine(pixRect.right(), 0, pixRect.right(), pixRect.bottom());
-            p.drawLine(pixRect.right(), pixRect.bottom(), pixRect.left(), pixRect.bottom());
-            p.drawLine(pixRect.left(), pixRect.bottom(), 0,0);
-#endif // TILES_DEBUG
         }
         else
         {

@@ -409,7 +409,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
         if ( tile->rect.intersects( d->visibleRect ) )
             continue;
 
-        long pixels = tile->pixmap->width()*tile->pixmap->height();
+        qulonglong pixels = tile->pixmap->width()*tile->pixmap->height();
         d->totalPixels -= pixels;
         if ( numberOfBytes < 4*pixels )
             numberOfBytes = 0;

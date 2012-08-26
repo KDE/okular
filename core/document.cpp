@@ -1063,6 +1063,27 @@ void DocumentPrivate::sendGeneratorRequest()
             r->page()->setTilesManager( r->id(), tilesManager );
             r->setTile( true );
 
+            // Change normalizedRect to the smallest rect that contains all
+            // visible tiles.
+            if ( !r->normalizedRect().isNull() )
+            {
+                NormalizedRect tilesRect;
+                QList<Tile> tiles = tilesManager->tilesAt( r->normalizedRect() );
+                QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+                while ( tIt != tEnd )
+                {
+                    Tile tile = *tIt;
+                    if ( tilesRect.isNull() )
+                        tilesRect = tile.rect;
+                    else
+                        tilesRect |= tile.rect;
+
+                    ++tIt;
+                }
+
+                r->setNormalizedRect( tilesRect );
+            }
+
             request = r;
         }
         else if ( tilesManager && (long)r->width() * (long)r->height() < 6000000L )

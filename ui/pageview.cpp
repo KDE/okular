@@ -4234,9 +4234,9 @@ void PageView::slotSetMouseNormal()
     Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::Browse );
     // hide the messageWindow
     d->messageWindow->hide();
-    // reshow the annotator toolbar if hiding was forced
-    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-        slotToggleAnnotator( true );
+    // reshow the annotator toolbar if hiding was forced (and if it is not already visible)
+    if ( d->annotator && d->annotator->hidingWasForced() && d->aToggleAnnotator && !d->aToggleAnnotator->isChecked() )
+        d->aToggleAnnotator->trigger();
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
     Okular::Settings::self()->writeConfig();
@@ -4248,8 +4248,11 @@ void PageView::slotSetMouseZoom()
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
-    if ( d->annotator )
-        d->annotator->setEnabled( false );
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+    {
+        d->aToggleAnnotator->trigger();
+        d->annotator->setHidingForced( true );
+    }
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
     Okular::Settings::self()->writeConfig();
@@ -4261,8 +4264,11 @@ void PageView::slotSetMouseSelect()
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
-    if ( d->annotator )
-        d->annotator->setEnabled( false );
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+    {
+        d->aToggleAnnotator->trigger();
+        d->annotator->setHidingForced( true );
+    }
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
     Okular::Settings::self()->writeConfig();
@@ -4274,8 +4280,11 @@ void PageView::slotSetMouseTextSelect()
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select text" ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
-    if ( d->annotator )
-        d->annotator->setEnabled( false );
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+    {
+        d->aToggleAnnotator->trigger();
+        d->annotator->setHidingForced( true );
+    }
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
     Okular::Settings::self()->writeConfig();
@@ -4289,8 +4298,11 @@ void PageView::slotSetMouseTableSelect()
         "Draw a rectangle around the table, then click near edges to divide up; press Esc to clear."
         ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
-    if ( d->annotator )
-        d->annotator->setEnabled( false );
+    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+    {
+        d->aToggleAnnotator->trigger();
+        d->annotator->setHidingForced( true );
+    }
     // force an update of the cursor
     updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
     Okular::Settings::self()->writeConfig();
@@ -4347,6 +4359,7 @@ void PageView::slotToggleAnnotator( bool on )
 
     // initialize/reset annotator (and show/hide toolbar)
     d->annotator->setEnabled( on );
+    d->annotator->setHidingForced( false );
 
     inHere = false;
 }

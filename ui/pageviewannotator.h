@@ -60,6 +60,9 @@ class PageViewAnnotator : public QObject
 
         void setToolsEnabled( bool enabled );
 
+        void setHidingForced( bool forced );
+        bool hidingWasForced() const;
+
         // methods used when creating the annotation
         bool routeEvents() const;
         QRect routeEvent( QMouseEvent * event, PageViewItem * item );
@@ -85,6 +88,7 @@ class PageViewAnnotator : public QObject
         bool m_textToolsEnabled;
         bool m_toolsEnabled;
         bool m_continuousMode;
+        bool m_hidingWasForced;
 
         // creation related variables
         int m_lastToolID;

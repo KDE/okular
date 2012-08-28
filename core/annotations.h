@@ -83,9 +83,6 @@ class OKULAR_EXPORT AnnotationUtils
  *
  * An Annotation is an object (text note, highlight, sound, popup window, ..)
  * contained by a Page in the document.
- *
- * For current state in relations to pdf embedded annotations:
- * @see generator_pdf/README.Annotations
  */
 class OKULAR_EXPORT Annotation
 {

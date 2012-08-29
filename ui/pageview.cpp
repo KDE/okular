@@ -3737,8 +3737,9 @@ void PageView::slotRelayoutPages()
     QRect viewportRect( horizontalScrollBar()->value(), verticalScrollBar()->value(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
-    const bool facing = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing;
-    const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered;
+    const bool facing = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount > 1;
+    const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered ||
+                               (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount == 1);
     const bool overrideCentering = facingCentered && pageCount < 3;
     const bool centerFirstPage = facingCentered && !overrideCentering;
     const bool facingPages = facing || centerFirstPage;

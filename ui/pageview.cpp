@@ -1850,8 +1850,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     d->mouseGrabPos = mousePos;
 
                     // scroll page by position increment
-                    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + delta.x());
-                    verticalScrollBar()->setValue(verticalScrollBar()->value() + delta.y());
+                    scrollTo( horizontalScrollBar()->value() + delta.x(), verticalScrollBar()->value() + delta.y() );
                 }
             }
             else if ( rightButton && !d->mousePressPos.isNull() && d->aMouseSelect )
@@ -3622,8 +3621,27 @@ int PageView::viewColumns() const
 
 void PageView::center(int cx, int cy)
 {
-    horizontalScrollBar()->setValue(cx - viewport()->width() / 2);
-    verticalScrollBar()->setValue(cy - viewport()->height() / 2);
+    scrollTo( cx - viewport()->width() / 2, cy - viewport()->height() / 2 );
+}
+
+void PageView::scrollTo( int x, int y )
+{
+    bool prevState = d->blockPixmapsRequest;
+    int prevX = horizontalScrollBar()->value();
+    int prevY = verticalScrollBar()->value();
+    int newValue = -1;
+
+    d->blockPixmapsRequest = true;
+    horizontalScrollBar()->setValue( x );
+    verticalScrollBar()->setValue( y );
+
+    d->blockPixmapsRequest = prevState;
+    if ( prevX != horizontalScrollBar()->value() )
+        newValue = horizontalScrollBar()->value();
+    if ( prevY != verticalScrollBar()->value() )
+        newValue = verticalScrollBar()->value();
+
+    slotRequestVisiblePixmaps( newValue );
 }
 
 void PageView::toggleFormWidgets( bool on )
@@ -4271,8 +4289,7 @@ void PageView::slotAutoScoll()
 
 void PageView::slotDragScroll()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + d->dragScrollVector.x());
-    verticalScrollBar()->setValue(verticalScrollBar()->value() + d->dragScrollVector.y());
+    scrollTo( horizontalScrollBar()->value() + d->dragScrollVector.x(), verticalScrollBar()->value() + d->dragScrollVector.y() );
     QPoint p = contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() );
     selectionEndPoint( p );
 }

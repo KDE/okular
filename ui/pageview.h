@@ -183,6 +183,7 @@ Q_OBJECT
         int viewColumns() const;
 
         void center(int cx, int cy);
+        void scrollTo( int x, int y );
 
         void toggleFormWidgets( bool on );
 

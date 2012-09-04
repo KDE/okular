@@ -1197,6 +1197,7 @@ bool Part::openFile()
     bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
+    emit enableCloseAction( ok );
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
@@ -1247,6 +1248,7 @@ bool Part::openFile()
         // if can't open document, update windows so they display blank contents
         m_pageView->viewport()->update();
         m_thumbnailList->update();
+        setUrl( KUrl() );
         return false;
     }
 
@@ -1371,6 +1373,7 @@ bool Part::closeUrl(bool promptToSave)
     }
 
     slotHidePresentation();
+    emit enableCloseAction( false );
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );

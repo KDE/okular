@@ -86,6 +86,7 @@ private slots:
   void openUrl( const KUrl & url );
   void delayedOpen();
   void showOpenRecentMenu();
+  void closeUrl();
 
 signals:
   void restoreDocument(const KConfigGroup &group);
@@ -105,6 +106,7 @@ private:
   QStringList m_fileformats;
   bool m_fileformatsscanned;
   KAction* m_printAction;
+  KAction* m_closeAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;

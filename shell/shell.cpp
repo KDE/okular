@@ -102,6 +102,7 @@ void Shell::init()
   connect( this, SIGNAL(restoreDocument(KConfigGroup)),m_part, SLOT(restoreDocument(KConfigGroup)));
   connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), m_part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
   connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
+  connect( m_part, SIGNAL(enableCloseAction(bool)), m_closeAction, SLOT(setEnabled(bool)));
 
   readSettings();
 
@@ -142,6 +143,13 @@ void Shell::openUrl( const KUrl & url )
 {
     if ( m_part )
     {
+        if( !m_part->url().isEmpty() )
+        {
+            Shell* newShell = new Shell();
+            newShell->openUrl( url );
+            newShell->show();
+            return;
+        }
         if ( m_doc && m_args && m_args->isSet( "presentation" ) )
             m_doc->startPresentation();
         bool openOk = m_part->openUrl( url );
@@ -156,6 +164,10 @@ void Shell::openUrl( const KUrl & url )
     }
 }
 
+void Shell::closeUrl()
+{
+    m_part->closeUrl();
+}
 
 void Shell::readSettings()
 {
@@ -196,6 +208,8 @@ void Shell::setupActions()
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( m_part, SLOT(slotPrint()), actionCollection() );
   m_printAction->setEnabled( false );
+  m_closeAction = KStandardAction::close( this, SLOT(closeUrl()), actionCollection() );
+  m_closeAction->setEnabled( false );
   KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
 
   setStandardToolBarMenuEnabled(true);
@@ -284,7 +298,6 @@ void Shell::fileOpen()
     KUrl url = dlg.selectedUrl();
     if ( !url.isEmpty() )
     {
-        m_part->closeUrl( false );
         openUrl( url );
     }
 }

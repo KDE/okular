@@ -232,8 +232,10 @@ Q_OBJECT
         void slotSetMouseTextSelect();
         void slotSetMouseTableSelect();
         void slotToggleAnnotator( bool );
-        void slotScrollUp();
-        void slotScrollDown();
+        void slotAutoScrollUp();
+        void slotAutoScrollDown();
+        void slotScrollUp( bool singleStep = false );
+        void slotScrollDown( bool singleStep = false );
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();

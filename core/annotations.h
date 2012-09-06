@@ -1051,16 +1051,6 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         QColor geometricalInnerColor() const;
 
         /**
-         * Sets the point @p width of the geometrical annotation.
-         */
-        KDE_DEPRECATED void setGeometricalPointWidth( int width );
-
-        /**
-         * Returns the point width of the geometrical annotation.
-         */
-        KDE_DEPRECATED int geometricalPointWidth() const;
-
-        /**
          * Returns the sub type of the geometrical annotation.
          */
         SubType subType() const;

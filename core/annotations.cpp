@@ -1546,18 +1546,6 @@ QColor GeomAnnotation::geometricalInnerColor() const
     return d->m_geomInnerColor;
 }
 
-void GeomAnnotation::setGeometricalPointWidth( int width )
-{
-    Q_D( GeomAnnotation );
-    d->m_style.setWidth( width );
-}
-
-int GeomAnnotation::geometricalPointWidth() const
-{
-    Q_D( const GeomAnnotation );
-    return static_cast< int >( d->m_style.width() );
-}
-
 Annotation::SubType GeomAnnotation::subType() const
 {
     return AGeom;

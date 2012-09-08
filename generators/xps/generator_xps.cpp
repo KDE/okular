@@ -393,18 +393,18 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
 /**
    Parse a "Matrix" attribute string
    \param csv the comma separated list of values
-   \return the QMatrix corresponding to the affine transform
+   \return the QTransform corresponding to the affine transform
    given in the attribute
 
    \see XPS specification 7.4.1
 */
-static QMatrix attsToMatrix( const QString &csv )
+static QTransform attsToMatrix( const QString &csv )
 {
     QStringList values = csv.split( ',' );
     if ( values.count() != 6 ) {
-        return QMatrix(); // that is an identity matrix - no effect
+        return QTransform(); // that is an identity matrix - no effect
     }
-    return QMatrix( values.at(0).toDouble(), values.at(1).toDouble(),
+    return QTransform( values.at(0).toDouble(), values.at(1).toDouble(),
                     values.at(2).toDouble(), values.at(3).toDouble(),
                     values.at(4).toDouble(), values.at(5).toDouble() );
 }
@@ -440,12 +440,12 @@ static QPen parseRscRefColorForPen( const QString &data )
 /**
    \return Matrix specified by given data or by referenced dictionary
 */
-static QMatrix parseRscRefMatrix( const QString &data )
+static QTransform parseRscRefMatrix( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
         kDebug(XpsDebug) << "Reference" << data;
-        return QMatrix();
+        return QTransform();
     } else {
         return attsToMatrix( data );
     }
@@ -878,7 +878,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     //RenderTransform
     att = node.attributes.value("RenderTransform");
     if (!att.isEmpty()) {
-        m_painter->setWorldMatrix( parseRscRefMatrix( att ), true);
+        m_painter->setWorldTransform( parseRscRefMatrix( att ), true);
     }
 
     // Clip
@@ -984,27 +984,27 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     QImage image = m_page->loadImageFromFile( node.attributes.value( "ImageSource" ) );
 
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewbox
-    QMatrix viewboxMatrix = QMatrix( viewbox.width() * image.physicalDpiX() / 96, 0, 0, viewbox.height() * image.physicalDpiY() / 96, viewbox.x(), viewbox.y() );
+    QTransform viewboxMatrix = QTransform( viewbox.width() * image.physicalDpiX() / 96, 0, 0, viewbox.height() * image.physicalDpiY() / 96, viewbox.x(), viewbox.y() );
 
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewport
     //TODO Take ViewPort into account
-    QMatrix viewportMatrix;
+    QTransform viewportMatrix;
     att = node.attributes.value( "Transform" );
     if ( att.isEmpty() ) {
         QVariant data = node.getChildData( "ImageBrush.Transform" );
-        if (data.canConvert<QMatrix>()) {
-            viewportMatrix = data.value<QMatrix>();
+        if (data.canConvert<QTransform>()) {
+            viewportMatrix = data.value<QTransform>();
         } else {
-            viewportMatrix = QMatrix();
+            viewportMatrix = QTransform();
         }
     } else {
         viewportMatrix = parseRscRefMatrix( att );
     }
-    viewportMatrix = viewportMatrix * QMatrix( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewport.y() );
+    viewportMatrix = viewportMatrix * QTransform( viewport.width(), 0, 0, viewport.height(), viewport.x(), viewport.y() );
 
 
     brush = QBrush( image );
-    brush.setMatrix( viewboxMatrix.inverted() * viewportMatrix );
+    brush.setTransform( viewboxMatrix.inverted() * viewportMatrix );
 
     node.data = qVariantFromValue( brush );
 }
@@ -1135,10 +1135,10 @@ void XpsHandler::processPath( XpsRenderNode &node )
     // RenderTransform
     att = node.attributes.value( "RenderTransform" );
     if (! att.isEmpty() ) {
-        m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
+        m_painter->setWorldTransform( parseRscRefMatrix( att ), true );
     }
     if ( !pathdata->transform.isIdentity() ) {
-        m_painter->setWorldMatrix( pathdata->transform, true );
+        m_painter->setWorldTransform( pathdata->transform, true );
     }
 
     Q_FOREACH ( XpsPathFigure *figure, pathdata->paths ) {
@@ -1292,7 +1292,7 @@ void XpsHandler::processStartElement( XpsRenderNode &node )
         m_painter->save();
         QString att = node.attributes.value( "RenderTransform" );
         if ( !att.isEmpty() ) {
-            m_painter->setWorldMatrix( parseRscRefMatrix( att ), true );
+            m_painter->setWorldTransform( parseRscRefMatrix( att ), true );
         }
         att = node.attributes.value( "Opacity" );
         if ( !att.isEmpty() ) {
@@ -1316,11 +1316,11 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processPath( node );
     } else if (node.name == "MatrixTransform") {
         //TODO Ignoring x:key
-        node.data = qVariantFromValue( QMatrix( attsToMatrix( node.attributes.value( "Matrix" ) ) ) );
+        node.data = qVariantFromValue( QTransform( attsToMatrix( node.attributes.value( "Matrix" ) ) ) );
     } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
         QVariant data = node.getRequiredChildData( "MatrixTransform" );
-        if (data.canConvert<QMatrix>()) {
-            m_painter->setWorldMatrix( data.value<QMatrix>(), true );
+        if (data.canConvert<QTransform>()) {
+            m_painter->setWorldTransform( data.value<QTransform>(), true );
         }
     } else if (node.name == "Canvas") {
         m_painter->restore();
@@ -1461,7 +1461,7 @@ bool XpsPage::renderToPainter( QPainter *painter )
 {
     XpsHandler handler( this );
     handler.m_painter = painter;
-    handler.m_painter->setWorldMatrix(QMatrix().scale((qreal)painter->device()->width() / size().width(), (qreal)painter->device()->height() / size().height()));
+    handler.m_painter->setWorldTransform(QTransform().scale((qreal)painter->device()->width() / size().width(), (qreal)painter->device()->height() / size().height()));
     QXmlSimpleReader parser;
     parser.setContentHandler( &handler );
     parser.setErrorHandler( &handler );
@@ -1617,9 +1617,9 @@ Okular::TextPage* XpsPage::textPage()
     QXmlStreamReader xml;
     xml.addData( readFileOrDirectoryParts( pageFile ) );
 
-    QMatrix matrix = QMatrix();
-    QStack<QMatrix> matrices;
-    matrices.push( QMatrix() );
+    QTransform matrix = QTransform();
+    QStack<QTransform> matrices;
+    matrices.push( QTransform() );
     bool useMatrix = false;
     QXmlStreamAttributes glyphsAtts;
 

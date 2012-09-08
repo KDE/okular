@@ -1181,7 +1181,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
                  * Transforms the quad coordinates with the transformation defined
                  * by @p matrix.
                  */
-                void transform( const QMatrix &matrix );
+                void transform( const QTransform &matrix );
 
             private:
                 class Private;

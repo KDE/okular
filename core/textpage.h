@@ -16,7 +16,7 @@
 #include "okular_export.h"
 #include "global.h"
 
-class QMatrix;
+class QTransform;
 
 namespace Okular {
 
@@ -70,7 +70,7 @@ class OKULAR_EXPORT TextEntity
         /**
          * Returns the transformed area of the text entity.
          */
-        NormalizedRect transformedArea(const QMatrix &matrix) const;
+        NormalizedRect transformedArea(const QTransform &matrix) const;
 
     private:
         QString m_text;

@@ -86,7 +86,7 @@ void GSRendererThread::run()
             {
                 case Okular::Rotation90:
                 {
-                    QMatrix m;
+                    QTransform m;
                     m.rotate(90);
                     img = img.transformed( m );
                     break;
@@ -94,14 +94,14 @@ void GSRendererThread::run()
 
                 case Okular::Rotation180:
                 {
-                    QMatrix m;
+                    QTransform m;
                     m.rotate(180);
                     img = img.transformed( m );
                     break;
                 }
                 case Okular::Rotation270:
                 {
-                    QMatrix m;
+                    QTransform m;
                     m.rotate(270);
                     img = img.transformed( m );
                 }

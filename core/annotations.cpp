@@ -849,18 +849,18 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     }
 }
 
-void AnnotationPrivate::annotationTransform( const QMatrix &matrix )
+void AnnotationPrivate::annotationTransform( const QTransform &matrix )
 {
     resetTransformation();
     transform( matrix );
 }
 
-void AnnotationPrivate::transform( const QMatrix &matrix )
+void AnnotationPrivate::transform( const QTransform &matrix )
 {
     m_transformedBoundary.transform( matrix );
 }
 
-void AnnotationPrivate::baseTransform( const QMatrix &matrix )
+void AnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     m_boundary.transform( matrix );
 }
@@ -898,8 +898,8 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
         virtual bool openDialogAfterCreation() const;
@@ -1130,7 +1130,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void TextAnnotationPrivate::transform( const QMatrix &matrix )
+void TextAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1139,7 +1139,7 @@ void TextAnnotationPrivate::transform( const QMatrix &matrix )
     }
 }
 
-void TextAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void TextAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1190,8 +1190,8 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
@@ -1434,7 +1434,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void LineAnnotationPrivate::transform( const QMatrix &matrix )
+void LineAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1443,7 +1443,7 @@ void LineAnnotationPrivate::transform( const QMatrix &matrix )
         it.next().transform( matrix );
 }
 
-void LineAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void LineAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1662,7 +1662,7 @@ double HighlightAnnotation::Quad::feather() const
     return d->m_feather;
 }
 
-void HighlightAnnotation::Quad::transform( const QMatrix &matrix )
+void HighlightAnnotation::Quad::transform( const QTransform &matrix )
 {
     for ( int i = 0; i < 4; ++i ) {
         d->m_transformedPoints[ i ] = d->m_points[ i ];
@@ -1679,8 +1679,8 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
 
         HighlightAnnotation::HighlightType m_highlightType;
         QList< HighlightAnnotation::Quad > m_highlightQuads;
@@ -1725,7 +1725,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
             q.setCapEnd( qe.hasAttribute( "end" ) );
             q.setFeather( qe.attribute( "feather", "0.1" ).toDouble() );
 
-            q.transform( QMatrix() );
+            q.transform( QTransform() );
 
             d->m_highlightQuads.append( q );
         }
@@ -1800,7 +1800,7 @@ Annotation::SubType HighlightAnnotation::subType() const
     return AHighlight;
 }
 
-void HighlightAnnotationPrivate::transform( const QMatrix &matrix )
+void HighlightAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1809,7 +1809,7 @@ void HighlightAnnotationPrivate::transform( const QMatrix &matrix )
         it.next().transform( matrix );
 }
 
-void HighlightAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void HighlightAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1904,8 +1904,8 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
@@ -2029,7 +2029,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void InkAnnotationPrivate::transform( const QMatrix &matrix )
+void InkAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -2041,7 +2041,7 @@ void InkAnnotationPrivate::transform( const QMatrix &matrix )
     }
 }
 
-void InkAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void InkAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 

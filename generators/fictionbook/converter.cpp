@@ -67,7 +67,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     Document fbDocument( fileName );
     if ( !fbDocument.open() ) {
         emit error( fbDocument.lastErrorString(), -1 );
-        return false;
+        return 0;
     }
 
     mTextDocument = new QTextDocument;
@@ -97,7 +97,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     if ( documentElement.tagName() != QLatin1String( "FictionBook" ) ) {
         emit error( i18n( "Document is not a valid FictionBook" ), -1 );
         delete mCursor;
-        return false;
+        return 0;
     }
 
     /**
@@ -108,7 +108,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         if ( element.tagName() == QLatin1String( "binary" ) ) {
             if ( !convertBinary( element ) ) {
                 delete mCursor;
-                return false;
+                return 0;
             }
         }
 
@@ -123,7 +123,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         if ( element.tagName() == QLatin1String( "description" ) ) {
             if ( !convertDescription( element ) ) {
                 delete mCursor;
-                return false;
+                return 0;
             }
         } else if ( element.tagName() == QLatin1String( "body" ) ) {
             if ( !mTitleInfo->mCoverPage.isNull() ) {
@@ -165,7 +165,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
             if ( !convertBody( element ) ) {
                 delete mCursor;
-                return false;
+                return 0;
             }
         }
 

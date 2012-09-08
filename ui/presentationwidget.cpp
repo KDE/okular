@@ -100,6 +100,7 @@ struct PresentationFrame
     const Okular::Page * page;
     QRect geometry;
     QHash< Okular::Movie *, VideoWidget * > videoWidgets;
+    QLinkedList< SmoothPath > drawings;
 };
 
 
@@ -365,9 +366,6 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
 {
     if ( previousPage != -1 )
     {
-        // remove the drawings on the old page before switching
-        clearDrawings();
-
         // stop video playback
         Q_FOREACH ( VideoWidget *vw, m_frames[ previousPage ]->videoWidgets )
         {
@@ -591,7 +589,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         if ( m_drawingEngine->creationCompleted() )
         {
             // add drawing to current page
-            m_currentPageDrawings << m_drawingEngine->endSmoothPath();
+            m_frames[ m_frameIndex ]->drawings << m_drawingEngine->endSmoothPath();
 
             // manually disable and re-enable the pencil mode, so we can do
             // cleaning of the actual drawer and create a new one just after
@@ -735,7 +733,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         painter.translate( geom.topLeft() );
         painter.setRenderHints( QPainter::Antialiasing );
 
-        foreach ( const SmoothPath &drawing, m_currentPageDrawings )
+        foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
             drawing.paint( &painter, geom.width(), geom.height() );
 
         if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
@@ -1391,7 +1389,8 @@ void PresentationWidget::togglePencilMode( bool on )
 
 void PresentationWidget::clearDrawings()
 {
-    m_currentPageDrawings.clear();
+    if ( m_frameIndex != -1 )
+        m_frames[ m_frameIndex ]->drawings.clear();
     update();
 }
 

@@ -14,7 +14,6 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qwidget.h>
-#include "ui/annotationtools.h"
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/pagetransition.h"
@@ -24,6 +23,7 @@ class QToolBar;
 class QTimer;
 class KActionCollection;
 class KSelectAction;
+class SmoothPathEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
 
@@ -105,7 +105,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QRect m_overlayGeometry;
         const Okular::Action * m_pressedLink;
         bool m_handCursor;
-        QLinkedList< SmoothPath > m_currentPageDrawings;
         SmoothPathEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;

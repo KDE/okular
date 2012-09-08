@@ -96,7 +96,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   if ( !document.setContent( &source, &reader, &errorMsg ) ) {
     emit error( i18n( "Invalid XML document: %1", errorMsg ), -1 );
     delete mCursor;
-    return false;
+    return 0;
   }
 
   mStyleInformation = new StyleInformation();
@@ -109,7 +109,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   if ( !styleParser.parse() ) {
     emit error( i18n( "Unable to read style information" ), -1 );
     delete mCursor;
-    return false;
+    return 0;
   }
 
   /**
@@ -156,7 +156,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       if ( !convertBody( element ) ) {
         emit error( i18n( "Unable to convert document content" ), -1 );
         delete mCursor;
-        return false;
+        return 0;
       }
     }
 

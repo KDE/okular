@@ -70,6 +70,13 @@ void GSRendererThread::run()
 
             spectre_page_render(req.spectrePage, m_renderContext, &data, &row_length);
 
+            // Qt needs the missing alpha of QImage::Format_RGB32 to be 0xff
+            if (data[3] != 0xff)
+            {
+                for (int i = 3; i < row_length * wantedHeight; i += 4)
+                    data[i] = 0xff;
+            }
+
             QImage img;
             if (row_length == wantedWidth * 4)
             {

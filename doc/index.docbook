@@ -278,8 +278,9 @@ Add a 'Find Previous' entry
 			<para>
 				You can also draw on the current page with a pencil. Click on the
 				<guilabel>Toggle Drawing Mode</guilabel> icon in the top bar to enable or disable the possibility
-				of draw in the presentation mode. The drawings are cleared automatically when leaving the presentation
-				mode, switching to another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
+				to draw in the presentation mode. The drawings are cleared automatically when leaving the presentation
+				mode. You can also click on the <guilabel>Erase Drawings</guilabel> icon to remove the
+				drawings in the current page.
 			</para>
 			<para>
 				The presentation mode has support for more than one screen in a multi-monitor configuration.

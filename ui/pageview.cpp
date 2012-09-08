@@ -193,7 +193,6 @@ public:
     KAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
-    KToggleAction * aZoomFitText;
     KActionMenu * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
@@ -301,7 +300,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aToggleAnnotator = 0;
     d->aZoomFitWidth = 0;
     d->aZoomFitPage = 0;
-    d->aZoomFitText = 0;
     d->aViewMode = 0;
     d->aViewContinuous = 0;
     d->aPrevAction = 0;
@@ -457,12 +455,6 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aZoomFitPage  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Page"), this);
     ac->addAction("view_fit_to_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL(toggled(bool)), SLOT(slotFitToPageToggled(bool)) );
-
-/*
-    d->aZoomFitText  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Text"), this);
-    ac->addAction("zoom_fit_text", d->aZoomFitText );
-    connect( d->aZoomFitText, SIGNAL(toggled(bool)), SLOT(slotFitToTextToggled(bool)) );
-*/
 
     // View-Layout actions
     d->aViewMode = new KActionMenu( KIcon( "view-split-left-right" ), i18n( "&View Mode" ), this );
@@ -628,7 +620,6 @@ void PageView::fitPageWidth( int page )
     Okular::Settings::setViewMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
-//    d->aZoomFitText->setChecked( false );
     d->aViewMode->menu()->actions().at( 0 )->setChecked( true );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
@@ -949,8 +940,6 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aZoomFitWidth->setEnabled( haspages );
     if ( d->aZoomFitPage )
         d->aZoomFitPage->setEnabled( haspages );
-    if ( d->aZoomFitText )
-        d->aZoomFitText->setEnabled( haspages );
 
     if ( d->aZoom )
     {
@@ -3417,9 +3406,6 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         case ZoomFitPage:
             checkedZoomAction = d->aZoomFitPage;
             break;
-        case ZoomFitText:
-            checkedZoomAction = d->aZoomFitText;
-            break;
         case ZoomRefreshCurrent:
             newZoomMode = ZoomFixed;
             d->zoomFactor = -1;
@@ -3449,7 +3435,6 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         {
             d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
             d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
-//        d->aZoomFitText->setChecked( checkedZoomAction == d->aZoomFitText );
         }
     }
     else if ( newZoomMode == ZoomFixed && newFactor == d->zoomFactor )
@@ -3469,13 +3454,12 @@ void PageView::updateZoomText()
 
     // add items that describe fit actions
     QStringList translated;
-    translated << i18n("Fit Width") << i18n("Fit Page") /*<< i18n("Fit Text")*/;
+    translated << i18n("Fit Width") << i18n("Fit Page");
 
     // add percent items
     QString double_oh( "00" );
     const float zoomValue[10] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00 };
-    int idx = 0,
-        selIdx = 2; // use 3 if "fit text" present
+    int idx = 0, selIdx = 2;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     while ( idx < 10 || !inserted )
     {
@@ -3502,8 +3486,6 @@ void PageView::updateZoomText()
         selIdx = 0;
     else if ( d->zoomMode == ZoomFitPage )
         selIdx = 1;
-    else if ( d->zoomMode == ZoomFitText )
-        selIdx = 2;
     // we have to temporarily enable the actions as otherwise we can't set a new current item
     d->aZoom->setEnabled( true );
     d->aZoom->selectableActionGroup()->setEnabled( true );
@@ -4176,11 +4158,6 @@ void PageView::slotFitToWidthToggled( bool on )
 void PageView::slotFitToPageToggled( bool on )
 {
     if ( on ) updateZoom( ZoomFitPage );
-}
-
-void PageView::slotFitToTextToggled( bool on )
-{
-    if ( on ) updateZoom( ZoomFitText );
 }
 
 void PageView::slotViewMode( QAction *action )

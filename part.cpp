@@ -991,7 +991,7 @@ void Part::setWindowTitleFromDocument()
 {
     // If 'DocumentTitle' should be used, check if the document has one. If
     // either case is false, use the file name.
-    QString title = realUrl().fileName();
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? realUrl().pathOrUrl() : realUrl().fileName();
 
     if ( Okular::Settings::displayDocumentTitle() )
     {

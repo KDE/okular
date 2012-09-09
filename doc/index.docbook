@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-06-29</date>
-		<releaseinfo>0.15 (&kde; 4.9)</releaseinfo>
+		<date>2012-09-09</date>
+		<releaseinfo>0.15.70 (&kde; 4.10)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -292,7 +292,7 @@ Add a 'Find Previous' entry
 			</para>
 		</sect1>
 		<sect1 id="inverse_search">
-		
+
 		<title>Inverse Search between &latex; Editors and &okular;</title>
 
 		<para>Inverse search is a very useful feature when you are writing a &latex; document yourself. If everything is set up properly, you can
@@ -311,7 +311,7 @@ Add a 'Find Previous' entry
 		corresponding line. Remember to tell &okular; to use proper editor, in &okular;'s
 		menu item <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Okular...</guimenuitem></menuchoice>
 		(on the page <guimenuitem>Editor</guimenuitem>).</para>
-		
+
 		<para>For more details on editor configuration please refer to the <link linkend="configeditor">corresponding section of this manual</link>.</para>
 
 		<screenshot>
@@ -411,7 +411,7 @@ Add a 'Find Previous' entry
 			</para>
 				<note>
 					<para>
-						It is not possible to save annotations into &PDF; file if original file was encrypted.
+						It is not possible to save annotations into &PDF; file if original file was encrypted and &okular; uses Poppler libraries of version which is lower than 0.22.
 					</para>
 				</note>
 				<note>
@@ -627,7 +627,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not encrypted or secured using DRM) to save annotations with &PDF; files (Poppler >= 0.20 required).</para>
+					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files (Poppler >= 0.22 required).</para>
 					</listitem>
 				</varlistentry>
 
@@ -1450,11 +1450,18 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Display document title in title bar</guilabel></term>
+					<term><guilabel>Display document title in title bar if available</guilabel></term>
 					<listitem>
 						<para>Whether to show the current document title in the title bar of &okular; window. If no metadata for title
 						found in the document or this item is unchecked &okular; shows filename of the document.
 						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>When not displaying document title</guilabel></term>
+					<listitem>
+					  <para>You can choose any of two options, <guilabel>Display file name only</guilabel> or <guilabel>Display full file path</guilabel>.
+					  </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

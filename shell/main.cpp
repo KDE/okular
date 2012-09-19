@@ -17,6 +17,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <QtDBus/qdbusinterface.h>
+#include <QTextStream>
 #include "aboutdata.h"
 #include "shellutils.h"
 
@@ -73,6 +74,12 @@ int main(int argc, char** argv)
         {
             Shell* widget = new Shell(args);
             widget->show();
+        }
+        else if (args->isSet( "unique" ) && args->count() > 1)
+        {
+            QTextStream stream(stderr);
+            stream << i18n( "Error: Can't open more than one document with the --unique switch" ) << endl;
+            return -1;
         }
         else
         {

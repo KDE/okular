@@ -110,6 +110,8 @@ void Shell::init()
   if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
   {
     m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
+    if (!m_unique)
+        KMessageBox::information(this, i18n("There is already an unique Okular instance running. This instance won't be the unique one."));
   }
   
   QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
@@ -145,6 +147,11 @@ void Shell::openUrl( const KUrl & url )
     {
         if( !m_part->url().isEmpty() )
         {
+            if( m_unique )
+            {
+                KMessageBox::error(this, i18n("Can't error more than one document in the unique Okular instance."));
+                return;
+            }
             Shell* newShell = new Shell();
             newShell->openUrl( url );
             newShell->show();

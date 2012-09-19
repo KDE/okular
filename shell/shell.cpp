@@ -149,7 +149,7 @@ void Shell::openUrl( const KUrl & url )
         {
             if( m_unique )
             {
-                KMessageBox::error(this, i18n("Can't error more than one document in the unique Okular instance."));
+                KMessageBox::error(this, i18n("Can't open more than one document in the unique Okular instance."));
             }
             else
             {

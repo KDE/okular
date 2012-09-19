@@ -150,23 +150,27 @@ void Shell::openUrl( const KUrl & url )
             if( m_unique )
             {
                 KMessageBox::error(this, i18n("Can't error more than one document in the unique Okular instance."));
-                return;
             }
-            Shell* newShell = new Shell();
-            newShell->openUrl( url );
-            newShell->show();
-            return;
-        }
-        if ( m_doc && m_args && m_args->isSet( "presentation" ) )
-            m_doc->startPresentation();
-        bool openOk = m_part->openUrl( url );
-        const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
-        if ( !isstdin )
-        {
-            if ( openOk )
-                m_recent->addUrl( url );
             else
-                m_recent->removeUrl( url );
+            {
+                Shell* newShell = new Shell();
+                newShell->openUrl( url );
+                newShell->show();
+            }
+        }
+        else
+        {
+            if ( m_doc && m_args && m_args->isSet( "presentation" ) )
+                m_doc->startPresentation();
+            bool openOk = m_part->openUrl( url );
+            const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+            if ( !isstdin )
+            {
+                if ( openOk )
+                    m_recent->addUrl( url );
+                else
+                    m_recent->removeUrl( url );
+            }
         }
     }
 }

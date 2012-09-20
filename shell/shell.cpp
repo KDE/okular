@@ -111,7 +111,7 @@ void Shell::init()
   {
     m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
     if (!m_unique)
-        KMessageBox::information(this, i18n("There is already an unique Okular instance running. This instance won't be the unique one."));
+        KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
   }
   
   QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);

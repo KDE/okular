@@ -318,7 +318,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, m_document, this );
                 frame->videoWidgets.insert( movieAnn->movie(), vw );
-                vw->pageEntered();
+                vw->pageInitialized();
             }
         }
         frame->recalcGeometry( m_width, m_height, screenRatio );

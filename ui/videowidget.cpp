@@ -212,7 +212,6 @@ void VideoWidget::Private::setPosterImage( const QImage &image )
     }
 
     posterImagePage->setPixmap( QPixmap::fromImage( image ) );
-    q->show();
 }
 
 void VideoWidget::Private::stateChanged( Phonon::State newState, Phonon::State )
@@ -321,6 +320,11 @@ Okular::NormalizedRect VideoWidget::normGeometry() const
 bool VideoWidget::isPlaying() const
 {
     return d->player->isPlaying();
+}
+
+void VideoWidget::pageInitialized()
+{
+    hide();
 }
 
 void VideoWidget::pageEntered()

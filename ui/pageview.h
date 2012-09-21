@@ -82,6 +82,7 @@ Q_OBJECT
         void notifyContentsCleared( int changedFlags );
         void notifyZoom(int factor);
         bool canUnloadPixmap( int pageNum ) const;
+        void notifyCurrentPageChanged( int previous, int current );
 
         // inherited from View
         uint viewId() const { return observerId(); }

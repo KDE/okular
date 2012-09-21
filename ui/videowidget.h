@@ -31,6 +31,11 @@ class VideoWidget : public QWidget
         bool isPlaying() const;
 
         /**
+         * This method is called when the page the video widget is located on has been initialized.
+         */
+        void pageInitialized();
+
+        /**
          * This method is called when the page the video widget is located on has been entered.
          */
         void pageEntered();

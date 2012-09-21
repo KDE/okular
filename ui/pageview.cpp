@@ -863,7 +863,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, d->document, viewport() );
                 item->videoWidgets().insert( movieAnn->movie(), vw );
-                vw->pageEntered();
+                vw->pageInitialized();
             }
         }
     }
@@ -1232,6 +1232,30 @@ bool PageView::canUnloadPixmap( int pageNumber ) const
     // if hidden premit unloading
     return true;
 }
+
+void PageView::notifyCurrentPageChanged( int previous, int current )
+{
+    if ( previous != -1 )
+    {
+        PageViewItem * item = d->items.at( previous );
+        if ( item )
+        {
+            Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
+                videoWidget->pageLeft();
+        }
+    }
+
+    if ( current != -1 )
+    {
+        PageViewItem * item = d->items.at( current );
+        if ( item )
+        {
+            Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
+                videoWidget->pageEntered();
+        }
+    }
+}
+
 //END DocumentObserver inherited methods
 
 //BEGIN View inherited methods

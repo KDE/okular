@@ -131,20 +131,15 @@ const Okular::DocumentInfo* PluckerGenerator::generateDocumentInfo()
     return &mDocumentInfo;
 }
 
-bool PluckerGenerator::canGeneratePixmap() const
-{
-    return true;
-}
-
-void PluckerGenerator::generatePixmap( Okular::PixmapRequest * request )
+QImage PluckerGenerator::image( Okular::PixmapRequest *request )
 {
     const QSizeF size = mPages[ request->pageNumber() ]->size();
 
-    QPixmap *pixmap = new QPixmap( request->width(), request->height() );
-    pixmap->fill( Qt::white );
+    QImage image( request->width(), request->height(), QImage::Format_ARGB32_Premultiplied );
+    image.fill( Qt::white );
 
     QPainter p;
-    p.begin( pixmap );
+    p.begin( &image );
 
     qreal width = request->width();
     qreal height = request->height();
@@ -152,9 +147,6 @@ void PluckerGenerator::generatePixmap( Okular::PixmapRequest * request )
     p.scale( width / (qreal)size.width(), height / (qreal)size.height() );
     mPages[ request->pageNumber() ]->drawContents( &p );
     p.end();
-
-    request->page()->setPixmap( request->id(), pixmap );
-
 
     if ( !mLinkAdded.contains( request->pageNumber() ) ) {
         QLinkedList<Okular::ObjectRect*> objects;
@@ -176,7 +168,7 @@ void PluckerGenerator::generatePixmap( Okular::PixmapRequest * request )
         mLinkAdded.insert( request->pageNumber() );
     }
 
-    signalPixmapRequestDone( request );
+    return image;
 }
 
 Okular::ExportFormat::List PluckerGenerator::exportFormats() const

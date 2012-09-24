@@ -32,9 +32,9 @@ class PluckerGenerator : public Okular::Generator
 
         // [INHERITED] document information
         const Okular::DocumentInfo * generateDocumentInfo();
-
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest *request );
+        
+        // [INHERITED] perform actions on document / pages
+        QImage image( Okular::PixmapRequest *request );
 
         // [INHERITED] text exporting
         Okular::ExportFormat::List exportFormats() const;

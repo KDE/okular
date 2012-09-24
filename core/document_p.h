@@ -63,6 +63,21 @@ namespace Okular {
 
 class FontExtractionThread;
 
+struct DoContinueDirectionMatchSearchStruct
+{
+    bool forward;
+    QSet< int > *pagesToNotify;
+    RegularAreaRect *match;
+    int currentPage;
+    int searchID;
+    QString text;
+    Qt::CaseSensitivity caseSensitivity;
+    bool moveViewport;
+    QColor color;
+    bool noDialogs;
+    int pagesDone;
+};
+
 class DocumentPrivate
 {
     public:
@@ -135,8 +150,7 @@ class DocumentPrivate
         void slotGeneratorConfigChanged( const QString& );
         void refreshPixmaps( int );
         void _o_configChanged();
-        void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
-        void doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
+        void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int caseSensitivity, const QColor & color, bool matchAll);
 
@@ -248,3 +262,5 @@ class DocumentPrivate
 }
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

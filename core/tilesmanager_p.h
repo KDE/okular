@@ -110,6 +110,17 @@ class OKULAR_EXPORT TilesManager
         void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 
         /**
+         * Checks whether a given region has already been requested
+         */
+        bool isRequesting( const NormalizedRect &rect, int pageWidth, int pageHeight ) const;
+
+        /**
+         * Sets a region to be requested so the tiles manager knows which
+         * pixmaps to expect and discard those not useful anymore (late pixmaps)
+         */
+        void setRequest( const NormalizedRect &rect, int pageWidth, int pageHeight );
+
+        /**
          * Inform the new width of the page and mark all tiles to repaint
          */
         void setWidth( int width );

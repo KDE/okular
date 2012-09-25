@@ -1038,6 +1038,11 @@ void DocumentPrivate::sendGeneratorRequest()
             //kDebug() << "Ignoring request that doesn't fit in cache";
             delete r;
         }
+        else if ( tilesManager && tilesManager->isRequesting( r->normalizedRect(), r->width(), r->height() ) )
+        {
+            m_pixmapRequestsStack.pop_back();
+            delete r;
+        }
         else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->supportsTiles() && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
@@ -1050,7 +1055,7 @@ void DocumentPrivate::sendGeneratorRequest()
             if ( pixmap )
             {
                 tilesManager = new TilesManager( pixmap->width(), pixmap->height(), r->page()->rotation() );
-                tilesManager->setPixmap( pixmap, r->normalizedRect() );
+                tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
                 tilesManager->setWidth( r->width() );
                 tilesManager->setHeight( r->height() );
             }
@@ -1124,7 +1129,7 @@ void DocumentPrivate::sendGeneratorRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    const TilesManager * tm = request->page()->tilesManager( request->id() );
+    TilesManager * tm = request->page()->tilesManager( request->id() );
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1139,6 +1144,9 @@ void DocumentPrivate::sendGeneratorRequest()
         QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
         kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous();
         m_pixmapRequestsStack.removeAll ( request );
+
+        if ( tm )
+            tm->setRequest( request->normalizedRect(), request->width(), request->height() );
 
         if ( (int)m_rotation % 2 )
             request->d->swap();

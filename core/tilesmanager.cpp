@@ -11,6 +11,7 @@
 #include <QPixmap>
 #include <QtCore/qmath.h>
 #include <QList>
+#include <QMutex>
 
 #define RANGE_MAX 1073741823
 #define RANGE_MIN -1073741824
@@ -61,9 +62,12 @@ class TilesManager::Private
         long totalPixels;
         Rotation rotation;
         NormalizedRect visibleRect;
+        NormalizedRect requestRect;
+        int requestWidth;
+        int requestHeight;
+        QMutex requestMutex;
 
         QList<Tile*> rankedTiles;
-        QSize tileSize;
 };
 
 TilesManager::Private::Private()
@@ -71,7 +75,9 @@ TilesManager::Private::Private()
     , height( 0 )
     , totalPixels( 0 )
     , rotation( Rotation0 )
-    , tileSize( QSize() )
+    , requestRect( NormalizedRect() )
+    , requestWidth( 0 )
+    , requestHeight( 0 )
 {
 }
 
@@ -118,12 +124,14 @@ void TilesManager::setWidth( int width )
     if ( width == d->width )
         return;
 
+    d->requestMutex.lock();
     d->width = width;
 
     for ( int i = 0; i < 16; ++i )
     {
         d->markDirty( d->tiles[ i ] );
     }
+    d->requestMutex.unlock();
 }
 
 int TilesManager::width() const {
@@ -135,7 +143,9 @@ void TilesManager::setHeight( int height )
     if ( height == d->height )
         return;
 
+    d->requestMutex.lock();
     d->height = height;
+    d->requestMutex.unlock();
 }
 
 int TilesManager::height() const {
@@ -185,10 +195,23 @@ NormalizedRect TilesManager::visibleRect() const
 
 void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
 {
+    d->requestMutex.lock();
+    if ( !d->requestRect.isNull() )
+    {
+        if ( !(d->requestRect == rect) || rect.geometry( width(), height() ).size() != pixmap->size() )
+        {
+            d->requestMutex.unlock();
+            return;
+        }
+
+        d->requestRect = NormalizedRect();
+    }
+
     for ( int i = 0; i < 16; ++i )
     {
         d->setPixmap( pixmap, fromRotatedRect( rect, d->rotation ), d->tiles[ i ] );
     }
+    d->requestMutex.unlock();
 }
 
 void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile )
@@ -282,8 +305,6 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 }
                 tile.tiles[ i ].pixmap = 0;
             }
-
-            tileSize = tile.rect.geometry( width, height ).size();
 
             delete [] tile.tiles;
             tile.tiles = 0;
@@ -444,6 +465,20 @@ void TilesManager::Private::rankTiles( Tile &tile )
     }
 }
 
+bool TilesManager::isRequesting( const NormalizedRect &rect, int pageWidth, int pageHeight ) const
+{
+    return rect == d->requestRect && pageWidth == d->requestWidth && pageHeight == d->requestHeight;
+}
+
+void TilesManager::setRequest( const NormalizedRect &rect, int pageWidth, int pageHeight )
+{
+    d->requestMutex.lock();
+    d->requestRect = rect;
+    d->requestWidth = pageWidth;
+    d->requestHeight = pageHeight;
+    d->requestMutex.unlock();
+}
+
 void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
 {
     if ( tile.nTiles != 0 )
@@ -464,8 +499,6 @@ void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
         tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
         tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
         tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
-
-        tileSize = tile.tiles[0].rect.geometry( width, height ).size();
 
         for ( int i = 0; i < tile.nTiles; ++i )
         {

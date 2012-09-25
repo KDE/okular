@@ -1186,13 +1186,14 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         return;
     }
 
+    bool doContinue = false;
     // if no match found, loop through the whole doc, starting from currentPage
     if ( !searchStruct->match )
     {
         const int pageCount = m_pagesVector.count();
         if (searchStruct->pagesDone < pageCount)
         {
-            bool doContinue = true;
+            doContinue = true;
             if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
                 const QString question = searchStruct->forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
@@ -1201,35 +1202,45 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
                 else
                     doContinue = false;
             }
-            if (doContinue)
-            {
-                // get page
-                Page * page = m_pagesVector[ searchStruct->currentPage ];
-                // request search page if needed
-                if ( !page->hasTextPage() )
-                    m_parent->requestTextPage( page->number() );
-                // if found a match on the current page, end the loop
-                searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
-
-                if ( !searchStruct->match )
-                {
-                    if (searchStruct->forward) searchStruct->currentPage++;
-                    else searchStruct->currentPage--;
-                    searchStruct->pagesDone++;
-                }
-                else
-                {
-                    searchStruct->pagesDone = 1;
-                }
-
-                QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
-                return;
-            }
         }
     }
 
-    doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, searchStruct->moveViewport, searchStruct->color );
-    delete searchStruct;
+    if (doContinue)
+    {
+        // get page
+        Page * page = m_pagesVector[ searchStruct->currentPage ];
+        // request search page if needed
+        if ( !page->hasTextPage() )
+        {
+            m_parent->requestTextPage( page->number() );
+            
+            // TODO wait for page text to be generated and call doContinueDirectionMatchSearch
+        }
+        else
+        {
+            // if found a match on the current page, end the loop
+            searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
+
+            if ( !searchStruct->match )
+            {
+                if (searchStruct->forward) searchStruct->currentPage++;
+                else searchStruct->currentPage--;
+                searchStruct->pagesDone++;
+            }
+            else
+            {
+                searchStruct->pagesDone = 1;
+            }
+            
+            // Both of the previous if branches need to call doContinueDirectionMatchSearch
+            QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+        }
+    }
+    else
+    {
+        doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, searchStruct->moveViewport, searchStruct->color );
+        delete searchStruct;
+    }
 }
 
 void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color )

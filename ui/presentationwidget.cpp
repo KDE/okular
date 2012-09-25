@@ -381,7 +381,7 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
             m_document->processAction( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) );
 
         // perform the additional actions of the page's annotations, if any
-        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
+        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( previousPage )->annotations() )
         {
             Okular::Action *action = 0;
 

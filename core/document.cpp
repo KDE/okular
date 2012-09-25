@@ -2363,7 +2363,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 2. [ADD TO STACK] add requests to stack
-    bool threadingDisabled = !Settings::enableThreading();
     QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
     for ( ; rIt != rEnd; ++rIt )
     {
@@ -2381,9 +2380,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
         if ( !request->asynchronous() )
             request->d->mPriority = 0;
-
-        if ( request->asynchronous() && threadingDisabled )
-            request->d->mAsynchronous = false;
 
         // add request to the 'stack' at the right place
         if ( !request->priority() )

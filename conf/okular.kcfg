@@ -65,9 +65,6 @@
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
   </entry>
-  <entry key="EnableThreading" type="Bool" >
-   <default>true</default>
-  </entry>
   <entry key="TextAntialias" type="Enum" >
    <default>Enabled</default>
    <choices>

@@ -1581,14 +1581,6 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Enable background generation</guilabel></term>
-					<listitem>
-						<para>Use a background thread to generate the pages. By disabling
-							this option the user interface will become less reactive (will be blocked
-							if necessary), but pages will be displayed a bit faster.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
 					<term><guilabel>Memory Usage</guilabel></term>
 					<listitem>
 						<para>&okular; can achieve best performance by tuning the memory usage, based on your system and your tastes.

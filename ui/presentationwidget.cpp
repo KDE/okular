@@ -1227,7 +1227,7 @@ void PresentationWidget::requestPixmaps()
     // restore cursor
     QApplication::restoreOverrideCursor();
     // ask for next and previous page if not in low memory usage setting
-    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading() )
+    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
     {
         int pagesToPreload = 1;
 

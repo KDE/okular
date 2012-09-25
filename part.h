@@ -231,6 +231,8 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
+        
+        static int numberOfParts;
 
         KTemporaryFile *m_tempfile;
 

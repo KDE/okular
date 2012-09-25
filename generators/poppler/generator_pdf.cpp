@@ -1396,6 +1396,10 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
 #ifdef HAVE_POPPLER_0_22
             if ( a->subType() == Poppler::Annotation::AScreen )
             {
+/*
+                // TODO: (tokoe) This has been disabled for the moment, since we return MovieAnnotation objects
+                // for AScreen annotations, which will lead to a crash down here.
+
                 Poppler::ScreenAnnotation *annotScreen = static_cast<Poppler::ScreenAnnotation*>( a );
                 Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation*>( newann );
 
@@ -1406,6 +1410,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
                 const Poppler::Link *pageClosingLink = annotScreen->additionalAction( Poppler::Annotation::PageClosingAction );
                 if ( pageClosingLink )
                     screenAnnotation->setAdditionalAction( Okular::Annotation::PageClosing, createLinkFromPopplerLink( pageClosingLink ) );
+*/
             }
 
             if ( a->subType() == Poppler::Annotation::AWidget )

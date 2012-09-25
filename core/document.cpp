@@ -972,7 +972,7 @@ void DocumentPrivate::slotTimedMemoryCheck()
         cleanupPixmapMemory();
 }
 
-void DocumentPrivate::sendGeneratorRequest()
+void DocumentPrivate::sendGeneratorPixmapRequest()
 {
     /* If the pixmap cache will have to be cleaned in order to make room for the
      * next request, get the distance from the current viewport of the page
@@ -1059,7 +1059,7 @@ void DocumentPrivate::sendGeneratorRequest()
     {
         m_pixmapRequestsMutex.unlock();
         // pino (7/4/2006): set the polling interval from 10 to 30
-        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorRequest()) );
+        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorPixmapRequest()) );
     }
 }
 
@@ -2393,9 +2393,9 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     // 3. [START FIRST GENERATION] if <NO>generator is ready, start a new generation,
     // or else (if gen is running) it will be started when the new contents will
     //come from generator (in requestDone())</NO>
-    // all handling of requests put into sendGeneratorRequest
+    // all handling of requests put into sendGeneratorPixmapRequest
     //    if ( generator->canRequestPixmap() )
-        d->sendGeneratorRequest();
+        d->sendGeneratorPixmapRequest();
 }
 
 void Document::requestTextPage( uint page )
@@ -3851,7 +3851,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     bool hasPixmaps = !m_pixmapRequestsStack.isEmpty();
     m_pixmapRequestsMutex.unlock();
     if ( hasPixmaps )
-        sendGeneratorRequest();
+        sendGeneratorPixmapRequest();
 }
 
 void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundingBox )

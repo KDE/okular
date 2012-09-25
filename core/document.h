@@ -811,7 +811,7 @@ class OKULAR_EXPORT Document : public QObject
 
         Q_PRIVATE_SLOT( d, void saveDocumentInfo() const )
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
-        Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
+        Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )

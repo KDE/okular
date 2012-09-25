@@ -143,7 +143,7 @@ class DocumentPrivate
         // private slots
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
-        void sendGeneratorRequest();
+        void sendGeneratorPixmapRequest();
         void rotationFinished( int page, Okular::Page *okularPage );
         void fontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );

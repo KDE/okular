@@ -1211,30 +1211,24 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         Page * page = m_pagesVector[ searchStruct->currentPage ];
         // request search page if needed
         if ( !page->hasTextPage() )
-        {
             m_parent->requestTextPage( page->number() );
-            
-            // TODO wait for page text to be generated and call doContinueDirectionMatchSearch
+
+        // if found a match on the current page, end the loop
+        searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
+
+        if ( !searchStruct->match )
+        {
+            if (searchStruct->forward) searchStruct->currentPage++;
+            else searchStruct->currentPage--;
+            searchStruct->pagesDone++;
         }
         else
         {
-            // if found a match on the current page, end the loop
-            searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
-
-            if ( !searchStruct->match )
-            {
-                if (searchStruct->forward) searchStruct->currentPage++;
-                else searchStruct->currentPage--;
-                searchStruct->pagesDone++;
-            }
-            else
-            {
-                searchStruct->pagesDone = 1;
-            }
-            
-            // Both of the previous if branches need to call doContinueDirectionMatchSearch
-            QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+            searchStruct->pagesDone = 1;
         }
+        
+        // Both of the previous if branches need to call doContinueDirectionMatchSearch
+        QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
     }
     else
     {

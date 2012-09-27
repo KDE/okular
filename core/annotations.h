@@ -1565,6 +1565,20 @@ class OKULAR_EXPORT ScreenAnnotation : public Annotation
         void store( QDomNode &parentNode, QDomDocument &document ) const;
 
         /**
+         * Sets the @p action that is executed when the annotation is triggered.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void setAction( Action *action );
+
+        /**
+         * Returns the action that is executed when the annotation is triggered or @c 0 if not action has been defined.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        Action* action() const;
+
+        /**
          * Sets the additional @p action of the given @p type.
          *
          * @since 0.16 (KDE 4.10)

@@ -2418,12 +2418,21 @@ void MovieAnnotation::setMovie( Movie *movie )
 class Okular::ScreenAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
+        ScreenAnnotationPrivate();
         ~ScreenAnnotationPrivate();
+
+        Okular::Action* m_action;
         QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
 };
 
+ScreenAnnotationPrivate::ScreenAnnotationPrivate()
+    : m_action( 0 )
+{
+}
+
 ScreenAnnotationPrivate::~ScreenAnnotationPrivate()
 {
+    delete m_action;
     qDeleteAll( m_additionalActions );
 }
 
@@ -2484,6 +2493,20 @@ Action* ScreenAnnotation::additionalAction( AdditionalActionType type ) const
         return 0;
     else
         return d->m_additionalActions.value( type );
+}
+
+void ScreenAnnotation::setAction( Action *action )
+{
+    Q_D( ScreenAnnotation );
+
+    delete d->m_action;
+    d->m_action = action;
+}
+
+Action* ScreenAnnotation::action() const
+{
+    Q_D( const ScreenAnnotation );
+    return d->m_action;
 }
 
 /** WidgetAnnotation [Annotation] */

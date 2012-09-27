@@ -26,7 +26,10 @@ class DocumentActionPrivate;
 class SoundActionPrivate;
 class ScriptActionPrivate;
 class MovieActionPrivate;
+class RenditionActionPrivate;
 class MovieAnnotation;
+class ScreenAnnotation;
+class Movie;
 class Sound;
 class DocumentViewport;
 
@@ -50,7 +53,8 @@ class OKULAR_EXPORT Action
             DocAction,  ///< Start a custom action
             Sound,      ///< Play a sound
             Movie,      ///< Play a movie
-            Script      ///< Executes a Script code
+            Script,     ///< Executes a Script code
+            Rendition,  ///< Play a movie and/or execute a Script code @since 0.16 (KDE 4.10)
         };
 
         /**
@@ -476,6 +480,86 @@ class OKULAR_EXPORT MovieAction : public Action
     private:
         Q_DECLARE_PRIVATE( MovieAction )
         Q_DISABLE_COPY( MovieAction )
+};
+
+/**
+ * The Rendition action executes an operation on a video or
+ * executes some JavaScript code on activation.
+ *
+ * @since 0.16 (KDE 4.10)
+ */
+class OKULAR_EXPORT RenditionAction : public Action
+{
+    public:
+        /**
+         * Describes the possible operation types.
+         */
+        enum OperationType {
+            None,   ///< Execute only the JavaScript
+            Play,   ///< Start playing the video
+            Stop,   ///< Stop playing the video
+            Pause,  ///< Pause the video
+            Resume  ///< Resume playing the video
+        };
+
+        /**
+         * Creates a new rendition action.
+         *
+         * @param operation The type of operation the action executes.
+         * @param movie The movie object the action references.
+         * @param scriptType The type of script the action executes.
+         * @param script The actual script the action executes.
+         */
+        RenditionAction( OperationType operation, Okular::Movie *movie, enum ScriptType scriptType, const QString &script );
+
+        /**
+         * Destroys the rendition action.
+         */
+        virtual ~RenditionAction();
+
+        /**
+         * Returns the action type.
+         */
+        ActionType actionType() const;
+
+        /**
+         * Returns the action tip.
+         */
+        QString actionTip() const;
+
+        /**
+         * Returns the operation type.
+         */
+        OperationType operation() const;
+
+        /**
+         * Returns the movie object or @c 0 if no movie object was set on construction time.
+         */
+        Okular::Movie* movie() const;
+
+        /**
+         * Returns the type of script.
+         */
+        ScriptType scriptType() const;
+
+        /**
+         * Returns the script code.
+         */
+        QString script() const;
+
+        /**
+         * Sets the @p annotation that is associated with the rendition action.
+         */
+        void setAnnotation( ScreenAnnotation *annotation );
+
+        /**
+         * Returns the annotation or @c 0 if no annotation has been set.
+         */
+        ScreenAnnotation* annotation() const;
+
+    private:
+        Q_DECLARE_PRIVATE( RenditionAction )
+        Q_DISABLE_COPY( RenditionAction )
 };
 
 }

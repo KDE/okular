@@ -29,6 +29,7 @@ extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *p
 extern Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen );
 #endif
 
+
 static void disposeAnnotation( const Okular::Annotation *ann )
 {
     Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( ann->nativeId() );
@@ -320,12 +321,20 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 #ifdef HAVE_POPPLER_0_20
         case Poppler::Annotation::AScreen:
         {
+#ifdef HAVE_POPPLER_0_22
+            Okular::ScreenAnnotation * m = new Okular::ScreenAnnotation();
+            annotation = m;
+            tieToOkularAnn = true;
+            *doDelete = false;
+#else
+#ifdef HAVE_POPPLER_0_20
             Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
             Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
             annotation = m;
 
             m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
-
+#endif
+#endif
             break;
         }
         case Poppler::Annotation::AText:

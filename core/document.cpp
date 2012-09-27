@@ -3254,6 +3254,19 @@ void Document::processAction( const Action * action )
         case Action::Movie:
             emit processMovieAction( static_cast< const MovieAction * >( action ) );
             break;
+        case Action::Rendition: {
+            const RenditionAction * linkrendition = static_cast< const RenditionAction * >( action );
+            if ( !linkrendition->script().isEmpty() )
+            {
+                if ( !d->m_scripter )
+                    d->m_scripter = new Scripter( d );
+                d->m_scripter->execute( linkrendition->scriptType(), linkrendition->script() );
+            }
+            else
+            {
+                emit processRenditionAction( static_cast< const RenditionAction * >( action ) );
+            }
+            } break;
     }
 }
 

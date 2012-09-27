@@ -48,6 +48,7 @@ class Action;
 class MovieAction;
 class Page;
 class PixmapRequest;
+class RenditionAction;
 class SourceReference;
 class View;
 class VisiblePageRect;
@@ -800,6 +801,13 @@ class OKULAR_EXPORT Document : public QObject
          * This signal is emitted whenever an movie action is triggered and the UI should process it.
          */
         void processMovieAction( const Okular::MovieAction *action );
+
+        /**
+         * This signal is emitted whenever an rendition action is triggered and the UI should process it.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void processRenditionAction( const Okular::RenditionAction *action );
 
     private:
         /// @cond PRIVATE

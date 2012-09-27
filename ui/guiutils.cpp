@@ -21,6 +21,7 @@
 #include <kstandarddirs.h>
 
 // local includes
+#include "core/action.h"
 #include "core/annotations.h"
 #include "core/document.h"
 
@@ -223,6 +224,20 @@ void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
     }
     f.write( ef->data() );
     f.close();
+}
+
+Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation *annotation )
+{
+    if ( !annotation )
+        return 0;
+
+    if ( annotation->action() && annotation->action()->actionType() == Okular::Action::Rendition )
+    {
+        Okular::RenditionAction *renditionAction = static_cast< Okular::RenditionAction * >( annotation->action() );
+        return renditionAction->movie();
+    }
+
+    return 0;
 }
 
 }

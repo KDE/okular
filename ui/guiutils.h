@@ -20,6 +20,8 @@ class KIconLoader;
 namespace Okular {
 class Annotation;
 class EmbeddedFile;
+class Movie;
+class ScreenAnnotation;
 }
 
 namespace GuiUtils
@@ -42,6 +44,13 @@ namespace GuiUtils
     KIconLoader* iconLoader();
 
     void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent );
+
+    /**
+     * Returns the movie object that is referenced by a rendition action of the passed screen @p annotation
+     * or @c 0 if the screen annotation has no rendition action set or the rendition action does not contain
+     * a media rendition.
+     */
+    Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation * annotation );
 }
 
 

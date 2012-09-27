@@ -13,8 +13,9 @@
 #include <qwidget.h>
 
 namespace Okular {
+class Annotation;
 class Document;
-class MovieAnnotation;
+class Movie;
 class NormalizedRect;
 }
 
@@ -22,7 +23,7 @@ class VideoWidget : public QWidget
 {
     Q_OBJECT
     public:
-        VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *document, QWidget *parent = 0 );
+        VideoWidget( const Okular::Annotation *annot, Okular::Movie *movie, Okular::Document *document, QWidget *parent = 0 );
         ~VideoWidget();
 
         void setNormGeometry( const Okular::NormalizedRect &rect );

@@ -316,7 +316,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
             if ( a->subType() == Okular::Annotation::AMovie )
             {
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
-                VideoWidget * vw = new VideoWidget( movieAnn, m_document, this );
+                VideoWidget * vw = new VideoWidget( movieAnn, movieAnn->movie(), m_document, this );
                 frame->videoWidgets.insert( movieAnn->movie(), vw );
                 vw->pageInitialized();
             }

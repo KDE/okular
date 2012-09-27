@@ -29,8 +29,8 @@
 #include <phonon/seekslider.h>
 #include <phonon/videoplayer.h>
 
-#include "core/area.h"
 #include "core/annotations.h"
+#include "core/area.h"
 #include "core/document.h"
 #include "core/movie.h"
 #include "snapshottaker.h"
@@ -58,8 +58,8 @@ static QAction* createToolBarButtonWithWidgetPopup( QToolBar* toolBar, QWidget *
 class VideoWidget::Private
 {
 public:
-    Private( Okular::MovieAnnotation *ma, Okular::Document *doc, VideoWidget *qq )
-        : q( qq ), anno( ma ), document( doc ), player( 0 ), loaded( false )
+    Private( Okular::Movie *m, Okular::Document *doc, VideoWidget *qq )
+        : q( qq ), movie( m ), document( doc ), player( 0 ), loaded( false )
     {
     }
 
@@ -83,7 +83,7 @@ public:
     void playOrPause();
 
     VideoWidget *q;
-    Okular::MovieAnnotation *anno;
+    Okular::Movie *movie;
     Okular::Document *document;
     Okular::NormalizedRect geom;
     Phonon::VideoPlayer *player;
@@ -105,7 +105,7 @@ void VideoWidget::Private::load()
 
     loaded = true;
 
-    QString url = anno->movie()->url();
+    QString url = movie->url();
     KUrl newurl;
     if ( QDir::isRelativePath( url ) )
     {
@@ -143,7 +143,7 @@ void VideoWidget::Private::setupPlayPauseAction( PlayPauseMode mode )
 
 void VideoWidget::Private::takeSnapshot()
 {
-    const QString url = anno->movie()->url();
+    const QString url = movie->url();
     KUrl newurl;
     if ( QDir::isRelativePath( url ) )
     {
@@ -166,7 +166,7 @@ void VideoWidget::Private::takeSnapshot()
 
 void VideoWidget::Private::videoStopped()
 {
-    if ( anno->movie()->showPosterImage() )
+    if ( movie->showPosterImage() )
         pageLayout->setCurrentIndex( 1 );
     else
         q->hide();
@@ -174,14 +174,14 @@ void VideoWidget::Private::videoStopped()
 
 void VideoWidget::Private::finished()
 {
-    switch ( anno->movie()->playMode() )
+    switch ( movie->playMode() )
     {
         case Okular::Movie::PlayOnce:
         case Okular::Movie::PlayOpen:
             // playback has ended, nothing to do
             stopAction->setEnabled( false );
             setupPlayPauseAction( PlayMode );
-            if ( anno->movie()->playMode() == Okular::Movie::PlayOnce )
+            if ( movie->playMode() == Okular::Movie::PlayOnce )
                 controlBar->setVisible( false );
             videoStopped();
             break;
@@ -214,7 +214,7 @@ void VideoWidget::Private::setPosterImage( const QImage &image )
     if ( !image.isNull() )
     {
         // cache the snapshot image
-        anno->movie()->setPosterImage( image );
+        movie->setPosterImage( image );
     }
 
     posterImagePage->setPixmap( QPixmap::fromImage( image ) );
@@ -226,8 +226,8 @@ void VideoWidget::Private::stateChanged( Phonon::State newState, Phonon::State )
         pageLayout->setCurrentIndex( 0 );
 }
 
-VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *document, QWidget *parent )
-    : QWidget( parent ), d( new Private( movieann, document, this ) )
+VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *movie, Okular::Document *document, QWidget *parent )
+    : QWidget( parent ), d( new Private( movie, document, this ) )
 {
     // do not propagate the mouse events to the parent widget;
     // they should be tied to this widget, not spread around...
@@ -268,12 +268,12 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
         d->controlBar, verticalSeekSlider, KIcon( "player-time" ) );
     d->seekSliderMenuAction->setVisible( false );
 
-    d->controlBar->setVisible( movieann->movie()->showControls() );
+    d->controlBar->setVisible( movie->showControls() );
 
     connect( d->player, SIGNAL(finished()), this, SLOT(finished()) );
     connect( d->playPauseAction, SIGNAL(triggered()), this, SLOT(playOrPause()) );
 
-    d->geom = movieann->transformedBoundingRectangle();
+    d->geom = annotation->transformedBoundingRectangle();
 
     // Setup poster image page
     d->posterImagePage = new QLabel;
@@ -288,11 +288,11 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
     d->pageLayout->addWidget( d->posterImagePage );
 
 
-    if ( movieann->movie()->showPosterImage() )
+    if ( movie->showPosterImage() )
     {
         d->pageLayout->setCurrentIndex( 1 );
 
-        const QImage posterImage = movieann->movie()->posterImage();
+        const QImage posterImage = movie->posterImage();
         if ( posterImage.isNull() )
         {
             d->takeSnapshot();
@@ -335,13 +335,13 @@ void VideoWidget::pageInitialized()
 
 void VideoWidget::pageEntered()
 {
-    if ( d->anno->movie()->showPosterImage() )
+    if ( d->movie->showPosterImage() )
     {
         d->pageLayout->setCurrentIndex( 1 );
         show();
     }
 
-    if ( d->anno->movie()->autoPlay() )
+    if ( d->movie->autoPlay() )
     {
         show();
         QMetaObject::invokeMethod(this, "play", Qt::QueuedConnection);

@@ -151,6 +151,7 @@ MobileComponents.OverlayDrawer {
             transform: Translate {
                 y: Math.max(0, -pageStack.currentPage.contentY)
             }
+            tools: pageStack.currentPage.tools
             Behavior on y {
                 NumberAnimation {
                     duration: 250

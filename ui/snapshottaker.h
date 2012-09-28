@@ -22,6 +22,7 @@ class SnapshotTaker : public QObject
 
     public:
         SnapshotTaker( const QString &url, QObject *parent = 0 );
+        ~SnapshotTaker();
 
     Q_SIGNALS:
         void finished( const QImage &image );

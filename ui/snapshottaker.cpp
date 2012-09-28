@@ -27,6 +27,12 @@ SnapshotTaker::SnapshotTaker( const QString &url, QObject *parent )
     m_player->play();
 }
 
+SnapshotTaker::~SnapshotTaker()
+{
+    m_player->stop();
+    delete m_player;
+}
+
 void SnapshotTaker::stateChanged(Phonon::State newState, Phonon::State)
 {
     if (newState == Phonon::PlayingState) {

@@ -59,8 +59,14 @@ class VideoWidget::Private
 {
 public:
     Private( Okular::MovieAnnotation *ma, Okular::Document *doc, VideoWidget *qq )
-        : q( qq ), anno( ma ), document( doc ), loaded( false )
+        : q( qq ), anno( ma ), document( doc ), player( 0 ), loaded( false )
     {
+    }
+
+    ~Private()
+    {
+        if ( player )
+            player->stop();
     }
 
     enum PlayPauseMode { PlayMode, PauseMode };
@@ -344,6 +350,7 @@ void VideoWidget::pageEntered()
 
 void VideoWidget::pageLeft()
 {
+    d->player->stop();
     d->videoStopped();
 
     hide();

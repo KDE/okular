@@ -38,6 +38,9 @@ Image {
 
     Okular.DocumentItem {
         id: documentItem
+        onPathChanged: {
+            application.caption = path.replace(/^.*[\\\/]/, '')
+        }
     }
 
     PlasmaComponents.PageStack {

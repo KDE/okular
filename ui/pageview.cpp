@@ -1853,7 +1853,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     d->aMouseSelect->trigger();
                     QPoint newPos = eventPos + QPoint( deltaX, deltaY );
                     selectionStart( newPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
-                    selectionEndPoint( eventPos );
+                    updateSelection( eventPos );
                     break;
                 }
             }
@@ -1869,7 +1869,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         case Okular::Settings::EnumMouseMode::TableSelect:
             // set second corner of selection
             if ( d->mouseSelecting )
-                selectionEndPoint( eventPos );
+                updateSelection( eventPos );
             break;
         case Okular::Settings::EnumMouseMode::TextSelect:
             // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
@@ -1877,27 +1877,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             {
                 d->mouseTextSelecting = true;
             }
-            if ( d->mouseTextSelecting )
-            {
-                int first = -1;
-                QList< Okular::RegularAreaRect * > selections = textSelections( eventPos, d->mouseSelectPos, first );
-                QSet< int > pagesWithSelectionSet;
-                for ( int i = 0; i < selections.count(); ++i )
-                    pagesWithSelectionSet.insert( i + first );
-
-                QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
-                // clear the selection from pages not selected anymore
-                foreach( int p, noMoreSelectedPages )
-                {
-                    d->document->setPageTextSelection( p, 0, QColor() );
-                }
-                // set the new selection for the selected pages
-                foreach( int p, pagesWithSelectionSet )
-                {
-                    d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
-                }
-                d->pagesWithTextSelection = pagesWithSelectionSet;
-            }
+            updateSelection( eventPos );
             updateCursor( contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() ) );
             break;
     }
@@ -3296,11 +3276,8 @@ void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*
     }
 }
 
-void PageView::selectionEndPoint( const QPoint & pos )
+void PageView::scrollPosIntoView( const QPoint & pos )
 {
-    if ( !d->mouseSelecting )
-        return;
-
     if (pos.x() < horizontalScrollBar()->value()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value());
     else if (horizontalScrollBar()->value() + viewport()->width() < pos.x()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value() - viewport()->width());
     else d->dragScrollVector.setX(0);
@@ -3314,13 +3291,42 @@ void PageView::selectionEndPoint( const QPoint & pos )
         if (!d->dragScrollTimer.isActive()) d->dragScrollTimer.start(100);
     }
     else d->dragScrollTimer.stop();
+}
 
-    // update the selection rect
-    QRect updateRect = d->mouseSelectionRect;
-    d->mouseSelectionRect.setBottomLeft( pos );
-    updateRect |= d->mouseSelectionRect;
-    updateRect.translate( -contentAreaPosition() );
-    viewport()->update( updateRect.adjusted( -1, -1, 1, 1 ) );
+void PageView::updateSelection( const QPoint & pos )
+{
+    if ( d->mouseSelecting )
+    {
+        scrollPosIntoView( pos );
+        // update the selection rect
+        QRect updateRect = d->mouseSelectionRect;
+        d->mouseSelectionRect.setBottomLeft( pos );
+        updateRect |= d->mouseSelectionRect;
+        updateRect.translate( -contentAreaPosition() );
+        viewport()->update( updateRect.adjusted( -1, -1, 1, 1 ) );
+    }
+    else if ( d->mouseTextSelecting)
+    {
+        scrollPosIntoView( pos );
+        int first = -1;
+        const QList< Okular::RegularAreaRect * > selections = textSelections( pos, d->mouseSelectPos, first );
+        QSet< int > pagesWithSelectionSet;
+        for ( int i = 0; i < selections.count(); ++i )
+            pagesWithSelectionSet.insert( i + first );
+
+        const QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
+        // clear the selection from pages not selected anymore
+        foreach( int p, noMoreSelectedPages )
+        {
+            d->document->setPageTextSelection( p, 0, QColor() );
+        }
+        // set the new selection for the selected pages
+        foreach( int p, pagesWithSelectionSet )
+        {
+            d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
+        }
+        d->pagesWithTextSelection = pagesWithSelectionSet;
+    }
 }
 
 static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QRect &rect, Okular::Rotation rotation )
@@ -4118,7 +4124,7 @@ void PageView::slotDragScroll()
     horizontalScrollBar()->setValue(horizontalScrollBar()->value() + d->dragScrollVector.x());
     verticalScrollBar()->setValue(verticalScrollBar()->value() + d->dragScrollVector.y());
     QPoint p = contentAreaPosition() + viewport()->mapFromGlobal( QCursor::pos() );
-    selectionEndPoint( p );
+    updateSelection( p );
 }
 
 void PageView::slotShowWelcome()

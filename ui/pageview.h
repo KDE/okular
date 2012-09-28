@@ -169,10 +169,11 @@ Q_OBJECT
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
-        void selectionEndPoint( const QPoint & pos );
         void selectionClear( const ClearMode mode = ClearAllSelection );
         void drawTableDividers(QPainter * screenPainter);
         void guessTableDividers();
+        // update either text or rectangle selection
+        void updateSelection( const QPoint & pos );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -191,6 +192,8 @@ Q_OBJECT
         void updatePageStep();
 
         void addWebShortcutsMenu( KMenu * menu, const QString & text );
+        // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
+        void scrollPosIntoView( const QPoint & pos );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

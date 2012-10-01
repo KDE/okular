@@ -76,8 +76,8 @@ struct XpsGradient
     Types of data in XpsRenderNode::data. Name of each type consist of Xps and
     name of xml element which data it holds
 */
-typedef QMatrix XpsMatrixTransform;
-typedef QMatrix XpsRenderTransform;
+typedef QTransform XpsMatrixTransform;
+typedef QTransform XpsRenderTransform;
 typedef QBrush XpsFill;
 struct XpsPathFigure
 {

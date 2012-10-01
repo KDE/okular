@@ -17,6 +17,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <QtDBus/qdbusinterface.h>
+#include <QTextStream>
 #include "aboutdata.h"
 #include "shellutils.h"
 
@@ -26,13 +27,15 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
         return false;
 
     QDBusInterface iface("org.kde.okular", "/okular", "org.kde.okular");
-    if (!iface.isValid())
+    QDBusInterface iface2("org.kde.okular", "/okularshell", "org.kde.okular");
+    if (!iface.isValid() || !iface2.isValid())
         return false;
 
     if (args->isSet("page"))
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
     else
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
+    iface2.call("tryRaise");
 
     return true;
 }
@@ -71,6 +74,12 @@ int main(int argc, char** argv)
         {
             Shell* widget = new Shell(args);
             widget->show();
+        }
+        else if (args->isSet( "unique" ) && args->count() > 1)
+        {
+            QTextStream stream(stderr);
+            stream << i18n( "Error: Can't open more than one document with the --unique switch" ) << endl;
+            return -1;
         }
         else
         {

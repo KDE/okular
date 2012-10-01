@@ -102,9 +102,9 @@ void PagePrivate::imageRotationDone( RotationJob * job )
     }
 }
 
-QMatrix PagePrivate::rotationMatrix() const
+QTransform PagePrivate::rotationMatrix() const
 {
-    QMatrix matrix;
+    QTransform matrix;
     matrix.rotate( (int)m_rotation * 90 );
 
     switch ( m_rotation )
@@ -369,7 +369,7 @@ void PagePrivate::rotateAt( Rotation orientation )
     /**
      * Rotate the object rects on the page.
      */
-    const QMatrix matrix = rotationMatrix();
+    const QTransform matrix = rotationMatrix();
     QLinkedList< ObjectRect * >::const_iterator objectIt = m_page->m_rects.begin(), end = m_page->m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
@@ -404,6 +404,19 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
             return *it;
     return 0;
 }
+
+QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
+{
+    QLinkedList< const ObjectRect * > result;
+
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    for ( ; it != end; ++it )
+        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
+            result.append( *it );
+
+    return result;
+}
+
 
 const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
 {
@@ -506,7 +519,7 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
     /**
      * Rotate the object rects of the page.
      */
-    const QMatrix matrix = d->rotationMatrix();
+    const QTransform matrix = d->rotationMatrix();
 
     QLinkedList< ObjectRect * >::const_iterator objectIt = rects.begin(), end = rects.end();
     for ( ; objectIt != end; ++objectIt )
@@ -588,7 +601,7 @@ void Page::addAnnotation( Annotation * annotation )
     AnnotationObjectRect *rect = new AnnotationObjectRect( annotation );
 
     // Rotate the annotation on the page.
-    const QMatrix matrix = d->rotationMatrix();
+    const QTransform matrix = d->rotationMatrix();
     annotation->d_ptr->baseTransform( matrix.inverted() );
     annotation->d_ptr->annotationTransform( matrix );
 
@@ -736,6 +749,9 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
             QTime time;
             time.start();
 #endif
+            // Clone annotationList as root node in restoredLocalAnnotationList
+            const QDomNode clonedNode = restoredLocalAnnotationList.importNode( childElement, true );
+            restoredLocalAnnotationList.appendChild( clonedNode );
 
             // iterate over all annotations
             QDomNode annotationNode = childElement.firstChild();
@@ -803,10 +819,6 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
 {
-    // only add a node if there is some stuff to write into
-    if ( m_page->m_annotations.isEmpty() && formfields.isEmpty() )
-        return;
-
     // create the page node and set the 'number' attribute
     QDomElement pageElement = document.createElement( "page" );
     pageElement.setAttribute( "number", m_number );
@@ -825,7 +837,17 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
 #endif
 
     // add annotations info if has got any
-    if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
+    if ( ( what & AnnotationPageItems ) && ( what & OriginalAnnotationPageItems ) )
+    {
+        const QDomElement savedDocRoot = restoredLocalAnnotationList.documentElement();
+        if ( !savedDocRoot.isNull() )
+        {
+            // Import and append node in target document
+            const QDomNode importedNode = document.importNode( savedDocRoot, true );
+            pageElement.appendChild( importedNode );
+        }
+    }
+    else if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
         QDomElement annotListElement = document.createElement( "annotationList" );

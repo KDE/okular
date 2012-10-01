@@ -174,7 +174,7 @@ class TinyTextEntity
                                             : QString::fromRawData( d.data, length );
         }
 
-        inline NormalizedRect transformedArea( const QMatrix &matrix ) const
+        inline NormalizedRect transformedArea( const QTransform &matrix ) const
         {
             NormalizedRect transformed_area = area;
             transformed_area.transform( matrix );
@@ -215,7 +215,7 @@ NormalizedRect* TextEntity::area() const
     return m_area;
 }
 
-NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
+NormalizedRect TextEntity::transformedArea(const QTransform &matrix) const
 {
     NormalizedRect transformed_area = *m_area;
     transformed_area.transform( matrix );
@@ -359,7 +359,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
-    const QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = d->m_page ? d->m_page->rotationMatrix() : QTransform();
 #if 0
     int it = -1;
     int itB = -1;
@@ -840,7 +840,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                                                              const TextList::ConstIterator &start,
                                                              const TextList::ConstIterator &end )
 {
-    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
 
     RegularAreaRect* ret=new RegularAreaRect;
 
@@ -863,7 +863,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         curEntity = *it;
         const QString &str = curEntity->text();
-	kDebug() << str;
         if ( !offsetMoved && ( it == start ) )
         {
             if ( m_searchPoints.contains( searchID ) )
@@ -956,7 +955,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                                                             const TextList::ConstIterator &start,
                                                             const TextList::ConstIterator &end )
 {
-    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
 
     RegularAreaRect* ret=new RegularAreaRect;
 

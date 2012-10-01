@@ -11,7 +11,7 @@
 #define _OKULAR_ROTATIONJOB_P_H_
 
 #include <QtGui/QImage>
-#include <QtGui/QMatrix>
+#include <QtGui/QTransform>
 
 #include <threadweaver/Job.h>
 
@@ -35,7 +35,7 @@ class RotationJob : public ThreadWeaver::Job
         int id() const;
         PagePrivate * page() const;
 
-        static QMatrix rotationMatrix( Rotation from, Rotation to );
+        static QTransform rotationMatrix( Rotation from, Rotation to );
 
     protected:
         virtual void run();

@@ -56,8 +56,8 @@ Q_OBJECT
         PageView( QWidget *parent, Okular::Document *document );
         ~PageView();
 
-        // Zoom mode ( last 4 are internally used only! )
-        enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitText,
+        // Zoom mode ( last 3 are internally used only! )
+        enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
 
         enum ClearMode { ClearAllSelection, ClearOnlyDividers };
@@ -82,6 +82,7 @@ Q_OBJECT
         void notifyContentsCleared( int changedFlags );
         void notifyZoom(int factor);
         bool canUnloadPixmap( int pageNum ) const;
+        void notifyCurrentPageChanged( int previous, int current );
 
         // inherited from View
         uint viewId() const { return observerId(); }
@@ -131,6 +132,9 @@ Q_OBJECT
     signals:
         void urlDropped( const KUrl& );
         void rightClick( const Okular::Page *, const QPoint & );
+        void mouseBackButtonClick();
+        void mouseForwardButtonClick();
+        void escPressed();
 
     protected:
         void resizeEvent( QResizeEvent* );
@@ -165,10 +169,11 @@ Q_OBJECT
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
         void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
-        void selectionEndPoint( const QPoint & pos );
         void selectionClear( const ClearMode mode = ClearAllSelection );
         void drawTableDividers(QPainter * screenPainter);
         void guessTableDividers();
+        // update either text or rectangle selection
+        void updateSelection( const QPoint & pos );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
@@ -187,6 +192,8 @@ Q_OBJECT
         void updatePageStep();
 
         void addWebShortcutsMenu( KMenu * menu, const QString & text );
+        // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
+        void scrollPosIntoView( const QPoint & pos );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;
@@ -220,7 +227,6 @@ Q_OBJECT
         void slotZoomOut();
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
-        void slotFitToTextToggled( bool );
         void slotViewMode( QAction *action );
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();
@@ -229,8 +235,10 @@ Q_OBJECT
         void slotSetMouseTextSelect();
         void slotSetMouseTableSelect();
         void slotToggleAnnotator( bool );
-        void slotScrollUp();
-        void slotScrollDown();
+        void slotAutoScrollUp();
+        void slotAutoScrollDown();
+        void slotScrollUp( bool singleStep = false );
+        void slotScrollDown( bool singleStep = false );
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();

@@ -42,7 +42,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return REVIEWS_ID; }
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
 
         void reparseConfig();
 

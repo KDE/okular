@@ -41,7 +41,7 @@ Q_OBJECT
         // inherited: create thumbnails ( inherited as a DocumentObserver )
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
         void notifyPageChanged( int pageNumber, int changedFlags );
         // inherited: request all visible pixmap (due to a global shange or so..)

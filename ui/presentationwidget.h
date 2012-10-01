@@ -23,7 +23,7 @@ class QToolBar;
 class QTimer;
 class KActionCollection;
 class KSelectAction;
-class AnnotatorEngine;
+class SmoothPathEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
 
@@ -53,6 +53,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber ) const;
+        void notifyCurrentPageChanged( int previous, int current );
 
     public slots:
         void slotFind();
@@ -104,8 +105,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QRect m_overlayGeometry;
         const Okular::Action * m_pressedLink;
         bool m_handCursor;
-        QList< Okular::Annotation * > m_currentPageDrawings;
-        AnnotatorEngine * m_drawingEngine;
+        SmoothPathEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
         int m_screenInhibitCookie;
@@ -133,6 +133,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
+        bool m_showSummaryView;
 
     private slots:
         void slotNextPage();

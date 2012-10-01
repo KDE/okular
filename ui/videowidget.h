@@ -31,9 +31,19 @@ class VideoWidget : public QWidget
         bool isPlaying() const;
 
         /**
+         * This method is called when the page the video widget is located on has been initialized.
+         */
+        void pageInitialized();
+
+        /**
          * This method is called when the page the video widget is located on has been entered.
          */
         void pageEntered();
+
+        /**
+         * This method is called when the page the video widget is located on has been left.
+         */
+        void pageLeft();
 
     public slots:
         void play();
@@ -48,6 +58,8 @@ class VideoWidget : public QWidget
     private:
         Q_PRIVATE_SLOT( d, void finished() )
         Q_PRIVATE_SLOT( d, void playOrPause() )
+        Q_PRIVATE_SLOT( d, void setPosterImage( const QImage& ) )
+        Q_PRIVATE_SLOT( d, void stateChanged( Phonon::State, Phonon::State ) )
 
         // private storage
         class Private;

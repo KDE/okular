@@ -40,7 +40,7 @@ NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p )
     return *this;
 }
 
-void NormalizedPoint::transform( const QMatrix &matrix )
+void NormalizedPoint::transform( const QTransform &matrix )
 {
     qreal tmp_x = (qreal)x;
     qreal tmp_y = (qreal)y;
@@ -190,7 +190,7 @@ QRect NormalizedRect::roundedGeometry( int xScale, int yScale ) const
     return QRect( l, t, r - l + 1, b - t + 1 );
 }
 
-void NormalizedRect::transform( const QMatrix &matrix )
+void NormalizedRect::transform( const QTransform &matrix )
 {
     QRectF rect( left, top, right - left, bottom - top );
     rect = matrix.mapRect( rect );
@@ -305,7 +305,7 @@ bool ObjectRect::contains( double x, double y, double, double ) const
     return m_transformedPath.contains( QPointF( x, y ) );
 }
 
-void ObjectRect::transform( const QMatrix &matrix )
+void ObjectRect::transform( const QTransform &matrix )
 {
     m_transformedPath = matrix.map( m_path );
 }
@@ -385,7 +385,7 @@ AnnotationObjectRect::~AnnotationObjectRect()
     m_object = 0;
 }
 
-void AnnotationObjectRect::transform( const QMatrix &matrix )
+void AnnotationObjectRect::transform( const QTransform &matrix )
 {
     m_annotation->d_func()->annotationTransform( matrix );
 }

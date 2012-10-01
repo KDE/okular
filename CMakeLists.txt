@@ -121,7 +121,7 @@ ENDIF(APPLE)
 
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
 
-set_target_properties(okularcore PROPERTIES VERSION 1.8.0 SOVERSION 1 )
+set_target_properties(okularcore PROPERTIES VERSION 2.0.0 SOVERSION 2 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
@@ -170,6 +170,7 @@ set(okularpart_SRCS
    ui/searchwidget.cpp
    ui/sidebar.cpp
    ui/side_reviews.cpp
+   ui/snapshottaker.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
    ui/tocmodel.cpp

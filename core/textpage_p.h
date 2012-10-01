@@ -14,7 +14,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtCore/QPair>
-#include <QtGui/QMatrix>
+#include <QtGui/QTransform>
 
 class SearchPoint;
 class TinyTextEntity;

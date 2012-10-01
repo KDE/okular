@@ -562,8 +562,32 @@ class OKULAR_EXPORT Document : public QObject
         const KComponentData* componentData() const;
 
         /**
+         * Saving capabilities. Their availability varies according to the
+         * underlying generator and/or the document type.
+         *
+         * @see canSaveChanges (SaveCapability)
+         * @since 0.15 (KDE 4.9)
+         */
+        enum SaveCapability
+        {
+            SaveFormsCapability = 1,       ///< Can save form changes
+            SaveAnnotationsCapability = 2  ///< Can save annotation changes
+        };
+
+        /**
+         * Returns whether it's possible to save a given category of changes to
+         * another document.
+         *
+         * @since 0.15 (KDE 4.9)
+         */
+        bool canSaveChanges( SaveCapability cap ) const;
+
+        /**
          * Returns whether the changes to the document (modified annotations,
          * values in form fields, etc) can be saved to another document.
+         *
+         * Equivalent to the logical OR of canSaveChanges(SaveCapability) for
+         * each capability.
          *
          * @since 0.7 (KDE 4.1)
          */
@@ -641,6 +665,14 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.14 (KDE 4.8)
         */
         QPrinter::Orientation orientation() const;
+
+        /**
+         * Control annotation editing (creation, modification and removal),
+         * which is enabled by default.
+         *
+         * @since 0.15 (KDE 4.9)
+        */
+        void setAnnotationEditingEnabled( bool enable );
 
 
     public Q_SLOTS:
@@ -779,7 +811,7 @@ class OKULAR_EXPORT Document : public QObject
 
         Q_PRIVATE_SLOT( d, void saveDocumentInfo() const )
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
-        Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
+        Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
@@ -788,8 +820,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void _o_configChanged() )
 
         // search thread simulators
-        Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
-        Q_PRIVATE_SLOT( d, void doContinuePrevMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
+        Q_PRIVATE_SLOT( d, void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct) )
         Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color) )
         Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int caseSensitivity, const QColor & color, bool matchAll) )
 };
@@ -829,6 +860,7 @@ class OKULAR_EXPORT DocumentViewport
          * @internal
          */
         bool operator==( const DocumentViewport &other ) const;
+        bool operator<( const DocumentViewport &other ) const;
 
         /**
          * The number of the page nearest the center of the viewport.

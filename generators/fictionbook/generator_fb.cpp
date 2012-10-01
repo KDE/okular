@@ -20,7 +20,7 @@ static KAboutData createAboutData()
          "okular_fictionbook",
          "okular_fictionbook",
          ki18n( "Fiction Book Backend" ),
-         "0.1.4",
+         "0.1.5",
          ki18n( "A renderer for FictionBook eBooks" ),
          KAboutData::License_GPL,
          ki18n( "© 2007-2008 Tobias Koenig" )

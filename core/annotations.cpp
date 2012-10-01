@@ -15,6 +15,7 @@
 #include <QtGui/QColor>
 
 // local includes
+#include "action.h"
 #include "document.h"
 #include "document_p.h"
 #include "movie.h"
@@ -849,18 +850,18 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     }
 }
 
-void AnnotationPrivate::annotationTransform( const QMatrix &matrix )
+void AnnotationPrivate::annotationTransform( const QTransform &matrix )
 {
     resetTransformation();
     transform( matrix );
 }
 
-void AnnotationPrivate::transform( const QMatrix &matrix )
+void AnnotationPrivate::transform( const QTransform &matrix )
 {
     m_transformedBoundary.transform( matrix );
 }
 
-void AnnotationPrivate::baseTransform( const QMatrix &matrix )
+void AnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     m_boundary.transform( matrix );
 }
@@ -893,13 +894,13 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
     public:
         TextAnnotationPrivate()
             : AnnotationPrivate(), m_textType( TextAnnotation::Linked ),
-              m_textIcon( "Note" ), m_inplaceAlign( 0 ),
+              m_textIcon( "Comment" ), m_inplaceAlign( 0 ),
               m_inplaceIntent( TextAnnotation::Unknown )
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
         virtual bool openDialogAfterCreation() const;
@@ -1098,7 +1099,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     // store the optional attributes
     if ( d->m_textType != Linked )
         textElement.setAttribute( "type", (int)d->m_textType );
-    if ( d->m_textIcon != "Comment" )
+    if ( !d->m_textIcon.isEmpty() )
         textElement.setAttribute( "icon", d->m_textIcon );
     if ( d->m_textFont != QApplication::font() )
         textElement.setAttribute( "font", d->m_textFont.toString() );
@@ -1130,7 +1131,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void TextAnnotationPrivate::transform( const QMatrix &matrix )
+void TextAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1139,7 +1140,7 @@ void TextAnnotationPrivate::transform( const QMatrix &matrix )
     }
 }
 
-void TextAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void TextAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1190,8 +1191,8 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
@@ -1434,7 +1435,7 @@ void LineAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void LineAnnotationPrivate::transform( const QMatrix &matrix )
+void LineAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1443,7 +1444,7 @@ void LineAnnotationPrivate::transform( const QMatrix &matrix )
         it.next().transform( matrix );
 }
 
-void LineAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void LineAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1544,18 +1545,6 @@ QColor GeomAnnotation::geometricalInnerColor() const
 {
     Q_D( const GeomAnnotation );
     return d->m_geomInnerColor;
-}
-
-void GeomAnnotation::setGeometricalPointWidth( int width )
-{
-    Q_D( GeomAnnotation );
-    d->m_style.setWidth( width );
-}
-
-int GeomAnnotation::geometricalPointWidth() const
-{
-    Q_D( const GeomAnnotation );
-    return static_cast< int >( d->m_style.width() );
 }
 
 Annotation::SubType GeomAnnotation::subType() const
@@ -1674,7 +1663,7 @@ double HighlightAnnotation::Quad::feather() const
     return d->m_feather;
 }
 
-void HighlightAnnotation::Quad::transform( const QMatrix &matrix )
+void HighlightAnnotation::Quad::transform( const QTransform &matrix )
 {
     for ( int i = 0; i < 4; ++i ) {
         d->m_transformedPoints[ i ] = d->m_points[ i ];
@@ -1691,8 +1680,8 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
 
         HighlightAnnotation::HighlightType m_highlightType;
         QList< HighlightAnnotation::Quad > m_highlightQuads;
@@ -1737,7 +1726,7 @@ HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
             q.setCapEnd( qe.hasAttribute( "end" ) );
             q.setFeather( qe.attribute( "feather", "0.1" ).toDouble() );
 
-            q.transform( QMatrix() );
+            q.transform( QTransform() );
 
             d->m_highlightQuads.append( q );
         }
@@ -1812,7 +1801,7 @@ Annotation::SubType HighlightAnnotation::subType() const
     return AHighlight;
 }
 
-void HighlightAnnotationPrivate::transform( const QMatrix &matrix )
+void HighlightAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -1821,7 +1810,7 @@ void HighlightAnnotationPrivate::transform( const QMatrix &matrix )
         it.next().transform( matrix );
 }
 
-void HighlightAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void HighlightAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -1916,8 +1905,8 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
 
@@ -2041,7 +2030,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-void InkAnnotationPrivate::transform( const QMatrix &matrix )
+void InkAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
@@ -2053,7 +2042,7 @@ void InkAnnotationPrivate::transform( const QMatrix &matrix )
     }
 }
 
-void InkAnnotationPrivate::baseTransform( const QMatrix &matrix )
+void InkAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
@@ -2422,4 +2411,150 @@ void MovieAnnotation::setMovie( Movie *movie )
 {
     Q_D( MovieAnnotation );
     d->movie = movie;
+}
+
+/** ScreenAnnotation [Annotation] */
+
+class Okular::ScreenAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        ~ScreenAnnotationPrivate();
+        QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
+};
+
+ScreenAnnotationPrivate::~ScreenAnnotationPrivate()
+{
+    qDeleteAll( m_additionalActions );
+}
+
+ScreenAnnotation::ScreenAnnotation()
+    : Annotation( *new ScreenAnnotationPrivate() )
+{
+}
+
+ScreenAnnotation::ScreenAnnotation( const QDomNode & node )
+    : Annotation( *new ScreenAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'screen' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "screen" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+ScreenAnnotation::~ScreenAnnotation()
+{
+}
+
+void ScreenAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [screen] element
+    QDomElement movieElement = document.createElement( "screen" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType ScreenAnnotation::subType() const
+{
+    return AScreen;
+}
+
+void ScreenAnnotation::setAdditionalAction( AdditionalActionType type, Action *action )
+{
+    Q_D( ScreenAnnotation );
+    if ( d->m_additionalActions.contains( type ) )
+        delete d->m_additionalActions.value( type );
+
+    d->m_additionalActions.insert( type, action );
+}
+
+Action* ScreenAnnotation::additionalAction( AdditionalActionType type ) const
+{
+    Q_D( const ScreenAnnotation );
+    if ( !d->m_additionalActions.contains( type ) )
+        return 0;
+    else
+        return d->m_additionalActions.value( type );
+}
+
+/** WidgetAnnotation [Annotation] */
+
+class Okular::WidgetAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        ~WidgetAnnotationPrivate();
+        QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
+};
+
+WidgetAnnotationPrivate::~WidgetAnnotationPrivate()
+{
+    qDeleteAll( m_additionalActions );
+}
+
+WidgetAnnotation::WidgetAnnotation()
+    : Annotation( *new WidgetAnnotationPrivate() )
+{
+}
+
+WidgetAnnotation::WidgetAnnotation( const QDomNode & node )
+    : Annotation( *new WidgetAnnotationPrivate(), node )
+{
+    // loop through the whole children looking for a 'widget' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "widget" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+WidgetAnnotation::~WidgetAnnotation()
+{
+}
+
+void WidgetAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [widget] element
+    QDomElement movieElement = document.createElement( "widget" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType WidgetAnnotation::subType() const
+{
+    return AWidget;
+}
+
+void WidgetAnnotation::setAdditionalAction( AdditionalActionType type, Action *action )
+{
+    Q_D( WidgetAnnotation );
+    if ( d->m_additionalActions.contains( type ) )
+        delete d->m_additionalActions.value( type );
+
+    d->m_additionalActions.insert( type, action );
+}
+
+Action* WidgetAnnotation::additionalAction( AdditionalActionType type ) const
+{
+    Q_D( const WidgetAnnotation );
+    if ( !d->m_additionalActions.contains( type ) )
+        return 0;
+    else
+        return d->m_additionalActions.value( type );
 }

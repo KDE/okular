@@ -42,6 +42,7 @@
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kactioncollection.h>
+#include <kwindowsystem.h>
 
 // local includes
 #include "kdocumentviewer.h"
@@ -85,7 +86,7 @@ void Shell::init()
 
   // now that the Part is loaded, we cast it to a Part to get
   // our hands on it
-  m_part = factory->create< KParts::ReadOnlyPart >( this );
+  m_part = factory->create< KParts::ReadWritePart >( this );
   if (m_part)
   {
     // then, setup our actions
@@ -101,13 +102,19 @@ void Shell::init()
   connect( this, SIGNAL(restoreDocument(KConfigGroup)),m_part, SLOT(restoreDocument(KConfigGroup)));
   connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), m_part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
   connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
+  connect( m_part, SIGNAL(enableCloseAction(bool)), m_closeAction, SLOT(setEnabled(bool)));
 
   readSettings();
 
-  if (m_args && m_args->isSet("unique") && m_args->count() == 1)
+  m_unique = false;
+  if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
   {
-    QDBusConnection::sessionBus().registerService("org.kde.okular");
+    m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
+    if (!m_unique)
+        KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
   }
+  
+  QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
 
   if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
 }
@@ -117,10 +124,19 @@ void Shell::delayedOpen()
    openUrl( m_openUrl );
 }
 
+void Shell::showOpenRecentMenu()
+{
+    m_recent->menu()->popup(QCursor::pos());
+}
+
 Shell::~Shell()
 {
-    if ( m_part ) writeSettings();
-    delete m_part;
+    if ( m_part )
+    {
+        writeSettings();
+        m_part->closeUrl( false );
+    }
+    m_part = 0; // It is deleted by the KPart/QObject machinery
     if ( m_args )
         m_args->clear();
 }
@@ -129,20 +145,40 @@ void Shell::openUrl( const KUrl & url )
 {
     if ( m_part )
     {
-        if ( m_doc && m_args && m_args->isSet( "presentation" ) )
-            m_doc->startPresentation();
-        bool openOk = m_part->openUrl( url );
-        const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
-        if ( !isstdin )
+        if( !m_part->url().isEmpty() )
         {
-            if ( openOk )
-                m_recent->addUrl( url );
+            if( m_unique )
+            {
+                KMessageBox::error(this, i18n("Can't open more than one document in the unique Okular instance."));
+            }
             else
-                m_recent->removeUrl( url );
+            {
+                Shell* newShell = new Shell();
+                newShell->openUrl( url );
+                newShell->show();
+            }
+        }
+        else
+        {
+            if ( m_doc && m_args && m_args->isSet( "presentation" ) )
+                m_doc->startPresentation();
+            bool openOk = m_part->openUrl( url );
+            const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+            if ( !isstdin )
+            {
+                if ( openOk )
+                    m_recent->addUrl( url );
+                else
+                    m_recent->removeUrl( url );
+            }
         }
     }
 }
 
+void Shell::closeUrl()
+{
+    m_part->closeUrl();
+}
 
 void Shell::readSettings()
 {
@@ -178,12 +214,13 @@ void Shell::setupActions()
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStandardAction::openRecent( this, SLOT(openUrl(KUrl)), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
-  m_recent->setToolButtonPopupMode( QToolButton::DelayedPopup );
-  connect( m_recent, SIGNAL(triggered()), this, SLOT(fileOpen()) );
+  connect( m_recent, SIGNAL(triggered()), this, SLOT(showOpenRecentMenu()) );
   m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( m_part, SLOT(slotPrint()), actionCollection() );
   m_printAction->setEnabled( false );
+  m_closeAction = KStandardAction::close( this, SLOT(closeUrl()), actionCollection() );
+  m_closeAction->setEnabled( false );
   KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
 
   setStandardToolBarMenuEnabled(true);
@@ -267,12 +304,22 @@ void Shell::fileOpen()
         return;
     KUrl url = dlg.selectedUrl();
     if ( !url.isEmpty() )
+    {
         openUrl( url );
+    }
 }
 
 void Shell::slotQuit()
 {
     close();
+}
+
+void Shell::tryRaise()
+{
+    if (m_unique)
+    {
+        KWindowSystem::forceActiveWindow( window()->effectiveWinId() );
+    }
 }
 
 // only called when starting the program
@@ -329,6 +376,11 @@ void Shell::slotShowMenubar()
 QSize Shell::sizeHint() const
 {
     return QApplication::desktop()->availableGeometry( this ).size() * 0.75;
+}
+
+bool Shell::queryClose()
+{
+    return m_part ? m_part->queryClose() : true;
 }
 
 #include "shell.moc"

@@ -63,6 +63,21 @@ namespace Okular {
 
 class FontExtractionThread;
 
+struct DoContinueDirectionMatchSearchStruct
+{
+    bool forward;
+    QSet< int > *pagesToNotify;
+    RegularAreaRect *match;
+    int currentPage;
+    int searchID;
+    QString text;
+    Qt::CaseSensitivity caseSensitivity;
+    bool moveViewport;
+    QColor color;
+    bool noDialogs;
+    int pagesDone;
+};
+
 class DocumentPrivate
 {
     public:
@@ -86,6 +101,7 @@ class DocumentPrivate
             m_archiveData( 0 ),
             m_fontsCached( false ),
             m_documentInfo( 0 ),
+            m_annotationEditingEnabled ( true ),
             m_annotationBeingMoved( false )
         {
             calculateMaxTextPages();
@@ -94,10 +110,13 @@ class DocumentPrivate
         // private methods
         QString pagesSizeString() const;
         QString localizedSize(const QSizeF &size) const;
-        void cleanupPixmapMemory( qulonglong bytesOffset = 0 );
+        qulonglong calculateMemoryToFree();
+        void cleanupPixmapMemory();
+        void cleanupPixmapMemory( qulonglong memoryToFree );
+        AllocatedPixmap * searchLowestPriorityUnloadablePixmap( bool thenRemoveIt = false );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
-        qulonglong getFreeMemory();
+        qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
         void loadDocumentInfo();
         void loadDocumentInfo( const QString &fileName );
         void loadViewsInfo( View *view, const QDomElement &e );
@@ -115,6 +134,7 @@ class DocumentPrivate
         bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
+        void notifyAnnotationChanges( int page );
         bool canAddAnnotationsNatively() const;
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
@@ -123,15 +143,14 @@ class DocumentPrivate
         // private slots
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
-        void sendGeneratorRequest();
+        void sendGeneratorPixmapRequest();
         void rotationFinished( int page, Okular::Page *okularPage );
         void fontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
         void slotGeneratorConfigChanged( const QString& );
         void refreshPixmaps( int );
         void _o_configChanged();
-        void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
-        void doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages);
+        void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int caseSensitivity, const QColor & color, bool matchAll);
 
@@ -184,7 +203,7 @@ class DocumentPrivate
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;
-        QLinkedList< AllocatedPixmap * > m_allocatedPixmapsFifo;
+        QLinkedList< AllocatedPixmap * > m_allocatedPixmaps;
         qulonglong m_allocatedPixmapsTotalMemory;
         QList< int > m_allocatedTextPagesFifo;
         int m_maxAllocatedTextPages;
@@ -225,6 +244,7 @@ class DocumentPrivate
         Scripter *m_scripter;
 
         ArchiveData *m_archiveData;
+        QString m_archivedFileName;
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
@@ -233,11 +253,14 @@ class DocumentPrivate
 
         QSet< View * > m_views;
 
+        bool m_annotationEditingEnabled;
+        bool m_annotationsNeedSaveAs;
         bool m_annotationBeingMoved; // is an annotation currently being moved?
-        bool m_containsExternalAnnotations; // set on opening and never changed
         bool m_showWarningLimitedAnnotSupport;
 };
 
 }
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

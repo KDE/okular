@@ -13,6 +13,7 @@
 #include <QtCore/QList>
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
+#include <QtGui/QTransform>
 #include <kdebug.h>
 
 #include "global.h"
@@ -69,7 +70,7 @@ class OKULAR_EXPORT NormalizedPoint
         /**
          * Transforms the normalized point with the operations defined by @p matrix.
          */
-        void transform( const QMatrix &matrix );
+        void transform( const QTransform &matrix );
 
         /**
          * The normalized x coordinate.
@@ -206,7 +207,7 @@ class OKULAR_EXPORT NormalizedRect
         /**
          * Transforms the normalized rectangle with the operations defined by @p matrix.
          */
-        void transform( const QMatrix &matrix );
+        void transform( const QTransform &matrix );
 
         /**
          * Returns true if the point pt is located to the bottom of the rectangle
@@ -370,7 +371,7 @@ class OKULAR_EXPORT ObjectRect
         /**
          * Transforms the object rectangle with the operations defined by @p matrix.
          */
-        virtual void transform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
 
         /**
          * Returns the square of the distance between the object and the point @p x, @p y
@@ -425,7 +426,7 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
         /**
          * Transforms the annotation object rectangle with the operations defined by @p matrix.
          */
-        virtual void transform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
 
     private:
         Annotation * m_annotation;
@@ -576,7 +577,7 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         /**
          * Transforms the regular area with the operations defined by @p matrix.
          */
-        void transform( const QMatrix &matrix );
+        void transform( const QTransform &matrix );
 };
 
 template <class NormalizedShape, class Shape>
@@ -808,7 +809,7 @@ QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int ySca
 }
 
 template <class NormalizedShape, class Shape>
-void RegularArea<NormalizedShape, Shape>::transform( const QMatrix &matrix )
+void RegularArea<NormalizedShape, Shape>::transform( const QTransform &matrix )
 {
     if ( !this )
         return;

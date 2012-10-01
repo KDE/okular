@@ -20,7 +20,7 @@ static KAboutData createAboutData()
          "okular_ooo",
          "okular_ooo",
          ki18n( "OpenOffice Document Backend" ),
-         "0.2.2",
+         "0.2.3",
          ki18n( "A renderer for OpenOffice text documents" ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2008 Tobias Koenig" )

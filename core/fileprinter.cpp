@@ -33,13 +33,6 @@
 
 using namespace Okular;
 
-// Deprecated overload for binary compatibility
-int FilePrinter::printFile( QPrinter &printer, const QString file, FileDeletePolicy fileDeletePolicy,
-                            PageSelectPolicy pageSelectPolicy, const QString &pageRange )
-{
-    return printFile( printer, file, QPrinter::Portrait, fileDeletePolicy, pageSelectPolicy, pageRange );
-}
-
 int FilePrinter::printFile( QPrinter &printer, const QString file,
                             QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
@@ -47,24 +40,6 @@ int FilePrinter::printFile( QPrinter &printer, const QString file,
     FilePrinter fp;
     return fp.doPrintFiles( printer, QStringList( file ), fileDeletePolicy, pageSelectPolicy, pageRange, 
                             documentOrientation );
-}
-
-// Deprecated function kept for binary compatibility
-// This is deprecated because it cannot support different original orientations
-// for each document in the list.
-int FilePrinter::printFiles( QPrinter &printer, const QStringList &fileList, FileDeletePolicy fileDeletePolicy )
-{
-    FilePrinter fp;
-    return fp.doPrintFiles( printer, fileList, fileDeletePolicy, FilePrinter::ApplicationSelectsPages, QString(),
-                            QPrinter::Portrait );
-}
-
-// Deprecated overload for binary compatibility
-int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
-                               PageSelectPolicy pageSelectPolicy, const QString &pageRange )
-{
-    return doPrintFiles( printer, fileList, fileDeletePolicy, pageSelectPolicy, pageRange,
-                         QPrinter::Portrait );
 }
 
 int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
@@ -380,15 +355,6 @@ Generator::PrintError FilePrinter::printError( int c )
 
 
 
-// Deprecated overload for binary compatibility
-QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
-                                         PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
-                                         const QString &pageRange, const QString &version )
-{
-    return printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions,
-                           pageRange, version, QPrinter::Portrait );
-}
-
 QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
                                          PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
                                          const QString &pageRange, const QString &version, 
@@ -516,12 +482,6 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
     return QStringList(); // AllPages
 }
 
-// Deprecated overload for binary compatibility
-QStringList FilePrinter::cupsOptions( QPrinter &printer )
-{
-    return cupsOptions( printer, QPrinter::Portrait );
-}
-
 QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation documentOrientation )
 {
     QStringList optionList;
@@ -633,12 +593,6 @@ QString FilePrinter::mediaPaperSource( QPrinter &printer )
     case QPrinter::SmallFormat:     return "SmallFormat";
     default:                        return QString();
     }
-}
-
-// Deprecated overload for binary compatibility
-QStringList FilePrinter::optionOrientation( QPrinter &printer )
-{
-    return optionOrientation( printer, QPrinter::Portrait );
 }
 
 QStringList FilePrinter::optionOrientation( QPrinter &printer, QPrinter::Orientation documentOrientation )

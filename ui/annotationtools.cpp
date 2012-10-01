@@ -50,6 +50,10 @@ AnnotatorEngine::~AnnotatorEngine()
 {
 }
 
+SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen )
+    : points ( points ), pen ( pen )
+{
+}
 
 /** SmoothPathEngine */
 SmoothPathEngine::SmoothPathEngine( const QDomElement & engineElement )
@@ -113,11 +117,19 @@ QRect SmoothPathEngine::event( EventType type, Button button, double nX, double 
 
 void SmoothPathEngine::paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
 {
+    // use engine's color for painting
+    const SmoothPath path( points, QPen(m_engineColor, 1) );
+
+    // draw the path
+    path.paint( painter, xScale, yScale );
+}
+
+void SmoothPath::paint( QPainter * painter, double xScale, double yScale ) const
+{
     // draw SmoothPaths with at least 2 points
     if ( points.count() > 1 )
     {
-        // use engine's color for painting
-        painter->setPen( QPen( m_engineColor, 1 ) );
+        painter->setPen( pen );
 
         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
         Okular::NormalizedPoint pA = *pIt;
@@ -171,5 +183,19 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
 
     // return annotation
     return QList< Okular::Annotation* >() << ann;
+}
+
+SmoothPath SmoothPathEngine::endSmoothPath()
+{
+    m_creationCompleted = false;
+
+    double width = 1;
+    if ( m_annotElement.hasAttribute( "width" ) )
+        width = m_annotElement.attribute( "width" ).toDouble();
+
+    QColor color( m_annotElement.hasAttribute( "color" ) ?
+        m_annotElement.attribute( "color" ) : m_engineColor );
+
+    return SmoothPath( points, QPen(color, width) );
 }
 

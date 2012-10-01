@@ -62,9 +62,7 @@ class BookmarkItem : public QTreeWidgetItem
             if ( other.type() == BookmarkItemType )
             {
                 const BookmarkItem *cmp = static_cast< const BookmarkItem* >( &other );
-                const int v = m_viewport.pageNumber - cmp->m_viewport.pageNumber;
-                if ( v != 0 )
-                    return v < 0;
+                return m_viewport < cmp->m_viewport;
             }
             return QTreeWidgetItem::operator<( other );
         }
@@ -229,7 +227,8 @@ void BookmarkList::slotChanged( QTreeWidgetItem * item )
     FileItem* fItem = dynamic_cast<FileItem*>( item );
     if ( fItem )
     {
-        m_document->bookmarkManager()->renameBookmark( m_document->currentDocument(), fItem->text( 0 ) );
+        const KUrl url = fItem->data( 0, UrlRole ).value< KUrl >();
+        m_document->bookmarkManager()->renameBookmark( url, fItem->text( 0 ) );
         m_document->bookmarkManager()->save();
     }
 }

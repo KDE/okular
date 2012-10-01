@@ -65,9 +65,6 @@
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
   </entry>
-  <entry key="EnableThreading" type="Bool" >
-   <default>true</default>
-  </entry>
   <entry key="TextAntialias" type="Enum" >
    <default>Enabled</default>
    <choices>
@@ -166,6 +163,13 @@
   </entry>
   <entry key="DisplayDocumentTitle" type="Bool" >
    <default>true</default>
+  </entry>
+  <entry key="DisplayDocumentNameOrPath" type="Enum" >
+   <default>Name</default>
+   <choices>
+    <choice name="Name" />
+    <choice name="Path" />
+   </choices>
   </entry>
   <entry key="UseKTTSD" type="Bool" />
   <entry key="WatchFile" type="Bool" >

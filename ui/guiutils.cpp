@@ -99,6 +99,12 @@ QString captionForAnnotation( const Okular::Annotation * ann )
         case Okular::Annotation::AMovie:
             ret = i18n( "Movie" );
             break;
+        case Okular::Annotation::AScreen:
+            ret = i18nc( "Caption for a screen annotation", "Screen" );
+            break;
+        case Okular::Annotation::AWidget:
+            ret = i18nc( "Caption for a widget annotation", "Widget" );
+            break;
         case Okular::Annotation::A_BASE:
             break;
     }

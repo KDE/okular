@@ -90,12 +90,11 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         // [INHERITED] from DocumentObserver
         uint observerId() const { return MINIBAR_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
         
     private:
         QSet<MiniBar *> m_miniBars;
         Okular::Document * m_document;
-        int m_currentPage;
 };
 
 /**
@@ -147,7 +146,7 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
 
         // [INHERITED] from DocumentObserver
         uint observerId() const { return PROGRESSWIDGET_ID; }
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
 
         void slotGotoNormalizedPage( float index );
 
@@ -165,7 +164,6 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
 
     private:
         Okular::Document * m_document;
-        int m_currentPage;
         float m_progressPercentage;
 };
 

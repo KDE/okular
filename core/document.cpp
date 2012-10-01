@@ -11,6 +11,7 @@
 #include "document.h"
 #include "document_p.h"
 
+#include <limits.h>
 #ifdef Q_OS_WIN
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
@@ -173,11 +174,12 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
     }
 }
 
-void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
+qulonglong DocumentPrivate::calculateMemoryToFree()
 {
     // [MEM] choose memory parameters based on configuration profile
     qulonglong clipValue = 0;
     qulonglong memoryToFree = 0;
+
     switch ( Settings::memoryLevel() )
     {
         case Settings::EnumMemoryLevel::Low:
@@ -201,7 +203,9 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
         break;
         case Settings::EnumMemoryLevel::Greedy:
         {
-            const qulonglong memoryLimit = qMax(getFreeMemory(), getTotalMemory() / 2);
+            qulonglong freeSwap;
+            qulonglong freeMemory = getFreeMemory( &freeSwap );
+            const qulonglong memoryLimit = qMin( qMax( freeMemory, getTotalMemory()/2 ), freeMemory+freeSwap );
             if (m_allocatedPixmapsTotalMemory > memoryLimit) clipValue = (m_allocatedPixmapsTotalMemory - memoryLimit) / 2;
         }
         break;
@@ -210,31 +214,78 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong /*sure? bytesOffset*/ )
     if ( clipValue > memoryToFree )
         memoryToFree = clipValue;
 
+    return memoryToFree;
+}
+
+void DocumentPrivate::cleanupPixmapMemory()
+{
+    cleanupPixmapMemory( calculateMemoryToFree() );
+}
+
+void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
+{
     if ( memoryToFree > 0 )
     {
         // [MEM] free memory starting from older pixmaps
         int pagesFreed = 0;
-        QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmapsFifo.end();
-        while ( (pIt != pEnd) && (memoryToFree > 0) )
+        while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = *pIt;
-            if ( m_observers.value( p->id )->canUnloadPixmap( p->page ) )
-            {
-                // update internal variables
-                pIt = m_allocatedPixmapsFifo.erase( pIt );
-                m_allocatedPixmapsTotalMemory -= p->memory;
+            AllocatedPixmap * p = searchLowestPriorityUnloadablePixmap( true );
+            if ( !p ) // No pixmap to remove
+                break;
+
+            kDebug().nospace() << "Evicting cache pixmap id=" << p->id << " page=" << p->page;
+
+            // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
+            // the memory used by the AllocatedPixmap so at most it can reach zero
+            m_allocatedPixmapsTotalMemory -= p->memory;
+            // Make sure memoryToFree does not underflow
+            if ( p->memory > memoryToFree )
+                memoryToFree = 0;
+            else
                 memoryToFree -= p->memory;
-                pagesFreed++;
-                // delete pixmap
-                m_pagesVector.at( p->page )->deletePixmap( p->id );
-                // delete allocation descriptor
-                delete p;
-            } else
-                ++pIt;
+            pagesFreed++;
+            // delete pixmap
+            m_pagesVector.at( p->page )->deletePixmap( p->id );
+            // delete allocation descriptor
+            delete p;
         }
-        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmapsFifo.count() + pagesFreed, pagesFreed, m_allocatedPixmapsFifo.count() );
+        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
     }
+}
+
+/* Returns the next pixmap to evict from cache, or NULL if no suitable pixmap
+ * is found. If thenRemoveIt is set, the pixmap is removed from
+ * m_allocatedPixmaps before returning it */
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityUnloadablePixmap( bool thenRemoveIt )
+{
+    QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
+    QLinkedList< AllocatedPixmap * >::iterator farthestPixmap = pEnd;
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+
+    /* Find the pixmap that is farthest from the current viewport */
+    int maxDistance = -1;
+    while ( pIt != pEnd )
+    {
+        const AllocatedPixmap * p = *pIt;
+        const int distance = qAbs( p->page - currentViewportPage );
+        if ( maxDistance < distance && m_observers.value( p->id )->canUnloadPixmap( p->page ) )
+        {
+            maxDistance = distance;
+            farthestPixmap = pIt;
+        }
+        ++pIt;
+    }
+
+    /* No pixmap to remove */
+    if ( farthestPixmap == pEnd )
+        return 0;
+
+    AllocatedPixmap * selectedPixmap = *farthestPixmap;
+    if ( thenRemoveIt )
+        m_allocatedPixmaps.erase( farthestPixmap );
+    return selectedPixmap;
 }
 
 qulonglong DocumentPrivate::getTotalMemory()
@@ -249,10 +300,8 @@ qulonglong DocumentPrivate::getTotalMemory()
     if ( !memFile.open( QIODevice::ReadOnly ) )
         return (cachedValue = 134217728);
 
-    // read /proc/meminfo and sum up the contents of 'MemFree', 'Buffers'
-    // and 'Cached' fields. consider swapped memory as used memory.
     QTextStream readStream( &memFile );
-     while ( true )
+    while ( true )
     {
         QString entry = readStream.readLine();
         if ( entry.isNull() ) break;
@@ -275,13 +324,23 @@ qulonglong DocumentPrivate::getTotalMemory()
     return (cachedValue = 134217728);
 }
 
-qulonglong DocumentPrivate::getFreeMemory()
+qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 {
     static QTime lastUpdate = QTime::currentTime().addSecs(-3);
     static qulonglong cachedValue = 0;
+    static qulonglong cachedFreeSwap = 0;
 
     if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
+    {
+        if (freeSwap)
+            *freeSwap = cachedFreeSwap;
         return cachedValue;
+    }
+
+    /* Initialize the returned free swap value to 0. It is overwritten if the
+     * actual value is available */
+    if (freeSwap)
+        *freeSwap = 0;
 
 #if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return MEMORY FULL
@@ -294,22 +353,46 @@ qulonglong DocumentPrivate::getFreeMemory()
     qulonglong memoryFree = 0;
     QString entry;
     QTextStream readStream( &memFile );
+    static const int nElems = 5;
+    QString names[nElems] = { "MemFree:", "Buffers:", "Cached:", "SwapFree:", "SwapTotal:" };
+    qulonglong values[nElems] = { 0, 0, 0, 0, 0 };
+    bool foundValues[nElems] = { false, false, false, false, false };
     while ( true )
     {
         entry = readStream.readLine();
         if ( entry.isNull() ) break;
-        if ( entry.startsWith( "MemFree:" ) ||
-                entry.startsWith( "Buffers:" ) ||
-                entry.startsWith( "Cached:" ) ||
-                entry.startsWith( "SwapFree:" ) )
-            memoryFree += entry.section( ' ', -2, -2 ).toULongLong();
-        if ( entry.startsWith( "SwapTotal:" ) )
-            memoryFree -= entry.section( ' ', -2, -2 ).toULongLong();
+        for ( int i = 0; i < nElems; ++i )
+        {
+            if ( entry.startsWith( names[i] ) )
+            {
+                values[i] = entry.section( ' ', -2, -2 ).toULongLong( &foundValues[i] );
+            }
+        }
     }
     memFile.close();
+    bool found = true;
+    for ( int i = 0; found && i < nElems; ++i )
+        found = found && foundValues[i];
+    if ( found )
+    {
+        /* MemFree + Buffers + Cached - SwapUsed =
+         * = MemFree + Buffers + Cached - (SwapTotal - SwapFree) =
+         * = MemFree + Buffers + Cached + SwapFree - SwapTotal */
+        memoryFree = values[0] + values[1] + values[2] + values[3];
+        if ( values[4] > memoryFree )
+            memoryFree = 0;
+        else
+            memoryFree -= values[4];
+    }
+    else
+    {
+        return 0;
+    }
 
     lastUpdate = QTime::currentTime();
 
+    if (freeSwap)
+        *freeSwap = ( cachedFreeSwap = (Q_UINT64_C(1024) * values[3]) );
     return ( cachedValue = (Q_UINT64_C(1024) * memoryFree) );
 #elif defined(Q_OS_FREEBSD)
     qulonglong cache, inact, free, psize;
@@ -338,6 +421,8 @@ qulonglong DocumentPrivate::getFreeMemory()
 
     lastUpdate = QTime::currentTime();
 
+    if (freeSwap)
+        *freeSwap = ( cachedFreeSwap = stat.ullAvailPageFile );
     return ( cachedValue = stat.ullAvailPhys );
 #else
     // tell the memory is full.. will act as in LOW profile
@@ -777,15 +862,16 @@ void DocumentPrivate::warnLimitedAnnotSupport()
         return;
     m_showWarningLimitedAnnotSupport = false; // Show the warning once
 
-    if ( canAddAnnotationsNatively() )
+    if ( m_annotationsNeedSaveAs )
     {
-        // Show only if there are external annotations (we follow the usual XML path otherwise)
-        if ( m_containsExternalAnnotations )
-            KMessageBox::sorry( m_parent->widget(), i18n("Your changes will not be saved automatically. Use File -> Save As... or your changes will be lost") );
+        // Shown if the user is editing annotations in a file whose metadata is
+        // not stored locally (.okular archives belong to this category)
+        KMessageBox::information( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
     }
-    else
+    else if ( !canAddAnnotationsNatively() )
     {
-        KMessageBox::information( m_parent->widget(), i18n("You can save the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
+        // If the generator doesn't support native annotations
+        KMessageBox::information( m_parent->widget(), i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
     }
 }
 
@@ -810,8 +896,14 @@ void DocumentPrivate::saveDocumentInfo() const
         QDomElement pageList = doc.createElement( "pageList" );
         root.appendChild( pageList );
         PageItems saveWhat = AllPageItems;
-        if ( canAddAnnotationsNatively() && m_containsExternalAnnotations )
-            saveWhat &= ~AnnotationPageItems; // Don't save local annotations in this case
+        if ( m_annotationsNeedSaveAs )
+        {
+            /* In this case, if the user makes a modification, he's requested to
+             * save to a new document. Therefore, if there are existing local
+             * annotations, we save them back unmodified in the original
+             * document's metadata, so that it appears that it was not changed */
+            saveWhat |= OriginalAnnotationPageItems;
+        }
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for ( ; pIt != pEnd; ++pIt )
@@ -880,8 +972,22 @@ void DocumentPrivate::slotTimedMemoryCheck()
         cleanupPixmapMemory();
 }
 
-void DocumentPrivate::sendGeneratorRequest()
+void DocumentPrivate::sendGeneratorPixmapRequest()
 {
+    /* If the pixmap cache will have to be cleaned in order to make room for the
+     * next request, get the distance from the current viewport of the page
+     * whose pixmap will be removed. We will ignore preload requests for pages
+     * that are at the same distance or farther */
+    const qulonglong memoryToFree = calculateMemoryToFree();
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+    int maxDistance = INT_MAX; // Default: No maximum
+    if ( memoryToFree )
+    {
+        AllocatedPixmap *pixmapToReplace = searchLowestPriorityUnloadablePixmap();
+        if ( pixmapToReplace )
+            maxDistance = qAbs( pixmapToReplace->page - currentViewportPage );
+    }
+
     // find a request
     PixmapRequest * request = 0;
     m_pixmapRequestsMutex.lock();
@@ -909,8 +1015,16 @@ void DocumentPrivate::sendGeneratorRequest()
             }
             delete r;
         }
+        else if ( !r->d->mForce && r->d->isPreload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
+        {
+            m_pixmapRequestsStack.pop_back();
+            //kDebug() << "Ignoring request that doesn't fit in cache";
+            delete r;
+        }
         else
+        {
             request = r;
+        }
     }
 
     // if no request found (or already generated), return
@@ -923,7 +1037,7 @@ void DocumentPrivate::sendGeneratorRequest()
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 4 * request->width() * request->height();
     if ( pixmapBytes > (1024 * 1024) )
-        cleanupPixmapMemory( pixmapBytes );
+        cleanupPixmapMemory( memoryToFree /* previously calculated value */ );
 
     // submit the request to the generator
     if ( m_generator->canGeneratePixmap() )
@@ -945,7 +1059,7 @@ void DocumentPrivate::sendGeneratorRequest()
     {
         m_pixmapRequestsMutex.unlock();
         // pino (7/4/2006): set the polling interval from 10 to 30
-        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorRequest()) );
+        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorPixmapRequest()) );
     }
 }
 
@@ -1008,11 +1122,8 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        m_allocatedPixmapsFifo.clear();
+        qDeleteAll( m_allocatedPixmaps );
+        m_allocatedPixmaps.clear();
         m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -1021,7 +1132,7 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !m_allocatedPixmapsFifo.isEmpty() && !m_pagesVector.isEmpty() )
+         !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
 }
 
@@ -1057,66 +1168,73 @@ void DocumentPrivate::_o_configChanged()
     }
 }
 
-void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
+void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct)
 {
-    RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
-    QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
-    RunningSearch *search = m_searches.value(searchID);
+    DoContinueDirectionMatchSearchStruct *searchStruct = static_cast<DoContinueDirectionMatchSearchStruct *>(doContinueDirectionMatchSearchStruct);
+    RunningSearch *search = m_searches.value(searchStruct->searchID);
 
-    if ((m_searchCancelled && !match) || !search)
+    if ((m_searchCancelled && !searchStruct->match) || !search)
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
 
         if (search) search->isCurrentlySearching = false;
 
-        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
-        delete pagesToNotify;
+        emit m_parent->searchFinished( searchStruct->searchID, Document::SearchCancelled );
+        delete searchStruct->pagesToNotify;
+        delete searchStruct;
         return;
     }
 
+    bool doContinue = false;
     // if no match found, loop through the whole doc, starting from currentPage
-    if ( !match )
+    if ( !searchStruct->match )
     {
-        int pageCount = m_pagesVector.count();
-        if (donePages < pageCount)
+        const int pageCount = m_pagesVector.count();
+        if (searchStruct->pagesDone < pageCount)
         {
-            bool doContinue = true;
-            if ( currentPage >= pageCount )
+            doContinue = true;
+            if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
-                if ( noDialogs || KMessageBox::questionYesNo(m_parent->widget(), i18n("End of document reached.\nContinue from the beginning?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    currentPage = 0;
+                const QString question = searchStruct->forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
+                if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_parent->widget(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                    searchStruct->currentPage = searchStruct->forward ? 0 : pageCount - 1;
                 else
                     doContinue = false;
-            }
-            if (doContinue)
-            {
-                // get page
-                Page * page = m_pagesVector[ currentPage ];
-                // request search page if needed
-                if ( !page->hasTextPage() )
-                    m_parent->requestTextPage( page->number() );
-                // if found a match on the current page, end the loop
-                match = page->findText( searchID, text, FromTop, caseSensitivity );
-
-                if ( !match )
-                {
-                    currentPage++;
-                    donePages++;
-                }
-                else
-                {
-                    donePages = 1;
-                }
-
-                QMetaObject::invokeMethod(m_parent, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
-                return;
             }
         }
     }
 
-    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
+    if (doContinue)
+    {
+        // get page
+        Page * page = m_pagesVector[ searchStruct->currentPage ];
+        // request search page if needed
+        if ( !page->hasTextPage() )
+            m_parent->requestTextPage( page->number() );
+
+        // if found a match on the current page, end the loop
+        searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
+
+        if ( !searchStruct->match )
+        {
+            if (searchStruct->forward) searchStruct->currentPage++;
+            else searchStruct->currentPage--;
+            searchStruct->pagesDone++;
+        }
+        else
+        {
+            searchStruct->pagesDone = 1;
+        }
+        
+        // Both of the previous if branches need to call doContinueDirectionMatchSearch
+        QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+    }
+    else
+    {
+        doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, searchStruct->moveViewport, searchStruct->color );
+        delete searchStruct;
+    }
 }
 
 void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color )
@@ -1167,69 +1285,6 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
     else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
 
     delete pagesToNotify;
-}
-
-void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
-{
-    RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
-    QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
-    RunningSearch *search = m_searches.value(searchID);
-
-    if ((m_searchCancelled && !match) || !search)
-    {
-        // if the user cancelled but he just got a match, give him the match!
-        QApplication::restoreOverrideCursor();
-
-        if (search) search->isCurrentlySearching = false;
-
-        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
-        delete pagesToNotify;
-        return;
-    }
-
-
-    // if no match found, loop through the whole doc, starting from currentPage
-    if ( !match )
-    {
-        int pageCount = m_pagesVector.count();
-        if (donePages < pageCount)
-        {
-            bool doContinue = true;
-            if ( currentPage < 0 )
-            {
-                if ( noDialogs || KMessageBox::questionYesNo(m_parent->widget(), i18n("Beginning of document reached.\nContinue from the bottom?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    currentPage = pageCount - 1;
-                else
-                    doContinue = false;
-            }
-            if (doContinue)
-            {
-                // get page
-                Page * page = m_pagesVector[ currentPage ];
-                // request search page if needed
-                if ( !page->hasTextPage() )
-                    m_parent->requestTextPage( page->number() );
-                // if found a match on the current page, end the loop
-                match = page->findText( searchID, text, FromBottom, caseSensitivity );
-
-                if ( !match )
-                {
-                    currentPage--;
-                    donePages++;
-                }
-                else
-                {
-                    donePages = 1;
-                }
-
-                QMetaObject::invokeMethod(m_parent, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
-                return;
-            }
-        }
-    }
-
-    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
 }
 
 void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color)
@@ -1678,24 +1733,32 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
-    d->m_containsExternalAnnotations = false;
-    d->m_showWarningLimitedAnnotSupport = true;
+
+    bool containsExternalAnnotations = false;
     foreach ( Page * p, d->m_pagesVector )
     {
         p->d->m_doc = d;
         if ( !p->annotations().empty() )
-            d->m_containsExternalAnnotations = true;
+            containsExternalAnnotations = true;
     }
+
+    // Be quiet while restoring local annotations
+    d->m_showWarningLimitedAnnotSupport = false;
+    d->m_annotationsNeedSaveAs = false;
 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
         d->loadDocumentInfo( d->m_archiveData->metadataFileName );
+        d->m_annotationsNeedSaveAs = true;
     }
     else
     {
         d->loadDocumentInfo();
+        d->m_annotationsNeedSaveAs = ( d->canAddAnnotationsNatively() && containsExternalAnnotations );
     }
+
+    d->m_showWarningLimitedAnnotSupport = true;
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
@@ -1863,11 +1926,8 @@ void Document::closeDocument()
     d->m_pagesVector.clear();
 
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
 
     // clear 'running searches' descriptors
     QMap< int, RunningSearch * >::const_iterator rIt = d->m_searches.constBegin();
@@ -1925,14 +1985,14 @@ void Document::removeObserver( DocumentObserver * pObserver )
             (*it)->deletePixmap( observerId );
 
         // [MEM] free observer's allocation descriptors
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
+        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmaps.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmaps.end();
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
             if ( p->id == observerId )
             {
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
+                aIt = d->m_allocatedPixmaps.erase( aIt );
                 delete p;
             }
             else
@@ -1963,11 +2023,8 @@ void Document::reparseConfig()
         }
 
         // [MEM] remove allocation descriptors
-        QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-        QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-            delete *aIt;
-        d->m_allocatedPixmapsFifo.clear();
+        qDeleteAll( d->m_allocatedPixmaps );
+        d->m_allocatedPixmaps.clear();
         d->m_allocatedPixmapsTotalMemory = 0;
 
         // send reload signals to observers
@@ -1976,7 +2033,7 @@ void Document::reparseConfig()
 
     // free memory if in 'low' profile
     if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
-         !d->m_allocatedPixmapsFifo.isEmpty() && !d->m_pagesVector.isEmpty() )
+         !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty() )
         d->cleanupPixmapMemory();
 }
 
@@ -2138,6 +2195,9 @@ KUrl Document::currentDocument() const
 
 bool Document::isAllowed( Permission action ) const
 {
+    if ( action == Okular::AllowNotes && !d->m_annotationEditingEnabled )
+        return false;
+
 #if !OKULAR_FORCE_DRM
     if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
         return true;
@@ -2297,7 +2357,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 2. [ADD TO STACK] add requests to stack
-    bool threadingDisabled = !Settings::enableThreading();
     QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
     for ( ; rIt != rEnd; ++rIt )
     {
@@ -2315,9 +2374,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
         if ( !request->asynchronous() )
             request->d->mPriority = 0;
-
-        if ( request->asynchronous() && threadingDisabled )
-            request->d->mAsynchronous = false;
 
         // add request to the 'stack' at the right place
         if ( !request->priority() )
@@ -2338,9 +2394,9 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     // 3. [START FIRST GENERATION] if <NO>generator is ready, start a new generation,
     // or else (if gen is running) it will be started when the new contents will
     //come from generator (in requestDone())</NO>
-    // all handling of requests put into sendGeneratorRequest
+    // all handling of requests put into sendGeneratorPixmapRequest
     //    if ( generator->canRequestPixmap() )
-        d->sendGeneratorRequest();
+        d->sendGeneratorPixmapRequest();
 }
 
 void Document::requestTextPage( uint page )
@@ -2352,6 +2408,16 @@ void Document::requestTextPage( uint page )
     // Memory management for TextPages
 
     d->m_generator->generateTextPage( kp );
+}
+
+void DocumentPrivate::notifyAnnotationChanges( int page )
+{
+    int flags = DocumentObserver::Annotations;
+
+    if ( m_annotationsNeedSaveAs )
+        flags |= DocumentObserver::NeedSaveAs;
+
+    foreachObserverD( notifyPageChanged( page, flags ) );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -2376,7 +2442,7 @@ void Document::addPageAnnotation( int page, Annotation * annotation )
         proxy->notifyAddition( annotation, page );
 
     // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    d->notifyAnnotationChanges( page );
 
     if ( annotation->flags() & Annotation::ExternallyDrawn )
     {
@@ -2432,7 +2498,7 @@ void Document::modifyPageAnnotation( int page, Annotation * annotation, bool app
         proxy->notifyModification( annotation, page, appearanceChanged );
 
     // notify observers about the change
-    foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+    d->notifyAnnotationChanges( page );
 
     if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
     {
@@ -2507,7 +2573,7 @@ void Document::removePageAnnotation( int page, Annotation * annotation )
         kp->removeAnnotation( annotation ); // Also destroys the object
 
         // in case of success, notify observers about the change
-        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+        d->notifyAnnotationChanges( page );
 
         if ( isExternallyDrawn )
         {
@@ -2555,7 +2621,7 @@ void Document::removePageAnnotations( int page, const QList< Annotation * > &ann
     if ( changed )
     {
         // in case we removed even only one annotation, notify observers about the change
-        foreachObserver( notifyPageChanged( page, DocumentObserver::Annotations ) );
+        d->notifyAnnotationChanges( page );
 
         if ( refreshNeeded )
         {
@@ -2662,6 +2728,8 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     //if ( viewport == oldViewport )
     //    kDebug(OkularDebug) << "setViewport with the same viewport.";
 
+    const int oldPageNumber = oldViewport.pageNumber;
+
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
     {
@@ -2681,31 +2749,19 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
         d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), viewport );
     }
 
+    const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
+
+    const bool currentPageChanged = (oldPageNumber != currentViewportPage);
+
     // notify change to all other (different from id) observers
     QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
     for ( ; it != end ; ++ it )
+    {
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
 
-    // [MEM] raise position of currently viewed page in allocation queue
-    if ( d->m_allocatedPixmapsFifo.count() > 1 )
-    {
-        const int page = viewport.pageNumber;
-        QLinkedList< AllocatedPixmap * > viewportPixmaps;
-        QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmapsFifo.begin();
-        QLinkedList< AllocatedPixmap * >::iterator aEnd = d->m_allocatedPixmapsFifo.end();
-        while ( aIt != aEnd )
-        {
-            if ( (*aIt)->page == page )
-            {
-                viewportPixmaps.append( *aIt );
-                aIt = d->m_allocatedPixmapsFifo.erase( aIt );
-                continue;
-            }
-            ++aIt;
-        }
-        if ( !viewportPixmaps.isEmpty() )
-            d->m_allocatedPixmapsFifo += viewportPixmaps;
+        if ( currentPageChanged )
+            (*it)->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
     }
 }
 
@@ -2825,37 +2881,14 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         QMetaObject::invokeMethod(this, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color));
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
-    else if ( type == NextMatch )
-    {
-        // find out from where to start/resume search from
-        int viewportPage = (*d->m_viewportIterator).pageNumber;
-        int currentPage = fromStart ? 0 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
-        Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
-        int pagesDone = 0;
-
-        // continue checking last TextPage first (if it is the current page)
-        RegularAreaRect * match = 0;
-        if ( lastPage && lastPage->number() == s->continueOnPage )
-        {
-            if ( newText )
-                match = lastPage->findText( searchID, text, FromTop, caseSensitivity );
-            else
-                match = lastPage->findText( searchID, text, NextResult, caseSensitivity, &s->continueOnMatch );
-            if ( !match )
-            {
-                currentPage++;
-                pagesDone++;
-            }
-        }
-
-        QMetaObject::invokeMethod(this, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
-    }
     // 3. PREVMATCH - find previous matching item (or start from bottom)
-    else if ( type == PreviousMatch )
+    else if ( type == NextMatch || type == PreviousMatch )
     {
         // find out from where to start/resume search from
-        int viewportPage = (*d->m_viewportIterator).pageNumber;
-        int currentPage = fromStart ? d->m_pagesVector.count() - 1 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        const bool forward = type == NextMatch;
+        const int viewportPage = (*d->m_viewportIterator).pageNumber;
+        const int fromStartSearchPage = forward ? 0 : d->m_pagesVector.count() - 1;
+        int currentPage = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
         Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
         int pagesDone = 0;
 
@@ -2864,17 +2897,31 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                match = lastPage->findText( searchID, text, FromBottom, caseSensitivity );
+                match = lastPage->findText( searchID, text, forward ? FromTop : FromBottom, caseSensitivity );
             else
-                match = lastPage->findText( searchID, text, PreviousResult, caseSensitivity, &s->continueOnMatch );
+                match = lastPage->findText( searchID, text, forward ? NextResult : PreviousResult, caseSensitivity, &s->continueOnMatch );
             if ( !match )
             {
-                currentPage--;
+                if (forward) currentPage++;
+                else currentPage--;
                 pagesDone++;
             }
         }
+        
+        DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
+        searchStruct->forward = forward;
+        searchStruct->pagesToNotify = pagesToNotify;
+        searchStruct->match = match;
+        searchStruct->currentPage = currentPage;
+        searchStruct->searchID = searchID;
+        searchStruct->text = text;
+        searchStruct->caseSensitivity = caseSensitivity;
+        searchStruct->moveViewport = moveViewport;
+        searchStruct->color = color;
+        searchStruct->noDialogs = noDialogs;
+        searchStruct->pagesDone = pagesDone;
 
-        QMetaObject::invokeMethod(this, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
+        QMetaObject::invokeMethod(this, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
     }
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )
@@ -3451,6 +3498,23 @@ bool Document::canSaveChanges() const
     return saveIface->supportsOption( SaveInterface::SaveChanges );
 }
 
+bool Document::canSaveChanges( SaveCapability cap ) const
+{
+    switch ( cap )
+    {
+        case SaveFormsCapability:
+            /* Assume that if the generator supports saving, forms can be saved.
+             * We have no means to actually query the generator at the moment
+             * TODO: Add some method to query the generator in SaveInterface */
+            return canSaveChanges();
+
+        case SaveAnnotationsCapability:
+            return d->canAddAnnotationsNatively();
+    }
+
+    return false;
+}
+
 bool Document::saveChanges( const QString &fileName )
 {
     QString errorText;
@@ -3597,6 +3661,7 @@ bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
 
     const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
     d->m_archiveData = archiveData.get();
+    d->m_archivedFileName = documentFileName;
     bool ret = openDocument( tempFileName, url, docMime );
 
     if ( ret )
@@ -3616,7 +3681,9 @@ bool Document::saveDocumentArchive( const QString &fileName )
     if ( !d->m_generator )
         return false;
 
-    QString docFileName = d->m_url.fileName();
+    /* If we opened an archive, use the name of original file (eg foo.pdf)
+     * instead of the archive's one (eg foo.okular) */
+    QString docFileName = d->m_archiveData ? d->m_archivedFileName : d->m_url.fileName();
     if ( docFileName == QLatin1String( "-" ) )
         return false;
 
@@ -3717,6 +3784,12 @@ QPrinter::Orientation Document::orientation() const
     return (landscape > portrait) ? QPrinter::Landscape : QPrinter::Portrait;
 }
 
+void Document::setAnnotationEditingEnabled( bool enable )
+{
+    d->m_annotationEditingEnabled = enable;
+    foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )
@@ -3739,13 +3812,13 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmapsFifo.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmapsFifo.end();
+    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
+    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
     for ( ; aIt != aEnd; ++aIt )
         if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
         {
             AllocatedPixmap * p = *aIt;
-            m_allocatedPixmapsFifo.erase( aIt );
+            m_allocatedPixmaps.erase( aIt );
             m_allocatedPixmapsTotalMemory -= p->memory;
             delete p;
             break;
@@ -3757,7 +3830,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 4 * req->width() * req->height();
         AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
-        m_allocatedPixmapsFifo.append( memoryPage );
+        m_allocatedPixmaps.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
@@ -3779,7 +3852,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     bool hasPixmaps = !m_pixmapRequestsStack.isEmpty();
     m_pixmapRequestsMutex.unlock();
     if ( hasPixmaps )
-        sendGeneratorRequest();
+        sendGeneratorPixmapRequest();
 }
 
 void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundingBox )
@@ -3892,11 +3965,8 @@ void Document::setPageSize( const PageSize &size )
     for ( ; pIt != pEnd; ++pIt )
         (*pIt)->d->changeSize( size );
     // clear 'memory allocation' descriptors
-    QLinkedList< AllocatedPixmap * >::const_iterator aIt = d->m_allocatedPixmapsFifo.constBegin();
-    QLinkedList< AllocatedPixmap * >::const_iterator aEnd = d->m_allocatedPixmapsFifo.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
-    d->m_allocatedPixmapsFifo.clear();
+    qDeleteAll( d->m_allocatedPixmaps );
+    d->m_allocatedPixmaps.clear();
     d->m_allocatedPixmapsTotalMemory = 0;
     // notify the generator that the current page size has changed
     d->m_generator->pageSizeChanged( size, d->m_pageSize );
@@ -4017,6 +4087,25 @@ bool DocumentViewport::operator==( const DocumentViewport & vp ) const
          ( autoFit.height != vp.autoFit.height )) )
         return false;
     return true;
+}
+
+bool DocumentViewport::operator<( const DocumentViewport & vp ) const
+{
+    // TODO: Check autoFit and Position
+
+    if ( pageNumber != vp.pageNumber )
+        return pageNumber < vp.pageNumber;
+
+    if ( !rePos.enabled && vp.rePos.enabled )
+        return true;
+
+    if ( !vp.rePos.enabled )
+        return false;
+
+    if ( rePos.normalizedY != vp.rePos.normalizedY )
+        return rePos.normalizedY < vp.rePos.normalizedY;
+
+    return rePos.normalizedX < vp.rePos.normalizedX;
 }
 
 

@@ -18,6 +18,8 @@
 
 #include <kparts/mainwindow.h>
 
+#include <QtDBus/QtDBus>
+
 class KCmdLineArgs;
 class KRecentFilesAction;
 class KToggleAction;
@@ -36,6 +38,7 @@ class Part;
 class Shell : public KParts::MainWindow
 {
   Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
 
 public:
   /**
@@ -51,6 +54,8 @@ public:
   QSize sizeHint() const;
 public slots:
   void slotQuit();
+  
+  Q_SCRIPTABLE Q_NOREPLY void tryRaise();
 
 protected:
   /**
@@ -68,6 +73,7 @@ protected:
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
+  bool queryClose();
 
   void showEvent(QShowEvent *event);
 
@@ -79,6 +85,8 @@ private slots:
 
   void openUrl( const KUrl & url );
   void delayedOpen();
+  void showOpenRecentMenu();
+  void closeUrl();
 
 signals:
   void restoreDocument(const KConfigGroup &group);
@@ -92,15 +100,17 @@ private:
 
 private:
   KCmdLineArgs* m_args;
-  KParts::ReadOnlyPart* m_part;
+  KParts::ReadWritePart* m_part;
   KDocumentViewer* m_doc;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
   bool m_fileformatsscanned;
   KAction* m_printAction;
+  KAction* m_closeAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
+  bool m_unique;
   KUrl m_openUrl;
 };
 

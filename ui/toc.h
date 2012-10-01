@@ -33,7 +33,7 @@ Q_OBJECT
         // inherited from DocumentObserver
         uint observerId() const;
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
+        void notifyCurrentPageChanged( int previous, int current );
 
         void reparseConfig();
 
@@ -49,7 +49,6 @@ Q_OBJECT
         QTreeView *m_treeView;
         KTreeViewSearchLine *m_searchLine;
         TOCModel *m_model;
-        int m_currentPage;
 };
 
 #endif

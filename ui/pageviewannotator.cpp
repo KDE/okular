@@ -187,6 +187,7 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
                 ta->setTextType( Okular::TextAnnotation::Linked );
+                ta->setTextIcon( "Note" );
                 ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 double iconhei=0.03;
@@ -603,7 +604,7 @@ class TextSelectorEngine : public AnnotatorEngine
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
     m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
-    m_continuousMode( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
+    m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
@@ -703,6 +704,16 @@ void PageViewAnnotator::setToolsEnabled( bool enabled )
     m_toolsEnabled = enabled;
     if ( m_toolBar )
         m_toolBar->setToolsEnabled( m_toolsEnabled );
+}
+
+void PageViewAnnotator::setHidingForced( bool forced )
+{
+    m_hidingWasForced = forced;
+}
+
+bool PageViewAnnotator::hidingWasForced() const
+{
+    return m_hidingWasForced;
 }
 
 bool PageViewAnnotator::routeEvents() const

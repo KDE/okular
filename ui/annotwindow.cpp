@@ -202,9 +202,6 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     if (!canEditAnnotation)
         textEdit->setReadOnly(true);
 
-    m_latexRenderer = new GuiUtils::LatexRenderer();
-    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );
-
     QVBoxLayout * mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 2 );
     mainlay->setSpacing( 0 );
@@ -216,6 +213,9 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     lowerlay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Fixed ) );
     QSizeGrip * sb = new QSizeGrip( this );
     lowerlay->addWidget( sb );
+
+    m_latexRenderer = new GuiUtils::LatexRenderer();
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );
 
     m_title->setTitle( m_annot->window().summary() );
     m_title->connectOptionButton( this, SLOT(slotOptionBtn()) );

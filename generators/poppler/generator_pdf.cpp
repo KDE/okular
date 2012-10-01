@@ -82,7 +82,7 @@ class PDFOptionsPage : public QWidget
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
 
-#ifndef HAVE_POPPLER_0_20
+#if defined(Q_WS_WIN) || !defined(HAVE_POPPLER_0_20)
            m_printAnnots->setVisible( false );
 #endif
            setPrintAnnots( true ); // Default value
@@ -180,6 +180,10 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
     movie->setShowControls( popplerMovie->showControls() );
     movie->setPlayMode( (Okular::Movie::PlayMode)popplerMovie->playMode() );
     movie->setAutoPlay( false ); // will be triggered by external MovieAnnotation
+#ifdef HAVE_POPPLER_0_22
+    movie->setShowPosterImage( popplerMovie->showPosterImage() );
+    movie->setPosterImage( popplerMovie->posterImage() );
+#endif
     return movie;
 }
 
@@ -358,7 +362,7 @@ static KAboutData createAboutData()
          "okular_poppler",
          "okular_poppler",
          ki18n( "PDF Backend" ),
-         "0.5",
+         "0.6.2",
          ki18n( "A PDF file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2005-2008 Albert Astals Cid" )
@@ -649,8 +653,10 @@ const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
             docInfo.set( Okular::DocumentInfo::ModificationDate,
                          KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
 
-            docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1",
-                         QString::number( pdfdoc->pdfVersion() ) ), i18n( "Format" ) );
+            int major, minor;
+            pdfdoc->getPdfVersion(&major, &minor);
+            docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1.%2",
+                         major, minor ), i18n( "Format" ) );
             docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ),
                          i18n("Security") );
             docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),
@@ -938,6 +944,23 @@ void PDFGenerator::resolveMovieLinkReferences( Okular::Page *page )
 {
     resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Opening ) ), page );
     resolveMovieLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Closing ) ), page );
+
+    foreach ( Okular::Annotation *annotation, page->annotations() )
+    {
+        if ( annotation->subType() == Okular::Annotation::AScreen )
+        {
+            Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation*>( annotation );
+            resolveMovieLinkReference( screenAnnotation->additionalAction( Okular::Annotation::PageOpening ), page );
+            resolveMovieLinkReference( screenAnnotation->additionalAction( Okular::Annotation::PageClosing ), page );
+        }
+
+        if ( annotation->subType() == Okular::Annotation::AWidget )
+        {
+            Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( annotation );
+            resolveMovieLinkReference( widgetAnnotation->additionalAction( Okular::Annotation::PageOpening ), page );
+            resolveMovieLinkReference( widgetAnnotation->additionalAction( Okular::Annotation::PageClosing ), page );
+        }
+    }
 
     foreach ( Okular::FormField *field, page->formFields() )
         resolveMovieLinkReference( field->activationAction(), page );
@@ -1238,7 +1261,7 @@ bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat
             Poppler::Page *pp = pdfdoc->page(i);
             if (pp)
             {
-                text = pp->text(QRect());
+                text = pp->text(QRect()).normalized(QString::NormalizationForm_KC);
             }
             userMutex()->unlock();
             ts << text;
@@ -1364,51 +1387,46 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
 
     foreach(Poppler::Annotation *a, popplerAnnotations)
     {
-        //a->window.width = (int)(page->width() * a->window.width);
-        //a->window.height = (int)(page->height() * a->window.height);
-        //a->window.width = a->window.width < 200 ? 200 : a->window.width;
-        // a->window.height = a->window.height < 120 ? 120 : a->window.height;
-        // resize annotation's geometry to an icon
-        // TODO okular geom.right = geom.left + 22.0 / page->width();
-        // TODO okular geom.bottom = geom.top + 22.0 / page->height();
-        /*
-        QString szanno;
-        QTextStream(&szanno)<<"PopplerAnnotation={author:"<<a->author
-                <<", contents:"<<a->contents
-                <<", uniqueName:"<<a->uniqueName
-                <<", modifyDate:"<<a->modifyDate.toString("hh:mm:ss, dd.MM.yyyy")
-                <<", creationDate:"<<a->creationDate.toString("hh:mm:ss, dd.MM.yyyy")
-                <<", flags:"<<a->flags
-                <<", boundary:"<<a->boundary.left()<<","<<a->boundary.top()<<","<<a->boundary.right()<<","<<a->boundary.bottom()
-                <<", style.color:"<<a->style.color.name()
-                <<", style.opacity:"<<a->style.opacity
-                <<", style.width:"<<a->style.width
-                <<", style.LineStyle:"<<a->style.style
-                <<", style.xyCorners:"<<a->style.xCorners<<","<<a->style.yCorners
-                <<", style.marks:"<<a->style.marks
-                <<", style.spaces:"<<a->style.spaces
-                <<", style.LineEffect:"<<a->style.effect
-                <<", style.effectIntensity:"<<a->style.effectIntensity
-                <<", window.flags:"<<a->window.flags
-                <<", window.topLeft:"<<(a->window.topLeft.x())
-                <<","<<(a->window.topLeft.y())
-                <<", window.width,height:"<<a->window.width<<","<<a->window.height
-                <<", window.title:"<<a->window.title
-                <<", window.summary:"<<a->window.summary
-                <<", window.text:"<<a->window.text;
-        kDebug(PDFDebug) << "astario:    " << szanno; */
-        //TODO add annotations after poppler write feather is full suported
         bool doDelete = true;
         Okular::Annotation * newann = createAnnotationFromPopplerAnnotation( a, &doDelete );
         if (newann)
         {
-            // the Contents field has lines separated by \r
-            QString contents = newann->contents();
-            contents.replace( QLatin1Char( '\r' ), QLatin1Char( '\n' ) );
-            newann->setContents( contents );
-            // explicitly mark as external
-            newann->setFlags( newann->flags() | Okular::Annotation::External );
             page->addAnnotation(newann);
+
+#ifdef HAVE_POPPLER_0_22
+            if ( a->subType() == Poppler::Annotation::AScreen )
+            {
+/*
+                // TODO: (tokoe) This has been disabled for the moment, since we return MovieAnnotation objects
+                // for AScreen annotations, which will lead to a crash down here.
+
+                Poppler::ScreenAnnotation *annotScreen = static_cast<Poppler::ScreenAnnotation*>( a );
+                Okular::ScreenAnnotation *screenAnnotation = static_cast<Okular::ScreenAnnotation*>( newann );
+
+                const Poppler::Link *pageOpeningLink = annotScreen->additionalAction( Poppler::Annotation::PageOpeningAction );
+                if ( pageOpeningLink )
+                    screenAnnotation->setAdditionalAction( Okular::Annotation::PageOpening, createLinkFromPopplerLink( pageOpeningLink ) );
+
+                const Poppler::Link *pageClosingLink = annotScreen->additionalAction( Poppler::Annotation::PageClosingAction );
+                if ( pageClosingLink )
+                    screenAnnotation->setAdditionalAction( Okular::Annotation::PageClosing, createLinkFromPopplerLink( pageClosingLink ) );
+*/
+            }
+
+            if ( a->subType() == Poppler::Annotation::AWidget )
+            {
+                Poppler::WidgetAnnotation *annotWidget = static_cast<Poppler::WidgetAnnotation*>( a );
+                Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( newann );
+
+                const Poppler::Link *pageOpeningLink = annotWidget->additionalAction( Poppler::Annotation::PageOpeningAction );
+                if ( pageOpeningLink )
+                    widgetAnnotation->setAdditionalAction( Okular::Annotation::PageOpening, createLinkFromPopplerLink( pageOpeningLink ) );
+
+                const Poppler::Link *pageClosingLink = annotWidget->additionalAction( Poppler::Annotation::PageClosingAction );
+                if ( pageClosingLink )
+                    widgetAnnotation->setAdditionalAction( Okular::Annotation::PageClosing, createLinkFromPopplerLink( pageClosingLink ) );
+            }
+#endif
 
             if ( !doDelete )
                 annotationsHash.insert( newann, a );
@@ -1672,7 +1690,7 @@ const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr
             }
             const char *name = synctex_scanner_get_name( synctex_scanner, synctex_node_tag( node ) );
 
-            Okular::SourceReference * sourceRef = new Okular::SourceReference( name, line, col );
+            Okular::SourceReference * sourceRef = new Okular::SourceReference( QString::fromLocal8Bit( name ), line, col );
             return sourceRef;
         }
     }
@@ -1755,9 +1773,13 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     {
         case SaveChanges:
         {
+            // Saving files with /Encrypt is not supported before Poppler 0.22
+#ifndef HAVE_POPPLER_0_22
             QMutexLocker locker( userMutex() );
-            // Saving files with /Encrypt is not supported
             return pdfdoc->isEncrypted() ? false : true;
+#else
+            return true;
+#endif
         }
         default: ;
     }
@@ -1780,7 +1802,10 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
         switch (pdfConv->lastError())
         {
             case Poppler::BaseConverter::NotSupportedInputFileError:
+#ifndef HAVE_POPPLER_0_22
+                // This can only happen with Poppler before 0.22
                 *errorText = i18n("Saving files with /Encrypt is not supported.");
+#endif
             break;
 
             case Poppler::BaseConverter::NoError:

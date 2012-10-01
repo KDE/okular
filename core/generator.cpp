@@ -10,6 +10,7 @@
 
 #include "generator.h"
 #include "generator_p.h"
+#include "observer.h"
 
 #include <qeventloop.h>
 #include <QtGui/QPrinter>
@@ -102,9 +103,9 @@ void GeneratorPrivate::pixmapGenerationFinished()
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ) );
     const int pageNumber = request->page()->number();
 
-    q->signalPixmapRequestDone( request );
     if ( mPixmapGenerationThread->calcBoundingBox() )
         q->updatePageBoundingBox( pageNumber, mPixmapGenerationThread->boundingBox() );
+    q->signalPixmapRequestDone( request );
 }
 
 void GeneratorPrivate::textpageGenerationFinished()
@@ -254,7 +255,6 @@ bool Generator::canGenerateTextPage() const
 
 void Generator::generateTextPage( Page *page )
 {
-    Q_D( Generator );
     TextPage *tp = textPage( page );
     page->setTextPage( tp );
     signalTextGenerationDone( page, tp );
@@ -476,6 +476,19 @@ Page* PixmapRequest::page() const
 void PixmapRequestPrivate::swap()
 {
     qSwap( mWidth, mHeight );
+}
+
+bool PixmapRequestPrivate::isPreload() const
+{
+    switch ( mPriority )
+    {
+        case PAGEVIEW_PRELOAD_PRIO:
+        case THUMBNAILS_PRELOAD_PRIO:
+        case PRESENTATION_PRELOAD_PRIO:
+            return true;
+        default:
+            return false;
+    }
 }
 
 class Okular::ExportFormatPrivate : public QSharedData

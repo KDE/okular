@@ -158,9 +158,11 @@ Reviews::~Reviews()
 }
 
 //BEGIN DocumentObserver Notifies 
-void Reviews::notifyViewportChanged( bool )
+void Reviews::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
-    m_filterProxy->setCurrentPage( m_document->currentPage() );
+    Q_UNUSED( previousPage )
+
+    m_filterProxy->setCurrentPage( currentPage );
 }
 //END DocumentObserver Notifies 
 
@@ -252,7 +254,7 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
 
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
-    AnnotationPopup popup( m_document, this );
+    AnnotationPopup popup( m_document, AnnotationPopup::SingleAnnotationMode, this );
     connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
              this, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)) );
 

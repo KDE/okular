@@ -72,8 +72,9 @@ class OKULAR_EXPORT DocumentObserver
             Bookmark = 2,         ///< Bookmarks has been changed
             Highlights = 4,       ///< Highlighting information has been changed
             TextSelection = 8,    ///< Text selection has been changed
-            Annotations = 16,     ///< Annotations has been changed
-            BoundingBox = 32      ///< Bounding boxes have been changed
+            Annotations = 16,     ///< Annotations have been changed
+            BoundingBox = 32,     ///< Bounding boxes have been changed
+            NeedSaveAs = 64       ///< Set along with Annotations when Save As is needed or annotation changes will be lost @since 0.15 (KDE 4.9)
         };
 
         /**
@@ -128,6 +129,16 @@ class OKULAR_EXPORT DocumentObserver
          * Returns true per default.
          */
         virtual bool canUnloadPixmap( int page ) const;
+
+        /**
+         * This method is called after the current page of the document has been entered.
+         *
+         * @param previous The number of the previous page (is @c -1 for the initial page change).
+         * @param current The number of the current page.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        virtual void notifyCurrentPageChanged( int previous, int current );
 
     private:
         class Private;

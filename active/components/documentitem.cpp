@@ -106,7 +106,7 @@ TOCModel *DocumentItem::tableOfContents() const
 QList<int> DocumentItem::bookmarks() const
 {
     QList<int> list;
-    foreach (KBookmark bookmark, m_document->bookmarkManager()->bookmarks()) {
+    foreach (const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
         list << bookmark.url().fragment().split(";").first().toInt();
     }
     qSort(list);

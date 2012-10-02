@@ -37,11 +37,34 @@ class PageItem : public QDeclarativeItem, public Okular::View
 {
     Q_OBJECT
 
+    /**
+     * The document this page belongs to
+     */
     Q_PROPERTY(DocumentItem *document READ document WRITE setDocument NOTIFY documentChanged)
+
+    /**
+     * The currently displayed page
+     */
     Q_PROPERTY(int pageNumber READ pageNumber WRITE setPageNumber NOTIFY pageNumberChanged)
+
+    /**
+     * If true, the page will be rendered with antialias
+     */
     Q_PROPERTY(bool smooth READ smooth WRITE setSmooth)
+
+    /**
+     * "Natural" width of the page
+     */
     Q_PROPERTY(int implicitWidth READ implicitWidth NOTIFY implicitWidthChanged)
+
+    /**
+     * "Natural" height of the page
+     */
     Q_PROPERTY(int implicitHeight READ implicitHeight NOTIFY implicitHeightChanged)
+
+    /**
+     * True if the page contains a bookmark
+     */
     Q_PROPERTY(bool bookmarked READ isBookmarked WRITE setBookmarked NOTIFY bookmarkedChanged)
 
 public:

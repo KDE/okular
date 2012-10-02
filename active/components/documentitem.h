@@ -38,14 +38,49 @@ class DocumentItem : public QObject
 {
     Q_OBJECT
 
+    /**
+     * Absolute path of the document file to open
+     */
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
+
+    /**
+     * Current displaying page for the document
+     */
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
+
+    /**
+     * True if this DocumentItem instance has a document file opened
+     */
     Q_PROPERTY(bool opened READ isOpened NOTIFY openedChanged)
+
+    /**
+     * How many pages there are in the document
+     */
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
+
+    /**
+     * True if the document is able to perform full text searches in its contents
+     */
     Q_PROPERTY(bool supportsSearching READ supportsSearching NOTIFY supportsSearchingChanged)
+
+    /**
+     * True if a search is currently in progress and results didn't arrive yet
+     */
     Q_PROPERTY(bool searchInProgress READ isSearchInProgress NOTIFY searchInProgressChanged)
+
+    /**
+     * A list of all pages that contain a match for the search terms. If no text has been searched, all pages are returned.
+     */
     Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
+
+    /**
+     * Table of contents for the document, if available
+     */
     Q_PROPERTY(TOCModel *tableOfContents READ tableOfContents CONSTANT)
+
+    /**
+     * List of pages that contain a bookmark
+     */
     Q_PROPERTY(QList<int> bookmarks READ bookmarks NOTIFY bookmarksChanged)
 
 public:
@@ -73,8 +108,17 @@ public:
 
     QList<int> bookmarks() const;
 
-    //Those could be a property, but maybe we want to have parameter for searchText
+    //This could be a property, but maybe we want to have parameter for searchText
+    /**
+     * Performs a search in the document
+     *
+     * @param text the string to search in the document
+     */
     Q_INVOKABLE void searchText(const QString &text);
+
+    /**
+     * Reset the search over the document.
+     */
     Q_INVOKABLE void resetSearch();
 
     //Internal, not binded to qml

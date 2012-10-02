@@ -2,7 +2,7 @@
 Name=Document viewer
 Encoding=UTF-8
 Type=Service
-Icon=system-file-manager
+Icon=okular
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=Marco Martin
 X-KDE-PluginInfo-Email=mart@kde.org

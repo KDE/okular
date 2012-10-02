@@ -26,10 +26,13 @@
 #include <QtDeclarative/qdeclarative.h>
 #include <QtDeclarative/QDeclarativeEngine>
 
+#include <KGlobalSettings>
+#include <KLocale>
 
 void OkularPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String("org.kde.okular"));
+    KGlobal::locale()->insertCatalog("org.kde.okular");
     qmlRegisterType<DocumentItem>(uri, 0, 1, "DocumentItem");
     qmlRegisterType<PageItem>(uri, 0, 1, "PageItem");
     qmlRegisterType<ThumbnailItem>(uri, 0, 1, "ThumbnailItem");

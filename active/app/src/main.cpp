@@ -54,6 +54,7 @@ KDE_EXPORT int kdemain(int argc, char **argv)
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
+    KGlobal::locale()->insertCatalog("org.kde.okular");
     //kDebug() << "ARGS:" << args << args->count();
 
     KDeclarativeMainWindow *mainWindow = new KDeclarativeMainWindow();

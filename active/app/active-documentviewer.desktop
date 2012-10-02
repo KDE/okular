@@ -3,7 +3,7 @@ Name=Reader
 GenericName=Document viewer
 Comment=Viewer for various types of documents
 
-Exec=active-documentviewer -graphicssystem raster %u
+Exec=active-documentviewer %u
 Terminal=false
 Icon=okular
 Type=Application

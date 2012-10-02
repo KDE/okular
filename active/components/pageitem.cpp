@@ -29,7 +29,7 @@
 #include <core/generator.h>
 #include <core/page.h>
 
-#include "pagepainter.h"
+#include "ui/pagepainter.h"
 #include "settings.h"
 
 #define REDRAW_TIMEOUT 250

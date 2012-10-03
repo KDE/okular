@@ -64,6 +64,24 @@ void DocumentItem::setPath(const QString &path)
     emit pageCountChanged();
     emit openedChanged();
     emit supportsSearchingChanged();
+    emit windowTitleForDocumentChanged();
+}
+
+QString DocumentItem::windowTitleForDocument() const
+{
+    // If 'DocumentTitle' should be used, check if the document has one. If
+    // either case is false, use the file name.
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? m_document->currentDocument().pathOrUrl() : m_document->currentDocument().fileName();
+
+    if (Okular::Settings::displayDocumentTitle()) {
+        const QString docTitle = m_document->metaData( "DocumentTitle" ).toString();
+
+        if (!docTitle.isEmpty() && !docTitle.trimmed().isEmpty()) {
+             title = docTitle;
+        }
+    }
+
+    return title;
 }
 
 QString DocumentItem::path() const

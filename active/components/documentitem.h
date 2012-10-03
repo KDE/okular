@@ -44,6 +44,11 @@ class DocumentItem : public QObject
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
 
     /**
+     * Suggested window title if a window represents this document. may be pathname or document title, dependeing from Okular settings.
+     */
+    Q_PROPERTY(QString windowTitleForDocument READ windowTitleForDocument NOTIFY windowTitleForDocumentChanged)
+
+    /**
      * Current displaying page for the document
      */
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
@@ -91,6 +96,8 @@ public:
     void setPath(const QString &path);
     QString path() const;
 
+    QString windowTitleForDocument() const;
+
     void setCurrentPage(int page);
     int currentPage() const;
 
@@ -134,6 +141,7 @@ Q_SIGNALS:
     void currentPageChanged();
     void supportsSearchingChanged();
     void bookmarksChanged();
+    void windowTitleForDocumentChanged();
 
 private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);

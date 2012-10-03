@@ -12,10 +12,10 @@ set(okular_SRCS
     okularplugin.cpp
     ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp
     ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp
+    ${CMAKE_SOURCE_DIR}/ui/tocmodel.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
-    tocmodel.cpp
     )
 
 qt4_automoc(${okular_SRCS})

@@ -24,7 +24,7 @@
 #include <core/page.h>
 #include <core/bookmarkmanager.h>
 
-#include "tocmodel.h"
+#include "ui/tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent),

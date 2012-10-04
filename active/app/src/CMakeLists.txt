@@ -1,6 +1,4 @@
 
-include_directories( ${KDE4_INCLUDES} ${QT_INCLUDES})
-
 set(active-documentviewer_SRCS
     main.cpp
 )
@@ -8,6 +6,8 @@ set(active-documentviewer_SRCS
 kde4_add_kdeinit_executable(active-documentviewer ${active-documentviewer_SRCS})
 
 find_package(ActiveApp REQUIRED)
+
+include_directories( ${KDE4_INCLUDES} ${QT_INCLUDES} ${ACTIVEAPP_INCLUDE_DIR})
 
 target_link_libraries(kdeinit_active-documentviewer
     ${QT_QTDECLARATIVE_LIBRARY}

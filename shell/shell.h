@@ -27,6 +27,10 @@ class KToggleAction;
 class KDocumentViewer;
 class Part;
 
+#ifdef KActivities_FOUND
+namespace KActivities { class ResourceInstance; }
+#endif
+
 /**
  * This is the application "Shell".  It has a menubar and a toolbar
  * but relies on the "Part" to do all the real work.
@@ -112,6 +116,10 @@ private:
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
   KUrl m_openUrl;
+
+#ifdef KActivities_FOUND
+  KActivities::ResourceInstance* m_activityResource;
+#endif
 };
 
 #endif

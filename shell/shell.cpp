@@ -44,6 +44,10 @@
 #include <kactioncollection.h>
 #include <kwindowsystem.h>
 
+#ifdef KActivities_FOUND
+#include <KActivities/ResourceInstance>
+#endif
+
 // local includes
 #include "kdocumentviewer.h"
 #include "shellutils.h"
@@ -53,6 +57,9 @@ static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarCom
 
 Shell::Shell(KCmdLineArgs* args, int argIndex)
   : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
+#ifdef KActivities_FOUND
+    , m_activityResource(0)
+#endif
 {
   if (m_args && argIndex != -1)
   {
@@ -167,7 +174,15 @@ void Shell::openUrl( const KUrl & url )
             if ( !isstdin )
             {
                 if ( openOk )
+                {
+#ifdef KActivities_FOUND
+                    if ( !m_activityResource )
+                        m_activityResource = new KActivities::ResourceInstance( window()->winId(), this );
+
+                    m_activityResource->setUri( url );
+#endif
                     m_recent->addUrl( url );
+                }
                 else
                     m_recent->removeUrl( url );
             }

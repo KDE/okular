@@ -88,6 +88,11 @@ class DocumentItem : public QObject
      */
     Q_PROPERTY(QList<int> bookmarkedPages READ bookmarkedPages NOTIFY bookmarkedPagesChanged)
 
+    /**
+     * list of bookmarks urls valid on this page
+     */
+    Q_PROPERTY(QStringList bookmarks READ bookmarks NOTIFY bookmarksChanged)
+
 public:
 
     DocumentItem(QObject *parent=0);
@@ -115,6 +120,8 @@ public:
 
     QList<int> bookmarkedPages() const;
 
+    QStringList bookmarks() const;
+
     //This could be a property, but maybe we want to have parameter for searchText
     /**
      * Performs a search in the document
@@ -141,6 +148,7 @@ Q_SIGNALS:
     void currentPageChanged();
     void supportsSearchingChanged();
     void bookmarkedPagesChanged();
+    void bookmarksChanged();
     void windowTitleForDocumentChanged();
 
 private Q_SLOTS:

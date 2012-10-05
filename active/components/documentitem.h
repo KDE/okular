@@ -86,7 +86,7 @@ class DocumentItem : public QObject
     /**
      * List of pages that contain a bookmark
      */
-    Q_PROPERTY(QList<int> bookmarks READ bookmarks NOTIFY bookmarksChanged)
+    Q_PROPERTY(QList<int> bookmarkedPages READ bookmarkedPages NOTIFY bookmarkedPagesChanged)
 
 public:
 
@@ -113,7 +113,7 @@ public:
 
     TOCModel *tableOfContents() const;
 
-    QList<int> bookmarks() const;
+    QList<int> bookmarkedPages() const;
 
     //This could be a property, but maybe we want to have parameter for searchText
     /**
@@ -140,7 +140,7 @@ Q_SIGNALS:
     void matchingPagesChanged();
     void currentPageChanged();
     void supportsSearchingChanged();
-    void bookmarksChanged();
+    void bookmarkedPagesChanged();
     void windowTitleForDocumentChanged();
 
 private Q_SLOTS:

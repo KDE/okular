@@ -21,5 +21,5 @@ import QtQuick 1.1
 
 
 ThumbnailsBase {
-    model: documentItem.bookmarks
+    model: documentItem.bookmarkedPages
 }

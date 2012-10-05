@@ -140,6 +140,7 @@ MouseEventListener {
             Okular.PageItem {
                 id: mainPage
                 document: documentItem
+                flickable: mainFlickable
                 anchors.centerIn: parent
                 property real ratio: implicitWidth / implicitHeight
 

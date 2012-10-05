@@ -232,7 +232,7 @@ MobileComponents.OverlayDrawer {
                     }
                     PlasmaComponents.TabButton {
                         id: bookmarksButton
-                        enabled: documentItem.bookmarks.length > 0
+                        enabled: documentItem.bookmarkedPages.length > 0
                         text: i18n("Bookmarks")
                         tab: tableOfContents
                         onCheckedChanged: {

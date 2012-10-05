@@ -22,6 +22,7 @@
 
 #include <QDeclarativeItem>
 
+#include <core/document.h>
 #include <core/view.h>
 
 class QTimer;
@@ -36,6 +37,11 @@ namespace Okular {
 class PageItem : public QDeclarativeItem, public Okular::View
 {
     Q_OBJECT
+
+    /**
+     * If this page is in a Flickable, assign it in this property, to make goToBookmark work
+     */
+    Q_PROPERTY(QDeclarativeItem *flickable READ flickable WRITE setFlickable NOTIFY flickableChanged)
 
     /**
      * The document this page belongs to
@@ -63,15 +69,24 @@ class PageItem : public QDeclarativeItem, public Okular::View
     Q_PROPERTY(int implicitHeight READ implicitHeight NOTIFY implicitHeightChanged)
 
     /**
-     * True if the page contains a bookmark
+     * True if the page contains at least a bookmark.
+     * Writing true to tis property idds a bookmark at the beginning of the page (if needed).
+     * Writing false, all bookmarks for this page will be removed
      */
     Q_PROPERTY(bool bookmarked READ isBookmarked WRITE setBookmarked NOTIFY bookmarkedChanged)
+
+    /**
+     * list of bookmarks urls valid on this page
+     */
+    Q_PROPERTY(QStringList bookmarks READ bookmarks NOTIFY bookmarksChanged)
 
 public:
 
     PageItem(QDeclarativeItem *parent=0);
     ~PageItem();
 
+    void setFlickable(QDeclarativeItem *flickable);
+    QDeclarativeItem *flickable() const;
 
     int implicitWidth() const;
     int implicitHeight() const;
@@ -88,6 +103,24 @@ public:
     bool isBookmarked();
     void setBookmarked(bool bookmarked);
 
+    QStringList bookmarks() const;
+
+    /**
+     * loads a page bookmark and tries to ensure the bookmarked position is visible
+     * @param bookmark Url for the bookmark
+     */
+    Q_INVOKABLE void goToBookmark(const QString &bookmark);
+
+    /**
+     * Add a new bookmark ar a given position of the current page
+     */
+    Q_INVOKABLE void setBookmarkAtPos(qreal x, qreal y);
+
+    /**
+     * Remove a bookmark at a given position, if any
+     */
+    Q_INVOKABLE void removeBookmark(const QString &bookmark);
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     // inherited from View
@@ -100,23 +133,28 @@ private Q_SLOTS:
     void delayedRedraw();
     void pageHasChanged(int page, int flags);
     void checkBookmarksChanged();
+    void contentXChanged();
+    void contentYChanged();
 
 Q_SIGNALS:
+    void flickableChanged();
     void implicitWidthChanged();
     void implicitHeightChanged();
     void documentChanged();
     void pageNumberChanged();
     void bookmarkedChanged();
+    void bookmarksChanged();
 
 private:
     const Okular::Page *m_page;
-    int m_pageNumber;
     bool m_smooth;
     bool m_intentionalDraw;
     bool m_bookmarked;
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
     int m_observerId;
+    QWeakPointer <QDeclarativeItem> m_flickable;
+    Okular::DocumentViewport m_viewPort;
     friend class ThumbnailItem;
 };
 

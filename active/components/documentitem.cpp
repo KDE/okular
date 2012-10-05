@@ -37,8 +37,8 @@ DocumentItem::DocumentItem(QObject *parent)
 
     connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
             this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
-    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
-            this, SIGNAL(bookmarksChanged()));
+    connect(m_document->bookmarkManager(), SIGNAL(bookmarkedPagesChanged(KUrl)),
+            this, SIGNAL(bookmarkedPagesChanged()));
 }
 
 
@@ -121,12 +121,14 @@ TOCModel *DocumentItem::tableOfContents() const
     return m_tocModel;
 }
 
-QList<int> DocumentItem::bookmarks() const
+QList<int> DocumentItem::bookmarkedPages() const
 {
     QList<int> list;
+    QSet<int> pages;
     foreach (const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
-        list << bookmark.url().fragment().split(";").first().toInt();
+        pages << bookmark.url().fragment().split(";").first().toInt();
     }
+    list = pages.toList();
     qSort(list);
     return list;
 }

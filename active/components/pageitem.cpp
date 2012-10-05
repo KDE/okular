@@ -38,7 +38,6 @@ PageItem::PageItem(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       Okular::View( QString::fromLatin1( "PageView" ) ),
       m_page(0),
-      m_pageNumber(0),
       m_smooth(false),
       m_intentionalDraw(true),
       m_bookmarked(false)
@@ -54,6 +53,44 @@ PageItem::PageItem(QDeclarativeItem *parent)
 
 PageItem::~PageItem()
 {
+}
+
+void PageItem::setFlickable(QDeclarativeItem *flickable)
+{
+    if (m_flickable.data() == flickable) {
+        return;
+    }
+
+    //check the object can act as a flickable
+    if (!flickable->property("contentX").isValid() ||
+        !flickable->property("contentY").isValid()) {
+        return;
+    }
+
+    if (m_flickable) {
+        disconnect(m_flickable.data(), 0, this, 0);
+    }
+
+    //check the object can act as a flickable
+    if (!flickable->property("contentX").isValid() ||
+        !flickable->property("contentY").isValid()) {
+        m_flickable.clear();
+        return;
+    }
+
+    m_flickable = flickable;
+
+    if (flickable) {
+        connect(flickable, SIGNAL(contentXChanged()), this, SLOT(contentXChanged()));
+        connect(flickable, SIGNAL(contentYChanged()), this, SLOT(contentYChanged()));
+    }
+
+    emit flickableChanged();
+}
+
+QDeclarativeItem *PageItem::flickable() const
+{
+    return m_flickable.data();
 }
 
 DocumentItem *PageItem::document() const
@@ -81,12 +118,12 @@ void PageItem::setDocument(DocumentItem *doc)
 
 int PageItem::pageNumber() const
 {
-    return m_pageNumber;
+    return m_viewPort.pageNumber;
 }
 
 void PageItem::setPageNumber(int number)
 {
-    if ((m_page && m_pageNumber == number) ||
+    if ((m_page && m_viewPort.pageNumber == number) ||
         !m_documentItem ||
         !m_documentItem.data()->isOpened() ||
         number < 0 ||
@@ -94,7 +131,7 @@ void PageItem::setPageNumber(int number)
         return;
     }
 
-    m_pageNumber = number;
+    m_viewPort.pageNumber = number;
     m_page = m_documentItem.data()->document()->page(number);
 
     emit pageNumberChanged();
@@ -150,12 +187,51 @@ void PageItem::setBookmarked(bool bookmarked)
     }
 
     if (bookmarked) {
-        m_documentItem.data()->document()->bookmarkManager()->addBookmark(m_pageNumber);
+        m_documentItem.data()->document()->bookmarkManager()->addBookmark(m_viewPort.pageNumber);
     } else {
-        m_documentItem.data()->document()->bookmarkManager()->removeBookmark(m_pageNumber);
+        m_documentItem.data()->document()->bookmarkManager()->removeBookmark(m_viewPort.pageNumber);
     }
     m_bookmarked = bookmarked;
     emit bookmarkedChanged();
+}
+
+QStringList PageItem::bookmarks() const
+{
+    QStringList list;
+    foreach(const KBookmark &bookmark, m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber)) {
+        list << bookmark.url().fragment();
+    }
+    return list;
+}
+
+void PageItem::goToBookmark(const QString &bookmark)
+{
+    Okular::DocumentViewport viewPort(bookmark);
+    setPageNumber(viewPort.pageNumber);
+
+    //Are we in a flickable?
+    if (m_flickable) {
+        //normalizedX is a proportion, so contentX will be the difference between document and viewport times normalizedX
+        m_flickable.data()->setProperty("contentX", qMax((qreal)0, width() - m_flickable.data()->width()) * viewPort.rePos.normalizedX);
+
+        m_flickable.data()->setProperty("contentY", qMax((qreal)0, height() - m_flickable.data()->height()) * viewPort.rePos.normalizedY);
+    }
+}
+
+void PageItem::setBookmarkAtPos(qreal x, qreal y)
+{
+    Okular::DocumentViewport viewPort(m_viewPort);
+    viewPort.rePos.normalizedX = x;
+    viewPort.rePos.normalizedY = y;
+
+    m_documentItem.data()->document()->bookmarkManager()->addBookmark(viewPort);
+    emit bookmarksChanged();
+}
+
+void PageItem::removeBookmark(const QString &bookmark)
+{
+    m_documentItem.data()->document()->bookmarkManager()->removeBookmark(bookmark);
+    emit bookmarksChanged();
 }
 
 //Reimplemented
@@ -193,7 +269,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     if (m_intentionalDraw) {
         QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-        requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_pageNumber, width(), height(), priority, true));
+        requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_viewPort.pageNumber, width(), height(), priority, true));
         m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
     }
     m_intentionalDraw = false;
@@ -217,7 +293,7 @@ void PageItem::delayedRedraw()
 void PageItem::pageHasChanged( int page, int flags )
 {
     Q_UNUSED(flags)
-    if (m_pageNumber == page) {
+    if (m_viewPort.pageNumber == page) {
         m_redrawTimer->start(REDRAW_TIMEOUT);
     }
 }
@@ -228,11 +304,32 @@ void PageItem::checkBookmarksChanged()
         return;
     }
 
-    bool newBookmarked = m_documentItem.data()->document()->bookmarkManager()->isBookmarked(m_pageNumber);
+    bool newBookmarked = m_documentItem.data()->document()->bookmarkManager()->isBookmarked(m_viewPort.pageNumber);
     if (m_bookmarked != newBookmarked) {
         m_bookmarked = newBookmarked;
         emit bookmarkedChanged();
     }
+
+    //TODO: check the page
+    emit bookmarksChanged();
+}
+
+void PageItem::contentXChanged()
+{
+    if (!m_flickable || !m_flickable.data()->property("contentX").isValid()) {
+        return;
+    }
+
+    m_viewPort.rePos.normalizedX = m_flickable.data()->property("contentX").toReal();
+}
+
+void PageItem::contentYChanged()
+{
+    if (!m_flickable || !m_flickable.data()->property("contentY").isValid()) {
+        return;
+    }
+
+    m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal();
 }
 
 #include "pageitem.moc"

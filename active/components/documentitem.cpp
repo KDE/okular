@@ -128,7 +128,8 @@ QList<int> DocumentItem::bookmarkedPages() const
     QList<int> list;
     QSet<int> pages;
     foreach (const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
-        pages << bookmark.url().fragment().split(";").first().toInt();
+        Okular::DocumentViewport viewport(bookmark.url().htmlRef());
+        pages << viewport.pageNumber;
     }
     list = pages.toList();
     qSort(list);

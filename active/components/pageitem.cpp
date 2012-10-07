@@ -293,11 +293,18 @@ void PageItem::delayedRedraw()
     }
 }
 
-void PageItem::pageHasChanged( int page, int flags )
+void PageItem::pageHasChanged(int page, int flags)
 {
-    Q_UNUSED(flags)
     if (m_viewPort.pageNumber == page) {
-        m_redrawTimer->start(REDRAW_TIMEOUT);
+        if (flags == 32) {
+            // skip bounding box updates
+            //kDebug() << "32" << m_page->boundingBox();
+        } else if (flags == Okular::DocumentObserver::Pixmap) {
+            // if pixmaps have updated, just repaint .. don't bother updating pixmaps AGAIN
+            update();
+        } else {
+            m_redrawTimer->start();
+        }
     }
 }
 

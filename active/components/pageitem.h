@@ -129,13 +129,6 @@ public:
     void geometryChanged(const QRectF &newGeometry,
                          const QRectF &oldGeometry);
 
-private Q_SLOTS:
-    void delayedRedraw();
-    void pageHasChanged(int page, int flags);
-    void checkBookmarksChanged();
-    void contentXChanged();
-    void contentYChanged();
-
 Q_SIGNALS:
     void flickableChanged();
     void implicitWidthChanged();
@@ -144,6 +137,16 @@ Q_SIGNALS:
     void pageNumberChanged();
     void bookmarkedChanged();
     void bookmarksChanged();
+
+protected:
+    void setIsThumbnail(bool thumbnail);
+
+private Q_SLOTS:
+    void delayedRedraw();
+    void pageHasChanged(int page, int flags);
+    void checkBookmarksChanged();
+    void contentXChanged();
+    void contentYChanged();
 
 private:
     const Okular::Page *m_page;
@@ -155,7 +158,6 @@ private:
     int m_observerId;
     QWeakPointer <QDeclarativeItem> m_flickable;
     Okular::DocumentViewport m_viewPort;
-    friend class ThumbnailItem;
 };
 
 #endif

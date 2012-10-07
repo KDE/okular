@@ -19,12 +19,10 @@
 
 #include "thumbnailitem.h"
 
-#include <core/observer.h>
-
 ThumbnailItem::ThumbnailItem(QDeclarativeItem *parent)
     : PageItem(parent)
 {
-    m_observerId = THUMBNAILS_ID;
+    setIsThumbnail(true);
 }
 
 

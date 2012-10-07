@@ -335,4 +335,22 @@ void PageItem::contentYChanged()
     m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal();
 }
 
+void PageItem::setIsThumbnail(bool thumbnail)
+{
+    if (thumbnail == (m_observerId == THUMBNAILS_ID)) {
+        return;
+    }
+
+    m_observerId = thumbnail ? THUMBNAILS_ID : PAGEVIEW_ID;
+
+    if (thumbnail) {
+        m_smooth = false;
+    }
+
+    /*
+    m_redrawTimer->setInterval(thumbnail ? 0 : REDRAW_TIMEOUT);
+    m_redrawTimer->setSingleShot(true);
+    */
+}
+
 #include "pageitem.moc"

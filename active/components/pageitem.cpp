@@ -127,7 +127,7 @@ void PageItem::setPageNumber(int number)
         !m_documentItem ||
         !m_documentItem.data()->isOpened() ||
         number < 0 ||
-        (uint)number > m_documentItem.data()->document()->pages()) {
+        (uint)number >= m_documentItem.data()->document()->pages()) {
         return;
     }
 

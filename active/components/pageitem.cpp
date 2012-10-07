@@ -270,7 +270,10 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     if (m_intentionalDraw) {
         QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
         requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_viewPort.pageNumber, width(), height(), priority, true));
-        m_documentItem.data()->document()->requestPixmaps( requestedPixmaps );
+        const Okular::Document::PixmapRequestFlag prf = (m_observerId == PAGEVIEW_ID) ?
+                                                        Okular::Document::RemoveAllPrevious :
+                                                        Okular::Document::NoOption;
+        m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
     }
     m_intentionalDraw = false;
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;

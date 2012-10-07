@@ -39,13 +39,15 @@ PageItem::PageItem(QDeclarativeItem *parent)
       Okular::View( QString::fromLatin1( "PageView" ) ),
       m_page(0),
       m_smooth(false),
-      m_intentionalDraw(true),
-      m_bookmarked(false)
+      m_intentionalDraw(false),
+      m_bookmarked(false),
+      m_observerId(PAGEVIEW_ID)
 {
     m_observerId = PAGEVIEW_ID;
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 
     m_redrawTimer = new QTimer(this);
+    m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
     connect(m_redrawTimer, SIGNAL(timeout()), this, SLOT(delayedRedraw()));
 }
@@ -113,7 +115,7 @@ void PageItem::setDocument(DocumentItem *doc)
             this, SLOT(checkBookmarksChanged()));
     setPageNumber(0);
     emit documentChanged();
-    m_redrawTimer->start(REDRAW_TIMEOUT);
+    m_redrawTimer->start();
 }
 
 int PageItem::pageNumber() const
@@ -138,7 +140,7 @@ void PageItem::setPageNumber(int number)
     emit implicitWidthChanged();
     emit implicitHeightChanged();
     checkBookmarksChanged();
-    m_redrawTimer->start(REDRAW_TIMEOUT);
+    m_redrawTimer->start();
 }
 
 int PageItem::implicitWidth() const
@@ -243,7 +245,7 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
     }
 
     if (newGeometry.size() != oldGeometry.size()) {
-        m_redrawTimer->start(REDRAW_TIMEOUT);
+        m_redrawTimer->start();
     }
 
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
@@ -268,14 +270,14 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
 
     if (m_intentionalDraw) {
-        QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+        QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
         requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_viewPort.pageNumber, width(), height(), priority, true));
         const Okular::Document::PixmapRequestFlag prf = (m_observerId == PAGEVIEW_ID) ?
                                                         Okular::Document::RemoveAllPrevious :
                                                         Okular::Document::NoOption;
         m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
+        m_intentionalDraw = false;
     }
-    m_intentionalDraw = false;
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), option->exposedRect.toRect());
 

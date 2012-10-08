@@ -83,8 +83,7 @@ void Shell::init()
     return;
   }
 
-  // now that the Part is loaded, we cast it to a Part to get
-  // our hands on it
+  // now that the Part plugin is loaded, create the part
   m_part = factory->create< KParts::ReadWritePart >( this );
   if (m_part)
   {
@@ -96,20 +95,20 @@ void Shell::init()
     setupGUI(Keys | ToolBar | Save);
     createGUI(m_part);
     m_doc = qobject_cast<KDocumentViewer*>(m_part);
+    
+    connect( this, SIGNAL(restoreDocument(KConfigGroup)),m_part, SLOT(restoreDocument(KConfigGroup)));
+    connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), m_part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
+    connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
+    
+    readSettings();
+
+    if (m_args && m_args->isSet("unique") && m_args->count() == 1)
+    {
+        QDBusConnection::sessionBus().registerService("org.kde.okular");
+    }
+
+    if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
   }
-
-  connect( this, SIGNAL(restoreDocument(KConfigGroup)),m_part, SLOT(restoreDocument(KConfigGroup)));
-  connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), m_part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
-  connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
-
-  readSettings();
-
-  if (m_args && m_args->isSet("unique") && m_args->count() == 1)
-  {
-    QDBusConnection::sessionBus().registerService("org.kde.okular");
-  }
-
-  if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
 }
 
 void Shell::delayedOpen()

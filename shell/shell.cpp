@@ -125,6 +125,10 @@ void Shell::init()
 
     if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
   }
+  else
+  {
+    KMessageBox::error(this, i18n("Unable to find the Okular component."));
+  }
 }
 
 void Shell::delayedOpen()

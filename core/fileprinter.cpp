@@ -211,7 +211,7 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
             if ( seqStart == seqEnd ) {
                 pageRange.append(pageList[i]);
             } else {
-                pageRange.append("%1-%2").arg(seqStart).arg(seqEnd);
+                pageRange.append(QString("%1-%2").arg(seqStart).arg(seqEnd));
             }
 
             seqStart = i + 1;

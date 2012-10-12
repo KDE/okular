@@ -126,6 +126,7 @@ MobileComponents.OverlayDrawer {
             right: pageArea.right
             top: pageArea.top
             bottom: pageArea.bottom
+            left: undefined
         }
     }
     PlasmaComponents.ScrollBar {
@@ -135,6 +136,7 @@ MobileComponents.OverlayDrawer {
             left: pageArea.left
             right: pageArea.right
             bottom: pageArea.bottom
+            top: undefined
         }
     }
 

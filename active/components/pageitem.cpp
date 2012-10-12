@@ -220,6 +220,18 @@ void PageItem::goToBookmark(const QString &bookmark)
     }
 }
 
+QPointF PageItem::bookmarkPosition(const QString &bookmark) const
+{
+    Okular::DocumentViewport viewPort(KUrl(bookmark).htmlRef());
+
+    if (viewPort.pageNumber != m_viewPort.pageNumber) {
+        return QPointF(-1, -1);
+    }
+
+    return QPointF(qMax((qreal)0, width() - m_flickable.data()->width()) * viewPort.rePos.normalizedX,
+                   qMax((qreal)0, height() - m_flickable.data()->height()) * viewPort.rePos.normalizedY);
+}
+
 void PageItem::setBookmarkAtPos(qreal x, qreal y)
 {
     Okular::DocumentViewport viewPort(m_viewPort);

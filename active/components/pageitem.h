@@ -112,6 +112,14 @@ public:
     Q_INVOKABLE void goToBookmark(const QString &bookmark);
 
     /**
+     * Returns the position in the page for a bookmark
+     * QPointF(-1,-1) if doesn't belong to this page
+     *
+     * @param bookmark Url for the bookmark
+     */
+    Q_INVOKABLE QPointF bookmarkPosition(const QString &bookmark) const;
+
+    /**
      * Add a new bookmark ar a given position of the current page
      */
     Q_INVOKABLE void setBookmarkAtPos(qreal x, qreal y);

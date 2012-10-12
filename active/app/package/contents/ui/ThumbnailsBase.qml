@@ -30,6 +30,7 @@ PlasmaComponents.Page {
     property alias contentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
     signal pageClicked(int pageNumber)
+    property Item view: resultsGrid
 
     anchors.fill: parent
 

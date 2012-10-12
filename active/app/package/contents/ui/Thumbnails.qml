@@ -40,7 +40,7 @@ ThumbnailsBase {
                 if (searchQuery.length > 2) {
                     documentItem.searchText(searchQuery)
                 } else {
-                    resultsGrid.currentIndex = pageArea.delegate.pageNumber
+                    view.currentIndex = pageArea.delegate.pageNumber
                     documentItem.resetSearch()
                 }
             }

@@ -17,7 +17,7 @@ Switching between documents using bookmarks
 Context menu actions like Rename Bookmarks etc)
  -->
 <book id="okular" lang="&language;">
-	<book id="okular"info>
+	<bookinfo>
 		<title>The &okular; Handbook</title>
 		<authorgroup>
 			<author>

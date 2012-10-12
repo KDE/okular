@@ -66,7 +66,8 @@ PlasmaComponents.Page {
                         document: documentItem
                         pageNumber: modelData
                         width: theme.defaultFont.mSize.width * 10
-                        height: Math.round(width / (implicitWidth/implicitHeight))
+                        //value repeated to avoid binding loops
+                        height: Math.round(theme.defaultFont.mSize.width * 10 / (implicitWidth/implicitHeight))
                         Rectangle {
                             width: childrenRect.width
                             height: childrenRect.height

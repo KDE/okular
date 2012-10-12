@@ -108,7 +108,7 @@ MouseEventListener {
 
         PinchArea {
             id: imageMargin
-            width: Math.max(mainFlickable.width + (pageSwitchEnabled ? 1: 0), mainPage.width)
+            width: Math.max(mainFlickable.width + (pageSwitchEnabled ? 1: 0), mainPage.implicitWidth)
             height: Math.max(mainFlickable.height, mainPage.height)
 
             property real startWidth

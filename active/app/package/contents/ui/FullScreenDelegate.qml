@@ -35,10 +35,10 @@ MouseEventListener {
 
     onWheelMoved: {
         if (wheel.modifiers == Qt.ControlModifier) {
-            var scale = wheel.delta > 0 ? 1.1 : 0.9
-            mainPage.width *= scale
-            mainPage.height *= scale
-            pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth)
+            var factor = wheel.delta > 0 ? 1.1 : 0.9
+            if (scale(factor)) {
+                pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth, true)
+            }
         }
     }
     property Item flickable: mainFlickable
@@ -47,11 +47,29 @@ MouseEventListener {
     property alias pageNumber: mainPage.pageNumber
     property Item pageItem: mainPage
 
-    function scale(zoom)
+    function scale(zoom, absolute)
     {
-        mainPage.width = mainPage.implicitWidth * zoom
-        mainPage.height = mainPage.implicitHeight * zoom
+        var newScale = absolute ? zoom : (mainPage.width / mainPage.implicitWidth) * zoom;
+        if (newScale < 0.3 || newScale > 2) {
+            return false
+        }
+
+        if (imageMargin.pinch.active) {
+            // pinch is happening!
+            mainPage.width = imageMargin.startWidth * zoom
+            mainPage.height = imageMargin.startHeight * zoom
+        } else if (absolute) {
+            // we were given an absolute, not a relative, scale
+            mainPage.width = mainPage.implicitWidth * zoom
+            mainPage.height = mainPage.implicitHeight * zoom
+        } else {
+            mainPage.width *= zoom
+            mainPage.height *= zoom
+        }
+
+        return true
     }
+
     Rectangle {
         id: backgroundRectangle
         x: -mainFlickable.contentX + mainPage.x
@@ -123,12 +141,10 @@ MouseEventListener {
             onPinchUpdated: {
                 var deltaWidth = mainPage.width < imageMargin.width ? ((startWidth * pinch.scale) - mainPage.width) : 0
                 var deltaHeight = mainPage.height < imageMargin.height ? ((startHeight * pinch.scale) - mainPage.height) : 0
-                mainPage.width = startWidth * pinch.scale
-                mainPage.height = startHeight * pinch.scale
-
-                mainFlickable.contentY += pinch.previousCenter.y - pinch.center.y + startY * (pinch.scale - pinch.previousScale) - deltaHeight
-
-                mainFlickable.contentX += pinch.previousCenter.x - pinch.center.x + startX * (pinch.scale - pinch.previousScale) - deltaWidth
+                if (scale(pinch.scale)) {
+                    mainFlickable.contentY += pinch.previousCenter.y - pinch.center.y + startY * (pinch.scale - pinch.previousScale) - deltaHeight
+                    mainFlickable.contentX += pinch.previousCenter.x - pinch.center.x + startX * (pinch.scale - pinch.previousScale) - deltaWidth
+                }
             }
             onPinchFinished: {
                 mainFlickable.returnToBounds()

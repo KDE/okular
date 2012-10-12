@@ -201,14 +201,14 @@ QStringList PageItem::bookmarks() const
 {
     QStringList list;
     foreach(const KBookmark &bookmark, m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber)) {
-        list << bookmark.url().fragment();
+        list << bookmark.url().prettyUrl();
     }
     return list;
 }
 
 void PageItem::goToBookmark(const QString &bookmark)
 {
-    Okular::DocumentViewport viewPort(bookmark);
+    Okular::DocumentViewport viewPort(KUrl(bookmark).htmlRef());
     setPageNumber(viewPort.pageNumber);
 
     //Are we in a flickable?

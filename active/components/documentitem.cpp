@@ -140,7 +140,7 @@ QStringList DocumentItem::bookmarks() const
 {
     QStringList list;
     foreach(const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
-        list << bookmark.url().fragment();
+        list << bookmark.url().prettyUrl();
     }
     return list;
 }

@@ -433,7 +433,12 @@ Add a 'Find Previous' entry
 					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
-					its buttons to start constructing that annotation.
+					its buttons to start constructing that annotation.</para>
+				<para>
+                                        With a single &LMB; click on an annotation tool button you can use a tool once. 
+					If you &eg; want to highlight all important parts of a text, activate that tool 
+					permanently by double clicking on the tool button. 
+					Press the <keycap>Esc</keycap> key or click the tool button again to leave the permanent mode.
 				</para>
 				<note>
 					<para>
@@ -641,6 +646,7 @@ Add a 'Find Previous' entry
 					<listitem>
 						<para><action>Save</action> a copy of the currently open file under a different name
 						without using the current document backend.</para>
+                                                <!-- does not save the annotations, they are still coupled to the original file-->
 					</listitem>
 				</varlistentry>
 

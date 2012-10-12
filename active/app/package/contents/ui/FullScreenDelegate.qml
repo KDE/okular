@@ -54,7 +54,7 @@ MouseEventListener {
             return false
         }
 
-        if (imageMargin.pinch.active) {
+        if (imageMargin.zooming) {
             // pinch is happening!
             mainPage.width = imageMargin.startWidth * zoom
             mainPage.height = imageMargin.startHeight * zoom
@@ -131,9 +131,11 @@ MouseEventListener {
             property real startHeight
             property real startY
             property real startX
+            property bool zooming: false
             onPinchStarted: {
                 startWidth = mainPage.width
                 startHeight = mainPage.height
+                zooming = true
                 startY = pinch.center.y
                 startX = pinch.center.x
                 pageArea.oldDelegate.visible = false
@@ -141,7 +143,7 @@ MouseEventListener {
             onPinchUpdated: {
                 var deltaWidth = mainPage.width < imageMargin.width ? ((startWidth * pinch.scale) - mainPage.width) : 0
                 var deltaHeight = mainPage.height < imageMargin.height ? ((startHeight * pinch.scale) - mainPage.height) : 0
-                if (scale(pinch.scale)) {
+                if (root.scale(pinch.scale)) {
                     mainFlickable.contentY += pinch.previousCenter.y - pinch.center.y + startY * (pinch.scale - pinch.previousScale) - deltaHeight
                     mainFlickable.contentX += pinch.previousCenter.x - pinch.center.x + startX * (pinch.scale - pinch.previousScale) - deltaWidth
                 }
@@ -150,6 +152,7 @@ MouseEventListener {
                 mainFlickable.returnToBounds()
                 pageArea.oldDelegate.scale(mainPage.width / mainPage.implicitWidth)
                 pageArea.oldDelegate.visible = true
+                zooming = false
             }
 
             Okular.PageItem {

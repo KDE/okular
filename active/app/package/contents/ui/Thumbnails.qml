@@ -23,16 +23,16 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 ThumbnailsBase {
+    id: root
     model: documentItem.matchingPages
 
     anchors.fill: parent
     tools: Item {
         id: toolBarContent
-        width: resultsGrid.width
+        width: root.width
         height: searchField.height
         MobileComponents.ViewSearch {
             id: searchField
-            visible: toolBarVisible
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
             busy: documentItem.searchInProgress

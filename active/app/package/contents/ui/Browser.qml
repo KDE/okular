@@ -212,7 +212,6 @@ MobileComponents.OverlayDrawer {
                     PlasmaComponents.TabButton {
                         id: thumbnailsButton
                         text: i18n("Thumbnails")
-                        tab: thumbnails
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
@@ -223,7 +222,6 @@ MobileComponents.OverlayDrawer {
                         id: tocButton
                         enabled: documentItem.tableOfContents.count > 0
                         text: i18n("Table of contents")
-                        tab: tableOfContents
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
@@ -234,7 +232,6 @@ MobileComponents.OverlayDrawer {
                         id: bookmarksButton
                         enabled: documentItem.bookmarkedPages.length > 0
                         text: i18n("Bookmarks")
-                        tab: tableOfContents
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))

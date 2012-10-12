@@ -47,8 +47,6 @@ MouseEventListener {
     property alias pageNumber: mainPage.pageNumber
     property Item pageItem: mainPage
 
-    property string label: model["label"]
-
     function scale(zoom)
     {
         mainPage.width = mainPage.implicitWidth * zoom

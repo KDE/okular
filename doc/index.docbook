@@ -16,7 +16,7 @@ Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
 Context menu actions like Rename Bookmarks etc)
  -->
-<book lang="&language;">
+<book id="okular" lang="&language;">
 	<bookinfo>
 		<title>The &okular; Handbook</title>
 		<authorgroup>

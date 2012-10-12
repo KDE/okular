@@ -45,6 +45,7 @@ MouseEventListener {
     property bool pageSwitchEnabled: false
     property alias document: mainPage.document
     property alias pageNumber: mainPage.pageNumber
+    property Item pageItem: mainPage
 
     property string label: model["label"]
 

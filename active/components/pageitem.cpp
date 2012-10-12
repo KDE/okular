@@ -46,6 +46,8 @@ PageItem::PageItem(QDeclarativeItem *parent)
     m_observerId = PAGEVIEW_ID;
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 
+    m_viewPort.rePos.enabled = true;
+
     m_redrawTimer = new QTimer(this);
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
@@ -189,7 +191,7 @@ void PageItem::setBookmarked(bool bookmarked)
     }
 
     if (bookmarked) {
-        m_documentItem.data()->document()->bookmarkManager()->addBookmark(m_viewPort.pageNumber);
+        m_documentItem.data()->document()->bookmarkManager()->addBookmark(m_viewPort);
     } else {
         m_documentItem.data()->document()->bookmarkManager()->removeBookmark(m_viewPort.pageNumber);
     }
@@ -239,6 +241,29 @@ void PageItem::setBookmarkAtPos(qreal x, qreal y)
     viewPort.rePos.normalizedY = y;
 
     m_documentItem.data()->document()->bookmarkManager()->addBookmark(viewPort);
+
+    if (!m_bookmarked) {
+        m_bookmarked = true;
+        emit bookmarkedChanged();
+    }
+
+    emit bookmarksChanged();
+}
+
+void PageItem::removeBookmarkAtPos(qreal x, qreal y)
+{
+    Okular::DocumentViewport viewPort(m_viewPort);
+    viewPort.rePos.enabled = true;
+    viewPort.rePos.normalizedX = x;
+    viewPort.rePos.normalizedY = y;
+
+    m_documentItem.data()->document()->bookmarkManager()->addBookmark(viewPort);
+
+    if (m_bookmarked && m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber).count() == 0) {
+        m_bookmarked = false;
+        emit bookmarkedChanged();
+    }
+
     emit bookmarksChanged();
 }
 
@@ -344,7 +369,7 @@ void PageItem::contentXChanged()
         return;
     }
 
-    m_viewPort.rePos.normalizedX = m_flickable.data()->property("contentX").toReal();
+    m_viewPort.rePos.normalizedX = m_flickable.data()->property("contentX").toReal() / (width() - m_flickable.data()->width());
 }
 
 void PageItem::contentYChanged()
@@ -353,7 +378,7 @@ void PageItem::contentYChanged()
         return;
     }
 
-    m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal();
+    m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal() / (height() - m_flickable.data()->height());
 }
 
 void PageItem::setIsThumbnail(bool thumbnail)

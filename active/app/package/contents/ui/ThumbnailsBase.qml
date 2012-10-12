@@ -25,9 +25,11 @@ import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
 
 PlasmaComponents.Page {
+    id: root
     property alias contentY: resultsGrid.contentY
     property alias contentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
+    signal pageClicked(int pageNumber)
 
     anchors.fill: parent
 
@@ -88,6 +90,7 @@ PlasmaComponents.Page {
                             documentItem.currentPage = modelData
 
                             resourceBrowser.open = false
+                            root.pageClicked(modelData)
                         }
                     }
                 }

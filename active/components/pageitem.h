@@ -125,6 +125,11 @@ public:
     Q_INVOKABLE void setBookmarkAtPos(qreal x, qreal y);
 
     /**
+     * Remove a bookmark ar a given position of the current page (if present)
+     */
+    Q_INVOKABLE void removeBookmarkAtPos(qreal x, qreal y);
+
+    /**
      * Remove a bookmark at a given position, if any
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);

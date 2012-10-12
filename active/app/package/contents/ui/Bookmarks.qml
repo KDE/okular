@@ -22,4 +22,7 @@ import QtQuick 1.1
 
 ThumbnailsBase {
     model: documentItem.bookmarkedPages
+    onPageClicked: {
+        pageArea.delegate.pageItem.goToBookmark(pageArea.delegate.pageItem.bookmarks[0])
+    }
 }

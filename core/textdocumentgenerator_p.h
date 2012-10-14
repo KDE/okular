@@ -36,6 +36,11 @@ namespace TextDocumentUtils {
 
             QTextLayout *startLayout = startBlock.layout();
             QTextLayout *endLayout = endBlock.layout();
+            if (!startLayout || !endLayout) {
+                kWarning() << "Start or end layout not found" << startLayout << endLayout;
+                page = -1;
+                return;
+            }
 
             int startPos = startPosition - startBlock.position();
             int endPos = endPosition - endBlock.position();

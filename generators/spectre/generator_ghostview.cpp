@@ -135,7 +135,9 @@ bool GSGenerator::print( QPrinter& printer )
         i++;
     }
 
-    SpectreStatus endStatus = spectre_exporter_end( exporter );
+    SpectreStatus endStatus = SPECTRE_STATUS_EXPORTER_ERROR;
+    if (exportStatus == SPECTRE_STATUS_SUCCESS)
+        endStatus = spectre_exporter_end( exporter );
 
     spectre_exporter_free( exporter );
 

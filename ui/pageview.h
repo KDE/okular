@@ -102,7 +102,7 @@ Q_OBJECT
         int contentAreaHeight() const;
         QPoint contentAreaPosition() const;
         QPoint contentAreaPoint( const QPoint & pos ) const;
-	QPointF contentAreaPoint( const QPointF & pos ) const;
+        QPointF contentAreaPoint( const QPointF & pos ) const;
 
         bool areSourceLocationsShownGraphically() const;
         void setShowSourceLocationsGraphically(bool show);
@@ -152,7 +152,7 @@ Q_OBJECT
         void dropEvent( QDropEvent* );
 
         void paintEvent( QPaintEvent *e );
-	void tabletEvent (QTabletEvent *e);
+        void tabletEvent (QTabletEvent *e );
         void mouseMoveEvent( QMouseEvent *e );
         void mousePressEvent( QMouseEvent *e );
         void mouseReleaseEvent( QMouseEvent *e );
@@ -259,3 +259,5 @@ Q_OBJECT
 };
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

@@ -51,7 +51,7 @@ class AnnotatorEngine
         void setItem( PageViewItem * item ) { m_item = item; }
 
         static void decodeEvent( const QMouseEvent * mouseEvent, EventType * eventType, Button * button );
-	static void decodeEvent( const QTabletEvent * tabletEvent, EventType * eventType, Button * button );
+        static void decodeEvent( const QTabletEvent * tabletEvent, EventType * eventType, Button * button );
 
     protected:
         PageViewItem * item() { return m_item; }
@@ -101,3 +101,5 @@ class SmoothPathEngine
 };
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

@@ -60,11 +60,14 @@ void AnnotatorEngine::decodeEvent( const QTabletEvent * tabletEvent, EventType *
             *button = AnnotatorEngine::Left;
             *eventType = AnnotatorEngine::Release;
             break;
-        default:
+        case QEvent::TabletMove:
             // Tablet events are only routed if the pen is down so
             // this is equivalent to the left mouse button being pressed
             *button = AnnotatorEngine::Left;
             *eventType = AnnotatorEngine::Move;
+            break;
+        default:
+            Q_ASSERT(false);
             break;
     }
 }
@@ -222,3 +225,4 @@ SmoothPath SmoothPathEngine::endSmoothPath()
     return SmoothPath( points, QPen(color, width) );
 }
 
+/* kate: replace-tabs on; indent-width 4; */

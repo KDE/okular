@@ -722,7 +722,7 @@ bool PageViewAnnotator::routeEvents() const
 }
 
 QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
-                                             const QPointF & pos, PageViewItem * item )
+                                                        const QPointF & pos, PageViewItem * item )
 {
     // if the right mouse button was pressed, we simply do nothing. In this way, we are still editing the annotation
     // and so this function will receive and process the right mouse button release event too. If we detach now the annotation tool,
@@ -811,7 +811,7 @@ QRect PageViewAnnotator::routeMouseEvent( QMouseEvent * e, PageViewItem * item )
     return performRouteMouseOrTabletEvent( eventType, button, e->posF(), item );
 }
 
-QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint localOriginInGlobal )
+QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint & localOriginInGlobal )
 {
     // Unlike routeMouseEvent, routeTabletEvent must explicitly ignore events it doesn't care about so that
     // the corresponding mouse event will later be delivered.

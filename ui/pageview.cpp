@@ -1746,7 +1746,7 @@ void PageView::tabletEvent( QTabletEvent * e )
     {
         const QPoint eventPos = contentAreaPoint( e->pos() );
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        QPoint localOriginInGlobal = mapToGlobal( QPoint(0,0) );
+        const QPoint localOriginInGlobal = mapToGlobal( QPoint(0,0) );
 
         // routeTabletEvent will accept or ignore event as appropriate
         d->annotator->routeTabletEvent( e, pageItem, localOriginInGlobal );

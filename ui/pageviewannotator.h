@@ -15,6 +15,7 @@
 #include <qlinkedlist.h>
 
 #include "pageviewutils.h"
+#include "annotationtools.h"
 
 class QKeyEvent;
 class QMouseEvent;
@@ -65,7 +66,10 @@ class PageViewAnnotator : public QObject
 
         // methods used when creating the annotation
         bool routeEvents() const;
-        QRect routeEvent( QMouseEvent * event, PageViewItem * item );
+        QRect routeMouseEvent( QMouseEvent * event, PageViewItem * item );
+	QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint localOriginInGlobal );
+	QRect performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
+					     const QPointF & pos, PageViewItem * item );
         bool routeKeyEvent( QKeyEvent * event );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );

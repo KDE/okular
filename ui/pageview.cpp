@@ -204,6 +204,9 @@ public:
     QActionGroup * mouseModeActionGroup;
 
     int setting_viewCols;
+
+    // Keep track of whether tablet pen is currently pressed down
+    bool penDown;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -311,6 +314,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->mouseModeActionGroup = 0;
+    d->penDown = false;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -742,6 +746,11 @@ QPoint PageView::contentAreaPosition() const
 }
 
 QPoint PageView::contentAreaPoint( const QPoint & pos ) const
+{
+    return pos + contentAreaPosition();
+}
+
+QPointF PageView::contentAreaPoint( const QPointF & pos ) const
 {
     return pos + contentAreaPosition();
 }
@@ -1708,6 +1717,44 @@ static QPoint rotateInRect( const QPoint &rotated, Okular::Rotation rotation )
     return ret;
 }
 
+void PageView::tabletEvent( QTabletEvent * e )
+{
+    // Ignore tablet events that we don't care about
+    if ( !( e->type() == QEvent::TabletPress ||
+            e->type() == QEvent::TabletRelease ||
+            e->type() == QEvent::TabletMove ) )
+    {
+        e->ignore();
+        return;
+    }
+
+    // Determine pen state
+    bool penReleased = false;
+    if ( e->type() == QEvent::TabletPress )
+    {
+        d->penDown = true;
+    }
+    if ( e->type() == QEvent::TabletRelease )
+    {
+        d->penDown = false;
+        penReleased = true;
+    }
+
+    // If we're editing an annotation and the tablet pen is either down or just released
+    // then dispatch event to annotator
+    if ( d->annotator && d->annotator->routeEvents() && ( d->penDown || penReleased ) )
+    {
+        const QPoint eventPos = contentAreaPoint( e->pos() );
+        PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
+        QPoint localOriginInGlobal = mapToGlobal( QPoint(0,0) );
+
+        // routeTabletEvent will accept or ignore event as appropriate
+        d->annotator->routeTabletEvent( e, pageItem, localOriginInGlobal );
+    } else {
+        e->ignore();
+    }
+}
+
 void PageView::mouseMoveEvent( QMouseEvent * e )
 {
     // don't perform any mouse action when no document is shown
@@ -1764,7 +1811,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
     if ( d->annotator && d->annotator->routeEvents() )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        d->annotator->routeEvent( e, pageItem );
+        d->annotator->routeMouseEvent( e, pageItem );
         return;
     }
 
@@ -1915,7 +1962,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
     if ( d->annotator && d->annotator->routeEvents() )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        d->annotator->routeEvent( e, pageItem );
+        d->annotator->routeMouseEvent( e, pageItem );
         return;
     }
 
@@ -2148,7 +2195,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     if ( d->annotator && d->annotator->routeEvents() )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        d->annotator->routeEvent( e, pageItem );
+        d->annotator->routeMouseEvent( e, pageItem );
         return;
     }
 

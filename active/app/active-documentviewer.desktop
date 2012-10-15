@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Reader
+GenericName=Document viewer
+Comment=Viewer for various types of documents
+
+Exec=active-documentviewer %u
+Terminal=false
+Icon=okular
+Type=Application
+Categories=Qt;KDE;Graphics;Office;Viewer;
+InitialPreference=7
+NoDisplay=true
+MimeType=application/vnd.kde.okular-archive;application/pdf;application/x-gzpdf;application/x-bzpdf;application/x-wwf;application/epub+zip;

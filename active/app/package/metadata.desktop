@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Document viewer
+Encoding=UTF-8
+Type=Service
+Icon=okular
+X-KDE-ParentApp=
+X-KDE-PluginInfo-Author=Marco Martin
+X-KDE-PluginInfo-Email=mart@kde.org
+X-KDE-PluginInfo-Name=org.kde.active.documentviewer
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=http://kde.org
+X-KDE-PluginInfo-Category=Office
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-Plasma-MainScript=ui/main.qml

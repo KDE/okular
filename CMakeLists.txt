@@ -18,6 +18,7 @@ include_directories(
    ${QIMAGEBLITZ_INCLUDES}
 )
 
+add_subdirectory( active )
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )

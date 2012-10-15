@@ -77,6 +77,7 @@
 #include "core/movie.h"
 #include "core/sourcereference.h"
 #include "settings.h"
+#include "settings_core.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
@@ -1221,8 +1222,8 @@ void PageView::notifyZoom( int factor )
 
 bool PageView::canUnloadPixmap( int pageNumber ) const
 {
-    if ( Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Low ||
-         Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Normal )
+    if ( Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Low ||
+         Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Normal )
     {
         // if the item is visible, forbid unloading
         QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.constBegin(), vEnd = d->visibleItems.constEnd();
@@ -4054,7 +4055,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 
     // if preloading is enabled, add the pages before and after in preloading
     if ( !d->visibleItems.isEmpty() &&
-         Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
+         Okular::SettingsCore::memoryLevel() != Okular::SettingsCore::EnumMemoryLevel::Low )
     {
         // as the requests are done in the order as they appear in the list,
         // request first the next page and then the previous
@@ -4062,7 +4063,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         int pagesToPreload = viewColumns();
 
         // if the greedy option is set, preload all pages
-        if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+        if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = d->items.count();
 
         for( int j = 1; j <= pagesToPreload; j++ )

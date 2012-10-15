@@ -60,7 +60,7 @@
 #include "core/movie.h"
 #include "core/page.h"
 #include "settings.h"
-
+#include "settings_core.h"
 
 // comment this to disable the top-right progress indicator
 #define ENABLE_PROGRESS_OVERLAY
@@ -447,8 +447,8 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
 
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 {
-    if ( Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Low ||
-         Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Normal )
+    if ( Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Low ||
+         Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Normal )
     {
         // can unload all pixmaps except for the currently visible one
         return pageNumber != m_frameIndex;
@@ -1169,11 +1169,11 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 void PresentationWidget::startAutoChangeTimer()
 {
     double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
-    if ( Okular::Settings::slidesAdvance() || pageDuration >= 0.0 )
+    if ( Okular::SettingsCore::slidesAdvance() || pageDuration >= 0.0 )
     {
         double secs = pageDuration < 0.0
-                   ? Okular::Settings::slidesAdvanceTime()
-                   : qMin<double>( pageDuration, Okular::Settings::slidesAdvanceTime() );
+                   ? Okular::SettingsCore::slidesAdvanceTime()
+                   : qMin<double>( pageDuration, Okular::SettingsCore::slidesAdvanceTime() );
         m_nextPageTimer->start( (int)( secs * 1000 ) );
     }
 }
@@ -1227,12 +1227,12 @@ void PresentationWidget::requestPixmaps()
     // restore cursor
     QApplication::restoreOverrideCursor();
     // ask for next and previous page if not in low memory usage setting
-    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
+    if ( Okular::SettingsCore::memoryLevel() != Okular::SettingsCore::EnumMemoryLevel::Low )
     {
         int pagesToPreload = 1;
 
         // If greedy, preload everything
-        if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+        if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = (int)m_document->pages();
 
         for( int j = 1; j <= pagesToPreload; j++ )

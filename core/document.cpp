@@ -72,7 +72,7 @@
 #include "page_p.h"
 #include "pagecontroller_p.h"
 #include "scripter.h"
-#include "settings.h"
+#include "settings_core.h"
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 #include "texteditors_p.h"
@@ -180,13 +180,13 @@ qulonglong DocumentPrivate::calculateMemoryToFree()
     qulonglong clipValue = 0;
     qulonglong memoryToFree = 0;
 
-    switch ( Settings::memoryLevel() )
+    switch ( SettingsCore::memoryLevel() )
     {
-        case Settings::EnumMemoryLevel::Low:
+        case SettingsCore::EnumMemoryLevel::Low:
             memoryToFree = m_allocatedPixmapsTotalMemory;
             break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case SettingsCore::EnumMemoryLevel::Normal:
         {
             qulonglong thirdTotalMemory = getTotalMemory() / 3;
             qulonglong freeMemory = getFreeMemory();
@@ -195,13 +195,13 @@ qulonglong DocumentPrivate::calculateMemoryToFree()
         }
         break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case SettingsCore::EnumMemoryLevel::Aggressive:
         {
             qulonglong freeMemory = getFreeMemory();
             if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
         }
         break;
-        case Settings::EnumMemoryLevel::Greedy:
+        case SettingsCore::EnumMemoryLevel::Greedy:
         {
             qulonglong freeSwap;
             qulonglong freeMemory = getFreeMemory( &freeSwap );
@@ -967,7 +967,7 @@ void DocumentPrivate::saveDocumentInfo() const
 void DocumentPrivate::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Low &&
          m_allocatedPixmapsTotalMemory > 1024*1024 )
         cleanupPixmapMemory();
 }
@@ -1131,7 +1131,7 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low &&
          !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
 }
@@ -1504,10 +1504,10 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
         // load paper color from Settings, or use the default color (white)
         // if we were told to do so
         QColor color;
-        if ( ( Settings::renderMode() == Settings::EnumRenderMode::Paper )
-             && Settings::changeColors() )
+        if ( ( SettingsCore::renderMode() == SettingsCore::EnumRenderMode::Paper )
+             && SettingsCore::changeColors() )
         {
-            color = Settings::paperColor();
+            color = SettingsCore::paperColor();
         }
         else if ( giveDefault )
         {
@@ -1517,13 +1517,13 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
     }
     else if ( key == QLatin1String( "ZoomFactor" ) )
     {
-        return Settings::zoomFactor();
+        return SettingsCore::zoomFactor();
     }
     else if ( key == QLatin1String( "TextAntialias" ) )
     {
-        switch ( Settings::textAntialias() )
+        switch ( SettingsCore::textAntialias() )
         {
-            case Settings::EnumTextAntialias::Enabled:
+            case SettingsCore::EnumTextAntialias::Enabled:
                 return true;
                 break;
 #if 0
@@ -1532,31 +1532,31 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
                 return true;
                 break;
 #endif
-            case Settings::EnumTextAntialias::Disabled:
+            case SettingsCore::EnumTextAntialias::Disabled:
                 return false;
                 break;
         }
     }
     else if ( key == QLatin1String( "GraphicsAntialias" ) )
     {
-        switch ( Settings::graphicsAntialias() )
+        switch ( SettingsCore::graphicsAntialias() )
         {
-            case Settings::EnumGraphicsAntialias::Enabled:
+            case SettingsCore::EnumGraphicsAntialias::Enabled:
                 return true;
                 break;
-            case Settings::EnumGraphicsAntialias::Disabled:
+            case SettingsCore::EnumGraphicsAntialias::Disabled:
                 return false;
                 break;
         }
     }
     else if ( key == QLatin1String( "TextHinting" ) )
     {
-        switch ( Settings::textHinting() )
+        switch ( SettingsCore::textHinting() )
         {
-            case Settings::EnumTextHinting::Enabled:
+            case SettingsCore::EnumTextHinting::Enabled:
                 return true;
                 break;
-            case Settings::EnumTextHinting::Disabled:
+            case SettingsCore::EnumTextHinting::Disabled:
                 return false;
                 break;
         }
@@ -1574,7 +1574,7 @@ Document::Document( QWidget *widget )
 
     connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
-    connect( Settings::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
+    connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
 
     qRegisterMetaType<Okular::FontInfo>();
 }
@@ -1692,7 +1692,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         // sort the offers: the offers with an higher priority come before
         qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
 
-        if ( Settings::chooseGenerators() )
+        if ( SettingsCore::chooseGenerators() )
         {
             QStringList list;
             for ( int i = 0; i < offercount; ++i )
@@ -2032,7 +2032,7 @@ void Document::reparseConfig()
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low &&
          !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty() )
         d->cleanupPixmapMemory();
 }
@@ -2199,7 +2199,7 @@ bool Document::isAllowed( Permission action ) const
         return false;
 
 #if !OKULAR_FORCE_DRM
-    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
+    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::SettingsCore::obeyDRM() )
         return true;
 #endif
 
@@ -3289,12 +3289,12 @@ void Document::processSourceReference( const SourceReference * ref )
         editors = buildEditorsMap();
     }
 
-    QHash< int, QString >::const_iterator it = editors.constFind( Settings::externalEditor() );
+    QHash< int, QString >::const_iterator it = editors.constFind( SettingsCore::externalEditor() );
     QString p;
     if ( it != editors.constEnd() )
         p = *it;
     else
-        p = Settings::externalEditorCommand();
+        p = SettingsCore::externalEditorCommand();
     // custom editor not yet configured
     if ( p.isEmpty() )
         return;
@@ -3878,21 +3878,21 @@ void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundi
 void DocumentPrivate::calculateMaxTextPages()
 {
     int multipliers = qMax(1, qRound(getTotalMemory() / 536870912.0)); // 512 MB
-    switch (Settings::memoryLevel())
+    switch (SettingsCore::memoryLevel())
     {
-        case Settings::EnumMemoryLevel::Low:
+        case SettingsCore::EnumMemoryLevel::Low:
             m_maxAllocatedTextPages = multipliers * 2;
         break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case SettingsCore::EnumMemoryLevel::Normal:
             m_maxAllocatedTextPages = multipliers * 50;
         break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case SettingsCore::EnumMemoryLevel::Aggressive:
             m_maxAllocatedTextPages = multipliers * 250;
         break;
 
-        case Settings::EnumMemoryLevel::Greedy:
+        case SettingsCore::EnumMemoryLevel::Greedy:
             m_maxAllocatedTextPages = multipliers * 1250;
         break;
     }

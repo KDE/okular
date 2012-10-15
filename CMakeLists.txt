@@ -95,6 +95,7 @@ install( FILES
            core/utils.h
            core/version.h
            core/fileprinter.h
+           ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
 
 install( FILES
@@ -109,8 +110,7 @@ kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
-
+kde4_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
@@ -126,6 +126,7 @@ set_target_properties(okularcore PROPERTIES VERSION 2.0.0 SOVERSION 2 )
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES conf/okular_core.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # okularpart
@@ -188,6 +189,8 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
+kde4_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
+
 qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
@@ -198,6 +201,8 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
+
+install(FILES okular.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
 
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular )

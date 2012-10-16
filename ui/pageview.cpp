@@ -2840,12 +2840,15 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
                     // TODO words with hyphens across pages
                     d->document->setPageTextSelection( pageItem->pageNumber(), wordRect, palette().color( QPalette::Active, QPalette::Highlight ) );
                     d->pagesWithTextSelection << pageItem->pageNumber();
-                    const QString text = d->selectedText();
-                    if ( !text.isEmpty() )
+                    if ( d->document->isAllowed( Okular::AllowCopy ) )
                     {
-                        QClipboard *cb = QApplication::clipboard();
-                        if ( cb->supportsSelection() )
-                            cb->setText( text, QClipboard::Selection );
+                        const QString text = d->selectedText();
+                        if ( !text.isEmpty() )
+                        {
+                            QClipboard *cb = QApplication::clipboard();
+                            if ( cb->supportsSelection() )
+                                cb->setText( text, QClipboard::Selection );
+                        }
                     }
                     return;
                 }

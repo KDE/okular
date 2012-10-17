@@ -1,7 +1,25 @@
 [Desktop Entry]
 Name=Reader
+Name[et]=Lugeja
+Name[pt]=Leitor
+Name[pt_BR]=Leitor
+Name[sv]=Läsprogram
+Name[uk]=Переглядач
+Name[x-test]=xxReaderxx
 GenericName=Document viewer
+GenericName[et]=Dokumendinäitaja
+GenericName[pt]=Visualizador de documentos
+GenericName[pt_BR]=Visualizador de documentos
+GenericName[sv]=Dokumentvisare
+GenericName[uk]=Переглядач документів
+GenericName[x-test]=xxDocument viewerxx
 Comment=Viewer for various types of documents
+Comment[et]=Eri tüüpi dokumentide näitaja
+Comment[pt]=Visualizador de vários tipos de documentos
+Comment[pt_BR]=Visualizador para vários tipos de documentos
+Comment[sv]=Visningsprogram för diverse typer av dokument
+Comment[uk]=Програма для перегляду документів різних типів
+Comment[x-test]=xxViewer for various types of documentsxx
 
 Exec=active-documentviewer %u
 Terminal=false

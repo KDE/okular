@@ -1064,6 +1064,7 @@ void DocumentPrivate::sendGeneratorRequest()
                 // create new tiles manager
                 tilesManager = new TilesManager( r->width(), r->height(), r->page()->rotation() );
             }
+            tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
             r->page()->deletePixmap( r->id() );
             r->page()->setTilesManager( r->id(), tilesManager );
             r->setTile( true );

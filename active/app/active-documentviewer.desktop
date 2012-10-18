@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=Reader
+Name[cs]=Čtečka
+Name[es]=Lector
 Name[et]=Lugeja
 Name[pt]=Leitor
 Name[pt_BR]=Leitor
@@ -7,6 +9,8 @@ Name[sv]=Läsprogram
 Name[uk]=Переглядач
 Name[x-test]=xxReaderxx
 GenericName=Document viewer
+GenericName[cs]=Prohlížeč dokumentů
+GenericName[es]=Visor de documentos
 GenericName[et]=Dokumendinäitaja
 GenericName[pt]=Visualizador de documentos
 GenericName[pt_BR]=Visualizador de documentos
@@ -14,6 +18,8 @@ GenericName[sv]=Dokumentvisare
 GenericName[uk]=Переглядач документів
 GenericName[x-test]=xxDocument viewerxx
 Comment=Viewer for various types of documents
+Comment[cs]=Prohlížeč různých typů dokumentů
+Comment[es]=Visor de diversos tipos de documentos
 Comment[et]=Eri tüüpi dokumentide näitaja
 Comment[pt]=Visualizador de vários tipos de documentos
 Comment[pt_BR]=Visualizador para vários tipos de documentos

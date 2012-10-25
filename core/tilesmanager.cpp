@@ -125,10 +125,7 @@ void TilesManager::setWidth( int width )
 
     d->width = width;
 
-    for ( int i = 0; i < 16; ++i )
-    {
-        d->markDirty( d->tiles[ i ] );
-    }
+    markDirty();
 }
 
 int TilesManager::width() const {
@@ -154,15 +151,20 @@ void TilesManager::setRotation( Rotation rotation )
 
     d->rotation = rotation;
 
-    for ( int i = 0; i < 16; ++i )
-    {
-        d->markDirty( d->tiles[ i ] );
-    }
+    markDirty();
 }
 
 Rotation TilesManager::rotation() const
 {
     return d->rotation;
+}
+
+void TilesManager::markDirty()
+{
+    for ( int i = 0; i < 16; ++i )
+    {
+        d->markDirty( d->tiles[ i ] );
+    }
 }
 
 void TilesManager::Private::markDirty( Tile &tile )

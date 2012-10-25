@@ -1261,6 +1261,34 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }
+
+    QMap< int, TilesManager* >::const_iterator tmIt = page->d->m_tilesManagers.constBegin(), tmEnd = page->d->m_tilesManagers.constEnd();
+    for ( ; tmIt != tmEnd; tmIt++ )
+    {
+        TilesManager * tilesManager = *tmIt;
+        tilesManager->markDirty();
+
+        PixmapRequest * p = new PixmapRequest( tmIt.key(), pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
+
+        NormalizedRect tilesRect;
+        QList<Tile> tiles = tilesManager->tilesAt( tilesManager->visibleRect() );
+        QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+        while ( tIt != tEnd )
+        {
+            Tile tile = *tIt;
+            if ( tilesRect.isNull() )
+                tilesRect = tile.rect;
+            else
+                tilesRect |= tile.rect;
+
+            tIt++;
+        }
+
+        p->setNormalizedRect( tilesRect );
+        p->setTile( true );
+        p->d->mForce = true;
+        requestedPixmaps.push_back( p );
+    }
     if ( !requestedPixmaps.isEmpty() )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
 }

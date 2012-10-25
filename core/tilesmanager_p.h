@@ -135,6 +135,11 @@ class OKULAR_EXPORT TilesManager
         Rotation rotation() const;
 
         /**
+         * Mark all tiles as dirty
+         */
+        void markDirty();
+
+        /**
          * Sets the visible area of the page
          */
         void setVisibleRect( const NormalizedRect &rect );

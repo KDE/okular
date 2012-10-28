@@ -100,6 +100,7 @@ int main()
 check_cxx_source_compiles("
 #include <poppler-qt4.h>
 #include <poppler-annotation.h>
+#include <poppler-link.h>
 
 int main()
 {
@@ -107,6 +108,7 @@ int main()
   movie->showPosterImage();
 
   const Poppler::Annotation::AdditionalActionType type = Poppler::Annotation::PageOpeningAction;
+  const Poppler::LinkRendition::RenditionAction action = Poppler::LinkRendition::NoRendition;
 
   return 0;
 }

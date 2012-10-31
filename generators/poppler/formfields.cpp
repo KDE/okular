@@ -277,6 +277,22 @@ void PopplerFormFieldChoice::setCurrentChoices( const QList<int>& choices )
     m_field->setCurrentChoices( choices );
 }
 
+QString PopplerFormFieldChoice::editChoice() const
+{
+#ifdef HAVE_POPPLER_0_22
+    return m_field->editChoice();
+#else
+    return QString();
+#endif
+}
+
+void PopplerFormFieldChoice::setEditChoice( const QString& text )
+{
+#ifdef HAVE_POPPLER_0_22
+    m_field->setEditChoice( text );
+#endif
+}
+
 Qt::Alignment PopplerFormFieldChoice::textAlignment() const
 {
     return Qt::AlignTop | m_field->textAlignment();

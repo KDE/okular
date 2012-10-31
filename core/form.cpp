@@ -239,6 +239,15 @@ void FormFieldChoice::setCurrentChoices( const QList< int >& )
 {
 }
 
+QString FormFieldChoice::editChoice() const
+{
+    return QString();
+}
+
+void FormFieldChoice::setEditChoice( const QString& )
+{
+}
+
 Qt::Alignment FormFieldChoice::textAlignment() const
 {
     return Qt::AlignVCenter | Qt::AlignLeft;

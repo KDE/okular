@@ -221,9 +221,10 @@ class ComboEdit : public QComboBox, public FormWidgetIface
         explicit ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent = 0 );
 
     private slots:
-        void indexChanged( int );
+        void slotValueChanged();
 
     private:
+
         Okular::FormFieldChoice * m_form;
 };
 

@@ -308,6 +308,20 @@ class OKULAR_EXPORT FormFieldChoice : public FormField
         virtual void setCurrentChoices( const QList< int >& choices );
 
         /**
+          The text entered into an editable combo box choice field
+
+          @since 0.16 (KDE 4.10)
+        */
+        virtual QString editChoice() const;
+
+        /**
+          Sets the text entered into an editable combo box choice field
+
+          @since 0.16 (KDE 4.10)
+        */
+        virtual void setEditChoice( const QString& text );
+
+        /**
          * The alignment of the text within the field.
          */
         virtual Qt::Alignment textAlignment() const;

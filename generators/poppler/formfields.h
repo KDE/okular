@@ -91,6 +91,8 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         virtual bool multiSelect() const;
         virtual QList<int> currentChoices() const;
         virtual void setCurrentChoices( const QList<int>& choices );
+        virtual QString editChoice() const;
+        virtual void setEditChoice( const QString& text );
         virtual Qt::Alignment textAlignment() const;
         virtual bool canBeSpellChecked() const;
 

@@ -415,7 +415,6 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_topMessage, SIGNAL(action()), this, SLOT(slotShowEmbeddedFiles()) );
     rightLayout->addWidget( m_topMessage );
     m_formsMessage = new PageViewTopMessage( rightContainer );
-    m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
@@ -1216,8 +1215,24 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles );
+
+    // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
+    if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )
+    {
+        m_formsMessage->setup( i18n( "This document has XFA forms, which are currently <b>unsupported</b>." ), KIcon( "dialog-warning" ) );
+        m_formsMessage->setVisible( true );
+    }
     // m_pageView->toggleFormsAction() may be null on dummy mode
-    m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() );
+    else if ( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() )
+    {
+        m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        m_formsMessage->setVisible( true );
+    }
+    else
+    {
+        m_formsMessage->setVisible( false );
+    }
+
     if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
     if ( ok )
     {

@@ -411,20 +411,22 @@ PageViewTopMessage::PageViewTopMessage( QWidget * parent )
 void PageViewTopMessage::setup( const QString & message, const KIcon& icon )
 {
     m_label->setText( message );
-    resize( minimumSizeHint() );
     if ( icon.isNull() )
     {
         m_icon->setPixmap( QPixmap() );
+        m_icon->setVisible( false );
     }
     else
     {
         m_icon->setPixmap( icon.pixmap( m_icon->size() ) );
+        m_icon->setVisible( true );
     }
+    resize( minimumSizeHint() );
 }
 
 void PageViewTopMessage::setIconSize( int size )
 {
-    m_icon->resize( size, size );
+    m_icon->setFixedSize( size, size );
 }
 
 void PageViewTopMessage::setActionButton( QAction * action )

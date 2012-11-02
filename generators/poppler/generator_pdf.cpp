@@ -1236,6 +1236,15 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         QMutexLocker ml(userMutex());
         return pdfdoc->scripts();
     }
+    else if ( key == "HasUnsupportedXfaForm" )
+    {
+#ifdef HAVE_POPPLER_0_22
+        QMutexLocker ml(userMutex());
+        return pdfdoc->formType() == Poppler::Document::XfaForm;
+#else
+        return false;
+#endif
+    }
     return QVariant();
 }
 

@@ -953,7 +953,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                                                             Qt::CaseSensitivity caseSensitivity,
                                                             TextComparisonFunction comparer,
                                                             const TextList::ConstIterator &start,
-                                                            const TextList::ConstIterator &end )
+                                                            const TextList::ConstIterator &loop_end )
 {
     const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
 
@@ -992,7 +992,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         }
         else
         {
-            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
+            len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
@@ -1057,7 +1057,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             ret->simplify();
             return ret;
         }
-        if ( it == end )
+        if ( it == loop_end )
             break;
         else
             --it;

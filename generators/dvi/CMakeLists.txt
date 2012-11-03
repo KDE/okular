@@ -7,7 +7,7 @@ include_directories(
 
 if (FREETYPE_FOUND)
    add_definitions(-DHAVE_FREETYPE)
-   include_directories(${FREETYPE_INCLUDE_DIR})
+   include_directories(${FREETYPE_INCLUDE_DIRS})
 else (FREETYPE_FOUND)
    remove_definitions(-DHAVE_FREETYPE)
 endif (FREETYPE_FOUND)

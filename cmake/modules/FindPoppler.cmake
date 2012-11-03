@@ -105,10 +105,12 @@ check_cxx_source_compiles("
 int main()
 {
   Poppler::MovieObject *movie = 0;
+  Poppler::Document *doc = 0;
   movie->showPosterImage();
 
   const Poppler::Annotation::AdditionalActionType type = Poppler::Annotation::PageOpeningAction;
   const Poppler::LinkRendition::RenditionAction action = Poppler::LinkRendition::NoRendition;
+  const Poppler::Document::FormType formType = doc->formType();
 
   return 0;
 }

@@ -293,6 +293,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( tilesManager )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
+            backImage.fill( 0xffffffff );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
             QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits, false );
@@ -433,9 +434,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             Q_ASSERT(backImage.format() == QImage::Format_ARGB32_Premultiplied);
             // precalc constants for normalizing [0,1] page coordinates into normalized [0,1] limit rect coordinates
             double pageScale = (double)croppedWidth / page->width();
-            double xOffset = (double)limits.left() / (double)scaledWidth + crop.left,
+            double xOffset = (double)limits.left() / (double)scaledWidth,
                    xScale = (double)scaledWidth / (double)limits.width(),
-                   yOffset = (double)limits.top() / (double)scaledHeight + crop.top,
+                   yOffset = (double)limits.top() / (double)scaledHeight,
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page

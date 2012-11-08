@@ -446,7 +446,7 @@ void TilesManager::Private::rankTiles( TileNode &tile, QList<TileNode*> &rankedT
             NormalizedPoint viewportCenter = visibleRect.center();
             NormalizedPoint tileCenter = tile.rect.center();
             // Manhattan distance. It's a good and fast approximation.
-            tile.distance = qAbs(viewportCenter.x - tileCenter.x) + qAbs(viewportCenter.y + tileCenter.y);
+            tile.distance = qAbs(viewportCenter.x - tileCenter.x) + qAbs(viewportCenter.y - tileCenter.y);
         }
         else
         {

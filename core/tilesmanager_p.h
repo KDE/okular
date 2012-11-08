@@ -6,21 +6,29 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_TILES_MANAGER_H_
-#define _OKULAR_TILES_MANAGER_H_
+#ifndef _OKULAR_TILES_MANAGER_P_H_
+#define _OKULAR_TILES_MANAGER_P_H_
 
 #include "okular_export.h"
 #include "area.h"
-
-#define TILES_MAXSIZE 2000000
 
 class QPixmap;
 
 namespace Okular {
 
 /**
- * Tile is a class that stores the pixmap of a tile and its location on the
- * page
+ * This class is a node on the tree structure of tiles on tiles manager.
+ * Each node stores the pixmap of the tile and its location on the page. Each
+ * node may have children and together they cover the same area of the node
+ * itself. Leaf tiles can have children if their size is bigger than an
+ * arbitrary value.
+ *
+ * eg: Say the page is divided into 4 tiles: A, B, C and D. If the user apply a
+ * zoom to part of the page covered by A, this tile may get too big and
+ * eventually will be split into 4 different tiles: A1, A2, A3 and A4. In the
+ * tree structure these are all children of the node A.
+ *
+ * @since 0.16 (KDE 4.10)
  */
 class OKULAR_EXPORT Tile
 {
@@ -45,10 +53,15 @@ class OKULAR_EXPORT Tile
          * If a tile doesn't have a pixmap but all its children are updated
          * (dirty = false), the parent tile is also considered updated.
          */
-        bool dirty : 1;
+        bool dirty;
 
         /**
          * Children tiles
+         * When a tile is split into multiple tiles it doesn't cease to exist.
+         * It actually adds children nodes to the data structure.
+         * Since each tile is a node on the tree structure, it's easier to
+         * consider if a large area should be evaluated without visiting all
+         * its tiles (eg: when we need to list all tiles from an small area)
          */
         Tile *tiles;
         int nTiles;
@@ -68,11 +81,14 @@ class OKULAR_EXPORT Tile
  * @short Tiles management
  *
  * This class has direct access to all tiles and handle how they should be
- * stored, deleted and retrieved.
+ * stored, deleted and retrieved. Each tiles manager only handles one page.
  *
  * The tiles manager is a tree of tiles. At first the page is divided in 16
  * tiles. Then each one of these tiles can be split in more tiles (or merged
- * back to only one).
+ * back to only one) so we keep the size of each pixmap of the tile inside a
+ * safe interval.
+ *
+ * @since 0.16 (KDE 4.10)
  */
 class OKULAR_EXPORT TilesManager
 {
@@ -81,7 +97,13 @@ class OKULAR_EXPORT TilesManager
         virtual ~TilesManager();
 
         /**
-         * Use @p pixmap to paint all tiles that are contained inside @p rect
+         * Sets the pixmap of the tiles covered by @p rect (which represents
+         * the location of @p pixmap on the page).
+         * @p pixmap may cover an area which contains multiple tiles. So each
+         * tile we get a cropped part of the @p pixmap.
+         *
+         * Also it checks the dimensions of the given parameters against the
+         * current request as to avoid setting pixmaps of late requests.
          */
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
 
@@ -95,6 +117,10 @@ class OKULAR_EXPORT TilesManager
         /**
          * Returns a list of all tiles intersecting with @p rect.
          *
+         * As to avoid requests of big areas, each traversed tile is checked
+         * for its size and split if necessary.
+         * Also the miss counter is updated for the use in the evicting algorithm.
+         *
          * @param allowEmpty If false only tiles with a non null pixmap are returned
          */
         QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true );
@@ -105,7 +131,9 @@ class OKULAR_EXPORT TilesManager
         long totalMemory() const;
 
         /**
-         * Removes the least ranked tiles from memory
+         * Removes at least @p numberOfBytes bytes worth of tiles (least ranked
+         * tiles are removed first).
+         * Visible tiles are not discarded.
          */
         void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
 
@@ -124,12 +152,21 @@ class OKULAR_EXPORT TilesManager
          * Inform the new width of the page and mark all tiles to repaint
          */
         void setWidth( int width );
+        /**
+         * Gets the width of the page in tiles manager
+         */
         int width() const;
+        /**
+         * Inform the new height of the page
+         */
         void setHeight( int height );
+        /**
+         * Gets the height of the page in tiles manager
+         */
         int height() const;
 
         /**
-         * Perform a rotation and mark all tiles to repaint.
+         * Inform the new rotation of the page and mark all tiles to repaint.
          */
         void setRotation( Rotation rotation );
         Rotation rotation() const;
@@ -140,7 +177,8 @@ class OKULAR_EXPORT TilesManager
         void markDirty();
 
         /**
-         * Sets the visible area of the page
+         * Sets the visible area of the page so tiles in this area will not be
+         * removed in the evicting process.
          */
         void setVisibleRect( const NormalizedRect &rect );
 
@@ -167,4 +205,4 @@ class OKULAR_EXPORT TilesManager
 
 }
 
-#endif // _OKULAR_TILES_MANAGER_H_
+#endif // _OKULAR_TILES_MANAGER_P_H_

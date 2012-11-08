@@ -11,16 +11,18 @@
 #include <QPixmap>
 #include <QtCore/qmath.h>
 #include <QList>
-#include <QMutex>
 
-#define RANGE_MAX 1073741823
-#define RANGE_MIN -1073741824
+#define MISSCOUNTER_MAX INT_MAX/2
+#define MISSCOUNTER_MIN INT_MIN/2
+#define TILES_MAXSIZE 2000000
 
 using namespace Okular;
 
 static bool rankedTilesLessThan( Tile *t1, Tile *t2 )
 {
-    if ( t1->dirty ^ t2->dirty )
+    // Order tiles by its dirty state and miss counter. That is: dirty tiles
+    // will be evicted first then tiles with higher miss values.
+    if ( t1->dirty == t2->dirty )
         return t1->miss < t2->miss;
 
     return !t1->dirty;
@@ -38,15 +40,15 @@ class TilesManager::Private
         /**
          * Mark @p tile and all its children as dirty
          */
-        void markDirty( Tile &tile );
+        static void markDirty( Tile &tile );
 
         /**
          * Deletes all tiles, recursively
          */
         void deleteTiles( const Tile &tile );
 
-        void onClearPixmap( const Tile &tile );
-        void rankTiles( Tile &tile );
+        void markParentDirty( const Tile &tile );
+        void rankTiles( Tile &tile, QList<Tile*> &rankedTiles );
         /**
          * Since the tile can be large enough to occupy a significant amount of
          * space, they may be split in more tiles. This operation is performed
@@ -56,6 +58,14 @@ class TilesManager::Private
          */
         void split( Tile &tile, const NormalizedRect &rect );
 
+        /**
+         * Checks whether the tile's size is bigger than an arbitrary value and
+         * performs the split operation returning true.
+         * Otherwise it just returns false, without performing any operation.
+         */
+        bool splitBigTiles( Tile &tile, const NormalizedRect &rect );
+
+        // The page is split in a 4x4 grid of tiles
         Tile tiles[16];
         int width;
         int height;
@@ -65,8 +75,6 @@ class TilesManager::Private
         NormalizedRect requestRect;
         int requestWidth;
         int requestHeight;
-
-        QList<Tile*> rankedTiles;
 };
 
 TilesManager::Private::Private()
@@ -87,6 +95,7 @@ TilesManager::TilesManager( int width, int height, Rotation rotation )
     d->height = height;
     d->rotation = rotation;
 
+    // The page is split in a 4x4 grid of tiles
     const double dim = 0.25;
     for ( int i = 0; i < 16; ++i )
     {
@@ -131,7 +140,8 @@ void TilesManager::setWidth( int width )
     markDirty();
 }
 
-int TilesManager::width() const {
+int TilesManager::width() const
+{
     return d->width;
 }
 
@@ -143,7 +153,8 @@ void TilesManager::setHeight( int height )
     d->height = height;
 }
 
-int TilesManager::height() const {
+int TilesManager::height() const
+{
     return d->height;
 }
 
@@ -166,7 +177,7 @@ void TilesManager::markDirty()
 {
     for ( int i = 0; i < 16; ++i )
     {
-        d->markDirty( d->tiles[ i ] );
+        TilesManager::Private::markDirty( d->tiles[ i ] );
     }
 }
 
@@ -213,10 +224,12 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
 {
     QRect pixmapRect = TilesManager::toRotatedRect( rect, rotation ).geometry( width, height );
 
+    // Exclude tiles outside the viewport
     if ( !tile.rect.intersects( rect ) )
         return;
 
-    // the tile intersects an edge of the viewport
+    // if the tile is not entirely within the viewport (the tile intersects an
+    // edged of the viewport), attempt to set the pixmap in the children tiles
     if ( !((tile.rect & rect) == tile.rect) )
     {
         // paint children tiles
@@ -232,13 +245,13 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
         return;
     }
 
+    // the tile lies entirely within the viewport
     if ( tile.nTiles == 0 )
     {
         tile.dirty = false;
 
-        QRect tileRect = tile.rect.geometry( width, height );
-
-        if ( tileRect.width()*tileRect.height() < TILES_MAXSIZE ) // size ok
+        // check whether the tile size is big and split it if necessary
+        if ( !splitBigTiles( tile, rect ) )
         {
             if ( tile.pixmap )
             {
@@ -251,48 +264,40 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
         }
         else
         {
-            split( tile, rect );
-            if ( tile.nTiles > 0 )
-            {
-                for ( int i = 0; i < tile.nTiles; ++i )
-                    setPixmap( pixmap, rect, tile.tiles[ i ] );
-
-                if ( tile.pixmap )
-                {
-                    totalPixels -= tile.pixmap->width()*tile.pixmap->height();
-                    delete tile.pixmap;
-                    tile.pixmap = 0;
-                }
-            }
-        }
-    }
-    else
-    {
-        QRect tileRect = tile.rect.geometry( width, height );
-        if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE ) // size ok
-        {
-            tile.dirty = false;
-            for ( int i = 0; i < tile.nTiles; ++i )
-                setPixmap( pixmap, rect, tile.tiles[ i ] );
-
             if ( tile.pixmap )
             {
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
                 tile.pixmap = 0;
             }
+
+            for ( int i = 0; i < tile.nTiles; ++i )
+                setPixmap( pixmap, rect, tile.tiles[ i ] );
         }
-        else // size not ok (too small)
+    }
+    else
+    {
+        QRect tileRect = tile.rect.geometry( width, height );
+        // sets the pixmap of the children tiles. if the tile's size is too
+        // small, discards the children tiles and use the current one
+        if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE )
+        {
+            tile.dirty = false;
+            if ( tile.pixmap )
+            {
+                totalPixels -= tile.pixmap->width()*tile.pixmap->height();
+                delete tile.pixmap;
+                tile.pixmap = 0;
+            }
+
+            for ( int i = 0; i < tile.nTiles; ++i )
+                setPixmap( pixmap, rect, tile.tiles[ i ] );
+        }
+        else
         {
             // remove children tiles
-            tile.rect = NormalizedRect();
             for ( int i = 0; i < tile.nTiles; ++i )
             {
-                if ( tile.rect.isNull() )
-                    tile.rect = tile.tiles[ i ].rect;
-                else
-                    tile.rect |= tile.tiles[ i ].rect;
-
                 deleteTiles( tile.tiles[ i ] );
                 tile.tiles[ i ].pixmap = 0;
             }
@@ -316,9 +321,10 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
 
 bool TilesManager::hasPixmap( const NormalizedRect &rect )
 {
+    NormalizedRect rotatedRect = fromRotatedRect( rect, d->rotation );
     for ( int i = 0; i < 16; ++i )
     {
-        if ( !d->hasPixmap( fromRotatedRect( rect, d->rotation ), d->tiles[ i ] ) )
+        if ( !d->hasPixmap( rotatedRect, d->tiles[ i ] ) )
             return false;
     }
 
@@ -331,7 +337,7 @@ bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &t
         return true;
 
     if ( tile.nTiles == 0 )
-        return tile.pixmap && !tile.dirty;
+        return tile.isValid();
 
     // all children tiles are clean. doesn't need to go deeper
     if ( !tile.dirty )
@@ -350,9 +356,10 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, bool allowEmpty )
 {
     QList<Tile> result;
 
+    NormalizedRect rotatedRect = fromRotatedRect( rect, d->rotation );
     for ( int i = 0; i < 16; ++i )
     {
-        d->tilesAt( fromRotatedRect( rect, d->rotation ), d->tiles[ i ], result, allowEmpty );
+        d->tilesAt( rotatedRect, d->tiles[ i ], result, allowEmpty );
     }
 
     return result;
@@ -362,17 +369,17 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
 {
     if ( !tile.rect.intersects( rect ) )
     {
-        tile.miss = qMin( tile.miss+1, RANGE_MAX );
+        tile.miss = qMin( tile.miss+1, MISSCOUNTER_MAX );
         return;
     }
 
-    // split tile (if necessary)
-    split( tile, rect );
+    // split big tiles before the requests are made, otherwise we would end up
+    // requesting huge areas unnecessarily
+    splitBigTiles( tile, rect );
 
     if ( ( allowEmpty && tile.nTiles == 0 ) || ( !allowEmpty && tile.pixmap ) )
     {
-        // TODO: check tile size
-        tile.miss = qMax( tile.miss-1, RANGE_MIN );
+        tile.miss = qMax( tile.miss-1, MISSCOUNTER_MIN );
         Tile newTile = tile;
         if ( rotation != Rotation0 )
             newTile.rect = TilesManager::toRotatedRect( tile.rect, rotation );
@@ -392,19 +399,20 @@ long TilesManager::totalMemory() const
 
 void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
 {
-    d->rankedTiles.clear();
+    QList<Tile*> rankedTiles;
     for ( int i = 0; i < 16; ++i )
     {
-        d->rankTiles( d->tiles[ i ] );
+        d->rankTiles( d->tiles[ i ], rankedTiles );
     }
-    qSort( d->rankedTiles.begin(), d->rankedTiles.end(), rankedTilesLessThan );
+    qSort( rankedTiles.begin(), rankedTiles.end(), rankedTilesLessThan );
 
-    while ( numberOfBytes > 0 && !d->rankedTiles.isEmpty() )
+    while ( numberOfBytes > 0 && !rankedTiles.isEmpty() )
     {
-        Tile *tile = d->rankedTiles.takeLast();
+        Tile *tile = rankedTiles.takeLast();
         if ( !tile->pixmap )
             continue;
 
+        // do not evict visible pixmaps
         if ( tile->rect.intersects( d->visibleRect ) )
             continue;
 
@@ -419,11 +427,11 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
         delete tile->pixmap;
         tile->pixmap = 0;
 
-        d->onClearPixmap( *tile );
+        d->markParentDirty( *tile );
     }
 }
 
-void TilesManager::Private::onClearPixmap( const Tile &tile )
+void TilesManager::Private::markParentDirty( const Tile &tile )
 {
     if ( !tile.parent )
         return;
@@ -431,14 +439,14 @@ void TilesManager::Private::onClearPixmap( const Tile &tile )
     if ( !tile.parent->dirty )
     {
         tile.parent->dirty = true;
-        onClearPixmap( *tile.parent );
+        markParentDirty( *tile.parent );
     }
 }
 
-void TilesManager::Private::rankTiles( Tile &tile )
+void TilesManager::Private::rankTiles( Tile &tile, QList<Tile*> &rankedTiles )
 {
     if ( tile.parent )
-        tile.miss = qBound( RANGE_MIN, tile.miss + tile.parent->miss, RANGE_MAX );
+        tile.miss = qBound( MISSCOUNTER_MIN, tile.miss + tile.parent->miss, MISSCOUNTER_MAX );
 
     if ( tile.pixmap )
     {
@@ -448,7 +456,7 @@ void TilesManager::Private::rankTiles( Tile &tile )
     {
         for ( int i = 0; i < tile.nTiles; ++i )
         {
-            rankTiles( tile.tiles[ i ] );
+            rankTiles( tile.tiles[ i ], rankedTiles );
         }
 
         if ( tile.nTiles > 0 )
@@ -468,6 +476,16 @@ void TilesManager::setRequest( const NormalizedRect &rect, int pageWidth, int pa
     d->requestHeight = pageHeight;
 }
 
+bool TilesManager::Private::splitBigTiles( Tile &tile, const NormalizedRect &rect )
+{
+    QRect tileRect = tile.rect.geometry( width, height );
+    if ( tileRect.width()*tileRect.height() < TILES_MAXSIZE )
+        return false;
+
+    split( tile, rect );
+    return true;
+}
+
 void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
 {
     if ( tile.nTiles != 0 )
@@ -476,24 +494,20 @@ void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
     if ( rect.isNull() || !tile.rect.intersects( rect ) )
         return;
 
-    QRect tileRect = tile.rect.geometry( width, height );
-    if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE )
+    tile.nTiles = 4;
+    tile.tiles = new Tile[4];
+    double hCenter = (tile.rect.left + tile.rect.right)/2;
+    double vCenter = (tile.rect.top + tile.rect.bottom)/2;
+
+    tile.tiles[0].rect = NormalizedRect( tile.rect.left, tile.rect.top, hCenter, vCenter );
+    tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
+    tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
+    tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
+
+    for ( int i = 0; i < tile.nTiles; ++i )
     {
-        tile.nTiles = 4;
-        tile.tiles = new Tile[4];
-        double hCenter = (tile.rect.left + tile.rect.right)/2;
-        double vCenter = (tile.rect.top + tile.rect.bottom)/2;
-
-        tile.tiles[0].rect = NormalizedRect( tile.rect.left, tile.rect.top, hCenter, vCenter );
-        tile.tiles[1].rect = NormalizedRect( hCenter, tile.rect.top, tile.rect.right, vCenter );
-        tile.tiles[2].rect = NormalizedRect( tile.rect.left, vCenter, hCenter, tile.rect.bottom );
-        tile.tiles[3].rect = NormalizedRect( hCenter, vCenter, tile.rect.right, tile.rect.bottom );
-
-        for ( int i = 0; i < tile.nTiles; ++i )
-        {
-            tile.tiles[ i ].parent = &tile;
-            split( tile.tiles[ i ], rect );
-        }
+        tile.tiles[ i ].parent = &tile;
+        splitBigTiles( tile.tiles[ i ], rect );
     }
 }
 

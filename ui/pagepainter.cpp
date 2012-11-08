@@ -245,16 +245,16 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             while ( tIt != tEnd )
             {
                 Okular::Tile tile = *tIt;
-                QRect tileRect = tile.rect.geometry( scaledWidth, scaledHeight );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
-                if ( tile.pixmap  && !limitsInTile.isEmpty() )
+                if ( tile.pixmap() && !limitsInTile.isEmpty() )
                 {
-                    if ( tile.pixmap->width() == tileRect.width() && tile.pixmap->height() == tileRect.height() )
-                        destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap),
+                    if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
+                        destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap()),
                                 limitsInTile.translated( -tileRect.topLeft() ) );
                     else
-                        destPainter->drawPixmap( tile.rect.geometry( scaledWidth, scaledHeight ),
-                                *(tile.pixmap) );
+                        destPainter->drawPixmap( tile.rect().geometry( scaledWidth, scaledHeight ),
+                                *(tile.pixmap()) );
                 }
                 tIt++;
             }
@@ -301,24 +301,24 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             while ( tIt != tEnd )
             {
                 Okular::Tile tile = *tIt;
-                QRect tileRect = tile.rect.geometry( scaledWidth, scaledHeight );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
-                if ( tile.pixmap && !limitsInTile.isEmpty() )
+                if ( tile.pixmap() && !limitsInTile.isEmpty() )
                 {
-                    if ( !tile.pixmap->hasAlpha() )
+                    if ( !tile.pixmap()->hasAlpha() )
                         has_alpha = false;
 
-                    if ( tile.pixmap->width() == tileRect.width() && tile.pixmap->height() == tileRect.height() )
+                    if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
                     {
-                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap),
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap()),
                                 limitsInTile.translated( -tileRect.topLeft() ) );
                     }
                     else
                     {
-                        double xScale = tile.pixmap->width() / (double)tileRect.width();
-                        double yScale = tile.pixmap->height() / (double)tileRect.height();
+                        double xScale = tile.pixmap()->width() / (double)tileRect.width();
+                        double yScale = tile.pixmap()->height() / (double)tileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
-                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap),
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap()),
                                 transform.mapRect( limitsInTile ).translated( -transform.mapRect( tileRect ).topLeft() ) );
                     }
                 }

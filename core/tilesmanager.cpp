@@ -16,7 +16,7 @@
 
 using namespace Okular;
 
-static bool rankedTilesLessThan( Tile *t1, Tile *t2 )
+static bool rankedTilesLessThan( TileNode *t1, TileNode *t2 )
 {
     // Order tiles by its dirty state and then by distance from the viewport.
     if ( t1->dirty == t2->dirty )
@@ -30,22 +30,22 @@ class TilesManager::Private
     public:
         Private();
 
-        bool hasPixmap( const NormalizedRect &rect, const Tile &tile ) const;
-        void tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty );
-        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile );
+        bool hasPixmap( const NormalizedRect &rect, const TileNode &tile ) const;
+        void tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, bool allowEmpty );
+        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile );
 
         /**
          * Mark @p tile and all its children as dirty
          */
-        static void markDirty( Tile &tile );
+        static void markDirty( TileNode &tile );
 
         /**
          * Deletes all tiles, recursively
          */
-        void deleteTiles( const Tile &tile );
+        void deleteTiles( const TileNode &tile );
 
-        void markParentDirty( const Tile &tile );
-        void rankTiles( Tile &tile, QList<Tile*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber );
+        void markParentDirty( const TileNode &tile );
+        void rankTiles( TileNode &tile, QList<TileNode*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber );
         /**
          * Since the tile can be large enough to occupy a significant amount of
          * space, they may be split in more tiles. This operation is performed
@@ -53,17 +53,17 @@ class TilesManager::Private
          * than an arbitrary value. Only tiles intersecting the desired region
          * are split. There's no need to do this for the entire page.
          */
-        void split( Tile &tile, const NormalizedRect &rect );
+        void split( TileNode &tile, const NormalizedRect &rect );
 
         /**
          * Checks whether the tile's size is bigger than an arbitrary value and
          * performs the split operation returning true.
          * Otherwise it just returns false, without performing any operation.
          */
-        bool splitBigTiles( Tile &tile, const NormalizedRect &rect );
+        bool splitBigTiles( TileNode &tile, const NormalizedRect &rect );
 
         // The page is split in a 4x4 grid of tiles
-        Tile tiles[16];
+        TileNode tiles[16];
         int width;
         int height;
         int pageNumber;
@@ -113,7 +113,7 @@ TilesManager::~TilesManager()
     delete d;
 }
 
-void TilesManager::Private::deleteTiles( const Tile &tile )
+void TilesManager::Private::deleteTiles( const TileNode &tile )
 {
     if ( tile.pixmap )
     {
@@ -181,7 +181,7 @@ void TilesManager::markDirty()
     }
 }
 
-void TilesManager::Private::markDirty( Tile &tile )
+void TilesManager::Private::markDirty( TileNode &tile )
 {
     tile.dirty = true;
 
@@ -207,7 +207,7 @@ void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect 
     }
 }
 
-void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, Tile &tile )
+void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile )
 {
     QRect pixmapRect = TilesManager::toRotatedRect( rect, rotation ).geometry( width, height );
 
@@ -318,7 +318,7 @@ bool TilesManager::hasPixmap( const NormalizedRect &rect )
     return true;
 }
 
-bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const Tile &tile ) const
+bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const TileNode &tile ) const
 {
     if ( !tile.rect.intersects( rect ) )
         return true;
@@ -352,7 +352,7 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, bool allowEmpty )
     return result;
 }
 
-void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty )
+void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, bool allowEmpty )
 {
     if ( !tile.rect.intersects( rect ) )
         return;
@@ -363,10 +363,12 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
 
     if ( ( allowEmpty && tile.nTiles == 0 ) || ( !allowEmpty && tile.pixmap ) )
     {
-        Tile newTile = tile;
+        NormalizedRect rotatedRect;
         if ( rotation != Rotation0 )
-            newTile.rect = TilesManager::toRotatedRect( tile.rect, rotation );
-        result.append( newTile );
+            rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
+        else
+            rotatedRect = tile.rect;
+        result.append( Tile( rotatedRect, tile.pixmap, tile.isValid() ) );
     }
     else
     {
@@ -382,7 +384,7 @@ long TilesManager::totalMemory() const
 
 void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const NormalizedRect &visibleRect, int visiblePageNumber )
 {
-    QList<Tile*> rankedTiles;
+    QList<TileNode*> rankedTiles;
     for ( int i = 0; i < 16; ++i )
     {
         d->rankTiles( d->tiles[ i ], rankedTiles, visibleRect, visiblePageNumber );
@@ -391,7 +393,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const Normaliz
 
     while ( numberOfBytes > 0 && !rankedTiles.isEmpty() )
     {
-        Tile *tile = rankedTiles.takeLast();
+        TileNode *tile = rankedTiles.takeLast();
         if ( !tile->pixmap )
             continue;
 
@@ -413,7 +415,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const Normaliz
     }
 }
 
-void TilesManager::Private::markParentDirty( const Tile &tile )
+void TilesManager::Private::markParentDirty( const TileNode &tile )
 {
     if ( !tile.parent )
         return;
@@ -425,7 +427,7 @@ void TilesManager::Private::markParentDirty( const Tile &tile )
     }
 }
 
-void TilesManager::Private::rankTiles( Tile &tile, QList<Tile*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber )
+void TilesManager::Private::rankTiles( TileNode &tile, QList<TileNode*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber )
 {
     // If the page is visible, visibleRect is not null.
     // Otherwise we use the number of one of the visible pages to calculate the
@@ -477,7 +479,7 @@ void TilesManager::setRequest( const NormalizedRect &rect, int pageWidth, int pa
     d->requestHeight = pageHeight;
 }
 
-bool TilesManager::Private::splitBigTiles( Tile &tile, const NormalizedRect &rect )
+bool TilesManager::Private::splitBigTiles( TileNode &tile, const NormalizedRect &rect )
 {
     QRect tileRect = tile.rect.geometry( width, height );
     if ( tileRect.width()*tileRect.height() < TILES_MAXSIZE )
@@ -487,7 +489,7 @@ bool TilesManager::Private::splitBigTiles( Tile &tile, const NormalizedRect &rec
     return true;
 }
 
-void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
+void TilesManager::Private::split( TileNode &tile, const NormalizedRect &rect )
 {
     if ( tile.nTiles != 0 )
         return;
@@ -496,7 +498,7 @@ void TilesManager::Private::split( Tile &tile, const NormalizedRect &rect )
         return;
 
     tile.nTiles = 4;
-    tile.tiles = new Tile[4];
+    tile.tiles = new TileNode[4];
     double hCenter = (tile.rect.left + tile.rect.right)/2;
     double vCenter = (tile.rect.top + tile.rect.bottom)/2;
 
@@ -562,7 +564,7 @@ NormalizedRect TilesManager::toRotatedRect( const NormalizedRect &rect, Rotation
     return newRect;
 }
 
-Tile::Tile()
+TileNode::TileNode()
     : pixmap( 0 )
     , dirty ( true )
     , distance( -1 )
@@ -572,7 +574,72 @@ Tile::Tile()
 {
 }
 
-bool Tile::isValid() const
+bool TileNode::isValid() const
 {
     return pixmap && !dirty;
+}
+
+class Tile::Private
+{
+    public:
+        Private();
+
+        NormalizedRect rect;
+        QPixmap *pixmap;
+        bool isValid;
+};
+
+Tile::Private::Private()
+    : pixmap( 0 )
+    , isValid( false )
+{
+}
+
+Tile::Tile( const NormalizedRect &rect, QPixmap *pixmap, bool isValid )
+    : d( new Tile::Private )
+{
+    d->rect = rect;
+    d->pixmap = pixmap;
+    d->isValid = isValid;
+}
+
+Tile::Tile( const Tile &t )
+    : d( new Tile::Private )
+{
+    d->rect = t.d->rect;
+    d->pixmap = t.d->pixmap;
+    d->isValid = t.d->isValid;
+}
+
+Tile & Tile::operator=( const Tile &t )
+{
+    if ( this == &t )
+        return *this;
+
+    d = new Tile::Private;
+    d->rect = t.d->rect;
+    d->pixmap = t.d->pixmap;
+    d->isValid = t.d->isValid;
+
+    return *this;
+}
+
+Tile::~Tile()
+{
+    delete d;
+}
+
+NormalizedRect Tile::rect() const
+{
+    return d->rect;
+}
+
+QPixmap * Tile::pixmap() const
+{
+    return d->pixmap;
+}
+
+bool Tile::isValid() const
+{
+    return d->isValid;
 }

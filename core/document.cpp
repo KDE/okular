@@ -1109,9 +1109,9 @@ void DocumentPrivate::sendGeneratorRequest()
                 {
                     Tile tile = *tIt;
                     if ( tilesRect.isNull() )
-                        tilesRect = tile.rect;
+                        tilesRect = tile.rect();
                     else
-                        tilesRect |= tile.rect;
+                        tilesRect |= tile.rect();
 
                     ++tIt;
                 }
@@ -1319,9 +1319,9 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         {
             Tile tile = *tIt;
             if ( tilesRect.isNull() )
-                tilesRect = tile.rect;
+                tilesRect = tile.rect();
             else
-                tilesRect |= tile.rect;
+                tilesRect |= tile.rect();
 
             tIt++;
         }

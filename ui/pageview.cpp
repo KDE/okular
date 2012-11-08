@@ -4055,9 +4055,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     if ( !tile.isValid() )
                     {
                         if ( tilesRect.isNull() )
-                            tilesRect = tile.rect;
+                            tilesRect = tile.rect();
                         else
-                            tilesRect |= tile.rect;
+                            tilesRect |= tile.rect();
                     }
 
                     tIt++;
@@ -4134,9 +4134,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                             if ( !tile.isValid() )
                             {
                                 if ( tilesRect.isNull() )
-                                    tilesRect = tile.rect;
+                                    tilesRect = tile.rect();
                                 else
-                                    tilesRect |= tile.rect;
+                                    tilesRect |= tile.rect();
                             }
 
                             tIt++;
@@ -4182,9 +4182,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                             if ( !tile.isValid() )
                             {
                                 if ( tilesRect.isNull() )
-                                    tilesRect = tile.rect;
+                                    tilesRect = tile.rect();
                                 else
-                                    tilesRect |= tile.rect;
+                                    tilesRect |= tile.rect();
                             }
 
                             tIt++;

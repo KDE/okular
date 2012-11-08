@@ -33,20 +33,40 @@ namespace Okular {
 class OKULAR_EXPORT Tile
 {
     public:
-        Tile();
+        Tile( const NormalizedRect &rect, QPixmap *pixmap, bool isValid );
+        Tile( const Tile &t );
+        ~Tile();
+
+        /**
+         * Location of the tile
+         */
+        NormalizedRect rect() const;
+
+        /**
+         * Pixmap (may also be NULL)
+         */
+        QPixmap * pixmap() const;
 
         /**
          * True if the pixmap is available and updated
          */
         bool isValid() const;
 
-        /**
-         * Location of the tile
-         */
+        Tile & operator=( const Tile &t );
+
+    private:
+        class Private;
+        Private * d;
+};
+
+class TileNode
+{
+    public:
+        TileNode();
+
+        bool isValid() const;
+
         NormalizedRect rect;
-        /**
-         * Pixmap (may also be NULL)
-         */
         QPixmap *pixmap;
         /**
          * Whether the tile needs to be repainted (after a zoom or rotation)
@@ -59,7 +79,6 @@ class OKULAR_EXPORT Tile
          * This is used by the evicting algorithm.
          */
         double distance;
-
         /**
          * Children tiles
          * When a tile is split into multiple tiles it doesn't cease to exist.
@@ -68,10 +87,9 @@ class OKULAR_EXPORT Tile
          * consider if a large area should be evaluated without visiting all
          * its tiles (eg: when we need to list all tiles from an small area)
          */
-        Tile *tiles;
+        TileNode *tiles;
         int nTiles;
-
-        Tile *parent;
+        TileNode *parent;
 };
 
 /**

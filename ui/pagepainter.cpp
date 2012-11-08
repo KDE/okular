@@ -64,24 +64,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 	int croppedWidth = scaledCrop.width();
 	int croppedHeight = scaledCrop.height();
 
-    QColor color = Qt::white;
+    QColor paperColor = Qt::white;
+    QColor backgroundColor = paperColor;
     if ( Okular::Settings::changeColors() )
     {
         switch ( Okular::Settings::renderMode() )
         {
             case Okular::Settings::EnumRenderMode::Inverted:
-                color = Qt::black;
+                backgroundColor = Qt::black;
                 break;
             case Okular::Settings::EnumRenderMode::Paper:
-                color = Okular::Settings::paperColor();
+                paperColor = Okular::Settings::paperColor();
+                backgroundColor = paperColor;
                 break;
             case Okular::Settings::EnumRenderMode::Recolor:
-                color = Okular::Settings::recolorBackground();
+                backgroundColor = Okular::Settings::recolorBackground();
                 break;
             default: ;
         }
     }
-    destPainter->fillRect( limits, color );
+    destPainter->fillRect( limits, backgroundColor );
 
     Okular::TilesManager *tilesManager = page->tilesManager( pixID );
     const QPixmap *pixmap = 0;
@@ -293,7 +295,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( tilesManager )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
-            backImage.fill( 0xffffffff );
+            backImage.fill( paperColor.rgb() );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
             QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits, false );

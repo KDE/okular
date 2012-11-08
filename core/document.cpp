@@ -76,6 +76,7 @@
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 #include "texteditors_p.h"
+#include "tile.h"
 #include "tilesmanager_p.h"
 #include "utils_p.h"
 #include "view.h"
@@ -270,7 +271,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             if ( !p ) // No pixmap to remove
                 break;
 
-            TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager();
+            TilesManager *tilesManager = m_pagesVector.at( p->page )->d->tilesManager();
             if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
                 qulonglong memoryDiff = p->memory;
@@ -1053,7 +1054,7 @@ void DocumentPrivate::sendGeneratorRequest()
         }
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
-        TilesManager *tilesManager = ( r->id() == PAGEVIEW_ID ) ? r->page()->tilesManager() : 0;
+        TilesManager *tilesManager = ( r->id() == PAGEVIEW_ID ) ? r->page()->d->tilesManager() : 0;
 
         // request only if page isn't already present or request has invalid id
         if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), r->normalizedRect() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
@@ -1161,7 +1162,7 @@ void DocumentPrivate::sendGeneratorRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    TilesManager * tm = ( request->id() == PAGEVIEW_ID ) ? request->page()->tilesManager() : 0;
+    TilesManager * tm = ( request->id() == PAGEVIEW_ID ) ? request->page()->d->tilesManager() : 0;
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1293,7 +1294,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         requestedPixmaps.push_back( p );
     }
 
-    TilesManager *tilesManager = page->tilesManager();
+    TilesManager *tilesManager = page->d->tilesManager();
     if ( tilesManager )
     {
         tilesManager->markDirty();
@@ -4065,7 +4066,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 0;
-        const TilesManager *tm = ( req->id() == PAGEVIEW_ID ) ? req->page()->tilesManager() : 0;
+        const TilesManager *tm = ( req->id() == PAGEVIEW_ID ) ? req->page()->d->tilesManager() : 0;
         if ( tm )
             memoryBytes = tm->totalMemory();
         else

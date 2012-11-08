@@ -92,6 +92,7 @@ install( FILES
            core/sourcereference.h
            core/textdocumentgenerator.h
            core/textpage.h
+           core/tile.h
            core/utils.h
            core/version.h
            core/fileprinter.h

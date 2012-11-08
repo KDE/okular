@@ -12,6 +12,8 @@
 #include <QtCore/qmath.h>
 #include <QList>
 
+#include "tile.h"
+
 #define TILES_MAXSIZE 2000000
 
 using namespace Okular;

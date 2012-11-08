@@ -76,7 +76,7 @@
 #include "core/generator.h"
 #include "core/movie.h"
 #include "core/sourcereference.h"
-#include "core/tilesmanager_p.h"
+#include "core/tile.h"
 #include "settings.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
@@ -3144,7 +3144,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 
         Okular::NormalizedRect crop;
 
-        if ( item->page()->tilesManager() )
+        if ( item->page()->hasTilesManager() )
         {
             QVector< Okular::VisiblePageRect * >::const_iterator vIt = d->document->visiblePageRects().constBegin(), vEnd = d->document->visiblePageRects().constEnd();
             for ( ; vIt != vEnd; ++vIt )
@@ -4019,9 +4019,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
-        Okular::TilesManager *tilesManager = i->page()->tilesManager();
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
-        if ( tilesManager && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
+        if ( i->page()->hasTilesManager() && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
             // Margin (in pixels) to expand
             int pixelsToExpand = 512;
@@ -4044,10 +4043,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             p->setNormalizedRect( vItem->rect );
             requestedPixmaps.push_back( p );
 
-            if ( tilesManager )
+            if ( i->page()->hasTilesManager() )
             {
                 Okular::NormalizedRect tilesRect;
-                QList<Okular::Tile> tiles = tilesManager->tilesAt( expandedVisibleRect );
+                QList<Okular::Tile> tiles = i->page()->tilesAt( expandedVisibleRect );
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -4113,7 +4112,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( tailRequest < (int)d->items.count() )
             {
                 PageViewItem * i = d->items[ tailRequest ];
-                Okular::TilesManager *tilesManager = i->page()->tilesManager();
 
                 Okular::NormalizedRect preRenderRegion;
                 QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
@@ -4123,10 +4121,11 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
                 {
-                    if ( tilesManager && !preRenderRegion.isNull() )
+                    const bool pagehasTilesManager = i->page()->hasTilesManager();
+                    if ( pagehasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
-                        QList<Okular::Tile> tiles = tilesManager->tilesAt( preRenderRegion );
+                        QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {
@@ -4147,7 +4146,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         p->setNormalizedRect( tilesRect );
                         p->setTile( true );
                     }
-                    else if ( !tilesManager )
+                    else if ( !pagehasTilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
@@ -4161,7 +4160,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( headRequest >= 0 )
             {
                 PageViewItem * i = d->items[ headRequest ];
-                Okular::TilesManager *tilesManager = i->page()->tilesManager();
 
                 Okular::NormalizedRect preRenderRegion;
                 QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
@@ -4171,10 +4169,11 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
                 {
-                    if ( tilesManager && !preRenderRegion.isNull() )
+                    const bool pagehasTilesManager = i->page()->hasTilesManager();
+                    if ( pagehasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
-                        QList<Okular::Tile> tiles = tilesManager->tilesAt( preRenderRegion );
+                        QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {
@@ -4195,7 +4194,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         p->setNormalizedRect( tilesRect );
                         p->setTile( true );
                     }
-                    else if ( !tilesManager )
+                    else if ( !pagehasTilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );

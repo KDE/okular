@@ -16,48 +16,7 @@ class QPixmap;
 
 namespace Okular {
 
-/**
- * This class is a node on the tree structure of tiles on tiles manager.
- * Each node stores the pixmap of the tile and its location on the page. Each
- * node may have children and together they cover the same area of the node
- * itself. Leaf tiles can have children if their size is bigger than an
- * arbitrary value.
- *
- * eg: Say the page is divided into 4 tiles: A, B, C and D. If the user apply a
- * zoom to part of the page covered by A, this tile may get too big and
- * eventually will be split into 4 different tiles: A1, A2, A3 and A4. In the
- * tree structure these are all children of the node A.
- *
- * @since 0.16 (KDE 4.10)
- */
-class OKULAR_EXPORT Tile
-{
-    public:
-        Tile( const NormalizedRect &rect, QPixmap *pixmap, bool isValid );
-        Tile( const Tile &t );
-        ~Tile();
-
-        /**
-         * Location of the tile
-         */
-        NormalizedRect rect() const;
-
-        /**
-         * Pixmap (may also be NULL)
-         */
-        QPixmap * pixmap() const;
-
-        /**
-         * True if the pixmap is available and updated
-         */
-        bool isValid() const;
-
-        Tile & operator=( const Tile &t );
-
-    private:
-        class Private;
-        Private * d;
-};
+class Tile;
 
 class TileNode
 {

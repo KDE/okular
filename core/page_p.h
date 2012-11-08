@@ -104,8 +104,9 @@ class PagePrivate
         void deleteTextSelections();
 
         /**
-         * Sets the tiles manager for the PAGEVIEW_ID observer
+         * Get/set the tiles manager for the PAGEVIEW_ID observer
          */
+        TilesManager *tilesManager() const;
         void setTilesManager( TilesManager *tm );
 
         class PixmapObject

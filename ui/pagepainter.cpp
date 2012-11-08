@@ -31,7 +31,7 @@
 #include "guiutils.h"
 #include "settings.h"
 #include "core/observer.h"
-#include "core/tilesmanager_p.h"
+#include "core/tile.h"
 
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
@@ -86,9 +86,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, backgroundColor );
 
-    Okular::TilesManager *tilesManager = ( pixID == PAGEVIEW_ID ) ? page->tilesManager() : 0;
     const QPixmap *pixmap = 0;
-    if ( !tilesManager )
+    if ( !page->hasTilesManager() )
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
         pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
@@ -240,10 +239,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
-        if ( tilesManager )
+        if ( page->hasTilesManager() )
         {
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
-            QList<Okular::Tile> tiles = tilesManager->tilesAt( crop | normalizedLimits, false );
+            QList<Okular::Tile> tiles = page->tilesAt( crop | normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
@@ -293,13 +292,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
             has_alpha = true;
 
-        if ( tilesManager )
+        if ( page->hasTilesManager() )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
             backImage.fill( paperColor.rgb() );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
-            QList<Okular::Tile> tiles = tilesManager->tilesAt( normalizedLimits, false );
+            QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {

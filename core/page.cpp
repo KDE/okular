@@ -38,6 +38,7 @@
 #include "rotationjob_p.h"
 #include "textpage.h"
 #include "textpage_p.h"
+#include "tile.h"
 #include "tilesmanager_p.h"
 
 #include <limits>
@@ -89,7 +90,7 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    TilesManager *tm = ( job->id() == PAGEVIEW_ID ) ? m_page->tilesManager() : 0;
+    TilesManager *tm = ( job->id() == PAGEVIEW_ID ) ? m_tilesManager : 0;
     if ( tm )
     {
         QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
@@ -214,7 +215,7 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
-    TilesManager *tm = ( id == PAGEVIEW_ID ) ? tilesManager() : 0;
+    TilesManager *tm = ( id == PAGEVIEW_ID ) ? d->m_tilesManager : 0;
     if ( tm )
     {
         if ( width != tm->width() || height != tm->height() )
@@ -492,7 +493,7 @@ QLinkedList< FormField * > Page::formFields() const
 void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
 {
     if ( d->m_rotation == Rotation0 ) {
-        TilesManager *tm = ( id == PAGEVIEW_ID ) ? tilesManager() : 0;
+        TilesManager *tm = ( id == PAGEVIEW_ID ) ? d->m_tilesManager : 0;
         if ( tm )
         {
             tm->setPixmap( pixmap, rect );
@@ -974,9 +975,22 @@ const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
     return pixmap;
 }
 
-TilesManager *Page::tilesManager() const
+bool Page::hasTilesManager() const
 {
-    return d->m_tilesManager;
+    return d->m_tilesManager != 0;
+}
+
+QList<Tile> Page::tilesAt( const NormalizedRect &rect, bool allowEmpty ) const
+{
+    if ( d->m_tilesManager )
+        return d->m_tilesManager->tilesAt( rect, allowEmpty );
+    else
+        return QList<Tile>();
+}
+
+TilesManager *PagePrivate::tilesManager() const
+{
+    return m_tilesManager;
 }
 
 void PagePrivate::setTilesManager( TilesManager *tm )

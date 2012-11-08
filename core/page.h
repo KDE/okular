@@ -31,7 +31,7 @@ class PagePrivate;
 class PageTransition;
 class SourceReference;
 class TextSelection;
-class TilesManager;
+class Tile;
 
 /**
  * @short Collector for all the data belonging to a page.
@@ -362,11 +362,21 @@ class OKULAR_EXPORT Page
         void deleteAnnotations();
 
         /**
-         * Returns the tile manager for the PAGEVIEW_ID observer.
+         * Returns whether pixmaps for the PAGEVIEW_ID observer are handled by a
+         * tile manager.
          *
          * @since 0.16 (KDE 4.10)
          */
-        TilesManager *tilesManager() const;
+        bool hasTilesManager() const;
+
+        /**
+         * Returns a list of all tiles intersecting with @p rect.
+         *
+         * @param allowEmpty If false only tiles with a non null pixmap are returned
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true ) const;
 
     private:
         PagePrivate* const d;

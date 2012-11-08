@@ -30,6 +30,7 @@
 #include "core/utils.h"
 #include "guiutils.h"
 #include "settings.h"
+#include "core/observer.h"
 #include "core/tilesmanager_p.h"
 
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
@@ -85,7 +86,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, backgroundColor );
 
-    Okular::TilesManager *tilesManager = page->tilesManager( pixID );
+    Okular::TilesManager *tilesManager = ( pixID == PAGEVIEW_ID ) ? page->tilesManager() : 0;
     const QPixmap *pixmap = 0;
     if ( !tilesManager )
     {

@@ -62,7 +62,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 }
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
-    : m_page( page ), m_number( n ), m_orientation( o ),
+    : m_tilesManager( 0 ), m_page( page ), m_number( n ), m_orientation( o ),
       m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
@@ -89,7 +89,7 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    TilesManager *tm = m_page->tilesManager( job->id() );
+    TilesManager *tm = ( job->id() == PAGEVIEW_ID ) ? m_page->tilesManager() : 0;
     if ( tm )
     {
         QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
@@ -214,7 +214,7 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
 {
-    TilesManager *tm = tilesManager( id );
+    TilesManager *tm = ( id == PAGEVIEW_ID ) ? tilesManager() : 0;
     if ( tm )
     {
         if ( width != tm->width() || height != tm->height() )
@@ -391,16 +391,10 @@ void PagePrivate::rotateAt( Rotation orientation )
     }
 
     /**
-     * Rotate tiles managers
+     * Rotate tiles manager
      */
-    QMapIterator< int, TilesManager* > tIt( m_tilesManagers );
-    while ( it.hasNext() )
-    {
-        it.next();
-
-        TilesManager *tilesManager = tIt.value();
-        tilesManager->setRotation( m_rotation );
-    }
+    if ( m_tilesManager )
+        m_tilesManager->setRotation( m_rotation );
 
     /**
      * Rotate the object rects on the page.
@@ -498,7 +492,7 @@ QLinkedList< FormField * > Page::formFields() const
 void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
 {
     if ( d->m_rotation == Rotation0 ) {
-        TilesManager *tm = tilesManager( id );
+        TilesManager *tm = ( id == PAGEVIEW_ID ) ? tilesManager() : 0;
         if ( tm )
         {
             tm->setPixmap( pixmap, rect );
@@ -703,9 +697,11 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 
 void Page::deletePixmap( int id )
 {
-    TilesManager *tm = d->m_tilesManagers.take( id );
-    if ( tm )
-        delete tm;
+    if ( id == PAGEVIEW_ID && d->m_tilesManager )
+    {
+        delete d->m_tilesManager;
+        d->m_tilesManager = 0;
+    }
     else
     {
         PagePrivate::PixmapObject object = d->m_pixmaps.take( id );
@@ -722,8 +718,8 @@ void Page::deletePixmaps()
     }
 
     d->m_pixmaps.clear();
-    qDeleteAll( d->m_tilesManagers );
-    d->m_tilesManagers.clear();
+    delete d->m_tilesManager;
+    d->m_tilesManager = 0;
 }
 
 void Page::deleteRects()
@@ -978,25 +974,14 @@ const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
     return pixmap;
 }
 
-TilesManager *Page::tilesManager( int id ) const
+TilesManager *Page::tilesManager() const
 {
-    TilesManager *tilesManager = 0;
-
-    QMap< int, TilesManager* >::iterator itTilesManager = d->m_tilesManagers.find( id );
-    if ( itTilesManager != d->m_tilesManagers.end() )
-        tilesManager = *itTilesManager;
-
-    return tilesManager;
+    return d->m_tilesManager;
 }
 
-void Page::setTilesManager( int id, TilesManager *tm )
+void PagePrivate::setTilesManager( TilesManager *tm )
 {
-    QMap< int, TilesManager* >::const_iterator itTilesManager = d->m_tilesManagers.constFind( id );
-    if ( itTilesManager != d->m_tilesManagers.constEnd() )
-    {
-        if ( *itTilesManager )
-            delete *itTilesManager;
-    }
-
-    d->m_tilesManagers.insert( id, tm );
+    delete m_tilesManager;
+    m_tilesManager = tm;
 }
+

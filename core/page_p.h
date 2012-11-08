@@ -103,6 +103,11 @@ class PagePrivate
          */
         void deleteTextSelections();
 
+        /**
+         * Sets the tiles manager for the PAGEVIEW_ID observer
+         */
+        void setTilesManager( TilesManager *tm );
+
         class PixmapObject
         {
             public:
@@ -110,7 +115,7 @@ class PagePrivate
                 Rotation m_rotation;
         };
         QMap< int, PixmapObject > m_pixmaps;
-        QMap< int, TilesManager* > m_tilesManagers;
+        TilesManager* m_tilesManager;
 
         Page *m_page;
         int m_number;

@@ -362,14 +362,11 @@ class OKULAR_EXPORT Page
         void deleteAnnotations();
 
         /**
-         * Returns the tile manager for the observer with the given @p id.
+         * Returns the tile manager for the PAGEVIEW_ID observer.
+         *
+         * @since 0.16 (KDE 4.10)
          */
-        TilesManager *tilesManager( int id ) const;
-
-        /**
-         * Sets a tiles manager for the given @p id
-         */
-        void setTilesManager( int id, TilesManager *tm );
+        TilesManager *tilesManager() const;
 
     private:
         PagePrivate* const d;

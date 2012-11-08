@@ -266,11 +266,11 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
         QLinkedList< AllocatedPixmap * > pixmapsToKeep;
         while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true );
+            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, PAGEVIEW_ID );
             if ( !p ) // No pixmap to remove
                 break;
 
-            TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager( p->id );
+            TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager();
             if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
                 qulonglong memoryDiff = p->memory;
@@ -305,7 +305,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
  * thenRemoveIt is set, the pixmap is removed from m_allocatedPixmaps before
  * returning it
  */
-AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt )
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt, int observerId )
 {
     QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
@@ -317,11 +317,15 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOn
     while ( pIt != pEnd )
     {
         const AllocatedPixmap * p = *pIt;
-        const int distance = qAbs( p->page - currentViewportPage );
-        if ( maxDistance < distance && ( !unloadableOnly || m_observers.value( p->id )->canUnloadPixmap( p->page ) ) )
+        // Filter by observer
+        if ( observerId == -1 || p->id == observerId )
         {
-            maxDistance = distance;
-            farthestPixmap = pIt;
+            const int distance = qAbs( p->page - currentViewportPage );
+            if ( maxDistance < distance && ( !unloadableOnly || m_observers.value( p->id )->canUnloadPixmap( p->page ) ) )
+            {
+                maxDistance = distance;
+                farthestPixmap = pIt;
+            }
         }
         ++pIt;
     }
@@ -1049,7 +1053,7 @@ void DocumentPrivate::sendGeneratorRequest()
         }
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
-        TilesManager *tilesManager = r->page()->tilesManager( r->id() );
+        TilesManager *tilesManager = ( r->id() == PAGEVIEW_ID ) ? r->page()->tilesManager() : 0;
 
         // request only if page isn't already present or request has invalid id
         if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), r->normalizedRect() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
@@ -1092,7 +1096,7 @@ void DocumentPrivate::sendGeneratorRequest()
             }
             tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
             r->page()->deletePixmap( r->id() );
-            r->page()->setTilesManager( r->id(), tilesManager );
+            r->page()->d->setTilesManager( tilesManager );
             r->setTile( true );
 
             // Change normalizedRect to the smallest rect that contains all
@@ -1157,7 +1161,7 @@ void DocumentPrivate::sendGeneratorRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    TilesManager * tm = request->page()->tilesManager( request->id() );
+    TilesManager * tm = ( request->id() == PAGEVIEW_ID ) ? request->page()->tilesManager() : 0;
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1289,13 +1293,12 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         requestedPixmaps.push_back( p );
     }
 
-    QMap< int, TilesManager* >::const_iterator tmIt = page->d->m_tilesManagers.constBegin(), tmEnd = page->d->m_tilesManagers.constEnd();
-    for ( ; tmIt != tmEnd; tmIt++ )
+    TilesManager *tilesManager = page->tilesManager();
+    if ( tilesManager )
     {
-        TilesManager * tilesManager = *tmIt;
         tilesManager->markDirty();
 
-        PixmapRequest * p = new PixmapRequest( tmIt.key(), pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
+        PixmapRequest * p = new PixmapRequest( PAGEVIEW_ID, pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
 
         NormalizedRect tilesRect;
 
@@ -4062,7 +4065,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 0;
-        const TilesManager *tm = req->page()->tilesManager( req->id() );
+        const TilesManager *tm = ( req->id() == PAGEVIEW_ID ) ? req->page()->tilesManager() : 0;
         if ( tm )
             memoryBytes = tm->totalMemory();
         else

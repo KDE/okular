@@ -3144,7 +3144,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 
         Okular::NormalizedRect crop;
 
-        if ( item->page()->tilesManager( PAGEVIEW_ID ) )
+        if ( item->page()->tilesManager() )
         {
             QVector< Okular::VisiblePageRect * >::const_iterator vIt = d->document->visiblePageRects().constBegin(), vEnd = d->document->visiblePageRects().constEnd();
             for ( ; vIt != vEnd; ++vIt )
@@ -4019,7 +4019,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
-        Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+        Okular::TilesManager *tilesManager = i->page()->tilesManager();
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
         if ( tilesManager && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
@@ -4047,7 +4047,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( tilesManager )
             {
                 Okular::NormalizedRect tilesRect;
-                QList<Okular::Tile> tiles = i->page()->tilesManager( PAGEVIEW_ID )->tilesAt( expandedVisibleRect );
+                QList<Okular::Tile> tiles = tilesManager->tilesAt( expandedVisibleRect );
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -4113,7 +4113,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( tailRequest < (int)d->items.count() )
             {
                 PageViewItem * i = d->items[ tailRequest ];
-                Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+                Okular::TilesManager *tilesManager = i->page()->tilesManager();
 
                 Okular::NormalizedRect preRenderRegion;
                 QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
@@ -4161,7 +4161,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( headRequest >= 0 )
             {
                 PageViewItem * i = d->items[ headRequest ];
-                Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
+                Okular::TilesManager *tilesManager = i->page()->tilesManager();
 
                 Okular::NormalizedRect preRenderRegion;
                 QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );

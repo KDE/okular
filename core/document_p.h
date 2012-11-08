@@ -98,7 +98,7 @@ class DocumentPrivate
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );
-        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false );
+        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, int observerId = -1 /* any */ );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );

@@ -67,7 +67,7 @@ class TilesManager::Private
         int width;
         int height;
         int pageNumber;
-        long totalPixels;
+        qulonglong totalPixels;
         Rotation rotation;
         NormalizedRect visibleRect;
         NormalizedRect requestRect;
@@ -377,7 +377,7 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
     }
 }
 
-long TilesManager::totalMemory() const
+qulonglong TilesManager::totalMemory() const
 {
     return 4*d->totalPixels;
 }

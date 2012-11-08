@@ -142,7 +142,7 @@ class OKULAR_EXPORT TilesManager
         /**
          * The total memory consumed by the tiles manager
          */
-        long totalMemory() const;
+        qulonglong totalMemory() const;
 
         /**
          * Removes at least @p numberOfBytes bytes worth of tiles (least ranked

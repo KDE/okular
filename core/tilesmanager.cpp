@@ -107,7 +107,10 @@ TilesManager::~TilesManager()
 void TilesManager::Private::deleteTiles( const Tile &tile )
 {
     if ( tile.pixmap )
+    {
+        totalPixels -= tile.pixmap->width()*tile.pixmap->height();
         delete tile.pixmap;
+    }
 
     if ( tile.nTiles > 0 )
     {
@@ -290,11 +293,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 else
                     tile.rect |= tile.tiles[ i ].rect;
 
-                if ( tile.tiles[ i ].pixmap )
-                {
-                    totalPixels -= tile.tiles[ i ].pixmap->width()*tile.tiles[ i ].pixmap->height();
-                    delete tile.tiles[ i ].pixmap;
-                }
+                deleteTiles( tile.tiles[ i ] );
                 tile.tiles[ i ].pixmap = 0;
             }
 

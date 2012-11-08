@@ -227,11 +227,21 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
 {
     if ( memoryToFree > 0 )
     {
+        // Number of one of the visible pages (to be used by tiles cleanup)
+        int visiblePageNumber = -1;
+        QMap< int, VisiblePageRect * > visibleRects;
+        QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+        for ( ; vIt != vEnd; ++vIt )
+        {
+            visiblePageNumber = (*vIt)->pageNumber;
+            visibleRects.insert( (*vIt)->pageNumber, (*vIt) );
+        }
+
         // Free memory starting from pages that are farthest from the current one
         int pagesFreed = 0;
         while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = searchLowestPriorityUnloadablePixmap( true );
+            AllocatedPixmap * p = searchLowestPriorityPixmap( true, true );
             if ( !p ) // No pixmap to remove
                 break;
 
@@ -254,34 +264,51 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
 
         // If we're still on low memory, try to free individual tiles based on
         // a ranking algorithm
-        QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
-        QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
-        while ( pIt != pEnd && memoryToFree > 0 )
+
+        // Store pages that weren't completely removed
+        QLinkedList< AllocatedPixmap * > pixmapsToKeep;
+        while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = *pIt;
+            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true );
+            if ( !p ) // No pixmap to remove
+                break;
 
             TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager( p->id );
             if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
-                tilesManager->cleanupPixmapMemory( memoryToFree );
-                m_allocatedPixmapsTotalMemory -= p->memory;
-                int memoryDiff = -p->memory;
-                p->memory = tilesManager->totalMemory();
-                memoryDiff += p->memory;
-                memoryToFree = qMax( 0, memoryDiff );
-                m_allocatedPixmapsTotalMemory += p->memory;
-            }
+                int memoryDiff = p->memory;
+                NormalizedRect currentViewport;
+                if ( visibleRects.contains( p->page ) )
+                    currentViewport = visibleRects[ p->page ]->rect;
 
-            ++pIt;
+                // Cleanup non visible tiles based on its dirty state and distance from the viewport
+                tilesManager->cleanupPixmapMemory( memoryToFree, currentViewport, visiblePageNumber );
+
+                p->memory = tilesManager->totalMemory();
+                memoryDiff -= p->memory;
+                memoryToFree = memoryToFree - memoryDiff;
+                m_allocatedPixmapsTotalMemory -= memoryDiff;
+
+                if ( p->memory > 0 )
+                    pixmapsToKeep.append( p );
+                else
+                    delete p;
+            }
+            else
+                pixmapsToKeep.append( p );
         }
+
+        m_allocatedPixmaps += pixmapsToKeep;
         //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
     }
 }
 
 /* Returns the next pixmap to evict from cache, or NULL if no suitable pixmap
- * is found. If thenRemoveIt is set, the pixmap is removed from
- * m_allocatedPixmaps before returning it */
-AllocatedPixmap * DocumentPrivate::searchLowestPriorityUnloadablePixmap( bool thenRemoveIt )
+ * if found. If unloadableOnly is set, only unloadable pixmaps are returned. If
+ * thenRemoveIt is set, the pixmap is removed from m_allocatedPixmaps before
+ * returning it
+ */
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt )
 {
     QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
@@ -294,7 +321,7 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityUnloadablePixmap( bool th
     {
         const AllocatedPixmap * p = *pIt;
         const int distance = qAbs( p->page - currentViewportPage );
-        if ( maxDistance < distance && m_observers.value( p->id )->canUnloadPixmap( p->page ) )
+        if ( maxDistance < distance && ( !unloadableOnly || m_observers.value( p->id )->canUnloadPixmap( p->page ) ) )
         {
             maxDistance = distance;
             farthestPixmap = pIt;
@@ -1007,7 +1034,7 @@ void DocumentPrivate::sendGeneratorRequest()
     int maxDistance = INT_MAX; // Default: No maximum
     if ( memoryToFree )
     {
-        AllocatedPixmap *pixmapToReplace = searchLowestPriorityUnloadablePixmap();
+        AllocatedPixmap *pixmapToReplace = searchLowestPriorityPixmap( true );
         if ( pixmapToReplace )
             maxDistance = qAbs( pixmapToReplace->page - currentViewportPage );
     }
@@ -1056,7 +1083,7 @@ void DocumentPrivate::sendGeneratorRequest()
             const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->id(), r->width(), r->height() );
             if ( pixmap )
             {
-                tilesManager = new TilesManager( pixmap->width(), pixmap->height(), r->page()->rotation() );
+                tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
                 tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
                 tilesManager->setWidth( r->width() );
                 tilesManager->setHeight( r->height() );
@@ -1064,7 +1091,7 @@ void DocumentPrivate::sendGeneratorRequest()
             else
             {
                 // create new tiles manager
-                tilesManager = new TilesManager( r->width(), r->height(), r->page()->rotation() );
+                tilesManager = new TilesManager( r->pageNumber(), r->width(), r->height(), r->page()->rotation() );
             }
             tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
             r->page()->deletePixmap( r->id() );
@@ -1274,7 +1301,19 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         PixmapRequest * p = new PixmapRequest( tmIt.key(), pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
 
         NormalizedRect tilesRect;
-        QList<Tile> tiles = tilesManager->tilesAt( tilesManager->visibleRect() );
+
+        // Get the visible page rect
+        NormalizedRect visibleRect;
+        QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+        for ( ; vIt != vEnd; ++vIt )
+        {
+            if ( (*vIt)->pageNumber == pageNumber )
+            {
+                visibleRect = (*vIt)->rect;
+                break;
+            }
+        }
+        QList<Tile> tiles = tilesManager->tilesAt( visibleRect );
         QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
         while ( tIt != tEnd )
         {

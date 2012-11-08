@@ -4007,9 +4007,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
         if ( intersectionRect.isEmpty() )
         {
-            Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
-            if ( tilesManager )
-                tilesManager->setVisibleRect( Okular::NormalizedRect() );
             continue;
         }
 
@@ -4023,9 +4020,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
 
         Okular::TilesManager *tilesManager = i->page()->tilesManager( PAGEVIEW_ID );
-        if ( tilesManager )
-            tilesManager->setVisibleRect( vItem->rect );
-
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
         if ( tilesManager && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {

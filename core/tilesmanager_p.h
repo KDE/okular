@@ -54,6 +54,11 @@ class OKULAR_EXPORT Tile
          * (dirty = false), the parent tile is also considered updated.
          */
         bool dirty;
+        /**
+         * Distance between the tile and the viewport.
+         * This is used by the evicting algorithm.
+         */
+        double distance;
 
         /**
          * Children tiles
@@ -67,14 +72,6 @@ class OKULAR_EXPORT Tile
         int nTiles;
 
         Tile *parent;
-
-        /**
-         * Hit/miss counter.
-         * Increased whenever the tile is not referenced. Decreased whenever a
-         * reference to the tile is made
-         * Used by the ranking algorithm.
-         */
-        int miss;
 };
 
 /**
@@ -93,7 +90,7 @@ class OKULAR_EXPORT Tile
 class OKULAR_EXPORT TilesManager
 {
     public:
-        TilesManager( int width, int height, Rotation rotation = Rotation0 );
+        TilesManager( int pageNumber, int width, int height, Rotation rotation = Rotation0 );
         virtual ~TilesManager();
 
         /**
@@ -119,7 +116,6 @@ class OKULAR_EXPORT TilesManager
          *
          * As to avoid requests of big areas, each traversed tile is checked
          * for its size and split if necessary.
-         * Also the miss counter is updated for the use in the evicting algorithm.
          *
          * @param allowEmpty If false only tiles with a non null pixmap are returned
          */
@@ -133,9 +129,11 @@ class OKULAR_EXPORT TilesManager
         /**
          * Removes at least @p numberOfBytes bytes worth of tiles (least ranked
          * tiles are removed first).
+         * Set @p visibleRect to the visible region of the page. Set a
+         * @p visiblePageNumber if the current page is not visible.
          * Visible tiles are not discarded.
          */
-        void cleanupPixmapMemory( qulonglong numberOfBytes = 1 );
+        void cleanupPixmapMemory( qulonglong numberOfBytes, const NormalizedRect &visibleRect, int visiblePageNumber );
 
         /**
          * Checks whether a given region has already been requested
@@ -175,17 +173,6 @@ class OKULAR_EXPORT TilesManager
          * Mark all tiles as dirty
          */
         void markDirty();
-
-        /**
-         * Sets the visible area of the page so tiles in this area will not be
-         * removed in the evicting process.
-         */
-        void setVisibleRect( const NormalizedRect &rect );
-
-        /**
-         * Returns the visible area of the page
-         */
-        NormalizedRect visibleRect() const;
 
         /**
          * Returns a rotated NormalizedRect given a @p rotation

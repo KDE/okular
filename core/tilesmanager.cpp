@@ -12,18 +12,15 @@
 #include <QtCore/qmath.h>
 #include <QList>
 
-#define MISSCOUNTER_MAX INT_MAX/2
-#define MISSCOUNTER_MIN INT_MIN/2
 #define TILES_MAXSIZE 2000000
 
 using namespace Okular;
 
 static bool rankedTilesLessThan( Tile *t1, Tile *t2 )
 {
-    // Order tiles by its dirty state and miss counter. That is: dirty tiles
-    // will be evicted first then tiles with higher miss values.
+    // Order tiles by its dirty state and then by distance from the viewport.
     if ( t1->dirty == t2->dirty )
-        return t1->miss < t2->miss;
+        return t1->distance < t2->distance;
 
     return !t1->dirty;
 }
@@ -48,7 +45,7 @@ class TilesManager::Private
         void deleteTiles( const Tile &tile );
 
         void markParentDirty( const Tile &tile );
-        void rankTiles( Tile &tile, QList<Tile*> &rankedTiles );
+        void rankTiles( Tile &tile, QList<Tile*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber );
         /**
          * Since the tile can be large enough to occupy a significant amount of
          * space, they may be split in more tiles. This operation is performed
@@ -69,6 +66,7 @@ class TilesManager::Private
         Tile tiles[16];
         int width;
         int height;
+        int pageNumber;
         long totalPixels;
         Rotation rotation;
         NormalizedRect visibleRect;
@@ -80,6 +78,7 @@ class TilesManager::Private
 TilesManager::Private::Private()
     : width( 0 )
     , height( 0 )
+    , pageNumber( 0 )
     , totalPixels( 0 )
     , rotation( Rotation0 )
     , requestRect( NormalizedRect() )
@@ -88,9 +87,10 @@ TilesManager::Private::Private()
 {
 }
 
-TilesManager::TilesManager( int width, int height, Rotation rotation )
+TilesManager::TilesManager( int pageNumber, int width, int height, Rotation rotation )
     : d( new Private )
 {
+    d->pageNumber = pageNumber;
     d->width = width;
     d->height = height;
     d->rotation = rotation;
@@ -189,19 +189,6 @@ void TilesManager::Private::markDirty( Tile &tile )
     {
         markDirty( tile.tiles[ i ] );
     }
-}
-
-void TilesManager::setVisibleRect( const NormalizedRect &rect )
-{
-    if ( d->visibleRect == rect )
-        return;
-
-    d->visibleRect = rect;
-}
-
-NormalizedRect TilesManager::visibleRect() const
-{
-    return d->visibleRect;
 }
 
 void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
@@ -368,10 +355,7 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, bool allowEmpty )
 void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QList<Tile> &result, bool allowEmpty )
 {
     if ( !tile.rect.intersects( rect ) )
-    {
-        tile.miss = qMin( tile.miss+1, MISSCOUNTER_MAX );
         return;
-    }
 
     // split big tiles before the requests are made, otherwise we would end up
     // requesting huge areas unnecessarily
@@ -379,7 +363,6 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, Tile &tile, QLi
 
     if ( ( allowEmpty && tile.nTiles == 0 ) || ( !allowEmpty && tile.pixmap ) )
     {
-        tile.miss = qMax( tile.miss-1, MISSCOUNTER_MIN );
         Tile newTile = tile;
         if ( rotation != Rotation0 )
             newTile.rect = TilesManager::toRotatedRect( tile.rect, rotation );
@@ -397,12 +380,12 @@ long TilesManager::totalMemory() const
     return 4*d->totalPixels;
 }
 
-void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
+void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const NormalizedRect &visibleRect, int visiblePageNumber )
 {
     QList<Tile*> rankedTiles;
     for ( int i = 0; i < 16; ++i )
     {
-        d->rankTiles( d->tiles[ i ], rankedTiles );
+        d->rankTiles( d->tiles[ i ], rankedTiles, visibleRect, visiblePageNumber );
     }
     qSort( rankedTiles.begin(), rankedTiles.end(), rankedTilesLessThan );
 
@@ -413,7 +396,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
             continue;
 
         // do not evict visible pixmaps
-        if ( tile->rect.intersects( d->visibleRect ) )
+        if ( tile->rect.intersects( visibleRect ) )
             continue;
 
         qulonglong pixels = tile->pixmap->width()*tile->pixmap->height();
@@ -423,7 +406,6 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes )
         else
             numberOfBytes -= 4*pixels;
 
-        tile->miss = 0;
         delete tile->pixmap;
         tile->pixmap = 0;
 
@@ -443,24 +425,43 @@ void TilesManager::Private::markParentDirty( const Tile &tile )
     }
 }
 
-void TilesManager::Private::rankTiles( Tile &tile, QList<Tile*> &rankedTiles )
+void TilesManager::Private::rankTiles( Tile &tile, QList<Tile*> &rankedTiles, const NormalizedRect &visibleRect, int visiblePageNumber )
 {
-    if ( tile.parent )
-        tile.miss = qBound( MISSCOUNTER_MIN, tile.miss + tile.parent->miss, MISSCOUNTER_MAX );
+    // If the page is visible, visibleRect is not null.
+    // Otherwise we use the number of one of the visible pages to calculate the
+    // distance.
+    // Note that the current page may be visible and yet its pageNumber is
+    // different from visiblePageNumber. Since we only use this value on hidden
+    // pages, any visible page number will fit.
+    if ( visibleRect.isNull() && visiblePageNumber < 0 )
+        return;
 
     if ( tile.pixmap )
     {
+        // Update distance
+        if ( !visibleRect.isNull() )
+        {
+            NormalizedPoint viewportCenter = visibleRect.center();
+            NormalizedPoint tileCenter = tile.rect.center();
+            // Manhattan distance. It's a good and fast approximation.
+            tile.distance = qAbs(viewportCenter.x - tileCenter.x) + qAbs(viewportCenter.y + tileCenter.y);
+        }
+        else
+        {
+            // For non visible pages only the vertical distance is used
+            if ( pageNumber < visiblePageNumber )
+                tile.distance = 1 - tile.rect.bottom;
+            else
+                tile.distance = tile.rect.top;
+        }
         rankedTiles.append( &tile );
     }
     else
     {
         for ( int i = 0; i < tile.nTiles; ++i )
         {
-            rankTiles( tile.tiles[ i ], rankedTiles );
+            rankTiles( tile.tiles[ i ], rankedTiles, visibleRect, visiblePageNumber );
         }
-
-        if ( tile.nTiles > 0 )
-            tile.miss = 0;
     }
 }
 
@@ -564,10 +565,10 @@ NormalizedRect TilesManager::toRotatedRect( const NormalizedRect &rect, Rotation
 Tile::Tile()
     : pixmap( 0 )
     , dirty ( true )
+    , distance( -1 )
     , tiles( 0 )
     , nTiles( 0 )
     , parent( 0 )
-    , miss( 0 )
 {
 }
 

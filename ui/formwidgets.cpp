@@ -415,20 +415,36 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 {
     addItems( m_form->choices() );
     setEditable( true );
+    setInsertPolicy( NoInsert );
     lineEdit()->setReadOnly( !m_form->isEditable() );
     QList< int > selectedItems = m_form->currentChoices();
     if ( selectedItems.count() == 1 && selectedItems.at(0) >= 0 && selectedItems.at(0) < count() )
         setCurrentIndex( selectedItems.at(0) );
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)) );
+    if ( m_form->isEditable() && !m_form->editChoice().isEmpty() )
+        lineEdit()->setText( m_form->editChoice() );
+
+    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()) );
+    connect( this, SIGNAL(editTextChanged(QString)), this, SLOT(slotValueChanged()) );
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
 }
 
-void ComboEdit::indexChanged( int index )
+void ComboEdit::slotValueChanged()
 {
-    m_form->setCurrentChoices( QList< int >() << index );
+    const int index = currentIndex();
+    const QString text = currentText();
+    const bool isCustomValue = ( index == -1 || itemText( index ) != text );
+
+    if ( isCustomValue )
+    {
+        m_form->setEditChoice( text );
+    }
+    else
+    {
+        m_form->setCurrentChoices( QList< int >() << index );
+    }
 
     m_controller->signalChanged( this );
 }

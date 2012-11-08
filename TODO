@@ -102,7 +102,6 @@ More items (first items will enter 'In progress list' first):
 -> add okular manual in PDF format loaded on the first startup or on menu->help->manual
    this visually explains basic usage, mouse buttons functions & more..
 -> ADD: click over image allows "save image" [60% done (activerect of type image)]
--> zoom: fit text (with configurable margin)
 -> bookview: 3d opengl widget for viewing the document as a real book (turning pages, etc..)
 -> wallet: use asynchronous interface (to prevent ui-blocking)
 -> restore a location from a given url (like http:/someurl?stringForViewport) (BR99240)

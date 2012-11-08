@@ -49,6 +49,7 @@
 
 // local includes
 #include "annotationtools.h"
+#include "guiutils.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
 #include "videowidget.h"
@@ -60,7 +61,7 @@
 #include "core/movie.h"
 #include "core/page.h"
 #include "settings.h"
-
+#include "settings_core.h"
 
 // comment this to disable the top-right progress indicator
 #define ENABLE_PROGRESS_OVERLAY
@@ -100,6 +101,7 @@ struct PresentationFrame
     const Okular::Page * page;
     QRect geometry;
     QHash< Okular::Movie *, VideoWidget * > videoWidgets;
+    QLinkedList< SmoothPath > drawings;
 };
 
 
@@ -132,7 +134,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false )
+    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
+    m_showSummaryView( Okular::Settings::slidesShowSummary() )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -222,6 +225,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( m_nextPageTimer, SIGNAL(timeout()), this, SLOT(slotNextPage()) ); 
 
     connect( m_document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)) );
+    connect( m_document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)) );
 
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
@@ -314,9 +318,20 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
             if ( a->subType() == Okular::Annotation::AMovie )
             {
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
-                VideoWidget * vw = new VideoWidget( movieAnn, m_document, this );
+                VideoWidget * vw = new VideoWidget( movieAnn, movieAnn->movie(), m_document, this );
                 frame->videoWidgets.insert( movieAnn->movie(), vw );
-                vw->hide();
+                vw->pageInitialized();
+            }
+            else if ( a->subType() == Okular::Annotation::AScreen )
+            {
+                const Okular::ScreenAnnotation * screenAnn = static_cast< Okular::ScreenAnnotation * >( a );
+                Okular::Movie *movie = GuiUtils::renditionMovieFromScreenAnnotation( screenAnn );
+                if ( movie )
+                {
+                    VideoWidget * vw = new VideoWidget( screenAnn, movie, m_document, this );
+                    frame->videoWidgets.insert( movie, vw );
+                    vw->pageInitialized();
+                }
             }
         }
         frame->recalcGeometry( m_width, m_height, screenRatio );
@@ -342,10 +357,6 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
 
 void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 {
-    // discard notifications if displaying the summary
-    if ( m_frameIndex == -1 && Okular::Settings::slidesShowSummary() )
-        return;
-
     // display the current page
     changePage( m_document->viewport().pageNumber );
 
@@ -364,10 +375,93 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
         generatePage( changedFlags & ( DocumentObserver::Annotations | DocumentObserver::Highlights ) );
 }
 
+void PresentationWidget::notifyCurrentPageChanged( int previousPage, int currentPage )
+{
+    if ( previousPage != -1 )
+    {
+        // stop video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ previousPage ]->videoWidgets )
+        {
+            vw->stop();
+            vw->pageLeft();
+        }
+
+        // stop audio playback, if any
+        Okular::AudioPlayer::instance()->stopPlaybacks();
+
+        // perform the page closing action, if any
+        if ( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) )
+            m_document->processAction( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) );
+
+        // perform the additional actions of the page's annotations, if any
+        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( previousPage )->annotations() )
+        {
+            Okular::Action *action = 0;
+
+            if ( annotation->subType() == Okular::Annotation::AScreen )
+                action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageClosing );
+            else if ( annotation->subType() == Okular::Annotation::AWidget )
+                action = static_cast<const Okular::WidgetAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageClosing );
+
+            if ( action )
+                m_document->processAction( action );
+        }
+    }
+
+    if ( currentPage != -1 )
+    {
+        m_frameIndex = currentPage;
+
+        // check if pixmap exists or else request it
+        PresentationFrame * frame = m_frames[ m_frameIndex ];
+        int pixW = frame->geometry.width();
+        int pixH = frame->geometry.height();
+
+        bool signalsBlocked = m_pagesEdit->signalsBlocked();
+        m_pagesEdit->blockSignals( true );
+        m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
+        m_pagesEdit->blockSignals( signalsBlocked );
+
+        // if pixmap not inside the Okular::Page we request it and wait for
+        // notifyPixmapChanged call or else we can proceed to pixmap generation
+        if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+        {
+            requestPixmaps();
+        }
+        else
+        {
+            // make the background pixmap
+            generatePage();
+        }
+
+        // perform the page opening action, if any
+        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
+            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
+
+        // perform the additional actions of the page's annotations, if any
+        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
+        {
+            Okular::Action *action = 0;
+
+            if ( annotation->subType() == Okular::Annotation::AScreen )
+                action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageOpening );
+            else if ( annotation->subType() == Okular::Annotation::AWidget )
+                action = static_cast<const Okular::WidgetAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageOpening );
+
+            if ( action )
+                m_document->processAction( action );
+        }
+
+        // start autoplay video playback
+        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+            vw->pageEntered();
+    }
+}
+
 bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 {
-    if ( Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Low ||
-         Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Normal )
+    if ( Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Low ||
+         Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Normal )
     {
         // can unload all pixmaps except for the currently visible one
         return pageNumber != m_frameIndex;
@@ -501,14 +595,22 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             return;
 
         const Okular::Annotation *annotation = getAnnotation( e->x(), e->y() );
-        if ( annotation && ( annotation->subType() == Okular::Annotation::AMovie ) )
+        if ( annotation )
         {
-            const Okular::MovieAnnotation *movieAnnotation = static_cast<const Okular::MovieAnnotation*>( annotation );
+            if ( annotation->subType() == Okular::Annotation::AMovie )
+            {
+                const Okular::MovieAnnotation *movieAnnotation = static_cast<const Okular::MovieAnnotation*>( annotation );
 
-            VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( movieAnnotation->movie() );
-            vw->show();
-            vw->play();
-            return;
+                VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( movieAnnotation->movie() );
+                vw->show();
+                vw->play();
+                return;
+            }
+            else if ( annotation->subType() == Okular::Annotation::AScreen )
+            {
+                m_document->processAction( static_cast<const Okular::ScreenAnnotation*>( annotation )->action() );
+                return;
+            }
         }
 
         // handle clicking on top-right overlay
@@ -536,7 +638,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         if ( m_drawingEngine->creationCompleted() )
         {
             // add drawing to current page
-            m_currentPageDrawings << m_drawingEngine->endSmoothPath();
+            m_frames[ m_frameIndex ]->drawings << m_drawingEngine->endSmoothPath();
 
             // manually disable and re-enable the pencil mode, so we can do
             // cleaning of the actual drawer and create a new one just after
@@ -680,7 +782,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         painter.translate( geom.topLeft() );
         painter.setRenderHints( QPainter::Antialiasing );
 
-        foreach ( const SmoothPath &drawing, m_currentPageDrawings )
+        foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
             drawing.paint( &painter, geom.width(), geom.height() );
 
         if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
@@ -767,7 +869,8 @@ void PresentationWidget::testCursorOnLink( int x, int y )
     const Okular::Annotation *annotation = getAnnotation( x, y, 0 );
 
     const bool needsHandCursor = ( ( link != 0 ) ||
-                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) );
+                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) ||
+                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AScreen ) && ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != 0 ) ) );
 
     // only react on changes (in/out from a link)
     if ( ( needsHandCursor && !m_handCursor ) || ( !needsHandCursor && m_handCursor ) )
@@ -796,63 +899,20 @@ void PresentationWidget::overlayClick( const QPoint & position )
 
 void PresentationWidget::changePage( int newPage )
 {
+    if ( m_showSummaryView ) {
+        m_showSummaryView = false;
+        m_frameIndex = -1;
+        return;
+    }
+
     if ( m_frameIndex == newPage )
         return;
 
-    // prepare to leave the current page
-    if ( m_frameIndex != -1 )
-    {
-        // remove the drawings on the old page before switching
-        clearDrawings();
-
-        // stop video playback
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        {
-            vw->stop();
-            vw->hide();
-        }
-
-        // stop audio playback, if any
-        Okular::AudioPlayer::instance()->stopPlaybacks();
-
-        // perform the page closing action, if any
-        if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) )
-            m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Closing ) );
-    }
-
     // switch to newPage
-    m_frameIndex = newPage;
-    m_document->setViewportPage( m_frameIndex, PRESENTATION_ID );
+    m_document->setViewportPage( newPage, PRESENTATION_ID );
 
-    // check if pixmap exists or else request it
-    PresentationFrame * frame = m_frames[ m_frameIndex ];
-    int pixW = frame->geometry.width();
-    int pixH = frame->geometry.height();
-
-    bool signalsBlocked = m_pagesEdit->signalsBlocked();
-    m_pagesEdit->blockSignals( true );
-    m_pagesEdit->setText( QString::number( m_frameIndex + 1 ) );
-    m_pagesEdit->blockSignals( signalsBlocked );
-
-    // if pixmap not inside the Okular::Page we request it and wait for
-    // notifyPixmapChanged call or else we can proceed to pixmap generation
-    if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-    {
-        requestPixmaps();
-    }
-    else
-    {
-        // make the background pixmap
-        generatePage();
-    }
-
-    // perform the page opening action, if any
-    if ( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) )
-        m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
-
-    // start autoplay video playback
-    Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
-        vw->pageEntered();
+    if ( (Okular::Settings::slidesShowSummary() && !m_showSummaryView) || m_frameIndex == -1 )
+        notifyCurrentPageChanged( -1, newPage );
 }
 
 void PresentationWidget::generatePage( bool disableTransition )
@@ -1131,11 +1191,11 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 void PresentationWidget::startAutoChangeTimer()
 {
     double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
-    if ( Okular::Settings::slidesAdvance() || pageDuration >= 0.0 )
+    if ( Okular::SettingsCore::slidesAdvance() || pageDuration >= 0.0 )
     {
         double secs = pageDuration < 0.0
-                   ? Okular::Settings::slidesAdvanceTime()
-                   : qMin<double>( pageDuration, Okular::Settings::slidesAdvanceTime() );
+                   ? Okular::SettingsCore::slidesAdvanceTime()
+                   : qMin<double>( pageDuration, Okular::SettingsCore::slidesAdvanceTime() );
         m_nextPageTimer->start( (int)( secs * 1000 ) );
     }
 }
@@ -1189,12 +1249,12 @@ void PresentationWidget::requestPixmaps()
     // restore cursor
     QApplication::restoreOverrideCursor();
     // ask for next and previous page if not in low memory usage setting
-    if ( Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low && Okular::Settings::enableThreading() )
+    if ( Okular::SettingsCore::memoryLevel() != Okular::SettingsCore::EnumMemoryLevel::Low )
     {
         int pagesToPreload = 1;
 
         // If greedy, preload everything
-        if (Okular::Settings::memoryLevel() == Okular::Settings::EnumMemoryLevel::Greedy)
+        if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = (int)m_document->pages();
 
         for( int j = 1; j <= pagesToPreload; j++ )
@@ -1379,7 +1439,8 @@ void PresentationWidget::togglePencilMode( bool on )
 
 void PresentationWidget::clearDrawings()
 {
-    m_currentPageDrawings.clear();
+    if ( m_frameIndex != -1 )
+        m_frames[ m_frameIndex ]->drawings.clear();
     update();
 }
 
@@ -2059,6 +2120,39 @@ void PresentationWidget::slotProcessMovieAction( const Okular::MovieAction *acti
             vw->pause();
             break;
         case Okular::MovieAction::Resume:
+            vw->play();
+            break;
+    };
+}
+
+void PresentationWidget::slotProcessRenditionAction( const Okular::RenditionAction *action )
+{
+    Okular::Movie *movie = action->movie();
+    if ( !movie )
+        return;
+
+    VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( movie );
+    if ( !vw )
+        return;
+
+    if ( action->operation() == Okular::RenditionAction::None )
+        return;
+
+    vw->show();
+
+    switch ( action->operation() )
+    {
+        case Okular::RenditionAction::Play:
+            vw->stop();
+            vw->play();
+            break;
+        case Okular::RenditionAction::Stop:
+            vw->stop();
+            break;
+        case Okular::RenditionAction::Pause:
+            vw->pause();
+            break;
+        case Okular::RenditionAction::Resume:
             vw->play();
             break;
     };

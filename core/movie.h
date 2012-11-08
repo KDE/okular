@@ -16,6 +16,8 @@
 
 #include <QtCore/QSize>
 
+class QImage;
+
 namespace Okular {
 
 /**
@@ -106,6 +108,34 @@ class OKULAR_EXPORT Movie
          * Whether to play the movie automatically
          */
         bool autoPlay() const;
+
+        /**
+         * Sets whether to show a poster image.
+         *
+         * @since 4.10
+         */
+        void setShowPosterImage( bool show );
+
+        /**
+         * Whether to show a poster image.
+         *
+         * @since 4.10
+         */
+        bool showPosterImage() const;
+
+        /**
+         * Sets the poster image.
+         *
+         * @since 4.10
+         */
+        void setPosterImage( const QImage &image );
+
+        /**
+         * Returns the poster image.
+         *
+         * @since 4.10
+         */
+        QImage posterImage() const;
 
     private:
         class Private;

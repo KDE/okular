@@ -15,6 +15,7 @@
 #include <qlinkedlist.h>
 
 #include "pageviewutils.h"
+#include "annotationtools.h"
 
 class QKeyEvent;
 class QMouseEvent;
@@ -60,9 +61,15 @@ class PageViewAnnotator : public QObject
 
         void setToolsEnabled( bool enabled );
 
+        void setHidingForced( bool forced );
+        bool hidingWasForced() const;
+
         // methods used when creating the annotation
         bool routeEvents() const;
-        QRect routeEvent( QMouseEvent * event, PageViewItem * item );
+        QRect routeMouseEvent( QMouseEvent * event, PageViewItem * item );
+        QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint & localOriginInGlobal );
+        QRect performRouteMouseOrTabletEvent( const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
+                                              const QPointF & pos, PageViewItem * item );
         bool routeKeyEvent( QKeyEvent * event );
         bool routePaints( const QRect & wantedRect ) const;
         void routePaint( QPainter * painter, const QRect & paintRect );
@@ -85,6 +92,7 @@ class PageViewAnnotator : public QObject
         bool m_textToolsEnabled;
         bool m_toolsEnabled;
         bool m_continuousMode;
+        bool m_hidingWasForced;
 
         // creation related variables
         int m_lastToolID;
@@ -95,3 +103,5 @@ class PageViewAnnotator : public QObject
 };
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

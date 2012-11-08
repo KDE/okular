@@ -9,7 +9,7 @@
 
 #include "rotationjob_p.h"
 
-#include <QtGui/QMatrix>
+#include <QtGui/QTransform>
 
 using namespace Okular;
 
@@ -61,14 +61,14 @@ void RotationJob::run()
         return;
     }
 
-    QMatrix matrix = rotationMatrix( mOldRotation, mNewRotation );
+    QTransform matrix = rotationMatrix( mOldRotation, mNewRotation );
 
     mRotatedImage = mImage.transformed( matrix );
 }
 
-QMatrix RotationJob::rotationMatrix( Rotation from, Rotation to )
+QTransform RotationJob::rotationMatrix( Rotation from, Rotation to )
 {
-    QMatrix matrix;
+    QTransform matrix;
 
     if ( from == Rotation0 ) {
         if ( to == Rotation90 )

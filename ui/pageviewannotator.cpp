@@ -604,7 +604,7 @@ class TextSelectorEngine : public AnnotatorEngine
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
     m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
-    m_continuousMode( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
+    m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
     // load the tools from the 'xml tools definition' file. store the tree internally.
     QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
@@ -706,35 +706,38 @@ void PageViewAnnotator::setToolsEnabled( bool enabled )
         m_toolBar->setToolsEnabled( m_toolsEnabled );
 }
 
+void PageViewAnnotator::setHidingForced( bool forced )
+{
+    m_hidingWasForced = forced;
+}
+
+bool PageViewAnnotator::hidingWasForced() const
+{
+    return m_hidingWasForced;
+}
+
 bool PageViewAnnotator::routeEvents() const
 {
     return m_engine && m_toolBar;
 }
 
-QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
+QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
+                                                        const QPointF & pos, PageViewItem * item )
 {
-    if ( !item ) return QRect();
-
-    AnnotatorEngine::EventType eventType;
-    AnnotatorEngine::Button button;
-
-    // figure out the event type and button
-    AnnotatorEngine::decodeEvent( e, &eventType, &button );
-
     // if the right mouse button was pressed, we simply do nothing. In this way, we are still editing the annotation
-    // and so this function will receive and process the right mouse button release event too. If we detach now the annotation tool, 
+    // and so this function will receive and process the right mouse button release event too. If we detach now the annotation tool,
     // the release event will be processed by the PageView class which would create the annotation property widget, and we do not want this.
     if ( button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Press )
-        return QRect(); 
+        return QRect();
     else if ( button == AnnotatorEngine::Right && eventType == AnnotatorEngine::Release )
     {
         detachAnnotation();
-        return QRect(); 
+        return QRect();
     }
-    
+
     // find out normalized mouse coords inside current item
     const QRect & itemRect = item->uncroppedGeometry();
-    const QPoint eventPos = m_pageView->contentAreaPoint( e->pos() );
+    const QPointF eventPos = m_pageView->contentAreaPoint( pos );
     double nX = item->absToPageX( eventPos.x() );
     double nY = item->absToPageY( eventPos.y() );
 
@@ -793,6 +796,52 @@ QRect PageViewAnnotator::routeEvent( QMouseEvent * e, PageViewItem * item )
     }
 
     return modifiedRect;
+}
+
+QRect PageViewAnnotator::routeMouseEvent( QMouseEvent * e, PageViewItem * item )
+{
+    if ( !item ) return QRect();
+
+    AnnotatorEngine::EventType eventType;
+    AnnotatorEngine::Button button;
+
+    // figure out the event type and button
+    AnnotatorEngine::decodeEvent( e, &eventType, &button );
+
+    return performRouteMouseOrTabletEvent( eventType, button, e->posF(), item );
+}
+
+QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint & localOriginInGlobal )
+{
+    // Unlike routeMouseEvent, routeTabletEvent must explicitly ignore events it doesn't care about so that
+    // the corresponding mouse event will later be delivered.
+    if ( !item )
+    {
+        e->ignore();
+        return QRect();
+    }
+
+    // We set all tablet events that take place over the annotations toolbar to ignore so that corresponding mouse
+    // events will be delivered to the toolbar.  However, we still allow the annotations code to handle
+    // TabletMove and TabletRelease events in case the user is drawing an annotation onto the toolbar.
+    const QPoint toolBarPos = m_toolBar->mapFromGlobal( e->globalPos() );
+    const QRect toolBarRect = m_toolBar->rect();
+    if ( toolBarRect.contains( toolBarPos ) )
+    {
+        e->ignore();
+        if (e->type() == QEvent::TabletPress)
+            return QRect();
+    }
+
+    AnnotatorEngine::EventType eventType;
+    AnnotatorEngine::Button button;
+
+    // figure out the event type and button
+    AnnotatorEngine::decodeEvent( e, &eventType, &button );
+
+    const QPointF globalPosF = e->hiResGlobalPos();
+    const QPointF localPosF = globalPosF - localOriginInGlobal;
+    return performRouteMouseOrTabletEvent( eventType, button, localPosF, item );
 }
 
 bool PageViewAnnotator::routeKeyEvent( QKeyEvent * event )

@@ -114,9 +114,9 @@ void PagePrivate::imageRotationDone( RotationJob * job )
     }
 }
 
-QMatrix PagePrivate::rotationMatrix() const
+QTransform PagePrivate::rotationMatrix() const
 {
-    QMatrix matrix;
+    QTransform matrix;
     matrix.rotate( (int)m_rotation * 90 );
 
     switch ( m_rotation )
@@ -400,7 +400,7 @@ void PagePrivate::rotateAt( Rotation orientation )
     /**
      * Rotate the object rects on the page.
      */
-    const QMatrix matrix = rotationMatrix();
+    const QTransform matrix = rotationMatrix();
     QLinkedList< ObjectRect * >::const_iterator objectIt = m_page->m_rects.begin(), end = m_page->m_rects.end();
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
@@ -435,6 +435,19 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
             return *it;
     return 0;
 }
+
+QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
+{
+    QLinkedList< const ObjectRect * > result;
+
+    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
+    for ( ; it != end; ++it )
+        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
+            result.append( *it );
+
+    return result;
+}
+
 
 const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
 {
@@ -546,7 +559,7 @@ void Page::setObjectRects( const QLinkedList< ObjectRect * > & rects )
     /**
      * Rotate the object rects of the page.
      */
-    const QMatrix matrix = d->rotationMatrix();
+    const QTransform matrix = d->rotationMatrix();
 
     QLinkedList< ObjectRect * >::const_iterator objectIt = rects.begin(), end = rects.end();
     for ( ; objectIt != end; ++objectIt )
@@ -628,7 +641,7 @@ void Page::addAnnotation( Annotation * annotation )
     AnnotationObjectRect *rect = new AnnotationObjectRect( annotation );
 
     // Rotate the annotation on the page.
-    const QMatrix matrix = d->rotationMatrix();
+    const QTransform matrix = d->rotationMatrix();
     annotation->d_ptr->baseTransform( matrix.inverted() );
     annotation->d_ptr->annotationTransform( matrix );
 

@@ -18,6 +18,7 @@ include_directories(
    ${QIMAGEBLITZ_INCLUDES}
 )
 
+add_subdirectory( active )
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
@@ -96,6 +97,7 @@ install( FILES
            core/utils.h
            core/version.h
            core/fileprinter.h
+           ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
 
 install( FILES
@@ -110,8 +112,7 @@ kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kde4_add_kcfg_files(okularcore_SRCS conf/settings.kcfgc )
-
+kde4_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
@@ -122,11 +123,12 @@ ENDIF(APPLE)
 
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
 
-set_target_properties(okularcore PROPERTIES VERSION 1.9.0 SOVERSION 1 )
+set_target_properties(okularcore PROPERTIES VERSION 2.0.0 SOVERSION 2 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
+install(FILES conf/okular_core.kcfg DESTINATION ${KCFG_INSTALL_DIR})
 install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # okularpart
@@ -171,6 +173,7 @@ set(okularpart_SRCS
    ui/searchwidget.cpp
    ui/sidebar.cpp
    ui/side_reviews.cpp
+   ui/snapshottaker.cpp
    ui/thumbnaillist.cpp
    ui/toc.cpp
    ui/tocmodel.cpp
@@ -188,6 +191,8 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
+kde4_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
+
 qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 kde4_add_plugin(okularpart ${okularpart_SRCS})
@@ -198,6 +203,8 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
+
+install(FILES okular.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
 
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular )

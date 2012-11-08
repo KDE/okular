@@ -13,7 +13,7 @@
 
 PageSizeLabel::PageSizeLabel( QWidget * parent, Okular::Document * document )
     : QLabel( parent ), m_document( document ),
-    m_currentPage( -1 ), m_antiWidget( NULL )
+    m_antiWidget( NULL )
 {
 }
 
@@ -55,20 +55,17 @@ void PageSizeLabel::notifySetup( const QVector< Okular::Page * > & pageVector, i
     }
 }
 
-void PageSizeLabel::notifyViewportChanged( bool /*smoothMove*/ )
+void PageSizeLabel::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
+    Q_UNUSED( previousPage )
+
     if (isVisible())
     {
-        // get current page number
-        int page = m_document->viewport().pageNumber;
-        int pages = m_document->pages();
-
-        // if the document is opened and page is changed
-        if ( page != m_currentPage && pages > 0 )
+        // if the document is opened
+        if ( m_document->pages() > 0 )
         {
-            m_currentPage = page;
-            setText( m_document->pageSizeString(page) );
-            m_antiWidget->setFixedSize(sizeHint());
+            setText( m_document->pageSizeString( currentPage ) );
+            m_antiWidget->setFixedSize( sizeHint() );
         }
    }
 }

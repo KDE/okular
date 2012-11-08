@@ -32,6 +32,7 @@
 #include "settings.h"
 #include "core/observer.h"
 #include "core/tile.h"
+#include "settings_core.h"
 
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
@@ -67,18 +68,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
-    if ( Okular::Settings::changeColors() )
+    if ( Okular::SettingsCore::changeColors() )
     {
-        switch ( Okular::Settings::renderMode() )
+        switch ( Okular::SettingsCore::renderMode() )
         {
-            case Okular::Settings::EnumRenderMode::Inverted:
+            case Okular::SettingsCore::EnumRenderMode::Inverted:
                 backgroundColor = Qt::black;
                 break;
-            case Okular::Settings::EnumRenderMode::Paper:
-                paperColor = Okular::Settings::paperColor();
+            case Okular::SettingsCore::EnumRenderMode::Paper:
+                paperColor = Okular::SettingsCore::paperColor();
                 backgroundColor = paperColor;
                 break;
-            case Okular::Settings::EnumRenderMode::Recolor:
+            case Okular::SettingsCore::EnumRenderMode::Recolor:
                 backgroundColor = Okular::Settings::recolorBackground();
                 break;
             default: ;
@@ -229,7 +230,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
-    bool bufferAccessibility = (flags & Accessibility) && Okular::Settings::changeColors() && (Okular::Settings::renderMode() != Okular::Settings::EnumRenderMode::Paper);
+    bool bufferAccessibility = (flags & Accessibility) && Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() != Okular::SettingsCore::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations || viewPortPoint;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
@@ -340,17 +341,17 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
         {
-            switch ( Okular::Settings::renderMode() )
+            switch ( Okular::SettingsCore::renderMode() )
             {
-                case Okular::Settings::EnumRenderMode::Inverted:
+                case Okular::SettingsCore::EnumRenderMode::Inverted:
                     // Invert image pixels using QImage internal function
                     backImage.invertPixels(QImage::InvertRgb);
                     break;
-                case Okular::Settings::EnumRenderMode::Recolor:
+                case Okular::SettingsCore::EnumRenderMode::Recolor:
                     // Recolor image using Blitz::flatten with dither:0
                     Blitz::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
                     break;
-                case Okular::Settings::EnumRenderMode::BlackWhite:
+                case Okular::SettingsCore::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
                     unsigned int * data = (unsigned int *)backImage.bits();
                     int val, pixels = backImage.width() * backImage.height(),

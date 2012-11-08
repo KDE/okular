@@ -1,0 +1,25 @@
+#Configuration update for Okular
+
+#separate settings used in core library from settings used in frontend
+Id=sep_settings
+File=okularpartrc
+Group=Dlg Performance,Core Performance
+Key=MemoryLevel
+Key=EnableThreading
+Key=TextAntialias
+Key=GraphicsAntialias
+Key=TextHinting
+Group=Dlg Accessibility,Document
+Key=PaperColor
+Key=ChangeColors
+Key=RenderMode
+Group=PageView,Core Zoom
+Key=ZoomFactor
+Group=General,Core General
+Key=ObeyDRM
+Key=ChooseGenerators
+Key=ExternalEditor
+Key=ExternalEditorCommand
+Group=Dlg Presentation,Core Presentation
+Key=SlidesAdvance
+Key=SlidesAdvanceTime

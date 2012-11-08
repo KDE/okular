@@ -19,7 +19,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QColor>
 
-class QMatrix;
+class QTransform;
 
 namespace Okular {
 
@@ -36,10 +36,10 @@ class AnnotationPrivate
          * Transforms the annotation coordinates with the transformation
          * defined by @p matrix.
          */
-        void annotationTransform( const QMatrix &matrix );
+        void annotationTransform( const QTransform &matrix );
 
-        virtual void transform( const QMatrix &matrix );
-        virtual void baseTransform( const QMatrix &matrix );
+        virtual void transform( const QTransform &matrix );
+        virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
         virtual bool openDialogAfterCreation() const;

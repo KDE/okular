@@ -25,7 +25,7 @@
 #include "core/document.h"
 #include "settings.h"
 
-TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document), m_currentPage(-1)
+TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
@@ -69,7 +69,6 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
 
     // clear contents
     m_model->clear();
-    m_currentPage = -1;
 
     // request synopsis description (is a dom tree)
     const Okular::DocumentSynopsis * syn = m_document->documentSynopsis();
@@ -86,14 +85,8 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
     emit hasTOC( !m_model->isEmpty() );
 }
 
-void TOC::notifyViewportChanged( bool /*smoothMove*/ )
+void TOC::notifyCurrentPageChanged( int, int )
 {
-    int newpage = m_document->viewport().pageNumber;
-    if ( m_currentPage == newpage )
-        return;
-
-    m_currentPage = newpage;
-
     m_model->setCurrentViewport( m_document->viewport() );
 }
 

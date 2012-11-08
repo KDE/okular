@@ -150,6 +150,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         void enablePrintAction(bool enable);
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
+        void enableCloseAction(bool enable);
 
     protected:
         // reimplemented from KParts::ReadWritePart
@@ -230,6 +231,8 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
+        
+        static int numberOfParts;
 
         KTemporaryFile *m_tempfile;
 

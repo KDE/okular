@@ -11,10 +11,13 @@
 
 // qt/kde includes
 #include <qaction.h>
+#include <qcoreapplication.h>
 #include <qdir.h>
 #include <qevent.h>
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qmenu.h>
+#include <qstackedlayout.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 #include <qwidgetaction.h>
@@ -22,13 +25,15 @@
 #include <kicon.h>
 #include <klocale.h>
 
+#include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
 #include <phonon/videoplayer.h>
 
-#include "core/area.h"
 #include "core/annotations.h"
+#include "core/area.h"
 #include "core/document.h"
 #include "core/movie.h"
+#include "snapshottaker.h"
 
 static QAction* createToolBarButtonWithWidgetPopup( QToolBar* toolBar, QWidget *widget, const QIcon &icon )
 {
@@ -53,22 +58,32 @@ static QAction* createToolBarButtonWithWidgetPopup( QToolBar* toolBar, QWidget *
 class VideoWidget::Private
 {
 public:
-    Private( Okular::MovieAnnotation *ma, Okular::Document *doc, VideoWidget *qq )
-        : q( qq ), anno( ma ), document( doc ), loaded( false )
+    Private( Okular::Movie *m, Okular::Document *doc, VideoWidget *qq )
+        : q( qq ), movie( m ), document( doc ), player( 0 ), loaded( false )
     {
+    }
+
+    ~Private()
+    {
+        if ( player )
+            player->stop();
     }
 
     enum PlayPauseMode { PlayMode, PauseMode };
 
     void load();
     void setupPlayPauseAction( PlayPauseMode mode );
+    void setPosterImage( const QImage& );
+    void takeSnapshot();
+    void videoStopped();
+    void stateChanged(Phonon::State, Phonon::State);
 
     // slots
     void finished();
     void playOrPause();
 
     VideoWidget *q;
-    Okular::MovieAnnotation *anno;
+    Okular::Movie *movie;
     Okular::Document *document;
     Okular::NormalizedRect geom;
     Phonon::VideoPlayer *player;
@@ -78,6 +93,8 @@ public:
     QAction *stopAction;
     QAction *seekSliderAction;
     QAction *seekSliderMenuAction;
+    QStackedLayout *pageLayout;
+    QLabel *posterImagePage;
     bool loaded : 1;
 };
 
@@ -88,7 +105,7 @@ void VideoWidget::Private::load()
 
     loaded = true;
 
-    QString url = anno->movie()->url();
+    QString url = movie->url();
     KUrl newurl;
     if ( QDir::isRelativePath( url ) )
     {
@@ -103,6 +120,9 @@ void VideoWidget::Private::load()
         player->load( newurl.toLocalFile() );
     else
         player->load( newurl );
+
+    connect( player->mediaObject(), SIGNAL( stateChanged( Phonon::State, Phonon::State ) ),
+             q, SLOT( stateChanged( Phonon::State, Phonon::State ) ) );
 
     seekSlider->setEnabled( true );
 }
@@ -121,18 +141,49 @@ void VideoWidget::Private::setupPlayPauseAction( PlayPauseMode mode )
     }
 }
 
+void VideoWidget::Private::takeSnapshot()
+{
+    const QString url = movie->url();
+    KUrl newurl;
+    if ( QDir::isRelativePath( url ) )
+    {
+        newurl = document->currentDocument();
+        newurl.setFileName( url );
+    }
+    else
+    {
+        newurl = url;
+    }
+
+    SnapshotTaker *taker = 0;
+    if ( newurl.isLocalFile() )
+        taker = new SnapshotTaker( newurl.toLocalFile(), q );
+    else
+        taker = new SnapshotTaker( newurl.url(), q );
+
+    q->connect( taker, SIGNAL( finished( const QImage& ) ), q, SLOT( setPosterImage( const QImage& ) ) );
+}
+
+void VideoWidget::Private::videoStopped()
+{
+    if ( movie->showPosterImage() )
+        pageLayout->setCurrentIndex( 1 );
+    else
+        q->hide();
+}
+
 void VideoWidget::Private::finished()
 {
-    switch ( anno->movie()->playMode() )
+    switch ( movie->playMode() )
     {
         case Okular::Movie::PlayOnce:
         case Okular::Movie::PlayOpen:
             // playback has ended, nothing to do
             stopAction->setEnabled( false );
             setupPlayPauseAction( PlayMode );
-            if ( anno->movie()->playMode() == Okular::Movie::PlayOnce )
+            if ( movie->playMode() == Okular::Movie::PlayOnce )
                 controlBar->setVisible( false );
-            q->setVisible(false);
+            videoStopped();
             break;
         case Okular::Movie::PlayRepeat:
             // repeat the playback
@@ -158,22 +209,42 @@ void VideoWidget::Private::playOrPause()
     }
 }
 
-VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *document, QWidget *parent )
-    : QWidget( parent ), d( new Private( movieann, document, this ) )
+void VideoWidget::Private::setPosterImage( const QImage &image )
+{
+    if ( !image.isNull() )
+    {
+        // cache the snapshot image
+        movie->setPosterImage( image );
+    }
+
+    posterImagePage->setPixmap( QPixmap::fromImage( image ) );
+}
+
+void VideoWidget::Private::stateChanged( Phonon::State newState, Phonon::State )
+{
+    if ( newState == Phonon::PlayingState )
+        pageLayout->setCurrentIndex( 0 );
+}
+
+VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *movie, Okular::Document *document, QWidget *parent )
+    : QWidget( parent ), d( new Private( movie, document, this ) )
 {
     // do not propagate the mouse events to the parent widget;
     // they should be tied to this widget, not spread around...
     setAttribute( Qt::WA_NoMousePropagation );
 
-    QVBoxLayout *mainlay = new QVBoxLayout( this );
+    // Setup player page
+    QWidget *playerPage = new QWidget;
+
+    QVBoxLayout *mainlay = new QVBoxLayout( playerPage );
     mainlay->setMargin( 0 );
     mainlay->setSpacing( 0 );
 
-    d->player = new Phonon::VideoPlayer( Phonon::NoCategory, this );
-    d->player->installEventFilter( this );
+    d->player = new Phonon::VideoPlayer( Phonon::NoCategory, playerPage );
+    d->player->installEventFilter( playerPage );
     mainlay->addWidget( d->player );
 
-    d->controlBar = new QToolBar( this );
+    d->controlBar = new QToolBar( playerPage );
     d->controlBar->setIconSize( QSize( 16, 16 ) );
     d->controlBar->setAutoFillBackground( true );
     mainlay->addWidget( d->controlBar );
@@ -197,12 +268,44 @@ VideoWidget::VideoWidget( Okular::MovieAnnotation *movieann, Okular::Document *d
         d->controlBar, verticalSeekSlider, KIcon( "player-time" ) );
     d->seekSliderMenuAction->setVisible( false );
 
-    d->controlBar->setVisible( movieann->movie()->showControls() );
+    d->controlBar->setVisible( movie->showControls() );
 
     connect( d->player, SIGNAL(finished()), this, SLOT(finished()) );
     connect( d->playPauseAction, SIGNAL(triggered()), this, SLOT(playOrPause()) );
 
-    d->geom = movieann->transformedBoundingRectangle();
+    d->geom = annotation->transformedBoundingRectangle();
+
+    // Setup poster image page
+    d->posterImagePage = new QLabel;
+    d->posterImagePage->setScaledContents( true );
+    d->posterImagePage->installEventFilter( this );
+    d->posterImagePage->setCursor( Qt::PointingHandCursor );
+
+    d->pageLayout = new QStackedLayout( this );
+    d->pageLayout->setMargin( 0 );
+    d->pageLayout->setSpacing( 0 );
+    d->pageLayout->addWidget( playerPage );
+    d->pageLayout->addWidget( d->posterImagePage );
+
+
+    if ( movie->showPosterImage() )
+    {
+        d->pageLayout->setCurrentIndex( 1 );
+
+        const QImage posterImage = movie->posterImage();
+        if ( posterImage.isNull() )
+        {
+            d->takeSnapshot();
+        }
+        else
+        {
+            d->setPosterImage( posterImage );
+        }
+    }
+    else
+    {
+        d->pageLayout->setCurrentIndex( 0 );
+    }
 }
 
 VideoWidget::~VideoWidget()
@@ -225,12 +328,32 @@ bool VideoWidget::isPlaying() const
     return d->player->isPlaying();
 }
 
+void VideoWidget::pageInitialized()
+{
+    hide();
+}
+
 void VideoWidget::pageEntered()
 {
-    if ( d->anno->movie()->autoPlay() ) {
+    if ( d->movie->showPosterImage() )
+    {
+        d->pageLayout->setCurrentIndex( 1 );
+        show();
+    }
+
+    if ( d->movie->autoPlay() )
+    {
         show();
         QMetaObject::invokeMethod(this, "play", Qt::QueuedConnection);
     }
+}
+
+void VideoWidget::pageLeft()
+{
+    d->player->stop();
+    d->videoStopped();
+
+    hide();
 }
 
 void VideoWidget::play()
@@ -256,7 +379,7 @@ void VideoWidget::pause()
 
 bool VideoWidget::eventFilter( QObject * object, QEvent * event )
 {
-    if ( object == d->player )
+    if ( object == d->player || object == d->posterImagePage )
     {
         switch ( event->type() )
         {
@@ -271,6 +394,18 @@ bool VideoWidget::eventFilter( QObject * object, QEvent * event )
                     }
                     event->accept();
                 }
+            }
+            case QEvent::Wheel:
+            {
+                if ( object == d->posterImagePage )
+                {
+                    QWheelEvent * we = static_cast< QWheelEvent * >( event );
+
+                    // forward wheel events to parent widget
+                    QWheelEvent *copy = new QWheelEvent( we->pos(), we->globalPos(), we->delta(), we->buttons(), we->modifiers(), we->orientation() );
+                    QCoreApplication::postEvent( parentWidget(), copy );
+                }
+                break;
             }
             default: ;
         }

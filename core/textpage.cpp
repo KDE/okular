@@ -174,7 +174,7 @@ class TinyTextEntity
                                             : QString::fromRawData( d.data, length );
         }
 
-        inline NormalizedRect transformedArea( const QMatrix &matrix ) const
+        inline NormalizedRect transformedArea( const QTransform &matrix ) const
         {
             NormalizedRect transformed_area = area;
             transformed_area.transform( matrix );
@@ -215,7 +215,7 @@ NormalizedRect* TextEntity::area() const
     return m_area;
 }
 
-NormalizedRect TextEntity::transformedArea(const QMatrix &matrix) const
+NormalizedRect TextEntity::transformedArea(const QTransform &matrix) const
 {
     NormalizedRect transformed_area = *m_area;
     transformed_area.transform( matrix );
@@ -359,7 +359,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
-    const QMatrix matrix = d->m_page ? d->m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = d->m_page ? d->m_page->rotationMatrix() : QTransform();
 #if 0
     int it = -1;
     int itB = -1;
@@ -840,7 +840,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                                                              const TextList::ConstIterator &start,
                                                              const TextList::ConstIterator &end )
 {
-    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
 
     RegularAreaRect* ret=new RegularAreaRect;
 
@@ -953,9 +953,9 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                                                             Qt::CaseSensitivity caseSensitivity,
                                                             TextComparisonFunction comparer,
                                                             const TextList::ConstIterator &start,
-                                                            const TextList::ConstIterator &end )
+                                                            const TextList::ConstIterator &loop_end )
 {
-    const QMatrix matrix = m_page ? m_page->rotationMatrix() : QMatrix();
+    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
 
     RegularAreaRect* ret=new RegularAreaRect;
 
@@ -992,7 +992,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         }
         else
         {
-            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
+            len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
             int min=qMin(queryLeft,len);
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
@@ -1057,7 +1057,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             ret->simplify();
             return ret;
         }
-        if ( it == end )
+        if ( it == loop_end )
             break;
         else
             --it;

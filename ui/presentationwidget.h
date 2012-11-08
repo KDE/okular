@@ -14,7 +14,6 @@
 #include <qpixmap.h>
 #include <qstringlist.h>
 #include <qwidget.h>
-#include "ui/annotationtools.h"
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/pagetransition.h"
@@ -24,6 +23,7 @@ class QToolBar;
 class QTimer;
 class KActionCollection;
 class KSelectAction;
+class SmoothPathEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
 
@@ -33,6 +33,7 @@ class Annotation;
 class Document;
 class MovieAction;
 class Page;
+class RenditionAction;
 }
 
 /**
@@ -53,6 +54,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
         bool canUnloadPixmap( int pageNumber ) const;
+        void notifyCurrentPageChanged( int previous, int current );
 
     public slots:
         void slotFind();
@@ -104,7 +106,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QRect m_overlayGeometry;
         const Okular::Action * m_pressedLink;
         bool m_handCursor;
-        QLinkedList< SmoothPath > m_currentPageDrawings;
         SmoothPathEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
@@ -133,6 +134,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
+        bool m_showSummaryView;
 
     private slots:
         void slotNextPage();
@@ -149,6 +151,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void chooseScreen( QAction * );
         void toggleBlackScreenMode( bool );
         void slotProcessMovieAction( const Okular::MovieAction *action );
+        void slotProcessRenditionAction( const Okular::RenditionAction *action );
 };
 
 #endif

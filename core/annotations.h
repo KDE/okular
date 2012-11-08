@@ -23,6 +23,7 @@
 
 namespace Okular {
 
+class Action;
 class Annotation;
 class AnnotationObjectRect;
 class AnnotationPrivate;
@@ -42,6 +43,8 @@ class CaretAnnotationPrivate;
 class FileAttachmentAnnotationPrivate;
 class SoundAnnotationPrivate;
 class MovieAnnotationPrivate;
+class ScreenAnnotationPrivate;
+class WidgetAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -83,9 +86,6 @@ class OKULAR_EXPORT AnnotationUtils
  *
  * An Annotation is an object (text note, highlight, sound, popup window, ..)
  * contained by a Page in the document.
- *
- * For current state in relations to pdf embedded annotations:
- * @see generator_pdf/README.Annotations
  */
 class OKULAR_EXPORT Annotation
 {
@@ -112,6 +112,8 @@ class OKULAR_EXPORT Annotation
             AFileAttachment = 9, ///< A file attachment annotation
             ASound = 10,    ///< A sound annotation
             AMovie = 11,    ///< A movie annotation
+            AScreen = 12,   ///< A screen annotation
+            AWidget = 13,   ///< A widget annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -175,6 +177,17 @@ class OKULAR_EXPORT Annotation
             Rejected = 16,   ///< Was rejected
             Cancelled = 32,  ///< Has been cancelled
             Completed = 64   ///< Has been completed
+        };
+
+        /**
+         * Describes the type of additional actions.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        enum AdditionalActionType
+        {
+            PageOpening, ///< Performed when the page containing the annotation is opened.
+            PageClosing  ///< Performed when the page containing the annotation is closed.
         };
 
         /**
@@ -1051,16 +1064,6 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         QColor geometricalInnerColor() const;
 
         /**
-         * Sets the point @p width of the geometrical annotation.
-         */
-        KDE_DEPRECATED void setGeometricalPointWidth( int width );
-
-        /**
-         * Returns the point width of the geometrical annotation.
-         */
-        KDE_DEPRECATED int geometricalPointWidth() const;
-
-        /**
          * Returns the sub type of the geometrical annotation.
          */
         SubType subType() const;
@@ -1191,7 +1194,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
                  * Transforms the quad coordinates with the transformation defined
                  * by @p matrix.
                  */
-                void transform( const QMatrix &matrix );
+                void transform( const QTransform &matrix );
 
             private:
                 class Private;
@@ -1522,6 +1525,131 @@ class OKULAR_EXPORT MovieAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( MovieAnnotation )
         Q_DISABLE_COPY( MovieAnnotation )
+};
+
+/**
+ * \short Screen annotation.
+ *
+ * The screen annotation specifies a region of a page upon which media clips
+ * may be played. It also serves as an object from which actions can be triggered.
+ *
+ * @since 0.16 (KDE 4.10)
+ */
+class OKULAR_EXPORT ScreenAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new screen annotation.
+         */
+        ScreenAnnotation();
+
+        /**
+         * Creates a new screen annotation from the xml @p description
+         */
+        ScreenAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the screen annotation.
+         */
+        virtual ~ScreenAnnotation();
+
+        /**
+         * Returns the sub type of the screen annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the screen annotation as xml in @p document
+         * under the given @p parentNode.
+         */
+        void store( QDomNode &parentNode, QDomDocument &document ) const;
+
+        /**
+         * Sets the @p action that is executed when the annotation is triggered.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void setAction( Action *action );
+
+        /**
+         * Returns the action that is executed when the annotation is triggered or @c 0 if not action has been defined.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        Action* action() const;
+
+        /**
+         * Sets the additional @p action of the given @p type.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void setAdditionalAction( AdditionalActionType type, Action *action );
+
+        /**
+         * Returns the additional action of the given @p type or @c 0 if no action has been defined.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        Action* additionalAction( AdditionalActionType type ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( ScreenAnnotation )
+        Q_DISABLE_COPY( ScreenAnnotation )
+};
+
+/**
+ * \short Widget annotation.
+ *
+ * The widget annotation represents a widget on a page.
+ *
+ * @since 0.16 (KDE 4.10)
+ */
+class OKULAR_EXPORT WidgetAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new widget annotation.
+         */
+        WidgetAnnotation();
+
+        /**
+         * Creates a new widget annotation from the xml @p description
+         */
+        WidgetAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the widget annotation.
+         */
+        virtual ~WidgetAnnotation();
+
+        /**
+         * Returns the sub type of the widget annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the widget annotation as xml in @p document
+         * under the given @p parentNode.
+         */
+        void store( QDomNode &parentNode, QDomDocument &document ) const;
+
+        /**
+         * Sets the additional @p action of the given @p type.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void setAdditionalAction( AdditionalActionType type, Action *action );
+
+        /**
+         * Returns the additional action of the given @p type or @c 0 if no action has been defined.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        Action* additionalAction( AdditionalActionType type ) const;
+
+    private:
+        Q_DECLARE_PRIVATE( WidgetAnnotation )
+        Q_DISABLE_COPY( WidgetAnnotation )
 };
 
 }

@@ -72,7 +72,7 @@
 #include "page_p.h"
 #include "pagecontroller_p.h"
 #include "scripter.h"
-#include "settings.h"
+#include "settings_core.h"
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 #include "texteditors_p.h"
@@ -182,13 +182,13 @@ qulonglong DocumentPrivate::calculateMemoryToFree()
     qulonglong clipValue = 0;
     qulonglong memoryToFree = 0;
 
-    switch ( Settings::memoryLevel() )
+    switch ( SettingsCore::memoryLevel() )
     {
-        case Settings::EnumMemoryLevel::Low:
+        case SettingsCore::EnumMemoryLevel::Low:
             memoryToFree = m_allocatedPixmapsTotalMemory;
             break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case SettingsCore::EnumMemoryLevel::Normal:
         {
             qulonglong thirdTotalMemory = getTotalMemory() / 3;
             qulonglong freeMemory = getFreeMemory();
@@ -197,13 +197,13 @@ qulonglong DocumentPrivate::calculateMemoryToFree()
         }
         break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case SettingsCore::EnumMemoryLevel::Aggressive:
         {
             qulonglong freeMemory = getFreeMemory();
             if (m_allocatedPixmapsTotalMemory > freeMemory) clipValue = (m_allocatedPixmapsTotalMemory - freeMemory) / 2;
         }
         break;
-        case Settings::EnumMemoryLevel::Greedy:
+        case SettingsCore::EnumMemoryLevel::Greedy:
         {
             qulonglong freeSwap;
             qulonglong freeMemory = getFreeMemory( &freeSwap );
@@ -1020,12 +1020,12 @@ void DocumentPrivate::saveDocumentInfo() const
 void DocumentPrivate::slotTimedMemoryCheck()
 {
     // [MEM] clean memory (for 'free mem dependant' profiles only)
-    if ( Settings::memoryLevel() != Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Low &&
          m_allocatedPixmapsTotalMemory > 1024*1024 )
         cleanupPixmapMemory();
 }
 
-void DocumentPrivate::sendGeneratorRequest()
+void DocumentPrivate::sendGeneratorPixmapRequest()
 {
     /* If the pixmap cache will have to be cleaned in order to make room for the
      * next request, get the distance from the current viewport of the page
@@ -1199,7 +1199,7 @@ void DocumentPrivate::sendGeneratorRequest()
     {
         m_pixmapRequestsMutex.unlock();
         // pino (7/4/2006): set the polling interval from 10 to 30
-        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorRequest()) );
+        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorPixmapRequest()) );
     }
 }
 
@@ -1271,7 +1271,7 @@ void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low &&
          !m_allocatedPixmaps.isEmpty() && !m_pagesVector.isEmpty() )
         cleanupPixmapMemory();
 }
@@ -1347,66 +1347,73 @@ void DocumentPrivate::_o_configChanged()
     }
 }
 
-void DocumentPrivate::doContinueNextMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
+void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct)
 {
-    RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
-    QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
-    RunningSearch *search = m_searches.value(searchID);
+    DoContinueDirectionMatchSearchStruct *searchStruct = static_cast<DoContinueDirectionMatchSearchStruct *>(doContinueDirectionMatchSearchStruct);
+    RunningSearch *search = m_searches.value(searchStruct->searchID);
 
-    if ((m_searchCancelled && !match) || !search)
+    if ((m_searchCancelled && !searchStruct->match) || !search)
     {
         // if the user cancelled but he just got a match, give him the match!
         QApplication::restoreOverrideCursor();
 
         if (search) search->isCurrentlySearching = false;
 
-        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
-        delete pagesToNotify;
+        emit m_parent->searchFinished( searchStruct->searchID, Document::SearchCancelled );
+        delete searchStruct->pagesToNotify;
+        delete searchStruct;
         return;
     }
 
+    bool doContinue = false;
     // if no match found, loop through the whole doc, starting from currentPage
-    if ( !match )
+    if ( !searchStruct->match )
     {
-        int pageCount = m_pagesVector.count();
-        if (donePages < pageCount)
+        const int pageCount = m_pagesVector.count();
+        if (searchStruct->pagesDone < pageCount)
         {
-            bool doContinue = true;
-            if ( currentPage >= pageCount )
+            doContinue = true;
+            if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
-                if ( noDialogs || KMessageBox::questionYesNo(m_parent->widget(), i18n("End of document reached.\nContinue from the beginning?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    currentPage = 0;
+                const QString question = searchStruct->forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
+                if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_parent->widget(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                    searchStruct->currentPage = searchStruct->forward ? 0 : pageCount - 1;
                 else
                     doContinue = false;
-            }
-            if (doContinue)
-            {
-                // get page
-                Page * page = m_pagesVector[ currentPage ];
-                // request search page if needed
-                if ( !page->hasTextPage() )
-                    m_parent->requestTextPage( page->number() );
-                // if found a match on the current page, end the loop
-                match = page->findText( searchID, text, FromTop, caseSensitivity );
-
-                if ( !match )
-                {
-                    currentPage++;
-                    donePages++;
-                }
-                else
-                {
-                    donePages = 1;
-                }
-
-                QMetaObject::invokeMethod(m_parent, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
-                return;
             }
         }
     }
 
-    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
+    if (doContinue)
+    {
+        // get page
+        Page * page = m_pagesVector[ searchStruct->currentPage ];
+        // request search page if needed
+        if ( !page->hasTextPage() )
+            m_parent->requestTextPage( page->number() );
+
+        // if found a match on the current page, end the loop
+        searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
+
+        if ( !searchStruct->match )
+        {
+            if (searchStruct->forward) searchStruct->currentPage++;
+            else searchStruct->currentPage--;
+            searchStruct->pagesDone++;
+        }
+        else
+        {
+            searchStruct->pagesDone = 1;
+        }
+        
+        // Both of the previous if branches need to call doContinueDirectionMatchSearch
+        QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+    }
+    else
+    {
+        doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, searchStruct->moveViewport, searchStruct->color );
+        delete searchStruct;
+    }
 }
 
 void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color )
@@ -1457,69 +1464,6 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
     else emit m_parent->searchFinished( searchID, Document::NoMatchFound );
 
     delete pagesToNotify;
-}
-
-void DocumentPrivate::doContinuePrevMatchSearch(void *pagesToNotifySet, void * theMatch, int currentPage, int searchID, const QString & text, int theCaseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages)
-{
-    RegularAreaRect * match = static_cast<RegularAreaRect *>(theMatch);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
-    QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
-    RunningSearch *search = m_searches.value(searchID);
-
-    if ((m_searchCancelled && !match) || !search)
-    {
-        // if the user cancelled but he just got a match, give him the match!
-        QApplication::restoreOverrideCursor();
-
-        if (search) search->isCurrentlySearching = false;
-
-        emit m_parent->searchFinished( searchID, Document::SearchCancelled );
-        delete pagesToNotify;
-        return;
-    }
-
-
-    // if no match found, loop through the whole doc, starting from currentPage
-    if ( !match )
-    {
-        int pageCount = m_pagesVector.count();
-        if (donePages < pageCount)
-        {
-            bool doContinue = true;
-            if ( currentPage < 0 )
-            {
-                if ( noDialogs || KMessageBox::questionYesNo(m_parent->widget(), i18n("Beginning of document reached.\nContinue from the bottom?"), QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    currentPage = pageCount - 1;
-                else
-                    doContinue = false;
-            }
-            if (doContinue)
-            {
-                // get page
-                Page * page = m_pagesVector[ currentPage ];
-                // request search page if needed
-                if ( !page->hasTextPage() )
-                    m_parent->requestTextPage( page->number() );
-                // if found a match on the current page, end the loop
-                match = page->findText( searchID, text, FromBottom, caseSensitivity );
-
-                if ( !match )
-                {
-                    currentPage--;
-                    donePages++;
-                }
-                else
-                {
-                    donePages = 1;
-                }
-
-                QMetaObject::invokeMethod(m_parent, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, donePages));
-                return;
-            }
-        }
-    }
-
-    doProcessSearchMatch( match, search, pagesToNotify, currentPage, searchID, moveViewport, color );
 }
 
 void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color)
@@ -1739,10 +1683,10 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
         // load paper color from Settings, or use the default color (white)
         // if we were told to do so
         QColor color;
-        if ( ( Settings::renderMode() == Settings::EnumRenderMode::Paper )
-             && Settings::changeColors() )
+        if ( ( SettingsCore::renderMode() == SettingsCore::EnumRenderMode::Paper )
+             && SettingsCore::changeColors() )
         {
-            color = Settings::paperColor();
+            color = SettingsCore::paperColor();
         }
         else if ( giveDefault )
         {
@@ -1752,13 +1696,13 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
     }
     else if ( key == QLatin1String( "ZoomFactor" ) )
     {
-        return Settings::zoomFactor();
+        return SettingsCore::zoomFactor();
     }
     else if ( key == QLatin1String( "TextAntialias" ) )
     {
-        switch ( Settings::textAntialias() )
+        switch ( SettingsCore::textAntialias() )
         {
-            case Settings::EnumTextAntialias::Enabled:
+            case SettingsCore::EnumTextAntialias::Enabled:
                 return true;
                 break;
 #if 0
@@ -1767,31 +1711,31 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
                 return true;
                 break;
 #endif
-            case Settings::EnumTextAntialias::Disabled:
+            case SettingsCore::EnumTextAntialias::Disabled:
                 return false;
                 break;
         }
     }
     else if ( key == QLatin1String( "GraphicsAntialias" ) )
     {
-        switch ( Settings::graphicsAntialias() )
+        switch ( SettingsCore::graphicsAntialias() )
         {
-            case Settings::EnumGraphicsAntialias::Enabled:
+            case SettingsCore::EnumGraphicsAntialias::Enabled:
                 return true;
                 break;
-            case Settings::EnumGraphicsAntialias::Disabled:
+            case SettingsCore::EnumGraphicsAntialias::Disabled:
                 return false;
                 break;
         }
     }
     else if ( key == QLatin1String( "TextHinting" ) )
     {
-        switch ( Settings::textHinting() )
+        switch ( SettingsCore::textHinting() )
         {
-            case Settings::EnumTextHinting::Enabled:
+            case SettingsCore::EnumTextHinting::Enabled:
                 return true;
                 break;
-            case Settings::EnumTextHinting::Disabled:
+            case SettingsCore::EnumTextHinting::Disabled:
                 return false;
                 break;
         }
@@ -1809,7 +1753,7 @@ Document::Document( QWidget *widget )
 
     connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
-    connect( Settings::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
+    connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
 
     qRegisterMetaType<Okular::FontInfo>();
 }
@@ -1927,7 +1871,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         // sort the offers: the offers with an higher priority come before
         qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
 
-        if ( Settings::chooseGenerators() )
+        if ( SettingsCore::chooseGenerators() )
         {
             QStringList list;
             for ( int i = 0; i < offercount; ++i )
@@ -2267,7 +2211,7 @@ void Document::reparseConfig()
     }
 
     // free memory if in 'low' profile
-    if ( Settings::memoryLevel() == Settings::EnumMemoryLevel::Low &&
+    if ( SettingsCore::memoryLevel() == SettingsCore::EnumMemoryLevel::Low &&
          !d->m_allocatedPixmaps.isEmpty() && !d->m_pagesVector.isEmpty() )
         d->cleanupPixmapMemory();
 }
@@ -2434,7 +2378,7 @@ bool Document::isAllowed( Permission action ) const
         return false;
 
 #if !OKULAR_FORCE_DRM
-    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::Settings::obeyDRM() )
+    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::SettingsCore::obeyDRM() )
         return true;
 #endif
 
@@ -2592,7 +2536,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 2. [ADD TO STACK] add requests to stack
-    bool threadingDisabled = !Settings::enableThreading();
     QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
     for ( ; rIt != rEnd; ++rIt )
     {
@@ -2610,9 +2553,6 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
         if ( !request->asynchronous() )
             request->d->mPriority = 0;
-
-        if ( request->asynchronous() && threadingDisabled )
-            request->d->mAsynchronous = false;
 
         // add request to the 'stack' at the right place
         if ( !request->priority() )
@@ -2633,9 +2573,9 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     // 3. [START FIRST GENERATION] if <NO>generator is ready, start a new generation,
     // or else (if gen is running) it will be started when the new contents will
     //come from generator (in requestDone())</NO>
-    // all handling of requests put into sendGeneratorRequest
+    // all handling of requests put into sendGeneratorPixmapRequest
     //    if ( generator->canRequestPixmap() )
-        d->sendGeneratorRequest();
+        d->sendGeneratorPixmapRequest();
 }
 
 void Document::requestTextPage( uint page )
@@ -2967,6 +2907,8 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     //if ( viewport == oldViewport )
     //    kDebug(OkularDebug) << "setViewport with the same viewport.";
 
+    const int oldPageNumber = oldViewport.pageNumber;
+
     // set internal viewport taking care of history
     if ( oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() )
     {
@@ -2986,11 +2928,20 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
         d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), viewport );
     }
 
+    const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
+
+    const bool currentPageChanged = (oldPageNumber != currentViewportPage);
+
     // notify change to all other (different from id) observers
     QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
     for ( ; it != end ; ++ it )
+    {
         if ( it.key() != excludeId )
             (*it)->notifyViewportChanged( smoothMove );
+
+        if ( currentPageChanged )
+            (*it)->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
+    }
 }
 
 void Document::setZoom(int factor, int excludeId)
@@ -3109,37 +3060,14 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         QMetaObject::invokeMethod(this, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color));
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
-    else if ( type == NextMatch )
-    {
-        // find out from where to start/resume search from
-        int viewportPage = (*d->m_viewportIterator).pageNumber;
-        int currentPage = fromStart ? 0 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
-        Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
-        int pagesDone = 0;
-
-        // continue checking last TextPage first (if it is the current page)
-        RegularAreaRect * match = 0;
-        if ( lastPage && lastPage->number() == s->continueOnPage )
-        {
-            if ( newText )
-                match = lastPage->findText( searchID, text, FromTop, caseSensitivity );
-            else
-                match = lastPage->findText( searchID, text, NextResult, caseSensitivity, &s->continueOnMatch );
-            if ( !match )
-            {
-                currentPage++;
-                pagesDone++;
-            }
-        }
-
-        QMetaObject::invokeMethod(this, "doContinueNextMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
-    }
     // 3. PREVMATCH - find previous matching item (or start from bottom)
-    else if ( type == PreviousMatch )
+    else if ( type == NextMatch || type == PreviousMatch )
     {
         // find out from where to start/resume search from
-        int viewportPage = (*d->m_viewportIterator).pageNumber;
-        int currentPage = fromStart ? d->m_pagesVector.count() - 1 : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
+        const bool forward = type == NextMatch;
+        const int viewportPage = (*d->m_viewportIterator).pageNumber;
+        const int fromStartSearchPage = forward ? 0 : d->m_pagesVector.count() - 1;
+        int currentPage = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
         Page * lastPage = fromStart ? 0 : d->m_pagesVector[ currentPage ];
         int pagesDone = 0;
 
@@ -3148,17 +3076,31 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
-                match = lastPage->findText( searchID, text, FromBottom, caseSensitivity );
+                match = lastPage->findText( searchID, text, forward ? FromTop : FromBottom, caseSensitivity );
             else
-                match = lastPage->findText( searchID, text, PreviousResult, caseSensitivity, &s->continueOnMatch );
+                match = lastPage->findText( searchID, text, forward ? NextResult : PreviousResult, caseSensitivity, &s->continueOnMatch );
             if ( !match )
             {
-                currentPage--;
+                if (forward) currentPage++;
+                else currentPage--;
                 pagesDone++;
             }
         }
+        
+        DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
+        searchStruct->forward = forward;
+        searchStruct->pagesToNotify = pagesToNotify;
+        searchStruct->match = match;
+        searchStruct->currentPage = currentPage;
+        searchStruct->searchID = searchID;
+        searchStruct->text = text;
+        searchStruct->caseSensitivity = caseSensitivity;
+        searchStruct->moveViewport = moveViewport;
+        searchStruct->color = color;
+        searchStruct->noDialogs = noDialogs;
+        searchStruct->pagesDone = pagesDone;
 
-        QMetaObject::invokeMethod(this, "doContinuePrevMatchSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, match), Q_ARG(int, currentPage), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(bool, moveViewport), Q_ARG(QColor, color), Q_ARG(bool, noDialogs), Q_ARG(int, pagesDone));
+        QMetaObject::invokeMethod(this, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
     }
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )
@@ -3491,6 +3433,19 @@ void Document::processAction( const Action * action )
         case Action::Movie:
             emit processMovieAction( static_cast< const MovieAction * >( action ) );
             break;
+        case Action::Rendition: {
+            const RenditionAction * linkrendition = static_cast< const RenditionAction * >( action );
+            if ( !linkrendition->script().isEmpty() )
+            {
+                if ( !d->m_scripter )
+                    d->m_scripter = new Scripter( d );
+                d->m_scripter->execute( linkrendition->scriptType(), linkrendition->script() );
+            }
+            else
+            {
+                emit processRenditionAction( static_cast< const RenditionAction * >( action ) );
+            }
+            } break;
     }
 }
 
@@ -3526,12 +3481,12 @@ void Document::processSourceReference( const SourceReference * ref )
         editors = buildEditorsMap();
     }
 
-    QHash< int, QString >::const_iterator it = editors.constFind( Settings::externalEditor() );
+    QHash< int, QString >::const_iterator it = editors.constFind( SettingsCore::externalEditor() );
     QString p;
     if ( it != editors.constEnd() )
         p = *it;
     else
-        p = Settings::externalEditorCommand();
+        p = SettingsCore::externalEditorCommand();
     // custom editor not yet configured
     if ( p.isEmpty() )
         return;
@@ -4095,7 +4050,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     bool hasPixmaps = !m_pixmapRequestsStack.isEmpty();
     m_pixmapRequestsMutex.unlock();
     if ( hasPixmaps )
-        sendGeneratorRequest();
+        sendGeneratorPixmapRequest();
 }
 
 void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundingBox )
@@ -4121,21 +4076,21 @@ void DocumentPrivate::setPageBoundingBox( int page, const NormalizedRect& boundi
 void DocumentPrivate::calculateMaxTextPages()
 {
     int multipliers = qMax(1, qRound(getTotalMemory() / 536870912.0)); // 512 MB
-    switch (Settings::memoryLevel())
+    switch (SettingsCore::memoryLevel())
     {
-        case Settings::EnumMemoryLevel::Low:
+        case SettingsCore::EnumMemoryLevel::Low:
             m_maxAllocatedTextPages = multipliers * 2;
         break;
 
-        case Settings::EnumMemoryLevel::Normal:
+        case SettingsCore::EnumMemoryLevel::Normal:
             m_maxAllocatedTextPages = multipliers * 50;
         break;
 
-        case Settings::EnumMemoryLevel::Aggressive:
+        case SettingsCore::EnumMemoryLevel::Aggressive:
             m_maxAllocatedTextPages = multipliers * 250;
         break;
 
-        case Settings::EnumMemoryLevel::Greedy:
+        case SettingsCore::EnumMemoryLevel::Greedy:
             m_maxAllocatedTextPages = multipliers * 1250;
         break;
     }

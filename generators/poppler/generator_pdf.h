@@ -128,8 +128,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
-        void resolveMovieLinkReferences( Okular::Page *page );
-        void resolveMovieLinkReference( Okular::Action *action, Okular::Page *page );
+        void resolveMediaLinkReferences( Okular::Page *page );
+        void resolveMediaLinkReference( Okular::Action *action );
 
         bool setDocumentRenderHints();
 

@@ -48,6 +48,7 @@ class Action;
 class MovieAction;
 class Page;
 class PixmapRequest;
+class RenditionAction;
 class SourceReference;
 class View;
 class VisiblePageRect;
@@ -801,6 +802,13 @@ class OKULAR_EXPORT Document : public QObject
          */
         void processMovieAction( const Okular::MovieAction *action );
 
+        /**
+         * This signal is emitted whenever an rendition action is triggered and the UI should process it.
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        void processRenditionAction( const Okular::RenditionAction *action );
+
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
@@ -811,7 +819,7 @@ class OKULAR_EXPORT Document : public QObject
 
         Q_PRIVATE_SLOT( d, void saveDocumentInfo() const )
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
-        Q_PRIVATE_SLOT( d, void sendGeneratorRequest() )
+        Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
         Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
@@ -820,8 +828,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void _o_configChanged() )
 
         // search thread simulators
-        Q_PRIVATE_SLOT( d, void doContinueNextMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
-        Q_PRIVATE_SLOT( d, void doContinuePrevMatchSearch(void *pagesToNotifySet, void * match, int currentPage, int searchID, const QString & text, int caseSensitivity, bool moveViewport, const QColor & color, bool noDialogs, int donePages) )
+        Q_PRIVATE_SLOT( d, void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct) )
         Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color) )
         Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int caseSensitivity, const QColor & color, bool matchAll) )
 };

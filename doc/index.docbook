@@ -16,7 +16,7 @@ Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
 Context menu actions like Rename Bookmarks etc)
  -->
-<book lang="&language;">
+<book id="okular" lang="&language;">
 	<bookinfo>
 		<title>The &okular; Handbook</title>
 		<authorgroup>
@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-06-29</date>
-		<releaseinfo>0.15 (&kde; 4.9)</releaseinfo>
+		<date>2012-09-09</date>
+		<releaseinfo>0.15.70 (&kde; 4.10)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -278,8 +278,9 @@ Add a 'Find Previous' entry
 			<para>
 				You can also draw on the current page with a pencil. Click on the
 				<guilabel>Toggle Drawing Mode</guilabel> icon in the top bar to enable or disable the possibility
-				of draw in the presentation mode. The drawings are cleared automatically when leaving the presentation
-				mode, switching to another page, or manually selecting the <guilabel>Erase Drawings</guilabel> icon in the top bar.
+				to draw in the presentation mode. The drawings are cleared automatically when leaving the presentation
+				mode. You can also click on the <guilabel>Erase Drawings</guilabel> icon to remove the
+				drawings in the current page.
 			</para>
 			<para>
 				The presentation mode has support for more than one screen in a multi-monitor configuration.
@@ -292,7 +293,7 @@ Add a 'Find Previous' entry
 			</para>
 		</sect1>
 		<sect1 id="inverse_search">
-		
+
 		<title>Inverse Search between &latex; Editors and &okular;</title>
 
 		<para>Inverse search is a very useful feature when you are writing a &latex; document yourself. If everything is set up properly, you can
@@ -311,7 +312,7 @@ Add a 'Find Previous' entry
 		corresponding line. Remember to tell &okular; to use proper editor, in &okular;'s
 		menu item <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Okular...</guimenuitem></menuchoice>
 		(on the page <guimenuitem>Editor</guimenuitem>).</para>
-		
+
 		<para>For more details on editor configuration please refer to the <link linkend="configeditor">corresponding section of this manual</link>.</para>
 
 		<screenshot>
@@ -411,7 +412,7 @@ Add a 'Find Previous' entry
 			</para>
 				<note>
 					<para>
-						It is not possible to save annotations into &PDF; file if original file was encrypted.
+						It is not possible to save annotations into &PDF; file if original file was encrypted and &okular; uses Poppler libraries of version which is lower than 0.22.
 					</para>
 				</note>
 				<note>
@@ -433,7 +434,12 @@ Add a 'Find Previous' entry
 					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
-					its buttons to start constructing that annotation.
+					its buttons to start constructing that annotation.</para>
+				<para>
+                                        With a single &LMB; click on an annotation tool button you can use a tool once. 
+					If you &eg; want to highlight all important parts of a text, activate that tool 
+					permanently by double clicking on the tool button. 
+					Press the <keycap>Esc</keycap> key or click the tool button again to leave the permanent mode.
 				</para>
 				<note>
 					<para>
@@ -627,7 +633,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not encrypted or secured using DRM) to save annotations with &PDF; files (Poppler >= 0.20 required).</para>
+					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files (Poppler >= 0.22 required).</para>
 					</listitem>
 				</varlistentry>
 
@@ -641,6 +647,7 @@ Add a 'Find Previous' entry
 					<listitem>
 						<para><action>Save</action> a copy of the currently open file under a different name
 						without using the current document backend.</para>
+                                                <!-- does not save the annotations, they are still coupled to the original file-->
 					</listitem>
 				</varlistentry>
 
@@ -1450,11 +1457,18 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Display document title in title bar</guilabel></term>
+					<term><guilabel>Display document title in title bar if available</guilabel></term>
 					<listitem>
 						<para>Whether to show the current document title in the title bar of &okular; window. If no metadata for title
 						found in the document or this item is unchecked &okular; shows filename of the document.
 						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>When not displaying document title</guilabel></term>
+					<listitem>
+					  <para>You can choose any of two options, <guilabel>Display file name only</guilabel> or <guilabel>Display full file path</guilabel>.
+					  </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1571,14 +1585,6 @@ Add a 'Find Previous' entry
 						<para>Draw selections and other special graphics using
 							transparency effects. Disable the option to draw them using
 							outline or opaque fill styles and increase speed on selections.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Enable background generation</guilabel></term>
-					<listitem>
-						<para>Use a background thread to generate the pages. By disabling
-							this option the user interface will become less reactive (will be blocked
-							if necessary), but pages will be displayed a bit faster.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

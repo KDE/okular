@@ -277,6 +277,8 @@ static bool keepFileOpen()
 }
 #endif
 
+int Okular::Part::numberOfParts = 0;
+
 namespace Okular
 {
 
@@ -302,8 +304,13 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
         }
     }
     Okular::Settings::instance( configFileName );
-
-    QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
+    
+    numberOfParts++;
+    if (numberOfParts == 1) {
+        QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
+    } else {
+        QDBusConnection::sessionBus().registerObject(QString("/okular%1").arg(numberOfParts), this, QDBusConnection::ExportScriptableSlots);
+    }
 
     // connect the started signal to tell the job the mimetypes we like,
     // and get some more information from it
@@ -408,7 +415,6 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     connect( m_topMessage, SIGNAL(action()), this, SLOT(slotShowEmbeddedFiles()) );
     rightLayout->addWidget( m_topMessage );
     m_formsMessage = new PageViewTopMessage( rightContainer );
-    m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
@@ -991,7 +997,7 @@ void Part::setWindowTitleFromDocument()
 {
     // If 'DocumentTitle' should be used, check if the document has one. If
     // either case is false, use the file name.
-    QString title = realUrl().fileName();
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? realUrl().pathOrUrl() : realUrl().fileName();
 
     if ( Okular::Settings::displayDocumentTitle() )
     {
@@ -1197,6 +1203,7 @@ bool Part::openFile()
     bool canSearch = m_document->supportsSearching();
 
     // update one-time actions
+    emit enableCloseAction( ok );
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
@@ -1208,8 +1215,24 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles );
+
+    // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
+    if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )
+    {
+        m_formsMessage->setup( i18n( "This document has XFA forms, which are currently <b>unsupported</b>." ), KIcon( "dialog-warning" ) );
+        m_formsMessage->setVisible( true );
+    }
     // m_pageView->toggleFormsAction() may be null on dummy mode
-    m_formsMessage->setVisible( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() );
+    else if ( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() )
+    {
+        m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        m_formsMessage->setVisible( true );
+    }
+    else
+    {
+        m_formsMessage->setVisible( false );
+    }
+
     if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
     if ( ok )
     {
@@ -1247,6 +1270,7 @@ bool Part::openFile()
         // if can't open document, update windows so they display blank contents
         m_pageView->viewport()->update();
         m_thumbnailList->update();
+        setUrl( KUrl() );
         return false;
     }
 
@@ -1371,6 +1395,7 @@ bool Part::closeUrl(bool promptToSave)
     }
 
     slotHidePresentation();
+    emit enableCloseAction( false );
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );

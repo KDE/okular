@@ -14,6 +14,7 @@
 
 // local includes
 #include "document.h"
+#include "movie.h"
 #include "sourcereference_p.h"
 #include "sound.h"
 
@@ -460,5 +461,100 @@ void MovieAction::setAnnotation( MovieAnnotation *annotation )
 MovieAnnotation* MovieAction::annotation() const
 {
     Q_D( const Okular::MovieAction );
+    return d->m_annotation;
+}
+
+// RenditionAction
+
+class Okular::RenditionActionPrivate : public Okular::ActionPrivate
+{
+    public:
+        RenditionActionPrivate( RenditionAction::OperationType operation, Okular::Movie *movie, enum ScriptType scriptType, const QString &script )
+            : ActionPrivate(), m_operation( operation ), m_movie( movie ), m_scriptType( scriptType ),
+              m_script( script ), m_annotation( 0 )
+        {
+        }
+
+
+        RenditionAction::OperationType m_operation;
+        Okular::Movie *m_movie;
+        ScriptType m_scriptType;
+        QString m_script;
+        ScreenAnnotation *m_annotation;
+};
+
+RenditionAction::RenditionAction( OperationType operation, Okular::Movie *movie, enum ScriptType scriptType, const QString &script )
+    : Action( *new RenditionActionPrivate( operation, movie, scriptType, script ) )
+{
+}
+
+RenditionAction::~RenditionAction()
+{
+}
+
+Action::ActionType RenditionAction::actionType() const
+{
+    return Rendition;
+}
+
+QString RenditionAction::actionTip() const
+{
+    Q_D( const Okular::RenditionAction );
+
+    switch ( d->m_operation )
+    {
+      default:
+      case None:
+          switch ( d->m_scriptType )
+          {
+              case JavaScript:
+                  return i18n( "JavaScript Script" );
+              default:
+                  return QString();
+          }
+      case Play:
+          return i18n( "Play movie" );
+      case Stop:
+          return i18n( "Stop movie" );
+      case Pause:
+          return i18n( "Pause movie" );
+      case Resume:
+          return i18n( "Resume movie" );
+    }
+}
+
+RenditionAction::OperationType RenditionAction::operation() const
+{
+    Q_D( const Okular::RenditionAction );
+    return d->m_operation;
+}
+
+Okular::Movie* RenditionAction::movie() const
+{
+    Q_D( const Okular::RenditionAction );
+    return d->m_movie;
+}
+
+ScriptType RenditionAction::scriptType() const
+{
+    Q_D( const Okular::RenditionAction );
+    return d->m_scriptType;
+}
+
+QString RenditionAction::script() const
+{
+    Q_D( const Okular::RenditionAction );
+    return d->m_script;
+}
+
+void RenditionAction::setAnnotation( ScreenAnnotation *annotation )
+{
+    Q_D( Okular::RenditionAction );
+    d->m_annotation = annotation;
+}
+
+ScreenAnnotation* RenditionAction::annotation() const
+{
+    Q_D( const Okular::RenditionAction );
     return d->m_annotation;
 }

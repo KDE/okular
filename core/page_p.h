@@ -14,7 +14,7 @@
 // qt/kde includes
 #include <qlinkedlist.h>
 #include <qmap.h>
-#include <qmatrix.h>
+#include <qtransform.h>
 #include <qstring.h>
 #include <qdom.h>
 
@@ -58,7 +58,7 @@ class PagePrivate
         ~PagePrivate();
 
         void imageRotationDone( RotationJob * job );
-        QMatrix rotationMatrix() const;
+        QTransform rotationMatrix() const;
 
         /**
          * Loads the local contents (e.g. annotations) of the page.

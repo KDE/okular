@@ -18,12 +18,18 @@
 
 #include <kparts/mainwindow.h>
 
+#include <QtDBus/QtDBus>
+
 class KCmdLineArgs;
 class KRecentFilesAction;
 class KToggleAction;
 
 class KDocumentViewer;
 class Part;
+
+#ifdef KActivities_FOUND
+namespace KActivities { class ResourceInstance; }
+#endif
 
 /**
  * This is the application "Shell".  It has a menubar and a toolbar
@@ -36,6 +42,7 @@ class Part;
 class Shell : public KParts::MainWindow
 {
   Q_OBJECT
+  Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
 
 public:
   /**
@@ -51,6 +58,8 @@ public:
   QSize sizeHint() const;
 public slots:
   void slotQuit();
+  
+  Q_SCRIPTABLE Q_NOREPLY void tryRaise();
 
 protected:
   /**
@@ -80,6 +89,8 @@ private slots:
 
   void openUrl( const KUrl & url );
   void delayedOpen();
+  void showOpenRecentMenu();
+  void closeUrl();
 
 signals:
   void restoreDocument(const KConfigGroup &group);
@@ -99,10 +110,16 @@ private:
   QStringList m_fileformats;
   bool m_fileformatsscanned;
   KAction* m_printAction;
+  KAction* m_closeAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
+  bool m_unique;
   KUrl m_openUrl;
+
+#ifdef KActivities_FOUND
+  KActivities::ResourceInstance* m_activityResource;
+#endif
 };
 
 #endif

@@ -5,6 +5,11 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
  <include>kuser.h</include>
  <kcfgfile arg="true" />
+ <group name="Dlg Performance" >
+  <entry key="EnableCompositing" type="Bool" >
+   <default>true</default>
+  </entry>
+ </group>
  <group name="Debugging Options" >
   <entry key="DebugDrawBoundaries" type="Bool" >
    <default>false</default>
@@ -13,95 +18,48 @@
    <default>false</default>
   </entry>
  </group>
- <group name="Dlg Accessibility" >
-  <entry key="PaperColor" type="Color" >
-   <default code="true" >Qt::white</default>
-  </entry>
-  <entry key="HighlightImages" type="Bool" >
+ <group name="Contents" >
+  <entry key="ContentsSearchCaseSensitive" type="Bool">
    <default>false</default>
   </entry>
-  <entry key="HighlightLinks" type="Bool" >
+  <entry key="ContentsSearchRegularExpression" type="Bool">
    <default>false</default>
-  </entry>
-  <entry key="ChangeColors" type="Bool" >
-   <default>false</default>
-  </entry>
-  <entry key="RenderMode" type="Enum" >
-   <default>Inverted</default>
-   <choices>
-    <choice name="Inverted" />
-    <choice name="Paper" />
-    <choice name="Recolor" />
-    <choice name="BlackWhite" />
-   </choices>
-  </entry>
-  <entry key="RecolorForeground" type="Color" >
-   <default code="true" >0x600000</default>
-  </entry>
-  <entry key="RecolorBackground" type="Color" >
-   <default code="true" >0xF0F0F0</default>
-  </entry>
-  <entry key="BWThreshold" type="UInt" >
-   <default>127</default>
-   <min>2</min>
-   <max>253</max>
-  </entry>
-  <entry key="BWContrast" type="UInt" >
-   <default>2</default>
-   <min>2</min>
-   <max>6</max>
   </entry>
  </group>
- <group name="Dlg Performance" >
-  <entry key="MemoryLevel" type="Enum" >
-   <default>Normal</default>
-   <choices>
-    <choice name="Low" />
-    <choice name="Normal" />
-    <choice name="Aggressive" />
-    <choice name="Greedy" />
-   </choices>
+ <group name="Reviews" >
+  <entry key="ReviewsSearchCaseSensitive" type="Bool">
+   <default>false</default>
   </entry>
-  <entry key="EnableCompositing" type="Bool" >
+  <entry key="ReviewsSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
+ <group name="Zoom">
+   <entry key="ZoomMode" type="UInt" >
+    <default>1</default>
+    <max>2</max>
+   </entry>
+ </group>
+ <group name="General" >
+  <entry key="ShowOSD" type="Bool" >
    <default>true</default>
   </entry>
-  <entry key="EnableThreading" type="Bool" >
+  <entry key="DisplayDocumentTitle" type="Bool" >
    <default>true</default>
-  </entry>
-  <entry key="TextAntialias" type="Enum" >
-   <default>Enabled</default>
+ </entry>
+ <entry key="DisplayDocumentNameOrPath" type="Enum" >
+   <default>Name</default>
    <choices>
-    <choice name="Enabled" />
-    <choice name="Disabled" />
+     <choice name="Name" />
+     <choice name="Path" />
    </choices>
-  </entry>
-  <entry key="GraphicsAntialias" type="Enum" >
-   <default>Enabled</default>
-   <choices>
-    <choice name="Enabled" />
-    <choice name="Disabled" />
-   </choices>
-  </entry>
-  <entry key="TextHinting" type="Enum" >
-   <default>Disabled</default>
-   <choices>
-    <choice name="Enabled" />
-    <choice name="Disabled" />
-   </choices>
+ </entry>
+  <entry key="UseKTTSD" type="Bool" />
+  <entry key="WatchFile" type="Bool" >
+   <default>true</default>
   </entry>
  </group>
  <group name="Dlg Presentation" >
-  <entry key="SlidesAdvance" type="Bool" >
-   <default>false</default>
-  </entry>
-  <entry key="SlidesAdvanceTime" type="UInt" >
-   <default>5</default>
-   <min>1</min>
-   <max>3600</max>
-  </entry>
-  <entry key="SlidesLoop" type="Bool" >
-   <default>false</default>
-  </entry>
   <entry key="SlidesBackgroundColor" type="Color" >
    <default code="true" >Qt::black</default>
   </entry>
@@ -152,38 +110,6 @@
    <default>-2</default>
    <min>-2</min>
    <max>20</max>
-  </entry>
- </group>
- <group name="General" >
-  <entry key="ObeyDRM" type="Bool" >
-   <default>true</default>
-  </entry>	  	
-  <entry key="ChooseGenerators" type="Bool" >
-   <default>false</default>
-  </entry>
-  <entry key="ShowOSD" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="DisplayDocumentTitle" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="UseKTTSD" type="Bool" />
-  <entry key="WatchFile" type="Bool" >
-   <default>true</default>
-  </entry>
-  <entry key="ExternalEditor" type="Enum" >
-   <default>Kate</default>
-   <choices>
-    <choice name="Custom" />
-    <choice name="Kate" />
-    <choice name="Kile" />
-    <choice name="Scite" />
-    <choice name="Emacsclient" />
-    <choice name="Lyxclient" />
-   </choices>
-  </entry>
-  <entry key="ExternalEditorCommand" type="String">
-    <default>kate --use --line %l --column %c</default>
   </entry>
  </group>
  <group name="Main View" >
@@ -263,17 +189,40 @@
     <choice name="TableSelect" />
    </choices>
   </entry>
-  <entry key="ZoomMode" type="UInt" >
-    <default>1</default>
-    <max>2</max>
-  </entry>
-  <entry key="ZoomFactor" type="Double" >
-    <default>1.0</default>
-    <min>0.1</min>
-    <max>16.0</max>
-  </entry>
   <entry key="ShowSourceLocationsGraphically" type="Bool" >
    <default>false</default>
+  </entry>
+ </group>
+ <group name="Search" >
+  <entry key="SearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="SearchFromCurrentPage" type="Bool">
+   <default>true</default>
+  </entry>
+ </group>
+ <group name="Dlg Accessibility" >
+  <entry key="HighlightImages" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="HighlightLinks" type="Bool" >
+   <default>false</default>
+  </entry>
+  <entry key="RecolorForeground" type="Color" >
+   <default code="true" >0x600000</default>
+  </entry>
+  <entry key="RecolorBackground" type="Color" >
+   <default code="true" >0xF0F0F0</default>
+  </entry>
+  <entry key="BWThreshold" type="UInt" >
+   <default>127</default>
+   <min>2</min>
+   <max>253</max>
+  </entry>
+  <entry key="BWContrast" type="UInt" >
+   <default>2</default>
+   <min>2</min>
+   <max>6</max>
   </entry>
  </group>
  <group name="Identity" >
@@ -287,30 +236,6 @@
       }
     </code>
     <default code="true">userString</default>
-  </entry>
- </group>
- <group name="Search" >
-  <entry key="SearchCaseSensitive" type="Bool">
-   <default>false</default>
-  </entry>
-  <entry key="SearchFromCurrentPage" type="Bool">
-   <default>true</default>
-  </entry>
- </group>
- <group name="Contents" >
-  <entry key="ContentsSearchCaseSensitive" type="Bool">
-   <default>false</default>
-  </entry>
-  <entry key="ContentsSearchRegularExpression" type="Bool">
-   <default>false</default>
-  </entry>
- </group>
- <group name="Reviews" >
-  <entry key="ReviewsSearchCaseSensitive" type="Bool">
-   <default>false</default>
-  </entry>
-  <entry key="ReviewsSearchRegularExpression" type="Bool">
-   <default>false</default>
   </entry>
  </group>
 </kcfg>

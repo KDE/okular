@@ -227,15 +227,13 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
 {
     if ( memoryToFree > 0 )
     {
-        // Number of one of the visible pages (to be used by tiles cleanup)
-        int visiblePageNumber = -1;
+        const int currentViewportPage = (*m_viewportIterator).pageNumber;
+
+        // Create a QMap of visible rects, indexed by page number
         QMap< int, VisiblePageRect * > visibleRects;
         QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
         for ( ; vIt != vEnd; ++vIt )
-        {
-            visiblePageNumber = (*vIt)->pageNumber;
             visibleRects.insert( (*vIt)->pageNumber, (*vIt) );
-        }
 
         // Free memory starting from pages that are farthest from the current one
         int pagesFreed = 0;
@@ -262,8 +260,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             delete p;
         }
 
-        // If we're still on low memory, try to free individual tiles based on
-        // a ranking algorithm
+        // If we're still on low memory, try to free individual tiles
 
         // Store pages that weren't completely removed
         QLinkedList< AllocatedPixmap * > pixmapsToKeep;
@@ -276,17 +273,17 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             TilesManager *tilesManager = m_pagesVector.at( p->page )->tilesManager( p->id );
             if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
-                int memoryDiff = p->memory;
-                NormalizedRect currentViewport;
+                qulonglong memoryDiff = p->memory;
+                NormalizedRect visibleRect;
                 if ( visibleRects.contains( p->page ) )
-                    currentViewport = visibleRects[ p->page ]->rect;
+                    visibleRect = visibleRects[ p->page ]->rect;
 
-                // Cleanup non visible tiles based on its dirty state and distance from the viewport
-                tilesManager->cleanupPixmapMemory( memoryToFree, currentViewport, visiblePageNumber );
+                // Free non visible tiles
+                tilesManager->cleanupPixmapMemory( memoryToFree, visibleRect, currentViewportPage );
 
                 p->memory = tilesManager->totalMemory();
                 memoryDiff -= p->memory;
-                memoryToFree = memoryToFree - memoryDiff;
+                memoryToFree = (memoryDiff < memoryToFree) ? (memoryToFree - memoryDiff) : 0;
                 m_allocatedPixmapsTotalMemory -= memoryDiff;
 
                 if ( p->memory > 0 )

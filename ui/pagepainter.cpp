@@ -87,8 +87,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, backgroundColor );
 
+    const bool hasTilesManager = ( pixID == PAGEVIEW_ID && page->hasTilesManager() );
     const QPixmap *pixmap = 0;
-    if ( !page->hasTilesManager() )
+
+    if ( !hasTilesManager )
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
         pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
@@ -240,7 +242,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
     if ( !useBackBuffer )
     {
-        if ( page->hasTilesManager() )
+        if ( hasTilesManager )
         {
             const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
             const QList<Okular::Tile> tiles = page->tilesAt( crop | normalizedLimits, false );
@@ -293,7 +295,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
             has_alpha = true;
 
-        if ( page->hasTilesManager() )
+        if ( hasTilesManager )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
             backImage.fill( paperColor.rgb() );

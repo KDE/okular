@@ -1105,7 +1105,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             if ( !r->normalizedRect().isNull() )
             {
                 NormalizedRect tilesRect;
-                QList<Tile> tiles = tilesManager->tilesAt( r->normalizedRect() );
+                const QList<Tile> tiles = tilesManager->tilesAt( r->normalizedRect() );
                 QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -1314,7 +1314,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
                 break;
             }
         }
-        QList<Tile> tiles = tilesManager->tilesAt( visibleRect );
+        const QList<Tile> tiles = tilesManager->tilesAt( visibleRect );
         QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
         while ( tIt != tEnd )
         {

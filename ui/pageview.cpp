@@ -4129,7 +4129,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             if ( i->page()->hasTilesManager() )
             {
                 Okular::NormalizedRect tilesRect;
-                QList<Okular::Tile> tiles = i->page()->tilesAt( expandedVisibleRect );
+                const QList<Okular::Tile> tiles = i->page()->tilesAt( expandedVisibleRect );
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -4207,7 +4207,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     if ( pagehasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
-                        QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
+                        const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {
@@ -4255,7 +4255,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     if ( pagehasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
-                        QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
+                        const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {

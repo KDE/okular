@@ -45,6 +45,8 @@ class OKULAR_EXPORT Tile
     private:
         class Private;
         Private * d;
+
+        Tile& operator=( const Tile &other ); // Not implemented
 };
 
 }

@@ -42,8 +42,6 @@ class OKULAR_EXPORT Tile
          */
         bool isValid() const;
 
-        Tile & operator=( const Tile &t );
-
     private:
         class Private;
         Private * d;

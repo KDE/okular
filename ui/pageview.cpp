@@ -4133,7 +4133,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
-                    Okular::Tile tile = *tIt;
+                    const Okular::Tile &tile = *tIt;
                     if ( !tile.isValid() )
                     {
                         if ( tilesRect.isNull() )
@@ -4211,7 +4211,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {
-                            Okular::Tile tile = *tIt;
+                            const Okular::Tile &tile = *tIt;
                             if ( !tile.isValid() )
                             {
                                 if ( tilesRect.isNull() )
@@ -4259,7 +4259,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                         while ( tIt != tEnd )
                         {
-                            Okular::Tile tile = *tIt;
+                            const Okular::Tile &tile = *tIt;
                             if ( !tile.isValid() )
                             {
                                 if ( tilesRect.isNull() )

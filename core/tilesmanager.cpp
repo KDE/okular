@@ -613,19 +613,6 @@ Tile::Tile( const Tile &t )
     d->isValid = t.d->isValid;
 }
 
-Tile & Tile::operator=( const Tile &t )
-{
-    if ( this == &t )
-        return *this;
-
-    d = new Tile::Private;
-    d->rect = t.d->rect;
-    d->pixmap = t.d->pixmap;
-    d->isValid = t.d->isValid;
-
-    return *this;
-}
-
 Tile::~Tile()
 {
     delete d;

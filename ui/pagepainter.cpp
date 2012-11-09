@@ -249,7 +249,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
-                Okular::Tile tile = *tIt;
+                const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
                 if ( tile.pixmap() && !limitsInTile.isEmpty() )
@@ -305,7 +305,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
-                Okular::Tile tile = *tIt;
+                const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
                 if ( tile.pixmap() && !limitsInTile.isEmpty() )

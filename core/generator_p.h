@@ -77,10 +77,10 @@ class PixmapRequestPrivate
         int mWidth;
         int mHeight;
         int mPriority;
-        bool mAsynchronous;
+        bool mAsynchronous : 1;
         bool mForce : 1;
-        Page *mPage;
         bool mTile : 1;
+        Page *mPage;
         NormalizedRect mNormalizedRect;
 };
 

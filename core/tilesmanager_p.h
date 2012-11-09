@@ -18,6 +18,19 @@ namespace Okular {
 
 class Tile;
 
+/**
+ * Node in the quadtree structure used by the tiles manager to store tiles.
+ *
+ * Except for the first level, the tiles manager stores tiles in a quadtree
+ * structure.
+ * Each node stores the pixmap of a tile and its location on the page.
+ * There's a limit on the size of the pixmaps (TILES_MAXSIZE, defined in
+ * tilesmanager.cpp), and tiles that are bigger than that value are split into
+ * four children tiles, which are stored as children of the original tile.
+ * If children tiles are still too big, they are recursively split again.
+ * If the zoom level changes and a big tile goes below the limit, it is merged
+ * back into a leaf tile.
+ */
 class TileNode
 {
     public:
@@ -25,26 +38,39 @@ class TileNode
 
         bool isValid() const;
 
+        /**
+         * Location on the page in normalized coords
+         */
         NormalizedRect rect;
+
+        /**
+         * Associated pixmap or NULL if not present
+         *
+         * For each node, it is guaranteed that there's no more than one pixmap
+         * along the path from the root to the node itself.
+         * In fact, it is very frequent that a leaf node has no pixmap and one
+         * of its ancestors has. Such a situation shows, for example, when the
+         * parent tile still has a dirty tile from a previous lower zoom level.
+         */
         QPixmap *pixmap;
+
         /**
          * Whether the tile needs to be repainted (after a zoom or rotation)
          * If a tile doesn't have a pixmap but all its children are updated
          * (dirty = false), the parent tile is also considered updated.
          */
         bool dirty;
+
         /**
          * Distance between the tile and the viewport.
          * This is used by the evicting algorithm.
          */
         double distance;
+
         /**
          * Children tiles
-         * When a tile is split into multiple tiles it doesn't cease to exist.
-         * It actually adds children nodes to the data structure.
-         * Since each tile is a node on the tree structure, it's easier to
-         * consider if a large area should be evaluated without visiting all
-         * its tiles (eg: when we need to list all tiles from an small area)
+         * When a tile is split into multiple tiles, they're added as children.
+         * nTiles can be either 0 (in leaf tiles) or 4 (in split tiles).
          */
         TileNode *tiles;
         int nTiles;
@@ -54,15 +80,12 @@ class TileNode
 /**
  * @short Tiles management
  *
- * This class has direct access to all tiles and handle how they should be
+ * This class has direct access to all tiles and handles how they should be
  * stored, deleted and retrieved. Each tiles manager only handles one page.
  *
- * The tiles manager is a tree of tiles. At first the page is divided in 16
- * tiles. Then each one of these tiles can be split in more tiles (or merged
- * back to only one) so we keep the size of each pixmap of the tile inside a
- * safe interval.
- *
- * @since 0.16 (KDE 4.10)
+ * The tiles manager is a tree of tiles. At first the page is divided in a 4x4
+ * grid of 16 tiles. Then each of these tiles can be recursively split in 4
+ * subtiles so that we keep the size of each pixmap inside a safe interval.
  */
 class TilesManager
 {

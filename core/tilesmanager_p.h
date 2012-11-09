@@ -64,11 +64,11 @@ class TileNode
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT TilesManager
+class TilesManager
 {
     public:
         TilesManager( int pageNumber, int width, int height, Rotation rotation = Rotation0 );
-        virtual ~TilesManager();
+        ~TilesManager();
 
         /**
          * Sets the pixmap of the tiles covered by @p rect (which represents

@@ -42,11 +42,11 @@ class OKULAR_EXPORT Tile
          */
         bool isValid() const;
 
+        Tile& operator=( const Tile &other );
+
     private:
         class Private;
         Private * d;
-
-        Tile& operator=( const Tile &other ); // Not implemented
 };
 
 }

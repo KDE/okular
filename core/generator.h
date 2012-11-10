@@ -251,6 +251,8 @@ class OKULAR_EXPORT Generator : public QObject
 
         /**
          * Returns whether the generator can render tiles.
+         *
+         * @since 0.16 (KDE 4.10)
          */
         virtual bool supportsTiles() const;
 
@@ -587,22 +589,30 @@ class OKULAR_EXPORT PixmapRequest
         /**
          * Sets whether the generator should render only the given normalized
          * rect or the entire page
+         *
+         * @since 0.16 (KDE 4.10)
          */
         void setTile( bool tile );
 
         /**
          * Returns whether the generator should render just the region given by
          * normalizedRect() or the entire page.
+         *
+         * @since 0.16 (KDE 4.10)
          */
         bool isTile() const;
 
         /**
          * Sets the region of the page to request.
+         *
+         * @since 0.16 (KDE 4.10)
          */
         void setNormalizedRect( const NormalizedRect &rect );
 
         /**
          * Returns the normalized region of the page to request.
+         *
+         * @since 0.16 (KDE 4.10)
          */
         const NormalizedRect normalizedRect() const;
 

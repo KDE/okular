@@ -204,7 +204,8 @@ class OKULAR_EXPORT Generator : public QObject
             PageSizes,         ///< Whether the Generator can change the size of the document pages.
             PrintNative,       ///< Whether the Generator supports native cross-platform printing (QPainter-based).
             PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
-            PrintToFile        ///< Whether the Generator supports export to PDF & PS through the Print Dialog
+            PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
+            TiledRendering     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
         };
 
         /**
@@ -248,13 +249,6 @@ class OKULAR_EXPORT Generator : public QObject
          * handle a new pixmap request.
          */
         virtual bool canGeneratePixmap() const;
-
-        /**
-         * Returns whether the generator can render tiles.
-         *
-         * @since 0.16 (KDE 4.10)
-         */
-        virtual bool supportsTiles() const;
 
         /**
          * This method can be called to trigger the generation of

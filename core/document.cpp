@@ -1075,7 +1075,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // If the requested area is above 8000000 pixels, switch on the tile manager
-        else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->supportsTiles() && (long)r->width() * (long)r->height() > 8000000L )
+        else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
             kDebug(OkularDebug).nospace() << "Start using tiles on page " << r->pageNumber()

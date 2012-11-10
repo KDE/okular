@@ -437,6 +437,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     if ( Okular::FilePrinter::ps2pdfAvailable() )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
+    setFeature( TiledRendering );
 
 #ifdef HAVE_POPPLER_0_16
     // You only need to do it once not for each of the documents but it is cheap enough
@@ -884,11 +885,6 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
         default: ;
     }
     return b;
-}
-
-bool PDFGenerator::supportsTiles() const
-{
-    return true;
 }
 
 QImage PDFGenerator::image( Okular::PixmapRequest * request )

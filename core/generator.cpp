@@ -493,7 +493,7 @@ void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )
     d->mNormalizedRect = rect;
 }
 
-const NormalizedRect PixmapRequest::normalizedRect() const
+const NormalizedRect& PixmapRequest::normalizedRect() const
 {
     return d->mNormalizedRect;
 }

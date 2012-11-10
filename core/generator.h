@@ -608,7 +608,7 @@ class OKULAR_EXPORT PixmapRequest
          *
          * @since 0.16 (KDE 4.10)
          */
-        const NormalizedRect normalizedRect() const;
+        const NormalizedRect& normalizedRect() const;
 
     private:
         Q_DISABLE_COPY( PixmapRequest )

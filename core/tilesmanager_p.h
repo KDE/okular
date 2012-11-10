@@ -55,6 +55,14 @@ class TileNode
         QPixmap *pixmap;
 
         /**
+         * Rotation of this individual tile.
+         *
+         * A rotation to the page does not immediately rotates the pixmaps in
+         * cache. This operation happens when pixmaps are going to be used.
+         */
+        Rotation rotation;
+
+        /**
          * Whether the tile needs to be repainted (after a zoom or rotation)
          * If a tile doesn't have a pixmap but all its children are updated
          * (dirty = false), the parent tile is also considered updated.
@@ -162,7 +170,7 @@ class TilesManager
         int height() const;
 
         /**
-         * Inform the new rotation of the page and mark all tiles to repaint.
+         * Inform the new rotation of the page
          */
         void setRotation( Rotation rotation );
         Rotation rotation() const;

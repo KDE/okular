@@ -11,6 +11,7 @@
 #include <QPixmap>
 #include <QtCore/qmath.h>
 #include <QList>
+#include <QPainter>
 
 #include "tile.h"
 
@@ -159,8 +160,6 @@ void TilesManager::setRotation( Rotation rotation )
         return;
 
     d->rotation = rotation;
-
-    markDirty();
 }
 
 Rotation TilesManager::rotation() const
@@ -242,6 +241,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             }
             NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
             tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            tile.rotation = rotation;
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
         }
         else
@@ -295,6 +295,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 delete tile.pixmap;
             }
             tile.pixmap = new QPixmap( pixmap->copy( tile.rect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            tile.rotation = rotation;
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
             tile.dirty = false;
         }
@@ -363,6 +364,54 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
             rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
         else
             rotatedRect = tile.rect;
+
+        if ( tile.pixmap && !allowEmpty && tile.rotation != rotation )
+        {
+            // Lazy tiles rotation
+            int angleToRotate = (rotation - tile.rotation)*90;
+            int xOffset = 0, yOffset = 0;
+            int w = 0, h = 0;
+            switch( angleToRotate )
+            {
+                case 0:
+                    xOffset = 0;
+                    yOffset = 0;
+                    w = tile.pixmap->width();
+                    h = tile.pixmap->height();
+                    break;
+                case 90:
+                case -270:
+                    xOffset = 0;
+                    yOffset = -tile.pixmap->height();
+                    w = tile.pixmap->height();
+                    h = tile.pixmap->width();
+                    break;
+                case 180:
+                case -180:
+                    xOffset = -tile.pixmap->width();
+                    yOffset = -tile.pixmap->height();
+                    w = tile.pixmap->width();
+                    h = tile.pixmap->height();
+                    break;
+                case 270:
+                case -90:
+                    xOffset = -tile.pixmap->width();
+                    yOffset = 0;
+                    w = tile.pixmap->height();
+                    h = tile.pixmap->width();
+                    break;
+            }
+            QPixmap *rotatedPixmap = new QPixmap( w, h );
+            QPainter p( rotatedPixmap );
+            p.rotate( angleToRotate );
+            p.translate( xOffset, yOffset );
+            p.drawPixmap( 0, 0, *tile.pixmap );
+            p.end();
+
+            delete tile.pixmap;
+            tile.pixmap = rotatedPixmap;
+            tile.rotation = rotation;
+        }
         result.append( Tile( rotatedRect, tile.pixmap, tile.isValid() ) );
     }
     else
@@ -561,6 +610,7 @@ NormalizedRect TilesManager::toRotatedRect( const NormalizedRect &rect, Rotation
 
 TileNode::TileNode()
     : pixmap( 0 )
+    , rotation( Rotation0 )
     , dirty ( true )
     , distance( -1 )
     , tiles( 0 )

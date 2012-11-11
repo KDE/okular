@@ -132,12 +132,13 @@ void TilesManager::Private::deleteTiles( const TileNode &tile )
     }
 }
 
-void TilesManager::setWidth( int width )
+void TilesManager::setSize( int width, int height )
 {
-    if ( width == d->width )
+    if ( width == d->width && height == d->height )
         return;
 
     d->width = width;
+    d->height = height;
 
     markDirty();
 }
@@ -145,14 +146,6 @@ void TilesManager::setWidth( int width )
 int TilesManager::width() const
 {
     return d->width;
-}
-
-void TilesManager::setHeight( int height )
-{
-    if ( height == d->height )
-        return;
-
-    d->height = height;
 }
 
 int TilesManager::height() const

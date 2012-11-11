@@ -1087,8 +1087,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             {
                 tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
                 tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
-                tilesManager->setWidth( r->width() );
-                tilesManager->setHeight( r->height() );
+                tilesManager->setSize( r->width(), r->height() );
             }
             else
             {

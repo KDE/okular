@@ -147,17 +147,15 @@ class TilesManager
         void setRequest( const NormalizedRect &rect, int pageWidth, int pageHeight );
 
         /**
-         * Inform the new width of the page and mark all tiles to repaint
+         * Inform the new size of the page and mark all tiles to repaint
          */
-        void setWidth( int width );
+        void setSize( int width, int height );
+
         /**
          * Gets the width of the page in tiles manager
          */
         int width() const;
-        /**
-         * Inform the new height of the page
-         */
-        void setHeight( int height );
+
         /**
          * Gets the height of the page in tiles manager
          */

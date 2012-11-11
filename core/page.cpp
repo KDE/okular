@@ -220,8 +220,7 @@ bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect 
     {
         if ( width != tm->width() || height != tm->height() )
         {
-            tm->setWidth( width );
-            tm->setHeight( height );
+            tm->setSize( width, height );
             return false;
         }
 

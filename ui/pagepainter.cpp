@@ -252,7 +252,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
-                if ( tile.pixmap() && !limitsInTile.isEmpty() )
+                if ( !limitsInTile.isEmpty() )
                 {
                     if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
                         destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap()),
@@ -308,7 +308,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
                 QRect limitsInTile = limits & tileRect;
-                if ( tile.pixmap() && !limitsInTile.isEmpty() )
+                if ( !limitsInTile.isEmpty() )
                 {
                     if ( !tile.pixmap()->hasAlpha() )
                         has_alpha = false;

@@ -992,10 +992,10 @@ bool Page::hasTilesManager() const
     return d->m_tilesManager != 0;
 }
 
-QList<Tile> Page::tilesAt( const NormalizedRect &rect, bool allowEmpty ) const
+QList<Tile> Page::tilesAt( const NormalizedRect &rect ) const
 {
     if ( d->m_tilesManager )
-        return d->m_tilesManager->tilesAt( rect, allowEmpty );
+        return d->m_tilesManager->tilesAt( rect, TilesManager::PixmapTile );
     else
         return QList<Tile>();
 }

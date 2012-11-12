@@ -4112,24 +4112,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 
             if ( i->page()->hasTilesManager() )
             {
-                Okular::NormalizedRect tilesRect;
-                const QList<Okular::Tile> tiles = i->page()->tilesAt( expandedVisibleRect );
-                QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-                while ( tIt != tEnd )
-                {
-                    const Okular::Tile &tile = *tIt;
-                    if ( !tile.isValid() )
-                    {
-                        if ( tilesRect.isNull() )
-                            tilesRect = tile.rect();
-                        else
-                            tilesRect |= tile.rect();
-                    }
-
-                    tIt++;
-                }
-
-                p->setNormalizedRect( tilesRect );
+                p->setNormalizedRect( expandedVisibleRect );
                 p->setTile( true );
             }
             else
@@ -4191,26 +4174,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     const bool pageHasTilesManager = i->page()->hasTilesManager();
                     if ( pageHasTilesManager && !preRenderRegion.isNull() )
                     {
-                        Okular::NormalizedRect tilesRect;
-                        const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
-                        QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-                        while ( tIt != tEnd )
-                        {
-                            const Okular::Tile &tile = *tIt;
-                            if ( !tile.isValid() )
-                            {
-                                if ( tilesRect.isNull() )
-                                    tilesRect = tile.rect();
-                                else
-                                    tilesRect |= tile.rect();
-                            }
-
-                            tIt++;
-                        }
-
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
-                        p->setNormalizedRect( tilesRect );
+
+                        p->setNormalizedRect( preRenderRegion );
                         p->setTile( true );
                     }
                     else if ( !pageHasTilesManager )
@@ -4239,26 +4206,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                     const bool pageHasTilesManager = i->page()->hasTilesManager();
                     if ( pageHasTilesManager && !preRenderRegion.isNull() )
                     {
-                        Okular::NormalizedRect tilesRect;
-                        const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
-                        QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-                        while ( tIt != tEnd )
-                        {
-                            const Okular::Tile &tile = *tIt;
-                            if ( !tile.isValid() )
-                            {
-                                if ( tilesRect.isNull() )
-                                    tilesRect = tile.rect();
-                                else
-                                    tilesRect |= tile.rect();
-                            }
-
-                            tIt++;
-                        }
-
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
-                        p->setNormalizedRect( tilesRect );
+
+                        p->setNormalizedRect( preRenderRegion );
                         p->setTile( true );
                     }
                     else if ( !pageHasTilesManager )

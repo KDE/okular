@@ -378,11 +378,11 @@ class OKULAR_EXPORT Page
         /**
          * Returns a list of all tiles intersecting with @p rect.
          *
-         * @param allowEmpty If false only tiles with a non null pixmap are returned
+         * The list contains only tiles with a pixmap
          *
          * @since 0.16 (KDE 4.10)
          */
-        QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true ) const;
+        QList<Tile> tilesAt( const NormalizedRect &rect ) const;
 
     private:
         PagePrivate* const d;

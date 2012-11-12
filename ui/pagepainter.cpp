@@ -244,7 +244,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( hasTilesManager )
         {
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
-            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits, false );
+            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
@@ -299,7 +299,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             backImage.fill( paperColor.rgb() );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
-            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits, false );
+            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {

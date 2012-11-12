@@ -98,6 +98,12 @@ class TileNode
 class TilesManager
 {
     public:
+        enum TileLeaf
+        {
+            TerminalTile,     ///< Return tiles without children
+            PixmapTile        ///< Return only tiles with pixmap
+        };
+
         TilesManager( int pageNumber, int width, int height, Rotation rotation = Rotation0 );
         ~TilesManager();
 
@@ -125,9 +131,9 @@ class TilesManager
          * As to avoid requests of big areas, each traversed tile is checked
          * for its size and split if necessary.
          *
-         * @param allowEmpty If false only tiles with a non null pixmap are returned
+         * @param tileLeaf Indicate the type of tile to return
          */
-        QList<Tile> tilesAt( const NormalizedRect &rect, bool allowEmpty = true );
+        QList<Tile> tilesAt( const NormalizedRect &rect, TileLeaf tileLeaf );
 
         /**
          * The total memory consumed by the tiles manager

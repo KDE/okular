@@ -1104,7 +1104,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             if ( !r->normalizedRect().isNull() )
             {
                 NormalizedRect tilesRect;
-                const QList<Tile> tiles = tilesManager->tilesAt( r->normalizedRect() );
+                const QList<Tile> tiles = tilesManager->tilesAt( r->normalizedRect(), TilesManager::TerminalTile );
                 QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
                 while ( tIt != tEnd )
                 {
@@ -1313,7 +1313,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
                 break;
             }
         }
-        const QList<Tile> tiles = tilesManager->tilesAt( visibleRect );
+        const QList<Tile> tiles = tilesManager->tilesAt( visibleRect, TilesManager::TerminalTile );
         QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
         while ( tIt != tEnd )
         {
@@ -2550,6 +2550,30 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
         }
 
         request->d->mPage = d->m_pagesVector.value( request->pageNumber() );
+
+        if ( request->isTile() )
+        {
+            // Change the current request rect so that only invalid tiles are
+            // requested. Also make sure the rect is tile-aligned.
+            NormalizedRect tilesRect;
+            const QList<Tile> tiles = request->page()->d->tilesManager()->tilesAt( request->normalizedRect(), TilesManager::TerminalTile );
+            QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
+            while ( tIt != tEnd )
+            {
+                const Tile &tile = *tIt;
+                if ( !tile.isValid() )
+                {
+                    if ( tilesRect.isNull() )
+                        tilesRect = tile.rect();
+                    else
+                        tilesRect |= tile.rect();
+                }
+
+                tIt++;
+            }
+
+            request->setNormalizedRect( tilesRect );
+        }
 
         if ( !request->asynchronous() )
             request->d->mPriority = 0;

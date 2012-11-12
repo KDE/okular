@@ -34,7 +34,7 @@ class TilesManager::Private
         Private();
 
         bool hasPixmap( const NormalizedRect &rect, const TileNode &tile ) const;
-        void tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, bool allowEmpty );
+        void tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, TileLeaf tileLeaf );
         void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile );
 
         /**
@@ -335,20 +335,20 @@ bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const TileNod
     return true;
 }
 
-QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, bool allowEmpty )
+QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, TileLeaf tileLeaf )
 {
     QList<Tile> result;
 
     NormalizedRect rotatedRect = fromRotatedRect( rect, d->rotation );
     for ( int i = 0; i < 16; ++i )
     {
-        d->tilesAt( rotatedRect, d->tiles[ i ], result, allowEmpty );
+        d->tilesAt( rotatedRect, d->tiles[ i ], result, tileLeaf );
     }
 
     return result;
 }
 
-void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, bool allowEmpty )
+void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, TileLeaf tileLeaf )
 {
     if ( !tile.rect.intersects( rect ) )
         return;
@@ -357,7 +357,7 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
     // requesting huge areas unnecessarily
     splitBigTiles( tile, rect );
 
-    if ( ( allowEmpty && tile.nTiles == 0 ) || ( !allowEmpty && tile.pixmap ) )
+    if ( ( tileLeaf == TerminalTile && tile.nTiles == 0 ) || ( tileLeaf == PixmapTile && tile.pixmap ) )
     {
         NormalizedRect rotatedRect;
         if ( rotation != Rotation0 )
@@ -365,7 +365,7 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
         else
             rotatedRect = tile.rect;
 
-        if ( tile.pixmap && !allowEmpty && tile.rotation != rotation )
+        if ( tile.pixmap && tileLeaf == PixmapTile && tile.rotation != rotation )
         {
             // Lazy tiles rotation
             int angleToRotate = (rotation - tile.rotation)*90;
@@ -417,7 +417,7 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
     else
     {
         for ( int i = 0; i < tile.nTiles; ++i )
-            tilesAt( rect, tile.tiles[ i ], result, allowEmpty );
+            tilesAt( rect, tile.tiles[ i ], result, tileLeaf );
     }
 }
 

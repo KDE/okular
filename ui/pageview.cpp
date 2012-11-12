@@ -3709,19 +3709,16 @@ void PageView::center(int cx, int cy)
 void PageView::scrollTo( int x, int y )
 {
     bool prevState = d->blockPixmapsRequest;
-    int prevX = horizontalScrollBar()->value();
-    int prevY = verticalScrollBar()->value();
+
     int newValue = -1;
+    if ( x != horizontalScrollBar()->value() || y != verticalScrollBar()->value() )
+        newValue = 1; // Pretend this call is the result of a scrollbar event
 
     d->blockPixmapsRequest = true;
     horizontalScrollBar()->setValue( x );
     verticalScrollBar()->setValue( y );
 
     d->blockPixmapsRequest = prevState;
-    if ( prevX != horizontalScrollBar()->value() )
-        newValue = horizontalScrollBar()->value();
-    if ( prevY != verticalScrollBar()->value() )
-        newValue = verticalScrollBar()->value();
 
     slotRequestVisiblePixmaps( newValue );
 }
@@ -4051,6 +4048,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
     double focusedX = 0.5,
            focusedY = 0.0,
            minDistance = -1.0;
+    // Margin (in pixels) around the viewport to preload
+    const int pixelsToExpand = 512;
 
     // iterate over all items
     d->visibleItems.clear();
@@ -4105,8 +4104,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
         if ( i->page()->hasTilesManager() && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
-            // Margin (in pixels) to expand
-            int pixelsToExpand = 512;
             double rectMargin = pixelsToExpand/(double)i->uncroppedHeight();
             expandedVisibleRect.left = qMax( 0.0, vItem->rect.left - rectMargin );
             expandedVisibleRect.top = qMax( 0.0, vItem->rect.top - rectMargin );
@@ -4115,7 +4112,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         }
 
         // if the item has not the right pixmap, add a request for it
-        // TODO: We presently request a pixmap for the full page, and then render just the crop part. This waste memory and cycles.
         if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
         {
 #ifdef PAGEVIEW_DEBUG
@@ -4123,7 +4119,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest(
                     PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
-            p->setNormalizedRect( vItem->rect );
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager() )
@@ -4148,6 +4143,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 p->setNormalizedRect( tilesRect );
                 p->setTile( true );
             }
+            else
+                p->setNormalizedRect( vItem->rect );
         }
 
         // look for the item closest to viewport center and the relative
@@ -4183,7 +4180,6 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = d->items.count();
 
-        int pixelsToExpand = 512;
         QRect expandedViewportRect = viewportRect.adjusted( 0, -pixelsToExpand, 0, pixelsToExpand );
 
         for( int j = 1; j <= pagesToPreload; j++ )
@@ -4203,8 +4199,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
                 {
-                    const bool pagehasTilesManager = i->page()->hasTilesManager();
-                    if ( pagehasTilesManager && !preRenderRegion.isNull() )
+                    const bool pageHasTilesManager = i->page()->hasTilesManager();
+                    if ( pageHasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
                         const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
@@ -4228,7 +4224,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         p->setNormalizedRect( tilesRect );
                         p->setTile( true );
                     }
-                    else if ( !pagehasTilesManager )
+                    else if ( !pageHasTilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );
@@ -4251,8 +4247,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 // request the pixmap if not already present
                 if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
                 {
-                    const bool pagehasTilesManager = i->page()->hasTilesManager();
-                    if ( pagehasTilesManager && !preRenderRegion.isNull() )
+                    const bool pageHasTilesManager = i->page()->hasTilesManager();
+                    if ( pageHasTilesManager && !preRenderRegion.isNull() )
                     {
                         Okular::NormalizedRect tilesRect;
                         const QList<Okular::Tile> tiles = i->page()->tilesAt( preRenderRegion );
@@ -4276,7 +4272,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                         p->setNormalizedRect( tilesRect );
                         p->setTile( true );
                     }
-                    else if ( !pagehasTilesManager )
+                    else if ( !pageHasTilesManager )
                     {
                         Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
                         requestedPixmaps.push_back( p );

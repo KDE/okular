@@ -18,6 +18,8 @@ namespace Okular {
 /**
  * This class represents a rectangular portion of a page.
  *
+ * It doesn't take ownership of pixmap
+ *
  * @since 0.16 (KDE 4.10)
  */
 class OKULAR_EXPORT Tile

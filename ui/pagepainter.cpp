@@ -235,7 +235,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations || viewPortPoint;
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
-    QRect limitsInPixmap = limits.translated( crop.geometry( scaledWidth, scaledHeight ).topLeft() );
+    QRect limitsInPixmap = limits.translated( scaledCrop.topLeft() );
         // limits within full (scaled but uncropped) pixmap
 
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
@@ -249,7 +249,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             while ( tIt != tEnd )
             {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -crop.geometry( scaledWidth, scaledHeight ).topLeft() );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {
@@ -304,7 +304,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             while ( tIt != tEnd )
             {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -crop.geometry( scaledWidth, scaledHeight ).topLeft() );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {

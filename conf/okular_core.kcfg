@@ -57,13 +57,6 @@
    </choices>
   </entry>
  </group>
- <group name="Core Zoom">
-   <entry key="ZoomFactor" type="Double" >
-    <default>1.0</default>
-    <min>0.1</min>
-    <max>16.0</max>
-   </entry>
- </group>
  <group name="Core General" >
   <entry key="ObeyDRM" type="Bool" >
    <default>true</default>

@@ -1693,10 +1693,6 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
         }
         return color;
     }
-    else if ( key == QLatin1String( "ZoomFactor" ) )
-    {
-        return SettingsCore::zoomFactor();
-    }
     else if ( key == QLatin1String( "TextAntialias" ) )
     {
         switch ( SettingsCore::textAntialias() )

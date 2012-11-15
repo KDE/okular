@@ -429,11 +429,9 @@ void CHMGenerator::additionalRequestData()
 
 Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
 {
-    bool ok = true;
     userMutex()->lock();
-    double zoomP = documentMetaData( "ZoomFactor" ).toInt( &ok );
-    int zoom = ok ? qRound( zoomP * 100 ) : 100;
-    m_syncGen->view()->resize(qRound( page->width() * zoomP ) , qRound( page->height() * zoomP ));
+    const int zoom = 100;
+    m_syncGen->view()->resize(page->width(), page->height());
     
     preparePageForSyncOperation(zoom, m_pageUrl[page->number()]);
     Okular::TextPage *tp=new Okular::TextPage();

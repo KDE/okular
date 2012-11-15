@@ -2390,6 +2390,11 @@ bool Document::supportsPageSizes() const
     return d->m_generator ? d->m_generator->hasFeature( Generator::PageSizes ) : false;
 }
 
+bool Document::supportsTiles() const
+{
+    return d->m_generator ? d->m_generator->hasFeature( Generator::TiledRendering ) : false;
+}
+
 PageSize::List Document::pageSizes() const
 {
     if ( d->m_generator )

@@ -220,6 +220,13 @@ class OKULAR_EXPORT Document : public QObject
         bool supportsPageSizes() const;
 
         /**
+         * Returns whether the current document supports tiles
+         *
+         * @since 0.16 (KDE 4.10)
+         */
+        bool supportsTiles() const;
+
+        /**
          * Returns the list of supported page sizes or an empty list if this
          * feature is not available.
          * @see supportsPageSizes()

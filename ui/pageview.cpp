@@ -413,7 +413,10 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoom  = new KSelectAction(KIcon( "page-zoom" ), i18n("Zoom"), this);
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
-    d->aZoom->setMaxComboViewCount( 16 );
+    if ( d->document->supportsTiles() )
+        d->aZoom->setMaxComboViewCount( 16 );
+    else
+        d->aZoom->setMaxComboViewCount( 13 );
     connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
     updateZoomText();
 
@@ -1795,8 +1798,9 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             deltaY = mouseContainer.height() - absDeltaY;
         }
 
+        const float upperZoomLimit = d->document->supportsTiles() ? 15.99 : 3.99;
         if ( mouseY <= mouseContainer.top() + 4 &&
-             d->zoomFactor < 15.99 )
+             d->zoomFactor < upperZoomLimit )
         {
             mouseY = mouseContainer.bottom() - 5;
             QCursor::setPos( e->globalPos().x(), mouseY );
@@ -2396,8 +2400,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentAreaWidth());
                 double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentAreaHeight());
 
-                // zoom up to 1600%
-                if ( d->zoomFactor <= 16.0 || zoom <= 1.0 )
+                const float upperZoomLimit = d->document->supportsTiles() ? 16.0 : 4.0;
+                if ( d->zoomFactor <= upperZoomLimit || zoom <= 1.0 )
                 {
                     d->zoomFactor *= zoom;
                     viewport()->setUpdatesEnabled( false );
@@ -3520,8 +3524,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             d->zoomFactor = -1;
             break;
     }
-    if ( newFactor > 16.0 )
-        newFactor = 16.0;
+    const float upperZoomLimit = d->document->supportsTiles() ? 16.0 : 4.0;
+    if ( newFactor > upperZoomLimit )
+        newFactor = upperZoomLimit;
     if ( newFactor < 0.1 )
         newFactor = 0.1;
 
@@ -3549,7 +3554,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     else if ( newZoomMode == ZoomFixed && newFactor == d->zoomFactor )
         updateZoomText();
 
-    d->aZoomIn->setEnabled( d->zoomFactor < 15.999 );
+    d->aZoomIn->setEnabled( d->zoomFactor < upperZoomLimit-0.001 );
     d->aZoomOut->setEnabled( d->zoomFactor > 0.101 );
 }
 
@@ -3570,9 +3575,12 @@ void PageView::updateZoomText()
     const float zoomValue[13] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
     int idx = 0, selIdx = 2;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
-    while ( idx < 13 || !inserted )
+    int zoomValueCount = 10;
+    if ( d->document->supportsTiles() )
+        zoomValueCount = 13;
+    while ( idx < zoomValueCount || !inserted )
     {
-        float value = idx < 13 ? zoomValue[ idx ] : newFactor;
+        float value = idx < zoomValueCount ? zoomValue[ idx ] : newFactor;
         if ( !inserted && newFactor < (value - 0.0001) )
             value = newFactor;
         else

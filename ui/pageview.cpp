@@ -3196,25 +3196,6 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             }
         }
 
-        Okular::NormalizedRect crop;
-
-        if ( item->page()->hasTilesManager() )
-        {
-            QVector< Okular::VisiblePageRect * >::const_iterator vIt = d->document->visiblePageRects().constBegin(), vEnd = d->document->visiblePageRects().constEnd();
-            for ( ; vIt != vEnd; ++vIt )
-            {
-                Okular::VisiblePageRect *vItem = *vIt;
-                if ( vItem->pageNumber == item->pageNumber() )
-                {
-                    crop = item->crop() & vItem->rect;
-                    break;
-                }
-            }
-        }
-
-        if ( crop.isNull() )
-            crop = item->crop();
-
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
@@ -3229,7 +3210,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
             PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
-                crop, viewPortPoint );
+                item->crop(), viewPortPoint );
         }
 
         // remove painted area from 'remainingArea' and restore painter

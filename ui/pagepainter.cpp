@@ -244,13 +244,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         if ( hasTilesManager )
         {
-            const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
-            const QList<Okular::Tile> tiles = page->tilesAt( crop | normalizedLimits, false );
+            const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
+            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -crop.geometry( scaledWidth, scaledHeight ).topLeft() );
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {
@@ -258,8 +258,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                         destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap()),
                                 limitsInTile.translated( -tileRect.topLeft() ) );
                     else
-                        destPainter->drawPixmap( tile.rect().geometry( scaledWidth, scaledHeight ),
-                                *(tile.pixmap()) );
+                        destPainter->drawPixmap( tileRect, *(tile.pixmap()) );
                 }
                 tIt++;
             }
@@ -300,13 +299,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
             backImage.fill( paperColor.rgb() );
             QPainter p( &backImage );
-            const Okular::NormalizedRect normalizedLimits( limits, scaledWidth, scaledHeight );
+            const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
             const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits, false );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
                 const Okular::Tile &tile = *tIt;
-                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight );
+                QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -crop.geometry( scaledWidth, scaledHeight ).topLeft() );
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {

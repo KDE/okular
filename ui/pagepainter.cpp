@@ -133,11 +133,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = ( (double)limits.left() / (double)scaledWidth ),
-               nXMax = ( (double)limits.right() / (double)scaledWidth ),
-               nYMin = ( (double)limits.top() / (double)scaledHeight ),
-               nYMax = ( (double)limits.bottom() / (double)scaledHeight );
-
+        double nXMin = ( (double)limits.left() / (double)scaledWidth ) + crop.left,
+               nXMax = ( (double)limits.right() / (double)scaledWidth )  + crop.left,
+               nYMin = ( (double)limits.top() / (double)scaledHeight ) + crop.top,
+               nYMax = ( (double)limits.bottom() / (double)scaledHeight ) + crop.top;
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {
@@ -386,7 +385,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
                 // find out the rect to highlight on pixmap
-                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).intersect( limits );
+                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
                 // highlight composition (product: highlight color * destcolor)
@@ -438,9 +437,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             Q_ASSERT(backImage.format() == QImage::Format_ARGB32_Premultiplied);
             // precalc constants for normalizing [0,1] page coordinates into normalized [0,1] limit rect coordinates
             double pageScale = (double)croppedWidth / page->width();
-            double xOffset = (double)limits.left() / (double)scaledWidth,
+            double xOffset = (double)limits.left() / (double)scaledWidth + crop.left,
                    xScale = (double)scaledWidth / (double)limits.width(),
-                   yOffset = (double)limits.top() / (double)scaledHeight,
+                   yOffset = (double)limits.top() / (double)scaledHeight + crop.top,
                    yScale = (double)scaledHeight / (double)limits.height();
 
             // paint all buffered annotations in the page
@@ -673,7 +672,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             acolor.setAlpha( opacity );
 
             // get annotation boundary and drawn rect
-            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight );
+            QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
             QRect annotRect = annotBoundary.intersect( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
@@ -797,7 +796,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
     if ( boundingRectOnlyAnn )
     {
-        QRect annotBoundary = boundingRectOnlyAnn->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight );
+        QRect annotBoundary = boundingRectOnlyAnn->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
         mixedPainter->setPen( Qt::DashLine );
         mixedPainter->drawRect( annotBoundary );
     }
@@ -807,6 +806,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         mixedPainter->save();
         mixedPainter->scale( scaledWidth, scaledHeight );
+        mixedPainter->translate( -crop.left, -crop.top );
 
         QColor normalColor = QApplication::palette().color( QPalette::Active, QPalette::Highlight );
         // enlarging limits for intersection is like growing the 'rectGeometry' below
@@ -820,7 +820,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             if ( (enhanceLinks && rect->objectType() == Okular::ObjectRect::Action) ||
                  (enhanceImages && rect->objectType() == Okular::ObjectRect::Image) )
             {
-                if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ) ) )
+                if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ) ) )
                 {
                     mixedPainter->strokePath( rect->region(), QPen( normalColor ) );
                 }

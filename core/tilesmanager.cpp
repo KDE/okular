@@ -187,9 +187,28 @@ void TilesManager::Private::markDirty( TileNode &tile )
 
 void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
 {
+    NormalizedRect rotatedRect = TilesManager::fromRotatedRect( rect, d->rotation );
     if ( !d->requestRect.isNull() )
     {
-        if ( !(d->requestRect == rect) || rect.geometry( width(), height() ).size() != pixmap->size() )
+        if ( !(d->requestRect == rect) )
+            return;
+
+        // Check whether the pixmap has the same absolute size of the expected
+        // request.
+        // If the document is rotated, rotate requestRect back to the original
+        // rotation before comparing to pixmap's size. This is to avoid
+        // conversion issues. The pixmap request was made using an unrotated
+        // rect.
+        QSize pixmapSize = pixmap->size();
+        int w = width();
+        int h = height();
+        if ( d->rotation % 2 )
+        {
+            qSwap(w, h);
+            pixmapSize.transpose();
+        }
+
+        if ( rotatedRect.geometry( w, h ).size() != pixmapSize )
             return;
 
         d->requestRect = NormalizedRect();
@@ -197,7 +216,7 @@ void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect 
 
     for ( int i = 0; i < 16; ++i )
     {
-        d->setPixmap( pixmap, fromRotatedRect( rect, d->rotation ), d->tiles[ i ] );
+        d->setPixmap( pixmap, rotatedRect, d->tiles[ i ] );
     }
 }
 

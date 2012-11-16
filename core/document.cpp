@@ -1101,7 +1101,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
             // Change normalizedRect to the smallest rect that contains all
             // visible tiles.
-            Q_ASSERT( !r->normalizedRect().isNull() )
+            Q_ASSERT( !r->normalizedRect().isNull() );
             if ( !r->normalizedRect().isNull() )
             {
                 NormalizedRect tilesRect;

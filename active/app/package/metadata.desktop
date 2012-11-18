@@ -17,6 +17,7 @@ Name[sr@latin]=Prikazivač dokumenata
 Name[sv]=Dokumentvisare
 Name[uk]=Переглядач документів
 Name[x-test]=xxDocument viewerxx
+Name[zh_CN]=文档查看器
 Name[zh_TW]=文件檢視器
 Encoding=UTF-8
 Type=Service

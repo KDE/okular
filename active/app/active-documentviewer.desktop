@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Reader
 Name[cs]=Čtečka
+Name[da]=Læser
 Name[el]=Πρόγραμμα ανάγνωσης
 Name[es]=Lector
 Name[et]=Lugeja
@@ -22,6 +23,7 @@ Name[zh_CN]=阅读器
 Name[zh_TW]=閱讀器
 GenericName=Document viewer
 GenericName[cs]=Prohlížeč dokumentů
+GenericName[da]=Dokumentfremviser
 GenericName[el]=Προβολέας εγγράφων
 GenericName[es]=Visor de documentos
 GenericName[et]=Dokumendinäitaja
@@ -43,6 +45,7 @@ GenericName[zh_CN]=文档查看器
 GenericName[zh_TW]=文件檢視器
 Comment=Viewer for various types of documents
 Comment[cs]=Prohlížeč různých typů dokumentů
+Comment[da]=Fremviser af diverse dokumenttyper
 Comment[el]=Πρόγραμμα προβολής για διάφορους τύπους εγγράφων
 Comment[es]=Visor de diversos tipos de documentos
 Comment[et]=Eri tüüpi dokumentide näitaja

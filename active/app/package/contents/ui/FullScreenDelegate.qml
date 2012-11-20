@@ -50,7 +50,7 @@ MouseEventListener {
     function scale(zoom, absolute)
     {
         var newScale = absolute ? zoom : (mainPage.width / mainPage.implicitWidth) * zoom;
-        if (newScale < 0.3 || newScale > 2) {
+        if (newScale < 0.3 || newScale > 3) {
             return false
         }
 

@@ -556,6 +556,89 @@ Add a 'Find Previous' entry
 				</para>
 		      </sect2>
 		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title>Command Line Options</title>
+		    <para>
+			Though &okular; may most often be started from the &kde; program menu, or a desktop icon, it can also be opened at the command line prompt of a terminal window.  There are a few useful options that are available when doing this.
+		    </para>
+		    <sect2 id="specify-a-file">
+			<title>Specify a File</title>
+			<para>
+			    By specifying the path and name of a particular file the user can have &okular; open that file immediately upon startup. This option might look something like the following:
+			</para>
+			<informalexample><screen><prompt>%</prompt> <userinput><command>okular</command> <option><replaceable>/home/myhome/docs/mydoc.pdf</replaceable></option> </userinput> </screen>
+			</informalexample>
+			<note>
+			    <para>
+				For &PDF; documents, the name can be given as <replaceable>document_name</replaceable>#<replaceable>named_destination</replaceable> where <replaceable>named_destination</replaceable> is a particular named destination embedded in the document.
+			    </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title>Other Command Line Options</title>
+			<para>
+			    The following command line help options are available
+			</para>
+			<variablelist>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--help</option></userinput></term>
+				<listitem><para>This lists the most basic options available at the command line.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--help-qt</option></userinput></term>
+				<listitem><para>This lists the options available for changing the way &okular; interacts with &Qt;.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--help-kde</option></userinput></term>
+				<listitem><para>This lists the options available for changing the way &okular; interacts with &kde;.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--help-all</option></userinput></term>
+				<listitem><para>This lists all of the command line options.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--author</option></userinput></term>
+				<listitem><para>Lists &okular;'s authors in the terminal window</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>-v, --version</option></userinput></term>
+				<listitem><para>Lists version information for &Qt;, &kde;, and &okular;. Also available through <userinput><command>okular</command> <option>-v</option></userinput> </para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--license</option></userinput></term>
+				<listitem><para>Shows license information.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--page <replaceable>number</replaceable></option></userinput></term>
+				<listitem><para>Open a page with a given number in the document. Also available through <userinput><command>okular</command> <option>-p <replaceable>number</replaceable></option></userinput></para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--presentation</option></userinput></term>
+				<listitem><para>Start the document in presentation mode.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--unique</option></userinput></term>
+				<listitem><para>Unique instance control.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--</option></userinput></term>
+				<listitem><para>End of options.</para></listitem>
+			    </varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
 	</chapter>
 
 	<chapter id="primary-menu-items">

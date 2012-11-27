@@ -602,13 +602,14 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
        in the array */
     if (space_encountered &&
         (currentlyDrawnPage->textBoxList.size() > last_space_index)) {
-      QString lastword(currentlyDrawnPage->textBoxList[last_space_index].text);
       for (int lidx = last_space_index+1; lidx<currentlyDrawnPage->textBoxList.size(); ++lidx) {
         // merge two adjacent boxes which are part of the same word
-        lastword += currentlyDrawnPage->textBoxList[lidx].text;
         currentlyDrawnPage->textBoxList[lidx-1].box.setRight(currentlyDrawnPage->textBoxList[lidx].box.x());
       }
 #ifdef DEBUG_RENDER
+      QString lastword(currentlyDrawnPage->textBoxList[last_space_index].text);
+      for (int lidx = last_space_index+1; lidx<currentlyDrawnPage->textBoxList.size(); ++lidx)
+        lastword += currentlyDrawnPage->textBoxList[lidx].text;
       kDebug(kvs::dvi) << "space encountered: '" << lastword << "'";
 #endif
       last_space_index = currentlyDrawnPage->textBoxList.size();

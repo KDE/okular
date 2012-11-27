@@ -275,7 +275,11 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
   currinf.fontp        = NULL;
   currinf.set_char_p   = &dviRenderer::set_no_char;
 
+  int last_space_index = 0;
+  bool space_encountered = false;
+  bool after_space = false;
   for (;;) {
+    space_encountered = false;
     ch = readUINT8();
     if (ch <= (unsigned char) (SETCHAR0 + 127)) {
       (this->*currinf.set_char_p)(ch, ch);
@@ -404,8 +408,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           if ((is_vfmacro == false) &&
               (currinf.fontp != 0) &&
               ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
-              (currentlyDrawnPage->textBoxList.size() > 0))
-            currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+              (currentlyDrawnPage->textBoxList.size() > 0)) {
+            //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+            space_encountered = true;
+          }
           currinf.data.dvi_h += ((long) (RRtmp *  current_dimconv));
           break;
 
@@ -419,8 +425,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           if ((is_vfmacro == false) &&
               (currinf.fontp != 0) &&
               ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
-              (currentlyDrawnPage->textBoxList.size() > 0) )
-            currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+              (currentlyDrawnPage->textBoxList.size() > 0) ) {
+            //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+            space_encountered = true;
+          }
           currinf.data.dvi_h += currinf.data.w;
           break;
 
@@ -434,8 +442,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           if ((is_vfmacro == false)  &&
               (currinf.fontp != 0) &&
               ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
-              (currentlyDrawnPage->textBoxList.size() > 0))
-            currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+              (currentlyDrawnPage->textBoxList.size() > 0)) {
+            //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
+            space_encountered = true;
+          }
           currinf.data.dvi_h += currinf.data.x;
           break;
 
@@ -451,6 +461,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                 (currentlyDrawnPage->textBoxList.size() > 0)) {
               word_boundary_encountered = true;
               line_boundary_encountered = true;
+              space_encountered = true;
               if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
                 currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
             }
@@ -472,6 +483,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
             line_boundary_encountered = true;
+            space_encountered = true;
             if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
               currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
           }
@@ -492,6 +504,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
             line_boundary_encountered = true;
+            space_encountered = true;
             if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
               currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
           }
@@ -526,6 +539,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           if (is_vfmacro == false) {
             word_boundary_encountered = true;
             line_boundary_encountered = true;
+            space_encountered = true;
           }
           a = readUINT(ch - XXX1 + 1);
           if (a > 0) {
@@ -562,6 +576,44 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           return;
         } /* end switch*/
       } /* end else (ch not a SETCHAR or FNTNUM) */
+
+#ifdef DEBUG_RENDER
+    if (currentlyDrawnPage->textBoxList.size() > 0)
+      kDebug(kvs::dvi) << "Element:"
+                       << currentlyDrawnPage->textBoxList.last().box
+                       << currentlyDrawnPage->textBoxList.last().text
+                       << " ? s:" << space_encountered
+                       << " / nl:" << line_boundary_encountered
+                       << " / w:" << word_boundary_encountered
+                       << ", " << last_space_index << "/"
+                       << currentlyDrawnPage->textBoxList.size();
+#endif
+
+    /* heuristic to properly detect newlines; a space is needed */
+    if (after_space &&
+        line_boundary_encountered && word_boundary_encountered) {
+      if (currentlyDrawnPage->textBoxList.last().text.endsWith('\n'))
+         currentlyDrawnPage->textBoxList.last().text.chop(1);
+      currentlyDrawnPage->textBoxList.last().text += " \n";
+      after_space = false;
+    }
+
+    /* a "space" has been found and there is some (new) character
+       in the array */
+    if (space_encountered &&
+        (currentlyDrawnPage->textBoxList.size() > last_space_index)) {
+      QString lastword(currentlyDrawnPage->textBoxList[last_space_index].text);
+      for (int lidx = last_space_index+1; lidx<currentlyDrawnPage->textBoxList.size(); ++lidx) {
+        // merge two adjacent boxes which are part of the same word
+        lastword += currentlyDrawnPage->textBoxList[lidx].text;
+        currentlyDrawnPage->textBoxList[lidx-1].box.setRight(currentlyDrawnPage->textBoxList[lidx].box.x());
+      }
+#ifdef DEBUG_RENDER
+      kDebug(kvs::dvi) << "space encountered: '" << lastword << "'";
+#endif
+      last_space_index = currentlyDrawnPage->textBoxList.size();
+      after_space = true;
+    }
   } /* end for */
 }
 

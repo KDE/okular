@@ -1548,6 +1548,9 @@ void Part::slotDoFileDirty()
     // do the following the first time the file is reloaded
     if ( m_viewportDirty.pageNumber == -1 )
     {
+        // store the url of the current document
+        m_oldUrl = url();
+
         // store the current viewport
         m_viewportDirty = m_document->viewport();
 
@@ -1567,17 +1570,16 @@ void Part::slotDoFileDirty()
     }
 
     // close and (try to) reopen the document
-    KUrl oldUrl = url();
-
     if ( !closeUrl() )
         return;
 
-    if ( KParts::ReadWritePart::openUrl( oldUrl ) )
+    if ( KParts::ReadWritePart::openUrl( m_oldUrl ) )
     {
         // on successful opening, restore the previous viewport
         if ( m_viewportDirty.pageNumber >= (int) m_document->pages() )
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
+        m_oldUrl = KUrl();
         m_viewportDirty.pageNumber = -1;
         m_document->setRotation( m_dirtyPageRotation );
         if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex )

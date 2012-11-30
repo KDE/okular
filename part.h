@@ -263,6 +263,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
         QTimer *m_dirtyHandler;
+        KUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
         int m_dirtyToolboxIndex;

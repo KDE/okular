@@ -413,10 +413,7 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoom  = new KSelectAction(KIcon( "page-zoom" ), i18n("Zoom"), this);
     ac->addAction("zoom_to", d->aZoom );
     d->aZoom->setEditable( true );
-    if ( d->document->supportsTiles() )
-        d->aZoom->setMaxComboViewCount( 16 );
-    else
-        d->aZoom->setMaxComboViewCount( 13 );
+    d->aZoom->setMaxComboViewCount( 14 );
     connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
     updateZoomText();
 
@@ -3575,7 +3572,7 @@ void PageView::updateZoomText()
     const float zoomValue[13] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
     int idx = 0, selIdx = 2;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
-    int zoomValueCount = 10;
+    int zoomValueCount = 11;
     if ( d->document->supportsTiles() )
         zoomValueCount = 13;
     while ( idx < zoomValueCount || !inserted )

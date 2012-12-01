@@ -219,9 +219,11 @@ void Generator::generatePixmap( PixmapRequest *request )
     Q_D( Generator );
     d->mPixmapReady = false;
 
+    const bool calcBoundingBox = !request->isTile() && !request->page()->isBoundingBoxKnown();
+
     if ( request->asynchronous() && hasFeature( Threaded ) )
     {
-        d->pixmapGenerationThread()->startGeneration( request, !request->page()->isBoundingBoxKnown() );
+        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
 
         /**
          * We create the text page for every page that is visible to the
@@ -237,13 +239,12 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     const QImage& img = image( request );
     request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
-    const bool bboxKnown = request->page()->isBoundingBoxKnown();
     const int pageNumber = request->page()->number();
 
     d->mPixmapReady = true;
 
     signalPixmapRequestDone( request );
-    if ( !bboxKnown )
+    if ( calcBoundingBox )
         updatePageBoundingBox( pageNumber, Utils::imageBoundingBox( &img ) );
 }
 

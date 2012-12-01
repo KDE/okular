@@ -1566,12 +1566,16 @@ void Part::slotDoFileDirty()
         m_dirtyPageRotation = m_document->rotation();
 
         // inform the user about the operation in progress
+        // TODO: Remove this line and integrate reload info in queryClose
         m_pageView->displayMessage( i18n("Reloading the document...") );
     }
 
     // close and (try to) reopen the document
     if ( !closeUrl() )
         return;
+
+    // inform the user about the operation in progress
+    m_pageView->displayMessage( i18n("Reloading the document...") );
 
     if ( KParts::ReadWritePart::openUrl( m_oldUrl ) )
     {

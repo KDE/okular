@@ -327,13 +327,11 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             tieToOkularAnn = true;
             *doDelete = false;
 #else
-#ifdef HAVE_POPPLER_0_20
             Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
             Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
             annotation = m;
 
             m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
-#endif
 #endif
             break;
         }

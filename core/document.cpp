@@ -1101,7 +1101,6 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
             // Change normalizedRect to the smallest rect that contains all
             // visible tiles.
-            Q_ASSERT( !r->normalizedRect().isNull() );
             if ( !r->normalizedRect().isNull() )
             {
                 NormalizedRect tilesRect;
@@ -1119,9 +1118,13 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 }
 
                 r->setNormalizedRect( tilesRect );
+                request = r;
             }
-
-            request = r;
+            else
+            {
+                m_pixmapRequestsStack.pop_back();
+                delete r;
+            }
         }
         // If the requested area is below 6000000 pixels, switch off the tile manager
         else if ( tilesManager && (long)r->width() * (long)r->height() < 6000000L )

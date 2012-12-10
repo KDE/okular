@@ -2916,7 +2916,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
             const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
             if ( orect )
                 ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
-            if ( ann )
+            if ( ann && ann->subType() != Okular::Annotation::AWidget )
             {
                 openAnnotationWindow( ann, pageItem->pageNumber() );
             }
@@ -3026,7 +3026,7 @@ bool PageView::viewportEvent( QEvent * e )
             }
         }
 
-        if ( ann )
+        if ( ann && ann->subType() != Okular::Annotation::AWidget )
         {
             QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
             r.translate( pageItem->uncroppedGeometry().topLeft() );

@@ -36,6 +36,20 @@ struct AnnItem
     int page;
 };
 
+static QLinkedList< Okular::Annotation* > filterOutWidgetAnnotations( const QLinkedList< Okular::Annotation* > &annotations )
+{
+    QLinkedList< Okular::Annotation* > result;
+
+    foreach ( Okular::Annotation *annotation, annotations )
+    {
+        if ( annotation->subType() == Okular::Annotation::AWidget )
+            continue;
+
+        result.append( annotation );
+    }
+
+    return result;
+}
 
 class AnnotationModelPrivate : public Okular::DocumentObserver
 {
@@ -115,7 +129,7 @@ void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
     if ( !(flags & Okular::DocumentObserver::Annotations ) )
         return;
 
-    QLinkedList< Okular::Annotation* > annots = document->page( page )->annotations();
+    const QLinkedList< Okular::Annotation* > annots = filterOutWidgetAnnotations( document->page( page )->annotations() );
     int annItemIndex = -1;
     AnnItem *annItem = findItem( page, &annItemIndex );
     // case 1: the page has no more annotations
@@ -231,7 +245,7 @@ void AnnotationModelPrivate::rebuildTree( const QVector< Okular::Page * > &pages
     emit q->layoutAboutToBeChanged();
     for ( int i = 0; i < pages.count(); ++i )
     {
-        QLinkedList< Okular::Annotation* > annots = pages.at( i )->annotations();
+        const QLinkedList< Okular::Annotation* > annots = filterOutWidgetAnnotations( pages.at( i )->annotations() );
         if ( annots.isEmpty() )
             continue;
 

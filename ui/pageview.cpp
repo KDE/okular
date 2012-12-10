@@ -2057,7 +2057,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         foreach ( const Okular::ObjectRect * orect, orects )
                         {
                             Okular::Annotation * ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
-                            if ( ann )
+                            if ( ann && (ann->subType() != Okular::Annotation::AWidget) )
                                 popup.addAnnotation( ann, pageItem->pageNumber() );
 
                         }

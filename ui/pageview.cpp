@@ -4013,6 +4013,34 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
+static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+{
+    Okular::NormalizedRect preRenderRegion;
+    const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+    if ( !intersectionRect.isEmpty() )
+        preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
+
+    // request the pixmap if not already present
+    if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
+    {
+        const bool pageHasTilesManager = i->page()->hasTilesManager();
+        if ( pageHasTilesManager && !preRenderRegion.isNull() )
+        {
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            requestedPixmaps->push_back( p );
+
+            p->setNormalizedRect( preRenderRegion );
+            p->setTile( true );
+        }
+        else if ( !pageHasTilesManager )
+        {
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            requestedPixmaps->push_back( p );
+            p->setNormalizedRect( preRenderRegion );
+        }
+    }
+}
+
 void PageView::slotRequestVisiblePixmaps( int newValue )
 {
     // if requests are blocked (because raised by an unwanted event), exit
@@ -4157,64 +4185,14 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             const int tailRequest = d->visibleItems.last()->pageNumber() + j;
             if ( tailRequest < (int)d->items.count() )
             {
-                const PageViewItem * i = d->items[ tailRequest ];
-
-                Okular::NormalizedRect preRenderRegion;
-                const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
-                if ( !intersectionRect.isEmpty() )
-                    preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
-
-                // request the pixmap if not already present
-                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
-                {
-                    const bool pageHasTilesManager = i->page()->hasTilesManager();
-                    if ( pageHasTilesManager && !preRenderRegion.isNull() )
-                    {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
-                        requestedPixmaps.push_back( p );
-
-                        p->setNormalizedRect( preRenderRegion );
-                        p->setTile( true );
-                    }
-                    else if ( !pageHasTilesManager )
-                    {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
-                        requestedPixmaps.push_back( p );
-                        p->setNormalizedRect( preRenderRegion );
-                    }
-                }
+                slotRequestPreloadPixmap( d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // add the page before the 'visible series' in preload
             const int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
             {
-                const PageViewItem * i = d->items[ headRequest ];
-
-                Okular::NormalizedRect preRenderRegion;
-                QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
-                if ( !intersectionRect.isEmpty() )
-                    preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
-
-                // request the pixmap if not already present
-                if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
-                {
-                    const bool pageHasTilesManager = i->page()->hasTilesManager();
-                    if ( pageHasTilesManager && !preRenderRegion.isNull() )
-                    {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
-                        requestedPixmaps.push_back( p );
-
-                        p->setNormalizedRect( preRenderRegion );
-                        p->setTile( true );
-                    }
-                    else if ( !pageHasTilesManager )
-                    {
-                        Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
-                        requestedPixmaps.push_back( p );
-                        p->setNormalizedRect( preRenderRegion );
-                    }
-                }
+                slotRequestPreloadPixmap( d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // stop if we've already reached both ends of the document

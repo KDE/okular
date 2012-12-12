@@ -981,16 +981,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         {
             offsetMoved = true;
         }
-        if ( query.at(j).isSpace() )
-        {
-            // lets match newline as a space
-#ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "newline or space";
-#endif
-            j--;
-            queryLeft--;
-        }
-        else
         {
             len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
             int min=qMin(queryLeft,len);

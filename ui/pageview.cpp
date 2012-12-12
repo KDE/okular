@@ -4149,19 +4149,18 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = d->items.count();
 
-        QRect expandedViewportRect = viewportRect.adjusted( 0, -pixelsToExpand, 0, pixelsToExpand );
+        const QRect expandedViewportRect = viewportRect.adjusted( 0, -pixelsToExpand, 0, pixelsToExpand );
 
         for( int j = 1; j <= pagesToPreload; j++ )
         {
             // add the page after the 'visible series' in preload
-            int tailRequest = d->visibleItems.last()->pageNumber() + j;
-
+            const int tailRequest = d->visibleItems.last()->pageNumber() + j;
             if ( tailRequest < (int)d->items.count() )
             {
-                PageViewItem * i = d->items[ tailRequest ];
+                const PageViewItem * i = d->items[ tailRequest ];
 
                 Okular::NormalizedRect preRenderRegion;
-                QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+                const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
                 if ( !intersectionRect.isEmpty() )
                     preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
@@ -4187,10 +4186,10 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             }
 
             // add the page before the 'visible series' in preload
-            int headRequest = d->visibleItems.first()->pageNumber() - j;
+            const int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
             {
-                PageViewItem * i = d->items[ headRequest ];
+                const PageViewItem * i = d->items[ headRequest ];
 
                 Okular::NormalizedRect preRenderRegion;
                 QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );

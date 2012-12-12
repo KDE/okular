@@ -1122,6 +1122,10 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             }
             else
             {
+                // Discard request if normalizedRect is null. This happens in
+                // preload requests issued by PageView if the requested page is
+                // not visible and the user has just switched from a non-tiled
+                // zoom level to a tiled one
                 m_pixmapRequestsStack.pop_back();
                 delete r;
             }

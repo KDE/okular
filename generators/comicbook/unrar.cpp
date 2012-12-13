@@ -16,7 +16,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kpassworddialog.h>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
 #if !defined(Q_OS_WIN)

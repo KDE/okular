@@ -4192,7 +4192,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             const int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
             {
-                slotRequestPreloadPixmap( d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
+                slotRequestPreloadPixmap( d->items[ headRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // stop if we've already reached both ends of the document
